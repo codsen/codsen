@@ -71,7 +71,7 @@ RESULT - ARRAY OF OBJECTS:
 [
   {
 	a : true,
-	  b : true
+	b : true
   },
   {
 	a : true,
