@@ -1,0 +1,37 @@
+{
+  "name": "object-boolean-combinations",
+  "version": "1.0.0",
+  "description": "Pass an object, get an array of all Boolean combinations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revelto/object-boolean-combinations.git"
+  },
+  "keywords": [
+    "object",
+    "unique",
+    "permutations",
+    "combinations",
+    "boolean",
+    "generate",
+    "array",
+    "variations",
+    "all",
+    "possible",
+    "create"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/revelto/object-boolean-combinations/issues"
+  },
+  "homepage": "https://github.com/revelto/object-boolean-combinations#readme",
+  "dependencies": {
+    "faucet": "0.0.1",
+    "lodash": "^3.10.1",
+    "tape": "^4.2.2"
+  }
+}
