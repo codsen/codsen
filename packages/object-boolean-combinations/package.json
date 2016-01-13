@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/revelt/object-boolean-combinations",
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^4.0.0"
   },
   "devDependencies": {
     "faucet": "0.0.1",
