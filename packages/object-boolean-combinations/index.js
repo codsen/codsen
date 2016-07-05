@@ -1,6 +1,5 @@
-'use strict';
-var _ = require('lodash');
-/*jslint bitwise: true */
+'use strict'
+var _ = require('lodash')
 
 /**
  * Creates an n-length array with all possible combinations of true/false
@@ -8,16 +7,16 @@ var _ = require('lodash');
  * @returns {Array} Array of arrays each containing one possible combination of true/false
  * @private modified http://stackoverflow.com/a/26610870
  */
-function combinations(n) {
-  var r = [];
+function combinations (n) {
+  var r = []
   for (var i = 0; i < (1 << n); i++) {
-    var c = [];
+    var c = []
     for (var j = 0; j < n; j++) {
-      c.push(i & (1 << j) ? 'true' : 'false');
+      c.push(i & (1 << j) ? 'true' : 'false')
     }
-    r.push(c);
+    r.push(c)
   }
-  return r;
+  return r
 }
 // ===================================
 
@@ -26,8 +25,8 @@ function combinations(n) {
  * @param {Object} or not object ;)
  * @returns {Boolean} explaining is it Object or not
  */
-function isObject(item) {
-  return (typeof item === 'object' && !Array.isArray(item) && item !== null);
+function isObject (item) {
+  return (typeof item === 'object' && !Array.isArray(item) && item !== null)
 }
 
 /**
@@ -36,71 +35,70 @@ function isObject(item) {
  * @param [Object] an optional override object. For example, you want all properties "a" to be true – pass {a:true}
  * @returns {Array} of objects with all possible combinations optionally including override. In our examle, an array of 2^(3-1) objects, each containing a:true. Without override we would have got 2^3 objects array
  */
-function objectBooleanCombinations(incomingObject, overrideObject) {
-  var outcomingObjectsArray = [];
+function objectBooleanCombinations (incomingObject, overrideObject) {
+  var outcomingObjectsArray = []
   if (incomingObject === void 0) {
-    throw 'missing input object';
+    throw new Error('missing input object')
   }
   if (!isObject(incomingObject)) {
-    throw 'input must be a true object';
+    throw new Error('input must be a true object')
   }
-  var propertiesToMix = _.keys(incomingObject);
+  var propertiesToMix = _.keys(incomingObject)
 
   // ===================================
   // if there's override, prepare an alternative (a subset) array propertiesToMix
 
   if ((overrideObject !== void 0) && !isObject(overrideObject)) {
-    throw 'override object must be a true object and nothing else';
+    throw new Error('override object must be a true object and nothing else')
   }
   if ((overrideObject !== void 0) && isObject(overrideObject)) {
     // check overrideObject's contents - must be Boolean:
-    Object.keys(overrideObject).forEach(function(elem5){
-      if (typeof overrideObject[elem5] !== 'boolean'){
-        throw 'override object must contain only Boolean values';
+    Object.keys(overrideObject).forEach(function (elem5) {
+      if (typeof overrideObject[elem5] !== 'boolean') {
+        throw new Error('override object must contain only Boolean values')
       }
-    });
+    })
   }
 
-  var override = false;
+  var override = false
   if ((overrideObject !== void 0) && (Object.keys(overrideObject).length !== 0)) {
-    override = true;
+    override = true
   }
 
   if (override) {
     // find legitimate properties from the overrideObject:
     // enforce that override object had just a subset of incomingObject properties, nothing else
-    var propertiesToBeOverridden = _.intersection(Object.keys(overrideObject), Object.keys(incomingObject));
+    var propertiesToBeOverridden = _.intersection(Object.keys(overrideObject), Object.keys(incomingObject))
     // propertiesToMix = all incoming object's properties MINUS properties to override
     propertiesToBeOverridden.forEach(function (elem) {
-      _.pull(propertiesToMix, elem);
-    });
-
+      _.pull(propertiesToMix, elem)
+    })
   }
 
   // ===================================
   // mix up whatever propertiesToMix has came to this point
 
-  var boolCombinations = combinations(Object.keys(propertiesToMix).length);
-  var tempObject = {};
+  var boolCombinations = combinations(Object.keys(propertiesToMix).length)
+  var tempObject = {}
   boolCombinations.forEach(function (elem1, index1) {
-    tempObject = {};
+    tempObject = {}
     propertiesToMix.forEach(function (elem2, index2) {
-      tempObject[elem2] = (boolCombinations[index1][index2] === 'true');
-    });
-    outcomingObjectsArray.push(tempObject);
-  });
+      tempObject[elem2] = (boolCombinations[index1][index2] === 'true')
+    })
+    outcomingObjectsArray.push(tempObject)
+  })
 
   // ===================================
   // if there's override, append the static override values on each property of the propertiesToMix array:
   if (override) {
     outcomingObjectsArray.forEach(function (elem3) {
       propertiesToBeOverridden.forEach(function (elem4) {
-        elem3[elem4] = overrideObject[elem4];
-      });
-    });
+        elem3[elem4] = overrideObject[elem4]
+      })
+    })
   }
 
-  return outcomingObjectsArray;
+  return outcomingObjectsArray
 }
 
-module.exports = objectBooleanCombinations;
+module.exports = objectBooleanCombinations

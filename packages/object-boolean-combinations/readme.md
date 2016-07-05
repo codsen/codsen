@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master)](https://travis-ci.org/revelt/object-boolean-combinations) [![Dependency Status](https://david-dm.org/revelt/object-boolean-combinations.svg)](https://david-dm.org/revelt/object-boolean-combinations) [![devDependency Status](https://david-dm.org/revelt/object-boolean-combinations/dev-status.svg)](https://david-dm.org/revelt/object-boolean-combinations#info=devDependencies)
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ## Install
 
 ```

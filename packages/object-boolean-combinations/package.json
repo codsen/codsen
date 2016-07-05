@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/revelt/object-boolean-combinations.git"
+    "url": "git://github.com/revelt/object-boolean-combinations.git"
   },
   "keywords": [
     "object",
