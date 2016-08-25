@@ -1,0 +1,38 @@
+{
+  "name": "easy-replace",
+  "version": "1.0.0",
+  "description": "Replace strings with optional lookarounds, but without regexes",
+  "main": "er.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revelt/easy-replace.git"
+  },
+  "keywords": [
+    "search",
+    "negative",
+    "positive",
+    "lookbehind",
+    "lookahead",
+    "string",
+    "lookaround",
+    "easy",
+    "replace",
+    "replacement",
+    "find"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/revelt/easy-replace/issues"
+  },
+  "homepage": "https://github.com/revelt/easy-replace#readme",
+  "dependencies": {
+    "array-from": "^2.1.1"
+  },
+  "devDependencies": {
+    "ava": "*"
+  }
+}
