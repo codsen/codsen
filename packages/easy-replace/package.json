@@ -4,7 +4,7 @@
   "description": "Replace strings with optional lookarounds, but without regexes",
   "main": "er.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava | faucet"
   },
   "repository": {
     "type": "git",
@@ -30,9 +30,14 @@
   },
   "homepage": "https://github.com/revelt/easy-replace#readme",
   "dependencies": {
-    "array-from": "^2.1.1"
+    "array-from": "^2.1.1",
+    "lodash.toarray": "^4.4.0"
   },
   "devDependencies": {
-    "ava": "*"
+    "ava": "*",
+    "faucet": "0.0.1"
+  },
+  "ava": {
+    "tap": true
   }
 }

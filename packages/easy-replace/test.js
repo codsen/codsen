@@ -5,7 +5,7 @@ import er from './er.js'
 // only the string to search for
 // ==============================
 
-test('test 1.1', function (t) {
+test('test 1.1 - replace letter with letter', function (t) {
   t.is(er(
     'a b c',
     {
@@ -20,10 +20,10 @@ test('test 1.1', function (t) {
     'd'
     ),
     'a d c',
-    'test 1.1 - simple replace with letter'
+    'test 1.1'
   )
 })
-test('test 1.2', function (t) {
+test('test 1.2 - replace 1 emoji with 1 emoji', function (t) {
   t.is(er(
     '🐴 🦄 🐴',
     {
@@ -38,12 +38,12 @@ test('test 1.2', function (t) {
     '💖'
     ),
     '🐴 💖 🐴',
-    'test 1.2 - simple replace with emoji'
+    'test 1.2'
   )
 })
-test('test 1.3', function (t) {
+test('test 1.3 - replace 3 consecutive emoji with emoji', function (t) {
   t.is(er(
-    '🐴 🦄 🐴',
+    'a 🦄🦄🦄 a',
     {
       leftOutsideNot: '',
       leftOutside: '',
@@ -55,11 +55,11 @@ test('test 1.3', function (t) {
     },
     '💖'
     ),
-    '🐴 💖 🐴',
-    'test 1.3 - simple replace, more emoji'
+    'a 💖💖💖 a',
+    'test 1.3'
   )
 })
-test('test 1.4', function (t) {
+test('test 1.4 - gorilla emoji - in escaped JS', function (t) {
   t.is(er(
     'ljghdfjkgzh\ud83e\udd8dlkgljd',
     {
@@ -74,10 +74,10 @@ test('test 1.4', function (t) {
     ' Gorilla '
     ),
     'ljghdfjkgzh Gorilla lkgljd',
-    'test 1.4 - newest baddest emoji - gorilla - http://unicode-table.com/en/1F98D/'
+    'test 1.4 - http://unicode-table.com/en/1F98D/'
   )
 })
-test('test 1.5', function (t) {
+test('test 1.5 - gorilla emoji - in raw', function (t) {
   t.is(er(
     'ljghdfjkgzh🦍lkgljd',
     {
@@ -92,10 +92,10 @@ test('test 1.5', function (t) {
     'gorilla'
     ),
     'ljghdfjkgzhgorillalkgljd',
-    'test 1.5 - raw gorilla char pasted in utf8 - http://unicode-table.com/en/1F98D/'
+    'test 1.5 - http://unicode-table.com/en/1F98D/'
   )
 })
-test('test 1.6', function (t) {
+test('test 1.6 - won\'t find a letter', function (t) {
   t.is(er(
     'a b c',
     {
@@ -110,10 +110,10 @@ test('test 1.6', function (t) {
     'd'
     ),
     'a b c',
-    'test 1.6 - won\'t find, simle letter'
+    'test 1.6'
   )
 })
-test('test 1.7', function (t) {
+test('test 1.7 - won\'t find emoji, with new lines', function (t) {
   t.is(er(
     'a\nb\nc',
     {
@@ -128,10 +128,10 @@ test('test 1.7', function (t) {
     'd'
     ),
     'a\nb\nc',
-    'test 1.7 - won\'t find, emoji, new lines'
+    'test 1.7'
   )
 })
-test('test 1.8', function (t) {
+test('test 1.8 - replacement with new lines', function (t) {
   t.is(er(
     'a\nb',
     {
@@ -146,10 +146,10 @@ test('test 1.8', function (t) {
     'c\nd'
     ),
     'c\nd',
-    'test 1.8 - replacement with new lines'
+    'test 1.8'
   )
 })
-test('test 1.9', function (t) {
+test('test 1.9 - multiple letter findings', function (t) {
   t.is(er(
     'a a a a a b',
     {
@@ -164,10 +164,10 @@ test('test 1.9', function (t) {
     'c'
     ),
     'c c c c c b',
-    'test 1.9 - multiple findings'
+    'test 1.9'
   )
 })
-test('test 1.10', function (t) {
+test('test 1.10 - single digit of string type replaced', function (t) {
   t.is(er(
     '0',
     {
@@ -182,10 +182,10 @@ test('test 1.10', function (t) {
     '1'
     ),
     '1',
-    'case #10 - single digit in string format'
+    'test 1.10'
   )
 })
-test('test 1.11', function (t) {
+test('test 1.11 - single digit of integer type replaced', function (t) {
   t.is(er(
     0,
     {
@@ -200,10 +200,10 @@ test('test 1.11', function (t) {
     1
     ),
     '1',
-    'case #11 - real digits passed as source and replacement'
+    'test 1.11'
   )
 })
-test('test 1.12', function (t) {
+test('test 1.12 - source and replacement are of integer type', function (t) {
   t.is(er(
     0,
     {
@@ -218,10 +218,10 @@ test('test 1.12', function (t) {
     1
     ),
     '1',
-    'test 1.12 - real digits passed as source and replacement'
+    'test 1.12'
   )
 })
-test('test 1.13', function (t) {
+test('test 1.13 - all raw integers: source, replacement and searchFor', function (t) {
   t.is(er(
     0,
     {
@@ -236,7 +236,25 @@ test('test 1.13', function (t) {
     1
     ),
     '1',
-    'case #13 - real digits passed everywhere'
+    'test 1.13'
+  )
+})
+test('test 1.14 - multiple consecutive letter replacements', function (t) {
+  t.is(er(
+    'aaavvvvccccc',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: '',
+      searchFor: 'v',
+      rightMaybe: '',
+      rightOutside: '',
+      rightOutsideNot: ''
+    },
+    'b'
+    ),
+    'aaabbbbccccc',
+    'test 1.14'
   )
 })
 
@@ -244,7 +262,7 @@ test('test 1.13', function (t) {
 // searchFor + left
 // ==============================
 
-test('test 2.1', function (t) {
+test('test 2.1 - left maybe found', function (t) {
   t.is(er(
     'a🦄🐴🦄c',
     {
@@ -259,10 +277,10 @@ test('test 2.1', function (t) {
     'b'
     ),
     'ab🦄c',
-    'test 2.1 - left maybe found'
+    'test 2.1'
   )
 })
-test('test 2.2', function (t) {
+test('test 2.2 - two replacements with one leftmaybe, nearby', function (t) {
   t.is(er(
     'ab🐴🦄🐴c',
     {
@@ -277,10 +295,10 @@ test('test 2.2', function (t) {
     'd'
     ),
     'abddc',
-    'test 2.2 - two replacements with one leftmaybe, nearby'
+    'test 2.2'
   )
 })
-test('test 2.3', function (t) {
+test('test 2.3 - two consecutive maybes found/replaced', function (t) {
   t.is(er(
     'ab🦄🐴🦄🐴c',
     {
@@ -295,10 +313,10 @@ test('test 2.3', function (t) {
     'd'
     ),
     'abddc',
-    'test 2.3 - two maybes together'
+    'test 2.3'
   )
 })
-test('test 2.4', function (t) {
+test('test 2.4 - futile left maybe', function (t) {
   t.is(er(
     '\'🐴',
     {
@@ -313,10 +331,10 @@ test('test 2.4', function (t) {
     'd'
     ),
     '\'d',
-    'test 2.4 - futile left maybe'
+    'test 2.4'
   )
 })
-test('test 2.5', function (t) {
+test('test 2.5 - line break as search string', function (t) {
   t.is(er(
     '\n\n\n',
     {
@@ -331,10 +349,10 @@ test('test 2.5', function (t) {
     'a'
     ),
     'aaa',
-    'test 2.5 - line break as search string'
+    'test 2.5'
   )
 })
-test('test 2.6', function (t) {
+test('test 2.6 - line break as both searchFor and maybe replaced', function (t) {
   t.is(er(
     '\n\n\n',
     {
@@ -349,10 +367,10 @@ test('test 2.6', function (t) {
     'a'
     ),
     'aaa',
-    'test 2.6 - line break as search string'
+    'test 2.6'
   )
 })
-test('test 2.7', function (t) {
+test('test 2.7 - operations on line breaks only', function (t) {
   t.is(er(
     '\n\n',
     {
@@ -367,7 +385,7 @@ test('test 2.7', function (t) {
     '\n'
     ),
     '\n',
-    'test 2.7 - operations on line breaks only'
+    'test 2.7'
   )
 })
 
@@ -375,7 +393,7 @@ test('test 2.7', function (t) {
 // searchFor + right
 // ==============================
 
-test('test 3.1', function (t) {
+test('test 3.1 - right maybe found', function (t) {
   t.is(er(
     'a🦄🐴🦄c',
     {
@@ -390,10 +408,10 @@ test('test 3.1', function (t) {
     'b'
     ),
     'a🦄bc',
-    'test 3.1 - right maybe found'
+    'test 3.1'
   )
 })
-test('test 3.2', function (t) {
+test('test 3.2 - two replacements with one rightmaybe, nearby', function (t) {
   t.is(er(
     'ab🐴🦄🐴c',
     {
@@ -408,10 +426,10 @@ test('test 3.2', function (t) {
     'd'
     ),
     'abddc',
-    'test 3.2 - two replacements with one rightmaybe, nearby'
+    'test 3.2'
   )
 })
-test('test 3.3', function (t) {
+test('test 3.3 - two consecutive right maybes', function (t) {
   t.is(er(
     'ab🦄🐴🦄🐴c',
     {
@@ -426,10 +444,10 @@ test('test 3.3', function (t) {
     'd'
     ),
     'abddc',
-    'test 3.3 - two maybes together'
+    'test 3.3'
   )
 })
-test('test 3.4', function (t) {
+test('test 3.4 - futile right maybe', function (t) {
   t.is(er(
     '\'🐴',
     {
@@ -444,10 +462,10 @@ test('test 3.4', function (t) {
     'd'
     ),
     '\'d',
-    'test 3.4 - futile right maybe'
+    'test 3.4'
   )
 })
-test('test 3.5', function (t) {
+test('test 3.5 - \\n as search string plus right maybe', function (t) {
   t.is(er(
     '\na\n\n',
     {
@@ -462,10 +480,10 @@ test('test 3.5', function (t) {
     'a'
     ),
     'aaa',
-    'test 3.5 - line break as search string'
+    'test 3.5'
   )
 })
-test('test 3.6', function (t) {
+test('test 3.6 - \\n as both searchFor and right maybe, replaced', function (t) {
   t.is(er(
     '\n\n\n',
     {
@@ -480,10 +498,10 @@ test('test 3.6', function (t) {
     'a'
     ),
     'aa',
-    'test 3.6 - line break as search string'
+    'test 3.6'
   )
 })
-test('test 3.7', function (t) {
+test('test 3.7 - rightMaybe with line breaks', function (t) {
   t.is(er(
     'a\n\na',
     {
@@ -498,10 +516,10 @@ test('test 3.7', function (t) {
     'b'
     ),
     'b',
-    'test 3.7 - rightMaybe wiht line breaks'
+    'test 3.7'
   )
 })
-test('test 3.8', function (t) {
+test('test 3.8 - specific case of semi infinite loop with maybe', function (t) {
   t.is(er(
     'aaaaab',
     {
@@ -516,7 +534,7 @@ test('test 3.8', function (t) {
     'a'
     ),
     'aaaaa',
-    'test 3.8 - specific case of semi infinite loop with maybe'
+    'test 3.8'
   )
 })
 
@@ -524,7 +542,7 @@ test('test 3.8', function (t) {
 // searchFor + both left and right
 // ==============================
 
-test('test 4.1', function (t) {
+test('test 4.1 - left and right maybes as emoji', function (t) {
   t.is(er(
     'a🦄🐴🦄a',
     {
@@ -539,10 +557,10 @@ test('test 4.1', function (t) {
     'z'
     ),
     'aza',
-    'test 4.1 - left and right maybes emoji'
+    'test 4.1'
   )
 })
-test('test 4.2', function (t) {
+test('test 4.2 - left and right maybes as text', function (t) {
   t.is(er(
     'abc abc abc',
     {
@@ -557,10 +575,10 @@ test('test 4.2', function (t) {
     'z'
     ),
     'z z z',
-    'test 4.2 - left and right text maybes'
+    'test 4.2'
   )
 })
-test('test 4.3', function (t) {
+test('test 4.3 - left+right maybes, middle & end of word #1', function (t) {
   t.is(er(
     'zzzabc zzzzabczzz abczzzz',
     {
@@ -575,10 +593,10 @@ test('test 4.3', function (t) {
     'z'
     ),
     'zzzz zzzzzzzz zzzzz',
-    'test 4.3 - left and right at beginning, middle and end of word, letters only'
+    'test 4.3'
   )
 })
-test('test 4.4', function (t) {
+test('test 4.4 - left+right maybes, middle & end of word #2', function (t) {
   t.is(er(
     'zzz🦄🐴🦄 zzzz🦄🐴🦄zzz 🦄🐴🦄zzzz',
     {
@@ -593,7 +611,7 @@ test('test 4.4', function (t) {
     'z'
     ),
     'zzzz zzzzzzzz zzzzz',
-    'test 4.4 - left and right at beginning, middle and end of word, with emoji'
+    'test 4.4'
   )
 })
 
@@ -601,7 +619,7 @@ test('test 4.4', function (t) {
 // searchFor + only outsides
 // ==============================
 
-test('test 5.1', function (t) {
+test('test 5.1 - both outsides only, emoji, found', function (t) {
   t.is(er(
     '🦄 🐴 🦄',
     {
@@ -616,10 +634,10 @@ test('test 5.1', function (t) {
     'z'
     ),
     '🦄 z 🦄',
-    'test 5.1 - both outsides, emoji, found'
+    'test 5.1'
   )
 })
-test('test 5.2', function (t) {
+test('test 5.2 - both outsides only, emoji, not found', function (t) {
   t.is(er(
     'a 🐴 a',
     {
@@ -634,12 +652,12 @@ test('test 5.2', function (t) {
     'z'
     ),
     'a 🐴 a',
-    'test 5.2 - both outsides, emoji, not found'
+    'test 5.2'
   )
 })
-test('test 5.3', function (t) {
+test('test 5.3 - both outsides, emoji, not found', function (t) {
   t.is(er(
-    '🦄a 🐴 a',
+    '🦄 🐴 a',
     {
       leftOutsideNot: '',
       leftOutside: '🦄',
@@ -651,11 +669,11 @@ test('test 5.3', function (t) {
     },
     'z'
     ),
-    '🦄a 🐴 a',
-    'test 5.3 - both outsides, emoji, not found'
+    '🦄 🐴 a',
+    'test 5.3'
   )
 })
-test('test 5.4', function (t) {
+test('test 5.4 - both outsides, emoji, not found #1', function (t) {
   t.is(er(
     'a 🐴 a🦄',
     {
@@ -670,10 +688,10 @@ test('test 5.4', function (t) {
     'z'
     ),
     'a 🐴 a🦄',
-    'test 5.4 - both outsides, emoji, not found'
+    'test 5.4'
   )
 })
-test('test 5.5', function (t) {
+test('test 5.5 - both outsides, emoji, not found #2', function (t) {
   t.is(er(
     'kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk',
     {
@@ -688,10 +706,10 @@ test('test 5.5', function (t) {
     'z'
     ),
     'kgldfj lkfjkl jfk \ng \t;lgkh a 🐴 a🦄 slkgj fhjf jkghljk',
-    'test 5.5 - both outsides, emoji, not found'
+    'test 5.5'
   )
 })
-test('test 5.6', function (t) {
+test('test 5.6 - line break as rightOutside, found', function (t) {
   t.is(er(
     'aaab\n',
     {
@@ -706,10 +724,10 @@ test('test 5.6', function (t) {
     'c'
     ),
     'aaac\n',
-    'test 5.6 - line break as rightOutside'
+    'test 5.6'
   )
 })
-test('test 5.7', function (t) {
+test('test 5.7 - line breaks as both outsides', function (t) {
   t.is(er(
     'aaa\nb\n',
     {
@@ -724,10 +742,10 @@ test('test 5.7', function (t) {
     'c'
     ),
     'aaa\nc\n',
-    'test 5.7 - line breaks as both outsides'
+    'test 5.7'
   )
 })
-test('test 5.8', function (t) {
+test('test 5.8 - \\n as outsides, replacement = undefined', function (t) {
   t.is(er(
     'aaa\nb\n',
     {
@@ -742,10 +760,10 @@ test('test 5.8', function (t) {
     undefined
     ),
     'aaa\n\n',
-    'test 5.8 - line breaks as outsides, replacement = undefined'
+    'test 5.8'
   )
 })
-test('test 5.9', function (t) {
+test('test 5.9 - line breaks as outsides, replacement = Bool', function (t) {
   t.is(er(
     'aaa\nb\n',
     {
@@ -760,10 +778,10 @@ test('test 5.9', function (t) {
     true
     ),
     'aaa\n\n',
-    'test 5.9 - line breaks as outsides, replacement = boolean'
+    'test 5.9'
   )
 })
-test('test 5.10', function (t) {
+test('test 5.10 - line breaks as outsides, replacement = null', function (t) {
   t.is(er(
     'aaa\nb\n',
     {
@@ -778,7 +796,7 @@ test('test 5.10', function (t) {
     null
     ),
     'aaa\n\n',
-    'test 5.10 - line breaks as outsides, replacement = null'
+    'test 5.10'
   )
 })
 
@@ -786,7 +804,7 @@ test('test 5.10', function (t) {
 // searchFor + maybes + outsides
 // ==============================
 
-test('test 6.1', function (t) {
+test('test 6.1 - maybes and outsides, emoji - full set', function (t) {
   t.is(er(
     'a🦄🐴💘b',
     {
@@ -801,10 +819,10 @@ test('test 6.1', function (t) {
     '🌟'
     ),
     'a🌟b',
-    'test 6.1 - maybes and outsides, emoji - full set'
+    'test 6.1'
   )
 })
-test('test 6.2', function (t) {
+test('test 6.2 - maybes + outsides - 1 of maybes not found #1', function (t) {
   t.is(er(
     'a🦄🐴b',
     {
@@ -819,10 +837,10 @@ test('test 6.2', function (t) {
     '🌟'
     ),
     'a🌟b',
-    'test 6.2 - maybes and outsides, emoji - no 1 of maybes'
+    'test 6.2'
   )
 })
-test('test 6.3', function (t) {
+test('test 6.3 - maybes + outsides - 1 of maybes not found #2', function (t) {
   t.is(er(
     'a🐴💘b',
     {
@@ -837,10 +855,10 @@ test('test 6.3', function (t) {
     '🌟'
     ),
     'a🌟b',
-    'test 6.3 - maybes and outsides, emoji - no 1 of maybes'
+    'test 6.3'
   )
 })
-test('test 6.4', function (t) {
+test('test 6.4 - maybes and outsides, emoji - neither of maybes', function (t) {
   t.is(er(
     'a🐴b',
     {
@@ -855,10 +873,10 @@ test('test 6.4', function (t) {
     '🌟'
     ),
     'a🌟b',
-    'test 6.4 - maybes and outsides, emoji - neither of maybes'
+    'test 6.4'
   )
 })
-test('test 6.5', function (t) {
+test('test 6.5 - multiple findings with maybes and outsides', function (t) {
   t.is(er(
     'a🦄🐴💘b a🦄🐴💘b a🦄🐴💘b',
     {
@@ -873,10 +891,10 @@ test('test 6.5', function (t) {
     '🌟'
     ),
     'a🌟b a🌟b a🌟b',
-    'test 6.5 - multiple findings with maybes and outsides'
+    'test 6.5'
   )
 })
-test('test 6.6', function (t) {
+test('test 6.6 - multiple findings with maybes and not-outsides', function (t) {
   t.is(er(
     'z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🦄🐴💘z',
     {
@@ -891,7 +909,7 @@ test('test 6.6', function (t) {
     '🌟'
     ),
     'z🦄🐴💘b a🦄🐴💘z a🦄🐴💘b z🌟z',
-    'test 6.6 - multiple findings with maybes and not-outsides'
+    'test 6.6'
   )
 })
 
@@ -899,7 +917,7 @@ test('test 6.6', function (t) {
 // no searchFor + no maybes + outsides
 // ==============================
 
-test('test 7.1', function (t) {
+test('test 7.1 - one rightOutside, not found', function (t) {
   t.is(er(
     'aaaa bbbb cccc',
     {
@@ -914,10 +932,10 @@ test('test 7.1', function (t) {
     '🌟'
     ),
     'aaaa bbbb cccc',
-    'test 7.1 - one rightOutside, not found'
+    'test 7.1'
   )
 })
-test('test 7.2', function (t) {
+test('test 7.2 - one leftOutside, not found', function (t) {
   t.is(er(
     'aaaa bbbb cccc',
     {
@@ -932,10 +950,10 @@ test('test 7.2', function (t) {
     '🌟'
     ),
     'aaaa bbbb cccc',
-    'test 7.2 - one leftOutside, not found'
+    'test 7.2'
   )
 })
-test('test 7.3', function (t) {
+test('test 7.3 - one leftOutside, not found + null replacement', function (t) {
   t.is(er(
     'aaaa bbbb cccc',
     {
@@ -950,10 +968,10 @@ test('test 7.3', function (t) {
     null
     ),
     'aaaa bbbb cccc',
-    'test 7.3 - one leftOutside, not found + null replacement'
+    'test 7.3'
   )
 })
-test('test 7.4', function (t) {
+test('test 7.4 - leftOutside and replacement are null', function (t) {
   t.is(er(
     'aaaa bbbb cccc',
     {
@@ -968,10 +986,10 @@ test('test 7.4', function (t) {
     null
     ),
     'aaaa bbbb cccc',
-    'test 7.4 - leftOutside is null'
+    'test 7.4'
   )
 })
-test('test 7.5', function (t) {
+test('test 7.5 - left outside and replacement are undefined', function (t) {
   t.is(er(
     'aaaa bbbb cccc',
     {
@@ -986,7 +1004,7 @@ test('test 7.5', function (t) {
     undefined
     ),
     'aaaa bbbb cccc',
-    'test 7.5 - left outside is undefined'
+    'test 7.5'
   )
 })
 
@@ -994,7 +1012,7 @@ test('test 7.5', function (t) {
 // infinite loop cases
 // ==============================
 
-test('test 8.1', function (t) {
+test('test 8.1 - infinite loop, no maybes, emoji', function (t) {
   t.is(er(
     '🐴🦄🐴🦄🐴',
     {
@@ -1009,10 +1027,10 @@ test('test 8.1', function (t) {
     '🐴'
     ),
     '🐴🦄🐴🦄🐴',
-    'test 8.1 - infinite loop protection, no maybes, emoji'
+    'test 8.1'
   )
 })
-test('test 8.2', function (t) {
+test('test 8.2 - infinite loop, maybes, multiple findings, emoji', function (t) {
   t.is(er(
     '🐴🦄🐴🦄🐴',
     {
@@ -1027,10 +1045,10 @@ test('test 8.2', function (t) {
     '🐴'
     ),
     '🐴🐴🐴',
-    'test 8.2 - infinite loop protection, maybes, multiple findings, emoji'
+    'test 8.2'
   )
 })
-test('test 8.3', function (t) {
+test('test 8.3 - infinite loop protection, emoji replaced with itself', function (t) {
   t.is(er(
     '🐴',
     {
@@ -1045,10 +1063,10 @@ test('test 8.3', function (t) {
     '🐴'
     ),
     '🐴',
-    'test 8.3 - infinite loop protection, one emoji replaced with itself'
+    'test 8.3'
   )
 })
-test('test 8.4', function (t) {
+test('test 8.4 - infinite loop protection, right outside', function (t) {
   t.is(er(
     '🐴🦄🐴🦄🐴',
     {
@@ -1063,10 +1081,10 @@ test('test 8.4', function (t) {
     '🐴'
     ),
     '🐴🦄🐴🦄🐴',
-    'test 8.4 - infinite loop protection, right outside'
+    'test 8.4'
   )
 })
-test('test 8.5', function (t) {
+test('test 8.5 - infinite loop protection, multiples', function (t) {
   t.is(er(
     '🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🦄🦄🦄',
     {
@@ -1081,10 +1099,10 @@ test('test 8.5', function (t) {
     '🌟'
     ),
     '🦄🦄🦄🦄zaaaaaaaaa🦄🦄🦄🌟🦄',
-    'test 8.5 - infinite loop protection, multiples'
+    'test 8.5'
   )
 })
-test('test 8.6', function (t) {
+test('test 8.6 - simple infinite loop case', function (t) {
   t.is(er(
     'a',
     {
@@ -1099,7 +1117,25 @@ test('test 8.6', function (t) {
     'a'
     ),
     'a',
-    'test 8.6 - simple infinite loop case'
+    'test 8.6'
+  )
+})
+test('test 8.7 - infinite loop, not found', function (t) {
+  t.is(er(
+    '',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: '',
+      searchFor: '',
+      rightMaybe: '',
+      rightOutside: '',
+      rightOutsideNot: ''
+    },
+    'a'
+    ),
+    '',
+    'test 8.7'
   )
 })
 
@@ -1107,7 +1143,7 @@ test('test 8.6', function (t) {
 // missing searchFor value
 // ==============================
 
-test('test 9.1', function (t) {
+test('test 9.1 - source present, missing searchFor', function (t) {
   t.is(er(
     'aaa',
     {
@@ -1122,10 +1158,10 @@ test('test 9.1', function (t) {
     ''
     ),
     'aaa',
-    'test 9.1 - source present, missing searchFor'
+    'test 9.1'
   )
 })
-test('test 9.2', function (t) {
+test('test 9.2 - everything is missing', function (t) {
   t.is(er(
     '',
     {
@@ -1140,31 +1176,31 @@ test('test 9.2', function (t) {
     ''
     ),
     '',
-    'test 9.2 - everything is missing'
+    'test 9.2'
   )
 })
-test('test 9.3', function (t) {
+test('test 9.3 - everything seriously missing', function (t) {
   t.is(er('', {}, ''),
     '',
-    'test 9.3 - everything is seriously missing'
+    'test 9.3'
   )
 })
-test('test 9.4', function (t) {
+test('test 9.4 - everything extremely seriously missing', function (t) {
   t.is(er('', {}),
     '',
-    'test 9.4 - everything is extremely seriously missing'
+    'test 9.4'
   )
 })
-test('test 9.5', function (t) {
+test('test 9.5 - everything truly extremely seriously missing', function (t) {
   t.is(er(''),
     '',
-    'test 9.5 - everything is truly extremely seriously missing'
+    'test 9.5'
   )
 })
-test('test 9.6', function (t) {
+test('test 9.6 - everything truly extremely seriously missing', function (t) {
   t.is(er(),
     '',
-    'test 9.6 - everything is truly extremely seriously missing'
+    'test 9.6'
   )
 })
 
@@ -1172,7 +1208,7 @@ test('test 9.6', function (t) {
 // missing replacement value = asking for delete mode
 // ==============================
 
-test('test 10.1', function (t) {
+test('test 10.1 - empty string as replacement = deletion mode', function (t) {
   t.is(er(
     'a🦄🐴🦄a',
     {
@@ -1187,10 +1223,10 @@ test('test 10.1', function (t) {
     ''
     ),
     'aa',
-    'test 10.1 - empty string as replacement = deletion mode. With emoji.'
+    'test 10.1'
   )
 })
-test('test 10.2', function (t) {
+test('test 10.2 - null as replacement = deletion mode', function (t) {
   t.is(er(
     'a🦄🐴🦄a',
     {
@@ -1205,10 +1241,10 @@ test('test 10.2', function (t) {
     null
     ),
     'aa',
-    'test 10.2 - null as replacement = deletion mode. With emoji.'
+    'test 10.2'
   )
 })
-test('test 10.3', function (t) {
+test('test 10.3 - replacement bool, nothing left', function (t) {
   t.is(er(
     '🐴',
     {
@@ -1223,10 +1259,10 @@ test('test 10.3', function (t) {
     true
     ),
     '',
-    'test 10.3 - replacement bool. Nothing left. Emoji.'
+    'test 10.3'
   )
 })
-test('test 10.4', function (t) {
+test('test 10.4 - replacement Bool, nothing left, searchFor Integer', function (t) {
   t.is(er(
     '2',
     {
@@ -1241,10 +1277,10 @@ test('test 10.4', function (t) {
     false
     ),
     '',
-    'test 10.4 - replacement false. Nothing left. searchFor raw integer.'
+    'test 10.4'
   )
 })
-test('test 10.5', function (t) {
+test('test 10.5 - nothing left, replacement undefined', function (t) {
   t.is(er(
     'fljlh fdlg ldfhgl abc aldjsdlflkjd ljfl fgklh fl',
     {
@@ -1259,10 +1295,10 @@ test('test 10.5', function (t) {
     undefined
     ),
     '',
-    'test 10.5 - nothing left, replacement undefined. bunch of text.'
+    'test 10.5'
   )
 })
-test('test 10.6', function (t) {
+test('test 10.6 - nothing left - more undefined', function (t) {
   t.is(er(
     'zzz',
     {
@@ -1277,10 +1313,10 @@ test('test 10.6', function (t) {
     void 'blablabla'
     ),
     '',
-    'test 10.6 - nothing left - more undefined.'
+    'test 10.6'
   )
 })
-test('test 10.7', function (t) {
+test('test 10.7 - emoji, null replacement, both outsides found', function (t) {
   t.is(er(
     'a🦄🐴🦄a',
     {
@@ -1295,10 +1331,10 @@ test('test 10.7', function (t) {
     null
     ),
     'a🦄🦄a',
-    'test 10.7 - emoji, null replacement, both outsides found'
+    'test 10.7'
   )
 })
-test('test 10.8', function (t) {
+test('test 10.8 - raw integers everywhere must work too', function (t) {
   t.is(er(
     6,
     {
@@ -1313,7 +1349,7 @@ test('test 10.8', function (t) {
     9
     ),
     '9',
-    'test 10.8 - raw integers everywhere'
+    'test 10.8'
   )
 })
 
@@ -1321,7 +1357,7 @@ test('test 10.8', function (t) {
 // outsideNot's
 // ==============================
 
-test('test 11.1', function (t) {
+test('test 11.1 - rightOutsideNot satisfied thus not replaced', function (t) {
   t.is(er(
     '🐴a',
     {
@@ -1336,10 +1372,10 @@ test('test 11.1', function (t) {
     'c'
     ),
     '🐴a',
-    'test 11.1 - rightOutsideNot satisfied thus not replaced'
+    'test 11.1'
   )
 })
-test('test 11.2', function (t) {
+test('test 11.2 - outsideNot left satisfied thus not replaced', function (t) {
   t.is(er(
     'a🐴',
     {
@@ -1354,10 +1390,10 @@ test('test 11.2', function (t) {
     'c'
     ),
     'a🐴',
-    'test 11.2 - left satisfied thus not replaced'
+    'test 11.2'
   )
 })
-test('test 11.3', function (t) {
+test('test 11.3 - outsideNot\'s satisfied thus not replaced', function (t) {
   t.is(er(
     'a🐴a',
     {
@@ -1372,10 +1408,10 @@ test('test 11.3', function (t) {
     'c'
     ),
     'a🐴a',
-    'test 11.3 - both outsideNot\'s satisfied thus not replaced'
+    'test 11.3'
   )
 })
-test('test 11.4', function (t) {
+test('test 11.4 - outsideNot\'s not satisfied, with 1 maybe replaced', function (t) {
   t.is(er(
     'zb🐴y',
     {
@@ -1390,10 +1426,10 @@ test('test 11.4', function (t) {
     '🦄'
     ),
     'z🦄y',
-    'test 11.4 - both outsideNot\'s not satisfied, with one maybe, replaced'
+    'test 11.4'
   )
 })
-test('test 11.5', function (t) {
+test('test 11.5 - leftOutsideNot blocked positive leftMaybe', function (t) {
   t.is(er(
     'zb🐴y',
     {
@@ -1408,10 +1444,10 @@ test('test 11.5', function (t) {
     'whatevs'
     ),
     'zb🐴y',
-    'test 11.5 - leftOutsideNot blocked positive leftMaybe'
+    'test 11.5'
   )
 })
-test('test 11.6', function (t) {
+test('test 11.6 - rightOutsideNot blocked both L-R maybes', function (t) {
   t.is(er(
     'zb🐴cy',
     {
@@ -1426,10 +1462,10 @@ test('test 11.6', function (t) {
     'whatevs'
     ),
     'zb🐴cy',
-    'test 11.6 - rightOutsideNot blocked both positive (left-right) maybes'
+    'test 11.6'
   )
 })
-test('test 11.7', function (t) {
+test('test 11.7 - rightOutsideNot last char goes outside', function (t) {
   t.is(er(
     'cccccccca',
     {
@@ -1444,10 +1480,10 @@ test('test 11.7', function (t) {
     'b'
     ),
     'ccccccccb',
-    'test 11.7 - rightOutsideNot on the last char in the string (goes outside of the string)'
+    'test 11.7'
   )
 })
-test('test 11.8', function (t) {
+test('test 11.8 - right maybe is last char, outsideNot satisfied', function (t) {
   t.is(er(
     'cccccccca',
     {
@@ -1462,10 +1498,10 @@ test('test 11.8', function (t) {
     'c'
     ),
     'cccccccc',
-    'test 11.8 - positive right maybe is last char, outsideNot satisfied'
+    'test 11.8'
   )
 })
-test('test 11.9', function (t) {
+test('test 11.9 - real life scenario, missing semicol on nbsp #1', function (t) {
   t.is(er(
     '&nbsp; &nbsp &nbsp',
     {
@@ -1480,10 +1516,10 @@ test('test 11.9', function (t) {
     'nbsp;'
     ),
     '&nbsp; &nbsp; &nbsp;',
-    'test 11.9 - real life scenario, missing semicol on nbsp in the middle of the string - spaces'
+    'test 11.9'
   )
 })
-test('test 11.10', function (t) {
+test('test 11.10 - real life scenario, missing semicol on nbsp #2', function (t) {
   t.is(er(
     '&nbsp;&nbsp&nbsp',
     {
@@ -1498,10 +1534,10 @@ test('test 11.10', function (t) {
     'nbsp;'
     ),
     '&nbsp;&nbsp;&nbsp;',
-    'test 11.10 - real life scenario, missing semicol on nbsp in the middle of the string - no spaces'
+    'test 11.10'
   )
 })
-test('test 11.11', function (t) {
+test('test 11.11 - real life scenario, missing ampersand, text', function (t) {
   t.is(er(
     'tralalalanbsp;nbsp;&nbsp;',
     {
@@ -1516,10 +1552,10 @@ test('test 11.11', function (t) {
     '&nbsp'
     ),
     'tralalala&nbsp;&nbsp;&nbsp;',
-    'test 11.11 - real life scenario, missing ampersand, text'
+    'test 11.11'
   )
 })
-test('test 11.12', function (t) {
+test('test 11.12 - as before but with emoji instead', function (t) {
   t.is(er(
     '🍺🍺👌🍺',
     {
@@ -1534,7 +1570,7 @@ test('test 11.12', function (t) {
     '🍻'
     ),
     '🍻🍻👌🍺',
-    'test 11.12 - real life scenario but with emoji instead'
+    'test 11.12'
   )
 })
 
@@ -1542,7 +1578,7 @@ test('test 11.12', function (t) {
 // double-check the README's corectness
 // ==============================
 
-test('test 12.1', function (t) {
+test('test 12.1 - readme example #1', function (t) {
   t.is(er(
     'a x c x d',
     {
@@ -1557,10 +1593,10 @@ test('test 12.1', function (t) {
     '🦄'
     ),
     'a 🦄 c 🦄 d',
-    'test 12.1 - readme example #1'
+    'test 12.1'
   )
 })
-test('test 12.2', function (t) {
+test('test 12.2 - readme example #2', function (t) {
   t.is(er(
     '🐴i🦄 🐴i i🦄 i',
     {
@@ -1575,10 +1611,10 @@ test('test 12.2', function (t) {
     'x'
     ),
     'x x x x',
-    'test 12.2 - readme example #2'
+    'test 12.2'
   )
 })
-test('test 12.3', function (t) {
+test('test 12.3 - readme example #3', function (t) {
   t.is(er(
     'a🦄c x🦄x',
     {
@@ -1593,10 +1629,10 @@ test('test 12.3', function (t) {
     '🐴'
     ),
     'a🦄c x🐴x',
-    'test 12.3 - readme example #3'
+    'test 12.3'
   )
 })
-test('test 12.4', function (t) {
+test('test 12.4 - readme example #4', function (t) {
   t.is(er(
     'zzzzz  zzzzzz zzzzzz',
     {
@@ -1611,10 +1647,10 @@ test('test 12.4', function (t) {
     ''
     ),
     'zzzzz zzzzzz zzzzzz',
-    'test 12.4 - readme example #4'
+    'test 12.4'
   )
 })
-test('test 12.5', function (t) {
+test('test 12.5 - readme example #5', function (t) {
   t.is(er(
     '<br /><br/><br />',
     {
@@ -1629,10 +1665,10 @@ test('test 12.5', function (t) {
     ' />'
     ),
     '<br /><br /><br />',
-    'test 12.5 - readme example #5'
+    'test 12.5'
   )
 })
-test('test 12.6', function (t) {
+test('test 12.6 - readme example #6', function (t) {
   t.is(er(
     '&nbsp; nbsp &nbsp nbsp;',
     {
@@ -1647,6 +1683,29 @@ test('test 12.6', function (t) {
     '&nbsp;'
     ),
     '&nbsp; &nbsp; &nbsp; &nbsp;',
-    'test 12.6 - readme example #6'
+    'test 12.6'
+  )
+})
+
+// ==============================
+// random tests from the front lines
+// ==============================
+
+test('test 13.1 - special case #1', function (t) {
+  t.is(er(
+    '&fnof;',
+    {
+      leftOutsideNot: 'e',
+      leftOutside: '',
+      leftMaybe: '&',
+      searchFor: 'nsp;',
+      rightMaybe: '',
+      rightOutside: '',
+      rightOutsideNot: ''
+    },
+    '&nbsp;'
+    ),
+    '&fnof;',
+    'test 13.1'
   )
 })
