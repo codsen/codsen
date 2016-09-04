@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "main": "er.js",
   "scripts": {
