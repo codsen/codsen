@@ -1,14 +1,24 @@
 'use strict'
 
-var toarray = require('lodash.toarray')
+var _ = require('lodash')
+// TODO: request each used function separately to trim lib size
 
+// ===========================
+
+/**
+ * astralAwareSearch - searches for strings and returns the findings in an array
+ *
+ * @param  {String} whereToLook    string upon which to perform the search
+ * @param  {String} whatToLookFor  string depicting what we are looking for
+ * @return {Array}                 findings array, indexes of each first "letter" found
+ */
 function astralAwareSearch (whereToLook, whatToLookFor) {
-  var foundIndex = -1
-  var arrWhereToLook = toarray(whereToLook)
-  var arrWhatToLookFor = toarray(whatToLookFor)
+  var foundIndexArray = []
+  var arrWhereToLook = _.toArray(whereToLook)
+  var arrWhatToLookFor = _.toArray(whatToLookFor)
   var found
 
-  loop1: for (var i = 0; i < arrWhereToLook.length; i++) {
+  for (var i = 0; i < arrWhereToLook.length; i++) {
   // check if current source character matches the first char of what we're looking for
     if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
       found = true
@@ -21,168 +31,315 @@ function astralAwareSearch (whereToLook, whatToLookFor) {
         }
       }
       if (found) {
-        foundIndex = i
-        break loop1
+        foundIndexArray.push(i)
       }
     }
   }
 
-  return foundIndex
+  return foundIndexArray
 }
 
-module.exports = function (incomingSource, options, incomingReplacement) {
+// ===========================
+
+/**
+ * stringise - Turns null/undefined into ''. If array, turns each elem into String.
+ * all other cases, runs through String()
+ *
+ * @param  {whatever} incoming     can be anything
+ * @return {String/Array}          string or array of strings
+ */
+function stringise (incoming) {
+  if ((incoming === undefined) || (incoming === null) || (typeof incoming === 'boolean')) {
+    return ['']
+  } else if (Array.isArray(incoming)) {
+    incoming.forEach(function (elem, i) {
+      if (elem === undefined || elem === null || typeof elem === 'boolean') {
+        incoming[i] = ''
+      } else {
+        incoming[i] = String(incoming[i])
+      }
+    })
+    // check if not incoming !== [''] already
+    if ((incoming.length !== 1) && (incoming[0] !== '')) {
+      incoming = _.without(incoming, '')
+    }
+  } else {
+    var tempArr = []
+    tempArr.push(String(incoming))
+    incoming = tempArr
+  }
+  return incoming
+}
+
+//                      ____
+//       bug hammer    |    |
+//   O=================|    |
+//     bugs into ham   |____|
+//
+//                     .=O=.
+
+// ===========================
+// M O D U L E . E X P O R T S
+// ===========================
+
+module.exports = function (source, options, replacement) {
+// (function (source, options, replacement) {
+  // in case the options object is missing:
   var o = options || {}
-  // setting defaults
-  if (o.leftOutsideNot === undefined) { o.leftOutsideNot = '' }
-  if (o.leftOutside === undefined) { o.leftOutside = '' }
-  if (o.leftMaybe === undefined) { o.leftMaybe = '' }
-  if (o.searchFor === undefined) { o.searchFor = '' }
-  if (o.rightMaybe === undefined) { o.rightMaybe = '' }
-  if (o.rightOutside === undefined) { o.rightOutside = '' }
-  if (o.rightOutsideNot === undefined) { o.rightOutsideNot = '' }
 
-  // turning into strings
-  o.leftOutsideNot = String(o.leftOutsideNot)
-  o.leftOutside = String(o.leftOutside)
-  o.leftMaybe = String(o.leftMaybe)
+  // enforce the peace and order:
+  source = stringise(source)
+  o.leftOutsideNot = stringise(o.leftOutsideNot)
+  o.leftOutside = stringise(o.leftOutside)
+  o.leftMaybe = stringise(o.leftMaybe)
   o.searchFor = String(o.searchFor)
-  o.rightMaybe = String(o.rightMaybe)
-  o.rightOutside = String(o.rightOutside)
-  o.rightOutsideNot = String(o.rightOutsideNot)
+  o.rightMaybe = stringise(o.rightMaybe)
+  o.rightOutside = stringise(o.rightOutside)
+  o.rightOutsideNot = stringise(o.rightOutsideNot)
+  replacement = stringise(replacement)
 
-  var source
-  if ((typeof incomingSource === 'string') || (typeof incomingSource === 'number')) {
-    source = String(incomingSource)
-  } else {
-    source = ''
-  }
+  // short-circuit:
+  // source = stringise('cac')
+  // o.leftOutsideNot = stringise('a')
+  // o.leftOutside = stringise()
+  // o.leftMaybe = stringise()
+  // o.searchFor = String('c')
+  // o.rightMaybe = stringise()
+  // o.rightOutside = stringise()
+  // o.rightOutsideNot = stringise()
+  // replacement = stringise('z')
 
-  var result = source
-  var arrSource = toarray(source)
+  var arrSource = _.toArray(source[0])
+  var foundBeginningIndex
+  var foundEndingIndex
+  var matched
+  var found
+  var replacementRecipe = []
+  var result = ''
 
-  var replacement
-  if ((typeof incomingReplacement === 'string') || (typeof incomingReplacement === 'number')) {
-    replacement = String(incomingReplacement)
-  } else {
-    replacement = ''
-  }
-
-  // indexes of starting and ending index of the finding in the string
-  var foundBeginningIndex = -1
-  var foundEndingIndex = -1
-  if ((Object.keys(o).length === 0) || (o.searchFor === 'undefined') || (o.searchFor === '')) {
-    return source
-  }
-
-  // This is the starting index, from which we commence the search. After each find, it's increased so loop can run through all occurencies of the searched string. It allows seemingly infinite loop replace cases.
-  var index = 0
+  // if ((Object.keys(o).length === 0) || (o.searchFor === 'undefined') || (o.searchFor === '')) {
+  //   return source
+  // }
 
   //  T H E   L O O P
 
-  while (index < arrSource.length) {
-    arrSource = toarray(result)
+  // console.log('\n')
+  // arrSource.forEach(function (elem, i) {
+  //   console.log('[' + i + ']: ' + elem)
+  // })
+  // console.log('\n')
+  // console.log('o.searchFor = ' + JSON.stringify(o.searchFor, null, 4))
+  // console.log('o.leftMaybe = ' + JSON.stringify(o.leftMaybe, null, 4))
+  // console.log('o.rightMaybe = ' + JSON.stringify(o.rightMaybe, null, 4))
+  // console.log('replacement = ' + JSON.stringify(replacement, null, 4))
 
-    // it's astralAwareSearch() plus index, because astralAwareSearch() will return index starting from what it received, and it actually received string that's index is offset by value of "index" variable!
-    // search can return also false
-    if (
-      astralAwareSearch(arrSource.slice(index).join(''), o.searchFor) !== false &&
-      astralAwareSearch(arrSource.slice(index).join(''), o.searchFor) >= 0
-    ) {
-      foundBeginningIndex = astralAwareSearch(arrSource.slice(index).join(''), o.searchFor) + index
-    } else {
-      // didn't find anymore, so block further actions:
-      foundBeginningIndex = -1
-    }
-    if (foundBeginningIndex >= 0) {
-      foundEndingIndex = foundBeginningIndex + toarray(o.searchFor).length
-      index = foundEndingIndex
-    } else {
-      index = arrSource.length
-      // return result
-    }
-    var matched
-    // =====================================
-    // check the leftMaybe:
-    if ((o.leftMaybe !== undefined) && (o.leftMaybe !== '')) {
-      // commence the leftMaybe check
-      matched = true
-      toarray(o.leftMaybe).forEach(function (elem, i) {
-        if (elem !== arrSource[foundBeginningIndex - toarray(o.leftMaybe).length + i]) {
-          matched = false
+  // console.log('source = ' + arrSource.join(''))
+  astralAwareSearch(source[0], o.searchFor).forEach(function (oneOfFoundIndexes) {
+    // console.log('\n========NEW FINDING========')
+    // console.log('index=' + oneOfFoundIndexes)
+    // oneOfFoundIndexes is the index of starting index of found
+    // the principle of replacement is after finding the searchFor string, the boundaries optionally expand. That's left/right Maybe's from the options object. When done, the outsides are checked, first positive (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
+    // that's the plan.
+    //
+    foundBeginningIndex = oneOfFoundIndexes
+    foundEndingIndex = oneOfFoundIndexes + _.toArray(o.searchFor).length
+    // console.log('1. foundBeginningIndex = ' + JSON.stringify(foundBeginningIndex, null, 4))
+    // console.log('1. foundEndingIndex = ' + JSON.stringify(foundEndingIndex, null, 4))
+    //
+    // ===================== leftMaybe =====================
+    // commence with maybe's
+    // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
+    //
+    // console.log('leftMaybe check:')
+    if (o.leftMaybe.length > 0) {
+      o.leftMaybe.forEach(function (elem, i) {
+        // console.log('\nelem[' + i + ']=' + elem)
+        // iterate each of the maybe's in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Maybe:
+          if (elem2 !== arrSource[oneOfFoundIndexes - _.toArray(elem).length + i2]) {
+            matched = false
+          }
+        })
+        // console.log('matched = ' + JSON.stringify(matched, null, 4))
+        if (matched && (oneOfFoundIndexes - _.toArray(elem).length) < foundBeginningIndex) {
+          // console.log('_.toArray(elem).length: ' + _.toArray(elem).length)
+          foundBeginningIndex = oneOfFoundIndexes - _.toArray(elem).length
         }
       })
-      if (matched) {
-        foundBeginningIndex -= toarray(o.leftMaybe).length
+    }
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== rightMaybe =====================
+    // console.log('rightMaybe check:')
+    if (o.rightMaybe.length > 0) {
+      o.rightMaybe.forEach(function (elem, i) {
+        // iterate each of the Maybe's in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Maybe:
+          if (elem2 !== arrSource[oneOfFoundIndexes + _.toArray(o.searchFor).length + i2]) {
+            matched = false
+          }
+        })
+        if (matched && (oneOfFoundIndexes + _.toArray(o.searchFor).length + _.toArray(elem).length) > foundEndingIndex) {
+          foundEndingIndex = oneOfFoundIndexes + _.toArray(o.searchFor).length + _.toArray(elem).length
+        }
+      })
+    }
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== leftOutside =====================
+    // console.log('leftOutside check:')
+    if (o.leftOutside[0] !== '') {
+      found = false
+      o.leftOutside.forEach(function (elem, i) {
+        // iterate each of the outsides in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Outside:
+          if (elem2 !== arrSource[foundBeginningIndex - _.toArray(elem).length + i2]) {
+            matched = false
+          }
+        })
+        if (matched) {
+          found = true
+        }
+      })
+      if (!found) {
+        foundBeginningIndex = -1
+        foundEndingIndex = -1
       }
     }
-    // =====================================
-    // check the rightMaybe:
-    if ((o.rightMaybe !== undefined) && (o.rightMaybe !== '')) {
-      // commence the rightMaybe check
-      matched = true
-      toarray(o.rightMaybe).forEach(function (elem, i) {
-        if (elem !== arrSource[foundEndingIndex + i]) {
-          matched = false
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== rightOutside =====================
+    // console.log('rightOutside check:')
+    if (o.rightOutside[0] !== '') {
+      found = false
+      o.rightOutside.forEach(function (elem, i) {
+        // iterate each of the outsides in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Outside:
+          if (elem2 !== arrSource[foundEndingIndex + i2]) {
+            matched = false
+          }
+        })
+        if (matched) {
+          found = true
         }
       })
-      if (matched) {
-        foundEndingIndex += toarray(o.rightMaybe).length
+      if (!found) {
+        foundBeginningIndex = -1
+        foundEndingIndex = -1
       }
     }
-    // =====================================
-    // check the leftOutside:
-    if ((o.leftOutside !== undefined) && (o.leftOutside !== '')) {
-      // commence the leftOutside check
-      toarray(o.leftOutside).forEach(function (elem, i) {
-        if (elem !== arrSource[foundBeginningIndex - toarray(o.leftOutside).length + i]) {
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== leftOutsideNot =====================
+    // console.log('leftOutsideNot check:')
+    if (o.leftOutsideNot[0] !== '') {
+      found = false
+      o.leftOutsideNot.forEach(function (elem, i) {
+        // iterate each of the outsides in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Outside:
+          if (elem2 !== arrSource[foundBeginningIndex - _.toArray(elem).length + i2]) {
+            matched = false
+          }
+        })
+        if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
         }
       })
     }
-    // =====================================
-    // check the rightOutside:
-    if ((o.rightOutside !== undefined) && (o.rightOutside !== '')) {
-      // commence the rightOutside check
-      toarray(o.rightOutside).forEach(function (elem, i) {
-        if (elem !== arrSource[foundEndingIndex + i]) {
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== rightOutsideNot =====================
+    // console.log('rightOutsideNot check:')
+    if (o.rightOutsideNot[0] !== '') {
+      found = false
+      // console.log('foundBeginningIndex = ' + JSON.stringify(foundBeginningIndex, null, 4))
+      // console.log('foundEndingIndex = ' + JSON.stringify(foundEndingIndex, null, 4))
+      // console.log('arrSource[foundEndingIndex]=' + arrSource[foundEndingIndex])
+      o.rightOutsideNot.forEach(function (elem, i) {
+        // console.log('elem[' + i + '] = ' + elem)
+        // iterate each of the outsides in the array:
+        matched = true
+        _.toArray(elem).forEach(function (elem2, i2) {
+          // iterate each character of particular Outside:
+          // console.log('IF: ' + elem2 + ' !== ' + arrSource[foundEndingIndex + i2])
+          if (elem2 !== arrSource[foundEndingIndex + i2]) {
+            matched = false
+            // console.log('matched = false')
+          }
+        })
+        if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
         }
       })
     }
-    // =====================================
-    // check the leftOutsideNot:
-    if ((o.leftOutsideNot !== undefined) && (o.leftOutsideNot !== '')) {
-      // commence the leftOutsideNot check
-      toarray(o.leftOutsideNot).forEach(function (elem, i) {
-        if (elem === arrSource[foundBeginningIndex - toarray(o.leftOutsideNot).length + i]) {
-          foundBeginningIndex = -1
-          foundEndingIndex = -1
-        }
-      })
+    // console.log('new foundBeginningIndex=' + foundBeginningIndex)
+    // console.log('new foundEndingIndex=' + foundEndingIndex)
+    // ===================== the rest =====================
+    // console.log('\n========RESULT========\n2. foundBeginningIndex = ' + JSON.stringify(foundBeginningIndex, null, 4))
+    // console.log('2. foundEndingIndex = ' + JSON.stringify(foundEndingIndex, null, 4))
+    if (_.isNumber(foundBeginningIndex) && (foundBeginningIndex !== -1)) {
+      // console.log('\nwe\'ll replace!!!!!!')
+      // console.log('pushed: [' + foundBeginningIndex + ', ' + foundEndingIndex + ']')
+      replacementRecipe.push([foundBeginningIndex, foundEndingIndex])
     }
-    // =====================================
-    // check the rightOutsideNot:
-    if ((o.rightOutsideNot !== undefined) && (o.rightOutsideNot !== '')) {
-      // commence the rightOutsideNot check
-      toarray(o.rightOutsideNot).forEach(function (elem, i) {
-        if (elem === arrSource[foundEndingIndex + i]) {
-          foundBeginningIndex = -1
-          foundEndingIndex = -1
-        }
-      })
-    }
-    // =====================================
-    // replace
-
-    if ((foundBeginningIndex !== -1) && (foundEndingIndex !== -1) && (arrSource.slice(foundBeginningIndex, foundEndingIndex).join('') !== replacement)) {
-      result = arrSource.slice(0, foundBeginningIndex).join('') + replacement + arrSource.slice(foundEndingIndex).join('')
-      index = arrSource.slice(0, foundBeginningIndex).join('').length + toarray(replacement).length
-      if (index > 1) {
-        index--
+  })
+  // console.log('1. replacementRecipe = ' + JSON.stringify(replacementRecipe, null, 4))
+  // =====
+  // first we need to remove any overlaps in the recipe, cases like:
+  // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
+  if (replacementRecipe.length > 0) {
+    replacementRecipe.forEach(function (elem, i) {
+      // iterate through all replacement-recipe-array's elements:
+      if ((replacementRecipe[i + 1] !== undefined) && (replacementRecipe[i][1] > replacementRecipe[i + 1][0])) {
+        replacementRecipe[i + 1][0] = replacementRecipe[i][1]
       }
-    }
+    })
+    // console.log('2. replacementRecipe = ' + JSON.stringify(replacementRecipe, null, 4))
+    // iterate the recipe array again, cleaning up elements like [12,12]
+    replacementRecipe.forEach(function (elem, i) {
+      if (elem[0] === elem[1]) {
+        replacementRecipe.splice(i, 1)
+      }
+    })
+  } else {
+    // there were no findings, so return source
+    return source.join('')
   }
+  // console.log('3. replacementRecipe = ' + JSON.stringify(replacementRecipe, null, 4))
+  //
+  // iterate the recipe array and perform the replacement:
+  // first, if replacements don't start with 0, attach this part onto result var:
+  // console.log('replacementRecipe = ' + JSON.stringify(replacementRecipe, null, 4))
+  if ((replacementRecipe.length > 0) && (replacementRecipe[0][0] !== 0)) {
+    result = result + arrSource.slice(0, replacementRecipe[0][0]).join('')
+  }
+  replacementRecipe.forEach(function (elem, i) {
+    // first position is replacement string:
+    result += replacement.join('')
+    // console.log('1. result = ' + JSON.stringify(result, null, 4))
+    if (replacementRecipe[i + 1] !== undefined) {
+      // if next element exists, add content between current and next finding
+      // console.log('2. adding: ' + arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join(''))
+      result += arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join('')
+      // console.log('splice = ' + arrSource.splice(replacementRecipe[i][1] + 1, replacementRecipe[i + 1][0]).join(''))
+      // console.log('new result: ' + result)
+    } else {
+      // if this is the last element in the replacement recipe array, add remainder of the string after last replacement and the end:
+      result += arrSource.slice(replacementRecipe[i][1]).join('')
+    }
+  })
+  // console.log('\n\nresult = ' + JSON.stringify(result, null, 4))
   return result
-}
+}// )()
