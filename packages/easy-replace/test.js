@@ -2777,9 +2777,9 @@ test('test 13.2 - readme example #2', function (t) {
     {
       leftOutsideNot: '',
       leftOutside: '',
-      leftMaybe: '🐴',
+      leftMaybe: ['🐴', '🦄'],
       searchFor: 'i',
-      rightMaybe: '🦄',
+      rightMaybe: ['🐴', '🦄'],
       rightOutside: '',
       rightOutsideNot: ''
     },
@@ -2799,7 +2799,7 @@ test('test 13.3 - readme example #3', function (t) {
       searchFor: '🦄',
       rightMaybe: '',
       rightOutside: '',
-      rightOutsideNot: 'c'
+      rightOutsideNot: ['c', 'd']
     },
     '🐴'
     ),
