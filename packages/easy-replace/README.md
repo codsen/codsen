@@ -193,17 +193,17 @@ er(
 er(source_string, options_object, replacement_string)
 ```
 
-You input a) a source string, b) a options object (which describes what to look for) and c) string to be placed instead of any search results.
+You input a) a source string, b) a options object (which describes what to look for) and c) string to replace all the findings with.
 
-### Settings object:
+### Options object:
 
 ```js
 {
   leftOutsideNot: 'string/array, optional', // equivalent of regex negative lookbehind
   leftOutside: 'string/array, optional', // equivalent of regex positive lookbehind
-  leftMaybe: 'string/array, optional', // optional string to replace, if present on the left side of the keyword
+  leftMaybe: 'string/array, optional', // optional string/array of strings to replace, if present on the left side of the keyword
   searchFor: 'string only, optional', // the keyword to look for in the source string
-  rightMaybe: 'string/array, optional', // optional string to replace, if present on the right side of the keyword
+  rightMaybe: 'string/array, optional', // optional string/array of strings to replace, if present on the right side of the keyword
   rightOutside: 'string/array, optional', // equivalent of regex positive lookahead
   rightOutsideNot: 'string/array, optional' // equivalent of regex negative lookahead
 }
