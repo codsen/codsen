@@ -33,7 +33,7 @@
     "lodash": "^4.15.0"
   },
   "devDependencies": {
-    "ava": "*"
+    "ava": "^0.16.0"
   },
   "ava": {
     "tap": false

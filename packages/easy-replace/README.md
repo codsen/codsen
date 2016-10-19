@@ -1,13 +1,12 @@
 # easy-replace
 
+<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+
 > string replacement with positive and negative lookahead and lookbehind, no regexes
 
 Emphasis on _no regexes_
 
-[![Build Status](https://travis-ci.org/revelt/easy-replace.svg?branch=master)](https://travis-ci.org/revelt/easy-replace) [![Dependency Status](https://david-dm.org/revelt/easy-replace.svg)](https://david-dm.org/revelt/easy-replace) [![devDependency Status](https://david-dm.org/revelt/easy-replace/dev-status.svg)](https://david-dm.org/revelt/easy-replace#info=devDependencies) [![Downloads/Month](https://img.shields.io/npm/dm/easy-replace.svg)](https://www.npmjs.com/package/easy-replace)
-
-<a href="https://github.com/feross/standard"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100"></a>
-
+[![Build Status](https://travis-ci.org/revelt/easy-replace.svg?branch=master)](https://travis-ci.org/revelt/easy-replace) [![bitHound Overall Score](https://www.bithound.io/github/revelt/easy-replace/badges/score.svg)](https://www.bithound.io/github/revelt/easy-replace) [![Dependency Status](https://david-dm.org/revelt/easy-replace.svg)](https://david-dm.org/revelt/easy-replace) [![devDependency Status](https://david-dm.org/revelt/easy-replace/dev-status.svg)](https://david-dm.org/revelt/easy-replace#info=devDependencies) [![Downloads/Month](https://img.shields.io/npm/dm/easy-replace.svg)](https://www.npmjs.com/package/easy-replace)
 
 ## Install
 
