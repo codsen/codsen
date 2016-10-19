@@ -25,6 +25,8 @@ $ npm test
 
 The ideal use case for `easy-replace` is when you need complex lookarounds, such as "replace this only when there is something on the left, but also, if there's some things on the right, include them too, yet there can't be such and such on the right". Yes, you could solve this using a regex, but it's faster to skip regex solutions and simply use this library.
 
+## Examples
+
 *Simple replace:*
 
 * **Example replacement recipe in words** — replace all instances of `x` with `🦄`.
@@ -54,7 +56,7 @@ er(
 
 *"Maybes"* — optional surrounding strings to be replaced as well:
 
-* **Example replacement recipe in words** — Replace all instances of `i`. If there are `🐴` characters on the left, count them as part of found `i` and replace together as one thing. If there are `🦄` characters on the right, count them as part of found `i` and replace together as one thing.
+* **Example replacement recipe in words** — Replace all instances of `i`. If there are `🐴` or `🦄` characters on the left, count them as part of found `i` and replace together as one thing. If there are `🐴` or `🦄` characters on the right, count them as part of found `i` and replace together as one thing.
 
 * **Solution using this library:**:
 
@@ -83,7 +85,7 @@ By the way, notice, how the values can be strings or arrays! The `easy-replace` 
 
 *Negative lookahead* - if you want to match something _not followed_ by something else:
 
-* **Example replacement recipe in words** — Replace all instances of `🦄`, but only those that don't have `c` or `d` on the right.
+* **Example replacement recipe in words** — Replace all instances of `🦄`, but only ones that don't have `c` or `d` on the right.
 
 * **Solution using this library:**:
 
@@ -135,7 +137,7 @@ er(
 
 ---
 
-*Negative lookbehind* - if you want to match something that is not preceded by something else. For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with ` />` if they are not preceded with space already:
+*Negative lookbehind* - if you want to match something that is not preceded by something else. For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with `{{space character}}/>` (disregard curly braces, it's only to make it more visible here) if they are not preceded with space already:
 
 * **Example replacement recipe in words** — Add missing spaces before closing slashes on tags. Do not add spaces where they exist already.
 
