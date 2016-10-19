@@ -1,3 +1,5 @@
-"critics": {
-  "lint": {"engine": "standard"}
+{
+  "critics": {
+    "lint": {"engine": "standard"}
+  }
 }
