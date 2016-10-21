@@ -8,39 +8,39 @@
 
 ## Purpose
 
-I was working on another project where I parsed some HTML and CSS and wanted to extract all the classes and id's. However, most of the time, the classes were wrapped in other selectors and tags.
+I was working on another project where I parsed some HTML and CSS and wanted to extract all the classes and id's. However, most of the time, the classes were surrounded with other selectors and tags. I wanted to nail this library 100% — not just download some regex'es from _StackOverflow_ and _hope_ library won't have any classes "contaminated" with surrounding tags. That's why I thoroughly researched the _CSS specs_ and not only prepared for all the possible characters that terminate class/id names, but coded _AVA tests_ for each case.
 
-From this:
+So, I'm taking this seriously, what first means serious _tests_ and serious _documentation_.
+
+## TLDR
+
+Basically.
+
+Input this:
 
 ```css
 sometagname a.class-name:hover
 ```
 
-we want to extract this:
+Output:
 
 ```css
 .class-name
 ```
 
-OR, from this:
+OR, input this:
 
 ```css
 a.class-name[target=_blank]
 ```
 
-extract this:
+output this:
 
 ```css
 .class-name
 ```
 
-This library will chop off everything up to `.` (default) or `#` (set second input var) and then — any of the following characters after the class/id name:
-
-```
-~ !@$%^&*()+=,./';:"?><[]\{}|`#
-```
-
-and everything that follows after them (the space above is deliberately there).
+String input, string output. See API below.
 
 ## Install
 
