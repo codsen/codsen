@@ -1,0 +1,38 @@
+{
+  "name": "string-extract-class-names",
+  "version": "1.0.0",
+  "description": "Extract class (or id) name from a string",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/string-extract-class-names.git"
+  },
+  "keywords": [
+    "css",
+    "extract",
+    "class",
+    "id",
+    "string",
+    "selector"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/string-extract-class-names/issues"
+  },
+  "homepage": "https://github.com/code-and-send/string-extract-class-names#readme",
+  "dependencies": {
+    "lodash.isstring": "^4.0.1",
+    "lodash.replace": "^4.1.4"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
