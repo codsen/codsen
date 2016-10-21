@@ -83,7 +83,7 @@ extract('div.class-name a[target=_blank]', '.')
 // => .class-name
 ```
 
-We can extract id's be providing id selector as a second input parameter:
+We can extract id's by providing _id_ selector (`#`) as a second input parameter:
 
 ```js
 extract('a#id-name[href^="https"]', '#')
