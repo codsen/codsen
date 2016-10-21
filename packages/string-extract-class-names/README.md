@@ -8,7 +8,7 @@
 
 ## Purpose
 
-I was working on another project where I parsed some HTML and CSS and wanted to extract all the classes and id's. However, most of the time, classes and id's don't come bare, just like that — there are other selectors and tags around. For example,
+I was working on another project where I parsed some HTML and CSS and wanted to extract all the classes and id's. However, most of the time, the classes were wrapped in other selectors and tags.
 
 From this:
 
@@ -28,13 +28,13 @@ OR, from this:
 a.class-name[target=_blank]
 ```
 
-this:
+extract this:
 
 ```css
 .class-name
 ```
 
-This library will chop off heads — everything up to `.` (default) or `#` (set second input var) and tails — any of the following characters:
+This library will chop off everything up to `.` (default) or `#` (set second input var) and then — any of the following characters after the class/id name:
 
 ```
 ~ !@$%^&*()+=,./';:"?><[]\{}|`#
