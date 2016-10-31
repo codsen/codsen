@@ -1,8 +1,10 @@
 # object-boolean-combinations
 
-[![Build Status](https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master)](https://travis-ci.org/revelt/object-boolean-combinations) [![Dependency Status](https://david-dm.org/revelt/object-boolean-combinations.svg)](https://david-dm.org/revelt/object-boolean-combinations) [![devDependency Status](https://david-dm.org/revelt/object-boolean-combinations/dev-status.svg)](https://david-dm.org/revelt/object-boolean-combinations#info=devDependencies)
+<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+> Take object, generate an array of its copies, each containing all possible combinations of Boolean true/false
+
+[![Build Status](https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master)](https://travis-ci.org/revelt/object-boolean-combinations) [![bitHound Overall Score](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/score.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations) [![bitHound Dependencies](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/dependencies.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/devDependencies.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm)
 
 ## Install
 
