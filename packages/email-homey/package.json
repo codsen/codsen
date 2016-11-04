@@ -17,7 +17,12 @@
     "root",
     "folder",
     "build",
-    "system"
+    "system",
+    "generate",
+    "home",
+    "page",
+    "homepage",
+    "browsersync"
   ],
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",
