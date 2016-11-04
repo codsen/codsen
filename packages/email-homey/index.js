@@ -53,7 +53,7 @@ module.exports = function homey (input, imgName) {
           var imgPath = input + '/' + pathToFile + '/' + imgName
           // console.log('imgPath = ' + JSON.stringify(imgPath, null, 4))
           fs.accessSync(imgPath, fs.F_OK)
-          temp.screenshot = '/' + input + '/' + pathToFile + '/' + imgName
+          temp.screenshot = '/' + pathToFile + '/' + imgName
         } catch (e) {
           // screenshot.png missing
           // console.log('no image for ' + pathToFile)
