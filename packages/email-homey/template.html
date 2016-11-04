@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Templates</title>
+    <style type="text/css">
+      * {
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
+      a {
+        color: #333;
+      }
+      .module {
+        float: left;
+        width: 200px;
+        height: 300px;
+        margin: 10px;
+        padding: 10px;
+        background-color: #ccc;
+      }
+      .module h1 {
+        font-size: 1em;
+        display: inline-block;
+        margin: 0 auto 10px;
+        /*wrapping:*/
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          -ms-word-break: break-all;
+          word-break: break-all;
+          word-break: break-word;
+          -ms-hyphens: auto;
+          -moz-hyphens: auto;
+          -webkit-hyphens: auto;
+          hyphens: auto;
+        /*wrapping ends*/
+      }
+      .module img {
+        width: 100%;
+        height: auto;
+      }
+      @media only screen and (max-width: 500px){
+        .module {
+          width: calc(50% - 20px);
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body style="text-align: center;">
+    <div class="container">
+
+      <!-- loop-me.html will be put here -->
+
+    </div>
+  </body>
+</html>

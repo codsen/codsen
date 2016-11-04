@@ -1,0 +1,38 @@
+{
+  "name": "email-homey",
+  "version": "1.0.0",
+  "description": "Generate homepage in the Browsersync root with links/screenshots of all your templates",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/email-homey.git"
+  },
+  "keywords": [
+    "email",
+    "templates",
+    "gulp",
+    "gulpplugin",
+    "root",
+    "folder",
+    "build",
+    "system"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/email-homey/issues"
+  },
+  "homepage": "https://github.com/code-and-send/email-homey#readme",
+  "dependencies": {
+    "glob-fs": "^0.1.6",
+    "lodash": "^4.16.6",
+    "plates": "^0.4.11"
+  },
+  "devDependencies": {},
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
