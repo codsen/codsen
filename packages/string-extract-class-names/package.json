@@ -25,14 +25,14 @@
   },
   "homepage": "https://github.com/code-and-send/string-extract-class-names#readme",
   "dependencies": {
-    "lodash.isstring": "^4.0.1",
-    "lodash.replace": "^4.1.4"
+    "lodash.replace": "^4.1.4",
+    "lodash.without": "^4.4.0"
   },
   "devDependencies": {
     "ava": "^0.16.0"
   },
   "ava": {
     "tap": false,
-    "verbose": true
+    "verbose": false
   }
 }

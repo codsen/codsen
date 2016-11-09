@@ -25,7 +25,7 @@ sometagname a.class-name:hover
 Output:
 
 ```css
-.class-name
+[.class-name]
 ```
 
 OR, input this:
@@ -37,7 +37,7 @@ a.class-name[target=_blank]
 output this:
 
 ```css
-.class-name
+[.class-name]
 ```
 
 String input, string output. See API below.
@@ -60,7 +60,7 @@ var extract = require('string-extract-class-names')
 $ npm test
 ```
 
-Uses AVA.
+Uses AVA for unit tests.
 
 ## API
 
@@ -69,7 +69,7 @@ extract(
   string,               // String. Input.
   chopUpToNotIncluding  // String. `.` for classes or `#` for id's. Default is `.`.
 )
-// => Extracted string
+// => Extracted string(s) in an array
 ```
 
 ## Examples
@@ -77,10 +77,16 @@ extract(
 ```js
 // second param is omitted, falls back to default "."
 extract('div.class-name a[target=_blank]')
-// => .class-name
+// => '.class-name'
 // or with second parameter
 extract('div.class-name a[target=_blank]', '.')
-// => .class-name
+// => '.class-name'
+// if there are multiple classes, you'll get an array:
+extract('div.class-name-one.class-name-two a[target=_blank]')
+// => ['.class-name-one', '.class-name-two']
+// you can filter id and class combos:
+extract('div#id.class a[target=_blank]', '#')
+// => ['#id', '.class']
 ```
 
 We can extract id's by providing _id_ selector (`#`) as a second input parameter:

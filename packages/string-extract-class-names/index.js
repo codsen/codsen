@@ -1,5 +1,5 @@
 var replace = require('lodash.replace')
-var isString = require('lodash.isstring')
+var without = require('lodash.without')
 
 /**
  * stringExtractClassNames - extracts CSS classes/id names (like `.class-name`) from things like:
@@ -7,30 +7,25 @@ var isString = require('lodash.isstring')
  * or from:
  * tag .class-name::after
  *
- * @param  {String} str                  input string
- * @param  {String} chopUpToNotIncluding dot or hash
- * @return {String}                      output string
+ * @param  {String} input                input string
+ * @return {Array}                       each detected class/id within array
  */
-function stringExtractClassNames (str, chopUpToNotIncluding) {
-  function chopOffTheRest (str) {
-    // CSS class stops where any of the following starts:
+function stringExtractClassNames (input) {
+  if (input === undefined) {
+    throw new Error()
+  }
+
+  function chopBeginning (str) {
+    // everything up to the first full stop of hash
+    return replace(str, /[^.#]*/m, '')
+  }
+
+  function chopEnding (str) {
     // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
-    return replace(str, /[ \~\\!@$%^&\*\(\)\+\=,\./';\:"?><[\]\\{}|`#].*/g, '')
+    return replace(str, /[ \~\\!@$%^&\*\(\)\+\=,/';\:"?><[\]\\{}|`].*/g, '')
   }
 
-  function aContainsB (a, b) {
-    return a.indexOf(b) >= 0
-  }
-
-  chopUpToNotIncluding = chopUpToNotIncluding || '.'
-  if (!isString(chopUpToNotIncluding) || !isString(str)) {
-    throw new TypeError('First input must be string, second (string) is optional.')
-  }
-  if (aContainsB(str, chopUpToNotIncluding)) {
-    str = str.slice(str.indexOf(chopUpToNotIncluding) + 1)
-    str = chopUpToNotIncluding + chopOffTheRest(str)
-  }
-  return str
+  return without(chopEnding(chopBeginning(input)).split(/([.#][^.#]*)/), '')
 }
 
 module.exports = stringExtractClassNames
