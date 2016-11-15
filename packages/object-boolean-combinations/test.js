@@ -3,7 +3,7 @@
 var test = require('tape')
 var objectBooleanCombinations = require('./index.js')
 
-test('1 property - true, no override', function (t) {
+test('one property - true, no override', function (t) {
   t.deepEqual(objectBooleanCombinations(
     {
       a: true
@@ -16,7 +16,7 @@ test('1 property - true, no override', function (t) {
   t.end()
 })
 
-test('1 property - false, no override', function (t) {
+test('one property - false, no override', function (t) {
   t.deepEqual(objectBooleanCombinations(
     {
       a: false
@@ -29,7 +29,7 @@ test('1 property - false, no override', function (t) {
   t.end()
 })
 
-test('3 properties, no override', function (t) {
+test('three properties, no override', function (t) {
   t.deepEqual(objectBooleanCombinations(
     {
       a: true,
@@ -52,7 +52,7 @@ test('3 properties, no override', function (t) {
 
 // now let's test overrides:
 
-test('3 properties 2 overrides', function (t) {
+test('three properties 2 overrides', function (t) {
   t.deepEqual(objectBooleanCombinations(
     {a: false, b: false, c: false},
     {a: true, b: true}
@@ -64,7 +64,7 @@ test('3 properties 2 overrides', function (t) {
   t.end()
 })
 
-test('4 properties 3 overrides', function (t) {
+test('four properties three overrides', function (t) {
   t.deepEqual(objectBooleanCombinations(
     {a: true, b: false, c: false, d: false},
     {a: true, b: true, c: true}

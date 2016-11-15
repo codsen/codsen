@@ -1,5 +1,6 @@
 'use strict'
-var _ = require('lodash')
+var intersection = require('lodash.intersection')
+var pull = require('lodash.pull')
 
 /**
  * Creates an n-length array with all possible combinations of true/false
@@ -43,7 +44,7 @@ function objectBooleanCombinations (incomingObject, overrideObject) {
   if (!isObject(incomingObject)) {
     throw new Error('input must be a true object')
   }
-  var propertiesToMix = _.keys(incomingObject)
+  var propertiesToMix = Object.keys(incomingObject)
 
   // ===================================
   // if there's override, prepare an alternative (a subset) array propertiesToMix
@@ -68,10 +69,10 @@ function objectBooleanCombinations (incomingObject, overrideObject) {
   if (override) {
     // find legitimate properties from the overrideObject:
     // enforce that override object had just a subset of incomingObject properties, nothing else
-    var propertiesToBeOverridden = _.intersection(Object.keys(overrideObject), Object.keys(incomingObject))
+    var propertiesToBeOverridden = intersection(Object.keys(overrideObject), Object.keys(incomingObject))
     // propertiesToMix = all incoming object's properties MINUS properties to override
     propertiesToBeOverridden.forEach(function (elem) {
-      _.pull(propertiesToMix, elem)
+      pull(propertiesToMix, elem)
     })
   }
 
