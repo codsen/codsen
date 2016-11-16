@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/revelt/easy-replace#readme",
   "dependencies": {
-    "lodash": "^4.15.0",
     "lodash.isnumber": "^3.0.3",
     "lodash.toarray": "^4.4.0",
     "lodash.without": "^4.4.0"
