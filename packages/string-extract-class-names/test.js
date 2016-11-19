@@ -361,7 +361,7 @@ test('01.27 - class: tick', t => {
 })
 
 // ==============================
-// Hash, in case if ID's are fitered
+// Hash, in case if ID's are found
 // ==============================
 
 test('02.01 - id: just id passed, nothing done, falls on default', t => {
@@ -746,10 +746,53 @@ test('02.27 - id: tick', t => {
 })
 
 // ==============================
+// Recognising class/id names after any character which is not allowed in class/id names
+// ==============================
+
+test('03.01 - classes separated with a space', t => {
+  t.deepEqual(
+    e('div.first-class .second-class'),
+    ['.first-class'],
+    '03.01')
+})
+
+// In the future it would be nice to include the .second-class
+// in the results array, but let's leave this for the next release :)
+test.skip('03.02 - classes separated with a space should be recognised', t => {
+  t.deepEqual(
+    e('div.first-class .second-class'),
+    ['.first-class', '.second-class'],
+    '03.01.01')
+  t.deepEqual(
+    e('div.first-class div.second-class'),
+    ['.first-class', '.second-class'],
+    '03.01.02')
+  t.deepEqual(
+    e('.first-class .second-class'),
+    ['.first-class', '.second-class'],
+    '03.01.03')
+})
+
+test.skip('03.03 - classes recognised after brackets', t => {
+  t.deepEqual(
+    e('div.first-class[lang|=en] .second-class[lang|=en]'),
+    ['.first-class', '.second-class'],
+    '03.01.01')
+  t.deepEqual(
+    e('div.first-class[lang|=en] div.second-class[lang|=en]'),
+    ['.first-class', '.second-class'],
+    '03.01.02')
+  t.deepEqual(
+    e('.first-class[lang|=en] .second-class[lang|=en]'),
+    ['.first-class', '.second-class'],
+    '03.01.03')
+})
+
+// ==============================
 // Precautions
 // ==============================
 
-test('03.01 - no params', t => {
+test('04.01 - no params', t => {
   t.throws(() => {
     e(undefined)
   })
