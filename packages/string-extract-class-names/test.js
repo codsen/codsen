@@ -164,7 +164,7 @@ test('01.13 - class: brackets', t => {
     e('p.class-name:lang(it)'), ['.class-name'],
     '01.13.01')
   t.deepEqual(
-    e('p.class-name:lang(it) p.class-name-other:lang(en)'), ['.class-name'],
+    e('p.class-name:lang(it) p.class-name-other:lang(en)'), ['.class-name', '.class-name-other'],
     '01.13.02')
   t.deepEqual(
     e(':.first-class.second-class:'), ['.first-class', '.second-class'],
@@ -197,10 +197,10 @@ test('01.15 - class: equals', t => {
 
 test('01.16 - class: colon', t => {
   t.deepEqual(
-    e('.class-name, .class-name-other'), ['.class-name'],
+    e('.class-name, .class-name-other'), ['.class-name', '.class-name-other'],
     '01.16.01')
   t.deepEqual(
-    e('.class-name,.class-name-other'), ['.class-name'],
+    e('.class-name,.class-name-other'), ['.class-name', '.class-name-other'],
     '01.16.02')
   t.deepEqual(
     e(',.first-class.second-class,'), ['.first-class', '.second-class'],
@@ -233,13 +233,13 @@ test('01.18 - class: apostrophe', t => {
 
 test('01.19 - class: semicolon', t => {
   t.deepEqual(
-    e('.class-name;.class-name'), ['.class-name'],
+    e('.class-name-1;.class-name-2'), ['.class-name-1', '.class-name-2'],
     '01.19.01')
   t.deepEqual(
-    e('.class-name;.class-name-other'), ['.class-name'],
+    e('.class-name-1;.class-name-2'), ['.class-name-1', '.class-name-2'],
     '01.19.02')
   t.deepEqual(
-    e(';.class-name;.class-name-other;'), ['.class-name'],
+    e(';.class-name-1;.class-name-2;'), ['.class-name-1', '.class-name-2'],
     '01.19.03')
   t.deepEqual(
     e(';.first-class.second-class;'), ['.first-class', '.second-class'],
@@ -296,13 +296,13 @@ test('01.23 - class: greater than sign', t => {
     e('.class-name> p'), ['.class-name'],
     '01.23.01')
   t.deepEqual(
-    e('* > .class-name > p > .class-name-other'), ['.class-name'],
+    e('* > .class-name > p > .class-name-other'), ['.class-name', '.class-name-other'],
     '01.23.02')
   t.deepEqual(
-    e('*.class-name> .class-name-other> p > .class-name-other'), ['.class-name'],
+    e('*.class-name> .class-name-other> p > .class-name-another'), ['.class-name', '.class-name-other', '.class-name-another'],
     '01.23.03')
   t.deepEqual(
-    e('>.first-class.second-class> .first-class.second-class-other> p > .first-class.second-class-other'), ['.first-class', '.second-class'],
+    e('>.class1.class2> .class3.class4> p > .class5.class6'), ['.class1', '.class2', '.class3', '.class4', '.class5', '.class6'],
     '01.23.04')
 })
 
@@ -537,7 +537,7 @@ test('02.13 - id: brackets', t => {
     e('p#id-name:lang(it)'), ['#id-name'],
     '02.13.01')
   t.deepEqual(
-    e('p#id-name:lang(it) p#id-name-other:lang(en)'), ['#id-name'],
+    e('p#id-name:lang(it) p#id-name-other:lang(en)'), ['#id-name', '#id-name-other'],
     '02.13.02')
   t.deepEqual(
     e('()#id-name()'), ['#id-name'],
@@ -582,10 +582,10 @@ test('02.15 - id: equals', t => {
 
 test('02.16 - id: colon', t => {
   t.deepEqual(
-    e('#id-name, #id-name-other'), ['#id-name'],
+    e('#id-name, #id-name-other'), ['#id-name', '#id-name-other'],
     '02.16.01')
   t.deepEqual(
-    e('#id-name,#id-name-other'), ['#id-name'],
+    e('#id-name,#id-name-other'), ['#id-name', '#id-name-other'],
     '02.16.02')
   t.deepEqual(
     e(',#id-name,'), ['#id-name'],
@@ -597,10 +597,10 @@ test('02.16 - id: colon', t => {
 
 test('02.17 - id: right slash', t => {
   t.deepEqual(
-    e('#id-name/#id-name-other'), ['#id-name'],
+    e('#id-name/#id-name-other'), ['#id-name', '#id-name-other'],
     '02.17.01')
   t.deepEqual(
-    e('/#id-name/#id-name-other'), ['#id-name'],
+    e('/#id-name/#id-name-other'), ['#id-name', '#id-name-other'],
     '02.17.02')
   t.deepEqual(
     e('/#id-name/'), ['#id-name'],
@@ -624,16 +624,16 @@ test('02.18 - id: apostrophe', t => {
 
 test('02.19 - id: semicolon', t => {
   t.deepEqual(
-    e('#id-name;#id-name'), ['#id-name'],
+    e('#id1;#id2'), ['#id1', '#id2'],
     '02.19.01')
   t.deepEqual(
-    e('#id-name;#id-name-other'), ['#id-name'],
+    e('#id-name;#id-name-other'), ['#id-name', '#id-name-other'],
     '02.19.02')
   t.deepEqual(
-    e(';#id-name;#id-name-other;'), ['#id-name'],
+    e(';#id-name;#id-name-other;'), ['#id-name', '#id-name-other'],
     '02.19.03')
   t.deepEqual(
-    e(';#id-name#second;#id-name#second-other;'), ['#id-name', '#second'],
+    e(';#id1#id2;#id3#id4;'), ['#id1', '#id2', '#id3', '#id4'],
     '02.19.04')
 })
 
@@ -681,13 +681,13 @@ test('02.23 - id: question mark', t => {
     e('?#id-name?'), ['#id-name'],
     '02.23.01')
   t.deepEqual(
-    e('?#id-name? > p > #id-name-other'), ['#id-name'],
+    e('?#id-name? > p > #id-name-other'), ['#id-name', '#id-name-other'],
     '02.23.02')
   t.deepEqual(
-    e('?#id-name? #id-name-other> p > #id-name-other'), ['#id-name'],
+    e('?#id-name-1? #id-name-2> p > #id-name-3'), ['#id-name-1', '#id-name-2', '#id-name-3'],
     '02.23.03')
   t.deepEqual(
-    e('?#id-name#second? #id-name#second-other> p > #id-name#second-other'), ['#id-name', '#second'],
+    e('?#id1#id2? #id3#id4> p > #id5#id6'), ['#id1', '#id2', '#id3', '#id4', '#id5', '#id6'],
     '02.23.04')
 })
 
@@ -749,16 +749,7 @@ test('02.27 - id: tick', t => {
 // Recognising class/id names after any character which is not allowed in class/id names
 // ==============================
 
-test('03.01 - classes separated with a space', t => {
-  t.deepEqual(
-    e('div.first-class .second-class'),
-    ['.first-class'],
-    '03.01')
-})
-
-// In the future it would be nice to include the .second-class
-// in the results array, but let's leave this for the next release :)
-test.skip('03.02 - classes separated with a space should be recognised', t => {
+test('03.01 - classes separated with a space should be recognised', t => {
   t.deepEqual(
     e('div.first-class .second-class'),
     ['.first-class', '.second-class'],
@@ -773,19 +764,19 @@ test.skip('03.02 - classes separated with a space should be recognised', t => {
     '03.01.03')
 })
 
-test.skip('03.03 - classes recognised after brackets', t => {
+test('03.02 - classes recognised after brackets', t => {
   t.deepEqual(
-    e('div.first-class[lang|=en] .second-class[lang|=en]'),
-    ['.first-class', '.second-class'],
-    '03.01.01')
+    e('div.class1[lang|=en]#id1[something] .class2[lang|=en] #id2'),
+    ['.class1', '#id1', '.class2', '#id2'],
+    '03.02.01')
   t.deepEqual(
     e('div.first-class[lang|=en] div.second-class[lang|=en]'),
     ['.first-class', '.second-class'],
-    '03.01.02')
+    '03.02.02')
   t.deepEqual(
     e('.first-class[lang|=en] .second-class[lang|=en]'),
     ['.first-class', '.second-class'],
-    '03.01.03')
+    '03.02.03')
 })
 
 // ==============================

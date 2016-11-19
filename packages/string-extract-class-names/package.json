@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/code-and-send/string-extract-class-names#readme",
   "dependencies": {
+    "lodash.flattendeep": "^4.4.0",
     "lodash.replace": "^4.1.4",
     "lodash.without": "^4.4.0"
   },
