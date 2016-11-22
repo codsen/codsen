@@ -8,11 +8,11 @@
 
 ## Pulling
 
-Let's say you have an array of strings and another array of strings to remove from the first array. That's easy to achieve with Lodash's [_.pullAll](https://lodash.com/docs/#pullAll). However, what if you are not sure what the to-be-removed strings exactly look like, or there are many of them, like `module-1`, `module-2` and so on?
+Let's say you have an array of strings and another array of strings to remove from the first array. That's easy to achieve with Lodash's [_.pullAll](https://lodash.com/docs/#pullAll). However, what if you are not sure what the to-be-removed strings exactly look like, or there are many of them, like `module-1`, `module-2`, ... `module-99` and so on?
 
-You need be able to put a _glob_ in search query, that is a string pattern (`*`), which means _any character from here on_.
+You need be able to put a _glob_ in a search query, that is a string pattern (`*`), which means _any character from here on_.
 
-That's what this library does. Check it out how easy it is to pull (remove) some strings from an array:
+Check it out how easy it is to pull (remove) some strings from an array:
 
 ```js
 source = ['something', 'module-1', 'module-2', 'module-jhkgdhgkhdfghdkghfdk']
@@ -21,7 +21,7 @@ pullAllWithGlob(source, whitelist)
 // => ['something']
 ```
 
-I'm needed this library for whitelisting to-be-deleted classes in upcoming [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+I needed this library for whitelisting to-be-deleted classes in upcoming [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
 
 ## Install
 
