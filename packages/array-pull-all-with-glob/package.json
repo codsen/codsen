@@ -1,0 +1,44 @@
+{
+  "name": "array-pull-all-with-glob",
+  "version": "1.0.0",
+  "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/array-pull-all-with-glob.git"
+  },
+  "keywords": [
+    "array",
+    "delete",
+    "pull",
+    "pullall",
+    "pulall",
+    "pullal",
+    "pulal",
+    "element",
+    "from",
+    "glob",
+    "pattern",
+    "whitelist"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/array-pull-all-with-glob/issues"
+  },
+  "homepage": "https://github.com/code-and-send/array-pull-all-with-glob#readme",
+  "dependencies": {
+    "lodash.remove": "^4.7.0",
+    "lodash.replace": "^4.1.4"
+  },
+  "devDependencies": {
+    "ava": "*"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": false
+  }
+}
