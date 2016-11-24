@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-str */
 'use strict'
 var detect = require('./index.js')
 import test from 'ava'
@@ -41,31 +42,31 @@ test('01.03 - recognised XHTML doctypes', t => {
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.01')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.02')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.03')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.04')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.05')
   t.is(
     detect(
@@ -83,43 +84,43 @@ test('01.03 - recognised XHTML doctypes', t => {
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.08')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.09')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE svg:svg PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.10')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.11')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.12')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN"	"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.13')
   t.is(
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.03.14')
 })
 
@@ -140,7 +141,7 @@ test('01.04 - recognises old HTML doctypes', t => {
     detect(
       '<jshkjdfghg>jdslfjlf dghjlgjh <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">\n<sdfhksh>\n<ljkgldkjfgl>sfjldg<qkwejklqwe>'
     ),
-    'html',
+    'xhtml',
     '01.04.03')
 })
 
@@ -305,6 +306,32 @@ test('02.07 - detects by hr tags only, one closed hr', t => {
     ),
     'xhtml',
     '02.07.15')
+})
+
+test('02.08 - real-life code', t => {
+  t.is(
+    detect(
+      '\
+            <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\
+            <html xmlns="http://www.w3.org/1999/xhtml">\
+            <head>\
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\
+              <title>Tile</title>\
+            </head>\
+            <body>\
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">\
+              <tr>\
+                <td>\
+                  <img src="image.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>\
+                </td>\
+              </tr>\
+            </table>\
+            </body>\
+            </html>\
+      '
+    ),
+    'xhtml',
+    '02.08')
 })
 
 // ==============================

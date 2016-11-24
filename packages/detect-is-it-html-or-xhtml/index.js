@@ -3,16 +3,7 @@
 // ===================================
 // F U N C T I O N S
 
-function truthy (x) { return (x !== false) && existy(x) }
-
 function existy (x) { return x != null }
-
-function aContainsB (a, b) {
-  if (!truthy(a) || !truthy(b)) {
-    return false
-  }
-  return a.indexOf(b) >= 0
-}
 
 function detectIsItHTMLOrXhtml (input) {
   var i, len, allImageTagsArr, allBRTagsArr, allHRTagsArr, allConcernedTagsArr
@@ -29,7 +20,9 @@ function detectIsItHTMLOrXhtml (input) {
 
   if (existy(extractedMetaTag)) {
     // detect by doctype meta tag
-    if (aContainsB(extractedMetaTag, 'xhtml') || aContainsB(extractedMetaTag, 'svg')) {
+    var xhtmlRegex = /xhtml/gi
+    var svgRegex = /svg/gi
+    if (extractedMetaTag[0].match(xhtmlRegex) || extractedMetaTag[0].match(svgRegex)) {
       res = 'xhtml'
     } else {
       res = 'html'
