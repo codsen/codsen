@@ -1,0 +1,40 @@
+{
+  "name": "detect-is-it-html-or-xhtml",
+  "version": "1.0.0",
+  "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/detect-is-it-html-or-xhtml.git"
+  },
+  "keywords": [
+    "detect",
+    "is",
+    "if",
+    "code",
+    "html",
+    "or",
+    "xhtml",
+    "doctype",
+    "format",
+    "meta"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/detect-is-it-html-or-xhtml/issues"
+  },
+  "homepage": "https://github.com/code-and-send/detect-is-it-html-or-xhtml#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "ava": "^0.17.0"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
