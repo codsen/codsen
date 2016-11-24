@@ -10,9 +10,9 @@
 
 As you know, XHTML is slightly different from HTML: **HTML** (4 and 5) does not close the `<img>` and other single tags, while **XHTML** does. There are more to that, but that's the major thing from developer's perspective.
 
-When I was working on the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css) I was parsing the HTML and rendering it back. Upon this rendering-back stage I had to identify, is the source code of the HTML type, or XHTML, because I could instruct [renderer](https://github.com/posthtml/posthtml-render) the renderer to close all the single tags (or not). I couldn't find any library that analyses the code, is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
+When I was working on the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this rendering-back stage, I had to identify, is the source code of the HTML type, or XHTML, because I could instruct [renderer](https://github.com/posthtml/posthtml-render) the renderer to close all the single tags (or not). I couldn't find any library that analyses the code, is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
 
-Feed the string into this library. If it's more of an HTML, it will output a string `"html"`. If it's more of an XHTML, it will output a string `xhtml`. If it doesn't contain any tags, or it does, but there is no `doctype` and it's impossible to distinguish between the two, it will output `null`.
+Feed the string into this library. If it's more of an HTML, it will output a string `"html"`. If it's more of an XHTML, it will output a string `xhtml`. If it doesn't contain any tags, or it does, but there is no `doctype`, and it's impossible to distinguish between the two, it will output `null`.
 
 ## Install
 
@@ -39,11 +39,11 @@ detect(
 
 ## Under the hood
 
-The alrorithm is the following:
+The algorithm is the following:
 
 1. Look for `doctype`. If recognised, Bob's your uncle.
-2. IF there's no `doctype` or it's messed up beyond recognition, DO scan all singleton tags (`<img>`, `<br>` and `<hr>`) and see of which type the majority is (closed or not closed).
-4. In a rare case when there is an equal amount of both closed and unclosed tags, judge in favor of `html`.
+2. IF there's no `doctype` or it's messed up beyond recognition, DO scan all singleton tags (`<img>`, `<br>` and `<hr>`) and see which type the majority is (closed or not closed).
+4. In a rare case when there is an equal amount of both closed and unclosed tags, lean for `html`.
 5. If (there are no tags in the input) OR (there are no doctype tags and no singleton tags), return `null`.
 
 ## Contributing & testing
