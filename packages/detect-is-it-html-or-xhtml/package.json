@@ -12,6 +12,7 @@
   },
   "keywords": [
     "detect",
+    "check",
     "is",
     "if",
     "code",
@@ -20,7 +21,10 @@
     "xhtml",
     "doctype",
     "format",
-    "meta"
+    "meta",
+    "tags",
+    "elements",
+    "string"
   ],
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",
