@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "main": "index.js",
   "scripts": {
@@ -28,8 +28,7 @@
     "url": "https://github.com/code-and-send/detect-is-it-html-or-xhtml/issues"
   },
   "homepage": "https://github.com/code-and-send/detect-is-it-html-or-xhtml#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "^0.17.0"
   },
