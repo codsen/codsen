@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "main": "index.js",
   "scripts": {
