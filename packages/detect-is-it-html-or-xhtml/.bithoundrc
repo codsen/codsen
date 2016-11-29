@@ -6,6 +6,6 @@
       "mute": ["ava"]
   },
   "test": [
-    "./test.js"
+    "test.js"
   ]
 }
