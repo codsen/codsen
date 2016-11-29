@@ -4,24 +4,11 @@
 
 > pullAllWithGlob - like _.pullAll but pulling stronger, with globs
 
-[![Build Status](https://travis-ci.org/code-and-send/array-pull-all-with-glob.svg?branch=master)](https://travis-ci.org/code-and-send/array-pull-all-with-glob) [![bitHound Overall Score](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/score.svg)](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob) [![bitHound Dependencies](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/dependencies.svg)](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/devDependencies.svg)](https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm) [![Downloads/Month](https://img.shields.io/npm/dm/array-pull-all-with-glob.svg)](https://www.npmjs.com/package/array-pull-all-with-glob)
-
-## Pulling
-
-Let's say you have an array of strings and another array of strings to remove from the first array. That's easy to achieve with Lodash's [_.pullAll](https://lodash.com/docs/#pullAll). However, what if you are not sure what the to-be-removed strings exactly look like, or there are many of them, like `module-1`, `module-2`, ... `module-99` and so on?
-
-You need be able to put a _glob_ in a search query, that is a string pattern (`*`), which means _any character from here on_.
-
-Check it out how easy it is to pull (remove) some strings from an array:
-
-```js
-source = ['something', 'module-1', 'module-2', 'module-jhkgdhgkhdfghdkghfdk']
-whitelist = ['module-*']
-pullAllWithGlob(source, whitelist)
-// => ['something']
-```
-
-I needed this library for whitelisting to-be-deleted classes in upcoming [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+[![Build Status][travis-img]][travis-url]
+[![bitHound Overall Score][overall-img]][overall-url]
+[![bitHound Dependencies][deps-img]][deps-url]
+[![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Downloads/Month][downloads-img]][downloads-url]
 
 ## Install
 
@@ -29,14 +16,45 @@ I needed this library for whitelisting to-be-deleted classes in upcoming [email-
 $ npm install --save array-pull-all-with-glob
 ```
 
+## Pulling
+
+Let's say you have an array of strings and another array of strings to remove from the aforementioned array. That's easy to achieve with Lodash's [_.pullAll](https://lodash.com/docs/#pullAll). However, what if you are not sure what _to-be-removed_ strings exactly look like and know only how their names _begin_, or there are too many of them to type manually, yet all begin with the same letters? What if you need to remove 99 elements: `module-1`, `module-2`, ... `module-99` from an array?
+
+You need be able to put a _glob_ in a search query, that is, a _string pattern_ (`*`), which means _any character from here on_.
+
+Check it out how easy it is to achieve that using this library:
+
+```js
+var pullAllWithGlob = require('array-pull-all-with-glob')
+sourceArray = ['keep_me', 'name-1', 'name-2', 'name-jhkgdhgkhdfghdkghfdk']
+removeThese = ['name-*']
+console.dir(pullAllWithGlob(sourceArray, removeThese))
+// => ['keep_me']
+```
+
+Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
+
 ## API
 
 ```js
 pullAllWithGlob (
-  incomingArray,   // input array of strings
-  whitelistArray   // strings to pull
+  sourceArray,   // input array of strings
+  removeThese    // array of strings to pull
 );
 ```
+
+### API - Input
+
+Input argument   | Type     | Obligatory? | Description
+-----------------|----------|-------------|--------------------
+`sourceArray`    | Array    | yes         | Source array of strings
+`removeThese`    | Array    | yes         | Array of strings to remove from the source array
+
+### API - Output
+
+Type     | Description
+---------|---------------------------------------
+Array    | Array of strings with elements removed
 
 ## Test
 
@@ -44,18 +62,49 @@ pullAllWithGlob (
 $ npm test
 ```
 
-Uses AVA.
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing & testing
 
-All contributions welcome. This library uses [Standard JavaScript](https://github.com/feross/standard) notation. See `test.js`. It's very minimalistic unit testing setup using [AVA](https://github.com/avajs/ava).
+All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-```bash
-npm test
-```
-
-If you see anything incorrect whatsoever, [raise an issue](https://github.com/code-and-send/array-pull-all-with-glob/issues). PR's welcome too.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/array-pull-all-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
 
 ## Licence
 
-MIT © [Roy Reveltas](https://github.com/revelt)
+> MIT License (MIT)
+
+> Copyright (c) 2016 Code and Send Ltd, Roy Reveltas
+
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+> The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+[travis-img]: https://travis-ci.org/code-and-send/array-pull-all-with-glob.svg?branch=master
+[travis-url]: https://travis-ci.org/code-and-send/array-pull-all-with-glob
+
+[overall-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/score.svg
+[overall-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob
+
+[deps-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm
+
+[dev-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg
+[downloads-url]: https://www.npmjs.com/package/array-pull-all-with-glob

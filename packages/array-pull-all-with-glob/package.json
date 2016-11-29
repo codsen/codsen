@@ -15,6 +15,7 @@
     "delete",
     "pull",
     "pullall",
+    "remove",
     "pulall",
     "pullal",
     "pulal",
@@ -39,6 +40,6 @@
   },
   "ava": {
     "tap": false,
-    "verbose": false
+    "verbose": true
   }
 }
