@@ -14,7 +14,9 @@
 
 As you know, XHTML is slightly different from HTML: **HTML** (4 and 5) does not close the `<img>` and other single tags, while **XHTML** does. There are more to that, but that's the major thing from developer's perspective.
 
-When I was working on the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct [renderer](https://github.com/posthtml/posthtml-render) the renderer to close all the single tags (or not). I couldn't find any library that analyses the code, is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
+When I was working on the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
+
+I couldn't find any library that analyses the code, telling is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
 
 Feed the string into this library. If it's more of an HTML, it will output a string `"html"`. If it's more of an XHTML, it will output a string `xhtml`. If your code doesn't contain any tags, or it does, but there is no `doctype`, and it's impossible to distinguish between the two, it will output `null`.
 
