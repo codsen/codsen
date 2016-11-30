@@ -35,7 +35,7 @@
     "lodash.without": "^4.4.0"
   },
   "devDependencies": {
-    "ava": "^0.16.0"
+    "ava": "*"
   },
   "ava": {
     "tap": false
