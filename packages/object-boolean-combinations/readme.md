@@ -4,7 +4,11 @@
 
 > Take object, generate an array of its copies, each containing all possible combinations of Boolean true/false
 
-[![Build Status](https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master)](https://travis-ci.org/revelt/object-boolean-combinations) [![bitHound Overall Score](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/score.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations) [![bitHound Dependencies](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/dependencies.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/revelt/object-boolean-combinations/badges/devDependencies.svg)](https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm)
+[![Build Status][travis-img]][travis-url]
+[![bitHound Overall Score][overall-img]][overall-url]
+[![bitHound Dependencies][deps-img]][deps-url]
+[![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Downloads/Month][downloads-img]][downloads-url]
 
 ## Install
 
@@ -111,6 +115,55 @@ test('encode entities - pound sign', function (t) {
 });
 ```
 
+## Testing
+
+```bash
+$ npm test
+```
+
+Unit tests use Tape and [JS Standard](https://github.com/feross/standard) notation.
+
+## Contributing
+
+All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/revelt/object-boolean-combinations/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+
 ## Licence
 
-MIT © Roy Reveltas
+> MIT License (MIT)
+
+> Copyright (c) 2016 Code and Send Ltd, Roy Reveltas
+
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+> The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+[travis-img]: https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master
+[travis-url]: https://travis-ci.org/revelt/object-boolean-combinations
+
+[overall-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/score.svg
+[overall-url]: https://www.bithound.io/github/revelt/object-boolean-combinations
+
+[deps-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm
+
+[dev-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/object-boolean-combinations.svg
+[downloads-url]: https://www.npmjs.com/package/object-boolean-combinations
