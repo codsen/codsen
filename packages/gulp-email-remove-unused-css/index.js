@@ -1,6 +1,6 @@
 'use strict'
 
-var remove = require('gulp-email-remove-unused-css')
+var remove = require('email-remove-unused-css')
 var gutil = require('gulp-util')
 var Transform = require('stream').Transform
 
