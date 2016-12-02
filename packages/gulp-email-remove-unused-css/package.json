@@ -1,0 +1,43 @@
+{
+  "name": "gulp-email-remove-unused-css",
+  "version": "1.0.0",
+  "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/gulp-email-remove-unused-css.git"
+  },
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "email",
+    "remove",
+    "unused",
+    "css",
+    "head",
+    "styles",
+    "body",
+    "uncss",
+    "inline",
+    "from"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/gulp-email-remove-unused-css/issues"
+  },
+  "homepage": "https://removecss.com",
+  "dependencies": {
+    "gulp-util": "~3.0.6",
+    "email-remove-unused-css": "^1.4.1"
+  },
+  "devDependencies": {
+  },
+  "ava": {
+    "tap": false,
+    "verbose": false
+  }
+}
