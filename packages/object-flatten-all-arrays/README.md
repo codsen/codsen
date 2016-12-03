@@ -60,7 +60,7 @@ console.log('flattened = ' + JSON.stringify(flattened, null, 4))
 ## API
 
 ```js
-setAllValuesTo(input, value)
+flatten(input)
 ```
 
 ### API - Input
