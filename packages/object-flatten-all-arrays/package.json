@@ -1,0 +1,43 @@
+{
+  "name": "object-flatten-all-arrays",
+  "version": "1.0.0",
+  "description": "Merge and flatten any arrays found in all values within plain objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/object-flatten-all-arrays.git"
+  },
+  "keywords": [
+    "ast",
+    "plain",
+    "object",
+    "posthtml-tree",
+    "posthtmltree",
+    "flatten",
+    "merge",
+    "values",
+    "arrays",
+    "nested",
+    "write"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/object-flatten-all-arrays/issues"
+  },
+  "homepage": "https://github.com/code-and-send/object-flatten-all-arrays#readme",
+  "dependencies": {
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.merge": "^4.6.0"
+  },
+  "devDependencies": {
+    "ava": "*"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
