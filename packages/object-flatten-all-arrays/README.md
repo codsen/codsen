@@ -18,9 +18,15 @@ $ npm install --save object-flatten-all-arrays
 
 ## Purpose
 
-This library recursively walks through the input (nested or not nested array, object, whatever) and look for arrays which are values in plain objects. Then it will scan contents of those arrays. If there are multiple plain objects inside, it will merge them.
+This library recursively walks through the input (nested or not nested array, object, whatever) and looks for plain objects that have arrays in any of their key values.
 
-In practice this library is used to extract the schema from a set of JSON files. The so called "schema" is the object which is has a superset of keys taken from one or many objects. Schema then can be matched across a set of JSON files — missing key/value pairs filled and all keys sorted.
+Then it will scan contents of those arrays. If there are multiple plain objects inside, it will merge them and sort their keys by alphabetical order. We anticipate that plain objects (in theory) can come with objects containing duplicate keys because we'll be using this library on JSON objects which can contain errors.
+
+In practice, this library is one ofer the pieces of the set of libraries used to extract the _Schema_ from a set of JSON files representing content which defines a set of email templates.
+
+There are alternative definitions of "schema", but I define it as a _superset_ representation that contains every key that each of the set pieces has.
+
+The typical JSON "schema" library will only tell only the type of the first level of what it finds, like "This is an array-type value.". That's not enough. This library will traverse that array, find any plain objects within, merge and flatten them, so you know exactly what the data structure should be, in order to contain all possible variations in your data.
 
 ## Use
 
