@@ -12,6 +12,7 @@
   },
   "keywords": [
     "ast",
+    "json",
     "plain",
     "object",
     "posthtml-tree",
