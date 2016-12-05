@@ -1,0 +1,40 @@
+{
+  "name": "object-merge-advanced",
+  "version": "1.0.0",
+  "description": "Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects too.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/object-merge-advanced.git"
+  },
+  "keywords": [
+    "ast",
+    "plain",
+    "object",
+    "posthtml-tree",
+    "posthtmltree",
+    "merge",
+    "objects",
+    "advanced"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/object-merge-advanced/issues"
+  },
+  "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
+  "dependencies": {
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.isstring": "^4.0.1"
+  },
+  "devDependencies": {
+    "ava": "*"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
