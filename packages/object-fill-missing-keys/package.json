@@ -1,0 +1,44 @@
+{
+  "name": "object-fill-missing-keys",
+  "version": "1.0.0",
+  "description": "Add missing keys into plain objects, according to a provided schema object.",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/object-fill-missing-keys.git"
+  },
+  "keywords": [
+    "ast",
+    "plain",
+    "object",
+    "posthtml-tree",
+    "posthtmltree",
+    "add",
+    "missing",
+    "fill",
+    "keys",
+    "schema",
+    "unify",
+    "normalise",
+    "normalize"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/object-fill-missing-keys/issues"
+  },
+  "homepage": "https://github.com/code-and-send/object-fill-missing-keys#readme",
+  "dependencies": {
+    "lodash.isplainobject": "^4.0.6"
+  },
+  "devDependencies": {
+    "ava": "*"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
