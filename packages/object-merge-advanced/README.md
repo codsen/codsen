@@ -26,11 +26,11 @@ When this library merges two objects, it will check the types of their keys:
 
 * If keys are unique, they go straight into the result object.
 * If keys are present in both input arguments, they'll get "judged" depending on their type:
-  ** Any object trumps any string
-  ** Non-empty array trumps any object or string
-  ** Empty array trumps empty object, but doesn't trump non-empty object
-  ** Empty array won't trump non-empty string
-  ** If both key have plain object values, they'll get recursively fed back into the library again
+  * Any object trumps any string
+  * Non-empty array trumps any object or string
+  * Empty array trumps empty object, but doesn't trump non-empty object
+  * Empty array won't trump non-empty string
+  * If both key have plain object values, they'll get recursively fed back into the library again
 
 As you see, we strive to retain as much info as possible after merging.
 
