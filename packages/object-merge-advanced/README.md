@@ -2,7 +2,7 @@
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects too.
+> Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects as well.
 
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
