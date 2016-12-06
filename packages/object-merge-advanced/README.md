@@ -36,7 +36,7 @@ We strive to retain as much info as possible after merging.
 
 Basically, there are 81 possible combinations: 9 types of first input (object #1) and 9 types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, boolean, undefined and null.
 
-![matching algorithm](https://i.imgsafe.org/722bff12b2.png)
+![matching algorithm](https://i.imgsafe.org/72ae7739f2.png)
 
 In the diagram above, the squares in the table show which value, first object's (marked `01`) or second one's (marked `02`) get's assigned to the merged value. In certain cases, there are custom actions needed: 1) passing value objects back into the main function _recursively_ (when both values are objects), 2) array concatenation, or 3) Boolean "and" composition (when both values are Boolean).
 
