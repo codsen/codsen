@@ -38,7 +38,9 @@ Basically, there are 81 possible combinations: 9 types of first input (object #1
 
 ![matching algorithm](https://i.imgsafe.org/72ae7739f2.png)
 
-In the diagram above, the squares in the table show which value, first object's (marked `01`) or second one's (marked `02`) get's assigned to the merged value. In certain cases, there are custom actions needed: 1) passing value objects back into the main function _recursively_ (when both values are objects), 2) array concatenation, or 3) Boolean "and" composition (when both values are Boolean).
+In the diagram above, the squares show **which value wins**, first object's (marked `01`) or second one's (marked `02`). In other words, do we assign second object's value onto first, or the opposite.
+
+In certain cases (marked red), there are custom actions needed: 1) passing value objects back into the main function _recursively_ (when both values are objects), 2) array concatenation, or 3) Boolean "and" composition (when both values are Boolean).
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
