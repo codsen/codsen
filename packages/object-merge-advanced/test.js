@@ -781,6 +781,109 @@ test('01.16 - object values are objects and get merged', t => {
     '01.16.04')
 })
 
+test('01.17 - merging booleans', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: false
+          }
+        ]
+      },
+      {
+        a: false
+      }
+    ),
+    {
+      a: [
+        {
+          b: false
+        }
+      ]
+    },
+    '01.17.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false
+      },
+      {
+        a: [
+          {
+            b: false
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: false
+        }
+      ]
+    },
+    '01.17.02')
+})
+
+test('01.18 - merging undefined', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: undefined
+      },
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '01.18.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'a'
+      },
+      {
+        a: undefined
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '01.18.02')
+})
+
+test('01.19 - merging null', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null
+      },
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '01.19.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'a'
+      },
+      {
+        a: null
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '01.19.02')
+})
+
 // ==============================
 // Edge cases
 // ==============================
