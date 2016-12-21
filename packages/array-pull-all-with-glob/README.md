@@ -8,6 +8,7 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 ## Install
@@ -62,7 +63,7 @@ Array    | Array of strings with elements removed
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing & testing
 
@@ -105,6 +106,9 @@ SOFTWARE.
 
 [dev-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/devDependencies.svg
 [dev-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/array-pull-all-with-glob/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/array-pull-all-with-glob?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg
 [downloads-url]: https://www.npmjs.com/package/array-pull-all-with-glob
