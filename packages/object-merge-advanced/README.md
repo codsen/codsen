@@ -5,6 +5,7 @@
 > Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects as well.
 
 [![Build Status][travis-img]][travis-url]
+[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
@@ -73,7 +74,7 @@ Input argument           | Type           | Obligatory? | Description
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing
 
@@ -107,6 +108,9 @@ SOFTWARE.
 
 [travis-img]: https://travis-ci.org/code-and-send/object-merge-advanced.svg?branch=master
 [travis-url]: https://travis-ci.org/code-and-send/object-merge-advanced
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/object-merge-advanced/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/object-merge-advanced?branch=master
 
 [overall-img]: https://www.bithound.io/github/code-and-send/object-merge-advanced/badges/score.svg
 [overall-url]: https://www.bithound.io/github/code-and-send/object-merge-advanced
