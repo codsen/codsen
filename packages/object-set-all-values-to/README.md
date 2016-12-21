@@ -59,7 +59,7 @@ Input argument           | Type           | Obligatory? | Default     | Descript
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing
 
