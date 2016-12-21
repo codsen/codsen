@@ -4,7 +4,8 @@
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "nyc --reporter=html --reporter=text ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
