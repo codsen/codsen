@@ -8,6 +8,7 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 ## Install
@@ -101,6 +102,9 @@ SOFTWARE.
 
 [dev-img]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/badges/devDependencies.svg
 [dev-url]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/master/dependencies/npm
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/object-set-all-values-to/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/object-set-all-values-to?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/object-set-all-values-to.svg
 [downloads-url]: https://www.npmjs.com/package/object-set-all-values-to
