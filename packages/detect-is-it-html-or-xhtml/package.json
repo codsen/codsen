@@ -34,7 +34,9 @@
   "homepage": "https://github.com/code-and-send/detect-is-it-html-or-xhtml#readme",
   "dependencies": {},
   "devDependencies": {
-    "ava": "*"
+    "ava": "*",
+    "coveralls": "^2.11.15",
+    "nyc": "^10.0.0"
   },
   "ava": {
     "tap": false,

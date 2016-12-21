@@ -8,6 +8,7 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 ## Purpose
@@ -70,7 +71,7 @@ The algorithm is the following:
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing
 
@@ -113,6 +114,9 @@ SOFTWARE.
 
 [dev-img]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/badges/devDependencies.svg
 [dev-url]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/master/dependencies/npm
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/detect-is-it-html-or-xhtml/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/detect-is-it-html-or-xhtml?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/detect-is-it-html-or-xhtml.svg
 [downloads-url]: https://www.npmjs.com/package/detect-is-it-html-or-xhtml
