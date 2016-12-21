@@ -52,3 +52,6 @@ rationale.md
 # Sublime Text project files (scary, risky stuff)
 .sublime-project
 .sublime-workspace
+
+# nyc test coverage
+.nyc_output
