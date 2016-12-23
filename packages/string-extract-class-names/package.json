@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Extract class (or id) name from a string",
   "main": "index.js",
   "scripts": {
