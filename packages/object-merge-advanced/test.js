@@ -884,6 +884,138 @@ test('01.19 - merging null', t => {
     '01.19.02')
 })
 
+test('01.20 - boolean vs boolean merge (#61)', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: true
+      },
+      {
+        a: false
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.20.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false
+      },
+      {
+        b: 'b',
+        a: true
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.20.02')
+})
+
+test('01.21 - boolean vs undefined merge (#62)', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: true
+      },
+      {
+        a: undefined
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.21.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: undefined
+      },
+      {
+        b: 'b',
+        a: true
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.21.02')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: false
+      },
+      {
+        a: undefined
+      }
+    ),
+    {
+      a: false,
+      b: 'b'
+    },
+    '01.21.03')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: undefined
+      },
+      {
+        b: 'b',
+        a: false
+      }
+    ),
+    {
+      a: false,
+      b: 'b'
+    },
+    '01.21.04')
+})
+
+test('01.22 - zzz (#??)', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: true
+      },
+      {
+        a: false
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.22.01')
+})
+
+test.skip('01.22 - zzz (#??)', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: true
+      },
+      {
+        a: false
+      }
+    ),
+    {
+      a: true,
+      b: 'b'
+    },
+    '01.22.01')
+})
+
 // ==============================
 // Edge cases
 // ==============================
