@@ -91,3 +91,23 @@ test('2.3 - asterisk in the source array', t => {
     ['something-*', 'something-**'],
     '2.3')
 })
+
+// ==============================
+// edge cases
+// ==============================
+
+test('3.1 - missing one input', t => {
+  t.deepEqual(
+    pull(
+      ['module-*', 'module-**', 'something-*', 'something-**']
+    ),
+    ['module-*', 'module-**', 'something-*', 'something-**'],
+    '3.1')
+})
+
+test('3.2 - missing both inputs', t => {
+  t.deepEqual(
+    pull(),
+    undefined,
+    '3.2')
+})
