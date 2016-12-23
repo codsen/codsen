@@ -7,6 +7,7 @@
 Emphasis on _no regexes_
 
 [![Build Status][travis-img]][travis-url]
+[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
@@ -275,6 +276,9 @@ SOFTWARE.
 
 [travis-img]: https://travis-ci.org/revelt/easy-replace.svg?branch=master
 [travis-url]: https://travis-ci.org/revelt/easy-replace
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/posthtml-ast-compare/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/posthtml-ast-compare?branch=master
 
 [overall-img]: https://www.bithound.io/github/revelt/easy-replace/badges/score.svg
 [overall-url]: https://www.bithound.io/github/revelt/easy-replace
