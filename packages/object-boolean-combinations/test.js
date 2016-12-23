@@ -1,7 +1,7 @@
 'use strict'
 
-var test = require('tape')
 var objectBooleanCombinations = require('./index.js')
+import test from 'ava'
 
 test('one property - true, no override', function (t) {
   t.deepEqual(objectBooleanCombinations(
@@ -13,7 +13,6 @@ test('one property - true, no override', function (t) {
       {a: true}
     ]
   )
-  t.end()
 })
 
 test('one property - false, no override', function (t) {
@@ -26,7 +25,6 @@ test('one property - false, no override', function (t) {
       {a: true}
     ]
   )
-  t.end()
 })
 
 test('three properties, no override', function (t) {
@@ -47,7 +45,6 @@ test('three properties, no override', function (t) {
       {a: true, b: true, c: true}
     ]
   )
-  t.end()
 })
 
 // now let's test overrides:
@@ -59,9 +56,8 @@ test('three properties 2 overrides', function (t) {
   ),
     [ {a: true, b: true, c: false},
       {a: true, b: true, c: true}
-     ]
+    ]
   )
-  t.end()
 })
 
 test('four properties three overrides', function (t) {
@@ -74,7 +70,6 @@ test('four properties three overrides', function (t) {
       {d: true, a: true, b: true, c: true}
     ]
   )
-  t.end()
 })
 
 // edge cases:
@@ -84,7 +79,7 @@ test('empty override object', function (t) {
     {a: true, b: false, c: false},
     {}
   ),
-  [ {a: false, b: false, c: false},
+    [ {a: false, b: false, c: false},
     {a: true, b: false, c: false},
     {a: false, b: true, c: false},
     {a: true, b: true, c: false},
@@ -93,7 +88,6 @@ test('empty override object', function (t) {
     {a: false, b: true, c: true},
     {a: true, b: true, c: true} ]
   )
-  t.end()
 })
 
 test('both input and override objects empty', function (t) {
@@ -103,5 +97,4 @@ test('both input and override objects empty', function (t) {
   ),
   [ {} ]
   )
-  t.end()
 })

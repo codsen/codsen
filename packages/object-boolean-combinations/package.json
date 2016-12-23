@@ -4,7 +4,9 @@
   "description": "Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js | faucet"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
@@ -34,7 +36,14 @@
     "lodash.pull": "^4.1.0"
   },
   "devDependencies": {
-    "faucet": "0.0.1",
-    "tape": "^4.2.2"
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
+    "nyc": "^10.0.0"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
   }
 }

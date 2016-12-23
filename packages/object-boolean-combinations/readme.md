@@ -5,6 +5,7 @@
 > Take object, generate an array of its copies, each containing all possible combinations of Boolean true/false
 
 [![Build Status][travis-img]][travis-url]
+[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
@@ -96,23 +97,21 @@ In practice, I use this overriding to perform the specific tests on [Detergent.j
 * first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
 * second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
 
-Here's a Tape test, which uses `objectBooleanCombinations()` to create a combinations array of settings objects, then uses `forEach()` to iterate through them all, testing each using Tape's `t.equal()`:
+Here's an AVA test, which uses `objectBooleanCombinations()` to create a combinations array of settings objects, then uses `forEach()` to iterate through them all, testing each:
 
 ```javascript
-
-test('encode entities - pound sign', function (t) {
+test('encode entities - pound sign', t => {
   objectBooleanCombinations(sampleObj, {
     convertEntities: true
     })
   .forEach(function (elem){
-    t.equal(detergent(
+    t.is(detergent(
       '\u00A3', elem),
       '&pound;',
       'pound char converted into entity'
-    );
-  });
-  t.end();
-});
+    )
+  })
+})
 ```
 
 ## Testing
@@ -121,7 +120,7 @@ test('encode entities - pound sign', function (t) {
 $ npm test
 ```
 
-Unit tests use Tape and [JS Standard](https://github.com/feross/standard) notation.
+Unit tests use AVA, Istanbul [CLI](https://www.npmjs.com/package/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
 ## Contributing
 
@@ -155,6 +154,9 @@ SOFTWARE.
 
 [travis-img]: https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master
 [travis-url]: https://travis-ci.org/revelt/object-boolean-combinations
+
+[cov-img]: https://coveralls.io/repos/github/revelt/object-boolean-combinations/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/revelt/object-boolean-combinations?branch=master
 
 [overall-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/score.svg
 [overall-url]: https://www.bithound.io/github/revelt/object-boolean-combinations
