@@ -4,8 +4,9 @@
   "description": "Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects too.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,9 @@
   },
   "devDependencies": {
     "ava": "*",
-    "coveralls": "^2.11.15",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
     "nyc": "^10.0.0"
   },
   "ava": {
