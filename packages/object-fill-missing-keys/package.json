@@ -4,8 +4,9 @@
   "description": "Add missing keys into plain objects, according to a provided schema object.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,9 @@
   },
   "devDependencies": {
     "ava": "*",
-    "coveralls": "^2.11.15",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
     "nyc": "^10.0.0"
   },
   "ava": {
