@@ -1,0 +1,11 @@
+{
+  "critics": {
+    "lint": {"engine": "standard"}
+  },
+  "dependencies": {
+      "mute": ["ava", "standard", "coveralls"]
+  },
+  "test": [
+    "test.js"
+  ]
+}

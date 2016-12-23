@@ -1,0 +1,45 @@
+{
+  "name": "util-nonempty",
+  "version": "1.0.0",
+  "description": "Is the input (plain object, array, string or whatever) not empty?",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/util-nonempty.git"
+  },
+  "keywords": [
+    "is",
+    "not",
+    "empty",
+    "object",
+    "array",
+    "string",
+    "util"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/util-nonempty/issues"
+  },
+  "homepage": "https://github.com/code-and-send/util-nonempty#readme",
+  "dependencies": {
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.isstring": "^4.0.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
+    "nyc": "^10.0.0"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
