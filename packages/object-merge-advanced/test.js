@@ -980,40 +980,104 @@ test('01.21 - boolean vs undefined merge (#62)', t => {
     '01.21.04')
 })
 
-test('01.22 - zzz (#??)', t => {
+test('01.22 - null vs empty object merge (#74)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
         b: 'b',
-        a: true
+        a: {}
       },
       {
-        a: false
+        a: null
       }
     ),
     {
-      a: true,
+      a: {},
       b: 'b'
     },
     '01.22.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null
+      },
+      {
+        b: 'b',
+        a: {}
+      }
+    ),
+    {
+      a: {},
+      b: 'b'
+    },
+    '01.22.02')
 })
 
-test.skip('01.22 - zzz (#??)', t => {
+test('01.23 - null vs. undefined (#80)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
         b: 'b',
-        a: true
+        a: null
       },
       {
-        a: false
+        a: undefined
       }
     ),
     {
-      a: true,
+      a: null,
       b: 'b'
     },
-    '01.22.01')
+    '01.23.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: undefined
+      },
+      {
+        b: 'b',
+        a: null
+      }
+    ),
+    {
+      a: null,
+      b: 'b'
+    },
+    '01.23.02')
+})
+
+var f = function () {
+  return null
+}
+test('01.24 - no clash, just filling missing values', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b'
+      },
+      {
+        a: f
+      }
+    ),
+    {
+      a: f,
+      b: 'b'
+    },
+    '01.24.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: f
+      },
+      {
+        b: 'b'
+      }
+    ),
+    {
+      a: f,
+      b: 'b'
+    },
+    '01.24.02')
 })
 
 // ==============================

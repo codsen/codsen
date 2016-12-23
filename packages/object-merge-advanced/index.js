@@ -135,19 +135,16 @@ function mergeAdvanced (o1, o2) {
         } else {
           // cases 62-63
         }
-      } else if (o1[key] === undefined) {
-        // cases 64-72
-        o1[key] = o2[key]
-      } else if (o1[key] === null) {
-        // cases 73-81
-        if (o2[key] !== undefined) {
-          // if not case 80
-          o1[key] = o2[key]
-        }
       }
-    } else {
-      // no value clash. easy.
+    } else if (o1[key] === undefined) {
+      // cases 64-72
       o1[key] = o2[key]
+    } else if (o1[key] === null) {
+      // cases 73-81
+      if (o2[key] !== undefined) {
+        // if not, case 80
+        o1[key] = o2[key]
+      }
     }
   })
   return sortObject(o1)
