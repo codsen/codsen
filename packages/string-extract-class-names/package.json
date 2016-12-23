@@ -4,7 +4,9 @@
   "description": "Extract class (or id) name from a string",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
@@ -30,10 +32,14 @@
     "lodash.without": "^4.4.0"
   },
   "devDependencies": {
-    "ava": "*"
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
+    "nyc": "^10.0.0"
   },
   "ava": {
     "tap": false,
-    "verbose": false
+    "verbose": true
   }
 }

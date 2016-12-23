@@ -5,6 +5,7 @@
 > Extract classes (or id's) from a string into an array
 
 [![Build Status][travis-img]][travis-url]
+[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
@@ -88,6 +89,9 @@ SOFTWARE.
 
 [travis-img]: https://travis-ci.org/code-and-send/string-extract-class-names.svg?branch=master
 [travis-url]: https://travis-ci.org/code-and-send/string-extract-class-names
+
+[cov-img]: https://coveralls.io/repos/github/code-and-send/string-extract-class-names/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/code-and-send/string-extract-class-names?branch=master
 
 [overall-img]: https://www.bithound.io/github/code-and-send/string-extract-class-names/badges/score.svg
 [overall-url]: https://www.bithound.io/github/code-and-send/string-extract-class-names

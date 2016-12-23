@@ -23,7 +23,7 @@ function stringExtractClassNames (input) {
   }
   function chopEnding (str) {
     // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
-    return replace(str, /[ \~\\!@$%^&\*\(\)\+\=,/';\:"?><[\]\\{}|`].*/g, '')
+    return replace(str, /[ ~\\!@$%^&*()+=,/';:"?><[\]\\{}|`].*/g, '')
   }
   function existy (x) { return x != null }
   temp = input.split(/([.#])/)
