@@ -56,7 +56,7 @@ console.log(nonEmpty('a'))
 
 ```js
 nonEmpty (
-  input // Array, plain object or string will be checked, rest will be instantly "false", unless input's missing (then returns undefined)
+  input // Array, plain object or string will be checked, rest will be instantly "false", unless input's missing (then returns undefined).
 );
 // => Boolean|undefined
 ```
