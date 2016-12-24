@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/code-and-send/object-fill-missing-keys#readme",
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6"
+    "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",
