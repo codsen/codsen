@@ -1,6 +1,7 @@
 'use strict'
 var intersection = require('lodash.intersection')
 var pull = require('lodash.pull')
+var isObject = require('lodash.isplainobject')
 
 /**
  * Creates an n-length array with all possible combinations of true/false
@@ -21,14 +22,7 @@ function combinations (n) {
 }
 // ===================================
 
-/**
- * Checks if input is a true Object (checking against null and Array)
- * @param {Object} or not object ;)
- * @returns {Boolean} explaining is it Object or not
- */
-function isObject (item) {
-  return (typeof item === 'object' && !Array.isArray(item) && item !== null)
-}
+function existy (x) { return x != null }
 
 /**
  * Checks if input is a true Object (checking against null and Array)
@@ -38,21 +32,24 @@ function isObject (item) {
  */
 function objectBooleanCombinations (incomingObject, overrideObject) {
   var outcomingObjectsArray = []
-  if (incomingObject === void 0) {
+  // ===================================
+  // checks
+
+  if (!existy(incomingObject)) {
     throw new Error('missing input object')
   }
   if (!isObject(incomingObject)) {
-    throw new Error('input must be a true object')
+    throw new Error('the first input object must be a true object')
+  }
+  if (existy(overrideObject) && !isObject(overrideObject)) {
+    throw new Error('the second override object must be a true object')
   }
   var propertiesToMix = Object.keys(incomingObject)
 
   // ===================================
   // if there's override, prepare an alternative (a subset) array propertiesToMix
 
-  if ((overrideObject !== void 0) && !isObject(overrideObject)) {
-    throw new Error('override object must be a true object and nothing else')
-  }
-  if ((overrideObject !== void 0) && isObject(overrideObject)) {
+  if (existy(overrideObject) && isObject(overrideObject)) {
     // check overrideObject's contents - must be Boolean:
     Object.keys(overrideObject).forEach(function (elem5) {
       if (typeof overrideObject[elem5] !== 'boolean') {
@@ -62,7 +59,7 @@ function objectBooleanCombinations (incomingObject, overrideObject) {
   }
 
   var override = false
-  if ((overrideObject !== void 0) && (Object.keys(overrideObject).length !== 0)) {
+  if (existy(overrideObject) && (Object.keys(overrideObject).length !== 0)) {
     override = true
   }
 
