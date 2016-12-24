@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Add missing keys into plain objects, according to a provided schema object.",
   "main": "index.js",
   "scripts": {
