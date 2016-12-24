@@ -33,6 +33,7 @@
   "homepage": "https://github.com/revelt/object-boolean-combinations",
   "dependencies": {
     "lodash.intersection": "^4.4.0",
+    "lodash.isplainobject": "^4.0.6",
     "lodash.pull": "^4.1.0"
   },
   "devDependencies": {
