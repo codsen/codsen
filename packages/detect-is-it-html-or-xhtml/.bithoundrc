@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-      "mute": ["ava"]
+      "mute": ["ava", "standard", "coveralls"]
   },
   "test": [
     "test.js"
