@@ -2,7 +2,7 @@
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Extract classes (or id's) from a string into an array
+> Extract all class and id names from a string and return them in an array
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -19,23 +19,24 @@ $ npm install --save string-extract-class-names
 
 ## Purpose
 
-This library extracts the classes and id's from the string and returns them all put into an array.
+This library extracts the class and id names from the string and returns them all put into an array.
 
-I use `string-extract-class-names` to identify and delete unused CSS selectors in the library [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css) which detects and deletes the unused CSS styles.
 
-Since deleting of people's code is a risky task, a huge responsibility falls onto parts which _identify_ what should be deleted. That's why I extracted the `string-extract-class-names` from the `email-remove-unused-css` and set up a proper test suite.
+Since deleting of people's code is a risky task, a huge responsibility falls onto parts which identify _what should be deleted_, and more importantly, parts which identify _class names and id's_. That's why I extracted the `string-extract-class-names` from the `email-remove-unused-css` and set up a proper test suite.
 
-Currently there 196 checks in `test.js` running on [AVA](https://github.com/avajs/ava). I'm checking all the possible (and impossible) strings in and around the class and id names to be 100% sure **only** correct class and id names are put into the results array.
+Currently there 196 checks in `test.js` running on [AVA](https://github.com/avajs/ava). I'm checking all the possible (and impossible) strings in and around the class and id names to be 100% sure **only** correct class and id names are put into the results array and nothing else.
 
 ## Examples
 
 ```js
 var extract = require('string-extract-class-names')
 
-// chop off tag, then the rest after the space character:
+// two classes and one id extracted:
 extract('div.first.second#third a[target=_blank]')
 // => ['.first', '.second', '#third']
 
+// six id's extracted (works even despite the nonsensical question mark characters):
 extract('?#id1#id2? #id3#id4> p > #id5#id6')
 // => ['#id1', '#id2', '#id3', '#id4', '#id5', '#id6']
 ```
@@ -67,7 +68,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2016 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
