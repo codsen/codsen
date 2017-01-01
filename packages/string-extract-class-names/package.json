@@ -6,7 +6,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "snazzy && nyc --reporter=html --reporter=text ava"
+    "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
