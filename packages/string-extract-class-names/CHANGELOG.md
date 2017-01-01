@@ -60,7 +60,7 @@ There is no second argument any more, to choose between id's or classes. Since a
 
 This library will detect the first clump of class(es)/array(s), will put each into an array, discarding everything else around.
 
-[3.0.0]: https://github.com/code-and-send/detergent/compare/v2.2.0...v3.0.0
-[3.1.0]: https://github.com/code-and-send/detergent/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/code-and-send/detergent/compare/v3.1.0...v3.2.0
-[3.3.0]: https://github.com/code-and-send/detergent/compare/v3.2.0...v3.3.0
+[3.0.0]: https://github.com/code-and-send/string-extract-class-names/compare/v2.2.0...v3.0.0
+[3.1.0]: https://github.com/code-and-send/string-extract-class-names/compare/v3.0.0...v3.1.0
+[3.2.0]: https://github.com/code-and-send/string-extract-class-names/compare/v3.1.0...v3.2.0
+[3.3.0]: https://github.com/code-and-send/string-extract-class-names/compare/v3.2.0...v3.3.0
