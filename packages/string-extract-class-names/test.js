@@ -788,3 +788,29 @@ test('04.01 - no params', t => {
     e(undefined)
   })
 })
+
+// ==============================
+// encoded strings given by JS
+// discovered working on emailcomb.com
+// ==============================
+
+test('05.01 - encoded line breaks', t => {
+  t.deepEqual(
+    e('#unused-1\n\n\n\n\t\t\t\t\nz\t\ta'),
+    ['#unused-1'],
+    '05.01')
+})
+
+test('05.02 - recognises JS escaped strings and repeated dots & hashes', t => {
+  t.deepEqual(
+    e('\naaa\n...    .unused-1\n\n\n.unused-2, .unused-3\n\t\t,,,\t###\t\nz\t\ta'),
+    ['.unused-1', '.unused-2', '.unused-3'],
+    '05.02')
+})
+
+test('05.03 - doesn\'t accept one character long classes and id\'s', t => {
+  t.deepEqual(
+    e('.a #b .c .1 .cl #zz'),
+    ['.cl', '#zz'],
+    '05.03')
+})

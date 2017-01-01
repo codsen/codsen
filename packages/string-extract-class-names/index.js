@@ -26,6 +26,7 @@ function stringExtractClassNames (input) {
     return replace(str, /[ ~\\!@$%^&*()+=,/';:"?><[\]\\{}|`].*/g, '')
   }
   function existy (x) { return x != null }
+  input = input.replace(/[\0'"\\\n\r\v\t\b\f]/g, ' ')
   temp = input.split(/([.#])/)
   // now each full stop or hash are put as a separate element.
   // let's join them back to the next element that follows them
@@ -41,6 +42,11 @@ function stringExtractClassNames (input) {
     temp[i] = without(chopEnding(chopBeginning(temp[i])).split(/([.#][^.#]*)/), '')
   })
   temp = flattenDeep(temp)
+  // finally, remove all class names that are not according to spec (1 char length etc)
+  temp = without(temp, '.', '#')
+  temp = temp.filter(function (val) {
+    return val.length > 2
+  })
   return temp
 }
 
