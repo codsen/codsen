@@ -1,0 +1,53 @@
+{
+  "name": "color-shorthand-hex-to-six-digit",
+  "version": "1.0.0",
+  "description": "Convert shorthand hex color codes into full",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/color-shorthand-hex-to-six-digit.git"
+  },
+  "keywords": [
+    "color",
+    "colour",
+    "shorthand",
+    "hex",
+    "code",
+    "convert",
+    "six",
+    "characters",
+    "long",
+    "codes",
+    "hexadecimal",
+    "email",
+    "newsletters"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit/issues"
+  },
+  "homepage": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit#readme",
+  "dependencies": {
+    "hex-color-regex": "^1.0.3",
+    "lodash.isplainobject": "*",
+    "lodash.isstring": "*"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "nyc": "*",
+    "snazzy": "*",
+    "standard": "*"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  }
+}
