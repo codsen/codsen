@@ -2,7 +2,7 @@
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Convert shorthand hex colour codes into full
+> Convert shorthand hex colour codes into full. #abc => #aabbcc
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
