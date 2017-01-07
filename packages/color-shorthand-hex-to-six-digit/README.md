@@ -19,20 +19,20 @@ $ npm install --save color-shorthand-hex-to-six-digit
 
 ## Purpose
 
-Email newsletters use a lot of styling using HTML attributes, for example, `<td bgcolor='#CCCCCC'>`. As you know, there is alternative way to write color codes in HEX — [shorthand](https://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form), for example, `<td bgcolor='#CCC'>`.
+Email newsletters use a lot of styling using HTML attributes, for example, `<td bgcolor='#cccccc'>`. As you know, there is alternative way to write color codes in HEX — [shorthand](https://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form), for example, `<td bgcolor='#ccc'>`.
 
 Certain contemporary email consumption software doesn't accept shorthand hex colour codes, what means you have to ensure all your email templates use **only full-length colour codes**. Some tooling libraries that work with SASS shorten the colour hex codes, and that's a best practice for web development, but not for email. We need a tool/library which could convert any shorthand hex codes from any input (array, plain object or string) into full notation.
 
 `color-shorthand-hex-to-six-digit` is an internal library either to be used in JS applications, or as a core dependency for plugins (Gulp) or CLI JS applications.
 
-This library takes any input: **array** (of strings, plain objects, other arrays or whatever nested), **plain object** (containing anything in values, including nested plain objects, arrays or strings) or **string**, traverses it and converts all found shorthand hex colour codes into full-length.
+This library takes any input: **array** (of strings, plain objects, other arrays or nested combination thereof), **plain object** (containing anything in values, including nested plain objects, arrays or strings) or **string**. Once received, it traverses the input and converts all found shorthand hex colour codes (#abc) into full-length (#aabbcc).
 
 ## Concept
 
 Here's the idea of this library:
-* `color-shorthand-hex-to-six-digit` is one-way only: whatever the hex code is accepted, but all and only shorthand is coverted to full-hand.
+* `color-shorthand-hex-to-six-digit` is one-way only: any the hex code is accepted, but all and only shorthand is converted to full-hand.
 * `color-shorthand-hex-to-six-digit` doesn't throw errors when it encounters full hex codes (or, for actually, even stupid things in the input — simply returns them back)
-* `color-shorthand-hex-to-six-digit` is AST-ready and accept whatever, including nested spaghetti trees, not just strings. You can pass anything: plain objects, arrays or strings — that's fine, shorthand hex'es will be found and converted.
+* `color-shorthand-hex-to-six-digit` is AST-ready and accept whatever, including nested spaghetti trees, not just strings. You can pass anything: plain objects, arrays or strings — that's fine, shorthand hexes will be found and converted.
 * if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it back. This is on purpose, to play well inside other libraries.
 
 ## Examples
@@ -91,7 +91,7 @@ conv(
   input  // Anything: array, plain object or string or anything else
 )
 // => Anything, with all shorthand hex occurrences inside of it, converted to full hand.
-// if input is of an unrecognised type (array, plain object or string), it will be returned without errors.
+// if an input is of an unrecognised type (array, plain object or string), it will be returned without errors.
 ```
 
 ## Testing, linting and coverage
