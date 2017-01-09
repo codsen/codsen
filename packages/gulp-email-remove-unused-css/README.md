@@ -12,6 +12,10 @@
 
 _If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css/issues) issue tracker._
 
+* Online web app: [EmailComb](https://emailcomb.com)
+* PostHTML plugin: [posthtml-email-remove-unused-css](https://github.com/code-and-send/posthtml-email-remove-unused-css/)
+* The core library: [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+
 ## Install
 
 Install using npm:
@@ -84,7 +88,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2016 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
