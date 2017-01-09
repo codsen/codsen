@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.0] - 2017-01-06
+## [1.1.0] - 2017-01-09
+
+### Added
+- All hex codes, three and six digits long, are converted to lowercase. This is to prevent case mismatches.
+- Test 05.01 to prove this works as intended.
+
+## 1.0.0 - 2017-01-06
 
 Initial release. 100% test coverage.
+
+
+[1.1.0]: https://github.com/code-and-send/color-shorthand-hex-to-six-digit/compare/v1.0.0...v1.1.0

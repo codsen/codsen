@@ -12,9 +12,13 @@ function convert (input) {
     }
     return hex
   }
+  function toLowerCase (match) {
+    return match.toLowerCase()
+  }
   // action
   if (isString(input)) {
     input = input.replace(r(), toFullHex)
+    input = input.replace(r(), toLowerCase)
   } else if (isArray(input)) {
     for (var i = 0, len = input.length; i < len; i++) {
       input[i] = convert(input[i])

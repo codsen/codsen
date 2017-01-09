@@ -168,3 +168,14 @@ test('04.05 - no input - returned undefined', t => {
     undefined,
     '04.05')
 })
+
+// ==============================
+// 05. Enforces all hexes to be lowercase only
+// ==============================
+
+test('05.01 - fixes mixed case three and six digit hexes', t => {
+  t.deepEqual(
+    c('aaaa #cCccCc zzzz\n\t\t\t#ffF.'),
+    'aaaa #cccccc zzzz\n\t\t\t#ffffff.',
+    '05.01')
+})

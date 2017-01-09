@@ -35,6 +35,8 @@ Here's the idea of this library:
 * `color-shorthand-hex-to-six-digit` is AST-ready and accept whatever, including nested spaghetti trees, not just strings. You can pass anything: plain objects, arrays or strings — that's fine, shorthand hexes will be found and converted.
 * if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it back. This is on purpose, to play well inside other libraries.
 
+Additionally, all letters in all hex codes are converted to lowercase.
+
 ## Examples
 
 ```js
