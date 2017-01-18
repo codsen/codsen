@@ -72,6 +72,30 @@ function stringise (incoming) {
   return incoming
 }
 
+// ===========================
+
+function iterateLeft (elem, arrSource, foundBeginningIndex) {
+  var matched = true
+  toArray(elem).forEach(function (elem2, i2) {
+    // iterate each character of particular Outside:
+    if (elem2 !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
+      matched = false
+    }
+  })
+  return matched
+}
+
+function iterateRight (elem, arrSource, foundEndingIndex) {
+  var matched = true
+  toArray(elem).forEach(function (elem2, i2) {
+    // iterate each character of particular Outside:
+    if (elem2 !== arrSource[foundEndingIndex + i2]) {
+      matched = false
+    }
+  })
+  return matched
+}
+
 //                      ____
 //       bug hammer    |    |
 //   O=================|    |
@@ -155,13 +179,7 @@ module.exports = function (source, options, replacement) {
       found = false
       o.leftOutside.forEach(function (elem, i) {
         // iterate each of the outsides in the array:
-        matched = true
-        toArray(elem).forEach(function (elem2, i2) {
-          // iterate each character of particular Outside:
-          if (elem2 !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
-            matched = false
-          }
-        })
+        matched = iterateLeft(elem, arrSource, foundBeginningIndex)
         if (matched) {
           found = true
         }
@@ -176,13 +194,7 @@ module.exports = function (source, options, replacement) {
       found = false
       o.rightOutside.forEach(function (elem, i) {
         // iterate each of the outsides in the array:
-        matched = true
-        toArray(elem).forEach(function (elem2, i2) {
-          // iterate each character of particular Outside:
-          if (elem2 !== arrSource[foundEndingIndex + i2]) {
-            matched = false
-          }
-        })
+        matched = iterateRight(elem, arrSource, foundEndingIndex)
         if (matched) {
           found = true
         }
@@ -194,16 +206,9 @@ module.exports = function (source, options, replacement) {
     }
     // ===================== leftOutsideNot =====================
     if (o.leftOutsideNot[0] !== '') {
-      found = false
       o.leftOutsideNot.forEach(function (elem, i) {
         // iterate each of the outsides in the array:
-        matched = true
-        toArray(elem).forEach(function (elem2, i2) {
-          // iterate each character of particular Outside:
-          if (elem2 !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
-            matched = false
-          }
-        })
+        matched = iterateLeft(elem, arrSource, foundBeginningIndex)
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
@@ -212,16 +217,9 @@ module.exports = function (source, options, replacement) {
     }
     // ===================== rightOutsideNot =====================
     if (o.rightOutsideNot[0] !== '') {
-      found = false
       o.rightOutsideNot.forEach(function (elem, i) {
         // iterate each of the outsides in the array:
-        matched = true
-        toArray(elem).forEach(function (elem2, i2) {
-          // iterate each character of particular Outside:
-          if (elem2 !== arrSource[foundEndingIndex + i2]) {
-            matched = false
-          }
-        })
+        matched = iterateRight(elem, arrSource, foundEndingIndex)
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
