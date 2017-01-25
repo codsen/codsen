@@ -3,10 +3,12 @@
 // ===================================
 // V A R S
 
-const _ = require('lodash')
 const glob = require('glob-fs')({gitignore: true})
 const fs = require('fs')
 const Plates = require('plates')
+const split = require('lodash.split')
+const trimEnd = require('lodash.trimend')
+const trimStart = require('lodash.trimstart')
 
 // ===================================
 // F U N C T I O N S
@@ -19,23 +21,24 @@ function existy (x) { return x != null };
 module.exports = function homey (input, imgName) {
   // ==============
   // precaution for input
-  if ((!existy(input)) || (typeof input !== 'string')) {
-    return
+  if (!existy(input) || (typeof input !== 'string')) {
+    throw new Error('Current error is not string, it\'s: ' + typeof input)
   }
   // precaution for imgName
-  imgName = imgName || 'screenshot.png'
-  if ((!existy(imgName)) || (typeof imgName !== 'string')) {
+  if (!existy(imgName) || (typeof imgName !== 'string')) {
     imgName = 'screenshot.png'
   }
+  input = trimEnd(trimStart(input, ' \\/.'), ' \\/.')
   // ==============
   // action
   // see https://github.com/flatiron/plates
   var collection = []
   // ==============
   // get folders list (array):
-  var foldersArray = glob.readdirSync(_.trimEnd(input, '/') + '/**/', {})
+
+  var foldersArray = glob.readdirSync(input + '/**/')
   foldersArray.forEach(function (rawFolderPath, i) {
-    foldersArray[i] = _.split(rawFolderPath, '/')[1]
+    foldersArray[i] = split(rawFolderPath, '/')[1]
   })
   // ==============
   // read each folder, if index.html present, create collection item; then if (optional) screenshot.jpg present, add it too
@@ -51,7 +54,6 @@ module.exports = function homey (input, imgName) {
         try {
           // existence of screenshot.*
           var imgPath = input + '/' + pathToFile + '/' + imgName
-          // console.log('imgPath = ' + JSON.stringify(imgPath, null, 4))
           fs.accessSync(imgPath, fs.F_OK)
           temp.screenshot = '/' + pathToFile + '/' + imgName
         } catch (e) {
@@ -67,7 +69,10 @@ module.exports = function homey (input, imgName) {
       }
     })
   }
-  // console.log('collection = ' + JSON.stringify(collection, null, 4))
+  if (collection.length === 0) {
+    // console.log('No files found, skipping!')
+    return
+  }
   // ==============
   // reading in the template file
   try {

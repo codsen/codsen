@@ -3,7 +3,10 @@
   "version": "1.4.0",
   "description": "Generate homepage in the Browsersync root with links/screenshots of all your templates",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "precommit": "npm test",
+    "test": "standard"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/code-and-send/email-homey.git"
@@ -31,10 +34,14 @@
   "homepage": "https://github.com/code-and-send/email-homey#readme",
   "dependencies": {
     "glob-fs": "^0.1.6",
-    "lodash": "^4.16.6",
+    "lodash.split": "*",
+    "lodash.trimend": "*",
+    "lodash.trimstart": "*",
     "plates": "^0.4.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "husky": "^0.13.1"
+  },
   "ava": {
     "tap": false,
     "verbose": true
