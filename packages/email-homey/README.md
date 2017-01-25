@@ -114,9 +114,9 @@ gulp.task('default', (callback) => {
 })
 ```
 
-The homepage will be assembled from two parts: 1) main template (`template.html` in the root of this package) and 2) template for a single thumbnail which will be loop'ed many times and contain each of your thumbnails/templates.
+The homepage will be assembled from two parts: 1) main template (`template.html` in the root folder of this package) and 2) template for a single thumbnail (`loop-me.html` in the root folder of this package) which will be loop'ed many times and contain each of your thumbnails/templates.
 
-Both files must be placed in the root of your template folder. Feel free to customise them.
+Both files must be placed in the root of your template folder. Feel free to customise them, just keep the classes on the tags because that's how the JS selects the tags to place the content inside of them.
 
 ## Contributing & testing
 
