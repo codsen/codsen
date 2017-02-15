@@ -365,7 +365,7 @@ data.gatherPath = [
 -----------
 ```
 
-## Unit testing and code coverage
+## Unit testing and testing the code coverage
 
 ```bash
 $ npm test
