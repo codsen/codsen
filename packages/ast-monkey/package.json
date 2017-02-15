@@ -1,0 +1,58 @@
+{
+  "name": "ast-monkey",
+  "version": "1.0.0",
+  "description": "Utility library for operations on parsed HTML (AST's)",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-and-send/ast-monkey.git"
+  },
+  "keywords": [
+    "ast",
+    "by",
+    "delete",
+    "drop",
+    "from",
+    "html",
+    "key",
+    "object",
+    "plain",
+    "parser",
+    "posthtml",
+    "posthtml-tree",
+    "posthtmltree",
+    "tree",
+    "xml",
+    "value"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/ast-monkey/issues"
+  },
+  "homepage": "https://github.com/code-and-send/ast-monkey#readme",
+  "dependencies": {
+    "lodash.isequal": "*",
+    "lodash.isplainobject": "*",
+    "object-assign": "*"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.12.0",
+    "standard": "*",
+    "nyc": "^10.0.0"
+  },
+  "ava": {
+    "tap": false,
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}

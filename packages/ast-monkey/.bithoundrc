@@ -1,0 +1,11 @@
+{
+  "critics": {
+    "lint": {"engine": "standard"}
+  },
+  "dependencies": {
+      "mute": ["ava", "standard", "coveralls", "object-assign", "lodash.isequal", "lodash.isplainobject"]
+  },
+  "test": [
+    "test.js"
+  ]
+}
