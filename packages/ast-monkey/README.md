@@ -406,6 +406,22 @@ Output           | Type             | Description
 
 **Use example**
 
+Let's say you want to delete all key/value pairs from objects that have a key equal to 'c'. Value does not matter.
+
+```js
+const monkey = require('ast-monkey')
+var input = {
+  a: {b: [{c: {d: 'e'}}]},
+  c: {d: ['h']}
+}
+var key = 'c'
+var result = monkey.del(input, {key: key})
+console.log('result = ' + JSON.stringify(result, null, 4))
+// => {
+//      a: {b: [{}]}
+//    }
+```
+
 ## Unit testing and code coverage
 
 ```bash
