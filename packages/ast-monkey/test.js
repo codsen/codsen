@@ -446,10 +446,7 @@ test('03.01 - gets from a simple object #1', t => {
   index = 1
   actual = get(input, {index: index})
   intended = {
-    pos: 1,
-    key: 'a',
-    val: {b: 'c'},
-    path: [1]
+    a: {b: 'c'}
   }
   t.deepEqual(
     actual,
@@ -466,10 +463,7 @@ test('03.02 - gets from a simple object #2', t => {
   index = 2
   actual = get(input, {index: index})
   intended = {
-    pos: 2,
-    key: 'b',
-    val: 'c',
-    path: [1, 2]
+    b: 'c'
   }
   t.deepEqual(
     actual,
@@ -485,12 +479,7 @@ test('03.03 - gets from a simple object #3', t => {
   }
   index = 3
   actual = get(input, {index: index})
-  intended = {
-    pos: 3,
-    key: 'c',
-    val: null,
-    path: [1, 2, 3]
-  }
+  intended = 'c'
   t.deepEqual(
     actual,
     intended,
@@ -516,12 +505,7 @@ test('03.05 - gets from a simple array', t => {
   input = ['a', [['b'], 'c']]
   index = 4
   actual = get(input, {index: index})
-  intended = {
-    pos: 4,
-    key: 'b',
-    path: [2, 3, 4],
-    val: null
-  }
+  intended = 'b'
   t.deepEqual(
     actual,
     intended,
@@ -536,10 +520,7 @@ test('03.06 - gets from mixed nested things, index string', t => {
   index = '7'
   actual = get(input, {index: index})
   intended = {
-    pos: 7,
-    key: 'g',
-    val: ['h'],
-    path: [6, 7]
+    g: ['h']
   }
 
   t.deepEqual(

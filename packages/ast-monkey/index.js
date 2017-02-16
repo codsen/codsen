@@ -94,10 +94,12 @@ function monkey (input, opts) {
       if (
         (opts.mode === 'get' && (data.count === opts.index))
       ) {
-        data.finding = data.finding || []
-        temp = { pos: data.count, key: key, path: [...data.gatherPath] }
-        temp.val = existy(val) ? val : null
-        data.finding = objectAssign({}, temp)
+        if (existy(val)) {
+          data.finding = {}
+          data.finding[key] = val
+        } else {
+          data.finding = key
+        }
       }
     } else if (opts.mode === 'find') {
       if ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (!ko && !vo && (key === opts.key) && (isEqual(val, opts.val)))) {

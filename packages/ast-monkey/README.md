@@ -107,16 +107,7 @@ Options object   | Type                      | Obligatory? | Description
 
 **Output**
 
-Output           | Type             | Description
------------------|------------------|-------------
-{                |                  |
-pos              | Number           | Mirrors the queried index. Same thing.
-key              | String           | The found object's/array's key
-val              | Whatever or Null | The found object's value/null if it's an array
-path             | Array            | The found object's path: indexes of all its parents, starting from the topmost. The found key/value pair's address will be the last element on the `path` array.
-}                |                  |
-
-If the finding is an element of an array, the `val` will be set to `null`.
+The `monkey.get()` returns object, array or `null`, depending what index was matched (or not).
 
 **Use example**
 
