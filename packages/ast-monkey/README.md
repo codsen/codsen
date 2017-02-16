@@ -124,10 +124,7 @@ var index = 2
 var result = monkey.get(input, {index: index})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => {
-//      pos: 2,
-//      key: 'b',
-//      val: 'c',
-//      path: [1, 2]
+//      b: 'c'
 //    }
 ```
 
