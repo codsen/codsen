@@ -1,6 +1,6 @@
 'use strict'
 
-import { find, get, set, drop, info } from './index'
+import { find, get, set, drop, info, del } from './index'
 
 import test from 'ava'
 var actual, intended, key, val, index
@@ -86,6 +86,15 @@ test('01.08 - find - throws when opts.key and opts.val are missing', t => {
   })
   t.throws(function () {
     find(input, {index: 3})
+  })
+})
+
+test('01.09 - del - throws when opts.key and opts.val are missing', t => {
+  t.throws(function () {
+    del(input, {index: '3'})
+  })
+  t.throws(function () {
+    del(input, {index: 3})
   })
 })
 
@@ -700,4 +709,133 @@ test('06.01 - info returns undefined', t => {
     actual,
     intended,
     '06.01')
+})
+
+// -----------------------------------------------------------------------------
+// del
+// -----------------------------------------------------------------------------
+
+test('07.01 - deletes by key, multiple findings', t => {
+  input = {
+    a: {b: [{c: {d: 'e'}}]},
+    c: {d: ['h']}
+  }
+  key = 'c'
+  actual = del(input, {key: key})
+  intended = {
+    a: {b: [{}]}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.01')
+})
+
+test('07.02 - deletes by key, multiple findings at the same branch', t => {
+  input = {
+    a: {b: [{c: {c: 'e'}}]},
+    c: {d: ['h']}
+  }
+  key = 'c'
+  actual = del(input, {key: key})
+  intended = {
+    a: {b: [{}]}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.02')
+})
+
+test('07.03 - can\'t find any to delete by key', t => {
+  input = {
+    a: {b: [{c: {c: 'e'}}]},
+    c: {d: ['h']}
+  }
+  key = 'zzz'
+  actual = del(input, {key: key})
+  intended = {
+    a: {b: [{c: {c: 'e'}}]},
+    c: {d: ['h']}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.03')
+})
+
+test('07.04 - deletes by value only from mixed', t => {
+  input = {
+    a: {b: [{ktjyklrjtyjlkl: {c: 'e'}}]},
+    dflshgdlfgh: {c: 'e'}
+  }
+  val = {c: 'e'}
+  actual = del(input, {val: val})
+  intended = {
+    a: {b: [{}]}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.04')
+})
+
+test('07.05 - deletes by value only from arrays', t => {
+  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
+  key = 'b'
+  actual = del(input, {key: key})
+  intended = ['a', 'c', ['a', [], 'c']]
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.05')
+})
+
+test('07.06 - deletes by value only from arrays', t => {
+  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
+  key = 'b'
+  actual = del(input, {key: key})
+  intended = ['a', 'c', ['a', [], 'c']]
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.06')
+})
+
+test('07.07 - deletes by key and value from mixed', t => {
+  input = {
+    a: {b: [{c: {d: {e: 'f'}}}]},
+    f: {d: {zzz: 'f'}}
+  }
+  key = 'd'
+  val = {e: 'f'}
+  actual = del(input, {key: key, val: val})
+  intended = {
+    a: {b: [{c: {}}]},
+    f: {d: {zzz: 'f'}}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.07')
+})
+
+test('07.08 - does not delete by key and value from arrays', t => {
+  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
+  key = 'b'
+  val = 'zzz'
+  actual = del(input, {key: key, val: val})
+  intended = ['a', 'b', 'c', ['a', ['b'], 'c']]
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.08')
 })

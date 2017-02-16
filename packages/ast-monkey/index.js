@@ -47,11 +47,14 @@ function monkey (input, opts) {
   if ((opts.mode === 'get' || opts.mode === 'set') && !existy(opts.index)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide opts.index')
   }
-  if (opts.mode === 'set' && !existy(opts.key) && !existy(opts.val)) {
+  if ((opts.mode === 'set') && !existy(opts.key) && !existy(opts.val)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide opts.val')
   }
   if (opts.mode === 'set' && existy(opts.key) && !existy(opts.val)) {
     opts.val = opts.key
+  }
+  if ((opts.mode === 'del') && !existy(opts.key) && !existy(opts.val)) {
+    throw new Error('ast-monkey/index.js/monkey(): Please provide opts.key or opts.val')
   }
   if (opts.mode === 'find' && !existy(opts.key) && !existy(opts.val)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide opts.key or opts.val')
@@ -101,7 +104,7 @@ function monkey (input, opts) {
           data.finding = key
         }
       }
-    } else if (opts.mode === 'find') {
+    } else if (opts.mode === 'find' || opts.mode === 'del') {
       if ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (!ko && !vo && (key === opts.key) && (isEqual(val, opts.val)))) {
         if (DEBUG || opts.mode === 'info') { console.log('\n\nfound: ' + key + ' = ' + JSON.stringify(val, null, 4)) }
         temp = {}
@@ -121,6 +124,8 @@ function monkey (input, opts) {
       return opts.val
     } else if (opts.mode === 'drop' && data.count === opts.index) {
       return null
+    } else if (opts.mode === 'del' && ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (key === opts.key && isEqual(val, opts.val)))) {
+      return null
     } else {
       return existy(val) ? val : key
     }
@@ -131,7 +136,7 @@ function monkey (input, opts) {
     return
   } else if (opts.mode === 'get') {
     return data.finding
-  } else if (opts.mode === 'set' || opts.mode === 'drop') {
+  } else if (opts.mode === 'set' || opts.mode === 'drop' || opts.mode === 'del') {
     return input
   } else if (opts.mode === 'find') {
     return findings.length > 0 ? findings : null
@@ -167,6 +172,9 @@ function drop (input, opts) {
 function info (input, opts) {
   return monkey(input, objectAssign(prep(opts), { mode: 'info' }))
 }
+function del (input, opts) {
+  return monkey(input, objectAssign(prep(opts), { mode: 'del' }))
+}
 
 // -----------------------------------------------------------------------------
 
@@ -175,5 +183,6 @@ module.exports = {
   get: get,
   set: set,
   drop: drop,
-  info: info
+  info: info,
+  del: del
 }

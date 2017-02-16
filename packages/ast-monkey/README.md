@@ -11,6 +11,27 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+  - [.find()](#find)
+  - [.get()](#get)
+  - [.set()](#set)
+  - [.drop()](#drop)
+  - [.info()](#info)
+  - [.del()](#del)
+- [Unit testing and code coverage](#unit-testing-and-code-coverage)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```bash
@@ -25,7 +46,9 @@ Working with parsed HTML AST trees is hard when you want to go "up" the branches
 
 Once you know the index, you can delete the particular piece of AST (method `drop()`) or overwrite (method `set()`). You can also perform searches by object's/array's `key`, `value` or both (method `find()`). You can retrieve all contents of any piece of AST by index (method `get()`) or list all indexes (method `info()`).
 
-### API - .find()
+## API
+
+### .find()
 
 Method `monkey.find()` can search objects/arrays by key or by value or by both and return the indexes path to an each finding.
 
@@ -36,7 +59,7 @@ Method `monkey.find()` can search objects/arrays by key or by value or by both a
 Input argument   | Type             | Obligatory? | Description
 -----------------|------------------|-------------|--------------
 `input`          | Whatever         | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
-`options`        | Object           | yes         | Options object containing an obligatory key `index`. See below.
+`options`        | Object           | yes         | Options object. See below.
 
 Options object's key  | Type             | Obligatory?                  | Description
 ----------------------|------------------|------------------------------|-------------
@@ -84,7 +107,7 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
-### API - .get()
+### .get()
 
 Use method `monkey.get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `monkey.find()` or you can pick a number manually, possibly choosing one of the indexes from `monkey.info()` output.
 
@@ -97,7 +120,7 @@ Practically, `monkey.get()` is typically used on each element of the findings ar
 Input argument   | Type                      | Obligatory? | Description
 -----------------|---------------------------|-------------|-------------
 `input`          | Whatever                  | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
-`options`        | Object                    | yes         | Options object containing an obligatory key `index`. See below.
+`options`        | Object                    | yes         | Options object. See below.
 
 Options object   | Type                      | Obligatory? | Description
 -----------------|---------------------------|-------------|-------------
@@ -130,7 +153,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
 
-### API - .set()
+### .set()
 
 Use method `monkey.set()` to overwrite a piece of an AST with a known index.
 
@@ -138,10 +161,10 @@ Use method `monkey.set()` to overwrite a piece of an AST with a known index.
 
 **Input**
 
-Input argument   | Type                  | Obligatory? | Description
------------------|-----------------------|-------------|-------------
-`input`          | Whatever              | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
-`options`        | Object                | yes         | Options object containing an obligatory key `index`. See below.
+Input argument   | Type            | Obligatory? | Description
+-----------------|-----------------|-------------|-------------
+`input`          | Whatever        | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
+`options`        | Object          | yes         | Options object. See below.
 
 Options object   | Type                       | Obligatory? | Description
 -----------------|----------------------------|-------------|-------------
@@ -176,7 +199,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-### API - .drop()
+### .drop()
 
 Use method `monkey.drop()` to delete a piece of an AST with a known index.
 
@@ -187,13 +210,13 @@ Use method `monkey.drop()` to delete a piece of an AST with a known index.
 Input argument   | Type                      | Obligatory? | Description
 -----------------|---------------------------|-------------|-------------
 `input`          | Whatever                  | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
-`options`        | Object                    | yes         | Options object containing an obligatory key `index`. See below.
+`options`        | Object                    | yes         | Options object. See below.
 
-Options object   | Type                       | Obligatory? | Description
------------------|----------------------------|-------------|-------------
-{                |                            |             |
-`index`          | Number or number-as-string | yes         | Index number of piece of AST you want the monkey to delete for you.
-}                |                            |             |
+Options object's key | Type                       | Obligatory? | Description
+---------------------|----------------------------|-------------|-------------
+{                    |                            |             |
+`index`              | Number or number-as-string | yes         | Index number of piece of AST you want the monkey to delete for you.
+}                    |                            |             |
 
 **Output**
 
@@ -220,7 +243,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-### API - .info()
+### .info()
 
 Use method `monkey.info()` to list each index and its contents on the command line. It's mainly for testing purposes.
 
@@ -353,7 +376,37 @@ data.gatherPath = [
 -----------
 ```
 
-## Unit testing and testing the code coverage
+### .del()
+
+Use method `monkey.del()` to delete all chosen key/value pairs from all objects found within an AST, or all chosen elements from all arrays.
+
+---
+
+**Input**
+
+Input argument   | Type                      | Obligatory? | Description
+-----------------|---------------------------|-------------|-------------
+`input`          | Whatever                  | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
+`options`        | Object                    | yes         | Options object. See below.
+
+Options object's key  | Type             | Obligatory?                  | Description
+----------------------|------------------|------------------------------|-------------
+{                     |                  |                              |
+`key`                 | String           | at least one, `key` or `val` | All keys in objects or elements in arrays will be selected for deletion
+`val`                 | Whatever         | at least one, `key` or `val` | All object key/value pairs having this value will be selected for deletion
+}                     |                  |                              |
+
+If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match, otherwise key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
+
+**Output**
+
+Output           | Type             | Description
+-----------------|------------------|--------------------
+`input`          | Same as `input`  | The amended `input`
+
+**Use example**
+
+## Unit testing and code coverage
 
 ```bash
 $ npm test
@@ -371,7 +424,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
