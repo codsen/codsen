@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
+    "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-and-send/object-merge-advanced.git"
+    "url": "https://github.com/code-and-send/object-merge-advanced.git"
   },
   "keywords": [
     "ast",
@@ -29,18 +29,18 @@
   },
   "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6",
-    "lodash.isstring": "^4.0.1"
+    "lodash.isplainobject": "*",
+    "lodash.isstring": "*"
   },
   "devDependencies": {
     "ava": "*",
-    "coveralls": "^2.11.15",
-    "husky": "^0.12.0",
-    "nyc": "^10.0.0",
+    "coveralls": "*",
+    "doctoc": "*",
+    "husky": "*",
+    "nyc": "*",
     "standard": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
