@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2017-02-17
+### Added
+- Table of Contents to README
+
+### Tweaked
+- Updated company's name
+- Updated dep version ranges to consume latest in package.json
+- Updated BitHound config accordingly too
+- Added extension to LICENSE
+
 ## [1.5.0] - 2017-01-25
 ### Added
 - Calling Lodash functions each separately, to cut the total file size
@@ -12,4 +22,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improved Readme
 - Set up JS Standard check on Husky calling on all commits (and failing commit if any files don't pass JS Standard)
 
-[1.5.0]: https://github.com/code-and-send/email-homey/compare/v1.5.0...v1.4.0
+[1.6.0]: https://github.com/code-and-send/email-homey/compare/v1.5.0...v1.6.0
+[1.5.0]: https://github.com/code-and-send/email-homey/compare/v1.4.0...v1.5.0

@@ -6,6 +6,22 @@
 
 [![bitHound Score](https://www.bithound.io/github/code-and-send/email-homey/badges/score.svg)](https://www.bithound.io/github/code-and-send/email-homey) [![bitHound Dependencies](https://www.bithound.io/github/code-and-send/email-homey/badges/dependencies.svg)](https://www.bithound.io/github/code-and-send/email-homey/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/code-and-send/email-homey/badges/devDependencies.svg)](https://www.bithound.io/github/code-and-send/email-homey/master/dependencies/npm)
 
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Purpose](#purpose)
+- [Getting the screenshots of the templates](#getting-the-screenshots-of-the-templates)
+- [API](#api)
+- [Use](#use)
+- [Contributing & testing](#contributing--testing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```sh
@@ -130,7 +146,7 @@ If you see anything incorrect whatsoever, [raise an issue](https://github.com/co
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

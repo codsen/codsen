@@ -4,12 +4,12 @@
   "description": "Generate homepage in the Browsersync root with links/screenshots of all your templates",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm test",
+    "precommit": "npm test && doctoc README.md",
     "test": "standard"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-and-send/email-homey.git"
+    "url": "https://github.com/code-and-send/email-homey.git"
   },
   "keywords": [
     "email",
@@ -33,17 +33,17 @@
   },
   "homepage": "https://github.com/code-and-send/email-homey#readme",
   "dependencies": {
-    "glob-fs": "^0.1.6",
+    "glob-fs": "*",
     "lodash.split": "*",
     "lodash.trimend": "*",
     "lodash.trimstart": "*",
     "plates": "^0.4.11"
   },
   "devDependencies": {
-    "husky": "^0.13.1"
+    "doctoc": "*",
+    "husky": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
