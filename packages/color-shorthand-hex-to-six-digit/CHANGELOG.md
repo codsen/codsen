@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2017-02-17
+
+### Added
+- Table of Contents in README
+
+### Tweaked
+- Set up blanket deps ranges because it's tedious to update them and these deps never breaking-change
+- Updated company name in README and LICENSE
+
 ## [1.1.0] - 2017-01-09
 
 ### Added
@@ -16,4 +25,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 Initial release. 100% test coverage.
 
 
+[1.2.0]: https://github.com/code-and-send/color-shorthand-hex-to-six-digit/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/code-and-send/color-shorthand-hex-to-six-digit/compare/v1.0.0...v1.1.0
