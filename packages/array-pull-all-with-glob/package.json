@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-and-send/array-pull-all-with-glob.git"
+    "url": "https://github.com/code-and-send/array-pull-all-with-glob.git"
   },
   "keywords": [
     "array",
@@ -34,18 +34,18 @@
   },
   "homepage": "https://github.com/code-and-send/array-pull-all-with-glob#readme",
   "dependencies": {
-    "lodash.remove": "^4.7.0",
-    "lodash.replace": "^4.1.4"
+    "lodash.remove": "*",
+    "lodash.replace": "*"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.12.0",
-    "standard": "*",
-    "nyc": "^10.0.0"
+    "doctoc": "*",
+    "husky": "*",
+    "nyc": "^10.0.0",
+    "standard": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
