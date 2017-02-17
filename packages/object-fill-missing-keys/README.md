@@ -11,6 +11,23 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Purpose](#purpose)
+- [Use](#use)
+- [API](#api)
+  - [API - Input](#api---input)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```sh
@@ -88,7 +105,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2016 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

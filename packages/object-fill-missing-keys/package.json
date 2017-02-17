@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
+    "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-and-send/object-fill-missing-keys.git"
+    "url": "https://github.com/code-and-send/object-fill-missing-keys.git"
   },
   "keywords": [
     "ast",
@@ -40,12 +40,12 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.12.0",
-    "standard": "*",
-    "nyc": "^10.0.0"
+    "doctoc": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
