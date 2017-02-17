@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-and-send/gulp-email-remove-unused-css.git"
+    "url": "https://github.com/code-and-send/gulp-email-remove-unused-css.git"
   },
   "keywords": [
     "gulp",
@@ -29,14 +29,15 @@
   "bugs": {
     "url": "https://github.com/code-and-send/gulp-email-remove-unused-css/issues"
   },
-  "homepage": "https://removecss.com",
+  "homepage": "https://emailcomb.com",
   "dependencies": {
-    "gulp-util": "~3.0.6",
-    "email-remove-unused-css": "^1.5.0"
+    "gulp-util": "*",
+    "email-remove-unused-css": "*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "doctoc": "*"
+  },
   "ava": {
-    "tap": false,
     "verbose": false
   }
 }

@@ -7,7 +7,6 @@
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 _If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css/issues) issue tracker._
@@ -15,6 +14,21 @@ _If you have any difficulties with the output of this plugin, please use the [em
 * Online web app: [EmailComb](https://emailcomb.com)
 * PostHTML plugin: [posthtml-email-remove-unused-css](https://github.com/code-and-send/posthtml-email-remove-unused-css/)
 * The core library: [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Example](#example)
+  - [Options](#options)
+- [Regarding removing unused CSS from web pages & competition](#regarding-removing-unused-css-from-web-pages--competition)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Install
 
@@ -88,7 +102,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -116,9 +130,6 @@ SOFTWARE.
 
 [deps-img]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/master/dependencies/npm
-
-[dev-img]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg
 [downloads-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
