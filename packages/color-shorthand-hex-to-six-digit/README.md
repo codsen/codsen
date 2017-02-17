@@ -13,6 +13,22 @@
 
 * PostHTML Plugin: [posthtml-color-shorthand-hex-to-six-digit](https://github.com/code-and-send/posthtml-color-shorthand-hex-to-six-digit)
 
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Install](#install)
+- [Purpose](#purpose)
+- [Concept](#concept)
+- [Examples](#examples)
+- [API](#api)
+- [Testing, linting and coverage](#testing-linting-and-coverage)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```sh
@@ -116,7 +132,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

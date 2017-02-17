@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
+    "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": {
@@ -34,20 +34,19 @@
   },
   "homepage": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit#readme",
   "dependencies": {
-    "hex-color-regex": "^1.0.3",
+    "hex-color-regex": "*",
     "lodash.isplainobject": "*",
     "lodash.isstring": "*"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.12.0",
+    "doctoc": "*",
+    "husky": "*",
     "nyc": "*",
-    "snazzy": "*",
     "standard": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
