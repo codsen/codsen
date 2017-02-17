@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Now git-ignoring `.nyc_output` folder.
 
-## [1.1.0] - 2016-12-21
+## 1.1.0 - 2016-12-21
 ### Added
 - Coveralls
 - Changelog
@@ -39,4 +39,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.2...v1.2.0
 [1.1.2]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.0.0...v1.1.0
