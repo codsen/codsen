@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Generate homepage in the Browsersync root with links/screenshots of all your templates",
   "main": "index.js",
   "scripts": {
