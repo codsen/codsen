@@ -98,6 +98,15 @@ test('01.09 - del - throws when opts.key and opts.val are missing', t => {
   })
 })
 
+test('01.10 - drop - throws when there\'s no index', t => {
+  t.throws(function () {
+    drop(['a'], 'a')
+  })
+  t.throws(function () {
+    drop({a: 'a'}, {b: 'b'})
+  })
+})
+
 // -----------------------------------------------------------------------------
 // find
 // -----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ function monkey (input, opts) {
   if (!existy(input)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide an input')
   }
-  if ((opts.mode === 'get' || opts.mode === 'set') && !existy(opts.index)) {
+  if ((opts.mode === 'get' || opts.mode === 'set' || opts.mode === 'drop') && !existy(opts.index)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide opts.index')
   }
   if ((opts.mode === 'set') && !existy(opts.key) && !existy(opts.val)) {
