@@ -77,6 +77,7 @@ Output will be an array, comprising of zero or more plain objects in the followi
 Object's key     | Type             | Description
 -----------------|------------------|-------------
 {                |                  |
+`index`          | Integer number   | The index of the finding. It's also the last element of the `path` array.
 `key`            | String           | The found object's key
 `val`            | Whatever or Null | The found object's value (or `null` if it's a key of an array)
 `path`           | Array            | The found object's path: indexes of all its parents, starting from the topmost. The found key/value pair's address will be the last element of the `path` array.
@@ -96,6 +97,7 @@ var result = monkey.find(input, {key: key})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => [
 //      {
+//        index: 4,
 //        key: 'b',
 //        val: null,
 //        path: [2, 3, 4]

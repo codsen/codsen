@@ -108,6 +108,7 @@ function monkey (input, opts) {
       if ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (!ko && !vo && (key === opts.key) && (isEqual(val, opts.val)))) {
         if (DEBUG || opts.mode === 'info') { console.log('\n\nfound: ' + key + ' = ' + JSON.stringify(val, null, 4)) }
         temp = {}
+        temp.index = data.count
         temp.key = key
         if (existy(val)) {
           temp.val = val

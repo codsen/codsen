@@ -113,11 +113,12 @@ test('02.01 - finds by key in a simple object #1', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'a',
-      'val': {
+      index: 1,
+      key: 'a',
+      val: {
         'b': 'c'
       },
-      'path': [1]
+      path: [1]
     }
   ]
   t.deepEqual(
@@ -144,9 +145,10 @@ test('02.02 - finds by key in a simple object #2', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'b',
-      'val': 'c',
-      'path': [1, 2]
+      index: 2,
+      key: 'b',
+      val: 'c',
+      path: [1, 2]
     }
   ]
   t.deepEqual(
@@ -185,6 +187,7 @@ test('02.04 - finds by key in simple arrays #1', t => {
   actual = find(input, {key: key})
   intended = [
     {
+      index: 1,
       key: 'a',
       val: null,
       path: [1]
@@ -202,6 +205,7 @@ test('02.05 - finds by key in simple arrays #2', t => {
   actual = find(input, {key: key})
   intended = [
     {
+      index: 4,
       key: 'b',
       val: null,
       path: [2, 3, 4]
@@ -219,6 +223,7 @@ test('02.06 - finds by key in simple arrays #3', t => {
   actual = find(input, {key: key, val: null})
   intended = [
     {
+      index: 5,
       key: 'c',
       val: null,
       path: [2, 5]
@@ -247,6 +252,7 @@ test('02.08 - finds by key in simple arrays #3', t => {
   actual = find(input, {key: key})
   intended = [
     {
+      index: 5,
       key: 'c',
       val: null,
       path: [2, 5]
@@ -269,9 +275,10 @@ test('02.09 - finds by value in a simple object - string', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'b',
-      'val': 'c',
-      'path': [1, 2]
+      index: 2,
+      key: 'b',
+      val: 'c',
+      path: [1, 2]
     }
   ]
   t.deepEqual(
@@ -291,9 +298,10 @@ test('02.10 - finds by value in a simple object - object', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'a',
-      'val': {b: 'c'},
-      'path': [1]
+      index: 1,
+      key: 'a',
+      val: {b: 'c'},
+      path: [1]
     }
   ]
   t.deepEqual(
@@ -313,9 +321,10 @@ test('02.11 - finds by value in a simple object - array', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'b',
-      'val': ['c'],
-      'path': [1, 2]
+      index: 2,
+      key: 'b',
+      val: ['c'],
+      path: [1, 2]
     }
   ]
   t.deepEqual(
@@ -336,14 +345,16 @@ test('02.12 - finds by value in a simple object - empty array', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'b',
-      'val': [],
-      'path': [1, 2]
+      index: 2,
+      key: 'b',
+      val: [],
+      path: [1, 2]
     },
     {
-      'key': 'c',
-      'val': [],
-      'path': [1, 3]
+      index: 3,
+      key: 'c',
+      val: [],
+      path: [1, 3]
     }
   ]
   t.deepEqual(
@@ -364,14 +375,16 @@ test('02.13 - finds by value in a simple object - empty object', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'b',
-      'val': {},
-      'path': [1, 2]
+      index: 2,
+      key: 'b',
+      val: {},
+      path: [1, 2]
     },
     {
-      'key': 'c',
-      'val': {},
-      'path': [1, 3]
+      index: 3,
+      key: 'c',
+      val: {},
+      path: [1, 3]
     }
   ]
   t.deepEqual(
@@ -390,15 +403,17 @@ test('02.14 - finds multiple nested keys by key and value in mixed #1', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'c',
-      'val': {
+      index: 4,
+      key: 'c',
+      val: {
         'd': 'e'
       },
       'path': [1, 2, 3, 4]
     },
     {
-      'key': 'c',
-      'val': {
+      index: 6,
+      key: 'c',
+      val: {
         'd': 'e'
       },
       'path': [6]
@@ -420,19 +435,22 @@ test('02.15 - finds multiple nested keys by key and value in mixed #2', t => {
   actual = find(input, {key: key, val: val})
   intended = [
     {
-      'key': 'd',
-      'val': 'e',
-      'path': [1, 2, 3, 4, 5]
+      index: 5,
+      key: 'd',
+      val: 'e',
+      path: [1, 2, 3, 4, 5]
     },
     {
-      'key': 'd',
-      'val': ['d'],
-      'path': [6, 7]
+      index: 7,
+      key: 'd',
+      val: ['d'],
+      path: [6, 7]
     },
     {
-      'key': 'd',
-      'val': null,
-      'path': [6, 7, 8]
+      index: 8,
+      key: 'd',
+      val: null,
+      path: [6, 7, 8]
     }
   ]
 
