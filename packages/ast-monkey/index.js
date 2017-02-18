@@ -53,10 +53,7 @@ function monkey (input, opts) {
   if (opts.mode === 'set' && existy(opts.key) && !existy(opts.val)) {
     opts.val = opts.key
   }
-  if ((opts.mode === 'del') && !existy(opts.key) && !existy(opts.val)) {
-    throw new Error('ast-monkey/index.js/monkey(): Please provide opts.key or opts.val')
-  }
-  if (opts.mode === 'find' && !existy(opts.key) && !existy(opts.val)) {
+  if ((opts.mode === 'find' || opts.mode === 'del') && !existy(opts.key) && !existy(opts.val)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide opts.key or opts.val')
   }
   if (existy(opts.index) && (opts.index !== parseInt(opts.index, 10))) {

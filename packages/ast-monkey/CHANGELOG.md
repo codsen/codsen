@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2017-02-18
+### New
+- Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
+
 ## [2.4.0] - 2017-02-18
 ### New
-- Enforcing the {index: ?} to be provided for `drop()`
+- Enforcing the {index: ?} to be provided for `drop()`.
 
 ## [2.3.0] - 2017-02-18
 ### New
@@ -24,3 +28,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.2.0]: https://github.com/code-and-send/ast-monkey/compare/v2.1.0...v2.2.0
 [2.3.0]: https://github.com/code-and-send/ast-monkey/compare/v2.2.0...v2.3.0
 [2.4.0]: https://github.com/code-and-send/ast-monkey/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/code-and-send/ast-monkey/compare/v2.4.0...v2.5.0
