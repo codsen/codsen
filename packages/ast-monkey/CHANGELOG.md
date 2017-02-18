@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2017-02-18
+### New
+- Enforcing the {index: ?} to be provided for `drop()`
+
 ## [2.3.0] - 2017-02-18
 ### New
 - Added `index` key to each of `find()` result object.
@@ -18,3 +22,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [2.0.0]: https://github.com/code-and-send/ast-monkey/compare/v1.0.1...v2.0.0
 [2.2.0]: https://github.com/code-and-send/ast-monkey/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/code-and-send/ast-monkey/compare/v2.2.0...v2.3.0
+[2.4.0]: https://github.com/code-and-send/ast-monkey/compare/v2.3.0...v2.4.0
