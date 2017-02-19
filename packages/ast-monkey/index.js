@@ -1,5 +1,6 @@
 'use strict'
 const isArr = Array.isArray
+const clone = require('lodash.clonedeep')
 const isObj = require('lodash.isplainobject')
 const isEqual = require('lodash.isequal')
 const objectAssign = require('object-assign')
@@ -39,7 +40,10 @@ function traverse (innerObj, tree, callback) {
 
 // -----------------------------------------------------------------------------
 
-function monkey (input, opts) {
+function monkey (inputOriginal, opts) {
+  // since incoming argument is object, it's very important not to mutate it:
+  var input = clone(inputOriginal)
+  // -----------------------------------
   // precautions
   if (!existy(input)) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide an input')

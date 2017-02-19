@@ -866,3 +866,27 @@ test('07.08 - does not delete by key and value from arrays', t => {
     intended,
     '07.08')
 })
+
+test('07.09 - deletes by key and value from mixed', t => {
+  input = {
+    a: {
+      b: '',
+      c: 'd',
+      e: 'f'
+    }
+  }
+  key = 'b'
+  val = ''
+  actual = del(input, {key: key, val: val})
+  intended = {
+    a: {
+      c: 'd',
+      e: 'f'
+    }
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '07.09')
+})

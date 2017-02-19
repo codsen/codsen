@@ -37,6 +37,7 @@
   },
   "homepage": "https://github.com/code-and-send/ast-monkey#readme",
   "dependencies": {
+    "lodash.clonedeep": "*",
     "lodash.isequal": "*",
     "lodash.isplainobject": "*",
     "object-assign": "*"
@@ -45,11 +46,10 @@
     "ava": "*",
     "coveralls": "*",
     "husky": "*",
-    "standard": "*",
-    "nyc": "^10.0.0"
+    "nyc": "^10.0.0",
+    "standard": "*"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   },
   "engines": {

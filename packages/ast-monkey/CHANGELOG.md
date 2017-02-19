@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2017-02-19
+### New
+- Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important.
+
 ## [2.5.0] - 2017-02-18
 ### New
 - Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
