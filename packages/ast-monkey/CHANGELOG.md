@@ -33,3 +33,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.3.0]: https://github.com/code-and-send/ast-monkey/compare/v2.2.0...v2.3.0
 [2.4.0]: https://github.com/code-and-send/ast-monkey/compare/v2.3.0...v2.4.0
 [2.5.0]: https://github.com/code-and-send/ast-monkey/compare/v2.4.0...v2.5.0
+[2.6.0]: https://github.com/code-and-send/ast-monkey/compare/v2.5.0...v2.6.0
