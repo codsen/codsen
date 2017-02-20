@@ -116,7 +116,7 @@ function monkey (inputOriginal, opts) {
         } else {
           temp.val = null
         }
-        temp.path = [...data.gatherPath]
+        temp.path = clone(data.gatherPath)
         findings.push(temp)
       }
     }
