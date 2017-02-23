@@ -1,7 +1,7 @@
 {
   "name": "object-merge-advanced",
   "version": "1.6.0",
-  "description": "Like .merge but an array in a key's value trumps a plain object and a plain object trumps a string. Works for nested objects too.",
+  "description": "Recursive, deep merge of object literals, which weighs contents by type hierarchy to ensure maximum content is retained",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -29,8 +29,10 @@
   },
   "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "*",
-    "lodash.isstring": "*"
+    "lodash.isstring": "*",
+    "object-assign": "^4.1.1"
   },
   "devDependencies": {
     "ava": "*",

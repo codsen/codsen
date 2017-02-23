@@ -1,5 +1,6 @@
 'use strict'
 var mergeAdvanced = require('./index.js')
+var clone = require('lodash.clonedeep')
 import test from 'ava'
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
@@ -1133,4 +1134,26 @@ test('02.03 - wrong type args - returns undefined', t => {
     ),
     undefined,
     '02.03.05')
+})
+
+// ==============================
+// Input argument mutation
+// ==============================
+
+var obj1 = {
+  a: 'a',
+  b: 'b'
+}
+
+var originalObj1 = clone(obj1)
+
+var obj2 = {
+  c: 'c',
+  d: 'd'
+}
+
+mergeAdvanced(obj1, obj2)
+
+test('03.01 - testing for mutation of the input args', t => {
+  t.deepEqual(obj1, originalObj1)
 })

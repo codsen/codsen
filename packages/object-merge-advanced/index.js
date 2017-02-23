@@ -6,49 +6,53 @@
 var isArr = Array.isArray
 var isObj = require('lodash.isplainobject')
 var isStr = require('lodash.isstring')
+var clone = require('lodash.clonedeep')
 
 // ===================================
 // F U N C T I O N S
 
-function existy (x) { return x != null }
+function mergeAdvanced (obj1orig, obj2orig) {
+// FUNCTIONS
+// -----------------------------------------------------------------------------
+  function existy (x) { return x != null }
 
-function isBool (bool) {
-  return typeof bool === 'boolean'
-}
-
-/**
- * sortObject - sorts object's keys
- *
- * @param  {Object} obj input object
- * @return {Object}     sorted object
- */
-function sortObject (obj) {
-  return Object.keys(obj).sort().reduce(function (result, key) {
-    result[key] = obj[key]
-    return result
-  }, {})
-}
-
-function nonEmpty (something) {
-  if (Array.isArray(something) || (typeof something === 'string')) {
-    return something.length > 0
-  } else if (isObj(something)) {
-    return Object.keys(something).length > 0
+  function isBool (bool) {
+    return typeof bool === 'boolean'
   }
-}
 
-/**
- * mergeAdvanced - Like "_.merge" except it treats different-type values correctly.
- * its aim is to retain as much data after merge and work with AST's from parsed JSON
- *
- * @param  {object} o2 input object
- * @param  {object} o1 input object
- * @return {object}    merged object
- */
-function mergeAdvanced (o1, o2) {
+  /**
+   * sortObject - sorts object's keys
+   *
+   * @param  {Object} obj input object
+   * @return {Object}     sorted object
+   */
+  function sortObject (obj) {
+    return Object.keys(obj).sort().reduce(function (result, key) {
+      result[key] = obj[key]
+      return result
+    }, {})
+  }
+
+  function nonEmpty (something) {
+    if (Array.isArray(something) || (typeof something === 'string')) {
+      return something.length > 0
+    } else if (isObj(something)) {
+      return Object.keys(something).length > 0
+    }
+  }
+
+// VARS AND PRECAUTIONS
+// -----------------------------------------------------------------------------
+
+  var o1 = clone(obj1orig)
+  var o2 = clone(obj2orig)
   if (!isObj(o1) || !isObj(o2)) {
     return
   }
+
+// ACTION
+// -----------------------------------------------------------------------------
+
   Object.keys(o2).forEach(function (key) {
     if (existy(o1[key])) {
       // value clash
