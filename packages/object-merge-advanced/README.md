@@ -23,8 +23,10 @@
 - [Use](#use)
 - [API](#api)
   - [API - Input](#api---input)
+  - [API - Output](#api---output)
 - [Testing](#testing)
 - [Contributing](#contributing)
+- [Difference from `object-assign`](#difference-from-object-assign)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
