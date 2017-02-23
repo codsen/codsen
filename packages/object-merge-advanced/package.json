@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "Recursive, deep merge of object literals, which weighs contents by type hierarchy to ensure maximum content is retained",
   "main": "index.js",
   "scripts": {
