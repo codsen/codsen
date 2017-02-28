@@ -1359,3 +1359,62 @@ test('04.02 - an edge case when one of merged arrays already has dupes', t => {
     },
     '04.02.02')
 })
+
+test('04.03 - array vs array, duped elements being arrays further', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: [
+          ['b'],
+          ['c'],
+          ['a']
+        ]
+      },
+      {
+        a: [
+          ['a'],
+          ['b']
+        ],
+        d: 'd'
+      }
+    ),
+    {
+      b: 'b',
+      a: [
+        ['b'],
+        ['c'],
+        ['a']
+      ],
+      d: 'd'
+    },
+    '04.03.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          ['a'],
+          ['b']
+        ],
+        d: 'd'
+      },
+      {
+        b: 'b',
+        a: [
+          ['b'],
+          ['c'],
+          ['a']
+        ]
+      }
+    ),
+    {
+      a: [
+        ['a'],
+        ['b'],
+        ['c']
+      ],
+      b: 'b',
+      d: 'd'
+    },
+    '04.03.02')
+})
