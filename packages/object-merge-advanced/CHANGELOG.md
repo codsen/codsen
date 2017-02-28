@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2017-02-28
+### Changed
+- Improved the algorithm, removed redundant insurance, cloning input variable.
+
 ## [4.0.0] - 2017-02-28
 ### Changed
 - Making API even more user-friendly. If one of the input args is missing, instead of returning the `undefined` now it's returning the argument that's present. What's the point to return `undefined`?
@@ -24,3 +28,5 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 
 [2.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v1.6.0...v2.0.0
 [3.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v2.0.0...v3.0.0
+[4.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v3.0.0...v4.0.0
+[4.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.0.0...v4.1.0

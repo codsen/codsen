@@ -98,7 +98,7 @@ function mergeAdvanced (obj1orig, obj2orig) {
           if (isArr(o2[key]) && nonEmpty(o2[key])) {
             // case 21
             // concat two non-empty arrays
-            o1[key] = o1[key].concat(pullAllWith(clone(o2[key]), o1[key], compare))
+            o1[key] = o1[key].concat(pullAllWith(o2[key], o1[key], compare))
           } else {
             // cases 19,20,22-27
             // nothing, o1[key] stays
