@@ -1157,3 +1157,205 @@ mergeAdvanced(obj1, obj2)
 test('03.01 - testing for mutation of the input args', t => {
   t.deepEqual(obj1, originalObj1)
 })
+
+// ================================================
+// does not introduce non-unique values into arrays
+// ================================================
+
+test('04.01 - array vs array, checking against dupes being added', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: [
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        },
+        {
+          y1: 'y1',
+          y2: 'y2'
+        }
+      ],
+      b: 'b'
+    },
+    '04.01.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      },
+      {
+        b: 'b',
+        a: [
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          y1: 'y1',
+          y2: 'y2'
+        },
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        }
+      ],
+      b: 'b'
+    },
+    '04.01.02')
+})
+
+test('04.02 - an edge case when one of merged arrays already has dupes', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: [
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      }
+    ),
+    {
+      b: 'b',
+      a: [
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        },
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        },
+        {
+          y1: 'y1',
+          y2: 'y2'
+        },
+        {
+          y1: 'y1',
+          y2: 'y2'
+        }
+      ]
+    },
+    '04.02.01')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      },
+      {
+        b: 'b',
+        a: [
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            x1: 'x1',
+            x2: 'x2',
+            x3: 'x3'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          y1: 'y1',
+          y2: 'y2'
+        },
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        },
+        {
+          x1: 'x1',
+          x2: 'x2',
+          x3: 'x3'
+        }
+      ],
+      b: 'b'
+    },
+    '04.02.02')
+})

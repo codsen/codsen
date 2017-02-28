@@ -7,6 +7,8 @@ var isArr = Array.isArray
 var isObj = require('lodash.isplainobject')
 var isStr = require('lodash.isstring')
 var clone = require('lodash.clonedeep')
+var pullAllWith = require('lodash.pullallwith')
+var compare = require('posthtml-ast-compare')
 
 // ===================================
 // F U N C T I O N S
@@ -90,7 +92,7 @@ function mergeAdvanced (obj1orig, obj2orig) {
           if (isArr(o2[key]) && nonEmpty(o2[key])) {
             // case 21
             // concat two non-empty arrays
-            o1[key] = o1[key].concat(o2[key])
+            o1[key] = o1[key].concat(pullAllWith(clone(o2[key]), o1[key], compare))
           } else {
             // cases 19,20,22-27
             // nothing, o1[key] stays

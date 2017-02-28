@@ -29,10 +29,11 @@
   },
   "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
+    "lodash.clonedeep": "*",
     "lodash.isplainobject": "*",
     "lodash.isstring": "*",
-    "object-assign": "^4.1.1"
+    "lodash.pullallwith": "*",
+    "posthtml-ast-compare": "^1.10.0"
   },
   "devDependencies": {
     "ava": "*",
