@@ -1092,48 +1092,75 @@ test('02.01 - missing second arg', t => {
         a: 'a'
       }
     ),
-    undefined,
+    {
+      a: 'a'
+    },
     '02.01')
 })
 
-test('02.02 - both args missing', t => {
+test('02.02 - missing first arg', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      undefined,
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '02.02.01')
+  t.deepEqual(
+    mergeAdvanced(
+      null,
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: 'a'
+    },
+    '02.02.02')
+})
+
+test('02.03 - both args missing', t => {
   t.deepEqual(
     mergeAdvanced(),
     undefined,
-    '02.02')
+    '02.03')
 })
 
-test('02.03 - wrong type args - returns undefined', t => {
+test('02.04 - wrong type args - returns undefined', t => {
   t.deepEqual(
     mergeAdvanced(
       null, null
     ),
     undefined,
-    '02.03.01')
+    '02.04.01')
   t.deepEqual(
     mergeAdvanced(
       undefined, undefined
     ),
     undefined,
-    '02.03.02')
+    '02.04.02')
   t.deepEqual(
     mergeAdvanced(
       true, false
     ),
     undefined,
-    '02.03.03')
+    '02.04.03')
   t.deepEqual(
     mergeAdvanced(
       ['a'], ['b']
     ),
     undefined,
-    '02.03.04')
+    '02.04.04')
   t.deepEqual(
     mergeAdvanced(
       [], []
     ),
     undefined,
-    '02.03.05')
+    '02.04.05')
 })
 
 // ==============================
@@ -1162,7 +1189,7 @@ test('03.01 - testing for mutation of the input args', t => {
 // does not introduce non-unique values into arrays
 // ================================================
 
-test('04.01 - array vs array, checking against dupes being added', t => {
+test('04.01 - arrays, checking against dupes being added', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -1245,7 +1272,7 @@ test('04.01 - array vs array, checking against dupes being added', t => {
     '04.01.02')
 })
 
-test('04.02 - an edge case when one of merged arrays already has dupes', t => {
+test('04.02 - edge case - one of merged arrays has dupes', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -1360,7 +1387,7 @@ test('04.02 - an edge case when one of merged arrays already has dupes', t => {
     '04.02.02')
 })
 
-test('04.03 - array vs array, duped elements being arrays further', t => {
+test('04.03 - arrays, duped elements being arrays further', t => {
   t.deepEqual(
     mergeAdvanced(
       {

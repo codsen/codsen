@@ -46,6 +46,12 @@ function mergeAdvanced (obj1orig, obj2orig) {
 // VARS AND PRECAUTIONS
 // -----------------------------------------------------------------------------
 
+  if (!existy(obj1orig) && existy(obj2orig)) {
+    return obj2orig
+  }
+  if (existy(obj1orig) && !existy(obj2orig)) {
+    return obj1orig
+  }
   if (!isObj(obj1orig) || !isObj(obj2orig)) {
     return
   }
