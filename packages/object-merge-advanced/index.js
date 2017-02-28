@@ -44,11 +44,11 @@ function mergeAdvanced (obj1orig, obj2orig) {
 // VARS AND PRECAUTIONS
 // -----------------------------------------------------------------------------
 
-  var o1 = clone(obj1orig)
-  var o2 = clone(obj2orig)
-  if (!isObj(o1) || !isObj(o2)) {
+  if (!isObj(obj1orig) || !isObj(obj2orig)) {
     return
   }
+  var o1 = clone(obj1orig)
+  var o2 = clone(obj2orig)
 
 // ACTION
 // -----------------------------------------------------------------------------
