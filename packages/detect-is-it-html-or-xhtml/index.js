@@ -3,9 +3,15 @@
 // ===================================
 // F U N C T I O N S
 
-function existy (x) { return x != null }
-
 function detectIsItHTMLOrXhtml (input) {
+  function existy (x) { return x != null }
+
+  if (!existy(input)) {
+    return null
+  }
+
+  input = String(input)
+
   var i, len, allImageTagsArr, allBRTagsArr, allHRTagsArr, allConcernedTagsArr
   var slashCount = 0
   var metaTag = /<\s*!\s*doctype[^>]*>/im

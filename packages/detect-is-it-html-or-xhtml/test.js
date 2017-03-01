@@ -347,7 +347,7 @@ test('03.01 - no tags at all, text string only', t => {
     '03.01')
 })
 
-test('03.02 - underognised meta tag - counts as HTML', t => {
+test('03.02 - unrecognised meta tag - counts as HTML', t => {
   t.is(
     detect(
       '<!DOCTYPE rubbish>'
@@ -363,4 +363,38 @@ test('03.03 - no meta tag, no single tags', t => {
     ),
     null,
     '03.03')
+})
+
+test('03.04 - missing input', t => {
+  t.is(
+    detect(),
+    null,
+    '03.04')
+})
+
+// =======================================
+// Insurance against input object mutation
+// =======================================
+
+var dummyObj1 = {
+  a: 'a',
+  b: 'b',
+  c: 'c'
+}
+
+var dummyObj2 = {
+  a: 'a',
+  b: 'b',
+  c: 'c'
+}
+
+var unneededResult = detect(dummyObj1)
+
+test('04.01 - insurance against the input argument mutation', t => {
+  t.pass(unneededResult) // filler
+  t.deepEqual(
+    dummyObj1,
+    dummyObj2,
+    '04.01'
+  ) // real deal
 })
