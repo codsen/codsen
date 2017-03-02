@@ -69,6 +69,8 @@ Input argument   | Type     | Obligatory? | Description
 -----------------|----------|-------------|--------------------
 `htmlAsString`   | String   | yes         | String, hopefully containing some HTML code
 
+If the input is not String type, this package will throw an error. If the input is missing completely, it will return `null`.
+
 ### API - Output
 
 Type              | Value                   | Description

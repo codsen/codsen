@@ -372,29 +372,10 @@ test('03.04 - missing input', t => {
     '03.04')
 })
 
-// =======================================
-// Insurance against input object mutation
-// =======================================
-
-var dummyObj1 = {
-  a: 'a',
-  b: 'b',
-  c: 'c'
-}
-
-var dummyObj2 = {
-  a: 'a',
-  b: 'b',
-  c: 'c'
-}
-
-var unneededResult = detect(dummyObj1)
-
-test('04.01 - insurance against the input argument mutation', t => {
-  t.pass(unneededResult) // filler
-  t.deepEqual(
-    dummyObj1,
-    dummyObj2,
-    '04.01'
-  ) // real deal
+test('03.05 - input is not string - throws', t => {
+  t.throws(function () {
+    detect({
+      a: 'a'
+    })
+  })
 })

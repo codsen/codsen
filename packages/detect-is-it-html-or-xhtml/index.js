@@ -10,7 +10,9 @@ function detectIsItHTMLOrXhtml (input) {
     return null
   }
 
-  input = String(input)
+  if (typeof input !== 'string') {
+    throw new TypeError('detect-is-it-html-or-xhtml: Input must be string')
+  }
 
   var i, len, allImageTagsArr, allBRTagsArr, allHRTagsArr, allConcernedTagsArr
   var slashCount = 0
