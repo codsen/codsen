@@ -5,6 +5,7 @@
 
 var isPlainObject = require('lodash.isplainobject')
 var merge = require('lodash.merge')
+var clone = require('lodash.clonedeep')
 
 // ===================================
 // F U N C T I O N S
@@ -25,11 +26,12 @@ function sortObject (obj) {
 /**
  * flattenAllArrays - merges and flattens arrays within object key values
  *
- * @param  {Object} incommingObj input object
- * @return {Object}              flattened-array object
+ * @param  {Object} originalIncommingObj  input object
+ * @return {Object}                       flattened-array object
  */
-function flattenAllArrays (incommingObj) {
+function flattenAllArrays (originalIncommingObj) {
   var tempObj
+  var incommingObj = clone(originalIncommingObj)
   if (isPlainObject(incommingObj)) {
     Object.keys(incommingObj).forEach(function (key) {
       if (Array.isArray(incommingObj[key])) {

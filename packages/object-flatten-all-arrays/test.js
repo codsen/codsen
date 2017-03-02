@@ -324,3 +324,46 @@ test('02.06 - nothing in the input', t => {
     undefined,
     '02.06')
 })
+
+// ==============================
+// Does not mutate input args
+// ==============================
+
+var obj = {
+  d: 'd',
+  b: 'b',
+  a: 'a',
+  c: [
+    {
+      b: 'b',
+      a: 'a'
+    },
+    {
+      d: 'd',
+      c: 'c'
+    }
+  ]
+}
+var unneededResult = flattenAllArrays(obj)
+
+test('03.01 - does not mutate input args', t => {
+  t.pass(unneededResult)
+  t.deepEqual(
+    obj,
+    {
+      d: 'd',
+      b: 'b',
+      a: 'a',
+      c: [
+        {
+          b: 'b',
+          a: 'a'
+        },
+        {
+          d: 'd',
+          c: 'c'
+        }
+      ]
+    },
+    '03.01')
+})

@@ -89,6 +89,8 @@ flatten(input)
 
 ### API - Input
 
+None of the input arguments are mutated. Their clones are being used instead.
+
 Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
 `input`                  | Whatever       | yes         | AST tree, or object or array or whatever. Can be deeply-nested. Hopefully contains some plain objects.
