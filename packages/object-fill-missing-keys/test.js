@@ -473,3 +473,30 @@ test('04.05 - both args completely missing', t => {
     undefined,
     '04.05')
 })
+
+// ================================
+// 5. Input arg mutation prevention
+// ================================
+
+var testObj = {
+  a: 'a'
+}
+
+var tempRes = fillMissingKeys(
+  testObj,
+  {
+    a: false,
+    b: false,
+    c: false
+  }
+)
+
+test('05.01 - does not mutate the input args', t => {
+  t.pass(tempRes) // dummy
+  t.deepEqual(
+    testObj,
+    {
+      a: 'a'
+    },
+    '05.01') // real deal
+})

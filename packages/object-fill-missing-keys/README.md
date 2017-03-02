@@ -80,6 +80,8 @@ console.log('f = ' + JSON.stringify(f, null, 4))
 fillMissingKeys(incompleteObj, schemaObj)
 ```
 
+Input arguments are not mutated, inputs are cloned before being used.
+
 ### API - Input
 
 Input argument           | Type           | Obligatory? | Description

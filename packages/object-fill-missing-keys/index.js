@@ -4,6 +4,7 @@
 // V A R S
 
 var isObj = require('lodash.isplainobject')
+var clone = require('lodash.clonedeep')
 
 // ===================================
 // F U N C T I O N S
@@ -29,10 +30,12 @@ function sortObject (obj) {
  * @param  {object} schemaObj         schema object which contains desired keys set
  * @return {object} normalised object
  */
-function fillMissingKeys (incompleteObj, schemaObj) {
-  if (!isObj(incompleteObj) || !isObj(schemaObj)) {
+function fillMissingKeys (originalIncompleteObj, originalSchemaObj) {
+  if (!isObj(originalIncompleteObj) || !isObj(originalSchemaObj)) {
     return
   }
+  var incompleteObj = clone(originalIncompleteObj)
+  var schemaObj = clone(originalSchemaObj)
   Object.keys(schemaObj).forEach(function (key) {
     if ((incompleteObj[key] === undefined) || (incompleteObj[key] === false)) {
       incompleteObj[key] = schemaObj[key]
