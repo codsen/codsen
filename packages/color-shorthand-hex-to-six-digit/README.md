@@ -107,6 +107,8 @@ conv(null)
 
 ## API
 
+Input arguments are not mutated in any way. This package will clone the inputs and work on the copies.
+
 ```js
 conv(
   input  // Anything: array, plain object or string or anything else
