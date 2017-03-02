@@ -2,8 +2,10 @@ var r = require('hex-color-regex')
 var isPlainObject = require('lodash.isplainobject')
 var isString = require('lodash.isstring')
 var isArray = Array.isArray
+var clone = require('lodash.clonedeep')
 
-function convert (input) {
+function convert (originalInput) {
+  var input = clone(originalInput)
   // f's
   function toFullHex (hex) {
     // console.log('received: ' + JSON.stringify(hex, null, 4))
@@ -16,17 +18,19 @@ function convert (input) {
     return match.toLowerCase()
   }
   // action
-  if (isString(input)) {
+  if (isString(originalInput)) {
     input = input.replace(r(), toFullHex)
     input = input.replace(r(), toLowerCase)
   } else if (isArray(input)) {
     for (var i = 0, len = input.length; i < len; i++) {
       input[i] = convert(input[i])
     }
-  } else if (isPlainObject(input)) {
+  } else if (isPlainObject(originalInput)) {
     Object.keys(input).forEach(function (key) {
       input[key] = convert(input[key])
     })
+  } else {
+    return originalInput
   }
   return input
 }

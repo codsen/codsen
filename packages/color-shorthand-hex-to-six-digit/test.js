@@ -179,3 +179,25 @@ test('05.01 - fixes mixed case three and six digit hexes', t => {
     'aaaa #cccccc zzzz\n\t\t\t#ffffff.',
     '05.01')
 })
+
+// ==============================
+// 06. Does not mutate input args
+// ==============================
+
+var input1 = {
+  a: 'aaaa #f0c zzzz\n\t\t\t#FFcc00',
+  b: 'aaaa #ff00CC zzzz\n\t\t\t#ffcc00'
+}
+
+var unneededRes = c(input1)
+
+test('06.01 - does not mutate the input args', t => {
+  t.pass(unneededRes) // dummy to please JS Standard
+  t.deepEqual(
+    input1,
+    {
+      a: 'aaaa #f0c zzzz\n\t\t\t#FFcc00',
+      b: 'aaaa #ff00CC zzzz\n\t\t\t#ffcc00'
+    },
+    '06.01.02') // real deal
+})

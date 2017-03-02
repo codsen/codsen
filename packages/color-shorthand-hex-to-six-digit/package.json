@@ -35,6 +35,7 @@
   "homepage": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit#readme",
   "dependencies": {
     "hex-color-regex": "*",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "*",
     "lodash.isstring": "*"
   },
