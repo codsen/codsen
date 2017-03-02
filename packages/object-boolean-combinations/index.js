@@ -2,6 +2,7 @@
 var intersection = require('lodash.intersection')
 var pull = require('lodash.pull')
 var isObject = require('lodash.isplainobject')
+var clone = require('lodash.clonedeep')
 
 /**
  * Creates an n-length array with all possible combinations of true/false
@@ -30,7 +31,9 @@ function existy (x) { return x != null }
  * @param [Object] an optional override object. For example, you want all properties "a" to be true – pass {a:true}
  * @returns {Array} of objects with all possible combinations optionally including override. In our examle, an array of 2^(3-1) objects, each containing a:true. Without override we would have got 2^3 objects array
  */
-function objectBooleanCombinations (incomingObject, overrideObject) {
+function objectBooleanCombinations (originalIncomingObject, originalOverrideObject) {
+  var incomingObject = clone(originalIncomingObject)
+  var overrideObject = clone(originalOverrideObject)
   var outcomingObjectsArray = []
   // ===================================
   // checks

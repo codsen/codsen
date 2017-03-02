@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/revelt/object-boolean-combinations",
   "dependencies": {
+    "lodash.clonedeep": "*",
     "lodash.intersection": "*",
     "lodash.isplainobject": "*",
     "lodash.pull": "*"
