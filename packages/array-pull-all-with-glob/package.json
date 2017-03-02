@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/code-and-send/array-pull-all-with-glob#readme",
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "lodash.remove": "*",
     "lodash.replace": "*"
   },

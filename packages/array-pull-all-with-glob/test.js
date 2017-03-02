@@ -4,9 +4,9 @@ var pull = require('./index.js')
 
 import test from 'ava'
 
-// ==============================
+// =======
 // no glob
-// ==============================
+// =======
 
 test('1.1 - no glob', t => {
   t.deepEqual(
@@ -58,9 +58,9 @@ test('1.5 - no glob, deletes last remaining thing', t => {
     '1.5')
 })
 
-// ==============================
+// ====
 // glob
-// ==============================
+// ====
 
 test('2.1 - glob, normal use', t => {
   t.deepEqual(
@@ -92,9 +92,9 @@ test('2.3 - asterisk in the source array', t => {
     '2.3')
 })
 
-// ==============================
+// ==========
 // edge cases
-// ==============================
+// ==========
 
 test('3.1 - missing one input', t => {
   t.deepEqual(
@@ -105,9 +105,48 @@ test('3.1 - missing one input', t => {
     '3.1')
 })
 
-test('3.2 - missing both inputs', t => {
+test('3.2 - missing both inputs - throws', t => {
+  t.throws(function () {
+    pull()
+  })
+})
+
+test('3.3 - against asterisk', t => {
   t.deepEqual(
-    pull(),
-    undefined,
-    '3.2')
+    pull(
+      ['a*', 'a**', '*******', null, '*'],
+      ['*']
+    ),
+    [],
+    '3.3')
+})
+
+test('3.4 - against emoji and asterisk', t => {
+  t.deepEqual(
+    pull(
+      ['🦄', '🦄*', '🦄**', '*🦄', '*******', undefined, '*'],
+      ['🦄*']
+    ),
+    ['*🦄', '*******', '*'],
+    '3.4')
+})
+
+// ========================================
+// checks for accidental input arg mutation
+// ========================================
+
+var arr1 = ['a', 'b', 'c']
+var arr2 = ['c']
+var unneededResult = pull(arr1, arr2)
+
+test('4.1 - does not mutate the input args', t => {
+  t.pass(unneededResult) // filler to shut up the JS Standard complaining
+  t.deepEqual(
+    arr1,
+    ['a', 'b', 'c'],
+    '4.1.1')
+  t.deepEqual(
+    arr2,
+    ['c'],
+    '4.1.2')
 })

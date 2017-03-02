@@ -1,38 +1,58 @@
 'use strict'
 var replace = require('lodash.replace')
 var remove = require('lodash.remove')
+var clone = require('lodash.clonedeep')
 
 /**
  * pullAllWithGlob - like _.pullAll but pulling stronger
  * Accepts * glob.
  * For example, "module-*" would pull all: "module-1", "module-zzz"...
  *
- * @param  {Array} incomingArray   array of strings
- * @param  {Array} whitelistArray  array of strings (might contain asterisk)
+ * @param  {Array} input           array of strings
+ * @param  {Array} toBeRemovedArr  array of strings (might contain asterisk)
  * @return {Array}                 pulled array
  */
-function pullAllWithGlob (incomingArray, whitelistArray) {
+function pullAllWithGlob (originalInput, originalToBeRemoved) {
+  //
+  // internal f()'s
+  function existy (x) { return x != null }
   function aContainsB (a, b) {
     return a.indexOf(b) >= 0
   }
   function aStartsWithB (a, b) {
     return a.indexOf(b) === 0
   }
-  // console.log('incomingArray = ' + JSON.stringify(incomingArray, null, 4))
-  if (!Array.isArray(whitelistArray) || !Array.isArray(incomingArray)) {
-    return incomingArray
+
+  // insurance
+  if (!existy(originalInput)) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): missing input!')
+  } else if (!existy(originalToBeRemoved)) {
+    return originalInput
   }
-  whitelistArray.forEach(function (whitelistArrayElem, whitelistArrayIndex) {
-    remove(incomingArray, function (n) {
-      if (aContainsB(whitelistArrayElem, '*')) {
-        return aStartsWithB(n, replace(whitelistArrayElem, /[*].*/g, ''))
+  if (!Array.isArray(originalInput) || !Array.isArray(originalToBeRemoved) || (Array.isArray(originalToBeRemoved) && originalToBeRemoved.length === 0)) {
+    return originalInput
+  }
+
+  // vars
+  var input = clone(originalInput).filter(function (elem) {
+    return existy(elem)
+  })
+  var toBeRemovedArr = clone(originalToBeRemoved).filter(function (elem) {
+    return existy(elem)
+  })
+
+  // action
+  toBeRemovedArr.forEach(function (toBeRemovedArrElem, toBeRemovedArrIndex) {
+    remove(input, function (n) {
+      if (aContainsB(toBeRemovedArrElem, '*')) {
+        return aStartsWithB(n, replace(toBeRemovedArrElem, /[*].*/g, ''))
       } else {
-        return n === whitelistArrayElem
+        return n === toBeRemovedArrElem
       }
     })
   })
-  // console.log('incomingArray = ' + JSON.stringify(incomingArray, null, 4))
-  return incomingArray
+
+  return input
 }
 
 module.exports = pullAllWithGlob

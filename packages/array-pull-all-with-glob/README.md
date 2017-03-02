@@ -67,6 +67,8 @@ Input argument   | Type     | Obligatory? | Description
 `sourceArray`    | Array    | yes         | Source array of strings
 `removeThese`    | Array    | yes         | Array of strings to remove from the source array
 
+None of the input arguments are mutated. That's checked by unit tests from group 4.x
+
 ### API - Output
 
 Type     | Description
