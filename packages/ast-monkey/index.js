@@ -10,7 +10,10 @@ const DEBUG = false
 
 function existy (x) { return x != null }
 
-function traverse (innerObj, tree, callback) {
+function traverse (innerObjOriginal, treeOriginal, callback) {
+  var innerObj = clone(innerObjOriginal)
+  var tree = clone(treeOriginal)
+
   var i, len, res, allKeys, key
   innerObj = objectAssign({depth: -1}, innerObj)
   innerObj.depth++
@@ -40,9 +43,10 @@ function traverse (innerObj, tree, callback) {
 
 // -----------------------------------------------------------------------------
 
-function monkey (inputOriginal, opts) {
+function monkey (inputOriginal, optsOriginal) {
   // since incoming argument is object, it's very important not to mutate it:
   var input = clone(inputOriginal)
+  var opts = clone(optsOriginal)
   // -----------------------------------
   // precautions
   if (!existy(input)) {

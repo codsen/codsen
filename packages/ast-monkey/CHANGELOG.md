@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.0] - 2017-03-02
+### Tweaks
+- Now cloning all arguments in main `monkey()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. This is big and important.
+
 ## [2.7.0] - 2017-02-20
 ### Tweaks
 - Replaced spread operator with lodash equivalent to avoid unnecessary Babel use
@@ -39,3 +43,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.5.0]: https://github.com/code-and-send/ast-monkey/compare/v2.4.0...v2.5.0
 [2.6.0]: https://github.com/code-and-send/ast-monkey/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/code-and-send/ast-monkey/compare/v2.6.0...v2.7.0
+[2.8.0]: https://github.com/code-and-send/ast-monkey/compare/v2.7.0...v2.8.0
