@@ -107,7 +107,7 @@ er(
 
 ---
 
-*"Maybes"* — optional surrounding strings to be replaced as well:
+### "Maybes" — optional surrounding strings to be replaced as well
 
 * **Example replacement recipe in words** — Replace all instances of `i`. If there are `🐴` or `🦄` characters on the left, count them as part of found `i` and replace together as one thing. If there are `🐴` or `🦄` characters on the right, count them as part of found `i` and replace together as one thing.
 
@@ -136,7 +136,7 @@ By the way, notice, how the values can be strings or arrays! The `easy-replace` 
 
 ---
 
-*Negative lookahead* - if you want to match something _not followed_ by something else:
+### Negative lookahead - if you want to match something _not followed_ by something else
 
 * **Example replacement recipe in words** — Replace all instances of `🦄`, but only ones that don't have `c` or `d` on the right.
 
@@ -163,7 +163,9 @@ er(
 
 ---
 
-*Positive lookbehind* - if you want to match something that is _preceded_ by something else. For example, search for space characters that have another space right to their left, and delete them.
+### Positive lookbehind - if you want to match something that is _preceded_ by something else
+
+For example, search for space characters that have another space right to their left, and delete them
 
 * **Example replacement recipe in words** — Replace all occurencies of space character, but only those that have another space character in front of them.
 
@@ -190,7 +192,9 @@ er(
 
 ---
 
-*Negative lookbehind* - if you want to match something that is not preceded by something else. For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with `{{space character}}/>` (disregard curly braces, it's only to make it more visible here) if they are not preceded with space already:
+### Negative lookbehind* - if you want to match something that is not preceded by something else
+
+For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with `{{space character}}/>` (disregard curly braces, it's only to make it more visible here) if they are not preceded with space already:
 
 * **Example replacement recipe in words** — Add missing spaces before closing slashes on tags. Do not add spaces where they exist already.
 
@@ -217,7 +221,7 @@ er(
 
 ---
 
-*Real life scenario*:
+### Real life scenario
 
 * **Example replacement recipe in words** — Add a missing semicolon and/or ampersand on `&nbsp;`, but only where they are missing.
 
