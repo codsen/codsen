@@ -33,7 +33,7 @@
     "lodash.isplainobject": "*",
     "lodash.isstring": "*",
     "lodash.pullallwith": "*",
-    "posthtml-ast-compare": "^1.10.0"
+    "posthtml-ast-compare": "^3.0.0"
   },
   "devDependencies": {
     "ava": "*",
@@ -41,7 +41,7 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^9.0.0"
   },
   "ava": {
     "verbose": true
