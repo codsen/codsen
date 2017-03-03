@@ -32,12 +32,12 @@
   "homepage": "https://emailcomb.com",
   "dependencies": {
     "email-remove-unused-css": "^1.16.0",
-    "gulp-util": "*"
+    "gulp-util": "^3.0.8"
   },
   "devDependencies": {
     "doctoc": "*"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   }
 }

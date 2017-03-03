@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-    "mute": ["gulp-util", "doctoc"]
+    "mute": ["doctoc"]
   },
   "test": [
     "test.js"
