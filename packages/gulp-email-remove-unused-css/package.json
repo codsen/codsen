@@ -31,8 +31,8 @@
   },
   "homepage": "https://emailcomb.com",
   "dependencies": {
-    "gulp-util": "*",
-    "email-remove-unused-css": "*"
+    "email-remove-unused-css": "^1.16.0",
+    "gulp-util": "*"
   },
   "devDependencies": {
     "doctoc": "*"

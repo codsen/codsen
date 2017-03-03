@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-    "mute": ["gulp-util", "email-remove-unused-css", "doctoc"]
+    "mute": ["gulp-util", "doctoc"]
   },
   "test": [
     "test.js"
