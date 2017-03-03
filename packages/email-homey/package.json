@@ -40,8 +40,8 @@
     "plates": "^0.4.11"
   },
   "devDependencies": {
-    "doctoc": "*",
-    "husky": "*"
+    "doctoc": "^1.3.0",
+    "husky": "^0.13.2"
   },
   "ava": {
     "verbose": true

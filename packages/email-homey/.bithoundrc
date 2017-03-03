@@ -3,6 +3,6 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-      "mute": ["glob-fs", "lodash.split", "lodash.trimend", "lodash.trimstart", "doctoc", "husky"]
+      "mute": ["glob-fs", "lodash.split", "lodash.trimend", "lodash.trimstart"]
   }
 }
