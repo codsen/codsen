@@ -26,6 +26,7 @@
   - [.drop()](#drop)
   - [.info()](#info)
   - [.del()](#del)
+  - [.flatten()](#flatten)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Contributing](#contributing)
 - [Licence](#licence)
