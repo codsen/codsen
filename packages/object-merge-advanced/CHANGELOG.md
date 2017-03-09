@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.0] - 2017-03-03
 ### Changed
-- Updated dependencies, now requesting JS Standard as normal version range, to prevent future surprises (like it happened on Standard v.9).
+- Updated dependencies, now requesting JS Standard as normal version range, to prevent future surprises.
 
 ## [4.1.0] - 2017-02-28
 ### Changed
@@ -34,3 +34,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [3.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v2.0.0...v3.0.0
 [4.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v3.0.0...v4.0.0
 [4.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.0.0...v4.1.0
+[4.2.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.1.0...v4.2.0
