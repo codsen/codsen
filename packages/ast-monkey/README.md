@@ -424,6 +424,46 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
+### .flatten()
+
+`monkey.flatten()` will take an input (whatever), if it's traversable, it will traverse it, leaving only the first element within each array it encounters.
+
+```js
+const monkey = require('ast-monkey')
+var input = [
+  {
+    a: 'a'
+  },
+  {
+    b: 'b'
+  }
+]
+var result = monkey.flatten(input)
+console.log('result = ' + JSON.stringify(result, null, 4))
+// => [
+//      {
+//        a: 'a'
+//      }
+//    ]
+```
+
+In practice, it's handy when you want to simplify the data objects. For example, all my email templates have content separated from the template layout. Content sits in `index.json` file. For dev purposes, I want to show, let's say two products in the shopping basket listing. However, in production build, I want to have only one item, but have it sprinkled with back-end code (loop logic and so on). This means, I have to take data object meant for dev build, and flatten all arrays in the data, so they contain only the first element. `ast-monkey` comes to help.
+
+---
+
+**Input**
+
+Input argument   | Type                      | Obligatory? | Description
+-----------------|---------------------------|-------------|-------------
+`input`          | Whatever                  | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
+
+**Output**
+
+Output           | Type             | Description
+-----------------|------------------|--------------------
+`input`          | Same as `input`  | The amended `input`
+
+
 ## Unit testing and code coverage
 
 ```bash

@@ -87,6 +87,15 @@ function monkey (inputOriginal, optsOriginal) {
 
   if (DEBUG) { console.log('ORIGINAL INPUT:\ninput = ' + JSON.stringify(input, null, 4) + '\n========================') }
   if (DEBUG || opts.mode === 'info') { console.log('-----------') }
+
+  if (opts.mode === 'flatten' && Array.isArray(input) && input.length > 0) {
+    input = [input[0]]
+  }
+
+  //
+  //
+  //
+
   input = traverse({}, input, function (innerObj, key, val) {
     var temp
     data.count++
@@ -132,20 +141,26 @@ function monkey (inputOriginal, optsOriginal) {
       return null
     } else if (opts.mode === 'del' && ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (key === opts.key && isEqual(val, opts.val)))) {
       return null
+    } else if (opts.mode === 'flatten') {
+      if (existy(val) && Array.isArray(val)) {
+        return [val[0]]
+      } else if (existy(key) && Array.isArray(key)) {
+        return [key[0]]
+      } else {
+        return existy(val) ? val : key
+      }
     } else {
       return existy(val) ? val : key
     }
   })
 
   // returns
-  if (opts.mode === 'info') {
-    return
-  } else if (opts.mode === 'get') {
+  if (opts.mode === 'get') {
     return data.finding
-  } else if (opts.mode === 'set' || opts.mode === 'drop' || opts.mode === 'del') {
-    return input
   } else if (opts.mode === 'find') {
     return findings.length > 0 ? findings : null
+  } else {
+    return input
   }
 }
 
@@ -181,6 +196,9 @@ function info (input, opts) {
 function del (input, opts) {
   return monkey(input, objectAssign(prep(opts), { mode: 'del' }))
 }
+function flatten (input, opts) {
+  return monkey(input, objectAssign(prep(opts), { mode: 'flatten' }))
+}
 
 // -----------------------------------------------------------------------------
 
@@ -190,5 +208,6 @@ module.exports = {
   set: set,
   drop: drop,
   info: info,
-  del: del
+  del: del,
+  flatten: flatten
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-import { find, get, set, drop, info, del } from './index'
+import { find, get, set, drop, info, del, flatten } from './index'
 
 import test from 'ava'
 var actual, intended, key, val, index
@@ -729,8 +729,8 @@ test('06.01 - info returns undefined', t => {
   input = {
     a: 'a'
   }
-  actual = info(input, {a: 'zzz'})
-  intended = undefined
+  actual = info(input)
+  intended = {a: 'a'}
 
   t.deepEqual(
     actual,
@@ -889,4 +889,95 @@ test('07.09 - deletes by key and value from mixed', t => {
     actual,
     intended,
     '07.09')
+})
+
+// -----------------------------------------------------------------------------
+// flatten (arrays)
+// -----------------------------------------------------------------------------
+
+test('08.01 - flattens nested arrays', t => {
+  input = {
+    a: {b: ['c', 'd', 'e']},
+    f: ['g', 'h']
+  }
+  actual = flatten(input)
+  intended = {
+    a: {b: ['c']},
+    f: ['g']
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.01')
+})
+
+test('08.02 - flattens — arrays within arrays only, no obj', t => {
+  input = [
+    ['a', 'b', 'c'],
+    ['d', ['e']]
+  ]
+  actual = flatten(input)
+  intended = [
+    ['a']
+  ]
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.02')
+})
+
+test('08.03 - flattens nested arrays #2', t => {
+  input = [
+    {
+      a: 'a'
+    },
+    {
+      b: 'b'
+    }
+  ]
+  actual = flatten(input)
+  intended = [
+    {
+      a: 'a'
+    }
+  ]
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.03')
+})
+
+test('08.04 - flatten leaves objects alone', t => {
+  input = {
+    a: 'a',
+    b: {
+      c: 'c'
+    }
+  }
+  actual = flatten(input)
+  intended = {
+    a: 'a',
+    b: {
+      c: 'c'
+    }
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.04')
+})
+
+test('08.05 - flatten leaves strings alone', t => {
+  input = 'zzz'
+  actual = flatten(input)
+  intended = 'zzz'
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.05')
 })
