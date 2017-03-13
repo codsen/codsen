@@ -109,6 +109,79 @@ Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
 `object1`                | Plain object   | yes         | Plain object. Can have nested values.
 `object2`                | Plain object   | yes         | Another plain object. Can have nested values.
+`options`                | Plain object   | no          | Pass all settings as a plain object, as a third argument
+
+Options object's key                | Value   | Default | Description
+------------------------------------|---------|---------|-------------
+`{`                                 |         |         |
+`mergeObjectsOnlyWhenKeysetMatches` | Boolean | true    | Controls the mergins of the objects within arrays. See below.
+`}`                                 |         |         |
+
+`mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).
+
+For example:
+
+Let's merge these two objects. Notice that each has unique key (`yyyy` and `xxxx` in the object that sits within the first position of each array).
+
+```js
+// #1
+var obj1 = {
+  a: [
+    {
+      a: 'a',
+      b: 'b',
+      yyyy: 'yyyy'
+    }
+  ]
+}
+
+var obj2 = {
+  a: [
+    {
+      xxxx: 'xxxx',
+      b: 'b',
+      c: 'c'
+    }
+  ]
+}
+
+var res1 = mergeAdvanced(object1, object2)
+
+console.log('res1 = ' + JSON.stringify(res1, null, 4))
+// => {
+//      a: [
+//        {
+//          a: 'a',
+//          b: 'b',
+//          yyyy: 'yyyy'
+//        },
+//        {
+//          xxxx: 'xxxx',
+//          b: 'b',
+//          c: 'c'
+//        }
+//      ]
+//    }
+
+```
+
+but if you turn off the safeguard, `{ mergeObjectsOnlyWhenKeysetMatches: false }` each object within an array is merged no matter their differences in the keysets:
+
+```js
+var res2 = mergeAdvanced(object1, object2, { mergeObjectsOnlyWhenKeysetMatches: false })
+console.log('res2 = ' + JSON.stringify(res2, null, 4))
+// => {
+//      a: [
+//        {
+//          a: 'a',
+//          b: 'b',
+//          yyyy: 'yyyy',
+//          xxxx: 'xxxx',
+//          c: 'c'
+//        }
+//      ]
+//    }
+```
 
 ### API - Output
 

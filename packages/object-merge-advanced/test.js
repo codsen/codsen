@@ -1,6 +1,12 @@
 'use strict'
-var mergeAdvanced = require('./index.js')
+var mergeAdvanced = require('./index')
+// var existy = require('./util').existy
+// var isBool = require('./util').isBool
+// var sortObject = require('./util').sortObject
+// var nonEmpty = require('./util').nonEmpty
+var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
 var clone = require('lodash.clonedeep')
+
 import test from 'ava'
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
@@ -669,12 +675,6 @@ test('01.15 - object values are arrays and get merged', t => {
           c: ['c']
         },
         {
-          d: 'd'
-        },
-        {
-          c: 'c'
-        },
-        {
           d: ['d']
         }
       ],
@@ -1163,6 +1163,16 @@ test('02.04 - wrong type args - returns undefined', t => {
     '02.04.05')
 })
 
+test('02.05 - third arg is not a plain object - throws', t => {
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'},
+      {b: 'b'},
+      'c'
+    )
+  })
+})
+
 // ==============================
 // Input argument mutation
 // ==============================
@@ -1209,6 +1219,9 @@ test('04.01 - arrays, checking against dupes being added', t => {
       {
         a: [
           {
+            x1: 'x1'
+          },
+          {
             y1: 'y1',
             y2: 'y2'
           }
@@ -1235,18 +1248,21 @@ test('04.01 - arrays, checking against dupes being added', t => {
       {
         a: [
           {
-            y1: 'y1',
-            y2: 'y2'
-          }
-        ]
-      },
-      {
-        b: 'b',
-        a: [
-          {
             x1: 'x1',
             x2: 'x2',
             x3: 'x3'
+          },
+          {
+            y1: 'y1',
+            y2: 'y2'
+          }
+        ],
+        b: 'b'
+      },
+      {
+        a: [
+          {
+            x1: 'x1'
           },
           {
             y1: 'y1',
@@ -1258,13 +1274,13 @@ test('04.01 - arrays, checking against dupes being added', t => {
     {
       a: [
         {
-          y1: 'y1',
-          y2: 'y2'
-        },
-        {
           x1: 'x1',
           x2: 'x2',
           x3: 'x3'
+        },
+        {
+          y1: 'y1',
+          y2: 'y2'
         }
       ],
       b: 'b'
@@ -1272,176 +1288,568 @@ test('04.01 - arrays, checking against dupes being added', t => {
     '04.01.02')
 })
 
-test('04.02 - edge case - one of merged arrays has dupes', t => {
+// ================================================
+// does not introduce non-unique values into arrays
+// ================================================
+
+test('05.01 - merges objects within arrays if keyset and position within array matches', t => {
   t.deepEqual(
     mergeAdvanced(
       {
-        b: 'b',
         a: [
           {
-            x1: 'x1',
-            x2: 'x2',
-            x3: 'x3'
+            b: 'b1',
+            c: 'c1'
           },
           {
-            x1: 'x1',
-            x2: 'x2',
-            x3: 'x3'
-          },
-          {
-            y1: 'y1',
-            y2: 'y2'
-          },
-          {
-            y1: 'y1',
-            y2: 'y2'
+            x: 'x1',
+            y: 'y1'
           }
         ]
       },
       {
         a: [
           {
-            y1: 'y1',
-            y2: 'y2'
+            b: 'b2',
+            c: 'c2'
+          },
+          {
+            x: 'x2',
+            y: 'y2'
           }
         ]
       }
     ),
     {
-      b: 'b',
       a: [
         {
-          x1: 'x1',
-          x2: 'x2',
-          x3: 'x3'
+          b: 'b2',
+          c: 'c2'
         },
         {
-          x1: 'x1',
-          x2: 'x2',
-          x3: 'x3'
-        },
-        {
-          y1: 'y1',
-          y2: 'y2'
-        },
-        {
-          y1: 'y1',
-          y2: 'y2'
+          x: 'x2',
+          y: 'y2'
         }
       ]
     },
-    '04.02.01')
-  t.deepEqual(
-    mergeAdvanced(
-      {
-        a: [
-          {
-            y1: 'y1',
-            y2: 'y2'
-          }
-        ]
-      },
-      {
-        b: 'b',
-        a: [
-          {
-            x1: 'x1',
-            x2: 'x2',
-            x3: 'x3'
-          },
-          {
-            x1: 'x1',
-            x2: 'x2',
-            x3: 'x3'
-          },
-          {
-            y1: 'y1',
-            y2: 'y2'
-          },
-          {
-            y1: 'y1',
-            y2: 'y2'
-          }
-        ]
-      }
-    ),
-    {
-      a: [
-        {
-          y1: 'y1',
-          y2: 'y2'
-        },
-        {
-          x1: 'x1',
-          x2: 'x2',
-          x3: 'x3'
-        },
-        {
-          x1: 'x1',
-          x2: 'x2',
-          x3: 'x3'
-        }
-      ],
-      b: 'b'
-    },
-    '04.02.02')
+    '05.01.01')
 })
 
-test('04.03 - arrays, duped elements being arrays further', t => {
+test('05.02 - concats instead if objects within arrays are in a wrong order', t => {
   t.deepEqual(
     mergeAdvanced(
       {
-        b: 'b',
         a: [
-          ['b'],
-          ['c'],
-          ['a']
+          {
+            x: 'x1',
+            y: 'y1'
+          },
+          {
+            b: 'b1',
+            c: 'c1'
+          }
         ]
       },
       {
         a: [
-          ['a'],
-          ['b']
-        ],
-        d: 'd'
-      }
-    ),
-    {
-      b: 'b',
-      a: [
-        ['b'],
-        ['c'],
-        ['a']
-      ],
-      d: 'd'
-    },
-    '04.03.01')
-  t.deepEqual(
-    mergeAdvanced(
-      {
-        a: [
-          ['a'],
-          ['b']
-        ],
-        d: 'd'
-      },
-      {
-        b: 'b',
-        a: [
-          ['b'],
-          ['c'],
-          ['a']
+          {
+            b: 'b2',
+            c: 'c2'
+          },
+          {
+            x: 'x2',
+            y: 'y2'
+          }
         ]
       }
     ),
     {
       a: [
-        ['a'],
-        ['b'],
-        ['c']
-      ],
-      b: 'b',
-      d: 'd'
+        {
+          x: 'x1',
+          y: 'y1'
+        },
+        {
+          b: 'b2',
+          c: 'c2'
+        },
+        {
+          b: 'b1',
+          c: 'c1'
+        },
+        {
+          x: 'x2',
+          y: 'y2'
+        }
+      ]
     },
-    '04.03.02')
+    '05.02')
+})
+
+test('05.03 - concats instead if objects within arrays are in a wrong order', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'b1',
+            c: 'c1'
+          },
+          {
+            n: 'n1',
+            m: 'm1'
+          },
+          {
+            x: 'x1',
+            y: 'y1'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: 'b2',
+            c: 'c2'
+          },
+          {
+            x: 'x2',
+            y: 'y2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'b2',
+          c: 'c2'
+        },
+        {
+          n: 'n1',
+          m: 'm1'
+        },
+        {
+          x: 'x2',
+          y: 'y2'
+        },
+        {
+          x: 'x1',
+          y: 'y1'
+        }
+      ]
+    },
+    '05.03')
+})
+
+test('05.04 - merges objects within arrays, key sets are a subset of one another', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'b1'
+          },
+          {
+            x: 'x1',
+            y: 'y1'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: 'b2',
+            c: 'c2'
+          },
+          {
+            x: 'x2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'b2',
+          c: 'c2'
+        },
+        {
+          x: 'x2',
+          y: 'y1'
+        }
+      ]
+    },
+    '05.04')
+})
+
+test('05.05 - merges objects within arrays, subset and no match, mixed case', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            c: 'c1'
+          },
+          {
+            x: 'x1',
+            y: 'y1'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: 'b2',
+            c: 'c2'
+          },
+          {
+            m: 'm3',
+            n: 'n3'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'b2',
+          c: 'c2'
+        },
+        {
+          x: 'x1',
+          y: 'y1'
+        },
+        {
+          m: 'm3',
+          n: 'n3'
+        }
+      ]
+    },
+    '05.05')
+})
+
+test('05.06 - opts.mergeObjectsOnlyWhenKeysetMatches', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            a: 'a',
+            b: 'b'
+          },
+          {
+            c: 'c',
+            d: 'd'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k',
+            l: 'l'
+          },
+          {
+            m: 'm',
+            n: 'n'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b'
+        },
+        {
+          k: 'k',
+          l: 'l'
+        },
+        {
+          c: 'c',
+          d: 'd'
+        },
+        {
+          m: 'm',
+          n: 'n'
+        }
+      ]
+    },
+    '05.06.01 - mergeObjectsOnlyWhenKeysetMatches = default')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            a: 'a',
+            b: 'b'
+          },
+          {
+            c: 'c',
+            d: 'd'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k',
+            l: 'l'
+          },
+          {
+            m: 'm',
+            n: 'n'
+          }
+        ]
+      },
+      {
+        mergeObjectsOnlyWhenKeysetMatches: true
+      }
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b'
+        },
+        {
+          k: 'k',
+          l: 'l'
+        },
+        {
+          c: 'c',
+          d: 'd'
+        },
+        {
+          m: 'm',
+          n: 'n'
+        }
+      ]
+    },
+    '05.06.02 - mergeObjectsOnlyWhenKeysetMatches = true')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            a: 'a',
+            b: 'b'
+          },
+          {
+            c: 'c',
+            d: 'd'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k',
+            l: 'l'
+          },
+          {
+            m: 'm',
+            n: 'n'
+          }
+        ]
+      },
+      {
+        mergeObjectsOnlyWhenKeysetMatches: false
+      }
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b',
+          k: 'k',
+          l: 'l'
+        },
+        {
+          c: 'c',
+          d: 'd',
+          m: 'm',
+          n: 'n'
+        }
+      ]
+    },
+    '05.06.03 - mergeObjectsOnlyWhenKeysetMatches = false')
+})
+
+test('05.07 - README example: opts.mergeObjectsOnlyWhenKeysetMatches', t => {
+  var obj1 = {
+    a: [
+      {
+        a: 'a',
+        b: 'b',
+        yyyy: 'yyyy'
+      }
+    ]
+  }
+
+  var obj2 = {
+    a: [
+      {
+        xxxx: 'xxxx',
+        b: 'b',
+        c: 'c'
+      }
+    ]
+  }
+
+  t.deepEqual(
+    mergeAdvanced(
+      obj1, obj2
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b',
+          yyyy: 'yyyy'
+        },
+        {
+          xxxx: 'xxxx',
+          b: 'b',
+          c: 'c'
+        }
+      ]
+    },
+    '05.07.01')
+
+  t.deepEqual(
+    mergeAdvanced(
+      obj1, obj2, { mergeObjectsOnlyWhenKeysetMatches: false }
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b',
+          yyyy: 'yyyy',
+          xxxx: 'xxxx',
+          c: 'c'
+        }
+      ]
+    },
+    '05.07.02')
+})
+
+// ============================================================
+//                   U T I L   T E S T S
+// ============================================================
+
+//                           ____
+//          massive hammer  |    |
+//        O=================|    |
+//          upon all bugs   |____|
+//
+//                         .=O=.
+
+// ==============================
+// util/equalOrSubsetKeys()
+// ==============================
+
+test('99.01 - equalOrSubsetKeys - two equal plain objects', t => {
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: 'ccc',
+        b: 'zzz'
+      },
+      {
+        a: 'ddd',
+        b: 'yyy'
+      }
+    ),
+    '99.01')
+})
+
+test('99.02 - equalOrSubsetKeys - first is a subset of the second', t => {
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: 'ccc'
+      },
+      {
+        a: 'ddd',
+        b: 'b'
+      }
+    ),
+    '99.02.01')
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: ['ccc']
+      },
+      {
+        a: ['ddd'],
+        b: ['b']
+      }
+    ),
+    '99.02.02')
+})
+
+test('99.03 - equalOrSubsetKeys - second is a subset of the first', t => {
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: 'a',
+        b: 'ccc'
+      },
+      {
+        b: 'ddd'
+      }
+    ),
+    '99.03')
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: ['a'],
+        b: ['ccc']
+      },
+      {
+        b: ['ddd']
+      }
+    ),
+    '99.03')
+})
+
+test('99.04 - equalOrSubsetKeys - empty object is a subset', t => {
+  t.truthy(
+    equalOrSubsetKeys(
+      {
+        a: 'a',
+        b: 'ccc'
+      },
+      {}
+    ),
+    '99.04.01')
+  t.truthy(
+    equalOrSubsetKeys(
+      {},
+      {
+        b: ['ddd']
+      }
+    ),
+    '99.04.02')
+})
+
+test('99.05 - first input is not an object - throws', t => {
+  t.throws(function () {
+    equalOrSubsetKeys('z')
+  })
+})
+
+test('99.06 - first input is missing - throws', t => {
+  t.throws(function () {
+    equalOrSubsetKeys()
+  })
+})
+
+test('99.07 - second input is not an object - throws', t => {
+  t.throws(function () {
+    equalOrSubsetKeys({a: 'a'}, 'z')
+  })
 })

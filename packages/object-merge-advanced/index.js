@@ -4,47 +4,28 @@
 // V A R S
 
 var isArr = Array.isArray
+var objectAssign = require('object-assign')
 var isObj = require('lodash.isplainobject')
 var isStr = require('lodash.isstring')
 var clone = require('lodash.clonedeep')
-var pullAllWith = require('lodash.pullallwith')
-var compare = require('posthtml-ast-compare')
+// var pullAllWith = require('lodash.pullallwith')
+// var compare = require('posthtml-ast-compare')
+
+var existy = require('./util').existy
+var isBool = require('./util').isBool
+var sortObject = require('./util').sortObject
+var nonEmpty = require('./util').nonEmpty
+var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
+
+var temp
 
 // ===================================
 // F U N C T I O N S
 
-function mergeAdvanced (obj1orig, obj2orig) {
-// FUNCTIONS
-// -----------------------------------------------------------------------------
-  function existy (x) { return x != null }
-
-  function isBool (bool) {
-    return typeof bool === 'boolean'
-  }
-
-  /**
-   * sortObject - sorts object's keys
-   *
-   * @param  {Object} obj input object
-   * @return {Object}     sorted object
-   */
-  function sortObject (obj) {
-    return Object.keys(obj).sort().reduce(function (result, key) {
-      result[key] = obj[key]
-      return result
-    }, {})
-  }
-
-  function nonEmpty (something) {
-    if (Array.isArray(something) || (typeof something === 'string')) {
-      return something.length > 0
-    } else if (isObj(something)) {
-      return Object.keys(something).length > 0
-    }
-  }
-
-// VARS AND PRECAUTIONS
-// -----------------------------------------------------------------------------
+function mergeAdvanced (obj1orig, obj2orig, opts) {
+  //
+  // VARS AND PRECAUTIONS
+  // ---------------------------------------------------------------------------
 
   if (!existy(obj1orig) && existy(obj2orig)) {
     return obj2orig
@@ -55,11 +36,21 @@ function mergeAdvanced (obj1orig, obj2orig) {
   if (!isObj(obj1orig) || !isObj(obj2orig)) {
     return
   }
+  if (existy(opts) && !isObj(opts)) {
+    throw new TypeError('object-merge-advanced/mergeAdvanced(): Options object, third argument must be a plain object')
+  }
   var o1 = clone(obj1orig)
   var o2 = clone(obj2orig)
 
-// ACTION
-// -----------------------------------------------------------------------------
+  // DEFAULTS
+  // ---------------------------------------------------------------------------
+
+  opts = objectAssign({
+    mergeObjectsOnlyWhenKeysetMatches: true // otherwise, concatenation will be preferred
+  }, opts)
+
+  // ACTION
+  // ---------------------------------------------------------------------------
 
   Object.keys(o2).forEach(function (key) {
     if (existy(o1[key])) {
@@ -97,8 +88,48 @@ function mergeAdvanced (obj1orig, obj2orig) {
           // cases 19-27
           if (isArr(o2[key]) && nonEmpty(o2[key])) {
             // case 21
-            // concat two non-empty arrays
-            o1[key] = o1[key].concat(pullAllWith(o2[key], o1[key], compare))
+            // two objects within an array.
+            // interesting case.
+            // two outcomes:
+            // 1. key sets are same or one has key set which is a subset of another object's key set.
+            // 2. two objects with key sets which are not equal or subset (both contains unique keys, for example)
+            //
+            // decision: case #1 — recursion with intent to merge keys
+            //           case #2 — array concat, putting second argument's stuff at the end of a resulting "mergeable".
+
+            temp = []
+            for (var i = 0, len = Math.max(o1[key].length, o2[key].length); i < len; i++) {
+//
+              if (existy(o1[key][i]) && existy(o2[key][i])) {
+                // console.log('o1[key][i] = ' + JSON.stringify(o1[key][i], null, 4))
+                // console.log('o2[key][i] = ' + JSON.stringify(o2[key][i], null, 4))
+                // console.log('1. temp = ' + JSON.stringify(temp, null, 4))
+
+                if (opts.mergeObjectsOnlyWhenKeysetMatches) {
+                  // custom merge of the objects.
+                  // if both are at the same position and their key sets are equal or subset of one/another,
+                  // then merge them.
+                  // if both have unique keys, don't merge, concat both into resulting array as separate array elements.
+                  // this is when different objects meaning separte different things are being merged.
+                  if (isObj(o1[key][i]) && isObj(o2[key][i]) && equalOrSubsetKeys(o1[key][i], o2[key][i])) {
+                    temp.push(mergeAdvanced(o1[key][i], o2[key][i]))
+                  } else {
+                    temp.push(o1[key][i])
+                    temp.push(o2[key][i])
+                  }
+                } else {
+                  temp.push(mergeAdvanced(o1[key][i], o2[key][i]))
+                }
+
+                // console.log('2. temp = ' + JSON.stringify(temp, null, 4))
+              } else {
+                // console.log('3. temp = ' + JSON.stringify(temp, null, 4))
+                temp.push(existy(o1[key][i]) ? o1[key][i] : o2[key][i])
+                // console.log('4. temp = ' + JSON.stringify(temp, null, 4))
+              }
+//
+            }
+            o1[key] = clone(temp)
           } else {
             // cases 19,20,22-27
             // nothing, o1[key] stays
