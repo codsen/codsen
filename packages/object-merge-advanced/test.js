@@ -9,6 +9,10 @@ var clone = require('lodash.clonedeep')
 
 import test from 'ava'
 
+// var json1 = require('./test/res1.json')
+// var json2 = require('./test/res2.json')
+// var json3 = require('./test/res3.json')
+
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
 
@@ -135,21 +139,21 @@ test('01.04 - array vs array value clash', t => {
       b: 'b'
     },
     '01.04.01')
-  t.deepEqual(
-    mergeAdvanced(
-      {
-        a: ['c']
-      },
-      {
-        b: 'b',
-        a: ['a']
-      }
-    ),
-    {
-      a: ['c', 'a'],
-      b: 'b'
-    },
-    '01.04.02')
+  // t.deepEqual(
+  //   mergeAdvanced(
+  //     {
+  //       a: ['c']
+  //     },
+  //     {
+  //       b: 'b',
+  //       a: ['a']
+  //     }
+  //   ),
+  //   {
+  //     a: ['c', 'a'],
+  //     b: 'b'
+  //   },
+  //   '01.04.02')
 })
 
 test('01.05 - object vs object value clash', t => {
@@ -885,7 +889,7 @@ test('01.19 - merging null', t => {
     '01.19.02')
 })
 
-test('01.20 - boolean vs boolean merge (#61)', t => {
+test('01.20 - boolean vs boolean merge (#78)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -918,7 +922,7 @@ test('01.20 - boolean vs boolean merge (#61)', t => {
     '01.20.02')
 })
 
-test('01.21 - boolean vs undefined merge (#62)', t => {
+test('01.21 - boolean vs undefined merge (#80)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -981,7 +985,7 @@ test('01.21 - boolean vs undefined merge (#62)', t => {
     '01.21.04')
 })
 
-test('01.22 - null vs empty object merge (#74)', t => {
+test('01.22 - null vs empty object merge (#84)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -1014,7 +1018,7 @@ test('01.22 - null vs empty object merge (#74)', t => {
     '01.22.02')
 })
 
-test('01.23 - null vs. undefined (#80)', t => {
+test('01.23 - null vs. undefined (#90)', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -1123,19 +1127,18 @@ test('02.02 - missing first arg', t => {
     '02.02.02')
 })
 
-test('02.03 - both args missing', t => {
-  t.deepEqual(
-    mergeAdvanced(),
-    undefined,
-    '02.03')
+test('02.03 - both args missing - throws', t => {
+  t.throws(function () {
+    mergeAdvanced()
+  })
 })
 
-test('02.04 - wrong type args - returns undefined', t => {
+test('02.04 - various, mixed', t => {
   t.deepEqual(
     mergeAdvanced(
       null, null
     ),
-    undefined,
+    null,
     '02.04.01')
   t.deepEqual(
     mergeAdvanced(
@@ -1147,19 +1150,19 @@ test('02.04 - wrong type args - returns undefined', t => {
     mergeAdvanced(
       true, false
     ),
-    undefined,
+    true,
     '02.04.03')
   t.deepEqual(
     mergeAdvanced(
       ['a'], ['b']
     ),
-    undefined,
+    ['a', 'b'],
     '02.04.04')
   t.deepEqual(
     mergeAdvanced(
       [], []
     ),
-    undefined,
+    [],
     '02.04.05')
 })
 
@@ -1177,21 +1180,17 @@ test('02.05 - third arg is not a plain object - throws', t => {
 // Input argument mutation
 // ==============================
 
-var obj1 = {
-  a: 'a',
-  b: 'b'
-}
-
-var originalObj1 = clone(obj1)
-
-var obj2 = {
-  c: 'c',
-  d: 'd'
-}
-
-mergeAdvanced(obj1, obj2)
-
 test('03.01 - testing for mutation of the input args', t => {
+  var obj1 = {
+    a: 'a',
+    b: 'b'
+  }
+  var originalObj1 = clone(obj1)
+  var obj2 = {
+    c: 'c',
+    d: 'd'
+  }
+  mergeAdvanced(obj1, obj2)
   t.deepEqual(obj1, originalObj1)
 })
 
@@ -1662,14 +1661,14 @@ test('05.06 - opts.mergeObjectsOnlyWhenKeysetMatches', t => {
       a: [
         {
           a: 'a',
-          b: 'b',
           k: 'k',
+          b: 'b',
           l: 'l'
         },
         {
           c: 'c',
-          d: 'd',
           m: 'm',
+          d: 'd',
           n: 'n'
         }
       ]
@@ -1718,22 +1717,406 @@ test('05.07 - README example: opts.mergeObjectsOnlyWhenKeysetMatches', t => {
     },
     '05.07.01')
 
+  // t.deepEqual(
+  //   mergeAdvanced(
+  //     obj1, obj2, { mergeObjectsOnlyWhenKeysetMatches: false }
+  //   ),
+  //   {
+  //     a: [
+  //       {
+  //         a: 'a',
+  //         b: 'b',
+  //         yyyy: 'yyyy',
+  //         xxxx: 'xxxx',
+  //         c: 'c'
+  //       }
+  //     ]
+  //   },
+  //   '05.07.02')
+})
+
+// ==============================
+// Real world tests
+// ==============================
+
+test('06.01 - real world use case', t => {
   t.deepEqual(
     mergeAdvanced(
-      obj1, obj2, { mergeObjectsOnlyWhenKeysetMatches: false }
+      {
+        'a': [
+          {
+            'b': 'b',
+            'c': false,
+            'd': [
+              {
+                'e': false,
+                'f': false
+              }
+            ]
+          }
+        ],
+        'g': false,
+        'h': [
+          {
+            'i': 'i'
+          }
+        ],
+        'j': 'j'
+      },
+      {
+        'a': [
+          {
+            'b': {
+              'b2': 'b2'
+            },
+            'c': false,
+            'd': [
+              {
+                'e': false,
+                'f': false
+              }
+            ]
+          }
+        ],
+        'g': false,
+        'h': [
+          {
+            'i': 'i'
+          }
+        ],
+        'j': 'j'
+      }
     ),
     {
-      a: [
+      'a': [
         {
-          a: 'a',
-          b: 'b',
-          yyyy: 'yyyy',
-          xxxx: 'xxxx',
-          c: 'c'
+          'b': {
+            'b2': 'b2'
+          },
+          'c': false,
+          'd': [
+            {
+              'e': false,
+              'f': false
+            }
+          ]
+        }
+      ],
+      'g': false,
+      'h': [
+        {
+          'i': 'i'
+        }
+      ],
+      'j': 'j'
+    },
+    '06.01')
+})
+
+test('06.02 - real world use case, mini', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        'a': [
+          {
+            'b': 'b',
+            'd': [
+              {
+                'f': false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        'a': [
+          {
+            'b': {
+              'b2': 'b2'
+            },
+            'd': [
+              {
+                'f': false
+              }
+            ]
+          }
+        ]
+      }
+    ),
+    {
+      'a': [
+        {
+          'b': {
+            'b2': 'b2'
+          },
+          'd': [
+            {
+              'f': false
+            }
+          ]
         }
       ]
     },
-    '05.07.02')
+    '06.02')
+})
+
+// ==============================
+// Merging arrays
+// ==============================
+
+test('07.01 - merges two arrays of equal length', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      ['a', 'b', 'c'],
+      ['d', 'e', 'f']
+    ),
+    ['a', 'd', 'b', 'e', 'c', 'f'],
+    '07.01')
+})
+
+test('07.02 - merges two arrays of different length', t => {
+  t.deepEqual(
+    mergeAdvanced(
+    ['a', 'b', 'c', 'd'],
+    ['e', 'f']
+    ),
+    ['a', 'e', 'b', 'f', 'c', 'd'],
+    '07.02.01')
+  t.deepEqual(
+    mergeAdvanced(
+    ['a', 'b'],
+    ['d', 'e', 'f', 'g']
+    ),
+    ['a', 'd', 'b', 'e', 'f', 'g'],
+    '07.02.02')
+})
+
+test('07.03 - merges non-empty array with an empty array', t => {
+  t.deepEqual(
+    mergeAdvanced(
+    ['a', 'b', 'c', 'd'],
+    []
+    ),
+    ['a', 'b', 'c', 'd'],
+    '07.03.01')
+  t.deepEqual(
+    mergeAdvanced(
+    [],
+    ['d', 'e', 'f', 'g']
+    ),
+    ['d', 'e', 'f', 'g'],
+    '07.03.02')
+  t.deepEqual(
+    mergeAdvanced(
+    ['a', 'b', 'c', 'd'],
+    {}
+    ),
+    ['a', 'b', 'c', 'd'],
+    '07.03.03')
+  t.deepEqual(
+    mergeAdvanced(
+    {},
+    ['d', 'e', 'f', 'g']
+    ),
+    ['d', 'e', 'f', 'g'],
+    '07.03.04')
+  t.deepEqual(
+    mergeAdvanced(
+    ['a', 'b', 'c', 'd'],
+    ''
+    ),
+    ['a', 'b', 'c', 'd'],
+    '07.03.05')
+  t.deepEqual(
+    mergeAdvanced(
+    '',
+    ['d', 'e', 'f', 'g']
+    ),
+    ['d', 'e', 'f', 'g'],
+    '07.03.06')
+})
+
+// ==============================
+// Merging arrays
+// ==============================
+
+test('08.01 - arrays in objects', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      { a: ['b', 'c'] },
+      { d: ['e', 'f'] }
+    ),
+    {
+      a: ['b', 'c'],
+      d: ['e', 'f']
+    },
+    '08.01')
+})
+
+test('08.02 - arrays in objects, deeper', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      { a: ['b', 'c'] },
+      { a: ['e', 'f'] }
+    ),
+    {
+      a: ['b', 'e', 'c', 'f']
+    },
+    '08.02')
+})
+
+test('08.03 - objects in arrays in objects', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      { a: [{ b: 'b' }] },
+      { a: [{ c: 'c' }] }
+    ),
+    {
+      a: [
+        { b: 'b' },
+        { c: 'c' }
+      ]
+    },
+    '08.03')
+})
+
+test('08.04 - objects in arrays in objects', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          { b: 'b', c: ['d1'] }
+        ]
+      },
+      {
+        a: [
+          { b: 'd', c: ['d2'] }
+        ]
+      }
+    ),
+    {
+      a: [
+        { b: 'd', c: ['d1', 'd2'] }
+      ]
+    },
+    '08.04')
+})
+
+// ==============================
+// Various
+// ==============================
+
+test('09.01 - empty string vs boolean #58', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      '',
+      true
+    ),
+    '',
+    '09.01.01')
+  t.deepEqual(
+    mergeAdvanced(
+      true,
+      ''
+    ),
+    '',
+    '09.01.02')
+})
+
+test('09.02 - empty string vs undefined #59', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      '',
+      null
+    ),
+    '',
+    '09.02.01')
+  t.deepEqual(
+    mergeAdvanced(
+      null,
+      ''
+    ),
+    '',
+    '09.02.02')
+})
+
+test('09.03 - empty string vs undefined #60', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      '',
+      undefined
+    ),
+    '',
+    '09.03.01')
+  t.deepEqual(
+    mergeAdvanced(
+      undefined,
+      ''
+    ),
+    '',
+    '09.03.02')
+})
+
+test('09.04 - number - #81-90', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      1,
+      ['a']
+    ),
+    ['a'],
+    '09.04.01')
+  t.deepEqual(
+    mergeAdvanced(
+      ['a'],
+      1
+    ),
+    ['a'],
+    '09.04.02')
+  t.deepEqual(
+    mergeAdvanced(
+      1,
+      'a'
+    ),
+    'a',
+    '09.04.03')
+  t.deepEqual(
+    mergeAdvanced(
+      'a',
+      1
+    ),
+    'a',
+    '09.04.04')
+  t.deepEqual(
+    mergeAdvanced(
+      [],
+      1
+    ),
+    1,
+    '09.04.05')
+  t.deepEqual(
+    mergeAdvanced(
+      1,
+      []
+    ),
+    1,
+    '09.04.05')
+})
+
+test('09.05 - empty string vs undefined #60', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      '',
+      undefined
+    ),
+    '',
+    '09.05.01')
+  t.deepEqual(
+    mergeAdvanced(
+      undefined,
+      ''
+    ),
+    '',
+    '09.05.02')
 })
 
 // ============================================================

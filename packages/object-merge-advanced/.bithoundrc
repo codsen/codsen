@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-      "mute": ["lodash.isplainobject", "lodash.isstring", "lodash.pullallwith", "lodash.clonedeep", "ava", "coveralls", "doctoc", "husky", "nyc"]
+      "mute": ["lodash.clonedeep", "lodash.isnumber", "lodash.isplainobject", "lodash.isstring", "ava", "coveralls", "doctoc", "husky", "nyc"]
   },
   "test": [
     "test.js"

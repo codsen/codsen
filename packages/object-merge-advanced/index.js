@@ -7,40 +7,30 @@ var isArr = Array.isArray
 var objectAssign = require('object-assign')
 var isObj = require('lodash.isplainobject')
 var isStr = require('lodash.isstring')
+var isNum = require('lodash.isnumber')
 var clone = require('lodash.clonedeep')
-// var pullAllWith = require('lodash.pullallwith')
-// var compare = require('posthtml-ast-compare')
 
 var existy = require('./util').existy
 var isBool = require('./util').isBool
-var sortObject = require('./util').sortObject
 var nonEmpty = require('./util').nonEmpty
 var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
-
-var temp
 
 // ===================================
 // F U N C T I O N S
 
-function mergeAdvanced (obj1orig, obj2orig, opts) {
+function mergeAdvanced (input1orig, input2orig, opts) {
   //
   // VARS AND PRECAUTIONS
   // ---------------------------------------------------------------------------
 
-  if (!existy(obj1orig) && existy(obj2orig)) {
-    return obj2orig
-  }
-  if (existy(obj1orig) && !existy(obj2orig)) {
-    return obj1orig
-  }
-  if (!isObj(obj1orig) || !isObj(obj2orig)) {
-    return
+  if (arguments.length === 0) {
+    throw new TypeError('object-merge-advanced/mergeAdvanced(): Both inputs are missing')
   }
   if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('object-merge-advanced/mergeAdvanced(): Options object, third argument must be a plain object')
+    throw new TypeError('object-merge-advanced/mergeAdvanced(): Options object, the third argument, must be a plain object')
   }
-  var o1 = clone(obj1orig)
-  var o2 = clone(obj2orig)
+  var i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
+  var i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
 
   // DEFAULTS
   // ---------------------------------------------------------------------------
@@ -52,145 +42,142 @@ function mergeAdvanced (obj1orig, obj2orig, opts) {
   // ACTION
   // ---------------------------------------------------------------------------
 
-  Object.keys(o2).forEach(function (key) {
-    if (existy(o1[key])) {
-      // value clash
-
-      // action
-      if (isObj(o1[key]) && isObj(o2[key])) {
-        // case 01
-        o1[key] = mergeAdvanced(o1[key], o2[key])
-      } else if (isObj(o1[key])) {
-        // cases 01-18
-        if (nonEmpty(o1[key])) {
-          // cases 01-09
-          if (isArr(o2[key]) && nonEmpty(o2[key])) {
-            // case 03
-            o1[key] = o2[key]
+  if (isArr(i1)) {
+    // cases 1-20
+    if (nonEmpty(i1)) {
+      // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+      if (isArr(i2) && nonEmpty(i2)) {
+        // case 1
+        // two array merge
+        var temp = []
+        for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+          if (
+            isObj(i1[index]) &&
+            isObj(i2[index]) &&
+            ((opts.mergeObjectsOnlyWhenKeysetMatches &&
+            equalOrSubsetKeys(i1[index], i2[index])) || !opts.mergeObjectsOnlyWhenKeysetMatches)
+          ) {
+            temp.push(mergeAdvanced(i1[index], i2[index]))
           } else {
-            // cases 01,02,04-09
-            // nothing, o1[key] stays
-          }
-        } else {
-          // cases 10-18
-          // o1[key] is empty object
-          if (isArr(o2[key]) || isObj(o2[key]) || (isStr(o2[key]) && nonEmpty(o2[key]))) {
-            // cases 10-14
-            o1[key] = o2[key]
-          } else {
-            // cases 15-18
-            // nothing, o1[key] stays
-          }
-        }
-      } else if (isArr(o1[key])) {
-        // cases 19-36
-        if (nonEmpty(o1[key])) {
-          // cases 19-27
-          if (isArr(o2[key]) && nonEmpty(o2[key])) {
-            // case 21
-            // two objects within an array.
-            // interesting case.
-            // two outcomes:
-            // 1. key sets are same or one has key set which is a subset of another object's key set.
-            // 2. two objects with key sets which are not equal or subset (both contains unique keys, for example)
-            //
-            // decision: case #1 — recursion with intent to merge keys
-            //           case #2 — array concat, putting second argument's stuff at the end of a resulting "mergeable".
-
-            temp = []
-            for (var i = 0, len = Math.max(o1[key].length, o2[key].length); i < len; i++) {
-//
-              if (existy(o1[key][i]) && existy(o2[key][i])) {
-                // console.log('o1[key][i] = ' + JSON.stringify(o1[key][i], null, 4))
-                // console.log('o2[key][i] = ' + JSON.stringify(o2[key][i], null, 4))
-                // console.log('1. temp = ' + JSON.stringify(temp, null, 4))
-
-                if (opts.mergeObjectsOnlyWhenKeysetMatches) {
-                  // custom merge of the objects.
-                  // if both are at the same position and their key sets are equal or subset of one/another,
-                  // then merge them.
-                  // if both have unique keys, don't merge, concat both into resulting array as separate array elements.
-                  // this is when different objects meaning separte different things are being merged.
-                  if (isObj(o1[key][i]) && isObj(o2[key][i]) && equalOrSubsetKeys(o1[key][i], o2[key][i])) {
-                    temp.push(mergeAdvanced(o1[key][i], o2[key][i]))
-                  } else {
-                    temp.push(o1[key][i])
-                    temp.push(o2[key][i])
-                  }
-                } else {
-                  temp.push(mergeAdvanced(o1[key][i], o2[key][i]))
-                }
-
-                // console.log('2. temp = ' + JSON.stringify(temp, null, 4))
-              } else {
-                // console.log('3. temp = ' + JSON.stringify(temp, null, 4))
-                temp.push(existy(o1[key][i]) ? o1[key][i] : o2[key][i])
-                // console.log('4. temp = ' + JSON.stringify(temp, null, 4))
-              }
-//
+            if (index < i1.length) {
+              temp.push(i1[index])
             }
-            o1[key] = clone(temp)
-          } else {
-            // cases 19,20,22-27
-            // nothing, o1[key] stays
-          }
-        } else {
-          // cases 28-36
-          if ((isObj(o2[key]) && nonEmpty(o2[key])) || isArr(o2[key]) || (isStr(o2[key]) && nonEmpty(o2[key]))) {
-            // cases 28,30,31,32
-            o1[key] = o2[key]
-          } else {
-            // cases 29,33-36
-            // nothing, o1[key] stays
+            if (index < i2.length) {
+              temp.push(i2[index])
+            }
           }
         }
-      } else if (isStr(o1[key])) {
-        // cases 37-54
-        if (nonEmpty(o1[key])) {
-          // cases 37-45
-          if ((isObj(o2[key]) && nonEmpty(o2[key])) || ((isArr(o2[key])) && (nonEmpty(o2[key]))) || ((isStr(o2[key])) && (nonEmpty(o2[key])))) {
-            // cases 37,39,41
-            o1[key] = o2[key]
-          } else {
-            // cases 38,40,42-45
-            // nothing, o1[key] stays
-          }
-        } else {
-          // cases 46-54
-          if (isArr(o2[key]) || isObj(o2[key]) || isStr(o2[key])) {
-            // cases 46-51
-            o1[key] = o2[key]
-          } else {
-            // cases 52-54
-            // nothing, o1[key] stays
-          }
-        }
-      } else if (isBool(o1[key])) {
-        // cases 55-63
-        if (isArr(o2[key]) || isObj(o2[key]) || isStr(o2[key])) {
-          // cases 55-60
-          o1[key] = o2[key]
-        } else if (isBool(o2[key])) {
-          // cases 61
-          if (o2[key]) {
-            o1[key] = o2[key]
-          }
-        } else {
-          // cases 62-63
-        }
+        i1 = clone(temp)
+      } else {
+        // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
+        return i1
       }
-    } else if (o1[key] === undefined) {
-      // cases 64-72
-      o1[key] = o2[key]
-    } else if (o1[key] === null) {
-      // cases 73-81
-      if (o2[key] !== undefined) {
-        // if not, case 80
-        o1[key] = o2[key]
+    } else {
+      // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+      if (nonEmpty(i2)) {
+        // cases 11, 13, 15, 17
+        return i2
+      } else {
+        // cases 12, 14, 16, 18, 19, 20
+        return i1
       }
     }
-  })
-  return sortObject(o1)
+  } else if (isObj(i1)) {
+    // cases 21-40
+    if (nonEmpty(i1)) {
+      // cases 21-30
+      if (isArr(i2)) {
+        // cases 21, 22
+        if (nonEmpty(i2)) {
+          // case 21
+          return i2
+        } else {
+          // case 22
+          return i1
+        }
+      } else if (isObj(i2)) {
+        // case 23
+        // two object merge
+        Object.keys(i2).forEach(function (key) {
+          if (i1.hasOwnProperty(key)) {
+            // value clash
+            i1[key] = mergeAdvanced(i1[key], i2[key], opts)
+          } else {
+            i1[key] = i2[key]
+          }
+        })
+      } else {
+        // cases 24, 25, 26, 27, 28, 29, 30
+        return i1
+      }
+    } else {
+      // i1 is empty obj
+      // cases 31-40
+      if (isArr(i2) || isObj(i2) || nonEmpty(i2)) {
+        // cases 31, 32, 33, 34, 35, 37
+        return i2
+      } else {
+        // 36, 38, 39, 40
+        return i1
+      }
+    }
+  } else if (isStr(i1)) {
+    if (nonEmpty(i1)) {
+      // cases 41-50
+      if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty(i2)) {
+        // cases 41, 43
+        return i2
+      } else {
+        // cases 42, 44, 45, 46, 47, 48, 49, 50
+        return i1
+      }
+    } else {
+      // i1 is empty string
+      // cases 51-60
+      if ((i2 != null) && !isBool(i2)) {
+        // cases 51, 52, 53, 54, 55, 56, 57
+        return i2
+      } else {
+        // 58, 59, 60
+        return i1
+      }
+    }
+  } else if (isNum(i1)) {
+    // cases 61-70
+    if (nonEmpty(i2)) {
+      // cases 61, 63, 65, 67
+      return i2
+    } else {
+      // cases 62, 64, 66, 68, 69, 70
+      return i1
+    }
+  } else if (isBool(i1)) {
+    // cases 71-80
+    if (isBool(i2)) {
+      // case 78
+      return i1 || i2
+    } else if (i2 != null) { // DELIBERATE LOOSE EQUAL — existy()
+      // cases 71, 72, 73, 74, 75, 76, 77
+      return i2
+    } else {
+      // i2 is null or undefined
+      // cases 79, 80
+      return i1
+    }
+  } else if (i1 === null) {
+    // cases 81-90
+    if (i2 != null) { // DELIBERATE LOOSE EQUAL — existy()
+      // case 81, 82, 83, 84, 85, 86, 87, 88
+      return i2
+    } else {
+      // cases 89, 90
+      return i1
+    }
+  } else if (i1 === undefined) {
+    // cases 91-100
+    return i2
+  }
+  return i1
 }
 
 module.exports = mergeAdvanced

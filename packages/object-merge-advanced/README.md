@@ -2,7 +2,7 @@
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Recursive, deep merge of object literals, which weighs contents by type hierarchy to ensure maximum content is retained
+> Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -41,49 +41,74 @@ $ npm install --save object-merge-advanced
 
 It's like `_.merge` but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
 
-I was not happy with Lodash [_.merge](https://lodash.com/docs/#merge) because it gets stuck when it encounters mismatching values within plain objects. All I wanted is to merge two plain objects, retaining as much information as possible after the merging.
+I was not happy with Lodash [_.merge](https://lodash.com/docs/#merge) because it gets stuck when it encounters mismatching type values within plain objects. All I wanted is to merge two plain objects, retaining as much information as possible after the merging.
 
 I was not happy with [object-assign](https://github.com/sindresorhus/object-assign) which doesn't care about what type is overwriting what type — it can merge value as String containing some text with Boolean `false`, for example. `object-assign` is good to merge default key set, but not to merge to objects containing precious content.
+
+Basically, merge these two:
+
+```
+// #1:
+{
+  a: {
+    b: 'c',
+    d: ['e', 'f']
+  }
+}
+
+// and #2:
+{
+  a: [
+    {
+      x: 'y'
+    }
+  ]
+}
+```
 
 ---
 
 Imagine, if we merged the identical keys of two objects judging their values by the hierarchy instead:
 
-- non-empty plain object
-- non-empty array
-- non-empty string
-- empty plain object
+- non-empty array trumps all below
+- non-empty plain object trumps all below
+- non-empty string ...
+- empty plain object ...
 - empty array
 - empty string
+- number
 - boolean
 - null
-- undefined
+- undefined doesn't trump anything
 
 The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string that with an empty array or boolean.
 
-**This library does exactly that.**
+**That's what this library does**
 
-When `object-merge-advanced` merges two objects, it will check the types of their key values:
+When `object-merge-advanced` merges two _objects_, it will check the types of their key values:
 
 * If a key exists only in one of the objects, it goes straight into the result object.
 * If key exists on both, we got a clash. Key's value will be chosen judging by it's value's type:
-  * Any value as object trumps any value as string
+  * Arrays trump objects which trump strings which trump numbers which trump Booleans
   * Non-empty array as value trumps any object or string as value
-  * Empty array values trump empty objects as values, but doesn't trump non-empty objects
-  * Empty array as a key's value won't trump non-empty string
+  * Anything empty won't trump anything not empty
   * If both key have plain object values, they'll get recursively fed back into the library again
   * Booleans will be merged using logical "OR"
-  * Arrays will be concatenated
+  * Arrays will be merged, and if there are objects within, those objects will be merged smartly, depending if their keysets are similar. If not, objects will be merged as separate array elements.
 
-Basically, there are 81 possible combinations: 9 types of first input (object #1) and 9 types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, boolean, undefined and null.
+Basically, there are 10 possible combinations: 10 types of first input (object #1) and 10 types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
-![matching algorithm](https://i.imgsafe.org/72ae7739f2.png)
+![matching algorithm](http://i.imgsafe.org/7e71b2b3b0.png)
 
 Large number in the center of a square shows which value prevails.
 
 In the diagram above, the squares show **which value wins**, first object's (marked `01`) or second one's (marked `02`). In other words, do we assign second object's value onto first, or the opposite.
 
-In certain cases (marked red), there are custom actions needed: 1) passing value objects back into the main function _recursively_ (when both values are objects), 2) array concatenation, or 3) Boolean "and" composition (when both values are Boolean).
+In certain cases, there are custom actions needed:
+
+1) passing value objects back into the main function _recursively_ (when both values are plain objects),
+2) array merge paying extra attention to options object and array contents (special measures for objects within), or
+3) Boolean "and" composition (when both values are Boolean).
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
@@ -195,6 +220,8 @@ $ npm test
 
 For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
+I aim to have 100% code coverage, which it is at the moment.
+
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
@@ -203,11 +230,13 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 ## Difference from `object-assign`
 
+`object-assign` doesn't compare _types_ of what's merged.
+
 [object-assign](https://github.com/sindresorhus/object-assign) will simply take first argument object, overwrite second one onto it. Then it will take the result and overwrite third argument object onto it. And so on. Every subsequent object's key will overwrite any existing-one.
 
-It's best to use `object-assign` when you care little about base object (first input argument), for example when it's default values object. If base object is overwritten, that's OK.
+It's best to use `object-assign` when you care little about base object (first input argument), for example when it's a default values' object. In such cases, when the base object (first argument of `object-assign`) is overwritten, that's OK.
 
-However, when incoming (second arg) objects can contain placeholder values in Boolean format, `object-assign` doesn't work, because any Boolean placeholder key values will overwrite base object's true, values in String.
+However, when all incoming (second arg onwards) objects can contain placeholder values in a Boolean format, `object-assign` doesn't work, because any Boolean placeholder key values will overwrite base object's real values in String.
 
 When you want to intelligently merge objects, according to the worthiness order, 'object-merge-advanced' is the best.
 

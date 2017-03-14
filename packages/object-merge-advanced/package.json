@@ -1,17 +1,14 @@
 {
   "name": "object-merge-advanced",
   "version": "5.0.0",
-  "description": "Recursive, deep merge of object literals, which weighs contents by type hierarchy to ensure maximum content is retained",
+  "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/object-merge-advanced.git"
-  },
+  "repository": "code-and-send/object-merge-advanced",
   "keywords": [
     "ast",
     "plain",
@@ -31,11 +28,10 @@
   "dependencies": {
     "array-includes-all": "^1.0.0",
     "lodash.clonedeep": "*",
+    "lodash.isnumber": "*",
     "lodash.isplainobject": "*",
     "lodash.isstring": "*",
-    "lodash.pullallwith": "*",
-    "object-assign": "^4.1.1",
-    "posthtml-ast-compare": "^3.0.0"
+    "object-assign": "^4.1.1"
   },
   "devDependencies": {
     "ava": "*",

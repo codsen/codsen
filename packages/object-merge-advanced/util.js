@@ -4,6 +4,7 @@
 // V A R S
 
 var isObj = require('lodash.isplainobject')
+var isNum = require('lodash.isnumber')
 var includesAll = require('array-includes-all')
 
 // ===================================
@@ -15,24 +16,13 @@ function isBool (bool) {
   return typeof bool === 'boolean'
 }
 
-/**
- * sortObject - sorts object's keys
- *
- * @param  {Object} obj input object
- * @return {Object}     sorted object
- */
-function sortObject (obj) {
-  return Object.keys(obj).sort().reduce(function (result, key) {
-    result[key] = obj[key]
-    return result
-  }, {})
-}
-
 function nonEmpty (something) {
   if (Array.isArray(something) || (typeof something === 'string')) {
     return something.length > 0
   } else if (isObj(something)) {
     return Object.keys(something).length > 0
+  } else if (isNum(something)) {
+    return true
   }
 }
 
@@ -52,7 +42,6 @@ function equalOrSubsetKeys (obj1, obj2) {
 module.exports = {
   existy: existy,
   isBool: isBool,
-  sortObject: sortObject,
   nonEmpty: nonEmpty,
   equalOrSubsetKeys: equalOrSubsetKeys
 }

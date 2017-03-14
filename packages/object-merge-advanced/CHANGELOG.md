@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0] - 2017-03-14
+### Changed
+- Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
+
 ## [5.0.0] - 2017-03-13
 ### API addition
 - Added an optional options object, the third argument. Now `opts.mergeObjectsOnlyWhenKeysetMatches` allow more granular control over how objects within arrays are merged. The default setting is balanced option, `opts.mergeObjectsOnlyWhenKeysetMatches = false` is more _gung-ho_ merging approach (behaviour like v4, previous version).
@@ -40,3 +44,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [4.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.0.0...v4.1.0
 [4.2.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.1.0...v4.2.0
 [5.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.2.0...v5.0.0
+[6.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v5.0.0...v6.0.0
