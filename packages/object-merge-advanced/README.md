@@ -107,8 +107,8 @@ In the diagram above, the squares show **which value wins**, first object's (mar
 In certain cases, there are custom actions needed:
 
 1) passing value objects back into the main function _recursively_ (when both values are plain objects),
-2) array merge paying extra attention to options object and array contents (special measures for objects within), or
-3) Boolean "and" composition (when both values are Boolean).
+2) array merge paying extra attention to options object and array contents (special measures for objects within),
+3) Logical "OR" composition (when both values are Boolean).
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
@@ -250,7 +250,7 @@ That's because I want to be able to overwrite global colours per-template when n
 
 Now imagine, we're merging those two objects, and SCSS variables object has a key `"mainbgcolor": "#ffffff"`. Now, a vast majority of templates don't need any customisation for the main background, therefore in their content JSON files the key is set to default, Boolean `false`: `"mainbgcolor": false`.
 
-If merging were done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is harsh pink!
+If merging were done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is pink!
 
 If merging were done using this library, `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
 
