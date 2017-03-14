@@ -39,13 +39,13 @@ $ npm install --save object-merge-advanced
 
 ## Purpose
 
-It's like `_.merge` but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
+It's like `_.merge`, but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
 
 I was not happy with Lodash [_.merge](https://lodash.com/docs/#merge) because it gets stuck when it encounters mismatching type values within plain objects. All I wanted is to merge two plain objects, retaining as much information as possible after the merging.
 
 I was not happy with [object-assign](https://github.com/sindresorhus/object-assign) which doesn't care about what type is overwriting what type — it can merge value as String containing some text with Boolean `false`, for example. `object-assign` is good to merge default key set, but not to merge to objects containing precious content.
 
-Basically, merge these two:
+Merge these two:
 
 ```
 // #1:
@@ -88,19 +88,19 @@ The idea is, we strive to retain as much info as possible after merging. For exa
 When `object-merge-advanced` merges two _objects_, it will check the types of their key values:
 
 * If a key exists only in one of the objects, it goes straight into the result object.
-* If key exists on both, we got a clash. Key's value will be chosen judging by it's value's type:
+* If a key exists on both, we got a clash. Key's value will be chosen judging by its value's type:
   * Arrays trump objects which trump strings which trump numbers which trump Booleans
   * Non-empty array as value trumps any object or string as value
   * Anything empty won't trump anything not empty
-  * If both key have plain object values, they'll get recursively fed back into the library again
+  * If both keys have plain object values, they'll get recursively fed back into the library again
   * Booleans will be merged using logical "OR"
   * Arrays will be merged, and if there are objects within, those objects will be merged smartly, depending if their keysets are similar. If not, objects will be merged as separate array elements.
 
-Basically, there are 10 possible combinations: 10 types of first input (object #1) and 10 types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
+There are ten possible combinations: 10 types of first input (object #1) and ten types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
 ![matching algorithm](http://i.imgsafe.org/7e71b2b3b0.png)
 
-Large number in the center of a square shows which value prevails.
+A Large number in the centre of a square shows which value prevails.
 
 In the diagram above, the squares show **which value wins**, first object's (marked `01`) or second one's (marked `02`). In other words, do we assign second object's value onto first, or the opposite.
 
@@ -139,14 +139,14 @@ Input argument           | Type           | Obligatory? | Description
 Options object's key                | Value   | Default | Description
 ------------------------------------|---------|---------|-------------
 `{`                                 |         |         |
-`mergeObjectsOnlyWhenKeysetMatches` | Boolean | true    | Controls the mergins of the objects within arrays. See below.
+`mergeObjectsOnlyWhenKeysetMatches` | Boolean | true    | Controls the merging of the objects within arrays. See below.
 `}`                                 |         |         |
 
 `mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).
 
 For example:
 
-Let's merge these two objects. Notice that each has unique key (`yyyy` and `xxxx` in the object that sits within the first position of each array).
+Let's merge these two objects. Notice that each has a unique key (`yyyy` and `xxxx` in the object that sits within the first position of each array).
 
 ```js
 // #1
@@ -226,19 +226,19 @@ I aim to have 100% code coverage, which it is at the moment.
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Difference from `object-assign`
 
 `object-assign` doesn't compare _types_ of what's merged.
 
-[object-assign](https://github.com/sindresorhus/object-assign) will simply take first argument object, overwrite second one onto it. Then it will take the result and overwrite third argument object onto it. And so on. Every subsequent object's key will overwrite any existing-one.
+[object-assign](https://github.com/sindresorhus/object-assign) will simply take first argument object, overwrite the second one onto it. Then it will take the result and overwrite third argument object onto it. And so on. Every subsequent object's key will overwrite an existing one.
 
-It's best to use `object-assign` when you care little about base object (first input argument), for example when it's a default values' object. In such cases, when the base object (first argument of `object-assign`) is overwritten, that's OK.
+It's best to use `object-assign` when you care little about a base object (first input argument), for example when it's a default values' object. In such cases, when the base object (first argument of `object-assign`) is overwritten, that's OK.
 
 However, when all incoming (second arg onwards) objects can contain placeholder values in a Boolean format, `object-assign` doesn't work, because any Boolean placeholder key values will overwrite base object's real values in String.
 
-When you want to intelligently merge objects, according to the worthiness order, 'object-merge-advanced' is the best.
+When you want to merge objects seeking maximum data retention, the 'object-merge-advanced' is the best.
 
 ---
 
@@ -246,11 +246,11 @@ For example, in my email template builds, I import SCSS variables file as an obj
 
 That's because I want to be able to overwrite global colours per-template when needed.
 
-Now imagine, we're merging those two objects, and SCSS variables object has a key `"mainbgcolor": "#ffffff"`. Now, vast majority of templates don't need any customisation for the main background, therefore in their content JSON files the key is set to default, Boolean `false`: `"mainbgcolor": false`.
+Now imagine, we're merging those two objects, and SCSS variables object has a key `"mainbgcolor": "#ffffff"`. Now, a vast majority of templates don't need any customisation for the main background, therefore in their content JSON files the key is set to default, Boolean `false`: `"mainbgcolor": false`.
 
-If merging was done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is harsh pink!
+If merging were done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is harsh pink!
 
-If merging was done using this library, `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
+If merging were done using this library, `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
 
 ## Licence
 
