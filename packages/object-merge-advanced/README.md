@@ -102,12 +102,12 @@ There are ten possible combinations: 10 types of first input (object #1) and ten
 
 A Large number in the centre of a square shows which value prevails.
 
-In the diagram above, the squares show **which value wins**, first object's (marked `01`) or second one's (marked `02`). In other words, do we assign second object's value onto first, or the opposite.
+In the diagram above, the squares show **which value gets assigned to the merge result** — the first object's (marked `1`, pink fields) or second one's (marked `2`, sky blue fields).
 
-In certain cases, there are custom actions needed:
+In some cases, we perform a custom actions:
 
 1) passing value objects back into the main function _recursively_ (when both values are plain objects),
-2) array merge paying extra attention to options object and array contents (special measures for objects within),
+2) when merging arrays, we pay extra attention to the options object (if present) and the contents of both arrays (taking special measures for objects within),
 3) Logical "OR" composition (when both values are Boolean).
 
 I challenge you to check `test.js` unit tests to see this library in action.
@@ -125,15 +125,15 @@ var mergeAdvanced = require('object-merge-advanced')
 ## API
 
 ```js
-mergeAdvanced(object1, object2)
+mergeAdvanced(input1, input2 [, { options }])
 ```
 
 ### API - Input
 
 Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
-`object1`                | Anything       | yes         | Normally an object literal, but array or string or whatever else will work too. Can be deeply nested.
-`object2`                | Anything       | yes         | Another thing, normally an object, but can be array or something else.
+`input1`                 | Anything       | yes         | Normally an object literal, but array or string or whatever else will work too. Can be deeply nested.
+`input2`                 | Anything       | yes         | Another thing, normally an object, but can be array or something else.
 `options`                | Plain object   | no          | Optionally, pass all settings in a plain object, as a third argument
 
 Options object's key                | Value   | Default | Description
