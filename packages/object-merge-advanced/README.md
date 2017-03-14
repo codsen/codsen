@@ -132,9 +132,9 @@ mergeAdvanced(object1, object2)
 
 Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
-`object1`                | Plain object   | yes         | Plain object. Can have nested values.
-`object2`                | Plain object   | yes         | Another plain object. Can have nested values.
-`options`                | Plain object   | no          | Pass all settings as a plain object, as a third argument
+`object1`                | Anything       | yes         | Normally an object literal, but array or string or whatever else will work too. Can be deeply nested.
+`object2`                | Anything       | yes         | Another thing, normally an object, but can be array or something else.
+`options`                | Plain object   | no          | Optionally, pass all settings in a plain object, as a third argument
 
 Options object's key                | Value   | Default | Description
 ------------------------------------|---------|---------|-------------
@@ -210,7 +210,9 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 
 ### API - Output
 
-A new plain object is returned. Input objects are **not mutated** (v2.x onwards).
+A merged thing is returned. It's probably the same type of your inputs.
+
+Objects or arrays in the inputs are **not mutated**. This is very important.
 
 ## Testing
 
