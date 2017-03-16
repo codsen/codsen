@@ -425,3 +425,23 @@ test('03.04 - input is missing but value provided', t => {
     undefined,
     '03.04')
 })
+
+// ==============================
+// Input arg mutation
+// ==============================
+
+test('04.01 - does not mutate input args', t => {
+  var inp = {
+    a: 'a',
+    b: 'b'
+  }
+  var dummyResult = setAllValuesTo(inp)
+  t.pass(dummyResult)
+  t.deepEqual(
+    inp,
+    {
+      a: 'a',
+      b: 'b'
+    },
+    '04.01')
+})

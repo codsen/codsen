@@ -38,6 +38,8 @@ $ npm install --save object-set-all-values-to
 
 Take any input: nested array, nested plain object or whatever really, no matter how deeply nested. Walk through it recursively and if you find any plain objects, assign **all their keys** to a given second input's argument OR default, `false`.
 
+It does not mutate the input arguments. Operations are done on a cloned input.
+
 I needed this library to overwrite all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
 
 This library is well-tested and is being used in commercial projects.

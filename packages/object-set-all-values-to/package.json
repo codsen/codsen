@@ -32,7 +32,8 @@
   },
   "homepage": "https://github.com/code-and-send/object-set-all-values-to#readme",
   "dependencies": {
-    "lodash.isplainobject": "*"
+    "lodash.clonedeep": "*",
+    "type-detect": "^4.0.0"
   },
   "devDependencies": {
     "ava": "*",
@@ -40,7 +41,7 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^9.0.1"
   },
   "ava": {
     "verbose": true
