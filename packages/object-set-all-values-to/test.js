@@ -389,6 +389,28 @@ test('02.06 - input simple plain object, assigning a function', t => {
     '02.06')
 })
 
+test('02.07 - input simple plain object, assigning a plain object', t => {
+  t.deepEqual(
+    setAllValuesTo(
+      {
+        a: 'a',
+        b: 'b',
+        c: 'c',
+        d: 'd'
+      },
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: { a: 'a' },
+      b: { a: 'a' },
+      c: { a: 'a' },
+      d: { a: 'a' }
+    },
+    '02.07')
+})
+
 // ==============================
 // Edge cases
 // ==============================
