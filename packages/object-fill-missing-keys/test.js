@@ -258,6 +258,27 @@ test('01.06 - ridiculously deep nesting', t => {
     '01.06')
 })
 
+test('01.07 - cheeky case, custom placeholder on schema has value null', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        d: null
+      },
+      {
+        a: null,
+        b: null,
+        c: null
+      }
+    ),
+    {
+      a: null,
+      b: null,
+      c: null,
+      d: null
+    },
+    '01.07')
+})
+
 // ==============================
 // 2. Normalises array contents
 // ==============================
@@ -368,10 +389,6 @@ test('02.02 - multiple levels of nested arrays)', t => {
 // ==============================
 // 3. String vs array clashes
 // ==============================
-// two objects with the same key
-// one has value array, other string
-// nothing happens
-// ==============================
 
 test('03.01 - string vs array clash', t => {
   t.deepEqual(
@@ -382,18 +399,22 @@ test('03.01 - string vs array clash', t => {
       {
         a: [
           {
-            b: 'b'
+            b: false
           }
         ]
       }
     ),
     {
-      a: 'a'
+      a: [
+        {
+          b: false
+        }
+      ]
     },
     '03.01')
 })
 
-test('03.02 - object vs array clash', t => {
+test('03.02 - string vs object clash', t => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -406,9 +427,37 @@ test('03.02 - object vs array clash', t => {
       }
     ),
     {
-      a: 'a'
+      a: {
+        b: false
+      }
     },
     '03.02')
+})
+
+test('03.03 - object vs array clash', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          c: 'ccc'
+        }
+      },
+      {
+        a: [
+          {
+            b: false
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: false
+        }
+      ]
+    },
+    '03.03')
 })
 
 // ==============================
@@ -478,20 +527,18 @@ test('04.05 - both args completely missing', t => {
 // 5. Input arg mutation prevention
 // ================================
 
-var testObj = {
-  a: 'a'
-}
-
-var tempRes = fillMissingKeys(
-  testObj,
-  {
-    a: false,
-    b: false,
-    c: false
-  }
-)
-
 test('05.01 - does not mutate the input args', t => {
+  var testObj = {
+    a: 'a'
+  }
+  var tempRes = fillMissingKeys(
+    testObj,
+    {
+      a: false,
+      b: false,
+      c: false
+    }
+  )
   t.pass(tempRes) // dummy
   t.deepEqual(
     testObj,

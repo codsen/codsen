@@ -3,11 +3,15 @@
 // ===================================
 // V A R S
 
-var isObj = require('lodash.isplainobject')
 var clone = require('lodash.clonedeep')
+var type = require('type-detect')
 
 // ===================================
 // F U N C T I O N S
+
+function isObj (something) { return type(something) === 'Object' }
+function isArr (something) { return Array.isArray(something) }
+function isStr (something) { return type(something) === 'string' }
 
 /**
  * sortObject - sorts object's keys
@@ -31,19 +35,31 @@ function sortObject (obj) {
  * @return {object} normalised object
  */
 function fillMissingKeys (originalIncompleteObj, originalSchemaObj) {
+  if (arguments.length === 0) {
+    return
+  }
   if (!isObj(originalIncompleteObj) || !isObj(originalSchemaObj)) {
     return
   }
   var incompleteObj = clone(originalIncompleteObj)
   var schemaObj = clone(originalSchemaObj)
+
   Object.keys(schemaObj).forEach(function (key) {
-    if ((incompleteObj[key] === undefined) || (incompleteObj[key] === false)) {
+    if (!incompleteObj.hasOwnProperty(key)) {
       incompleteObj[key] = schemaObj[key]
-    }
-    if (Array.isArray(schemaObj[key]) && Array.isArray(incompleteObj[key])) {
-      incompleteObj[key].forEach(function (e, i) {
-        incompleteObj[key][i] = sortObject(fillMissingKeys(incompleteObj[key][i], schemaObj[key][0]))
-      })
+    } else {
+      if (Array.isArray(schemaObj[key])) {
+        if (!isArr(incompleteObj[key])) {
+          incompleteObj[key] = schemaObj[key]
+        } else {
+          // both arrays
+          incompleteObj[key].forEach(function (e, i) {
+            incompleteObj[key][i] = sortObject(fillMissingKeys(incompleteObj[key][i], schemaObj[key][0]))
+          })
+        }
+      } else if (isObj(schemaObj[key]) && isStr(incompleteObj[key])) {
+        incompleteObj[key] = schemaObj[key]
+      }
     }
   })
   return sortObject(incompleteObj)
