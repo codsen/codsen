@@ -15,4 +15,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Unchanged
 - Unit test coverage is still a solid 100%.
 
-[3.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v2.0.0...v3.0.0
+[3.0.0]: https://github.com/code-and-send/object-flatten-all-arrays/compare/v2.0.0...v3.0.0
