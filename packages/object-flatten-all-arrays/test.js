@@ -131,7 +131,7 @@ test('01.04 - nested objects', t => {
   t.deepEqual(
     flattenAllArrays(
       [
-        'z',
+        'z1',
         {
           b: 'b',
           a: 'a'
@@ -140,20 +140,18 @@ test('01.04 - nested objects', t => {
           d: 'd',
           c: 'c'
         },
-        'z'
+        'z2'
       ]
     ),
     [
-      'z',
+      'z1',
       {
         a: 'a',
-        b: 'b'
-      },
-      {
+        b: 'b',
         c: 'c',
         d: 'd'
       },
-      'z'
+      'z2'
     ],
     '01.04')
 })
@@ -230,7 +228,7 @@ test('01.06 - array contents are not of the same type', t => {
     '01.06')
 })
 
-test('01.07 - multiple types in an array', t => {
+test('01.07 - multiple types in an array #1', t => {
   t.deepEqual(
     flattenAllArrays(
       {
@@ -238,7 +236,15 @@ test('01.07 - multiple types in an array', t => {
         b: 'b',
         a: 'a',
         c: [
-          ['y', {z: 'z'}],
+          [
+            'y',
+            {
+              z: 'z'
+            },
+            {
+              x: 'x'
+            }
+          ],
           {
             b: 'b',
             a: 'a'
@@ -255,18 +261,130 @@ test('01.07 - multiple types in an array', t => {
       a: 'a',
       b: 'b',
       c: [
+        [
+          'y',
+          {
+            x: 'x',
+            z: 'z'
+          }
+        ],
         {
           a: 'a',
           b: 'b',
           c: 'c',
           d: 'd'
         },
-        ['y', {z: 'z'}],
         'z'
       ],
       d: 'd'
     },
     '01.07')
+})
+
+test('01.08 - multiple types in an array #2', t => {
+  t.deepEqual(
+    flattenAllArrays(
+      {
+        b: [
+          {
+            e: [
+              {
+                f: 'fff'
+              },
+              {
+                g: 'ggg'
+              }
+            ],
+            d: 'ddd',
+            c: 'ccc'
+          }
+        ],
+        a: 'aaa'
+      }
+    ),
+    {
+      b: [
+        {
+          e: [
+            {
+              f: 'fff',
+              g: 'ggg'
+            }
+          ],
+          d: 'ddd',
+          c: 'ccc'
+        }
+      ],
+      a: 'aaa'
+    },
+    '01.08')
+})
+
+test('01.09 - simple array, two ojects', t => {
+  t.deepEqual(
+    flattenAllArrays(
+      [
+        {
+          a: 'a'
+        },
+        {
+          b: 'b'
+        }
+      ]
+    ),
+    [
+      {
+        a: 'a',
+        b: 'b'
+      }
+    ],
+    '01.09')
+})
+
+test('01.10 - simple array, two nested ojects', t => {
+  t.deepEqual(
+    flattenAllArrays(
+      [
+        {
+          a: ['a']
+        },
+        {
+          b: {b: 'b'}
+        }
+      ]
+    ),
+    [
+      {
+        a: ['a'],
+        b: {b: 'b'}
+      }
+    ],
+    '01.10')
+})
+
+test('01.11 - array, mix of ojects, arrays and strings', t => {
+  t.deepEqual(
+    flattenAllArrays(
+      [
+        'zzz',
+        {
+          a: ['a']
+        },
+        {
+          b: {b: 'b'}
+        },
+        ['yyy']
+      ]
+    ),
+    [
+      'zzz',
+      {
+        a: ['a'],
+        b: {b: 'b'}
+      },
+      ['yyy']
+    ],
+    '01.11')
 })
 
 // ==============================
@@ -329,24 +447,23 @@ test('02.06 - nothing in the input', t => {
 // Does not mutate input args
 // ==============================
 
-var obj = {
-  d: 'd',
-  b: 'b',
-  a: 'a',
-  c: [
-    {
-      b: 'b',
-      a: 'a'
-    },
-    {
-      d: 'd',
-      c: 'c'
-    }
-  ]
-}
-var unneededResult = flattenAllArrays(obj)
-
 test('03.01 - does not mutate input args', t => {
+  var obj = {
+    d: 'd',
+    b: 'b',
+    a: 'a',
+    c: [
+      {
+        b: 'b',
+        a: 'a'
+      },
+      {
+        d: 'd',
+        c: 'c'
+      }
+    ]
+  }
+  var unneededResult = flattenAllArrays(obj)
   t.pass(unneededResult)
   t.deepEqual(
     obj,

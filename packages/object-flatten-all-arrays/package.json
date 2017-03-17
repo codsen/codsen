@@ -42,7 +42,7 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^9.0.1"
   },
   "ava": {
     "verbose": true
