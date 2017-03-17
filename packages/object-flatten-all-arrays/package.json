@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "main": "index.js",
   "scripts": {
