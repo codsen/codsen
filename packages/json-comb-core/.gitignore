@@ -52,7 +52,3 @@ config.json
 
 # nyc test coverage
 .nyc_output
-
-# temporary files
-internal.js
-internal2.js
