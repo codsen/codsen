@@ -1,7 +1,7 @@
 {
   "name": "json-comb-core",
   "version": "1.0.0",
-  "description": "Enforce multiple JSON files have the same keys",
+  "description": "The inner core of json-comb",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
