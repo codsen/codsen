@@ -1,0 +1,54 @@
+{
+  "name": "json-comb-core",
+  "version": "1.0.0",
+  "description": "Enforce multiple JSON files have the same keys",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-and-send/json-comb-core.git"
+  },
+  "keywords": [
+    "json",
+    "normalize",
+    "normalise",
+    "schema",
+    "files",
+    "fill",
+    "keyset",
+    "keys",
+    "same",
+    "comb"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/json-comb-core/issues"
+  },
+  "homepage": "https://github.com/code-and-send/json-comb-core#readme",
+  "dependencies": {
+    "lodash.clonedeep": "*",
+    "object-fill-missing-keys": "^2.0.0",
+    "object-flatten-all-arrays": "^3.0.0",
+    "object-merge-advanced": "^6.0.3",
+    "object-set-all-values-to": "^2.0.0",
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "^0.13.2",
+    "nyc": "*",
+    "standard": "^9.0.1"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
