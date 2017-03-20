@@ -1,6 +1,6 @@
 'use strict'
 
-import { find, get, set, drop, info, del, flatten } from './index'
+import { find, get, set, drop, info, del, arrayFirstOnly } from './index'
 
 import test from 'ava'
 var actual, intended, key, val, index
@@ -892,15 +892,15 @@ test('07.09 - deletes by key and value from mixed', t => {
 })
 
 // -----------------------------------------------------------------------------
-// flatten (arrays)
+// arrayFirstOnly
 // -----------------------------------------------------------------------------
 
-test('08.01 - flattens nested arrays', t => {
+test('08.01 - arrayFirstOnly - nested arrays', t => {
   input = {
     a: {b: ['c', 'd', 'e']},
     f: ['g', 'h']
   }
-  actual = flatten(input)
+  actual = arrayFirstOnly(input)
   intended = {
     a: {b: ['c']},
     f: ['g']
@@ -912,12 +912,12 @@ test('08.01 - flattens nested arrays', t => {
     '08.01')
 })
 
-test('08.02 - flattens — arrays within arrays only, no obj', t => {
+test('08.02 - arrayFirstOnly — arrays within arrays only, no obj', t => {
   input = [
     ['a', 'b', 'c'],
     ['d', ['e']]
   ]
-  actual = flatten(input)
+  actual = arrayFirstOnly(input)
   intended = [
     ['a']
   ]
@@ -928,7 +928,7 @@ test('08.02 - flattens — arrays within arrays only, no obj', t => {
     '08.02')
 })
 
-test('08.03 - flattens nested arrays #2', t => {
+test('08.03 - arrayFirstOnly - nested arrays #2', t => {
   input = [
     {
       a: 'a'
@@ -937,7 +937,7 @@ test('08.03 - flattens nested arrays #2', t => {
       b: 'b'
     }
   ]
-  actual = flatten(input)
+  actual = arrayFirstOnly(input)
   intended = [
     {
       a: 'a'
@@ -950,14 +950,14 @@ test('08.03 - flattens nested arrays #2', t => {
     '08.03')
 })
 
-test('08.04 - flatten leaves objects alone', t => {
+test('08.04 - arrayFirstOnly leaves objects alone', t => {
   input = {
     a: 'a',
     b: {
       c: 'c'
     }
   }
-  actual = flatten(input)
+  actual = arrayFirstOnly(input)
   intended = {
     a: 'a',
     b: {
@@ -971,9 +971,9 @@ test('08.04 - flatten leaves objects alone', t => {
     '08.04')
 })
 
-test('08.05 - flatten leaves strings alone', t => {
+test('08.05 - arrayFirstOnly leaves strings alone', t => {
   input = 'zzz'
-  actual = flatten(input)
+  actual = arrayFirstOnly(input)
   intended = 'zzz'
 
   t.deepEqual(

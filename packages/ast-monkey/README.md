@@ -425,9 +425,11 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-### .flatten()
+### .arrayFirstOnly()
 
-`monkey.flatten()` will take an input (whatever), if it's traversable, it will traverse it, leaving only the first element within each array it encounters.
+(ex-`flatten()` on versions `v.<3`)
+
+`monkey.arrayFirstOnly()` will take an input (whatever), if it's traversable, it will traverse it, leaving only the first element within each array it encounters.
 
 ```js
 const monkey = require('ast-monkey')
@@ -439,7 +441,7 @@ var input = [
     b: 'b'
   }
 ]
-var result = monkey.flatten(input)
+var result = monkey.arrayFirstOnly(input)
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => [
 //      {
@@ -464,6 +466,22 @@ Output           | Type             | Description
 -----------------|------------------|--------------------
 `input`          | Same as `input`  | The amended `input`
 
+### .traverse()
+
+`traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
+
+```js
+// function existy (x) { return x != null }
+var ast = [{a: 'a', b: 'b'}]
+ast = monkey.traverse(function callback(key, val, innerObj) {
+  // use key, val, innerObj
+  return monkey.existy(val) ? val : key // (point #1)
+})
+```
+
+It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise **you will change the input** (your AST). Maybe it's what you want, for example, functions `monkey.drop()` and `monkey.del()` work that way — they don't return anything when they encounter to-be-deleted piece upon traversal — that piece **gets deleted**.
+
+By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `truthy()` is second, but `console.log('placeholder = ' + JSON.stringify(placeholder, null, 4))` is also a contender for the top spot).
 
 ## Unit testing and code coverage
 

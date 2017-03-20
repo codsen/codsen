@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-03-20
+### Changed
+BREAKING API CHANGES.
+- `flatten()` method renamed to `arrayFirstOnly()` to reflect better what this does. The real "flatten" is [object-flatten-all-arrays](https://www.npmjs.com/package/object-flatten-all-arrays) and while it could be rewritten in `ast-monkey`, it goes against the overall flow of the `ast-monkey`'s algorithm — monkey goes horizontal, by branch, while `flatten-all-arrays` goes vertically, by array, all keys at once. The new `arrayFirstOnly()` is easy feature because it simply filters the first element of each array encountered during the traversal.
+### Added
+- Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
+
 ## [2.9.0] - 2017-03-09
 ### Added
 - `.flatten()`
@@ -53,3 +60,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.7.0]: https://github.com/code-and-send/ast-monkey/compare/v2.6.0...v2.7.0
 [2.8.0]: https://github.com/code-and-send/ast-monkey/compare/v2.7.0...v2.8.0
 [2.9.0]: https://github.com/code-and-send/ast-monkey/compare/v2.8.0...v2.9.0
+[3.0.0]: https://github.com/code-and-send/ast-monkey/compare/v2.9.0...v3.0.0

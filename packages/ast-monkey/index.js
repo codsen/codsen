@@ -10,35 +10,41 @@ const DEBUG = false
 
 function existy (x) { return x != null }
 
-function traverse (innerObjOriginal, treeOriginal, callback) {
-  var innerObj = clone(innerObjOriginal)
-  var tree = clone(treeOriginal)
+function traverse (treeOriginal, callback) {
+  //
+  // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
+  //
+  function traverseInner (treeOriginal, callback, innerObjOriginal) {
+    var innerObj = clone(innerObjOriginal)
+    var tree = clone(treeOriginal)
 
-  var i, len, res, allKeys, key
-  innerObj = objectAssign({depth: -1}, innerObj)
-  innerObj.depth++
-  if (isArr(tree)) {
-    for (i = 0, len = tree.length; i < len; i++) {
-      res = traverse(innerObj, callback(innerObj, tree[i]), callback)
-      if (!existy(res)) {
-        tree.splice(i, 1)
-      } else {
-        tree[i] = res
+    var i, len, res, allKeys, key
+    innerObj = objectAssign({depth: -1}, innerObj)
+    innerObj.depth++
+    if (isArr(tree)) {
+      for (i = 0, len = tree.length; i < len; i++) {
+        res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
+        if (!existy(res)) {
+          tree.splice(i, 1)
+        } else {
+          tree[i] = res
+        }
+      }
+    } else if (isObj(tree)) {
+      allKeys = Object.keys(tree)
+      for (i = 0, len = allKeys.length; i < len; i++) {
+        key = allKeys[i]
+        res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
+        if (!existy(res)) {
+          delete tree[key]
+        } else {
+          tree[key] = res
+        }
       }
     }
-  } else if (isObj(tree)) {
-    allKeys = Object.keys(tree)
-    for (i = 0, len = allKeys.length; i < len; i++) {
-      key = allKeys[i]
-      res = traverse(innerObj, callback(innerObj, key, tree[key]), callback)
-      if (!existy(res)) {
-        delete tree[key]
-      } else {
-        tree[key] = res
-      }
-    }
+    return tree
   }
-  return tree
+  return traverseInner(treeOriginal, callback, {})
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +94,7 @@ function monkey (inputOriginal, optsOriginal) {
   if (DEBUG) { console.log('ORIGINAL INPUT:\ninput = ' + JSON.stringify(input, null, 4) + '\n========================') }
   if (DEBUG || opts.mode === 'info') { console.log('-----------') }
 
-  if (opts.mode === 'flatten' && Array.isArray(input) && input.length > 0) {
+  if (opts.mode === 'arrayFirstOnly' && Array.isArray(input) && input.length > 0) {
     input = [input[0]]
   }
 
@@ -96,7 +102,7 @@ function monkey (inputOriginal, optsOriginal) {
   //
   //
 
-  input = traverse({}, input, function (innerObj, key, val) {
+  input = traverse(input, function (key, val, innerObj) {
     var temp
     data.count++
     if (DEBUG || opts.mode === 'info') { console.log('    #' + data.count + '\n') }
@@ -141,7 +147,7 @@ function monkey (inputOriginal, optsOriginal) {
       return null
     } else if (opts.mode === 'del' && ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (key === opts.key && isEqual(val, opts.val)))) {
       return null
-    } else if (opts.mode === 'flatten') {
+    } else if (opts.mode === 'arrayFirstOnly') {
       if (existy(val) && Array.isArray(val)) {
         return [val[0]]
       } else if (existy(key) && Array.isArray(key)) {
@@ -196,8 +202,8 @@ function info (input, opts) {
 function del (input, opts) {
   return monkey(input, objectAssign(prep(opts), { mode: 'del' }))
 }
-function flatten (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'flatten' }))
+function arrayFirstOnly (input, opts) {
+  return monkey(input, objectAssign(prep(opts), { mode: 'arrayFirstOnly' }))
 }
 
 // -----------------------------------------------------------------------------
@@ -209,5 +215,7 @@ module.exports = {
   drop: drop,
   info: info,
   del: del,
-  flatten: flatten
+  arrayFirstOnly: arrayFirstOnly,
+  traverse: traverse,
+  existy: existy
 }
