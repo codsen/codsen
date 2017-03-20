@@ -469,12 +469,14 @@ Output           | Type             | Description
 
 ### .traverse()
 
+This one is a bit advanced and more risky in wrong hands.
+
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 
 ```js
-// function existy (x) { return x != null }
+const monkey = require('ast-monkey')
 var ast = [{a: 'a', b: 'b'}]
-ast = monkey.traverse(function callback(key, val, innerObj) {
+ast = monkey.traverse(ast, function (key, val, innerObj) {
   // use key, val, innerObj
   return monkey.existy(val) ? val : key // (point #1)
 })
