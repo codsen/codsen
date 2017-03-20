@@ -460,6 +460,99 @@ test('03.03 - object vs array clash', t => {
     '03.03')
 })
 
+test('03.04 - array vs empty array', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        'a': [],
+        'b': 'b'
+      },
+      {
+        'a': [
+          {
+            'd': false,
+            'e': false
+          }
+        ],
+        'b': false,
+        'c': false
+      }
+    ),
+    {
+      'a': [
+        {
+          'd': false,
+          'e': false
+        }
+      ],
+      'b': 'b',
+      'c': false
+    },
+    '03.04')
+})
+
+test('03.05 - array vs string', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        'a': 'a',
+        'b': 'b'
+      },
+      {
+        'a': [
+          {
+            'd': false,
+            'e': false
+          }
+        ],
+        'b': false,
+        'c': false
+      }
+    ),
+    {
+      'a': [
+        {
+          'd': false,
+          'e': false
+        }
+      ],
+      'b': 'b',
+      'c': false
+    },
+    '03.05')
+})
+
+test('03.06 - array vs bool', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        'a': true,
+        'b': 'b'
+      },
+      {
+        'a': [
+          {
+            'd': false,
+            'e': false
+          }
+        ],
+        'b': false,
+        'c': false
+      }
+    ),
+    {
+      'a': [
+        {
+          'd': false,
+          'e': false
+        }
+      ],
+      'b': 'b',
+      'c': false
+    },
+    '03.06')
+})
+
 // ==============================
 // 4. Contingencies
 // ==============================

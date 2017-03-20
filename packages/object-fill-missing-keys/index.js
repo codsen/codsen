@@ -5,6 +5,7 @@
 
 var clone = require('lodash.clonedeep')
 var type = require('type-detect')
+var merge = require('object-merge-advanced')
 
 // ===================================
 // F U N C T I O N S
@@ -14,55 +15,66 @@ function isArr (something) { return Array.isArray(something) }
 function isStr (something) { return type(something) === 'string' }
 
 /**
- * sortObject - sorts object's keys
+ * sort - sorts object's keys
  *
  * @param  {Object} obj input object
  * @return {Object}     sorted object
  */
-function sortObject (obj) {
-  return Object.keys(obj).sort().reduce(function (result, key) {
-    result[key] = obj[key]
-    return result
-  }, {})
+function sort (obj) {
+  if (isObj(obj)) {
+    return Object.keys(obj).sort().reduce(function (result, key) {
+      result[key] = obj[key]
+      return result
+    }, {})
+  } else {
+    return obj
+  }
 }
 
-/**
- * fillMissingKeys - Like "_.merge" except it treats different-type values correctly.
- * its aim is to retain as much data after merge and work with AST's from parsed JSON
- *
- * @param  {object} incompleteObj     input object
- * @param  {object} schemaObj         schema object which contains desired keys set
- * @return {object} normalised object
- */
-function fillMissingKeys (originalIncompleteObj, originalSchemaObj) {
+function fillMissingKeys (originalIncomplete, originalSchema) {
   if (arguments.length === 0) {
     return
   }
-  if (!isObj(originalIncompleteObj) || !isObj(originalSchemaObj)) {
+  if (type(originalIncomplete) !== type(originalSchema)) {
     return
   }
-  var incompleteObj = clone(originalIncompleteObj)
-  var schemaObj = clone(originalSchemaObj)
+  var incomplete = clone(originalIncomplete)
+  var schema = clone(originalSchema)
 
-  Object.keys(schemaObj).forEach(function (key) {
-    if (!incompleteObj.hasOwnProperty(key)) {
-      incompleteObj[key] = schemaObj[key]
-    } else {
-      if (Array.isArray(schemaObj[key])) {
-        if (!isArr(incompleteObj[key])) {
-          incompleteObj[key] = schemaObj[key]
+  if (isObj(incomplete) && isObj(schema)) {
+    // both are objects
+    Object.keys(schema).forEach(function (key) {
+      if (!incomplete.hasOwnProperty(key)) {
+        // if key is missing, simply add it:
+        incomplete[key] = schema[key]
+      } else {
+        // obj key clash
+        // console.log('\n=======\n')
+        // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
+        // console.log('schema[key] = ' + JSON.stringify(schema[key], null, 4))
+
+        if (isStr(incomplete[key]) && isStr(schema[key])) {
+          // nothing
+        } else if (!isArr(incomplete[key]) || (isArr(incomplete[key]) && incomplete[key].length === 0)) {
+          incomplete[key] = merge(incomplete[key], schema[key])
         } else {
-          // both arrays
-          incompleteObj[key].forEach(function (e, i) {
-            incompleteObj[key][i] = sortObject(fillMissingKeys(incompleteObj[key][i], schemaObj[key][0]))
-          })
+          // console.log('zzzz')
+          incomplete[key] = fillMissingKeys(incomplete[key], schema[key])
         }
-      } else if (isObj(schemaObj[key]) && isStr(incompleteObj[key])) {
-        incompleteObj[key] = schemaObj[key]
+        // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
       }
-    }
-  })
-  return sortObject(incompleteObj)
+    })
+  } else if (isArr(incomplete) && isArr(schema)) {
+    // both are arrays
+    incomplete.forEach(function (el, i) {
+      incomplete[i] = sort(fillMissingKeys(incomplete[i], schema[0]))
+    })
+  }// else {
+    // both are probably strings
+  //   incomplete = schema
+  // }
+
+  return sort(incomplete)
 }
 
 module.exports = fillMissingKeys
