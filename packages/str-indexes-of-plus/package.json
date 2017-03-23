@@ -13,16 +13,16 @@
     "url": "https://github.com/code-and-send/str-indexes-of-plus.git"
   },
   "keywords": [
-    "json",
-    "normalize",
-    "normalise",
-    "schema",
-    "files",
-    "fill",
-    "keyset",
-    "keys",
-    "same",
-    "comb"
+    "string",
+    "indexes",
+    "array",
+    "search",
+    "plus",
+    "find",
+    "in",
+    "unicode",
+    "emoji",
+    "astral"
   ],
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",

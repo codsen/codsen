@@ -1,4 +1,4 @@
-# str-indexes-of-plus
+# str-indexes-of +
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
@@ -21,7 +21,6 @@
 - [Idea](#idea)
 - [Usage](#usage)
 - [API](#api)
-  - [indx(str, searchValue\[, fromIndex])](#indxstr-searchvalue%5C-fromindex)
     - [str](#str)
     - [searchValue](#searchvalue)
     - [fromIndex](#fromindex)
@@ -63,7 +62,7 @@ console.log('res3 = ' + JSON.stringify(res3, null, 4))
 
 ## API
 
-### indx(str, searchValue\[, fromIndex])
+**indx(str, searchValue\[, fromIndex])**
 
 Returns an array of zero or more numbers, each indicating the index of each finding's first character. Unicode astral characters are counted correctly, as one character-long.
 
