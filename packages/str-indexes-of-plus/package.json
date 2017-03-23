@@ -1,6 +1,6 @@
 {
   "name": "str-indexes-of-plus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Search for a string in another string. Get array of indexes. Full Unicode support.",
   "main": "index.js",
   "scripts": {
