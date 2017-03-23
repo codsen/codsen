@@ -19,6 +19,12 @@
 
 - [Install](#install)
 - [Idea](#idea)
+- [Usage](#usage)
+- [API](#api)
+  - [indx(str, searchValue\[, fromIndex])](#indxstr-searchvalue%5C-fromindex)
+    - [str](#str)
+    - [searchValue](#searchvalue)
+    - [fromIndex](#fromindex)
 - [The algorithm](#the-algorithm)
 - [Contributing](#contributing)
 - [Licence](#licence)
