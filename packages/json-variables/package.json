@@ -1,0 +1,58 @@
+{
+  "name": "json-variables",
+  "version": "1.0.0",
+  "description": "Objects coming from JSON can have keys referencing other keys",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-and-send/json-variables.git"
+  },
+  "keywords": [
+    "json",
+    "normalize",
+    "normalise",
+    "schema",
+    "files",
+    "fill",
+    "keyset",
+    "keys",
+    "same",
+    "comb"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/json-variables/issues"
+  },
+  "homepage": "https://github.com/code-and-send/json-variables#readme",
+  "dependencies": {
+    "ast-monkey": "^3.0.0",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.includes": "^4.3.0",
+    "lodash.trim": "^4.5.1",
+    "object-assign": "^4.1.1",
+    "splice-string": "^2.0.0",
+    "str-indexes-of-plus": "^1.0.1",
+    "string-length": "^1.0.1",
+    "string-slice": "^0.1.0",
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^9.0.2"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
