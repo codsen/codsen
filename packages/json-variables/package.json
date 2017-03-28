@@ -22,7 +22,9 @@
     "keyset",
     "keys",
     "same",
-    "comb"
+    "comb",
+    "variable",
+    "variables"
   ],
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",
