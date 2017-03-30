@@ -10,9 +10,10 @@ var isPlainObject = require('lodash.isplainobject')
  * @return {Boolean}                     is it empty or not
  */
 function nonEmpty (input) {
-  if (input === undefined) {
+  if (arguments.length === 0 || input === undefined) {
     return
-  } else if (isArray(input) || isString(input)) {
+  }
+  if (isArray(input) || isString(input)) {
     return input.length > 0
   } else if (isPlainObject(input)) {
     return Object.keys(input).length > 0
