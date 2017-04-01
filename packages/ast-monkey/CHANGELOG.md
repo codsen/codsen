@@ -69,3 +69,4 @@ BREAKING API CHANGES.
 [2.8.0]: https://github.com/code-and-send/ast-monkey/compare/v2.7.0...v2.8.0
 [2.9.0]: https://github.com/code-and-send/ast-monkey/compare/v2.8.0...v2.9.0
 [3.0.0]: https://github.com/code-and-send/ast-monkey/compare/v2.9.0...v3.0.0
+[3.1.0]: https://github.com/code-and-send/ast-monkey/compare/v3.0.0...v3.1.0
