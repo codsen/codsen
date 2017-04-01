@@ -14,8 +14,7 @@ function traverse (treeOriginal, callback) {
   //
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
-  function traverseInner (treeOriginal, callback, innerObjOriginal) {
-    var innerObj = clone(innerObjOriginal)
+  function traverseInner (treeOriginal, callback, innerObj) {
     var tree = clone(treeOriginal)
 
     var i, len, res, allKeys, key
@@ -24,9 +23,10 @@ function traverse (treeOriginal, callback) {
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
         res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
-        if (!existy(res)) {
+        if (res === null) {
           tree.splice(i, 1)
-        } else {
+          i--
+        } else if (existy(res)) {
           tree[i] = res
         }
       }
@@ -35,7 +35,7 @@ function traverse (treeOriginal, callback) {
       for (i = 0, len = allKeys.length; i < len; i++) {
         key = allKeys[i]
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
-        if (!existy(res)) {
+        if (res === null) {
           delete tree[key]
         } else {
           tree[key] = res

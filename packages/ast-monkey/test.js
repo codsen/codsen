@@ -1,6 +1,6 @@
 'use strict'
 
-import { find, get, set, drop, info, del, arrayFirstOnly } from './index'
+import { find, get, set, drop, info, del, arrayFirstOnly, traverse, existy } from './index'
 
 import test from 'ava'
 var actual, intended, key, val, index
@@ -9,6 +9,7 @@ var input = {
   a: {b: [{c: {d: 'e'}}]},
   c: {d: 'e'}
 }
+const isEqual = require('lodash.isequal')
 
 // -----------------------------------------------------------------------------
 // all throws
@@ -900,6 +901,7 @@ test('08.01 - arrayFirstOnly - nested arrays', t => {
     a: {b: ['c', 'd', 'e']},
     f: ['g', 'h']
   }
+
   actual = arrayFirstOnly(input)
   intended = {
     a: {b: ['c']},
@@ -980,4 +982,122 @@ test('08.05 - arrayFirstOnly leaves strings alone', t => {
     actual,
     intended,
     '08.05')
+})
+
+// -----------------------------------------------------------------------------
+// traverse
+// -----------------------------------------------------------------------------
+
+test('09.01 - use traverse to delete one key from an array', t => {
+  input = [
+    {
+      a: 'b'
+    },
+    {
+      c: 'd'
+    },
+    {
+      e: 'f'
+    }
+  ]
+
+  var actual01 = traverse(input, function (key, val, innerObj) {
+    var current = existy(val) ? val : key
+    if (isEqual(current, { a: 'b' })) {
+      return null
+    } else {
+      return current
+    }
+  })
+  var intended01 = [
+    {
+      c: 'd'
+    },
+    {
+      e: 'f'
+    }
+  ]
+  t.deepEqual(
+    actual01,
+    intended01,
+    '09.01.01')
+
+  var actual02 = traverse(input, function (key, val, innerObj) {
+    var current = existy(val) ? val : key
+    if (isEqual(current, { c: 'd' })) {
+      return null
+    } else {
+      return current
+    }
+  })
+  var intended02 = [
+    {
+      a: 'b'
+    },
+    {
+      e: 'f'
+    }
+  ]
+  t.deepEqual(
+    actual02,
+    intended02,
+    '09.01.02')
+
+  var actual03 = traverse(input, function (key, val, innerObj) {
+    var current = existy(val) ? val : key
+    if (isEqual(current, { e: 'f' })) {
+      return null
+    } else {
+      return current
+    }
+  })
+  var intended03 = [
+    {
+      a: 'b'
+    },
+    {
+      c: 'd'
+    }
+  ]
+  t.deepEqual(
+    actual03,
+    intended03,
+    '09.01.03')
+})
+
+test('09.02 - use traverse to delete two keys in one go from an array', t => {
+  input = [
+    {
+      a: 'b'
+    },
+    {
+      a: 'b'
+    },
+    {
+      c: 'd'
+    }
+  ]
+
+  var actual01 = traverse(input, function (key, val, innerObj) {
+    // console.log('\n\n------\n')
+    // console.log('key = ' + JSON.stringify(key, null, 4))
+    // console.log('val = ' + JSON.stringify(val, null, 4))
+    var current = existy(val) ? val : key
+    if (isEqual(current, { a: 'b' })) {
+      // console.log('returning null')
+      return null
+    } else {
+      // console.log('returning current: ' + JSON.stringify(current, null, 4))
+      return current
+    }
+  })
+  var intended01 = [
+    {
+      c: 'd'
+    }
+  ]
+  t.deepEqual(
+    actual01,
+    intended01,
+    '09.01.01')
 })

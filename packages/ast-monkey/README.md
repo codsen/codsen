@@ -44,9 +44,11 @@ $ npm install --save ast-monkey
 
 Working with parsed HTML AST trees is hard when you want to go "up" the branches because all "AST-walking" algorithms rely on recursion and walk just "down", not "up". `ast-monkey`'s primary purpose is to help in those cases when you want to go _up the branches_.
 
-`ast-monkey` algorithm is based on indexes. It will recursively traverse each key of each object and each element of each array. Then it will assign an incremental integer, and index for each.
+`ast-monkey` algorithm assigns indexes to every traversed node so that you can visit it again. Also, [.find()](#find) will record the "bread crumb"-style indexes path to each found node. This, combined with [.get()](#get) function allows you to traverse the tree "up", from the found child node up all the way until its topmost parent node is reached.
 
-Once you know the index, you can delete the particular piece of AST (method `drop()`) or overwrite (method `set()`). You can also perform searches by object's/array's `key`, `value` or both (method `find()`). You can retrieve all contents of any piece of AST by index (method `get()`) or list all indexes (method `info()`).
+Using this library, you can delete the particular piece of AST (method [.drop()](#drop)) or overwrite (method [.set()](#set)). You can also perform searches by object's/array's `key`, `value` or both (method [.find()](#find)). You can retrieve all contents of any piece of AST by index (method [.get()](#get)) or list all indexes (method [.info()](#info)).
+
+Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions — the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
 ## API
 
@@ -479,6 +481,19 @@ var ast = [{a: 'a', b: 'b'}]
 ast = monkey.traverse(ast, function (key, val, innerObj) {
   // use key, val, innerObj
   return monkey.existy(val) ? val : key // (point #1)
+})
+```
+
+Also, I like to use it this way:
+
+```js
+const monkey = require('ast-monkey')
+var ast = [{a: 'a', b: 'b'}]
+ast = monkey.traverse(ast, function (key, val, innerObj) {
+  var current = monkey.existy(val) ? val : key
+  // All action with variable `current` goes here.
+  // It's the same name for any array element or any object key's value.
+  return current // it's obligatory to return it, unless you want to delete that node
 })
 ```
 

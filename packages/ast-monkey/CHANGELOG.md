@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2017-04-01
+### Improved
+- All this Saturday morning I worked on `monkey.traverse()`. Yesterday night I discovered that when you delete something on `traverse()`, all subsequent nodes are affected. The solution is not so elementary: yes, `i--` was missing, but there were also more fixed to implement for this to work. Now when you want to instruct `traverse()` to delete current node, you have to pass `null` — `undefined` won't work.
+### Added
+- Added `traverse()` unit tests, namely, `09.x` group.
+### Unchanged
+- Unit test coverage stays solid 100% lines.
+
 ## [3.0.0] - 2017-03-20
 ### Changed
 BREAKING API CHANGES.
