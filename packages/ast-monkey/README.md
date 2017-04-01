@@ -54,7 +54,7 @@ Alternatively, you can tap into the core of the monkey, the [.traverse()](#trave
 
 ### .find()
 
-Method `monkey.find()` can search objects/arrays by key or by value or by both and return the indexes path to an each finding.
+Method `monkey.find()` can search objects by key or by value or by both and return the indexes path to an each finding.
 
 ---
 
@@ -68,7 +68,7 @@ Input argument   | Type             | Obligatory? | Description
 Options object's key  | Type             | Obligatory?                  | Description
 ----------------------|------------------|------------------------------|-------------
 {                     |                  |                              |
-`key`                 | String           | at least one, `key` or `val` | If you want to search by an object's key, put it here.
+`key`                 | String           | at least one, `key` or `val` | If you want to search by a plain object's key, put it here.
 `val`                 | Whatever         | at least one, `key` or `val` | If you want to search by a plain object's value, put it here.
 }                     |                  |                              |
 
