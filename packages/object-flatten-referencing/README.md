@@ -117,7 +117,7 @@ An optional third argument - options object.
 `wrapTails`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
 `dontWrapKeysEndingWith`         | String   | no          | empty string      | If it's set, if key names end with this, don't append or prepend anything to them (or their child nodes). Also, don't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example.
 `xhtml`                        | Boolean  | no          | `true`            | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)
-`preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeads` or `wrapTails` don't wrap to prevent double wrapping.
+`preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeads` or `wrapTails`, don't wrap to prevent double wrapping.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
 }                              |          |             |                   |
 
