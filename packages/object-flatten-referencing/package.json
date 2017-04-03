@@ -1,0 +1,52 @@
+{
+  "name": "object-flatten-referencing",
+  "version": "1.0.0",
+  "description": "Flatten complex nested objects according to a reference objects",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-and-send/object-flatten-referencing.git"
+  },
+  "keywords": [
+    "object",
+    "plain",
+    "wrap",
+    "flatten",
+    "flat",
+    "mapping",
+    "content",
+    "objects",
+    "advanced",
+    "email"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/object-flatten-referencing/issues"
+  },
+  "homepage": "https://github.com/code-and-send/object-flatten-referencing#readme",
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "object-assign": "^4.1.1",
+    "str-indexes-of-plus": "^1.0.1",
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^9.0.2"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
