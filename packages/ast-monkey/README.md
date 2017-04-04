@@ -28,7 +28,7 @@
   - [.del()](#del)
   - [.arrayFirstOnly()](#arrayfirstonly)
   - [.traverse()](#traverse)
-  - [innerObj in the callback](#innerobj-in-the-callback)
+    - [innerObj in the callback](#innerobj-in-the-callback)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -502,7 +502,7 @@ It's very important to **return the value on the callback function** (point mark
 
 By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `truthy()` is second, but `console.log('placeholder = ' + JSON.stringify(placeholder, null, 4))` is also a contender for the top spot).
 
-### innerObj in the callback
+#### innerObj in the callback
 
 Currently it gives you two pieces of information:
 
