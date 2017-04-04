@@ -28,6 +28,7 @@
   - [.del()](#del)
   - [.arrayFirstOnly()](#arrayfirstonly)
   - [.traverse()](#traverse)
+  - [innerObj in the callback](#innerobj-in-the-callback)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -500,6 +501,19 @@ ast = monkey.traverse(ast, function (key, val, innerObj) {
 It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise **you will change the input** (your AST). Maybe it's what you want, for example, functions `monkey.drop()` and `monkey.del()` work that way — they don't return anything when they encounter to-be-deleted piece upon traversal — that piece **gets deleted**.
 
 By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `truthy()` is second, but `console.log('placeholder = ' + JSON.stringify(placeholder, null, 4))` is also a contender for the top spot).
+
+### innerObj in the callback
+
+Currently it gives you two pieces of information:
+
+* Current depth where you are in the AST, `innerObj.depth`. "Root" is `0`.
+* The topmost parent key's name, which is available on all its children, `innerObj.topmostKey`.
+
+You can access it just like `key` or `val`. Try `console.log`ing its contents inside `monkey.traverse()`:
+
+```js
+console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
+```
 
 ## Unit testing and code coverage
 

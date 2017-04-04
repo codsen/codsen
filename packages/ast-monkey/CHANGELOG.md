@@ -16,7 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       }
     }
 
-When you'll be traversing the array, `['something', 'anything']`, you'll have access to the key name, `title`. I needed this feature for [json-variables](https://github.com/code-and-send/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece. 👍
+When you'll be traversing the array, `['something', 'anything']`, you'll have access to the key name, `title` via `innerObj.topmostKey` on the callback.
+
+I needed this feature for [json-variables](https://github.com/code-and-send/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece. 👍
 
 ## [3.1.0] - 2017-04-01
 ### Improved
