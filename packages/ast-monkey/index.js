@@ -34,6 +34,9 @@ function traverse (treeOriginal, callback) {
       allKeys = Object.keys(tree)
       for (i = 0, len = allKeys.length; i < len; i++) {
         key = allKeys[i]
+        if (innerObj.depth === 0 && existy(key)) {
+          innerObj.topmostKey = key
+        }
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
         if (res === null) {
           delete tree[key]

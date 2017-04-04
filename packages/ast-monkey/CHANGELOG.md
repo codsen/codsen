@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.0] - 2017-04-04
+### Added
+- Imagine, you're using [`monkey.traverse()`](https://github.com/code-and-send/ast-monkey#traverse) on the following piece of AST:
+
+    {
+      title: ['something', 'anything'],
+      title_data: {
+        subtitle: 'text',
+        submarine: 'ship'
+      }
+    }
+
+When you'll be traversing the array, `['something', 'anything']`, you'll have access to the key name, `title`. I needed this feature for [json-variables](https://github.com/code-and-send/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece. 👍
+
 ## [3.1.0] - 2017-04-01
 ### Improved
 - All this Saturday morning I worked on `monkey.traverse()`. Yesterday night I discovered that when you delete something on `traverse()`, the traversal reports extra non-existing nodes. The solution is not so elementary. Yes, the iterator was not being reduced in the `for` loop — `i--` was missing — but there were also more fixes necessary to implement for this to work. Now when you want to instruct `traverse()` to delete current node, you have to pass `null` (`undefined` won't work). I believe that's how everybody were using it anyway, so it doesn't warrant major semver bump.
@@ -70,3 +84,4 @@ BREAKING API CHANGES.
 [2.9.0]: https://github.com/code-and-send/ast-monkey/compare/v2.8.0...v2.9.0
 [3.0.0]: https://github.com/code-and-send/ast-monkey/compare/v2.9.0...v3.0.0
 [3.1.0]: https://github.com/code-and-send/ast-monkey/compare/v3.0.0...v3.1.0
+[3.2.0]: https://github.com/code-and-send/ast-monkey/compare/v3.1.0...v3.2.0
