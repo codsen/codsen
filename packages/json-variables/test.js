@@ -4,15 +4,24 @@
 
 import jv from './index'
 import test from 'ava'
-import { aContainsB, extractVarsFromString, findLastInArray } from './util'
+import { aContainsB, extractVarsFromString, findLastInArray, checkTypes } from './util'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test('01.01 - throws when there\'s no input', t => {
+test('01.01 - basic throws related to wrong input', t => {
   t.throws(function () {
     jv()
+  })
+  t.throws(function () {
+    jv('zzzz')
+  })
+  t.throws(function () {
+    jv('{}')
+  })
+  t.throws(function () {
+    jv('[]')
   })
 })
 
@@ -720,10 +729,279 @@ test('03.07 - preventDoubleWrapping: on & off', function (t) {
 })
 
 // -----------------------------------------------------------------------------
-// 04. involving arrays
+// 04. variable whitelisting
 // -----------------------------------------------------------------------------
 
-test('04.01 - arrays referencing values which are strings', function (t) {
+test('04.01 - wrap flipswitch works', function (t) {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: true }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: 'val'
+    },
+    '04.01.01'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: false }),
+    {
+      a: 'val',
+      b: 'val',
+      c: 'val'
+    },
+    '04.01.02'
+  )
+})
+
+test('04.02 - global wrap flipswitch and dontWrapVarsStartingWith combo', function (t) {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: true, dontWrapVarsStartingWith: 'c' }),
+    {
+      a: 'val',
+      b: 'val',
+      c: 'val'
+    },
+    '04.02.01'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: false, dontWrapVarsStartingWith: 'c' }),
+    {
+      a: 'val',
+      b: 'val',
+      c: 'val'
+    },
+    '04.02.02'
+  )
+})
+
+test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['b', 'c'] }),
+    {
+      a: 'val',
+      b: 'val',
+      c: 'val'
+    },
+    '04.03.01'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['zzzz'] }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: 'val'
+    },
+    '04.03.02'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: '' }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: 'val'
+    },
+    '04.03.03'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: [] }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: 'val'
+    },
+    '04.03.04'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: 'zzzz' }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: 'val'
+    },
+    '04.03.05'
+  )
+})
+
+test('04.04 - opts.dontWrapVarsStartingWith, real key names', function (t) {
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['sub'] }),
+    {
+      title_front: 'Some text val and more text.',
+      title_sub: 'val',
+      subtitle: 'val'
+    },
+    '04.04.01'
+  )
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: 'sub' }),
+    {
+      title_front: 'Some text val and more text.',
+      title_sub: 'val',
+      subtitle: 'val'
+    },
+    '04.04.02'
+  )
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: '' }),
+    {
+      title_front: 'Some text {val} and more text.',
+      title_sub: '{val}',
+      subtitle: 'val'
+    },
+    '04.04.03'
+  )
+})
+
+test('04.05 - multiple dontWrapVarsStartingWith values', function (t) {
+  t.deepEqual(jv(
+    {
+      front_title: '%%_lower_title_%%',
+      lower_title: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['zzz', 'title', 'lower'] }),
+    {
+      front_title: '{val}',
+      lower_title: '{val}',
+      subtitle: 'val'
+    },
+    '04.05.01 - still wraps because child variable call ("subtitle") is not excluded'
+  )
+})
+
+test('04.06 - one level var querying and whitelisting', function (t) {
+  t.deepEqual(jv(
+    {
+      key: 'Some text %%_otherkey_%%',
+      otherkey: 'variable'
+    },
+    {
+      wrapHeads: '%%-',
+      wrapTails: '-%%',
+      wrapGlobalFlipSwitch: true,
+      dontWrapVarsEndingWith: 'c'
+    }
+  ),
+    {
+      key: 'Some text %%-variable-%%',
+      otherkey: 'variable'
+    },
+    '04.06.01'
+  )
+  t.deepEqual(jv(
+    {
+      key: 'Some text %%_otherkey_%%',
+      otherkey: 'variable'
+    },
+    {
+      wrapHeads: '%%-',
+      wrapTails: '-%%',
+      wrapGlobalFlipSwitch: false,
+      dontWrapVarsEndingWith: 'c'
+    }
+  ),
+    {
+      key: 'Some text variable',
+      otherkey: 'variable'
+    },
+    '04.06.02'
+  )
+})
+
+test('04.07 - opts.dontWrapVarsEndingWith, real key names', function (t) {
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: ['le'] }),
+    {
+      title_front: 'Some text val and more text.',
+      title_sub: 'val',
+      subtitle: 'val'
+    },
+    '04.07.01'
+  )
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: 'le' }),
+    {
+      title_front: 'Some text val and more text.',
+      title_sub: 'val',
+      subtitle: 'val'
+    },
+    '04.07.02'
+  )
+  t.deepEqual(jv(
+    {
+      title_front: 'Some text %%_title_sub_%% and more text.',
+      title_sub: '%%_subtitle_%%',
+      subtitle: 'val'
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: '' }),
+    {
+      title_front: 'Some text {val} and more text.',
+      title_sub: '{val}',
+      subtitle: 'val'
+    },
+    '04.07.03'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 05. involving arrays
+// -----------------------------------------------------------------------------
+
+test('05.01 - arrays referencing values which are strings', function (t) {
   t.deepEqual(jv(
     {
       a: ['Some text %%_d_%% some more text %%_c_%%'],
@@ -737,11 +1015,11 @@ test('04.01 - arrays referencing values which are strings', function (t) {
       c: 'cval',
       d: 'dval'
     },
-    '04.01'
+    '05.01'
   )
 })
 
-test('04.02 - arrays referencing values which are arrays', function (t) {
+test('05.02 - arrays referencing values which are arrays', function (t) {
   t.deepEqual(jv(
     {
       a: ['Some text %%_b_%% some more text %%_c_%%', '%%_c_%%', '%%_d_%%'],
@@ -755,8 +1033,311 @@ test('04.02 - arrays referencing values which are arrays', function (t) {
       c: ['c1', 'c2'],
       d: 'dval'
     },
-    '04.02'
+    '05.02'
   )
+})
+
+test('05.03 - arrays, whitelisting as string', function (t) {
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text {text}', '{ship}', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.03.01 - base - no ignores'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: 'sub',
+      dontWrapVarsEndingWith: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', 'ship', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.03.02 - string whitelist startsWith'
+  )
+})
+
+test('05.04 - arrays, whitelisting as array', function (t) {
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: ['subt'],
+      dontWrapVarsEndingWith: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', '{ship}', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.04.01'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: ['zzz', 'subt', 'subm'],
+      dontWrapVarsEndingWith: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', 'ship', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.04.02 - two ignores in an array'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: ['zzz', 'le', 'ne'],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', 'ship', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.04.03 - two ignores in an array startsWith'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', '{ship}', 'anything'],
+      subtitle: 'text',
+      submarine: 'ship'
+    },
+    '05.04.04 - two ignores in an array, endsWith'
+  )
+})
+
+test('05.05 - arrays, whitelisting as array', function (t) {
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_submarine_%%', 'anything'],
+      title_data: {
+        subtitle: 'text',
+        submarine: 'ship'
+      }
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text text', '{ship}', 'anything'],
+      title_data: {
+        subtitle: 'text',
+        submarine: 'ship'
+      }
+    },
+    '05.05.01 - two ignores in an array, data store'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
+      title_data: {
+        subtitle: 'SUB'
+      },
+      whatnot: '%%_submarine_%%',
+      whatnot_data: {
+        submarine: 'ship'
+      }
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text SUB', '{ship}', 'anything'],
+      title_data: {
+        subtitle: 'SUB'
+      },
+      whatnot: '{ship}',
+      whatnot_data: {
+        submarine: 'ship'
+      }
+    },
+    '05.05.02 - does not wrap SUB'
+  )
+  t.deepEqual(jv(
+    {
+      title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
+      title_data: {
+        subtitle: 'SUB'
+      },
+      whatnot: '%%_submarine_%%',
+      whatnot_data: {
+        submarine: 'ship'
+      }
+    },
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '{',
+      wrapTails: '}',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: ['zzz', 'yyy'],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
+  ),
+    {
+      title: ['something', 'Some text {SUB}', '{ship}', 'anything'],
+      title_data: {
+        subtitle: 'SUB'
+      },
+      whatnot: '{ship}',
+      whatnot_data: {
+        submarine: 'ship'
+      }
+    },
+    '05.05.03 - wraps SUB'
+  )
+  t.throws(() => {
+    jv(
+      {
+        title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
+        title_data: {
+          subtitle: 'SUB'
+        },
+        whatnot: '%%_submarine_%%',
+        whatnot_data: {
+          zzz: 'yyy'
+        }
+      },
+      {
+        heads: '%%_',
+        tails: '_%%',
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: '_data',
+        wrapHeads: '{',
+        wrapTails: '}',
+        dontWrapVarsStartingWith: [],
+        dontWrapVarsEndingWith: ['zzz', 'yyy'],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true
+      }
+    )
+  })
+})
+
+// -----------------------------------------------------------------------------
+// 96. UTIL - checkTypes()
+// -----------------------------------------------------------------------------
+
+test('96.01 - UTIL > throws when there\'s no input', t => {
+  t.throws(function () {
+    checkTypes()
+  })
 })
 
 // -----------------------------------------------------------------------------

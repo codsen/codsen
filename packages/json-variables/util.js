@@ -16,6 +16,17 @@ function aContainsB (a, b) {
   return String(a).indexOf(String(b)) >= 0
 }
 
+function checkTypes (obj, ref, msg, variable) {
+  if (arguments.length === 0) {
+    throw new Error('object-flatten-referencing/util.js/checkTypes(): missing inputs!')
+  }
+  Object.keys(obj).forEach(function (key) {
+    if (existy(ref[key]) && type(obj[key]) !== type(ref[key])) {
+      throw new TypeError(msg + ' ' + variable + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + type(ref[key]) + ' but ' + type(obj[key]))
+    }
+  })
+}
+
 function findLastInArray (array, val) {
   var res = null
   if (!existy(val)) {
@@ -67,5 +78,6 @@ function extractVarsFromString (str, heads, tails) {
 module.exports = {
   aContainsB: aContainsB,
   extractVarsFromString: extractVarsFromString,
-  findLastInArray: findLastInArray
+  findLastInArray: findLastInArray,
+  checkTypes: checkTypes
 }

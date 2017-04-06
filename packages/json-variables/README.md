@@ -70,12 +70,20 @@ Type: `object` - a plain object. Usually parsed JSON file.
 
 Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 
-heads: '%%_',
-tails: '_%%',
-lookForDataContainers: true,
-dataContainerIdentifierTails: '_data',
-wrapHeads: '',
-wrapTails: ''
+**Defaults**:
+
+    {
+      heads: '%%_',
+      tails: '_%%',
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeads: '',
+      wrapTails: '',
+      dontWrapVarsStartingWith: [],
+      dontWrapVarsEndingWith: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true
+    }
 
 `options` object's key         | Type     | Obligatory? | Default     | Description
 -------------------------------|----------|-------------|-------------|----------------------
@@ -86,7 +94,10 @@ wrapTails: ''
 `dataContainerIdentifierTails` | String   | no          | `_data`     | If you do put your variables in dedicated keys besides, those keys will have to be different somehow. We suggest appending a string to the key's name — tell here what string.
 `wrapHeads`                    | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the left is called "heads", please tell what string to use.
 `wrapTails`                    | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the right is called "tails", please tell what string to use.
+`dontWrapVarsStartingWith`     | Array or String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) starts with this string or any of the elements of this array, it won't be wrapped with `wrapHeads` and `wrapTails`.
+`dontWrapVarsEndingWith`     | Array or String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) ends with this string or any of the elements of this array, it won't be wrapped with `wrapHeads` and `wrapTails`.
 `preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeads` and `wrapTails`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
+`wrapGlobalFlipSwitch`         | String   | no          | yes         | Global flipswitch to turn off the variable wrapping function completely, everywhere.
 }                              |          |             |             |
 
 ## Use examples
@@ -138,7 +149,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-You can also wrap all resolved variables with strings, a new heads and tails using `opts.wrapHeads` and `opts.wrapTails`. For example, make them Java-style:
+You can also wrap all resolved variables with strings, a new heads and tails using `opts.wrapHeads` and `opts.wrapTails`. For example, make them Java-style, wrapped with `${` and `}`:
 
 ```js
 const jv = require('json-variables')
@@ -148,7 +159,11 @@ var res = jv(
     b: 'something',
     var1: 'value1',
     var2: 'value2'
-  }, { wrapHeads: '${', wrapTails: '}' }
+  },
+  {
+    wrapHeads: '${',
+    wrapTails: '}'
+  }
 )
 console.log('res = ' + JSON.stringify(res, null, 4))
 // => {
@@ -187,18 +202,18 @@ Data-wise, if you looked at a higher level, it might appear clunky to put values
 }
 ```
 
-Does this look clean data arrangement? Hell no. This is a convoluted and nasty data. The keys `var1` and `var2` are not of the same status as `a` and `b`, therefore can't be mashed together.
+Does this look like clean data arrangement? Hell no. This is a convoluted and nasty data. The keys `var1` and `var2` are not of the same status as `a` and `b`, therefore can't be mashed together at the same level.
 
 What if we placed all key's `a` variables within a separate key, `a_data` — it starts with the same letter so it will end up being nearby the `a` after sorting. Observe:
 
 ```js
 {
   a: 'some text %%_var1_%% more text %%_var2_%%',
-  b: 'something',
   a_data: {
     var1: 'value1',
     var2: 'value2'
-  }
+  },
+  b: 'something'
 }
 ```
 
@@ -211,11 +226,11 @@ const jv = require('json-variables')
 var res = jv(
   {
     a: 'some text %%_var1_%% more text %%_var3_%%.',
-    b: 'something',
     a_data: {
       var1: 'value1',
       var3: '333333'
-    }
+    },
+    b: 'something'
   }
 )
 console.log('res = ' + JSON.stringify(res, null, 4))
