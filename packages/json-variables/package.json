@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Objects coming from JSON can have keys referencing other keys",
   "main": "index.js",
   "scripts": {
