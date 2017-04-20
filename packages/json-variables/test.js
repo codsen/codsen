@@ -351,7 +351,7 @@ test('02.01 - fills in variables found among other keys', function (t) {
       var1: 'value1',
       var2: 'value2'
     },
-    '02.01.01'
+    '02.01.01 - defaults'
   )
   t.deepEqual(jv(
     {
@@ -359,14 +359,19 @@ test('02.01 - fills in variables found among other keys', function (t) {
       b: 'something',
       var1: 'value1',
       var2: 'value2'
-    }, { wrapHeads: '${', wrapTails: '}' }),
+    },
+    {
+      wrapHeads: '${',
+      wrapTails: '}'
+    }
+    ),
     {
       a: 'some text ${value1} more text ${value2}',
       b: 'something',
       var1: 'value1',
       var2: 'value2'
     },
-    '02.01.02'
+    '02.01.02 - custom wrappers'
   )
   t.deepEqual(jv(
     {
@@ -386,7 +391,7 @@ test('02.01 - fills in variables found among other keys', function (t) {
       var1: 'value1',
       var2: 'value2'
     },
-  '02.01.03'
+  '02.01.03 - custom heads/tails'
   )
   t.deepEqual(jv(
     {
@@ -406,7 +411,136 @@ test('02.01 - fills in variables found among other keys', function (t) {
       var1: 'value1',
       var2: 'value2'
     },
-  '02.01.04'
+  '02.01.04 - custom heads/tails, some whitespace inside of them'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'some text %%_var1_%% more text %%_var2_%%',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '%%_',
+      d: '_%%',
+      e: '_%%'
+    }),
+    {
+      a: 'some text value1 more text value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '%%_',
+      d: '_%%',
+      e: '_%%'
+    },
+    '02.01.05 - some keys have heads/tails only - defaults'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'some text %%_var1_%% more text %%_var2_%%',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '%%_',
+      d: '_%%',
+      e: '_%%'
+    },
+    {
+      noSingleMarkers: false
+    }
+  ),
+    {
+      a: 'some text value1 more text value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '%%_',
+      d: '_%%',
+      e: '_%%'
+    },
+    '02.01.05 - some keys have heads/tails only - hardcoded defaults'
+  )
+  t.throws(function () {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text %%_var2_%%',
+        b: 'something',
+        var1: 'value1',
+        var2: 'value2',
+        c: '%%_',
+        d: '_%%',
+        e: '_%%'
+      },
+      {
+        noSingleMarkers: true
+      }
+    )
+  })
+  t.throws(function () {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text %%_var2_%%',
+        b: 'something',
+        var1: 'value1',
+        var2: 'value2',
+        c: '%%_'
+      },
+      {
+        noSingleMarkers: true
+      }
+    )
+  })
+  t.deepEqual(jv(
+    {
+      a: 'some text {var1} more text {var2}',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '{',
+      d: '}',
+      e: '}'
+    },
+    {
+      heads: '{',
+      tails: '}'
+    }
+  ),
+    {
+      a: 'some text value1 more text value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '{',
+      d: '}',
+      e: '}'
+    },
+    '02.01.08 - some keys have heads/tails only - custom heads/tails, defaults'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'some text {var1} more text {var2}',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '{',
+      d: '}',
+      e: '}'
+    },
+    {
+      noSingleMarkers: false,
+      heads: '{',
+      tails: '}'
+    }
+  ),
+    {
+      a: 'some text value1 more text value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+      c: '{',
+      d: '}',
+      e: '}'
+    },
+    '02.01.09 - some keys have heads/tails only - custom heads/tails, hardcoded defaults'
   )
 })
 
@@ -1331,6 +1465,43 @@ test('05.05 - arrays, whitelisting as array', function (t) {
 })
 
 // -----------------------------------------------------------------------------
+// 06. opts.noSingleMarkers
+// -----------------------------------------------------------------------------
+
+test('06.01 - UTIL > throws when there\'s no input', t => {
+  t.notThrows(function () {
+    jv(
+      {
+        a: 'z',
+        b: '%%_'
+      }
+    )
+  })
+  t.notThrows(function () {
+    jv(
+      {
+        a: 'z',
+        b: '%%_'
+      },
+      {
+        noSingleMarkers: false
+      }
+    )
+  })
+  t.throws(function () {
+    jv(
+      {
+        a: 'z',
+        b: '%%_'
+      },
+      {
+        noSingleMarkers: true
+      }
+    )
+  })
+})
+
+// -----------------------------------------------------------------------------
 // 96. UTIL - checkTypes()
 // -----------------------------------------------------------------------------
 
@@ -1410,31 +1581,31 @@ test('99.03 - UTIL > extractVarsFromString - no results => empty array', functio
   )
 })
 
-test('99.04 - UTIL > throws when there\'s no input', t => {
+test('99.04 - UTIL > extractVarsFromString - throws when there\'s no input', t => {
   t.throws(function () {
     extractVarsFromString()
   })
 })
 
-test('99.05 - UTIL > throws when first argument is not string-type', t => {
+test('99.05 - UTIL > extractVarsFromString - throws when first argument is not string-type', t => {
   t.throws(function () {
     extractVarsFromString(111)
   })
 })
 
-test('99.06 - UTIL > throws when second argument (heads) is not string-type', t => {
+test('99.06 - UTIL > extractVarsFromString - throws when second argument (heads) is not string-type', t => {
   t.throws(function () {
     extractVarsFromString('a', 111)
   })
 })
 
-test('99.07 - UTIL > throws when third argument (tails) is not string-type', t => {
+test('99.07 - UTIL > extractVarsFromString - throws when third argument (tails) is not string-type', t => {
   t.throws(function () {
     extractVarsFromString('a', '%%_', 111)
   })
 })
 
-test('99.08 - UTIL > empty string gives result of empty array', function (t) {
+test('99.08 - UTIL > extractVarsFromString - empty string gives result of empty array', function (t) {
   t.deepEqual(extractVarsFromString(
       '', '{', '}'
     ),
@@ -1443,11 +1614,34 @@ test('99.08 - UTIL > empty string gives result of empty array', function (t) {
   )
 })
 
-test('99.09 - UTIL > throws when heads and tails are not matches (count differs)', t => {
+test('99.09 - UTIL > extractVarsFromString - throws when heads and tails are not matches (count differs)', t => {
   t.throws(function () {
     extractVarsFromString('{a {b}', '{', '}')
   })
   t.throws(function () {
     extractVarsFromString('🦄🦄🦄🦄🦄{a {🦄b}', '{', '}')
   })
+  t.notThrows(function () {
+    extractVarsFromString('%%_', '%%_', '_%%')
+  })
+  t.notThrows(function () {
+    extractVarsFromString('_%%', '%%_', '_%%')
+  })
+})
+
+test('99.10 - UTIL > extractVarsFromString - copes when heads/tails are given as input', function (t) {
+  t.deepEqual(
+    extractVarsFromString(
+      '%%_', '%%_', '_%%'
+    ),
+    [],
+    '99.10.01'
+  )
+  t.deepEqual(
+    extractVarsFromString(
+      '_%%', '%%_', '_%%'
+    ),
+    [],
+    '99.10.02'
+  )
 })

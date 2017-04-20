@@ -40,6 +40,7 @@ function findLastInArray (array, val) {
   return res
 }
 
+// since v.1.1 str can be equal to heads or tails - there won't be any results though (result will be empty array)
 function extractVarsFromString (str, heads, tails) {
   heads = heads || '%%_'
   tails = tails || '_%%'
@@ -55,6 +56,9 @@ function extractVarsFromString (str, heads, tails) {
   if (typeof tails !== 'string') {
     throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be string-type. Currently it\'s: ' + type(tails))
   }
+  if ((str === heads) || (str === tails)) {
+    return []
+  }
   var res = []
   if (str.length === 0) {
     return res
@@ -62,7 +66,8 @@ function extractVarsFromString (str, heads, tails) {
 
   var foundHeads = search(str, heads)
   var foundTails = search(str, tails)
-  if (foundHeads.length !== foundTails.length) {
+
+  if ((foundHeads.length !== foundTails.length) && (str !== heads) && (str !== tails)) {
     throw new Error('json-variables/util.js/extractVarsFromString(): Mismatching heads and tails in the input:' + str)
   }
 
@@ -75,9 +80,21 @@ function extractVarsFromString (str, heads, tails) {
   return res
 }
 
+function arrayiffyString (something) {
+  if (type(something) === 'string') {
+    if (something.length > 0) {
+      return [something]
+    } else {
+      return []
+    }
+  }
+  return something
+}
+
 module.exports = {
   aContainsB: aContainsB,
   extractVarsFromString: extractVarsFromString,
   findLastInArray: findLastInArray,
-  checkTypes: checkTypes
+  checkTypes: checkTypes,
+  arrayiffyString: arrayiffyString
 }

@@ -98,6 +98,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `dontWrapVarsEndingWith`     | Array or String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) ends with this string or any of the elements of this array, it won't be wrapped with `wrapHeads` and `wrapTails`.
 `preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeads` and `wrapTails`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
 `wrapGlobalFlipSwitch`         | String   | no          | yes         | Global flipswitch to turn off the variable wrapping function completely, everywhere.
+`noSingleMarkers`              | Boolean  | no          | `false`     | Key values can be equal to `heads` or `tails`. If you don't want that, set it to `true`, the library will throw an error on those cases.
 }                              |          |             |             |
 
 ## Use examples
