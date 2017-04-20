@@ -60,8 +60,20 @@ function flattenArr (arrOrig, opts, wrap) {
   return res
 }
 
+function arrayiffyString (something) {
+  if (isStr(something)) {
+    if (something.length > 0) {
+      return [something]
+    } else {
+      return []
+    }
+  }
+  return something
+}
+
 module.exports = {
   checkTypes: checkTypes,
   flattenObject: flattenObject,
-  flattenArr: flattenArr
+  flattenArr: flattenArr,
+  arrayiffyString: arrayiffyString
 }

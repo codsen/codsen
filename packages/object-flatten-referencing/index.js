@@ -7,6 +7,7 @@ const clone = require('lodash.clonedeep')
 const search = require('str-indexes-of-plus')
 const isArr = Array.isArray
 const util = require('./util')
+const includes = require('lodash.includes')
 
 function existy (x) { return x != null }
 function isStr (something) { return type(something) === 'string' }
@@ -37,26 +38,18 @@ function outer (originalInput, originalReference, opts) {
       wrapTails: '_%%',
       dontWrapKeysStartingWith: [],
       dontWrapKeysEndingWith: [],
-      xhtml: true,
+      xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
       objectKeyAndValueJoinChar: '.',
-      wrapGlobalFlipSwitch: true // allow disabling the wrapping feature. used on deeper branches.
+      wrapGlobalFlipSwitch: true, // Allow disabling the wrapping feature. Used on deeper branches.
+      ignore: [], // Ignore these keys, don't flatten their values.
+      whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string
     }
     opts = objectAssign(clone(defaults), opts)
-    if (isStr(opts.dontWrapKeysEndingWith)) {
-      if (opts.dontWrapKeysEndingWith.length > 0) {
-        opts.dontWrapKeysEndingWith = [opts.dontWrapKeysEndingWith]
-      } else {
-        opts.dontWrapKeysEndingWith = []
-      }
-    }
-    if (isStr(opts.dontWrapKeysStartingWith)) {
-      if (opts.dontWrapKeysStartingWith.length > 0) {
-        opts.dontWrapKeysStartingWith = [opts.dontWrapKeysStartingWith]
-      } else {
-        opts.dontWrapKeysStartingWith = []
-      }
-    }
+    opts.dontWrapKeysEndingWith = util.arrayiffyString(opts.dontWrapKeysEndingWith)
+    opts.dontWrapKeysStartingWith = util.arrayiffyString(opts.dontWrapKeysStartingWith)
+    opts.ignore = util.arrayiffyString(opts.ignore)
+
     util.checkTypes(opts, defaults, 'object-flatten-referencing/ofr():', 'opts')
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false
@@ -64,47 +57,51 @@ function outer (originalInput, originalReference, opts) {
 
     if (isObj(input)) {
       Object.keys(input).forEach(function (key) {
-        if (opts.wrapGlobalFlipSwitch) {
-          wrap = true // reset it for the new key.
-        }
-        if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysEndingWith.length > 0) {
-          wrap = wrap && !opts.dontWrapKeysEndingWith.some(function (elem) {
-            return key.endsWith(elem)
-          })
-        }
-        if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysStartingWith.length > 0) {
-          wrap = wrap && !opts.dontWrapKeysStartingWith.some(function (elem) {
-            return key.startsWith(elem)
-          })
-        }
-        if (isArr(input[key])) {
-          if (isStr(reference[key])) {
-            input[key] = util.flattenArr(input[key], opts, wrap)
-          } else {
-            input[key] = ofr(input[key], reference[key], opts, wrap)
+        if ((opts.ignore.length === 0) || !includes(opts.ignore, key)) {
+
+          if (opts.wrapGlobalFlipSwitch) {
+            wrap = true // reset it for the new key.
           }
-        } else if (isObj(input[key])) {
-          if (isStr(reference[key])) {
-            input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap)
-          } else {
-            // when calling recursively, the parent key might get identified (wrap=false) to be not wrapped.
-            // however, that flag might get lost as its children will calculate the new "wrap" on its own keys.
-            // to prevent that, we flip the switch on the global wrap setting for all deeper child nodes.
-            // we also clone the options object so as not to mutate it.
-            if (!wrap) {
-              input[key] = ofr(
-                input[key],
-                reference[key],
-                objectAssign(clone(opts), {wrapGlobalFlipSwitch: false}),
-                wrap
-              )
+          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysEndingWith.length > 0) {
+            wrap = wrap && !opts.dontWrapKeysEndingWith.some(function (elem) {
+              return key.endsWith(elem)
+            })
+          }
+          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysStartingWith.length > 0) {
+            wrap = wrap && !opts.dontWrapKeysStartingWith.some(function (elem) {
+              return key.startsWith(elem)
+            })
+          }
+          if (isArr(input[key])) {
+            if (isStr(reference[key])) {
+              input[key] = util.flattenArr(input[key], opts, wrap)
             } else {
               input[key] = ofr(input[key], reference[key], opts, wrap)
             }
-          }
-        } else if (isStr(input[key])) {
+          } else if (isObj(input[key])) {
+            if (isStr(reference[key])) {
+              input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap)
+            } else {
+              // when calling recursively, the parent key might get identified (wrap=false) to be not wrapped.
+              // however, that flag might get lost as its children will calculate the new "wrap" on its own keys.
+              // to prevent that, we flip the switch on the global wrap setting for all deeper child nodes.
+              // we also clone the options object so as not to mutate it.
+              if (!wrap) {
+                input[key] = ofr(
+                  input[key],
+                  reference[key],
+                  objectAssign(clone(opts), {wrapGlobalFlipSwitch: false}),
+                  wrap
+                )
+              } else {
+                input[key] = ofr(input[key], reference[key], opts, wrap)
+              }
+            }
+          } else if (isStr(input[key])) {
 
-          input[key] = ofr(input[key], reference[key], opts, wrap)
+            input[key] = ofr(input[key], reference[key], opts, wrap)
+          }
+
         }
       })
     } else if (isArr(input)) {

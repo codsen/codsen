@@ -3,7 +3,7 @@
 
 import ofr from './index'
 import test from 'ava'
-import { checkTypes, flattenObject, flattenArr } from './util'
+import { checkTypes, flattenObject, flattenArr, arrayiffyString } from './util'
 
 // -----------------------------------------------------------------------------
 // 01. various throws
@@ -864,6 +864,365 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       wrapme: '${oh yes}'
     },
     '02.09'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 03. opts.ignore
+// -----------------------------------------------------------------------------
+
+test('03.01 - opts.ignore & wrapping function', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        key1: 'val11.val12',
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      }
+    ),
+    {
+      key1: '%%_val11.val12_%%',
+      key2: '%%_val21.val22_%%'
+    },
+    '03.01.01 - default behaviour'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: 'val11.val12',
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      },
+      {
+        ignore: 'key1'
+      }
+    ),
+    {
+      key1: 'val11.val12',
+      key2: '%%_val21.val22_%%'
+    },
+    '03.01.02 - does not wrap ignored string'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: 'val11.val12',
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      },
+      {
+        ignore: ['z', 'key1']
+      }
+    ),
+    {
+      key1: 'val11.val12',
+      key2: '%%_val21.val22_%%'
+    },
+    '03.01.03 - does not wrap ignored array'
+  )
+})
+
+test('03.02 - flattens an array value but doesn\'t touch other one', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      }
+    ),
+    {
+      key1: '%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%',
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '03.02.01'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        wrapHeads: '%%_',
+        wrapTails: '_%%'
+      }
+    ),
+    {
+      key1: '%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%',
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '03.02.02'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        ignore: 'key1'
+      }
+    ),
+    {
+      key1: {
+        key2: [
+          'val1',
+          'val2',
+          'val3'
+        ]
+      },
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '03.02.03 - ignore affects key1, default wrapping'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        wrapHeads: '%%_',
+        wrapTails: '_%%',
+        ignore: 'key1'
+      }
+    ),
+    {
+      key1: {
+        key2: [
+          'val1',
+          'val2',
+          'val3'
+        ]
+      },
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '03.02.04 - ignore affects key1, custom wrapping'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key0: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key0: 'Text',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        wrapHeads: '%%_',
+        wrapTails: '_%%',
+        ignore: 'key0'
+      }
+    ),
+    {
+      key0: {
+        key2: [
+          'val1',
+          'val2',
+          'val3'
+        ]
+      },
+      key1: '%%_key2.val1_%%<br />%%_key2.val2_%%<br />%%_key2.val3_%%',
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '03.02.05 - some ignored, some flattened'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 96. util.arrayiffyString
+// -----------------------------------------------------------------------------
+
+test('96.01 - util.arrayiffyString - turns string into an array', function (t) {
+  t.deepEqual(
+    arrayiffyString('zzz'),
+    ['zzz'],
+    '96.01'
+  )
+})
+
+test('96.02 - util.arrayiffyString - turns empty string into an empty array', function (t) {
+  t.deepEqual(
+    arrayiffyString(''),
+    [],
+    '96.02'
+  )
+})
+
+test('96.03 - util.arrayiffyString - doesn\'t touch any other input types', function (t) {
+  t.deepEqual(
+    arrayiffyString(['a']),
+    ['a'],
+    '96.03.01'
+  )
+  t.deepEqual(
+    arrayiffyString([]),
+    [],
+    '96.03.02'
+  )
+  t.deepEqual(
+    arrayiffyString(1),
+    1,
+    '96.03.03'
+  )
+  t.deepEqual(
+    arrayiffyString(null),
+    null,
+    '96.03.04'
   )
 })
 
