@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/code-and-send/object-flatten-referencing#readme",
   "dependencies": {
+    "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "object-assign": "^4.1.1",

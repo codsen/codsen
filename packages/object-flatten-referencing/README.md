@@ -125,7 +125,7 @@ An optional third argument - options object.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
 `wrapGlobalFlipSwitch`         | Boolean  | no          | `true`            | You can turn off the wrapping function completely using this.
 `ignore`                       | Array or String | no   | empty array       | Don't apply any flattening to any of these keys. Naturally, don't wrap them with anything either.
-`whatToDoWhenReferenceIsMissing` | Integer | no         | `0`               | 0 = skip, 1 = throw, 2 = flatten to string
+`whatToDoWhenReferenceIsMissing` | Integer or Integer as String | no | `0`  | 0 = skip, 1 = throw, 2 = flatten to string
 }                              |          |             |                   |
 
 ## The algorithm

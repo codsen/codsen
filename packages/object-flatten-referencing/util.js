@@ -4,6 +4,7 @@
 // const objectAssign = require('object-assign')
 const type = require('type-detect')
 const clone = require('lodash.clonedeep')
+const isStringInt = require('is-string-int')
 const isArr = Array.isArray
 function isStr (something) { return type(something) === 'string' }
 function isObj (something) { return type(something) === 'Object' }
@@ -71,9 +72,17 @@ function arrayiffyString (something) {
   return something
 }
 
+function reclaimIntegerString (something) {
+  if (isStr(something) && isStringInt(something)) {
+    return parseInt(something, 10)
+  }
+  return something
+}
+
 module.exports = {
   checkTypes: checkTypes,
   flattenObject: flattenObject,
   flattenArr: flattenArr,
-  arrayiffyString: arrayiffyString
+  arrayiffyString: arrayiffyString,
+  reclaimIntegerString: reclaimIntegerString
 }

@@ -49,6 +49,7 @@ function outer (originalInput, originalReference, opts) {
     opts.dontWrapKeysEndingWith = util.arrayiffyString(opts.dontWrapKeysEndingWith)
     opts.dontWrapKeysStartingWith = util.arrayiffyString(opts.dontWrapKeysStartingWith)
     opts.ignore = util.arrayiffyString(opts.ignore)
+    opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
 
     util.checkTypes(opts, defaults, 'object-flatten-referencing/ofr():', 'opts')
     if (!opts.wrapGlobalFlipSwitch) {
@@ -72,6 +73,10 @@ function outer (originalInput, originalReference, opts) {
               return key.startsWith(elem)
             })
           }
+
+          // if (existy(reference[key])) {
+          //
+          // }
           if (isArr(input[key])) {
             if (isStr(reference[key])) {
               input[key] = util.flattenArr(input[key], opts, wrap)
@@ -98,7 +103,6 @@ function outer (originalInput, originalReference, opts) {
               }
             }
           } else if (isStr(input[key])) {
-
             input[key] = ofr(input[key], reference[key], opts, wrap)
           }
 

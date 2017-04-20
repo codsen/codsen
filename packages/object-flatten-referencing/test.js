@@ -3,7 +3,7 @@
 
 import ofr from './index'
 import test from 'ava'
-import { checkTypes, flattenObject, flattenArr, arrayiffyString } from './util'
+import { checkTypes, flattenObject, flattenArr, arrayiffyString, reclaimIntegerString } from './util'
 
 // -----------------------------------------------------------------------------
 // 01. various throws
@@ -1180,6 +1180,134 @@ test('03.02 - flattens an array value but doesn\'t touch other one', function (t
       }
     },
     '03.02.05 - some ignored, some flattened'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 04. opts.whatToDoWhenReferenceIsMissing
+// -----------------------------------------------------------------------------
+
+test.only('04.01 - opts.whatToDoWhenReferenceIsMissing', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        a: {
+          c: 'd'
+        },
+        b: {
+          e: 'f'
+        }
+      },
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: '%%_c.d_%%',
+      b: {
+        e: 'f'
+      }
+    },
+    '04.01.01 - no opts - opt. 0 - skips'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        a: {
+          c: 'd'
+        },
+        b: {
+          e: 'f'
+        }
+      },
+      {
+        a: 'a'
+      }
+    ),
+    {
+      a: '%%_c.d_%%',
+      b: {
+        e: 'f'
+      }
+    },
+    '04.01.02 - opts - opt. 0 hardcoded - skips (same as #01)'
+  )
+  t.throws(function () {
+    ofr(
+      {
+        a: {
+          c: 'd'
+        },
+        b: {
+          e: 'f'
+        }
+      },
+      {
+        a: 'a'
+      },
+      {
+        whatToDoWhenReferenceIsMissing: 1
+      }
+    )
+  }, '04.01.03 - opts - opt. 1 - throws')
+  t.deepEqual(
+    ofr(
+      {
+        a: {
+          c: 'd'
+        },
+        b: {
+          e: 'f'
+        }
+      },
+      {
+        a: 'a'
+      },
+      {
+        whatToDoWhenReferenceIsMissing: 2
+      }
+    ),
+    {
+      a: '%%_c.d_%%',
+      b: '%%_e.f_%%'
+    },
+    '04.01.04 - opts - opt. 2 - flattens to string anyway + wraps if permitted'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 95. util.reclaimIntegerString
+// -----------------------------------------------------------------------------
+
+test('95.01 - util.reclaimIntegerString - does what it says on strings', function (t) {
+  t.deepEqual(
+    reclaimIntegerString('1'),
+    1,
+    '95.01'
+  )
+})
+
+test('95.02 - util.reclaimIntegerString - doesn\'t parse non-integer strings', function (t) {
+  t.deepEqual(
+    reclaimIntegerString('1.1'),
+    '1.1',
+    '95.02'
+  )
+})
+
+test('95.03 - util.reclaimIntegerString - doesn\'t parse non-number strings either', function (t) {
+  t.deepEqual(
+    reclaimIntegerString('zz'),
+    'zz',
+    '95.03'
+  )
+})
+
+test('95.04 - util.reclaimIntegerString - doesn\'t parse booleans', function (t) {
+  t.deepEqual(
+    reclaimIntegerString(true),
+    true,
+    '95.04'
   )
 })
 
