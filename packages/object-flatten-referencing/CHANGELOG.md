@@ -18,3 +18,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 1.0.0 - 2017-04-03
 ### New
 - First public release
+
+[1.1.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.0.1...v1.1.0

@@ -12,7 +12,7 @@ function existy (x) { return x != null }
 
 function checkTypes (obj, ref, msg, variable) {
   if (arguments.length === 0) {
-    throw new Error('object-flatten-referencing/util.js/checkTypes(): missing inputs!')
+    throw new Error('object-flatten-referencing/util.js/checkTypes(): [THROW_ID_04] missing inputs!')
   }
   Object.keys(obj).forEach(function (key) {
     if (existy(ref[key]) && type(obj[key]) !== type(ref[key])) {

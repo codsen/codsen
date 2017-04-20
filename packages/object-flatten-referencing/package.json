@@ -43,10 +43,10 @@
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^9.0.2"
+    "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   },
   "engines": {
     "node": ">=5.11.0"

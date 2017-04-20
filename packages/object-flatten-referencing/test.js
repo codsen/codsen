@@ -861,9 +861,109 @@ test('02.09 - one ignore works on multiple keys', function (t) {
     {
       key_aaaa: 'something',
       key_bbbb: 'anything',
+      wrapme: 'oh yes'
+    },
+    '02.09.01 - defaults on opts.whatToDoWhenReferenceIsMissing'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key_aaaa: 'something',
+        key_bbbb: 'anything',
+        wrapme: 'oh yes'
+      },
+      {
+        key_aaaa: 'Title',
+        key_bbbb: 'Subtitle'
+      },
+      {
+        dontWrapKeysStartingWith: ['key'],
+        wrapHeads: '${',
+        wrapTails: '}',
+        whatToDoWhenReferenceIsMissing: 0
+      }
+    ),
+    {
+      key_aaaa: 'something',
+      key_bbbb: 'anything',
+      wrapme: 'oh yes'
+    },
+    '02.09.02 - hardcoded defaults on opts.whatToDoWhenReferenceIsMissing'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key_aaaa: 'something',
+        key_bbbb: 'anything',
+        wrapme: 'oh yes'
+      },
+      {
+        key_aaaa: 'Title',
+        key_bbbb: 'Subtitle'
+      },
+      {
+        dontWrapKeysStartingWith: ['key'],
+        wrapHeads: '${',
+        wrapTails: '}',
+        whatToDoWhenReferenceIsMissing: 2
+      }
+    ),
+    {
+      key_aaaa: 'something',
+      key_bbbb: 'anything',
       wrapme: '${oh yes}'
     },
-    '02.09'
+    '02.09.03 - defaults on opts.whatToDoWhenReferenceIsMissing'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key_aaaa: 'something',
+        key_bbbb: 'anything',
+        wrapme: 'oh yes'
+      },
+      {
+        key_aaaa: 'Title',
+        key_bbbb: 'Subtitle',
+        wrapme: 'z'
+      },
+      {
+        dontWrapKeysStartingWith: ['key'],
+        wrapHeads: '${',
+        wrapTails: '}'
+      }
+    ),
+    {
+      key_aaaa: 'something',
+      key_bbbb: 'anything',
+      wrapme: '${oh yes}'
+    },
+    '02.09.04 - normal case, where reference is provided for key "wrapme"'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key_aaaa: {a: 'a'},
+        key_bbbb: {b: 'b'},
+        wrapme: {c: 'c'}
+      },
+      {
+        key_aaaa: 'a',
+        key_bbbb: 'b',
+        wrapme: 'c'
+      },
+      {
+        dontWrapKeysStartingWith: ['key'],
+        wrapHeads: '${',
+        wrapTails: '}'
+      }
+    ),
+    {
+      key_aaaa: 'a.a',
+      key_bbbb: 'b.b',
+      wrapme: '${c.c}'
+    },
+    '02.09.05 - same as #04 but with objects'
   )
 })
 
@@ -1187,7 +1287,7 @@ test('03.02 - flattens an array value but doesn\'t touch other one', function (t
 // 04. opts.whatToDoWhenReferenceIsMissing
 // -----------------------------------------------------------------------------
 
-test.only('04.01 - opts.whatToDoWhenReferenceIsMissing', function (t) {
+test('04.01 - opts.whatToDoWhenReferenceIsMissing', function (t) {
   t.deepEqual(
     ofr(
       {
@@ -1249,7 +1349,7 @@ test.only('04.01 - opts.whatToDoWhenReferenceIsMissing', function (t) {
         whatToDoWhenReferenceIsMissing: 1
       }
     )
-  }, '04.01.03 - opts - opt. 1 - throws')
+  })
   t.deepEqual(
     ofr(
       {
@@ -1283,7 +1383,7 @@ test('95.01 - util.reclaimIntegerString - does what it says on strings', functio
   t.deepEqual(
     reclaimIntegerString('1'),
     1,
-    '95.01'
+    '95.01.03'
   )
 })
 

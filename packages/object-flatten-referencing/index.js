@@ -16,13 +16,13 @@ function isObj (something) { return type(something) === 'Object' }
 
 function outer (originalInput, originalReference, opts) {
   if (arguments.length === 0) {
-    throw new Error('object-flatten-referencing/ofr(): all inputs missing!')
+    throw new Error('object-flatten-referencing/ofr(): [THROW_ID_01] all inputs missing!')
   }
   if (arguments.length === 1) {
-    throw new Error('object-flatten-referencing/ofr(): reference object missing!')
+    throw new Error('object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!')
   }
   if ((typeof opts !== 'undefined') && !isObj(opts)) {
-    throw new Error('object-flatten-referencing/ofr(): third input, options object must be a plain object. Currently it\'s: ' + typeof opts)
+    throw new Error('object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it\'s: ' + typeof opts)
   }
 
   function ofr (originalInput, originalReference, opts, wrap) {
@@ -43,7 +43,7 @@ function outer (originalInput, originalReference, opts) {
       objectKeyAndValueJoinChar: '.',
       wrapGlobalFlipSwitch: true, // Allow disabling the wrapping feature. Used on deeper branches.
       ignore: [], // Ignore these keys, don't flatten their values.
-      whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string
+      whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
     }
     opts = objectAssign(clone(defaults), opts)
     opts.dontWrapKeysEndingWith = util.arrayiffyString(opts.dontWrapKeysEndingWith)
@@ -51,7 +51,7 @@ function outer (originalInput, originalReference, opts) {
     opts.ignore = util.arrayiffyString(opts.ignore)
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
 
-    util.checkTypes(opts, defaults, 'object-flatten-referencing/ofr():', 'opts')
+    util.checkTypes(opts, defaults, 'object-flatten-referencing/ofr(): [THROW_ID_05*] ', 'opts')
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false
     }
@@ -74,36 +74,45 @@ function outer (originalInput, originalReference, opts) {
             })
           }
 
-          // if (existy(reference[key])) {
-          //
-          // }
-          if (isArr(input[key])) {
-            if (isStr(reference[key])) {
-              input[key] = util.flattenArr(input[key], opts, wrap)
-            } else {
-              input[key] = ofr(input[key], reference[key], opts, wrap)
-            }
-          } else if (isObj(input[key])) {
-            if (isStr(reference[key])) {
-              input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap)
-            } else {
-              // when calling recursively, the parent key might get identified (wrap=false) to be not wrapped.
-              // however, that flag might get lost as its children will calculate the new "wrap" on its own keys.
-              // to prevent that, we flip the switch on the global wrap setting for all deeper child nodes.
-              // we also clone the options object so as not to mutate it.
-              if (!wrap) {
-                input[key] = ofr(
-                  input[key],
-                  reference[key],
-                  objectAssign(clone(opts), {wrapGlobalFlipSwitch: false}),
-                  wrap
-                )
+          if (
+            existy(reference[key]) ||
+            (!existy(reference[key]) && (opts.whatToDoWhenReferenceIsMissing === 2))
+          ) {
+            if (isArr(input[key])) {
+              if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
+                input[key] = util.flattenArr(input[key], opts, wrap)
               } else {
                 input[key] = ofr(input[key], reference[key], opts, wrap)
               }
+            } else if (isObj(input[key])) {
+              if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
+                input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap)
+              } else {
+                // when calling recursively, the parent key might get identified (wrap=true) to be wrapped.
+                // however, that flag might get lost as its children will calculate the new "wrap" on its own keys, often turning off the wrap function.
+                // to prevent that, we flip the switch on the global wrap setting for all deeper child nodes.
+                // we also clone the options object so as not to mutate it.
+                if (!wrap) {
+                  input[key] = ofr(
+                    input[key],
+                    reference[key],
+                    objectAssign(clone(opts), {wrapGlobalFlipSwitch: false}),
+                    wrap
+                  )
+                } else {
+                  input[key] = ofr(input[key], reference[key], opts, wrap)
+                }
+              }
+            } else if (isStr(input[key])) {
+              input[key] = ofr(input[key], reference[key], opts, wrap)
             }
-          } else if (isStr(input[key])) {
-            input[key] = ofr(input[key], reference[key], opts, wrap)
+          } else {
+            if (type(input[key]) !== type(reference[key])) {
+              if (opts.whatToDoWhenReferenceIsMissing === 1) {
+                throw new Error('object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ' + key + ' and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.')
+              }
+              // when opts.whatToDoWhenReferenceIsMissing === 2, library does nothing, so we simply let it slip through.
+            }
           }
 
         }
