@@ -27,6 +27,7 @@ $ npm install --save array-includes-with-glob
 - [API](#api)
   - [API - Input](#api---input)
   - [API - Output](#api---output)
+- [Conditions when this library will throw](#conditions-when-this-library-will-throw)
 - [Test](#test)
 - [Contributing & testing](#contributing--testing)
 - [Licence](#licence)
