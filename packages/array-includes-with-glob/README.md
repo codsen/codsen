@@ -85,7 +85,7 @@ includesWithGlob (
 
 Input argument   | Type     | Obligatory? | Description
 -----------------|----------|-------------|--------------------
-`sourceArray`    | Array    | yes         | Source array of strings
+`sourceArray`    | Array or String | yes  | Source array of strings
 `stringToFind`   | String   | yes         | What to look for. Can contain wildcards.
 
 None of the input arguments are mutated.
