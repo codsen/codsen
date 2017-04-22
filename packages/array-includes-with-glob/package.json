@@ -44,6 +44,6 @@
     "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   }
 }
