@@ -23,6 +23,9 @@ test('0.3 - first input arg is not array', t => {
   t.throws(function () {
     i({a: 'a'}, 'a')
   })
+  t.notThrows(function () {
+    i('zzz', 'a')
+  })
   t.throws(function () {
     i(1, 'a')
   })
@@ -144,6 +147,30 @@ test('1.6 - second arg is empty string', t => {
     ),
     false,
     '1.6')
+})
+
+test('1.7 - input is not array but string', t => {
+  t.is(
+    i(
+      ['something'],
+      '*thing'
+    ),
+    true,
+    '1.7.1')
+  t.is(
+    i(
+      'something',
+      '*thing'
+    ),
+    true,
+    '1.7.2')
+  t.is(
+    i(
+      'something',
+      'thing'
+    ),
+    false,
+    '1.7.3')
 })
 
 // 👍

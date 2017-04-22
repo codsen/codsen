@@ -17,7 +17,11 @@ function includesWithGlob (originalInput, stringToFind) {
     throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_02] second argument missing!')
   }
   if (!isArr(originalInput)) {
-    throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ' + typeof originalInput)
+    if (isStr(originalInput)) {
+      originalInput = [originalInput]
+    } else {
+      throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ' + typeof originalInput)
+    }
   }
   if (!isStr(stringToFind)) {
     throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_04] second argument must be a string! It was given as ' + typeof stringToFind)
