@@ -9,11 +9,14 @@ var isObj = require('lodash.isplainobject')
 var isStr = require('lodash.isstring')
 var isNum = require('lodash.isnumber')
 var clone = require('lodash.clonedeep')
+var includes = require('array-includes-with-glob')
 
 var existy = require('./util').existy
 var isBool = require('./util').isBool
 var nonEmpty = require('./util').nonEmpty
+var checkTypes = require('./util').checkTypes
 var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
+var arrayiffyString = require('./util').arrayiffyString
 
 // ===================================
 // F U N C T I O N S
@@ -35,9 +38,16 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   // DEFAULTS
   // ---------------------------------------------------------------------------
 
-  opts = objectAssign({
-    mergeObjectsOnlyWhenKeysetMatches: true // otherwise, concatenation will be preferred
-  }, opts)
+  var defaults = {
+    mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
+    ignoreKeys: [],
+    hardMergeKeys: []
+  }
+  opts = objectAssign(clone(defaults), opts)
+  opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
+  opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
+
+  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced():', 'opts')
 
   // ACTION
   // ---------------------------------------------------------------------------
@@ -98,12 +108,17 @@ function mergeAdvanced (input1orig, input2orig, opts) {
       } else if (isObj(i2)) {
         // case 23
         // two object merge
+
         Object.keys(i2).forEach(function (key) {
           if (i1.hasOwnProperty(key)) {
             // value clash
-            i1[key] = mergeAdvanced(i1[key], i2[key], opts)
+            if ((opts.hardMergeKeys.length > 0) && includes(key, opts.hardMergeKeys)) {
+              i1[key] = i2[key] // hard overwrite
+            } else if (!((opts.ignoreKeys.length > 0) && includes(key, opts.ignoreKeys))) {
+              i1[key] = mergeAdvanced(i1[key], i2[key], opts) // if not being ignored
+            } // else case is omitted as nothing happens there, i1[key] stays as it is
           } else {
-            i1[key] = i2[key]
+            i1[key] = i2[key] // key does not exist, so creates it
           }
         })
       } else {

@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] - 2017-04-23 weekend
+### Added
+- Options settings' type enforcing and if necessary, throwing implemented when the options object values are set to be of a wrong type. At the same time, we're trying to be as flexible as possible — for example, accepting single string value instead of array.
+- new options setting, `opts.ignoreKeys`
+- new options setting, `opts.hardMergeKeys`
+### Unchanged
+- Coverage is kept 100%. That does not mean much but hey.
+
+### PS.
+It took nearly whole weekend on and off to get this out. Bloody leading wildcard [bug](https://github.com/deltreey/wildstring/issues/2) kept poking out until I switched to [matcher](https://www.npmjs.com/package/matcher), problem solved.
+
+It's nice to use the modular way of coding JS: I found bug here on this library with leading wildcards, but it was coming from dependency, another of mine, [array-includes-with-glob](https://github.com/code-and-send/array-includes-with-glob), which in turn was bugged by buggy [wildstring](https://github.com/deltreey/wildstring). I swapped its dependencies, updated `object-merge-advanced` (this library) and tests passed again.
+
+Like changing a broken carburettor with another, working-one. 🎉
+
 ## [6.0.0] - 2017-03-14
 ### Changed
 - Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
@@ -45,3 +60,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [4.2.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.1.0...v4.2.0
 [5.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.2.0...v5.0.0
 [6.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v5.0.0...v6.0.0
+[6.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.0.0...v6.1.0

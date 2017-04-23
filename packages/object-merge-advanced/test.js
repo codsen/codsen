@@ -1,17 +1,14 @@
 'use strict'
+import test from 'ava'
+
 var mergeAdvanced = require('./index')
 // var existy = require('./util').existy
 // var isBool = require('./util').isBool
 // var sortObject = require('./util').sortObject
 // var nonEmpty = require('./util').nonEmpty
 var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
+var checkTypes = require('./util').checkTypes
 var clone = require('lodash.clonedeep')
-
-import test from 'ava'
-
-// var json1 = require('./test/res1.json')
-// var json2 = require('./test/res2.json')
-// var json3 = require('./test/res3.json')
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
@@ -1717,26 +1714,26 @@ test('05.07 - README example: opts.mergeObjectsOnlyWhenKeysetMatches', t => {
     },
     '05.07.01')
 
-  // t.deepEqual(
-  //   mergeAdvanced(
-  //     obj1, obj2, { mergeObjectsOnlyWhenKeysetMatches: false }
-  //   ),
-  //   {
-  //     a: [
-  //       {
-  //         a: 'a',
-  //         b: 'b',
-  //         yyyy: 'yyyy',
-  //         xxxx: 'xxxx',
-  //         c: 'c'
-  //       }
-  //     ]
-  //   },
-  //   '05.07.02')
+  t.deepEqual(
+    mergeAdvanced(
+      obj1, obj2, { mergeObjectsOnlyWhenKeysetMatches: false }
+    ),
+    {
+      a: [
+        {
+          a: 'a',
+          b: 'b',
+          yyyy: 'yyyy',
+          xxxx: 'xxxx',
+          c: 'c'
+        }
+      ]
+    },
+    '05.07.02')
 })
 
 // ==============================
-// Real world tests
+// 06. Real world tests
 // ==============================
 
 test('06.01 - real world use case', t => {
@@ -1861,7 +1858,7 @@ test('06.02 - real world use case, mini', t => {
 })
 
 // ==============================
-// Merging arrays
+// 07. Merging arrays
 // ==============================
 
 test('07.01 - merges two arrays of equal length', t => {
@@ -1937,7 +1934,7 @@ test('07.03 - merges non-empty array with an empty array', t => {
 })
 
 // ==============================
-// Merging arrays
+// 08. Merging arrays
 // ==============================
 
 test('08.01 - arrays in objects', t => {
@@ -2003,7 +2000,7 @@ test('08.04 - objects in arrays in objects', t => {
 })
 
 // ==============================
-// Various
+// 09. Various
 // ==============================
 
 test('09.01 - empty string vs boolean #58', t => {
@@ -2119,6 +2116,427 @@ test('09.05 - empty string vs undefined #60', t => {
     '09.05.02')
 })
 
+// ==============================
+// 10. opts.ignoreKeys
+// ==============================
+
+test('10.01 - OPTS > opts.ignoreKeys - basic cases', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        k: 'l'
+      },
+      {
+        a: ['c'],
+        m: 'n'
+      }
+    ),
+    {
+      a: ['c'],
+      k: 'l',
+      m: 'n'
+    },
+    '10.01.01 - #1, forward')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['c'],
+        m: 'n'
+      },
+      {
+        a: 'b',
+        k: 'l'
+      }
+    ),
+    {
+      a: ['c'],
+      k: 'l',
+      m: 'n'
+    },
+    '10.01.02 - #1, backward')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        k: 'l'
+      },
+      {
+        a: ['c'],
+        m: 'n'
+      },
+      {
+        ignoreKeys: ['a']
+      }
+    ),
+    {
+      a: 'b',
+      k: 'l',
+      m: 'n'
+    },
+    '10.01.03 - #2, forward, ignoreKeys as array')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['c'],
+        m: 'n'
+      },
+      {
+        a: 'b',
+        k: 'l'
+      },
+      {
+        ignoreKeys: ['a']
+      }
+    ),
+    {
+      a: ['c'],
+      k: 'l',
+      m: 'n'
+    },
+    '10.01.04 - #2, backward, ignoreKeys as array')
+})
+
+test('10.02 - OPTS > opts.ignoreKeys - multiple keys ignored, multiple merged', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        d: ['e'],
+        k: 'l',
+        p: 1,
+        r: '',
+        t: 'u'
+      },
+      {
+        a: ['c'],
+        d: {f: 'g'},
+        m: 'n',
+        p: 2,
+        r: 'zzz',
+        t: ['v']
+      },
+      {
+        ignoreKeys: ['a', 'p', 'r']
+      }
+    ),
+    {
+      a: 'b',
+      d: ['e'],
+      k: 'l',
+      m: 'n',
+      p: 1,
+      r: '',
+      t: ['v']
+    },
+    '10.02')
+})
+
+test('10.03 - OPTS > opts.ignoreKeys - wildcards', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        something: 'a',
+        anything: 'b',
+        everything: 'c'
+      },
+      {
+        something: ['a'],
+        anything: ['b'],
+        everything: 'd'
+      },
+      {
+        ignoreKeys: ['*thing']
+      }
+    ),
+    {
+      something: 'a',
+      anything: 'b',
+      everything: 'c'
+    },
+    '10.03')
+})
+
+test('10.04 - OPTS > opts.ignoreKeys - wildcard, but not found', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        something: 'a',
+        anything: 'b',
+        everything: 'c'
+      },
+      {
+        something: ['a'],
+        anything: ['b'],
+        everything: 'd'
+      },
+      {
+        ignoreKeys: ['*z*']
+      }
+    ),
+    {
+      something: ['a'],
+      anything: ['b'],
+      everything: 'd'
+    },
+    '10.04')
+})
+
+// ==============================
+// 11. opts.hardMergeKeys
+// ==============================
+
+test('11.01 - OPTS > opts.hardMergeKeys', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        d: ['e'],
+        k: 'l',
+        p: 1,
+        r: '',
+        t: {u: 'u'}
+      },
+      {
+        a: ['c'],
+        d: {f: 'g'},
+        m: 'n',
+        p: 2,
+        r: 'zzz',
+        t: 'v'
+      }
+    ),
+    {
+      a: ['c'],
+      d: ['e'],
+      k: 'l',
+      m: 'n',
+      p: 2,
+      r: 'zzz',
+      t: {u: 'u'}
+    },
+    '11.01.01 - default behaviour')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        d: ['e'],
+        k: 'l',
+        p: 1,
+        r: '',
+        t: {u: 'u'}
+      },
+      {
+        a: ['c'],
+        d: {f: 'g'},
+        m: 'n',
+        p: 2,
+        r: 'zzz',
+        t: 'v'
+      },
+      {
+        hardMergeKeys: ['d', 't']
+      }
+    ),
+    {
+      a: ['c'],
+      d: {f: 'g'},
+      k: 'l',
+      m: 'n',
+      p: 2,
+      r: 'zzz',
+      t: 'v'
+    },
+    '11.01.02 - hardMergeKeys only')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        d: ['e'],
+        k: 'l',
+        p: 1,
+        r: '',
+        t: {u: 'u'}
+      },
+      {
+        a: ['c'],
+        d: {f: 'g'},
+        m: 'n',
+        p: 2,
+        r: 'zzz',
+        t: 'v'
+      },
+      {
+        hardMergeKeys: ['d', 't'],
+        ignoreKeys: ['a']
+      }
+    ),
+    {
+      a: 'b',
+      d: {f: 'g'},
+      k: 'l',
+      m: 'n',
+      p: 2,
+      r: 'zzz',
+      t: 'v'
+    },
+    '11.01.03 - hardMergeKeys and ignoreKeys, both')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'b',
+        d: ['e'],
+        k: 'l',
+        p: 1,
+        r: '',
+        t: {u: 'u'}
+      },
+      {
+        a: ['c'],
+        d: {f: 'g'},
+        m: 'n',
+        p: 2,
+        r: 'zzz',
+        t: 'v'
+      },
+      {
+        hardMergeKeys: 'd',
+        ignoreKeys: 'a'
+      }
+    ),
+    {
+      a: 'b',
+      d: {f: 'g'},
+      k: 'l',
+      m: 'n',
+      p: 2,
+      r: 'zzz',
+      t: {u: 'u'}
+    },
+    '11.01.04 - hardMergeKeys and ignoreKeys both at once, both as strings')
+})
+
+test('11.02 - OPTS > opts.hardMergeKeys', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        something: ['aaa'],
+        anything: ['bbb'],
+        everything: {c: 'ccc'},
+        xxx: ['ddd'],
+        yyy: 'yyy',
+        zzz: 'zzz'
+      },
+      {
+        something: 'aaa',
+        anything: 'bbb',
+        everything: 'ccc',
+        xxx: 'overwrite',
+        yyy: 'overwrite',
+        zzz: 'overwrite'
+      },
+      {
+        hardMergeKeys: ['*thing', '*xx'],
+        ignoreKeys: 'nonexisting key'
+      }
+    ),
+    {
+      something: 'aaa',
+      anything: 'bbb',
+      everything: 'ccc',
+      xxx: 'overwrite',
+      yyy: 'overwrite',
+      zzz: 'overwrite'
+    },
+    '11.02.01')
+})
+
+// ==============================
+// 12. throws of all kinds
+// ==============================
+
+test('12.01 - OPTS > third argument is not a plain object', t => {
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, 1
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {}
+    )
+  })
+})
+
+test('12.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work', t => {
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {mergeObjectsOnlyWhenKeysetMatches: 'true'}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {mergeObjectsOnlyWhenKeysetMatches: true}
+    )
+  })
+})
+
+test('12.03 - OPTS > opts.ignoreKeys type checks work', t => {
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {ignoreKeys: 1}
+    )
+  })
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {ignoreKeys: true}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {ignoreKeys: ''}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {ignoreKeys: ['']}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {ignoreKeys: []}
+    )
+  })
+})
+
+test('12.04 - OPTS > opts.hardMergeKeys type checks work', t => {
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {hardMergeKeys: 1}
+    )
+  })
+  t.throws(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {hardMergeKeys: true}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {hardMergeKeys: ''}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {hardMergeKeys: ['']}
+    )
+  })
+  t.notThrows(function () {
+    mergeAdvanced(
+      {a: 'a'}, {b: 'b'}, {hardMergeKeys: []}
+    )
+  })
+})
+
 // ============================================================
 //                   U T I L   T E S T S
 // ============================================================
@@ -2131,10 +2549,20 @@ test('09.05 - empty string vs undefined #60', t => {
 //                         .=O=.
 
 // ==============================
+// util/checkTypes()
+// ==============================
+
+test('98.01 - UTIL > throws when there\'s no input', t => {
+  t.throws(function () {
+    checkTypes()
+  })
+})
+
+// ==============================
 // util/equalOrSubsetKeys()
 // ==============================
 
-test('99.01 - equalOrSubsetKeys - two equal plain objects', t => {
+test('99.01 - UTIL > equalOrSubsetKeys - two equal plain objects', t => {
   t.truthy(
     equalOrSubsetKeys(
       {
@@ -2149,7 +2577,7 @@ test('99.01 - equalOrSubsetKeys - two equal plain objects', t => {
     '99.01')
 })
 
-test('99.02 - equalOrSubsetKeys - first is a subset of the second', t => {
+test('99.02 - UTIL > equalOrSubsetKeys - first is a subset of the second', t => {
   t.truthy(
     equalOrSubsetKeys(
       {
@@ -2174,7 +2602,7 @@ test('99.02 - equalOrSubsetKeys - first is a subset of the second', t => {
     '99.02.02')
 })
 
-test('99.03 - equalOrSubsetKeys - second is a subset of the first', t => {
+test('99.03 - UTIL > equalOrSubsetKeys - second is a subset of the first', t => {
   t.truthy(
     equalOrSubsetKeys(
       {
@@ -2199,7 +2627,7 @@ test('99.03 - equalOrSubsetKeys - second is a subset of the first', t => {
     '99.03')
 })
 
-test('99.04 - equalOrSubsetKeys - empty object is a subset', t => {
+test('99.04 - UTIL > equalOrSubsetKeys - empty object is a subset', t => {
   t.truthy(
     equalOrSubsetKeys(
       {
@@ -2219,19 +2647,19 @@ test('99.04 - equalOrSubsetKeys - empty object is a subset', t => {
     '99.04.02')
 })
 
-test('99.05 - first input is not an object - throws', t => {
+test('99.05 - UTIL > first input is not an object - throws', t => {
   t.throws(function () {
     equalOrSubsetKeys('z')
   })
 })
 
-test('99.06 - first input is missing - throws', t => {
+test('99.06 - UTIL > first input is missing - throws', t => {
   t.throws(function () {
     equalOrSubsetKeys()
   })
 })
 
-test('99.07 - second input is not an object - throws', t => {
+test('99.07 - UTIL > second input is not an object - throws', t => {
   t.throws(function () {
     equalOrSubsetKeys({a: 'a'}, 'z')
   })

@@ -41,31 +41,6 @@ $ npm install --save object-merge-advanced
 
 It's like `_.merge`, but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
 
-I was not happy with Lodash [_.merge](https://lodash.com/docs/#merge) because it gets stuck when it encounters mismatching type values within plain objects. All I wanted is to merge two plain objects, retaining as much information as possible after the merging.
-
-I was not happy with [object-assign](https://github.com/sindresorhus/object-assign) which doesn't care about what type is overwriting what type — it can merge value as String containing some text with Boolean `false`, for example. `object-assign` is good to merge default key set, but not to merge to objects containing precious content.
-
-Merge these two:
-
-```
-// #1:
-{
-  a: {
-    b: 'c',
-    d: ['e', 'f']
-  }
-}
-
-// and #2:
-{
-  a: [
-    {
-      x: 'y'
-    }
-  ]
-}
-```
-
 ---
 
 Imagine, if we merged the identical keys of two objects judging their values by the hierarchy instead:
@@ -81,7 +56,7 @@ Imagine, if we merged the identical keys of two objects judging their values by 
 - null
 - undefined doesn't trump anything
 
-The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string that with an empty array or boolean.
+The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
 **That's what this library does**
 
@@ -222,27 +197,17 @@ $ npm test
 
 For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
 
-I aim to have 100% code coverage, which it is at the moment.
+I aim to have 100% code coverage (which is the case at the moment).
 
-## Contributing
+## Difference from Lodash `_.merge`
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
-
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
 
 ## Difference from `object-assign`
 
-`object-assign` doesn't compare _types_ of what's merged.
+[object-assign](https://github.com/sindresorhus/object-assign) will is just a hard overwrite of all existing keys, from one object to another. It does not weigh the types of the input values and will happily overwrite the string value with a boolean placeholder.
 
-[object-assign](https://github.com/sindresorhus/object-assign) will simply take first argument object, overwrite the second one onto it. Then it will take the result and overwrite third argument object onto it. And so on. Every subsequent object's key will overwrite an existing one.
-
-It's best to use `object-assign` when you care little about a base object (first input argument), for example when it's a default values' object. In such cases, when the base object (first argument of `object-assign`) is overwritten, that's OK.
-
-However, when all incoming (second arg onwards) objects can contain placeholder values in a Boolean format, `object-assign` doesn't work, because any Boolean placeholder key values will overwrite base object's real values in String.
-
-When you want to merge objects seeking maximum data retention, the 'object-merge-advanced' is the best.
-
----
+`object-assign` is not for merging data objects, it's for setting defaults in the options objects.
 
 For example, in my email template builds, I import SCSS variables file as an object. I also import variables for each template, and template variables object overwrites anything existing in SCSS variables object.
 
@@ -252,7 +217,13 @@ Now imagine, we're merging those two objects, and SCSS variables object has a ke
 
 If merging were done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is pink!
 
-If merging were done using this library, `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
+If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
+
+## Contributing
+
+All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 

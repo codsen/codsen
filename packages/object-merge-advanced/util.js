@@ -3,9 +3,10 @@
 // ===================================
 // V A R S
 
-var isObj = require('lodash.isplainobject')
-var isNum = require('lodash.isnumber')
-var includesAll = require('array-includes-all')
+const isObj = require('lodash.isplainobject')
+const isNum = require('lodash.isnumber')
+const includesAll = require('array-includes-all')
+const type = require('type-detect')
 
 // ===================================
 // F U N C T I O N S
@@ -39,9 +40,33 @@ function equalOrSubsetKeys (obj1, obj2) {
   return includesAll(Object.keys(obj1), Object.keys(obj2)) || includesAll(Object.keys(obj2), Object.keys(obj1))
 }
 
+function checkTypes (obj, ref, msg, variable) {
+  if (arguments.length === 0) {
+    throw new Error('object-merge-advanced/util.js/checkTypes(): missing inputs!')
+  }
+  Object.keys(obj).forEach(function (key) {
+    if (existy(ref[key]) && (type(obj[key]) !== type(ref[key]))) {
+      throw new TypeError(msg + ' ' + variable + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + type(ref[key]) + ' but ' + type(obj[key]))
+    }
+  })
+}
+
+function arrayiffyString (something) {
+  if (type(something) === 'string') {
+    if (something.length > 0) {
+      return [something]
+    } else {
+      return []
+    }
+  }
+  return something
+}
+
 module.exports = {
   existy: existy,
   isBool: isBool,
   nonEmpty: nonEmpty,
-  equalOrSubsetKeys: equalOrSubsetKeys
+  equalOrSubsetKeys: equalOrSubsetKeys,
+  checkTypes: checkTypes,
+  arrayiffyString: arrayiffyString
 }

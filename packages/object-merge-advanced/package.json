@@ -27,11 +27,13 @@
   "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
   "dependencies": {
     "array-includes-all": "^1.0.0",
+    "array-includes-with-glob": "^1.1.0",
     "lodash.clonedeep": "*",
     "lodash.isnumber": "*",
     "lodash.isplainobject": "*",
     "lodash.isstring": "*",
-    "object-assign": "^4.1.1"
+    "object-assign": "^4.1.1",
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
@@ -39,9 +41,9 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^9.0.0"
+    "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   }
 }
