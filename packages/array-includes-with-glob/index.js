@@ -1,13 +1,20 @@
 'use strict'
 var clone = require('lodash.clonedeep')
 var wildstring = require('wildstring')
+var objectAssign = require('object-assign')
 
-function includesWithGlob (originalInput, stringToFind) {
+function includesWithGlob (originalInput, stringToFind, opts) {
   //
   // internal f()'s
   function existy (x) { return x != null }
   function isArr (something) { return Array.isArray(something) }
   function isStr (something) { return typeof something === 'string' }
+
+  var defaults = {
+    arrayVsArrayAllMustBeFound: 'any' // two options: 'any' or 'all'
+  }
+
+  opts = objectAssign(defaults, opts)
 
   // insurance
   if (arguments.length === 0) {
@@ -23,8 +30,11 @@ function includesWithGlob (originalInput, stringToFind) {
       throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ' + typeof originalInput)
     }
   }
-  if (!isStr(stringToFind)) {
-    throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_04] second argument must be a string! It was given as ' + typeof stringToFind)
+  if (!isStr(stringToFind) && !isArr(stringToFind)) {
+    throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ' + typeof stringToFind)
+  }
+  if (opts.arrayVsArrayAllMustBeFound !== 'any' && opts.arrayVsArrayAllMustBeFound !== 'all') {
+    throw new Error('array-includes-with-glob/includesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ' + opts.arrayVsArrayAllMustBeFound + '. It must be equal to either "any" or "all".')
   }
 
   // maybe we can end prematurely:
@@ -42,9 +52,26 @@ function includesWithGlob (originalInput, stringToFind) {
     return false
   }
 
-  return input.some(function (val) {
-    return wildstring.match(stringToFind, val)
-  })
+  if (isStr(stringToFind)) {
+    return input.some(function (val) {
+      return wildstring.match(stringToFind, val)
+    })
+  } else {
+    // array then.
+    if (opts.arrayVsArrayAllMustBeFound === 'any') {
+      return stringToFind.some(function (stringToFindVal) {
+        return input.some(function (val) {
+          return wildstring.match(stringToFindVal, val)
+        })
+      })
+    } else {
+      return stringToFind.every(function (stringToFindVal) {
+        return input.some(function (val) {
+          return wildstring.match(stringToFindVal, val)
+        })
+      })
+    }
+  }
 }
 
 module.exports = includesWithGlob

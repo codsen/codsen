@@ -46,21 +46,21 @@ test('0.4 - throws when second arg is not string', t => {
   })
 })
 
-test('0.5 - not throws when overloaded', t => {
-  t.notThrows(function () {
-    i(['zzz'], '1', true)
-  })
-})
-
-test('0.6 - empty array always yields false', t => {
+test('0.5 - empty array always yields false', t => {
   t.notThrows(function () {
     i([], 'zzz', false)
   })
 })
 
-test('0.7 - non-empty array turned empty because of cleaning yields false too', t => {
+test('0.6 - non-empty array turned empty because of cleaning yields false too', t => {
   t.notThrows(function () {
     i([null, null], 'zzz', false)
+  })
+})
+
+test('0.7 - throws if options is set to nonsense', t => {
+  t.throws(function () {
+    i(['aaa', 'bbb', 'ccc'], 'zzz', {arrayVsArrayAllMustBeFound: 'x'})
   })
 })
 
@@ -171,6 +171,81 @@ test('1.7 - input is not array but string', t => {
     ),
     false,
     '1.7.3')
+})
+
+// =======================================================
+// various combinations of different types including globs
+// =======================================================
+
+test('2.1 - both arrays, no wildcards', t => {
+  t.is(
+    i(
+      ['something', 'anything', 'everything'],
+      ['anything', 'zzz']
+    ),
+    true,
+    '2.1.1 - default (opts ANY)')
+  t.is(
+    i(
+      ['something', 'anything', 'everything'],
+      ['anything', 'zzz'],
+      { arrayVsArrayAllMustBeFound: 'any' }
+    ),
+    true,
+    '2.1.2 - hardcoded opts ANY')
+  t.is(
+    i(
+      ['something', 'anything', 'everything'],
+      ['anything', 'zzz'],
+      { arrayVsArrayAllMustBeFound: 'all' }
+    ),
+    false,
+    '2.1.3 - opts ALL')
+  t.is(
+    i(
+      ['something', 'anything', 'everything'],
+      ['*thing', 'zzz']
+    ),
+    true,
+    '2.1.4 - hardcoded opts ANY')
+  t.is(
+    i(
+      'something',
+      ['*thing', 'zzz']
+    ),
+    true,
+    '2.1.5 - string source, array to search, with wildcards, found')
+  t.is(
+    i(
+      'something',
+      ['thing', '*zzz']
+    ),
+    false,
+    '2.1.6 - string source, array to search, with wildcards, not found')
+  t.is(
+    i(
+      ['something', 'anything', 'everything'],
+      ['*thing', 'zzz'],
+      { arrayVsArrayAllMustBeFound: 'all' }
+    ),
+    false,
+    '2.1.7 - opts ALL vs array')
+  t.is(
+    i(
+      'something',
+      ['*thing', 'zzz'],
+      { arrayVsArrayAllMustBeFound: 'all' }
+    ),
+    false,
+    '2.1.8 - opts ALL vs string')
+  t.is(
+    i(
+      'something',
+      '*thing',
+      { arrayVsArrayAllMustBeFound: 'all' }
+    ),
+    true,
+    '2.1.9 - opts ALL string vs string')
 })
 
 // 👍
