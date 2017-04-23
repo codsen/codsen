@@ -25,8 +25,9 @@
   - [API - Input](#api---input)
   - [API - Output](#api---output)
 - [Testing](#testing)
-- [Contributing](#contributing)
+- [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `object-assign`](#difference-from-object-assign)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
