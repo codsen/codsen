@@ -33,8 +33,8 @@
   "homepage": "https://github.com/code-and-send/array-includes-with-glob#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "object-assign": "*",
-    "wildstring": "^1.0.8"
+    "matcher": "^0.1.2",
+    "object-assign": "*"
   },
   "devDependencies": {
     "ava": "*",

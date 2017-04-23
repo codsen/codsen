@@ -1,6 +1,6 @@
 'use strict'
 var clone = require('lodash.clonedeep')
-var wildstring = require('wildstring')
+var matcher = require('matcher')
 var objectAssign = require('object-assign')
 
 function includesWithGlob (originalInput, stringToFind, opts) {
@@ -54,20 +54,20 @@ function includesWithGlob (originalInput, stringToFind, opts) {
 
   if (isStr(stringToFind)) {
     return input.some(function (val) {
-      return wildstring.match(stringToFind, val)
+      return matcher.isMatch(val, stringToFind)
     })
   } else {
     // array then.
     if (opts.arrayVsArrayAllMustBeFound === 'any') {
       return stringToFind.some(function (stringToFindVal) {
         return input.some(function (val) {
-          return wildstring.match(stringToFindVal, val)
+          return matcher.isMatch(val, stringToFindVal)
         })
       })
     } else {
       return stringToFind.every(function (stringToFindVal) {
         return input.some(function (val) {
-          return wildstring.match(stringToFindVal, val)
+          return matcher.isMatch(val, stringToFindVal)
         })
       })
     }

@@ -248,4 +248,30 @@ test('2.1 - both arrays, no wildcards', t => {
     '2.1.9 - opts ALL string vs string')
 })
 
+test('2.2 - various, #1', t => {
+  t.is(
+    i(
+      'zzz',
+      ['*thing', '*zz']
+    ),
+    true,
+    '2.2.1 - two keys to match in a second arg, running on assumed default')
+  t.is(
+    i(
+      'zzz',
+      ['*thing', '*zz'],
+      { arrayVsArrayAllMustBeFound: 'any' }
+    ),
+    true,
+    '2.2.2 - two keys to match in a second arg, running on hardcoded default')
+  t.is(
+    i(
+      'zzz',
+      ['*thing', '*zz'],
+      { arrayVsArrayAllMustBeFound: 'all' }
+    ),
+    false,
+    '2.2.3 - two keys to match in a second arg, running on hardcoded default')
+})
+
 // 👍
