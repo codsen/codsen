@@ -99,7 +99,7 @@ None of the input arguments is mutated.
 Options object's key          | Value          | Default | Description
 ------------------------------|----------------|---------|-------------
 `{`                           |                |         |
-`arrayVsArrayAllMustBeFound`  | `any` or `all` | `any`   | When a source (first argument) is array, and what to look for (second argument) are both arrays, you can have the match performed two ways: `any` setting will return true if _any_ of the second argument array's elements are found in the source array. `all` setting will return `true` only if _all_ elements within the second argument are found within the source array.
+`arrayVsArrayAllMustBeFound`  | `any` or `all` | `any`   | When a source (the first argument) is array, and what to look for (the second argument) is also array, you can have the match performed two ways: `any` setting will return true if _any_ of the second argument array's elements are found in the source array. `all` setting will return `true` only if _all_ elements within the second argument are found within the source array.
 `}`                           |                |         |
 
 #### Options object examples
