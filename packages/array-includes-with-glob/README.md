@@ -152,7 +152,7 @@ Boolean  | Returns `true` if at least one `stringToFind` is found, else `false`.
 
 This library will throw an error if:
 
-* any of inputs is missing
+* any of inputs are missing
 * any of inputs are of the wrong type
 
 Also, if first input argument, a source array, is an empty array or empty string, the result will always be `false`.
