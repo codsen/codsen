@@ -70,18 +70,18 @@ includesWithGlob(['something', 'zzz', 'soothing'], 'so*ing')
 // => true (2 hits)
 ```
 
-This library will tolerate non-string values in the source array, it will skip those values.
+This library will tolerate non-string values in the source array; it will skip those values.
 
 This library is astral-character friendly, supports all Unicode characters (including emoji) and doesn't mutate the input.
 
-You can also query multiple values and request that ANY (default behaviour) or ALL (optional setting) should be found in the source, in order to yield a result "`true`". See examples [below](#options-object-examples).
+You can also query multiple values and request that ANY (default behaviour) or ALL (optional setting) should be found in the source, to yield a result "`true`". See examples [below](#options-object-examples).
 
 ## API
 
 ```js
 includesWithGlob (
-  sourceArray,   // input array of strings
-  stringToFind   // string to look for. Can contain wildcards, "*"'s,
+  source,      // input - an array of strings or a single string
+  whatToFind,  // what to look for - can contain wildcards, "*"'s, can be array of strings or a single string
   options
 )
 ```
@@ -90,11 +90,11 @@ includesWithGlob (
 
 Input argument   | Type                         | Obligatory? | Description
 -----------------|------------------------------|-------------|--------------------
-`sourceArray`    | A string or array of strings | yes         | Source string or array of strings
-`stringToFind`   | A string or array of strings | yes         | What to look for. Can contain wildcards. Can be one string or array of strings
+`source`         | A string or array of strings | yes         | Source string or array of strings
+`whatToFind`     | A string or array of strings | yes         | What to look for. Can contain wildcards. Can be one string or array of strings
 `options`        | Plain object                 | no          | Options object. See below for its API.
 
-None of the input arguments are mutated.
+None of the input arguments is mutated.
 
 Options object's key          | Value          | Default | Description
 ------------------------------|----------------|---------|-------------
@@ -120,7 +120,7 @@ console.log('res2 = ' + res2)
 
 ### Practical usage
 
-I need this library for my other libraries, when I'm working with plain objects and I want to let users to whitelist certain keys of those objects. For example, [object-merge-advanced](https://github.com/code-and-send/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
+I need this library for my other libraries when I'm working with plain objects, and I want to let users whitelist certain keys of those objects. For example, [object-merge-advanced](https://github.com/code-and-send/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
 
 ```js
 mergeAdvanced(
@@ -169,7 +169,7 @@ For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https:
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/array-includes-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/array-includes-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
 
 ## Licence
 
