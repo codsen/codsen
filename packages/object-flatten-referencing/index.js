@@ -132,8 +132,8 @@ function outer (originalInput, originalReference, opts) {
         if (
         !opts.preventDoubleWrapping ||
         (
-          (opts.wrapHeads === '' || !search(input, opts.wrapHeads).length) &&
-          (opts.wrapTails === '' || !search(input, opts.wrapTails).length)
+          (opts.wrapHeads === '' || !search(input, opts.wrapHeads.trim()).length) &&
+          (opts.wrapTails === '' || !search(input, opts.wrapTails.trim()).length)
         )
       ) {
           input = (wrap ? opts.wrapHeads : '') + input + (wrap ? opts.wrapTails : '')

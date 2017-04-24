@@ -1376,6 +1376,72 @@ test('04.01 - opts.whatToDoWhenReferenceIsMissing', function (t) {
 })
 
 // -----------------------------------------------------------------------------
+// 05. Other cases
+// -----------------------------------------------------------------------------
+
+test('05.01 - double-wrapping prevention when markers have white space', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        key1: '%%_val11.val12_%%',
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      }
+    ),
+    {
+      key1: '%%_val11.val12_%%',
+      key2: '%%_val21.val22_%%'
+    },
+    '05.01.01 - base'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '%%_val11.val12_%%', // << notice missing white space around markers
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      },
+      {
+        wrapHeads: '%%_ ', // << notice the white space around markers
+        wrapTails: ' _%%'
+      }
+    ),
+    {
+      key1: '%%_val11.val12_%%',
+      key2: '%%_ val21.val22 _%%'
+    },
+    '05.01.02 - whitespace on default heads and tails, checking double wrapping prevention'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{val11.val12}', // << notice missing white space around markers
+        key2: 'val21.val22'
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789'
+      },
+      {
+        wrapHeads: '{ ', // << notice the white space around markers
+        wrapTails: ' }'
+      }
+    ),
+    {
+      key1: '{val11.val12}', // << not { {val11.val12} }
+      key2: '{ val21.val22 }'
+    },
+    '05.01.03 - whitespace on custom heads and tails, checking double wrapping prevention'
+  )
+})
+
+// -----------------------------------------------------------------------------
 // 95. util.reclaimIntegerString
 // -----------------------------------------------------------------------------
 

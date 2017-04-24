@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.1.0 - 2017-04-20
+## [1.2.0] - 2017-04-24
+### Added
+- Made the algorithm to be even more smarter: when the value has no spaces around already existing `heads` and `tails`, for example `{{value}}`, but you want, in general, to have a space around your wrappings, you set `heads` for for example: `{{ ` with a trailing space. Previously, this would have caused double wrapping. Now, `heads` and `tails` are trimmed before search, so go crazy with the white space!
+
+## [1.1.0] - 2017-04-20
 ### Added
 - New options setting `opts.ignore` which lets you skip flattening on an array (or a single string) of keys.
 - New options setting `opts.whatToDoWhenReferenceIsMissing` which allows you to specify exactly what do you want to happen when the equivalent value in the reference (object/array/string/whatever) is falsey.
@@ -20,3 +24,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - First public release
 
 [1.1.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.0.1...v1.1.0
+[1.2.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.1.0...v1.2.0
