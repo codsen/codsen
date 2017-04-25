@@ -8,6 +8,7 @@ const search = require('str-indexes-of-plus')
 const isArr = Array.isArray
 const util = require('./util')
 const includes = require('lodash.includes')
+const matcher = require('matcher')
 
 function existy (x) { return x != null }
 function isStr (something) { return type(something) === 'string' }
@@ -36,8 +37,7 @@ function outer (originalInput, originalReference, opts) {
     var defaults = {
       wrapHeads: '%%_',
       wrapTails: '_%%',
-      dontWrapKeysStartingWith: [],
-      dontWrapKeysEndingWith: [],
+      dontWrapKeys: [],
       xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
       objectKeyAndValueJoinChar: '.',
@@ -46,8 +46,7 @@ function outer (originalInput, originalReference, opts) {
       whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
     }
     opts = objectAssign(clone(defaults), opts)
-    opts.dontWrapKeysEndingWith = util.arrayiffyString(opts.dontWrapKeysEndingWith)
-    opts.dontWrapKeysStartingWith = util.arrayiffyString(opts.dontWrapKeysStartingWith)
+    opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
     opts.ignore = util.arrayiffyString(opts.ignore)
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
 
@@ -63,14 +62,9 @@ function outer (originalInput, originalReference, opts) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true // reset it for the new key.
           }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysEndingWith.length > 0) {
-            wrap = wrap && !opts.dontWrapKeysEndingWith.some(function (elem) {
-              return key.endsWith(elem)
-            })
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeysStartingWith.length > 0) {
-            wrap = wrap && !opts.dontWrapKeysStartingWith.some(function (elem) {
-              return key.startsWith(elem)
+          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeys.length > 0) {
+            wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
+              return matcher.isMatch(key, elem)
             })
           }
 

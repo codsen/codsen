@@ -39,12 +39,12 @@ test('01.03 - throws when opts object has wrong opts.wrapTails', t => {
   })
 })
 
-test('01.04 - throws when opts object has wrong opts.dontWrapKeysEndingWith', t => {
+test('01.04 - throws when opts object has wrong opts.dontWrapKeys', t => {
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {dontWrapKeysEndingWith: 1})
+    ofr({a: 'a'}, {b: 'b'}, {dontWrapKeys: 1})
   })
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {dontWrapKeysEndingWith: false})
+    ofr({a: 'a'}, {b: 'b'}, {dontWrapKeys: false})
   })
 })
 
@@ -170,7 +170,9 @@ test('02.01 - defaults - objects, one level', function (t) {
         key1: 'Contact us',
         key2: 'Tel. 0123456789'
       },
-      { dontWrapKeysEndingWith: '', dontWrapKeysStartingWith: 'key' }
+      {
+        dontWrapKeys: 'key*'
+      }
     ),
     {
       key1: 'val11.val12',
@@ -188,7 +190,9 @@ test('02.01 - defaults - objects, one level', function (t) {
         key1: 'Contact us',
         key2: 'Tel. 0123456789'
       },
-      { dontWrapKeysEndingWith: '', dontWrapKeysStartingWith: ['key'] }
+      {
+        dontWrapKeys: ['key*']
+      }
     ),
     {
       key1: 'val11.val12',
@@ -206,13 +210,59 @@ test('02.01 - defaults - objects, one level', function (t) {
         key1: 'Contact us',
         key2: 'Tel. 0123456789'
       },
-      { dontWrapKeysEndingWith: ['1', '2', '3'], dontWrapKeysStartingWith: [] }
+      {
+        dontWrapKeys: ['*1', '*2', '*3']
+      }
     ),
     {
       key1: 'val11.val12',
       key2: 'val21.val22'
     },
     '02.01.07 - does not wrap because ends with 1 or 2'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        thekey1: 'val11.val12',
+        akey2: 'val21.val22'
+      },
+      {
+        thekey1: 'Contact us',
+        akey2: 'Tel. 0123456789'
+      },
+      {
+        dontWrapKeys: ['a*', '*1', '*3']
+      }
+    ),
+    {
+      thekey1: 'val11.val12',
+      akey2: 'val21.val22'
+    },
+    '02.01.08 - mix of various wildcards, sources are strings'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        thekey1: {
+          val11: 'val12'
+        },
+        akey2: {
+          val21: 'val22'
+        }
+      },
+      {
+        thekey1: 'Contact us',
+        akey2: 'Tel. 0123456789'
+      },
+      {
+        dontWrapKeys: ['a*', '*1', '*3']
+      }
+    ),
+    {
+      thekey1: 'val11.val12',
+      akey2: 'val21.val22'
+    },
+    '02.01.09 - mix of various wildcards, sources are plain objects'
   )
 })
 
@@ -457,7 +507,7 @@ test('02.03 - flattens an array value but doesn\'t touch other one', function (t
   )
 })
 
-test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', function (t) {
+test('02.04 - wildcards in opts.dontWrapKeys', function (t) {
   t.deepEqual(
     ofr(
       {
@@ -486,7 +536,9 @@ test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', fu
           ]
         }
       },
-      { dontWrapKeysEndingWith: '1', dontWrapKeysStartingWith: '' }
+      {
+        dontWrapKeys: '*1'
+      }
     ),
     {
       key1: 'key2.val1<br />key2.val2<br />key2.val3',
@@ -528,7 +580,9 @@ test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', fu
           ]
         }
       },
-      { dontWrapKeysEndingWith: '1', dontWrapKeysStartingWith: '' }
+      {
+        dontWrapKeys: '*1'
+      }
     ),
     {
       key1: 'key2.val1<br />key2.val2<br />key2.val3',
@@ -572,7 +626,7 @@ test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', fu
       },
       {
         xhtml: false,
-        dontWrapKeysEndingWith: '3'
+        dontWrapKeys: '*3'
       }
     ),
     {
@@ -618,7 +672,7 @@ test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', fu
       {
         wrapHeads: '%%_',
         wrapTails: '_%%',
-        dontWrapKeysStartingWith: 'key3'
+        dontWrapKeys: 'key3*'
       }
     ),
     {
@@ -665,7 +719,7 @@ test('02.04 - opts.dontWrapKeysEndingWith and opts.dontWrapKeysStartingWith', fu
         wrapHeads: '%%_',
         wrapTails: '_%%',
         xhtml: false,
-        dontWrapKeysStartingWith: 'key4'
+        dontWrapKeys: 'key4*'
       }
     ),
     {
@@ -853,7 +907,7 @@ test('02.09 - one ignore works on multiple keys', function (t) {
         key_bbbb: 'Subtitle'
       },
       {
-        dontWrapKeysStartingWith: ['key'],
+        dontWrapKeys: ['key*'],
         wrapHeads: '${',
         wrapTails: '}'
       }
@@ -877,7 +931,7 @@ test('02.09 - one ignore works on multiple keys', function (t) {
         key_bbbb: 'Subtitle'
       },
       {
-        dontWrapKeysStartingWith: ['key'],
+        dontWrapKeys: ['key*'],
         wrapHeads: '${',
         wrapTails: '}',
         whatToDoWhenReferenceIsMissing: 0
@@ -902,7 +956,7 @@ test('02.09 - one ignore works on multiple keys', function (t) {
         key_bbbb: 'Subtitle'
       },
       {
-        dontWrapKeysStartingWith: ['key'],
+        dontWrapKeys: ['key*'],
         wrapHeads: '${',
         wrapTails: '}',
         whatToDoWhenReferenceIsMissing: 2
@@ -928,7 +982,7 @@ test('02.09 - one ignore works on multiple keys', function (t) {
         wrapme: 'z'
       },
       {
-        dontWrapKeysStartingWith: ['key'],
+        dontWrapKeys: ['key*'],
         wrapHeads: '${',
         wrapTails: '}'
       }
@@ -953,7 +1007,7 @@ test('02.09 - one ignore works on multiple keys', function (t) {
         wrapme: 'c'
       },
       {
-        dontWrapKeysStartingWith: ['key'],
+        dontWrapKeys: ['key*'],
         wrapHeads: '${',
         wrapTails: '}'
       }
@@ -1569,8 +1623,7 @@ test('98.02 - util.flattenObject > simple object', function (t) {
       {
         wrapHeads: '%%_',
         wrapTails: '_%%',
-        dontWrapKeysEndingWith: [],
-        dontWrapKeysStartingWith: [],
+        dontWrapKeys: '',
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: '.'
@@ -1591,8 +1644,7 @@ test('98.03 - util.flattenObject > nested objects', function (t) {
       {
         wrapHeads: '%%_',
         wrapTails: '_%%',
-        dontWrapKeysEndingWith: [],
-        dontWrapKeysStartingWith: [],
+        dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: '.'
@@ -1622,8 +1674,7 @@ test('99.02 - util.flattenArr > simple array', function (t) {
       {
         wrapHeads: '%%_',
         wrapTails: '_%%',
-        dontWrapKeysEndingWith: [],
-        dontWrapKeysStartingWith: [],
+        dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: '.'
@@ -1639,8 +1690,7 @@ test('99.02 - util.flattenArr > simple array', function (t) {
       {
         wrapHeads: '%%_',
         wrapTails: '_%%',
-        dontWrapKeysEndingWith: [],
-        dontWrapKeysStartingWith: [],
+        dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,
         objectKeyAndValueJoinChar: '.'

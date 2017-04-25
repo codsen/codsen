@@ -19,7 +19,6 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [Usage](#usage)
 - [API](#api)
     - [plainObject](#plainobject)
     - [searchValue](#searchvalue)
@@ -64,19 +63,17 @@ but, for example, you need to make it like:
 
 This library does that.
 
-## Usage
+## API
+
+**ofr(plainObject, referenceObject\[, options])**
+
+Returns a plain object, flattened according to your supplied reference object.
 
 ```js
 const ofr = require('object-flatten-referencing')
 var res = ofr(plainObject, referenceObject, options)
 console.log('res = ' + JSON.stringify(res, null, 4))
 ```
-
-## API
-
-**ofr(plainObject, referenceObject\[, options])**
-
-Returns a plain object, flattened according to your supplied reference object.
 
 #### plainObject
 
@@ -103,8 +100,7 @@ An optional third argument - options object.
 {
   wrapHeads: '%%_',
   wrapTails: '_%%',
-  dontWrapKeysStartingWith: [],
-  dontWrapKeysEndingWith: [],
+  dontWrapKeys: [],
   xhtml: true,
   preventDoubleWrapping: true,
   objectKeyAndValueJoinChar: '.',
@@ -118,8 +114,7 @@ An optional third argument - options object.
 {                              |          |             |                   |
 `wrapHeads`                    | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
 `wrapTails`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
-`dontWrapKeysStartingWith`     | Array or String | no          | empty array      | If it's set, if key names start with this, then we won't append or prepend anything to them (or their child nodes). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example.
-`dontWrapKeysEndingWith`         | Array or String | no | empty array      | If it's set, if key names end with this, then we won't append or prepend anything to them (or their child nodes). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example.
+`dontWrapKeys`                 | Array of strings or String | no | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example. You can put wildcards (*) to match zero or more characters.
 `xhtml`                        | Boolean  | no          | `true`            | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)
 `preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeads` or `wrapTails`, don't wrap to prevent double wrapping.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
