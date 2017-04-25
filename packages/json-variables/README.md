@@ -2,7 +2,7 @@
 
 <a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Preprocessor for objects (parsed JSON) to allow object key values to reference other keys' values
+> Postprocessor for JSON to allow keys referencing keys
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -79,8 +79,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
       dataContainerIdentifierTails: '_data',
       wrapHeads: '',
       wrapTails: '',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: [],
+      dontWrapVars: [],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -94,10 +93,9 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `dataContainerIdentifierTails` | String   | no          | `_data`     | If you do put your variables in dedicated keys besides, those keys will have to be different somehow. We suggest appending a string to the key's name — tell here what string.
 `wrapHeads`                    | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the left is called "heads", please tell what string to use.
 `wrapTails`                    | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the right is called "tails", please tell what string to use.
-`dontWrapVarsStartingWith`     | Array or String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) starts with this string or any of the elements of this array, it won't be wrapped with `wrapHeads` and `wrapTails`.
-`dontWrapVarsEndingWith`     | Array or String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) ends with this string or any of the elements of this array, it won't be wrapped with `wrapHeads` and `wrapTails`.
+`dontWrapVars`                 | Array of strings OR String | no          | n/a         | If any of the variables (surrounded by `heads` and `tails`) can be matched by string(s) given here, it won't be wrapped with `wrapHeads` and `wrapTails`. You can put **wildcards** (*) to note zero or more characters.
 `preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeads` and `wrapTails`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
-`wrapGlobalFlipSwitch`         | String   | no          | yes         | Global flipswitch to turn off the variable wrapping function completely, everywhere.
+`wrapGlobalFlipSwitch`         | Boolean  | no          | `true`      | Global flipswitch to turn off the variable wrapping function completely, everywhere.
 `noSingleMarkers`              | Boolean  | no          | `false`     | Key values can be equal to `heads` or `tails`. If you don't want that, set it to `true`, the library will throw an error on those cases.
 }                              |          |             |             |
 
@@ -242,6 +240,32 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //        var1: 'value1',
 //        var3: '333333'
 //      }
+//    }
+```
+
+### Ignores with wildcards
+
+You can ignore the wrapping on any keys by supplying their name patterns in the options array, `dontWrapVars` value. It can be array or string:
+
+```js
+const jv = require('json-variables')
+var res = jv(
+  {
+    a: '%%_b_%%',
+    b: '%%_c_%%',
+    c: 'val'
+  },
+  {
+    wrapHeads: '{',
+    wrapTails: '}',
+    dontWrapVars: ['b*', 'c*']
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: 'val', <<< didn't get wrapped
+//      b: 'val', <<< also didn't get wrapped
+//      c: 'val'
 //    }
 ```
 

@@ -895,13 +895,13 @@ test('04.01 - wrap flipswitch works', function (t) {
   )
 })
 
-test('04.02 - global wrap flipswitch and dontWrapVarsStartingWith combo', function (t) {
+test('04.02 - global wrap flipswitch and dontWrapVars combo', function (t) {
   t.deepEqual(jv(
     {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: true, dontWrapVarsStartingWith: 'c' }),
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: true, dontWrapVars: 'c*' }),
     {
       a: 'val',
       b: 'val',
@@ -914,7 +914,7 @@ test('04.02 - global wrap flipswitch and dontWrapVarsStartingWith combo', functi
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: false, dontWrapVarsStartingWith: 'c' }),
+    }, { wrapHeads: '{', wrapTails: '}', wrapGlobalFlipSwitch: false, dontWrapVars: 'c*' }),
     {
       a: 'val',
       b: 'val',
@@ -924,13 +924,13 @@ test('04.02 - global wrap flipswitch and dontWrapVarsStartingWith combo', functi
   )
 })
 
-test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
+test('04.03 - opts.dontWrapVars', function (t) {
   t.deepEqual(jv(
     {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['b', 'c'] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: ['b*', 'c*'] }),
     {
       a: 'val',
       b: 'val',
@@ -943,7 +943,7 @@ test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['zzzz'] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: ['zzzz*'] }),
     {
       a: '{val}',
       b: '{val}',
@@ -956,7 +956,7 @@ test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: '' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: '' }),
     {
       a: '{val}',
       b: '{val}',
@@ -969,7 +969,7 @@ test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: [] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: [] }),
     {
       a: '{val}',
       b: '{val}',
@@ -982,7 +982,7 @@ test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
       a: '%%_b_%%',
       b: '%%_c_%%',
       c: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: 'zzzz' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: 'zzzz*' }),
     {
       a: '{val}',
       b: '{val}',
@@ -992,13 +992,13 @@ test('04.03 - opts.dontWrapVarsStartingWith', function (t) {
   )
 })
 
-test('04.04 - opts.dontWrapVarsStartingWith, real key names', function (t) {
+test('04.04 - opts.dontWrapVars, real key names', function (t) {
   t.deepEqual(jv(
     {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['sub'] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: ['sub*'] }),
     {
       title_front: 'Some text val and more text.',
       title_sub: 'val',
@@ -1011,7 +1011,7 @@ test('04.04 - opts.dontWrapVarsStartingWith, real key names', function (t) {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: 'sub' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: 'sub*' }),
     {
       title_front: 'Some text val and more text.',
       title_sub: 'val',
@@ -1024,7 +1024,7 @@ test('04.04 - opts.dontWrapVarsStartingWith, real key names', function (t) {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: '' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: '' }),
     {
       title_front: 'Some text {val} and more text.',
       title_sub: '{val}',
@@ -1034,13 +1034,13 @@ test('04.04 - opts.dontWrapVarsStartingWith, real key names', function (t) {
   )
 })
 
-test('04.05 - multiple dontWrapVarsStartingWith values', function (t) {
+test('04.05 - multiple dontWrapVars values', function (t) {
   t.deepEqual(jv(
     {
       front_title: '%%_lower_title_%%',
       lower_title: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsStartingWith: ['zzz', 'title', 'lower'] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: ['zzz*', 'title*', 'lower*'] }),
     {
       front_title: '{val}',
       lower_title: '{val}',
@@ -1060,7 +1060,7 @@ test('04.06 - one level var querying and whitelisting', function (t) {
       wrapHeads: '%%-',
       wrapTails: '-%%',
       wrapGlobalFlipSwitch: true,
-      dontWrapVarsEndingWith: 'c'
+      dontWrapVars: '*c'
     }
   ),
     {
@@ -1078,7 +1078,7 @@ test('04.06 - one level var querying and whitelisting', function (t) {
       wrapHeads: '%%-',
       wrapTails: '-%%',
       wrapGlobalFlipSwitch: false,
-      dontWrapVarsEndingWith: 'c'
+      dontWrapVars: '*c'
     }
   ),
     {
@@ -1089,13 +1089,13 @@ test('04.06 - one level var querying and whitelisting', function (t) {
   )
 })
 
-test('04.07 - opts.dontWrapVarsEndingWith, real key names', function (t) {
+test('04.07 - opts.dontWrapVars, real key names', function (t) {
   t.deepEqual(jv(
     {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: ['le'] }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: ['*le'] }),
     {
       title_front: 'Some text val and more text.',
       title_sub: 'val',
@@ -1108,7 +1108,7 @@ test('04.07 - opts.dontWrapVarsEndingWith, real key names', function (t) {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: 'le' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: '*le' }),
     {
       title_front: 'Some text val and more text.',
       title_sub: 'val',
@@ -1121,7 +1121,7 @@ test('04.07 - opts.dontWrapVarsEndingWith, real key names', function (t) {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val'
-    }, { wrapHeads: '{', wrapTails: '}', dontWrapVarsEndingWith: '' }),
+    }, { wrapHeads: '{', wrapTails: '}', dontWrapVars: '' }),
     {
       title_front: 'Some text {val} and more text.',
       title_sub: '{val}',
@@ -1185,8 +1185,7 @@ test('05.03 - arrays, whitelisting as string', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: [],
+      dontWrapVars: [],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1211,8 +1210,7 @@ test('05.03 - arrays, whitelisting as string', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: 'sub',
-      dontWrapVarsEndingWith: [],
+      dontWrapVars: 'sub*',
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1240,8 +1238,7 @@ test('05.04 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: ['subt'],
-      dontWrapVarsEndingWith: [],
+      dontWrapVars: ['subt*'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1266,8 +1263,7 @@ test('05.04 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: ['zzz', 'subt', 'subm'],
-      dontWrapVarsEndingWith: [],
+      dontWrapVars: ['zzz*', 'subt*', 'subm*'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1292,8 +1288,7 @@ test('05.04 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: ['zzz', 'le', 'ne'],
+      dontWrapVars: ['*zzz', '*le', '*ne'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1318,8 +1313,7 @@ test('05.04 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      dontWrapVars: ['*zzz', '*le', '*yyy'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1349,8 +1343,7 @@ test('05.05 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      dontWrapVars: ['*zzz', '*le', '*yyy'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1382,8 +1375,7 @@ test('05.05 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: ['zzz', 'le', 'yyy'],
+      dontWrapVars: ['*zzz', '*le', '*yyy'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1418,8 +1410,7 @@ test('05.05 - arrays, whitelisting as array', function (t) {
       dataContainerIdentifierTails: '_data',
       wrapHeads: '{',
       wrapTails: '}',
-      dontWrapVarsStartingWith: [],
-      dontWrapVarsEndingWith: ['zzz', 'yyy'],
+      dontWrapVars: ['*zzz', '*yyy'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true
     }
@@ -1455,8 +1446,7 @@ test('05.05 - arrays, whitelisting as array', function (t) {
         dataContainerIdentifierTails: '_data',
         wrapHeads: '{',
         wrapTails: '}',
-        dontWrapVarsStartingWith: [],
-        dontWrapVarsEndingWith: ['zzz', 'yyy'],
+        dontWrapVars: ['*zzz', '*yyy'],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true
       }

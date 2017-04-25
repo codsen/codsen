@@ -1,7 +1,7 @@
 {
   "name": "json-variables",
   "version": "1.2.0",
-  "description": "Objects coming from JSON can have keys referencing other keys",
+  "description": "Postprocessor for JSON to allow keys referencing keys",
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -37,6 +37,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "lodash.trim": "^4.5.1",
+    "matcher": "^0.1.2",
     "object-assign": "^4.1.1",
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^1.0.1",

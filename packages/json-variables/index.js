@@ -12,6 +12,7 @@ const spliceStr = require('splice-string')
 const util = require('./util')
 const aContainsB = util.aContainsB
 const isArr = Array.isArray
+const matcher = require('matcher')
 
 function isStr (something) { return type(something) === 'string' }
 function isObj (something) { return type(something) === 'Object' }
@@ -35,16 +36,14 @@ function jsonVariables (inputOriginal, opts) {
     dataContainerIdentifierTails: '_data',
     wrapHeads: '',
     wrapTails: '',
-    dontWrapVarsStartingWith: [],
-    dontWrapVarsEndingWith: [],
+    dontWrapVars: [],
     preventDoubleWrapping: true,
     wrapGlobalFlipSwitch: true, // global flip switch for variable wrapping after resolving
     noSingleMarkers: false // if value has only and exactly heads or tails, don't throw mismatched marker error.
   }
   opts = objectAssign(clone(defaults), opts)
 
-  opts.dontWrapVarsStartingWith = util.arrayiffyString(opts.dontWrapVarsStartingWith)
-  opts.dontWrapVarsEndingWith = util.arrayiffyString(opts.dontWrapVarsEndingWith)
+  opts.dontWrapVars = util.arrayiffyString(opts.dontWrapVars)
 
   util.checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts')
 
@@ -199,14 +198,9 @@ function jsonVariables (inputOriginal, opts) {
             wrap = true // reset it for the new key.
           }
 
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapVarsEndingWith.length > 0) {
-            wrap = wrap && !opts.dontWrapVarsEndingWith.some(function (elem) {
-              return innerVar.endsWith(elem)
-            })
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapVarsStartingWith.length > 0) {
-            wrap = wrap && !opts.dontWrapVarsStartingWith.some(function (elem) {
-              return innerVar.startsWith(elem)
+          if (opts.wrapGlobalFlipSwitch && opts.dontWrapVars.length > 0) {
+            wrap = wrap && !opts.dontWrapVars.some(function (elem) {
+              return matcher.isMatch(innerVar, elem)
             })
           }
 
