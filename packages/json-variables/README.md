@@ -24,6 +24,7 @@
     - [options](#options)
 - [Use examples](#use-examples)
   - [Data containers](#data-containers)
+  - [Ignores with wildcards](#ignores-with-wildcards)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
