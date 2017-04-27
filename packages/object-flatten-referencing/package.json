@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Flatten complex nested objects according to a reference objects",
   "main": "index.js",
   "scripts": {
