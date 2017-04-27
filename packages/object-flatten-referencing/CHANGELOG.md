@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-04-27
+### Changed
+- `opts.wrapHeads` is now `opts.wrapHeadsWith`
+- `opts.wrapTails` is now `opts.wrapTailsWith`
+
 ## [2.0.0] - 2017-04-25
 ### Changed
 - Major API change and major semver bump: `opts.dontWrapKeysStartingWith` and `opts.dontWrapKeysEndingWith` are now one key, `opts.dontWrapKeys` and the same (and better) result is achieved using wildcards (`*` symbols). Now you can have as many wildcards as you like, not only at the beginning or the ending of a string (or arrays of strings), but also anywhere in the middle too. Also you can set multiple wildcards in the same string.
@@ -30,3 +35,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.1.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.0.1...v1.1.0
 [1.2.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.1.0...v1.2.0
 [2.0.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.2.0...v2.0.0
+[3.0.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v2.0.0...v3.0.0

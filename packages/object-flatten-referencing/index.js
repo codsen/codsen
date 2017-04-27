@@ -35,8 +35,8 @@ function outer (originalInput, originalReference, opts) {
     }
 
     var defaults = {
-      wrapHeads: '%%_',
-      wrapTails: '_%%',
+      wrapHeadsWith: '%%_',
+      wrapTailsWith: '_%%',
       dontWrapKeys: [],
       xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
@@ -122,15 +122,15 @@ function outer (originalInput, originalReference, opts) {
         })
       }
     } else if (isStr(input)) {
-      if (input.length > 0 && (opts.wrapHeads || opts.wrapTails)) {
+      if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
         if (
         !opts.preventDoubleWrapping ||
         (
-          (opts.wrapHeads === '' || !search(input, opts.wrapHeads.trim()).length) &&
-          (opts.wrapTails === '' || !search(input, opts.wrapTails.trim()).length)
+          (opts.wrapHeadsWith === '' || !search(input, opts.wrapHeadsWith.trim()).length) &&
+          (opts.wrapTailsWith === '' || !search(input, opts.wrapTailsWith.trim()).length)
         )
       ) {
-          input = (wrap ? opts.wrapHeads : '') + input + (wrap ? opts.wrapTails : '')
+          input = (wrap ? opts.wrapHeadsWith : '') + input + (wrap ? opts.wrapTailsWith : '')
         }
       }
     }

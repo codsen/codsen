@@ -21,21 +21,21 @@ test('01.01 - throws when inputs are missing/wrong', t => {
   })
 })
 
-test('01.02 - throws when opts object has wrong opts.wrapHeads', t => {
+test('01.02 - throws when opts object has wrong opts.wrapHeadsWith', t => {
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {wrapHeads: 1})
+    ofr({a: 'a'}, {b: 'b'}, {wrapHeadsWith: 1})
   })
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {wrapHeads: false})
+    ofr({a: 'a'}, {b: 'b'}, {wrapHeadsWith: false})
   })
 })
 
-test('01.03 - throws when opts object has wrong opts.wrapTails', t => {
+test('01.03 - throws when opts object has wrong opts.wrapTailsWith', t => {
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {wrapTails: 1})
+    ofr({a: 'a'}, {b: 'b'}, {wrapTailsWith: 1})
   })
   t.throws(function () {
-    ofr({a: 'a'}, {b: 'b'}, {wrapTails: false})
+    ofr({a: 'a'}, {b: 'b'}, {wrapTailsWith: false})
   })
 })
 
@@ -108,8 +108,8 @@ test('02.01 - defaults - objects, one level', function (t) {
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '',
-        wrapTails: ''
+        wrapHeadsWith: '',
+        wrapTailsWith: ''
       }
     ),
     {
@@ -129,8 +129,8 @@ test('02.01 - defaults - objects, one level', function (t) {
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '{',
-        wrapTails: ''
+        wrapHeadsWith: '{',
+        wrapTailsWith: ''
       }
     ),
     {
@@ -150,8 +150,8 @@ test('02.01 - defaults - objects, one level', function (t) {
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '',
-        wrapTails: '}'
+        wrapHeadsWith: '',
+        wrapTailsWith: '}'
       }
     ),
     {
@@ -295,8 +295,8 @@ test('02.02 - opts.preventDoubleWrapping', function (t) {
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '{',
-        wrapTails: '}'
+        wrapHeadsWith: '{',
+        wrapTailsWith: '}'
       }
     ),
     {
@@ -316,8 +316,8 @@ test('02.02 - opts.preventDoubleWrapping', function (t) {
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '%%',
-        wrapTails: '%%'
+        wrapHeadsWith: '%%',
+        wrapTailsWith: '%%'
       }
     ),
     {
@@ -443,8 +443,8 @@ test('02.03 - flattens an array value but doesn\'t touch other one', function (t
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%'
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%'
       }
     ),
     {
@@ -488,8 +488,8 @@ test('02.03 - flattens an array value but doesn\'t touch other one', function (t
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         xhtml: false
       }
     ),
@@ -670,8 +670,8 @@ test('02.04 - wildcards in opts.dontWrapKeys', function (t) {
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         dontWrapKeys: 'key3*'
       }
     ),
@@ -716,8 +716,8 @@ test('02.04 - wildcards in opts.dontWrapKeys', function (t) {
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         xhtml: false,
         dontWrapKeys: 'key4*'
       }
@@ -908,8 +908,8 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       },
       {
         dontWrapKeys: ['key*'],
-        wrapHeads: '${',
-        wrapTails: '}'
+        wrapHeadsWith: '${',
+        wrapTailsWith: '}'
       }
     ),
     {
@@ -932,8 +932,8 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       },
       {
         dontWrapKeys: ['key*'],
-        wrapHeads: '${',
-        wrapTails: '}',
+        wrapHeadsWith: '${',
+        wrapTailsWith: '}',
         whatToDoWhenReferenceIsMissing: 0
       }
     ),
@@ -957,8 +957,8 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       },
       {
         dontWrapKeys: ['key*'],
-        wrapHeads: '${',
-        wrapTails: '}',
+        wrapHeadsWith: '${',
+        wrapTailsWith: '}',
         whatToDoWhenReferenceIsMissing: 2
       }
     ),
@@ -983,8 +983,8 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       },
       {
         dontWrapKeys: ['key*'],
-        wrapHeads: '${',
-        wrapTails: '}'
+        wrapHeadsWith: '${',
+        wrapTailsWith: '}'
       }
     ),
     {
@@ -1008,8 +1008,8 @@ test('02.09 - one ignore works on multiple keys', function (t) {
       },
       {
         dontWrapKeys: ['key*'],
-        wrapHeads: '${',
-        wrapTails: '}'
+        wrapHeadsWith: '${',
+        wrapTailsWith: '}'
       }
     ),
     {
@@ -1156,8 +1156,8 @@ test('03.02 - flattens an array value but doesn\'t touch other one', function (t
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%'
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%'
       }
     ),
     {
@@ -1251,8 +1251,8 @@ test('03.02 - flattens an array value but doesn\'t touch other one', function (t
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         ignore: 'key1'
       }
     ),
@@ -1311,8 +1311,8 @@ test('03.02 - flattens an array value but doesn\'t touch other one', function (t
         }
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         ignore: 'key0'
       }
     ),
@@ -1462,8 +1462,8 @@ test('05.01 - double-wrapping prevention when markers have white space', functio
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '%%_ ', // << notice the white space around markers
-        wrapTails: ' _%%'
+        wrapHeadsWith: '%%_ ', // << notice the white space around markers
+        wrapTailsWith: ' _%%'
       }
     ),
     {
@@ -1483,8 +1483,8 @@ test('05.01 - double-wrapping prevention when markers have white space', functio
         key2: 'Tel. 0123456789'
       },
       {
-        wrapHeads: '{ ', // << notice the white space around markers
-        wrapTails: ' }'
+        wrapHeadsWith: '{ ', // << notice the white space around markers
+        wrapTailsWith: ' }'
       }
     ),
     {
@@ -1621,8 +1621,8 @@ test('98.02 - util.flattenObject > simple object', function (t) {
         c: 'd'
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         dontWrapKeys: '',
         xhtml: true,
         preventDoubleWrapping: true,
@@ -1642,8 +1642,8 @@ test('98.03 - util.flattenObject > nested objects', function (t) {
         f: {g: 'h', e: 'j'}
       },
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,
@@ -1672,8 +1672,8 @@ test('99.02 - util.flattenArr > simple array', function (t) {
     flattenArr(
       ['a', 'b', 'c'],
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,
@@ -1688,8 +1688,8 @@ test('99.02 - util.flattenArr > simple array', function (t) {
     flattenArr(
       ['a', 'b', 'c'],
       {
-        wrapHeads: '%%_',
-        wrapTails: '_%%',
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
         dontWrapKeys: [],
         xhtml: true,
         preventDoubleWrapping: true,

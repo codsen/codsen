@@ -51,11 +51,11 @@ function flattenArr (arrOrig, opts, wrap) {
   }
   var arr = clone(arrOrig)
 
-  var res = (wrap ? opts.wrapHeads : '') + arr[0] + (wrap ? opts.wrapTails : '')
+  var res = (wrap ? opts.wrapHeadsWith : '') + arr[0] + (wrap ? opts.wrapTailsWith : '')
 
   if (arr.length > 1) {
     for (var i = 1, len = arr.length; i < len; i++) {
-      res += '<br' + (opts.xhtml ? ' /' : '') + '>' + (wrap ? opts.wrapHeads : '') + arr[i] + (wrap ? opts.wrapTails : '')
+      res += '<br' + (opts.xhtml ? ' /' : '') + '>' + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
     }
   }
   return res

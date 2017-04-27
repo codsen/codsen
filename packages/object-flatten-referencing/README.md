@@ -98,8 +98,8 @@ An optional third argument - options object.
 
 ```js
 {
-  wrapHeads: '%%_',
-  wrapTails: '_%%',
+  wrapHeadsWith: '%%_',
+  wrapTailsWith: '_%%',
   dontWrapKeys: [],
   xhtml: true,
   preventDoubleWrapping: true,
@@ -112,11 +112,11 @@ An optional third argument - options object.
 `options` object's key         | Type     | Obligatory? | Default           | Description
 -------------------------------|----------|-------------|-------------------|----------------------
 {                              |          |             |                   |
-`wrapHeads`                    | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
-`wrapTails`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
+`wrapHeadsWith`                    | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
+`wrapTailsWith`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
 `dontWrapKeys`                 | Array of strings or String | no | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example. You can put wildcards (*) to match zero or more characters.
 `xhtml`                        | Boolean  | no          | `true`            | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)
-`preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeads` or `wrapTails`, don't wrap to prevent double wrapping.
+`preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeadsWith` or `wrapTailsWith`, don't wrap to prevent double wrapping.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
 `wrapGlobalFlipSwitch`         | Boolean  | no          | `true`            | You can turn off the wrapping function completely using this.
 `ignore`                       | Array or String | no   | empty array       | Don't apply any flattening to any of these keys. Naturally, don't wrap them with anything either.
@@ -217,8 +217,8 @@ mergedDataFile = ofr(
   mergedDataFile,
   reference,
   {
-    wrapHeads: '${',
-    wrapTails: '}'
+    wrapHeadsWith: '${',
+    wrapTailsWith: '}'
   }
 )
 console.log(JSON.stringify(mergedDataFile, null, 4))
