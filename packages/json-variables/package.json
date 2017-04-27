@@ -38,6 +38,7 @@
     "lodash.includes": "^4.3.0",
     "lodash.trim": "^4.5.1",
     "matcher": "^0.1.2",
+    "num-sort": "^1.0.0",
     "object-assign": "^4.1.1",
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^1.0.1",

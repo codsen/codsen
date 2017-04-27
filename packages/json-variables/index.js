@@ -9,10 +9,12 @@ const monkey = require('ast-monkey')
 const search = require('str-indexes-of-plus')
 const strLen = require('string-length')
 const spliceStr = require('splice-string')
+const slice = require('string-slice')
 const util = require('./util')
 const aContainsB = util.aContainsB
 const isArr = Array.isArray
 const matcher = require('matcher')
+const numSort = require('num-sort')
 
 function isStr (something) { return type(something) === 'string' }
 function isObj (something) { return type(something) === 'Object' }
@@ -32,13 +34,15 @@ function jsonVariables (inputOriginal, opts) {
   var defaults = {
     heads: '%%_',
     tails: '_%%',
+    headsNoWrap: '%%-',
+    tailsNoWrap: '-%%',
     lookForDataContainers: true,
     dataContainerIdentifierTails: '_data',
-    wrapHeads: '',
-    wrapTails: '',
+    wrapHeadsWith: '',
+    wrapTailsWith: '',
     dontWrapVars: [],
     preventDoubleWrapping: true,
-    wrapGlobalFlipSwitch: true, // global flip switch for variable wrapping after resolving
+    wrapGlobalFlipSwitch: true, // is wrap function on?
     noSingleMarkers: false // if value has only and exactly heads or tails, don't throw mismatched marker error.
   }
   opts = objectAssign(clone(defaults), opts)
@@ -59,55 +63,101 @@ function jsonVariables (inputOriginal, opts) {
   if (opts.heads === opts.tails) {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_06] opts.heads and opts.tails can\'t be equal!')
   }
+  if (opts.heads === opts.headsNoWrap) {
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_07] opts.heads and opts.headsNoWrap can\'t be equal!')
+  }
+  if (opts.tails === opts.tailsNoWrap) {
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_08] opts.tails and opts.tailsNoWrap can\'t be equal!')
+  }
+  if (opts.headsNoWrap === '') {
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_09] opts.headsNoWrap is empty!')
+  }
+  if (opts.tailsNoWrap === '') {
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_10] opts.tailsNoWrap is empty!')
+  }
+  if (opts.headsNoWrap === opts.tailsNoWrap) {
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_11] opts.headsNoWrap and opts.tailsNoWrap can\'t be equal!')
+  }
 
   var foundHeads, foundTails
-  var current, currentObjKey
+  var current, currentObjKey, wrapLeft, wrapRight, offset
   var wrap = opts.wrapGlobalFlipSwitch
 
   input = monkey.traverse(input, function (key, val, innerObj) {
-    if (existy(val) && (aContainsB(key, opts.heads) || aContainsB(key, opts.tails))) {
-      throw new Error('json-variables/jsonVariables(): [THROW_ID_07] Object keys can\'t contain variables!\nPlease check following key: ' + key)
+    if (
+      existy(val) && (
+        aContainsB(key, opts.heads) ||
+        aContainsB(key, opts.tails) ||
+        aContainsB(key, opts.headsNoWrap) ||
+        aContainsB(key, opts.tailsNoWrap)
+      )
+    ) {
+      throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Object keys can\'t contain variables!\nPlease check following key: ' + key)
     }
     // If it's an array, val will not exist, only key.
     // On objects, we'll use val instead:
     current = existy(val) ? val : key
     currentObjKey = existy(val) ? key : null
 
-    // if current branch piece that monkey has just brought, "current" contains no variable
+    // if current branch's piece that monkey has just brought, "current" contains no variable
     // placeholders, instantly return it back, skipping all the action.
 
-    if (!isStr(current) || (search(current, opts.heads).length === 0)) {
+    if (
+      !isStr(current) ||
+      (
+        (search(current, opts.heads).length === 0) &&
+        (search(current, opts.headsNoWrap).length === 0)
+      )
+    ) {
       return current
     }
 
-    // ((current !== opts.heads) && (current !== opts.tails)) ||
     if (
-      (search(current, opts.heads).length !== search(current, opts.tails).length) &&
+      (
+        (search(current, opts.heads).length + search(current, opts.headsNoWrap).length) !==
+        (search(current, opts.tails).length + search(current, opts.tailsNoWrap).length)
+      ) &&
       (
         (opts.noSingleMarkers) ||
-        (!opts.noSingleMarkers && (current !== opts.heads) && (current !== opts.tails))
+        (
+          !opts.noSingleMarkers &&
+          (current !== opts.heads) &&
+          (current !== opts.tails) &&
+          (current !== opts.headsNoWrap) &&
+          (current !== opts.tailsNoWrap)
+        )
       )
     ) {
-      throw new Error('json-variables/jsonVariables(): [THROW_ID_08] Mismatching opening and closing markers!\nPlease check following key: "' + key + '", we have ' + search(current, opts.heads).length + ' head markers and ' + search(current, opts.tails).length + ' tail markers.')
+      throw new Error('json-variables/jsonVariables(): [THROW_ID_13] Mismatching opening and closing markers!\nPlease check following key: "' + key + '", we have ' + search(current, opts.heads).length + ' head markers (' + opts.heads + ') and ' + search(current, opts.tails).length + ' tail markers (' + opts.tails + ').')
     }
 
-    var innerVar // first extracted variable, without heads and tails
+    var innerVar // first extracted variable's key, without heads and tails
     var patience = false // when it reaches zero recursion error is thrown. When off, it's falsey.
     var recursionLoopSize // how many indexes are between the element to-be-added to innerPath[] and the index of the last occurence of the same value in innerPath[].
     // For example, on "abcda", the recursionLoopSize = 4 - 0 = 4.
     var innerPath = [] // recording path to identify recursions
     var loopKillSwitch = true
 
-    if (!opts.noSingleMarkers && ((current === opts.heads) || (current === opts.tails))) {
+    if (!opts.noSingleMarkers && (
+      (current === opts.heads) ||
+      (current === opts.tails) ||
+      (current === opts.headsNoWrap) ||
+      (current === opts.tailsNoWrap)
+    )) {
       loopKillSwitch = false
     }
 
+    var dontWrapTheseVarsStartingWithIndexes = []
+
     // loop will be skipped completely with the help of "loopKillSwitch" if opts.noSingleMarkers=false and "current" has the value of "opts.heads" or "opts.tails"
+    // its purpose is that when we allow heads or tails to be present in the content, among values, they can throw off the whole system because they will be unmatched!
+    // we are not talking about cases like: "some text %%_variableName_%% some text", but only where the whole object's value is equal to heads or tails: "%%_" or "_%%".
+    // The above is relevant in cases when all preferences are kept in the same JSON and heads/tails are set from the same file they will later process.
     if ((!opts.noSingleMarkers && loopKillSwitch) || opts.noSingleMarkers) {
-      while (search(current, opts.heads).length !== 0) {
-        foundHeads = search(current, opts.heads)
-        foundTails = search(current, opts.tails)
-        innerVar = util.extractVarsFromString(current, opts.heads, opts.tails)[0]
+      while ((search(current, opts.heads).length !== 0) || (search(current, opts.headsNoWrap).length !== 0)) {
+        foundHeads = search(current, opts.heads).concat(search(current, opts.headsNoWrap)).sort(numSort.asc)
+        foundTails = search(current, opts.tails).concat(search(current, opts.tailsNoWrap)).sort(numSort.asc)
+        innerVar = util.extractVarsFromString(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0]
 
         // catch recursion after one full cycle
         if (includes(innerPath, innerVar)) {
@@ -121,7 +171,7 @@ function jsonVariables (inputOriginal, opts) {
               patience--
             }
             if (patience < 1) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_09] Recursion detected!\nPlease check following key: ' + current)
+              throw new Error('json-variables/jsonVariables(): [THROW_ID_14] Recursion detected!\nPlease check following key: ' + current)
             }
           }
         } else {
@@ -130,7 +180,7 @@ function jsonVariables (inputOriginal, opts) {
         innerPath.push(innerVar)
 
         if (innerVar === currentObjKey) {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_10] Recursion detected!\nPlease check the following key: ' + currentObjKey || current)
+          throw new Error('json-variables/jsonVariables(): [THROW_ID_15] Recursion detected!\nPlease check the following key: ' + currentObjKey || current)
         }
         var case1, case2, case3
         if (input.hasOwnProperty(innerVar)) {
@@ -141,14 +191,14 @@ function jsonVariables (inputOriginal, opts) {
             if (isArr(replacement)) {
               replacement = replacement.join('')
             } else {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_11] The value for our variable was given not a string but ' + type(replacement))
+              throw new Error('json-variables/jsonVariables(): [THROW_ID_16] The value for our variable was given not a string but ' + type(replacement))
             }
           }
           // from here consider "current" to be of string format
-          if (includes(util.extractVarsFromString(replacement), currentObjKey)) {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey)
-          } else if (includes(util.extractVarsFromString(replacement), innerVar)) {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_13] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar)
+          if (includes(util.extractVarsFromString(replacement, opts.heads, opts.tails), currentObjKey)) {
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_17] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey)
+          } else if (includes(util.extractVarsFromString(replacement, opts.heads, opts.tails), innerVar)) {
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_18] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar)
           }
         } else if (opts.lookForDataContainers) {
           if (
@@ -183,20 +233,23 @@ function jsonVariables (inputOriginal, opts) {
                 }
               })
               if (!replacement) {
-                throw new Error('json-variables/jsonVariables(): [THROW_ID_14] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input')
+                throw new Error('json-variables/jsonVariables(): [THROW_ID_19] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input')
               }
             }
           } else {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_16] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input')
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_20] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input. We wanted to resolve: ' + current + (existy(key) ? (' coming from key: ' + key) : ''))
           }
         } else {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_17] Required key ' + innerVar + ' is missing and you turned off the feature to search for key containing data (opts.lookForDataContainers=false). Now the value is missing and we\'re in trouble.')
+          throw new Error('json-variables/jsonVariables(): [THROW_ID_21] Required key ' + innerVar + ' is missing and you turned off the feature to search for key containing data (opts.lookForDataContainers=false). Now the value is missing and we\'re in trouble.')
         }
 
         if (case1 || case2 || case3) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true // reset it for the new key.
           }
+          // more resets:
+          wrapLeft = true
+          wrapRight = true
 
           if (opts.wrapGlobalFlipSwitch && opts.dontWrapVars.length > 0) {
             wrap = wrap && !opts.dontWrapVars.some(function (elem) {
@@ -204,20 +257,57 @@ function jsonVariables (inputOriginal, opts) {
             })
           }
 
+          // check if current variable's marker is opts.headsNoWrap (default is "%%-"). If so, don't wrap it.
+          if (util.aStartsWithB(spliceStr(current, 0, foundHeads[0]), opts.headsNoWrap)) {
+            wrapLeft = false
+          }
+
+          // check if current variable's marker is opts.headsNoWrap (default is "%%-"). If so, don't wrap it.
+          if (util.aStartsWithB(slice(current, foundTails[0]), opts.tailsNoWrap)) {
+            wrapRight = false
+          }
+
+          if (!wrapLeft && !wrapRight) {
+            dontWrapTheseVarsStartingWithIndexes.push([foundHeads[0], foundTails[0]])
+          } else if (!wrapLeft && wrapRight) {
+            dontWrapTheseVarsStartingWithIndexes.push([foundHeads[0], null])
+          } else if (wrapLeft && !wrapRight) {
+            dontWrapTheseVarsStartingWithIndexes.push([null, foundTails[0]])
+          }
+
+          if (dontWrapTheseVarsStartingWithIndexes.length > 0) {
+            dontWrapTheseVarsStartingWithIndexes.forEach(function (el) {
+              if (el[0] === foundHeads[0]) {
+                wrapLeft = false
+              }
+              if (el[1] === foundTails[0]) {
+                wrapRight = false
+              }
+            })
+          }
+
+          // calculating what to replace the variable with (is it wrapped or not)
           if (
             opts.wrapGlobalFlipSwitch &&
             wrap &&
             (!opts.preventDoubleWrapping ||
               (
-                (opts.wrapHeads === '' || search(replacement, opts.wrapHeads).length === 0) &&
-                (opts.wrapTails === '' || search(replacement, opts.wrapTails).length === 0) &&
+                (opts.wrapHeadsWith === '' || search(replacement, opts.wrapHeadsWith).length === 0) &&
+                (opts.wrapTailsWith === '' || search(replacement, opts.wrapTailsWith).length === 0) &&
                 (search(replacement, opts.heads).length === 0) &&
                 (search(replacement, opts.tails).length === 0)
               )
             )
           ) {
-            replacement = opts.wrapHeads + replacement + opts.wrapTails
+            replacement = (wrapLeft ? opts.wrapHeadsWith : '') + replacement + (wrapRight ? opts.wrapTailsWith : '')
           }
+
+          // offset fixes
+          var extr = util.extractVarsFromString(replacement, opts.heads, opts.tails)[0] || replacement
+          offset = extr.length - innerVar.length
+          dontWrapTheseVarsStartingWithIndexes = util.fixOffset(dontWrapTheseVarsStartingWithIndexes, foundHeads[0], offset)
+
+          // replacing variable with the value
           current = spliceStr(
             current,
             foundHeads[0],
@@ -227,7 +317,6 @@ function jsonVariables (inputOriginal, opts) {
         }
       }
     }
-
     return current
   })
   return input

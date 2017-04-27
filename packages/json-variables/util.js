@@ -6,14 +6,26 @@ const search = require('str-indexes-of-plus')
 const slice = require('string-slice')
 const strLen = require('string-length')
 const trim = require('lodash.trim')
+const includes = require('lodash.includes')
+const clone = require('lodash.clonedeep')
+const numSort = require('num-sort')
+const monkey = require('ast-monkey')
 
 function existy (x) { return x != null }
+function truthy (x) { return (x !== false) && existy(x) }
 
 function aContainsB (a, b) {
   if (arguments.length < 2) {
     return false
   }
   return String(a).indexOf(String(b)) >= 0
+}
+
+function aStartsWithB (a, b) {
+  if (!truthy(a) || !truthy(b)) {
+    return false
+  }
+  return a.indexOf(b) === 0
 }
 
 function checkTypes (obj, ref, msg, variable) {
@@ -42,44 +54,62 @@ function findLastInArray (array, val) {
 
 // since v.1.1 str can be equal to heads or tails - there won't be any results though (result will be empty array)
 function extractVarsFromString (str, heads, tails) {
-  heads = heads || '%%_'
-  tails = tails || '_%%'
   if (arguments.length === 0) {
     throw new Error('json-variables/util.js/extractVarsFromString(): inputs missing!')
   }
-  if (typeof str !== 'string') {
+  if (type(str) !== 'string') {
     throw new Error('json-variables/util.js/extractVarsFromString(): first arg must be string-type. Currently it\'s: ' + type(str))
   }
-  if (typeof heads !== 'string') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): second arg must be string-type. Currently it\'s: ' + type(heads))
+  if (heads === undefined) {
+    heads = ['%%_']
   }
-  if (typeof tails !== 'string') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be string-type. Currently it\'s: ' + type(tails))
+  if (tails === undefined) {
+    tails = ['_%%']
   }
-  if ((str === heads) || (str === tails)) {
+  if (type(heads) !== 'string' && type(heads) !== 'Array') {
+    throw new Error('json-variables/util.js/extractVarsFromString(): second arg must be a string or an array of strings. Currently it\'s: ' + type(heads))
+  }
+  if (type(tails) !== 'string' && type(tails) !== 'Array') {
+    throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be a string or an array of strings. Currently it\'s: ' + type(tails))
+  }
+  heads = arrayiffyString(clone(heads))
+  tails = arrayiffyString(clone(tails))
+  if (includes(heads, str) || includes(tails, str)) {
     return []
   }
   var res = []
   if (str.length === 0) {
     return res
   }
+  // var foundHeads = search(str, heads)
+  // var foundTails = search(str, tails)
+  var foundHeads = heads.reduce(function (acc, val) {
+    return acc.concat(search(str, val))
+  }, []).sort(numSort.asc)
 
-  var foundHeads = search(str, heads)
-  var foundTails = search(str, tails)
+  var foundTails = tails.reduce(function (acc, val) {
+    return acc.concat(search(str, val))
+  }, []).sort(numSort.asc)
 
-  if ((foundHeads.length !== foundTails.length) && (str !== heads) && (str !== tails)) {
+  if ((foundHeads.length !== foundTails.length) && !includes(heads, str) && !includes(tails, str)) {
     throw new Error('json-variables/util.js/extractVarsFromString(): Mismatching heads and tails in the input:' + str)
   }
 
-  var to, from
+  var to, from, currentHeadLength
   for (var i = 0, len = foundHeads.length; i < len; i++) {
-    from = foundHeads[i] + strLen(heads)
+    heads.forEach(function (el) {
+      if (aStartsWithB(slice(str, foundHeads[i]), el)) {
+        currentHeadLength = strLen(el)
+      }
+    })
+    from = foundHeads[i] + currentHeadLength
     to = foundTails[i]
     res.push(trim(slice(str, from, to)))
   }
   return res
 }
 
+// If a string is given, put it into an array. Bypass everything else.
 function arrayiffyString (something) {
   if (type(something) === 'string') {
     if (something.length > 0) {
@@ -91,10 +121,31 @@ function arrayiffyString (something) {
   return something
 }
 
+// accepts array, where elements are arrays, containing integers or null.
+// for example:
+// [ [1, 3], [5, null], [null, 16] ]
+//
+// it's for internal use, so there is no input type validation
+function fixOffset (whatever, position, amount) {
+  whatever = monkey.traverse(whatever, function (key, val, innerObj) {
+    var current = monkey.existy(val) ? val : key
+    if ((val === null) && (typeof key === 'number')) {
+      // console.log('key=' + key)
+      if (existy(amount) && (amount !== 0) && key > position) {
+        return key + amount
+      }
+    }
+    return current
+  })
+  return whatever
+}
+
 module.exports = {
   aContainsB: aContainsB,
+  aStartsWithB: aStartsWithB,
   extractVarsFromString: extractVarsFromString,
   findLastInArray: findLastInArray,
   checkTypes: checkTypes,
-  arrayiffyString: arrayiffyString
+  arrayiffyString: arrayiffyString,
+  fixOffset: fixOffset
 }

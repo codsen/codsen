@@ -4,9 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-04-27
+### Added
+- `opts.headsNoWrap` (default `%%-`) & `opts.tailsNoWrap` (default `-%%`). When the same string has multiple occasions of a variable and we want some variables to be wrapped but some not it was previously impossible. Wrapping ignores were global. Now not. I came with an idea to allow different (customiseable) `heads` and `tails` which prevent wrapping on the variable it marks.
+### Changed
+- `opts.wrapHeads` is now `opts.wrapHeadsWith`
+- `opts.wrapTails` is now `opts.wrapTailsWith`
+
 ## [2.0.0] - 2017-04-25
 ### Changed
-- Breaking changes & major semver version bump: `opts.dontWrapVarsStartingWith` and `opts.dontWrapVarsEndingWith` merged into one and allow wildcards now. It's way more powerful since you can _glob_ not only the starting/ending pieces of string but _anything within it_. You can put a wildcard in the middle now or multiple wildcards!
+- Breaking changes & major semver version bump: `opts.dontWrapVarsStartingWith` and `opts.dontWrapVarsEndingWith` merged into one and allow wildcards now. It's way more powerful since you can _glob_ not only the starting/ending pieces of string but _anything within it_. You can put a wildcard in the middle now or even multiple wildcards!
 
 ## [1.2.0] - 2017-04-20
 ### New
@@ -26,3 +33,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.1.0]: https://github.com/code-and-send/json-variables/compare/v1.0.1...v1.1.0
 [1.2.0]: https://github.com/code-and-send/json-variables/compare/v1.1.0...v1.2.0
 [2.0.0]: https://github.com/code-and-send/json-variables/compare/v1.2.0...v2.0.0
+[3.0.0]: https://github.com/code-and-send/json-variables/compare/v2.0.0...v3.0.0
