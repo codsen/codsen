@@ -43,7 +43,13 @@ $ npm install --save ast-monkey
 
 ## Idea
 
-Working with parsed HTML AST trees is hard when you want to go "up" the branches because all "AST-walking" algorithms rely on recursion and walk just "down", not "up". `ast-monkey`'s primary purpose is to help in those cases when you want to go _up the branches_.
+The main purpose of this library is to do operations on parsed HTML, but more and more I'm [using](#traverse) it everywhere else where I have nested arrays and/or plain objects.
+
+Working with parsed HTML (AST trees) is hard when you want to go "up" the branches because "AST-walking" algorithms usually just go through all the nodes, from the first one to the last one.
+
+`ast-monkey`'s primary purpose is to help in those cases when you want to go _up the branches_ — to be able to query what is the current node's parent (and optionally all the way up).
+
+`ast-monkey`'s secondary purpose is to give us a reliable, tested [traversal function](#traverse), so you don't have to write yours each time. I took the idea from PostHTML traversal but rewrote it adding more powerful features (such as reporting the current depth in the AST).
 
 `ast-monkey` algorithm assigns indexes to every traversed node so that you can visit it again. Also, [.find()](#find) will record the "bread crumb"-style indexes path to each found node. This, combined with [.get()](#get) function allows you to traverse the tree "up", from the found child node up all the way until its topmost parent node is reached.
 
@@ -77,7 +83,7 @@ Either `opts.key` or `opts.val` or both must be present. If both are missing, `a
 
 **Output**
 
-Output will be an array, comprising of zero or more plain objects in the following format:
+The output will be an array, comprising of zero or more plain objects in the following format:
 
 Object's key     | Type             | Description
 -----------------|------------------|-------------
@@ -403,7 +409,7 @@ Options object's key  | Type             | Obligatory?                  | Descri
 `val`                 | Whatever         | at least one, `key` or `val` | All object key/value pairs having this value will be selected for deletion
 }                     |                  |                              |
 
-If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match, otherwise key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
+If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match; otherwise, key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
 
 **Output**
 
@@ -454,7 +460,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    ]
 ```
 
-In practice, it's handy when you want to simplify the data objects. For example, all my email templates have content separated from the template layout. Content sits in `index.json` file. For dev purposes, I want to show, let's say two products in the shopping basket listing. However, in production build, I want to have only one item, but have it sprinkled with back-end code (loop logic and so on). This means, I have to take data object meant for dev build, and flatten all arrays in the data, so they contain only the first element. `ast-monkey` comes to help.
+In practice, it's handy when you want to simplify the data objects. For example, all my email templates have content separated from the template layout. Content sits in `index.json` file. For dev purposes, I want to show, let's say two products in the shopping basket listing. However, in a production build, I want to have only one item, but have it sprinkled with back-end code (loop logic and so on). This means, I have to take data object meant for a dev build, and flatten all arrays in the data, so they contain only the first element. `ast-monkey` comes to help.
 
 ---
 
@@ -472,7 +478,7 @@ Output           | Type             | Description
 
 ### .traverse()
 
-This one is a bit advanced and more risky in wrong hands.
+This one is a bit advanced and riskier in wrong hands.
 
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 
@@ -504,10 +510,10 @@ By the way, the one-liner `existy()` is taken from Michael Fogus book "Functiona
 
 #### innerObj in the callback
 
-Currently it gives you two pieces of information:
+Currently, it gives you two pieces of information:
 
 * Current depth where you are in the AST, `innerObj.depth`. "Root" is `0`.
-* The topmost parent key's name, which is available on all its children, `innerObj.topmostKey`.
+* The topmost parent key's name, which is available for all its children, `innerObj.topmostKey`.
 
 You can access it just like `key` or `val`. Try `console.log`ing its contents inside `monkey.traverse()`:
 
@@ -528,6 +534,10 @@ Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://git
 All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+
+## The name of this library
+
+HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**.
 
 ## Licence
 
