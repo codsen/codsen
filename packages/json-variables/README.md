@@ -41,7 +41,7 @@ $ npm i -S json-variables
 
 ## Idea
 
-Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This is a simple preprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
+Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This library is a simple postprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
 
 ```js
 // IN:
@@ -98,15 +98,15 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 {                              |          |             |             |
 `heads`                        | String   | no          | `%%_`       | How do you want to mark the beginning of a variable?
 `tails`                        | String   | no          | `_%%`       | How do you want to mark the ending of a variable?
-`headsNoWrap`                  | String   | no          | `%%-`       | How do you want to mark the beginning of a variable, which you definitely don't want wrapped?
-`tailsNoWrap`                  | String   | no          | `-%%`       | How do you want to mark the ending of a variable, which you definitely don't want wrapped?
+`headsNoWrap`                  | String   | no          | `%%-`       | How do you want to mark the beginning of a variable, which you definitely don't want to be wrapped?
+`tailsNoWrap`                  | String   | no          | `-%%`       | How do you want to mark the ending of a variable, which you definitely don't want to be wrapped?
 `lookForDataContainers`        | Boolean  | no          | `true`      | You can put a separate dedicated key, named similarly, where the values for variables are placed.
 `dataContainerIdentifierTails` | String   | no          | `_data`     | If you do put your variables in dedicated keys besides, those keys will have to be different somehow. We suggest appending a string to the key's name — tell here what string.
 `wrapHeadsWith`                | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the left is called "heads", please tell what string to use.
 `wrapTailsWith`                | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the right is called "tails", please tell what string to use.
 `dontWrapVars`                | Array of strings OR String | no | n/a | If any of the variables (surrounded by `heads` and `tails`) can be matched by string(s) given here, it won't be wrapped with `wrapHeadsWith` and `wrapTailsWith`. You can put **wildcards** (*) to note zero or more characters.
 `preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeadsWith` and `wrapTailsWith`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
-`wrapGlobalFlipSwitch`         | Boolean  | no          | `true`      | Global flipswitch to turn off the variable wrapping function completely, everywhere.
+`wrapGlobalFlipSwitch`         | Boolean  | no          | `true`      | Global flip switch to turn off the variable wrapping function completely, everywhere.
 `noSingleMarkers`              | Boolean  | no          | `false`     | If any value in the source object has only and exactly heads or tails: a) do throw mismatched marker error (`true`) or b) don't (`false`)
 }                              |          |             |             |
 
@@ -232,9 +232,9 @@ Data-wise, if you looked at a higher level, it might appear clunky to put values
 }
 ```
 
-Does this look like clean data arrangement? Hell no. This is a convoluted and nasty data arrangement. The keys `var1` and `var2` are not of the same status as `a` and `b`, therefore can't be mashed together at the same level.
+Does this look like clean data arrangement? Hell no. It's a convoluted and nasty data arrangement. The keys `var1` and `var2` are not of the same status as an `a` and `b`, therefore can't be mashed together at the same level.
 
-What if we placed all key's `a` variables within a separate key, `a_data` — it starts with the same letter so it will end up being nearby the `a` after sorting. Observe:
+What if we placed all key's `a` variables within a separate key, `a_data` — it starts with the same letter, so it will end up being nearby the `a` after sorting. Observe:
 
 ```js
 {
@@ -249,7 +249,7 @@ What if we placed all key's `a` variables within a separate key, `a_data` — it
 
 That's better, isn't it? I think so too.
 
-To set this up, you can either rely on my default way of naming data keys, appending `_data`, or you can customise that using `opts.dataContainerIdentifierTails`. On the other hand, you can also turn off this function completely via `opts.lookForDataContainers`.
+To set this up, you can rely on my default way of naming data keys (appending `_data`) or you can customise how to call data keys using `opts.dataContainerIdentifierTails`. On the other hand, you can also turn off this function completely via `opts.lookForDataContainers` and force all values to be the keys at the same level as the current variable's key.
 
 ```js
 const jv = require('json-variables')
@@ -304,7 +304,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 #### Challenge:
 
-> How do you wrap one instance of a variable, but not another, when both are in a same string?
+> How do you wrap one instance of a variable, but not another, when both are in the same string?
 
 **Solution**: Alternative `heads` and `tails`, which are always non-wrapping: `opts.headsNoWrap` and `opts.tailsNoWrap`. Default values are: `%%-` and `-%%`. You can customise them to anything you want.
 
@@ -328,7 +328,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 
 #### In practice:
 
-Wrapping of the variables is an essential feature when working with data structures that need to be adapted for both back-end and front-end. For the development, preview build you might want `John` as a first name, but for back-end build you might want `{{ user.firstName }}`.
+Wrapping of the variables is an essential feature when working with data structures that need to be adapted for both back-end and front-end. For the development, preview build you might want `John` as a first name, but for back-end build, you might want `{{ user.firstName }}`.
 
 Taking Nunjucks templating language as an example, you'll end up with something like:
 
