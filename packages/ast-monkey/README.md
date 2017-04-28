@@ -31,6 +31,7 @@
     - [innerObj in the callback](#innerobj-in-the-callback)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Contributing](#contributing)
+- [The name of this library](#the-name-of-this-library)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
