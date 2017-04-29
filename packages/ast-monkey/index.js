@@ -9,8 +9,20 @@ const DEBUG = false
 // -----------------------------------------------------------------------------
 
 function existy (x) { return x != null }
+function isBool (something) { return typeof something === 'boolean' }
 
-function traverse (treeOriginal, callback) {
+function traverse (treeOriginal, callback, opts) {
+  if (arguments.length > 2 && !isObj(opts)) {
+    throw new Error('ast-monkey/index.js/traverse(): [THOW_ID_01] Options object must be a plain object. Currently it\'s ' + typeof opts)
+  }
+  var defaults = {
+    nullDeletes: true
+  }
+  opts = objectAssign(defaults, opts)
+  if (!isBool(opts.nullDeletes)) {
+    throw new Error('ast-monkey/index.js/traverse(): [THOW_ID_02] opts.nullDeletes must be Boolean. Currently it\'s ' + typeof opts.nullDeletes)
+  }
+
   //
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
@@ -23,10 +35,10 @@ function traverse (treeOriginal, callback) {
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
         res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
-        if (res === null) {
+        if ((res === null) && opts.nullDeletes) {
           tree.splice(i, 1)
           i--
-        } else if (existy(res)) {
+        } else if (existy(res) || (!opts.nullDeletes && (res === null))) {
           tree[i] = res
         }
       }
@@ -38,7 +50,7 @@ function traverse (treeOriginal, callback) {
           innerObj.topmostKey = key
         }
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
-        if (res === null) {
+        if ((res === null) && opts.nullDeletes) {
           delete tree[key]
         } else {
           tree[key] = res
@@ -59,19 +71,19 @@ function monkey (inputOriginal, optsOriginal) {
   // -----------------------------------
   // precautions
   if (!existy(input)) {
-    throw new Error('ast-monkey/index.js/monkey(): Please provide an input')
+    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_03] Please provide an input')
   }
   if ((opts.mode === 'get' || opts.mode === 'set' || opts.mode === 'drop') && !existy(opts.index)) {
-    throw new Error('ast-monkey/index.js/monkey(): Please provide opts.index')
+    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_04] Please provide opts.index')
   }
   if ((opts.mode === 'set') && !existy(opts.key) && !existy(opts.val)) {
-    throw new Error('ast-monkey/index.js/monkey(): Please provide opts.val')
+    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_05] Please provide opts.val')
   }
   if (opts.mode === 'set' && existy(opts.key) && !existy(opts.val)) {
     opts.val = opts.key
   }
   if ((opts.mode === 'find' || opts.mode === 'del') && !existy(opts.key) && !existy(opts.val)) {
-    throw new Error('ast-monkey/index.js/monkey(): Please provide opts.key or opts.val')
+    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_06] Please provide opts.key or opts.val')
   }
   if (existy(opts.index) && (opts.index !== parseInt(opts.index, 10))) {
     opts.index = parseInt(opts.index, 10)
@@ -79,7 +91,7 @@ function monkey (inputOriginal, optsOriginal) {
   // ---------------------------------------------------------------------------
   // action
 
-  if (DEBUG) { console.log('\n\n\n\n\n\n\n\n\n\nmode: ' + opts.mode) }
+  if (DEBUG || opts.mode === 'info') { console.log('\n\n\n\n\n\n\n\n\n\nmode: ' + opts.mode) }
   var data = { count: 0, gatherPath: [], finding: null }
   var findings = []
 
@@ -94,7 +106,7 @@ function monkey (inputOriginal, optsOriginal) {
     vo = true
   }
 
-  if (DEBUG) { console.log('ORIGINAL INPUT:\ninput = ' + JSON.stringify(input, null, 4) + '\n========================') }
+  if (DEBUG || opts.mode === 'info') { console.log('ORIGINAL INPUT:\ninput = ' + JSON.stringify(input, null, 4) + '\n========================') }
   if (DEBUG || opts.mode === 'info') { console.log('-----------') }
 
   if (opts.mode === 'arrayFirstOnly' && Array.isArray(input) && input.length > 0) {
@@ -129,7 +141,6 @@ function monkey (inputOriginal, optsOriginal) {
       }
     } else if (opts.mode === 'find' || opts.mode === 'del') {
       if ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (!ko && !vo && (key === opts.key) && (isEqual(val, opts.val)))) {
-        if (DEBUG || opts.mode === 'info') { console.log('\n\nfound: ' + key + ' = ' + JSON.stringify(val, null, 4)) }
         temp = {}
         temp.index = data.count
         temp.key = key
@@ -177,7 +188,6 @@ function monkey (inputOriginal, optsOriginal) {
 
 function prep (obj) {
   if (!existy(obj) || !isObj(obj)) {
-    if (DEBUG) { console.log('prep() sets an empty object') }
     return {}
   } else {
     return obj

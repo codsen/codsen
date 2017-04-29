@@ -1065,7 +1065,7 @@ test('09.01 - use traverse to delete one key from an array', t => {
     '09.01.03')
 })
 
-test('09.02 - use traverse to delete two keys in one go from an array', t => {
+test('09.02 - use traverse, passing null, write over objects within an array/delete them', t => {
   input = [
     {
       a: 'b'
@@ -1099,5 +1099,115 @@ test('09.02 - use traverse to delete two keys in one go from an array', t => {
   t.deepEqual(
     actual01,
     intended01,
-    '09.01.01')
+    '09.02.01')
+
+  var actual02 = traverse(input, function (key, val, innerObj) {
+    var current = existy(val) ? val : key
+    if (isEqual(current, { a: 'b' })) {
+      // console.log('returning null')
+      return null
+    } else {
+      // console.log('returning current: ' + JSON.stringify(current, null, 4))
+      return current
+    }
+  }, { nullDeletes: false })
+  var intended02 = [
+    null,
+    null,
+    {
+      c: 'd'
+    }
+  ]
+  t.deepEqual(
+    actual02,
+    intended02,
+    '09.02.02')
+})
+
+test('09.03 - use traverse, passing null, write over values', t => {
+  input = [
+    {
+      a: 'b'
+    },
+    {
+      a: 'b'
+    },
+    {
+      c: 'd'
+    }
+  ]
+
+  var actual01 = traverse(input, function (key, val, innerObj) {
+    // console.log('\n\n------\n')
+    // console.log('key = ' + JSON.stringify(key, null, 4))
+    // console.log('val = ' + JSON.stringify(val, null, 4))
+    var current = existy(val) ? val : key
+    if (current === 'b') {
+      // console.log('returning null')
+      return null
+    } else {
+      // console.log('returning current: ' + JSON.stringify(current, null, 4))
+      return current
+    }
+  }, { nullDeletes: false })
+  var intended01 = [
+    {
+      a: null
+    },
+    {
+      a: null
+    },
+    {
+      c: 'd'
+    }
+  ]
+  t.deepEqual(
+    actual01,
+    intended01,
+    '09.03')
+})
+
+test('09.04 - traverse() throws when opts.nullDeletes are not Boolean', t => {
+  t.throws(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, 1)
+  })
+  t.throws(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, 'true')
+  })
+  t.throws(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, true)
+  })
+  t.notThrows(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, {nullDeletes: true})
+  })
+  t.notThrows(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, {nullDeletes: false})
+  })
+  t.throws(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, {nullDeletes: 'false'})
+  })
+  t.throws(function () {
+    traverse({a: 'a'}, function (key, val, innerObj) {
+      var current = existy(val) ? val : key
+      return current
+    }, {nullDeletes: [false]})
+  })
 })
