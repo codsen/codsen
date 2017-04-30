@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2017-04-28
+### Changed
+- JSON specs allow various kinds of types to be placed as key values: Booleans, arrays, plain objects and even `null`. In this release we loosen the restrictions and allow these different types to be resolved as values, particularly, `null` and Booleans.
+
+### Added
+- `opts.resolveToFalseIfAnyValuesContainFalse`
+
 ## [3.0.0] - 2017-04-27
 ### Added
 - `opts.headsNoWrap` (default `%%-`) & `opts.tailsNoWrap` (default `-%%`). When the same string has multiple occasions of a variable and we want some variables to be wrapped but some not it was previously impossible. Wrapping ignores were global. Now not. I came with an idea to allow different (customiseable) `heads` and `tails` which prevent wrapping on the variable it marks.
@@ -34,3 +41,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/code-and-send/json-variables/compare/v1.1.0...v1.2.0
 [2.0.0]: https://github.com/code-and-send/json-variables/compare/v1.2.0...v2.0.0
 [3.0.0]: https://github.com/code-and-send/json-variables/compare/v2.0.0...v3.0.0
+[3.1.0]: https://github.com/code-and-send/json-variables/compare/v3.0.0...v3.1.0

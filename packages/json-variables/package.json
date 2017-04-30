@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/code-and-send/json-variables#readme",
   "dependencies": {
-    "ast-monkey": "^3.2.0",
+    "ast-monkey": "^5.0.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "lodash.trim": "^4.5.1",
@@ -54,7 +54,7 @@
     "standard": "^10.0.0"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   },
   "engines": {
     "node": ">=5.11.0"

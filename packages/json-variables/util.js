@@ -57,6 +57,7 @@ function extractVarsFromString (str, heads, tails) {
   if (arguments.length === 0) {
     throw new Error('json-variables/util.js/extractVarsFromString(): inputs missing!')
   }
+  var res = []
   if (type(str) !== 'string') {
     throw new Error('json-variables/util.js/extractVarsFromString(): first arg must be string-type. Currently it\'s: ' + type(str))
   }
@@ -77,7 +78,6 @@ function extractVarsFromString (str, heads, tails) {
   if (includes(heads, str) || includes(tails, str)) {
     return []
   }
-  var res = []
   if (str.length === 0) {
     return res
   }
@@ -128,9 +128,8 @@ function arrayiffyString (something) {
 // it's for internal use, so there is no input type validation
 function fixOffset (whatever, position, amount) {
   whatever = monkey.traverse(whatever, function (key, val, innerObj) {
-    var current = monkey.existy(val) ? val : key
-    if ((val === null) && (typeof key === 'number')) {
-      // console.log('key=' + key)
+    var current = existy(val) ? val : key
+    if ((val === undefined) && (typeof key === 'number')) {
       if (existy(amount) && (amount !== 0) && key > position) {
         return key + amount
       }

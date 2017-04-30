@@ -4,7 +4,7 @@
 
 import jv from './index'
 import test from 'ava'
-import { aContainsB, extractVarsFromString, findLastInArray, checkTypes, aStartsWithB } from './util'
+import { aContainsB, extractVarsFromString, findLastInArray, checkTypes, aStartsWithB, fixOffset } from './util'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -321,19 +321,7 @@ test('01.26 - throws when opts.preventDoubleWrapping is not boolean', function (
   })
 })
 
-test('01.27 - throws when values given for variable resolution are not strings or arrays', t => {
-  t.throws(function () {
-    jv({
-      a: '%%_c_%%',
-      b: '%%_a_%%',
-      c: {
-        d: 'd'
-      }
-    })
-  })
-})
-
-test('01.28 - throws when opts.heads and opts.headsNoWrap are customised to be equal', function (t) {
+test('01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal', function (t) {
   t.throws(function () {
     jv(
       {
@@ -371,7 +359,7 @@ test('01.28 - throws when opts.heads and opts.headsNoWrap are customised to be e
   })
 })
 
-test('01.29 - throws when opts.tails and opts.tailsNoWrap are customised to be equal', function (t) {
+test('01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be equal', function (t) {
   t.throws(function () {
     jv(
       {
@@ -409,7 +397,7 @@ test('01.29 - throws when opts.tails and opts.tailsNoWrap are customised to be e
   })
 })
 
-test('01.30 - empty nowraps', function (t) {
+test('01.29 - empty nowraps', function (t) {
   t.throws(function () {
     jv(
       {
@@ -458,7 +446,7 @@ test('01.30 - empty nowraps', function (t) {
   })
 })
 
-test('01.31 - equal nowraps', function (t) {
+test('01.30 - equal nowraps', function (t) {
   t.throws(function () {
     jv(
       {
@@ -492,6 +480,42 @@ test('01.31 - equal nowraps', function (t) {
       {
         headsNoWrap: '%%-'
       }
+    )
+  })
+})
+
+test('01.31 - throws there\'s simple recursion loop', t => {
+  t.throws(function () {
+    jv({
+      a: '%%_a_%%'
+    })
+  })
+  t.throws(function () {
+    jv({
+      a: ['%%_a_%%']
+    })
+  })
+  t.throws(function () {
+    jv(
+      ['%%_a_%%']
+    )
+  })
+})
+
+test('01.32 - throws referencing what does not exist', t => {
+  t.throws(function () {
+    jv({
+      a: '%%_b_%%'
+    })
+  })
+  t.throws(function () {
+    jv({
+      a: ['%%_b_%%']
+    })
+  })
+  t.throws(function () {
+    jv(
+      ['%%_b_%%']
     )
   })
 })
@@ -1874,7 +1898,108 @@ test('07.02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars', fun
       bbb: '??z!!',
       c: 'z'
     },
-    '07.02.02 - two level redirects, custom everything'
+    '07.02.03 - two level redirects, custom everything'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 08. non-string values - still valid JSON
+// -----------------------------------------------------------------------------
+
+test('08.01 - Boolean values inserted into a middle of a string', t => {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%% %%_c_%% %%_d_%% %%_e_%%',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false
+    }
+  ),
+    {
+      a: 'stringB true stringD false',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false
+    },
+    '08.01'
+  )
+})
+
+test('08.02 - Boolean values inserted instead of other values, in whole', t => {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: true
+    }
+  ),
+    {
+      a: true,
+      b: true
+    },
+    '08.02'
+  )
+})
+
+test('08.03 - null values inserted into a middle of a string', t => {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%% %%_c_%% %%_d_%% %%_e_%%',
+      b: 'stringB',
+      c: null,
+      d: 'stringD',
+      e: null
+    }
+  ),
+    {
+      a: 'stringB  stringD ',
+      b: 'stringB',
+      c: null,
+      d: 'stringD',
+      e: null
+    },
+    '08.03'
+  )
+})
+
+test('08.04 - null values inserted instead of other values, in whole', t => {
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%%',
+      b: null
+    }
+  ),
+    {
+      a: null,
+      b: null
+    },
+    '08.04'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 94. UTIL - fixOffset()
+// -----------------------------------------------------------------------------
+
+test('94.01 - UTIL > fixOffset', t => {
+  t.deepEqual(
+    fixOffset(
+      [[0, 1], [5, 8], [10, 15]],
+      1,
+      2
+    ),
+    [[0, 1], [7, 10], [12, 17]],
+    '94.01.01'
+  )
+  t.deepEqual(
+    fixOffset(
+      [[0, 1], [5, 8], [10, 15]],
+      20,
+      2
+    ),
+    [[0, 1], [5, 8], [10, 15]],
+    '94.01.02'
   )
 })
 
