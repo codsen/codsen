@@ -28,6 +28,7 @@
   - [Wrapping](#wrapping)
     - [Challenge:](#challenge)
     - [In practice:](#in-practice)
+  - [Mixing Booleans and strings](#mixing-booleans-and-strings)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -108,6 +109,8 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeadsWith` and `wrapTailsWith`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
 `wrapGlobalFlipSwitch`         | Boolean  | no          | `true`      | Global flip switch to turn off the variable wrapping function completely, everywhere.
 `noSingleMarkers`              | Boolean  | no          | `false`     | If any value in the source object has only and exactly heads or tails: a) do throw mismatched marker error (`true`) or b) don't (`false`)
+`resolveToBoolIfAnyValuesContainBool` | Boolean  | no        | `true` | The very first moment Boolean is merged into a string value, it turns the whole value to its value. Permanently. Nothing else matters. When `false` and there's a mix of Strings and Boolaens, Boolean is resolved into empty string. When the value is just a reference marker, upon resolving it will be intact Boolean. This setting is relevant when there's mixing of strings and Booleans - what to do in those cases.
+`resolveToFalseIfAnyValuesContainBool` | Boolean  | no       | `true` | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.
 }                              |          |             |             |
 
 ## Use examples
@@ -393,6 +396,47 @@ content JSON for PROD build:
 ```
 
 Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the postprocessor to skip wrapping, no matter what.
+
+### Mixing Booleans and strings
+
+Very often, in email templating, there inactive modules are marked with Boolean `false`. When they have content, they are strings. There are cases when you want to resolve the whole variable to Boolean if any of resolved variables are Boolean.
+
+When `opts.resolveToBoolIfAnyValuesContainBool` is set to `true` (default), it will always resolve to the first encountered Boolean. When set to `false`, it will resolve Booleans to empty strings.
+
+When `opts.resolveToFalseIfAnyValuesContainBool` and `opts.resolveToBoolIfAnyValuesContainBool` are set to `true` (both defaults), every mix of string(s) and Boolean(s) will resolve to Boolean `false`. If `opts.resolveToBoolIfAnyValuesContainBool` is set to false, but `opts.resolveToFalseIfAnyValuesContainBool` to true, the mixes of strings and Booleans will resolve to the value of the first encountered Boolean variable's value.
+
+Observe:
+
+```js
+var res = jv(
+  {
+    a: 'zzz %%_b_%% zzz',
+    b: true
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: false, // <<< It's because opts.resolveToFalseIfAnyValuesContainBool is default, true
+//      b: true
+//    }
+```
+
+```js
+var res = jv(
+  {
+    a: 'zzz %%_b_%% zzz',
+    b: true
+  },
+  {
+    resolveToFalseIfAnyValuesContainBool: false
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: true, <<< It's because we have a mix of string and Boolean, and first encountered Boolean value is `true`
+//      b: true
+//    }
+```
 
 ## Contributing
 

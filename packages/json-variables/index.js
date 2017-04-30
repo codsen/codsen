@@ -45,7 +45,8 @@ function jsonVariables (inputOriginal, opts) {
     preventDoubleWrapping: true,
     wrapGlobalFlipSwitch: true, // is wrap function on?
     noSingleMarkers: false, // if value has only and exactly heads or tails, don't throw mismatched marker error.
-    resolveToFalseIfAnyValuesContainFalse: true // if variable is resolved into anything that contains or is equal to Boolean false, set the whole thing to false
+    resolveToBoolIfAnyValuesContainBool: true, // if variable is resolved into anything that contains or is equal to Boolean false, set the whole thing to false
+    resolveToFalseIfAnyValuesContainBool: true // resolve whole value to false, even if some values contain Boolean true. Otherwise, the whole value will resolve to the first encountered Boolean.
   }
   opts = objectAssign(clone(defaults), opts)
 
@@ -182,7 +183,6 @@ function jsonVariables (inputOriginal, opts) {
         innerPath.push(innerVar)
 
         if (innerVar === currentObjKey) {
-          console.log('*')
           throw new Error('json-variables/jsonVariables(): [THROW_ID_15] Recursion detected!\nPlease check the following key: ' + (currentObjKey || current))
         }
         var case1, case2, case3
@@ -322,7 +322,16 @@ function jsonVariables (inputOriginal, opts) {
           // replacing variable with the value
           if (!isStr(replacement) && (strLen(current) === (foundTails[0] - foundHeads[0] + strLen(opts.tails)))) {
             current = replacement
+          } else if ((typeof replacement === 'boolean') && opts.resolveToBoolIfAnyValuesContainBool) {
+            if (opts.resolveToFalseIfAnyValuesContainBool) {
+              current = false
+            } else {
+              current = replacement
+            }
           } else {
+            if (typeof replacement === 'boolean') {
+              replacement = ''
+            }
             current = spliceStr(
               current,
               foundHeads[0],
@@ -330,6 +339,7 @@ function jsonVariables (inputOriginal, opts) {
               replacement
             )
           }
+
         }
       }
     }

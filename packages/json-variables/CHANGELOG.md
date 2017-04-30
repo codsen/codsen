@@ -4,12 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.1.0] - 2017-04-28
+## [4.0.0] - 2017-04-30
+
+Breaking changes in the API, or rather output. When Boolean values are encountered and written as values (and no other string characters are present on the original placeholder), we output empty string, not `false` or `true`. Nobody needs Booleans converted to String. I need this for my email templating projects. 🦄
+
 ### Changed
 - JSON specs allow various kinds of types to be placed as key values: Booleans, arrays, plain objects and even `null`. In this release we loosen the restrictions and allow these different types to be resolved as values, particularly, `null` and Booleans.
 
 ### Added
-- `opts.resolveToFalseIfAnyValuesContainFalse`
+- `opts.resolveToBoolIfAnyValuesContainBool` - if `true` (default), if any variable's value is Boolean, upon resolving it will set the whole value to itself. For example, `aaaa %%_var_%% bbbbb` and `var=true` would resolve to `true`. If setting is `false`, it will resolve to empty string, in this example's case, `aaaa  bbbbb`. I don't see why anybody would set it to other value than `default`, but hey, the more freedom the better.
+- `opts.resolveToFalseIfAnyValuesContainBool` - if Boolean variable is enountered, the whole thing always resolves to `false`. Even if the first encountered variable's value was `true`. This is needed for email templating, so that when Booleans are encountered, we bail setting the whole thing to `false`.
 
 ## [3.0.0] - 2017-04-27
 ### Added

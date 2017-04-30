@@ -1917,13 +1917,34 @@ test('08.01 - Boolean values inserted into a middle of a string', t => {
     }
   ),
     {
-      a: 'stringB true stringD false',
+      a: false,
       b: 'stringB',
       c: true,
       d: 'stringD',
       e: false
     },
-    '08.01'
+    '08.01.01'
+  )
+  t.deepEqual(jv(
+    {
+      a: '%%_b_%% %%_c_%% %%_d_%% %%_e_%%',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false
+    },
+    {
+      resolveToBoolIfAnyValuesContainBool: false
+    }
+  ),
+    {
+      a: 'stringB  stringD ',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false
+    },
+    '08.01.02'
   )
 })
 
@@ -1975,6 +1996,108 @@ test('08.04 - null values inserted instead of other values, in whole', t => {
       b: null
     },
     '08.04'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 09. opts.resolveToBoolIfAnyValuesContainBool
+// -----------------------------------------------------------------------------
+
+test('09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix', t => {
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz',
+      b: true
+    }
+  ),
+    {
+      a: false,
+      b: true
+    },
+    '09.01.01 - relying on default'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz',
+      b: true
+    },
+    {
+      resolveToBoolIfAnyValuesContainBool: true
+    }
+  ),
+    {
+      a: false,
+      b: true
+    },
+    '09.01.02 - Bools hardcoded default'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz',
+      b: true
+    },
+    {
+      resolveToBoolIfAnyValuesContainBool: false
+    }
+  ),
+    {
+      a: 'zzz  zzz',
+      b: true
+    },
+    '09.01.03 - Bools turned off'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz %%_c_%%',
+      b: true,
+      c: false
+    },
+    {
+      resolveToFalseIfAnyValuesContainBool: false
+    }
+  ),
+    {
+      a: true, // because first encountered value to be resolved was Boolean True
+      b: true,
+      c: false
+    },
+    '09.01.04 - relying on default, opts.resolveToFalseIfAnyValuesContainBool does not matter'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz %%_c_%%',
+      b: true,
+      c: false
+    },
+    {
+      resolveToBoolIfAnyValuesContainBool: true,
+      resolveToFalseIfAnyValuesContainBool: false
+    }
+  ),
+    {
+      a: true,
+      b: true,
+      c: false
+    },
+    '09.01.05 - Bools hardcoded default, not forcing false'
+  )
+  t.deepEqual(jv(
+    {
+      a: 'zzz %%_b_%% zzz %%_c_%%',
+      b: true,
+      c: false
+    },
+    {
+      resolveToBoolIfAnyValuesContainBool: true,
+      resolveToFalseIfAnyValuesContainBool: true
+    }
+  ),
+    {
+      a: false,
+      b: true,
+      c: false
+    },
+    '09.01.06 - Bools hardcoded default, forcing false'
   )
 })
 
