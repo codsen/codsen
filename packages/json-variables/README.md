@@ -399,9 +399,9 @@ Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the p
 
 ### Mixing Booleans and strings
 
-Very often, in email templating, there inactive modules are marked with Boolean `false`. When they have content, they are strings. There are cases when you want to resolve the whole variable to Boolean if any of resolved variables are Boolean.
+Very often, in email templating, the inactive modules are marked with Boolean `false`. When modules have content, they are marked with strings. There are cases when you want to resolve the whole variable to Boolean if upon resolving you end up with a mix of strings and Booleans.
 
-When `opts.resolveToBoolIfAnyValuesContainBool` is set to `true` (default), it will always resolve to the first encountered Boolean. When set to `false`, it will resolve Booleans to empty strings.
+When `opts.resolveToBoolIfAnyValuesContainBool` is set to `true` (default), it will always resolve to the value of the first encountered Boolean value. When set to `false`, it will resolve Booleans to empty strings.
 
 When `opts.resolveToFalseIfAnyValuesContainBool` and `opts.resolveToBoolIfAnyValuesContainBool` are set to `true` (both defaults), every mix of string(s) and Boolean(s) will resolve to Boolean `false`. If `opts.resolveToBoolIfAnyValuesContainBool` is set to false, but `opts.resolveToFalseIfAnyValuesContainBool` to true, the mixes of strings and Booleans will resolve to the value of the first encountered Boolean variable's value.
 
