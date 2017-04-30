@@ -9,20 +9,8 @@ const DEBUG = false
 // -----------------------------------------------------------------------------
 
 function existy (x) { return x != null }
-function isBool (something) { return typeof something === 'boolean' }
 
-function traverse (treeOriginal, callback, opts) {
-  if (arguments.length > 2 && !isObj(opts)) {
-    throw new Error('ast-monkey/index.js/traverse(): [THOW_ID_01] Options object must be a plain object. Currently it\'s ' + typeof opts)
-  }
-  var defaults = {
-    nullDeletes: true
-  }
-  opts = objectAssign(defaults, opts)
-  if (!isBool(opts.nullDeletes)) {
-    throw new Error('ast-monkey/index.js/traverse(): [THOW_ID_02] opts.nullDeletes must be Boolean. Currently it\'s ' + typeof opts.nullDeletes)
-  }
-
+function traverse (treeOriginal, callback) {
   //
   // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
   //
@@ -34,12 +22,14 @@ function traverse (treeOriginal, callback, opts) {
     innerObj.depth++
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
-        res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
-        if ((res === null) && opts.nullDeletes) {
-          tree.splice(i, 1)
-          i--
-        } else if (existy(res) || (!opts.nullDeletes && (res === null))) {
-          tree[i] = res
+        if (tree[i] !== undefined) {
+          res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
+          if ((res === undefined) && (i < tree.length)) {
+            tree.splice(i, 1)
+            i--
+          } else {
+            tree[i] = res
+          }
         }
       }
     } else if (isObj(tree)) {
@@ -50,7 +40,7 @@ function traverse (treeOriginal, callback, opts) {
           innerObj.topmostKey = key
         }
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
-        if ((res === null) && opts.nullDeletes) {
+        if (res === undefined) {
           delete tree[key]
         } else {
           tree[key] = res
@@ -91,7 +81,7 @@ function monkey (inputOriginal, optsOriginal) {
   // ---------------------------------------------------------------------------
   // action
 
-  if (DEBUG || opts.mode === 'info') { console.log('\n\n\n\n\n\n\n\n\n\nmode: ' + opts.mode) }
+  if (DEBUG || opts.mode === 'info') { console.log('mode: ' + opts.mode) }
   var data = { count: 0, gatherPath: [], finding: null }
   var findings = []
 
@@ -118,6 +108,9 @@ function monkey (inputOriginal, optsOriginal) {
   //
 
   input = traverse(input, function (key, val, innerObj) {
+    // console.log('=========================================================\nNEW TRAVERSE\n')
+    // console.log('key = ' + JSON.stringify(key, null, 4))
+    // console.log('val = ' + JSON.stringify(val, null, 4))
     var temp
     data.count++
     if (DEBUG || opts.mode === 'info') { console.log('    #' + data.count + '\n') }
@@ -158,9 +151,9 @@ function monkey (inputOriginal, optsOriginal) {
     if (opts.mode === 'set' && data.count === opts.index) {
       return opts.val
     } else if (opts.mode === 'drop' && data.count === opts.index) {
-      return null
+      return undefined
     } else if (opts.mode === 'del' && ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (key === opts.key && isEqual(val, opts.val)))) {
-      return null
+      return undefined
     } else if (opts.mode === 'arrayFirstOnly') {
       if (existy(val) && Array.isArray(val)) {
         return [val[0]]

@@ -4,7 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.3.0] - 2017-04-29 International black plastic day.
+## [4.0.0] - 2017-04-30
+
+The good thing about being not popular is you can make breaking changes and very few (if anybody) will care. I will make use of this privilege and do some cardinal yet necessary API changes.
+
+### Changed
+- Removing options from `traverse()`. It's not necessary any more. See below why.
+- When particular node is to be deleted, the message (function's `return` value) previously was `null`. This is not effective as JSON objects can have `null` values and this means `monkey.traverse()` does not know, is it value `null` being returned recursively, or is it an instruction coming from deeper resursions to delete current thing. That's why I decided to move onto `undefined` as a _deletion message_ — it can't be a JSON value, and it does not belong among the object values — it's perfect format for a deletion message.
+
+### Unchanged
+- All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as a an instruction delete.
+
+## [3.3.0] - 2017-04-29
 ### Added
 - `🐒.traverse()` gets _options_! ✨ Optional `opts.nullDeletes===false` now let's you to write `null` values during traversal. Previously on all cases (and currently during default `opts.nullDeletes===true`) `null` would be interpreted as an instruction to delete the current piece of AST. Now you can essentially turn off the deletion in favor of being able to write `null` as value. For the record, `null` is a valid JSON value type. 🦄
 
