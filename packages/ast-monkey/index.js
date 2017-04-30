@@ -108,9 +108,6 @@ function monkey (inputOriginal, optsOriginal) {
   //
 
   input = traverse(input, function (key, val, innerObj) {
-    // console.log('=========================================================\nNEW TRAVERSE\n')
-    // console.log('key = ' + JSON.stringify(key, null, 4))
-    // console.log('val = ' + JSON.stringify(val, null, 4))
     var temp
     data.count++
     if (DEBUG || opts.mode === 'info') { console.log('    #' + data.count + '\n') }
