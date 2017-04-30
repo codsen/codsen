@@ -1003,7 +1003,9 @@ test('09.01 - use traverse to delete one key from an array', t => {
 
   var actual01 = traverse(input, function (key, val, innerObj) {
     var current = existy(val) ? val : key
-    if (!isEqual(current, { a: 'b' })) {
+    if (isEqual(current, { a: 'b' })) {
+      return NaN
+    } else {
       return current
     }
   })
@@ -1022,7 +1024,9 @@ test('09.01 - use traverse to delete one key from an array', t => {
 
   var actual02 = traverse(input, function (key, val, innerObj) {
     var current = existy(val) ? val : key
-    if (!isEqual(current, { c: 'd' })) {
+    if (isEqual(current, { c: 'd' })) {
+      return NaN
+    } else {
       return current
     }
   })
@@ -1041,7 +1045,9 @@ test('09.01 - use traverse to delete one key from an array', t => {
 
   var actual03 = traverse(input, function (key, val, innerObj) {
     var current = existy(val) ? val : key
-    if (!isEqual(current, { e: 'f' })) {
+    if (isEqual(current, { e: 'f' })) {
+      return NaN
+    } else {
       return current
     }
   })
@@ -1077,7 +1083,9 @@ test('09.02 - use traverse, passing undefined to delete', t => {
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
     var current = existy(val) ? val : key
-    if (!isEqual(current, { a: 'b' })) {
+    if (isEqual(current, { a: 'b' })) {
+      return NaN
+    } else {
       return current
     }
   })

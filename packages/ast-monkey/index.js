@@ -23,8 +23,8 @@ function traverse (treeOriginal, callback) {
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
         if (tree[i] !== undefined) {
-          res = traverseInner(callback(tree[i], null, innerObj), callback, innerObj)
-          if ((res === undefined) && (i < tree.length)) {
+          res = traverseInner(callback(tree[i], undefined, innerObj), callback, innerObj)
+          if ((Number.isNaN(res)) && (i < tree.length)) {
             tree.splice(i, 1)
             i--
           } else {
@@ -40,7 +40,7 @@ function traverse (treeOriginal, callback) {
           innerObj.topmostKey = key
         }
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
-        if (res === undefined) {
+        if (Number.isNaN(res)) {
           delete tree[key]
         } else {
           tree[key] = res
@@ -148,9 +148,9 @@ function monkey (inputOriginal, optsOriginal) {
     if (opts.mode === 'set' && data.count === opts.index) {
       return opts.val
     } else if (opts.mode === 'drop' && data.count === opts.index) {
-      return undefined
+      return NaN
     } else if (opts.mode === 'del' && ((ko && (key === opts.key)) || (vo && (isEqual(val, opts.val))) || (key === opts.key && isEqual(val, opts.val)))) {
-      return undefined
+      return NaN
     } else if (opts.mode === 'arrayFirstOnly') {
       if (existy(val) && Array.isArray(val)) {
         return [val[0]]

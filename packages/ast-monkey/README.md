@@ -505,9 +505,11 @@ ast = monkey.traverse(ast, function (key, val, innerObj) {
 })
 ```
 
-It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise **you will change the input** (your AST). Maybe it's what you want, for example, functions `monkey.drop()` and `monkey.del()` work that way — they don't return anything when they encounter to-be-deleted piece upon traversal — that piece **gets deleted**.
+It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise whatever you return will be written over the current AST piece being iterated.
 
-By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `truthy()` is second, but `console.log('placeholder = ' + JSON.stringify(placeholder, null, 4))` is also a contender for the top spot).
+If you definitely want to delete, return `NaN`.
+
+By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `console.log('var = ' + JSON.stringify(var, null, 4))` is also a contender for the top spot).
 
 #### innerObj in the callback
 

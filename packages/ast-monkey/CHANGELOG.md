@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2017-04-30
+
+After spending nearly whole Sunday testing v4, I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
+
+### Changed
+- Internally, the message to delete in `traverse()` is now `NaN`.
+### Unchanged
+- All the methods stay the same. I just rewired all internal messaging to use `NaN` instead of `undefined` as an instruction for `traverse()` to delete.
+
 ## [4.0.0] - 2017-04-30
 
 The good thing about being not popular is you can make breaking changes and very few (if anybody) will care. I will make use of this privilege and do some cardinal yet necessary API changes.
@@ -13,7 +22,7 @@ The good thing about being not popular is you can make breaking changes and very
 - When particular node is to be deleted, the message (function's `return` value) previously was `null`. This is not effective as JSON objects can have `null` values and this means `monkey.traverse()` does not know, is it value `null` being returned recursively, or is it an instruction coming from deeper resursions to delete current thing. That's why I decided to move onto `undefined` as a _deletion message_ — it can't be a JSON value, and it does not belong among the object values — it's perfect format for a deletion message.
 
 ### Unchanged
-- All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as a an instruction delete.
+- All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as an instruction for `traverse()` to delete.
 
 ## [3.3.0] - 2017-04-29
 ### Added
