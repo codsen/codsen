@@ -23,6 +23,7 @@ function traverse (treeOriginal, callback) {
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
         if (tree[i] !== undefined) {
+          innerObj.parent = clone(tree)
           res = traverseInner(callback(tree[i], undefined, innerObj), callback, innerObj)
           if ((Number.isNaN(res)) && (i < tree.length)) {
             tree.splice(i, 1)
@@ -39,6 +40,7 @@ function traverse (treeOriginal, callback) {
         if (innerObj.depth === 0 && existy(key)) {
           innerObj.topmostKey = key
         }
+        innerObj.parent = clone(tree)
         res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
         if (Number.isNaN(res)) {
           delete tree[key]

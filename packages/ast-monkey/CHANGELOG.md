@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2017-05-02
+
+### Added
+- `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/code-and-send/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
+
 ## [5.0.0] - 2017-04-30
 
-After spending nearly whole Sunday testing v4, I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
+After spending nearly whole Sunday testing [v4], I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
 
 ### Changed
 - Internally, the message to delete in `traverse()` is now `NaN`.
@@ -114,4 +119,7 @@ BREAKING API CHANGES.
 [3.1.0]: https://github.com/code-and-send/ast-monkey/compare/v3.0.0...v3.1.0
 [3.2.0]: https://github.com/code-and-send/ast-monkey/compare/v3.1.0...v3.2.0
 [3.3.0]: https://github.com/code-and-send/ast-monkey/compare/v3.2.2...v3.3.0
+[v4]: https://github.com/code-and-send/ast-monkey/compare/v3.3.0...v4.0.0
 [4.0.0]: https://github.com/code-and-send/ast-monkey/compare/v3.3.0...v4.0.0
+[5.0.0]: https://github.com/code-and-send/ast-monkey/compare/v4.0.0...v5.0.0
+[5.1.0]: https://github.com/code-and-send/ast-monkey/compare/v5.0.0...v5.1.0

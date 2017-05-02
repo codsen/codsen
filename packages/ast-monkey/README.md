@@ -1,6 +1,6 @@
 # ast-monkey
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Utility library for operations on parsed HTML (AST's)
 
@@ -513,15 +513,90 @@ By the way, the one-liner `existy()` is taken from Michael Fogus book "Functiona
 
 #### innerObj in the callback
 
-Currently, it gives you two pieces of information:
-
-* Current depth where you are in the AST, `innerObj.depth`. "Root" is `0`.
-* The topmost parent key's name, which is available for all its children, `innerObj.topmostKey`.
-
-You can access it just like `key` or `val`. Try `console.log`ing its contents inside `monkey.traverse()`:
+When you call `traverse()` like this:
 
 ```js
-console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
+input = monkey.traverse(input, function (key, val, innerObj) {
+  ...
+})
+```
+
+you get three variables:
+
+- `key`
+- `val`
+- `innerObj`
+
+If monkey is currently traversing a plain object, going each key/value pair, `key` will be key and `val` will be the value.
+If monkey is currently traversing an array, going each element, `key` will be the current element. `val` will be `null`.
+
+`innerObj` object's key | Type           | Description
+------------------------|----------------|----------------------
+`{`                     |                |
+`depth`                 | Integer number | Zero is root, topmost level. Every level deeper increments `depth` by `1`.
+`topmostKey`            | String         | When you are very deep, this is the topmost parent's key.
+`parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. It's purpose is to allow you to query the **siblings** of the current element.
+`}`                     |                |
+
+Allow me to show you how to tap the `innerObj` practically;
+
+```js
+const monkey = require('ast-monkey')
+var ast = {
+            a: {
+              b: 'b val'
+            },
+            c: 'c val'
+          }
+ast = monkey.traverse(ast, function (key, val, innerObj) {
+  var current = monkey.existy(val) ? val : key
+  console.log('\nkey = ' + JSON.stringify(key, null, 4))
+  console.log('val = ' + JSON.stringify(val, null, 4))
+  console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
+  return current
+})
+```
+
+CONSOLE OUTPUT WILL BE:
+
+```js
+key = "a"
+val = {
+    "b": "b val"
+}
+innerObj = {
+    "depth": 0,
+    "topmostKey": "a",
+    "parent": {
+        "a": {
+            "b": "b val"
+        },
+        "c": "c val"
+    }
+}
+
+key = "b"
+val = "b val"
+innerObj = {
+    "depth": 1,
+    "topmostKey": "a",
+    "parent": {
+        "b": "b val"
+    }
+}
+
+key = "c"
+val = "c val"
+innerObj = {
+    "depth": 0,
+    "topmostKey": "c",
+    "parent": {
+        "a": {
+            "b": "b val"
+        },
+        "c": "c val"
+    }
+}
 ```
 
 ## Unit testing and code coverage
@@ -530,11 +605,11 @@ console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation. Unit test code coverage is calculated using [Istanbul](https://www.npmjs.com/package/nyc).
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Unit test code coverage is calculated using [Istanbul](https://www.npmjs.com/package/nyc).
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
