@@ -496,6 +496,17 @@ test('01.31 - throws there\'s simple recursion loop', t => {
     })
   })
   t.throws(function () {
+    jv({
+      a: ['%%_b_%%'],
+      b: ['%%_a_%%']
+    })
+  })
+  t.throws(function () {
+    jv({
+      a: ['%%_b_%%', '%%_b_%%']
+    })
+  })
+  t.throws(function () {
     jv(
       ['%%_a_%%']
     )
@@ -512,11 +523,6 @@ test('01.32 - throws referencing what does not exist', t => {
     jv({
       a: ['%%_b_%%']
     })
-  })
-  t.throws(function () {
-    jv(
-      ['%%_b_%%']
-    )
   })
 })
 
@@ -2098,6 +2104,289 @@ test('09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix', 
       c: false
     },
     '09.01.06 - Bools hardcoded default, forcing false'
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 10. variable resolving on a deeper levels, other than root
+// -----------------------------------------------------------------------------
+
+test('10.01 - variables resolve being in deeper levels', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: 'zzz %%_c_%% yyy',
+          c: 'd1'
+        }
+      ],
+      c: 'd2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: 'zzz d1 yyy',
+          c: 'd1'
+        }
+      ],
+      c: 'd2'
+    },
+    '10.01 - defaults'
+  )
+})
+
+test('10.02 - deeper level variables not found, bubble up and are found', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: 'zzz %%_c_%% yyy',
+          z: 'd1'
+        }
+      ],
+      c: 'd2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: 'zzz d2 yyy',
+          z: 'd1'
+        }
+      ],
+      c: 'd2'
+    },
+    '10.02 - defaults'
+  )
+})
+
+test('10.03 - third level resolves at its level', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              d: 'e1'
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e1 yyy',
+              d: 'e1'
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    },
+    '10.03 - defaults'
+  )
+})
+
+test('10.04 - third level falls back to root', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              z: 'e1'
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e2 yyy',
+              z: 'e1'
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    },
+    '10.04 - defaults'
+  )
+})
+
+test('10.05 - third level uses data container key', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1',
+                d: 'e1'
+              }
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e1 yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1',
+                d: 'e1'
+              }
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    },
+    '10.05 - defaults'
+  )
+})
+
+test('10.06 - third level uses data container key, but there\'s nothing there so falls back to root (successfully)', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e2 yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      d: 'e2'
+    },
+    '10.06 - defaults'
+  )
+})
+
+test('10.07 - third level uses data container key, but there\'s nothing there so falls back to root data container (successfully)', t => {
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      a_data: {
+        d: 'e2'
+      }
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e2 yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      a_data: {
+        d: 'e2'
+      }
+    },
+    '10.07 - defaults - root has normal container, a_data, named by topmost parent key'
+  )
+  t.deepEqual(jv(
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz %%_d_%% yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      c_data: {
+        d: 'e2'
+      }
+    }
+  ),
+    {
+      a: [
+        {
+          b: [
+            {
+              c: 'zzz e2 yyy',
+              c_data: {
+                x: 'x1',
+                y: 'y1'
+              }
+            }
+          ]
+        }
+      ],
+      c_data: {
+        d: 'e2'
+      }
+    },
+    '10.07.02 - root has container, named how deepest data contaienr should be named'
   )
 })
 

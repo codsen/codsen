@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2017-05-03
+
+### Added
+- Variables are not correctly resolved from linking to the same (deeper) level. If not found, search continues in that level's data store key (default key name for data stores is `<same-key-name>_data`). If not found there, search jumps to root level, and looks for key there. If not found, search continues for data store at the root. If failed, error is thrown.
+- Some rebasing done to clean things up 🚿.
+
 ## [4.0.0] - 2017-04-30
 
 Breaking changes in the API, or rather output. When Boolean values are encountered and written as values (and no other string characters are present on the original placeholder), we output empty string, not `false` or `true`. Nobody needs Booleans converted to String. I need this for my email templating projects. 🦄
@@ -46,3 +52,5 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [2.0.0]: https://github.com/code-and-send/json-variables/compare/v1.2.0...v2.0.0
 [3.0.0]: https://github.com/code-and-send/json-variables/compare/v2.0.0...v3.0.0
 [3.1.0]: https://github.com/code-and-send/json-variables/compare/v3.0.0...v3.1.0
+[4.0.0]: https://github.com/code-and-send/json-variables/compare/v3.1.0...v4.0.0
+[4.1.0]: https://github.com/code-and-send/json-variables/compare/v4.0.1...v4.1.0
