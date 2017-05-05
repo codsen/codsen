@@ -163,7 +163,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-You can also wrap all resolved variables with strings, a new heads and tails using `opts.wrapHeadsWith` and `opts.wrapTailsWith`. For example, make them Java-style, wrapped with `${` and `}`:
+You can also wrap all resolved variables with strings, a new pair of _heads_ and _tails_, using `opts.wrapHeadsWith` and `opts.wrapTailsWith`. For example, bake some Java, wrap your variables with `${` and `}`:
 
 ```js
 const jv = require('json-variables')
@@ -189,7 +189,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-If variables reference keys which have values that reference other keys, that's fine. Just ensure there's no closed loop.
+If variables reference keys which have values that reference other keys, that's fine. Just ensure there's _no closed loop_. Otherwise, renderer will `throw` and error.
 
 ```js
 const jv = require('json-variables')
@@ -224,7 +224,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-Variables can also reference deeper levels within objects and arrays, just use the dot notation:
+Variables can also reference deeper levels within objects and arrays — just put dot like `variable.key.subkey`:
 
 ```js
 const jv = require('json-variables')
@@ -252,7 +252,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ### Data containers
 
-Data-wise, if you looked at a higher level, it might appear clunky to put values as separate values, like in examples above. Saving you time scrolling up, check this out:
+Data-wise, if you looked at a higher level, it might appear clunky to put values as _separate values_, like in examples above. Saving you time scrolling up, check this out:
 
 ```js
 {
@@ -263,7 +263,7 @@ Data-wise, if you looked at a higher level, it might appear clunky to put values
 }
 ```
 
-Does this look like clean data arrangement? Hell no. It's a convoluted and nasty data arrangement. The keys `var1` and `var2` are not of the same status as an `a` and `b`, therefore can't be mashed together at the same level.
+Does this look like clean data arrangement? Hell no. It's a convoluted and nasty. The keys `var1` and `var2` are not of the same status as an `a` and `b`, therefore can't be mashed together at the same level, can it?
 
 What if we placed all key's `a` variables within a separate key, `a_data` — it starts with the same letter, so it will end up being nearby the `a` after sorting. Observe:
 
