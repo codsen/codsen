@@ -111,6 +111,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `noSingleMarkers`              | Boolean  | no          | `false`     | If any value in the source object has only and exactly heads or tails: a) do throw mismatched marker error (`true`) or b) don't (`false`)
 `resolveToBoolIfAnyValuesContainBool` | Boolean  | no        | `true` | The very first moment Boolean is merged into a string value, it turns the whole value to its value. Permanently. Nothing else matters. When `false` and there's a mix of Strings and Boolaens, Boolean is resolved into empty string. When the value is just a reference marker, upon resolving it will be intact Boolean. This setting is relevant when there's mixing of strings and Booleans - what to do in those cases.
 `resolveToFalseIfAnyValuesContainBool` | Boolean  | no       | `true` | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.
+`throwWhenNonStringInsertedInString`   | Boolean  | no       | `false`| By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.
 }                              |          |             |             |
 
 ## Use examples
