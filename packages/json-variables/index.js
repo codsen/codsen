@@ -11,10 +11,21 @@ const strLen = require('string-length')
 const spliceStr = require('splice-string')
 const slice = require('string-slice')
 const util = require('./util')
-const aContainsB = util.aContainsB
 const isArr = Array.isArray
 const matcher = require('matcher')
 const numSort = require('num-sort')
+const objectPath = require('object-path')
+
+// tap util f's directly
+const aContainsB = util.aContainsB
+const aStartsWithB = util.aStartsWithB
+const extractVarsFromString = util.extractVarsFromString
+const findLastInArray = util.findLastInArray
+const checkTypes = util.checkTypes
+const arrayiffyString = util.arrayiffyString
+const fixOffset = util.fixOffset
+const front = util.front
+const splitObjectPath = util.splitObjectPath
 
 function isStr (something) { return type(something) === 'string' }
 function isObj (something) { return type(something) === 'Object' }
@@ -46,13 +57,14 @@ function jsonVariables (inputOriginal, opts) {
     wrapGlobalFlipSwitch: true, // is wrap function on?
     noSingleMarkers: false, // if value has only and exactly heads or tails, don't throw mismatched marker error.
     resolveToBoolIfAnyValuesContainBool: true, // if variable is resolved into anything that contains or is equal to Boolean false, set the whole thing to false
-    resolveToFalseIfAnyValuesContainBool: true // resolve whole value to false, even if some values contain Boolean true. Otherwise, the whole value will resolve to the first encountered Boolean.
+    resolveToFalseIfAnyValuesContainBool: true, // resolve whole value to false, even if some values contain Boolean true. Otherwise, the whole value will resolve to the first encountered Boolean.
+    throwWhenNonStringInsertedInString: false
   }
   opts = objectAssign(clone(defaults), opts)
 
-  opts.dontWrapVars = util.arrayiffyString(opts.dontWrapVars)
+  opts.dontWrapVars = arrayiffyString(opts.dontWrapVars)
 
-  util.checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts')
+  checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts')
 
   if (opts.heads === '') {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_03] opts.heads are empty!')
@@ -83,10 +95,11 @@ function jsonVariables (inputOriginal, opts) {
   }
 
   var foundHeads, foundTails
-  var current, currentObjKey, wrapLeft, wrapRight, offset
+  var current, currentObjKey, wrapLeft, wrapRight, offset, resolvedValue
   var wrap = opts.wrapGlobalFlipSwitch
 
   input = monkey.traverse(input, function (key, val, innerObj) {
+    // console.log('\n========================================')
     if (
       existy(val) && (
         aContainsB(key, opts.heads) ||
@@ -95,12 +108,14 @@ function jsonVariables (inputOriginal, opts) {
         aContainsB(key, opts.tailsNoWrap)
       )
     ) {
-      throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Object keys can\'t contain variables!\nPlease check following key: ' + key)
+      throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Object keys can\'t contain variables!\nPlease check the following key: ' + key)
     }
     // If it's an array, val will not exist, only key.
     // On objects, we'll use val instead:
     current = notUndef(val) ? val : key
     currentObjKey = notUndef(val) ? key : null
+    // console.log('key = ' + JSON.stringify(key, null, 4))
+    // console.log('val = ' + JSON.stringify(val, null, 4))
 
     // if current branch's piece that monkey has just brought, "current" contains no variable
     // placeholders, instantly return it back, skipping all the action.
@@ -158,16 +173,17 @@ function jsonVariables (inputOriginal, opts) {
     // The above is relevant in cases when all preferences are kept in the same JSON and heads/tails are set from the same file they will later process.
     if ((!opts.noSingleMarkers && loopKillSwitch) || opts.noSingleMarkers) {
       while (isStr(current) && ((search(current, opts.heads).length !== 0) || (search(current, opts.headsNoWrap).length !== 0))) {
+        // console.log('\n------------------')
         foundHeads = search(current, opts.heads).concat(search(current, opts.headsNoWrap)).sort(numSort.asc)
         foundTails = search(current, opts.tails).concat(search(current, opts.tailsNoWrap)).sort(numSort.asc)
-        innerVar = util.extractVarsFromString(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0]
+        innerVar = extractVarsFromString(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0]
 
         // catch recursion after one full cycle
         // [!] cases when recursionLoopSize === 1 are not covered here because of false positives risk
         if (includes(innerPath, innerVar)) {
           if (!patience) {
             // means recursion is about to start, patience is not active yet
-            recursionLoopSize = innerPath.length - util.findLastInArray(innerPath, innerVar)
+            recursionLoopSize = innerPath.length - findLastInArray(innerPath, innerVar)
             patience = recursionLoopSize > 1 ? recursionLoopSize : false
           } else {
             // means second recursion cycle is potentially going on, patience is active
@@ -188,40 +204,74 @@ function jsonVariables (inputOriginal, opts) {
         }
         var found
 
-        if (isObj(innerObj.parent) && innerObj.parent.hasOwnProperty(innerVar)) {
+        // console.log('innerVar = ' + JSON.stringify(innerVar, null, 4))
+        if (
+          isObj(innerObj.parent) &&
+          innerObj.parent.hasOwnProperty(front(innerVar)) &&
+          (objectPath.get(innerObj.parent, innerVar) !== undefined)
+        ) {
+          // console.log('> case 001')
           found = true
-          replacement = innerObj.parent[innerVar]
+          // replacement = innerObj.parent[innerVar]
+          resolvedValue = objectPath.get(innerObj.parent, innerVar)
+          // console.log('resolvedValue = ' + JSON.stringify(resolvedValue, null, 4))
+          if (!isStr(resolvedValue) && opts.throwWhenNonStringInsertedInString) {
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_16] We were going to replace the variable "' + innerVar + '" in ' + JSON.stringify(current, null, 4) + ' and it was not string but ' + type(resolvedValue))
+          } else {
+            replacement = resolvedValue
+          }
         } else if (
           opts.lookForDataContainers &&
           isObj(innerObj.parent) &&
           innerObj.parent.hasOwnProperty('' + key + opts.dataContainerIdentifierTails) &&
-          innerObj.parent['' + key + opts.dataContainerIdentifierTails][innerVar]
+          existy(innerObj.parent['' + key + opts.dataContainerIdentifierTails][front(innerVar)]) &&
+          (objectPath.get(innerObj.parent['' + key + opts.dataContainerIdentifierTails], innerVar) !== undefined)
         ) {
+          // console.log('> case 002')
+          // console.log('\n*')
+          // console.log('innerVar = ' + JSON.stringify(innerVar, null, 4))
           found = true
-          replacement = innerObj.parent['' + key + opts.dataContainerIdentifierTails][innerVar]
 
-        } else if (input.hasOwnProperty(innerVar)) {
+          replacement = objectPath.get(innerObj.parent['' + key + opts.dataContainerIdentifierTails], innerVar)
+          // console.log('replacement = ' + JSON.stringify(replacement, null, 4))
+        } else if (
+          input.hasOwnProperty(front(innerVar)) &&
+          (objectPath.get(input, innerVar) !== undefined)
+        ) {
+          // console.log('> case 003')
           found = true
-          replacement = input[innerVar]
 
+          // console.log('\n\n+ input = ' + JSON.stringify(input, null, 4))
+          // console.log('+ innerVar = ' + JSON.stringify(innerVar, null, 4))
+          replacement = objectPath.get(input, innerVar)
+          // console.log('replacement = ' + JSON.stringify(replacement, null, 4))
         } else if (opts.lookForDataContainers) {
-
+          // console.log('> cases 004-005-006')
           if (
             input.hasOwnProperty('' + key + opts.dataContainerIdentifierTails) &&
             isObj(input[key + opts.dataContainerIdentifierTails])
           ) {
+            // console.log('> case 004')
             found = true
-            replacement = input['' + key + opts.dataContainerIdentifierTails][innerVar]
+            // replacement = input['' + key + opts.dataContainerIdentifierTails][innerVar]
+            replacement = objectPath.get(input, ['' + key + opts.dataContainerIdentifierTails, innerVar])
           } else if (
-            input.hasOwnProperty(innerObj.topmostKey + opts.dataContainerIdentifierTails) &&
-            isObj(input[innerObj.topmostKey + opts.dataContainerIdentifierTails])
+            input.hasOwnProperty('' + innerObj.topmostKey + opts.dataContainerIdentifierTails) &&
+            isObj(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails])
           ) {
             found = true
-            if (existy(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails][innerVar])) {
-              replacement = input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails][innerVar]
+            if (existy(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails][front(innerVar)])) {
+              // console.log('> case 005')
+              // console.log('input[innerObj.topmostKey + opts.dataContainerIdentifierTails] = ' + JSON.stringify(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails], null, 4))
+              replacement = objectPath.get(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails], innerVar)
+              // console.log('replacement = ' + JSON.stringify(replacement, null, 4))
             } else {
-              // A rare case when variable from data store is referencing another variable that also comes from data store.
+              // console.log('> case 006')
+              // When value is array and there are variable references among that array's elements, pointing to _data store key, this is the case.
+
+              // Also, it's a rare case when a variable from data store is referencing an another variable that also comes from a data store.
               // Now essentially the original reference to the correct data store is lost, and now the new data store doesn't contain the variable we're looking for.
+
               // The solution (not ideal) is to traverse all keys at root level that can be identified as data stores and look for the missing key we need there.
 
               replacement = undefined
@@ -232,9 +282,10 @@ function jsonVariables (inputOriginal, opts) {
                   (opts.dataContainerIdentifierTails !== '') && // data key name append is not set to blank
                   key2.endsWith(opts.dataContainerIdentifierTails) && // it's data container
                   isObj(input[key2]) && // key's value is object
-                  input[key2].hasOwnProperty(innerVar) // has the key we want
+                  input[key2].hasOwnProperty(front(innerVar)) // has the key we want
                 ) {
-                  replacement = input[key2][innerVar]
+                  replacement = objectPath.get(input, [key2, innerVar])
+                  // console.log('replacement = ' + JSON.stringify(replacement, null, 4))
                 }
               })
               if (!replacement) {
@@ -256,19 +307,26 @@ function jsonVariables (inputOriginal, opts) {
           wrapLeft = true
           wrapRight = true
 
+          // console.log('* opts.dontWrapVars = ' + JSON.stringify(opts.dontWrapVars, null, 4))
+          // console.log('* innerVar = ' + JSON.stringify(innerVar, null, 4))
           if (opts.wrapGlobalFlipSwitch && opts.dontWrapVars.length > 0) {
-            wrap = wrap && !opts.dontWrapVars.some(function (elem) {
-              return matcher.isMatch(innerVar, elem)
+            // wrap = wrap && !opts.dontWrapVars.some(function (elem) {
+            //   return matcher.isMatch(innerVar, elem)
+            // })
+            wrap = wrap && !splitObjectPath(innerVar).some(function (el1) {
+              return opts.dontWrapVars.some(function (el2) {
+                return matcher.isMatch(el1, el2)
+              })
             })
           }
 
           // check if current variable's marker is opts.headsNoWrap (default is "%%-"). If so, don't wrap it.
-          if (util.aStartsWithB(spliceStr(current, 0, foundHeads[0]), opts.headsNoWrap)) {
+          if (aStartsWithB(spliceStr(current, 0, foundHeads[0]), opts.headsNoWrap)) {
             wrapLeft = false
           }
 
           // check if current variable's marker is opts.headsNoWrap (default is "%%-"). If so, don't wrap it.
-          if (util.aStartsWithB(slice(current, foundTails[0]), opts.tailsNoWrap)) {
+          if (aStartsWithB(slice(current, foundTails[0]), opts.tailsNoWrap)) {
             wrapRight = false
           }
 
@@ -313,9 +371,9 @@ function jsonVariables (inputOriginal, opts) {
           }
 
           // offset fixes
-          var extr = util.extractVarsFromString(replacement, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0] || replacement
+          var extr = extractVarsFromString(replacement, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0] || replacement
           offset = extr.length - innerVar.length
-          dontWrapTheseVarsStartingWithIndexes = util.fixOffset(dontWrapTheseVarsStartingWithIndexes, foundHeads[0], offset)
+          dontWrapTheseVarsStartingWithIndexes = fixOffset(dontWrapTheseVarsStartingWithIndexes, foundHeads[0], offset)
         } else if (isArr(replacement) && found) {
           replacement = replacement.join('')
         }
@@ -323,9 +381,9 @@ function jsonVariables (inputOriginal, opts) {
         // this covers both cases: when replacement is string or not
         if (found) {
           if (isStr(replacement)) {
-            if (includes(util.extractVarsFromString(replacement, opts.heads, opts.tails), currentObjKey)) {
+            if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), currentObjKey)) {
               throw new Error('json-variables/jsonVariables(): [THROW_ID_19] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey)
-            } else if (includes(util.extractVarsFromString(replacement, opts.heads, opts.tails), innerVar)) {
+            } else if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), innerVar)) {
               throw new Error('json-variables/jsonVariables(): [THROW_ID_20] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar)
             }
           }

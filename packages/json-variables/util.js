@@ -28,6 +28,8 @@ function aStartsWithB (a, b) {
   return a.indexOf(b) === 0
 }
 
+function isStr (something) { return type(something) === 'string' }
+
 function checkTypes (obj, ref, msg, variable) {
   if (arguments.length === 0) {
     throw new Error('object-flatten-referencing/util.js/checkTypes(): missing inputs!')
@@ -139,6 +141,28 @@ function fixOffset (whatever, position, amount) {
   return whatever
 }
 
+// extracts all the characters from the front of a string until finds "." or "[".
+function front (str) {
+  if (!isStr(str)) {
+    return str
+  } else {
+    return existy(str.match(/\b[^.[]+/)) ? str.match(/\b[^.[]+/)[0] : ''
+  }
+}
+
+// splits object-path notation into array: "aaa.bbb[ccc]" => ["aaa", "bbb", "ccc"]
+function splitObjectPath (str) {
+  // console.log('str = ' + JSON.stringify(str, null, 4))
+  var re = /\s*[[.*\]]\s*/
+  if (!isStr(str)) {
+    return str
+  } else {
+    var res = str.split(re).filter(function (n) { return existy(n) && (n.length > 0) }).map(Function.prototype.call, String.prototype.trim)
+    // console.log('res = ' + JSON.stringify(res, null, 4))
+    return res
+  }
+}
+
 module.exports = {
   aContainsB: aContainsB,
   aStartsWithB: aStartsWithB,
@@ -146,5 +170,7 @@ module.exports = {
   findLastInArray: findLastInArray,
   checkTypes: checkTypes,
   arrayiffyString: arrayiffyString,
-  fixOffset: fixOffset
+  fixOffset: fixOffset,
+  front: front,
+  splitObjectPath: splitObjectPath
 }

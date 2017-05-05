@@ -175,7 +175,8 @@ var res = jv(
   },
   {
     wrapHeadsWith: '${',
-    wrapTailsWith: '}'
+    wrapTailsWith: '}',
+    dontWrapVars: ['*zzz', '*3', '*6']
   }
 )
 console.log('res = ' + JSON.stringify(res, null, 4))
@@ -219,6 +220,32 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //      c: 'zzz',
 //      d: 'zzz',
 //      e: 'zzz'
+//    }
+```
+
+Variables can also reference deeper levels within objects and arrays, just use the dot notation:
+
+```js
+const jv = require('json-variables')
+var res = jv(
+  {
+    a: 'some text %%_var1.key1_%% more text %%_var2.key2_%%',
+    b: 'something',
+    var1: {key1: 'value1'},
+    var2: {key2: 'value2'}
+  },
+  {
+    wrapHeadsWith: '%%=',
+    wrapTailsWith: '=%%',
+    dontWrapVars: ['*zzz', '*3', '*6']
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: 'some text %%=value1=%% more text %%=value2=%%',
+//      b: 'something',
+//      var1: {key1: 'value1'},
+//      var2: {key2: 'value2'}
 //    }
 ```
 
@@ -277,9 +304,34 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
+Data container keys can also contain objects or arrays. Just query the whole path:
+
+```js
+const jv = require('json-variables')
+var res = jv(
+  {
+    a: 'some text %%_var1.key1.key2.key3_%% more text %%_var3_%%.',
+    a_data: {
+      var1: {key1: {key2: {key3: 'value1'}}},
+      var3: '333333'
+    },
+    b: 'something'
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: 'some text value1 more text 333333.',
+//      b: 'something',
+//      a_data: {
+//        var1: {key1: {key2: {key3: 'value1'}}},
+//        var3: '333333'
+//      }
+//    }
+```
+
 ### Ignores with wildcards
 
-You can ignore the wrapping on any keys by supplying their name patterns in the options array, `dontWrapVars` value. It can be array or string:
+You can ignore the wrapping on any keys by supplying their name patterns in the options array, `dontWrapVars` value. It can be array or string and also it can contain wildcards:
 
 ```js
 const jv = require('json-variables')
@@ -333,7 +385,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 
 Wrapping of the variables is an essential feature when working with data structures that need to be adapted for both back-end and front-end. For the development, preview build you might want `John` as a first name, but for back-end build, you might want `{{ user.firstName }}`.
 
-Taking Nunjucks templating language as an example, you'll end up with something like:
+The following example shows how to "bake" HTML sprinkled with [Nunjucks](https://mozilla.github.io/nunjucks/templating.html) notation (or any members of Jinja-like templating languages that use double curly braces):
 
 HTML template:
 ```html
@@ -350,9 +402,10 @@ JSON for DEV build (a preview build to check how everything looks):
 }
 ```
 
-In the above, `hero_title_wrapper` basically redirects to `hero_title`, which pulls `John` as the first name. Alternative title's text is when `first_name` is missing.
+In the above, `hero_title_wrapper` basically redirects to `hero_title`, which pulls `John` as a first name. The alternative title's text is used when `first_name` is missing.
 
 JSON for PROD version is minimal, only overwriting what's different/new (to keep it DRY):
+
 ```json
 {
   "first_name": "user.firstName"
@@ -366,7 +419,7 @@ In the end, our baked HTML template, ready to be put on the back-end will look l
 <div>{{ user.firstName }}, check out our seasonal offers!</div>
 ```
 
-So far so good, but what happens if we want to add a check, does `first_name` exist? Again in a Nunjucks templating language, simplified, it would be something like:
+So far so good, but what happens if we want to add a check, does `first_name` exist? Again in a Nunjucks templating language, it would be something like:
 
 content JSON for PROD build:
 ```json
@@ -395,7 +448,7 @@ content JSON for PROD build:
 }
 ```
 
-Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the postprocessor to skip wrapping, no matter what.
+Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the postprocessor to **skip wrapping, no matter what**.
 
 ### Mixing Booleans and strings
 

@@ -40,6 +40,7 @@
     "matcher": "^0.1.2",
     "num-sort": "^1.0.0",
     "object-assign": "^4.1.1",
+    "object-path": "^0.11.4",
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^1.0.1",
     "string-length": "^1.0.1",
@@ -54,7 +55,7 @@
     "standard": "^10.0.0"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   },
   "engines": {
     "node": ">=5.11.0"

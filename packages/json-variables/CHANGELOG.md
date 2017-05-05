@@ -4,6 +4,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2017-05-05
+### Added
+- `opts.resolveToFalseIfAnyValuesContainBool` (on by default)
+- `opts.throwWhenNonStringInsertedInString` (off by default)
+- Now allowing to query deeper-level values. For example:
+
+```js
+jv(
+  {
+    a: 'some text %%_b.key2_%% more text',
+    b: {
+      key1: 'val1',
+      key2: 'val2',
+      key3: 'val3'
+    }
+  }
+)
+// => {
+//      a: 'some text val2 more text',
+//      b: {
+//        key1: 'val1',
+//        key2: 'val2',
+//        key3: 'val3'
+//      }
+//    }
+```
+
+- Obviously, the new changes above threw the `opts.dontWrapVars` out of track a little bit since instead of `key` now we've possibly got `key.key[element.key]`, so I fixed that too and added more unit tests.
+
+Blimey, we've got 99 unit tests! 🍾 We'll need to celebrate the 100th! 🍻✨
+
 ## [4.1.0] - 2017-05-03
 
 ### Added
@@ -54,3 +85,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [3.1.0]: https://github.com/code-and-send/json-variables/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/code-and-send/json-variables/compare/v3.1.0...v4.0.0
 [4.1.0]: https://github.com/code-and-send/json-variables/compare/v4.0.1...v4.1.0
+[4.2.0]: https://github.com/code-and-send/json-variables/compare/v4.1.0...v4.2.0
