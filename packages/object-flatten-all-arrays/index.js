@@ -1,14 +1,17 @@
 'use strict'
 
-var isObj = require('lodash.isplainobject')
 var isArr = Array.isArray
 var merge = require('lodash.merge')
 var clone = require('lodash.clonedeep')
 var objectAssign = require('object-assign')
+const type = require('type-detect')
 var checkTypes = require('./util').checkTypes
 var arrayContainsStr = require('./util').arrayContainsStr
 
 function flattenAllArrays (originalIncommingObj, opts) {
+  function isObj (something) {
+    return type(something) === 'Object'
+  }
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   }
