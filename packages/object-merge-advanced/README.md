@@ -1,6 +1,6 @@
 # object-merge-advanced
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
@@ -112,11 +112,14 @@ Input argument           | Type           | Obligatory? | Description
 `input2`                 | Anything       | yes         | Another thing, normally an object, but can be array or something else.
 `options`                | Plain object   | no          | Optionally, pass all settings in a plain object, as a third argument
 
-Options object's key                | Value   | Default | Description
-------------------------------------|---------|---------|-------------
-`{`                                 |         |         |
-`mergeObjectsOnlyWhenKeysetMatches` | Boolean | true    | Controls the merging of the objects within arrays. See below.
-`}`                                 |         |         |
+Options object's key                    | Value   | Default | Description
+----------------------------------------|---------|---------|-------------
+`{`                                     |         |         |
+`mergeObjectsOnlyWhenKeysetMatches`     | Boolean | `true`  | Controls the merging of the objects within arrays. See below.
+`ignoreKeys`                            | String  | n/a     | These keys, if present on `input1`, will be kept and not merged, that is, changed. You can use wildcards.
+`hardMergeKeys`                         | String  | n/a     | These keys, if present on `input2`, will overwrite their counterparts on `input1` (if present) no matter what. You can use wildcards.
+`mergeArraysContainingStringsToBeEmpty` | Boolean | `false` | If any arrays contain strings, resulting merged array will be empty IF this setting is set to `true`.
+`}`                                     |         |         |
 
 `mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).
 
@@ -196,7 +199,7 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 I aim to have 100% code coverage (which is the case at the moment).
 
@@ -222,7 +225,7 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 

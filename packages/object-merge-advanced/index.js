@@ -3,11 +3,8 @@
 // ===================================
 // V A R S
 
-var isArr = Array.isArray
 var objectAssign = require('object-assign')
-var isObj = require('lodash.isplainobject')
-var isStr = require('lodash.isstring')
-var isNum = require('lodash.isnumber')
+var type = require('type-detect')
 var clone = require('lodash.clonedeep')
 var includes = require('array-includes-with-glob')
 
@@ -17,9 +14,15 @@ var nonEmpty = require('./util').nonEmpty
 var checkTypes = require('./util').checkTypes
 var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
 var arrayiffyString = require('./util').arrayiffyString
+var arrayContainsStr = require('./util').arrayContainsStr
 
 // ===================================
 // F U N C T I O N S
+
+function isObj (something) { return type(something) === 'Object' }
+function isArr (something) { return Array.isArray(something) }
+function isStr (something) { return type(something) === 'string' }
+function isNum (something) { return type(something) === 'number' }
 
 function mergeAdvanced (input1orig, input2orig, opts) {
   //
@@ -27,10 +30,10 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   // ---------------------------------------------------------------------------
 
   if (arguments.length === 0) {
-    throw new TypeError('object-merge-advanced/mergeAdvanced(): Both inputs are missing')
+    throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing')
   }
   if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('object-merge-advanced/mergeAdvanced(): Options object, the third argument, must be a plain object')
+    throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object')
   }
   var i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
   var i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
@@ -41,13 +44,14 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   var defaults = {
     mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
     ignoreKeys: [],
-    hardMergeKeys: []
+    hardMergeKeys: [],
+    mergeArraysContainingStringsToBeEmpty: false
   }
   opts = objectAssign(clone(defaults), opts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 
-  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced():', 'opts')
+  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06x] ', 'opts')
 
   // ACTION
   // ---------------------------------------------------------------------------
@@ -59,25 +63,29 @@ function mergeAdvanced (input1orig, input2orig, opts) {
       if (isArr(i2) && nonEmpty(i2)) {
         // case 1
         // two array merge
-        var temp = []
-        for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-          if (
-            isObj(i1[index]) &&
-            isObj(i2[index]) &&
-            ((opts.mergeObjectsOnlyWhenKeysetMatches &&
-            equalOrSubsetKeys(i1[index], i2[index])) || !opts.mergeObjectsOnlyWhenKeysetMatches)
-          ) {
-            temp.push(mergeAdvanced(i1[index], i2[index]))
-          } else {
-            if (index < i1.length) {
-              temp.push(i1[index])
-            }
-            if (index < i2.length) {
-              temp.push(i2[index])
+        if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
+          return []
+        } else {
+          var temp = []
+          for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+            if (
+              isObj(i1[index]) &&
+              isObj(i2[index]) &&
+              ((opts.mergeObjectsOnlyWhenKeysetMatches &&
+                equalOrSubsetKeys(i1[index], i2[index])) || !opts.mergeObjectsOnlyWhenKeysetMatches)
+            ) {
+              temp.push(mergeAdvanced(i1[index], i2[index], opts))
+            } else {
+              if (index < i1.length) {
+                temp.push(i1[index])
+              }
+              if (index < i2.length) {
+                temp.push(i2[index])
+              }
             }
           }
+          i1 = clone(temp)
         }
-        i1 = clone(temp)
       } else {
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         return i1

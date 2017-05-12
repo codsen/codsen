@@ -1,14 +1,8 @@
 'use strict'
 import test from 'ava'
-
-var mergeAdvanced = require('./index')
-// var existy = require('./util').existy
-// var isBool = require('./util').isBool
-// var sortObject = require('./util').sortObject
-// var nonEmpty = require('./util').nonEmpty
-var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
-var checkTypes = require('./util').checkTypes
-var clone = require('lodash.clonedeep')
+import { equalOrSubsetKeys, checkTypes, arrayContainsStr } from './util'
+const mergeAdvanced = require('./index')
+const clone = require('lodash.clonedeep')
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
@@ -1996,7 +1990,29 @@ test('08.04 - objects in arrays in objects', t => {
         { b: 'd', c: ['d1', 'd2'] }
       ]
     },
-    '08.04')
+    '08.04.01 - default')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          { b: 'b', c: ['d1'] }
+        ]
+      },
+      {
+        a: [
+          { b: 'd', c: ['d2'] }
+        ]
+      },
+      {
+        mergeArraysContainingStringsToBeEmpty: true
+      }
+    ),
+    {
+      a: [
+        { b: 'd', c: [] }
+      ]
+    },
+    '08.04.02 - arrays with strings merged into empty arrays')
 })
 
 // ==============================
@@ -2549,10 +2565,25 @@ test('12.04 - OPTS > opts.hardMergeKeys type checks work', t => {
 //                         .=O=.
 
 // ==============================
+// util/arrayContainsStr()
+// ==============================
+
+test('97.01 - UTIL > arrayContainsStr - throws when there\'s no input', t => {
+  t.is(
+    arrayContainsStr(),
+    false,
+    '97.01'
+  )
+  t.throws(function () {
+    arrayContainsStr(1)
+  })
+})
+
+// ==============================
 // util/checkTypes()
 // ==============================
 
-test('98.01 - UTIL > throws when there\'s no input', t => {
+test('98.01 - UTIL > checkTypes - throws when there\'s no input', t => {
   t.throws(function () {
     checkTypes()
   })

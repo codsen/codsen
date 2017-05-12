@@ -3,8 +3,6 @@
 // ===================================
 // V A R S
 
-const isObj = require('lodash.isplainobject')
-const isNum = require('lodash.isnumber')
 const includesAll = require('array-includes-all')
 const type = require('type-detect')
 
@@ -13,12 +11,16 @@ const type = require('type-detect')
 
 function existy (x) { return x != null }
 
+function isObj (something) { return type(something) === 'Object' }
+function isArr (something) { return Array.isArray(something) }
+function isStr (something) { return type(something) === 'string' }
+function isNum (something) { return type(something) === 'number' }
 function isBool (bool) {
   return typeof bool === 'boolean'
 }
 
 function nonEmpty (something) {
-  if (Array.isArray(something) || (typeof something === 'string')) {
+  if (isArr(something) || isStr(something)) {
     return something.length > 0
   } else if (isObj(something)) {
     return Object.keys(something).length > 0
@@ -29,10 +31,10 @@ function nonEmpty (something) {
 
 function equalOrSubsetKeys (obj1, obj2) {
   if (!isObj(obj1)) {
-    throw new TypeError('object-merge-advanced/ mergeAdvanced()/ equalOrSubsetKeys(): First input is not an object, it\'s ' + typeof obj1)
+    throw new TypeError('object-merge-advanced/util.js/equalOrSubsetKeys(): [THROW_ID_03] First input is not an object, it\'s ' + typeof obj1)
   }
   if (!isObj(obj2)) {
-    throw new TypeError('object-merge-advanced/ mergeAdvanced()/ equalOrSubsetKeys(): Second input is not an object, it\'s ' + typeof obj2)
+    throw new TypeError('object-merge-advanced/util.js/equalOrSubsetKeys(): [THROW_ID_04] Second input is not an object, it\'s ' + typeof obj2)
   }
   if ((Object.keys(obj1).length === 0) || (Object.keys(obj2).length === 0)) {
     return true
@@ -42,7 +44,7 @@ function equalOrSubsetKeys (obj1, obj2) {
 
 function checkTypes (obj, ref, msg, variable) {
   if (arguments.length === 0) {
-    throw new Error('object-merge-advanced/util.js/checkTypes(): missing inputs!')
+    throw new Error('object-merge-advanced/util.js/checkTypes(): [THROW_ID_05] missing inputs!')
   }
   Object.keys(obj).forEach(function (key) {
     if (existy(ref[key]) && (type(obj[key]) !== type(ref[key]))) {
@@ -62,11 +64,24 @@ function arrayiffyString (something) {
   return something
 }
 
+function arrayContainsStr (arr) {
+  if (arguments.length === 0) {
+    return false
+  }
+  if (!isArr(arr)) {
+    throw new TypeError('object-merge-advanced/util.js/arrayContainsStr(): [THROW_ID_07] input must be array')
+  }
+  return arr.some(function (val) {
+    return typeof val === 'string'
+  })
+}
+
 module.exports = {
   existy: existy,
   isBool: isBool,
   nonEmpty: nonEmpty,
   equalOrSubsetKeys: equalOrSubsetKeys,
   checkTypes: checkTypes,
-  arrayiffyString: arrayiffyString
+  arrayiffyString: arrayiffyString,
+  arrayContainsStr: arrayContainsStr
 }

@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.2.0] - 2017-05-12
+### Added
+- opts.mergeArraysContainingStringsToBeEmpty
+
 ## [6.1.0] - 2017-04-23 weekend
 ### Added
-- Options settings' type enforcing and if necessary, throwing implemented when the options object values are set to be of a wrong type. At the same time, we're trying to be as flexible as possible — for example, accepting single string value instead of array.
-- new options setting, `opts.ignoreKeys`
-- new options setting, `opts.hardMergeKeys`
+- When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible — for example, accepting single string value instead of array.
+- new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
+- new options setting, `opts.hardMergeKeys` - this is also one direction (opposive of above) merge. Key names accept wildcards.
 ### Unchanged
 - Coverage is kept 100%. That does not mean much but hey.
 
@@ -61,3 +65,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [5.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v4.2.0...v5.0.0
 [6.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v5.0.0...v6.0.0
 [6.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.0.0...v6.1.0
+[6.2.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.1.0...v6.2.0

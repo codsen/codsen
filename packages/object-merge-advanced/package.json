@@ -29,9 +29,6 @@
     "array-includes-all": "^1.0.0",
     "array-includes-with-glob": "^1.1.0",
     "lodash.clonedeep": "*",
-    "lodash.isnumber": "*",
-    "lodash.isplainobject": "*",
-    "lodash.isstring": "*",
     "object-assign": "^4.1.1",
     "type-detect": "^4.0.3"
   },
