@@ -1,7 +1,7 @@
 'use strict'
-var flattenAllArrays = require('./index.js')
 import test from 'ava'
 import { checkTypes, arrayContainsStr } from './util'
+var flattenAllArrays = require('./index.js')
 
 // ==========
 // Normal use
