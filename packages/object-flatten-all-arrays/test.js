@@ -1,10 +1,11 @@
 'use strict'
 var flattenAllArrays = require('./index.js')
 import test from 'ava'
+import { checkTypes, arrayContainsStr } from './util'
 
-// ==============================
+// ==========
 // Normal use
-// ==============================
+// ==========
 
 test('01.01 - simple plain object, one array', t => {
   t.deepEqual(
@@ -225,7 +226,36 @@ test('01.06 - array contents are not of the same type', t => {
         'z'
       ]
     },
-    '01.06')
+    '01.06.01 - default')
+  t.deepEqual(
+    flattenAllArrays(
+      {
+        d: 'd',
+        b: 'b',
+        a: 'a',
+        c: [
+          {
+            b: 'b',
+            a: 'a'
+          },
+          {
+            d: 'd',
+            c: 'c'
+          },
+          'z'
+        ]
+      },
+      {
+        flattenArraysContainingStringsToBeEmpty: true
+      }
+    ),
+    {
+      d: 'd',
+      b: 'b',
+      a: 'a',
+      c: []
+    },
+    '01.06.02 - opts.flattenArraysContainingStringsToBeEmpty')
 })
 
 test('01.07 - multiple types in an array #1', t => {
@@ -384,12 +414,64 @@ test('01.11 - array, mix of ojects, arrays and strings', t => {
       },
       ['yyy']
     ],
-    '01.11')
+    '01.11.01 - default')
+  t.deepEqual(
+    flattenAllArrays(
+      [
+        'zzz',
+        {
+          a: ['a']
+        },
+        {
+          b: {b: 'b'}
+        },
+        ['yyy']
+      ],
+      {
+        flattenArraysContainingStringsToBeEmpty: true
+      }
+    ),
+    [],
+    '01.11.02 - opts')
 })
 
-// ==============================
+test('01.12 - arrays within objects, strings as elements', t => {
+  t.deepEqual(
+    flattenAllArrays(
+      {
+        a: {
+          b: ['c', 'd']
+        }
+      }
+    ),
+    {
+      a: {
+        b: ['c', 'd']
+      }
+    },
+    '01.12.01 - default')
+  t.deepEqual(
+    flattenAllArrays(
+      {
+        a: {
+          b: ['c', 'd']
+        }
+      },
+      {
+        flattenArraysContainingStringsToBeEmpty: true
+      }
+    ),
+    {
+      a: {
+        b: []
+      }
+    },
+    '01.12.02 - opts')
+})
+
+// ==========
 // Edge cases
-// ==============================
+// ==========
 
 test('02.01 - empty object as input', t => {
   t.deepEqual(
@@ -443,9 +525,9 @@ test('02.06 - nothing in the input', t => {
     '02.06')
 })
 
-// ==============================
+// ==========================
 // Does not mutate input args
-// ==============================
+// ==========================
 
 test('03.01 - does not mutate input args', t => {
   var obj = {
@@ -483,4 +565,38 @@ test('03.01 - does not mutate input args', t => {
       ]
     },
     '03.01')
+})
+
+// ----
+// UTIL
+// ----
+
+test('99.01 - UTIL > checkTypes - throws when there\'s no input', t => {
+  t.throws(function () {
+    checkTypes()
+  })
+})
+
+test('99.02 - UTIL > checkTypes - BAU throws', t => {
+  t.throws(function () {
+    checkTypes(
+      {a: 'aaa', b: true, c: true},
+      {a: 'aaa', b: true, c: 'zzz'},
+      'message',
+      'variable'
+    )
+  })
+})
+
+test('99.03 - UTIL > arrayContainsStr - throws when there\'s no input', t => {
+  t.throws(function () {
+    arrayContainsStr(1)
+  })
+})
+
+test('99.04 - UTIL > arrayContainsStr - empty input', t => {
+  t.deepEqual(
+    arrayContainsStr(),
+    false,
+    '99.04')
 })

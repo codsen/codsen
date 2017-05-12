@@ -33,8 +33,9 @@
   "homepage": "https://github.com/code-and-send/object-flatten-all-arrays#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "lodash.isplainobject": "*",
-    "lodash.merge": "*"
+    "lodash.merge": "*",
+    "object-assign": "^4.1.1",
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
@@ -42,9 +43,9 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^9.0.1"
+    "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   }
 }

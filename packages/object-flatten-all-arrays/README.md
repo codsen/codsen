@@ -1,8 +1,8 @@
 # object-flatten-all-arrays
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Merge and flatten any arrays found in all values within plain objects
+> Recursively flatten any arrays found in all values within plain objects
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -19,7 +19,7 @@
 
 - [Install](#install)
 - [Purpose](#purpose)
-- [Use](#use)
+- [For example](#for-example)
 - [API](#api)
   - [API - Input](#api---input)
 - [Testing](#testing)
@@ -38,7 +38,7 @@ $ npm install --save object-flatten-all-arrays
 
 Recursively traverse the cloned input and merge all plain objects within each array.
 
-## Use
+## For example
 
 ```js
 var flatten = require('object-flatten-all-arrays')
@@ -71,13 +71,13 @@ console.log('flattened = ' + JSON.stringify(flattened, null, 4))
 // ]}
 ```
 
-
-
 ## API
 
 ```js
-flatten(input)
+flatten(input[, options])
 ```
+
+Returns the same type thing as given input, only with arrays (recursively) flattened.
 
 ### API - Input
 
@@ -86,6 +86,14 @@ None of the input arguments are mutated. Their clones are being used instead.
 Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
 `input`                  | Whatever       | yes         | AST tree, or object or array or whatever. Can be deeply-nested. Hopefully contains some plain objects.
+`options`                | Plain object   | no          | Set the options in this object. See below for keys.
+
+
+`options` object's key                     | Type     | Obligatory? | Default     | Description
+-------------------------------------------|----------|-------------|-------------|----------------------
+{                                          |          |             |             |
+`flattenArraysContainingStringsToBeEmpty`  | Boolean  | no          | `false`     | If any arrays contain strings, flatten them to be empty thing. This is turned off by default, but it's what you actually need most of the time.
+}                                          |          |             |             |
 
 ## Testing
 
@@ -93,11 +101,11 @@ Input argument           | Type           | Obligatory? | Description
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-flatten-all-arrays/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
