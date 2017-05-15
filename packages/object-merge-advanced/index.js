@@ -7,11 +7,11 @@ var objectAssign = require('object-assign')
 var type = require('type-detect')
 var clone = require('lodash.clonedeep')
 var includes = require('array-includes-with-glob')
+var checkTypes = require('check-types-mini')
 
 var existy = require('./util').existy
 var isBool = require('./util').isBool
 var nonEmpty = require('./util').nonEmpty
-var checkTypes = require('./util').checkTypes
 var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
 var arrayiffyString = require('./util').arrayiffyString
 var arrayContainsStr = require('./util').arrayContainsStr
@@ -51,7 +51,7 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 
-  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06x] ', 'opts')
+  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06x] ')
 
   // ACTION
   // ---------------------------------------------------------------------------

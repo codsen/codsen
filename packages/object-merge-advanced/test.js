@@ -1,6 +1,6 @@
 'use strict'
 import test from 'ava'
-import { equalOrSubsetKeys, checkTypes, arrayContainsStr } from './util'
+import { equalOrSubsetKeys, arrayContainsStr } from './util'
 const mergeAdvanced = require('./index')
 const clone = require('lodash.clonedeep')
 
@@ -2568,24 +2568,14 @@ test('12.04 - OPTS > opts.hardMergeKeys type checks work', t => {
 // util/arrayContainsStr()
 // ==============================
 
-test('97.01 - UTIL > arrayContainsStr - throws when there\'s no input', t => {
+test('98.01 - UTIL > arrayContainsStr - throws when there\'s no input', t => {
   t.is(
     arrayContainsStr(),
     false,
-    '97.01'
+    '98.01'
   )
   t.throws(function () {
     arrayContainsStr(1)
-  })
-})
-
-// ==============================
-// util/checkTypes()
-// ==============================
-
-test('98.01 - UTIL > checkTypes - throws when there\'s no input', t => {
-  t.throws(function () {
-    checkTypes()
   })
 })
 

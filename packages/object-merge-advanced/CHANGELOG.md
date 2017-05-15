@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.3.0] - 2017-05-15
+### Added
+- Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini); removed all existing functions responsible for options' types.
+
 ## [6.2.0] - 2017-05-12
 ### Added
 - opts.mergeArraysContainingStringsToBeEmpty
@@ -66,3 +70,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [6.0.0]: https://github.com/code-and-send/object-merge-advanced/compare/v5.0.0...v6.0.0
 [6.1.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.0.0...v6.1.0
 [6.2.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.1.0...v6.2.0
+[6.3.0]: https://github.com/code-and-send/object-merge-advanced/compare/v6.2.0...v6.3.0

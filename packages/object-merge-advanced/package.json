@@ -28,6 +28,7 @@
   "dependencies": {
     "array-includes-all": "^1.0.0",
     "array-includes-with-glob": "^1.1.0",
+    "check-types-mini": "^1.2.0",
     "lodash.clonedeep": "*",
     "object-assign": "^4.1.1",
     "type-detect": "^4.0.3"
