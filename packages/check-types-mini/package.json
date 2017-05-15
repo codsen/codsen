@@ -1,0 +1,53 @@
+{
+  "name": "check-types-mini",
+  "version": "1.0.0",
+  "description": "Check the types of your options object's values after user has customised them",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava",
+    "watch": "nodemon --quiet --watch . --exec npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-and-send/check-types-mini.git"
+  },
+  "keywords": [
+    "plain",
+    "object",
+    "deep",
+    "keys",
+    "unique",
+    "no",
+    "difference",
+    "compare",
+    "new",
+    "match",
+    "schema",
+    "validate"
+  ],
+  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-and-send/check-types-mini/issues"
+  },
+  "homepage": "https://github.com/code-and-send/check-types-mini#readme",
+  "dependencies": {
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nodemon": "^1.11.0",
+    "nyc": "*",
+    "standard": "^10.0.0"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}

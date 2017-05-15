@@ -1,0 +1,33 @@
+'use strict'
+
+const type = require('type-detect')
+function existy (x) { return x != null }
+
+function checkTypes (obj, ref, msg, optsVarName) {
+  if (arguments.length === 0) {
+    throw new Error('check-types-mini/checkTypes(): missing first two arguments!')
+  }
+  if (arguments.length === 1) {
+    throw new Error('check-types-mini/checkTypes(): missing second argument!')
+  }
+  if (!existy(optsVarName)) {
+    optsVarName = 'opts'
+  }
+  if ((typeof msg === 'string') && (msg.length > 0)) {
+    msg = msg.trim() + ' '
+  } else {
+    msg = ''
+  }
+  if ((typeof optsVarName === 'string') && (optsVarName.length > 0)) {
+    optsVarName = optsVarName.trim() + '.'
+  } else {
+    optsVarName = ''
+  }
+  Object.keys(obj).forEach(function (key) {
+    if (existy(ref[key]) && (type(obj[key]) !== type(ref[key]))) {
+      throw new TypeError(`${msg}${optsVarName}${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not ${type(ref[key])} but ${type(obj[key])}`)
+    }
+  })
+}
+
+module.exports = checkTypes
