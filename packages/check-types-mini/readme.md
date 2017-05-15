@@ -20,6 +20,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
+  - [Options object](#options-object)
 - [For example](#for-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -50,8 +51,17 @@ Input argument   | Type         | Obligatory? | Description
 -----------------|--------------|-------------|--------------
 `obj`            | Plain object | yes         | Options object after user's customisation
 `ref`            | Plain object | yes         | Default options — used to compare the types
-`msg`            | String       | yes         | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
-`optsVarName`    | String       | yes         | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
+`msg`            | String       | no          | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
+`optsVarName`    | String       | no          | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
+`opts`           | Plain object | no          | Optional options go here.
+
+### Options object
+
+`options` object's key         | Type     | Obligatory? | Default     | Description
+-------------------------------|----------|-------------|-------------|----------------------
+{                              |          |             |             |
+`ignoreKeys`                   | Array    | no          | `[]` (empty array)        | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
+}                              |          |             |             |
 
 ## For example
 
