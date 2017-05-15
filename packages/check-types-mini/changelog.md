@@ -17,3 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - First public release
 
 [1.1.0]: https://github.com/code-and-send/check-types-mini/compare/v1.0.1...v1.1.0
+[1.2.0]: https://github.com/code-and-send/check-types-mini/compare/v1.1.0...v1.2.0
