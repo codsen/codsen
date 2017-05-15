@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Postprocessor for JSON to allow keys referencing keys",
   "main": "index.js",
   "scripts": {
