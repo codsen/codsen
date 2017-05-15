@@ -33,6 +33,13 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
     ignoreKeys: []
   }
   opts = objectAssign(clone(defaults), opts)
+  if (typeof opts.ignoreKeys === 'string') {
+    if (opts.ignoreKeys.length > 0) {
+      opts.ignoreKeys = [opts.ignoreKeys]
+    } else {
+      opts.ignoreKeys = []
+    }
+  }
   if (!isArr(opts.ignoreKeys)) {
     throw new TypeError('check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: ' + type(opts.ignoreKeys))
   }

@@ -123,4 +123,10 @@ test('01.04 - throws when opts are set wrong', t => {
   t.throws(function () {
     checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: false })
   }, 'check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: boolean')
+  t.notThrows(function () {
+    checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: 'a' })
+  })
+  t.notThrows(function () {
+    checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: '' })
+  })
 })

@@ -60,7 +60,7 @@ Input argument   | Type         | Obligatory? | Description
 `options` object's key         | Type     | Obligatory? | Default     | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
-`ignoreKeys`                   | Array    | no          | `[]` (empty array)        | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
+`ignoreKeys`                   | Array or String | no          | `[]` (empty array)        | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
 }                              |          |             |             |
 
 ## For example
