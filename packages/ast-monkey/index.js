@@ -57,14 +57,14 @@ function traverse (treeOriginal, callback) {
 // -----------------------------------------------------------------------------
 
 function monkey (inputOriginal, optsOriginal) {
-  // since incoming argument is object, it's very important not to mutate it:
-  var input = clone(inputOriginal)
-  var opts = clone(optsOriginal)
   // -----------------------------------
   // precautions
-  if (!existy(input)) {
+  if ((arguments.length === 0) || !existy(inputOriginal)) {
     throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_03] Please provide an input')
   }
+  var input = clone(inputOriginal)
+  var opts = clone(optsOriginal)
+
   if ((opts.mode === 'get' || opts.mode === 'set' || opts.mode === 'drop') && !existy(opts.index)) {
     throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_04] Please provide opts.index')
   }
