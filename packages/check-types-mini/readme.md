@@ -34,9 +34,9 @@ $ npm i -S check-types-mini
 
 ## Idea
 
-[check-types](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to throw if somebody sets my input settings to a wrong type.
+[check-types](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to `throw` if somebody sets my input settings to a wrong type.
 
-In few occasions I copied the predecessor function (which later became this library) from one library of mine to another, along with its unit tests. Then I got fed up with that and here were are. Its point is to cut corners publishing new libraries. Every library that has options needs some checks, has user set things to be of a correct type.
+In few occasions, I copied the predecessor function (which later became this library) from one library of mine to another, along with its unit tests. Then I got fed up with that and here were are. Its point is to cut corners publishing new libraries. Every library that has options needs some checks, has user set things to be of a correct type.
 
 ## API
 
@@ -49,7 +49,7 @@ As a result, it _throws_ `TypeError`s for you, containing your custom message, s
 Input argument   | Type         | Obligatory? | Description
 -----------------|--------------|-------------|--------------
 `obj`            | Plain object | yes         | Options object after user's customisation
-`ref`            | Plain object | yes         | Default options — used to compare the types against
+`ref`            | Plain object | yes         | Default options — used to compare the types
 `msg`            | String       | yes         | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
 `optsVarName`    | String       | yes         | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
 
@@ -77,7 +77,7 @@ var res = yourFunction(1, {placeholder: 'zzz'})
 // =>> [TypeError: 'newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "false" which is not boolean but string']
 ```
 
-If you are happy with `opts` variable name, you can omit the fourth argument, it will be set to that by default.
+If you are happy with `opts` variable name, you can omit the fourth argument; it will be set to that by default.
 
 ## Contributing
 
