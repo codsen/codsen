@@ -41,7 +41,7 @@ In few occasions, I copied the predecessor function (which later became this lib
 
 ## API
 
-**checkTypes(obj, ref, msg, optsVarName)**
+**checkTypes(obj, ref\[, msg, optsVarName, opts])**
 
 As a result, it _throws_ `TypeError`s for you, containing your custom message, similar to:
 
