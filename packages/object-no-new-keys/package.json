@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Check is a plain object (AST/JSON) has no unique keys, not present in a reference object (another AST/JSON)",
   "main": "index.js",
   "scripts": {
