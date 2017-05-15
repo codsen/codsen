@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.2.0] - 2017-05-15
+### Added
+- Tighetened the API in cases when `monkey()` inputs are missing or falsey.
+
 ## [5.1.0] - 2017-05-02
 
 ### Added
@@ -123,3 +127,4 @@ BREAKING API CHANGES.
 [4.0.0]: https://github.com/code-and-send/ast-monkey/compare/v3.3.0...v4.0.0
 [5.0.0]: https://github.com/code-and-send/ast-monkey/compare/v4.0.0...v5.0.0
 [5.1.0]: https://github.com/code-and-send/ast-monkey/compare/v5.0.0...v5.1.0
+[5.2.0]: https://github.com/code-and-send/ast-monkey/compare/v5.1.0...v5.2.0
