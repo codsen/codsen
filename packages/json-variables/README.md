@@ -63,7 +63,7 @@ The API is the following: a plain object in (it's not mutated), a new plain obje
 
 ## API
 
-**jsonVariables (inputOriginal, options)**
+**jsonVariables (inputOriginal\[, options])**
 
 Returns a plain object with all variables resolved.
 
@@ -263,7 +263,7 @@ Data-wise, if you looked at a higher level, it might appear clunky to put values
 }
 ```
 
-Does this look like clean data arrangement? Hell no. It's a convoluted and nasty. The keys `var1` and `var2` are not of the same status as an `a` and `b`, therefore can't be mashed together at the same level, can it?
+Does this look like clean data arrangement? Hell no. It's convoluted and nasty. The keys `var1` and `var2` are not of the same status as an `a` and `b`, therefore can't be mashed together at the same level, can it?
 
 What if we placed all key's `a` variables within a separate key, `a_data` — it starts with the same letter, so it will end up being nearby the `a` after sorting. Observe:
 
