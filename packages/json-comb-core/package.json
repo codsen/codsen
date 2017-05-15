@@ -31,19 +31,22 @@
   },
   "homepage": "https://github.com/code-and-send/json-comb-core#readme",
   "dependencies": {
+    "check-types-mini": "^1.0.1",
     "lodash.clonedeep": "*",
-    "object-fill-missing-keys": "^2.0.0",
-    "object-flatten-all-arrays": "^3.0.0",
-    "object-merge-advanced": "^6.0.3",
-    "object-set-all-values-to": "^2.0.0",
-    "type-detect": "^4.0.0"
+    "object-fill-missing-keys": "^2.1.1",
+    "object-flatten-all-arrays": "^3.1.1",
+    "object-merge-advanced": "^6.2.0",
+    "object-no-new-keys": "^1.0.2",
+    "object-set-all-values-to": "^2.0.1",
+    "posthtml-ast-compare": "^4.1.0",
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.13.2",
+    "husky": "^0.13.3",
     "nyc": "*",
-    "standard": "^9.0.1"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true

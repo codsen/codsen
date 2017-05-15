@@ -1,8 +1,10 @@
 # json-comb-core
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Enforce multiple JSON files have the same keys
+> Enforce multiple JSON files have the same keys, sorted alphabetically
+> Enforce each object within an array to have the same keys as each other object within the same array
+> When there are type clashes, a type "higher a food chain" prevails
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -20,12 +22,13 @@
 - [Install](#install)
 - [Idea](#idea)
 - [getKeyset()](#getkeyset)
+  - [the input](#the-input)
+  - [the ouput](#the-ouput)
+- [enforceKeyset()](#enforcekeyset)
   - [input](#input)
   - [ouput](#ouput)
-- [enforceKeyset()](#enforcekeyset)
-  - [input](#input-1)
-  - [ouput](#ouput-1)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
+- [Normalising vs. JSON Schemas](#normalising-vs-json-schemas)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -49,26 +52,30 @@ This library is meant to be used as a core for other libraries: plugins, front-e
 
 ## getKeyset()
 
-Reads an array of plain objects and extracts a schema keyset from them.
+Reads an array of plain objects (parsed JSON files) and extracts a schema keyset, a plain object, from them.
 
-### input
+Technically speaking, a schema is a superset plain object, with sorted keys, with each array flattened to keep one superset plain object of its contents.
+
+The merging is done on a premise to retain [as much information](https://github.com/code-and-send/object-merge-advanced) after merging as possible.
+
+### the input
 
 Input argument   | Type                   | Obligatory? | Description
 -----------------|------------------------|-------------|--------------
 `input`          | Array of plain objects | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
 `options`        | Object                 | no          | Options object. See below.
 
-Input argument   | Value's type | Obligatory? | Default value   | Description
------------------|--------------|-------------|-----------------|--------------
-{                |              |             |                 |
-`placeholder`    | anything     | no          | `false` (bool.) | When we add a key, what its value should be? If you set here anything, it will be used. Otherwise, Boolean `false` will be set.
-}                |              |             |                 |
+`options` object's key         | Type     | Obligatory? | Default         | Description
+-------------------------------|----------|-------------|-----------------|----------------------
+{                              |          |             |                 |
+`placeholder`                  | Any      | no          | `false` (bool.) | Instructs to skip all and any checks on these keys.
+}                              |          |             |                 |
 
 For example, keeping placeholder the default:
 
 ```js
 var schema = getKeyset([
-  {
+  { // < plain object No.1
     a: 'a',
     b: 'c',
     c: {
@@ -76,10 +83,10 @@ var schema = getKeyset([
       e: 'e'
     }
   },
-  {
+  { // < plain object No.2
     a: 'a'
   },
-  {
+  { // < plain object No.3
     c: {
       f: 'f'
     }
@@ -132,20 +139,20 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 //    }
 ```
 
-### ouput
+### the ouput
 
 A plain object, which can be used in `enforceKeyset()`. See below.
 
 ## enforceKeyset()
 
-Reads an input plain object and a keyset schema object and normalises the input object
+Reads an input plain object and a keyset schema object and normalises the input plain object
 
 ### input
 
 Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
-`input`        | Object   | yes         | What to normalise?
-`schema`       | Object   | yes         | According to what schema to normalise?
+`input`        | Object   | yes         | What should we normalise?
+`schema`       | Object   | yes         | According to what schema should we normalise?
 
 ### ouput
 
@@ -177,11 +184,19 @@ console.log('inputObj = ' + JSON.stringify(inputObj, null, 4))
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation. Unit test code coverage is calculated using [Istanbul CLI](https://www.npmjs.com/package/nyc).
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Unit test code coverage is calculated using [Istanbul CLI](https://www.npmjs.com/package/nyc).
+
+## Normalising vs. JSON Schemas
+
+There is another, different concept of _JSON Schema_ which basically means enforcing the types of the key values. It is used when you get or set the JSON data object from the network and want to ensure that values are of a correct type and, of course, exist.
+
+Compare this with multiple file normalisation (what this library does) — we have bunch of JSON files, we want them to look as similar as possible, each having exact keys as any other JSON in the set. We don't care about the types overall, if a key is missing we simply fill it with a placeholder.
+
+See the difference between the two concepts?
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/json-comb-core/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
