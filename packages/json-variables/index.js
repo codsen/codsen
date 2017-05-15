@@ -15,13 +15,13 @@ const isArr = Array.isArray
 const matcher = require('matcher')
 const numSort = require('num-sort')
 const objectPath = require('object-path')
+const checkTypes = require('check-types-mini')
 
 // tap util f's directly
 const aContainsB = util.aContainsB
 const aStartsWithB = util.aStartsWithB
 const extractVarsFromString = util.extractVarsFromString
 const findLastInArray = util.findLastInArray
-const checkTypes = util.checkTypes
 const arrayiffyString = util.arrayiffyString
 const fixOffset = util.fixOffset
 const front = util.front
@@ -64,7 +64,7 @@ function jsonVariables (inputOriginal, opts) {
 
   opts.dontWrapVars = arrayiffyString(opts.dontWrapVars)
 
-  checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts')
+  checkTypes(opts, defaults, 'json-variables/jsonVariables():')
 
   if (opts.heads === '') {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_03] opts.heads are empty!')

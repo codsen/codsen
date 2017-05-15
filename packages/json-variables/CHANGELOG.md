@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0] - 2017-05-15
+### Added
+- Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini) and removed internal equivalents.
+
 ## [4.2.0] - 2017-05-05
 ### Added
 - `opts.resolveToFalseIfAnyValuesContainBool` (on by default)
@@ -86,3 +90,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [4.0.0]: https://github.com/code-and-send/json-variables/compare/v3.1.0...v4.0.0
 [4.1.0]: https://github.com/code-and-send/json-variables/compare/v4.0.1...v4.1.0
 [4.2.0]: https://github.com/code-and-send/json-variables/compare/v4.1.0...v4.2.0
+[4.3.0]: https://github.com/code-and-send/json-variables/compare/v4.2.3...v4.3.0

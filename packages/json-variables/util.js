@@ -30,17 +30,6 @@ function aStartsWithB (a, b) {
 
 function isStr (something) { return type(something) === 'string' }
 
-function checkTypes (obj, ref, msg, variable) {
-  if (arguments.length === 0) {
-    throw new Error('object-flatten-referencing/util.js/checkTypes(): missing inputs!')
-  }
-  Object.keys(obj).forEach(function (key) {
-    if (existy(ref[key]) && type(obj[key]) !== type(ref[key])) {
-      throw new TypeError(msg + ' ' + variable + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + type(ref[key]) + ' but ' + type(obj[key]))
-    }
-  })
-}
-
 function findLastInArray (array, val) {
   var res = null
   if (!existy(val)) {
@@ -168,7 +157,6 @@ module.exports = {
   aStartsWithB: aStartsWithB,
   extractVarsFromString: extractVarsFromString,
   findLastInArray: findLastInArray,
-  checkTypes: checkTypes,
   arrayiffyString: arrayiffyString,
   fixOffset: fixOffset,
   front: front,

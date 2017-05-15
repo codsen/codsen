@@ -4,7 +4,7 @@
 
 import jv from './index'
 import test from 'ava'
-import { aContainsB, extractVarsFromString, findLastInArray, checkTypes, aStartsWithB, fixOffset, front, splitObjectPath } from './util'
+import { aContainsB, extractVarsFromString, findLastInArray, aStartsWithB, fixOffset, front, splitObjectPath } from './util'
 
 // -----------------------------------------------------------------------------
 // 02. BAU
@@ -2367,93 +2367,93 @@ test('11.04 - multi-level + from array + root data store + ignores', t => {
 })
 
 // -----------------------------------------------------------------------------
-// 92. UTIL - splitObjectPath()
+// 93. UTIL - splitObjectPath()
 // -----------------------------------------------------------------------------
 
-test('92.01 - UTIL > splitObjectPath - dot notation', t => {
+test('93.01 - UTIL > splitObjectPath - dot notation', t => {
   t.deepEqual(
     splitObjectPath('something.anything'),
     ['something', 'anything'],
-    '92.01'
+    '93.01'
   )
 })
 
-test('92.02 - UTIL > splitObjectPath - brackets', t => {
+test('93.02 - UTIL > splitObjectPath - brackets', t => {
   t.deepEqual(
     splitObjectPath('something[anything.everything]'),
     ['something', 'anything', 'everything'],
-    '92.02'
+    '93.02'
   )
 })
 
-test('92.03 - UTIL > splitObjectPath - more brackets', t => {
+test('93.03 - UTIL > splitObjectPath - more brackets', t => {
   t.deepEqual(
     splitObjectPath('something[anything.everything[nothing]]'),
     ['something', 'anything', 'everything', 'nothing'],
-    '92.03.01'
+    '93.03.01'
   )
   t.deepEqual(
     splitObjectPath('    something[  anything.everything[ nothing ]  ]   '),
     ['something', 'anything', 'everything', 'nothing'],
-    '92.03.02'
+    '93.03.02'
   )
   t.deepEqual(
     splitObjectPath('  \n  something  \t\n  [   \n  \t  anything  \n \t. \t\t everything \n\n   [   \nnothing\t  ] \n  ]  \t\t \n'),
     ['something', 'anything', 'everything', 'nothing'],
-    '92.03.03 - and as crazy as it might look, even this ^^^'
+    '93.03.03 - and as crazy as it might look, even this ^^^'
   )
   t.deepEqual(
     splitObjectPath('shfgldhfgdg'),
     ['shfgldhfgdg'],
-    '92.03.04 - should also work on normal strings'
+    '93.03.04 - should also work on normal strings'
   )
 })
 
-test('92.04 - UTIL > splitObjectPath - returns intact non-string input', t => {
+test('93.04 - UTIL > splitObjectPath - returns intact non-string input', t => {
   t.is(
     splitObjectPath(1),
     1,
-    '92.04'
+    '93.04'
   )
 })
 
 // -----------------------------------------------------------------------------
-// 93. UTIL - front()
+// 94. UTIL - front()
 // -----------------------------------------------------------------------------
 
-test('93.01 - UTIL > front', t => {
+test('94.01 - UTIL > front', t => {
   t.is(
     front('something.anything'),
     'something',
-    '93.01.01'
+    '94.01.01'
   )
   t.is(
     front('something[anything]'),
     'something',
-    '93.01.02'
+    '94.01.02'
   )
   t.is(
     front('.'),
     '',
-    '93.01.03'
+    '94.01.03'
   )
   t.is(
     front(''),
     '',
-    '93.01.04'
+    '94.01.04'
   )
   t.is(
     front(),
     undefined,
-    '93.01.05'
+    '94.01.05'
   )
 })
 
 // -----------------------------------------------------------------------------
-// 94. UTIL - fixOffset()
+// 95. UTIL - fixOffset()
 // -----------------------------------------------------------------------------
 
-test('94.01 - UTIL > fixOffset', t => {
+test('95.01 - UTIL > fixOffset', t => {
   t.deepEqual(
     fixOffset(
       [[0, 1], [5, 8], [10, 15]],
@@ -2461,7 +2461,7 @@ test('94.01 - UTIL > fixOffset', t => {
       2
     ),
     [[0, 1], [7, 10], [12, 17]],
-    '94.01.01'
+    '95.01.01'
   )
   t.deepEqual(
     fixOffset(
@@ -2470,52 +2470,42 @@ test('94.01 - UTIL > fixOffset', t => {
       2
     ),
     [[0, 1], [5, 8], [10, 15]],
-    '94.01.02'
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 95. UTIL - aStartsWithB()
-// -----------------------------------------------------------------------------
-
-test('95.01 - UTIL > aStartsWithB - when inputs are falsey, always return false', t => {
-  t.deepEqual(aStartsWithB(),
-    false,
-    '95.01.01'
-  )
-  t.deepEqual(aStartsWithB('zzz'),
-    false,
     '95.01.02'
   )
 })
 
-test('95.02 - UTIL > aStartsWithB - normal working', t => {
-  t.deepEqual(aStartsWithB('aaa', 'a'),
-    true,
-    '95.02.01'
-  )
-  t.deepEqual(aStartsWithB('aaa', 'z'),
+// -----------------------------------------------------------------------------
+// 96. UTIL - aStartsWithB()
+// -----------------------------------------------------------------------------
+
+test('96.01 - UTIL > aStartsWithB - when inputs are falsey, always return false', t => {
+  t.deepEqual(aStartsWithB(),
     false,
-    '95.02.02'
+    '96.01.01'
   )
-  t.deepEqual(aStartsWithB('aaa', 'A'),
+  t.deepEqual(aStartsWithB('zzz'),
     false,
-    '95.02.03'
-  )
-  t.deepEqual(aStartsWithB('', 'A'),
-    false,
-    '95.02.04'
+    '96.01.02'
   )
 })
 
-// -----------------------------------------------------------------------------
-// 96. UTIL - checkTypes()
-// -----------------------------------------------------------------------------
-
-test('96.01 - UTIL > checkTypes - throws when there\'s no input', t => {
-  t.throws(function () {
-    checkTypes()
-  })
+test('96.02 - UTIL > aStartsWithB - normal working', t => {
+  t.deepEqual(aStartsWithB('aaa', 'a'),
+    true,
+    '96.02.01'
+  )
+  t.deepEqual(aStartsWithB('aaa', 'z'),
+    false,
+    '96.02.02'
+  )
+  t.deepEqual(aStartsWithB('aaa', 'A'),
+    false,
+    '96.02.03'
+  )
+  t.deepEqual(aStartsWithB('', 'A'),
+    false,
+    '96.02.04'
+  )
 })
 
 // -----------------------------------------------------------------------------
