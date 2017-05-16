@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CH-ange-L-og U-pdate — Automatically fix errors in your changelog file",
   "main": "index.js",
   "engines": {
