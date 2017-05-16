@@ -1,0 +1,11 @@
+{
+  "critics": {
+    "lint": {"engine": "standard"}
+  },
+  "dependencies": {
+      "mute": ["doctoc", "husky", "standard"]
+  },
+  "test": [
+    "test.js"
+  ]
+}
