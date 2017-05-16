@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Automatically fix errors in your changelog file
+> CH-ange-L-og U-pdate — Automatically fix errors in your changelog file
 
 [![Build Status][travis-img]][travis-url]
 [![bitHound Score][bithound-img]][bithound-url]
@@ -65,7 +65,7 @@ This has happened to me before, actually on Detergent's repo even. I copied and 
 
 ## Extras
 
-Since the order of the features is descending, the default order of title markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I hate that. Personally, I find it difficult to visually scan the list if the order is descending. That's why `chlu` will respect the existing order of your footer links and add the missing link in a correct order.
+Since the order of the features is descending, the default order of title markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I hate that. Personally, I find it difficult to visually scan the list if the order is descending. That's why `chlu` will respect the existing order of your footer links and add the missing link in an order you've already got.
 
 ## Contributing
 
