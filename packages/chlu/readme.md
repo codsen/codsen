@@ -35,15 +35,13 @@ $ npm i -S chlu
 
 ## What it does
 
-`chlu` stands for CHangeLog Update. It comprises of two parts.
-
-`chlu` is an API for [`chlu-cli`](https://www.npmjs.com/package/chlu-cli). `chlu` does the actual job on a string, performs operations of the content and returns another string. The `chlu-cli` reads in the files, runs `chlu` on them and writes files back.
+`chlu` stands for CHangeLog Update. This library is the API for [`chlu-cli`](https://www.npmjs.com/package/chlu-cli). You probably want latter installed globally on your hard drive.
 
 ## Automatically updating changelogs
 
 Your changelogs should follow the rules given by http://keepachangelog.com
 
-However, sometimes errors happen and this tool will automatically fix them:
+However, sometimes errors happen and this tool will automatically fix them. Let me go through the most common errors (from my experience) in `changelog.md`:
 
 ### 1. Missing diff links in the footer for newly added titles.
 
@@ -57,19 +55,17 @@ For example, the culprit footer link would look like this:
 
 ### 2. Wrong package
 
-This has happened to me before, actually on Detergent's repo even. I copied and edited the changelog from my other library and forgot to edit the package name in the footer diff links. For example, `wrong-lib` could be wrong in the footer link below:
+This has happened to me before, actually on Detergent's repo even. I copied and edited the changelog from my other library and forgot to edit the package name in the footer diff links. For example, `wrong-lib` is wrong below:
 
 ```md
 [1.4.0]: https://github.com/code-and-send/wrong-lib/compare/v1.3.0...v1.4.0
 ```
 
-`chlu` will read your package.json (must be located at the same root folder as changelog.md) and fix both your GitHub user and GutHub package name in the links.
+`chlu` will read your `package.json` (which must be located at the same root folder as `changelog.md`) and fix both your GitHub user and GitHub package name in the links.
 
 ## Extras
 
 Since the order of the features is descending, the default order of title markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I hate that. Personally, I find it difficult to visually scan the list if the order is descending. That's why `chlu` will respect the existing order of your footer links and add the missing link in a correct order.
-
-Oh, forgot to say, `chlu` is meant to be run automatically so it's good to set your snippet got `git add` to be `git add `
 
 ## Contributing
 
