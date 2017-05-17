@@ -13,4 +13,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Changelog.md
 
-[2.0.0]: https://github.com/code-and-send/array-pull-all-with-glob/compare/v1.4.1...v2.0.0
+[2.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v1.4.1...v2.0.0

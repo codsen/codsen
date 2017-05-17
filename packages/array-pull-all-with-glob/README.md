@@ -1,6 +1,6 @@
 # array-pull-all-with-glob
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > pullAllWithGlob - like _.pullAll but pulling stronger, with globs
 
@@ -49,7 +49,7 @@ console.dir(pullAllWithGlob(sourceArray, removeThese))
 // => ['keep_me']
 ```
 
-Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
+Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
 
 ## API
 
@@ -81,13 +81,13 @@ Array    | Array of strings with elements removed
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing & testing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/array-pull-all-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/array-pull-all-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
 
 ## Licence
 
@@ -113,20 +113,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/array-pull-all-with-glob.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/array-pull-all-with-glob
+[travis-img]: https://travis-ci.org/codsen/array-pull-all-with-glob.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/array-pull-all-with-glob
 
-[overall-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob
+[overall-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
 
-[deps-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/array-pull-all-with-glob/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/array-pull-all-with-glob/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/array-pull-all-with-glob?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/array-pull-all-with-glob/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/array-pull-all-with-glob?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg
 [downloads-url]: https://www.npmjs.com/package/array-pull-all-with-glob
