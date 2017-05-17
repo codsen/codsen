@@ -1,0 +1,60 @@
+{
+  "name": "chlu-cli",
+  "version": "1.0.0",
+  "description": "Automatically fix errors in your changelog file",
+  "license": "MIT",
+  "repository": "code-and-send/chlu-cli",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codeandsend.com",
+    "url": "codeandsend.com"
+  },
+  "bin": {
+    "chlu": "cli.js"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "precommit": "npm test && doctoc README.md",
+    "test": "standard"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "keywords": [
+    "update",
+    "changelog",
+    "change",
+    "log",
+    "fix",
+    "errors",
+    "missing",
+    "links",
+    "markdown",
+    "correct",
+    "automatically",
+    "automated",
+    "tool",
+    "cli",
+    "cli-app"
+  ],
+  "bugs": {
+    "url": "https://github.com/code-and-send/chlu-cli/issues"
+  },
+  "homepage": "https://github.com/code-and-send/chlu-cli#readme",
+  "dependencies": {
+    "chalk": "^1.1.0",
+    "meow": "^3.3.0",
+    "update-notifier": "^2.1.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "doctoc": "*",
+    "husky": "*",
+    "standard": "*"
+  },
+  "ava": {
+    "verbose": true
+  }
+}
