@@ -1,8 +1,7 @@
 'use strict'
 
-var pull = require('./index.js')
-
 import test from 'ava'
+var pull = require('./index.js')
 
 // =======
 // no glob
