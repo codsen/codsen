@@ -55,3 +55,9 @@ test('07. non-GitHub package.json - throws', (t) => {
 test('08. mid links missing in changelog.md', (t) => {
   return compare(t, '08_mid_links_missing')
 })
+
+test('09. if no input, will silently return indefined', (t) => {
+  t.deepEqual(c(), undefined,
+    '09.01'
+  )
+})
