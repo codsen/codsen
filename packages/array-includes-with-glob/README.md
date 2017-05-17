@@ -1,6 +1,6 @@
 # array-includes-with-glob
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > like Lodash _.includes but with wildcards
 
@@ -120,7 +120,7 @@ console.log('res2 = ' + res2)
 
 ### Practical usage
 
-I need this library for my other libraries when I'm working with plain objects, and I want to let users whitelist certain keys of those objects. For example, [object-merge-advanced](https://github.com/code-and-send/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
+I need this library for my other libraries when I'm working with plain objects, and I want to let users whitelist certain keys of those objects. For example, [object-merge-advanced](https://github.com/codsen/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
 
 ```js
 mergeAdvanced(
@@ -163,13 +163,13 @@ Also, if first input argument, a source array, is an empty array or empty string
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing & testing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/array-includes-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/array-includes-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
 
 ## Licence
 
@@ -195,20 +195,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/array-includes-with-glob.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/array-includes-with-glob
+[travis-img]: https://travis-ci.org/codsen/array-includes-with-glob.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/array-includes-with-glob
 
-[overall-img]: https://www.bithound.io/github/code-and-send/array-includes-with-glob/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/array-includes-with-glob
+[overall-img]: https://www.bithound.io/github/codsen/array-includes-with-glob/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/array-includes-with-glob
 
-[deps-img]: https://www.bithound.io/github/code-and-send/array-includes-with-glob/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/array-includes-with-glob/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/array-includes-with-glob/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/array-includes-with-glob/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/array-includes-with-glob/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/array-includes-with-glob/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/array-includes-with-glob/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/array-includes-with-glob/master/dependencies/npm
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/array-includes-with-glob/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/array-includes-with-glob?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/array-includes-with-glob/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/array-includes-with-glob?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/array-includes-with-glob.svg
 [downloads-url]: https://www.npmjs.com/package/array-includes-with-glob

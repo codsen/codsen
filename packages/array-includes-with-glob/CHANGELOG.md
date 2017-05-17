@@ -22,6 +22,6 @@ SOLUTION: switched to Sindre Sorhus' [matcher](https://www.npmjs.com/package/mat
 ### New
 - First public release
 
-[1.2.0]: https://github.com/code-and-send/array-includes-with-glob/compare/v1.0.0...v1.2.0
-[1.3.0]: https://github.com/code-and-send/array-includes-with-glob/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/code-and-send/array-includes-with-glob/compare/v1.3.0...v1.4.0
+[1.2.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.0.0...v1.2.0
+[1.3.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.3.0...v1.4.0

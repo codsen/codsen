@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc readme.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/array-includes-with-glob.git"
-  },
+  "repository": "codsen/array-includes-with-glob",
   "keywords": [
     "array",
     "inclues",
@@ -28,9 +25,9 @@
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/array-includes-with-glob/issues"
+    "url": "https://github.com/codsen/array-includes-with-glob/issues"
   },
-  "homepage": "https://github.com/code-and-send/array-includes-with-glob#readme",
+  "homepage": "https://github.com/codsen/array-includes-with-glob#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
     "matcher": "^0.1.2",
