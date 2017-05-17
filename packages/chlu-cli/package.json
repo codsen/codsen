@@ -45,6 +45,7 @@
   "homepage": "https://github.com/code-and-send/chlu-cli#readme",
   "dependencies": {
     "chalk": "^1.1.0",
+    "chlu": "^1.1.0",
     "meow": "^3.3.0",
     "update-notifier": "^2.1.0"
   },
