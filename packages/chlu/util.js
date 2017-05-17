@@ -151,9 +151,9 @@ function setRepoInfo (str, newUser, newProject) {
   return split.join('/')
 }
 
-// function () {
-//
-// }
+function versionSort (a, b) {
+  return cmp(a.version, b.version)
+}
 
 // FIN
 // -----------------------------------------------------------------------------
@@ -169,5 +169,6 @@ module.exports = {
   getTitlesAndFooterLinks: getTitlesAndFooterLinks,
   getRepoInfo: getRepoInfo,
   setRepoInfo: setRepoInfo,
-  aContainsB: aContainsB
+  aContainsB: aContainsB,
+  versionSort: versionSort
 }

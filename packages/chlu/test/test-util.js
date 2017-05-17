@@ -3,8 +3,8 @@
 /* eslint padded-blocks: 0 */
 
 const test = require('ava')
-// const { isTitle, isFooterLink, versionWithBracketsRegex, versionWithoutBracketsRegex, getPreviousVersion, getRow, setRow, getTitlesAndFooterLinks, getRepoInfo, setRepoInfo } = require('../util')
-const { isTitle, isFooterLink, getPreviousVersion, aContainsB } = require('../util')
+// const { versionWithBracketsRegex, versionWithoutBracketsRegex, getRow, setRow, getTitlesAndFooterLinks, getRepoInfo } = require('../util')
+const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo } = require('../util')
 
 // isTitle
 // -------
@@ -126,4 +126,30 @@ test('04.01 - aContainsB() - BAU', function (t) {
   t.is(aContainsB('aaaaaabcdddddd'),
   false,
   '04.01.03')
+})
+
+// setRepoInfo
+// -----------
+
+test('05.01 - setRepoInfo() - BAU', function (t) {
+  t.is(setRepoInfo(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    'newUser',
+    'newProject'
+  ),
+  '[1.1.0]: https://github.com/newUser/newProject/compare/v1.0.1...v1.1.0',
+  '05.01.01')
+  t.is(setRepoInfo(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    'newUser'
+  ),
+  '[1.1.0]: https://github.com/newUser/libName/compare/v1.0.1...v1.1.0',
+  '05.01.02 - user only')
+  t.is(setRepoInfo(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    null,
+    'package'
+  ),
+  '[1.1.0]: https://github.com/userName/package/compare/v1.0.1...v1.1.0',
+  '05.01.03 - package only')
 })

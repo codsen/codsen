@@ -7,6 +7,7 @@ const getPkgRepo = require('get-pkg-repo')
 const cmp = require('semver-compare')
 const empty = require('posthtml-ast-contains-only-empty-space')
 const insert = require('just-insert')
+const clone = require('lodash.clonedeep')
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -17,17 +18,20 @@ const getTitlesAndFooterLinks = util.getTitlesAndFooterLinks
 const getRepoInfo = util.getRepoInfo
 const setRepoInfo = util.setRepoInfo
 const setRow = util.setRow
+const versionSort = util.versionSort
 
 // ACTION
 // -----------------------------------------------------------------------------
 
 function chlu (changelogContents, packageJsonContents) {
-  // TODO - add input type checks
+  if ((arguments.length === 0) || !existy(changelogContents)) {
+    return
+  }
+
   var changelogMd = changelogContents
 
   // TODO - add measures against wrong/missing json
   var packageJson = getPkgRepo(packageJsonContents)
-  // console.log('packageJson = ' + JSON.stringify(packageJson, null, 4))
 
   if (packageJson.type !== 'github') {
     throw new Error('chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on ' + packageJson.type)
@@ -52,10 +56,6 @@ function chlu (changelogContents, packageJsonContents) {
   titles = getTitlesAndFooterLinks(linesArr).titles
   footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks
 
-  // console.log('titles = ' + JSON.stringify(titles, null, 4))
-  // console.log('footerLinks = ' + JSON.stringify(footerLinks, null, 4))
-  // console.log('==============================')
-
   // =======
   // stage 2: locate titles don't have footer links
 
@@ -70,9 +70,6 @@ function chlu (changelogContents, packageJsonContents) {
       }
     }
   }
-
-  // console.log('\nmissingFooterLinks = ' + JSON.stringify(missingFooterLinks, null, 4))
-  // console.log('==============================')
 
   // =======
   // stage 3: find out what is the order of footer links
@@ -90,10 +87,6 @@ function chlu (changelogContents, packageJsonContents) {
     }
   }
 
-  // console.log('ascendingFooterLinkCount = ' + JSON.stringify(ascendingFooterLinkCount, null, 4))
-  // console.log('descendingFooterLinkCount = ' + JSON.stringify(descendingFooterLinkCount, null, 4))
-  // console.log('==============================')
-
   var ascending = true
   if (ascendingFooterLinkCount <= descendingFooterLinkCount) {
     ascending = false
@@ -105,13 +98,6 @@ function chlu (changelogContents, packageJsonContents) {
   var sortedTitlesArray = titles.map(function (el) {
     return el.version
   }).sort(cmp)
-  // console.log('\nsortedTitlesArray = ' + JSON.stringify(sortedTitlesArray, null, 4))
-
-  // var sortedFooterLinksArray = footerLinks.map(function (el) {
-  //   return el.version
-  // }).sort(cmp)
-  // console.log('\nsortedFooterLinksArray = ' + JSON.stringify(sortedFooterLinksArray, null, 4))
-  // console.log('==============================')
 
   // =======
   // stage 5: calculate what goes where
@@ -122,9 +108,7 @@ function chlu (changelogContents, packageJsonContents) {
     // count from the end of the file.
     // if last non-empty line has "]:" in it, place right after it.
     // otherwise, insert an empty line. This means there's content only and no links yet.
-    // console.log('*')
     for (i = linesArr.length - 1, start = 0; i >= start; i--) {
-      // console.log('linesArr[' + i + '] = ' + JSON.stringify(linesArr[i], null, 4))
       if (existy(linesArr[i]) && !empty(linesArr[i])) {
         whereToPlaceIt = i + 2
         break
@@ -132,31 +116,19 @@ function chlu (changelogContents, packageJsonContents) {
       // TODO: Remember to add a blank line at the bottom!
     }
   } else {
-    if (ascending) {
-      // -- if footer links order is ascending
-      whereToPlaceIt = footerLinks[footerLinks.length - 1].rowNum + 1
-    } else {
-      // -- if descending
-      whereToPlaceIt = footerLinks[0].rowNum
-    }
+    whereToPlaceIt = footerLinks[0].rowNum
   }
-  // console.log('whereToPlaceIt = ' + JSON.stringify(whereToPlaceIt, null, 4))
-  // console.log('==============================')
 
   // =======
   // stage 6: assemble the new chunk - array of new lines
 
-  // console.log('\nGOING THROUGH ALL MISSING VERSIONS')
   temp = []
   missingFooterLinks.forEach(function (key) {
     temp.push('[' + key.version + ']: https://github.com/' + packageJson.user + '/' + packageJson.project + '/compare/v' + getPreviousVersion(key.version, sortedTitlesArray) + '...v' + key.version)
   })
-  // console.log('temp = ' + JSON.stringify(temp, null, 4))
   if (ascending) {
     temp = reverse(temp)
-    // console.log('temp = ' + JSON.stringify(temp, null, 4))
   }
-  // console.log('==============================')
 
   // =======
   // stage 7: insert new rows into linesArr
@@ -164,24 +136,19 @@ function chlu (changelogContents, packageJsonContents) {
   newLinesArr = insert(linesArr, temp, whereToPlaceIt)
 
   // =======
-  // stage 8: double-check are footerLinks correct
+  // stage 8: prepare for checking are footerLinks correct.
   // calculate title and footeLinks again, this time including our additions
 
-  titles = getTitlesAndFooterLinks(newLinesArr).titles
-  footerLinks = getTitlesAndFooterLinks(newLinesArr).footerLinks
+  temp = getTitlesAndFooterLinks(newLinesArr)
+  titles = temp.titles
+  footerLinks = temp.footerLinks
 
   // =======
   // stage 9: check all footerLinks
 
-  // console.log('BEFORE footerLinks = ' + JSON.stringify(footerLinks, null, 4))
-  // console.log('')
-
   for (i = 0, len = footerLinks.length; i < len; i++) {
     var extracted = getRepoInfo(footerLinks[i].content)
-    // console.log('extracted = ' + JSON.stringify(extracted, null, 4))
     if ((extracted.user !== packageJson.user) || (extracted.project !== packageJson.project)) {
-      // console.log('BAD extracted.user = ' + JSON.stringify(extracted.user, null, 4))
-      // console.log('BAD extracted.project = ' + JSON.stringify(extracted.project, null, 4))
       footerLinks[i].content = setRepoInfo(footerLinks[i].content, packageJson.user, packageJson.project)
       //
       // write over:
@@ -190,16 +157,22 @@ function chlu (changelogContents, packageJsonContents) {
     }
   }
 
-  // console.log('==============================')
-  // console.log('AFTER footerLinks = ' + JSON.stringify(footerLinks, null, 4))
-  // console.log('')
-  // console.log('==============================')
+  // ========
+  // stage 10: sort all footer links, depending on a current preference
+
+  temp = clone(footerLinks).sort(versionSort)
+  if (!ascending) {
+    temp = temp.reverse()
+  }
+
+  footerLinks.forEach((footerLink, index) => {
+    newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content)
+  })
 
   // add trailing empty line if it's missing:
   if (newLinesArr[newLinesArr.length - 1] !== '') {
     newLinesArr.push('')
   }
-
   return newLinesArr.join('\n')
 }
 

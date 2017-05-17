@@ -51,3 +51,7 @@ test('06. there are no linked titles', (t) => {
 test('07. non-GitHub package.json - throws', (t) => {
   return throws(t, '07_gitlab_package_json')
 })
+
+test('08. mid links missing in changelog.md', (t) => {
+  return compare(t, '08_mid_links_missing')
+})
