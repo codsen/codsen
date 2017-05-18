@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [5.1.0] - 2017-05-02
 
 ### Added
-- `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/code-and-send/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
+- `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
 
 ## [5.0.0] - 2017-04-30
 
@@ -39,7 +39,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 ## [3.2.0] - 2017-04-04
 ### Added
-- Imagine, you're using [`🐒.traverse()`](https://github.com/code-and-send/ast-monkey#traverse) on the following piece of AST:
+- Imagine, you're using [`🐒.traverse()`](https://github.com/codsen/ast-monkey#traverse) on the following piece of AST:
 
 ```js
 {
@@ -53,7 +53,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 When you'll be traversing the array, `['something', 'anything']`, you'll have access to the **key name**, `title`, via `innerObj.topmostKey` on the callback. ✨
 
-I needed this feature for [json-variables](https://github.com/code-and-send/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
+I needed this feature for [json-variables](https://github.com/codsen/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
 
 ## [3.1.0] - 2017-04-01 International Fools day. No tricks here though.
 ### Improved
@@ -110,21 +110,21 @@ BREAKING API CHANGES.
 ### Changed
 - Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
 
-[2.0.0]: https://github.com/code-and-send/ast-monkey/compare/v1.0.1...v2.0.0
-[2.2.0]: https://github.com/code-and-send/ast-monkey/compare/v2.1.0...v2.2.0
-[2.3.0]: https://github.com/code-and-send/ast-monkey/compare/v2.2.0...v2.3.0
-[2.4.0]: https://github.com/code-and-send/ast-monkey/compare/v2.3.0...v2.4.0
-[2.5.0]: https://github.com/code-and-send/ast-monkey/compare/v2.4.0...v2.5.0
-[2.6.0]: https://github.com/code-and-send/ast-monkey/compare/v2.5.0...v2.6.0
-[2.7.0]: https://github.com/code-and-send/ast-monkey/compare/v2.6.0...v2.7.0
-[2.8.0]: https://github.com/code-and-send/ast-monkey/compare/v2.7.0...v2.8.0
-[2.9.0]: https://github.com/code-and-send/ast-monkey/compare/v2.8.0...v2.9.0
-[3.0.0]: https://github.com/code-and-send/ast-monkey/compare/v2.9.0...v3.0.0
-[3.1.0]: https://github.com/code-and-send/ast-monkey/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/code-and-send/ast-monkey/compare/v3.1.0...v3.2.0
-[3.3.0]: https://github.com/code-and-send/ast-monkey/compare/v3.2.2...v3.3.0
-[v4]: https://github.com/code-and-send/ast-monkey/compare/v3.3.0...v4.0.0
-[4.0.0]: https://github.com/code-and-send/ast-monkey/compare/v3.3.0...v4.0.0
-[5.0.0]: https://github.com/code-and-send/ast-monkey/compare/v4.0.0...v5.0.0
-[5.1.0]: https://github.com/code-and-send/ast-monkey/compare/v5.0.0...v5.1.0
-[5.2.0]: https://github.com/code-and-send/ast-monkey/compare/v5.1.0...v5.2.0
+[2.0.0]: https://github.com/codsen/ast-monkey/compare/v1.0.1...v2.0.0
+[2.2.0]: https://github.com/codsen/ast-monkey/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/ast-monkey/compare/v2.2.0...v2.3.0
+[2.4.0]: https://github.com/codsen/ast-monkey/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/codsen/ast-monkey/compare/v2.4.0...v2.5.0
+[2.6.0]: https://github.com/codsen/ast-monkey/compare/v2.5.0...v2.6.0
+[2.7.0]: https://github.com/codsen/ast-monkey/compare/v2.6.0...v2.7.0
+[2.8.0]: https://github.com/codsen/ast-monkey/compare/v2.7.0...v2.8.0
+[2.9.0]: https://github.com/codsen/ast-monkey/compare/v2.8.0...v2.9.0
+[3.0.0]: https://github.com/codsen/ast-monkey/compare/v2.9.0...v3.0.0
+[3.1.0]: https://github.com/codsen/ast-monkey/compare/v3.0.0...v3.1.0
+[3.2.0]: https://github.com/codsen/ast-monkey/compare/v3.1.0...v3.2.0
+[3.3.0]: https://github.com/codsen/ast-monkey/compare/v3.2.2...v3.3.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
+[4.0.0]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
+[5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
+[5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
+[5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0

@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc readme.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code-and-send/ast-monkey.git"
-  },
+  "repository": "codsen/ast-monkey",
   "keywords": [
     "ast",
     "by",
@@ -33,9 +30,9 @@
   "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/ast-monkey/issues"
+    "url": "https://github.com/codsen/ast-monkey/issues"
   },
-  "homepage": "https://github.com/code-and-send/ast-monkey#readme",
+  "homepage": "https://github.com/codsen/ast-monkey#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
