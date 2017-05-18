@@ -30,7 +30,7 @@
   "homepage": "https://github.com/codsen/array-includes-with-glob#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "matcher": "^0.1.2",
+    "matcher": "^1.0.0",
     "object-assign": "*"
   },
   "devDependencies": {
