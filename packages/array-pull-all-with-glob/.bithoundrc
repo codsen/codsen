@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-      "mute": ["ava", "coveralls", "doctoc", "husky", "lodash.remove", "lodash.replace"]
+      "mute": ["ava", "coveralls", "doctoc", "husky", "lodash.remove", "lodash.replace", "lodash.clonedeep"]
   },
   "test": [
     "test.js"
