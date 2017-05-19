@@ -1,4 +1,4 @@
 # CLI ideas
 
-[ ] test file names in all possible cases, also without extension
-[ ] set up update-notifier
+- [ ] test file names in all possible cases, also without extension
+- [x] set up update-notifier
