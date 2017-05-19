@@ -24,6 +24,12 @@ function throws (t, name) {
 
 // -----------------------------------------------------------------------------
 
+test('00. if no input, will silently return indefined', (t) => {
+  t.deepEqual(c(), undefined,
+    '00.01'
+  )
+})
+
 test('01. ascending order, with wrong package names', (t) => {
   return compare(t, '01_asc_order_wrong_package')
 })
@@ -56,8 +62,6 @@ test('08. mid links missing in changelog.md', (t) => {
   return compare(t, '08_mid_links_missing')
 })
 
-test('09. if no input, will silently return indefined', (t) => {
-  t.deepEqual(c(), undefined,
-    '09.01'
-  )
+test('09. sneaky cases with tight spacing', (t) => {
+  return compare(t, '09_tight_spacing')
 })

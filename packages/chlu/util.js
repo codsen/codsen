@@ -2,8 +2,7 @@
 
 const cmp = require('semver-compare')
 const clone = require('lodash.clonedeep')
-function isArr (something) { return Array.isArray(something) }
-function isStr (something) { return typeof something === 'string' }
+const isNum = require('is-natural-number')
 
 // REGEXES
 // -----------------------------------------------------------------------------
@@ -16,6 +15,8 @@ var versionWithoutBracketsRegex = /\d+\.\d+(\.\d)*/g
 
 function existy (x) { return x != null }
 function truthy (x) { return (x !== false) && existy(x) }
+function isArr (something) { return Array.isArray(something) }
+function isStr (something) { return typeof something === 'string' }
 function aContainsB (a, b) {
   if (!truthy(a) || !truthy(b)) {
     return false
@@ -109,16 +110,20 @@ function setRow (arr, row, content) {
   return res
 }
 
-// function getRow (str, arr) {
-//   console.log('str = ' + JSON.stringify(str, null, 4))
-//   console.log('arr = ' + JSON.stringify(arr, null, 4))
-//   for (var i = 0, len = arr.length; i < len; i++) {
-//     if ((arr[i].version === str) && existy(arr[i].rowNum)) {
-//       return arr[i].rowNum
-//     }
-//   }
-//   return null
-// }
+function getRow (num, arr) {
+  if (!existy(num) || !isNum(num)) {
+    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it\'s given as: ' + typeof num + ' and equal: ' + JSON.stringify(num, null, 4))
+  }
+  if (!existy(arr) || !isArr(arr)) {
+    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an array. Currently it\'s given as: ' + typeof arr + ' and equal: ' + JSON.stringify(arr, null, 4))
+  }
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (i === num) {
+      return arr[i]
+    }
+  }
+  return null
+}
 
 // consumes link strings like "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
 // returns {user: "userName", project: "libName"}
@@ -164,7 +169,7 @@ module.exports = {
   versionWithBracketsRegex: versionWithBracketsRegex,
   versionWithoutBracketsRegex: versionWithoutBracketsRegex,
   getPreviousVersion: getPreviousVersion,
-  // getRow: getRow,
+  getRow: getRow,
   setRow: setRow,
   getTitlesAndFooterLinks: getTitlesAndFooterLinks,
   getRepoInfo: getRepoInfo,

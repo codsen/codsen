@@ -18,6 +18,7 @@ const getTitlesAndFooterLinks = util.getTitlesAndFooterLinks
 const getRepoInfo = util.getRepoInfo
 const setRepoInfo = util.setRepoInfo
 const setRow = util.setRow
+const getRow = util.getRow
 const versionSort = util.versionSort
 
 // ACTION
@@ -169,10 +170,26 @@ function chlu (changelogContents, packageJsonContents) {
     newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content)
   })
 
-  // add trailing empty line if it's missing:
+  // ========
+  // stage 11: add trailing empty line if it's missing:
+
   if (newLinesArr[newLinesArr.length - 1] !== '') {
     newLinesArr.push('')
   }
+
+  // ========
+  // stage 12: add any missing line break before footer links
+
+  footerLinks = getTitlesAndFooterLinks(newLinesArr).footerLinks
+
+  if (
+    existy(footerLinks) &&
+    (footerLinks.length > 0) &&
+    !empty(getRow((footerLinks[0].rowNum - 1), newLinesArr))
+  ) {
+    newLinesArr.splice(footerLinks[0].rowNum, 0, '')
+  }
+
   return newLinesArr.join('\n')
 }
 

@@ -1,10 +1,8 @@
 'use strict'
 /* eslint no-template-curly-in-string: 0 */
-/* eslint padded-blocks: 0 */
 
 const test = require('ava')
-// const { versionWithBracketsRegex, versionWithoutBracketsRegex, getRow, setRow, getTitlesAndFooterLinks, getRepoInfo } = require('../util')
-const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo } = require('../util')
+const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo, getRow } = require('../util')
 
 // isTitle
 // -------
@@ -152,4 +150,29 @@ test('05.01 - setRepoInfo() - BAU', function (t) {
   ),
   '[1.1.0]: https://github.com/userName/package/compare/v1.0.1...v1.1.0',
   '05.01.03 - package only')
+})
+
+// getRow
+// ------
+
+test('06.01 - getRow() - all kinds of throws', function (t) {
+  t.throws(function () { getRow(1) })
+  t.throws(function () { getRow('a') })
+  t.throws(function () { getRow(1, 1) })
+  t.throws(function () { getRow(1.5, ['a']) })
+})
+
+test('06.02 - getRow() - BAU', function (t) {
+  t.is(getRow(
+    2,
+    ['aaa', 'bbb', 'ccc']
+  ),
+  'ccc',
+  '06.02.01 - found')
+  t.is(getRow(
+    99,
+    ['aaa', 'bbb', 'ccc']
+  ),
+  null,
+  '06.02.01 - not found')
 })
