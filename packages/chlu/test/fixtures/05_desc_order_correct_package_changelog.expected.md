@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
-[1.4.0]: https://github.com/code-and-send/correct-lib/compare/v1.3.0...v1.4.0
-[1.3.0]: https://github.com/code-and-send/correct-lib/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/code-and-send/correct-lib/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/code-and-send/correct-lib/compare/v1.0.0...v1.1.0
+[1.4.0]: https://github.com/codsen/correct-lib/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/codsen/correct-lib/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0

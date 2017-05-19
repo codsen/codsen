@@ -52,7 +52,7 @@ function getTitlesAndFooterLinks (linesArr) {
 
 // Is current string a title?
 // For example, "## [1.2.0] - 2017-04-24" is.
-// For example, "[1.1.0]: https://github.com/code-and-send/wrong-lib/compare/v1.0.1...v1.1.0" is not
+// For example, "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0" is not
 function isTitle (str) {
   if (str === undefined) {
     return false

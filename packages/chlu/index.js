@@ -50,7 +50,7 @@ function chlu (changelogContents, packageJsonContents) {
   // - record all titles, like:
   //   "## [1.2.0] - 2017-04-24"
   // - record all url links at the bottom, like:
-  //   "[1.1.0]: https://github.com/code-and-send/wrong-lib/compare/v1.0.1...v1.1.0"
+  //   "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0"
   var linesArr = splitLines(changelogMd)
 
   titles = getTitlesAndFooterLinks(linesArr).titles

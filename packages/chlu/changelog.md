@@ -15,4 +15,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
-[1.1.0]: https://github.com/code-and-send/chlu/compare/v1.0.0...v1.1.0
+[1.1.0]: https://github.com/codsen/chlu/compare/v1.0.0...v1.1.0

@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/code-and-send/correct-lib.git"
+    "url": "https://gitlab.com/codsen/correct-lib.git"
   },
   "keywords": [
     "aaaaaaa",
@@ -24,12 +24,12 @@
     "jjjjjjj",
     "kkkkkkk"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": "Roy Reveltas <roy@codsen.com> (http://codsen.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/code-and-send/correct-lib/issues"
+    "url": "https://gitlab.com/codsen/correct-lib/issues"
   },
-  "homepage": "https://gitlab.com/code-and-send/correct-lib#readme",
+  "homepage": "https://gitlab.com/codsen/correct-lib#readme",
   "dependencies": {
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",

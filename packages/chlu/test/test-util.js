@@ -75,7 +75,7 @@ test('02.01 - isFooterLink() - negative result', function (t) {
 })
 
 test('02.02 - isFooterLink() - positive result', function (t) {
-  t.is(isFooterLink('[1.1.0]: https://github.com/code-and-send/wrong-lib/compare/v1.0.0...v1.1.0'), true, '02.02.01')
+  t.is(isFooterLink('[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.0...v1.1.0'), true, '02.02.01')
   t.is(isFooterLink('[1.1.0]: https://github.com'), true, '02.02.02')
 })
 

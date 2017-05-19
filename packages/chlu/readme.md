@@ -37,7 +37,7 @@ $ npm i -S chlu
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/chlu/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise a GitHub issue.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/chlu/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise a GitHub issue.
 
 ## Licence
 
@@ -63,17 +63,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/chlu.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/chlu
+[travis-img]: https://travis-ci.org/codsen/chlu.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/chlu
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/chlu/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/chlu
+[bithound-img]: https://www.bithound.io/github/codsen/chlu/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/chlu
 
-[deps-img]: https://www.bithound.io/github/code-and-send/chlu/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/chlu/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/chlu/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/chlu/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/chlu/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/chlu/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/chlu/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/chlu/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/chlu.svg
 [downloads-url]: https://www.npmjs.com/package/chlu
