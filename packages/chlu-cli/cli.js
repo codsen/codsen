@@ -6,6 +6,8 @@ const chlu = require('chlu')
 const fs = require('fs')
 const pack = './package.json'
 const change = './changelog.md'
+const updateNotifier = require('update-notifier')
+
 const cli = meow(`
   Usage
     $ chlu
@@ -16,10 +18,10 @@ const cli = meow(`
   Example
     Just call it in the root, where your package.json is located
 `)
-
-let res
+updateNotifier({pkg: cli.pkg}).notify()
 
 fs.readFile(change, 'utf8', (changelogErr, changelogData) => {
+  let res
   if (changelogData) {
     fs.readFile(pack, 'utf8', (packageErr, packageData) => {
       if (packageErr) {

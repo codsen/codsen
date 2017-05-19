@@ -3,11 +3,11 @@
   "version": "1.0.1",
   "description": "CH-ange-L-og U-pdate — Automatically fix errors in your changelog file",
   "license": "MIT",
-  "repository": "code-and-send/chlu-cli",
+  "repository": "codsen/chlu-cli",
   "author": {
     "name": "Roy Reveltas",
-    "email": "roy@codeandsend.com",
-    "url": "codeandsend.com"
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
   },
   "bin": {
     "chlu": "cli.js"
@@ -40,18 +40,18 @@
     "cli-app"
   ],
   "bugs": {
-    "url": "https://github.com/code-and-send/chlu-cli/issues"
+    "url": "https://github.com/codsen/chlu-cli/issues"
   },
-  "homepage": "https://github.com/code-and-send/chlu-cli#readme",
+  "homepage": "https://github.com/codsen/chlu-cli#readme",
   "dependencies": {
-    "chalk": "^1.1.0",
-    "chlu": "^1.1.0",
+    "chlu": "^1.1.1",
     "meow": "^3.3.0",
     "update-notifier": "^2.1.0"
   },
   "devDependencies": {
     "ava": "*",
     "doctoc": "*",
+    "execa": "*",
     "husky": "*",
     "standard": "*"
   },

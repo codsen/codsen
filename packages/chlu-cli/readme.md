@@ -55,7 +55,7 @@ In practice, this means your titles become actually linked (before/after example
 This has happened to me before, actually on Detergent's repo even. I copied and edited the changelog from my other library and forgot to edit the package name in the footer diff links. For example, `PUT_A_WRONG_NAME_OF_THE_PACKAGE_HERE` below would get replaced by the correct name fresh from your `package.json`:
 
 ```md
-[1.4.0]: https://github.com/code-and-send/PUT_A_WRONG_PACKAGE_HERE/compare/v1.3.0...v1.4.0
+[1.4.0]: https://github.com/codsen/PUT_A_WRONG_PACKAGE_HERE/compare/v1.3.0...v1.4.0
 ```
 
 Same with wrong user names in the URL.
@@ -68,7 +68,7 @@ Since the order of the features is descending, the default order of title Markdo
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/chlu-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a mentioned issue link.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/chlu-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a mentioned issue link.
 
 ## Licence
 
@@ -94,17 +94,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/chlu-cli.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/chlu-cli
+[travis-img]: https://travis-ci.org/codsen/chlu-cli.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/chlu-cli
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/chlu-cli/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/chlu-cli
+[bithound-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/chlu-cli
 
-[deps-img]: https://www.bithound.io/github/code-and-send/chlu-cli/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/chlu-cli/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/chlu-cli/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/chlu-cli/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg
 [downloads-url]: https://www.npmjs.com/package/chlu-cli
