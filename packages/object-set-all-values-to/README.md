@@ -1,6 +1,6 @@
 # object-set-all-values-to
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Recursively walk the input and set all found values in plain objects to something
 
@@ -78,13 +78,13 @@ Input argument           | Type           | Obligatory? | Default     | Descript
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-set-all-values-to/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-set-all-values-to/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -110,20 +110,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-set-all-values-to.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-set-all-values-to
+[travis-img]: https://travis-ci.org/codsen/object-set-all-values-to.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-set-all-values-to
 
-[overall-img]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/object-set-all-values-to
+[overall-img]: https://www.bithound.io/github/codsen/object-set-all-values-to/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-set-all-values-to
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-set-all-values-to/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-set-all-values-to/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-set-all-values-to/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-set-all-values-to/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-set-all-values-to/master/dependencies/npm
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-set-all-values-to/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-set-all-values-to?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-set-all-values-to/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-set-all-values-to?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/object-set-all-values-to.svg
 [downloads-url]: https://www.npmjs.com/package/object-set-all-values-to

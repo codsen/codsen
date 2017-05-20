@@ -1,6 +1,6 @@
 'use strict'
-var setAllValuesTo = require('./index.js')
 import test from 'ava'
+var setAllValuesTo = require('./index.js')
 
 // ==============================
 // Normal assignments with default value, false

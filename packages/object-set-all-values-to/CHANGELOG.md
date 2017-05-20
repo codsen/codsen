@@ -42,8 +42,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First public release
 
-[1.1.1]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.0...v1.1.1
-[1.1.2]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.1...v1.1.2
-[1.2.0]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.1.2...v1.2.0
-[1.3.0]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.2.0...v1.3.0
-[2.0.0]: https://github.com/code-and-send/object-set-all-values-to/compare/v1.3.2...v2.0.0
+[1.1.1]: https://github.com/codsen/object-set-all-values-to/compare/v1.1.0...v1.1.1
+[1.1.2]: https://github.com/codsen/object-set-all-values-to/compare/v1.1.1...v1.1.2
+[1.2.0]: https://github.com/codsen/object-set-all-values-to/compare/v1.1.2...v1.2.0
+[1.3.0]: https://github.com/codsen/object-set-all-values-to/compare/v1.2.0...v1.3.0
+[2.0.0]: https://github.com/codsen/object-set-all-values-to/compare/v1.3.2...v2.0.0
