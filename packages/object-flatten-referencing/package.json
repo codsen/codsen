@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc readme.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/object-flatten-referencing.git"
-  },
+  "repository": "codsen/object-flatten-referencing",
   "keywords": [
     "object",
     "plain",
@@ -24,17 +21,21 @@
     "advanced",
     "email"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/object-flatten-referencing/issues"
+    "url": "https://github.com/codsen/object-flatten-referencing/issues"
   },
-  "homepage": "https://github.com/code-and-send/object-flatten-referencing#readme",
+  "homepage": "https://github.com/codsen/object-flatten-referencing#readme",
   "dependencies": {
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
-    "matcher": "^0.1.2",
+    "matcher": "^1.0.0",
     "object-assign": "^4.1.1",
     "str-indexes-of-plus": "^1.0.1",
     "type-detect": "^4.0.0"

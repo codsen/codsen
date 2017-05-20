@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
-[1.1.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.0.1...v1.1.0
-[1.2.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.1.0...v1.2.0
-[2.0.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v1.2.0...v2.0.0
-[3.0.0]: https://github.com/code-and-send/object-flatten-referencing/compare/v2.0.0...v3.0.0
+[1.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.0.1...v1.1.0
+[1.2.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.1.0...v1.2.0
+[2.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.2.0...v2.0.0
+[3.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v2.0.0...v3.0.0

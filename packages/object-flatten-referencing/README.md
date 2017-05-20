@@ -1,6 +1,6 @@
 # object-flatten-referencing
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Flatten complex nested objects according to a reference
 
@@ -114,7 +114,7 @@ An optional third argument - options object.
 {                              |          |             |                   |
 `wrapHeadsWith`                    | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
 `wrapTailsWith`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
-`dontWrapKeys`                 | Array of strings or String | no | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/code-and-send/json-variables#data-containers), for example. You can put wildcards (*) to match zero or more characters.
+`dontWrapKeys`                 | Array of strings or String | no | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/codsen/json-variables#data-containers), for example. You can put wildcards (*) to match zero or more characters.
 `xhtml`                        | Boolean  | no          | `true`            | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)
 `preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeadsWith` or `wrapTailsWith`, don't wrap to prevent double wrapping.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
@@ -232,9 +232,9 @@ Voilà!
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-flatten-referencing/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-referencing/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -260,20 +260,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-flatten-referencing.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-flatten-referencing
+[travis-img]: https://travis-ci.org/codsen/object-flatten-referencing.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-flatten-referencing/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-flatten-referencing?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/object-flatten-referencing/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/object-flatten-referencing
+[bithound-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-flatten-referencing/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-flatten-referencing/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-flatten-referencing/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-flatten-referencing/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg
 [downloads-url]: https://www.npmjs.com/package/object-flatten-referencing
