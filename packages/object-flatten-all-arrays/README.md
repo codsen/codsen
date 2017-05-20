@@ -107,7 +107,7 @@ For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https:
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-flatten-all-arrays/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-all-arrays/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -133,20 +133,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-flatten-all-arrays.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-flatten-all-arrays
+[travis-img]: https://travis-ci.org/codsen/object-flatten-all-arrays.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-flatten-all-arrays
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-flatten-all-arrays/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-flatten-all-arrays?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-all-arrays/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-flatten-all-arrays?branch=master
 
-[overall-img]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays
+[overall-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-flatten-all-arrays/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-flatten-all-arrays.svg
 [downloads-url]: https://www.npmjs.com/package/object-flatten-all-arrays
