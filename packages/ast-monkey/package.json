@@ -27,7 +27,11 @@
     "xml",
     "value"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/codsen/ast-monkey/issues"
@@ -44,7 +48,7 @@
     "coveralls": "*",
     "husky": "*",
     "nyc": "^10.0.0",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true
