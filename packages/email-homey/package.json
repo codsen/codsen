@@ -7,10 +7,7 @@
     "precommit": "npm test && doctoc README.md",
     "test": "standard"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/email-homey.git"
-  },
+  "repository": "codsen/email-homey",
   "keywords": [
     "email",
     "templates",
@@ -26,12 +23,16 @@
     "homepage",
     "browsersync"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/email-homey/issues"
+    "url": "https://github.com/codsen/email-homey/issues"
   },
-  "homepage": "https://github.com/code-and-send/email-homey#readme",
+  "homepage": "https://github.com/codsen/email-homey#readme",
   "dependencies": {
     "glob-fs": "*",
     "lodash.split": "*",
@@ -41,7 +42,8 @@
   },
   "devDependencies": {
     "doctoc": "^1.3.0",
-    "husky": "^0.13.2"
+    "husky": "^0.13.2",
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true

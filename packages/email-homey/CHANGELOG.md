@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2017-03-03
+### Updated
+- Updated deps, Codsen name change, installed `standard` as dev-dependency (was missing previously).
+
 ## [1.7.0] - 2017-03-03
 ### Updated
 - Updated dependencies, consuming normal version ranges.
@@ -26,5 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Improved Readme
 - Set up JS Standard check on Husky calling on all commits (and failing commit if any files don't pass JS Standard)
 
-[1.6.0]: https://github.com/code-and-send/email-homey/compare/v1.5.0...v1.6.0
-[1.5.0]: https://github.com/code-and-send/email-homey/compare/v1.4.0...v1.5.0
+[1.5.0]: https://github.com/codsen/email-homey/compare/v1.4.0...v1.5.0
+[1.6.0]: https://github.com/codsen/email-homey/compare/v1.5.0...v1.6.0
+[1.7.0]: https://github.com/codsen/email-homey/compare/v1.6.0...v1.7.0
+[1.8.0]: https://github.com/codsen/email-homey/compare/v1.7.0...v1.8.0

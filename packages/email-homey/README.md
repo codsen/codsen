@@ -1,10 +1,10 @@
 # email-homey
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Generate homepage in the root containing all your templates, by folder
 
-[![bitHound Score](https://www.bithound.io/github/code-and-send/email-homey/badges/score.svg)](https://www.bithound.io/github/code-and-send/email-homey) [![bitHound Dependencies](https://www.bithound.io/github/code-and-send/email-homey/badges/dependencies.svg)](https://www.bithound.io/github/code-and-send/email-homey/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/code-and-send/email-homey/badges/devDependencies.svg)](https://www.bithound.io/github/code-and-send/email-homey/master/dependencies/npm)
+[![bitHound Score](https://www.bithound.io/github/codsen/email-homey/badges/score.svg)](https://www.bithound.io/github/codsen/email-homey) [![bitHound Dependencies](https://www.bithound.io/github/codsen/email-homey/badges/dependencies.svg)](https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/codsen/email-homey/badges/devDependencies.svg)](https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm)
 
 ## Table of Contents
 
@@ -140,7 +140,7 @@ Both files must be placed in the root of your template folder. Feel free to cust
 $ npm test
 ```
 
-If you see anything incorrect whatsoever, [raise an issue](https://github.com/code-and-send/email-homey/issues). Pull requests are welcome — fork, hack and pull-request. I'll do my best to merge soon.
+If you see anything incorrect whatsoever, [raise an issue](https://github.com/codsen/email-homey/issues). Pull requests are welcome — fork, hack and pull-request. I'll do my best to merge soon.
 
 ## Licence
 
