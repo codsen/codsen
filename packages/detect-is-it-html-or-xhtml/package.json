@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code-and-send/detect-is-it-html-or-xhtml.git"
-  },
+  "repository": "codsen/detect-is-it-html-or-xhtml",
   "keywords": [
     "detect",
     "check",
@@ -28,12 +25,16 @@
     "elements",
     "string"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/detect-is-it-html-or-xhtml/issues"
+    "url": "https://github.com/codsen/detect-is-it-html-or-xhtml/issues"
   },
-  "homepage": "https://github.com/code-and-send/detect-is-it-html-or-xhtml#readme",
+  "homepage": "https://github.com/codsen/detect-is-it-html-or-xhtml#readme",
   "dependencies": {},
   "devDependencies": {
     "ava": "*",
@@ -41,7 +42,7 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true

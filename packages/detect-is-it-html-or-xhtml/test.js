@@ -1,7 +1,7 @@
 /* eslint-disable no-multi-str */
 'use strict'
-var detect = require('./index.js')
 import test from 'ava'
+var detect = require('./index.js')
 
 // ==============================
 // Doctype

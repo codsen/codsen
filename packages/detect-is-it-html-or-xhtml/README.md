@@ -1,6 +1,6 @@
 # detect-is-it-html-or-xhtml
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Answers, is the string input string more an HTML or XHTML (or neither)
 
@@ -34,7 +34,7 @@
 
 As you know, XHTML is slightly different from HTML: **HTML** (4 and 5) does not close the `<img>` and other single tags, while **XHTML** does. There are more to that, but that's the major thing from developer's perspective.
 
-When I was working on the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
+When I was working on the [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
 
 I couldn't find any library that analyses the code, telling is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
 
@@ -92,13 +92,13 @@ The algorithm is the following:
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/detect-is-it-html-or-xhtml/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/detect-is-it-html-or-xhtml/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -124,20 +124,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/detect-is-it-html-or-xhtml.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/detect-is-it-html-or-xhtml
+[travis-img]: https://travis-ci.org/codsen/detect-is-it-html-or-xhtml.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/detect-is-it-html-or-xhtml
 
-[overall-img]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml
+[overall-img]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml
 
-[deps-img]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/detect-is-it-html-or-xhtml/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/detect-is-it-html-or-xhtml/master/dependencies/npm
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/detect-is-it-html-or-xhtml/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/detect-is-it-html-or-xhtml?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/detect-is-it-html-or-xhtml/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/detect-is-it-html-or-xhtml?branch=master
 
 [downloads-img]: https://img.shields.io/npm/dm/detect-is-it-html-or-xhtml.svg
 [downloads-url]: https://www.npmjs.com/package/detect-is-it-html-or-xhtml
