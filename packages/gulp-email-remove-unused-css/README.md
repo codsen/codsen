@@ -1,6 +1,6 @@
 # gulp-email-remove-unused-css
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Remove unused CSS from email templates
 
@@ -9,11 +9,11 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
-_If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css/issues) issue tracker._
+_If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/issues) issue tracker._
 
 * Online web app: [EmailComb](https://emailcomb.com)
-* PostHTML plugin: [posthtml-email-remove-unused-css](https://github.com/code-and-send/posthtml-email-remove-unused-css/)
-* The core library: [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css).
+* PostHTML plugin: [posthtml-email-remove-unused-css](https://github.com/codsen/posthtml-email-remove-unused-css/)
+* The core library: [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css).
 
 ## Table of Contents
 
@@ -88,15 +88,15 @@ If you need more advanced CSS removal tools, check out [uncss](https://github.co
 
 There's also more direct competitor, [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) which uses [Cheerio](https://www.npmjs.com/package/cheerio), but:
 
-1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://github.com/code-and-send/detergent) from its [front-end](https://detergent.io).
+1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://github.com/codsen/detergent) from its [front-end](https://detergent.io).
 
 2) [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/gulp-email-remove-unused-css/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/gulp-email-remove-unused-css/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -122,14 +122,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/gulp-email-remove-unused-css.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/gulp-email-remove-unused-css
+[travis-img]: https://travis-ci.org/codsen/gulp-email-remove-unused-css.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/gulp-email-remove-unused-css
 
-[overall-img]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css
+[overall-img]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css
 
-[deps-img]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/gulp-email-remove-unused-css/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg
 [downloads-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css

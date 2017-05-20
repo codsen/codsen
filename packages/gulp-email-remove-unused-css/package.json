@@ -3,10 +3,7 @@
   "version": "1.2.0",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/gulp-email-remove-unused-css.git"
-  },
+  "repository": "codsen/gulp-email-remove-unused-css",
   "keywords": [
     "gulp",
     "gulpplugin",
@@ -24,10 +21,14 @@
   "files": [
     "index.js"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/gulp-email-remove-unused-css/issues"
+    "url": "https://github.com/codsen/gulp-email-remove-unused-css/issues"
   },
   "homepage": "https://emailcomb.com",
   "dependencies": {
