@@ -528,7 +528,7 @@ you get three variables:
 - `innerObj`
 
 If monkey is currently traversing a plain object, going each key/value pair, `key` will be key and `val` will be the value.
-If monkey is currently traversing an array, going each element, `key` will be the current element. `val` will be `null`.
+If monkey is currently traversing an array, going through all elements, a `key` will be the current element and `val` will be `null`.
 
 `innerObj` object's key | Type           | Description
 ------------------------|----------------|----------------------
