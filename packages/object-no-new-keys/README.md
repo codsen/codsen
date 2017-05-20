@@ -37,11 +37,13 @@ $ npm i -S object-no-new-keys
 
 ## Idea
 
-Check, does a `given thing` (probably a nested plain object) have any keys, not present in a `reference` thing (probably an another nested plain object). Both inputs can be whatever — that's because this is another recursive library, and as such, it anticipates anything in its inputs.
+Check, does a `given thing` (probably a nested plain object) have any keys, not present in a `reference thing` (probably an another nested plain object). I'm using a term "thing" because this library uses recursive algorithm which means both inputs can be _whatever_-type (string, plain object or an array).
 
-This library will try to perform deep, recursive traversal of both inputs and will not mutate the input arguments.
+This library will try to perform a **deep, recursive traversal** of both inputs and will not mutate the input arguments.
 
 It is meant for work with AST's, parsed HTML or JSON, the cases where there are _objects within arrays within objects_.
+
+Personally, I use this library to look for any rogue keys in email template content files, in JSON format.
 
 ## API
 
@@ -173,7 +175,7 @@ In short, `missing-deep-keys` is for cases when you have only objects-within-obj
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-no-new-keys/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-no-new-keys/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -199,20 +201,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-no-new-keys.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-no-new-keys
+[travis-img]: https://travis-ci.org/codsen/object-no-new-keys.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-no-new-keys
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-no-new-keys/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-no-new-keys?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-no-new-keys/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-no-new-keys?branch=master
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/object-no-new-keys/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/object-no-new-keys
+[bithound-img]: https://www.bithound.io/github/codsen/object-no-new-keys/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/object-no-new-keys
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-no-new-keys/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-no-new-keys/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-no-new-keys/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-no-new-keys/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-no-new-keys/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-no-new-keys/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-no-new-keys/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-no-new-keys/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-no-new-keys.svg
 [downloads-url]: https://www.npmjs.com/package/object-no-new-keys
