@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code-and-send/color-shorthand-hex-to-six-digit.git"
-  },
+  "repository": "codsen/color-shorthand-hex-to-six-digit",
   "keywords": [
     "color",
     "colour",
@@ -27,12 +24,16 @@
     "email",
     "newsletters"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit/issues"
+    "url": "https://github.com/codsen/color-shorthand-hex-to-six-digit/issues"
   },
-  "homepage": "https://github.com/code-and-send/color-shorthand-hex-to-six-digit#readme",
+  "homepage": "https://github.com/codsen/color-shorthand-hex-to-six-digit#readme",
   "dependencies": {
     "hex-color-regex": "*",
     "lodash.clonedeep": "^4.5.0",
@@ -45,7 +46,7 @@
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true

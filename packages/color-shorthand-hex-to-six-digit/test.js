@@ -1,6 +1,6 @@
 'use strict'
-var c = require('./index.js')
 import test from 'ava'
+var c = require('./index.js')
 
 // ==============================
 // 01. String inputs
