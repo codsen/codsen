@@ -310,14 +310,11 @@ function jsonVariables (inputOriginal, opts) {
           // console.log('* opts.dontWrapVars = ' + JSON.stringify(opts.dontWrapVars, null, 4))
           // console.log('* innerVar = ' + JSON.stringify(innerVar, null, 4))
           if (opts.wrapGlobalFlipSwitch && opts.dontWrapVars.length > 0) {
-            // wrap = wrap && !opts.dontWrapVars.some(function (elem) {
-            //   return matcher.isMatch(innerVar, elem)
-            // })
-            wrap = wrap && !splitObjectPath(innerVar).some(function (el1) {
-              return opts.dontWrapVars.some(function (el2) {
-                return matcher.isMatch(el1, el2)
-              })
-            })
+            wrap = wrap && !splitObjectPath(innerVar).some(
+              el1 => opts.dontWrapVars.some(
+                el2 => matcher.isMatch(el1, el2)
+              )
+            )
           }
 
           // check if current variable's marker is opts.headsNoWrap (default is "%%-"). If so, don't wrap it.
@@ -339,8 +336,7 @@ function jsonVariables (inputOriginal, opts) {
           }
 
           if (dontWrapTheseVarsStartingWithIndexes.length > 0) {
-            dontWrapTheseVarsStartingWithIndexes.forEach(function (el) {
-
+            dontWrapTheseVarsStartingWithIndexes.forEach(el => {
               if (el[0] === foundHeads[0]) {
                 wrapLeft = false
               }
