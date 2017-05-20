@@ -56,7 +56,7 @@ Reads an array of plain objects (parsed JSON files) and extracts a schema keyset
 
 Technically speaking, a schema is a superset plain object, with sorted keys, with each array flattened to keep one superset plain object of its contents.
 
-The merging is done on a premise to retain [as much information](https://github.com/code-and-send/object-merge-advanced) after merging as possible.
+The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
 ### the input
 
@@ -198,7 +198,7 @@ See the difference between the two concepts?
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/json-comb-core/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/json-comb-core/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -224,20 +224,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/json-comb-core.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/json-comb-core
+[travis-img]: https://travis-ci.org/codsen/json-comb-core.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/json-comb-core
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/json-comb-core/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/json-comb-core?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/json-comb-core/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/json-comb-core
+[bithound-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/json-comb-core
 
-[deps-img]: https://www.bithound.io/github/code-and-send/json-comb-core/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/json-comb-core/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/json-comb-core/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/json-comb-core/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg
 [downloads-url]: https://www.npmjs.com/package/json-comb-core

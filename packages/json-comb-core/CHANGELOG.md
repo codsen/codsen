@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - First public release
 - Unit test coverage is solid 100%
 
-[2.0.0]: https://github.com/code-and-send/json-comb-core/compare/v1.0.1...v2.0.0
+[2.0.0]: https://github.com/codsen/json-comb-core/compare/v1.0.1...v2.0.0

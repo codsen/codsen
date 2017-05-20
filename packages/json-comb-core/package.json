@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc readme.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/json-comb-core.git"
-  },
+  "repository": "codsen/json-comb-core",
   "keywords": [
     "json",
     "normalize",
@@ -24,12 +21,16 @@
     "same",
     "comb"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/json-comb-core/issues"
+    "url": "https://github.com/codsen/json-comb-core/issues"
   },
-  "homepage": "https://github.com/code-and-send/json-comb-core#readme",
+  "homepage": "https://github.com/codsen/json-comb-core#readme",
   "dependencies": {
     "check-types-mini": "^1.0.1",
     "lodash.clonedeep": "*",
