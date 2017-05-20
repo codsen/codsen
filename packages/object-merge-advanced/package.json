@@ -8,7 +8,7 @@
     "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": "code-and-send/object-merge-advanced",
+  "repository": "codsen/object-merge-advanced",
   "keywords": [
     "ast",
     "plain",
@@ -19,12 +19,16 @@
     "objects",
     "advanced"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/object-merge-advanced/issues"
+    "url": "https://github.com/codsen/object-merge-advanced/issues"
   },
-  "homepage": "https://github.com/code-and-send/object-merge-advanced#readme",
+  "homepage": "https://github.com/codsen/object-merge-advanced#readme",
   "dependencies": {
     "array-includes-all": "^1.0.0",
     "array-includes-with-glob": "^1.1.0",

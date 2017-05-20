@@ -227,7 +227,7 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -253,20 +253,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-merge-advanced.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-merge-advanced
+[travis-img]: https://travis-ci.org/codsen/object-merge-advanced.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-merge-advanced
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-merge-advanced/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-merge-advanced?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-merge-advanced/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-merge-advanced?branch=master
 
-[overall-img]: https://www.bithound.io/github/code-and-send/object-merge-advanced/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/object-merge-advanced
+[overall-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-merge-advanced
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-merge-advanced/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-merge-advanced/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-merge-advanced/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-merge-advanced/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg
 [downloads-url]: https://www.npmjs.com/package/object-merge-advanced
