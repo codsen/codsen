@@ -1,6 +1,6 @@
 'use strict'
-var fillMissingKeys = require('./index.js')
 import test from 'ava'
+var fillMissingKeys = require('./index.js')
 
 // ==============================
 // 1. Adds missing keys
@@ -526,31 +526,133 @@ test('03.06 - array vs bool', t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        'a': true,
-        'b': 'b'
+        a: true,
+        b: 'b'
       },
       {
-        'a': [
+        a: [
           {
-            'd': false,
-            'e': false
+            d: false,
+            e: false
           }
         ],
-        'b': false,
-        'c': false
+        b: false,
+        c: false
       }
     ),
     {
-      'a': [
+      a: [
         {
-          'd': false,
-          'e': false
+          d: false,
+          e: false
         }
       ],
-      'b': 'b',
-      'c': false
+      b: 'b',
+      c: false
     },
     '03.06')
+})
+
+test('03.06 - multiple levels of nested arrays #1', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: false,
+        c: 'c'
+      },
+      {
+        a: false,
+        b: [
+          {
+            b1: false,
+            b2: false,
+            b3: [
+              {
+                b4: false,
+                b5: false
+              }
+            ]
+          }
+        ],
+        c: false
+      }
+    ),
+    {
+      a: false,
+      b: [
+        {
+          b1: false,
+          b2: false,
+          b3: [
+            {
+              b4: false,
+              b5: false
+            }
+          ]
+        }
+      ],
+      c: 'c'
+    },
+    '03.06')
+})
+
+test('03.07 - multiple levels of nested arrays #2', t => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        b: [
+          {
+            b1: 'val1',
+            b2: 'val2',
+            b3: [
+              {
+                b4: 'val4'
+              },
+              {
+                b5: 'val5'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        a: false,
+        b: [
+          {
+            b1: false,
+            b2: false,
+            b3: [
+              {
+                b4: false,
+                b5: false
+              }
+            ]
+          }
+        ],
+        c: false
+      }
+    ),
+    {
+      a: false,
+      b: [
+        {
+          b1: 'val1',
+          b2: 'val2',
+          b3: [
+            {
+              b4: 'val4',
+              b5: false
+            },
+            {
+              b4: false,
+              b5: 'val5'
+            }
+          ]
+        }
+      ],
+      c: false
+    },
+    '03.07')
 })
 
 // ==============================

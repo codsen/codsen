@@ -1,6 +1,6 @@
 # object-fill-missing-keys
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Add missing keys into plain objects, according to a provided schema object
 
@@ -46,9 +46,9 @@ Flatten and merge all arrays, then set all key values of it to the default value
 
 For that you'll need few other libraries:
 
-* [object-flatten-all-arrays](https://github.com/code-and-send/object-flatten-all-arrays)
-* [object-merge-advanced](https://github.com/code-and-send/object-merge-advanced)
-* [object-set-all-values-to](https://github.com/code-and-send/object-set-all-values-to)
+* [object-flatten-all-arrays](https://github.com/codsen/object-flatten-all-arrays)
+* [object-merge-advanced](https://github.com/codsen/object-merge-advanced)
+* [object-set-all-values-to](https://github.com/codsen/object-set-all-values-to)
 
 But let's get back to the main subject.
 
@@ -99,13 +99,13 @@ To repeat, library does not mutate the input arguments.
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/object-fill-missing-keys/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-fill-missing-keys/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -131,20 +131,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/object-fill-missing-keys.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/object-fill-missing-keys
+[travis-img]: https://travis-ci.org/codsen/object-fill-missing-keys.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-fill-missing-keys
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/object-fill-missing-keys/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/object-fill-missing-keys?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-fill-missing-keys/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-fill-missing-keys?branch=master
 
-[overall-img]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys
+[overall-img]: https://www.bithound.io/github/codsen/object-fill-missing-keys/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys
 
-[deps-img]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-fill-missing-keys/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/object-fill-missing-keys/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-fill-missing-keys/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-fill-missing-keys.svg
 [downloads-url]: https://www.npmjs.com/package/object-fill-missing-keys

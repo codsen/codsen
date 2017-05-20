@@ -6,12 +6,10 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test && doctoc README.md",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+    "test": "clear && standard && nyc --reporter=html --reporter=text ava",
+    "watch": "nodemon --quiet --watch . --exec npm run test"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/object-fill-missing-keys.git"
-  },
+  "repository": "codsen/object-fill-missing-keys",
   "keywords": [
     "ast",
     "json",
@@ -28,12 +26,16 @@
     "normalise",
     "normalize"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/object-fill-missing-keys/issues"
+    "url": "https://github.com/codsen/object-fill-missing-keys/issues"
   },
-  "homepage": "https://github.com/code-and-send/object-fill-missing-keys#readme",
+  "homepage": "https://github.com/codsen/object-fill-missing-keys#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
     "object-merge-advanced": "^6.0.3",
@@ -41,11 +43,12 @@
   },
   "devDependencies": {
     "ava": "*",
+    "clear-cli": "*",
     "coveralls": "*",
     "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true
