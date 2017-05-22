@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Put non-empty strings into arrays, empty-ones into empty arrays. Bypass everything else.
+> Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
