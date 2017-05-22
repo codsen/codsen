@@ -1,0 +1,47 @@
+{
+  "name": "arrayiffy-if-string",
+  "version": "1.0.0",
+  "description": "Put non-empty strings into arrays, empty-ones into empty arrays. Bypass everything else.",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava",
+    "watch": "nodemon --quiet --watch . --exec npm run test"
+  },
+  "repository": "codsen/arrayiffy-if-string",
+  "keywords": [
+    "arrayiffy",
+    "turn",
+    "into",
+    "array",
+    "if",
+    "string"
+  ],
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/arrayiffy-if-string/issues"
+  },
+  "homepage": "https://github.com/codsen/arrayiffy-if-string#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nodemon": "*",
+    "nyc": "*",
+    "standard": "^10.0.0"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "engines": {
+    "node": ">=4"
+  }
+}
