@@ -60,7 +60,9 @@ Input argument   | Type         | Obligatory? | Description
 `options` object's key         | Type     | Obligatory? | Default     | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
-`ignoreKeys`                   | Array or String | no          | `[]` (empty array)        | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
+`ignoreKeys`                   | Array or String | no          | `[]` (empty array)   | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
+`acceptArrays`                 | Boolean  | no          | `false`     | If it's set to `true`, value can be array of elements, same type as reference.
+`acceptArraysIgnore`           | Array of strings or String | no | `[]` (empty array) | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.
 }                              |          |             |             |
 
 ## For example
@@ -88,6 +90,51 @@ var res = yourFunction(1, {placeholder: 'zzz'})
 ```
 
 If you are happy with `opts` variable name, you can omit the fourth argument; it will be set to that by default.
+
+Sometimes you want to accept either a string (or type "X") or an arrays of strings (elements of type "X"). As long as ALL the elements within the array match the reference type, it's OK. For these cases set `opts.acceptArrays` to `true`:
+
+```js
+const checkTypes = require('check-types-mini')
+var res = checkTypes(
+  { // < input
+    option1: 'setting1',
+    option2: [true, true],
+    option3: false
+  },
+  { // < reference
+    option1: 'setting1',
+    option2: false,
+    option3: false
+  }
+)
+// => Throws, because reference's `option2` is Boolean ("false") but input `option2` is array ("[true, true]").
+```
+
+But this does not `throw`:
+
+```js
+const checkTypes = require('check-types-mini')
+var res = checkTypes(
+  {
+    option1: 'setting1',
+    option2: ['setting3', 'setting4'],
+    option3: false
+  },
+  {
+    option1: 'setting1',
+    option2: 'setting2',
+    option3: false
+  },
+  'check-types-mini/checkTypes(): [THROW_ID_01]',
+  'opts',
+  {
+    acceptArrays: true
+  }
+)
+// => Does not throw.
+```
+
+If you want, you can blacklist certain keys of your objects so that `opts.acceptArrays` will not apply to them. Just add keys into `opts.acceptArraysIgnore` array.
 
 ## Contributing
 

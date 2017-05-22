@@ -130,3 +130,220 @@ test('01.04 - throws when opts are set wrong', t => {
     checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: '' })
   })
 })
+
+// ======================
+// 02. Arrays
+// ======================
+
+test('02.01 - opts.acceptArrays, strings+arrays', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting3', 'setting4'],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: 'setting2',
+        option3: false
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting3', 'setting4'],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: 'setting2',
+        option3: false
+      },
+      'message',
+      'varname',
+      {
+        acceptArrays: true
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting3', true, 'setting4'],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: 'setting2',
+        option3: false
+      },
+      'message',
+      'varname',
+      {
+        acceptArrays: true
+      }
+    )
+  })
+})
+
+test('02.02 - opts.acceptArrays, Booleans+arrays', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: false,
+        option3: false
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: false,
+        option3: false
+      },
+      'message',
+      'varname',
+      {
+        acceptArrays: true
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: [true, true, 1],
+        option3: false
+      },
+      {
+        option1: 'setting1',
+        option2: false,
+        option3: false
+      },
+      'message',
+      'varname',
+      {
+        acceptArrays: true
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      'test: [THROW_ID_01]',
+      'opts',
+      {
+        acceptArrays: 'this string will cause the throw',
+        acceptArraysIgnore: []
+      }
+    )
+  })
+})
+
+test('02.03 - opts.acceptArraysIgnore', t => {
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      'test: [THROW_ID_01]',
+      'opts',
+      {
+        acceptArrays: true,
+        acceptArraysIgnore: []
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      'test: [THROW_ID_01]',
+      'opts',
+      {
+        acceptArrays: true,
+        acceptArraysIgnore: ['zzz', 'option1']
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      'test: [THROW_ID_01]',
+      'opts',
+      {
+        acceptArrays: false,
+        acceptArraysIgnore: ['zzz', 'option1']
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      'test: [THROW_ID_01]',
+      'opts',
+      {
+        acceptArrays: true,
+        acceptArraysIgnore: true
+      }
+    )
+  })
+})
