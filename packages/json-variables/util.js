@@ -10,6 +10,7 @@ const includes = require('lodash.includes')
 const clone = require('lodash.clonedeep')
 const numSort = require('num-sort')
 const monkey = require('ast-monkey')
+const arrayiffyIfString = require('arrayiffy-if-string')
 
 function existy (x) { return x != null }
 function truthy (x) { return (x !== false) && existy(x) }
@@ -64,8 +65,8 @@ function extractVarsFromString (str, heads, tails) {
   if (type(tails) !== 'string' && type(tails) !== 'Array') {
     throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be a string or an array of strings. Currently it\'s: ' + type(tails))
   }
-  heads = arrayiffyString(clone(heads))
-  tails = arrayiffyString(clone(tails))
+  heads = arrayiffyIfString(clone(heads))
+  tails = arrayiffyIfString(clone(tails))
   if (includes(heads, str) || includes(tails, str)) {
     return []
   }
@@ -98,18 +99,6 @@ function extractVarsFromString (str, heads, tails) {
     res.push(trim(slice(str, from, to)))
   }
   return res
-}
-
-// If a string is given, put it into an array. Bypass everything else.
-function arrayiffyString (something) {
-  if (type(something) === 'string') {
-    if (something.length > 0) {
-      return [something]
-    } else {
-      return []
-    }
-  }
-  return something
 }
 
 // accepts array, where elements are arrays, containing integers or null.
@@ -157,7 +146,6 @@ module.exports = {
   aStartsWithB: aStartsWithB,
   extractVarsFromString: extractVarsFromString,
   findLastInArray: findLastInArray,
-  arrayiffyString: arrayiffyString,
   fixOffset: fixOffset,
   front: front,
   splitObjectPath: splitObjectPath

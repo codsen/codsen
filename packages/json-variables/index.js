@@ -16,13 +16,13 @@ const matcher = require('matcher')
 const numSort = require('num-sort')
 const objectPath = require('object-path')
 const checkTypes = require('check-types-mini')
+const arrayiffyIfString = require('arrayiffy-if-string')
 
 // tap util f's directly
 const aContainsB = util.aContainsB
 const aStartsWithB = util.aStartsWithB
 const extractVarsFromString = util.extractVarsFromString
 const findLastInArray = util.findLastInArray
-const arrayiffyString = util.arrayiffyString
 const fixOffset = util.fixOffset
 const front = util.front
 const splitObjectPath = util.splitObjectPath
@@ -62,7 +62,7 @@ function jsonVariables (inputOriginal, opts) {
   }
   opts = objectAssign(clone(defaults), opts)
 
-  opts.dontWrapVars = arrayiffyString(opts.dontWrapVars)
+  opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars)
 
   checkTypes(opts, defaults, 'json-variables/jsonVariables():')
 

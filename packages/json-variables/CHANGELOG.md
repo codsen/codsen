@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.5.0] - 2017-05-23
+### Added
+- Separated the `arrayiffy-if-string` into a standalone library and tapped it.
+
 ## [4.4.0] - 2017-05-20
 ### Updated
 - Deps
@@ -97,3 +101,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [4.2.0]: https://github.com/codsen/json-variables/compare/v4.1.0...v4.2.0
 [4.3.0]: https://github.com/codsen/json-variables/compare/v4.2.3...v4.3.0
 [4.4.0]: https://github.com/codsen/json-variables/compare/v4.3.0...v4.4.0
+[4.5.0]: https://github.com/codsen/json-variables/compare/v4.4.0...v4.5.0
