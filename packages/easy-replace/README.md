@@ -277,7 +277,7 @@ Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://sta
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/revelt/easy-replace/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/easy-replace/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -303,20 +303,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/revelt/easy-replace.svg?branch=master
-[travis-url]: https://travis-ci.org/revelt/easy-replace
+[travis-img]: https://travis-ci.org/codsen/easy-replace.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/easy-replace
 
 [cov-img]: https://coveralls.io/repos/github/codsen/posthtml-ast-compare/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/posthtml-ast-compare?branch=master
 
-[overall-img]: https://www.bithound.io/github/revelt/easy-replace/badges/score.svg
-[overall-url]: https://www.bithound.io/github/revelt/easy-replace
+[overall-img]: https://www.bithound.io/github/codsen/easy-replace/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/easy-replace
 
-[deps-img]: https://www.bithound.io/github/revelt/easy-replace/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/revelt/easy-replace/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/easy-replace/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/easy-replace/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/revelt/easy-replace/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/revelt/easy-replace/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/easy-replace/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/easy-replace/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/easy-replace.svg
 [downloads-url]: https://www.npmjs.com/package/easy-replace

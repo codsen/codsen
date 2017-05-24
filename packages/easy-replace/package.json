@@ -8,7 +8,7 @@
     "precommit": "npm test && doctoc README.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": "revelt/easy-replace",
+  "repository": "codsen/easy-replace",
   "keywords": [
     "search",
     "negative",
@@ -29,9 +29,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/revelt/easy-replace/issues"
+    "url": "https://github.com/codsen/easy-replace/issues"
   },
-  "homepage": "https://github.com/revelt/easy-replace#readme",
+  "homepage": "https://github.com/codsen/easy-replace#readme",
   "dependencies": {
     "lodash.isnumber": "*",
     "lodash.toarray": "*",
