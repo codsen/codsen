@@ -306,8 +306,8 @@ SOFTWARE.
 [travis-img]: https://travis-ci.org/codsen/easy-replace.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/easy-replace
 
-[cov-img]: https://coveralls.io/repos/github/codsen/posthtml-ast-compare/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/codsen/posthtml-ast-compare?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/easy-replace/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/easy-replace?branch=master
 
 [overall-img]: https://www.bithound.io/github/codsen/easy-replace/badges/score.svg
 [overall-url]: https://www.bithound.io/github/codsen/easy-replace
