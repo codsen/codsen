@@ -8,7 +8,6 @@ var clone = require('lodash.clonedeep')
  * Creates an n-length array with all possible combinations of true/false
  * @param {number} input integer
  * @returns {Array} Array of arrays each containing one possible combination of true/false
- * @private modified http://stackoverflow.com/a/26610870
  */
 function combinations (n) {
   var r = []
@@ -54,7 +53,7 @@ function objectBooleanCombinations (originalIncomingObject, originalOverrideObje
 
   if (existy(overrideObject) && isObject(overrideObject)) {
     // check overrideObject's contents - must be Boolean:
-    Object.keys(overrideObject).forEach(function (elem5) {
+    Object.keys(overrideObject).forEach(elem5 => {
       if (typeof overrideObject[elem5] !== 'boolean') {
         throw new Error('override object must contain only Boolean values')
       }
@@ -71,9 +70,7 @@ function objectBooleanCombinations (originalIncomingObject, originalOverrideObje
     // enforce that override object had just a subset of incomingObject properties, nothing else
     var propertiesToBeOverridden = intersection(Object.keys(overrideObject), Object.keys(incomingObject))
     // propertiesToMix = all incoming object's properties MINUS properties to override
-    propertiesToBeOverridden.forEach(function (elem) {
-      pull(propertiesToMix, elem)
-    })
+    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem))
   }
 
   // ===================================
@@ -92,11 +89,11 @@ function objectBooleanCombinations (originalIncomingObject, originalOverrideObje
   // ===================================
   // if there's override, append the static override values on each property of the propertiesToMix array:
   if (override) {
-    outcomingObjectsArray.forEach(function (elem3) {
-      propertiesToBeOverridden.forEach(function (elem4) {
+    outcomingObjectsArray.forEach(elem3 =>
+      propertiesToBeOverridden.forEach(elem4 => {
         elem3[elem4] = overrideObject[elem4]
       })
-    })
+    )
   }
 
   return outcomingObjectsArray

@@ -1,6 +1,6 @@
 # object-boolean-combinations
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Take object, generate an array of its copies, each containing all possible combinations of Boolean true/false
 
@@ -110,7 +110,7 @@ RESULT - ARRAY OF OBJECTS:
 
 ## Overriding the combinations — in practice
 
-In practice, I use this overriding to perform the specific tests on [Detergent.js](https://github.com/code-and-send/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
+In practice, I use this overriding to perform the specific tests on [Detergent.js](https://github.com/codsen/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
 * first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
 * second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
 
@@ -137,13 +137,13 @@ test('encode entities - pound sign', t => {
 $ npm test
 ```
 
-Unit tests use AVA, Istanbul [CLI](https://www.npmjs.com/package/nyc) and [JS Standard](https://github.com/feross/standard) notation.
+Unit tests use AVA, Istanbul [CLI](https://www.npmjs.com/package/nyc) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/revelt/object-boolean-combinations/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-boolean-combinations/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -169,20 +169,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/revelt/object-boolean-combinations.svg?branch=master
-[travis-url]: https://travis-ci.org/revelt/object-boolean-combinations
+[travis-img]: https://travis-ci.org/codsen/object-boolean-combinations.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/object-boolean-combinations
 
-[cov-img]: https://coveralls.io/repos/github/revelt/object-boolean-combinations/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/revelt/object-boolean-combinations?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-boolean-combinations/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-boolean-combinations?branch=master
 
-[overall-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/score.svg
-[overall-url]: https://www.bithound.io/github/revelt/object-boolean-combinations
+[overall-img]: https://www.bithound.io/github/codsen/object-boolean-combinations/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-boolean-combinations
 
-[deps-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/object-boolean-combinations/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/revelt/object-boolean-combinations/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/revelt/object-boolean-combinations/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/object-boolean-combinations/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/object-boolean-combinations.svg
 [downloads-url]: https://www.npmjs.com/package/object-boolean-combinations

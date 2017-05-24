@@ -1,7 +1,7 @@
 'use strict'
 
-var objectBooleanCombinations = require('./index.js')
 import test from 'ava'
+var objectBooleanCombinations = require('./index')
 
 // ==============================
 // Basic, no overrides
