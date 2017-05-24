@@ -1,6 +1,6 @@
 # easy-replace
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > string replacement with positive and negative lookahead and lookbehind, no regexes
 
@@ -271,11 +271,11 @@ Same with replacment — empty, `null`, `boolean` or `undefined` are accepted an
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/revelt/easy-replace/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
@@ -306,8 +306,8 @@ SOFTWARE.
 [travis-img]: https://travis-ci.org/revelt/easy-replace.svg?branch=master
 [travis-url]: https://travis-ci.org/revelt/easy-replace
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/posthtml-ast-compare/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/posthtml-ast-compare?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/posthtml-ast-compare/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/posthtml-ast-compare?branch=master
 
 [overall-img]: https://www.bithound.io/github/revelt/easy-replace/badges/score.svg
 [overall-url]: https://www.bithound.io/github/revelt/easy-replace
