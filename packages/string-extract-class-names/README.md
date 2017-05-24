@@ -1,6 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [string-extract-class-names](#string-extract-class-names)
+  - [Install](#install)
+  - [Purpose](#purpose)
+  - [Examples](#examples)
+  - [API](#api)
+  - [Testing](#testing)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # string-extract-class-names
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Extract all class and id names from a string and return them in an array
 
@@ -21,7 +36,7 @@ $ npm install --save string-extract-class-names
 
 This library extracts the class and id names from the string and returns them all put into an array.
 
-I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-remove-unused-css](https://github.com/code-and-send/email-remove-unused-css) which detects and deletes the unused CSS styles.
+I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) which detects and deletes the unused CSS styles.
 
 Since deleting of people's code is a risky task, a huge responsibility falls onto parts which identify _what should be deleted_, and more importantly, parts which identify _class names and id's_. That's why I extracted the `string-extract-class-names` from the `email-remove-unused-css` and set up a proper test suite.
 
@@ -56,19 +71,19 @@ extract(
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation.
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/string-extract-class-names/issues). If you file a pull request, I'll do my best to review it promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-extract-class-names/issues). If you file a pull request, I'll do my best to review it promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Code and Send Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -88,20 +103,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/string-extract-class-names.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/string-extract-class-names
+[travis-img]: https://travis-ci.org/codsen/string-extract-class-names.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/string-extract-class-names
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/string-extract-class-names/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/string-extract-class-names?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/string-extract-class-names/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/string-extract-class-names?branch=master
 
-[overall-img]: https://www.bithound.io/github/code-and-send/string-extract-class-names/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/string-extract-class-names
+[overall-img]: https://www.bithound.io/github/codsen/string-extract-class-names/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/string-extract-class-names
 
-[deps-img]: https://www.bithound.io/github/code-and-send/string-extract-class-names/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/string-extract-class-names/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/string-extract-class-names/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/string-extract-class-names/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/string-extract-class-names/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/string-extract-class-names/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/string-extract-class-names/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/string-extract-class-names/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/string-extract-class-names.svg
 [downloads-url]: https://www.npmjs.com/package/string-extract-class-names

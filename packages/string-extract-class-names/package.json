@@ -8,10 +8,7 @@
     "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/code-and-send/string-extract-class-names.git"
-  },
+  "repository": "codsen/string-extract-class-names",
   "keywords": [
     "css",
     "extract",
@@ -20,12 +17,16 @@
     "string",
     "selector"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/string-extract-class-names/issues"
+    "url": "https://github.com/codsen/string-extract-class-names/issues"
   },
-  "homepage": "https://github.com/code-and-send/string-extract-class-names#readme",
+  "homepage": "https://github.com/codsen/string-extract-class-names#readme",
   "dependencies": {
     "lodash.flattendeep": "^4.4.0",
     "lodash.replace": "^4.1.4",
@@ -34,10 +35,9 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.12.0",
+    "husky": "^0.13.3",
     "nyc": "*",
-    "snazzy": "*",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "tap": false,

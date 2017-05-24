@@ -1,6 +1,6 @@
 'use strict'
-var e = require('./index.js')
 import test from 'ava'
+var e = require('./index.js')
 
 // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
 
