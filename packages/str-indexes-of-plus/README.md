@@ -1,6 +1,6 @@
 # str-indexes-of +
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Search for a string in another string. Get array of indexes. Full Unicode support.
 
@@ -90,9 +90,9 @@ I came up with my own algorithm. It follows the way how I would search for strin
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/str-indexes-of-plus/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/str-indexes-of-plus/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -118,20 +118,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/str-indexes-of-plus.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/str-indexes-of-plus
+[travis-img]: https://travis-ci.org/codsen/str-indexes-of-plus.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/str-indexes-of-plus
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/str-indexes-of-plus/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/str-indexes-of-plus?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/str-indexes-of-plus/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/str-indexes-of-plus?branch=master
 
-[bithound-img]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus
+[bithound-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus
 
-[deps-img]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/str-indexes-of-plus/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/str-indexes-of-plus.svg
 [downloads-url]: https://www.npmjs.com/package/str-indexes-of-plus

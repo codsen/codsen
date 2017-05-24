@@ -8,10 +8,7 @@
     "precommit": "npm test && doctoc readme.md",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/str-indexes-of-plus.git"
-  },
+  "repository": "codsen/str-indexes-of-plus",
   "keywords": [
     "string",
     "indexes",
@@ -24,12 +21,16 @@
     "emoji",
     "astral"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/str-indexes-of-plus/issues"
+    "url": "https://github.com/codsen/str-indexes-of-plus/issues"
   },
-  "homepage": "https://github.com/code-and-send/str-indexes-of-plus#readme",
+  "homepage": "https://github.com/codsen/str-indexes-of-plus#readme",
   "dependencies": {
     "is-natural-number": "*",
     "is-natural-number-string": "*",
@@ -40,7 +41,7 @@
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^9.0.2"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true
