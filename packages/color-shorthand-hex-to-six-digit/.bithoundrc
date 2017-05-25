@@ -2,7 +2,7 @@
   "critics": {
     "lint": {"engine": "standard"}
   },
-  "dependencies": { "mute": [ "hex-color-regex", "lodash.isplainobject", "lodash.isstring", "devDependencies", "ava", "coveralls", "doctoc", "husky", "nyc", "standard" ]
+  "dependencies": { "mute": ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject", "lodash.isstring", "ava", "coveralls", "doctoc", "husky", "nyc"]
   },
   "test": [
     "test.js"

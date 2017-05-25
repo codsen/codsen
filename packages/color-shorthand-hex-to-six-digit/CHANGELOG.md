@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2017-05-25
+### Updated
+- Dependencies to request the latest `_.clonedeep`
+- Readme, added more examples
+
 ## [1.4.0] - 2017-03-06
 
 ### Added
@@ -39,3 +44,4 @@ Initial release. 100% test coverage.
 [1.2.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.1.0...v1.2.0
 [1.3.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.2.0...v1.3.0
 [1.4.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.3.0...v1.4.0
+[1.5.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.4.0...v1.5.0
