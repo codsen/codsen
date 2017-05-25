@@ -46,7 +46,7 @@ $ npm install --save easy-replace
 
 ## Usage
 
-The ideal use case for `easy-replace` is when you need complex lookarounds, such as "replace this only when there is something on the left, but also, if there's some things on the right, include them too, yet there can't be such and such on the right". Yes, you could solve this using a regex, but it's faster to skip regex solutions and simply use this library.
+The ideal use case for `easy-replace` is when you need complex lookarounds, such as "replace this only when there is something on the left, but also, if there's some things on the right, include them too, yet there can't be such and such on the right". Yes, you could solve this using a regex ([if it exists at all](#rationale)), but it's faster to skip regex solutions and simply use this library.
 
 ## API
 
@@ -253,13 +253,13 @@ er(
 
 ## Rationale
 
-Positive lookbehind and negative lookbehind are not supported in native JavaScript (at least in what we count as "classic" JavaScript, not ES2030 or something). Plus I find complex regexes, well, _complex_. Hence this library. I hope it is still simple-enough to bear 'easy' in its name.
+Positive lookbehinds and negative lookbehinds are not supported in native JavaScript (at least in what we count as "classic" JavaScript, not ES2030 or something). If you gonna you a library, better use one with an "easy" in its name. I hope it's not too easy on features.
 
-Did I mention that this library is [astral-character](https://mathiasbynens.be/notes/javascript-unicode)-friendly? As you noticed in the examples above, it accepts emoji perfectly fine (and AVA tests prove this).
+Did I mention that `easy-replace` is also [astral-character](https://mathiasbynens.be/notes/javascript-unicode)-friendly? As you noticed in the examples above, it accepts emoji perfectly fine (and AVA tests prove this).
 
-It's impossible to cause an infinite loop on this library (see tests 8.1-8.6).
+It's also impossible to cause an infinite loop on this library (see tests 8.1-8.6).
 
-Library is also friendly if any input is of a `number` type — numbers are converted and replaced string is returned in `string` type (see test 10.8). That's extra convenience.
+Library is also friendly if any input is of a `number` type — numbers are converted and replaced string is returned in `string` type (see test 10.8). That's an extra convenience.
 
 Options object is fool-proof — you can omit keys or pass non-existing ones or pass non-string type variables — if the options key matches, it's first turned into string. You can even omit any or all of the inputs — library will return an empty string (see tests 9.1–9.6).
 
