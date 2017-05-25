@@ -1,6 +1,6 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Convert shorthand hex color codes into full",
   "main": "index.js",
   "scripts": {
