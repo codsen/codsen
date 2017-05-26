@@ -253,13 +253,13 @@ er(
 
 ## Rationale
 
-Positive lookbehinds and negative lookbehinds are not supported in native JavaScript (at least in what we count as "classic" JavaScript, not ES2030 or something). If you gonna you a library, better use one with an "easy" in its name. I hope it's not too easy on features.
+Positive lookbehinds and negative lookbehinds are not supported in native JavaScript (at least in what we count as "classic" JavaScript, not ES2030 or something). If you gonna use a library for string replacement, better use one with "easy" in its name.
 
 Did I mention that `easy-replace` is also [astral-character](https://mathiasbynens.be/notes/javascript-unicode)-friendly? As you noticed in the examples above, it accepts emoji perfectly fine (and AVA tests prove this).
 
 It's also impossible to cause an infinite loop on this library (see tests 8.1-8.6).
 
-Library is also friendly if any input is of a `number` type — numbers are converted and replaced string is returned in `string` type (see test 10.8). That's an extra convenience.
+`easy-replace` is also friendly if any input is of a `number` type — numbers are converted and replaced string is returned in `string` type (see test 10.8). That's an extra convenience.
 
 Options object is fool-proof — you can omit keys or pass non-existing ones or pass non-string type variables — if the options key matches, it's first turned into string. You can even omit any or all of the inputs — library will return an empty string (see tests 9.1–9.6).
 
