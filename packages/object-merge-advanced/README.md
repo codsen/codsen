@@ -59,6 +59,8 @@ Imagine, if we merged the identical keys of two objects judging their values by 
 
 The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
+The fun does not stop here. Sometimes life demands _unidirectional merges_ from either source or destination ("overwrite no matter what, from either side"). This can be done per object-key-basis, see `opts.ignoreKeys` where first input object's key overrides the second's and `opts.hardMergeKeys` for the opposite.
+
 **That's what this library does**
 
 When `object-merge-advanced` merges two _objects_, it will check the types of their key values:
@@ -90,7 +92,9 @@ I challenge you to check `test.js` unit tests to see this library in action.
 
 ## In practice
 
-In practice I needed this library to normalise JSON files — generate a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates — it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
+In practice I needed this library to normalise JSON files - [generate](https://github.com/codsen/json-comb-core#getkeyset) a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates - it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
+
+I use unidirectional merging when dealing with content mapping JSON files which are by definition unidirectional-flow (always overwrite normal data JSON files).
 
 ## Use
 
@@ -209,9 +213,9 @@ Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mi
 
 ## Difference from `object-assign`
 
-[object-assign](https://github.com/sindresorhus/object-assign) will is just a hard overwrite of all existing keys, from one object to another. It does not weigh the types of the input values and will happily overwrite the string value with a boolean placeholder.
+[object-assign](https://github.com/sindresorhus/object-assign) is just a hard overwrite of all existing keys, from one object to another. It does not weigh the types of the input values and will happily overwrite the string value with a boolean placeholder.
 
-`object-assign` is not for merging data objects, it's for setting defaults in the options objects.
+`object-assign` is not for merging data objects, it's for _setting defaults_ in the options objects.
 
 For example, in my email template builds, I import SCSS variables file as an object. I also import variables for each template, and template variables object overwrites anything existing in SCSS variables object.
 
@@ -221,7 +225,7 @@ Now imagine, we're merging those two objects, and SCSS variables object has a ke
 
 If merging were done using `object-assign`, placeholder `false` would overwrite real string value `"#ffffff`. That means, HTML would receive "false" as a CSS value, which is pink!
 
-If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite default SCSS string values.
+If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
 ## Contributing
 

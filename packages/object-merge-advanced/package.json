@@ -32,7 +32,7 @@
   "dependencies": {
     "array-includes-all": "^1.0.0",
     "array-includes-with-glob": "^1.1.0",
-    "check-types-mini": "^1.2.0",
+    "check-types-mini": "^1.3.0",
     "lodash.clonedeep": "*",
     "object-assign": "^4.1.1",
     "type-detect": "^4.0.3"
@@ -41,8 +41,8 @@
     "ava": "*",
     "coveralls": "*",
     "doctoc": "*",
-    "husky": "*",
-    "nyc": "*",
+    "husky": "^0.13.4",
+    "nyc": "^11.0.1",
     "standard": "^10.0.2"
   },
   "ava": {

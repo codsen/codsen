@@ -179,7 +179,7 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     if (isBool(i2)) {
       // case 78
       return i1 || i2
-    } else if (i2 != null) { // DELIBERATE LOOSE EQUAL — existy()
+    } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
       return i2
     } else {
@@ -189,14 +189,14 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     }
   } else if (i1 === null) {
     // cases 81-90
-    if (i2 != null) { // DELIBERATE LOOSE EQUAL — existy()
+    if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88
       return i2
     } else {
       // cases 89, 90
       return i1
     }
-  } else if (i1 === undefined) {
+  } else {
     // cases 91-100
     return i2
   }

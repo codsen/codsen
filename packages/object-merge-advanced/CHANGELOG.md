@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.4.0] - 2017-06-02
+### Changed
+- Slightly rebased so that there's 100% branch coverage too, not only statements/lines.
+
 ## [6.3.0] - 2017-05-15
 ### Added
 - Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini); removed all existing functions responsible for options' types.
@@ -14,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [6.1.0] - 2017-04-23 weekend
 ### Added
-- When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible — for example, accepting single string value instead of array.
+- When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible - for example, accepting single string value instead of array.
 - new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
 - new options setting, `opts.hardMergeKeys` - this is also one direction (opposive of above) merge. Key names accept wildcards.
 ### Unchanged
@@ -71,3 +75,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [6.1.0]: https://github.com/codsen/object-merge-advanced/compare/v6.0.0...v6.1.0
 [6.2.0]: https://github.com/codsen/object-merge-advanced/compare/v6.1.0...v6.2.0
 [6.3.0]: https://github.com/codsen/object-merge-advanced/compare/v6.2.0...v6.3.0
+[6.4.0]: https://github.com/codsen/object-merge-advanced/compare/v6.3.0...v6.4.0
