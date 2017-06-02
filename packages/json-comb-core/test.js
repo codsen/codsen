@@ -1,6 +1,6 @@
 'use strict'
 
-import { getKeyset, enforceKeyset, noNewKeys } from './index'
+import { getKeyset, enforceKeyset, noNewKeys, findUnused, sortIfObject } from './index'
 import test from 'ava'
 var schema, obj1, obj2, obj3, dummyResult
 
@@ -1323,4 +1323,537 @@ test('04.03 - noNewKeys() - various throws', t => {
   t.throws(function () {
     noNewKeys(['a'], ['a'])
   })
+})
+
+// -----------------------------------------------------------------------------
+// 05. findUnused()
+// -----------------------------------------------------------------------------
+
+test('05.01 - findUnused() - single-level plain objects', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c'],
+    '05.01.01 - running on defaults'
+  )
+})
+
+test('05.02 - findUnused() - multiple-level plain objects', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            {
+              k: false,
+              l: false,
+              m: false
+            },
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            }
+          ],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            },
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            }
+          ],
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a[0].l'],
+    '05.02 - multiple levels, two objects, two unused keys, defaults'
+  )
+})
+
+test('05.03 - findUnused() - double-nested arrays', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            [
+              {
+                k: false,
+                l: false,
+                m: false
+              },
+              {
+                k: 'k',
+                l: false,
+                m: 'm'
+              }
+            ]
+          ],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [
+            [
+              {
+                k: false,
+                l: 'l',
+                m: 'm'
+              },
+              {
+                k: false,
+                l: 'l',
+                m: 'm'
+              }
+            ]
+          ],
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a[0][0].l', 'a[0][1].k'],
+    '05.03.01'
+  )
+})
+
+test('05.04 - findUnused() - works on empty arrays', function (t) {
+  t.deepEqual(
+    findUnused([]),
+    [],
+    '05.04'
+  )
+})
+
+test('05.05 - findUnused() - various throws', function (t) {
+  t.throws(function () {
+    findUnused(1, {placeholder: false})
+  })
+  t.notThrows(function () {
+    findUnused([1, 2, 3])
+  })
+  t.throws(function () {
+    findUnused([{a: 'a'}, {a: 'b'}], 1)
+  })
+})
+
+test('05.06 - findUnused() - case of empty array within an array', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [[]],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [[]],
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c'],
+    '05.06'
+  )
+})
+
+test('05.07 - findUnused() - case of empty array within an array', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [[]],
+          b: 'bbb1',
+          c: false
+        }
+      ]
+    ),
+    [],
+    '05.07'
+  )
+})
+
+test('05.08 - findUnused() - objects containing objects (2 in total)', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y'
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z'
+          },
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a.x'],
+    '05.08.01'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y'
+          },
+          b: 'bbb1',
+          c: false,
+          d: {
+            y: 'y',
+            x: false
+          },
+          e: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z'
+          },
+          b: 'bbb2',
+          c: false,
+          d: {
+            y: 'y',
+            x: false
+          },
+          e: false
+        }
+      ]
+    ),
+    ['c', 'e', 'a.x', 'd.x'],
+    '05.08.02'
+  )
+})
+
+test('05.09 - findUnused() - objects containing objects (3 in total)', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y',
+            k: {
+              l: false,
+              m: 'zzz'
+            }
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z',
+            k: {
+              l: false,
+              m: 'yyy'
+            }
+          },
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a.x', 'a.k.l'],
+    '05.09'
+  )
+})
+
+test('05.10 - findUnused() - objects containing objects, mixed with arrays', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y',
+            k: {
+              l: false,
+              m: 'zzz',
+              p: {
+                r: [
+                  {
+                    w: false,
+                    x: 'zzz'
+                  },
+                  {
+                    w: false,
+                    x: 'zzz'
+                  }
+                ]
+              }
+            }
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z',
+            k: {
+              l: false,
+              m: false,
+              p: {
+                r: [
+                  {
+                    w: 'www',
+                    x: false
+                  },
+                  {
+                    w: 'zzz',
+                    x: false
+                  }
+                ]
+              }
+            }
+          },
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a.x', 'a.k.l'],
+    '05.10.01'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y',
+            k: {
+              l: false,
+              m: 'zzz',
+              p: {
+                r: [
+                  {
+                    w: 'xxx',
+                    x: false
+                  },
+                  {
+                    w: 'w2',
+                    x: false
+                  }
+                ]
+              }
+            }
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z',
+            k: {
+              l: false,
+              m: false,
+              p: {
+                r: [
+                  {
+                    w: 'www',
+                    x: false
+                  },
+                  {
+                    w: 'zzz',
+                    x: false
+                  }
+                ]
+              }
+            }
+          },
+          b: 'bbb2',
+          c: false
+        }
+      ]
+    ),
+    ['c', 'a.x', 'a.k.l', 'a.k.p.r[0].x'],
+    '05.10.02'
+  )
+})
+
+test('05.11 - findUnused() - array contents are not objects/arrays', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        false,
+        false,
+        false
+      ]
+    ),
+    [],
+    '05.11.01 - topmost level, Booleans'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        'zzz',
+        'zzz',
+        'zzz'
+      ]
+    ),
+    [],
+    '05.11.02 - topmost level, strings'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {},
+        {},
+        {}
+      ]
+    ),
+    [],
+    '05.11.03 - topmost level, empty plain objects'
+  )
+})
+
+test('05.12 - findUnused() - array > single object > array > unused inside', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            {
+              k: false,
+              l: 'l1'
+            },
+            {
+              k: false,
+              l: 'l2'
+            },
+            {
+              k: false,
+              l: false
+            },
+            {
+              k: false,
+              l: 'l4'
+            }
+          ],
+          b: 'b'
+        }
+      ]
+    ),
+    ['a[0].k'],
+    '05.12.01 - topmost array has a single object'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            {
+              k: false,
+              l: 'l1'
+            },
+            {
+              k: false,
+              l: 'l2'
+            },
+            {
+              k: false,
+              l: false
+            },
+            {
+              k: false,
+              l: 'l4'
+            }
+          ],
+          b: 'b'
+        },
+        {
+          a: [
+            {
+              k: false,
+              l: 'l1'
+            },
+            {
+              k: false,
+              l: 'l2'
+            },
+            {
+              k: false,
+              l: false
+            },
+            {
+              k: false,
+              l: 'l4'
+            }
+          ],
+          b: 'b'
+        }
+      ]
+    ),
+    ['a[0].k'],
+    '05.12.02 - topmost array has multiple objects'
+  )
+})
+
+test.todo('not normalised JSON - should work anyway')
+
+// -----------------------------------------------------------------------------
+// 06. sortIfObject()
+// -----------------------------------------------------------------------------
+
+test('06.01 - sortIfObject() - sorts', function (t) {
+  t.deepEqual(
+    sortIfObject(
+      {
+        a: 'a',
+        c: 'c',
+        b: 'b'
+      }
+    ),
+    {
+      a: 'a',
+      b: 'b',
+      c: 'c'
+    },
+    '06.01'
+  )
+})
+
+test('06.02 - sortIfObject() - wrong inputs are bypassed', function (t) {
+  t.deepEqual(
+    sortIfObject(1),
+    1,
+    '06.02'
+  )
 })

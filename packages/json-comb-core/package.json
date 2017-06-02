@@ -39,14 +39,13 @@
     "object-merge-advanced": "^6.2.0",
     "object-no-new-keys": "^1.0.2",
     "object-set-all-values-to": "^2.0.1",
-    "posthtml-ast-compare": "^4.1.0",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
     "husky": "^0.13.3",
-    "nyc": "*",
+    "nyc": "^11.0.1",
     "standard": "^10.0.2"
   },
   "ava": {

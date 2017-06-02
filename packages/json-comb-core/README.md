@@ -2,9 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Enforce multiple JSON files have the same keys, sorted alphabetically
-> Enforce each object within an array to have the same keys as each other object within the same array
-> When there are type clashes, a type "higher a food chain" prevails
+> Utility library for operations with JSON files
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -22,13 +20,13 @@
 - [Install](#install)
 - [Idea](#idea)
 - [getKeyset()](#getkeyset)
-  - [the input](#the-input)
-  - [the ouput](#the-ouput)
-- [enforceKeyset()](#enforcekeyset)
   - [input](#input)
   - [ouput](#ouput)
+- [enforceKeyset()](#enforcekeyset)
+  - [input](#input-1)
+  - [ouput](#ouput-1)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
-- [Normalising vs. JSON Schemas](#normalising-vs-json-schemas)
+- [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -52,13 +50,18 @@ This library is meant to be used as a core for other libraries: plugins, front-e
 
 ## getKeyset()
 
-Reads an array of plain objects (parsed JSON files) and extracts a schema keyset, a plain object, from them.
+This function produces a reference object according to which you can normalise JSON files.
 
-Technically speaking, a schema is a superset plain object, with sorted keys, with each array flattened to keep one superset plain object of its contents.
+It reads an array of plain objects (parsed JSON files) and extracts a "schema keyset", a plain object, from them.
+
+Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
+
+1. Each object of the same level between different JSON files should have same keys.
+2. If array has objects, those objects should have exactly the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
-### the input
+### input
 
 Input argument   | Type                   | Obligatory? | Description
 -----------------|------------------------|-------------|--------------
@@ -139,7 +142,7 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 //    }
 ```
 
-### the ouput
+### ouput
 
 A plain object, which can be used in `enforceKeyset()`. See below.
 
@@ -186,11 +189,11 @@ $ npm test
 
 Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Unit test code coverage is calculated using [Istanbul CLI](https://www.npmjs.com/package/nyc).
 
-## Normalising vs. JSON Schemas
+## Difference between Normalising JSON and JSON Schemas
 
-There is another, different concept of _JSON Schema_ which basically means enforcing the types of the key values. It is used when you get or set the JSON data object from the network and want to ensure that values are of a correct type and, of course, exist.
+In short, JSON Schema concept is a way to define and enforce keys presence and/or their value types.
 
-Compare this with multiple file normalisation (what this library does) — we have bunch of JSON files, we want them to look as similar as possible, each having exact keys as any other JSON in the set. We don't care about the types overall, if a key is missing we simply fill it with a placeholder.
+JSON file normalisation (what this library does, among other things) is making so that every JSON in a given set has exactly the same keys as all others. Missing values are simply set to a placeholder (normally Boolean `false`).
 
 See the difference between the two concepts?
 

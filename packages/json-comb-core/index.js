@@ -16,11 +16,15 @@ function existy (x) { return x != null }
 function isObj (something) { return type(something) === 'Object' }
 function isArr (something) { return Array.isArray(something) }
 
-function sortObject (obj) {
-  return Object.keys(obj).sort().reduce(function (result, key) {
-    result[key] = obj[key]
-    return result
-  }, {})
+function sortIfObject (obj) {
+  if (isObj(obj)) {
+    return Object.keys(obj).sort().reduce(function (result, key) {
+      result[key] = obj[key]
+      return result
+    }, {})
+  } else {
+    return obj
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +49,7 @@ function getKeyset (arrOriginal, opts) {
     placeholder: false
   }
   opts = objectAssign(clone(defaults), opts)
-  checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts', {ignoreKeys: 'placeholder'})
+  checkTypes(opts, defaults, 'json-comb-core/getKeyset(): [THROW_ID_10]', 'opts', {ignoreKeys: 'placeholder'})
 
   var fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
@@ -57,7 +61,7 @@ function getKeyset (arrOriginal, opts) {
     }
     schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), { mergeArraysContainingStringsToBeEmpty: true })
   })
-  schemaObj = sortObject(setAllValuesTo(schemaObj, opts.placeholder))
+  schemaObj = sortIfObject(setAllValuesTo(schemaObj, opts.placeholder))
   return schemaObj
 }
 
@@ -76,7 +80,7 @@ function enforceKeyset (obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s ' + typeof schemaKeyset)
   }
-  return sortObject(fillMissingKeys(obj, schemaKeyset))
+  return sortIfObject(fillMissingKeys(obj, schemaKeyset))
 }
 
 // -----------------------------------------------------------------------------
@@ -101,19 +105,112 @@ function noNewKeys (obj, schemaKeyset) {
 
 // -----------------------------------------------------------------------------
 
-// function findUnused (arrOriginal, opts) {
-//   var defaults = {
-//     placeholder: false
-//   }
-//   opts = objectAssign(clone(defaults), opts)
-//   checkTypes(opts, defaults, 'json-variables/jsonVariables():', 'opts')
-// }
+function findUnused (arrOriginal, opts) {
+  //
+  // PREPARATIONS AND TYPE CHECKS
+  // ============================
+
+  if (isArr(arrOriginal)) {
+    if ((arrOriginal.length === 0)) {
+      return []
+    }
+  } else {
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_41] The first argument should be an array. Currently it\'s: ' + type(arrOriginal))
+  }
+  if ((arguments.length > 1) && !isObj(opts)) {
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_42] The second argument, options object, must be a plain object, not ' + type(opts))
+  }
+  var defaults = {
+    placeholder: false
+  }
+  opts = objectAssign(clone(defaults), opts)
+  checkTypes(opts, defaults, 'json-comb-core/findUnused(): [THROW_ID_40]', 'opts')
+  var arr = clone(arrOriginal)
+
+  // ---------------------------------------------------------------------------
+
+  function removeLeadingDot (something) {
+    return something.map(
+      finding => finding.charAt(0) === '.' ? finding.slice(1) : finding
+    )
+  }
+
+  function findUnusedInner (arr, opts, res, path) {
+    if (isArr(arr) && (arr.length === 0)) {
+      return res
+    }
+    if (res === undefined) {
+      res = []
+    }
+    if (path === undefined) {
+      path = ''
+    }
+    if (arr.every(el => type(el) === 'Object')) {
+      //
+      // ------ PART 1 ------
+      // iterate all objects within given array, find unused keys
+      //
+      if (arr.length > 1) {
+        var unusedKeys = Object.keys(arr[0]).filter(
+          key => arr.every(
+            obj => {
+              return obj[key] === opts.placeholder
+            }
+          )
+        )
+        res = res.concat(unusedKeys.map(
+            el => path + '.' + el
+          ))
+      }
+      // ------ PART 2 ------
+      // no matter how many objects are there within our array, if any values
+      // contain objects or arrays, traverse them recursively
+      //
+      var keys = [].concat.apply([], Object.keys(arr[0]).filter(
+        key => {
+          return (isObj(arr[0][key]) || isArr(arr[0][key]))
+        }
+      ))
+      var keysContents = keys.map(
+        key => type(arr[0][key])
+      )
+
+      var extras = keys.map(
+        el => [].concat.apply([], arr.map(
+          obj => obj[el]
+        ))
+      )
+      var appendix = ''
+      var innerDot = ''
+
+      if (extras.length > 0) {
+        extras.forEach((singleExtra, i) => {
+          if (keysContents[i] === 'Array') {
+            appendix = '[' + i + ']'
+          }
+          innerDot = '.'
+          res = findUnusedInner(singleExtra, opts, res, path + innerDot + keys[i] + appendix)
+        })
+      }
+    } else if (arr.every(el => type(el) === 'Array')) {
+      arr.forEach(function (singleArray, i) {
+        res = findUnusedInner(singleArray, opts, res, path + '[' + i + ']')
+      })
+    } else if (arr.every(el => type(el) === 'string')) {
+    }
+
+    return removeLeadingDot(res)
+  }
+
+  return findUnusedInner(arr, opts)
+}
 
 // -----------------------------------------------------------------------------
 
 module.exports = {
   getKeyset: getKeyset,
   enforceKeyset: enforceKeyset,
-  sortObject: sortObject,
-  noNewKeys: noNewKeys
+  sortIfObject: sortIfObject,
+  noNewKeys: noNewKeys,
+  findUnused: findUnused
 }
