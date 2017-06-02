@@ -80,7 +80,7 @@ function enforceKeyset (obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s ' + typeof schemaKeyset)
   }
-  return sortIfObject(fillMissingKeys(obj, schemaKeyset))
+  return sortIfObject(fillMissingKeys(clone(obj), schemaKeyset))
 }
 
 // -----------------------------------------------------------------------------
@@ -145,16 +145,18 @@ function findUnused (arrOriginal, opts) {
     if (path === undefined) {
       path = ''
     }
+    var keySet
     if (arr.every(el => type(el) === 'Object')) {
+      keySet = getKeyset(arr)
       //
       // ------ PART 1 ------
       // iterate all objects within given array, find unused keys
       //
       if (arr.length > 1) {
-        var unusedKeys = Object.keys(arr[0]).filter(
+        var unusedKeys = Object.keys(keySet).filter(
           key => arr.every(
             obj => {
-              return obj[key] === opts.placeholder
+              return (obj[key] === opts.placeholder) || (obj[key] === undefined)
             }
           )
         )
@@ -166,18 +168,25 @@ function findUnused (arrOriginal, opts) {
       // no matter how many objects are there within our array, if any values
       // contain objects or arrays, traverse them recursively
       //
-      var keys = [].concat.apply([], Object.keys(arr[0]).filter(
+      var keys = [].concat.apply([], Object.keys(keySet).filter(
         key => {
-          return (isObj(arr[0][key]) || isArr(arr[0][key]))
+          return (isObj(keySet[key]) || isArr(keySet[key]))
         }
       ))
       var keysContents = keys.map(
-        key => type(arr[0][key])
+        key => type(keySet[key])
       )
 
+      // can't use map() because we want to prevent nulls being written.
+      // hence the reduce() contraption
       var extras = keys.map(
-        el => [].concat.apply([], arr.map(
-          obj => obj[el]
+        el => [].concat.apply([], arr.reduce(
+          (res, obj) => {
+            if (existy(obj[el]) && (obj[el] !== opts.placeholder)) {
+              res.push(obj[el])
+            }
+            return res
+          }, []
         ))
       )
       var appendix = ''

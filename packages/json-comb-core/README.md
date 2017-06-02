@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Utility library for operations with JSON files
+> Utility library to maintain a set of JSON files
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -22,9 +22,23 @@
 - [getKeyset()](#getkeyset)
   - [input](#input)
   - [ouput](#ouput)
+  - [example](#example)
 - [enforceKeyset()](#enforcekeyset)
   - [input](#input-1)
   - [ouput](#ouput-1)
+  - [example](#example-1)
+- [noNewKeys()](#nonewkeys)
+  - [input](#input-2)
+  - [ouput](#ouput-2)
+  - [example](#example-2)
+- [findUnused()](#findunused)
+  - [input](#input-3)
+  - [output](#output)
+  - [example](#example-3)
+- [sortIfObject()](#sortifobject)
+  - [input](#input-4)
+  - [output](#output-1)
+  - [example](#example-4)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
 - [Contributing](#contributing)
@@ -35,18 +49,28 @@
 ## Install
 
 ```bash
-$ npm i -S json-comb-core
+$ npm i json-comb-core
 ```
 
 ## Idea
 
-Imagine, we have a set of objects (we just read few JSON files). We want to normalise those JSON files:
+Imagine, you have a set of JSON files. To keep everything under control, we need tools to maintain it. Otherwise, it will quickly get out of hand. `json-comb-core` will tend the following tasks:
 
-* Each object should have the same key set — missing keys should be added to each object.
+**Normalise those JSON files:**
+
+* Each object should have the same key set - missing keys should be added to each object.
 * If an object has nested array, and there are plain objects within, each of those objects should have the same key set as its siblings within the same array.
 * For the sake of completeness, let's sort each resulting object's keys too.
 
-This library is meant to be used as a core for other libraries: plugins, front-end web apps or whatnot. It's DRY'er this way.
+For that, we'll need tools to [extract](#getkeyset) a keyset and [enforce](#enforcekeyset) it.
+
+**Alert when JSON's have unique keys**
+
+It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an alert if my objects contain unique keys that none of the other objects has.
+
+**Find unused keys in a set of JSONs**
+
+A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is unused and probably can be deleted.
 
 ## getKeyset()
 
@@ -57,7 +81,7 @@ It reads an array of plain objects (parsed JSON files) and extracts a "schema ke
 Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 1. Each object of the same level between different JSON files should have same keys.
-2. If array has objects, those objects should have exactly the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
+2. If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
@@ -68,17 +92,24 @@ Input argument   | Type                   | Obligatory? | Description
 `input`          | Array of plain objects | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
 `options`        | Object                 | no          | Options object. See below.
 
-`options` object's key         | Type     | Obligatory? | Default         | Description
--------------------------------|----------|-------------|-----------------|----------------------
-{                              |          |             |                 |
-`placeholder`                  | Any      | no          | `false` (bool.) | Instructs to skip all and any checks on these keys.
-}                              |          |             |                 |
+`options` object's key | Type  | Obligatory? | Default   | Description
+-----------------------|-------|-------------|-----------|----------------------
+{                      |       |             |           |
+`placeholder`          | Any   | no          | `false`   | When adding a missing key, this will be assigned to its value.
+}                      |       |             |           |
+
+### ouput
+
+A plain object, which can be used in `enforceKeyset()`. See below.
+
+### example
 
 For example, keeping placeholder the default:
 
 ```js
-var schema = getKeyset([
-  { // < plain object No.1
+const getKeyset = require('json-comb-core').getKeyset
+let schema = getKeyset([
+  { // <- object #1
     a: 'a',
     b: 'c',
     c: {
@@ -86,10 +117,10 @@ var schema = getKeyset([
       e: 'e'
     }
   },
-  { // < plain object No.2
+  { // <- object #2
     a: 'a'
   },
-  { // < plain object No.3
+  { // <- object #3
     c: {
       f: 'f'
     }
@@ -110,8 +141,9 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 Customising the placeholder:
 
 ```js
-var schema = getKeyset([
-    {
+const getKeyset = require('json-comb-core').getKeyset
+let schema = getKeyset([
+    { // <- object #1
       a: 'a',
       b: 'c',
       c: {
@@ -119,10 +151,10 @@ var schema = getKeyset([
         e: 'e'
       }
     },
-    {
+    { // <- object #2
       a: 'a'
     },
-    {
+    { // <- object #3
       c: {
         f: 'f'
       }
@@ -142,13 +174,9 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 //    }
 ```
 
-### ouput
-
-A plain object, which can be used in `enforceKeyset()`. See below.
-
 ## enforceKeyset()
 
-Reads an input plain object and a keyset schema object and normalises the input plain object
+Reads an input plain object and a keyset schema object and normalises the input plain object, adding any missing keys.
 
 ### input
 
@@ -159,25 +187,232 @@ Input argument | Type     | Obligatory? | Description
 
 ### ouput
 
-A clone of an input object, with exactly the same key set as the `schema` object.
+A clone of an input object, with the same key set as the `schema` object.
 
-For example,
+### example
 
 ```js
-var inputObj = {
+const getKeyset = require('json-comb-core').getKeyset
+const enforceKeyset = require('json-comb-core').enforceKeyset
+let inputObj = {
   a: 'ccc'
 }
-var anotherObj = {
+let anotherObj = {
   a: 'aaa',
   b: 'bbb'
 }
-var schema = getKeyset([ inputObj, anotherObj ]) // <= notice both are fed via an array
+let schema = getKeyset([ inputObj, anotherObj ]) // <= notice both are fed via an array
 
 inputObj = enforceKeyset( inputObj, schema )
 console.log('inputObj = ' + JSON.stringify(inputObj, null, 4))
 // => {
 //      a: 'ccc',
 //      b: false
+//    }
+```
+
+## noNewKeys()
+
+Reads an array and a reference keyset object, returns an array of zero or more keys that are in the array, but not in keyset.
+
+Practically this is handy to tame the JSON's that we don't/can't normalise. At least we can ensure there are no new keys. For example, all data mapping files could be validated through `noNewKeys()`.
+
+### input
+
+Input argument | Type     | Obligatory? | Description
+---------------|----------|-------------|--------------
+`input`        | Object   | yes         | What should we check?
+`schema`       | Object   | yes         | According to what schema should we normalise?
+
+### ouput
+
+An array of zero or more paths.
+
+### example
+
+We are going to catch the rogue key `b`:
+
+```js
+const noNewKeys = require('json-comb-core').noNewKeys
+let res = noNewKeys(
+  { // <- input we're checking
+    a: 'a',
+    b: 'b',
+    c: 'c'
+  },
+  { // <- reference keyset
+    a: 'aaa',
+    c: 'ccc'
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => ['b']
+```
+
+More advanced example:
+
+```js
+const noNewKeys = require('json-comb-core').noNewKeys
+let res = noNewKeys(
+  { // <- input we're checking
+    z: [
+      {
+        a: 'a',
+        b: 'b',
+        c: 'c'
+      },
+      {
+        a: false,
+        b: false,
+        c: 'c'
+      }
+    ]
+  },
+  { // <- reference keyset
+    z: [
+      {
+        a: 'a',
+        b: 'b'
+      },
+      {
+        a: false,
+        b: false
+      }
+    ]
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => ['z[0].c', 'z[1].c']
+```
+
+## findUnused()
+
+Reads a set of objects (array of plain objects, probably parsed JSON files) and tells, are there any keys throughout the whole set that have only the placeholder values. You can customise the placeholder value via an optional options object.
+
+Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
+
+As a rule, it will flag up all comments, because they are always equal to a placeholder (`false` in my case), so take it with a grain of salt. Also, sometimes you want to keep keys even if they are unused for consistency purposes. Sometimes modules are repeated, and it's handy to see all the available keys.
+
+### input
+
+Input argument | Type                                | Obligatory? | Description
+---------------|-------------------------------------|-------------|--------------
+`input`        | Array of zero or more plain objects | yes         | Array of parsed JSON files.
+`options`      | Object                              | no          | Options object. See below.
+
+`options` object's key         | Type     | Obligatory? | Default   | Description
+-------------------------------|----------|-------------|-----------|----------------------
+{                              |          |             |           |
+`placeholder`                  | Any      | no          | `false`   | What value is being used to mark unused key?
+}                              |          |             |           |
+
+### output
+
+An array of zero or more paths leading to keys which are either missing or have values equal to `opts.placeholder`.
+
+### example
+
+```js
+const findUnused = require('json-comb-core').findUnused
+let res = findUnused(
+  [
+    { // <- object #1
+      a: false,
+      b: 'bbb1',
+      c: false
+    },
+    { // <- object #2
+      a: 'aaa',
+      b: 'bbb2',
+      c: false
+    },
+    {} // <- object #3
+  ]
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => ['c']
+```
+
+This function will work on arrays of both normalised and not normalised object sets.
+
+More complex example:
+
+```js
+const findUnused = require('json-comb-core').findUnused
+let res = findUnused(
+  [
+    {
+      a: [
+        {
+          k: false,
+          l: false,
+          m: false
+        },
+        {
+          k: 'k',
+          l: false,
+          m: 'm'
+        }
+      ],
+      b: 'bbb1',
+      c: false
+    },
+    {
+      a: [
+        {
+          k: 'k',
+          l: false,
+          m: 'm'
+        },
+        {
+          k: 'k',
+          l: false,
+          m: 'm'
+        }
+      ],
+      b: 'bbb2',
+      c: false
+    },
+    {b: false},
+    {c: false}
+  ]
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => ['c', 'a[0].l']
+```
+
+## sortIfObject()
+
+This is an auxiliary function to help with sorting object keys. Yes, object keys can be sorted. This function is flexible if non-object is passed, it's returned without messing it up. You can freely assign things to the result of this function.
+
+### input
+
+Input argument | Type     | Obligatory? | Description
+---------------|----------|-------------|--------------
+`input`        | Whatever | no          | If it's an object, its keys will get sorted
+
+It is not recursive or deep function. Only topmost level keys will get sorted.
+
+### output
+
+If the input were a plain object, the output would be a clone of it, with keys sorted. Otherwise, it will be the same input, returned.
+
+### example
+
+```js
+const sortIfObject = require('json-comb-core').sortIfObject
+let res = sortIfObject(
+  {
+    a: 'a',
+    c: 'c',
+    b: 'b'
+  }
+)
+console.log('res = ' + JSON.stringify(res, null, 4))
+// => {
+//      a: 'a',
+//      b: 'b',
+//      c: 'c'
 //    }
 ```
 
@@ -191,11 +426,15 @@ Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://sta
 
 ## Difference between Normalising JSON and JSON Schemas
 
-In short, JSON Schema concept is a way to define and enforce keys presence and/or their value types.
+In simple terms, a _JSON Schema_ is a way to define and enforce key presence and their value types. It is used when dealing with reading/writing objects to network sources.
 
-JSON file normalisation (what this library does, among other things) is making so that every JSON in a given set has exactly the same keys as all others. Missing values are simply set to a placeholder (normally Boolean `false`).
+JSON file normalisation (what this library does, among other things) is making so that every JSON in a given set has the same keys as all others. Missing values are simply set to a placeholder (normally Boolean `false`).
 
 See the difference between the two concepts?
+
+JSON Schema is usually set. You've agreed on the API and now enforce it. Data files, on the other hand, have evolving API - new keys are added (and removed) regularly, and we're concerned only to keep the keysets the same.
+
+Schemas are used when dealing with API's and network. Normalisation is used when dealing with local files on a hard drive.
 
 ## Contributing
 

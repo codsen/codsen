@@ -1348,6 +1348,25 @@ test('05.01 - findUnused() - single-level plain objects', function (t) {
     ['c'],
     '05.01.01 - running on defaults'
   )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          c: false
+        },
+        {}
+      ]
+    ),
+    ['c'],
+    '05.01.02 - not normalised is fine as well'
+  )
 })
 
 test('05.02 - findUnused() - multiple-level plain objects', function (t) {
@@ -1389,7 +1408,49 @@ test('05.02 - findUnused() - multiple-level plain objects', function (t) {
       ]
     ),
     ['c', 'a[0].l'],
-    '05.02 - multiple levels, two objects, two unused keys, defaults'
+    '05.02.01 - multiple levels, two objects, two unused keys, defaults'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            {
+              k: false,
+              l: false,
+              m: false
+            },
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            }
+          ],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            },
+            {
+              k: 'k',
+              l: false,
+              m: 'm'
+            }
+          ],
+          b: 'bbb2',
+          c: false
+        },
+        {b: false},
+        {c: false}
+      ]
+    ),
+    ['c', 'a[0].l'],
+    '05.02.02 - not normalised, see third and fourth args, not normalised objects'
   )
 })
 
@@ -1438,13 +1499,70 @@ test('05.03 - findUnused() - double-nested arrays', function (t) {
     ['c', 'a[0][0].l', 'a[0][1].k'],
     '05.03.01'
   )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [
+            [
+              {
+                k: false,
+                l: false,
+                m: false
+              },
+              {
+                k: 'k',
+                l: false,
+                m: 'm'
+              }
+            ]
+          ],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [
+            [
+              {
+                k: false,
+                l: 'l',
+                m: 'm'
+              },
+              {
+                k: false,
+                l: 'l',
+                m: 'm'
+              }
+            ]
+          ],
+          b: 'bbb2',
+          c: false
+        },
+        {
+          a: false
+        }
+      ]
+    ),
+    ['c', 'a[0][0].l', 'a[0][1].k'],
+    '05.03.02 - value false vs values as arrays - in the context of unused-ness'
+  )
 })
 
 test('05.04 - findUnused() - works on empty arrays', function (t) {
   t.deepEqual(
     findUnused([]),
     [],
-    '05.04'
+    '05.04.01'
+  )
+  t.deepEqual(
+    findUnused([{}]),
+    [],
+    '05.04.02'
+  )
+  t.deepEqual(
+    findUnused([{}, {}]),
+    [],
+    '05.04.03'
   )
 })
 
@@ -1477,7 +1595,27 @@ test('05.06 - findUnused() - case of empty array within an array', function (t) 
       ]
     ),
     ['c'],
-    '05.06'
+    '05.06.01 - normal'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [[]],
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: [[]],
+          b: 'bbb2',
+          c: false
+        },
+        {},
+        {}
+      ]
+    ),
+    ['c'],
+    '05.06.02 - not normalised'
   )
 })
 
@@ -1493,7 +1631,22 @@ test('05.07 - findUnused() - case of empty array within an array', function (t) 
       ]
     ),
     [],
-    '05.07'
+    '05.07.01 - normalised'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: [[]],
+          b: 'bbb1',
+          c: false
+        },
+        {},
+        {a: false}
+      ]
+    ),
+    ['c'],
+    '05.07.02 - not normalised. Now that there are three inputs (even two of them empty-ish) result is the key c'
   )
 })
 
@@ -1556,6 +1709,41 @@ test('05.08 - findUnused() - objects containing objects (2 in total)', function 
     ['c', 'e', 'a.x', 'd.x'],
     '05.08.02'
   )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y'
+          },
+          b: 'bbb1',
+          c: false,
+          d: {
+            y: 'y',
+            x: false
+          },
+          e: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z'
+          },
+          b: 'bbb2',
+          c: false,
+          d: {
+            y: 'y',
+            x: false
+          },
+          e: false
+        },
+        {c: false}
+      ]
+    ),
+    ['c', 'e', 'a.x', 'd.x'],
+    '05.08.03 - not normalised'
+  )
 })
 
 test('05.09 - findUnused() - objects containing objects (3 in total)', function (t) {
@@ -1589,7 +1777,41 @@ test('05.09 - findUnused() - objects containing objects (3 in total)', function 
       ]
     ),
     ['c', 'a.x', 'a.k.l'],
-    '05.09'
+    '05.09.01 - normalised, on default placeholder'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y',
+            k: {
+              l: false,
+              m: 'zzz'
+            }
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z',
+            k: {
+              l: false,
+              m: 'yyy'
+            }
+          },
+          b: 'bbb2',
+          c: false
+        },
+        {},
+        {c: false}
+      ]
+    ),
+    ['c', 'a.x', 'a.k.l'],
+    '05.09.02 - not normalised, on default placeholder'
   )
 })
 
@@ -1704,7 +1926,65 @@ test('05.10 - findUnused() - objects containing objects, mixed with arrays', fun
       ]
     ),
     ['c', 'a.x', 'a.k.l', 'a.k.p.r[0].x'],
-    '05.10.02'
+    '05.10.02 - even deeper'
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: {
+            x: false,
+            y: 'y',
+            k: {
+              l: false,
+              m: 'zzz',
+              p: {
+                r: [
+                  {
+                    w: 'xxx',
+                    x: false
+                  },
+                  {
+                    w: 'w2',
+                    x: false
+                  }
+                ]
+              }
+            }
+          },
+          b: 'bbb1',
+          c: false
+        },
+        {
+          a: {
+            x: false,
+            y: 'z',
+            k: {
+              l: false,
+              m: false,
+              p: {
+                r: [
+                  {
+                    w: 'www',
+                    x: false
+                  },
+                  {
+                    w: 'zzz',
+                    x: false
+                  },
+                  {}
+                ]
+              }
+            }
+          },
+          b: 'bbb2',
+          c: false
+        },
+        {}
+      ]
+    ),
+    ['c', 'a.x', 'a.k.l', 'a.k.p.r[0].x'],
+    '05.10.03 - even deeper plus not normalised in deeper levels'
   )
 })
 
@@ -1826,7 +2106,29 @@ test('05.12 - findUnused() - array > single object > array > unused inside', fun
   )
 })
 
-test.todo('not normalised JSON - should work anyway')
+test('05.13 - findUnused() - simple case of not normalised input', function (t) {
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: false,
+          c: 'c'
+        },
+        {
+          a: false,
+          b: false,
+          c: 'c'
+        },
+        {
+          c: 'c'
+        }
+      ]
+    ),
+    ['a', 'b'],
+    '05.13 - default placeholder'
+  )
+})
 
 // -----------------------------------------------------------------------------
 // 06. sortIfObject()
@@ -1856,4 +2158,32 @@ test('06.02 - sortIfObject() - wrong inputs are bypassed', function (t) {
     1,
     '06.02'
   )
+})
+
+// -----------------------------------------------------------------------------
+// 07. input arg mutation tests
+// -----------------------------------------------------------------------------
+
+test('07.01 - does not mutate input args: enforceKeyset()', t => {
+  var source = {
+    a: 'a'
+  }
+  const frozen = {
+    a: 'a'
+  }
+  var dummyResult = enforceKeyset(source, {a: false, b: false})
+  t.pass(dummyResult) // a mickey assertion to trick the Standard
+  t.deepEqual(source, frozen)
+})
+
+test('07.02 - does not mutate input args: noNewKeys()', t => {
+  var source = {
+    a: 'a'
+  }
+  const frozen = {
+    a: 'a'
+  }
+  var dummyResult = noNewKeys(source, {a: false, b: false})
+  t.pass(dummyResult) // a mickey assertion to trick the Standard
+  t.deepEqual(source, frozen)
 })
