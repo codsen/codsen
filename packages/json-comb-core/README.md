@@ -54,7 +54,7 @@ $ npm i json-comb-core
 
 ## Idea
 
-Imagine, you have a set of JSON files. To keep everything under control, we need tools to maintain it. Otherwise, it will quickly get out of hand. `json-comb-core` will tend the following tasks:
+Imagine, you have a set of JSON files. `json-comb-core` helps to maintain and manage it:
 
 **Normalise those JSON files:**
 
