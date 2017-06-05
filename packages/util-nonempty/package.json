@@ -8,10 +8,7 @@
     "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/code-and-send/util-nonempty.git"
-  },
+  "repository": "codsen/util-nonempty",
   "keywords": [
     "is",
     "not",
@@ -21,22 +18,25 @@
     "string",
     "util"
   ],
-  "author": "Roy Reveltas <roy@codeandsend.com> (http://codeandsend.com/)",
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/code-and-send/util-nonempty/issues"
+    "url": "https://github.com/codsen/util-nonempty/issues"
   },
-  "homepage": "https://github.com/code-and-send/util-nonempty#readme",
+  "homepage": "https://github.com/codsen/util-nonempty#readme",
   "dependencies": {
-    "lodash.isplainobject": "^4.0.6",
-    "lodash.isstring": "^4.0.1"
+    "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.12.0",
-    "nyc": "^10.0.0",
-    "standard": "^9.0.2"
+    "husky": "^0.13.4",
+    "nyc": "^11.0.2",
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true

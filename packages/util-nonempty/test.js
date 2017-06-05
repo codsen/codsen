@@ -1,7 +1,7 @@
 'use strict'
 
-var nonEmpty = require('./index.js')
 import test from 'ava'
+var nonEmpty = require('./index.js')
 
 // ==============================
 // Precautions

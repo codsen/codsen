@@ -1,14 +1,8 @@
 'use strict'
-var isString = require('lodash.isstring')
 var isArray = Array.isArray
 var isPlainObject = require('lodash.isplainobject')
+var isString = something => typeof something === 'string'
 
-/**
- * nonEmpty - tells, is input empty thing or not
- *
- * @param  {Array||PlainObject||String}  input
- * @return {Boolean}                     is it empty or not
- */
 function nonEmpty (input) {
   if (arguments.length === 0 || input === undefined) {
     return

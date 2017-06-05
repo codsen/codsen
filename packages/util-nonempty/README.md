@@ -1,6 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [util-nonempty](#util-nonempty)
+  - [Purpose](#purpose)
+  - [Install](#install)
+  - [Use](#use)
+  - [API](#api)
+  - [Testing](#testing)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # util-nonempty
 
-<a href="https://github.com/feross/standard" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
 > Is the input (plain object, array, string or whatever) not empty?
 
@@ -72,13 +87,13 @@ nonEmpty (
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://github.com/feross/standard) notation. I aim to have 100% unit test coverage.
+Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. I aim to have 100% unit test coverage.
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://github.com/feross/standard) notation and supplement the `test.js` with new unit tests covering your feature(s).
+All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/code-and-send/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
@@ -104,20 +119,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[travis-img]: https://travis-ci.org/code-and-send/util-nonempty.svg?branch=master
-[travis-url]: https://travis-ci.org/code-and-send/util-nonempty
+[travis-img]: https://travis-ci.org/codsen/util-nonempty.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/util-nonempty
 
-[cov-img]: https://coveralls.io/repos/github/code-and-send/util-nonempty/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/code-and-send/util-nonempty?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/util-nonempty/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/util-nonempty?branch=master
 
-[overall-img]: https://www.bithound.io/github/code-and-send/util-nonempty/badges/score.svg
-[overall-url]: https://www.bithound.io/github/code-and-send/util-nonempty
+[overall-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/util-nonempty
 
-[deps-img]: https://www.bithound.io/github/code-and-send/util-nonempty/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/code-and-send/util-nonempty/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/util-nonempty/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/code-and-send/util-nonempty/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/code-and-send/util-nonempty/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/util-nonempty/master/dependencies/npm
 
 [downloads-img]: https://img.shields.io/npm/dm/util-nonempty.svg
 [downloads-url]: https://www.npmjs.com/package/util-nonempty
