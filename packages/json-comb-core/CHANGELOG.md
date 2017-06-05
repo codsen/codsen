@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2017-06-05
+### Updated
+- ☝️ Improved some error messages, now outputting both its type and value.
+
 ## [2.2.0] - 2017-06-02
 ### Added
 - 🆕 Unit tests covering input arg mutation on all functions that accept objects as input args.
@@ -29,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 🆕 First public release
 - Unit test coverage is solid 100%
 
+[2.3.0]: https://github.com/codsen/json-comb-core/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/json-comb-core/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/json-comb-core/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/json-comb-core/compare/v1.0.1...v2.0.0

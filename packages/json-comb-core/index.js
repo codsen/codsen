@@ -34,13 +34,13 @@ function getKeyset (arrOriginal, opts) {
     throw new Error('json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!')
   }
   if (!isArr(arrOriginal)) {
-    throw new Error('json-comb-core/getKeyset(): [THROW_ID_12] Input must be array! Currently it\'s ' + typeof arrOriginal)
+    throw new Error(`json-comb-core/getKeyset(): [THROW_ID_12] Input must be array! Currently it's: ${type(arrOriginal)}`)
   }
   if (arrOriginal.length === 0) {
     throw new Error('json-comb-core/getKeyset(): [THROW_ID_13] Input array is empty!')
   }
   if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_14] Options object must be a plain object!')
+    throw new TypeError(`json-comb-core/getKeyset(): [THROW_ID_14] Options object must be a plain object! Currently it's: ${type(opts)}, equal to: ${JSON.stringify(opts, null, 4)}`)
   }
 
   var schemaObj = {}
@@ -55,9 +55,9 @@ function getKeyset (arrOriginal, opts) {
     flattenArraysContainingStringsToBeEmpty: true
   }
 
-  arr.forEach(function (obj) {
+  arr.forEach(function (obj, i) {
     if (!isObj(obj)) {
-      throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_15] Non-object detected within an array!')
+      throw new TypeError(`json-comb-core/getKeyset(): [THROW_ID_15] Non-object (${type(obj)}) detected within an array! It's the ${i}th element: ${JSON.stringify(obj, null, 4)}`)
     }
     schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), { mergeArraysContainingStringsToBeEmpty: true })
   })
@@ -75,10 +75,10 @@ function enforceKeyset (obj, schemaKeyset) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_22] Second arg missing!')
   }
   if (!isObj(obj)) {
-    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_23] Input must be a plain object! Currently it\'s ' + typeof obj)
+    throw new Error(`json-comb-core/enforceKeyset(): [THROW_ID_23] Input must be a plain object! Currently it's: ${type(obj)}, equal to: ${JSON.stringify(obj, null, 4)}`)
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s ' + typeof schemaKeyset)
+    throw new Error(`json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it's: ${type(schemaKeyset)}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`)
   }
   return sortIfObject(fillMissingKeys(clone(obj), schemaKeyset))
 }
@@ -95,10 +95,10 @@ function noNewKeys (obj, schemaKeyset) {
     throw new Error('json-comb-core/noNewKeys(): [THROW_ID_32] Schema object is missing!')
   }
   if (!isObj(obj)) {
-    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_33] Main input (1st arg.) must be a plain object! Currently it\'s ' + type(obj))
+    throw new Error(`json-comb-core/noNewKeys(): [THROW_ID_33] Main input (1st arg.) must be a plain object! Currently it's: ${type(obj)}, equal to: ${JSON.stringify(obj, null, 4)}`)
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_34] Schema input (2nd arg.) must be a plain object! Currently it\'s ' + type(schemaKeyset))
+    throw new Error(`json-comb-core/noNewKeys(): [THROW_ID_34] Schema input (2nd arg.) must be a plain object! Currently it's: ${type(schemaKeyset)}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`)
   }
   return nnk(obj, schemaKeyset)
 }
