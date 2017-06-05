@@ -22,7 +22,11 @@
     "same",
     "comb",
     "variable",
-    "variables"
+    "variables",
+    "preprocessor",
+    "postprocessor",
+    "processor",
+    "process"
   ],
   "author": {
     "name": "Roy Reveltas",
@@ -46,7 +50,7 @@
     "object-assign": "^4.1.1",
     "object-path": "^0.11.4",
     "splice-string": "^2.0.0",
-    "str-indexes-of-plus": "^1.0.1",
+    "str-indexes-of-plus": "^1.0.2",
     "string-length": "^1.0.1",
     "string-slice": "^0.1.0",
     "type-detect": "^4.0.0"
@@ -54,9 +58,9 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "*",
+    "husky": "^0.13.4",
     "nodemon": "^1.11.0",
-    "nyc": "*",
+    "nyc": "^11.0.2",
     "standard": "^10.0.0"
   },
   "ava": {
