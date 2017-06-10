@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Check the types of your options object's values after user has customised them",
   "main": "index.js",
   "scripts": {
