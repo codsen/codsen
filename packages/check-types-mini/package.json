@@ -36,20 +36,23 @@
   "homepage": "https://github.com/codsen/check-types-mini#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "*",
+    "lodash.pullall": "^4.2.0",
+    "object-assign": "^4.1.1",
     "type-detect": "^4.0.0"
   },
   "devDependencies": {
     "ava": "*",
     "clear-cli": "*",
     "coveralls": "*",
-    "husky": "*",
+    "husky": "^0.13.4",
     "nodemon": "*",
-    "nyc": "*",
+    "nyc": "^11.0.2",
     "standard": "^10.0.0"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   },
   "engines": {
     "node": ">=5.11.0"

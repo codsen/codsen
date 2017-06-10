@@ -21,7 +21,8 @@
 - [Idea](#idea)
 - [API](#api)
   - [Options object](#options-object)
-- [For example](#for-example)
+  - [For example](#for-example)
+  - [`opts.enforceStrictKeyset`](#optsenforcestrictkeyset)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,9 +36,11 @@ $ npm i -S check-types-mini
 
 ## Idea
 
-[check-types](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to `throw` if somebody sets my input settings to a wrong type.
+[`check-types`](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to `throw` if somebody sets my input settings to a wrong type.
 
-In few occasions, I copied the predecessor function (which later became this library) from one library of mine to another, along with its unit tests. Then I got fed up with that and here were are. Its point is to cut corners publishing new libraries. Every library that has options needs some checks, has user set things to be of a correct type.
+I had a working prototype of this library ages ago. Pieces of it were finding a new life (and evolving) in every new non-trivial library I created. Then I got fed up with chasing 100% code coverage each time, duplicating unit tests and decided to split it into a standalone library.
+
+The point of `check-types-mini` is to save your time creating new libraries. Every library that has options object will need some type checks if you let user tinker with it.
 
 ## API
 
@@ -50,7 +53,7 @@ As a result, it _throws_ `TypeError`s for you, containing your custom message, s
 Input argument   | Type         | Obligatory? | Description
 -----------------|--------------|-------------|--------------
 `obj`            | Plain object | yes         | Options object after user's customisation
-`ref`            | Plain object | yes         | Default options — used to compare the types
+`ref`            | Plain object | yes         | Default options - used to compare the types
 `msg`            | String       | no          | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
 `optsVarName`    | String       | no          | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
 `opts`           | Plain object | no          | Optional options go here.
@@ -63,9 +66,10 @@ Input argument   | Type         | Obligatory? | Description
 `ignoreKeys`                   | Array or String | no          | `[]` (empty array)   | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
 `acceptArrays`                 | Boolean  | no          | `false`     | If it's set to `true`, value can be array of elements, same type as reference.
 `acceptArraysIgnore`           | Array of strings or String | no | `[]` (empty array) | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.
+`enforceStrictKeyset`          | Boolean  | no          | `true`      | If it's set to `true`, your object must not have any unique keys that reference object does not have.
 }                              |          |             |             |
 
-## For example
+### For example
 
 ```js
 const checkTypes = require('check-types-mini')
@@ -110,7 +114,7 @@ var res = checkTypes(
 // => Throws, because reference's `option2` is Boolean ("false") but input `option2` is array ("[true, true]").
 ```
 
-But this does not `throw`:
+But this does not `throw` when we allow arrays:
 
 ```js
 const checkTypes = require('check-types-mini')
@@ -135,6 +139,10 @@ var res = checkTypes(
 ```
 
 If you want, you can blacklist certain keys of your objects so that `opts.acceptArrays` will not apply to them. Just add keys into `opts.acceptArraysIgnore` array.
+
+### `opts.enforceStrictKeyset`
+
+When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings was only one argument - Boolean. I had to change it to be a plain object. I noticed that old Boolean argument was not causing problems! Then I came up with the idea to enforce the keys of the object to match the reference. This was released in `v1.4.0`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
 ## Contributing
 

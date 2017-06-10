@@ -5,6 +5,7 @@ const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
 const isArr = Array.isArray
 const includes = require('lodash.includes')
+const pullAll = require('lodash.pullall')
 const arrayiffyIfString = require('arrayiffy-if-string')
 
 function checkTypes (obj, ref, msg, optsVarName, opts) {
@@ -34,20 +35,24 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
   var defaults = {
     ignoreKeys: [],
     acceptArrays: false,
-    acceptArraysIgnore: []
+    acceptArraysIgnore: [],
+    enforceStrictKeyset: true
   }
   opts = objectAssign(clone(defaults), opts)
   opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys)
   opts.acceptArraysIgnore = arrayiffyIfString(opts.acceptArraysIgnore)
 
   if (!isArr(opts.ignoreKeys)) {
-    throw new TypeError('check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: ' + type(opts.ignoreKeys))
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it's: ${type(opts.ignoreKeys)}`)
   }
   if (!isBool(opts.acceptArrays)) {
-    throw new TypeError('check-types-mini/checkTypes(): [THROW_ID_04] opts.acceptArrays should be a Boolean, currently it\'s: ' + type(opts.acceptArrays))
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_04] opts.acceptArrays should be a Boolean, currently it's: ${type(opts.acceptArrays)}`)
   }
   if (!isArr(opts.acceptArraysIgnore)) {
-    throw new TypeError('check-types-mini/checkTypes(): [THROW_ID_03] opts.acceptArraysIgnore should be an array, currently it\'s: ' + type(opts.acceptArraysIgnore))
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_05] opts.acceptArraysIgnore should be an array, currently it's: ${type(opts.acceptArraysIgnore)}`)
+  }
+  if (opts.enforceStrictKeyset && (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0)) {
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_06] object has some unrecongnised keys: ${pullAll(Object.keys(ref), Object.keys(obj))}`)
   }
 
   Object.keys(obj).forEach(function (key) {

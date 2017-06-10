@@ -15,7 +15,7 @@ test('01.02 - throws when second arg\'s missing', t => {
   }, 'check-types-mini/checkTypes(): [THROW_ID_02] missing second argument!')
 })
 
-test('01.03 - third argument and fourth arguments are missing', t => {
+test('01.03 - throws when one of the arguments is of a wrong type', t => {
   t.throws(function () {
     checkTypes(
       {
@@ -32,7 +32,7 @@ test('01.03 - third argument and fourth arguments are missing', t => {
   }, 'opts.option2 was customised to "false" which is not boolean but string')
 })
 
-test('01.03 - third argument and fourth arguments are missing', t => {
+test('01.04 - throws when input args are of a wrong type', t => {
   t.throws(function () {
     checkTypes(
       {
@@ -44,9 +44,11 @@ test('01.03 - third argument and fourth arguments are missing', t => {
         option1: 'setting1',
         option2: false,
         option3: false
-      }
+      },
+      'zzz',
+      1
     )
-  }, 'opts.option2 was customised to "false" which is not boolean but string')
+  })
   t.throws(function () {
     checkTypes(
       {
@@ -60,12 +62,12 @@ test('01.03 - third argument and fourth arguments are missing', t => {
         option3: false
       },
       1,
-      1
+      'zzz'
     )
-  }, 'option2 was customised to "false" which is not boolean but string')
+  })
 })
 
-test('01.03 - fourth argument is missing', t => {
+test('01.05 - throws if fourth argument is missing', t => {
   t.throws(function () {
     checkTypes(
       {
@@ -119,7 +121,7 @@ test('01.03 - fourth argument is missing', t => {
   })
 })
 
-test('01.04 - throws when opts are set wrong', t => {
+test('01.06 - throws when opts are set wrong', t => {
   t.throws(function () {
     checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: false })
   }, 'check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: boolean')
@@ -343,6 +345,44 @@ test('02.03 - opts.acceptArraysIgnore', t => {
       {
         acceptArrays: true,
         acceptArraysIgnore: true
+      }
+    )
+  })
+})
+
+// ======================
+// 03. opts.enforceStrictKeyset
+// ======================
+
+test('02.04 - opts.acceptArrays, strings+arrays', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'setting2',
+        rogueKey: false
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'setting2',
+        rogueKey: false
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        enforceStrictKeyset: false
       }
     )
   })
