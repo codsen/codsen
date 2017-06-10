@@ -26,7 +26,6 @@
   - [Data containers](#data-containers)
   - [Ignores with wildcards](#ignores-with-wildcards)
   - [Wrapping](#wrapping)
-    - [Challenge:](#challenge)
     - [In practice:](#in-practice)
   - [Mixing Booleans and strings](#mixing-booleans-and-strings)
 - [Contributing](#contributing)
@@ -60,6 +59,8 @@ Let's make it possible for values within our JSON to reference other keys' value
 ```
 
 The API is the following: a plain object in (it's not mutated), a new plain object out.
+
+**[⬆ back to top](#table-of-contents)**
 
 ## API
 
@@ -113,6 +114,8 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `resolveToFalseIfAnyValuesContainBool` | Boolean  | no       | `true` | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.
 `throwWhenNonStringInsertedInString`   | Boolean  | no       | `false`| By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.
 }                              |          |             |             |
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Use examples
 
@@ -250,6 +253,8 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### Data containers
 
 Data-wise, if you looked at a higher level, it might appear clunky to put values as _separate values_, like in examples above. Saving you time scrolling up, check this out:
@@ -330,6 +335,8 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### Ignores with wildcards
 
 You can ignore the wrapping on any keys by supplying their name patterns in the options array, `dontWrapVars` value. It can be array or string and also it can contain wildcards:
@@ -356,9 +363,11 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### Wrapping
 
-#### Challenge:
+**Challenge:**
 
 > How do you wrap one instance of a variable, but not another, when both are in the same string?
 
@@ -381,6 +390,8 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
   "firstName": "John"
 }
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 #### In practice:
 
@@ -491,6 +502,8 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //      b: true
 //    }
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Contributing
 
