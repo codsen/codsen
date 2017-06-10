@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.4.0] - 2017-06-10
+### Added
+- [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
+
 ## [5.3.0] - 2017-05-15
 ### Added
 - Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
@@ -128,8 +132,9 @@ BREAKING API CHANGES.
 [3.2.0]: https://github.com/codsen/ast-monkey/compare/v3.1.0...v3.2.0
 [3.3.0]: https://github.com/codsen/ast-monkey/compare/v3.2.2...v3.3.0
 [4.0.0]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
 [5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0
 [5.3.0]: https://github.com/codsen/ast-monkey/compare/v5.2.0...v5.3.0
+[5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0

@@ -29,9 +29,8 @@
   - [.arrayFirstOnly()](#arrayfirstonly)
   - [.traverse()](#traverse)
     - [innerObj in the callback](#innerobj-in-the-callback)
-- [Unit testing and code coverage](#unit-testing-and-code-coverage)
-- [Contributing](#contributing)
 - [The name of this library](#the-name-of-this-library)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -57,6 +56,8 @@ Working with parsed HTML (AST trees) is hard when you want to go "up" the branch
 Using this library, you can delete the particular piece of AST (method [.drop()](#drop)) or overwrite (method [.set()](#set)). You can also perform searches by object's/array's `key`, `value` or both (method [.find()](#find)). You can retrieve all contents of any piece of AST by index (method [.get()](#get)) or list all indexes (method [.info()](#info)).
 
 Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions — the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
+
+**[⬆ back to top](#table-of-contents)**
 
 ## API
 
@@ -121,6 +122,8 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
+**[⬆ back to top](#table-of-contents)**
+
 ### .get()
 
 Use method `monkey.get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `monkey.find()` or you can pick a number manually, possibly choosing one of the indexes from `monkey.info()` output.
@@ -166,6 +169,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 ```
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
+
+**[⬆ back to top](#table-of-contents)**
 
 ### .set()
 
@@ -213,6 +218,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### .drop()
 
 Use method `monkey.drop()` to delete a piece of an AST with a known index.
@@ -256,6 +263,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //      f: {g: []}
 //    }
 ```
+
+**[⬆ back to top](#table-of-contents)**
 
 ### .info()
 
@@ -390,6 +399,8 @@ data.gatherPath = [
 -----------
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### .del()
 
 Use method `monkey.del()` to delete all chosen key/value pairs from all objects found within an AST, or all chosen elements from all arrays.
@@ -436,6 +447,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
+**[⬆ back to top](#table-of-contents)**
+
 ### .arrayFirstOnly()
 
 (ex-`flatten()` on versions `v.<3`)
@@ -476,6 +489,8 @@ Input argument   | Type                      | Obligatory? | Description
 Output           | Type             | Description
 -----------------|------------------|--------------------
 `input`          | Same as `input`  | The amended `input`
+
+**[⬆ back to top](#table-of-contents)**
 
 ### .traverse()
 
@@ -599,23 +614,19 @@ innerObj = {
 }
 ```
 
-## Unit testing and code coverage
+**[⬆ back to top](#table-of-contents)**
 
-```bash
-$ npm test
-```
+## The name of this library
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Unit test code coverage is calculated using [Istanbul](https://www.npmjs.com/package/nyc).
+HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**.
+
+**[⬆ back to top](#table-of-contents)**
 
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
-
-## The name of this library
-
-HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. I know this doesn't happen ever, but if you have any comments on the code, including ideas how to improve something, just email me.
 
 ## Licence
 

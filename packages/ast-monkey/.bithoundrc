@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-      "mute": ["ava", "coveralls", "husky", "object-assign", "lodash.isequal", "lodash.isplainobject", "lodash.clonedeep"]
+    "mute": ["ava", "coveralls", "object-assign", "lodash.isequal", "lodash.isplainobject", "lodash.clonedeep"]
   },
   "test": [
     "test.js"

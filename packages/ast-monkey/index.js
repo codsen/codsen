@@ -31,6 +31,8 @@ function traverse (treeOriginal, callback) {
           } else {
             tree[i] = res
           }
+        } else {
+          tree.splice(i, 1)
         }
       }
     } else if (isObj(tree)) {

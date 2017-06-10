@@ -1,11 +1,10 @@
 'use strict'
 
 import { find, get, set, drop, info, del, arrayFirstOnly, traverse, existy } from './index'
-
 import test from 'ava'
-var actual, intended, key, val, index
+let actual, intended, key, val, index
 
-var input = {
+let input = {
   a: {b: [{c: {d: 'e'}}]},
   c: {d: 'e'}
 }
@@ -1001,15 +1000,15 @@ test('09.01 - use traverse to delete one key from an array', t => {
     }
   ]
 
-  var actual01 = traverse(input, function (key, val, innerObj) {
-    var current = existy(val) ? val : key
+  let actual01 = traverse(input, function (key, val, innerObj) {
+    let current = existy(val) ? val : key
     if (isEqual(current, { a: 'b' })) {
       return NaN
     } else {
       return current
     }
   })
-  var intended01 = [
+  let intended01 = [
     {
       c: 'd'
     },
@@ -1022,15 +1021,15 @@ test('09.01 - use traverse to delete one key from an array', t => {
     intended01,
     '09.01.01')
 
-  var actual02 = traverse(input, function (key, val, innerObj) {
-    var current = existy(val) ? val : key
+  let actual02 = traverse(input, function (key, val, innerObj) {
+    let current = existy(val) ? val : key
     if (isEqual(current, { c: 'd' })) {
       return NaN
     } else {
       return current
     }
   })
-  var intended02 = [
+  let intended02 = [
     {
       a: 'b'
     },
@@ -1043,15 +1042,15 @@ test('09.01 - use traverse to delete one key from an array', t => {
     intended02,
     '09.01.02')
 
-  var actual03 = traverse(input, function (key, val, innerObj) {
-    var current = existy(val) ? val : key
+  let actual03 = traverse(input, function (key, val, innerObj) {
+    let current = existy(val) ? val : key
     if (isEqual(current, { e: 'f' })) {
       return NaN
     } else {
       return current
     }
   })
-  var intended03 = [
+  let intended03 = [
     {
       a: 'b'
     },
@@ -1078,18 +1077,18 @@ test('09.02 - use traverse, passing undefined to delete', t => {
     }
   ]
 
-  var actual01 = traverse(input, function (key, val, innerObj) {
+  let actual01 = traverse(input, function (key, val, innerObj) {
     // console.log('\n\n------\n')
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
-    var current = existy(val) ? val : key
+    let current = existy(val) ? val : key
     if (isEqual(current, { a: 'b' })) {
       return NaN
     } else {
       return current
     }
   })
-  var intended01 = [
+  let intended01 = [
     {
       c: 'd'
     }
@@ -1113,18 +1112,18 @@ test('09.03 - use traverse, passing null, write over values', t => {
     }
   ]
 
-  var actual01 = traverse(input, function (key, val, innerObj) {
+  let actual01 = traverse(input, function (key, val, innerObj) {
     // console.log('\n\n------\n')
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
-    var current = existy(val) ? val : key
+    let current = existy(val) ? val : key
     if (current === 'b') {
       return null
     } else {
       return current
     }
   })
-  var intended01 = [
+  let intended01 = [
     {
       a: null
     },
@@ -1139,4 +1138,22 @@ test('09.03 - use traverse, passing null, write over values', t => {
     actual01,
     intended01,
     '09.03')
+})
+
+test('09.04 - traverse automatically patches up holes in arrays', t => {
+  input = ['a', undefined, 'b']
+
+  let actual01 = traverse(input, function (key, val, innerObj) {
+    // console.log('\n\n------\n')
+    // console.log('key = ' + JSON.stringify(key, null, 4))
+    // console.log('val = ' + JSON.stringify(val, null, 4))
+    let current = existy(val) ? val : key
+    // we do nothing here
+    return current
+  })
+  let intended01 = ['a', 'b']
+  t.deepEqual(
+    actual01,
+    intended01,
+    '09.04')
 })
