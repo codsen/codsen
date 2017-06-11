@@ -350,11 +350,93 @@ test('02.03 - opts.acceptArraysIgnore', t => {
   })
 })
 
+test('02.05 - involving null values', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        'key': 1,
+        'val': null,
+        'cleanup': true
+      },
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      }
+    )
+  })
+})
+
+test('02.06 - throws/notThrows when keysets mismatch', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      },
+      {
+        'key': null,
+        'val': null
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        'key': null,
+        'val': null
+      },
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      },
+      {
+        'key': null,
+        'val': null
+      },
+      null,
+      null,
+      {
+        enforceStrictKeyset: false
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        'key': null,
+        'val': null
+      },
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      },
+      null,
+      null,
+      {
+        enforceStrictKeyset: false
+      }
+    )
+  })
+})
+
 // ======================
 // 03. opts.enforceStrictKeyset
 // ======================
 
-test('02.04 - opts.acceptArrays, strings+arrays', t => {
+test('03.01 - opts.acceptArrays, strings+arrays', t => {
   t.throws(function () {
     checkTypes(
       {

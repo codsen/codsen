@@ -6,6 +6,7 @@ const clone = require('lodash.clonedeep')
 const isArr = Array.isArray
 const includes = require('lodash.includes')
 const pullAll = require('lodash.pullall')
+const isEqual = require('lodash.isequal')
 const arrayiffyIfString = require('arrayiffy-if-string')
 
 function checkTypes (obj, ref, msg, optsVarName, opts) {
@@ -51,13 +52,13 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
   if (!isArr(opts.acceptArraysIgnore)) {
     throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_05] opts.acceptArraysIgnore should be an array, currently it's: ${type(opts.acceptArraysIgnore)}`)
   }
-  if (opts.enforceStrictKeyset && (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0)) {
+  if (opts.enforceStrictKeyset && !isEqual(Object.keys(obj), Object.keys(ref))) {
     throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_06] object has some unrecongnised keys: ${pullAll(Object.keys(ref), Object.keys(obj))}`)
   }
 
   Object.keys(obj).forEach(function (key) {
     if (
-      existy(ref[key]) &&
+      ref.hasOwnProperty(key) &&
       (type(obj[key]) !== type(ref[key])) &&
       !includes(opts.ignoreKeys, key)
     ) {

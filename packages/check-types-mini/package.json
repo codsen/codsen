@@ -38,6 +38,7 @@
     "arrayiffy-if-string": "*",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "*",
+    "lodash.isequal": "^4.5.0",
     "lodash.pullall": "^4.2.0",
     "object-assign": "^4.1.1",
     "type-detect": "^4.0.0"
