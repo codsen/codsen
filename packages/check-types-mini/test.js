@@ -32,37 +32,41 @@ test('01.03 - throws when one of the arguments is of a wrong type', t => {
   }, 'opts.option2 was customised to "false" which is not boolean but string')
 })
 
-test('01.04 - throws when input args are of a wrong type', t => {
+test('01.04 - opts.msg or opts.optsVarName args are wrong-type', t => {
   t.throws(function () {
     checkTypes(
       {
         option1: 'setting1',
-        option2: 'false',
+        option2: 'setting2',
         option3: false
       },
       {
         option1: 'setting1',
-        option2: false,
+        option2: 'setting2',
         option3: false
       },
-      'zzz',
-      1
+      {
+        msg: 'zzz',
+        optsVarName: 1
+      }
     )
   })
   t.throws(function () {
     checkTypes(
       {
         option1: 'setting1',
-        option2: 'false',
+        option2: 'setting2',
         option3: false
       },
       {
         option1: 'setting1',
-        option2: false,
+        option2: 'setting2',
         option3: false
       },
-      1,
-      'zzz'
+      {
+        msg: 1,
+        optsVarName: 'zzz'
+      }
     )
   })
 })
@@ -80,7 +84,9 @@ test('01.05 - throws if fourth argument is missing', t => {
         option2: false,
         option3: false
       },
-      'newLibrary/index.js: [THROW_ID_01]' // << no trailing space
+      {
+        msg: 'newLibrary/index.js: [THROW_ID_01]' // << no trailing space
+      }
     )
   },
     'newLibrary/index.js: [THROW_ID_01] opts.option2 was customised to "false" which is not boolean but string'
@@ -97,7 +103,9 @@ test('01.05 - throws if fourth argument is missing', t => {
         option2: false,
         option3: false
       },
-      'newLibrary/index.js: [THROW_ID_01] ' // << trailing space
+      {
+        msg: 'newLibrary/index.js: [THROW_ID_01] ' // << trailing space
+      }
     )
   },
     'newLibrary/index.js: [THROW_ID_01] opts.option2 was customised to "false" which is not boolean but string'
@@ -114,9 +122,10 @@ test('01.05 - throws if fourth argument is missing', t => {
         option2: false,
         option3: false
       },
-      'newLibrary/index.js: [THROW_ID_01] ',
-      null,
-      { ignoreKeys: ['option2'] }
+      {
+        msg: 'newLibrary/index.js: [THROW_ID_01] ',
+        ignoreKeys: ['option2']
+      }
     )
   })
 })
@@ -126,16 +135,31 @@ test('01.06 - throws when opts are set wrong', t => {
     checkTypes(
       {a: 'a'},
       {a: 'b'},
-      'aa',
-      'bbb',
-      {ignoreKeys: false}
+      {
+        msg: 'aa',
+        optsVarName: 'bbb',
+        ignoreKeys: false
+      }
     )
-  }, 'check-types-mini/checkTypes(): [THROW_ID_05] opts.ignoreKeys should be an array, currently it\'s: boolean')
+  },
+  'check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: boolean')
   t.notThrows(function () {
-    checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: 'a' })
+    checkTypes({a: 'a'}, {a: 'b'},
+      {
+        msg: 'aa',
+        optsVarName: 'bbb',
+        ignoreKeys: 'a'
+      }
+    )
   })
   t.notThrows(function () {
-    checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: '' })
+    checkTypes({a: 'a'}, {a: 'b'},
+      {
+        msg: 'aa',
+        optsVarName: 'bbb',
+        ignoreKeys: ''
+      }
+    )
   })
 })
 
@@ -170,9 +194,9 @@ test('02.01 - opts.acceptArrays, strings+arrays', t => {
         option2: 'setting2',
         option3: false
       },
-      'message',
-      'varname',
       {
+        msg: 'message',
+        optsVarName: 'varname',
         acceptArrays: true
       }
     )
@@ -189,9 +213,9 @@ test('02.01 - opts.acceptArrays, strings+arrays', t => {
         option2: 'setting2',
         option3: false
       },
-      'message',
-      'varname',
       {
+        msg: 'message',
+        optsVarName: 'varname',
         acceptArrays: true
       }
     )
@@ -225,9 +249,9 @@ test('02.02 - opts.acceptArrays, Booleans+arrays', t => {
         option2: false,
         option3: false
       },
-      'message',
-      'varname',
       {
+        msg: 'message',
+        optsVarName: 'varname',
         acceptArrays: true
       }
     )
@@ -244,9 +268,9 @@ test('02.02 - opts.acceptArrays, Booleans+arrays', t => {
         option2: false,
         option3: false
       },
-      'message',
-      'varname',
       {
+        msg: 'message',
+        optsVarName: 'varname',
         acceptArrays: true
       }
     )
@@ -263,9 +287,9 @@ test('02.02 - opts.acceptArrays, Booleans+arrays', t => {
         option2: false,
         option3: false
       },
-      'test: [THROW_ID_01]',
-      'opts',
       {
+        msg: 'test: [THROW_ID_01]',
+        optsVarName: 'opts',
         acceptArrays: 'this string will cause the throw',
         acceptArraysIgnore: []
       }
@@ -286,9 +310,9 @@ test('02.03 - opts.acceptArraysIgnore', t => {
         option2: false,
         option3: false
       },
-      'test: [THROW_ID_01]',
-      'opts',
       {
+        msg: 'test: [THROW_ID_01]',
+        optsVarName: 'opts',
         acceptArrays: true,
         acceptArraysIgnore: []
       }
@@ -306,9 +330,9 @@ test('02.03 - opts.acceptArraysIgnore', t => {
         option2: false,
         option3: false
       },
-      'test: [THROW_ID_01]',
-      'opts',
       {
+        msg: 'test: [THROW_ID_01]',
+        optsVarName: 'opts',
         acceptArrays: true,
         acceptArraysIgnore: ['zzz', 'option1']
       }
@@ -326,9 +350,9 @@ test('02.03 - opts.acceptArraysIgnore', t => {
         option2: false,
         option3: false
       },
-      'test: [THROW_ID_01]',
-      'opts',
       {
+        msg: 'test: [THROW_ID_01]',
+        optsVarName: 'opts',
         acceptArrays: false,
         acceptArraysIgnore: ['zzz', 'option1']
       }
@@ -346,9 +370,9 @@ test('02.03 - opts.acceptArraysIgnore', t => {
         option2: false,
         option3: false
       },
-      'test: [THROW_ID_01]',
-      'opts',
       {
+        msg: 'test: [THROW_ID_01]',
+        optsVarName: 'opts',
         acceptArrays: true,
         acceptArraysIgnore: true
       }
@@ -411,8 +435,6 @@ test('02.06 - throws/notThrows when keysets mismatch', t => {
         'key': null,
         'val': null
       },
-      null,
-      null,
       {
         enforceStrictKeyset: false
       }
@@ -429,8 +451,6 @@ test('02.06 - throws/notThrows when keysets mismatch', t => {
         'val': null,
         'cleanup': true
       },
-      null,
-      null,
       {
         enforceStrictKeyset: false
       }
@@ -451,8 +471,6 @@ test('02.07 - opts.enforceStrictKeyset set to a wrong thing', t => {
         'val': null,
         'cleanup': true
       },
-      null,
-      null,
       {
         enforceStrictKeyset: 1
       }
@@ -468,9 +486,6 @@ test('02.08 - throws when reference and schema are both missing', t => {
         'val': null,
         'cleanup': true
       },
-      null,
-      null,
-      null,
       {}
     )
   })
@@ -505,8 +520,6 @@ test('03.01 - opts.acceptArrays, strings+arrays', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         enforceStrictKeyset: false
       }
@@ -541,8 +554,6 @@ test('04.01 - opts.schema only', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option2: ['stRing', null]
@@ -560,8 +571,6 @@ test('04.01 - opts.schema only', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option2: ['string', 'boolean']
@@ -576,8 +585,6 @@ test('04.01 - opts.schema only', t => {
         option2: null
       },
       null, // << reference object is completely omitted!!!
-      null,
-      null,
       {
         schema: {
           option1: 'String',
@@ -592,8 +599,6 @@ test('04.01 - opts.schema only', t => {
         option1: 'setting1',
         option2: null
       },
-      null,
-      null,
       null,
       {
         schema: { // <<< notice how option1 is missing AND also missing in reference obj
@@ -627,8 +632,6 @@ test('04.02 - opts.schema values as strings + "whatever" keys', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option1: ['object', 'string'],
@@ -647,8 +650,6 @@ test('04.02 - opts.schema values as strings + "whatever" keys', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option1: 'object', // << observe it's a string, not an array
@@ -667,8 +668,6 @@ test('04.02 - opts.schema values as strings + "whatever" keys', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option1: 'string', // << will throw because this type is not followed
@@ -687,8 +686,6 @@ test('04.02 - opts.schema values as strings + "whatever" keys', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option1: ['string', 'any'], // <<< observe how "any" is among other types
@@ -711,8 +708,6 @@ test('04.03 - opts.schema falling back to reference object', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option1: 'number'
@@ -731,8 +726,6 @@ test('04.03 - opts.schema falling back to reference object', t => {
         option1: {ww: 'zz'},
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: {
           option99: 'number' // << that's useless, so falls back to reference object
@@ -753,8 +746,6 @@ test('04.04 - opts.schema is set to a wrong thing - throws', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: 'zzz'
       }
@@ -770,8 +761,6 @@ test('04.04 - opts.schema is set to a wrong thing - throws', t => {
         option1: 'zz',
         option2: 'yy'
       },
-      null,
-      null,
       {
         schema: null
       }

@@ -8,11 +8,12 @@ const pullAll = require('lodash.pullall')
 const intersection = require('lodash.intersection')
 const arrayiffyIfString = require('arrayiffy-if-string')
 
-function checkTypes (obj, ref, msg, optsVarName, opts) {
+function checkTypes (obj, ref, opts) {
   const NAMESFORANYTYPE = ['everything', 'all', 'any', 'whatever']
 
   function existy (x) { return x != null }
   function isBool (something) { return type(something) === 'boolean' }
+  function isStr (something) { return type(something) === 'string' }
   const isArr = Array.isArray
 
   if (arguments.length === 0) {
@@ -21,33 +22,28 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
   if (arguments.length === 1) {
     throw new Error('check-types-mini/checkTypes(): [THROW_ID_02] missing second argument!')
   }
-  if (existy(msg) && (type(msg) !== 'string')) {
-    throw new Error(`check-types-mini/checkTypes(): [THROW_ID_03] third argument, msg must be string! Currently it's: ${type(msg)}, equal to ${JSON.stringify(msg, null, 4)}`)
-  }
-  if (existy(optsVarName) && (type(optsVarName) !== 'string')) {
-    throw new Error(`check-types-mini/checkTypes(): [THROW_ID_04] fourth argument, optsVarName must be string! Currently it's: ${type(optsVarName)}, equal to ${JSON.stringify(optsVarName, null, 4)}`)
-  }
-  if ((typeof msg === 'string') && (msg.length > 0)) {
-    msg = msg.trim() + ' '
-  } else {
-    msg = ''
-  }
-  if ((optsVarName === undefined) || (optsVarName === null)) {
-    optsVarName = 'opts'
-  }
-  optsVarName = optsVarName.trim() + '.'
 
   var defaults = {
     ignoreKeys: [],
     acceptArrays: false,
     acceptArraysIgnore: [],
     enforceStrictKeyset: true,
-    schema: {}
+    schema: {},
+    msg: '',
+    optsVarName: 'opts.'
   }
   opts = objectAssign(clone(defaults), opts)
+  if (!isStr(opts.msg)) {
+    throw new Error(`check-types-mini/checkTypes(): [THROW_ID_07] opts.msg must be string! Currently it's: ${type(opts.msg)}, equal to ${JSON.stringify(opts.msg, null, 4)}`)
+  }
+  if (!isStr(opts.optsVarName)) {
+    throw new Error(`check-types-mini/checkTypes(): [THROW_ID_08] opts.optsVarName must be string! Currently it's: ${type(opts.optsVarName)}, equal to ${JSON.stringify(opts.optsVarName, null, 4)}`)
+  }
+
   opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys)
   opts.acceptArraysIgnore = arrayiffyIfString(opts.acceptArraysIgnore)
   // make every schema object key's value to be an array:
+
   Object.keys(opts.schema).forEach(function (oneKey) {
     if (!isArr(opts.schema[oneKey])) {
       opts.schema[oneKey] = [opts.schema[oneKey]]
@@ -57,20 +53,23 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
   })
 
   if (!isArr(opts.ignoreKeys)) {
-    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_05] opts.ignoreKeys should be an array, currently it's: ${type(opts.ignoreKeys)}`)
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it's: ${type(opts.ignoreKeys)}`)
   }
   if (!isBool(opts.acceptArrays)) {
-    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_06] opts.acceptArrays should be a Boolean, currently it's: ${type(opts.acceptArrays)}`)
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_04] opts.acceptArrays should be a Boolean, currently it's: ${type(opts.acceptArrays)}`)
   }
   if (!isArr(opts.acceptArraysIgnore)) {
-    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_07] opts.acceptArraysIgnore should be an array, currently it's: ${type(opts.acceptArraysIgnore)}`)
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_05] opts.acceptArraysIgnore should be an array, currently it's: ${type(opts.acceptArraysIgnore)}`)
   }
   if (!isBool(opts.enforceStrictKeyset)) {
-    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_08] opts.enforceStrictKeyset should be a Boolean, currently it's: ${type(opts.enforceStrictKeyset)}`)
+    throw new TypeError(`check-types-mini/checkTypes(): [THROW_ID_06] opts.enforceStrictKeyset should be a Boolean, currently it's: ${type(opts.enforceStrictKeyset)}`)
   }
 
   if (!existy(ref)) {
     ref = {}
+  }
+  if (opts.msg.length > 0) {
+    opts.msg = opts.msg.trim() + ' '
   }
 
   if (opts.enforceStrictKeyset) {
@@ -102,7 +101,7 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
       if (!intersection(opts.schema[key], NAMESFORANYTYPE).length) {
         // because, if not, it means we need to do some work, check types:
         if (!includes(opts.schema[key], type(obj[key]).toLowerCase())) {
-          throw new TypeError(`${msg}${optsVarName}${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not among the allowed types in schema (${opts.schema[key]}) but ${type(obj[key])}`)
+          throw new TypeError(`${opts.msg}${opts.optsVarName}${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not among the allowed types in schema (${opts.schema[key]}) but ${type(obj[key])}`)
         }
       }
     } else {
@@ -117,10 +116,10 @@ function checkTypes (obj, ref, msg, optsVarName, opts) {
             return type(el) === type(ref[key])
           })
           if (!allMatch) {
-            throw new TypeError(`${msg}${optsVarName}${key} was customised to be array, but not all of its elements are ${type(ref[key])}-type`)
+            throw new TypeError(`${opts.msg}${opts.optsVarName}${key} was customised to be array, but not all of its elements are ${type(ref[key])}-type`)
           }
         } else {
-          throw new TypeError(`${msg}${optsVarName}${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not ${type(ref[key])} but ${type(obj[key])}`)
+          throw new TypeError(`${opts.msg}${opts.optsVarName}${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not ${type(ref[key])} but ${type(obj[key])}`)
         }
       }
     }

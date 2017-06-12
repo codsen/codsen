@@ -49,7 +49,7 @@ The point of `check-types-mini` is to save your time creating new libraries. Eve
 
 ## API
 
-**checkTypes(obj, ref\[, msg, optsVarName, opts])**
+**checkTypes(obj, ref\[, opts])**
 
 As a result, it _throws_ `TypeError`s for you, containing your custom message which you optionally set via arguments:
 
@@ -57,8 +57,6 @@ Input argument   | Type         | Obligatory? | Description
 -----------------|--------------|-------------|--------------
 `obj`            | Plain object | yes         | Options object after user's customisation
 `ref`            | Plain object | yes         | Default options - used to compare the types
-`msg`            | String       | no          | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
-`optsVarName`    | String       | no          | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
 `opts`           | Plain object | no          | Optional options go here.
 
 ### Options object
@@ -71,6 +69,8 @@ Input argument   | Type         | Obligatory? | Description
 `acceptArraysIgnore`           | Array of strings or String | no | `[]` (empty array) | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.
 `enforceStrictKeyset`          | Boolean  | no          | `true`      | If it's set to `true`, your object must not have any unique keys that reference object (and/or `schema`) does not have.
 `schema`                       | Plain object | no      | `{}`        | You can set arrays of types for each key, overriding the reference object. This allows you more precision and enforcing multiple types.
+`msg`                          | String   | no          | ` `         | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
+`optsVarName`                  | String   | no          | `opts`      | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
 }                              |          |             |             |
 
 ### For example
@@ -88,7 +88,7 @@ function yourFunction (input, opts) {
   // fill any settings with defaults if missing:
   opts = objectAssign(clone(defaults), opts)
   // the check:
-  checkTypes(opts, defaults, 'newLibrary/yourFunction(): [THROW_ID_01]', 'opts')
+  checkTypes(opts, defaults, {msg: 'newLibrary/yourFunction(): [THROW_ID_01]', optsVarName: 'opts'})
   // ...
 }
 
@@ -133,13 +133,11 @@ let res = checkTypes(
     option2: 'setting2',
     option3: false
   },
-  'check-types-mini/checkTypes(): [THROW_ID_01]',
-  'opts',
   {
     acceptArrays: true
   }
 )
-// => Does not throw.
+// => Does not throw, because we allow arrays full of a matching type
 ```
 
 If you want, you can blacklist certain keys of your objects so that `opts.acceptArrays` will not apply to them. Just add keys into `opts.acceptArraysIgnore` array.
@@ -167,8 +165,6 @@ checkTypes(
     option1: 'zz',
     option2: 'yy' // << notice, it's given as string in defaults object
   },
-  null,
-  null,
   {
     schema: {
       option2: ['stRing', null]

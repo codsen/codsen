@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-06-12
+### Changed
+- ✨ BREAKING API CHANGES. third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That's the right thing to do.
+
 ## [1.6.0] - 2017-06-11
 ### Added
 - ✨ `opts.schema` - let's you enforce any schema you want for any key. Case-insensitive, just put types. `object` means plain object, not `array`. `whatever`, and `any` are also valid values. Algorithm will check the `opts.schema` first, then if the keys does not exist there, will check its type in `defaults`.
@@ -40,3 +44,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.4.0]: https://github.com/codsen/check-types-mini/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/check-types-mini/compare/v1.4.0...v1.5.0
 [1.6.0]: https://github.com/codsen/check-types-mini/compare/v1.5.0...v1.6.0
+[2.0.0]: https://github.com/codsen/check-types-mini/compare/v1.6.0...v2.0.0
