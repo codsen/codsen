@@ -123,8 +123,14 @@ test('01.05 - throws if fourth argument is missing', t => {
 
 test('01.06 - throws when opts are set wrong', t => {
   t.throws(function () {
-    checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: false })
-  }, 'check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: boolean')
+    checkTypes(
+      {a: 'a'},
+      {a: 'b'},
+      'aa',
+      'bbb',
+      {ignoreKeys: false}
+    )
+  }, 'check-types-mini/checkTypes(): [THROW_ID_05] opts.ignoreKeys should be an array, currently it\'s: boolean')
   t.notThrows(function () {
     checkTypes({a: 'a'}, {a: 'b'}, 'aa', 'bbb', { ignoreKeys: 'a' })
   })
@@ -432,6 +438,44 @@ test('02.06 - throws/notThrows when keysets mismatch', t => {
   })
 })
 
+test('02.07 - opts.enforceStrictKeyset set to a wrong thing', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        'key': 1,
+        'val': null,
+        'cleanup': true
+      },
+      {
+        'key': null,
+        'val': null,
+        'cleanup': true
+      },
+      null,
+      null,
+      {
+        enforceStrictKeyset: 1
+      }
+    )
+  })
+})
+
+test('02.08 - throws when reference and schema are both missing', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        'key': 1,
+        'val': null,
+        'cleanup': true
+      },
+      null,
+      null,
+      null,
+      {}
+    )
+  })
+})
+
 // ======================
 // 03. opts.enforceStrictKeyset
 // ======================
@@ -465,6 +509,271 @@ test('03.01 - opts.acceptArrays, strings+arrays', t => {
       null,
       {
         enforceStrictKeyset: false
+      }
+    )
+  })
+})
+
+// ======================
+// 04. opts.schema
+// ======================
+
+test('04.01 - opts.schema only', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option2: ['stRing', null]
+        }
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option2: ['string', 'boolean']
+        }
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null
+      },
+      null, // << reference object is completely omitted!!!
+      null,
+      null,
+      {
+        schema: {
+          option1: 'String',
+          option2: ['stRing', null]
+        }
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null
+      },
+      null,
+      null,
+      null,
+      {
+        schema: { // <<< notice how option1 is missing AND also missing in reference obj
+          option2: ['stRing', null]
+        }
+      }
+    )
+  })
+})
+
+test('04.02 - opts.schema values as strings + "whatever" keys', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option1: ['object', 'string'],
+          option2: ['whatever']
+        }
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option1: 'object', // << observe it's a string, not an array
+          option2: ['whatever']
+        }
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option1: 'string', // << will throw because this type is not followed
+          option2: ['whatever']
+        }
+      }
+    )
+  })
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option1: ['string', 'any'], // <<< observe how "any" is among other types
+          option2: 'whatever' // also observe that it's not an array. Should work anyway!
+        }
+      }
+    )
+  })
+})
+
+test('04.03 - opts.schema falling back to reference object', t => {
+  // with throwing consequences:
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option1: 'number'
+        }
+      }
+    )
+  })
+  // without throwing consequences:
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: 'zz'
+      },
+      {
+        option1: {ww: 'zz'},
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: {
+          option99: 'number' // << that's useless, so falls back to reference object
+        }
+      }
+    )
+  })
+})
+
+test('04.04 - opts.schema is set to a wrong thing - throws', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: 'zzz'
+      }
+    )
+  })
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: {a: 'setting1'},
+        option2: null
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      null,
+      null,
+      {
+        schema: null
       }
     )
   })

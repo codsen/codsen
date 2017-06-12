@@ -23,6 +23,7 @@
   - [Options object](#options-object)
   - [For example](#for-example)
   - [`opts.enforceStrictKeyset`](#optsenforcestrictkeyset)
+  - [`opts.schema`](#optsschema)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -36,19 +37,21 @@ $ npm i -S check-types-mini
 
 ## Idea
 
-[`check-types`](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to `throw` if somebody sets my input settings to a wrong type.
+[`check-types`](https://www.npmjs.com/package/check-types) is good but it's too big. All I need is to `throw` if somebody sets my input settings to a wrong type:
 
-I had a working prototype of this library ages ago. Pieces of it were finding a new life (and evolving) in every new non-trivial library I created. Then I got fed up with chasing 100% code coverage each time, duplicating unit tests and decided to split it into a standalone library.
+```js
+TypeError: newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "false" which is not boolean but string
+```
 
-The point of `check-types-mini` is to save your time creating new libraries. Every library that has options object will need some type checks if you let user tinker with it.
+Originally this library started as a function within one of my libraries. When I was about to copy-paste the thing into another library, I stopped and put that into a separate library, `check-types`. I'm glad I did this, because already 4 of my libraries depend on it, and improving `check-types` I improve my other libraries. DRY in it's best.
+
+The point of `check-types-mini` is to save your time creating new libraries. Every library that has options object will need some **type checks** if you let user tinker with it.
 
 ## API
 
 **checkTypes(obj, ref\[, msg, optsVarName, opts])**
 
-As a result, it _throws_ `TypeError`s for you, containing your custom message, similar to:
-
-    check-types-mini/checkTypes(): opts.mode was customised to "zzz" which is not Boolean but string
+As a result, it _throws_ `TypeError`s for you, containing your custom message which you optionally set via arguments:
 
 Input argument   | Type         | Obligatory? | Description
 -----------------|--------------|-------------|--------------
@@ -66,7 +69,8 @@ Input argument   | Type         | Obligatory? | Description
 `ignoreKeys`                   | Array or String | no          | `[]` (empty array)   | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
 `acceptArrays`                 | Boolean  | no          | `false`     | If it's set to `true`, value can be array of elements, same type as reference.
 `acceptArraysIgnore`           | Array of strings or String | no | `[]` (empty array) | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.
-`enforceStrictKeyset`          | Boolean  | no          | `true`      | If it's set to `true`, your object must not have any unique keys that reference object does not have.
+`enforceStrictKeyset`          | Boolean  | no          | `true`      | If it's set to `true`, your object must not have any unique keys that reference object (and/or `schema`) does not have.
+`schema`                       | Plain object | no      | `{}`        | You can set arrays of types for each key, overriding the reference object. This allows you more precision and enforcing multiple types.
 }                              |          |             |             |
 
 ### For example
@@ -78,7 +82,7 @@ const clone = require('lodash.clonedeep')
 
 function yourFunction (input, opts) {
   // declare defaults, so we can enforce types later:
-  var defaults = {
+  let defaults = {
     placeholder: false
   }
   // fill any settings with defaults if missing:
@@ -88,7 +92,7 @@ function yourFunction (input, opts) {
   // ...
 }
 
-var res = yourFunction(1, {placeholder: 'zzz'})
+let res = yourFunction(1, {placeholder: 'zzz'})
 
 // =>> [TypeError: 'newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "false" which is not boolean but string']
 ```
@@ -99,7 +103,7 @@ Sometimes you want to accept either a string (or type "X") or an arrays of strin
 
 ```js
 const checkTypes = require('check-types-mini')
-var res = checkTypes(
+let res = checkTypes(
   { // < input
     option1: 'setting1',
     option2: [true, true],
@@ -118,7 +122,7 @@ But this does not `throw` when we allow arrays:
 
 ```js
 const checkTypes = require('check-types-mini')
-var res = checkTypes(
+let res = checkTypes(
   {
     option1: 'setting1',
     option2: ['setting3', 'setting4'],
@@ -142,13 +146,53 @@ If you want, you can blacklist certain keys of your objects so that `opts.accept
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings was only one argument - Boolean. I had to change it to be a plain object. I noticed that old Boolean argument was not causing problems! Then I came up with the idea to enforce the keys of the object to match the reference. This was released in `v1.4.0`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
+When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `object-assign`ed into a default settings object and no alarm was being raised! That's not good.
+
+Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
+
+### `opts.schema`
+
+Sometimes your API is more complex than a single type or array of them. Sometimes you want to allow, let's say, `string` or `array` of strings or `null`. What do you do?
+
+Enter `opts.schema`. You can define all the types for particular key, as an array:
+
+```js
+const checkTypes = require('check-types-mini')
+checkTypes(
+  {
+    option1: 'setting1',
+    option2: null
+  },
+  {
+    option1: 'zz',
+    option2: 'yy' // << notice, it's given as string in defaults object
+  },
+  null,
+  null,
+  {
+    schema: {
+      option2: ['stRing', null]
+    }
+  }
+)
+// => does not throw
+```
+
+The types are case-insensitive and come from [type-detect](https://github.com/chaijs/type-detect), a Chai library:
+
+* `object` (meaning a plain object literal, nothing else)
+* `array`
+* `string`
+* `null`
+* and other usual types
+
+The type values you put into `opts.schema` are not validated, on purpose, so please don't make typos.
 
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/check-types-mini/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/check-types-mini/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have some advice how to improve this code, email me, I would really appreciate that.
 
 ## Licence
 
