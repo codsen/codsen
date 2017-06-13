@@ -1,0 +1,11 @@
+{
+  "critics": {
+    "lint": {"engine": "standard"}
+  },
+  "dependencies": {
+      "mute": ["lodash.clonedeep", "lodash.isplainobject", "object-assign", "ava", "coveralls", "husky", "nyc"]
+  },
+  "test": [
+    "test.js"
+  ]
+}
