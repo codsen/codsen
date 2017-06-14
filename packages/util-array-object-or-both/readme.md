@@ -39,14 +39,14 @@ When I give the user ability to choose from: `array`, `object` or `both` in sett
 <br>        | Assumed to be an array-type | object-type   | either type
 ------------|------------|---------------|---------------
 **Input string:**  | `array`    | `object`      | `any`
-            | `arrays`   | `objects`     | `all`
-            | `arr`      | `obj`         | `everything`
-            | `aray`     | `ob`          | `both`
-            | `arr`      | `o`           | `either`
-            | `a`        |               | `each`
-            |            |               | `whatever`
-            |            |               | `e`
-            | `----`     | `----`        | `----`
+<br>        | `arrays`   | `objects`     | `all`
+<br>        | `arr`      | `obj`         | `everything`
+<br>        | `aray`     | `ob`          | `both`
+<br>        | `arr`      | `o`           | `either`
+<br>        | `a`        |               | `each`
+<br>        |            |               | `whatever`
+<br>        |            |               | `e`
+<br>        | `----`     | `----`        | `----`
 **Output string:** | `array`    | `object`      | `any`
 
 ## Install
