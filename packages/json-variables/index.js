@@ -64,7 +64,7 @@ function jsonVariables (inputOriginal, opts) {
 
   opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars)
 
-  checkTypes(opts, defaults, 'json-variables/jsonVariables():')
+  checkTypes(opts, defaults, {msg: 'json-variables/jsonVariables():'})
 
   if (opts.heads === '') {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_03] opts.heads are empty!')

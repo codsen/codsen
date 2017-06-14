@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.5.0] - 2017-05-23
 ### Added
-- Separated the `arrayiffy-if-string` into a standalone library and tapped it.
+- ✨ Separated the `arrayiffy-if-string` into a standalone library and tapped it.
 
 ## [4.4.0] - 2017-05-20
 ### Updated
@@ -15,13 +15,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.3.0] - 2017-05-15
 ### Added
-- Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini) and removed internal equivalents.
+- ✨ Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini) and removed internal equivalents.
 
 ## [4.2.0] - 2017-05-05
 ### Added
-- `opts.resolveToFalseIfAnyValuesContainBool` (on by default)
-- `opts.throwWhenNonStringInsertedInString` (off by default)
-- Now allowing to query deeper-level values. For example:
+- ✨ `opts.resolveToFalseIfAnyValuesContainBool` (on by default)
+- ✨ `opts.throwWhenNonStringInsertedInString` (off by default)
+- ✨ Now allowing to query deeper-level values. For example:
 
 ```js
 jv(
@@ -51,8 +51,8 @@ Blimey, we've got 99 unit tests! 🍾 We'll need to celebrate the 100th! 🍻✨
 ## [4.1.0] - 2017-05-03
 
 ### Added
-- Variables are not correctly resolved from linking to the same (deeper) level. If not found, search continues in that level's data store key (default key name for data stores is `<same-key-name>_data`). If not found there, search jumps to root level, and looks for key there. If not found, search continues for data store at the root. If failed, error is thrown.
-- Some rebasing done to clean things up 🚿.
+- ✨ Variables are not correctly resolved from linking to the same (deeper) level. If not found, search continues in that level's data store key (default key name for data stores is `<same-key-name>_data`). If not found there, search jumps to root level, and looks for key there. If not found, search continues for data store at the root. If failed, error is thrown.
+- ✨ Some rebasing done to clean things up 🚿.
 
 ## [4.0.0] - 2017-04-30
 
@@ -62,12 +62,12 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - JSON specs allow various kinds of types to be placed as key values: Booleans, arrays, plain objects and even `null`. In this release we loosen the restrictions and allow these different types to be resolved as values, particularly, `null` and Booleans.
 
 ### Added
-- `opts.resolveToBoolIfAnyValuesContainBool` - if `true` (default), if any variable's value is Boolean, upon resolving it will set the whole value to itself. For example, `aaaa %%_var_%% bbbbb` and `var=true` would resolve to `true`. If setting is `false`, it will resolve to empty string, in this example's case, `aaaa  bbbbb`. I don't see why anybody would set it to other value than `default`, but hey, the more freedom the better.
-- `opts.resolveToFalseIfAnyValuesContainBool` - if Boolean variable is enountered, the whole thing always resolves to `false`. Even if the first encountered variable's value was `true`. This is needed for email templating, so that when Booleans are encountered, we bail setting the whole thing to `false`.
+- ✨ `opts.resolveToBoolIfAnyValuesContainBool` - if `true` (default), if any variable's value is Boolean, upon resolving it will set the whole value to itself. For example, `aaaa %%_var_%% bbbbb` and `var=true` would resolve to `true`. If setting is `false`, it will resolve to empty string, in this example's case, `aaaa  bbbbb`. I don't see why anybody would set it to other value than `default`, but hey, the more freedom the better.
+- ✨ `opts.resolveToFalseIfAnyValuesContainBool` - if Boolean variable is enountered, the whole thing always resolves to `false`. Even if the first encountered variable's value was `true`. This is needed for email templating, so that when Booleans are encountered, we bail setting the whole thing to `false`.
 
 ## [3.0.0] - 2017-04-27
 ### Added
-- `opts.headsNoWrap` (default `%%-`) & `opts.tailsNoWrap` (default `-%%`). When the same string has multiple occasions of a variable and we want some variables to be wrapped but some not it was previously impossible. Wrapping ignores were global. Now not. I came with an idea to allow different (customiseable) `heads` and `tails` which prevent wrapping on the variable it marks.
+- ✨ `opts.headsNoWrap` (default `%%-`) & `opts.tailsNoWrap` (default `-%%`). When the same string has multiple occasions of a variable and we want some variables to be wrapped but some not it was previously impossible. Wrapping ignores were global. Now not. I came with an idea to allow different (customiseable) `heads` and `tails` which prevent wrapping on the variable it marks.
 ### Changed
 - `opts.wrapHeads` is now `opts.wrapHeadsWith`
 - `opts.wrapTails` is now `opts.wrapTailsWith`
@@ -77,8 +77,8 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - Breaking changes & major semver version bump: `opts.dontWrapVarsStartingWith` and `opts.dontWrapVarsEndingWith` merged into one and allow wildcards now. It's way more powerful since you can _glob_ not only the starting/ending pieces of string but _anything within it_. You can put a wildcard in the middle now or even multiple wildcards!
 
 ## [1.2.0] - 2017-04-20
-### New
-- If any key's value contains only a heads or tails marker and nothing else, it will not throw. You can force throwing (that's previous version's behaviour) setting `opts.noSingleMarkers` to `true`. But the default is `false`.
+### Added
+- ✨ If any key's value contains only a heads or tails marker and nothing else, it will not throw. You can force throwing (that's previous version's behaviour) setting `opts.noSingleMarkers` to `true`. But the default is `false`.
 ### Improved
 - Did some code rebasing.
 
@@ -89,7 +89,7 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 
 ## 1.0.0 - 2017-03-28
 ### New
-- First public release
+- ✨ First public release
 
 [1.1.0]: https://github.com/codsen/json-variables/compare/v1.0.1...v1.1.0
 [1.2.0]: https://github.com/codsen/json-variables/compare/v1.1.0...v1.2.0
