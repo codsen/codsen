@@ -78,7 +78,7 @@ Options object lets you customise the `throw`n error message. It's format is the
 
 For example, set `optsVarName` to `opts.only` and set `msg` to `posthtml-ast-delete-key/deleteKey(): [THROW_ID_01]` and the error message `throw`n if user misconfigures the setting will be, for example:
 
-    posthtml-ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: object. Please check it against the API documentation.
+    posthtml-ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: sweetcarrots. Please check it against the API documentation.
 
 ## Use
 
@@ -105,7 +105,8 @@ opts = objectAssign(clone(defaults), opts)
 // now, use "check-types-mini" to validate the types:
 checkTypes(opts, defaults,
   {
-    // give a meaningful message in case it throws:
+    // give a meaningful message in case it throws,
+    // customise the library `check-types-mini`:
     msg: 'my-library/myPrecious(): [THROW_ID_01]',
     optsVarName: 'opts',
     schema: {
@@ -116,7 +117,10 @@ checkTypes(opts, defaults,
 )
 // by this point, we can guarantee that opts.only is either `null` or `string`.
 // if it's a `string`, let's validate is its values among accepted-ones:
-opts.only = arrayOrObjectOrBoth(opts.only)
+opts.only = arrayOrObjectOrBoth(opts.only, {
+  msg: 'my-library/myPrecious(): [THROW_ID_02]',
+  optsVarName: 'opts.only'
+})
 // now we can guarantee that it's either falsey (undefined or null) OR:
 //   - `object`
 //   - `array`
