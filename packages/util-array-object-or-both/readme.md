@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Is the input (plain object, array, string or whatever) not empty?
+> Validate and normalise user choice: array, object or both?
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -38,9 +38,9 @@ $ npm install --save util-array-object-or-both
 
 When I give the user ability to choose from: `array`, `object` or `both` in settings, I want to:
 
-- validate the choice, `throw`ing an error if it's not among the acceptable values
-- allow user to state the choice in a multiple ways: `array`, `Arrays`, `add`, `ARR`, `a` - all will be normalised to `array`. That's what this library will return.
-- forcing lowercase and trimming are done on all input by default
+- Validate the choice, `throw`ing an error if it's not among the acceptable values
+- Allow the user to state the choice in multiple ways. For example, for `array`, I also want to accept: `Arrays`, `add`, `ARR`, `a`, - normalising them all to `array`.
+- enforce lowercase and trim and input, to maximise the input possibilities
 
 <br>        | Assumed to be an array-type | object-type   | either type
 ------------|------------|---------------|---------------
@@ -57,7 +57,7 @@ When I give the user ability to choose from: `array`, `object` or `both` in sett
 
 ## API
 
-API is simple - just pass your value through this library's function. If it's valid, it will be normalised to either `array` or `object` or `any`. If it's not valid, error will be thrown.
+API is simple - just pass your value through this library's function. If it's valid, it will be normalised to either `array` or `object` or `any`. If it's not valid, an error will be thrown.
 
 Input argument   | Type   | Obligatory? | Description
 -----------------|--------|-------------|-------------
@@ -76,7 +76,7 @@ const objectAssign = require('object-assign')
 function myPrecious (input, opts) {
   // blablabla
 }
-// now you want to check your options object, is it still valid after users has laid their sticky paws on it:
+// now you want to check your options object, is it still valid after users have laid their sticky paws on it:
 // define defaults:
 let defaults = {
   lalala: null,
@@ -114,9 +114,9 @@ You may ask, why on Earth you would need a package for such thing? It's not very
 
 Actually, it is.
 
-I discovered that when working with AST's, you often need to tell your tools to process (traverse, delete, and so on) EITHER objects OR arrays, or both. That's where this library comes in: standardise the choice out of three options and give user a wide amount of values to use.
+I discovered that when working with AST's, you often need to tell your tools to process (traverse, delete, and so on) EITHER objects OR arrays or both. That's where this library comes in: standardise the choice out of three options and give a user a wide amount of values to use.
 
-I think the API should accept very wide amount of values so you don't even need to check the API documentation - just describe that in English.
+I think the API should accept a very wide spectrum of values, so users would not even need to check the API documentation - they'd just describe what they want, in plain English.
 
 I'm going to use it in:
 - [ast-monkey](https://github.com/codsen/ast-monkey)
