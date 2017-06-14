@@ -55,9 +55,9 @@ Working with parsed HTML (AST trees) is hard when you want to go "up" the branch
 
 Using this library, you can delete the particular piece of AST (method [.drop()](#drop)) or overwrite (method [.set()](#set)). You can also perform searches by object's/array's `key`, `value` or both (method [.find()](#find)). You can retrieve all contents of any piece of AST by index (method [.get()](#get)) or list all indexes (method [.info()](#info)).
 
-Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions — the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
+Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -122,7 +122,7 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .get()
 
@@ -170,7 +170,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .set()
 
@@ -218,7 +218,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .drop()
 
@@ -264,7 +264,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .info()
 
@@ -399,7 +399,7 @@ data.gatherPath = [
 -----------
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .del()
 
@@ -447,7 +447,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .arrayFirstOnly()
 
@@ -490,7 +490,7 @@ Output           | Type             | Description
 -----------------|------------------|--------------------
 `input`          | Same as `input`  | The amended `input`
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### .traverse()
 
@@ -614,13 +614,13 @@ innerObj = {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## The name of this library
 
 HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## Contributing
 

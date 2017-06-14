@@ -41,7 +41,8 @@
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
     "lodash.isplainobject": "*",
-    "object-assign": "*"
+    "object-assign": "*",
+    "util-array-object-or-both": "^1.0.3"
   },
   "devDependencies": {
     "ava": "*",

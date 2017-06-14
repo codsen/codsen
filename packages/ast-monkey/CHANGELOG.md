@@ -4,22 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.5.0] - 2017-06-15
+### Added
+- ✨ Options on all revevant methods to perform operations on only plain objects, on only arrays OR on both.
+
 ## [5.4.0] - 2017-06-10
 ### Added
-- [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
+- ✨ [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
 
 ## [5.3.0] - 2017-05-15
 ### Added
-- Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
+- ✨ Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
 
 ## [5.2.0] - 2017-05-15
 ### Added
-- Tighetened the API in cases when `monkey()` inputs are missing or falsey.
+- ✨ Tighetened the API in cases when `monkey()` inputs are missing or falsey.
 
 ## [5.1.0] - 2017-05-02
 
 ### Added
-- `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
+- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
 
 ## [5.0.0] - 2017-04-30
 
@@ -47,7 +51,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 ## [3.2.0] - 2017-04-04
 ### Added
-- Imagine, you're using [`🐒.traverse()`](https://github.com/codsen/ast-monkey#traverse) on the following piece of AST:
+- ✨ Imagine, you're using [`🐒.traverse()`](https://github.com/codsen/ast-monkey#traverse) on the following piece of AST:
 
 ```js
 {
@@ -67,7 +71,7 @@ I needed this feature for [json-variables](https://github.com/codsen/json-variab
 ### Improved
 - All this Saturday morning I worked on `🐒.traverse()`. Yesterday night I discovered that when you delete something on `traverse()`, the traversal reports extra non-existing nodes. The solution is not so elementary. Yes, the iterator was not being reduced in the `for` loop — `i--` was missing — but there were also more fixes necessary to implement for this to work. Now when you want to instruct `traverse()` to delete current node, you have to pass `null` (`undefined` won't work). I believe that's how everybody were using it anyway, so it doesn't warrant major semver bump. ✨
 ### Added
-- Added `traverse()` unit tests, namely, `09.x` group.
+- ✨ Added `traverse()` unit tests, namely, `09.x` group.
 ### Unchanged
 - Unit test coverage stays solid 100% lines.
 
@@ -76,43 +80,43 @@ I needed this feature for [json-variables](https://github.com/codsen/json-variab
 BREAKING API CHANGES.
 - `flatten()` method renamed to `arrayFirstOnly()` to reflect better what this does. The real "flatten" is [object-flatten-all-arrays](https://www.npmjs.com/package/object-flatten-all-arrays) and while it could be rewritten in `ast-monkey`, it goes against the overall flow of the `ast-monkey`'s algorithm — 🐒 goes horizontal, by branch, while `flatten-all-arrays` goes vertically, by array, all keys at once. The new `arrayFirstOnly()` is easy feature because it simply filters the first element of each array encountered during the traversal.
 ### Added
-- Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
+- ✨ Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
 
 ## [2.9.0] - 2017-03-09 International recursive alrorithms day
 ### Added
-- `.flatten()` ✨
-- related unit tests.
+- ✨ `.flatten()`
+- ✨ related unit tests.
 
 ### Changed
 - `.info()` now returns the input, not `undefined`. This doesn't warrant major version bump because method was for logging only and nothing changes in this aspect.
 
 ## [2.8.0] - 2017-03-02
 ### Added
-- Now cloning all arguments in main `🐒()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. **This is big and very important.**
+- ✨ Now cloning all arguments in main `🐒()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. **This is big and very important.**
 
 ## [2.7.0] - 2017-02-20
 ### Tweaks
 - Replaced spread operator with lodash equivalent to avoid unnecessary Babel use 😌
 
 ## [2.6.0] - 2017-02-19 Actual day of NTFS invention
-### New
-- Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important. ✨
+### Added
+- ✨ Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important. ✨
 
 ## [2.5.0] - 2017-02-18
-### New
-- Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
+### Added
+- ✨ Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
 
 ## [2.4.0] - 2017-02-18
-### New
-- Enforcing the {index: ?} to be provided for `drop()`. ✨
+### Added
+- ✨ Enforcing the {index: ?} to be provided for `drop()`. ✨
 
 ## [2.3.0] - 2017-02-18
-### New
-- Added `index` key to each of `find()` result object. 👌
+### Added
+- ✨ Added `index` key to each of `find()` result object. 👌
 
 ## [2.2.0] - 2017-02-16 International software testers commemoration day
-### New
-- Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
+### Added
+- ✨ Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
 
 ## [2.0.0] - 2017-02-16
 ### Changed
@@ -133,8 +137,9 @@ BREAKING API CHANGES.
 [3.3.0]: https://github.com/codsen/ast-monkey/compare/v3.2.2...v3.3.0
 [4.0.0]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0
 [5.3.0]: https://github.com/codsen/ast-monkey/compare/v5.2.0...v5.3.0
 [5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0
+[5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
