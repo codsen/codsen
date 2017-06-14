@@ -58,7 +58,7 @@ function arrayContainsStr (arr) {
     return false
   }
   if (!isArr(arr)) {
-    throw new TypeError('object-merge-advanced/util.js/arrayContainsStr(): [THROW_ID_07] input must be array')
+    throw new TypeError('object-merge-advanced/util.js/arrayContainsStr(): [THROW_ID_05] input must be array')
   }
   return arr.some(function (val) {
     return typeof val === 'string'

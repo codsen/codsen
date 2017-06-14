@@ -51,7 +51,7 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 
-  checkTypes(opts, defaults, 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06x] ')
+  checkTypes(opts, defaults, {msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06]'})
 
   // ACTION
   // ---------------------------------------------------------------------------
