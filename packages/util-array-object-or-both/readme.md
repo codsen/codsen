@@ -91,42 +91,43 @@ const checkTypes = require('check-types-mini')
 const objectAssign = require('object-assign')
 // let's say you have a function:
 function myPrecious (input, opts) {
-  // blablabla
-}
-// now you want to check your options object, is it still valid after users have laid their sticky paws on it:
-// define defaults:
-let defaults = {
-  lalala: null,
-  only: 'object' // <<< this is the value we're particularly keen to validate, is it `array`|`object`|`any`
-}
-// clone the defaults to safeguard it, and then, object-assign onto defaults.
-// basically you fill missing values with default-ones
-opts = objectAssign(clone(defaults), opts)
-// now, use "check-types-mini" to validate the types:
-checkTypes(opts, defaults,
-  {
-    // give a meaningful message in case it throws,
-    // customise the library `check-types-mini`:
-    msg: 'my-library/myPrecious(): [THROW_ID_01]',
-    optsVarName: 'opts',
-    schema: {
-      lalala: ['null', 'string'],
-      only: ['null', 'string']
-    }
+  // now you want to check your options object, is it still valid after users have laid their sticky paws on it:
+  // define defaults:
+  let defaults = {
+    lalala: null,
+    only: 'object' // <<< this is the value we're particularly keen to validate, is it `array`|`object`|`any`
   }
-)
-// by this point, we can guarantee that opts.only is either `null` or `string`.
-// if it's a `string`, let's validate is its values among accepted-ones:
-opts.only = arrayOrObjectOrBoth(opts.only, {
-  msg: 'my-library/myPrecious(): [THROW_ID_02]',
-  optsVarName: 'opts.only'
-})
-// now we can guarantee that it's either falsey (undefined or null) OR:
-//   - `object`
-//   - `array`
-//   - `any`
+  // clone the defaults to safeguard it, and then, object-assign onto defaults.
+  // basically you fill missing values with default-ones
+  opts = objectAssign(clone(defaults), opts)
+  // now, use "check-types-mini" to validate the types:
+  checkTypes(opts, defaults,
+    {
+      // give a meaningful message in case it throws,
+      // customise the library `check-types-mini`:
+      msg: 'my-library/myPrecious(): [THROW_ID_01]',
+      optsVarName: 'opts',
+      schema: {
+        lalala: ['null', 'string'],
+        only: ['null', 'string']
+      }
+    }
+  )
+  // by this point, we can guarantee that opts.only is either `null` or `string`.
+  // if it's a `string`, let's validate is its values among accepted-ones:
+  opts.only = arrayOrObjectOrBoth(opts.only, {
+    msg: 'my-library/myPrecious(): [THROW_ID_02]',
+    optsVarName: 'opts.only'
+  })
+  // now we can guarantee that it's either falsey (undefined or null) OR:
+  //   - `object`
+  //   - `array`
+  //   - `any`
 
-// now you can use `opts.only`
+  // now you can use `opts.only` in your function safely.
+  ...
+  // rest of the function...
+}
 ```
 
 ## Critique
