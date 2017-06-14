@@ -32,8 +32,9 @@
   },
   "homepage": "https://github.com/codsen/json-comb-core#readme",
   "dependencies": {
-    "check-types-mini": "^1.0.1",
+    "check-types-mini": "^2.0.0",
     "lodash.clonedeep": "*",
+    "object-assign": "*",
     "object-fill-missing-keys": "^2.1.1",
     "object-flatten-all-arrays": "^3.1.1",
     "object-merge-advanced": "^6.2.0",

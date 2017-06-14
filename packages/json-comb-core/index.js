@@ -49,7 +49,7 @@ function getKeyset (arrOriginal, opts) {
     placeholder: false
   }
   opts = objectAssign(clone(defaults), opts)
-  checkTypes(opts, defaults, 'json-comb-core/getKeyset(): [THROW_ID_10]', 'opts', {ignoreKeys: 'placeholder'})
+  checkTypes(opts, defaults, {ignoreKeys: 'placeholder', msg: 'json-comb-core/getKeyset(): [THROW_ID_10]'})
 
   var fOpts = {
     flattenArraysContainingStringsToBeEmpty: true
@@ -124,7 +124,7 @@ function findUnused (arrOriginal, opts) {
     placeholder: false
   }
   opts = objectAssign(clone(defaults), opts)
-  checkTypes(opts, defaults, 'json-comb-core/findUnused(): [THROW_ID_40]', 'opts')
+  checkTypes(opts, defaults, {msg: 'json-comb-core/findUnused(): [THROW_ID_40]'})
   var arr = clone(arrOriginal)
 
   // ---------------------------------------------------------------------------
