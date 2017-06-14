@@ -17,8 +17,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Purpose](#purpose)
 - [Install](#install)
+- [Purpose](#purpose)
 - [API](#api)
 - [Use](#use)
 - [Critique](#critique)
@@ -27,6 +27,12 @@
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Install
+
+```bash
+$ npm install --save util-array-object-or-both
+```
 
 ## Purpose
 
@@ -48,12 +54,6 @@ When I give the user ability to choose from: `array`, `object` or `both` in sett
 <br>        |            |               | `e`
 <br>        | `----`     | `----`        | `----`
 **Output string:** | `array`    | `object`      | `any`
-
-## Install
-
-```bash
-$ npm install --save util-array-object-or-both
-```
 
 ## API
 
