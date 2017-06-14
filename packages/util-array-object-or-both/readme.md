@@ -19,9 +19,9 @@
 
 - [Purpose](#purpose)
 - [Install](#install)
+- [API](#api)
 - [Use](#use)
 - [Critique](#critique)
-- [API](#api)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -36,11 +36,32 @@ When I give the user ability to choose from: `array`, `object` or `both` in sett
 - allow user to state the choice in a multiple ways: `array`, `Arrays`, `add`, `ARR`, `a` - all will be normalised to `array`. That's what this library will return.
 - forcing lowercase and trimming are done on all input by default
 
+<br>        | Assumed to be an array-type | object-type   | either type
+------------|------------|---------------|---------------
+**Input string:**  | `array`    | `object`      | `any`
+            | `arrays`   | `objects`     | `all`
+            | `arr`      | `obj`         | `everything`
+            | `aray`     | `ob`          | `both`
+            | `arr`      | `o`           | `either`
+            | `a`        |               | `each`
+            |            |               | `whatever`
+            |            |               | `e`
+            | `----`     | `----`        | `----`
+**Output string:** | `array`    | `object`      | `any`
+
 ## Install
 
 ```bash
 $ npm install --save util-array-object-or-both
 ```
+
+## API
+
+API is simple - just pass your value through this library's function. If it's valid, it will be normalised to either `array` or `object` or `any`. If it's not valid, error will be thrown.
+
+Input argument   | Type   | Obligatory? | Description
+-----------------|--------|-------------|-------------
+`input`          | String | yes         | Let users choose from variations of "array", "object" or "both". See above.
 
 ## Use
 
@@ -55,11 +76,11 @@ const objectAssign = require('object-assign')
 function myPrecious (input, opts) {
   // blablabla
 }
-// now you want to check your options object, is it valid etc:
+// now you want to check your options object, is it still valid after users has laid their sticky paws on it:
 // define defaults:
 let defaults = {
   lalala: null,
-  only: 'object' // <<< this is the value we're interested.
+  only: 'object' // <<< this is the value we're particularly keen to validate, is it `array`|`object`|`any`
 }
 // clone the defaults to safeguard it, and then, object-assign onto defaults.
 // basically you fill missing values with default-ones
@@ -103,29 +124,6 @@ I'm going to use it in:
 - [posthtml-ast-delete-key](https://github.com/codsen/posthtml-ast-delete-key)
 
 and others. So, it's not that niche as it might seem!
-
-## API
-
-API is simple - just pass your value through this library's function. If it's valid, it will be normalised to either `array` or `object` or `any`. If it's not valid, error will be thrown.
-
-Input argument   | Type   | Obligatory? | Description
------------------|--------|-------------|-------------
-`input`          | String | yes         | Let users choose from variations of "array", "object" or "both". See below.
-
-Accepted values for:
-
-Input:  | Array-type | Object-type   | Either type
---------|------------|---------------|---------------
-        | `array`    | `object`      | `any`
-        | `arrays`   | `objects`     | `all`
-        | `arr`      | `obj`         | `everything`
-        | `aray`     | `ob`          | `both`
-        | `arr`      | `o`           | `either`
-        | `a`        |               | `each`
-        |            |               | `whatever`
-        |            |               | `e`
---------|------------|---------------|---------------
-Output: | `array`    | `object`      | `any`
 
 ## Testing
 
