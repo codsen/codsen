@@ -36,11 +36,12 @@ $ npm install --save util-array-object-or-both
 
 ## Purpose
 
-When I give the user ability to choose from: `array`, `object` or `both` in settings, I want to:
+When I give the user ability to choose their preference out of: `array`, `object` or `any`, I want to:
 
-- Validate the choice, `throw`ing an error if it's not among the acceptable values
-- Allow the user to state the choice in multiple ways. For example, for `array`, I also want to accept: `Arrays`, `add`, `ARR`, `a`, - normalising them all to `array`.
-- enforce lowercase and trim and input, to maximise the input possibilities
+- Allow users to input the preference in many ways: for example, for `array`, I also want to accept: `Arrays`, `add`, `ARR`, `a`. Similar thing goes for options `object` and `any`.
+- Normalise the choice - recognise it and set it to one of the three following strings: `array`, `object` or `any`. This is necessary because we want set values to use in our programs. You can't have five values for `array` in an IF statement, for example.
+- When a user sets the preference to unrecognised string, I want to `throw` a meaningful error message. Technically this will be achieved using an options object.
+- Enforce lowercase and trim and input, to maximise the input possibilities
 
 <br>        | Assumed to be an array-type | object-type   | either type
 ------------|------------|---------------|---------------
@@ -59,9 +60,25 @@ When I give the user ability to choose from: `array`, `object` or `both` in sett
 
 API is simple - just pass your value through this library's function. If it's valid, it will be normalised to either `array` or `object` or `any`. If it's not valid, an error will be thrown.
 
-Input argument   | Type   | Obligatory? | Description
------------------|--------|-------------|-------------
-`input`          | String | yes         | Let users choose from variations of "array", "object" or "both". See above.
+Input argument   | Type         | Obligatory? | Description
+-----------------|--------------|-------------|-------------
+`input`          | String       | yes         | Let users choose from variations of "array", "object" or "both". See above.
+`opts`           | Plain object | no          | Optional Options Object. See below for its API.
+
+Options object lets you customise the `throw`n error message. It's format is the following:
+
+    ${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.
+
+`options` object's key | Type     | Obligatory? | Default          | Description
+-----------------------|----------|-------------|------------------|----------------------
+{                      |          |             |                  |
+`msg`                  | String   | no          | ``               | Append the message in front of the thrown error.
+`optsVarName`          | String   | no          | `given variable` | The name of the variable we are checking here.
+}                      |          |             |                  |
+
+For example, set `optsVarName` to `opts.only` and set `msg` to `posthtml-ast-delete-key/deleteKey(): [THROW_ID_01]` and the error message `throw`n if user misconfigures the setting will be, for example:
+
+    posthtml-ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: object. Please check it against the API documentation.
 
 ## Use
 
