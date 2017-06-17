@@ -5,6 +5,8 @@ const isObj = require('lodash.isplainobject')
 const isEqual = require('lodash.isequal')
 const objectAssign = require('object-assign')
 // const validateIsItArrayObjectOrBoth = require('util-array-object-or-both')
+const checkTypes = require('check-types-mini')
+const isNaturalNumber = require('is-natural-number')
 const DEBUG = false
 
 // -----------------------------------------------------------------------------
@@ -59,30 +61,17 @@ function traverse (treeOriginal, callback) {
 
 // -----------------------------------------------------------------------------
 
-function monkey (inputOriginal, optsOriginal) {
+function monkey (inputOriginal, opts) {
   // -----------------------------------
   // precautions
-  if ((arguments.length === 0) || !existy(inputOriginal)) {
-    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_03] Please provide an input')
+  if (!existy(inputOriginal)) {
+    throw new Error('ast-monkey/index.js/monkey(): Please provide an input')
   }
   var input = clone(inputOriginal)
-  var opts = clone(optsOriginal)
-
-  if ((opts.mode === 'get' || opts.mode === 'set' || opts.mode === 'drop') && !existy(opts.index)) {
-    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_04] Please provide opts.index')
-  }
-  if ((opts.mode === 'set') && !existy(opts.key) && !existy(opts.val)) {
-    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_05] Please provide opts.val')
-  }
-  if (opts.mode === 'set' && existy(opts.key) && !existy(opts.val)) {
-    opts.val = opts.key
-  }
-  if ((opts.mode === 'find' || opts.mode === 'del') && !existy(opts.key) && !existy(opts.val)) {
-    throw new Error('ast-monkey/index.js/monkey(): [THOW_ID_06] Please provide opts.key or opts.val')
-  }
-  if (existy(opts.index) && (opts.index !== parseInt(opts.index, 10))) {
-    opts.index = parseInt(opts.index, 10)
-  }
+  opts = objectAssign({
+    key: null,
+    val: null
+  }, opts)
   // ---------------------------------------------------------------------------
   // action
 
@@ -90,8 +79,6 @@ function monkey (inputOriginal, optsOriginal) {
   var data = { count: 0, gatherPath: [], finding: null }
   var findings = []
 
-  opts.key = existy(opts.key) ? opts.key : null
-  opts.val = existy(opts.val) ? opts.val : null
   var ko = false // key only
   var vo = false // value only
   if (existy(opts.key) && !existy(opts.val)) {
@@ -180,38 +167,96 @@ function monkey (inputOriginal, optsOriginal) {
 }
 
 // -----------------------------------------------------------------------------
-
-function prep (obj) {
-  if (!existy(obj) || !isObj(obj)) {
-    return {}
-  } else {
-    return obj
-  }
-}
-
-// -----------------------------------------------------------------------------
-// Methods lead to the same main function monkey(), only mode changes
+// Validate and prep all the options right here
 
 function find (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'find' }))
+  if (!existy(opts.key) && !existy(opts.val)) {
+    throw new Error('ast-monkey/index.js/find(): Please provide opts.key or opts.val')
+  }
+  checkTypes(opts, null, {schema: {
+    key: [null, 'string'],
+    val: 'any'
+  }})
+  return monkey(input, objectAssign(clone(opts), { mode: 'find' }))
 }
+
 function get (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'get' }))
+  if (!existy(opts.index)) {
+    throw new Error('ast-monkey/index.js/get(): Please provide opts.index')
+  }
+  if (typeof opts.index === 'string') {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {includeZero: true})) {
+      opts.index = parseInt(opts.index, 10)
+    } else {
+      console.log('*')
+      throw new Error('ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ' + opts.index)
+    }
+  }
+  checkTypes(opts, null, {schema: {
+    index: 'number'
+  }})
+  return monkey(input, objectAssign(clone(opts), { mode: 'get' }))
 }
+
 function set (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'set' }))
+  if (!existy(opts.key) && !existy(opts.val)) {
+    throw new Error('ast-monkey/index.js/set(): Please provide opts.val')
+  }
+  if (!existy(opts.index)) {
+    throw new Error('ast-monkey/index.js/set(): Please provide opts.index')
+  }
+  if (Number.isFinite(opts.index) && !isNaturalNumber(opts.index, {includeZero: true})) {
+    throw new Error('ast-monkey/index.js/set(): opts.index is a wrong number, it must be a natural number. It was given as: ' + opts.index)
+  }
+  if (typeof opts.index === 'string') {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {includeZero: true})) {
+      opts.index = parseInt(opts.index, 10)
+    } else {
+      throw new Error('ast-monkey/index.js/set(): opts.index must be a natural number. It was given as: ' + opts.index)
+    }
+  }
+  if (existy(opts.key) && !existy(opts.val)) {
+    opts.val = opts.key
+  }
+  checkTypes(opts, null, {schema: {
+    key: [null, 'string'],
+    val: 'any',
+    index: 'number'
+  }})
+  return monkey(input, objectAssign(clone(opts), { mode: 'set' }))
 }
+
 function drop (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'drop' }))
+  if (!existy(opts.index)) {
+    throw new Error('ast-monkey/index.js/drop(): Please provide opts.index')
+  }
+  if (typeof opts.index === 'string') {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {includeZero: true})) {
+      opts.index = parseInt(opts.index, 10)
+    } else {
+      throw new Error('ast-monkey/index.js/drop(): opts.index must be a natural number. It was given as: ' + opts.index)
+    }
+  }
+  return monkey(input, objectAssign(clone(opts), { mode: 'drop' }))
 }
-function info (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'info' }))
+
+function info (input) {
+  return monkey(input, { mode: 'info' })
 }
+
 function del (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'del' }))
+  if (!existy(opts.key) && !existy(opts.val)) {
+    throw new Error('ast-monkey/index.js/del(): Please provide opts.key or opts.val')
+  }
+  checkTypes(opts, null, {schema: {
+    key: [null, 'string'],
+    val: 'any'
+  }})
+  return monkey(input, objectAssign(clone(opts), { mode: 'del' }))
 }
-function arrayFirstOnly (input, opts) {
-  return monkey(input, objectAssign(prep(opts), { mode: 'arrayFirstOnly' }))
+
+function arrayFirstOnly (input) {
+  return monkey(input, { mode: 'arrayFirstOnly' })
 }
 
 // -----------------------------------------------------------------------------

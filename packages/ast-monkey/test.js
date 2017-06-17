@@ -565,6 +565,38 @@ test('03.06 - gets from mixed nested things, index string', t => {
     '03.06')
 })
 
+test('03.07 - gets from a simple object, index is string', t => {
+  input = {
+    a: {
+      b: 'c'
+    }
+  }
+  index = '2'
+  actual = get(input, {index: index})
+  intended = {
+    b: 'c'
+  }
+  t.deepEqual(
+    actual,
+    intended,
+    '03.07')
+})
+
+test('03.08 - index is real number as string - throws', t => {
+  t.throws(function () {
+    get(
+      {
+        a: {
+          b: 'c'
+        }
+      },
+      {
+        index: '2.1'
+      }
+    )
+  })
+})
+
 // -----------------------------------------------------------------------------
 // set
 // -----------------------------------------------------------------------------
@@ -626,7 +658,7 @@ test('04.03 - does not set', t => {
     '04.03')
 })
 
-test('04.04 - sets when only key given instead', t => {
+test('04.04 - sets when only key given instead, index as string', t => {
   input = {
     a: {b: [{c: {d: 'e'}}]},
     f: {g: ['h']}
@@ -643,6 +675,62 @@ test('04.04 - sets when only key given instead', t => {
     actual,
     intended,
     '04.04')
+})
+
+test('04.05 - sets when only key given, numeric index', t => {
+  input = {
+    a: {b: [{c: {d: 'e'}}]},
+    f: {g: ['h']}
+  }
+  index = 8
+  key = 'zzz'
+  actual = set(input, {index: index, key: key})
+  intended = {
+    a: {b: [{c: {d: 'e'}}]},
+    f: {g: ['zzz']}
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '04.05')
+})
+
+test('04.06 - throws when inputs are wrong', t => {
+  t.throws(function () {
+    set(
+      {a: 'a'},
+      {
+        val: 'a',
+        index: 'a'
+      }
+    )
+  })
+  t.throws(function () {
+    set(
+      {a: 'a'},
+      {
+        val: 'a'
+      }
+    )
+  })
+  t.throws(function () {
+    set(
+      {a: 'a', b: ['c']},
+      {
+        index: '1'
+      }
+    )
+  })
+  t.throws(function () {
+    set(
+      {a: 'a', b: ['c']},
+      {
+        val: 'a',
+        index: 1.5
+      }
+    )
+  })
 })
 
 // -----------------------------------------------------------------------------
@@ -721,11 +809,22 @@ test('05.04 - does not drop - 99', t => {
     '05.04')
 })
 
+test('05.05 - drops in mixed things #3 - index is not a natural number', t => {
+  input = {
+    a: {b: [{c: {d: 'e'}}]},
+    f: {g: ['h']}
+  }
+  index = '6.1'
+  t.throws(function () {
+    drop(input, {index: index})
+  })
+})
+
 // -----------------------------------------------------------------------------
 // info
 // -----------------------------------------------------------------------------
 
-test('06.01 - info returns undefined', t => {
+test('06.01 - info', t => {
   input = {
     a: 'a'
   }
@@ -913,7 +1012,7 @@ test('08.01 - arrayFirstOnly - nested arrays', t => {
     '08.01')
 })
 
-test('08.02 - arrayFirstOnly — arrays within arrays only, no obj', t => {
+test('08.02 - arrayFirstOnly - arrays within arrays only, no obj', t => {
   input = [
     ['a', 'b', 'c'],
     ['d', ['e']]

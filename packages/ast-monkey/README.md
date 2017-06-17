@@ -174,7 +174,7 @@ In practice, you would query a list of indexes programmatically using a `for` lo
 
 ### .set()
 
-Use method `monkey.set()` to overwrite a piece of an AST with a known index.
+Use method `monkey.set()` to overwrite a piece of an AST when you know its index.
 
 ---
 

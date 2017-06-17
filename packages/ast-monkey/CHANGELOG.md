@@ -4,9 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.5.0] - 2017-06-15
+## [5.5.0] - 2017-06-17
+Hardened the API, namely, all added more validations to options object key values.
 ### Added
-- ✨ Options on all revevant methods to perform operations on only plain objects, on only arrays OR on both.
+- ✨ Recoded all options objects' validations, on each method. Preparing for next big secret feature. We'll need this.
 
 ## [5.4.0] - 2017-06-10
 ### Added
