@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.0.0] - 2017-06-12
 ### Changed
-- ✨ BREAKING API CHANGES. third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That's the right thing to do.
+- ✨ BREAKING API CHANGES. Third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That was the right thing to do. Sorry for any hassle updating.
 
 ## [1.6.0] - 2017-06-11
 ### Added

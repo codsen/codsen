@@ -9,7 +9,7 @@ const intersection = require('lodash.intersection')
 const arrayiffyIfString = require('arrayiffy-if-string')
 
 function checkTypes (obj, ref, opts) {
-  const NAMESFORANYTYPE = ['everything', 'all', 'any', 'whatever']
+  const NAMESFORANYTYPE = ['any', 'anything', 'every', 'everything', 'all', 'whatever', 'whatevs']
 
   function existy (x) { return x != null }
   function isBool (something) { return type(something) === 'boolean' }
