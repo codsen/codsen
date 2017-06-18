@@ -79,9 +79,25 @@ Options object's key  | Type             | Obligatory?                  | Descri
 {                     |                  |                              |
 `key`                 | String           | at least one, `key` or `val` | If you want to search by a plain object's key, put it here.
 `val`                 | Whatever         | at least one, `key` or `val` | If you want to search by a plain object's value, put it here.
+`only`                | String           | no (if not given, will default to `any`) | You can specify, to find only within arrays, objects or any. `any` is default and will be set if `opts.only` is not given.
 }                     |                  |                              |
 
 Either `opts.key` or `opts.val` or both must be present. If both are missing, `ast-monkey` will throw an error.
+
+`opts.only` is validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+
+Interpreted as array-type | Interpreted as object-type | either type
+--------------------------|----------------------------|---------------
+ `array`                  | `object`                   | `any`
+ `arrays`                 | `objects`                  | `all`
+ `arr`                    | `obj`                      | `everything`
+ `aray`                   | `ob`                       | `both`
+ `arr`                    | `o`                        | `either`
+ `a`                      |                            | `each`
+                          |                            | `whatever`
+                          |                            | `e`
+
+If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
 **Output**
 
@@ -419,9 +435,25 @@ Options object's key  | Type             | Obligatory?                  | Descri
 {                     |                  |                              |
 `key`                 | String           | at least one, `key` or `val` | All keys in objects or elements in arrays will be selected for deletion
 `val`                 | Whatever         | at least one, `key` or `val` | All object key/value pairs having this value will be selected for deletion
+`only`                | String           | no (if not given, will default to `any`) | You can specify, to delete key/value pairs (if object) or elements (if array) by setting this key's value to one of the acceptable values from the table below.
 }                     |                  |                              |
 
 If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match; otherwise, key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
+
+`opts.only` values are validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+
+Interpreted as array-type | Interpreted as object-type | either type
+--------------------------|----------------------------|---------------
+ `array`                  | `object`                   | `any`
+ `arrays`                 | `objects`                  | `all`
+ `arr`                    | `obj`                      | `everything`
+ `aray`                   | `ob`                       | `both`
+ `arr`                    | `o`                        | `either`
+ `a`                      |                            | `each`
+                          |                            | `whatever`
+                          |                            | `e`
+
+If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
 **Output**
 

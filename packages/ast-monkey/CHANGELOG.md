@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0] - 2017-06-18
+BREAKING CHANGES
+
+JSON spec allows objects to have `null` in values. However, the traversal algotithm has not (until now) considered that. The key in an array would have `val` reported as `null` - same as (theoretical) object that has `null` as key's value.
+
+This now changes.
+
+**Now, the absence of value will be marked with `undefined`. Checking does a key/value pair have a value should be done checking if value is not `undefined`.**
+
+This changes how you interact with `traversal()` function. Sorry about this breaking change, but it's part of my major drive to have all my libraries to support JSON spec. And in JSON, objects can have `null` values.
+
+### Changed
+- 🔧 Absence of value during traversal (as is the case when traversing arrays) is now marked as `undefined`. Previously it was `null`. This will surely break all the algorithms that use `monkey.traverse()`. On a positive side, once you migrate your code to `ast-monkey` v6, you'll be able to support `null` in object key values, as per JSON spec.
+
+### Added
+- ✨ `opts.only` is now present on all relevant `ast-monkey`'s methods and allows you to describe in natural language do you want to query only objects, or arrays or both. Previously it was only both. Supported values for `opts.only` are quite wide:
+
+```js
+// keywords for `opts.only` to query only objects:
+['object', 'objects', 'obj', 'ob', 'o']
+
+// keywords for `opts.only` to query only arrays:
+['array', 'arrays', 'arr', 'aray', 'arr', 'a']
+
+// keywords for `opts.only` to query both:
+['any', 'all', 'everything', 'both', 'either', 'each', 'whatever', 'whatevs', 'e']
+```
+
 ## [5.5.0] - 2017-06-17
 Hardened the API, namely, all added more validations to options object key values.
 ### Added
@@ -31,20 +59,20 @@ Hardened the API, namely, all added more validations to options object key value
 After spending nearly whole Sunday testing [v4], I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
 
 ### Changed
-- Internally, the message to delete in `traverse()` is now `NaN`.
+- 🔧 Internally, the message to delete in `traverse()` is now `NaN`.
 ### Unchanged
-- All the methods stay the same. I just rewired all internal messaging to use `NaN` instead of `undefined` as an instruction for `traverse()` to delete.
+- 🔧 All the methods stay the same. I just rewired all internal messaging to use `NaN` instead of `undefined` as an instruction for `traverse()` to delete.
 
 ## [4.0.0] - 2017-04-30
 
 The good thing about being not popular is you can make breaking changes and very few (if anybody) will care. I will make use of this privilege and do some cardinal yet necessary API changes.
 
 ### Changed
-- Removing options from `traverse()`. It's not necessary any more. See below why.
-- When particular node is to be deleted, the message (function's `return` value) previously was `null`. This is not effective as JSON objects can have `null` values and this means `monkey.traverse()` does not know, is it value `null` being returned recursively, or is it an instruction coming from deeper resursions to delete current thing. That's why I decided to move onto `undefined` as a _deletion message_ — it can't be a JSON value, and it does not belong among the object values — it's perfect format for a deletion message.
+- 🔧 Removing options from `traverse()`. It's not necessary any more. See below why.
+- 🔧 When particular node is to be deleted, the message (function's `return` value) previously was `null`. This is not effective as JSON objects can have `null` values and this means `monkey.traverse()` does not know, is it value `null` being returned recursively, or is it an instruction coming from deeper resursions to delete current thing. That's why I decided to move onto `undefined` as a _deletion message_ — it can't be a JSON value, and it does not belong among the object values — it's perfect format for a deletion message.
 
 ### Unchanged
-- All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as an instruction for `traverse()` to delete.
+- 🔧 All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as an instruction for `traverse()` to delete.
 
 ## [3.3.0] - 2017-04-29
 ### Added
@@ -70,7 +98,7 @@ I needed this feature for [json-variables](https://github.com/codsen/json-variab
 
 ## [3.1.0] - 2017-04-01 International Fools day. No tricks here though.
 ### Improved
-- All this Saturday morning I worked on `🐒.traverse()`. Yesterday night I discovered that when you delete something on `traverse()`, the traversal reports extra non-existing nodes. The solution is not so elementary. Yes, the iterator was not being reduced in the `for` loop — `i--` was missing — but there were also more fixes necessary to implement for this to work. Now when you want to instruct `traverse()` to delete current node, you have to pass `null` (`undefined` won't work). I believe that's how everybody were using it anyway, so it doesn't warrant major semver bump. ✨
+- 🔧 All this Saturday morning I worked on `🐒.traverse()`. Yesterday night I discovered that when you delete something on `traverse()`, the traversal reports extra non-existing nodes. The solution is not so elementary. Yes, the iterator was not being reduced in the `for` loop - `i--` was missing - but there were also more fixes necessary to implement for this to work. Now when you want to instruct `traverse()` to delete current node, you have to pass `null` (`undefined` won't work). I believe that's how everybody were using it anyway, so it doesn't warrant major semver bump. ✨
 ### Added
 - ✨ Added `traverse()` unit tests, namely, `09.x` group.
 ### Unchanged
@@ -79,7 +107,7 @@ I needed this feature for [json-variables](https://github.com/codsen/json-variab
 ## [3.0.0] - 2017-03-20
 ### Changed
 BREAKING API CHANGES.
-- `flatten()` method renamed to `arrayFirstOnly()` to reflect better what this does. The real "flatten" is [object-flatten-all-arrays](https://www.npmjs.com/package/object-flatten-all-arrays) and while it could be rewritten in `ast-monkey`, it goes against the overall flow of the `ast-monkey`'s algorithm — 🐒 goes horizontal, by branch, while `flatten-all-arrays` goes vertically, by array, all keys at once. The new `arrayFirstOnly()` is easy feature because it simply filters the first element of each array encountered during the traversal.
+- 🔧 `flatten()` method renamed to `arrayFirstOnly()` to reflect better what this does. The real "flatten" is [object-flatten-all-arrays](https://www.npmjs.com/package/object-flatten-all-arrays) and while it could be rewritten in `ast-monkey`, it goes against the overall flow of the `ast-monkey`'s algorithm — 🐒 goes horizontal, by branch, while `flatten-all-arrays` goes vertically, by array, all keys at once. The new `arrayFirstOnly()` is easy feature because it simply filters the first element of each array encountered during the traversal.
 ### Added
 - ✨ Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
 
@@ -121,7 +149,7 @@ BREAKING API CHANGES.
 
 ## [2.0.0] - 2017-02-16
 ### Changed
-- Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
+- 🔧 Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
 
 [2.0.0]: https://github.com/codsen/ast-monkey/compare/v1.0.1...v2.0.0
 [2.2.0]: https://github.com/codsen/ast-monkey/compare/v2.1.0...v2.2.0
@@ -139,8 +167,9 @@ BREAKING API CHANGES.
 [4.0.0]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
 [5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.3.0]: https://github.com/codsen/ast-monkey/compare/v5.2.0...v5.3.0
 [5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0
 [5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
+[6.0.0]: https://github.com/codsen/ast-monkey/compare/v5.5.0...v6.0.0

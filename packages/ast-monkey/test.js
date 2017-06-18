@@ -74,13 +74,34 @@ test('01.06 - get/set - throws when opts.index is missing', t => {
   })
 })
 
-test('01.07 - set - throws when opts.key and opts.val are missing', t => {
+test('01.07 - get/set/drop - throws when opts.index is not a natural number (both string or number)', t => {
+  t.throws(function () {
+    get(input, {index: '1.5'})
+  })
+  t.throws(function () {
+    get(input, {index: 1.5})
+  })
+  t.throws(function () {
+    set(input, {index: '1.5', val: 'zzz'})
+  })
+  t.throws(function () {
+    set(input, {index: 1.5, val: 'zzz'})
+  })
+  t.throws(function () {
+    drop(input, {index: '1.5'})
+  })
+  t.throws(function () {
+    drop(input, {index: 1.5})
+  })
+})
+
+test('01.08 - set - throws when opts.key and opts.val are missing', t => {
   t.throws(function () {
     set(input, {index: '3'})
   })
 })
 
-test('01.08 - find - throws when opts.key and opts.val are missing', t => {
+test('01.09 - find - throws when opts.key and opts.val are missing', t => {
   t.throws(function () {
     find(input, {index: '3'})
   })
@@ -89,7 +110,7 @@ test('01.08 - find - throws when opts.key and opts.val are missing', t => {
   })
 })
 
-test('01.09 - del - throws when opts.key and opts.val are missing', t => {
+test('01.10 - del - throws when opts.key and opts.val are missing', t => {
   t.throws(function () {
     del(input, {index: '3'})
   })
@@ -117,9 +138,6 @@ test('02.01 - finds by key in a simple object #1', t => {
       b: 'c'
     }
   }
-  key = 'a'
-  val = null
-  actual = find(input, {key: key, val: val})
   intended = [
     {
       index: 1,
@@ -131,16 +149,21 @@ test('02.01 - finds by key in a simple object #1', t => {
     }
   ]
   t.deepEqual(
-    actual,
+    find(input, {key: 'a', val: undefined}),
     intended,
     '02.01.01')
 
   // absence of the second arg:
-  actual = find(input, {key: key})
   t.deepEqual(
-    actual,
+    find(input, {key: 'a'}),
     intended,
     '02.01.02')
+
+  // null would mean actual null being there (which is not), so it's not going to find any:
+  t.deepEqual(
+    find(input, {key: 'a', val: null}),
+    null, // <---- !!!! null means no findings !!!!
+    '02.01.03')
 })
 
 test('02.02 - finds by key in a simple object #2', t => {
@@ -149,9 +172,6 @@ test('02.02 - finds by key in a simple object #2', t => {
       b: 'c'
     }
   }
-  key = 'b'
-  val = null
-  actual = find(input, {key: key, val: val})
   intended = [
     {
       index: 2,
@@ -160,17 +180,23 @@ test('02.02 - finds by key in a simple object #2', t => {
       path: [1, 2]
     }
   ]
+  // second arg hardcoded null - won't find any because input has no null's:
   t.deepEqual(
-    actual,
-    intended,
+    find(input, {key: 'b', val: null}),
+    null,
     '02.02.01')
 
   // absence of the second arg:
-  actual = find(input, {key: key})
   t.deepEqual(
-    actual,
+    find(input, {key: 'b'}),
     intended,
     '02.02.02')
+
+  // second arg hardcoded undefined:
+  t.deepEqual(
+    find(input, {key: 'b', val: undefined}),
+    intended,
+    '02.02.03')
 })
 
 test('02.03 - does not find by key in a simple object', t => {
@@ -198,7 +224,7 @@ test('02.04 - finds by key in simple arrays #1', t => {
     {
       index: 1,
       key: 'a',
-      val: null,
+      val: undefined,
       path: [1]
     }
   ]
@@ -216,7 +242,7 @@ test('02.05 - finds by key in simple arrays #2', t => {
     {
       index: 4,
       key: 'b',
-      val: null,
+      val: undefined,
       path: [2, 3, 4]
     }
   ]
@@ -229,12 +255,12 @@ test('02.05 - finds by key in simple arrays #2', t => {
 test('02.06 - finds by key in simple arrays #3', t => {
   input = ['a', [['b'], 'c']]
   key = 'c'
-  actual = find(input, {key: key, val: null})
+  actual = find(input, {key: key, val: undefined})
   intended = [
     {
       index: 5,
       key: 'c',
-      val: null,
+      val: undefined,
       path: [2, 5]
     }
   ]
@@ -263,7 +289,7 @@ test('02.08 - finds by key in simple arrays #3', t => {
     {
       index: 5,
       key: 'c',
-      val: null,
+      val: undefined,
       path: [2, 5]
     }
   ]
@@ -439,34 +465,228 @@ test('02.15 - finds multiple nested keys by key and value in mixed #2', t => {
     a: {b: [{c: {d: 'e'}}]},
     c: {d: ['d']}
   }
-  key = 'd'
-  val = null
-  actual = find(input, {key: key, val: val})
-  intended = [
-    {
-      index: 5,
-      key: 'd',
-      val: 'e',
-      path: [1, 2, 3, 4, 5]
-    },
-    {
-      index: 7,
-      key: 'd',
-      val: ['d'],
-      path: [6, 7]
-    },
-    {
-      index: 8,
-      key: 'd',
-      val: null,
-      path: [6, 7, 8]
-    }
-  ]
-
+  // ---------------------------
   t.deepEqual(
-    actual,
-    intended,
-    '02.15')
+    find(input, {key: 'd', val: null}),
+    null,
+    '02.15.01 - Null is a valid value! It\'s not found in the input!')
+  // ---------------------------
+  t.deepEqual(
+    find(input, {key: 'd', val: undefined}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: 'e',
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.15.02 - hardcoded undefined as a value')
+  // ---------------------------
+  t.deepEqual(
+    find(input, {key: 'd'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: 'e',
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.15.03 - default behaviour, val is not hardcoded - should be the same as null')
+  // ---------------------------
+  // arrays only:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'arrays'}),
+    [
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.15.04 - finds only array instances and omits object-ones')
+  // ---------------------------
+  // objects only:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'objects'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: 'e',
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      }
+    ],
+    '02.15.05 - finds only array instances and omits object-ones')
+  // ---------------------------
+  // any:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'whatever'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: 'e',
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.15.06 - finds only array instances and omits object-ones')
+})
+
+test('02.16 - like 02.15, but with sneaky objects where values are null, tricking the algorithm', t => {
+  input = {
+    a: {b: [{c: {d: null}}]},
+    c: {d: ['d']}
+  }
+  // ---------------------------
+  t.deepEqual(
+    find(input, {key: 'd', val: undefined}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: null,
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.16.01 - default behaviour, val is hardcoded `undefined`')
+  // ---------------------------
+  t.deepEqual(
+    find(input, {key: 'd'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: null,
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.16.02 - default behaviour, val is not hardcoded - should be the same as null')
+  // ---------------------------
+  // arrays only:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'arrays'}),
+    [
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.16.03 - finds only array instances and omits object-ones')
+  // ---------------------------
+  // objects only:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'objects'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: null,
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      }
+    ],
+    '02.16.04 - finds only array instances and omits object-ones')
+  // ---------------------------
+  // any:
+  t.deepEqual(
+    find(input, {key: 'd', only: 'whatever'}),
+    [
+      {
+        index: 5,
+        key: 'd',
+        val: null,
+        path: [1, 2, 3, 4, 5]
+      },
+      {
+        index: 7,
+        key: 'd',
+        val: ['d'],
+        path: [6, 7]
+      },
+      {
+        index: 8,
+        key: 'd',
+        val: undefined,
+        path: [6, 7, 8]
+      }
+    ],
+    '02.16.05 - finds only array instances and omits object-ones')
 })
 
 // -----------------------------------------------------------------------------
@@ -846,16 +1066,31 @@ test('07.01 - deletes by key, multiple findings', t => {
     a: {b: [{c: {d: 'e'}}]},
     c: {d: ['h']}
   }
-  key = 'c'
-  actual = del(input, {key: key})
-  intended = {
-    a: {b: [{}]}
-  }
-
   t.deepEqual(
-    actual,
-    intended,
-    '07.01')
+    del(input, {key: 'c'}),
+    {
+      a: {b: [{}]}
+    },
+    '07.01.01')
+  t.deepEqual(
+    del(input, {key: 'c', only: 'array'}),
+    {
+      a: {b: [{c: {d: 'e'}}]},
+      c: {d: ['h']}
+    },
+    '07.01.02 - only array')
+  t.deepEqual(
+    del(input, {key: 'c', only: 'o'}),
+    {
+      a: {b: [{}]}
+    },
+    '07.01.03')
+  t.deepEqual(
+    del(input, {key: 'c', only: 'whatever'}),
+    {
+      a: {b: [{}]}
+    },
+    '07.01.04')
 })
 
 test('07.02 - deletes by key, multiple findings at the same branch', t => {
@@ -863,15 +1098,11 @@ test('07.02 - deletes by key, multiple findings at the same branch', t => {
     a: {b: [{c: {c: 'e'}}]},
     c: {d: ['h']}
   }
-  key = 'c'
-  actual = del(input, {key: key})
-  intended = {
-    a: {b: [{}]}
-  }
-
   t.deepEqual(
-    actual,
-    intended,
+    del(input, {key: 'c'}),
+    {
+      a: {b: [{}]}
+    },
     '07.02')
 })
 
@@ -880,16 +1111,12 @@ test('07.03 - can\'t find any to delete by key', t => {
     a: {b: [{c: {c: 'e'}}]},
     c: {d: ['h']}
   }
-  key = 'zzz'
-  actual = del(input, {key: key})
-  intended = {
-    a: {b: [{c: {c: 'e'}}]},
-    c: {d: ['h']}
-  }
-
   t.deepEqual(
-    actual,
-    intended,
+    del(input, {key: 'zzz'}),
+    {
+      a: {b: [{c: {c: 'e'}}]},
+      c: {d: ['h']}
+    },
     '07.03')
 })
 
@@ -898,75 +1125,45 @@ test('07.04 - deletes by value only from mixed', t => {
     a: {b: [{ktjyklrjtyjlkl: {c: 'e'}}]},
     dflshgdlfgh: {c: 'e'}
   }
-  val = {c: 'e'}
-  actual = del(input, {val: val})
-  intended = {
-    a: {b: [{}]}
-  }
-
   t.deepEqual(
-    actual,
-    intended,
+    del(input, {val: {c: 'e'}}),
+    {
+      a: {b: [{}]}
+    },
     '07.04')
 })
 
 test('07.05 - deletes by value only from arrays', t => {
   input = ['a', 'b', 'c', ['a', ['b'], 'c']]
-  key = 'b'
-  actual = del(input, {key: key})
-  intended = ['a', 'c', ['a', [], 'c']]
-
   t.deepEqual(
-    actual,
-    intended,
+    del(input, {key: 'b'}),
+    ['a', 'c', ['a', [], 'c']],
     '07.05')
 })
 
-test('07.06 - deletes by value only from arrays', t => {
-  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
-  key = 'b'
-  actual = del(input, {key: key})
-  intended = ['a', 'c', ['a', [], 'c']]
-
-  t.deepEqual(
-    actual,
-    intended,
-    '07.06')
-})
-
-test('07.07 - deletes by key and value from mixed', t => {
+test('07.06 - deletes by key and value from mixed', t => {
   input = {
     a: {b: [{c: {d: {e: 'f'}}}]},
     f: {d: {zzz: 'f'}}
   }
-  key = 'd'
-  val = {e: 'f'}
-  actual = del(input, {key: key, val: val})
-  intended = {
-    a: {b: [{c: {}}]},
-    f: {d: {zzz: 'f'}}
-  }
-
   t.deepEqual(
-    actual,
-    intended,
+    del(input, {key: 'd', val: {e: 'f'}}),
+    {
+      a: {b: [{c: {}}]},
+      f: {d: {zzz: 'f'}}
+    },
+    '07.06')
+})
+
+test('07.07 - does not delete by key and value from arrays', t => {
+  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
+  t.deepEqual(
+    del(input, {key: 'b', val: 'zzz'}),
+    ['a', 'b', 'c', ['a', ['b'], 'c']],
     '07.07')
 })
 
-test('07.08 - does not delete by key and value from arrays', t => {
-  input = ['a', 'b', 'c', ['a', ['b'], 'c']]
-  key = 'b'
-  val = 'zzz'
-  actual = del(input, {key: key, val: val})
-  intended = ['a', 'b', 'c', ['a', ['b'], 'c']]
-
-  t.deepEqual(
-    actual,
-    intended,
-    '07.08')
-})
-
-test('07.09 - deletes by key and value from mixed', t => {
+test('07.08 - deletes by key and value from mixed', t => {
   input = {
     a: {
       b: '',
@@ -974,20 +1171,38 @@ test('07.09 - deletes by key and value from mixed', t => {
       e: 'f'
     }
   }
-  key = 'b'
-  val = ''
-  actual = del(input, {key: key, val: val})
-  intended = {
-    a: {
-      c: 'd',
-      e: 'f'
-    }
-  }
-
   t.deepEqual(
-    actual,
-    intended,
-    '07.09')
+    del(input, {key: 'b', val: ''}),
+    {
+      a: {
+        c: 'd',
+        e: 'f'
+      }
+    },
+    '07.08')
+})
+
+test('07.09 - sneaky-one: object keys have values as null', t => {
+  input = {
+    a: {b: [{c: null}]},
+    c: null
+  }
+  t.deepEqual(
+    del(input, {key: 'c'}),
+    {
+      a: {b: [{}]}
+    },
+    '07.09.01')
+  t.deepEqual(
+    del(input, {key: 'c', only: 'array'}),
+    input,
+    '07.09.02 - only array')
+  t.deepEqual(
+    del(input, {key: 'c', only: 'object'}),
+    {
+      a: {b: [{}]}
+    },
+    '07.09.03')
 })
 
 // -----------------------------------------------------------------------------
