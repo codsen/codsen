@@ -59,8 +59,8 @@
     "ava": "*",
     "clear-cli": "*",
     "coveralls": "*",
-    "husky": "^0.13.4",
-    "nodemon": "^1.11.0",
+    "husky": "*",
+    "nodemon": "*",
     "nyc": "^11.0.2",
     "standard": "^10.0.0"
   },

@@ -3,7 +3,7 @@
     "lint": {"engine": "standard"}
   },
   "dependencies": {
-    "mute": ["ava", "coveralls", "husky", "nyc", "arrayiffy-if-string", "clear-cli"]
+    "mute": ["arrayiffy-if-string", "ava", "clear-cli", "coveralls", "husky", "nodemon"]
   },
   "test": [
     "test.js"
