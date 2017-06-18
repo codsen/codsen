@@ -60,7 +60,7 @@ Let's make it possible for values within our JSON to reference other keys' value
 
 The API is the following: a plain object in (it's not mutated), a new plain object out.
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -91,7 +91,10 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
       dontWrapVars: [],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true,
-      noSingleMarkers: false
+      noSingleMarkers: false,
+      resolveToBoolIfAnyValuesContainBool: true,
+      resolveToFalseIfAnyValuesContainBool: true,
+      throwWhenNonStringInsertedInString: false
     }
 ```
 
@@ -115,7 +118,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 `throwWhenNonStringInsertedInString`   | Boolean  | no       | `false`| By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.
 }                              |          |             |             |
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## Use examples
 
@@ -253,7 +256,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### Data containers
 
@@ -335,7 +338,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### Ignores with wildcards
 
@@ -363,7 +366,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ### Wrapping
 
@@ -391,7 +394,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 #### In practice:
 
@@ -503,7 +506,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
