@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "description": "Utility library for operations on parsed HTML (AST's)",
   "main": "index.js",
   "scripts": {
