@@ -3,16 +3,16 @@
 import checkTypes from './index'
 import test from 'ava'
 
-test('01.01 - throws when all/first arg\'s missing', t => {
+test('01.01 - throws when all/first args are missing', t => {
   t.throws(function () {
     checkTypes()
-  }, 'check-types-mini/checkTypes(): [THROW_ID_01] missing first two arguments!')
+  }, 'check-types-mini/checkTypes(): Missing all arguments!')
 })
 
-test('01.02 - throws when second arg\'s missing', t => {
+test('01.02 - throws when second arg is missing', t => {
   t.throws(function () {
     checkTypes('zzzz')
-  }, 'check-types-mini/checkTypes(): [THROW_ID_02] missing second argument!')
+  }, 'check-types-mini/checkTypes(): Missing second argument!')
 })
 
 test('01.03 - throws when one of the arguments is of a wrong type', t => {
@@ -29,7 +29,7 @@ test('01.03 - throws when one of the arguments is of a wrong type', t => {
         option3: false
       }
     )
-  }, 'opts.option2 was customised to "false" which is not boolean but string')
+  }, 'check-types-mini/checkTypes(): opts.option2 was customised to "false" which is not boolean but string')
 })
 
 test('01.04 - opts.msg or opts.optsVarName args are wrong-type', t => {
@@ -85,11 +85,11 @@ test('01.05 - throws if fourth argument is missing', t => {
         option3: false
       },
       {
-        msg: 'newLibrary/index.js: [THROW_ID_01]' // << no trailing space
+        msg: 'newLibrary/index.js [THROW_ID_01]' // << no trailing space
       }
     )
   },
-    'newLibrary/index.js: [THROW_ID_01] opts.option2 was customised to "false" which is not boolean but string'
+    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string'
   )
   t.throws(function () {
     checkTypes(
@@ -104,11 +104,11 @@ test('01.05 - throws if fourth argument is missing', t => {
         option3: false
       },
       {
-        msg: 'newLibrary/index.js: [THROW_ID_01] ' // << trailing space
+        msg: 'newLibrary/index.js [THROW_ID_01]:        ' // << trailing space
       }
     )
   },
-    'newLibrary/index.js: [THROW_ID_01] opts.option2 was customised to "false" which is not boolean but string'
+    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string'
   )
   t.notThrows(function () {
     checkTypes(
@@ -123,7 +123,7 @@ test('01.05 - throws if fourth argument is missing', t => {
         option3: false
       },
       {
-        msg: 'newLibrary/index.js: [THROW_ID_01] ',
+        msg: 'newLibrary/index.js [THROW_ID_01]: ',
         ignoreKeys: ['option2']
       }
     )
@@ -142,7 +142,19 @@ test('01.06 - throws when opts are set wrong', t => {
       }
     )
   },
-  'check-types-mini/checkTypes(): [THROW_ID_03] opts.ignoreKeys should be an array, currently it\'s: boolean')
+  'check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: boolean')
+  t.throws(function () {
+    checkTypes(
+      {a: 'a'},
+      {a: 'b'},
+      {
+        msg: 1,
+        optsVarName: 'bbb',
+        ignoreKeys: false
+      }
+    )
+  },
+  'check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: number, equal to 1')
   t.notThrows(function () {
     checkTypes({a: 'a'}, {a: 'b'},
       {
