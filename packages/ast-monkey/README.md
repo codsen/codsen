@@ -535,7 +535,7 @@ const monkey = require('ast-monkey')
 var ast = [{a: 'a', b: 'b'}]
 ast = monkey.traverse(ast, function (key, val, innerObj) {
   // use key, val, innerObj
-  return monkey.existy(val) ? val : key // (point #1)
+  return (val !== undefined) ? val : key // (point #1)
 })
 ```
 
@@ -545,7 +545,7 @@ Also, I like to use it this way:
 const monkey = require('ast-monkey')
 var ast = [{a: 'a', b: 'b'}]
 ast = monkey.traverse(ast, function (key, val, innerObj) {
-  var current = monkey.existy(val) ? val : key
+  var current = (val !== undefined) ? val : key
   // All action with variable `current` goes here.
   // It's the same name for any array element or any object key's value.
   return current // it's obligatory to return it, unless you want to delete that node
@@ -555,8 +555,6 @@ ast = monkey.traverse(ast, function (key, val, innerObj) {
 It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise whatever you return will be written over the current AST piece being iterated.
 
 If you definitely want to delete, return `NaN`.
-
-By the way, the one-liner `existy()` is taken from Michael Fogus book "Functional JavaScript". It's the greatest snippet of all times (ok, `console.log('var = ' + JSON.stringify(var, null, 4))` is also a contender for the top spot).
 
 #### innerObj in the callback
 

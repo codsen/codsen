@@ -105,9 +105,7 @@ function monkey (inputOriginal, opts) {
     data.count++
     if (DEBUG || opts.mode === 'info') { console.log('    #' + data.count + '\n') }
     if (DEBUG || opts.mode === 'info') { console.log('key = ' + JSON.stringify(key, null, 4)) }
-    if (existy(val)) {
-      if (DEBUG || opts.mode === 'info') { console.log('val = ' + JSON.stringify(val, null, 4)) }
-    }
+    if (DEBUG || opts.mode === 'info') { console.log('val = ' + JSON.stringify(val, null, 4)) }
     data.gatherPath.length = innerObj.depth
     data.gatherPath.push(data.count)
     if (DEBUG || opts.mode === 'info') { console.log('data.gatherPath = ' + JSON.stringify(data.gatherPath, null, 4)) }
@@ -304,6 +302,5 @@ module.exports = {
   info: info,
   del: del,
   arrayFirstOnly: arrayFirstOnly,
-  traverse: traverse,
-  existy: existy
+  traverse: traverse
 }

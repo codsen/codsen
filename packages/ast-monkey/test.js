@@ -1,6 +1,6 @@
 'use strict'
 
-import { find, get, set, drop, info, del, arrayFirstOnly, traverse, existy } from './index'
+import { find, get, set, drop, info, del, arrayFirstOnly, traverse } from './index'
 import test from 'ava'
 let actual, intended, key, val, index
 
@@ -1315,7 +1315,7 @@ test('09.01 - use traverse to delete one key from an array', t => {
   ]
 
   let actual01 = traverse(input, function (key, val, innerObj) {
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     if (isEqual(current, { a: 'b' })) {
       return NaN
     } else {
@@ -1336,7 +1336,7 @@ test('09.01 - use traverse to delete one key from an array', t => {
     '09.01.01')
 
   let actual02 = traverse(input, function (key, val, innerObj) {
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     if (isEqual(current, { c: 'd' })) {
       return NaN
     } else {
@@ -1357,7 +1357,7 @@ test('09.01 - use traverse to delete one key from an array', t => {
     '09.01.02')
 
   let actual03 = traverse(input, function (key, val, innerObj) {
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     if (isEqual(current, { e: 'f' })) {
       return NaN
     } else {
@@ -1395,7 +1395,7 @@ test('09.02 - use traverse, passing undefined to delete', t => {
     // console.log('\n\n------\n')
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     if (isEqual(current, { a: 'b' })) {
       return NaN
     } else {
@@ -1430,7 +1430,7 @@ test('09.03 - use traverse, passing null, write over values', t => {
     // console.log('\n\n------\n')
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     if (current === 'b') {
       return null
     } else {
@@ -1461,7 +1461,7 @@ test('09.04 - traverse automatically patches up holes in arrays', t => {
     // console.log('\n\n------\n')
     // console.log('key = ' + JSON.stringify(key, null, 4))
     // console.log('val = ' + JSON.stringify(val, null, 4))
-    let current = existy(val) ? val : key
+    let current = (val !== undefined) ? val : key
     // we do nothing here
     return current
   })
