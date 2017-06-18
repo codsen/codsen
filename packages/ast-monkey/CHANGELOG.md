@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] - 2017-06-18
+- ✨ Added checkTypes() onto drop(). Missed it this morning. Now all sorted.
+
 ## [6.0.0] - 2017-06-18
 BREAKING CHANGES
 
@@ -168,8 +171,9 @@ BREAKING API CHANGES.
 [5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
 [5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
 [5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.3.0]: https://github.com/codsen/ast-monkey/compare/v5.2.0...v5.3.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0
 [5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
 [6.0.0]: https://github.com/codsen/ast-monkey/compare/v5.5.0...v6.0.0
+[6.1.0]: https://github.com/codsen/ast-monkey/compare/v6.0.0...v6.1.0

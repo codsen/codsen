@@ -39,13 +39,13 @@
   },
   "homepage": "https://github.com/codsen/ast-monkey#readme",
   "dependencies": {
-    "check-types-mini": "^2.0.2",
+    "check-types-mini": "^2.1.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
     "lodash.isplainobject": "*",
     "object-assign": "*",
-    "util-array-object-or-both": "^1.0.7"
+    "util-array-object-or-both": "^1.0.8"
   },
   "devDependencies": {
     "ava": "*",

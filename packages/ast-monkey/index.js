@@ -260,6 +260,9 @@ function drop (input, opts) {
   if (!isNaturalNumber(opts.index, {includeZero: true})) {
     throw new Error('ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ' + opts.index)
   }
+  checkTypes(opts, null, {schema: {
+    index: 'number'
+  }})
   return monkey(input, objectAssign(clone(opts), { mode: 'drop' }))
 }
 
