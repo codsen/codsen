@@ -94,8 +94,8 @@ Interpreted as array-type | Interpreted as object-type | either type
  `aray`                   | `ob`                       | `both`
  `arr`                    | `o`                        | `either`
  `a`                      |                            | `each`
-                          |                            | `whatever`
-                          |                            | `e`
+<br/>                     |                            | `whatever`
+<br/>                     |                            | `e`
 
 If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
