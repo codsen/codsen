@@ -1,7 +1,7 @@
 {
   "name": "chlu-cli",
   "version": "1.1.1",
-  "description": "CH-ange-L-og U-pdate — Automatically fix errors in your changelog file",
+  "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "repository": "codsen/chlu-cli",
   "author": {
@@ -53,7 +53,7 @@
     "doctoc": "*",
     "execa": "*",
     "husky": "*",
-    "standard": "*"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true
