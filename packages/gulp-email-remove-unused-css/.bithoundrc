@@ -1,11 +1,12 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-    "mute": ["doctoc"]
-  },
-  "test": [
-    "test.js"
-  ]
+    "mute": [
+      "husky"
+    ]
+  }
 }

@@ -21,6 +21,9 @@
   "files": [
     "index.js"
   ],
+  "scripts": {
+    "precommit": "standard"
+  },
   "author": {
     "name": "Roy Reveltas",
     "email": "roy@codsen.com",
@@ -36,9 +39,7 @@
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {
-    "doctoc": "*"
-  },
-  "ava": {
-    "verbose": true
+    "husky": "*",
+    "standard": "^10.0.2"
   }
 }
