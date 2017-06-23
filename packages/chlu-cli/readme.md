@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> CH-ange-L-og U-pdate — Automatically fix errors in your changelog file
+> CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Build Status][travis-img]][travis-url]
 [![bitHound Score][bithound-img]][bithound-url]
@@ -20,6 +20,8 @@
 - [What it does](#what-it-does)
   - [1. Missing diff URLs in the footer for newly-added titles](#1-missing-diff-urls-in-the-footer-for-newly-added-titles)
   - [2. Wrong package/user in the diff URL](#2-wrong-packageuser-in-the-diff-url)
+  - [3. Automatic title linking (where it's missing)](#3-automatic-title-linking-where-its-missing)
+  - [4. Automatic date conversion](#4-automatic-date-conversion)
 - [Extras](#extras)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -60,9 +62,65 @@ This has happened to me before, actually on Detergent's repo even. I copied and 
 
 Same with wrong user names in the URL.
 
+### 3. Automatic title linking (where it's missing)
+
+I believe that every title in the changelog should be linked to a GitHub's magic diff view, showing what was added between those two versions.
+
+Chlu will scan the titles and add GitHub magic diff links between each title. The smallest version's title won't get a link.
+
+For example, if you have:
+
+```md
+## 3.1.2 (2017-03-17)
+
+blablabla
+
+## 3.1.1 (2017-03-01)
+
+blablabla
+
+## 3.1.0 (2017-02-27)
+
+blablabla
+```
+
+If would add links on `3.1.2` (comparing it against `3.1.1`) and `3.1.1` (comparing it against `3.1.0`).
+
+### 4. Automatic date conversion
+
+As long as your titles follow reasonable patterns, `chlu` will recognise and convert the dates into a correct format. Also, it will add missing dash between the version and the date.
+
+For example, all titles below would get converted to the same thing: `## [3.1.2] - 2017-03-17`:
+
+```md
+## 3.1.2 (2017-3-17)
+## 3.1.2 (2017-03-17)
+## 3.1.2 (March 17th, 2017)
+## 3.1.2  (March 17th, 2017)
+## 3.1.2 (March 17, 2017)
+## 3.1.2 2017-3-17
+## 3.1.2 2017-03-17
+## 3.1.2 March 17th, 2017
+## 3.1.2 March 17, 2017
+## 3.1.2  March 17, 2017
+## 3.1.2 - (2017-3-17)
+## 3.1.2 - (2017-03-17)
+## 3.1.2 - (March 17th, 2017)
+## 3.1.2 -  (March 17th, 2017)
+## 3.1.2 - (March 17, 2017)
+## 3.1.2 - 2017-3-17
+## 3.1.2 - 2017-03-17
+## 3.1.2 - March 17th, 2017
+## 3.1.2 - March 17, 2017
+## 3.1.2 -  March 17, 2017
+...and many other date combinations
+```
+
+That's thanks to amazing [dehumanize-date](https://www.npmjs.com/package/dehumanize-date).
+
 ## Extras
 
-Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order. Mwhuahaha!!
+Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order.
 
 ## Contributing
 

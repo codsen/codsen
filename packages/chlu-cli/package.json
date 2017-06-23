@@ -51,7 +51,7 @@
   "devDependencies": {
     "ava": "*",
     "doctoc": "*",
-    "execa": "*",
+    "execa": "^0.7.0",
     "husky": "*",
     "standard": "^10.0.2"
   },

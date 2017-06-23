@@ -17,7 +17,11 @@ const cli = meow(`
 
   Example
     Just call it in the root, where your package.json is located
-`)
+`, {
+  alias: {
+    l: 'loud'
+  }
+})
 updateNotifier({pkg: cli.pkg}).notify()
 
 fs.readFile(change, 'utf8', (changelogErr, changelogData) => {
