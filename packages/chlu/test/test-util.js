@@ -2,7 +2,7 @@
 /* eslint no-template-curly-in-string: 0 */
 
 const test = require('ava')
-const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo, getRow } = require('../util')
+const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo, getRow, filterDate } = require('../util')
 
 // isTitle
 // -------
@@ -164,15 +164,39 @@ test('06.01 - getRow() - all kinds of throws', function (t) {
 
 test('06.02 - getRow() - BAU', function (t) {
   t.is(getRow(
-    2,
-    ['aaa', 'bbb', 'ccc']
+    ['aaa', 'bbb', 'ccc'],
+    2
   ),
   'ccc',
   '06.02.01 - found')
   t.is(getRow(
-    99,
-    ['aaa', 'bbb', 'ccc']
+    ['aaa', 'bbb', 'ccc'],
+    99
   ),
   null,
   '06.02.01 - not found')
+})
+
+// filterDate
+// ----------
+
+test('07.01 - filterDate() - filters out date string', function (t) {
+  t.is(filterDate(' ]  (March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.01')
+  t.is(filterDate(']  (March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.02')
+  t.is(filterDate('   (March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.03')
+  t.is(filterDate('((March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.04')
+  t.is(filterDate('(March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.05')
+  t.is(filterDate('March 1st, 2017)'),
+  'March 1st, 2017',
+  '06.01.06')
 })

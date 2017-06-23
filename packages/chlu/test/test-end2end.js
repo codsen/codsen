@@ -65,3 +65,11 @@ test('08. mid links missing in changelog.md', (t) => {
 test('09. sneaky cases with tight spacing', (t) => {
   return compare(t, '09_tight_spacing')
 })
+
+test('10. redundant footer links present, no git logs in context', (t) => {
+  return compare(t, '10_redundant_links')
+})
+
+test('11. title dates are in wrong formats, no git logs in context', (t) => {
+  return compare(t, '11_wrong_dates')
+})

@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> CH-ange-L-og U-pdate — Automatically fix errors in your changelog file
+> CH-ange-L-og U-pdate - Automatically update and fix your changelog file
 
 [![Build Status][travis-img]][travis-url]
 [![bitHound Score][bithound-img]][bithound-url]

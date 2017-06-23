@@ -4,15 +4,21 @@ const reverse = require('lodash.reverse')
 const splitLines = require('split-lines')
 const util = require('./util')
 const getPkgRepo = require('get-pkg-repo')
-const cmp = require('semver-compare')
+const serverCompare = require('semver-compare')
 const empty = require('posthtml-ast-contains-only-empty-space')
 const insert = require('just-insert')
 const clone = require('lodash.clonedeep')
+const includes = require('lodash.includes')
+const dd = require('dehumanize-date')
 
-// FUNCTIONS
+// F'S
 // -----------------------------------------------------------------------------
 
 function existy (x) { return x != null }
+
+// UTIL
+// -----------------------------------------------------------------------------
+
 const getPreviousVersion = util.getPreviousVersion
 const getTitlesAndFooterLinks = util.getTitlesAndFooterLinks
 const getRepoInfo = util.getRepoInfo
@@ -20,6 +26,7 @@ const setRepoInfo = util.setRepoInfo
 const setRow = util.setRow
 const getRow = util.getRow
 const versionSort = util.versionSort
+const filterDate = util.filterDate
 
 // ACTION
 // -----------------------------------------------------------------------------
@@ -38,7 +45,7 @@ function chlu (changelogContents, packageJsonContents) {
     throw new Error('chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on ' + packageJson.type)
   }
 
-  var temp, i, len, start
+  var temp
   var titles = []
   var footerLinks = []
   var newLinesArr = []
@@ -54,16 +61,42 @@ function chlu (changelogContents, packageJsonContents) {
   //   "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0"
   var linesArr = splitLines(changelogMd)
 
-  titles = getTitlesAndFooterLinks(linesArr).titles
-  footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks
+  var titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr)
+  titles = titlesAndFooterLinks.titles
+  footerLinks = titlesAndFooterLinks.footerLinks
 
   // =======
-  // stage 2: locate titles don't have footer links
+  // stage 2: get the ordered array of all title versions
+
+  var sortedTitlesArray = titles.map(function (el) {
+    return el.version
+  }).sort(serverCompare)
+
+  // =======
+  // stage 3: find unused footer links
+  var unusedFooterLinks = footerLinks.filter(
+    (link) => {
+      return !includes(titles.map(title => title.version), link.version)
+    }
+  )
+
+  while (unusedFooterLinks.length > 0) {
+    linesArr.splice(unusedFooterLinks[0]['rowNum'], 1)
+    footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks
+    unusedFooterLinks = footerLinks.filter(
+      (link) => {
+        return !includes(titles.map(title => title.version), link.version)
+      }
+    )
+  }
+
+  // =======
+  // stage 3: create footer links for all titles except the smallest version-one
 
   var missingFooterLinks = []
-  for (i = 0, len = titles.length; i < len; i++) {
-    if (titles[i].linked) {
-      var linkFound = footerLinks.some(function (el) {
+  for (let i = 0, len = titles.length; i < len; i++) {
+    if ((len > 1) && (titles[i].version !== sortedTitlesArray[0])) {
+      let linkFound = footerLinks.some(function (el) {
         return titles[i].version === el.version
       })
       if (!linkFound) {
@@ -73,14 +106,14 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 3: find out what is the order of footer links
+  // stage 4: find out what is the order of footer links
 
   var ascendingFooterLinkCount = 0
   var descendingFooterLinkCount = 0
 
   if (footerLinks.length > 1) {
-    for (i = 0, len = footerLinks.length; i < len - 1; i++) {
-      if (cmp(footerLinks[i].version, footerLinks[i + 1].version) === 1) {
+    for (let i = 0, len = footerLinks.length; i < len - 1; i++) {
+      if (serverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1) {
         descendingFooterLinkCount++
       } else {
         ascendingFooterLinkCount++
@@ -94,14 +127,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 4: get the ordered array of all title versions
-
-  var sortedTitlesArray = titles.map(function (el) {
-    return el.version
-  }).sort(cmp)
-
-  // =======
-  // stage 5: calculate what goes where
+  // stage 6: calculate what goes where
 
   var whereToPlaceIt
   // calculate the Where
@@ -109,7 +135,7 @@ function chlu (changelogContents, packageJsonContents) {
     // count from the end of the file.
     // if last non-empty line has "]:" in it, place right after it.
     // otherwise, insert an empty line. This means there's content only and no links yet.
-    for (i = linesArr.length - 1, start = 0; i >= start; i--) {
+    for (let i = linesArr.length - 1, start = 0; i >= start; i--) {
       if (existy(linesArr[i]) && !empty(linesArr[i])) {
         whereToPlaceIt = i + 2
         break
@@ -121,7 +147,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 6: assemble the new chunk - array of new lines
+  // stage 7: assemble the new chunk - array of new lines
 
   temp = []
   missingFooterLinks.forEach(function (key) {
@@ -132,25 +158,32 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 7: insert new rows into linesArr
+  // stage 8: insert new rows into linesArr
 
   newLinesArr = insert(linesArr, temp, whereToPlaceIt)
 
   // =======
-  // stage 8: prepare for checking are footerLinks correct.
-  // calculate title and footeLinks again, this time including our additions
+  // stage 9: prepare for checking are footerLinks correct.
+  // calculate title and footerLinks again, this time, including our additions
 
   temp = getTitlesAndFooterLinks(newLinesArr)
   titles = temp.titles
   footerLinks = temp.footerLinks
 
   // =======
-  // stage 9: check all footerLinks
+  // stage 10: check all footerLinks
 
-  for (i = 0, len = footerLinks.length; i < len; i++) {
+  for (let i = 0, len = footerLinks.length; i < len; i++) {
     var extracted = getRepoInfo(footerLinks[i].content)
-    if ((extracted.user !== packageJson.user) || (extracted.project !== packageJson.project)) {
-      footerLinks[i].content = setRepoInfo(footerLinks[i].content, packageJson.user, packageJson.project)
+    if (
+      (extracted.user !== packageJson.user) ||
+      (extracted.project !== packageJson.project)
+    ) {
+      footerLinks[i].content = setRepoInfo(
+        footerLinks[i].content,
+        packageJson.user,
+        packageJson.project
+      )
       //
       // write over:
       //
@@ -159,7 +192,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // ========
-  // stage 10: sort all footer links, depending on a current preference
+  // stage 11: sort all footer links, depending on a current preference
 
   temp = clone(footerLinks).sort(versionSort)
   if (!ascending) {
@@ -171,23 +204,41 @@ function chlu (changelogContents, packageJsonContents) {
   })
 
   // ========
-  // stage 11: add trailing empty line if it's missing:
+  // stage 12: add trailing empty line if it's missing:
 
   if (newLinesArr[newLinesArr.length - 1] !== '') {
     newLinesArr.push('')
   }
 
   // ========
-  // stage 12: add any missing line break before footer links
+  // stage 13: add any missing line break before footer links
 
-  footerLinks = getTitlesAndFooterLinks(newLinesArr).footerLinks
+  titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr)
+  titles = titlesAndFooterLinks.titles
+  footerLinks = titlesAndFooterLinks.footerLinks
 
   if (
     existy(footerLinks) &&
     (footerLinks.length > 0) &&
-    !empty(getRow((footerLinks[0].rowNum - 1), newLinesArr))
+    !empty(getRow(newLinesArr, (footerLinks[0].rowNum - 1)))
   ) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, '')
+  }
+
+  // ========
+  // stage 14: normalise titles
+
+  var gitStuffReadyYet = false
+
+  if (gitStuffReadyYet) {
+    // TODO: implement lookup against .git logs
+  } else {
+    titles.forEach(function (title, index) {
+      let fixedDate = dd(filterDate(title.afterVersion))
+      if (fixedDate !== null) {
+        newLinesArr = setRow(newLinesArr, title.rowNum, `## ${title.version !== sortedTitlesArray[0] ? '[' : ''}${title.version}${title.version !== sortedTitlesArray[0] ? ']' : ''} - ${fixedDate}`)
+      }
+    })
   }
 
   return newLinesArr.join('\n')

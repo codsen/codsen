@@ -1,11 +1,17 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-      "mute": [ "ava", "coveralls", "husky", "nyc" ]
+    "mute": [
+      "ava",
+      "coveralls"
+    ]
   },
   "test": [
-    "test.js"
+    "test/test-end2end.js",
+    "test/test-util.js"
   ]
 }

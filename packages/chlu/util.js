@@ -3,6 +3,7 @@
 const cmp = require('semver-compare')
 const clone = require('lodash.clonedeep')
 const isNum = require('is-natural-number')
+const trim = require('lodash.trim')
 
 // REGEXES
 // -----------------------------------------------------------------------------
@@ -30,11 +31,14 @@ function getTitlesAndFooterLinks (linesArr) {
   var i, len, temp
   for (i = 0, len = linesArr.length; i < len; i++) {
     if (isTitle(linesArr[i])) {
+      let firstEncounteredVersion = linesArr[i].match(versionWithoutBracketsRegex)[0]
       titles.push({
-        version: linesArr[i].match(versionWithoutBracketsRegex)[0],
+        version: firstEncounteredVersion,
         rowNum: i,
         linked: existy(linesArr[i].match(versionWithBracketsRegex)),
-        content: linesArr[i]
+        content: linesArr[i],
+        beforeVersion: linesArr[i].split(firstEncounteredVersion)[0],
+        afterVersion: linesArr[i].split(firstEncounteredVersion)[1]
       })
     } else if (isFooterLink(linesArr[i])) {
       temp = linesArr[i].match(versionWithBracketsRegex)[0]
@@ -100,26 +104,26 @@ function getPreviousVersion (currVers, versionsArr) {
   throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (' + currVers + ') is not in the versions array (' + JSON.stringify(versionsArr, null, 4) + ')')
 }
 
-function setRow (arr, row, content) {
-  var res = clone(arr)
+function setRow (rowsArray, index, content) {
+  var res = clone(rowsArray)
   for (var i = 0, len = res.length; i < len; i++) {
-    if (i === row) {
+    if (i === index) {
       res[i] = content
     }
   }
   return res
 }
 
-function getRow (num, arr) {
-  if (!existy(num) || !isNum(num)) {
-    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it\'s given as: ' + typeof num + ' and equal: ' + JSON.stringify(num, null, 4))
+function getRow (rowsArray, index) {
+  if (!existy(index) || !isNum(index)) {
+    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it\'s given as: ' + typeof index + ' and equal: ' + JSON.stringify(index, null, 4))
   }
-  if (!existy(arr) || !isArr(arr)) {
-    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an array. Currently it\'s given as: ' + typeof arr + ' and equal: ' + JSON.stringify(arr, null, 4))
+  if (!existy(rowsArray) || !isArr(rowsArray)) {
+    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it\'s given as: ' + typeof rowsArray + ' and equal: ' + JSON.stringify(rowsArray, null, 4))
   }
-  for (var i = 0, len = arr.length; i < len; i++) {
-    if (i === num) {
-      return arr[i]
+  for (var i = 0, len = rowsArray.length; i < len; i++) {
+    if (i === index) {
+      return rowsArray[i]
     }
   }
   return null
@@ -160,6 +164,12 @@ function versionSort (a, b) {
   return cmp(a.version, b.version)
 }
 
+function filterDate (someString) {
+  let res = someString.trim()
+  res = trim(res, '- []()')
+  return res
+}
+
 // FIN
 // -----------------------------------------------------------------------------
 
@@ -175,5 +185,6 @@ module.exports = {
   getRepoInfo: getRepoInfo,
   setRepoInfo: setRepoInfo,
   aContainsB: aContainsB,
-  versionSort: versionSort
+  versionSort: versionSort,
+  filterDate: filterDate
 }
