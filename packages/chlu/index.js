@@ -84,14 +84,14 @@ function chlu (changelogContents, packageJsonContents) {
     linesArr.splice(unusedFooterLinks[0]['rowNum'], 1)
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks
     unusedFooterLinks = footerLinks.filter(
-      (link) => {
+      link => {
         return !includes(titles.map(title => title.version), link.version)
       }
     )
   }
 
   // =======
-  // stage 3: create footer links for all titles except the smallest version-one
+  // stage 4: create footer links for all titles except the smallest version-one
 
   var missingFooterLinks = []
   for (let i = 0, len = titles.length; i < len; i++) {
@@ -106,7 +106,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 4: find out what is the order of footer links
+  // stage 5: find out what is the order of footer links
 
   var ascendingFooterLinkCount = 0
   var descendingFooterLinkCount = 0
@@ -140,7 +140,6 @@ function chlu (changelogContents, packageJsonContents) {
         whereToPlaceIt = i + 2
         break
       }
-      // TODO: Remember to add a blank line at the bottom!
     }
   } else {
     whereToPlaceIt = footerLinks[0].rowNum

@@ -73,3 +73,7 @@ test('10. redundant footer links present, no git logs in context', (t) => {
 test('11. title dates are in wrong formats, no git logs in context', (t) => {
   return compare(t, '11_wrong_dates')
 })
+
+test.skip('12. footer links match titles but have wrong versions in URLs', (t) => {
+  return compare(t, '12_wrong_footer_link_versions')
+})

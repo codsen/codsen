@@ -1,0 +1,54 @@
+{
+  "name": "correct-lib",
+  "version": "1.2.0",
+  "description": "Does many fancy things",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codsen/correct-lib.git"
+  },
+  "keywords": [
+    "aaaaaaa",
+    "bbbbbbb",
+    "ccccccc",
+    "ddddddd",
+    "eeeeeee",
+    "fffffff",
+    "ggggggg",
+    "hhhhhhh",
+    "jjjjjjj",
+    "kkkkkkk"
+  ],
+  "author": "Roy Reveltas <roy@codsen.com> (http://codsen.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/correct-lib/issues"
+  },
+  "homepage": "https://github.com/codsen/correct-lib#readme",
+  "dependencies": {
+    "is-string-int": "^1.0.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.includes": "^4.3.0",
+    "object-assign": "^4.1.1",
+    "str-indexes-of-plus": "^1.0.1",
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.2"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
