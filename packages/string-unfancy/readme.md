@@ -40,9 +40,11 @@ $ npm i -S string-unfancy
 
 ## Idea
 
-This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. It is convenient when coding email templates when you want to ensure only simple characters are within `alt` attributes.
+This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. It is convenient when coding email templates and you want to ensure only simple characters are within `alt` attributes.
 
 The list of covered characters includes all kinds of single quotes, double quotes, dashes and the non-breaking space.
+
+Also, this library will recursively decode any HTML entities before performing the replacement.
 
 ## Usage
 
