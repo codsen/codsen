@@ -1,3 +1,12 @@
+<h1 align="center">
+  <br>
+  <br>
+  <img width="400" src="https://cdn.rawgit.com/codsen/string-unfancy/59e8cfc1/media/logo.png" alt="string-unfancy">
+  <br>
+  <br>
+  <br>
+</h1>
+
 # string-unfancy
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
