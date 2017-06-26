@@ -1,0 +1,52 @@
+{
+  "name": "string-unfancy",
+  "version": "1.0.0",
+  "description": "Replace all fancy dashes, quotes etc with their simpler equivalents",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": "codsen/string-unfancy",
+  "keywords": [
+    "string",
+    "characters",
+    "replace",
+    "email",
+    "templates",
+    "alt",
+    "tags",
+    "attributes",
+    "fancy",
+    "simple",
+    "quote",
+    "dash"
+  ],
+  "author": {
+    "name": "Roy Reveltas",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/string-unfancy/issues"
+  },
+  "homepage": "https://github.com/codsen/string-unfancy#readme",
+  "dependencies": {
+    "he": "^1.1.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.2"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
