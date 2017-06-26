@@ -38,6 +38,7 @@
     "just-insert": "^1.0.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
+    "lodash.min": "^4.0.1",
     "lodash.reverse": "^4.0.1",
     "lodash.trim": "^4.5.1",
     "posthtml-ast-contains-only-empty-space": "^1.6.0",

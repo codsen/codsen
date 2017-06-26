@@ -2,174 +2,307 @@
 /* eslint no-template-curly-in-string: 0 */
 
 const test = require('ava')
-const { isTitle, isFooterLink, getPreviousVersion, aContainsB, setRepoInfo, getRow, filterDate } = require('../util')
+const { isTitle, isFooterLink, getPreviousVersion, aContainsB, getSetFooterLink, getRow, filterDate } = require('../util')
 
 // isTitle
 // -------
 
-test('01.01 - isTitle() - negative result', function (t) {
-  t.is(isTitle(''), false, '01.01.01')
-  t.is(isTitle('a.a.a'), false, '01.01.02')
-  t.is(isTitle('a.a.a.'), false, '01.01.03')
-  t.is(isTitle('## a.a.a'), false, '01.01.04')
-  t.is(isTitle('## [a.a.a] - 2017-04-24'), false, '01.01.05')
-  t.is(isTitle('## [1.a.a] - 2017-04-24'), false, '01.01.06')
-  t.is(isTitle('## [1.a.a](http://codsen.com)'), false, '01.01.07')
-  t.is(isTitle('## [1.a.a]: http://codsen.com'), false, '01.01.08')
-  t.is(isTitle('## [1.a.a]:http://codsen.com'), false, '01.01.09')
-  t.is(isTitle('[1.a.a]:http://codsen.com'), false, '01.01.10')
-  t.is(isTitle('1.a.a:http://codsen.com'), false, '01.01.11')
+test('01.01 - isTitle() - negative result', t => {
+  t.deepEqual(isTitle(''), false, '01.01.01')
+  t.deepEqual(isTitle('a.a.a'), false, '01.01.02')
+  t.deepEqual(isTitle('a.a.a.'), false, '01.01.03')
+  t.deepEqual(isTitle('## a.a.a'), false, '01.01.04')
+  t.deepEqual(isTitle('## [a.a.a] - 2017-04-24'), false, '01.01.05')
+  t.deepEqual(isTitle('## [1.a.a] - 2017-04-24'), false, '01.01.06')
+  t.deepEqual(isTitle('## [1.a.a](http://codsen.com)'), false, '01.01.07')
+  t.deepEqual(isTitle('## [1.a.a]: http://codsen.com'), false, '01.01.08')
+  t.deepEqual(isTitle('## [1.a.a]:http://codsen.com'), false, '01.01.09')
+  t.deepEqual(isTitle('[1.a.a]:http://codsen.com'), false, '01.01.10')
+  t.deepEqual(isTitle('1.a.a:http://codsen.com'), false, '01.01.11')
 })
 
-test('01.02 - isTitle() - positive result', function (t) {
-  t.is(isTitle('## [1.2.0] - 2017-04-24'), true, '01.02.01')
-  t.is(isTitle('## [1.2.0]'), true, '01.02.02')
-  t.is(isTitle('## [1.2.0] aaa'), true, '01.02.03')
-  t.is(isTitle('# [1.2.0]'), true, '01.02.04')
-  t.is(isTitle('[1.2.0]'), true, '01.02.05')
-  t.is(isTitle('[1.2.0] Text'), true, '01.02.06')
-  t.is(isTitle('1.2.0 Text'), true, '01.02.07')
+test('01.02 - isTitle() - positive result', t => {
+  t.deepEqual(isTitle('## [1.2.0] - 2017-04-24'), true, '01.02.01')
+  t.deepEqual(isTitle('## [1.2.0]'), true, '01.02.02')
+  t.deepEqual(isTitle('## [1.2.0] aaa'), true, '01.02.03')
+  t.deepEqual(isTitle('# [1.2.0]'), true, '01.02.04')
+  t.deepEqual(isTitle('[1.2.0]'), true, '01.02.05')
+  t.deepEqual(isTitle('[1.2.0] Text'), true, '01.02.06')
+  t.deepEqual(isTitle('1.2.0 Text'), true, '01.02.07')
 })
 
-test('01.03 - isTitle() - non-semver, 2 digits only', function (t) {
-  t.is(isTitle('## [1.2] - 2017-04-24'), true, '01.03.01')
-  t.is(isTitle('## [1.2]'), true, '01.03.02')
-  t.is(isTitle('## [1.2] aaa'), true, '01.03.03')
-  t.is(isTitle('# [1.2]'), true, '01.03.04')
-  t.is(isTitle('[1.2]'), true, '01.03.05')
-  t.is(isTitle('[1.2] Text'), true, '01.03.06')
-  t.is(isTitle('1.2 Text'), true, '01.03.07')
+test('01.03 - isTitle() - non-semver, 2 digits only', t => {
+  t.deepEqual(isTitle('## [1.2] - 2017-04-24'), true, '01.03.01')
+  t.deepEqual(isTitle('## [1.2]'), true, '01.03.02')
+  t.deepEqual(isTitle('## [1.2] aaa'), true, '01.03.03')
+  t.deepEqual(isTitle('# [1.2]'), true, '01.03.04')
+  t.deepEqual(isTitle('[1.2]'), true, '01.03.05')
+  t.deepEqual(isTitle('[1.2] Text'), true, '01.03.06')
+  t.deepEqual(isTitle('1.2 Text'), true, '01.03.07')
 })
 
-test('01.04 - isTitle() - three hashes, H3', function (t) {
-  t.is(isTitle('### [1.2.0] - 2017-04-24'), true, '01.04.01')
-  t.is(isTitle('### [1.2.0]'), true, '01.04.02')
-  t.is(isTitle('### [1.2.0] aaa'), true, '01.04.03')
+test('01.04 - isTitle() - three hashes, H3', t => {
+  t.deepEqual(isTitle('### [1.2.0] - 2017-04-24'), true, '01.04.01')
+  t.deepEqual(isTitle('### [1.2.0]'), true, '01.04.02')
+  t.deepEqual(isTitle('### [1.2.0] aaa'), true, '01.04.03')
 })
 
-test('01.05 - isTitle() - four hashes, H4', function (t) {
-  t.is(isTitle('#### [1.2.0] - 2017-04-24'), true, '01.05.01')
-  t.is(isTitle('#### [1.2.0]'), true, '01.05.02')
-  t.is(isTitle('#### [1.2.0] aaa'), true, '01.05.03')
+test('01.05 - isTitle() - four hashes, H4', t => {
+  t.deepEqual(isTitle('#### [1.2.0] - 2017-04-24'), true, '01.05.01')
+  t.deepEqual(isTitle('#### [1.2.0]'), true, '01.05.02')
+  t.deepEqual(isTitle('#### [1.2.0] aaa'), true, '01.05.03')
 })
 
-test('01.05 - isTitle() - all kinds of throws', function (t) {
-  t.throws(function () { isTitle(1) })
-  t.throws(function () { isTitle(true) })
-  t.throws(function () { isTitle(null) })
-  t.notThrows(function () { isTitle(undefined) })
-  t.notThrows(function () { isTitle('zzz') })
+test('01.05 - isTitle() - all kinds of throws', t => {
+  t.throws(() => isTitle(1))
+  t.throws(() => isTitle(true))
+  t.throws(() => isTitle(null))
+  t.notThrows(() => isTitle(undefined))
+  t.notThrows(() => isTitle('zzz'))
 })
 
 // isFooterLink
 // ------------
 
-test('02.01 - isFooterLink() - negative result', function (t) {
-  t.is(isFooterLink(''), false, '02.01.01')
-  t.is(isFooterLink(), false, '02.01.02')
-  t.is(isFooterLink('[1.1.0](https://github.com)'), false, '02.01.03')
-  t.is(isFooterLink('1.1.0: https://github.com'), false, '02.01.04')
-  t.is(isFooterLink('[1.1.0](github.com)'), false, '02.01.05')
+test('02.01 - isFooterLink() - negative result', t => {
+  t.deepEqual(isFooterLink(''), false, '02.01.01')
+  t.deepEqual(isFooterLink(), false, '02.01.02')
+  t.deepEqual(isFooterLink('[1.1.0](https://github.com)'), false, '02.01.03')
+  t.deepEqual(isFooterLink('1.1.0: https://github.com'), false, '02.01.04')
+  t.deepEqual(isFooterLink('[1.1.0](github.com)'), false, '02.01.05')
 })
 
-test('02.02 - isFooterLink() - positive result', function (t) {
-  t.is(isFooterLink('[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.0...v1.1.0'), true, '02.02.01')
-  t.is(isFooterLink('[1.1.0]: https://github.com'), true, '02.02.02')
+test('02.02 - isFooterLink() - positive result', t => {
+  t.deepEqual(isFooterLink('[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.0...v1.1.0'), true, '02.02.01')
+  t.deepEqual(isFooterLink('[1.1.0]: https://github.com'), true, '02.02.02')
 })
 
-test('02.03 - isFooterLink() - all kinds of throws', function (t) {
-  t.throws(function () { isFooterLink(1) })
-  t.throws(function () { isFooterLink(true) })
-  t.throws(function () { isFooterLink(null) })
-  t.notThrows(function () { isFooterLink(undefined) })
-  t.notThrows(function () { isFooterLink('zzz') })
+test('02.03 - isFooterLink() - all kinds of throws', t => {
+  t.throws(() => isFooterLink(1))
+  t.throws(() => isFooterLink(true))
+  t.throws(() => isFooterLink(null))
+  t.notThrows(() => isFooterLink(undefined))
+  t.notThrows(() => isFooterLink('zzz'))
 })
 
 // getPreviousVersion
 // ------------------
 
-test('03.01 - getPreviousVersion() - various throws', function (t) {
-  t.throws(function () { getPreviousVersion() })
-  t.throws(function () { getPreviousVersion('zzz') })
-  t.throws(function () { getPreviousVersion(1, ['zzz']) })
-  t.throws(function () { getPreviousVersion(1, 1) })
-  t.throws(function () { getPreviousVersion('zzz', 1) })
-  t.throws(function () { getPreviousVersion('zzz', '1') })
-  t.throws(function () { getPreviousVersion('zzz', ['yyy']) })
+test('03.01 - getPreviousVersion() - various throws', t => {
+  t.throws(() => getPreviousVersion())
+  t.throws(() => getPreviousVersion('zzz'))
+  t.throws(() => getPreviousVersion(1, ['zzz']))
+  t.throws(() => getPreviousVersion(1, 1))
+  t.throws(() => getPreviousVersion('zzz', 1))
+  t.throws(() => getPreviousVersion('zzz', '1'))
+  t.throws(() => getPreviousVersion('zzz', ['yyy']))
 })
 
-test('03.02 - getPreviousVersion() - BAU', function (t) {
-  t.is(getPreviousVersion(
+test('03.02 - getPreviousVersion() - BAU', t => {
+  t.deepEqual(getPreviousVersion(
     '1.1.0',
     ['1.1.0', '1.2.0', '1.3.0', '1.0.0']
   ), '1.0.0',
   '03.02.01')
-  t.is(getPreviousVersion(
+  t.deepEqual(getPreviousVersion(
     '3.0.0',
     ['1.0.0', '3.0.0', '2.0.0', '4.0.0']
   ), '2.0.0',
   '03.02.02')
 })
 
+test('03.03 - getPreviousVersion() - requesting previous of a first', t => {
+  t.deepEqual(getPreviousVersion(
+    '1.1.0',
+    ['1.1.0', '1.2.0', '1.3.0']
+  ), null,
+  '03.03')
+})
+
 // aContainsB
 // ------------------
 
-test('04.01 - aContainsB() - BAU', function (t) {
-  t.is(aContainsB('aaaaaabcdddddd', 'bc'),
+test('04.01 - aContainsB() - BAU', t => {
+  t.deepEqual(aContainsB('aaaaaabcdddddd', 'bc'),
   true,
   '04.01.01')
-  t.is(aContainsB('aaaaaabcdddddd', null),
+  t.deepEqual(aContainsB('aaaaaabcdddddd', null),
   false,
   '04.01.02')
-  t.is(aContainsB('aaaaaabcdddddd'),
+  t.deepEqual(aContainsB('aaaaaabcdddddd'),
   false,
   '04.01.03')
 })
 
-// setRepoInfo
+// getSetFooterLink
 // -----------
 
-test('05.01 - setRepoInfo() - BAU', function (t) {
-  t.is(setRepoInfo(
+test('05.01 - getSetFooterLink() - sets correctly', t => {
+  t.deepEqual(getSetFooterLink(
     '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
-    'newUser',
-    'newProject'
+    {
+      user: 'newUser',
+      project: 'newProject'
+    }
   ),
   '[1.1.0]: https://github.com/newUser/newProject/compare/v1.0.1...v1.1.0',
   '05.01.01')
-  t.is(setRepoInfo(
+
+  t.deepEqual(getSetFooterLink(
     '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
-    'newUser'
+    {
+      user: 'newUser'
+    }
   ),
   '[1.1.0]: https://github.com/newUser/libName/compare/v1.0.1...v1.1.0',
   '05.01.02 - user only')
-  t.is(setRepoInfo(
+
+  t.deepEqual(getSetFooterLink(
     '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
-    null,
-    'package'
+    {
+      project: 'package'
+    }
   ),
   '[1.1.0]: https://github.com/userName/package/compare/v1.0.1...v1.1.0',
   '05.01.03 - package only')
+
+  t.deepEqual(getSetFooterLink(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    {
+      versBefore: '4.0.0'
+    }
+  ),
+  '[1.1.0]: https://github.com/userName/libName/compare/v4.0.0...v1.1.0',
+  '05.01.04 - versBefore only')
+
+  t.deepEqual(getSetFooterLink(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    {
+      versAfter: '5.0.0'
+    }
+  ),
+  '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v5.0.0',
+  '05.01.05 - versAfter only')
+
+  t.deepEqual(getSetFooterLink(
+    '[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    {
+      version: '9.9.9'
+    }
+  ),
+  '[9.9.9]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+  '05.01.06 - version only')
+
+  t.deepEqual(getSetFooterLink(
+    '[6.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0',
+    {
+      user: 'joe',
+      project: 'amazing',
+      versBefore: '8.0.44',
+      versAfter: '8.1.0',
+      version: '8.1.0'
+    }
+  ),
+  '[8.1.0]: https://github.com/joe/amazing/compare/v8.0.44...v8.1.0',
+  '05.01.07 - all')
+})
+
+test('08.01 - getSetFooterLink() - gets correctly', t => {
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0'
+    ),
+    {
+      user: 'userName',
+      project: 'libName',
+      versBefore: '1.0.1',
+      versAfter: '1.1.0',
+      version: '999.88.7'
+    },
+    '08.01.01'
+  )
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0', null
+    ),
+    {
+      user: 'userName',
+      project: 'libName',
+      versBefore: '1.0.1',
+      versAfter: '1.1.0',
+      version: '999.88.7'
+    },
+    '08.01.02 - null as second arg'
+  )
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/vv1.0.1...vv1.1.0'
+    ),
+    {
+      user: 'userName',
+      project: 'libName',
+      versBefore: '1.0.1',
+      versAfter: '1.1.0',
+      version: '999.88.7'
+    },
+    '08.01.03 - error with double v - still OK'
+  )
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/1.0.1...1.1.0'
+    ),
+    {
+      user: 'userName',
+      project: 'libName',
+      versBefore: '1.0.1',
+      versAfter: '1.1.0',
+      version: '999.88.7'
+    },
+    '08.01.04 - characters "v" missing completely'
+  )
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/1.0.1...vv1.1.0'
+    ),
+    {
+      user: 'userName',
+      project: 'libName',
+      versBefore: '1.0.1',
+      versAfter: '1.1.0',
+      version: '999.88.7'
+    },
+    '08.01.05 - one missing, one double v'
+  )
+})
+
+test('08.02 - getSetFooterLink() - get errors out returning null when link is erroneous', t => {
+  t.deepEqual(
+    getSetFooterLink(
+      '[999.88.7]: https://github.com/userName/libName/compare/v1.0.1'
+    ),
+    null,
+    '08.02.01'
+  )
 })
 
 // getRow
 // ------
 
-test('06.01 - getRow() - all kinds of throws', function (t) {
-  t.throws(function () { getRow(1) })
-  t.throws(function () { getRow('a') })
-  t.throws(function () { getRow(1, 1) })
-  t.throws(function () { getRow(1.5, ['a']) })
+test('06.01 - getRow() - all kinds of throws', t => {
+  t.throws(() => getRow(1))
+  t.throws(() => getRow('a'))
+  t.throws(() => getRow(1, 1))
+  t.throws(() => getRow(1.5, ['a']))
 })
 
-test('06.02 - getRow() - BAU', function (t) {
-  t.is(getRow(
+test('06.02 - getRow() - BAU', t => {
+  t.deepEqual(getRow(
     ['aaa', 'bbb', 'ccc'],
     2
   ),
   'ccc',
   '06.02.01 - found')
-  t.is(getRow(
+  t.deepEqual(getRow(
     ['aaa', 'bbb', 'ccc'],
     99
   ),
@@ -180,23 +313,23 @@ test('06.02 - getRow() - BAU', function (t) {
 // filterDate
 // ----------
 
-test('07.01 - filterDate() - filters out date string', function (t) {
-  t.is(filterDate(' ]  (March 1st, 2017)'),
+test('07.01 - filterDate() - filters out date string', t => {
+  t.deepEqual(filterDate(' ]  (March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.01')
-  t.is(filterDate(']  (March 1st, 2017)'),
+  '07.01.01')
+  t.deepEqual(filterDate(']  (March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.02')
-  t.is(filterDate('   (March 1st, 2017)'),
+  '07.01.02')
+  t.deepEqual(filterDate('   (March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.03')
-  t.is(filterDate('((March 1st, 2017)'),
+  '07.01.03')
+  t.deepEqual(filterDate('((March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.04')
-  t.is(filterDate('(March 1st, 2017)'),
+  '07.01.04')
+  t.deepEqual(filterDate('(March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.05')
-  t.is(filterDate('March 1st, 2017)'),
+  '07.01.05')
+  t.deepEqual(filterDate('March 1st, 2017)'),
   'March 1st, 2017',
-  '06.01.06')
+  '07.01.06')
 })

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-06-26
+### Changed
+- ✨ Merged getRepoInfo and setRepoInfo. This might prevent some bugs when both algorithms are not the same. I anticipate to improve getter/setter algorithms in the future and it's easier when both are within the same function. The only difference between getter and setter is presence of second argument - if it's not provided, it's get. If it is, it's set.
+### Added
+- ✨ Footer link versions within GitHub magic diff links are validated and fixed if necessary. Fixes in include wrong versions (before and/or after), missing or multiple letters `v` before version and complete rubbish within any of the parts of the footer link (like text instead of diff link's version, in the URL).
+- ✨ Empty lines between footer versions are deleted.
+- ✨ Added safeguards against some edge cases where footer links are broken but in a sneaky way similar to real-ones, like `[3.0.0.]: whatever`. Now they're recognised and removed (and new-ones, correct-ones are generated if needed).
+
 ## [1.3.0] - 2017-06-23
 ### Added
 - ✨ Now GitHub magic diff links will be added for all titles except the smallest version-one.
@@ -24,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - 🌟 First public release
 
+[2.0.0]: https://github.com/codsen/chlu/compare/v1.3.0...v2.0.0
 [1.3.0]: https://github.com/codsen/chlu/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/chlu/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/chlu/compare/v1.0.0...v1.1.0

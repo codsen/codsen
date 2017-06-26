@@ -74,6 +74,6 @@ test('11. title dates are in wrong formats, no git logs in context', (t) => {
   return compare(t, '11_wrong_dates')
 })
 
-test.skip('12. footer links match titles but have wrong versions in URLs', (t) => {
+test('12. footer links match titles but have wrong versions in URLs', (t) => {
   return compare(t, '12_wrong_footer_link_versions')
 })

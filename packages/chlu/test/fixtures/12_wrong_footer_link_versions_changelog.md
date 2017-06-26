@@ -23,4 +23,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     * Windows: skd lsjdlf lsjf sldjl fsjlfdksfjlsjflsj lsdk jlsj flsdkjf lsj
 
 [3.1.2]: https://github.com/codsen/correct-lib/compare/v3.1.0...v3.1.1
+
+
+
+
+
+[3.2.0]: https://github.com/codsen/correct-lib/compare/v3.1.0...v3.1.1
+
+
+
+
+
 [3.1.1]: https://github.com/codsen/correct-lib/compare/v3.1.0...whatever

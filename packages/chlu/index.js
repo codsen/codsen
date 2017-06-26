@@ -9,6 +9,7 @@ const empty = require('posthtml-ast-contains-only-empty-space')
 const insert = require('just-insert')
 const clone = require('lodash.clonedeep')
 const includes = require('lodash.includes')
+const min = require('lodash.min')
 const dd = require('dehumanize-date')
 
 // F'S
@@ -21,8 +22,7 @@ function existy (x) { return x != null }
 
 const getPreviousVersion = util.getPreviousVersion
 const getTitlesAndFooterLinks = util.getTitlesAndFooterLinks
-const getRepoInfo = util.getRepoInfo
-const setRepoInfo = util.setRepoInfo
+const getSetFooterLink = util.getSetFooterLink
 const setRow = util.setRow
 const getRow = util.getRow
 const versionSort = util.versionSort
@@ -66,14 +66,29 @@ function chlu (changelogContents, packageJsonContents) {
   footerLinks = titlesAndFooterLinks.footerLinks
 
   // =======
-  // stage 2: get the ordered array of all title versions
+  // stage 2: remove any invalid footer links
+
+  for (let i = 0, len = footerLinks.length; i < len; i++) {
+    if (!existy(getSetFooterLink(footerLinks[i].content))) {
+      linesArr.splice(footerLinks[i].rowNum, 1)
+    }
+  }
+
+  // recalculate:
+  titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr)
+  titles = titlesAndFooterLinks.titles
+  footerLinks = titlesAndFooterLinks.footerLinks
+
+  // =======
+  // stage 3: get the ordered array of all title versions
 
   var sortedTitlesArray = titles.map(function (el) {
     return el.version
   }).sort(serverCompare)
 
   // =======
-  // stage 3: find unused footer links
+  // stage 4: find unused footer links
+
   var unusedFooterLinks = footerLinks.filter(
     (link) => {
       return !includes(titles.map(title => title.version), link.version)
@@ -91,7 +106,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 4: create footer links for all titles except the smallest version-one
+  // stage 5: create footer links for all titles except the smallest version-one
 
   var missingFooterLinks = []
   for (let i = 0, len = titles.length; i < len; i++) {
@@ -106,7 +121,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 5: find out what is the order of footer links
+  // stage 6: find out what is the order of footer links
 
   var ascendingFooterLinkCount = 0
   var descendingFooterLinkCount = 0
@@ -127,7 +142,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 6: calculate what goes where
+  // stage 7: calculate what goes where
 
   var whereToPlaceIt
   // calculate the Where
@@ -146,7 +161,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 7: assemble the new chunk - array of new lines
+  // stage 8: assemble the new chunk - array of new lines
 
   temp = []
   missingFooterLinks.forEach(function (key) {
@@ -157,37 +172,45 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // =======
-  // stage 8: insert new rows into linesArr
+  // stage 9: insert new rows into linesArr
 
   newLinesArr = insert(linesArr, temp, whereToPlaceIt)
 
   // =======
-  // stage 9: prepare for checking are footerLinks correct.
+  // stage 10: prepare for checking are footerLinks correct.
   // calculate title and footerLinks again, this time, including our additions
 
   temp = getTitlesAndFooterLinks(newLinesArr)
   titles = temp.titles
   footerLinks = temp.footerLinks
 
-  // =======
-  // stage 10: check all footerLinks
-
   for (let i = 0, len = footerLinks.length; i < len; i++) {
-    var extracted = getRepoInfo(footerLinks[i].content)
-    if (
-      (extracted.user !== packageJson.user) ||
-      (extracted.project !== packageJson.project)
-    ) {
-      footerLinks[i].content = setRepoInfo(
-        footerLinks[i].content,
-        packageJson.user,
-        packageJson.project
-      )
-      //
-      // write over:
-      //
-      newLinesArr = setRow(newLinesArr, footerLinks[i].rowNum, footerLinks[i].content)
+    var extracted = getSetFooterLink(footerLinks[i].content)
+    if (extracted.versAfter !== extracted.version || extracted.versAfter !== footerLinks[i].version) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
+        versAfter: extracted.version
+      })
     }
+    // versBefore can't be lesser than the version of the previous title
+    if (
+      serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[i].version, sortedTitlesArray)) < 0
+    ) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
+        versBefore: getPreviousVersion(extracted.version, sortedTitlesArray)
+      })
+    }
+    if (extracted.user !== packageJson.user) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
+        user: packageJson.user
+      })
+    }
+    if (extracted.project !== packageJson.project) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
+        project: packageJson.project
+      })
+    }
+    // write over:
+    newLinesArr = setRow(newLinesArr, footerLinks[i].rowNum, footerLinks[i].content)
   }
 
   // ========
@@ -203,16 +226,27 @@ function chlu (changelogContents, packageJsonContents) {
   })
 
   // ========
-  // stage 12: add trailing empty line if it's missing:
+  // stage 12: delete empty rows between footer links:
+
+  let firstRowWithFooterLink = min(footerLinks.map(link => link.rowNum))
+  for (let i = firstRowWithFooterLink + 1, len = newLinesArr.length; i < len; i++) {
+    if ((newLinesArr[i] === '') || ((newLinesArr[i] !== undefined) && (newLinesArr[i].trim() === ''))) {
+      newLinesArr.splice(i, 1)
+      i--
+    }
+  }
+
+  // ========
+  // stage 13: add trailing empty line if it's missing:
 
   if (newLinesArr[newLinesArr.length - 1] !== '') {
     newLinesArr.push('')
   }
 
   // ========
-  // stage 13: add any missing line break before footer links
+  // stage 14: add any missing line break before footer links
 
-  titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr)
+  titlesAndFooterLinks = getTitlesAndFooterLinks(newLinesArr)
   titles = titlesAndFooterLinks.titles
   footerLinks = titlesAndFooterLinks.footerLinks
 
@@ -225,7 +259,7 @@ function chlu (changelogContents, packageJsonContents) {
   }
 
   // ========
-  // stage 14: normalise titles
+  // stage 15: normalise titles
 
   var gitStuffReadyYet = false
 

@@ -67,8 +67,8 @@ function isTitle (str) {
   return (
     (str.length > 0) &&
     existy(str.match(versionWithoutBracketsRegex)) &&
-    !aContainsB(str, 'http') &&
-    !aContainsB(str, ']:')
+    !str.includes('http') &&
+    !str.includes(']:')
   )
 }
 
@@ -81,7 +81,7 @@ function isFooterLink (str) {
   return (
     (str.length > 0) &&
     existy(str.match(versionWithBracketsRegex)) &&
-    aContainsB(str, ']: http')
+    aContainsB(str, ']:')
   )
 }
 
@@ -96,17 +96,24 @@ function getPreviousVersion (currVers, versionsArr) {
     throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be array. Currently it\'s ' + typeof versionsArr)
   }
   versionsArr = versionsArr.sort(cmp)
-  for (var i = 0, len = versionsArr.length; i < len; i++) {
+  // first, check if it's the first version from the versions array.
+  // in that case, there's no previous version, so we return null:
+  if (currVers === versionsArr[0]) {
+    return null
+  }
+  // next, iterate versions array and try to get the previous version:
+  for (let i = 0, len = versionsArr.length; i < len; i++) {
     if ((versionsArr[i] === currVers) && existy(versionsArr[i - 1])) {
       return versionsArr[i - 1]
     }
   }
+  // if nothing was found yet, throw:
   throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (' + currVers + ') is not in the versions array (' + JSON.stringify(versionsArr, null, 4) + ')')
 }
 
 function setRow (rowsArray, index, content) {
   var res = clone(rowsArray)
-  for (var i = 0, len = res.length; i < len; i++) {
+  for (let i = 0, len = res.length; i < len; i++) {
     if (i === index) {
       res[i] = content
     }
@@ -121,7 +128,7 @@ function getRow (rowsArray, index) {
   if (!existy(rowsArray) || !isArr(rowsArray)) {
     throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it\'s given as: ' + typeof rowsArray + ' and equal: ' + JSON.stringify(rowsArray, null, 4))
   }
-  for (var i = 0, len = rowsArray.length; i < len; i++) {
+  for (let i = 0, len = rowsArray.length; i < len; i++) {
     if (i === index) {
       return rowsArray[i]
     }
@@ -129,35 +136,42 @@ function getRow (rowsArray, index) {
   return null
 }
 
-// consumes link strings like "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
-// returns {user: "userName", project: "libName"}
-function getRepoInfo (str) {
-  var split = str.split('/')
-  var res = {}
-  // console.log('split = ' + JSON.stringify(split, null, 4))
-  for (var i = 0, len = split.length; i < len; i++) {
-    if (split[i] === 'github.com') {
-      res.user = split[i + 1]
-      res.project = split[i + 2]
-      break
-    }
+// gets and sets various pieces in strings of the format:
+// "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
+function getSetFooterLink (str, o) {
+  let mode
+  if (existy(o)) { mode = 'set' } else { mode = 'get'; o = {} }
+  if (
+    (typeof str !== 'string') ||
+    !str.includes('/')
+  ) {
+    return null
   }
-  return res
-}
+  let split = str.split('/')
+  let res = {}
 
-// consumes link strings like "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
-// and user (substitute for "userName" above)
-// and package name (substitute for "libName" above)
-// then writes them over and returns the new string.
-function setRepoInfo (str, newUser, newProject) {
-  var split = str.split('/')
-  for (var i = 0, len = split.length; i < len; i++) {
+  for (let i = 0, len = split.length; i < len; i++) {
     if (split[i] === 'github.com') {
-      split[i + 1] = existy(newUser) ? newUser : split[i + 1]
-      split[i + 2] = existy(newProject) ? newProject : split[i + 2]
+      res.user = existy(o.user) ? o.user : split[i + 1]
+      res.project = existy(o.project) ? o.project : split[i + 2]
+    } else if (split[i] === 'compare') {
+      if (split[i + 1].includes('...')) {
+        let splitVersions = split[i + 1].split('...')
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], 'v')
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], 'v')
+      } else {
+        // incurance against broken compare links:
+        return null
+      }
+    } else if (i === 0) {
+      res.version = existy(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0]
     }
   }
-  return split.join('/')
+  if (mode === 'get') {
+    return res
+  } else {
+    return `[${res.version}]: https://github.com/${res.user}/${res.project}/compare/v${res.versBefore}...v${res.versAfter}`
+  }
 }
 
 function versionSort (a, b) {
@@ -182,8 +196,7 @@ module.exports = {
   getRow: getRow,
   setRow: setRow,
   getTitlesAndFooterLinks: getTitlesAndFooterLinks,
-  getRepoInfo: getRepoInfo,
-  setRepoInfo: setRepoInfo,
+  getSetFooterLink: getSetFooterLink,
   aContainsB: aContainsB,
   versionSort: versionSort,
   filterDate: filterDate
