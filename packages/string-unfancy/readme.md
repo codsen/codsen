@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Replace all fancy dashes, quotes etc with their simpler equivalents
+> Replace all fancy dashes, quotes, etc. with their simpler equivalents
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -35,9 +35,9 @@ $ npm i -S string-unfancy
 
 ## Idea
 
-This library converts fancy strings like curly apostrophes into not fancy-ones, like a single quote. It is very handy when coding email templates, when you want to ensure only simple characters are within `alt` attributes.
+This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. It is convenient when coding email templates when you want to ensure only simple characters are within `alt` attributes.
 
-The list of coverted characters includes all kinds of single quotes, double quotes, dashes and the non-breaking space.
+The list of covered characters includes all kinds of single quotes, double quotes, dashes and the non-breaking space.
 
 ## Usage
 
