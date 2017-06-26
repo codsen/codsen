@@ -62,7 +62,7 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 
 ## API
 
-Simple: `string` in, `string` out.
+API is simple: `string` in, `string` out.
 Caveat: if the input is not a `string`, it returns `undefined` and does not `throw`.
 
 ## Example - treating the image alt attributes - Gulp and stream-tapping
