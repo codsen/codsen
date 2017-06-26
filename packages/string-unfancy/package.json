@@ -1,6 +1,6 @@
 {
   "name": "string-unfancy",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Replace all fancy dashes, quotes etc with their simpler equivalents",
   "main": "index.js",
   "scripts": {
