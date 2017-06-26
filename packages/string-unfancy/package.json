@@ -21,7 +21,9 @@
     "fancy",
     "simple",
     "quote",
-    "dash"
+    "dash",
+    "remove",
+    "encoding"
   ],
   "author": {
     "name": "Roy Reveltas",
