@@ -1,9 +1,5 @@
 <h1 align="center">
-  <br>
-  <br>
   <img width="400" src="https://cdn.rawgit.com/codsen/string-unfancy/59e8cfc1/media/logo.png" alt="string-unfancy">
-  <br>
-  <br>
   <br>
 </h1>
 
