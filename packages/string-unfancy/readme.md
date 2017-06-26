@@ -83,7 +83,7 @@ Then, tap your main build task's stream, probably towards the end of the pipelin
 .pipe(tap((file) => {
   file.contents = Buffer.from(unfancy(file.contents.toString()))
 }))
-.pipe(gulp.dest('dist')) // that's the final write happening, your might be different
+.pipe(gulp.dest('dist')) // that's the final write happening, your's might be different
 ...
 ```
 
