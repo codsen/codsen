@@ -26,7 +26,7 @@
 ## Install
 
 ```sh
-$ npm i -S chlu
+$ npm i -g chlu-cli
 ```
 
 ## What it does
