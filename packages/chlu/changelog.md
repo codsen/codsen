@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2017-06-28
+### Added
+- ✨ Added n-dash, m-dash, tab, comma, full stop and non-breaking space to the list of what's being trimmed after link titles. This means, bigger variation of non-standard titles would get recognised and there will be less chance that the remainder will not get recognised by `dehumanize-date`.
+
 ## [2.0.0] - 2017-06-26
 ### Changed
 - ✨ Merged getRepoInfo and setRepoInfo. This might prevent some bugs when both algorithms are not the same. I anticipate to improve getter/setter algorithms in the future and it's easier when both are within the same function. The only difference between getter and setter is presence of second argument - if it's not provided, it's get. If it is, it's set.
@@ -32,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - 🌟 First public release
 
+[2.1.0]: https://github.com/codsen/chlu/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/chlu/compare/v1.3.0...v2.0.0
 [1.3.0]: https://github.com/codsen/chlu/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/chlu/compare/v1.1.0...v1.2.0

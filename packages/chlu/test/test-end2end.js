@@ -3,7 +3,6 @@
 /* eslint padded-blocks: 0 */
 
 const test = require('ava')
-
 const c = require('..')
 const {readFileSync} = require('fs')
 const path = require('path')

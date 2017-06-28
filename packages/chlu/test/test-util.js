@@ -332,4 +332,10 @@ test('07.01 - filterDate() - filters out date string', t => {
   t.deepEqual(filterDate('March 1st, 2017)'),
   'March 1st, 2017',
   '07.01.06')
+  t.deepEqual(filterDate(', 1st of March 2017)'),
+  '1st of March 2017',
+  '07.01.07')
+  t.deepEqual(filterDate(' \u2014 March 1st, 2017)'),
+  'March 1st, 2017',
+  '07.01.08')
 })

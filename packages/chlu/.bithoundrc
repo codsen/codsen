@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "mute": [
-      "ava",
       "coveralls"
     ]
   },
