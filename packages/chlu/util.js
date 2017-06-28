@@ -180,7 +180,7 @@ function versionSort (a, b) {
 
 function filterDate (someString) {
   let res = someString.trim()
-  res = trim(res, '-\u2013\u2014 [](),.\t\u00A0')
+  res = trim(res, ' [](),.-\u2013\u2014\t\u00A0')
   return res
 }
 
