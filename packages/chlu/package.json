@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "2.1.0",
+  "version": "2.0.0",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "main": "index.js",
   "engines": {
@@ -9,7 +9,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test && doctoc README.md",
-    "test": "standard --verbose | snazzy && nyc --reporter=html --reporter=text ava",
+    "test": "standard --verbose && nyc --reporter=html --reporter=text ava",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/chlu",
@@ -46,12 +46,11 @@
     "split-lines": "^1.1.0"
   },
   "devDependencies": {
-    "ava": "^0.20.0",
+    "ava": "*",
     "coveralls": "*",
-    "husky": "^0.14.0",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
-    "snazzy": "^7.0.0",
+    "husky": "*",
+    "nodemon": "*",
+    "nyc": "*",
     "standard": "^10.0.0"
   },
   "ava": {

@@ -6,7 +6,11 @@
   },
   "dependencies": {
     "mute": [
-      "coveralls"
+      "ava",
+      "coveralls",
+      "husky",
+      "nodemon",
+      "nyc"
     ]
   },
   "test": [
