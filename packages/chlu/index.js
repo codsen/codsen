@@ -194,6 +194,7 @@ function chlu (changelogContents, packageJsonContents) {
     }
     // versBefore can't be lesser than the version of the previous title
     if (
+      existy(getPreviousVersion(footerLinks[i].version, sortedTitlesArray)) &&
       serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[i].version, sortedTitlesArray)) < 0
     ) {
       footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {

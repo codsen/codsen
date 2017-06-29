@@ -14,12 +14,19 @@
   },
   "repository": "codsen/chlu",
   "keywords": [
-    "choose",
-    "folder",
-    "list",
-    "cli",
-    "pipe",
-    "commands"
+    "update",
+    "changelog",
+    "change",
+    "log",
+    "fix",
+    "errors",
+    "missing",
+    "links",
+    "markdown",
+    "correct",
+    "automatically",
+    "automated",
+    "tool"
   ],
   "author": {
     "name": "Roy Reveltas",
