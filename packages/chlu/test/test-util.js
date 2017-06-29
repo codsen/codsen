@@ -19,6 +19,20 @@ test('01.01 - isTitle() - negative result', t => {
   t.deepEqual(isTitle('## [1.a.a]:http://codsen.com'), false, '01.01.09')
   t.deepEqual(isTitle('[1.a.a]:http://codsen.com'), false, '01.01.10')
   t.deepEqual(isTitle('1.a.a:http://codsen.com'), false, '01.01.11')
+  t.deepEqual(isTitle(`some text
+some more text 1.0.0 and
+[1.0.0](http://codsen.com)
+whatever
+  `), false, '01.01.12')
+  t.deepEqual(isTitle(`some text
+some more text 1.0 and
+[1.0.0](http://codsen.com)
+whatever
+  `), false, '01.01.13')
+  t.deepEqual(isTitle(`some text 1.0.0 and more text`), false, '01.01.14')
+  t.deepEqual(isTitle(`some text 1.0 and more text`), false, '01.01.15')
+  t.deepEqual(isTitle(`* some text 1.0.0 and more text`), false, '01.01.14')
+  t.deepEqual(isTitle(`- some text 1.0 and more text`), false, '01.01.15')
 })
 
 test('01.02 - isTitle() - positive result', t => {
@@ -207,7 +221,7 @@ test('05.01 - getSetFooterLink() - sets correctly', t => {
   '05.01.07 - all')
 })
 
-test('08.01 - getSetFooterLink() - gets correctly', t => {
+test('06.01 - getSetFooterLink() - gets correctly', t => {
   t.deepEqual(
     getSetFooterLink(
       '[999.88.7]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0'
@@ -219,7 +233,7 @@ test('08.01 - getSetFooterLink() - gets correctly', t => {
       versAfter: '1.1.0',
       version: '999.88.7'
     },
-    '08.01.01'
+    '06.01.01'
   )
   t.deepEqual(
     getSetFooterLink(
@@ -232,7 +246,7 @@ test('08.01 - getSetFooterLink() - gets correctly', t => {
       versAfter: '1.1.0',
       version: '999.88.7'
     },
-    '08.01.02 - null as second arg'
+    '06.01.02 - null as second arg'
   )
   t.deepEqual(
     getSetFooterLink(
@@ -245,7 +259,7 @@ test('08.01 - getSetFooterLink() - gets correctly', t => {
       versAfter: '1.1.0',
       version: '999.88.7'
     },
-    '08.01.03 - error with double v - still OK'
+    '06.01.03 - error with double v - still OK'
   )
   t.deepEqual(
     getSetFooterLink(
@@ -258,7 +272,7 @@ test('08.01 - getSetFooterLink() - gets correctly', t => {
       versAfter: '1.1.0',
       version: '999.88.7'
     },
-    '08.01.04 - characters "v" missing completely'
+    '06.01.04 - characters "v" missing completely'
   )
   t.deepEqual(
     getSetFooterLink(
@@ -271,71 +285,71 @@ test('08.01 - getSetFooterLink() - gets correctly', t => {
       versAfter: '1.1.0',
       version: '999.88.7'
     },
-    '08.01.05 - one missing, one double v'
+    '06.01.05 - one missing, one double v'
   )
 })
 
-test('08.02 - getSetFooterLink() - get errors out returning null when link is erroneous', t => {
+test('06.02 - getSetFooterLink() - get errors out returning null when link is erroneous', t => {
   t.deepEqual(
     getSetFooterLink(
       '[999.88.7]: https://github.com/userName/libName/compare/v1.0.1'
     ),
     null,
-    '08.02.01'
+    '06.02.01'
   )
 })
 
 // getRow
 // ------
 
-test('06.01 - getRow() - all kinds of throws', t => {
+test('07.01 - getRow() - all kinds of throws', t => {
   t.throws(() => getRow(1))
   t.throws(() => getRow('a'))
   t.throws(() => getRow(1, 1))
   t.throws(() => getRow(1.5, ['a']))
 })
 
-test('06.02 - getRow() - BAU', t => {
+test('07.02 - getRow() - BAU', t => {
   t.deepEqual(getRow(
     ['aaa', 'bbb', 'ccc'],
     2
   ),
   'ccc',
-  '06.02.01 - found')
+  '07.02.01 - found')
   t.deepEqual(getRow(
     ['aaa', 'bbb', 'ccc'],
     99
   ),
   null,
-  '06.02.01 - not found')
+  '07.02.01 - not found')
 })
 
 // filterDate
 // ----------
 
-test('07.01 - filterDate() - filters out date string', t => {
+test('08.01 - filterDate() - filters out date string', t => {
   t.deepEqual(filterDate(' ]  (March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.01')
+  'March 1st 2017',
+  '08.01.01')
   t.deepEqual(filterDate(']  (March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.02')
+  'March 1st 2017',
+  '08.01.02')
   t.deepEqual(filterDate('   (March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.03')
+  'March 1st 2017',
+  '08.01.03')
   t.deepEqual(filterDate('((March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.04')
+  'March 1st 2017',
+  '08.01.04')
   t.deepEqual(filterDate('(March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.05')
+  'March 1st 2017',
+  '08.01.05')
   t.deepEqual(filterDate('March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.06')
+  'March 1st 2017',
+  '08.01.06')
   t.deepEqual(filterDate(', 1st of March 2017)'),
   '1st of March 2017',
-  '07.01.07')
+  '08.01.07')
   t.deepEqual(filterDate(' \u2014 March 1st, 2017)'),
-  'March 1st, 2017',
-  '07.01.08')
+  'March 1st 2017',
+  '08.01.08')
 })

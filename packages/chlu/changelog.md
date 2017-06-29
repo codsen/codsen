@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2017-06-29
+### Added
+- ✨ Avoids false positives coming from semver pattern used within regular text
+- ✨ Improved date extraction what will lead to less unrecognised dates in title
+
 ## [2.1.1] - 2017-06-28
 ### Added
 - ✨ Added n-dash, m-dash, tab, comma, full stop and non-breaking space to the list of what's being trimmed after link titles. This means, bigger variation of non-standard titles would get recognised and there will be less chance that the remainder will not get recognised by `dehumanize-date`.
@@ -41,3 +46,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.3.0]: https://github.com/codsen/chlu/compare/v1.2.0...v1.3.0
 [2.0.0]: https://github.com/codsen/chlu/compare/v1.3.0...v2.0.0
 [2.1.1]: https://github.com/codsen/chlu/compare/v2.0.0...v2.1.1
+[2.2.0]: https://github.com/codsen/chlu/compare/v2.1.1...v2.2.0

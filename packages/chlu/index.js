@@ -64,6 +64,7 @@ function chlu (changelogContents, packageJsonContents) {
   var titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr)
   titles = titlesAndFooterLinks.titles
   footerLinks = titlesAndFooterLinks.footerLinks
+  // console.log('titlesAndFooterLinks = ' + JSON.stringify(titlesAndFooterLinks, null, 4))
 
   // =======
   // stage 2: remove any invalid footer links

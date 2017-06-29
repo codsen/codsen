@@ -64,11 +64,21 @@ function isTitle (str) {
   } else if (!isStr(str)) {
     throw new TypeError('chlu/util.js/isTitle(): [THROW_ID_01] The input must be string')
   }
+  var stringInFrontOfVersion
+  if (existy(str.match(versionWithoutBracketsRegex))) {
+    stringInFrontOfVersion = str.split(str.match(versionWithoutBracketsRegex)[0])
+    if (stringInFrontOfVersion === null) {
+      stringInFrontOfVersion = ''
+    } else {
+      stringInFrontOfVersion = stringInFrontOfVersion[0]
+    }
+  }
   return (
     (str.length > 0) &&
     existy(str.match(versionWithoutBracketsRegex)) &&
     !str.includes('http') &&
-    !str.includes(']:')
+    !str.includes(']:') &&
+    (trim(stringInFrontOfVersion, '[# \t') === '')
   )
 }
 
@@ -180,6 +190,11 @@ function versionSort (a, b) {
 
 function filterDate (someString) {
   let res = someString.trim()
+  res = res.replace('.', ' ')
+  res = res.replace(',', ' ')
+  res = res.replace(';', ' ')
+  res = res.replace('  ', ' ')
+  res = res.replace('  ', ' ')
   res = trim(res, '[](),.- \u2013\u2014\t\u00A0')
   return res
 }
