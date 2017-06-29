@@ -123,6 +123,7 @@ Options object's key                    | Value   | Default | Description
 `ignoreKeys`                            | String  | n/a     | These keys, if present on `input1`, will be kept and not merged, that is, changed. You can use wildcards.
 `hardMergeKeys`                         | String  | n/a     | These keys, if present on `input2`, will overwrite their counterparts on `input1` (if present) no matter what. You can use wildcards.
 `mergeArraysContainingStringsToBeEmpty` | Boolean | `false` | If any arrays contain strings, resulting merged array will be empty IF this setting is set to `true`.
+`oneToManyArrayObjectMerge`             | Boolean | `false` | If one array has one object, but another array has many objects, when `oneToManyArrayObjectMerge` is `true`, each object from "many-objects" array will be merged with that one object from "one-object" array. Handy when setting defaults on JSON data structures.
 `}`                                     |         |         |
 
 `mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).

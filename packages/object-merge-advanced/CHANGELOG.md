@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.5.0] - 2017-06-29
+### Added
+- `opts.oneToManyArrayObjectMerge`. It's an essential feature when setting defaults on data structures in JSON. When your default values object has array with single object, but your working object has an array with many objects. That's one-to-many merge. `opts.oneToManyArrayObjectMerge` is off by default in order to keep the release semver "minor". 🦄
+
 ## [6.4.0] - 2017-06-02
 ### Changed
 - Slightly rebased so that there's 100% branch coverage too, not only statements/lines.
@@ -59,7 +63,7 @@ If none are present, `undefined` is returned as before.
 
 By the way, I needed this myself, placeholder default values in merged JSON files otherwise get duplicated. Now it's how it should be. 🍺
 
-## [2.0.0] - 2017-02-23
+## 2.0.0 - 2017-02-23
 ### Changed
 - Major API change. Input argument objects are not mutated any more. Function first clones what it later uses.
 - Adding tests for input argument mutation (`3.x` group).
@@ -76,3 +80,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [6.2.0]: https://github.com/codsen/object-merge-advanced/compare/v6.1.0...v6.2.0
 [6.3.0]: https://github.com/codsen/object-merge-advanced/compare/v6.2.0...v6.3.0
 [6.4.0]: https://github.com/codsen/object-merge-advanced/compare/v6.3.0...v6.4.0
+[6.5.0]: https://github.com/codsen/object-merge-advanced/compare/v6.4.0...v6.5.0

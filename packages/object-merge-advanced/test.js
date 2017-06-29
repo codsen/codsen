@@ -2467,11 +2467,250 @@ test('11.02 - OPTS > opts.hardMergeKeys', t => {
     '11.02.01')
 })
 
+// ==================================
+// 12. opts.oneToManyArrayObjectMerge
+// ==================================
+
+test('12.01 - OPTS > opts.oneToManyArrayObjectMerge', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            k: false,
+            l: false,
+            m: 'm1'
+          },
+          {
+            k: 'k1',
+            l: 'l1',
+            m: false
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm2'
+        },
+        {
+          k: 'k1',
+          l: 'l1',
+          m: false
+        }
+      ]
+    },
+    '12.01.01 - default behaviour will merge first keys and leave second key as it is')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: false,
+            l: false,
+            m: 'm1'
+          },
+          {
+            k: 'k1',
+            l: 'l1',
+            m: false
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm1'
+        },
+        {
+          k: 'k1',
+          l: 'l1',
+          m: false
+        }
+      ]
+    },
+    '12.01.02 - same as #01, but swapped order of input arguments. Should not differ except for string merge order.')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            k: false,
+            l: false,
+            m: 'm1'
+          },
+          {
+            k: 'k1',
+            l: 'l1',
+            m: false
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          }
+        ]
+      },
+      {
+        oneToManyArrayObjectMerge: true
+      }
+    ),
+    {
+      a: [
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm2'
+        },
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm2'
+        }
+      ]
+    },
+    '12.01.03 - one-to-many merge, normal argument order')
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: false,
+            l: false,
+            m: 'm1'
+          },
+          {
+            k: 'k1',
+            l: 'l1',
+            m: false
+          }
+        ]
+      },
+      {
+        oneToManyArrayObjectMerge: true
+      }
+    ),
+    {
+      a: [
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm1'
+        },
+        {
+          k: 'k1',
+          l: 'l1',
+          m: 'm2'
+        }
+      ]
+    },
+    '12.01.04 - one-to-many merge, opposite arg. order')
+})
+
+test('12.02 - OPTS > opts.oneToManyArrayObjectMerge - two-to-many does not work', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            k: false,
+            l: 'l1',
+            m: 'm1'
+          },
+          {
+            k: 'k1',
+            l: 'l1',
+            m: false
+          },
+          {
+            k: 'k1',
+            l: false,
+            m: 'm1'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          },
+          {
+            k: 'k2',
+            l: 'l2',
+            m: 'm2'
+          }
+        ]
+      },
+      {
+        oneToManyArrayObjectMerge: true
+      }
+    ),
+    {
+      a: [
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm2'
+        },
+        {
+          k: 'k2',
+          l: 'l2',
+          m: 'm2'
+        },
+        {
+          k: 'k1',
+          l: false,
+          m: 'm1'
+        }
+      ]
+    },
+    '12.02.01 - does not activate when two-to-many found')
+})
+
 // ==============================
-// 12. throws of all kinds
+// 13. throws of all kinds
 // ==============================
 
-test('12.01 - OPTS > third argument is not a plain object', t => {
+test('13.01 - OPTS > third argument is not a plain object', t => {
   t.throws(function () {
     mergeAdvanced(
       {a: 'a'}, {b: 'b'}, 1
@@ -2484,7 +2723,7 @@ test('12.01 - OPTS > third argument is not a plain object', t => {
   })
 })
 
-test('12.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work', t => {
+test('13.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work', t => {
   t.throws(function () {
     mergeAdvanced(
       {a: 'a'}, {b: 'b'}, {mergeObjectsOnlyWhenKeysetMatches: 'true'}
@@ -2497,7 +2736,7 @@ test('12.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work', t
   })
 })
 
-test('12.03 - OPTS > opts.ignoreKeys type checks work', t => {
+test('13.03 - OPTS > opts.ignoreKeys type checks work', t => {
   t.throws(function () {
     mergeAdvanced(
       {a: 'a'}, {b: 'b'}, {ignoreKeys: 1}
@@ -2525,7 +2764,7 @@ test('12.03 - OPTS > opts.ignoreKeys type checks work', t => {
   })
 })
 
-test('12.04 - OPTS > opts.hardMergeKeys type checks work', t => {
+test('13.04 - OPTS > opts.hardMergeKeys type checks work', t => {
   t.throws(function () {
     mergeAdvanced(
       {a: 'a'}, {b: 'b'}, {hardMergeKeys: 1}

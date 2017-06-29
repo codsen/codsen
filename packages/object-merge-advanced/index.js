@@ -45,7 +45,8 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
     ignoreKeys: [],
     hardMergeKeys: [],
-    mergeArraysContainingStringsToBeEmpty: false
+    mergeArraysContainingStringsToBeEmpty: false,
+    oneToManyArrayObjectMerge: false
   }
   opts = objectAssign(clone(defaults), opts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
@@ -76,11 +77,20 @@ function mergeAdvanced (input1orig, input2orig, opts) {
             ) {
               temp.push(mergeAdvanced(i1[index], i2[index], opts))
             } else {
-              if (index < i1.length) {
-                temp.push(i1[index])
-              }
-              if (index < i2.length) {
-                temp.push(i2[index])
+              if (
+                opts.oneToManyArrayObjectMerge &&
+                (
+                  (i1.length === 1) || (i2.length === 1)
+                )
+              ) {
+                temp.push((i1.length === 1) ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts))
+              } else {
+                if (index < i1.length) {
+                  temp.push(i1[index])
+                }
+                if (index < i2.length) {
+                  temp.push(i2[index])
+                }
               }
             }
           }

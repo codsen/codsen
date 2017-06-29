@@ -6,7 +6,8 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test && doctoc README.md",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+    "test": "standard && nyc --reporter=html --reporter=text ava",
+    "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/object-merge-advanced",
   "keywords": [
@@ -34,14 +35,15 @@
     "array-includes-with-glob": "^1.1.0",
     "check-types-mini": "^2.0.0",
     "lodash.clonedeep": "*",
-    "object-assign": "^4.1.1",
-    "type-detect": "^4.0.3"
+    "object-assign": "*",
+    "type-detect": "*"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
     "doctoc": "*",
     "husky": "*",
+    "nodemon": "^1.11.0",
     "nyc": "^11.0.2",
     "standard": "^10.0.2"
   },
