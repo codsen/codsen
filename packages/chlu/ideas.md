@@ -1,11 +1,12 @@
 # ideas
 
 - [ ] Add missing title "All notable changes.." as per keepachangelog.com
-- [ ] BIG: Read git files, gather versions, wipe all titles and fill them matching versions and dates straight from GIT repo info
+- [ ] MAJOR: Read git files, gather versions, wipe all titles and fill them matching versions and dates straight from GIT repo info
 - [ ] If one entry has duplicate sections (like two "Added" sections), merge them.
 - [ ] Should support `"Unreleased"` sections
 - [ ] Fix heading tags of a wrong order. For example, if somebody uses version titles with H3 instead of H2
 - [ ] Support any trailing text in titles, after date
+- [ ] BUG - Text in titles after the date is being removed.
 
 # testing
 

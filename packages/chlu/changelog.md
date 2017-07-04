@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
-[keepachangelog](http://keepachangelog.com/) spec.
+[Keep a Changelog](http://keepachangelog.com/) spec.
 
 ## [2.3.0] - 2017-07-04
 ### Added
