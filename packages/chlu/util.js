@@ -4,6 +4,9 @@ const cmp = require('semver-compare')
 const clone = require('lodash.clonedeep')
 const isNum = require('is-natural-number')
 const trim = require('lodash.trim')
+const easyReplace = require('easy-replace')
+const emojiRegexLib = require('emoji-regex')
+const emojiRegex = emojiRegexLib()
 
 // REGEXES
 // -----------------------------------------------------------------------------
@@ -190,11 +193,29 @@ function versionSort (a, b) {
 
 function filterDate (someString) {
   let res = someString.trim()
+  res = easyReplace(res, {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: '[',
+    searchFor: 'YANKED',
+    rightMaybe: ']',
+    rightOutside: '',
+    rightOutsideNot: ''
+  })
+  res = easyReplace(res, {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: '[',
+    searchFor: 'yanked',
+    rightMaybe: ']',
+    rightOutside: '',
+    rightOutsideNot: ''
+  })
   res = res.replace('.', ' ')
   res = res.replace(',', ' ')
   res = res.replace(';', ' ')
-  res = res.replace('  ', ' ')
-  res = res.replace('  ', ' ')
+  res = res.replace(emojiRegex, '')
+  res = res.replace(/[ ]+/g, ' ')
   res = trim(res, '[](),.- \u2013\u2014\t\u00A0')
   return res
 }

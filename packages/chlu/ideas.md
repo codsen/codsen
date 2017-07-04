@@ -1,33 +1,36 @@
 # ideas
 
+- [ ] Add missing title "All notable changes.." as per keepachangelog.com
+- [ ] BIG: Read git files, gather versions, wipe all titles and fill them matching versions and dates straight from GIT repo info
+- [ ] If one entry has duplicate sections (like two "Added" sections), merge them.
+- [ ] Should support `"Unreleased"` sections
+- [ ] Fix heading tags of a wrong order. For example, if somebody uses version titles with H3 instead of H2
+- [ ] Support any trailing text in titles, after date
+
+# testing
+
+- [ ] check if supports x.x versions. Even mixed with normal semver.
+- [ ] support both uppercase and lowercase file names
+- [ ] check does it work on Linux where case-sensitive file systems might be used and `chlu` algorithm might be looking for the files in a wrong case
+
+# done
+
 - [x] Fill missing diff links
 - [x] Detect and correct missing brackets
 - [x] Detect order of links and insert new ones in correct order
 - [x] Detect wrong repos in the URL's
 - [x] Check all repo URL's are they in order
-- [ ] Add missing title "All notable changes.." as per keepachangelog.com
-- [ ] BIG Read git files, gather versions, wipe all titles and fill them matching versions and dates straight from GIT repo info
-- [ ] If one entry has duplicate sections (like two "Added" sections), merge them.
 - [x] Detect non-international dates and convert to correct format
-- [x] Add diff links AND puts links on the 2nd title and onwards if all looks nice and clean
-- [ ] Should support `"Unreleased"` sections
-- [ ] Support yanked, like: `## 0.0.5 - 2014-12-13 - [YANKED]`
+- [x] Support yanked, like: `## 0.0.5 - 2014-12-13 - [YANKED]`
 - [x] Remove unused, non-existent footer links
 - [x] Remove _any_ unused markdown links from the footer
-- [ ] Fix heading tags of a wrong order. For example, if somebody uses version titles with H3 instead of H2
-- [ ] Correct existing footer links. For example, when `1.2.0` footer link is diffing between `1.0.0` and `1.1.0`.
-
----
-
-# testing
-
-- [ ] check if supports x.x versions. Even mixed with normal semver.
+- [x] Add diff links AND puts links on the 2nd title and onwards if all looks nice and clean
+- [x] Correct existing footer links. For example, when `1.2.0` footer link is diffing between `1.0.0` and `1.1.0`.
+- [x] Support emoji in titles
 - [x] check if inserts above or below the footer links, correctly matching existing order
 - [x] test if two missing links can be added:
-  - last two
-  - random two
-- [ ] support both uppercase and lowercase file names
-- [ ] check does it work on Linux where case-sensitive file systems might be used and `chlu` algorithm might be looking for the files in a wrong case
+- last two
+- random two
 
 ---
 

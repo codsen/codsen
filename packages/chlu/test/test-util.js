@@ -43,6 +43,8 @@ test('01.02 - isTitle() - positive result', t => {
   t.deepEqual(isTitle('[1.2.0]'), true, '01.02.05')
   t.deepEqual(isTitle('[1.2.0] Text'), true, '01.02.06')
   t.deepEqual(isTitle('1.2.0 Text'), true, '01.02.07')
+  t.deepEqual(isTitle('## 0.0.5 - 2014-12-13 - [YANKED]'), true, '01.02.08')
+  t.deepEqual(isTitle('## [0.0.5] - 2014-12-13 - [YANKED]'), true, '01.02.09')
 })
 
 test('01.03 - isTitle() - non-semver, 2 digits only', t => {
@@ -84,6 +86,7 @@ test('02.01 - isFooterLink() - negative result', t => {
   t.deepEqual(isFooterLink('[1.1.0](https://github.com)'), false, '02.01.03')
   t.deepEqual(isFooterLink('1.1.0: https://github.com'), false, '02.01.04')
   t.deepEqual(isFooterLink('[1.1.0](github.com)'), false, '02.01.05')
+  t.deepEqual(isFooterLink('## 0.0.5 - 2014-12-13 - [YANKED]'), false, '02.01.06')
 })
 
 test('02.02 - isFooterLink() - positive result', t => {
@@ -352,4 +355,52 @@ test('08.01 - filterDate() - filters out date string', t => {
   t.deepEqual(filterDate(' \u2014 March 1st, 2017)'),
   'March 1st 2017',
   '08.01.08')
+  t.deepEqual(filterDate('] - 2014-12-13 - [YANKED]'),
+  '2014-12-13',
+  '08.01.09')
+  t.deepEqual(filterDate('] - 2014-12-13 - YANKED'),
+  '2014-12-13',
+  '08.01.10')
+  t.deepEqual(filterDate('] - 2014-12-13, YANKED'),
+  '2014-12-13',
+  '08.01.11')
+  t.deepEqual(filterDate('] - 2014-12-13 -YANKED'),
+  '2014-12-13',
+  '08.01.12')
+  t.deepEqual(filterDate('] - 2014-12-13 YANKED'),
+  '2014-12-13',
+  '08.01.13')
+  t.deepEqual(filterDate(' - 2014-12-13 - [YANKED]'),
+  '2014-12-13',
+  '08.01.14')
+  t.deepEqual(filterDate(' - 2014-12-13 - YANKED'),
+  '2014-12-13',
+  '08.01.15')
+  t.deepEqual(filterDate(' - 2014-12-13, YANKED'),
+  '2014-12-13',
+  '08.01.16')
+  t.deepEqual(filterDate(' - 2014-12-13 -YANKED'),
+  '2014-12-13',
+  '08.01.17')
+  t.deepEqual(filterDate(' - 2014-12-13 YANKED'),
+  '2014-12-13',
+  '08.01.18')
+  t.deepEqual(filterDate(' -                                    2014-12-13 YANKED'),
+  '2014-12-13',
+  '08.01.19 - many spaces')
+  t.deepEqual(filterDate(' - 2014-12-13                          YANKED'),
+  '2014-12-13',
+  '08.01.20')
+  t.deepEqual(filterDate(' (2017-3-17)'),
+  '2017-3-17',
+  '08.01.21')
+  t.deepEqual(filterDate(' - 2017-07-04 🇺🇸'),
+  '2017-07-04',
+  '08.01.22')
+  t.deepEqual(filterDate(' - 2017-07-04 - 🇺🇸'),
+  '2017-07-04',
+  '08.01.23')
+  t.deepEqual(filterDate(' - 2017-07-04 - 🇺🇸 '),
+  '2017-07-04',
+  '08.01.24')
 })

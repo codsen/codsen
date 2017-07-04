@@ -40,6 +40,8 @@
   "homepage": "https://github.com/codsen/chlu#readme",
   "dependencies": {
     "dehumanize-date": "^2.4.0",
+    "easy-replace": "^2.7.6",
+    "emoji-regex": "^6.4.3",
     "get-pkg-repo": "^1.4.0",
     "is-natural-number": "^4.0.1",
     "just-insert": "^1.0.0",

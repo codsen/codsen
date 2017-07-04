@@ -2,7 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
+and this project adheres to [Semantic Versioning](http://semver.org/) and
+[keepachangelog](http://keepachangelog.com/) spec.
+
+## [2.3.0] - 2017-07-04 🇺🇸
+### Added
+- ✨ Now supports `[YANKED]`, `YANKED`, `[yanked]` and `yanked` in the titles. Exactly as per [keepachangelog](http://keepachangelog.com/) spec.
+- ✨ Now supports emoji in the titles. Like this one above.
 
 ## [2.2.0] - 2017-06-29
 ### Added
@@ -47,3 +53,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.0.0]: https://github.com/codsen/chlu/compare/v1.3.0...v2.0.0
 [2.1.1]: https://github.com/codsen/chlu/compare/v2.0.0...v2.1.1
 [2.2.0]: https://github.com/codsen/chlu/compare/v2.1.1...v2.2.0
+[2.3.0]: https://github.com/codsen/chlu/compare/v2.2.1...v2.3.0
