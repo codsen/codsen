@@ -23,6 +23,7 @@
   - [3. Automatic title linking (where it's missing)](#3-automatic-title-linking-where-its-missing)
   - [4. Automatic date conversion](#4-automatic-date-conversion)
 - [Extras](#extras)
+- [A nifty setup idea](#a-nifty-setup-idea)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -121,6 +122,40 @@ That's thanks to amazing [dehumanize-date](https://www.npmjs.com/package/dehuman
 ## Extras
 
 Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order.
+
+## A nifty setup idea
+
+It would be tedious and unnecessary to run `chlu` manually. Not to mention, you might even forget to run it.
+
+What I suggest, add `chlu` to one of your aliases, for example, `git add .`. That's what I do.
+
+For example, edit your `.zshrc` (or Bash config, or whatever-you-are-using-shell's config) file to contain:
+
+```
+# create a function which runs commands if certain files exist, and skips if they don't:
+my-git-add() {
+  [ -e readme.md ] && doctoc readme.md
+  [ -e readme.md ] && bitsausage
+  [ -e changelog.md ] && chlu changelog.md
+  npm-check
+  git add .
+}
+
+# create alias for your command, call the function:
+alias gaa=my-git-add
+```
+
+The example above runs:
+
+- [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
+- then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
+- then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
+- then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
+- it runs the `git add .`.
+
+It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with  `-g` flag.
+
+The example above is growing; I want to automate _everything_. Literally.
 
 ## Contributing
 

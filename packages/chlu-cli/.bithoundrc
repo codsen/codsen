@@ -7,8 +7,7 @@
   "dependencies": {
     "mute": [
       "ava",
-      "doctoc",
-      "husky"
+      "doctoc"
     ]
   },
   "test": [
