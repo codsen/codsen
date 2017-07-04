@@ -779,3 +779,119 @@ test('04.04 - opts.schema is set to a wrong thing - throws', t => {
     )
   })
 })
+
+test('04.05 - opts.schema understands opts.acceptArrays', t => {
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2']
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      }
+    )
+  }) // throws because reference's type mismatches.
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2']
+      },
+      {
+        option1: 'zz',
+        option2: 'yy'
+      },
+      {
+        acceptArrays: true
+      }
+    )
+  }) // does not throw because of opts.acceptArrays is matching against reference
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2']
+      },
+      {
+        option1: 'zz'
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          option2: 'string'
+        }
+      }
+    )
+  }) // does not throw because of opts.acceptArrays is matching against schema's keys
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2', 999]
+      },
+      {
+        option1: 'zz'
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          option2: 'string'
+        }
+      }
+    )
+  }) // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2', 999]
+      },
+      {
+        option1: 'zz'
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          option2: ['string', 'number']
+        }
+      }
+    )
+  }) // number is allowed now
+  t.throws(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2', 999]
+      },
+      {
+        option1: 'zz'
+      },
+      {
+        acceptArrays: false,
+        schema: {
+          option2: ['string', 'number']
+        }
+      }
+    )
+  }) // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
+  t.notThrows(function () {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: ['setting2', 999]
+      },
+      {
+        option1: 'zz'
+      },
+      {
+        acceptArrays: false,
+        schema: {
+          option2: ['string', 'number', 'array']
+        }
+      }
+    )
+  }) // does not throw because blanked permission for array's is on.
+  // it might be array of rubbish though, so that's a faulty, short-sighted type check.
+})

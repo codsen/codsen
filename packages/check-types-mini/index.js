@@ -106,7 +106,23 @@ function checkTypes (obj, ref, opts) {
       if (!intersection(opts.schema[key], NAMESFORANYTYPE).length) {
         // because, if not, it means we need to do some work, check types:
         if (!includes(opts.schema[key], type(obj[key]).toLowerCase())) {
-          throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not among the allowed types in schema (${opts.schema[key]}) but ${type(obj[key])}`)
+          // new in v.2.2
+          // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
+          // If it is, then iterate through the array, checking does each value conform to the
+          // types listed in that key's schema entry.
+          if (
+            isArr(obj[key]) && opts.acceptArrays
+          ) {
+            // check each key:
+            for (let i = 0, len = obj[key].length; i < len; i++) {
+              if (!includes(opts.schema[key], type(obj[key][i]).toLowerCase())) {
+                throw new Error('error!')
+              }
+            }
+          } else {
+            // only then, throw
+            throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} was customised to ${JSON.stringify(obj[key], null, 4)} which is not among the allowed types in schema (${opts.schema[key]}) but ${type(obj[key])}`)
+          }
         }
       }
     } else {
