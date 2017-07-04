@@ -1,9 +1,23 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-    "mute": ["arrayiffy-if-string", "lodash.clonedeep", "lodash.includes", "lodash.intersection", "lodash.pullall", "lodash.isplainobject", "object-assign", "ava", "clear-cli", "coveralls", "nodemon"]
+    "mute": [
+      "arrayiffy-if-string",
+      "ava",
+      "clear-cli",
+      "coveralls",
+      "lodash.clonedeep",
+      "lodash.includes",
+      "lodash.intersection",
+      "lodash.isplainobject",
+      "lodash.pullall",
+      "nodemon",
+      "object-assign"
+    ]
   },
   "test": [
     "test.js"

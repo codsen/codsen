@@ -110,7 +110,7 @@ function yourFunction (input, opts) {
 
 let res = yourFunction(1, {placeholder: 'zzz'})
 
-// =>> [TypeError: 'newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "false" which is not boolean but string']
+// =>> [TypeError: 'newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "zzz" which is not boolean but string']
 ```
 
 Sometimes you want to accept either a string (or type "X") or an arrays of strings (elements of type "X"). As long as ALL the elements within the array match the reference type, it's OK. For these cases set `opts.acceptArrays` to `true`.
