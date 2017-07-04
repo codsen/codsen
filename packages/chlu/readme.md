@@ -31,7 +31,7 @@ $ npm i -g chlu-cli
 
 ## What it does
 
-`chlu` stands for CHangeLog Update. This library is the API for [`chlu-cli`](https://www.npmjs.com/package/chlu-cli) which you should install with a `-g` flag. You probably should check it [instead](https://www.npmjs.com/package/chlu-cli).
+`chlu` stands for CHangeLog Update. This library is the API for [`chlu-cli`](https://github.com/codsen/chlu-cli) which you should install with a `-g` flag. You probably should check it [instead](https://github.com/codsen/chlu-cli).
 
 ## Contributing
 
