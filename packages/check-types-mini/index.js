@@ -116,7 +116,7 @@ function checkTypes (obj, ref, opts) {
             // check each key:
             for (let i = 0, len = obj[key].length; i < len; i++) {
               if (!includes(opts.schema[key], type(obj[key][i]).toLowerCase())) {
-                throw new Error('error!')
+                throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} is of type ${type(obj[key][i]).toLowerCase()}, but only the following are allowed in ${opts.optsVarName}.schema: ${opts.schema[key]}`)
               }
             }
           } else {
