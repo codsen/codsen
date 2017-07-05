@@ -14,26 +14,43 @@ const checkTypes = require('check-types-mini')
  * @param  {String} whatToLookFor  string depicting what we are looking for
  * @return {Array}                 findings array, indexes of each first "letter" found
  */
-function astralAwareSearch (whereToLook, whatToLookFor) {
-  var foundIndexArray = []
-  var arrWhereToLook = toArray(whereToLook)
-  var arrWhatToLookFor = toArray(whatToLookFor)
-  var found
+function astralAwareSearch (whereToLook, whatToLookFor, opts) {
+  let foundIndexArray = []
+  let arrWhereToLook = toArray(whereToLook)
+  let arrWhatToLookFor = toArray(whatToLookFor)
+  let found
 
-  for (var i = 0; i < arrWhereToLook.length; i++) {
+  for (let i = 0; i < arrWhereToLook.length; i++) {
   // check if current source character matches the first char of what we're looking for
-    if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
-      found = true
-      // this means first character matches
-      // match the rest:
-      for (var i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
-        if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
-          found = false
-          break
+    if (opts.i) {
+      if (arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()) {
+        found = true
+        // this means first character matches
+        // match the rest:
+        for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+          if (arrWhereToLook[i + i2].toLowerCase() !== arrWhatToLookFor[i2].toLowerCase()) {
+            found = false
+            break
+          }
+        }
+        if (found) {
+          foundIndexArray.push(i)
         }
       }
-      if (found) {
-        foundIndexArray.push(i)
+    } else {
+      if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
+        found = true
+        // this means first character matches
+        // match the rest:
+        for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+          if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
+            found = false
+            break
+          }
+        }
+        if (found) {
+          foundIndexArray.push(i)
+        }
       }
     }
   }
@@ -66,7 +83,7 @@ function stringise (incoming) {
       incoming = without(incoming, '')
     }
   } else {
-    var tempArr = []
+    let tempArr = []
     tempArr.push(String(incoming))
     incoming = tempArr
   }
@@ -76,7 +93,7 @@ function stringise (incoming) {
 // ===========================
 
 function iterateLeft (elem, arrSource, foundBeginningIndex) {
-  var matched = true
+  let matched = true
   toArray(elem).forEach(function (elem2, i2) {
     // iterate each character of particular Outside:
     if (elem2 !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
@@ -87,7 +104,7 @@ function iterateLeft (elem, arrSource, foundBeginningIndex) {
 }
 
 function iterateRight (elem, arrSource, foundEndingIndex) {
-  var matched = true
+  let matched = true
   toArray(elem).forEach(function (elem2, i2) {
     // iterate each character of particular Outside:
     if (elem2 !== arrSource[foundEndingIndex + i2]) {
@@ -109,10 +126,10 @@ function iterateRight (elem, arrSource, foundEndingIndex) {
 // ===========================
 
 module.exports = function (source, options, replacement) {
-  var defaults = {
+  let defaults = {
     i: false
   }
-  var o = Object.assign(defaults, options)
+  let o = Object.assign(defaults, options)
   checkTypes(o, defaults, {
     schema: {
       leftOutsideNot: ['string', 'number', 'null', 'undefined'],
@@ -140,17 +157,17 @@ module.exports = function (source, options, replacement) {
   o.rightOutsideNot = stringise(o.rightOutsideNot)
   replacement = stringise(replacement)
 
-  var arrSource = toArray(source[0])
-  var foundBeginningIndex
-  var foundEndingIndex
-  var matched
-  var found
-  var replacementRecipe = []
-  var result = ''
+  let arrSource = toArray(source[0])
+  let foundBeginningIndex
+  let foundEndingIndex
+  let matched
+  let found
+  let replacementRecipe = []
+  let result = ''
 
   //  T H E   L O O P
 
-  astralAwareSearch(source[0], o.searchFor).forEach(function (oneOfFoundIndexes) {
+  astralAwareSearch(source[0], o.searchFor, {i: o.i}).forEach(function (oneOfFoundIndexes) {
     // oneOfFoundIndexes is the index of starting index of found
     // the principle of replacement is after finding the searchFor string, the boundaries optionally expand. That's left/right Maybe's from the options object. When done, the outsides are checked, first positive (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
     // that's the plan.
@@ -272,7 +289,7 @@ module.exports = function (source, options, replacement) {
   }
   //
   // iterate the recipe array and perform the replacement:
-  // first, if replacements don't start with 0, attach this part onto result var:
+  // first, if replacements don't start with 0, attach this part onto result let:
   if ((replacementRecipe.length > 0) && (replacementRecipe[0][0] !== 0)) {
     result = result + arrSource.slice(0, replacementRecipe[0][0]).join('')
   }

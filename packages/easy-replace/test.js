@@ -2902,3 +2902,115 @@ test('test 14.2 - special case #2', function (t) {
     'test 14.1'
   )
 })
+
+// ==============================
+// case-insensitive opts flag
+// ==============================
+
+test('test 15.1 - case-insensitive flag works', function (t) {
+  t.is(er(
+    'zzz abbb zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: 'a',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: false
+    },
+    'yyy'
+    ),
+    'zzz yyy zzz',
+    'test 15.1 - all ok, flag off'
+  )
+  t.is(er(
+    'zzz aBBB zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: 'a',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: false
+    },
+    'yyy'
+    ),
+    'zzz aBBB zzz',
+    'test 15.2 - case mismatch, nothing replaced because flag\'s off'
+  )
+  t.is(er(
+    'zzz aBBB zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: 'a',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: true
+    },
+    'yyy'
+    ),
+    'zzz yyy zzz',
+    'test 15.3 - case mismatch, but flag allows it, so replace happens'
+  )
+  t.is(er(
+    'zzz aBBB zzz bbB zzz aBbBc zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: '',
+      leftMaybe: 'a',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: true
+    },
+    'yyy'
+    ),
+    'zzz yyy zzz yyy zzz yyy zzz',
+    'test 15.4 - case-insensitive flag, multiple replacements'
+  )
+})
+
+test.skip('test 15.2 - case-insensitive surroundings', function (t) {
+  t.is(er(
+    'zzz Abbb zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: 'a',
+      leftMaybe: '',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: false
+    },
+    'yyy'
+    ),
+    'zzz Abbb zzz',
+    'test 15.2.1 - flag off'
+  )
+  t.is(er(
+    'zzz Abbb zzz',
+    {
+      leftOutsideNot: '',
+      leftOutside: 'a',
+      leftMaybe: '',
+      searchFor: 'bbb',
+      rightMaybe: 'c',
+      rightOutside: '',
+      rightOutsideNot: '',
+      i: true
+    },
+    'yyy'
+    ),
+    'zzz yyy zzz',
+    'test 15.2.1 - flag on'
+  )
+})

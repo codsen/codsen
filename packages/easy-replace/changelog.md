@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.9.0] - 2017-07-05
+### Added
+- Case insensitive searches/replacement/deletion. Set `opts.i` to `true`.
+
 ## [2.8.0] - 2017-07-05
 ### Added
 - ✨ Changelog. Ha!
@@ -39,3 +43,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.6.0]: https://github.com/codsen/easy-replace/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/codsen/easy-replace/compare/v2.6.0...v2.7.0
 [2.8.0]: https://github.com/codsen/easy-replace/compare/v2.7.0...v2.8.0
+[2.9.0]: https://github.com/codsen/easy-replace/compare/v2.8.0...v2.9.0

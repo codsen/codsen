@@ -39,11 +39,11 @@
     "lodash.without": "*"
   },
   "devDependencies": {
-    "ava": "^0.20.0",
+    "ava": "*",
     "coveralls": "*",
     "doctoc": "*",
-    "husky": "^0.14.3",
-    "nyc": "^11.0.3",
+    "husky": "*",
+    "nyc": "*",
     "standard": "^10.0.2"
   },
   "ava": {

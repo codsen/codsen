@@ -6,11 +6,14 @@
   },
   "dependencies": {
     "mute": [
+      "ava",
       "coveralls",
       "doctoc",
+      "husky",
       "lodash.isnumber",
       "lodash.toarray",
-      "lodash.without"
+      "lodash.without",
+      "nyc"
     ]
   },
   "test": [
