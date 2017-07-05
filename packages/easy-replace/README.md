@@ -75,6 +75,7 @@ Options object's key | Type                    | Obligatory? | Description
 `rightMaybe`         | String/Array of strings | no          | If this is present on the right side of the `searchFor`, replace/delete it together with `searchFor`, but don't fret if it's not found.
 `rightOutside`       | String/Array of strings | no          | Equivalent of regex positive lookahead. This/these string(s) must **be** present to the right of `searchFor` (plus any "maybe's" strings, see higher), in order for `searchFor` to be counted as "found". This input's contents are not replaced/deleted.
 `rightOutsideNot`    | String/Array of strings | no          | Equivalent of regex negative lookahead. This/these string(s) must **not be** present to the right of `searchFor` (plus any "maybe's" strings, see higher), in order for `searchFor` to be counted as "found". This input's contents are not replaced/deleted.
+`i`                  | Boolean                 | no          | Case insensitive mode. Default is `false`, mode being turned off. It's equivalent to passing `i` flag on a regex.
 `}`                  |                         |             |
 
 ### API - Output

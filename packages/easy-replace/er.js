@@ -1,8 +1,9 @@
 'use strict'
 
-var toArray = require('lodash.toarray')
-var without = require('lodash.without')
-var isNumber = require('lodash.isnumber')
+const toArray = require('lodash.toarray')
+const without = require('lodash.without')
+const isNumber = require('lodash.isnumber')
+const checkTypes = require('check-types-mini')
 
 // ===========================
 
@@ -43,7 +44,7 @@ function astralAwareSearch (whereToLook, whatToLookFor) {
 // ===========================
 
 /**
- * stringise - Turns null/undefined into ''. If array, turns each elem into String.
+ * stringise/arrayiffy - Turns null/undefined into ''. If array, turns each elem into String.
  * all other cases, runs through String()
  *
  * @param  {whatever} incoming     can be anything
@@ -108,7 +109,25 @@ function iterateRight (elem, arrSource, foundEndingIndex) {
 // ===========================
 
 module.exports = function (source, options, replacement) {
-  var o = options || {}
+  var defaults = {
+    i: false
+  }
+  var o = Object.assign(defaults, options)
+  checkTypes(o, defaults, {
+    schema: {
+      leftOutsideNot: ['string', 'number', 'null', 'undefined'],
+      leftOutside: ['string', 'number', 'null', 'undefined'],
+      leftMaybe: ['string', 'number', 'null', 'undefined'],
+      searchFor: ['string', 'number'],
+      rightMaybe: ['string', 'number', 'null', 'undefined'],
+      rightOutside: ['string', 'number', 'null', 'undefined'],
+      rightOutsideNot: ['string', 'number', 'null', 'undefined']
+    },
+    msg: 'easy-replace/module.exports():',
+    optsVarName: 'options',
+    acceptArrays: true,
+    acceptArraysIgnore: 'i'
+  })
 
   // enforce the peace and order:
   source = stringise(source)

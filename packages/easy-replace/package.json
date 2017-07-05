@@ -33,19 +33,20 @@
   },
   "homepage": "https://github.com/codsen/easy-replace#readme",
   "dependencies": {
+    "check-types-mini": "^2.2.1",
     "lodash.isnumber": "*",
     "lodash.toarray": "*",
     "lodash.without": "*"
   },
   "devDependencies": {
-    "ava": "*",
+    "ava": "^0.20.0",
     "coveralls": "*",
     "doctoc": "*",
-    "husky": "*",
-    "nyc": "*",
+    "husky": "^0.14.3",
+    "nyc": "^11.0.3",
     "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": true
+    "verbose": false
   }
 }
