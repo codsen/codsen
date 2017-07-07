@@ -200,16 +200,10 @@ function filterDate (someString) {
     searchFor: 'YANKED',
     rightMaybe: ']',
     rightOutside: '',
-    rightOutsideNot: ''
-  })
-  res = easyReplace(res, {
-    leftOutsideNot: '',
-    leftOutside: '',
-    leftMaybe: '[',
-    searchFor: 'yanked',
-    rightMaybe: ']',
-    rightOutside: '',
-    rightOutsideNot: ''
+    rightOutsideNot: '',
+    i: {
+      searchFor: true
+    }
   })
   res = res.replace('.', ' ')
   res = res.replace(',', ' ')
