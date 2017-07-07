@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.9.0] - 2017-07-05
+## [2.9.0] - 2017-07-07
 ### Added
 - Case insensitive searches/replacement/deletion. Set `opts.i` plain object's keys to `true`.
 - Swapped all `foreach` loops with old `for`'s, that should make this library tiny bit faster.
