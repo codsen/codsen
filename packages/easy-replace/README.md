@@ -29,7 +29,7 @@ Emphasis on _no regexes_
   - ["Maybes" — optional surrounding strings to be replaced as well](#maybes--optional-surrounding-strings-to-be-replaced-as-well)
   - [Negative lookahead - if you want to match something _not followed_ by something else](#negative-lookahead---if-you-want-to-match-something-_not-followed_-by-something-else)
   - [Positive lookbehind - if you want to match something that is _preceded_ by something else](#positive-lookbehind---if-you-want-to-match-something-that-is-_preceded_-by-something-else)
-  - [Negative lookbehind* - if you want to match something that is not preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
+  - [Negative lookbehind* - if you want to match something that is NOT preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
   - [Real life scenario](#real-life-scenario)
 - [Rationale](#rationale)
 - [Testing](#testing)
@@ -111,6 +111,30 @@ er(
 //=> 'a 🦄 c 🦄 d'
 ```
 
+Case insensitive setting — set each and every key you want to ignore the case via `opts.i`:
+
+```js
+var er = require('easy-replace');
+
+er(
+  'a X c x d',
+  {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: '',
+    searchFor: 'x',
+    rightMaybe: '',
+    rightOutside: '',
+    rightOutsideNot: '',
+    i: {
+      searchFor: true
+    }
+  },
+  '🦄'
+);
+//=> 'a 🦄 c 🦄 d'
+```
+
 ---
 
 ### "Maybes" — optional surrounding strings to be replaced as well
@@ -140,6 +164,30 @@ er(
 
 By the way, notice, how the values can be strings or arrays! The `easy-replace` doesn't accept array only for `searchFor` values — create a loop from the outside of this library, then call this library many times if you want to search for multiple values.
 
+Case-insensitive setting will cover more surroundings' cases:
+
+```js
+var er = require('easy-replace');
+
+er(
+  'Ai ib Aib i',
+  {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: ['a', 'z'],
+    searchFor: 'i',
+    rightMaybe: ['y', 'b'],
+    rightOutside: '',
+    rightOutsideNot: '',
+    i: {
+      leftMaybe: true
+    }
+  },
+  'x'
+);
+//=> 'x x x x'
+```
+
 ---
 
 ### Negative lookahead - if you want to match something _not followed_ by something else
@@ -167,6 +215,30 @@ er(
 //=> 'a🦄c x🐴x'
 ```
 
+Case insensitive setting will narrow-down the amount of findings/replacements:
+
+```js
+var er = require('easy-replace');
+
+er(
+  'a🦄C x🦄x',
+  {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: '',
+    searchFor: '🦄',
+    rightMaybe: '',
+    rightOutside: '',
+    rightOutsideNot: ['c', 'd'],
+    i: {
+      rightOutsideNot: true
+    }
+  },
+  '🐴'
+);
+//=> 'a🦄c x🐴x'
+```
+
 ---
 
 ### Positive lookbehind - if you want to match something that is _preceded_ by something else
@@ -184,21 +256,21 @@ er(
   'zzzzz  zzzzzz zzzzzz',
   {
     leftOutsideNot: '',
-    leftOutside: ' ',
+    leftOutside: ' ', // <- space
     leftMaybe: '',
-    searchFor: ' ',
+    searchFor: ' ', // <- space
     rightMaybe: '',
     rightOutside: '',
     rightOutsideNot: ''
   },
-  ''
+  '' // <- empty string
 );
 //=> 'zzzzz zzzzzz zzzzzz'
 ```
 
 ---
 
-### Negative lookbehind* - if you want to match something that is not preceded by something else
+### Negative lookbehind* - if you want to match something that is NOT preceded by something else
 
 For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with `{{space character}}/>` (disregard curly braces, it's only to make it more visible here) if they are not preceded with space already:
 
@@ -246,6 +318,30 @@ er(
     rightMaybe: ';',
     rightOutside: '',
     rightOutsideNot: ''
+  },
+  '&nbsp;'
+);
+//=> '&nbsp; &nbsp; &nbsp; &nbsp;'
+```
+
+If you want to cover cases of random letter capitalisation of `n`, `b`, `s` and `p`, just set case-insensitive flag for `searchFor`:
+
+```js
+var er = require('easy-replace');
+
+er(
+  '&nBsp; NBsp &nbSP NbsP;',
+  {
+    leftOutsideNot: '',
+    leftOutside: '',
+    leftMaybe: '&',
+    searchFor: 'nbsp',
+    rightMaybe: ';',
+    rightOutside: '',
+    rightOutsideNot: '',
+    i: {
+      searchFor: true
+    }
   },
   '&nbsp;'
 );

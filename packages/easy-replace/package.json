@@ -34,7 +34,6 @@
   "homepage": "https://github.com/codsen/easy-replace#readme",
   "dependencies": {
     "check-types-mini": "^2.2.1",
-    "lodash.isnumber": "*",
     "lodash.toarray": "*",
     "lodash.without": "*"
   },

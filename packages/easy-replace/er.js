@@ -2,7 +2,7 @@
 
 const toArray = require('lodash.toarray')
 const without = require('lodash.without')
-const isNumber = require('lodash.isnumber')
+// const isNumber = require('lodash.isnumber')
 const checkTypes = require('check-types-mini')
 
 // ===========================
@@ -92,25 +92,43 @@ function stringise (incoming) {
 
 // ===========================
 
-function iterateLeft (elem, arrSource, foundBeginningIndex) {
+function iterateLeft (elem, arrSource, foundBeginningIndex, i) {
   let matched = true
-  toArray(elem).forEach(function (elem2, i2) {
+  let charsArray = toArray(elem)
+  for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
-    if (elem2 !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
-      matched = false
+    if (i) {
+      if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()) {
+        matched = false
+        break
+      }
+    } else {
+      if (charsArray[i2] !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
+        matched = false
+        break
+      }
     }
-  })
+  }
   return matched
 }
 
-function iterateRight (elem, arrSource, foundEndingIndex) {
+function iterateRight (elem, arrSource, foundEndingIndex, i) {
   let matched = true
-  toArray(elem).forEach(function (elem2, i2) {
+  let charsArray = toArray(elem)
+  for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
-    if (elem2 !== arrSource[foundEndingIndex + i2]) {
-      matched = false
+    if (i) {
+      if (charsArray[i2].toLowerCase() !== arrSource[foundEndingIndex + i2].toLowerCase()) {
+        matched = false
+        break
+      }
+    } else {
+      if (charsArray[i2] !== arrSource[foundEndingIndex + i2]) {
+        matched = false
+        break
+      }
     }
-  })
+  }
   return matched
 }
 
@@ -127,7 +145,15 @@ function iterateRight (elem, arrSource, foundEndingIndex) {
 
 module.exports = function (source, options, replacement) {
   let defaults = {
-    i: false
+    i: {
+      leftOutsideNot: false,
+      leftOutside: false,
+      leftMaybe: false,
+      searchFor: false,
+      rightMaybe: false,
+      rightOutside: false,
+      rightOutsideNot: false
+    }
   }
   let o = Object.assign(defaults, options)
   checkTypes(o, defaults, {
@@ -143,7 +169,7 @@ module.exports = function (source, options, replacement) {
     msg: 'easy-replace/module.exports():',
     optsVarName: 'options',
     acceptArrays: true,
-    acceptArraysIgnore: 'i'
+    acceptArraysIgnore: ['i']
   })
 
   // enforce the peace and order:
@@ -167,7 +193,7 @@ module.exports = function (source, options, replacement) {
 
   //  T H E   L O O P
 
-  astralAwareSearch(source[0], o.searchFor, {i: o.i}).forEach(function (oneOfFoundIndexes) {
+  for (let oneOfFoundIndexes of astralAwareSearch(source[0], o.searchFor, {i: o.i.searchFor})) {
     // oneOfFoundIndexes is the index of starting index of found
     // the principle of replacement is after finding the searchFor string, the boundaries optionally expand. That's left/right Maybe's from the options object. When done, the outsides are checked, first positive (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
     // that's the plan.
@@ -180,93 +206,119 @@ module.exports = function (source, options, replacement) {
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
     if (o.leftMaybe.length > 0) {
-      o.leftMaybe.forEach(function (elem, i) {
+      for (let i = 0, len = o.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true
-        toArray(elem).forEach(function (elem2, i2) {
+        let splitLeftMaybe = toArray(o.leftMaybe[i])
+        for (let i2 = 0, len = splitLeftMaybe.length; i2 < len; i2++) {
           // iterate each character of particular Maybe:
-          if (elem2 !== arrSource[oneOfFoundIndexes - toArray(elem).length + i2]) {
-            matched = false
+          if (o.i.leftMaybe) {
+            if (splitLeftMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2].toLowerCase()) {
+              matched = false
+              break
+            }
+          } else {
+            if (splitLeftMaybe[i2] !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2]) {
+              matched = false
+              break
+            }
           }
-        })
-        if (matched && (oneOfFoundIndexes - toArray(elem).length) < foundBeginningIndex) {
-          foundBeginningIndex = oneOfFoundIndexes - toArray(elem).length
         }
-      })
+        if (matched && (oneOfFoundIndexes - splitLeftMaybe.length) < foundBeginningIndex) {
+          foundBeginningIndex = oneOfFoundIndexes - splitLeftMaybe.length
+        }
+      }
     }
     // ===================== rightMaybe =====================
     if (o.rightMaybe.length > 0) {
-      o.rightMaybe.forEach(function (elem, i) {
+      for (let i = 0, len = o.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true
-        toArray(elem).forEach(function (elem2, i2) {
+        let splitRightMaybe = toArray(o.rightMaybe[i])
+        for (let i2 = 0, len = splitRightMaybe.length; i2 < len; i2++) {
           // iterate each character of particular Maybe:
-          if (elem2 !== arrSource[oneOfFoundIndexes + toArray(o.searchFor).length + i2]) {
-            matched = false
+          if (o.i.rightMaybe) {
+            if (splitRightMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes + toArray(o.searchFor).length + i2].toLowerCase()) {
+              matched = false
+              break
+            }
+          } else {
+            if (splitRightMaybe[i2] !== arrSource[oneOfFoundIndexes + toArray(o.searchFor).length + i2]) {
+              matched = false
+              break
+            }
           }
-        })
-        if (matched && (oneOfFoundIndexes + toArray(o.searchFor).length + toArray(elem).length) > foundEndingIndex) {
-          foundEndingIndex = oneOfFoundIndexes + toArray(o.searchFor).length + toArray(elem).length
         }
-      })
+        if (matched && (oneOfFoundIndexes + toArray(o.searchFor).length + splitRightMaybe.length) > foundEndingIndex) {
+          foundEndingIndex = oneOfFoundIndexes + toArray(o.searchFor).length + splitRightMaybe.length
+        }
+      }
     }
     // ===================== leftOutside =====================
     if (o.leftOutside[0] !== '') {
       found = false
-      o.leftOutside.forEach(function (elem, i) {
+      for (let i = 0, len = o.leftOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(elem, arrSource, foundBeginningIndex)
+        matched = iterateLeft(o.leftOutside[i], arrSource, foundBeginningIndex, o.i.leftOutside)
         if (matched) {
           found = true
         }
-      })
+      }
       if (!found) {
-        foundBeginningIndex = -1
-        foundEndingIndex = -1
+        continue
+        // foundBeginningIndex = -1
+        // foundEndingIndex = -1
       }
     }
     // ===================== rightOutside =====================
     if (o.rightOutside[0] !== '') {
       found = false
-      o.rightOutside.forEach(function (elem, i) {
+      for (let i = 0, len = o.rightOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(elem, arrSource, foundEndingIndex)
+        matched = iterateRight(o.rightOutside[i], arrSource, foundEndingIndex, o.i.rightOutside)
         if (matched) {
           found = true
         }
-      })
+      }
       if (!found) {
-        foundBeginningIndex = -1
-        foundEndingIndex = -1
+        continue
+        // foundBeginningIndex = -1
+        // foundEndingIndex = -1
       }
     }
     // ===================== leftOutsideNot =====================
     if (o.leftOutsideNot[0] !== '') {
-      o.leftOutsideNot.forEach(function (elem, i) {
+      for (let i = 0, len = o.leftOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(elem, arrSource, foundBeginningIndex)
+        matched = iterateLeft(o.leftOutsideNot[i], arrSource, foundBeginningIndex, o.i.leftOutsideNot)
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
+          break
         }
-      })
+      }
+      if (foundBeginningIndex === -1) {
+        continue
+      }
     }
     // ===================== rightOutsideNot =====================
     if (o.rightOutsideNot[0] !== '') {
-      o.rightOutsideNot.forEach(function (elem, i) {
+      for (let i = 0, len = o.rightOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(elem, arrSource, foundEndingIndex)
+        matched = iterateRight(o.rightOutsideNot[i], arrSource, foundEndingIndex, o.i.rightOutsideNot)
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
+          break
         }
-      })
+      }
+      if (foundBeginningIndex === -1) {
+        continue
+      }
     }
     // ===================== the rest =====================
-    if (isNumber(foundBeginningIndex) && (foundBeginningIndex !== -1)) {
-      replacementRecipe.push([foundBeginningIndex, foundEndingIndex])
-    }
-  })
+    replacementRecipe.push([foundBeginningIndex, foundEndingIndex])
+  }
   // =====
   // first we need to remove any overlaps in the recipe, cases like:
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]

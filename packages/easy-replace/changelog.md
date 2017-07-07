@@ -6,7 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.9.0] - 2017-07-05
 ### Added
-- Case insensitive searches/replacement/deletion. Set `opts.i` to `true`.
+- Case insensitive searches/replacement/deletion. Set `opts.i` plain object's keys to `true`.
+- Swapped all `foreach` loops with old `for`'s, that should make this library tiny bit faster.
+- Added `continue`'s and `break`'s, so loops should terminate earlier, at the first moment when algorithm detects first false match. This should, in theory, relieve us from redundant calculations when the outcome is already decided. In other words, this library _should_ run faster.
+- Bunch of new tests to maintain 100% code coverage.
 
 ## [2.8.0] - 2017-07-05
 ### Added

@@ -10,7 +10,6 @@
       "coveralls",
       "doctoc",
       "husky",
-      "lodash.isnumber",
       "lodash.toarray",
       "lodash.without",
       "nyc"
