@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.10.0] - 2017-07-08
+
+Fresh morning and fresh head yields new improvements.
+
+### Added
+- Improved the main search algorithm to better account for edge cases where there are missing inputs.
+
 ## [2.9.0] - 2017-07-07
 ### Added
 - Case insensitive searches/replacement/deletion. Set `opts.i` plain object's keys to `true`.
@@ -47,3 +54,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.7.0]: https://github.com/codsen/easy-replace/compare/v2.6.0...v2.7.0
 [2.8.0]: https://github.com/codsen/easy-replace/compare/v2.7.0...v2.8.0
 [2.9.0]: https://github.com/codsen/easy-replace/compare/v2.8.0...v2.9.0
+[2.10.0]: https://github.com/codsen/easy-replace/compare/v2.9.0...v2.10.0
