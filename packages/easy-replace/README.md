@@ -29,7 +29,7 @@ Emphasis on _no regexes_
   - ["Maybes" — optional surrounding strings to be replaced as well](#maybes--optional-surrounding-strings-to-be-replaced-as-well)
   - [Negative lookahead - if you want to match something _not followed_ by something else](#negative-lookahead---if-you-want-to-match-something-_not-followed_-by-something-else)
   - [Positive lookbehind - if you want to match something that is _preceded_ by something else](#positive-lookbehind---if-you-want-to-match-something-that-is-_preceded_-by-something-else)
-  - [Negative lookbehind* - if you want to match something that is NOT preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
+  - [Negative lookbehind - if you want to match something that is NOT preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
   - [Real life scenario](#real-life-scenario)
 - [Rationale](#rationale)
 - [Testing](#testing)
@@ -270,7 +270,7 @@ er(
 
 ---
 
-### Negative lookbehind* - if you want to match something that is NOT preceded by something else
+### Negative lookbehind - if you want to match something that is NOT preceded by something else
 
 For example, our `<br />` sometimes look like `<br/>`. Replace all occurencies of `/>` with `{{space character}}/>` (disregard curly braces, it's only to make it more visible here) if they are not preceded with space already:
 
