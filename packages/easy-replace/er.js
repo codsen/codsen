@@ -15,6 +15,13 @@ const checkTypes = require('check-types-mini')
  * @return {Array}                 findings array, indexes of each first "letter" found
  */
 function astralAwareSearch (whereToLook, whatToLookFor, opts) {
+  function existy (x) { return x != null }
+  if (
+    (typeof whereToLook !== 'string') || (whereToLook.length === 0) ||
+    (typeof whatToLookFor !== 'string') || (whatToLookFor.length === 0)
+  ) {
+    return []
+  }
   let foundIndexArray = []
   let arrWhereToLook = toArray(whereToLook)
   let arrWhatToLookFor = toArray(whatToLookFor)
@@ -28,7 +35,11 @@ function astralAwareSearch (whereToLook, whatToLookFor, opts) {
         // this means first character matches
         // match the rest:
         for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
-          if (arrWhereToLook[i + i2].toLowerCase() !== arrWhatToLookFor[i2].toLowerCase()) {
+          if (
+            !existy(arrWhereToLook[i + i2]) ||
+            !existy(arrWhatToLookFor[i2]) ||
+            (arrWhereToLook[i + i2].toLowerCase() !== arrWhatToLookFor[i2].toLowerCase())
+          ) {
             found = false
             break
           }
