@@ -1,9 +1,16 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-      "mute": ["lodash.clonedeep", "object-assign", "ava", "coveralls"]
+    "mute": [
+      "ava",
+      "coveralls",
+      "lodash.clonedeep",
+      "object-assign"
+    ]
   },
   "test": [
     "test.js"
