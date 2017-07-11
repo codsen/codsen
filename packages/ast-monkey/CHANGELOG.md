@@ -155,7 +155,7 @@ BREAKING API CHANGES.
 ### Added
 - ✨ Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
 
-## [2.0.0] - 2017-02-16
+## 2.0.0 - 2017-02-16
 ### Changed
 - 🔧 Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
 
