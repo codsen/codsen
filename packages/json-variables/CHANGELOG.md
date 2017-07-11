@@ -95,7 +95,6 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [1.2.0]: https://github.com/codsen/json-variables/compare/v1.1.0...v1.2.0
 [2.0.0]: https://github.com/codsen/json-variables/compare/v1.2.0...v2.0.0
 [3.0.0]: https://github.com/codsen/json-variables/compare/v2.0.0...v3.0.0
-[3.1.0]: https://github.com/codsen/json-variables/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/json-variables/compare/v3.1.0...v4.0.0
 [4.1.0]: https://github.com/codsen/json-variables/compare/v4.0.1...v4.1.0
 [4.2.0]: https://github.com/codsen/json-variables/compare/v4.1.0...v4.2.0

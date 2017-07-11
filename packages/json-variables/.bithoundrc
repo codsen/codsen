@@ -1,9 +1,18 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-    "mute": ["arrayiffy-if-string", "ava", "clear-cli", "coveralls", "husky", "nodemon"]
+    "mute": [
+      "arrayiffy-if-string",
+      "ava",
+      "clear-cli",
+      "coveralls",
+      "husky",
+      "nodemon"
+    ]
   },
   "test": [
     "test.js"
