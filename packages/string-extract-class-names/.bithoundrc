@@ -1,9 +1,19 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-      "mute": ["ava", "coveralls", "snazzy", "nyc"]
+    "mute": [
+      "ava",
+      "coveralls",
+      "husky",
+      "lodash.flattendeep",
+      "lodash.replace",
+      "lodash.without",
+      "nyc"
+    ]
   },
   "test": [
     "test.js"

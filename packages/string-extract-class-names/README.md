@@ -1,18 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [string-extract-class-names](#string-extract-class-names)
-  - [Install](#install)
-  - [Purpose](#purpose)
-  - [Examples](#examples)
-  - [API](#api)
-  - [Testing](#testing)
-  - [Contributing](#contributing)
-  - [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # string-extract-class-names
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
@@ -31,6 +16,21 @@
 ```sh
 $ npm install --save string-extract-class-names
 ```
+
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Purpose](#purpose)
+- [Examples](#examples)
+- [API](#api)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Purpose
 
@@ -83,7 +83,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

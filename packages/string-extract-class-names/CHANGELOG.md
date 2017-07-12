@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * Standard JS precommit hooks to enforce code style
 
-## [3.0.0] - 2016-11-19
+## 3.0.0 - 2016-11-19
 
 ### Changed
 
@@ -33,7 +33,7 @@ Algorithm change.
 
 ## v.2.0.0 - 2016-11-09
 
-### Change #1.
+### Change 1.
 
 Breaking changes — instead of giving the first class or id as string, now we're outputting the array of them:
 
@@ -54,7 +54,7 @@ extract('div#id.class a[target=_blank]', '#')
 
 Once the space is encountered, there won't be any more additions to the array.
 
-### Change #2.
+### Change 2.
 
 There is no second argument any more, to choose between id's or classes. Since array can contain a mix of classes and id's, it's unpractical to impose any other restrictions upon user any more.
 

@@ -28,19 +28,18 @@
   },
   "homepage": "https://github.com/codsen/string-extract-class-names#readme",
   "dependencies": {
-    "lodash.flattendeep": "^4.4.0",
-    "lodash.replace": "^4.1.4",
-    "lodash.without": "^4.4.0"
+    "lodash.flattendeep": "*",
+    "lodash.replace": "*",
+    "lodash.without": "*"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.13.3",
+    "husky": "*",
     "nyc": "*",
     "standard": "^10.0.2"
   },
   "ava": {
-    "tap": false,
     "verbose": true
   }
 }
