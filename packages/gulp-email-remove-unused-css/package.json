@@ -25,7 +25,7 @@
     "precommit": "standard"
   },
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -35,7 +35,7 @@
   },
   "homepage": "https://emailcomb.com",
   "dependencies": {
-    "email-remove-unused-css": "^1.16.0",
+    "email-remove-unused-css": "^2.0.0",
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {

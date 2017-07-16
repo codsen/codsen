@@ -18,7 +18,7 @@ module.exports = function (options) {
         // Don't crash on empty files
         return cb(null, file)
       }
-      file.contents = Buffer.from(remove(contents, options)[0])
+      file.contents = Buffer.from(remove(contents, options).result)
       cb(null, file)
     } else {
       // Pass through when null
