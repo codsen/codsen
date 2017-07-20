@@ -87,13 +87,12 @@ The common pattern is,
 
 1. a) Define defaults object. Later it will be used to validate user's options, PLUS, if that's not enough, you can allow users to provide **arrays** of the matching type (set `opts.acceptArrays` to `true`)
 1. b) Alternatively, you can skip defaults object and provide schema for each key via `opts.schema`. Just stick an object there, as a value, with all keys. Put allowed types in an array.
-2. `object-assign` cloned defaults onto the options object that comes from the input.
+2. `Object.assign` cloned defaults onto the options object that comes from the input.
 3. call `check-types-mini` with the above.
 4. If input types mismatch, error will be `throw`n.
 
 ```js
 const checkTypes = require('check-types-mini')
-const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
 
 function yourFunction (input, opts) {
@@ -102,7 +101,7 @@ function yourFunction (input, opts) {
     placeholder: false
   }
   // fill any settings with defaults if missing:
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign(clone(defaults), opts)
   // the check:
   checkTypes(opts, defaults, {msg: 'newLibrary/yourFunction(): [THROW_ID_01]', optsVarName: 'opts'})
   // ...
@@ -160,7 +159,7 @@ If you want, you can blacklist certain keys of your objects so that `opts.accept
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `object-assign`ed into a default settings object and no alarm was being raised! That's not good.
+When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
@@ -210,7 +209,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

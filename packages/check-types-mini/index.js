@@ -1,18 +1,17 @@
 'use strict'
 
 const type = require('type-detect')
-const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
 const includes = require('lodash.includes')
 const pullAll = require('lodash.pullall')
 const intersection = require('lodash.intersection')
 const arrayiffyIfString = require('arrayiffy-if-string')
-const isObj = require('lodash.isplainobject')
 
 function checkTypes (obj, ref, opts) {
   function existy (x) { return x != null }
   function isBool (something) { return type(something) === 'boolean' }
   function isStr (something) { return type(something) === 'string' }
+  function isObj (something) { return type(something) === 'Object' }
   const NAMESFORANYTYPE = ['any', 'anything', 'every', 'everything', 'all', 'whatever', 'whatevs']
   const isArr = Array.isArray
 
@@ -33,7 +32,7 @@ function checkTypes (obj, ref, opts) {
     optsVarName: 'opts'
   }
   if (existy(opts) && isObj(opts)) {
-    opts = objectAssign(clone(defaults), opts)
+    opts = Object.assign(clone(defaults), opts)
   } else {
     opts = clone(defaults)
   }

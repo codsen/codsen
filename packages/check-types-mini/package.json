@@ -25,7 +25,7 @@
     "validate"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -39,16 +39,14 @@
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "lodash.intersection": "*",
-    "lodash.isplainobject": "*",
     "lodash.pullall": "*",
-    "object-assign": "*",
     "type-detect": "^4.0.0"
   },
   "devDependencies": {
     "ava": "*",
     "clear-cli": "*",
     "coveralls": "*",
-    "husky": "^0.14.2",
+    "husky": "*",
     "nodemon": "*",
     "nyc": "^11.0.2",
     "standard": "^10.0.0"

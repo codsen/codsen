@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2017-07-20
+### Updated
+- All deps and removed few redundant ones, switching to ES6 counterparts.
+- Name in documentation and licenses
+### Added
+- .npmignore
+
 ## [2.2.0] - 2017-07-04
 ### Added
 - ✨ Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
@@ -58,3 +65,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.0.0]: https://github.com/codsen/check-types-mini/compare/v1.6.0...v2.0.0
 [2.1.0]: https://github.com/codsen/check-types-mini/compare/v2.0.0...v2.1.0
 [2.2.0]: https://github.com/codsen/check-types-mini/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/check-types-mini/compare/v2.2.0...v2.3.0

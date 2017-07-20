@@ -10,13 +10,12 @@
       "ava",
       "clear-cli",
       "coveralls",
+      "husky",
       "lodash.clonedeep",
       "lodash.includes",
       "lodash.intersection",
-      "lodash.isplainobject",
       "lodash.pullall",
-      "nodemon",
-      "object-assign"
+      "nodemon"
     ]
   },
   "test": [
