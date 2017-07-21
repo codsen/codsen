@@ -243,12 +243,8 @@ test('02.01 - defaults - objects, one level', function (t) {
   t.deepEqual(
     ofr(
       {
-        thekey1: {
-          val11: 'val12'
-        },
-        akey2: {
-          val21: 'val22'
-        }
+        thekey1: { val11: 'val12' },
+        akey2: { val21: 'val22' }
       },
       {
         thekey1: 'Contact us',
@@ -1099,6 +1095,85 @@ test('02.11 - deeper level - array within array VS. string', function (t) {
   )
 })
 
+test('02.12 - deeper level - array within array VS. string #2', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        a: [
+          {
+            k_key: 'k_val',
+            l_key: [
+              ['xxxx', 'yyyy', 'zzzz'],
+              '222',
+              '333',
+              '444',
+              '555'
+            ],
+            m_key: 'm_val'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k_key: 'k_val',
+            l_key: 'l_val',
+            m_key: 'm_val'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          k_key: '%%_k_val_%%',
+          l_key: '%%_xxxx_%% %%_yyyy_%% %%_zzzz_%%<br />%%_222_%%<br />%%_333_%%<br />%%_444_%%<br />%%_555_%%',
+          m_key: '%%_m_val_%%'
+        }
+      ]
+    },
+    '02.12.01 - innermost array is first element'
+  )
+  t.deepEqual(
+    ofr(
+      {
+        a: [
+          {
+            k_key: 'k_val',
+            l_key: [
+              '111',
+              ['xxxx', 'yyyy', 'zzzz'],
+              '222',
+              '333',
+              '444'
+            ],
+            m_key: 'm_val'
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            k_key: 'k_val',
+            l_key: 'l_val',
+            m_key: 'm_val'
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          k_key: '%%_k_val_%%',
+          l_key: '%%_111_%%<br />%%_xxxx_%% %%_yyyy_%% %%_zzzz_%%<br />%%_222_%%<br />%%_333_%%<br />%%_444_%%',
+          m_key: '%%_m_val_%%'
+        }
+      ]
+    },
+    '02.12.02 - innermost array is second element'
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. opts.ignore
 // -----------------------------------------------------------------------------
@@ -1759,7 +1834,7 @@ test('99.02 - util.flattenArr > simple array', function (t) {
       },
       true
     ),
-    '%%_a_%%<br />%%_b_%%<br />%%_c_%%',
+    '%%_a_%% %%_b_%% %%_c_%%',
     '99.02.01'
   )
   t.deepEqual(
@@ -1775,7 +1850,7 @@ test('99.02 - util.flattenArr > simple array', function (t) {
       },
       false
     ),
-    'a<br />b<br />c',
+    'a b c',
     '99.02.02'
   )
 })

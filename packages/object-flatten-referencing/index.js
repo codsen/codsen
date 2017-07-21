@@ -26,14 +26,16 @@ function outer (originalInput, originalReference, opts) {
     throw new Error('object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it\'s: ' + typeof opts)
   }
 
-  function ofr (originalInput, originalReference, opts, wrap) {
+  function ofr (originalInput, originalReference, opts, wrap, joinArraysUsingBrs) {
     var input = clone(originalInput)
     var reference = clone(originalReference)
 
     if (wrap === undefined) {
       wrap = true
     }
-
+    if (joinArraysUsingBrs === undefined) {
+      joinArraysUsingBrs = true
+    }
     var defaults = {
       wrapHeadsWith: '%%_',
       wrapTailsWith: '_%%',
@@ -75,15 +77,48 @@ function outer (originalInput, originalReference, opts) {
           ) {
             if (isArr(input[key])) {
               if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
+                // reference is string
                 // that's array vs. string clash:
-                input[key] = util.flattenArr(input[key], opts, wrap)
+                input[key] = util.flattenArr(input[key], opts, wrap, joinArraysUsingBrs)
               } else {
+                // reference is array as well
                 // that's array vs. array clash, for example
-                input[key] = ofr(input[key], reference[key], opts, wrap)
+                // so input[key] is array. Let's check, does it contain only strings, or
+                // do some elements contain array of strings? Because if so, those deeper-level
+                // arrays must be joined with spaces. Outermost arrays must be joined by BR's.
+                // We're talking about ['1111', '2222', '3333'] in:
+                // {
+                //   k_key: 'k_val',
+                //   l_key: 'l_val',
+                //   m_key: [
+                //     'xxxx',
+                //     ['1111', '2222', '3333'],
+                //     'yyyy',
+                //     'zzzz'
+                //   ]
+                // }
+                //
+                // referencing above,
+                // ['1111', '2222', '3333'] should be joined by spaces.
+                // ['xxxx', [...], 'yyyy', 'zzzz'] should be joined by BR's
+                if (input[key].every(el => (typeof el === 'string') || (Array.isArray(el)))) {
+                  // check that those array elements contain only string elements:
+                  let allOK = true
+                  input[key].forEach(oneOfElements => {
+                    // check that child arrays contain only string elements
+                    if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr)) {
+                      allOK = false
+                    }
+                  })
+                  if (allOK) {
+                    joinArraysUsingBrs = false
+                  }
+                }
+                input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
               }
             } else if (isObj(input[key])) {
               if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
-                input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap)
+                input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs)
               } else {
                 // when calling recursively, the parent key might get identified (wrap=true) to be wrapped.
                 // however, that flag might get lost as its children will calculate the new "wrap" on its own keys, often turning off the wrap function.
@@ -94,14 +129,15 @@ function outer (originalInput, originalReference, opts) {
                     input[key],
                     reference[key],
                     Object.assign(clone(opts), {wrapGlobalFlipSwitch: false}),
-                    wrap
+                    wrap,
+                    joinArraysUsingBrs
                   )
                 } else {
-                  input[key] = ofr(input[key], reference[key], opts, wrap)
+                  input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
                 }
               }
             } else if (isStr(input[key])) {
-              input[key] = ofr(input[key], reference[key], opts, wrap)
+              input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
             }
           } else {
             if (type(input[key]) !== type(reference[key])) {
@@ -118,15 +154,13 @@ function outer (originalInput, originalReference, opts) {
       if (isArr(reference)) {
         input.forEach(function (el, i) {
           if (existy(input[i]) && existy(reference[i])) {
-            input[i] = ofr(input[i], reference[i], opts, wrap)
+            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs)
           } else {
-            input[i] = ofr(input[i], reference[0], opts, wrap)
+            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs)
           }
         })
       } else if (isStr(reference)) {
-        input = input.reduce((sum, value) => {
-          return sum + ((sum.length > 0) ? ' ' : '') + ofr(value, reference, opts, wrap)
-        }, '')
+        input = util.flattenArr(input, opts, wrap, joinArraysUsingBrs)
       }
     } else if (isStr(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {

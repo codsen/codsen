@@ -32,37 +32,54 @@ function flattenObject (objOrig, opts) {
   return res
 }
 
-function flattenArr (arrOrig, opts, wrap) {
+function flattenArr (arrOrig, opts, wrap, joinArraysUsingBrs) {
   if (arguments.length === 0 || arrOrig.length === 0) {
     return ''
   }
   var arr = clone(arrOrig)
-
-  var res = (wrap ? opts.wrapHeadsWith : '') + arr[0] + (wrap ? opts.wrapTailsWith : '')
-
-  if (arr.length > 1) {
-    for (var i = 1, len = arr.length; i < len; i++) {
-      if (isStr(arr[i])) {
-        res += '<br' + (opts.xhtml ? ' /' : '') + '>' + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
-      } else if (isArr(arr[i])) {
-        // there's an array among elements
-        if (
-          (arr[i].length > 0) &&
-          arr[i].every(isStr)
-        ) {
+  var res = ''
+  if (arr.length > 0) {
+    if (joinArraysUsingBrs) {
+      for (var i = 0, len = arr.length; i < len; i++) {
+        if (isStr(arr[i])) {
           let lineBreak = ''
-          if (res.length > 0) {
+          if (i > 0) {
             lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
           }
-          res = arr[i].reduce((acc, val, i, arr) => {
-            let trailingSpace = ''
-            if (i !== (arr.length - 1)) {
-              trailingSpace = ' '
+          res += lineBreak + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
+        } else if (isArr(arr[i])) {
+
+          // there's an array among elements
+          if (
+            (arr[i].length > 0) &&
+            arr[i].every(isStr)
+          ) {
+            let lineBreak = ''
+            if (res.length > 0) {
+              lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
             }
-            return acc + ((i === 0) ? lineBreak : '') + (wrap ? opts.wrapHeadsWith : '') + val + (wrap ? opts.wrapTailsWith : '') + trailingSpace
-          }, res)
+            res = arr[i].reduce((acc, val, i, arr) => {
+              let trailingSpace = ''
+              if (i !== (arr.length - 1)) {
+                trailingSpace = ' '
+              }
+              return acc + ((i === 0) ? lineBreak : '') + (wrap ? opts.wrapHeadsWith : '') + val + (wrap ? opts.wrapTailsWith : '') + trailingSpace
+            }, res)
+          }
         }
       }
+    } else {
+      res = arr.reduce((acc, val, i, arr) => {
+        let lineBreak = ''
+        if (res.length > 0) {
+          lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
+        }
+        let trailingSpace = ''
+        if (i !== (arr.length - 1)) {
+          trailingSpace = ' '
+        }
+        return acc + ((i === 0) ? lineBreak : '') + (wrap ? opts.wrapHeadsWith : '') + val + (wrap ? opts.wrapTailsWith : '') + trailingSpace
+      }, res)
     }
   }
   return res

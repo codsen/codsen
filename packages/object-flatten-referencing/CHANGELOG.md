@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.0] - 2017-07-21
+### Added
+- More improvements to the array-within-array flattening scenarios.
+
 ## [3.1.0] - 2017-07-21
 ### Added
  - When deeper level array is flattened referencing a string, result is the sum of all strings within the array, joined with a space, and each string wrapped according to wrapping settings.
@@ -43,3 +47,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.2.0...v2.0.0
 [3.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v2.0.0...v3.0.0
 [3.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.0.0...v3.1.0
+[3.2.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.1.0...v3.2.0
