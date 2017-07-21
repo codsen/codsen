@@ -63,7 +63,8 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 ## API
 
 API is simple: `string` in, `string` out.
-Caveat: if the input is not a `string`, it returns `undefined` and does not `throw`.
+
+Caveat: if the input is not a `string` it will `throw`.
 
 ## Example - treating the image alt attributes - Gulp and stream-tapping
 
@@ -112,7 +113,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

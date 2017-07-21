@@ -7,12 +7,22 @@ import test from 'ava'
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test('01.01 - missing input yields undefined', t => {
-  t.deepEqual(
-    unfancy(),
-    undefined,
-    '01.01'
-  )
+test('01 - wrong/missing input = throw', t => {
+  t.throws(function () {
+    unfancy()
+  })
+  t.throws(function () {
+    unfancy(1)
+  })
+  t.throws(function () {
+    unfancy(null)
+  })
+  t.throws(function () {
+    unfancy(undefined)
+  })
+  t.throws(function () {
+    unfancy(true)
+  })
 })
 
 // -----------------------------------------------------------------------------

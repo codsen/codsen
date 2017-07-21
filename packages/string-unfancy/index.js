@@ -28,21 +28,22 @@ function unfancy (str) {
     '\uFE49': `-`,
     '\u00A0': ' '
   }
-  if (!existy(str) || typeof str !== 'string') {
-    return
+  if (!existy(str)) {
+    throw new Error('string-unfancy/unfancy(): [THROW_ID_01] The input is missing!')
   }
-  // decode anticipating multiple encoding
+  if (typeof str !== 'string') {
+    throw new Error('string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It\'s: ' + typeof str)
+  }
+  // decode anticipating multiple encoding on top of one another
   while (he.decode(str) !== str) {
     str = he.decode(str)
   }
-  let arr = Array.from(str)
-
-  for (let i = 0, len = arr.length; i < len; i++) {
-    if (CHARS.hasOwnProperty(arr[i])) {
-      arr[i] = CHARS[arr[i]]
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (CHARS.hasOwnProperty(str[i])) {
+      str = str.slice(0, i) + CHARS[str[i]] + str.slice(i + 1)
     }
   }
-  return arr.join('')
+  return str
 }
 
 module.exports = unfancy
