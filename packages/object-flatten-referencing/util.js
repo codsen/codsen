@@ -1,25 +1,12 @@
 'use strict'
 /* eslint padded-blocks: 0 */
 
-// const objectAssign = require('object-assign')
 const type = require('type-detect')
 const clone = require('lodash.clonedeep')
 const isStringInt = require('is-string-int')
 const isArr = Array.isArray
 function isStr (something) { return type(something) === 'string' }
 function isObj (something) { return type(something) === 'Object' }
-function existy (x) { return x != null }
-
-function checkTypes (obj, ref, msg, variable) {
-  if (arguments.length === 0) {
-    throw new Error('object-flatten-referencing/util.js/checkTypes(): [THROW_ID_04] missing inputs!')
-  }
-  Object.keys(obj).forEach(function (key) {
-    if (existy(ref[key]) && type(obj[key]) !== type(ref[key])) {
-      throw new TypeError(msg + ' ' + variable + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + type(ref[key]) + ' but ' + type(obj[key]))
-    }
-  })
-}
 
 function flattenObject (objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
@@ -55,7 +42,27 @@ function flattenArr (arrOrig, opts, wrap) {
 
   if (arr.length > 1) {
     for (var i = 1, len = arr.length; i < len; i++) {
-      res += '<br' + (opts.xhtml ? ' /' : '') + '>' + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
+      if (isStr(arr[i])) {
+        res += '<br' + (opts.xhtml ? ' /' : '') + '>' + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
+      } else if (isArr(arr[i])) {
+        // there's an array among elements
+        if (
+          (arr[i].length > 0) &&
+          arr[i].every(isStr)
+        ) {
+          let lineBreak = ''
+          if (res.length > 0) {
+            lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
+          }
+          res = arr[i].reduce((acc, val, i, arr) => {
+            let trailingSpace = ''
+            if (i !== (arr.length - 1)) {
+              trailingSpace = ' '
+            }
+            return acc + ((i === 0) ? lineBreak : '') + (wrap ? opts.wrapHeadsWith : '') + val + (wrap ? opts.wrapTailsWith : '') + trailingSpace
+          }, res)
+        }
+      }
     }
   }
   return res
@@ -80,7 +87,6 @@ function reclaimIntegerString (something) {
 }
 
 module.exports = {
-  checkTypes: checkTypes,
   flattenObject: flattenObject,
   flattenArr: flattenArr,
   arrayiffyString: arrayiffyString,

@@ -40,7 +40,7 @@ $ npm i -S object-flatten-referencing
 
 Sometimes you need to make one nested object to look like another, type-wise.
 
-You've got:
+For example, you've got a key `a`, whose value is array of object(s):
 
 ```js
 {
@@ -53,7 +53,7 @@ You've got:
 }
 ```
 
-but, for example, you need to make it like:
+but, you need the key to have its value as string:
 
 ```js
 {
@@ -61,7 +61,7 @@ but, for example, you need to make it like:
 }
 ```
 
-This library does that.
+This library does such object "flattening".
 
 ## API
 
@@ -240,7 +240,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

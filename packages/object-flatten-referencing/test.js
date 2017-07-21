@@ -1021,6 +1021,84 @@ test('02.09 - one ignore works on multiple keys', function (t) {
   )
 })
 
+test('02.10 - deeper level - array VS. string', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        a_key: [
+          {
+            k_key: 'k_val',
+            l_key: 'l_val',
+            m_key: [
+              'xxxx',
+              ['1111', '2222', '3333'],
+              'yyyy',
+              'zzzz'
+            ]
+          }
+        ],
+        b_key: 'b_val'
+      },
+      {
+        a_key: [
+          {
+            k_key: 'k_val',
+            l_key: 'l_val',
+            m_key: [
+              'xxxx',
+              'wwww',
+              'yyyy',
+              'zzzz'
+            ]
+          }
+        ],
+        b_key: 'b_val'
+      }
+    ),
+    {
+      a_key: [
+        {
+          k_key: '%%_k_val_%%',
+          l_key: '%%_l_val_%%',
+          m_key: [
+            '%%_xxxx_%%',
+            '%%_1111_%% %%_2222_%% %%_3333_%%',
+            '%%_yyyy_%%',
+            '%%_zzzz_%%'
+          ]
+        }
+      ],
+      b_key: '%%_b_val_%%'
+    },
+    '02.10'
+  )
+})
+
+test('02.11 - deeper level - array within array VS. string', function (t) {
+  t.deepEqual(
+    ofr(
+      {
+        a_key: [
+          'xxxx',
+          ['1111', '2222', '3333'],
+          'yyyy',
+          'zzzz'
+        ],
+        b_key: 'b_val'
+      },
+      {
+        a_key: 'a_val',
+        b_key: 'b_val'
+      }
+    ),
+    {
+      a_key: '%%_xxxx_%%<br />%%_1111_%% %%_2222_%% %%_3333_%%<br />%%_yyyy_%%<br />%%_zzzz_%%',
+      b_key: '%%_b_val_%%'
+    },
+    '02.11'
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. opts.ignore
 // -----------------------------------------------------------------------------

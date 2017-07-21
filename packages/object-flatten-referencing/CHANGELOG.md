@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2017-07-20
+### Added
+ - When deeper level array is flattened referencing a string, result is the sum of all strings within the array, joined with a space, and each string wrapped according to wrapping settings.
+
+ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string `%%_aaa_%% %%_bbb_%% %%_ccc_%%` (that's default wrapping settings, which can be customised).
+
 ## [3.0.0] - 2017-04-27
 ### Changed
 - `opts.wrapHeads` is now `opts.wrapHeadsWith`
@@ -36,3 +42,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.1.0...v1.2.0
 [2.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v1.2.0...v2.0.0
 [3.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v2.0.0...v3.0.0
+[3.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.0.0...v3.1.0

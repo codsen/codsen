@@ -1,7 +1,6 @@
 'use strict'
 /* eslint padded-blocks: 0 */
 
-const objectAssign = require('object-assign')
 const type = require('type-detect')
 const clone = require('lodash.clonedeep')
 const search = require('str-indexes-of-plus')
@@ -9,6 +8,7 @@ const isArr = Array.isArray
 const util = require('./util')
 const includes = require('lodash.includes')
 const matcher = require('matcher')
+const checkTypes = require('check-types-mini')
 
 function existy (x) { return x != null }
 function isStr (something) { return type(something) === 'string' }
@@ -22,7 +22,7 @@ function outer (originalInput, originalReference, opts) {
   if (arguments.length === 1) {
     throw new Error('object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!')
   }
-  if ((typeof opts !== 'undefined') && !isObj(opts)) {
+  if (existy(opts) && !isObj(opts)) {
     throw new Error('object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it\'s: ' + typeof opts)
   }
 
@@ -45,12 +45,13 @@ function outer (originalInput, originalReference, opts) {
       ignore: [], // Ignore these keys, don't flatten their values.
       whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
     }
-    opts = objectAssign(clone(defaults), opts)
+    opts = Object.assign(clone(defaults), opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
     opts.ignore = util.arrayiffyString(opts.ignore)
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
 
-    util.checkTypes(opts, defaults, 'object-flatten-referencing/ofr(): [THROW_ID_05*] ', 'opts')
+    checkTypes(opts, defaults, 'object-flatten-referencing/ofr(): [THROW_ID_05*] ', 'opts')
+
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false
     }
@@ -74,8 +75,10 @@ function outer (originalInput, originalReference, opts) {
           ) {
             if (isArr(input[key])) {
               if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
+                // that's array vs. string clash:
                 input[key] = util.flattenArr(input[key], opts, wrap)
               } else {
+                // that's array vs. array clash, for example
                 input[key] = ofr(input[key], reference[key], opts, wrap)
               }
             } else if (isObj(input[key])) {
@@ -90,7 +93,7 @@ function outer (originalInput, originalReference, opts) {
                   input[key] = ofr(
                     input[key],
                     reference[key],
-                    objectAssign(clone(opts), {wrapGlobalFlipSwitch: false}),
+                    Object.assign(clone(opts), {wrapGlobalFlipSwitch: false}),
                     wrap
                   )
                 } else {
@@ -120,6 +123,10 @@ function outer (originalInput, originalReference, opts) {
             input[i] = ofr(input[i], reference[0], opts, wrap)
           }
         })
+      } else if (isStr(reference)) {
+        input = input.reduce((sum, value) => {
+          return sum + ((sum.length > 0) ? ' ' : '') + ofr(value, reference, opts, wrap)
+        }, '')
       }
     } else if (isStr(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
@@ -134,9 +141,7 @@ function outer (originalInput, originalReference, opts) {
         }
       }
     }
-
     return input
-
   }
 
   return ofr(originalInput, originalReference, opts)
