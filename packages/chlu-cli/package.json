@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "codsen/chlu-cli",
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -44,15 +44,15 @@
   },
   "homepage": "https://github.com/codsen/chlu-cli#readme",
   "dependencies": {
-    "chlu": "^2.3.0",
-    "meow": "^3.3.0",
-    "update-notifier": "^2.1.0"
+    "chlu": "^2.4.0",
+    "meow": "^3.7.0",
+    "update-notifier": "^2.2.0"
   },
   "devDependencies": {
     "ava": "*",
     "doctoc": "*",
     "execa": "^0.7.0",
-    "husky": "^0.14.2",
+    "husky": "^0.14.3",
     "standard": "^10.0.2"
   },
   "ava": {

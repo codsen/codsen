@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2017-07-22
+### Updated
+- Updated to the latest API, adding improved recognition of the titles
+- Documentation with up-to-date author's name
+
+### Added
+- `npmignore`
+
+## [1.4.0] - 2017-06-29
+### Updated
+Updated all dependencies
+
 ## [1.3.0] - 2017-06-29
 ### Added
 Updated to the new version of the API package, CHLU, enabling new features:
@@ -28,3 +40,5 @@ Updated to the new version of the API package, CHLU, enabling new features:
 [1.1.0]: https://github.com/codsen/chlu-cli/compare/v1.0.0...v1.1.0
 [1.2.0]: https://github.com/codsen/chlu-cli/compare/v1.1.0...v1.2.0
 [1.3.0]: https://github.com/codsen/chlu-cli/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/codsen/chlu-cli/compare/v1.3.0...v1.4.0
+[1.5.0]: https://github.com/codsen/chlu-cli/compare/v1.4.0...v1.5.0
