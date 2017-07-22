@@ -80,3 +80,7 @@ test('12. footer links match titles but have wrong versions in URLs', (t) => {
 test('13. Real world case - https://github.com/guigrpa/giu/', (t) => {
   return compare(t, '13_real_world')
 })
+
+test('14. Real world case with slashes and letter v - https://github.com/keystonejs/keystone/', (t) => {
+  return compare(t, '14_slashes')
+})

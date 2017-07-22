@@ -5,10 +5,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## [2.4.0] - 2017-07-22
+### Added
+- ✨ Now when date in title is unrecognised, cleaning of the title will still happen: letter "v" in front of version digits will be removed (if it exists), whatever-date will be trimmed out of usual separators like minus, dash etc and separated by a single minus-dash.
+- ✨ Did I mention, new erroneous title format `## v0.3.17 / 2016-03-23` is recognised and fixed automatically? It's letter `v` and/or dash separating the version and date.
+- ✨ Copyrights and licences in README mentioning real-life changelogs used in unit tests.
+
+### Changed
+- All Lodash deps are now set to `*`, _the latest_.
+- Removed bunch of irrelevant lines from unit test dummy package.json's
+- Updated the documentation and licence with the up-to-date author name
+
 ## [2.3.0] - 2017-07-04
 ### Added
 - ✨ Now supports `[YANKED]`, `YANKED`, `[yanked]` and `yanked` in the titles. Exactly as per [keepachangelog](http://keepachangelog.com/) spec.
-- ✨ Now supports emoji in the titles. Like this one above.
 
 ## [2.2.0] - 2017-06-29
 ### Added
@@ -54,3 +64,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 [2.1.1]: https://github.com/codsen/chlu/compare/v2.0.0...v2.1.1
 [2.2.0]: https://github.com/codsen/chlu/compare/v2.1.1...v2.2.0
 [2.3.0]: https://github.com/codsen/chlu/compare/v2.2.1...v2.3.0
+[2.4.0]: https://github.com/codsen/chlu/compare/v2.3.0...v2.4.0

@@ -270,8 +270,12 @@ function chlu (changelogContents, packageJsonContents) {
   } else {
     titles.forEach(function (title, index) {
       let fixedDate = dd(filterDate(title.afterVersion))
+
       if (fixedDate !== null) {
         newLinesArr = setRow(newLinesArr, title.rowNum, `## ${title.version !== sortedTitlesArray[0] ? '[' : ''}${title.version}${title.version !== sortedTitlesArray[0] ? ']' : ''} - ${fixedDate}`)
+      } else {
+        // if date is unrecogniseable leave it alone, fix the rest of the title
+        newLinesArr = setRow(newLinesArr, title.rowNum, `## ${title.version !== sortedTitlesArray[0] ? '[' : ''}${title.version}${title.version !== sortedTitlesArray[0] ? ']' : ''} - ${filterDate(title.afterVersion)}`)
       }
     })
   }

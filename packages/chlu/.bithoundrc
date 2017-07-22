@@ -9,6 +9,11 @@
       "ava",
       "coveralls",
       "husky",
+      "lodash.clonedeep",
+      "lodash.includes",
+      "lodash.min",
+      "lodash.reverse",
+      "lodash.trim",
       "nodemon",
       "nyc"
     ]

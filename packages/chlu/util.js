@@ -11,8 +11,9 @@ const emojiRegex = emojiRegexLib()
 // REGEXES
 // -----------------------------------------------------------------------------
 
-var versionWithBracketsRegex = /\[\d+\.\d+(\.\d+)*\]/g
-var versionWithoutBracketsRegex = /\d+\.\d+(\.\d)*/g
+var versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g
+var versionWithoutBracketsRegex = /v?\d+\.\d+(\.\d+)*/g
+var versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -34,7 +35,7 @@ function getTitlesAndFooterLinks (linesArr) {
   var i, len, temp
   for (i = 0, len = linesArr.length; i < len; i++) {
     if (isTitle(linesArr[i])) {
-      let firstEncounteredVersion = linesArr[i].match(versionWithoutBracketsRegex)[0]
+      let firstEncounteredVersion = linesArr[i].match(versionWithoutBracketsRegexNoVersion)[0]
       titles.push({
         version: firstEncounteredVersion,
         rowNum: i,
@@ -210,7 +211,7 @@ function filterDate (someString) {
   res = res.replace(';', ' ')
   res = res.replace(emojiRegex, '')
   res = res.replace(/[ ]+/g, ' ')
-  res = trim(res, '[](),.- \u2013\u2014\t\u00A0')
+  res = trim(res, '[](),.-/\\ \u2013\u2014\t\u00A0')
   return res
 }
 

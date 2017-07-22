@@ -5,14 +5,12 @@
 - [ ] If one entry has duplicate sections (like two "Added" sections), merge them.
 - [ ] Should support `"Unreleased"` sections
 - [ ] Fix heading tags of a wrong order. For example, if somebody uses version titles with H3 instead of H2
-- [ ] Support any trailing text in titles, after date
-- [ ] BUG - Text in titles after the date is being removed.
+- [ ] BUG? - Text in titles after the date is being removed.
 
 # testing
 
 - [ ] check if supports x.x versions. Even mixed with normal semver.
-- [ ] support both uppercase and lowercase file names
-- [ ] check does it work on Linux where case-sensitive file systems might be used and `chlu` algorithm might be looking for the files in a wrong case
+- [ ] support both uppercase and lowercase file names. Check does it work on Linux where case-sensitive file systems might be used and `chlu` algorithm might be looking for the files in a wrong case
 
 # done
 
@@ -30,8 +28,8 @@
 - [x] Support emoji in titles
 - [x] check if inserts above or below the footer links, correctly matching existing order
 - [x] test if two missing links can be added:
-- last two
-- random two
+    - last two
+    - random two
 
 ---
 

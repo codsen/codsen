@@ -19,7 +19,7 @@
 - [Install](#install)
 - [What it does](#what-it-does)
 - [Contributing](#contributing)
-- [Licence](#licence)
+- [Licences](#licences)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -39,11 +39,16 @@ All contributions are welcome. Please stick to [Standard JavaScript](https://sta
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/chlu/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise a GitHub issue.
 
-## Licence
+## Licences
+
+- Changelog code used in unit test no.13 - [`giu`](https://github.com/guigrpa/giu/), copyright Guillermo Grau Panea, MIT licence
+- Changelog code used in unit test no.14 - [`keystone`](https://github.com/keystonejs/keystone/), copyright Jed Watson, MIT licence
+
+---
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

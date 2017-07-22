@@ -29,7 +29,7 @@
     "tool"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -40,16 +40,16 @@
   "homepage": "https://github.com/codsen/chlu#readme",
   "dependencies": {
     "dehumanize-date": "^2.4.0",
-    "easy-replace": "^2.7.6",
-    "emoji-regex": "^6.4.3",
+    "easy-replace": "^2.10.1",
+    "emoji-regex": "^6.5.0",
     "get-pkg-repo": "^1.4.0",
     "is-natural-number": "^4.0.1",
     "just-insert": "^1.0.0",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.includes": "^4.3.0",
-    "lodash.min": "^4.0.1",
-    "lodash.reverse": "^4.0.1",
-    "lodash.trim": "^4.5.1",
+    "lodash.clonedeep": "*",
+    "lodash.includes": "*",
+    "lodash.min": "*",
+    "lodash.reverse": "*",
+    "lodash.trim": "*",
     "posthtml-ast-contains-only-empty-space": "^1.6.0",
     "semver-compare": "^1.0.0",
     "split-lines": "^1.1.0"
@@ -60,7 +60,7 @@
     "husky": "*",
     "nodemon": "*",
     "nyc": "*",
-    "standard": "^10.0.0"
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": true
