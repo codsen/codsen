@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/codsen/chlu#readme",
   "dependencies": {
-    "dehumanize-date": "^2.4.0",
+    "dehumanize-date": "^2.5.0",
     "easy-replace": "^2.10.1",
     "emoji-regex": "^6.5.0",
     "get-pkg-repo": "^1.4.0",

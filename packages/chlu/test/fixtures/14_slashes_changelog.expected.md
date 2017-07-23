@@ -525,7 +525,7 @@ types, thanks [Benjamin Lupton](https://github.com/balupton)
 
 Also; all dependencies are up to date with their latest published versions, except for `express` and `less-middleware` which require further testing to ensure compatibility.
 
-## [0.2.14] - 2014/04-16
+## [0.2.14] - 2014-04-16
 
 * added; new `createItems()` method to quickly populate data, see [this gist](https://gist.github.com/JedWatson/10739959) for usage instructions and examples
 * improved; `.toCSV()` method for lists now uses dependency injection and can be asynchronous (just pass `callback` as the last argument)

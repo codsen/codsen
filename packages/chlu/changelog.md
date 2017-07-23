@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## [2.5.0] - 2017-07-23
+### Added
+- ✨ Now mixed marker dates such as `2014/04-20` are recognised. Updated unit tests accordingly. Thanks to [dehumanize-date](https://github.com/ForbesLindesay/dehumanize-date/commit/7b4a27477a2bfdb614a4eb74c7972d5eea529480) by [forbeslindsay](https://github.com/ForbesLindesay).
+
 ## [2.4.0] - 2017-07-22
 ### Added
 - ✨ Now when date in title is unrecognised, cleaning of the title will still happen: letter "v" in front of version digits will be removed (if it exists), whatever-date will be trimmed out of usual separators like minus, dash etc and separated by a single minus-dash.
@@ -65,3 +69,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 [2.2.0]: https://github.com/codsen/chlu/compare/v2.1.1...v2.2.0
 [2.3.0]: https://github.com/codsen/chlu/compare/v2.2.1...v2.3.0
 [2.4.0]: https://github.com/codsen/chlu/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/codsen/chlu/compare/v2.4.0...v2.5.0
