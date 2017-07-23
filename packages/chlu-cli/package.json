@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/codsen/chlu-cli#readme",
   "dependencies": {
-    "chlu": "^2.4.0",
+    "chlu": "^2.5.0",
     "meow": "^3.7.0",
     "update-notifier": "^2.2.0"
   },
