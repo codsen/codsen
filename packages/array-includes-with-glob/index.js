@@ -1,7 +1,6 @@
 'use strict'
 var clone = require('lodash.clonedeep')
 var matcher = require('matcher')
-var objectAssign = require('object-assign')
 
 function includesWithGlob (originalInput, stringToFind, opts) {
   //
@@ -14,7 +13,7 @@ function includesWithGlob (originalInput, stringToFind, opts) {
     arrayVsArrayAllMustBeFound: 'any' // two options: 'any' or 'all'
   }
 
-  opts = objectAssign(defaults, opts)
+  opts = Object.assign(defaults, opts)
 
   // insurance
   if (arguments.length === 0) {
