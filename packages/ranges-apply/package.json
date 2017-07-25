@@ -1,0 +1,53 @@
+{
+  "name": "string-replace-slices-array",
+  "version": "1.0.0",
+  "description": "Delete or replace an array of slices in string",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": "codsen/string-replace-slices-array",
+  "keywords": [
+    "string",
+    "delete",
+    "replace",
+    "multiple",
+    "ranges",
+    "slice",
+    "slices",
+    "many",
+    "from",
+    "splice"
+  ],
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/string-replace-slices-array/issues"
+  },
+  "homepage": "https://github.com/codsen/string-replace-slices-array#readme",
+  "dependencies": {
+    "is-natural-number": "*",
+    "is-natural-number-string": "*",
+    "lodash.isplainobject": "*",
+    "ordinal-number-suffix": "^0.1.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.2"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
