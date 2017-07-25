@@ -104,7 +104,7 @@ console.log('str = ' + str)
 
 ## The algorithm
 
-The plan is simple - we `array.reduce` your given ranges array slicing the input string accordingly.
+The plan is simple - we `array.reduce` your given ranges array, slicing the input string accordingly.
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character numeration counting emoji as one character.
 
