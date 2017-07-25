@@ -1,22 +1,29 @@
 'use strict'
 
-const type = require('type-detect')
-const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
+const isObj = require('lodash.isplainobject')
+const checkTypes = require('check-types-mini')
 
 function objectNoNewKeys (input, reference, opts) {
-  function isObj (something) { return type(something) === 'Object' }
   const isArr = Array.isArray
   var defaults = {
     mode: 2
   }
-  opts = objectAssign(clone(defaults), opts)
+  if (Number.isFinite(opts)) {
+    if (!Number.isInteger(opts)) {
+      throw new TypeError(`object-no-new-keys/objectNoNewKeys(): [THROW_ID_03] The third argument, options object, is not only not an object, it's not even an integer! It's currently: ${opts} and computer doesn't like it very much.`)
+    } else {
+      throw new TypeError(`object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] Please pass a plain object with a key "mode" set to 1 or 2, not the number ${opts} directly! Computer doesn't like that.`)
+    }
+  }
+  opts = Object.assign(clone(defaults), opts)
   if (typeof opts.mode === 'string') {
     opts.mode = parseInt(opts.mode, 10)
   }
   if ((opts.mode !== 1) && (opts.mode !== 2)) {
     throw new TypeError('object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, "' + opts.mode + '" while it should be either natural number 1 or 2.')
   }
+  checkTypes(opts, defaults, {msg: 'object-no-new-keys/objectNoNewKeys(): [THROW_ID_04*]'})
 
   function objectNoNewKeysInternal (input, reference, opts, innerVar) {
     var temp

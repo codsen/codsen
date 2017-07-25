@@ -76,7 +76,7 @@ This library has two modes:
 1. Strict comparing, having no assumptions about the `reference`.
 2. Comparing, assuming that the `reference` will be NORMALISED.
 
-> Normalisation - a process of making multiple nested objects or arrays to have the same key set. If any array in any level has plain objects as its elements, those objects should have the same key set as their siblings at the same level. _— elders of the Internet._
+By _normalised_ I mean if any arrays have object children, those objects have the same keys.
 
 These two modes mainly concern the case when both `input` and `reference` have an array, but `reference` has less elements and there's nothing to compare the `input` element to:
 

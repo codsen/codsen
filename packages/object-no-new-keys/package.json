@@ -35,9 +35,9 @@
   },
   "homepage": "https://github.com/codsen/object-no-new-keys#readme",
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
-    "object-assign": "^4.1.1",
-    "type-detect": "^4.0.0"
+    "check-types-mini": "^2.3.0",
+    "lodash.clonedeep": "*",
+    "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",

@@ -368,4 +368,31 @@ test('04.01 - mode.opts customised to a wrong type - throws', t => {
   t.throws(function () {
     nnk({a: 'a'}, {b: 'b'}, {mode: 'z'})
   })
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, {mode: 1.5})
+  })
+})
+
+test('04.02 - mode is given as integer - throws', t => {
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, 1)
+  })
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, 2)
+  })
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, 2.5)
+  })
+})
+
+test('04.03 - check-types-mini will throw if rogue options key is given', t => {
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, {aaa: 1})
+  })
+  t.throws(function () {
+    nnk({a: 'a'}, {b: 'b'}, {aaa: 1, mode: 1})
+  })
+  t.notThrows(function () {
+    nnk({a: 'a'}, {b: 'b'}, {mode: 1})
+  })
 })
