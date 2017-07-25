@@ -42,7 +42,7 @@ const replaceSlicesArr = require('string-replace-slices-array')
 
 ## Idea
 
-You compile an array of string slices, feed it to this library and it deletes/replaces them for you.
+You compile an array of string slices, feed it to this library, and it deletes/replaces them for you.
 
 First, make sure you found exact boundaries of the slice - preview it using `String.slice`:
 
@@ -106,13 +106,13 @@ console.log('str = ' + str)
 
 The plan is simple - we `array.reduce` your given ranges array, slicing the input string accordingly.
 
-The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character numeration counting emoji as one character.
+The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), where I traversed HTML as string and compiled an array of things to delete or replace later, in one go. Performance was important, so it was not a good idea to delete/replace things on the spot, because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears the most fastest way.
+Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
-Generally I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
+I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
 ## Contributing
 
