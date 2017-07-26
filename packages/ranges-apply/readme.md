@@ -44,10 +44,10 @@ const replaceSlicesArr = require('string-replace-slices-array')
 
 You compile an array of string slices, feed it to this library, and it deletes/replaces them for you.
 
-First, make sure you found exact boundaries of the slice - preview it using `String.slice`:
+First, make sure you found the exact boundaries of the slice - preview each using `String.slice`:
 
 ```js
-console.log(someString.slice(sliceFrom, sliceTo)) // <--- you want exactly this range to be deleted
+console.log('>>>' + someString.slice(sliceFrom, sliceTo) + '<<<') // <--- make sure what you see is exactly what you want deleted/replaced or the place where it starts is exactly where you want string inserted
 ```
 
 Now that you have "from" index, `sliceFrom` and "to" index `sliceTo`, put them into an array and push them into another array. You can push many such "from"-"to" arrays into it.
@@ -100,6 +100,22 @@ str = repl(
 )
 console.log('str = ' + str)
 // => 'aaa zzz bbb yyy ccc',
+```
+
+To insert a piece of string into a string pass the index where you want the string inserted as both "from" and "to" values:
+
+```js
+const repl = require('string-replace-slices-array')
+let str = 'aaa  ccc'
+//
+str = repl(
+  str,
+  [
+    [4, 4, 'bbb']
+  ]
+)
+console.log('str = ' + str)
+// 'aaa bbb ccc'
 ```
 
 ## The algorithm

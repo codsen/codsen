@@ -41,7 +41,7 @@ function srsa (str, rangesArr, opts) {
       if (isNumStr(el[1])) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10)
       } else {
-        throw new TypeError(`string-replace-slices-array/srsa(): [THROW_ID_06] ranges array, second input arg. has ${i}${ordinal(i)} element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`)
+        throw new TypeError(`string-replace-slices-array/srsa(): [THROW_ID_07] ranges array, second input arg. has ${i}${ordinal(i)} element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`)
       }
     }
   })

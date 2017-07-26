@@ -153,3 +153,37 @@ test('02.04 - empty ranges array', function (t) {
     '02.04'
   )
 })
+
+// -----------------------------------------------------------------------------
+// 03. replacement - both "from" and "to" markers are equal
+// -----------------------------------------------------------------------------
+
+test('03.01 - basic replacement', function (t) {
+  t.deepEqual(
+    repl(
+      'aaa  ccc',
+      [
+        [4, 4, 'bbb']
+      ]
+    ),
+    'aaa bbb ccc',
+    '03.01'
+  )
+})
+
+test('03.02 - multiple replacement pieces', function (t) {
+  // let str = 'aaa  ccc  eee'
+  // console.log('previewing: >>>' + str.slice(4, 15) + '<<<')
+  // console.log('previewing: >>>' + str.slice(9, 15) + '<<<')
+  t.deepEqual(
+    repl(
+      'aaa  ccc  eee',
+      [
+        [4, 4, 'bbb'],
+        [9, 9, 'ddd']
+      ]
+    ),
+    'aaa bbb ccc ddd eee',
+    '03.02'
+  )
+})
