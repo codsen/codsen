@@ -1,0 +1,53 @@
+{
+  "name": "string-slices-array-push",
+  "version": "1.0.0",
+  "description": "Manage the array of slices referencing the index ranges within the string",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test && doctoc readme.md",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": "codsen/string-slices-array-push",
+  "keywords": [
+    "string",
+    "delete",
+    "replace",
+    "multiple",
+    "ranges",
+    "slice",
+    "slices",
+    "many",
+    "from",
+    "splice"
+  ],
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/string-slices-array-push/issues"
+  },
+  "homepage": "https://github.com/codsen/string-slices-array-push#readme",
+  "dependencies": {
+    "is-natural-number": "*",
+    "is-natural-number-string": "*",
+    "ordinal-number-suffix": "^0.1.1"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "doctoc": "^1.3.0",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.2"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}
