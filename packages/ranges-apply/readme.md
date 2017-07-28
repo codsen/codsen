@@ -50,13 +50,13 @@ First, make sure you found the exact boundaries of the slice - preview each usin
 console.log('>>>' + someString.slice(sliceFrom, sliceTo) + '<<<') // <--- make sure what you see is exactly what you want deleted/replaced or the place where it starts is exactly where you want string inserted
 ```
 
-Now that you have "from" index, `sliceFrom` and "to" index `sliceTo`, put them into an array and push them into another array. You can push many such "from"-"to" arrays into it.
+Now that you have "from" index, `sliceFrom` and "to" index `sliceTo`, put them into an array and push them into another array, `rangesArray`. You can push many such "from"-"to" arrays into it.
 
 For replacement, set the new value as a third element in the ranges array: `[sliceFrom, sliceTo, replaceWith]`
 
 That's it. Feed that array of ranges into this package, together with your source string and your deletion/replacement will be done for you.
 
-PSST. Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the slices array. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap or new ones are behind previous ones.
+**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap or new ones are behind previous ones.
 
 ## API
 
@@ -64,7 +64,7 @@ PSST. Check out [string-slices-array-push](https://github.com/codsen/string-slic
 stringReplaceSlicesArray(inputString, rangesArray) // options will come in later releases
 ```
 
-Returns a string.
+Returns a string with requested slices deleted/replaced.
 
 #### inputString
 
