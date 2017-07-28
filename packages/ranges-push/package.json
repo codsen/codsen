@@ -1,6 +1,6 @@
 {
   "name": "string-slices-array-push",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Manage the array of slices referencing the index ranges within the string",
   "main": "index.js",
   "scripts": {
