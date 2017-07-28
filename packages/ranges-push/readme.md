@@ -91,7 +91,7 @@ Input argument | Type                    | Obligatory? | Description
 ---------------|-------------------------|-------------|--------------------
 `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice
 `deleteTo`     | Integer, natural number | yes         | Ending index of the slice
-`str`          | String                  | no          | If you want not only to delete but [insert](https://github.com/codsen/string-replace-slices-array) something, put that new string here.
+`str`          | String                  | no          | If you want not only to delete but [insert](https://github.com/codsen/string-replace-slices-array) something, put that new string here
 
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
 
