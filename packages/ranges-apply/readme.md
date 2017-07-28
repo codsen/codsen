@@ -42,7 +42,7 @@ const replaceSlicesArr = require('string-replace-slices-array')
 
 ## Idea
 
-You compile an array of string slices, feed it to this library, and it deletes/replaces them for you.
+You [compile](https://github.com/codsen/string-slices-array-push) an array of string slices, feed it to this library, and it deletes/replaces them for you.
 
 First, make sure you found the exact boundaries of the slice - preview each using `String.slice`:
 
@@ -56,10 +56,12 @@ For replacement, set the new value as a third element in the ranges array: `[sli
 
 That's it. Feed that array of ranges into this package, together with your source string and your deletion/replacement will be done for you.
 
+PSST. Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the slices array. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap or new ones are behind previous ones.
+
 ## API
 
 ```js
-stringReplaceSlicesArray(inputString, rangesArray[, opts])
+stringReplaceSlicesArray(inputString, rangesArray) // options will come in later releases
 ```
 
 Returns a string.
