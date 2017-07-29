@@ -27,7 +27,7 @@
     "normalize"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -38,8 +38,8 @@
   "homepage": "https://github.com/codsen/object-fill-missing-keys#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "object-merge-advanced": "^6.0.3",
-    "type-detect": "^4.0.0"
+    "object-merge-advanced": "^6.5.0",
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
