@@ -23,7 +23,7 @@
     "comb"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -33,14 +33,14 @@
   },
   "homepage": "https://github.com/codsen/json-comb-core#readme",
   "dependencies": {
-    "check-types-mini": "^2.0.0",
+    "check-types-mini": "^2.3.0",
     "lodash.clonedeep": "*",
     "object-assign": "*",
-    "object-fill-missing-keys": "^2.1.1",
-    "object-flatten-all-arrays": "^3.1.1",
-    "object-merge-advanced": "^6.2.0",
-    "object-no-new-keys": "^1.0.2",
-    "object-set-all-values-to": "^2.0.1",
+    "object-fill-missing-keys": "^2.1.2",
+    "object-flatten-all-arrays": "^3.1.2",
+    "object-merge-advanced": "^6.5.0",
+    "object-no-new-keys": "^1.1.0",
+    "object-set-all-values-to": "^2.0.2",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "coveralls": "*",
     "husky": "^0.14.3",
     "nodemon": "^1.11.0",
-    "nyc": "^11.0.1",
+    "nyc": "^11.0.3",
     "standard": "^10.0.2"
   },
   "ava": {
