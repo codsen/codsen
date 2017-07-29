@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "The inner core of json-comb",
   "main": "index.js",
   "scripts": {
