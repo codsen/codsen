@@ -1,8 +1,21 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
-  "dependencies": { "mute": ["hex-color-regex", "lodash.clonedeep", "lodash.isplainobject", "lodash.isstring", "ava", "coveralls", "doctoc", "husky", "nyc"]
+  "dependencies": {
+    "mute": [
+      "ava",
+      "coveralls",
+      "doctoc",
+      "hex-color-regex",
+      "husky",
+      "lodash.clonedeep",
+      "lodash.isplainobject",
+      "lodash.isstring",
+      "nyc"
+    ]
   },
   "test": [
     "test.js"
