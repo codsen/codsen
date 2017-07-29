@@ -8,8 +8,7 @@
     "mute": [
       "ava",
       "coveralls",
-      "lodash.clonedeep",
-      "object-assign"
+      "lodash.clonedeep"
     ]
   },
   "test": [

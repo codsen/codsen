@@ -5,7 +5,6 @@ const flattenAllArrays = require('object-flatten-all-arrays')
 const mergeAdvanced = require('object-merge-advanced')
 const fillMissingKeys = require('object-fill-missing-keys')
 const nnk = require('object-no-new-keys')
-const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
 const type = require('type-detect')
 const checkTypes = require('check-types-mini')
@@ -48,7 +47,7 @@ function getKeyset (arrOriginal, opts) {
   var defaults = {
     placeholder: false
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign(clone(defaults), opts)
   checkTypes(opts, defaults, {ignoreKeys: 'placeholder', msg: 'json-comb-core/getKeyset(): [THROW_ID_10]'})
 
   var fOpts = {
@@ -123,7 +122,7 @@ function findUnused (arrOriginal, opts) {
   var defaults = {
     placeholder: false
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign(clone(defaults), opts)
   checkTypes(opts, defaults, {msg: 'json-comb-core/findUnused(): [THROW_ID_40]'})
   var arr = clone(arrOriginal)
 
