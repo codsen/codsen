@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Updated BitHound config accordingly too
 - Added extension to LICENSE
 
-## [1.5.0] - 2017-01-25
+## 1.5.0 - 2017-01-25
 ### Added
 - Calling Lodash functions each separately, to cut the total file size
 - Calling Lodash functions using `*` version flag, the latest, to save time later when Lodash is updated
