@@ -98,7 +98,7 @@ For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https:
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/detect-is-it-html-or-xhtml/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/detect-is-it-html-or-xhtml/issues). If you file a pull request, I'll do my best to help you to merge it soon. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
 
 ## Licence
 
