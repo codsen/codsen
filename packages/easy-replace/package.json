@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/codsen/easy-replace#readme",
   "dependencies": {
-    "check-types-mini": "^2.2.1",
+    "check-types-mini": "^2.3.0",
     "lodash.toarray": "*",
     "lodash.without": "*"
   },
