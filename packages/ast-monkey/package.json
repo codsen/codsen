@@ -29,7 +29,7 @@
     "value"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -39,12 +39,11 @@
   },
   "homepage": "https://github.com/codsen/ast-monkey#readme",
   "dependencies": {
-    "check-types-mini": "^2.1.0",
+    "check-types-mini": "^2.3.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
     "lodash.isplainobject": "*",
-    "object-assign": "*",
     "util-array-object-or-both": "^1.0.8"
   },
   "devDependencies": {
@@ -53,7 +52,7 @@
     "coveralls": "*",
     "husky": "^0.14.3",
     "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
+    "nyc": "^11.0.3",
     "standard": "^10.0.2"
   },
   "ava": {

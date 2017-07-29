@@ -3,7 +3,6 @@ const isArr = Array.isArray
 const clone = require('lodash.clonedeep')
 const isObj = require('lodash.isplainobject')
 const isEqual = require('lodash.isequal')
-const objectAssign = require('object-assign')
 const arrayObjectOrBoth = require('util-array-object-or-both')
 const checkTypes = require('check-types-mini')
 const isNaturalNumber = require('is-natural-number')
@@ -22,7 +21,7 @@ function traverse (treeOriginal, callback) {
     var tree = clone(treeOriginal)
 
     var i, len, res, allKeys, key
-    innerObj = objectAssign({depth: -1}, innerObj)
+    innerObj = Object.assign({depth: -1}, innerObj)
     innerObj.depth++
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
@@ -69,7 +68,7 @@ function monkey (inputOriginal, opts) {
     throw new Error('ast-monkey/index.js/monkey(): Please provide an input')
   }
   var input = clone(inputOriginal)
-  opts = objectAssign({
+  opts = Object.assign({
     key: null,
     val: undefined
   }, opts)
@@ -194,7 +193,7 @@ function find (input, opts) {
   } else {
     opts.only = 'any'
   }
-  return monkey(input, objectAssign(clone(opts), { mode: 'find' }))
+  return monkey(input, Object.assign(clone(opts), { mode: 'find' }))
 }
 
 function get (input, opts) {
@@ -214,7 +213,7 @@ function get (input, opts) {
   if (!isNaturalNumber(opts.index, {includeZero: true})) {
     throw new Error('ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ' + opts.index)
   }
-  return monkey(input, objectAssign(clone(opts), { mode: 'get' }))
+  return monkey(input, Object.assign(clone(opts), { mode: 'get' }))
 }
 
 function set (input, opts) {
@@ -241,7 +240,7 @@ function set (input, opts) {
     val: 'any',
     index: 'number'
   }})
-  return monkey(input, objectAssign(clone(opts), { mode: 'set' }))
+  return monkey(input, Object.assign(clone(opts), { mode: 'set' }))
 }
 
 function drop (input, opts) {
@@ -261,7 +260,7 @@ function drop (input, opts) {
   checkTypes(opts, null, {schema: {
     index: 'number'
   }})
-  return monkey(input, objectAssign(clone(opts), { mode: 'drop' }))
+  return monkey(input, Object.assign(clone(opts), { mode: 'drop' }))
 }
 
 function info (input) {
@@ -285,7 +284,7 @@ function del (input, opts) {
   } else {
     opts.only = 'any'
   }
-  return monkey(input, objectAssign(clone(opts), { mode: 'del' }))
+  return monkey(input, Object.assign(clone(opts), { mode: 'del' }))
 }
 
 function arrayFirstOnly (input) {

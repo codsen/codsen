@@ -11,8 +11,7 @@
       "coveralls",
       "lodash.clonedeep",
       "lodash.isequal",
-      "lodash.isplainobject",
-      "object-assign"
+      "lodash.isplainobject"
     ]
   },
   "test": [
