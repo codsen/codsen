@@ -29,7 +29,7 @@
     "process"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -40,29 +40,29 @@
   "homepage": "https://github.com/codsen/json-variables#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
-    "ast-monkey": "^6.0.0",
-    "check-types-mini": "^2.0.0",
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.includes": "^4.3.0",
-    "lodash.trim": "^4.5.1",
+    "ast-monkey": "^6.2.1",
+    "check-types-mini": "^2.3.0",
+    "lodash.clonedeep": "*",
+    "lodash.includes": "*",
+    "lodash.trim": "*",
     "matcher": "^1.0.0",
     "num-sort": "^1.0.0",
-    "object-assign": "^4.1.1",
     "object-path": "^0.11.4",
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^1.0.2",
-    "string-length": "^1.0.1",
+    "string-length": "^2.0.0",
     "string-slice": "^0.1.0",
-    "type-detect": "^4.0.0"
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "clear-cli": "*",
     "coveralls": "*",
+    "doctoc": "*",
     "husky": "*",
     "nodemon": "*",
-    "nyc": "^11.0.2",
-    "standard": "^10.0.0"
+    "nyc": "^11.0.3",
+    "standard": "^10.0.2"
   },
   "ava": {
     "verbose": false

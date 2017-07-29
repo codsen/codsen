@@ -10,7 +10,11 @@
       "ava",
       "clear-cli",
       "coveralls",
+      "doctoc",
       "husky",
+      "lodash.clonedeep",
+      "lodash.includes",
+      "lodash.trim",
       "nodemon"
     ]
   },
