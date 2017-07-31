@@ -3,6 +3,7 @@
 const isInt = require('is-natural-number')
 const isNumStr = require('is-natural-number-string')
 const ordinal = require('ordinal-number-suffix')
+const mergeRanges = require('./util').mergeRanges
 
 function mandatory (i) {
   throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing parameter ${i}${ordinal(i)}`)
@@ -44,52 +45,6 @@ class Slices {
       if (existy(addVal)) {
         this.last()[2] = (existy(this.last()[2]) && this.last()[2].length > 0) ? this.last()[2] + addVal : addVal
       }
-    } else if (
-      (this.slices !== undefined) &&
-      (
-        (from <= this.last()[1]) ||
-        (from <= this.last()[0])
-      )
-    ) {
-      this.last()[0] = Math.min(from, this.last()[0])
-      this.last()[1] = Math.max(to, this.last()[1])
-      if (addVal !== undefined) {
-        if (
-          existy(this.last()[2]) &&
-          (this.last()[2].length > 0)
-        ) {
-          this.last()[2] += addVal
-        } else {
-          this.last()[2] = addVal
-        }
-      }
-      // now, newly-owerwritten, last element of indexes array can itself overlap or
-      // have smaller indexes than the element before it.
-      // We need to traverse it backwards recursively and check/fix that.
-      for (let i = this.slices.length - 1; i > 0; i--) {
-        for (let y = i; y > 0; y--) {
-          if (this.slices[y][0] <= this.slices[y - 1][1]) {
-            this.slices[y - 1][0] = Math.min(this.slices[y - 1][0], this.slices[y][0])
-            this.slices[y - 1][1] = Math.max(this.slices[y - 1][1], this.slices[y][1])
-            if (existy(this.slices[y][2])) {
-              if (
-                existy(this.slices[y - 1][2]) &&
-                (this.slices[y - 1][2].length > 0)
-              ) {
-                this.slices[y - 1][2] += this.slices[y][2]
-              } else {
-                this.slices[y - 1][2] = this.slices[y][2]
-              }
-            }
-            // delete last element, the array this.slices[y]
-            this.slices.pop()
-            // fix the counter
-            i--
-          } else {
-            break
-          }
-        }
-      }
     } else {
       if (!this.slices) {
         this.slices = []
@@ -103,7 +58,7 @@ class Slices {
   current () {
     function existy (x) { return x != null }
     if (existy(this.slices)) {
-      return this.slices
+      return mergeRanges(this.slices)
     } else {
       return null
     }

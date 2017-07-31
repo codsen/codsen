@@ -96,11 +96,16 @@ Input argument | Type                    | Obligatory? | Description
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
 
 * If the arguments are of a wrong type, it will `throw` and error.
-* Also, if you _overload_ it, providing fourth, fifth input argument and so on if will `throw` too. It's for your safety because that might flag up something wrong happening in your program.
+* Also, if you _overload_ it, providing fourth, fifth input argument and so on if will `throw` too. It's for your own safety because it might flag up something wrong happening in your code.
+
+In essence, `.add()` behaves two ways:
+
+1) `.add(1, 2)`, later `.add(2, 3)` will not create a new `[2, 3]` but extend `[1, 2]` into `[1, 3]`. This is to save time because we prevent bunch of connecting ranges from being recorded as separate ones.
+2) all other cases, if it's not an exact extension of a previous range, new range is added into the array. `.add(2, 3)`, later `.add(1, 2)` will result in `[ [2, 3], [1, 2] ]`. The `.current()` method will clean it later. Read on...
 
 ### slices.current()
 
-This method fetches the **current** state of your slices array.
+This method fetches the **current** state of your slices array, sorts and **merges it**, then outputs it to you.
 
 Result is either
 
@@ -108,7 +113,7 @@ Result is either
 
 ```js
 [ // notice it's an array of arrays
-  [10, 20, ' insert this']
+  [10, 20, ' insert this string after deleting range between indexes 10 & 20']
   [30, 50],
   [51, 55]
 ]
@@ -116,9 +121,29 @@ Result is either
 
 2) or `null` if it's still empty and nothing has been added since.
 
+`.current()` will do the sorting first by `deleteFrom` (first element), then, sorting by `deleteTo` (second element), **then**, it will merge any ranges that overlap.
+
+```js
+[[4, 5], [1, 2]] => [[1, 2], [4, 5]] // no overlap, so just sorted by 1st element
+```
+
+```js
+[[1, 5], [1, 2]] => [[1, 2], [1, 5]] // no overlap, sorted first by 1st, then by 2nd element
+```
+
+```js
+[[2, 5], [2, 3], [1, 10]] => [[1, 10]] // there was an overlap, so ranges were merged
+```
+
+In theory, since `.current()` does not mutate our slices array in the memory, you could add more ranges and call `.current()` again, this time possibly with slightly different result. However, be aware that merging will lose some of the data in the ranges.
+
+Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and became `[ [10, 20, 'bbbaaa'] ]`. Now if you use this range in [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to amend the string, but then later discover that you left out the range `[12, 17, ccc]`, that is, you wanted to delete between indexes 12 and 17, and then insert `ccc`, you'll be in trouble. Since you amended your string, you can't "stick in" `ccc` between original `bbb` and `aaa` — your desired place to add `ccc`, at index 17 has been "merged" by `bbb` and `aaa`.
+
+**Conclusion**: complete all your operations, `add()`-ing ranges. Then, fetch your master ranges array _once_, using `.current` and feed it into [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array). At this point don't do any more `add()`ing, or if you really want that, process the ranges you've got using [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array), `wipe()` everything and start `add()`ing again.
+
 ### slices.wipe()
 
-Sets your slices array to `null`. Right after that `slices.current()` will yield `null`.
+Sets your slices array to `null`. Right after that `slices.current()` will yield `null`. You can then start `add`-ing again, from scratch.
 
 ### slices.last()
 
@@ -135,7 +160,7 @@ Outputs:
 ---
 
 
-PSST. Later, use [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to crunch your string using the `slices.current`.
+PSST. Later, feed your ranges array into [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to delete/replace all those ranges in your string.
 
 ## In my case
 
@@ -147,9 +172,9 @@ This library is part one of two library combo, second one being [string-replace-
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-slices-array-push/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-slices-array-push/issues). If you file a pull request, I'll do my best to merge it quickly. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
-If something doesn't work as you wished or you don't understand the inner working of this library, do raise an issue. I'm happy to explain what's happening. Often some part of my README documentation is woolly, and I can't spot it myself. I need user feedback.
+If something doesn't work as you wished or you don't understand the inner working of this library, _do raise an issue_. I'm happy to explain what's happening. Often some part of my README documentation is woolly, and I can't spot it myself. I need user feedback.
 
 Also, if you miss a feature, request it by [raising](https://github.com/codsen/string-slices-array-push/issues) an issue as well.
 
