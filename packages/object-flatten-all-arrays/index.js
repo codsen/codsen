@@ -3,7 +3,6 @@
 var isArr = Array.isArray
 var merge = require('lodash.merge')
 var clone = require('lodash.clonedeep')
-var objectAssign = require('object-assign')
 const type = require('type-detect')
 var checkTypes = require('./util').checkTypes
 var arrayContainsStr = require('./util').arrayContainsStr
@@ -15,7 +14,7 @@ function flattenAllArrays (originalIncommingObj, opts) {
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign(clone(defaults), opts)
   checkTypes(opts, defaults, 'object-flatten-all-arrays/flattenAllArrays(): [THROW_ID_01] ', 'opts')
 
   var incommingObj = clone(originalIncommingObj)

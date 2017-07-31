@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "3.1.2",
+  "version": "3.1.1",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,6 @@
   "dependencies": {
     "lodash.clonedeep": "*",
     "lodash.merge": "*",
-    "object-assign": "^4.1.1",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
