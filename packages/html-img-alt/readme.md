@@ -48,14 +48,14 @@ This library takes care of the `alt=` attributes (also wrongly-called "alt tags"
 1. If `alt` attribute is missing on any `img` tag, it will add an empty-one.
 2. If `alt` attribute is present on any `img` tag, it will run its contents through [string-unfancy](https://github.com/codsen/string-unfancy) to:
     - decode all HTML entities, recursively (in case multiple HTML encoding was applied)
-    - replace "fancy" characters with their simpler equivalents within ASCII range. For example, curly single quotes are changed into single apostrophes. This includes dashes and all sorts of double quotes.
+    - replace "fancy" characters with their simpler equivalents within ASCII range. For example, single curly quotes are changed into single apostrophes. This includes dashes and all sorts of double quotes.
     - replace all non-breaking spaces with regular spaces
 3. If `img` `alt` attribute has single quotes, it will remove them and all content within and replace with a pair of empty double quotes.
-4. It will also normalise the whitespace within `img` tags, leaving one space between attributes and leaving one space before closing slash (XHTML) or closing bracket (HTML).
+4. It will also normalise the white space within `img` tags, leaving one space between attributes and leaving one space before the closing slash (XHTML) or closing bracket (HTML).
 
-It works fine with both HTML and XHTML, it doesn't touch the closing slashes. Use a separate library for setting closing slashes on HTML tags.
+It works fine with both HTML and XHTML; it doesn't touch the closing slashes. Use a separate library for setting closing slashes on HTML tags.
 
-The main USP of this library is that **it does not parse the HTML**. It will never `throw` and error because of a dirty code. It might throw because of wrong input type, but not because of something in the code.
+The main USP of this library is that **it does not parse the HTML**. It will never `throw` an error because of a dirty code. It might throw because of wrong input type, but not because of something in the code.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -67,18 +67,18 @@ String-in, string-out. No options (yet).
 
 ## The algorithm
 
-If somebody would come up with this problem, the first idea would be to tackle it by parsing the HTML, traversing the AST tree, finding `img` tags and checking are all `alt` attributes in place.
+If somebody came up with this problem, the first idea would be to tackle it by parsing the HTML, traversing the AST tree, finding `img` tags and checking are all `alt` attributes in place.
 
-However, this way is: a) succeptible to HTML errors or any unrecognised code in the HTML (such as your back-end code or ESP campaign setup tags), and b) it's slow.
+However, this way is a) susceptible to HTML errors or any unrecognised code in the HTML (such as your back-end code or ESP campaign setup tags), and b) it's slow.
 
-My chosen way, treating the HTML as string, is both fastest and the most resilient. We traverse the code **only once**. All findings are put into "to-do list", driven by combo of:
+My chosen way, treating the HTML as a string, is both fastest and the most resilient. We traverse the code **only once**. All findings are put into "to-do list", driven by a combo of:
 
 * [string-slices-array-push](https://github.com/codsen/string-slices-array-push) - which manages the string index ranges, allowing to add/remove/query; and
 * [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) - which takes the final "to-do list" string ranges array and performs all those operations at once.
 
 The operation speeds are so fast that we can allow it to be [synchronous](https://stackoverflow.com/q/16336367/3943954)!
 
-When I recoded [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/) this way (v.2+), treating HTML as string, the largest of the largest email templates' fixing time dropped from handful _minutes_ to _miliseconds_.
+When I re-coded [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/) this way (v.2+), treating HTML as a string, the largest of the largest email templates' fixing time dropped from handful _minutes_ to _miliseconds_.
 
 **[⬆ &nbsp;back to top](#)**
 
