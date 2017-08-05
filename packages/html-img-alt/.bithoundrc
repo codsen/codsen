@@ -1,0 +1,20 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "standard"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "clear-cli",
+      "coveralls",
+      "husky",
+      "nodemon",
+      "nyc"
+    ]
+  },
+  "test": [
+    "test.js"
+  ]
+}
