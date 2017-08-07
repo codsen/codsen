@@ -621,7 +621,7 @@ test('04.05 - alt with only one single quote', (t) => {
 // -----------------------------------------------------------------------------
 // alt, two quotes (double or single)
 
-test('05.01 - alt with two double quotes, HTML', (t) => {
+test('05.01 - alt with two double quotes, excessive whitespace, HTML', (t) => {
   // one IMG tag:
   // ---------------------------------------------------------------------------
   t.deepEqual(
@@ -718,7 +718,7 @@ test('05.01 - alt with two double quotes, HTML', (t) => {
   )
 })
 
-test('05.02 - alt with two double quotes, one XHTML tag', (t) => {
+test('05.02 - alt with two double quotes, no space after slash, one XHTML tag', (t) => {
   t.deepEqual(
     alt('zzz<img     alt=""    />zzz'), 'zzz<img alt="" />zzz',
     '05.02.01 - html, excessive white space'
@@ -757,7 +757,7 @@ test('05.02 - alt with two double quotes, one XHTML tag', (t) => {
   )
 })
 
-test('05.03 - alt with two double quotes, XHTML', (t) => {
+test('05.03 - alt with two double quotes, one space between slash & bracket, XHTML', (t) => {
   t.deepEqual(
     alt('zzz<img     alt=""    / >zzz'), 'zzz<img alt="" />zzz',
     '05.03.01'
@@ -796,9 +796,9 @@ test('05.03 - alt with two double quotes, XHTML', (t) => {
   )
 })
 
-test('05.04 - alt with two double quotes, XHTML', (t) => {
+test('05.04 - alt with two double quotes, many spaces between slash & bracket, XHTML', (t) => {
   // ---------------------------------------------------------------------------
-  // same but with many spaces between clash and closing bracket:
+  // same but with many spaces between slash and closing bracket:
   t.deepEqual(
     alt('zzz<img     alt=""    /    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.01'
@@ -1031,5 +1031,29 @@ test('08.02 - cleans alt tag contents - m-dash + trim', (t) => {
   t.deepEqual(
     alt('<img alt    =" The new offer \u2014 50% discount " >', {unfancyTheAltContents: false}), '<img alt=" The new offer \u2014 50% discount " >',
     '08.02.03 - unfancyTheAltContents off - no character substitution, no trimming done'
+  )
+})
+
+test('08.03 - un-fancies multiple alt tags', (t) => {
+  t.deepEqual(
+    alt('abc <img alt    ="   someone’s " > def\n <img alt    =" The new offer \u2014 50% discount " > ghi <img      >\n\n\njkl'), 'abc <img alt="someone\'s" > def\n <img alt="The new offer - 50% discount" > ghi <img alt="" >\n\n\njkl',
+    '08.03.01 - default'
+  )
+})
+
+test('08.04 - adds an ALT within a nunjucks-sprinkled HTML', (t) => {
+  t.deepEqual(
+    alt(
+      '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %}></td>'
+    ),
+    '<img {% if m.n_o %}class="x-y"{% else %}id="a db-c d" style="display: block;"{% endif %} alt="" ></td>',
+    '08.04.01 - minime of 08.04.02'
+  )
+  t.deepEqual(
+    alt(
+      '<td class="anything-here" background="{%- include "partials/zzz.nunjucks" -%}" bgcolor="{{ color }}" height="{{ something_here }}" valign="top" style="background-image: url({%- include "partials/partials-location.nunjucks" -%}); background-position: top center; background-repeat: no-repeat; font-size: 0; line-height: 0;" align="center"><img {% if something.is_right %}class="right-class"{% else %}id="alternative dont-know-why-i-put-id here" style="display: block;"{% endif %}></td>'
+    ),
+    '<td class="anything-here" background="{%- include "partials/zzz.nunjucks" -%}" bgcolor="{{ color }}" height="{{ something_here }}" valign="top" style="background-image: url({%- include "partials/partials-location.nunjucks" -%}); background-position: top center; background-repeat: no-repeat; font-size: 0; line-height: 0;" align="center"><img {% if something.is_right %}class="right-class"{% else %}id="alternative dont-know-why-i-put-id here" style="display: block;"{% endif %} alt="" ></td>',
+    '08.04.02'
   )
 })
