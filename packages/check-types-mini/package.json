@@ -36,7 +36,6 @@
   "homepage": "https://github.com/codsen/check-types-mini#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
-    "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "lodash.intersection": "*",
     "lodash.pullall": "*",

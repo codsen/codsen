@@ -93,7 +93,6 @@ The common pattern is,
 
 ```js
 const checkTypes = require('check-types-mini')
-const clone = require('lodash.clonedeep')
 
 function yourFunction (input, opts) {
   // declare defaults, so we can enforce types later:
@@ -101,7 +100,8 @@ function yourFunction (input, opts) {
     placeholder: false
   }
   // fill any settings with defaults if missing:
-  opts = Object.assign(clone(defaults), opts)
+  opts = Object.assign({}, defaults, opts)
+
   // the check:
   checkTypes(opts, defaults, {msg: 'newLibrary/yourFunction(): [THROW_ID_01]', optsVarName: 'opts'})
   // ...

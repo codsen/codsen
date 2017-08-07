@@ -1,7 +1,6 @@
 'use strict'
 
 const type = require('type-detect')
-const clone = require('lodash.clonedeep')
 const includes = require('lodash.includes')
 const pullAll = require('lodash.pullall')
 const intersection = require('lodash.intersection')
@@ -12,6 +11,7 @@ function checkTypes (obj, ref, opts) {
   function isBool (something) { return type(something) === 'boolean' }
   function isStr (something) { return type(something) === 'string' }
   function isObj (something) { return type(something) === 'Object' }
+  function clone (obj) { return Object.assign({}, obj) }
   const NAMESFORANYTYPE = ['any', 'anything', 'every', 'everything', 'all', 'whatever', 'whatevs']
   const isArr = Array.isArray
 
@@ -78,12 +78,18 @@ function checkTypes (obj, ref, opts) {
 
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && (Object.keys(opts.schema).length > 0)) {
-      if (pullAll(Object.keys(obj), clone(Object.keys(ref)).concat(Object.keys(opts.schema))).length !== 0) {
-        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.enforceStrictKeyset is on and the following keys are not covered by schema and/or reference objects: ${JSON.stringify(pullAll(Object.keys(obj), clone(Object.keys(ref)).concat(Object.keys(opts.schema))), null, 4)}`)
+      if (pullAll(
+        Object.keys(obj),
+        Object.keys(ref).concat(Object.keys(opts.schema))
+      ).length !== 0) {
+        throw new TypeError(`${opts.msg}: ${opts.optsVarName}.enforceStrictKeyset is on and the following keys are not covered by schema and/or reference objects: ${JSON.stringify(pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), null, 4)}`)
       }
     } else {
       if (existy(ref) && (Object.keys(ref).length > 0)) {
-        if (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0) {
+        if (pullAll(
+          Object.keys(obj),
+          Object.keys(ref)
+        ).length !== 0) {
           throw new TypeError(`${opts.msg}: The input object has keys that are not covered by reference object: ${JSON.stringify(pullAll(Object.keys(obj), Object.keys(ref)), null, 4)}`)
         } else if (pullAll(Object.keys(ref), Object.keys(obj)).length !== 0) {
           throw new TypeError(`${opts.msg}: The reference object has keys that are not present in the input object: ${JSON.stringify(pullAll(Object.keys(ref), Object.keys(obj)), null, 4)}`)
@@ -104,7 +110,10 @@ function checkTypes (obj, ref, opts) {
       // first check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(opts.schema[key], NAMESFORANYTYPE).length) {
         // because, if not, it means we need to do some work, check types:
-        if (!includes(opts.schema[key], type(obj[key]).toLowerCase())) {
+        if (!includes(
+          opts.schema[key],
+          type(obj[key]).toLowerCase())
+        ) {
           // new in v.2.2
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
           // If it is, then iterate through the array, checking does each value conform to the
@@ -114,7 +123,10 @@ function checkTypes (obj, ref, opts) {
           ) {
             // check each key:
             for (let i = 0, len = obj[key].length; i < len; i++) {
-              if (!includes(opts.schema[key], type(obj[key][i]).toLowerCase())) {
+              if (!includes(
+                opts.schema[key],
+                type(obj[key][i]).toLowerCase())
+              ) {
                 throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} is of type ${type(obj[key][i]).toLowerCase()}, but only the following are allowed in ${opts.optsVarName}.schema: ${opts.schema[key]}`)
               }
             }
