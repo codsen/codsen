@@ -52,8 +52,9 @@ This library takes care of the `alt=` attributes (also wrongly-called "alt tags"
     - replace all non-breaking spaces with regular spaces
 3. If `img` `alt` attribute has single quotes, it will remove them and all content within and replace with a pair of empty double quotes.
 4. It will also normalise the white space within `img` tags, leaving one space between attributes and leaving one space before the closing slash (XHTML) or closing bracket (HTML).
+5. You can turn it off, but by default all the contents of the image `ALT` attributes will be trimmed and [unfancie'd](https://github.com/codsen/string-unfancy) (curly quotes, m/n-dashes replaced with single quotes, minuses). That's to keep it simple for old email consumption software and make it easier to QA them.
 
-It works fine with both HTML and XHTML; it doesn't touch the closing slashes. Use a separate library for setting closing slashes on HTML tags.
+`html-img-alt` works fine with both HTML and XHTML; it doesn't touch the closing slashes. Use a separate library for enforcing the closing slashes (or removing them) from singleton tags (`br`, `hr` and so on).
 
 The main USP of this library is that **it does not parse the HTML**. It will never `throw` an error because of a dirty code. It might throw because of wrong input type, but not because of something in the code.
 
@@ -61,7 +62,21 @@ The main USP of this library is that **it does not parse the HTML**. It will nev
 
 ## API
 
-String-in, string-out. No options (yet).
+String-in, string-out. You can pass in the optional options object:
+
+**Defaults**:
+
+```js
+    {
+      unfancyTheAltContents: true
+    }
+```
+
+`options` object's key         | Type     | Obligatory? | Default     | Description
+-------------------------------|----------|-------------|-------------|----------------------
+{                              |          |             |             |
+`unfancyTheAltContents`        | Boolean  | no          | `true`      | Are each image's `alt` attributes contents trimmed and processed by [string-unfancy](https://github.com/codsen/string-unfancy)
+}                              |          |             |             |
 
 **[⬆ &nbsp;back to top](#)**
 

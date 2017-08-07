@@ -37,8 +37,11 @@
   },
   "homepage": "https://github.com/codsen/html-img-alt#readme",
   "dependencies": {
+    "check-types-mini": "^2.4.0",
+    "lodash.isplainobject": "*",
     "string-replace-slices-array": "^1.0.5",
-    "string-slices-array-push": "^1.1.0"
+    "string-slices-array-push": "^1.1.0",
+    "string-unfancy": "^2.0.0"
   },
   "devDependencies": {
     "ava": "*",
@@ -47,7 +50,7 @@
     "husky": "*",
     "nodemon": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true

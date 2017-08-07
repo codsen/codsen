@@ -10,6 +10,7 @@
       "clear-cli",
       "coveralls",
       "husky",
+      "lodash.isplainobject",
       "nodemon",
       "nyc"
     ]

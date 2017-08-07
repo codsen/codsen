@@ -641,23 +641,23 @@ test('05.01 - alt with two double quotes, HTML', (t) => {
     '05.01.04 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt="   "    >zzz'), 'zzz<img alt="   " >zzz',
+    alt('zzz<img     alt="   "    >zzz'), 'zzz<img alt="" >zzz',
     '05.01.05 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    ="   "    >zzz'), 'zzz<img alt="   " >zzz',
+    alt('zzz<img     alt    ="   "    >zzz'), 'zzz<img alt="" >zzz',
     '05.01.06 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "    >zzz'), 'zzz<img alt="   " >zzz',
+    alt('zzz<img     alt    =    "   "    >zzz'), 'zzz<img alt="" >zzz',
     '05.01.07 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   ">zzz'), 'zzz<img alt="   " >zzz',
+    alt('zzz<img     alt    =    "   ">zzz'), 'zzz<img alt="" >zzz',
     '05.01.08 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   ">zzz'), 'zzz<img alt="   " >zzz',
+    alt('zzz<img     alt    =    "   ">zzz'), 'zzz<img alt="" >zzz',
     '05.01.09 - html, excessive white space'
   )
   // three IMG tags:
@@ -689,31 +689,31 @@ test('05.01 - alt with two double quotes, HTML', (t) => {
   t.deepEqual(
     alt(
       'zzz<img     alt="   "    >zzz<img     alt="   "    >zzz<img     alt="   "    >zzz'),
-      'zzz<img alt="   " >zzz<img alt="   " >zzz<img alt="   " >zzz',
+      'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
     '05.01.14 - html, excessive white space'
   )
   t.deepEqual(
     alt(
       'zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz<img     alt    ="   "    >zzz'),
-      'zzz<img alt="   " >zzz<img alt="   " >zzz<img alt="   " >zzz',
+      'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
     '05.01.15 - html, excessive white space'
   )
   t.deepEqual(
     alt(
       'zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz<img     alt    =    "   "    >zzz'),
-      'zzz<img alt="   " >zzz<img alt="   " >zzz<img alt="   " >zzz',
+      'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
     '05.01.16 - html, excessive white space'
   )
   t.deepEqual(
     alt(
       'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'),
-      'zzz<img alt="   " >zzz<img alt="   " >zzz<img alt="   " >zzz',
+      'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
     '05.01.17 - html, excessive white space'
   )
   t.deepEqual(
     alt(
       'zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz<img     alt    =    "   ">zzz'),
-      'zzz<img alt="   " >zzz<img alt="   " >zzz<img alt="   " >zzz',
+      'zzz<img alt="" >zzz<img alt="" >zzz<img alt="" >zzz',
     '05.01.18 - html, excessive white space'
   )
 })
@@ -736,23 +736,23 @@ test('05.02 - alt with two double quotes, one XHTML tag', (t) => {
     '05.02.04 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt="   "    />zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt="   "    />zzz'), 'zzz<img alt="" />zzz',
     '05.02.05 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    ="   "    />zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    ="   "    />zzz'), 'zzz<img alt="" />zzz',
     '05.02.06 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "    />zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "    />zzz'), 'zzz<img alt="" />zzz',
     '05.02.07 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/>zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/>zzz'), 'zzz<img alt="" />zzz',
     '05.02.08 - html, excessive white space'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/>zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/>zzz'), 'zzz<img alt="" />zzz',
     '05.02.09 - html, excessive white space'
   )
 })
@@ -775,23 +775,23 @@ test('05.03 - alt with two double quotes, XHTML', (t) => {
     '05.03.04'
   )
   t.deepEqual(
-    alt('zzz<img     alt="   "    / >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt="   "    / >zzz'), 'zzz<img alt="" />zzz',
     '05.03.05'
   )
   t.deepEqual(
-    alt('zzz<img     alt    ="   "    / >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    ="   "    / >zzz'), 'zzz<img alt="" />zzz',
     '05.03.06'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "    / >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "    / >zzz'), 'zzz<img alt="" />zzz',
     '05.03.07'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/ >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/ >zzz'), 'zzz<img alt="" />zzz',
     '05.03.08'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/ >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/ >zzz'), 'zzz<img alt="" />zzz',
     '05.03.09'
   )
 })
@@ -816,23 +816,23 @@ test('05.04 - alt with two double quotes, XHTML', (t) => {
     '05.04.04'
   )
   t.deepEqual(
-    alt('zzz<img     alt="   "    /    >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt="   "    /    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.05'
   )
   t.deepEqual(
-    alt('zzz<img     alt    ="   "    /    >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    ="   "    /    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.06'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "    /    >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "    /    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.07'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/    >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.08'
   )
   t.deepEqual(
-    alt('zzz<img     alt    =    "   "/    >zzz'), 'zzz<img alt="   " />zzz',
+    alt('zzz<img     alt    =    "   "/    >zzz'), 'zzz<img alt="" />zzz',
     '05.04.09'
   )
 })
@@ -944,6 +944,13 @@ test('06.03 - other attributes don\'t have equal and value', (t) => {
   )
 })
 
+test('06.04 - specific place in the algorithm, protection against rogue slashes', (t) => {
+  t.deepEqual(
+    alt('<img alt="/ class="" />'), '<img alt="/ class="" />',
+    '06.04 - should do nothing.'
+  )
+})
+
 // GROUP SEVEN.
 // -----------------------------------------------------------------------------
 // throws
@@ -970,4 +977,59 @@ test('07.02 - throws if input is not string', (t) => {
   t.throws(function () {
     alt(true)
   })
+})
+
+test('07.03 - throws if opts is not a plain object', (t) => {
+  t.throws(function () {
+    alt('zzz', ['aaa'])
+  })
+  t.notThrows(function () {
+    alt('zzz', null) // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
+  })
+  t.notThrows(function () {
+    alt('zzz', undefined) // it can be falsey, - we'll interpret as hardcoded choice of NO opts.
+  })
+  t.throws(function () {
+    alt('zzz', 1)
+  })
+  t.notThrows(function () {
+    alt('zzz', {})
+  })
+  t.throws(function () {
+    alt('zzz', {zzz: 'yyy'}) // rogue keys - throws. WTF?
+  })
+})
+
+// GROUP EIGHT.
+// -----------------------------------------------------------------------------
+// opts.unfancyTheAltContents
+
+test('08.01 - cleans alt tag contents - fancy quote', (t) => {
+  t.deepEqual(
+    alt('<img alt    ="   someone’s " >'), '<img alt="someone\'s" >',
+    '08.01.01 - default'
+  )
+  t.deepEqual(
+    alt('<img alt    ="   someone’s " >', {unfancyTheAltContents: true}), '<img alt="someone\'s" >',
+    '08.01.02 - hardcoded default, unfancyTheAltContents on'
+  )
+  t.deepEqual(
+    alt('<img alt    ="   someone’s " >', {unfancyTheAltContents: false}), '<img alt="   someone’s " >',
+    '08.01.03 - unfancyTheAltContents off - no character substitution, no trim'
+  )
+})
+
+test('08.02 - cleans alt tag contents - m-dash + trim', (t) => {
+  t.deepEqual(
+    alt('<img alt    =" The new offer \u2014 50% discount " >'), '<img alt="The new offer - 50% discount" >',
+    '08.02.01 - default'
+  )
+  t.deepEqual(
+    alt('<img alt    =" The new offer \u2014 50% discount " >'), '<img alt="The new offer - 50% discount" >',
+    '08.02.02 - hardcoded default, unfancyTheAltContents on'
+  )
+  t.deepEqual(
+    alt('<img alt    =" The new offer \u2014 50% discount " >', {unfancyTheAltContents: false}), '<img alt=" The new offer \u2014 50% discount " >',
+    '08.02.03 - unfancyTheAltContents off - no character substitution, no trimming done'
+  )
 })
