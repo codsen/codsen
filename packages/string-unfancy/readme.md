@@ -38,13 +38,19 @@
 $ npm i -S string-unfancy
 ```
 
+> or, if you work with image `alt` attributes, check out [html-img-alt](https://github.com/codsen/html-img-alt) which uses `string-unfancy`.
+
 ## Idea
 
-This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. It is convenient when coding email templates and you want to ensure only simple characters are within `alt` attributes.
+This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. One could say it's the opposite of [Detergent](https://github.com/codsen/detergent).
+
+`string-unfancy` main purpose is to simplify the images `alt` attribute content in email templates.
 
 The list of covered characters includes all kinds of single quotes, double quotes, dashes and the non-breaking space.
 
 Also, this library will recursively decode any HTML entities before performing the replacement.
+
+PS. If you want a higher-level tool, [html-img-alt](https://github.com/codsen/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
 
 ## Usage
 
