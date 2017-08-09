@@ -22,7 +22,7 @@
     "choice"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -32,11 +32,9 @@
   },
   "homepage": "https://github.com/codsen/util-array-object-or-both#readme",
   "dependencies": {
-    "check-types-mini": "^2.0.0",
-    "lodash.clonedeep": "*",
+    "check-types-mini": "^2.4.0",
     "lodash.includes": "*",
-    "lodash.isplainobject": "*",
-    "object-assign": "*"
+    "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",
@@ -45,7 +43,7 @@
     "husky": "*",
     "nodemon": "^1.11.0",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true

@@ -1,9 +1,7 @@
 'use strict'
 
 const includes = require('lodash.includes')
-const objectAssign = require('object-assign')
 const checkTypes = require('check-types-mini')
-const clone = require('lodash.clonedeep')
 const isObj = require('lodash.isplainobject')
 
 function validate (str, opts) {
@@ -26,7 +24,7 @@ function validate (str, opts) {
     msg: '',
     optsVarName: 'given variable'
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign({}, defaults, opts)
   checkTypes(
     opts,
     defaults,
