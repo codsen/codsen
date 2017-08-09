@@ -1,18 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [util-nonempty](#util-nonempty)
-  - [Purpose](#purpose)
-  - [Install](#install)
-  - [Use](#use)
-  - [API](#api)
-  - [Testing](#testing)
-  - [Contributing](#contributing)
-  - [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # util-nonempty
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
@@ -24,7 +9,24 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Purpose](#purpose)
+- [Install](#install)
+- [Use](#use)
+- [API](#api)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Purpose
 
@@ -99,7 +101,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -136,3 +138,6 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/util-nonempty.svg
 [downloads-url]: https://www.npmjs.com/package/util-nonempty
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-nonempty/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-nonempty

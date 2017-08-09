@@ -19,7 +19,7 @@
     "util"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -34,9 +34,9 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "husky": "^0.13.4",
-    "nyc": "^11.0.2",
-    "standard": "^10.0.2"
+    "husky": "^0.14.3",
+    "nyc": "^11.1.0",
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true
