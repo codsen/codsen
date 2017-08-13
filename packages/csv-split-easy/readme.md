@@ -2,7 +2,7 @@
 
 <a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
 
-> Splits the CSV string into array of arrays, each representing a row or columns
+> Splits the CSV string into array of arrays, each representing a row of columns
 
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
