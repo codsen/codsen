@@ -71,24 +71,70 @@ test('01.02 - breaks lines that have empty values', (t) => {
   t.deepEqual(
     split(',,\na,b,c'),
     [
-      ['', '', ''],
       ['a', 'b', 'c']
     ],
     '01.02.01 - whole row comprises of empty values'
   )
   t.deepEqual(
-    split(','),
+    split('a,b\n,\n,'),
     [
-      ['', '']
+      ['a', 'b']
     ],
-    '01.02.02 - only one comma'
+    '01.02.02 - only first row contains real data'
+  )
+  t.deepEqual(
+    split('a,b\n\r,\n,c'),
+    [
+      ['a', 'b'],
+      ['', 'c']
+    ],
+    '01.02.02 - only first row contains real data'
+  )
+  t.deepEqual(
+    split('a,b\n\r"",""\n,c'),
+    [
+      ['a', 'b'],
+      ['', 'c']
+    ],
+    '01.02.03 - empty row all with double quotes'
+  )
+  t.deepEqual(
+    split('a,b\n\r"",""\n"",c'),
+    [
+      ['a', 'b'],
+      ['', 'c']
+    ],
+    '01.02.04 - more double quotes'
+  )
+  t.deepEqual(
+    split('a,"b"\n\r"",""\n"","c"'),
+    [
+      ['a', 'b'],
+      ['', 'c']
+    ],
+    '01.02.05 - double quotes almost everywhere'
+  )
+  t.deepEqual(
+    split('a,b,c\n\r,,\n\r,,\n,,\n,,\r,,\n,,\n,d,'),
+    [
+      ['a', 'b', 'c'],
+      ['', 'd', '']
+    ],
+    '01.02.06 - many empty rows'
+  )
+  t.deepEqual(
+    split(',,,'),
+    [
+      ['']
+    ],
+    '01.02.07 - three commas'
   )
   t.deepEqual(
     split(''),
     [
       ['']
     ],
-    '01.02.03 - nothing'
+    '01.02.08 - nothing'
   )
 })
 
