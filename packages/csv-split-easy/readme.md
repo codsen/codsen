@@ -92,6 +92,8 @@ console.log('source = ' + JSON.stringify(source, null, 4))
 //    ]
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## The algorithm
 
 CSV files, especially accounting-ones, are different from _any_ files. We assume that **we don't want any empty rows** in the parsed arrays. It means, [conventional](https://github.com/sindresorhus/split-lines/) string splitting libraries would be inefficient here because after splitting, we'd have to clean up any empty rows.
