@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Splits the CSV string into array of arrays, each representing a row or columns",
   "main": "index.js",
   "scripts": {
