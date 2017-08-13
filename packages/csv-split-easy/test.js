@@ -92,6 +92,43 @@ test('01.02 - breaks lines that have empty values', (t) => {
   )
 })
 
+test('01.03 - copes with leading/trailing empty space', (t) => {
+  t.deepEqual(
+    split(`Description,Debit Amount,Credit Amount,Balance
+Client #1 payment,,1000,1940
+Bought table,10,,940
+Bought carpet,30,,950
+Bought chairs,20,,980
+Bought pens,10,,1000\n`),
+    [
+      ['Description', 'Debit Amount', 'Credit Amount', 'Balance'],
+      ['Client #1 payment', '', '1000', '1940'],
+      ['Bought table', '10', '', '940'],
+      ['Bought carpet', '30', '', '950'],
+      ['Bought chairs', '20', '', '980'],
+      ['Bought pens', '10', '', '1000']
+    ],
+    '01.03.01 - one trailing \\n'
+  )
+  t.deepEqual(
+    split(`\nDescription,Debit Amount,Credit Amount,Balance
+Client #1 payment,,1000,1940
+Bought table,10,,940
+Bought carpet,30,,950
+Bought chairs,20,,980
+Bought pens,10,,1000\n \r \n \r \r\r\r\n\n\n\n      `),
+    [
+      ['Description', 'Debit Amount', 'Credit Amount', 'Balance'],
+      ['Client #1 payment', '', '1000', '1940'],
+      ['Bought table', '10', '', '940'],
+      ['Bought carpet', '30', '', '950'],
+      ['Bought chairs', '20', '', '980'],
+      ['Bought pens', '10', '', '1000']
+    ],
+    '01.03.02 - bunch of leading and trailing whitespace'
+  )
+})
+
 // =============================================================
 // group 02 - concentrating on values wrapped with duoble quotes
 // =============================================================

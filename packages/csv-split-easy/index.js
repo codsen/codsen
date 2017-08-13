@@ -11,9 +11,12 @@ function split (str) {
 
   if (typeof str !== 'string') {
     throw new TypeError('csv-split-easy: split(): [THROW_ID_01] input must be string! Currently it\'s: ' + typeof (str) + ', equal to: ' + JSON.stringify(str, null, 4))
-  }
-  if (str === '') {
-    return [['']]
+  } else {
+    if (str === '') {
+      return [['']]
+    } else {
+      str = str.trim()
+    }
   }
   for (let i = 0, len = str.length; i < len; i++) {
     //
