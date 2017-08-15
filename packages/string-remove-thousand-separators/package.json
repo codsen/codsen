@@ -1,0 +1,48 @@
+{
+  "name": "string-remove-thousand-separators",
+  "version": "1.0.0",
+  "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": "codsen/string-remove-thousand-separators",
+  "keywords": [
+    "css",
+    "extract",
+    "class",
+    "id",
+    "string",
+    "selector"
+  ],
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/string-remove-thousand-separators/issues"
+  },
+  "homepage": "https://github.com/codsen/string-remove-thousand-separators#readme",
+  "dependencies": {
+    "check-types-mini": "^2.4.0",
+    "is-numeric": "0.0.5",
+    "lodash.isplainobject": "*",
+    "lodash.trim": "*",
+    "string-replace-slices-array": "^1.0.5",
+    "string-slices-array-push": "^1.1.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.2"
+  },
+  "ava": {
+    "verbose": true
+  }
+}
