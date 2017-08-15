@@ -58,7 +58,9 @@ console.log(remSep('1,000,000.00'))
 
 // 🇷🇺  thousand separators:
 console.log(remSep('1 000 000,00'))
-// => "1000000.00"
+// => "1000000,00"
+// (if you want it converted to Western notation with dot,
+// set opts.forceUKStyle = true, see below)
 
 // 🇨🇭 thousand separators:
 console.log(remSep("1'000'000.00"))
@@ -82,7 +84,7 @@ console.log(remSep('100 000,2'))
 // => "100000,20" (Russian notation)
 
 console.log(remSep('100\'000.2'))
-// => "100000,20" (Swiss notation)
+// => "100000.20" (Swiss notation)
 ```
 
 ## API
