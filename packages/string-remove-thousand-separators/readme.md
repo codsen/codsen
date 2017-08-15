@@ -76,7 +76,7 @@ console.log(remSep('100 000 000 000')) // => 100000000000
 // while removing thousand separators, it will also pad the digits to two decimal places
 // (optional, on by default, to turn it off set opts.padSingleDecimalPlaceNumbers to `false`):
 console.log(remSep('100,000.2'))
-// => "100000.20" (western notation)
+// => "100000.20" (Western notation)
 
 console.log(remSep('100 000,2'))
 // => "100000,20" (Russian notation)
