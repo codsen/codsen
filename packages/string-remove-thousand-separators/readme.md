@@ -92,7 +92,7 @@ console.log(remSep('100\'000.2'))
 **remSep('str'[, opts])**
 
 If first argument (input) is not `string`, it will `throw` and error.
-If second argument (opts) is not `null` and is not `undefined` and is not a plain object, it will `throw` and error.
+Second input argument, `opts`, is optional. However, if _it is_ present and is not `null`, not `undefined` and not a plain object, it will `throw` and error.
 
 ### options
 
