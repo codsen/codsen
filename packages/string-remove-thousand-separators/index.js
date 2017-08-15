@@ -22,7 +22,7 @@ function remSep (str, opts) {
   }
 
   // prep opts
-  let defaults = {
+  var defaults = {
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   }
