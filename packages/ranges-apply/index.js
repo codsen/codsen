@@ -30,14 +30,14 @@ function srsa (str, rangesArr, opts) {
     if (!isArr(el)) {
       throw new TypeError(`string-replace-slices-array/srsa(): [THROW_ID_05] ranges array, second input arg., has ${i}${ordinal(i)} element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`)
     }
-    if (!isInt(el[0])) {
+    if (!isInt(el[0], {includeZero: true})) {
       if (isNumStr(el[0])) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10)
       } else {
         throw new TypeError(`string-replace-slices-array/srsa(): [THROW_ID_06] ranges array, second input arg. has ${i}${ordinal(i)} element, array [${el[0]},${el[1]}]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}. Computer doesn't like this.`)
       }
     }
-    if (!isInt(el[1])) {
+    if (!isInt(el[1], {includeZero: true})) {
       if (isNumStr(el[1])) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10)
       } else {

@@ -154,6 +154,56 @@ test('02.04 - empty ranges array', function (t) {
   )
 })
 
+test('02.05 - deletes multiple chunks with zero indexes correctly', function (t) {
+  let str = 'delete me bbb and me too ccc'
+  // console.log('\n===============\n02.05')
+  // console.log('slice 1: >>>' + str.slice(0, 10) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [0, 10],
+        [14, 25]
+      ]
+    ),
+    'bbb ccc',
+    '02.05'
+  )
+})
+
+test('02.06 - replaces multiple chunks with zero indexes correctly', function (t) {
+  let str = 'delete me bbb and me too ccc'
+  // console.log('\n===============\n02.06')
+  // console.log('slice 1: >>>' + str.slice(0, 9) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(14, 25) + '<<<\n')
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [0, 9, 'aaa'],
+        [14, 25]
+      ]
+    ),
+    'aaa bbb ccc',
+    '02.06'
+  )
+})
+
+test('02.07 - replace with ending index zero', function (t) {
+  let str = 'bbb ccc'
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [0, 0, 'aaa ']
+      ]
+    ),
+    'aaa bbb ccc',
+    '02.07 - both from and to indexes are zeros, because we\'re adding content in front'
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
