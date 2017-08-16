@@ -32,15 +32,15 @@
     "is-numeric": "0.0.5",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
-    "string-replace-slices-array": "^1.0.5",
-    "string-slices-array-push": "^1.1.0"
+    "string-replace-slices-array": "^1.1.0",
+    "string-slices-array-push": "^1.2.0"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true

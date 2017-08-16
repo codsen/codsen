@@ -23,6 +23,7 @@ function remSep (str, opts) {
 
   // prep opts
   var defaults = {
+    removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   }
@@ -44,14 +45,21 @@ function remSep (str, opts) {
   for (let i = 0, len = str.length; i < len; i++) {
     // -------------------------------------------------------------------------
     // catch empty space for Russian-style thousand separators (spaces):
-    if (str[i].trim() === '') {
+    if (opts.removeThousandSeparatorsFromNumbers && (str[i].trim() === '')) {
       rangesToDelete.add(i, i + 1)
     }
     // -------------------------------------------------------------------------
     // catch single quotes for Swiss-style thousand separators:
     // (safe to delete instantly because they're not commas or dots)
-    if (str[i] === '\'') {
+    if (opts.removeThousandSeparatorsFromNumbers && (str[i] === '\'')) {
       rangesToDelete.add(i, i + 1)
+      // but if single quote follows this, that's dodgy and let's bail
+      if (str[i + 1] === '\'') {
+        // bail!
+        allOK = false
+        break
+        // That's very weird case by the way. We're talking about CSV contents here after all...
+      }
     }
     // -------------------------------------------------------------------------
     // catch thousand separators
@@ -77,7 +85,9 @@ function remSep (str, opts) {
                   // thousands separator followed by three digits...
                   // =============
                   // 1. submit for deletion
-                  rangesToDelete.add(i, i + 1)
+                  if (opts.removeThousandSeparatorsFromNumbers) {
+                    rangesToDelete.add(i, i + 1)
+                  }
 
                   // 2. enforce the thousands separator consistency:
                   if (!firstSeparator) {
@@ -106,7 +116,7 @@ function remSep (str, opts) {
               // A Separator followed by two digits and string ends.
               //
               // If Russian notation:
-              if (opts.forceUKStyle && (str[i] === ',')) {
+              if (opts.removeThousandSeparatorsFromNumbers && opts.forceUKStyle && (str[i] === ',')) {
                 rangesToDelete.add(i, i + 1, '.')
               }
             }
@@ -115,7 +125,8 @@ function remSep (str, opts) {
             allOK = false
             break
           }
-        } else {
+        } else { // second digit IS UNDEFINED
+          //
           // Stuff like "10.1" (UK notation) or "10,1" (Russian notation).
           // Thousands separator followed by only one digit and then string ends.
           // =============
