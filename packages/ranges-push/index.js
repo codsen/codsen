@@ -6,7 +6,7 @@ const ordinal = require('ordinal-number-suffix')
 const mergeRanges = require('./util').mergeRanges
 
 function mandatory (i) {
-  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing parameter ${i}${ordinal(i)}`)
+  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${i}${ordinal(i)} parameter`)
 }
 
 class Slices {
@@ -19,10 +19,10 @@ class Slices {
     // validation
     if (isNumStr(from)) { from = parseInt(from, 10) }
     if (isNumStr(to)) { to = parseInt(to, 10) }
-    if (!isInt(from)) {
-      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_02] "from" value, first input argument, must be a natural number! Currently it's equal to: ${JSON.stringify(from, null, 4)}`)
+    if (!isInt(from, {includeZero: true})) {
+      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_02] "from" value, first input argument, must be a natural number or zero! Currently it's equal to: ${JSON.stringify(from, null, 4)}`)
     }
-    if (!isInt(to)) {
+    if (!isInt(to, {includeZero: true})) {
       throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_03] "to" value, second input argument, must be a natural number! Currently it's equal to: ${JSON.stringify(to, null, 4)}`)
     }
     if (existy(addVal) && (typeof addVal !== 'string')) {

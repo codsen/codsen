@@ -84,12 +84,12 @@ test('02.01  -  ADD() - adds two non-overlapping ranges', (t) => {
 
 test('02.02  -  ADD() - adds two overlapping ranges', (t) => {
   let slices = new Slices()
-  slices.add(1, 5)
+  slices.add(0, 5)
   slices.add(3, 9)
   t.deepEqual(
     slices.current(),
     [
-      [1, 9]
+      [0, 9]
     ],
     '02.02'
   )
