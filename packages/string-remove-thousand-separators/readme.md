@@ -69,7 +69,7 @@ console.log(remSep("1'000'000.00"))
 // IT'S SMART TOO:
 
 // will not delete if the thousand separators are mixed:
-console.log(remSep('100,000,000.000')) // => same, does nothing
+console.log(remSep('100,000,000.000')) // => does nothing
 
 // but will remove empty space, even if there is no decimal separator:
 // (that's to cope with Russian notation integers that use thousand separators)
