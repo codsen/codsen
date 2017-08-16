@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2017-08-16
+### Added
+- ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's [string-remove-thousand-separators](https://github.com/codsen/string-remove-thousand-separators) internally doing it.
+- ✨ `opts.padSingleDecimalPlaceNumbers`. On by default. `10.2` → `10.20`.
+- ✨ `opts.forceUKStyle`. Off by default. `10,15` → `10.15`.
+
 ## [1.2.0] - 2017-08-13
 ### Added
 - ✨ Skips empty rows, where each column within the row contains only empty space.
@@ -16,5 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[1.3.0]: https://github.com/codsen/csv-split-easy/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/csv-split-easy/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/csv-split-easy/compare/v1.0.2...v1.1.0

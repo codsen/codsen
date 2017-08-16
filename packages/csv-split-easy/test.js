@@ -220,14 +220,14 @@ test('02.03 - particular attention of double quotes at the end', (t) => {
   )
 })
 
-test('02.04 - all values are wrapped with double quotes', (t) => {
+test('02.04 - all values are wrapped with double quotes, some trailing white space', (t) => {
   t.deepEqual(
-    split('"something here","and something there"," notice space in front"\n"and here","this is wrapped as well","and this too"'),
+    split('"Something here","And something there"," Notice space in front"\n"And here","This is wrapped as well","And this too"'),
     [
-      ['something here', 'and something there', ' notice space in front'],
-      ['and here', 'this is wrapped as well', 'and this too']
+      ['Something here', 'And something there', 'Notice space in front'],
+      ['And here', 'This is wrapped as well', 'And this too']
     ],
-    '02.04.01 - splits correctly, respecting trimm-able space around'
+    '02.04.01 - splits correctly, trimming the space around'
   )
 })
 
@@ -261,4 +261,114 @@ test('03.01 - wrong input types causes throwing up', (t) => {
     let f = () => null
     split(f)
   })
+})
+
+// =============================================================
+// group 04 - opts.removeThousandSeparatorsFromNumbers
+// =============================================================
+//
+
+test('04.01 - deals with (or does not) thousand separators in numbers', (t) => {
+  t.deepEqual(
+    split('Product Name,Main Price,Discounted Price\nTestarossa (Type F110),"100,000","90,000"\nF50,"2,500,000","1,800,000"'),
+    [
+      ['Product Name', 'Main Price', 'Discounted Price'],
+      ['Testarossa (Type F110)', '100000', '90000'],
+      ['F50', '2500000', '1800000']
+    ],
+    '04.01.01 - splits correctly, understanding comma thousand separators and removing them'
+  )
+  t.deepEqual(
+    split(
+      'Product Name,Main Price,Discounted Price\nTestarossa (Type F110),"100,000","90,000"\nF50,"2,500,000","1,800,000"',
+      {removeThousandSeparatorsFromNumbers: false}
+    ),
+    [
+      ['Product Name', 'Main Price', 'Discounted Price'],
+      ['Testarossa (Type F110)', '100,000', '90,000'],
+      ['F50', '2,500,000', '1,800,000']
+    ],
+    '04.01.02 - leaves thousand separators intact'
+  )
+})
+
+// =============================================================
+// group 05 - opts.padSingleDecimalPlaceNumbers
+// =============================================================
+//
+
+test('05.01 - to pad or not to pad', (t) => {
+  t.deepEqual(
+    split('Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"'),
+    [
+      ['Product Name', 'Main Price', 'Discounted Price'],
+      ['Pencil HB', '2.20', '2.10'],
+      ['Pencil 2H', '2.32', '2.30']
+    ],
+    '05.01.01 - default behaviour, padds'
+  )
+  t.deepEqual(
+    split('Product Name,Main Price,Discounted Price\n\rPencil HB,"2.2","2.1"\nPencil 2H,"2.32","2.3"',
+      {padSingleDecimalPlaceNumbers: false}
+    ),
+    [
+      ['Product Name', 'Main Price', 'Discounted Price'],
+      ['Pencil HB', '2.2', '2.1'],
+      ['Pencil 2H', '2.32', '2.3']
+    ],
+    '05.01.02 - padding off'
+  )
+})
+
+// =============================================================
+// group 06 - opts.forceUKStyle
+// =============================================================
+//
+
+test('06.01 - Russian/Lithuanian/continental decimal notation style CSV that uses commas', (t) => {
+  t.deepEqual(
+    split('Product Name,Main Price (EUR),Discounted Price (EUR)\n\rCepelinai,"5,25","5,1"\nJautienos kepsnys,"14,5","14,2"'),
+    [
+      ['Product Name', 'Main Price (EUR)', 'Discounted Price (EUR)'],
+      ['Cepelinai', '5,25', '5,10'],
+      ['Jautienos kepsnys', '14,50', '14,20']
+    ],
+    '06.01.01 - does not convert the notation by default, but does pad'
+  )
+  t.deepEqual(
+    split(
+      'Product Name,Main Price (EUR),Discounted Price (EUR)\n\rCepelinai,"5,25","5,1"\nJautienos kepsnys,"14,5","14,2"',
+      {forceUKStyle: true}
+    ),
+    [
+      ['Product Name', 'Main Price (EUR)', 'Discounted Price (EUR)'],
+      ['Cepelinai', '5.25', '5.10'],
+      ['Jautienos kepsnys', '14.50', '14.20']
+    ],
+    '06.01.02 - converts the notation as requested, and does pad by default'
+  )
+  t.deepEqual(
+    split(
+      'Product Name,Main Price (EUR),Discounted Price (EUR)\n\rCepelinai,"5,25","5,1"\nJautienos kepsnys,"14,5","14,2"',
+      {padSingleDecimalPlaceNumbers: false}
+    ),
+    [
+      ['Product Name', 'Main Price (EUR)', 'Discounted Price (EUR)'],
+      ['Cepelinai', '5,25', '5,1'],
+      ['Jautienos kepsnys', '14,5', '14,2']
+    ],
+    '06.01.03 - does not convert the notation by default, and does not pad as requested'
+  )
+  t.deepEqual(
+    split(
+      'Product Name,Main Price (EUR),Discounted Price (EUR)\n\rCepelinai,"5,25","5,1"\nJautienos kepsnys,"14,5","14,2"',
+      {forceUKStyle: true, padSingleDecimalPlaceNumbers: false}
+    ),
+    [
+      ['Product Name', 'Main Price (EUR)', 'Discounted Price (EUR)'],
+      ['Cepelinai', '5.25', '5.1'],
+      ['Jautienos kepsnys', '14.5', '14.2']
+    ],
+    '06.01.04 - converts the notation as requested, but does not pad as requested'
+  )
 })

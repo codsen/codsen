@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
+    "precommit": "npm test",
     "test": "clear && standard && nyc --reporter=html --reporter=text ava",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
@@ -36,7 +36,10 @@
     "url": "https://github.com/codsen/csv-split-easy/issues"
   },
   "homepage": "https://github.com/codsen/csv-split-easy#readme",
-  "dependencies": {},
+  "dependencies": {
+    "check-types-mini": "^2.4.0",
+    "string-remove-thousand-separators": "^1.1.1"
+  },
   "devDependencies": {
     "ava": "*",
     "clear-cli": "*",
