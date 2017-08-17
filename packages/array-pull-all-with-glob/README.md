@@ -9,6 +9,7 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 ## Install
@@ -93,7 +94,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -130,3 +131,6 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg
 [downloads-url]: https://www.npmjs.com/package/array-pull-all-with-glob
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/array-pull-all-with-glob/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/array-pull-all-with-glob

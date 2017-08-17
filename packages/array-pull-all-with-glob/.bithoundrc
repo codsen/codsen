@@ -12,7 +12,8 @@
       "husky",
       "lodash.clonedeep",
       "lodash.remove",
-      "lodash.replace"
+      "lodash.replace",
+      "nyc"
     ]
   },
   "test": [
