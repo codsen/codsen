@@ -77,7 +77,7 @@ When `object-merge-advanced` merges two _objects_, it will check the types of th
 
 There are ten possible combinations: 10 types of first input (object #1) and ten types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
-![matching algorithm](http://i.imgsafe.org/7e71b2b3b0.png)
+![matching algorithm](https://cdn.rawgit.com/codsen/object-merge-advanced/54bac472/media/object-merge-advanced_algorithm.png)
 
 A Large number in the centre of a square shows which value prevails.
 
