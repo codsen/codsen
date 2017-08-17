@@ -3,7 +3,6 @@
 // ===================================
 // V A R S
 
-var objectAssign = require('object-assign')
 var type = require('type-detect')
 var clone = require('lodash.clonedeep')
 var includes = require('array-includes-with-glob')
@@ -48,7 +47,7 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     mergeArraysContainingStringsToBeEmpty: false,
     oneToManyArrayObjectMerge: false
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign(clone(defaults), opts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 

@@ -8,10 +8,8 @@
     "mute": [
       "ava",
       "coveralls",
-      "doctoc",
       "husky",
       "lodash.clonedeep",
-      "object-assign",
       "type-detect"
     ]
   },

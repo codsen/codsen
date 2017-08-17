@@ -9,6 +9,7 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 
 ## Table of Contents
@@ -238,7 +239,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -275,3 +276,6 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg
 [downloads-url]: https://www.npmjs.com/package/object-merge-advanced
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/detergent/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/detergent
