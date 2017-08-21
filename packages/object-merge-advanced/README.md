@@ -4,6 +4,7 @@
 
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -11,6 +12,7 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 
 ## Table of Contents
 
@@ -91,11 +93,15 @@ In some cases, we perform a custom actions:
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## In practice
 
 In practice I needed this library to normalise JSON files - [generate](https://github.com/codsen/json-comb-core#getkeyset) a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates - it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
 
 I use unidirectional merging when dealing with content mapping JSON files which are by definition unidirectional-flow (always overwrite normal data JSON files).
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Use
 
@@ -108,6 +114,8 @@ var mergeAdvanced = require('object-merge-advanced')
 ```js
 mergeAdvanced(input1, input2 [, { options }])
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -193,11 +201,15 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### API - Output
 
 A merged thing is returned. It's probably the same type of your inputs.
 
 Objects or arrays in the inputs are **not mutated**. This is very important.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Testing
 
@@ -212,6 +224,8 @@ I aim to have 100% code coverage (which is the case at the moment).
 ## Difference from Lodash `_.merge`
 
 Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Difference from `object-assign`
 
@@ -229,11 +243,15 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
@@ -259,6 +277,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/object-merge-advanced.svg
+[npm-url]: https://www.npmjs.com/package/object-merge-advanced
+
 [travis-img]: https://travis-ci.org/codsen/object-merge-advanced.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/object-merge-advanced
 
@@ -277,5 +298,8 @@ SOFTWARE.
 [downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg
 [downloads-url]: https://www.npmjs.com/package/object-merge-advanced
 
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/detergent/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/detergent
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-merge-advanced/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-merge-advanced
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/object-merge-advanced
