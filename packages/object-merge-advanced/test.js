@@ -2432,7 +2432,7 @@ test('11.01 - OPTS > opts.hardMergeKeys', t => {
     '11.01.04 - hardMergeKeys and ignoreKeys both at once, both as strings')
 })
 
-test('11.02 - OPTS > opts.hardMergeKeys', t => {
+test('11.02 - OPTS > opts.hardMergeKeys and opts.ignoreKeys together', t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2465,6 +2465,197 @@ test('11.02 - OPTS > opts.hardMergeKeys', t => {
       zzz: 'overwrite'
     },
     '11.02.01')
+})
+
+test('11.03 - case #10', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      ['a'],
+      undefined
+    ),
+    ['a'],
+    '11.03.01 - default'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: ['a']},
+      {a: undefined}
+    ),
+    {a: ['a']},
+    '11.03.02.1 - default, objects'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: undefined},
+      {a: ['a']}
+    ),
+    {a: ['a']},
+    '11.03.02.2 - 11.03.02 opposite order (same res.)'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: ['a']},
+      {a: undefined},
+      {hardMergeKeys: '*'}
+    ),
+    {a: undefined},
+    '11.03.03 - hard merge'
+  )
+})
+
+test('11.04 - case #91', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: undefined},
+      {a: ['a']},
+      {hardMergeKeys: '*'}
+    ),
+    {a: ['a']},
+    '11.04.01 - useless hardMergeKeys setting'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: undefined},
+      {a: ['a']},
+      {ignoreKeys: '*'}
+    ),
+    {a: undefined},
+    '11.04.02 - checkin the ignores glob'
+  )
+})
+
+test('11.05 - case #81', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: null},
+      {a: ['a']},
+      {hardMergeKeys: '*'}
+    ),
+    {a: ['a']},
+    '11.05.01 - useless hardMergeKeys setting'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: null},
+      {a: ['a']},
+      {ignoreKeys: '*'}
+    ),
+    {a: null},
+    '11.05.01 - checkin the ignores glob'
+  )
+})
+
+test('11.06 - case #9 (mirror to #81)', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: ['a']},
+      {a: null},
+      {hardMergeKeys: '*'}
+    ),
+    {a: null},
+    '11.06.01 - useless hardMergeKeys setting'
+  )
+})
+
+test('11.07 - case #8 and its mirrow #71', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: ['a']},
+      {a: true},
+      {hardMergeKeys: '*'}
+    ),
+    {a: true},
+    '11.07.01 - #8'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: true},
+      {a: ['a']},
+      {ignoreKeys: '*'}
+    ),
+    {a: true},
+    '11.07.01 - #71'
+  )
+})
+
+test('11.08 - case #7 and its mirrow #61', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: ['a']},
+      {a: 1},
+      {hardMergeKeys: '*'}
+    ),
+    {a: 1},
+    '11.08.01 - #7'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: 1},
+      {a: ['a']},
+      {ignoreKeys: '*'}
+    ),
+    {a: 1},
+    '11.08.02 - #61'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: 1},
+      {a: ['a']},
+      {hardMergeKeys: '*'}
+    ),
+    {a: ['a']},
+    '11.08.03 - #7 redundant hardMerge setting'
+  )
+})
+
+test('11.09 - #27 and its mirror #63 - full obj vs number + hardMerge/ignore', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: {b: 'c'}},
+      {a: 1},
+      {hardMergeKeys: '*'}
+    ),
+    {a: 1},
+    '11.09.01 - #27'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: 1},
+      {a: {b: 'c'}},
+      {ignoreKeys: '*'}
+    ),
+    {a: 1},
+    '11.09.01 - #63'
+  )
+})
+
+test('11.10 - #23 two full objects', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {a: {b: 'c'}},
+      {a: {b: 'd'}}
+    ),
+    {a: {b: 'd'}},
+    '11.10.01 - default behaviour'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: {b: 'c'}},
+      {a: {b: 'd'}},
+      {hardMergeKeys: '*'}
+    ),
+    {a: {b: 'd'}},
+    '11.10.02 - redundant setting'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {a: {b: 'c'}},
+      {a: {b: 'd'}},
+      {ignoreKeys: '*'}
+    ),
+    {a: {b: 'c'}},
+    '11.10.03 - checking ignores'
+  )
 })
 
 // ==================================
@@ -2790,6 +2981,218 @@ test('13.04 - OPTS > opts.hardMergeKeys type checks work', t => {
       {a: 'a'}, {b: 'b'}, {hardMergeKeys: []}
     )
   })
+})
+
+// ==============================
+// 14. ad-hoc
+// ==============================
+
+test('14.01 - objects within arrays', t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- and this key is unique.
+          }
+        ]
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'zzz',
+          c: 'ccc'
+        },
+        {
+          b: false,
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.01 - default behaviour'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- and this key is unique.
+          }
+        ]
+      },
+      {
+        mergeObjectsOnlyWhenKeysetMatches: false
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'zzz',
+          c: 'ccc',
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.02.01 - customising opts.mergeObjectsOnlyWhenKeysetMatches - one way'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- and this key is unique.
+          }
+        ]
+      },
+      {
+        mergeObjectsOnlyWhenKeysetMatches: false
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'zzz',
+          c: 'ccc',
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.02.02 - customising opts.mergeObjectsOnlyWhenKeysetMatches - other way (swapped args of 14.01.02.01)'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- and this key is unique.
+          }
+        ]
+      },
+      {
+        hardMergeKeys: '*' // <----- notice it's glob
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'zzz',
+          c: 'ccc'
+        },
+        {
+          b: false,
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.03 - hard merge * - does nothing different because keys are not clashing'
+    // the problem is, hard merges drive key-vs.-key choice and here without opts.mergeObjectsOnlyWhenKeysetMatches: false
+    // the objects are not merged since they have unique keys. Their parent arrays are contatenated instead.
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- and this key is unique.
+          }
+        ]
+      },
+      {
+        hardMergeKeys: 'b', // <----- forcing hard merge on "b"
+        mergeObjectsOnlyWhenKeysetMatches: false
+      }
+    ),
+    {
+      a: [
+        {
+          b: false,
+          c: 'ccc',
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.04 - with mergeObjectsOnlyWhenKeysetMatches=false objects will clash, plus we got hard merge'
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd' // <----- and this key is unique.
+          }
+        ]
+      },
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc' // <----- this key is unique.
+          }
+        ]
+      },
+      {
+        hardMergeKeys: 'b', // <----- unnecessarily forcing hard merge on "b"
+        mergeObjectsOnlyWhenKeysetMatches: false
+      }
+    ),
+    {
+      a: [
+        {
+          b: 'zzz', // it would result in string anyway, without a hard merge.
+          c: 'ccc',
+          d: 'ddd'
+        }
+      ]
+    },
+    '14.01.05 - with mergeObjectsOnlyWhenKeysetMatches=false objects will clash, plus we got hard merge'
+  )
 })
 
 // ============================================================

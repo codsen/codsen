@@ -41,11 +41,11 @@
     "ava": "*",
     "coveralls": "*",
     "husky": "*",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.0.2",
+    "nodemon": "*",
+    "nyc": "*",
     "standard": "^10.0.2"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   }
 }

@@ -4,27 +4,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2017-08-21
+Bumping the _major_ just in case because strictly speaking, while things behave more _correct_ now, they behave slightly different. This involves more precise hard merging and ignoring keys, when values are container-like (arrays or plain objects). For the rest, the merging algorithm's behaviour is the same. Read below.
+
+### Added
+- ✨ Improvements to the algorithm, related to hard merges and ignores. Quick refresher: **a hard merge** is when second item overwrites first no matter what. **An ignore** is the opposite - first value is left as it is, no matter what it is merged against. Up until now, the hard merging was done via simple overwriting. On some edge cases I found out that container-like values (arrays or objects) should not be simply overwritten, but **their contents** should be hard-merged instead. Again, this concerns only narrow cases where types of both _merger_ and _mergee_ match and are equal to arrays or plain objects.
+### Unchanged
+- Unit test coverage is still 100%, counting per-functions, per-statement, per-branches and per-line.
+
 ## [6.5.0] - 2017-06-29
 ### Added
-- `opts.oneToManyArrayObjectMerge`. It's an essential feature when setting defaults on data structures in JSON. When your default values object has array with single object, but your working object has an array with many objects. That's one-to-many merge. `opts.oneToManyArrayObjectMerge` is off by default in order to keep the release semver "minor". 🦄
+- ✨ `opts.oneToManyArrayObjectMerge`. It's an essential feature when setting defaults on data structures in JSON. When your default values object has array with single object, but your working object has an array with many objects. That's one-to-many merge. `opts.oneToManyArrayObjectMerge` is off by default in order to keep the release semver "minor". 🦄
 
 ## [6.4.0] - 2017-06-02
 ### Changed
-- Slightly rebased so that there's 100% branch coverage too, not only statements/lines.
+- 🔧 Slightly rebased so that there's 100% branch coverage too, not only statements/lines.
 
 ## [6.3.0] - 2017-05-15
 ### Added
-- Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini); removed all existing functions responsible for options' types.
+- ✨ Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini); removed all existing functions responsible for options' types.
 
 ## [6.2.0] - 2017-05-12
 ### Added
-- opts.mergeArraysContainingStringsToBeEmpty
+- ✨ opts.mergeArraysContainingStringsToBeEmpty
 
 ## [6.1.0] - 2017-04-23 weekend
 ### Added
-- When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible - for example, accepting single string value instead of array.
-- new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
-- new options setting, `opts.hardMergeKeys` - this is also one direction (opposive of above) merge. Key names accept wildcards.
+- ✨ When the options object values are set to be of a wrong type, this library will throw an error. At the same time, we're trying to be as flexible as possible - for example, accepting single string value instead of array.
+- ✨ new options setting, `opts.ignoreKeys` - this is one direction merge. Key names accept wildcards.
+- ✨ new options setting, `opts.hardMergeKeys` - this is also one direction (opposive of above) merge. Key names accept wildcards.
 ### Unchanged
 - Coverage is kept 100%. That does not mean much but hey.
 
@@ -37,37 +45,37 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 ## [6.0.0] - 2017-03-14
 ### Changed
-- Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
+- 🔧 Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
 
 ## [5.0.0] - 2017-03-13
 ### API addition
-- Added an optional options object, the third argument. Now `opts.mergeObjectsOnlyWhenKeysetMatches` allow more granular control over how objects within arrays are merged. The default setting is balanced option, `opts.mergeObjectsOnlyWhenKeysetMatches = false` is more _gung-ho_ merging approach (behaviour like v4, previous version).
+- ✨ Added an optional options object, the third argument. Now `opts.mergeObjectsOnlyWhenKeysetMatches` allow more granular control over how objects within arrays are merged. The default setting is balanced option, `opts.mergeObjectsOnlyWhenKeysetMatches = false` is more _gung-ho_ merging approach (behaviour like v4, previous version).
 
 ## [4.2.0] - 2017-03-03
 ### Changed
-- Updated dependencies, now requesting JS Standard as normal version range, to prevent future surprises.
+- 🔧 Updated dependencies, now requesting JS Standard as normal version range, to prevent future surprises.
 
 ## [4.1.0] - 2017-02-28
 ### Changed
-- Improved the algorithm, removed redundant insurance, cloning input variable.
+- 🔧 Improved the algorithm, removed redundant insurance, cloning input variable.
 
 ## [4.0.0] - 2017-02-28
 ### Changed
-- Making API even more user-friendly. If one of the input args is missing, instead of returning the `undefined` now it's returning the argument that's present. What's the point to return `undefined`?
+- 🔧 Making API even more user-friendly. If one of the input args is missing, instead of returning the `undefined` now it's returning the argument that's present. What's the point to return `undefined`?
 
 If none are present, `undefined` is returned as before.
 
 ## [3.0.0] - 2017-02-28
 ### Changed
-- Technically a major API change. When object key values are arrays now we're checking is _merger's_ element already present in a _mergee_. If so, it's omitted. This means, you can safely merge similar arrays without them bloating. However, in theory, while it's very logical and necessary feature, it's also a major API change. Hence bumping to v.3.
+- 🔧 Technically a major API change. When object key values are arrays now we're checking is _merger's_ element already present in a _mergee_. If so, it's omitted. This means, you can safely merge similar arrays without them bloating. However, in theory, while it's very logical and necessary feature, it's also a major API change. Hence bumping to v.3.
 
 By the way, I needed this myself, placeholder default values in merged JSON files otherwise get duplicated. Now it's how it should be. 🍺
 
 ## 2.0.0 - 2017-02-23
 ### Changed
-- Major API change. Input argument objects are not mutated any more. Function first clones what it later uses.
-- Adding tests for input argument mutation (`3.x` group).
-- All auxiliary functions are ported inside the main exported function. Looks cleaner.
+- 🔧 Major API change. Input argument objects are not mutated any more. Function first clones what it later uses.
+- 🔧 Adding tests for input argument mutation (`3.x` group).
+- 🔧 All auxiliary functions are ported inside the main exported function. Looks cleaner.
 
 [2.0.0]: https://github.com/codsen/object-merge-advanced/compare/v1.6.0...v2.0.0
 [3.0.0]: https://github.com/codsen/object-merge-advanced/compare/v2.0.0...v3.0.0
@@ -81,3 +89,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [6.3.0]: https://github.com/codsen/object-merge-advanced/compare/v6.2.0...v6.3.0
 [6.4.0]: https://github.com/codsen/object-merge-advanced/compare/v6.3.0...v6.4.0
 [6.5.0]: https://github.com/codsen/object-merge-advanced/compare/v6.4.0...v6.5.0
+[7.0.0]: https://github.com/codsen/object-merge-advanced/compare/v6.5.0...v7.0.0
