@@ -501,6 +501,50 @@ test('02.03 - flattens an array value but doesn\'t touch other one', function (t
     },
     '02.03.04'
   )
+  t.deepEqual(
+    ofr(
+      {
+        key1: {
+          key2: [
+            'val1',
+            'val2',
+            'val3'
+          ]
+        },
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        key1: 'Contact us',
+        key3: {
+          key4: [
+            'val4',
+            'val5',
+            'val6'
+          ]
+        }
+      },
+      {
+        mergeArraysWithoutLineBreaks: false
+      }
+    ),
+    {
+      key1: '%%_key2.val1_%%%%_key2.val2_%%%%_key2.val3_%%',
+      key3: {
+        key4: [
+          '%%_val4_%%',
+          '%%_val5_%%',
+          '%%_val6_%%'
+        ]
+      }
+    },
+    '02.03.05 - does not put <br /> at all when flattening arrays'
+  )
 })
 
 test('02.04 - wildcards in opts.dontWrapKeys', function (t) {

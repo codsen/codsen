@@ -4,6 +4,7 @@
 
 > Flatten complex nested objects according to a reference
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
 [![bitHound Score][bithound-img]][bithound-url]
@@ -11,6 +12,7 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 
 ## Table of Contents
 
@@ -122,6 +124,7 @@ An optional third argument - options object.
 `wrapGlobalFlipSwitch`         | Boolean  | no          | `true`            | You can turn off the wrapping function completely using this.
 `ignore`                       | Array or String | no   | empty array       | Don't apply any flattening to any of these keys. Naturally, don't wrap them with anything either.
 `whatToDoWhenReferenceIsMissing` | Integer or Integer as String | no | `0`  | 0 = skip, 1 = throw, 2 = flatten to string
+`mergeArraysWithoutLineBreaks` | Boolean  | no          | `true`            | Should we merge arrays using `<br />`'s? It's handy to turn it off when mapping variables on email templates where values in data arrays are IF statements, and `<br />`'s are hardcoded inside of them.
 }                              |          |             |                   |
 
 ## The algorithm
@@ -261,6 +264,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/object-flatten-referencing.svg
+[npm-url]: https://www.npmjs.com/package/object-flatten-referencing
+
 [travis-img]: https://travis-ci.org/codsen/object-flatten-referencing.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
 
@@ -281,3 +287,6 @@ SOFTWARE.
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-referencing/badge.svg
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-referencing
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-referencing

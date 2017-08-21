@@ -43,7 +43,7 @@ function flattenArr (arrOrig, opts, wrap, joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
         if (isStr(arr[i])) {
           let lineBreak = ''
-          if (i > 0) {
+          if (opts.mergeArraysWithoutLineBreaks && (i > 0)) {
             lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
           }
           res += lineBreak + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '')
@@ -55,7 +55,7 @@ function flattenArr (arrOrig, opts, wrap, joinArraysUsingBrs) {
             arr[i].every(isStr)
           ) {
             let lineBreak = ''
-            if (res.length > 0) {
+            if (opts.mergeArraysWithoutLineBreaks && (res.length > 0)) {
               lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
             }
             res = arr[i].reduce((acc, val, i, arr) => {
@@ -71,7 +71,7 @@ function flattenArr (arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce((acc, val, i, arr) => {
         let lineBreak = ''
-        if (res.length > 0) {
+        if (opts.mergeArraysWithoutLineBreaks && (res.length > 0)) {
           lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>'
         }
         let trailingSpace = ''

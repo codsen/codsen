@@ -45,7 +45,8 @@ function outer (originalInput, originalReference, opts) {
       objectKeyAndValueJoinChar: '.',
       wrapGlobalFlipSwitch: true, // Allow disabling the wrapping feature. Used on deeper branches.
       ignore: [], // Ignore these keys, don't flatten their values.
-      whatToDoWhenReferenceIsMissing: 0 // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
+      whatToDoWhenReferenceIsMissing: 0, // 0 = leave that key's value as it is, 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
+      mergeArraysWithoutLineBreaks: true // when merging arrays, should we add <br /> between the rows?
     }
     opts = Object.assign(clone(defaults), opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
