@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "main": "index.js",
   "scripts": {
