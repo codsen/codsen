@@ -1,0 +1,60 @@
+{
+  "name": "csv-sort",
+  "version": "1.0.0",
+  "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
+  "main": "index.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "standard && nyc --reporter=html --reporter=text ava"
+  },
+  "repository": "codsen/csv-sort",
+  "keywords": [
+    "csv",
+    "sort",
+    "fix",
+    "bank",
+    "accountancy",
+    "accounting",
+    "lloyds",
+    "crunch",
+    "patch",
+    "pony",
+    "rows",
+    "columns",
+    "missing",
+    "file",
+    "files"
+  ],
+  "author": {
+    "name": "Roy Revelt",
+    "email": "roy@codsen.com",
+    "url": "codsen.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codsen/csv-sort/issues"
+  },
+  "homepage": "https://github.com/codsen/csv-sort#readme",
+  "dependencies": {
+    "bignumber.js": "^4.0.2",
+    "csv-split-easy": "^1.3.0",
+    "currency-symbol-map": "^4.0.1",
+    "is-numeric": "0.0.5",
+    "lodash.pull": "*",
+    "ordinal": "^1.0.2"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "husky": "*",
+    "nyc": "*",
+    "standard": "^10.0.3"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "engines": {
+    "node": ">=5.11.0"
+  }
+}

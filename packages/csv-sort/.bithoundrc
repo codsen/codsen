@@ -1,0 +1,20 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "standard"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "coveralls",
+      "husky",
+      "lodash.pull",
+      "nyc"
+    ]
+  },
+  "test": [
+    "test/test-util.js",
+    "test/test.js"
+  ]
+}
