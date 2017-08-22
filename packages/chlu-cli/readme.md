@@ -4,11 +4,14 @@
 
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Score][bithound-img]][bithound-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 
 ## Table of Contents
 
@@ -24,6 +27,7 @@
   - [4. Automatic date conversion](#4-automatic-date-conversion)
 - [Extras](#extras)
 - [A nifty setup idea](#a-nifty-setup-idea)
+- [Updating it](#updating-it)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,7 +39,19 @@
 $ npm i -g chlu-cli
 ```
 
-Yes, install globally. This is a CLI app.
+Yes, install globally. This is a CLI app. Once installed, call it in the root where your Changelog sits:
+
+```bash
+chlu
+```
+
+There's no config, if just silently does the job, checks and fixes your Changelog.
+
+Or, you can even run `chlu` without any installation, just use `npx`:
+
+```bash
+npx chlu-cli
+```
 
 ## What it does
 
@@ -157,6 +173,10 @@ It means, you always get your readme, changelog, BitHound config (`.bithoundrc`)
 
 The example above is growing; I want to automate _everything_. Literally.
 
+## Updating it
+
+When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
+
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
@@ -187,6 +207,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/chlu-cli.svg
+[npm-url]: https://www.npmjs.com/package/chlu-cli
+
 [travis-img]: https://travis-ci.org/codsen/chlu-cli.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/chlu-cli
 
@@ -201,3 +224,9 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg
 [downloads-url]: https://www.npmjs.com/package/chlu-cli
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu-cli
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu-cli

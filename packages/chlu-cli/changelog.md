@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.7.0] - 2017-08-22
+### Added
+- More badges to `readme`
+### Updated
+- Deps and `package.json`
+
 ## [1.6.0] - 2017-07-23
 ### Updated
 - Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
@@ -47,3 +53,4 @@ Updated to the new version of the API package, CHLU, enabling new features:
 [1.4.0]: https://github.com/codsen/chlu-cli/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/chlu-cli/compare/v1.4.0...v1.5.0
 [1.6.0]: https://github.com/codsen/chlu-cli/compare/v1.5.0...v1.6.0
+[1.7.0]: https://github.com/codsen/chlu-cli/compare/v1.6.0...v1.7.0
