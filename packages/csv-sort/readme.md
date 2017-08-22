@@ -46,6 +46,8 @@ Other siblings of this package:
 
 `csv-sort` can correct the order of rows of _any_ accounting CSV files that come in [double entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) format:
 
+![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img1.png)
+
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
 
 **[⬆ &nbsp;back to top](#)**
@@ -53,9 +55,13 @@ Currently (late 2017) Lloyds Bank website exports CSV files with some rows from 
 ## This lib does two twings:
 
 * Sorts rows in correct order that follows the double-entry format.
-* Trims the empty columns and rows.
+* Trims the empty columns and rows (so-called 2D-Trim^).
+
+![2D trim of a CSV contents](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img2.png)
 
 In later releases I would like to be able to recognise and fix any offset columns caused by misinterpreted commas as values.
+
+<small>^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.</small>
 
 **[⬆ &nbsp;back to top](#)**
 
