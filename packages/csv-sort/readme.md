@@ -46,7 +46,7 @@ Other siblings of this package:
 
 `csv-sort` can correct the order of rows of _any_ accounting CSV files that come in [double entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) format:
 
-![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img1.png)
+![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
 
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
 
