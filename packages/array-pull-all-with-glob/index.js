@@ -41,7 +41,7 @@ function pullAllWithGlob (originalInput, originalToBeRemoved) {
   return pullAll(Array.from(originalInput), matcher(
     originalInput,
     originalToBeRemoved
-  )).filter(elem => existy(elem))
+  ))
 }
 
 module.exports = pullAllWithGlob
