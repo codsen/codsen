@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
+    "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/array-includes-with-glob",
@@ -45,5 +45,6 @@
   },
   "ava": {
     "verbose": false
-  }
+  },
+  "runkitExampleFilename": "runkit_example.js"
 }
