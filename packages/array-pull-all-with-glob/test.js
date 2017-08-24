@@ -91,17 +91,36 @@ test('2.3 - asterisk in the source array', t => {
     '2.3')
 })
 
+test('2.4 - empty arrays as inputs', t => {
+  t.deepEqual(
+    pull(
+      [],
+      ['module-*']
+    ),
+    [],
+    '2.4')
+})
+
+test('2.5 - empty array as second arg', t => {
+  t.deepEqual(
+    pull(
+      ['module-*', 'module-**', 'something-*', 'something-**'],
+      []
+    ),
+    ['module-*', 'module-**', 'something-*', 'something-**'],
+    '2.5')
+})
+
 // ==========
 // edge cases
 // ==========
 
-test('3.1 - missing one input', t => {
-  t.deepEqual(
+test('3.1 - missing one input - throws', t => {
+  t.throws(function () {
     pull(
       ['module-*', 'module-**', 'something-*', 'something-**']
-    ),
-    ['module-*', 'module-**', 'something-*', 'something-**'],
-    '3.1')
+    )
+  })
 })
 
 test('3.2 - missing both inputs - throws', t => {
@@ -113,21 +132,56 @@ test('3.2 - missing both inputs - throws', t => {
 test('3.3 - against asterisk', t => {
   t.deepEqual(
     pull(
-      ['a*', 'a**', '*******', null, '*'],
+      ['a*', 'a**', '*******', '*'],
       ['*']
     ),
     [],
-    '3.3')
+    '3.3'
+  )
+  t.throws(function () {
+    pull(
+      ['a*', 'a**', '*******', null, '*'],
+      ['*']
+    )
+  }) // because of null, a non-string element in the array
 })
 
 test('3.4 - against emoji and asterisk', t => {
   t.deepEqual(
     pull(
-      ['🦄', '🦄*', '🦄**', '*🦄', '*******', undefined, '*'],
+      ['🦄', '🦄*', '🦄**', '*🦄', '*******', '*'],
       ['🦄*']
     ),
     ['*🦄', '*******', '*'],
-    '3.4')
+    '3.4'
+  )
+  t.throws(function () {
+    pull(
+      ['🦄', '🦄*', '🦄**', '*🦄', '*******', undefined, '*'],
+      ['🦄*']
+    )
+  }) // because of undefined, a non-string element in the array
+})
+
+test('3.5 - wrong inputs - throws', t => {
+  t.throws(function () {
+    pull(1, 1)
+  })
+  t.throws(function () {
+    pull(1, ['a'])
+  })
+  t.throws(function () {
+    pull(['a'], 1)
+  })
+  t.throws(function () {
+    pull(['a', 1], ['b'])
+  })
+  t.throws(function () {
+    pull(['a', 1], ['b', 1])
+  })
+  t.throws(function () {
+    pull(['a', 'b'], ['b', 1, 'c'])
+  })
 })
 
 // ========================================

@@ -1,7 +1,7 @@
 'use strict'
-var replace = require('lodash.replace')
-var remove = require('lodash.remove')
-var clone = require('lodash.clonedeep')
+const pullAll = require('lodash.pullall')
+const matcher = require('matcher')
+const isArr = Array.isArray
 
 /**
  * pullAllWithGlob - like _.pullAll but pulling stronger
@@ -13,46 +13,35 @@ var clone = require('lodash.clonedeep')
  * @return {Array}                 pulled array
  */
 function pullAllWithGlob (originalInput, originalToBeRemoved) {
-  //
-  // internal f()'s
   function existy (x) { return x != null }
-  function aContainsB (a, b) {
-    return a.indexOf(b) >= 0
-  }
-  function aStartsWithB (a, b) {
-    return a.indexOf(b) === 0
-  }
-
+  function isStr (something) { return typeof something === 'string' }
   // insurance
   if (!existy(originalInput)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): missing input!')
-  } else if (!existy(originalToBeRemoved)) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_01] first argument is missing!')
+  }
+  if (!existy(originalToBeRemoved)) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_02] second argument is missing!')
+  }
+  if (!isArr(originalInput)) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_03] first argument must be an array! Currently it\'s ' + typeof originalInput + ', equal to: ' + JSON.stringify(originalInput, null, 4))
+  }
+  if (!isArr(originalToBeRemoved)) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_04] first argument must be an array! Currently it\'s ' + typeof originalToBeRemoved + ', equal to: ' + JSON.stringify(originalToBeRemoved, null, 4))
+  }
+  if ((originalInput.length === 0) || (originalToBeRemoved.length === 0)) {
     return originalInput
   }
-  if (!Array.isArray(originalInput) || !Array.isArray(originalToBeRemoved) || (Array.isArray(originalToBeRemoved) && originalToBeRemoved.length === 0)) {
-    return originalInput
+  if (!originalInput.every(el => isStr(el))) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ' + JSON.stringify(originalInput, null, 4))
+  }
+  if (!originalToBeRemoved.every(el => isStr(el))) {
+    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ' + JSON.stringify(originalToBeRemoved, null, 4))
   }
 
-  // vars
-  var input = clone(originalInput).filter(function (elem) {
-    return existy(elem)
-  })
-  var toBeRemovedArr = clone(originalToBeRemoved).filter(function (elem) {
-    return existy(elem)
-  })
-
-  // action
-  toBeRemovedArr.forEach(function (toBeRemovedArrElem, toBeRemovedArrIndex) {
-    remove(input, function (n) {
-      if (aContainsB(toBeRemovedArrElem, '*')) {
-        return aStartsWithB(n, replace(toBeRemovedArrElem, /[*].*/g, ''))
-      } else {
-        return n === toBeRemovedArrElem
-      }
-    })
-  })
-
-  return input
+  return pullAll(Array.from(originalInput), matcher(
+    originalInput,
+    originalToBeRemoved
+  )).filter(elem => existy(elem))
 }
 
 module.exports = pullAllWithGlob

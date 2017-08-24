@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-08-25
+### Added
+- Switched to [matcher](https://github.com/sindresorhus/matcher/) to do all the globbing.
+### Removed
+- Dependency on `lodash.clonedeep`
+- Dependency on `lodash.replace`
+### Changed
+- Made the API slightly more strict, not allowing non-string elements within arrays.
+
 ## 2.0.0 - 2017-03-02
 ### Changed
 - Simple thing, but, technically, a major API change. Input arguments are not mutated any more.
@@ -13,4 +22,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Changelog.md
 
+[3.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v1.4.1...v2.0.0

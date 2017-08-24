@@ -35,9 +35,8 @@
   },
   "homepage": "https://github.com/codsen/array-pull-all-with-glob#readme",
   "dependencies": {
-    "lodash.clonedeep": "*",
-    "lodash.remove": "*",
-    "lodash.replace": "*"
+    "lodash.pullall": "*",
+    "matcher": "^1.0.0"
   },
   "devDependencies": {
     "ava": "*",

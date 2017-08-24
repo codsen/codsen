@@ -9,9 +9,7 @@
       "ava",
       "coveralls",
       "husky",
-      "lodash.clonedeep",
-      "lodash.remove",
-      "lodash.replace",
+      "lodash.pullall",
       "nyc"
     ]
   },
