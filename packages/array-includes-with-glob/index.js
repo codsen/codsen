@@ -1,5 +1,4 @@
 'use strict'
-const clone = require('lodash.clonedeep')
 const matcher = require('matcher')
 const isArr = Array.isArray
 
@@ -42,7 +41,7 @@ function includesWithGlob (originalInput, stringToFind, opts) {
   }
 
   // prevent any mutation + filter out undefined and null elements:
-  var input = clone(originalInput).filter(elem => existy(elem))
+  var input = originalInput.filter(elem => existy(elem))
 
   // if array contained only null/undefined values, do a Dutch leave:
   if (input.length === 0) {

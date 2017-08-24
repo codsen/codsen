@@ -9,7 +9,6 @@
       "ava",
       "coveralls",
       "husky",
-      "lodash.clonedeep",
       "nyc"
     ]
   },

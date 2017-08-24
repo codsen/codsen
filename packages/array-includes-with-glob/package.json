@@ -33,7 +33,6 @@
   },
   "homepage": "https://github.com/codsen/array-includes-with-glob#readme",
   "dependencies": {
-    "lodash.clonedeep": "*",
     "matcher": "^1.0.0"
   },
   "devDependencies": {
@@ -41,7 +40,7 @@
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": false
