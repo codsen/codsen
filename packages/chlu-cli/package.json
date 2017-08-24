@@ -44,13 +44,12 @@
   },
   "homepage": "https://github.com/codsen/chlu-cli#readme",
   "dependencies": {
-    "chlu": "^2.5.0",
+    "chlu": "^2.5.1",
     "meow": "^3.7.0",
     "update-notifier": "^2.2.0"
   },
   "devDependencies": {
     "ava": "*",
-    "doctoc": "*",
     "execa": "^0.8.0",
     "husky": "*",
     "standard": "^10.0.3"
