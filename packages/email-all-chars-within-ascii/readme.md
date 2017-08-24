@@ -37,11 +37,13 @@
 $ npm i email-all-chars-within-ascii
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Idea
 
-Traverse the string and check if all characters are suitable for 7bit encoding, in other words, are within the basic ASCII range, first 126 characters.
+Traverse the string and check if all characters are suitable for 7bit encoding, in other words, are within the basic ASCII range, first 126 characters, and does not include any invisible control characters.
 
-Also, we don't want invisible control characters (anything below decimal point 32), EXCEPT:
+We don't want any invisible control characters (anything below decimal point 32), EXCEPT:
 
 * HT, horizontal tab, decimal number 9
 * LF, new line, decimal number 10
@@ -50,6 +52,8 @@ Also, we don't want invisible control characters (anything below decimal point 3
 Often decimal point 127, DEL, is overlooked, yet it is not good in your templates, especially email.
 
 In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and the likes are dangerous to validate your email template code because they are too lax.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -68,11 +72,15 @@ var res2 = within('Ą')
 // => throws an error because "Ą" is not within allowed ASCII range.
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Practical use
 
 I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://github.com/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, what encoding it is using to deploy emails: 7bit, 8bit, quoted-printable or base64, also, does the back-end validate and encode the unacceptable characters for you. However, I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
 PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is not acceptable in templates.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
