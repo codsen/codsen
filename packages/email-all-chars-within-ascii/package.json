@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "main": "index.js",
   "scripts": {
