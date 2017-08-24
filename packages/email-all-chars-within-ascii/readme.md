@@ -6,7 +6,7 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][overall-img]][overall-url]
+[![bitHound Overall Score][bithound-img]][bithound-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -54,7 +54,7 @@ In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and
 ## API
 
 Input - string only or will `throw`.
-Input string will be traversed and if/when first unacceptable character is encountered, error will be thrown.
+Input string will be traversed and if/when the first unacceptable character is encountered, an error will be thrown.
 
 ## Usage
 
