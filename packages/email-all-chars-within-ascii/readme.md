@@ -64,11 +64,10 @@ Input string will be traversed and if/when the first unacceptable character is e
 
 ```js
 const within = require('email-all-chars-within-ascii')
-let res = within('<html><head>zzzz</head><body>blablabla</body></html>')
+let res1 = within('<html><head>zzzz</head><body>blablabla</body></html>')
 // => does not throw, that's good.
 
-// works with encoded HTML:
-var res2 = within('Ą')
+let res2 = within('Ą')
 // => throws an error because "Ą" is not within allowed ASCII range.
 ```
 
