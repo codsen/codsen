@@ -81,7 +81,7 @@ $ npx csv-sort-cli YOURFILE.csv
 
 ![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
 
-Sometimes Internet Banking CSV's have rows in a wrong order, especially when entries are on the _same date_. This library helps to sort the rows in correct order.
+Sometimes internet banking CSV's have rows in a wrong order, especially when entries are on the _same date_. This library helps to sort the rows in correct order.
 
 2. As a bonus, it will **trim** the empty columns/rows:
 
