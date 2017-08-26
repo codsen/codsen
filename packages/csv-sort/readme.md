@@ -13,6 +13,11 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
+
+Other siblings of this package:
+<!-- * Front end: [csvpony.com](https://csvpony.com) -->
+* CLI (command-line app) version: [csv-sort-cli](https://github.com/codsen/csv-sort-cli)
 
 ## Table of Contents
 
@@ -35,12 +40,6 @@
 ```bash
 $ npm i -S csv-sort
 ```
-
-Other siblings of this package:
-<!-- * Front end: [csvpony.com](https://csvpony.com) -->
-* CLI version: [csv-sort-cli](https://github.com/codsen/csv-sort-cli)
-
-**[⬆ &nbsp;back to top](#)**
 
 ## TLDR;
 
@@ -155,3 +154,6 @@ SOFTWARE.
 
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-url]: https://npm.runkit.com/csv-sort
