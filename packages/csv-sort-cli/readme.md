@@ -23,8 +23,8 @@ Other siblings of this package:
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Install globally, call `csvsort`](#install-globally-call-csvsort)
-- [or,](#or)
+- [Install globally, call `csvsort` on a file](#install-globally-call-csvsort-on-a-file)
+- [or, omit the file's name, it will let you pick a CSV:](#or-omit-the-files-name-it-will-let-you-pick-a-csv)
 - [What it does exactly](#what-it-does-exactly)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
@@ -34,7 +34,7 @@ Other siblings of this package:
 
 **[⬆ &nbsp;back to top](#)**
 
-## Install globally, call `csvsort`
+## Install globally, call `csvsort` on a file
 
 ```bash
 $ npm i -g csv-sort-cli
@@ -57,10 +57,10 @@ $ csvsort --help
 
 ![Calling csv-sort-cli directly on a file](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example1.gif)
 
-## or,
+## or, omit the file's name, it will let you pick a CSV:
 
 ```bash
-$ csvsort # omit the file's name but you can include -o/--overwrite flag
+$ csvsort # omit the file's name, but you can include -o/--overwrite flag
 ```
 
 omit the file name and `csv-sort-cli` will offer a list of CSV files in the current folder to choose from:
@@ -77,17 +77,17 @@ $ npx csv-sort-cli YOURFILE.csv
 
 ## What it does exactly
 
-1. It **sorts CSV file rows** to correspond to the double-entry bookkeeping format:
+1. It **sorts CSV file rows** to correspond to the [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) principles:
 
 ![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
 
-Sometimes Internet Banking CSV's have rows in a wrong order.
+Sometimes Internet Banking CSV's have rows in a wrong order, especially when entries are on the _same date_. This library helps to sort the rows in correct order.
 
 2. As a bonus, it will **trim** the empty columns/rows:
 
 ![2D trim of a CSV contents](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img2.png)
 
-3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
+3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
 
 **[⬆ &nbsp;back to top](#)**
 
