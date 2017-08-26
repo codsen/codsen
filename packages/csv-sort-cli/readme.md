@@ -13,13 +13,18 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 
+Other siblings of this package:
+<!-- * Front end: [csvpony.com](https://csvpony.com) -->
+* API for it: [csv-sort](https://github.com/codsen/csv-sort)
+
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Install globally](#install-globally)
+- [Install globally, call `csvsort`](#install-globally-call-csvsort)
+- [or,](#or)
 - [What it does exactly](#what-it-does-exactly)
 - [Updating it](#updating-it)
 - [Contributing](#contributing)
@@ -29,7 +34,7 @@
 
 **[⬆ &nbsp;back to top](#)**
 
-## Install globally
+## Install globally, call `csvsort`
 
 ```bash
 $ npm i -g csv-sort-cli
@@ -48,11 +53,19 @@ $ csvsort -h
 $ csvsort --help
 ```
 
-- or omit the file name and `csv-sort-cli` will offer a list of CSV files in the current folder to choose from:
+**like this:**
+
+![Calling csv-sort-cli directly on a file](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example1.gif)
+
+## or,
 
 ```bash
-$ csvsort
+$ csvsort # omit the file's name but you can include -o/--overwrite flag
 ```
+
+omit the file name and `csv-sort-cli` will offer a list of CSV files in the current folder to choose from:
+
+![Calling csv-sort-cli without file and picking a CSV](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example2.gif)
 
 You can even try it without installing — use `npx`:
 

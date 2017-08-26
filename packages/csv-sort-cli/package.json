@@ -1,7 +1,7 @@
 {
   "name": "csv-sort-cli",
   "version": "1.0.0",
-  "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
+  "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
   "repository": "codsen/csv-sort-cli",
   "author": {
