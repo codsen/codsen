@@ -1,0 +1,15 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "standard"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "husky",
+      "lodash.pullall",
+      "lodash.uniq"
+    ]
+  }
+}
