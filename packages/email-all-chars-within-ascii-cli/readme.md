@@ -18,6 +18,22 @@
 Other siblings of this package:
 * API for it: [email-all-chars-within-ascii](https://github.com/codsen/email-all-chars-within-ascii)
 
+## TLDR; Usage
+
+Call on one file:
+
+![ran on one file](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov1.gif)
+
+Call just the application and it will let you choose a file from that folder:
+
+![ran without any arguments](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov2.gif)
+
+Call on multiple files all at once:
+
+![ran on multiple files all at once](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov3.gif)
+
+**[⬆ &nbsp;back to top](#)**
+
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -26,7 +42,6 @@ Other siblings of this package:
 
 - [Install](#install)
 - [Idea](#idea)
-- [Usage](#usage)
 - [Practical use](#practical-use)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -47,28 +62,15 @@ Then, call it by a name `withinascii` or `tinaturner`. Whichever easier for you 
 
 This CLI app will check, does your HTML file (or some other extension) contains non-ASCII characters.
 
-Specifically, it will check, are your file contents suitable for 7bit encoding, in other words, are all characters within the basic ASCII range, first 126 characters. However, **only** this check would be short-sighted, as invisible control characters (anything below decimal point 32) fall within this range.
+Specifically, it will check, are your file contents suitable for 7bit encoding, in other words, are all characters within the [basic ASCII range](http://www.fileformat.info/info/unicode/block/basic_latin/list.htm), the first 126^ characters. However, **only** this check would be short-sighted, as invisible control characters (anything below decimal point 32) fall within this range.
 
 We don't want any invisible control characters (anything below decimal point 32), EXCEPT:
 
-* HT, horizontal tab, decimal number 9
-* LF, new line, decimal number 10
-* CR, carriage return, decimal number 13
+* [HT](http://www.fileformat.info/info/unicode/char/0009/index.htm), horizontal tab, decimal number 9
+* [LF](http://www.fileformat.info/info/unicode/char/000a/index.htm), new line, decimal number 10
+* [CR](http://www.fileformat.info/info/unicode/char/000d/index.htm), carriage return, decimal number 13
 
-Also, we don't want decimal point 127, DEL, which technically falls within basic ASCII range.
-
-**[⬆ &nbsp;back to top](#)**
-
-## Usage
-
-Call on one file:
-![ran on one file](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov1.gif)
-
-Call just the application and it will let you choose a file from that folder:
-![ran without any arguments](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov2.gif)
-
-Call on multiple files all at once:
-![ran on multiple files all at once](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov3.gif)
+^ Also, we don't want character at a decimal point 127, [DEL](http://www.fileformat.info/info/unicode/char/007f/index.htm), which technically falls within basic ASCII range but might appear broken in email clients.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -78,7 +80,7 @@ I'm going to use this library to validate my email templates, as a part of final
 
 I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
-PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is not acceptable in templates.
+PS. I'm saying 126, not 127 because 127 is "invisible" [DEL](http://www.fileformat.info/info/unicode/char/007f/index.htm) character which is not acceptable in templates.
 
 Check out [the API](https://github.com/codsen/email-all-chars-within-ascii) version which works well in Gulp environment.
 
