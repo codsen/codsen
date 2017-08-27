@@ -23,7 +23,8 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [API](#api)
+- [The API](#the-api)
+  - [Optional Options Object's API:](#optional-options-objects-api)
 - [Usage](#usage)
 - [Practical use](#practical-use)
 - [Contributing](#contributing)
@@ -49,16 +50,41 @@ We don't want any invisible control characters (anything below decimal point 32)
 * LF, new line, decimal number 10
 * CR, carriage return, decimal number 13
 
-Often decimal point 127, DEL, is overlooked, yet it is not good in your templates, especially email.
+Often decimal point 127, DEL, is overlooked, yet it is not right in your templates, especially email.
 
 In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and the likes are dangerous to validate your email template code because they are too lax.
 
 **[⬆ &nbsp;back to top](#)**
 
-## API
+## The API
 
-Input - string only or will `throw`.
-Input string will be traversed and if/when the first unacceptable character is encountered, an error will be thrown.
+**includes (inputOriginal\[, opts])**
+
+Input:
+- the first argument - string only or will `throw`.
+- the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
+
+Input string will be traversed, and if/when the first unacceptable character is encountered, an error will be thrown.
+
+Options object is sanitised by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognised keys. You'll thank me later.
+
+**Defaults**:
+
+```js
+    {
+      messageOnly: false
+    }
+```
+
+### Optional Options Object's API:
+
+`options` object's key         | Type     | Obligatory? | Default     | Description
+-------------------------------|----------|-------------|-------------|----------------------
+{                              |          |             |             |
+`messageOnly`                  | Boolean  | no          | `false`     | Should we not append `email-all-chars-within-ascii: ` in front of each error message? Set to `true` to turn it off, like in [CLI app](https://github.com/codsen/email-all-chars-within-ascii-cli/).
+}                              |          |             |             |
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Usage
 
@@ -78,6 +104,8 @@ let res2 = within('Ą')
 I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://github.com/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, what encoding it is using to deploy emails: 7bit, 8bit, quoted-printable or base64, also, does the back-end validate and encode the unacceptable characters for you. However, I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
 PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is not acceptable in templates.
+
+Check out [CLI](https://github.com/codsen/email-all-chars-within-ascii-cli/) version which you can install globally and use in your terminal.
 
 **[⬆ &nbsp;back to top](#)**
 
