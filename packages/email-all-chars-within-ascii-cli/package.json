@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Command line app to scans email templates, are all their characters within ASCII range",
   "license": "MIT",
   "repository": "codsen/email-all-chars-within-ascii-cli",
