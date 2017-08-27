@@ -62,19 +62,21 @@ Also, we don't want decimal point 127, DEL, which technically falls within basic
 ## Usage
 
 Call on one file:
-
+![ran on one file](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov1.gif)
 
 Call just the application and it will let you choose a file from that folder:
-
+![ran without any arguments](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov2.gif)
 
 Call on multiple files all at once:
-
+![ran on multiple files all at once](https://cdn.rawgit.com/codsen/email-all-chars-within-ascii-cli/044aa28a/media/mov3.gif)
 
 **[⬆ &nbsp;back to top](#)**
 
 ## Practical use
 
-I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://github.com/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, what encoding it is using to deploy emails: 7bit, 8bit, quoted-printable or base64, also, does the back-end validate and encode the unacceptable characters for you. However, I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
+I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://github.com/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, because your ESP back-end _might_ encode the rogue characters for you. But it might not, and you'd be in trouble.
+
+I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
 PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is not acceptable in templates.
 
