@@ -9,6 +9,7 @@
       "ava",
       "coveralls",
       "husky",
+      "lodash.isplainobject",
       "nyc"
     ]
   },

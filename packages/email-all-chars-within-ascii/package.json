@@ -30,7 +30,10 @@
     "url": "https://github.com/codsen/email-all-chars-within-ascii/issues"
   },
   "homepage": "https://github.com/codsen/email-all-chars-within-ascii#readme",
-  "dependencies": {},
+  "dependencies": {
+    "check-types-mini": "^2.4.0",
+    "lodash.isplainobject": "*"
+  },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",

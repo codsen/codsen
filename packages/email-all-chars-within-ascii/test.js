@@ -8,7 +8,7 @@ import test from 'ava'
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test('01 - wrong/missing input = throw', t => {
+test('01.01 - wrong/missing input = throw', t => {
   t.throws(function () {
     within()
   })
@@ -26,6 +26,30 @@ test('01 - wrong/missing input = throw', t => {
   })
 })
 
+test('01.02 - wrong opts = throw', t => {
+  t.throws(function () {
+    within('aaaa', true) // not object but bool
+  })
+  t.throws(function () {
+    within('aaaa', 1) // not object but number
+  })
+  t.notThrows(function () {
+    within('aaaa', undefined) // hardcoded "nothing" is ok!
+  })
+  t.notThrows(function () {
+    within('aaaa', null) // null fine too - that's hardcoded "nothing"
+  })
+  t.throws(function () {
+    within('aaaa', {zzz: true}) // opts contain rogue keys.
+  })
+  t.throws(function () {
+    within('aaaa', {zzz: true, messageOnly: false}) // one rogue key is enough to cause a throw
+  })
+  t.notThrows(function () {
+    within('aaaa', {messageOnly: false}) // no rogue keys.
+  })
+})
+
 // -----------------------------------------------------------------------------
 // 02. normal use
 // -----------------------------------------------------------------------------
@@ -34,17 +58,26 @@ test('02.00 - NULL control char (dec. 0) is not ok', t => {
   t.throws(function () {
     within(`\u0000`)
   })
+  t.throws(function () {
+    within(`\u0000`, {messageOnly: true})
+  })
 })
 
 test('02.01 - SOH control char (dec. 1) is not ok', t => {
   t.throws(function () {
     within(`\u0001`)
   })
+  t.throws(function () {
+    within(`\u0001`, {messageOnly: true})
+  })
 })
 
 test('02.02 - STX control char (dec. 2) is not ok', t => {
   t.throws(function () {
     within(`\u0002`)
+  })
+  t.throws(function () {
+    within(`\u0002`, {messageOnly: true})
   })
 })
 
@@ -234,6 +267,9 @@ test('02.32 - space (dec. 32) is ok', t => {
 test('02.33 - delete (dec. 127) is not cool!', t => {
   t.throws(function () {
     within(`\u007F`)
+  })
+  t.throws(function () {
+    within(`\u007F`, {messageOnly: true})
   })
 })
 
