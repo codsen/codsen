@@ -18,7 +18,7 @@
     "selector"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -37,7 +37,7 @@
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true

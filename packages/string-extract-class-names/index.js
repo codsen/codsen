@@ -1,6 +1,6 @@
-var replace = require('lodash.replace')
-var without = require('lodash.without')
-var flattenDeep = require('lodash.flattendeep')
+const replace = require('lodash.replace')
+const without = require('lodash.without')
+const flattenDeep = require('lodash.flattendeep')
 
 /**
  * stringExtractClassNames - extracts CSS classes/id names (like `.class-name`) from things like:
@@ -18,7 +18,7 @@ function stringExtractClassNames (input) {
   }
   var temp = ''
   function chopBeginning (str) {
-    // everything up to the first full stop of hash
+    // everything up to the first full stop or hash
     return replace(str, /[^.#]*/m, '')
   }
   function chopEnding (str) {
@@ -44,9 +44,6 @@ function stringExtractClassNames (input) {
   temp = flattenDeep(temp)
   // finally, remove all class names that are not according to spec (1 char length etc)
   temp = without(temp, '.', '#')
-  temp = temp.filter(function (val) {
-    return val.length > 2
-  })
   return temp
 }
 

@@ -360,6 +360,17 @@ test('01.27 - class: tick', t => {
     '01.27.02')
 })
 
+test('01.28 - one-letter class names', t => {
+  t.deepEqual(
+    e('.h'), ['.h'],
+    '01.28.01'
+  )
+  t.deepEqual(
+    e('.a.b.c'), ['.a', '.b', '.c'],
+    '01.28.02'
+  )
+})
+
 // ==============================
 // Hash, in case if ID's are found
 // ==============================
@@ -806,11 +817,4 @@ test('05.02 - recognises JS escaped strings and repeated dots & hashes', t => {
     e('\naaa\n...    .unused-1\n\n\n.unused-2, .unused-3\n\t\t,,,\t###\t\nz\t\ta'),
     ['.unused-1', '.unused-2', '.unused-3'],
     '05.02')
-})
-
-test('05.03 - doesn\'t accept one character long classes and id\'s', t => {
-  t.deepEqual(
-    e('.a #b .c .1 .cl #zz'),
-    ['.cl', '#zz'],
-    '05.03')
 })
