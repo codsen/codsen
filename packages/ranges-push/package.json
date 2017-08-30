@@ -4,8 +4,10 @@
   "description": "Manage the array of slices referencing the index ranges within the string",
   "main": "index.js",
   "scripts": {
+    "build": "babel index.js util.js --presets babel-preset-es2015 --out-dir es5",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
+    "precommit": "npm test",
+    "prepublish": "npm run build",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/string-slices-array-push",
@@ -38,8 +40,9 @@
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "coveralls": "*",
-    "doctoc": "*",
     "husky": "*",
     "nyc": "*",
     "standard": "^10.0.3"
@@ -49,5 +52,10 @@
   },
   "engines": {
     "node": ">=5.11.0"
+  },
+  "standard": {
+    "ignore": [
+      "es5/"
+    ]
   }
 }

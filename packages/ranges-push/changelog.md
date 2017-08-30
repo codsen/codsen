@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2017-08-30
+### Added
+- ✨ Transpiled version is available from the folder `/es5/`.
+
 ## [1.2.0] - 2017-08-16
 ### Fixed
 - 🔧 The input validation was not passing through the zero indexes for `.add()` because natural number checks were not including zero. Sorted now.
@@ -16,5 +20,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[1.3.0]: https://github.com/codsen/string-slices-array-push/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/string-slices-array-push/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/string-slices-array-push/compare/v1.0.0...v1.1.0

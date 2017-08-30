@@ -8,7 +8,6 @@
     "mute": [
       "ava",
       "coveralls",
-      "doctoc",
       "husky",
       "is-natural-number",
       "is-natural-number-string",
