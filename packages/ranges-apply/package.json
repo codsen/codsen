@@ -1,6 +1,6 @@
 {
   "name": "string-replace-slices-array",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Delete or replace an array of slices in string",
   "main": "index.js",
   "scripts": {
