@@ -6,7 +6,7 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][overall-img]][overall-url]
+[![bitHound Overall Score][bithound-img]][bithound-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
