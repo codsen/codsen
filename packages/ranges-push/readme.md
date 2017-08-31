@@ -58,25 +58,21 @@ Imagine you want to delete a bunch of characters from a string. Like making a bu
 
 **Challenge: how do you manage those string index ranges?**
 
-`[deleteFrom1, deleteTo1]`, `[deleteFrom2, deteleTo2]` and so on.
+`[deleteFromIndex1, deleteToIndex1]`, `[deleteFromIndex2, deteleToIndex2]` and so on.
 
-What happens when ranges overlap? We need to merge them.
-
-What happens if new range is located before the last-one? We need to sort them.
-
-How do you prevent damage when the same range is added multiple times?
-
-What happens if you want not only to delete, but also, **to add** something? We need to accept third argument, the value to add.
-
-What happens if you want to only add something, without deletion? We need to accept first and second argument as the same index.
+- What happens when ranges overlap? We need to merge them.
+- What happens if new range is located before the last-one? We need to sort them.
+- How do you prevent damage when the same range is added multiple times?
+- What happens if you want not only to delete, but also, **to add** something? We need to accept third argument, the value to add.
+- What happens if you want to only add something, without deletion? We need to accept first and second argument as the same index.
 
 ---
 
-**The solution to all these challenges above is... ** this library.
+**The solution to all these challenges above is...** this library.
 
 ---
 
-**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to do the actual deletion/replacement job.
+**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
 
 ## API
 
@@ -166,7 +162,7 @@ PSST. Later, feed your ranges array into [string-replace-slices-array](https://g
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://github.com/codsen/html-img-alt).
+Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://github.com/codsen/html-img-alt). Since then, [Detergent](https://github.com/codsen/detergent) also uses it, so its unit test wouldn't take an hour, calculating all possible combinations of the options, while input string is mutated again and again in the for loop.
 
 This library is part one of two library combo, second one being [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array).
 
