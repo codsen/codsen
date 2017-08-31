@@ -22,7 +22,7 @@
 
 
 - [Install](#install)
-- [Idea](#idea)
+- [The Idea](#the-idea)
 - [API](#api)
   - [slices.add(from, to[, str])](#slicesaddfrom-to-str)
   - [slices.current()](#slicescurrent)
@@ -52,29 +52,31 @@ console.log(slices.current())
 // => [ [1, 4], [10, 20] ]
 ```
 
-## Idea
+## The Idea
 
 Imagine you want to delete a bunch of characters from a string. Like making a bunch of holes in a slice of cheese. An ineffective way is to traverse that string and mutate it on each "hole". The effective way is to gather the indexes of `[from, to]` ranges in an array while traversing, and when string traversal is done, perform all cutting **in one go**. It's like using ten pencils to make ten holes in a slice, all at once. OK, bad example, but you get it. All in one go. That's the plan.
 
-Sounds good.
-
-Challenge: how do you manage those string index ranges?
+**Challenge: how do you manage those string index ranges?**
 
 `[deleteFrom1, deleteTo1]`, `[deleteFrom2, deteleTo2]` and so on.
 
-It's easy when you push non-overlapping ranges, but what happens when an incoming range is overlapping the previous-one? Like if `deleteFrom2` is less than `deleteTo1`?
+What happens when ranges overlap? We need to merge them.
 
-What happens if both "start" and "end" values of a new range are lower the previous-one's? Like if `deleteFrom2` < `deleteTo2` < `**deleteTo1**`?
+What happens if new range is located before the last-one? We need to sort them.
 
 How do you prevent damage when the same range is added multiple times?
 
+What happens if you want not only to delete, but also, **to add** something? We need to accept third argument, the value to add.
+
+What happens if you want to only add something, without deletion? We need to accept first and second argument as the same index.
+
 ---
 
-**The answer:** this library.
+**The solution to all these challenges above is... ** this library.
 
 ---
 
-**PS.** Later, when you finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to do the actual deletion/replacement job.
+**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to do the actual deletion/replacement job.
 
 ## API
 
@@ -129,10 +131,6 @@ Result is either
 
 ```js
 [[4, 5], [1, 2]] => [[1, 2], [4, 5]] // no overlap, so just sorted by 1st element
-```
-
-```js
-[[1, 5], [1, 2]] => [[1, 2], [1, 5]] // no overlap, sorted first by 1st, then by 2nd element
 ```
 
 ```js
