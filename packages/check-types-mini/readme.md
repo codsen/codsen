@@ -4,12 +4,16 @@
 
 > Check the types of your options object's values after user has customised them
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
 [![bitHound Score][bithound-img]][bithound-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -229,14 +233,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/check-types-mini.svg
+[npm-url]: https://www.npmjs.com/package/check-types-mini
+
 [travis-img]: https://travis-ci.org/codsen/check-types-mini.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/check-types-mini
 
 [cov-img]: https://coveralls.io/repos/github/codsen/check-types-mini/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/check-types-mini?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/check-types-mini/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/check-types-mini
+[overall-img]: https://www.bithound.io/github/codsen/check-types-mini/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/check-types-mini
 
 [deps-img]: https://www.bithound.io/github/codsen/check-types-mini/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/check-types-mini/master/dependencies/npm
@@ -246,3 +253,12 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/check-types-mini.svg
 [downloads-url]: https://www.npmjs.com/package/check-types-mini
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/check-types-mini/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/check-types-mini
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/check-types-mini
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-url]: https://npm.runkit.com/check-types-mini
