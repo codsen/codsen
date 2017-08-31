@@ -1,8 +1,8 @@
 'use strict'
-const unfancy = require('string-unfancy')
-const repl = require('string-replace-slices-array')
-const Slices = require('string-slices-array-push')
-const checkTypes = require('check-types-mini')
+const unfancy = require('string-unfancy/es5')
+const repl = require('string-replace-slices-array/es5')
+const Slices = require('string-slices-array-push/es5')
+const checkTypes = require('check-types-mini/es5')
 const isObj = require('lodash.isplainobject')
 
 function alts (str, opts) {
