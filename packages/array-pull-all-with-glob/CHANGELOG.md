@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2017-08-31
+### Added
+- Now generating transpiled version within `/es5/` folder, which you can require like that, `var pull = require('array-pull-all-with-glob/es5')`
+
 ## [3.0.0] - 2017-08-25
 ### Added
 - Switched to [matcher](https://github.com/sindresorhus/matcher/) to do all the globbing.
@@ -22,5 +26,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Changelog.md
 
-[3.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v1.4.1...v2.0.0
+[3.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v2.0.0...v3.0.0
+[3.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v3.0.0...v3.1.0

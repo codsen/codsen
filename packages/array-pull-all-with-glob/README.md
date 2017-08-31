@@ -6,7 +6,7 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -19,6 +19,13 @@
 
 ```bash
 $ npm install --save array-pull-all-with-glob
+```
+
+```js
+// Main file is ES6:
+const pullWithGlob = require('array-pull-all-with-glob')
+// You can get transpiled ES5 version from /es5/ folder:
+var pullWithGlob = require('array-pull-all-with-glob/es5')
 ```
 
 ## Table of Contents
@@ -123,8 +130,8 @@ SOFTWARE.
 [travis-img]: https://travis-ci.org/codsen/array-pull-all-with-glob.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/array-pull-all-with-glob
 
-[bithound-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
+[overall-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
 
 [deps-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm

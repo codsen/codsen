@@ -4,8 +4,10 @@
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "main": "index.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-dir es5",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
+    "prepublish": "npm run build",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/array-pull-all-with-glob",
@@ -40,6 +42,8 @@
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
@@ -47,5 +51,10 @@
   },
   "ava": {
     "verbose": true
+  },
+  "standard": {
+    "ignore": [
+      "es5/"
+    ]
   }
 }
