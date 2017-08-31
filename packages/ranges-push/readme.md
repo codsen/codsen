@@ -217,8 +217,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/string-slices-array-push/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-slices-array-push?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/string-slices-array-push/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/string-slices-array-push
+[overall-img]: https://www.bithound.io/github/codsen/string-slices-array-push/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/string-slices-array-push
 
 [deps-img]: https://www.bithound.io/github/codsen/string-slices-array-push/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/string-slices-array-push/master/dependencies/npm
