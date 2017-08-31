@@ -5,7 +5,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var unfancy = require('string-unfancy/es5');
 var repl = require('string-replace-slices-array/es5');
 var Slices = require('string-slices-array-push/es5');
-var checkTypes = require('check-types-mini');
+var checkTypes = require('check-types-mini/es5');
 var isObj = require('lodash.isplainobject');
 
 function alts(str, opts) {
