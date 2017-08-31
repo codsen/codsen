@@ -453,11 +453,6 @@ function alts (str, opts) {
     str = repl(str, rangesArr.current())
   }
 
-  // TODO unfancy the ALT tag contents:
-  // ================
-  // TODO - port this to inline traversal and put only what's necessary onto rangesArr
-  // str = str.replace(/alt="[^"]*"/g, el => unfancy(el))
-
   return str
 }
 
