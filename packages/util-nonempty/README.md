@@ -4,13 +4,16 @@
 
 > Is the input (plain object, array, string or whatever) not empty?
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -121,6 +124,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/util-nonempty.svg
+[npm-url]: https://www.npmjs.com/package/util-nonempty
+
 [travis-img]: https://travis-ci.org/codsen/util-nonempty.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/util-nonempty
 
@@ -141,3 +147,9 @@ SOFTWARE.
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/util-nonempty/badge.svg
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/util-nonempty
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/util-nonempty
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-url]: https://npm.runkit.com/util-nonempty
