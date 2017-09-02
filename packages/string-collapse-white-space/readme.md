@@ -75,8 +75,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `options` object's key         | Type     | Obligatory? | Default     | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
-`trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be collapsed to a single space
-`trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be collapsed to a single space
+`trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be collapsed to a single space.
+`trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be collapsed to a single space.
 `dontTouchLeadingWhiteSpace`   | Boolean  | no          | `false`     | if `true`, leading whitespace won't be touched. Overrides trimStart.
 `dontTouchTrailingWhiteSpace`  | Boolean  | no          | `false`     | if `true`, trailing whitespace won't be touched. Overrides trimEnd.
 }                              |          |             |             |
