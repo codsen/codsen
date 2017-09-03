@@ -186,3 +186,13 @@ test('03.02 - trims mixed white space lump into empty string', t => {
   '',
   '03.02.04')
 })
+
+test('03.03 - trim involving non-breaking spaces', t => {
+  // defaults
+  t.is(collapse('\xa0   a   \xa0'),
+  '\xa0 a \xa0',
+  '03.03.01')
+  t.is(collapse('    \xa0     a     \xa0      '),
+  '\xa0 a \xa0',
+  '03.03.02')
+})
