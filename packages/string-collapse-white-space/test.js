@@ -107,7 +107,7 @@ test('02.03 - sequences of spaces outside of string - opts.trimStart', t => {
   '\ta b',
   '02.03.03 - trims single tabs')
   t.is(collapse('\n \ta b\t \n', {trimStart: false}),
-  '\ta b',
+  '\n \ta b',
   '02.03.04 - trims with line breaks')
   t.is(collapse('  a  b  ', {trimStart: false}),
   ' a b',
@@ -117,112 +117,72 @@ test('02.03 - sequences of spaces outside of string - opts.trimStart', t => {
   '02.03.06')
 })
 
-test('02.04 - sequences of spaces outside of string - opts.dontTouchLeadingWhiteSpace', t => {
-  // only opts.dontTouchLeadingWhiteSpace
-  t.is(collapse('  a b  ', {dontTouchLeadingWhiteSpace: true}),
-  '  a b',
-  '02.04.01 - nothing to collapse, only trim')
-  t.is(collapse(' a b ', {dontTouchLeadingWhiteSpace: true}),
-  ' a b',
-  '02.04.02 - trims single spaces')
-  t.is(collapse('\ta b\t', {dontTouchLeadingWhiteSpace: true}),
-  '\ta b',
-  '02.04.03 - trims single tabs')
-  t.is(collapse('\n \ta b\t \n', {dontTouchLeadingWhiteSpace: true}),
-  '\n \ta b',
-  '02.04.04 - trims single tabs')
-  t.is(collapse('  a  b  ', {dontTouchLeadingWhiteSpace: true}),
-  '  a b',
-  '02.04.05')
-  t.is(collapse('  aaa     bbb    ccc   dddd  ', {dontTouchLeadingWhiteSpace: true}),
-  '  aaa bbb ccc dddd',
-  '02.04.06')
-})
-
-test('02.05 - sequences of spaces outside of string - opts.dontTouchLeadingWhiteSpace + opts.trimStart', t => {
-  // opts.dontTouchLeadingWhiteSpace + opts.trimStart (latter does not matter)
-  t.is(collapse('  a b  ', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  '  a b',
-  '02.05.01 - nothing to collapse, only trim')
-  t.is(collapse(' a b ', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  ' a b',
-  '02.05.02 - trims single spaces')
-  t.is(collapse('\ta b\t', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  '\ta b',
-  '02.05.03 - trims single tabs')
-  t.is(collapse('\n \ta b\t \n', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  '\n \ta b',
-  '02.05.04 - trims single tabs')
-  t.is(collapse('  a  b  ', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  '  a b',
-  '02.05.04')
-  t.is(collapse('  aaa     bbb    ccc   dddd  ', {dontTouchLeadingWhiteSpace: true, trimStart: false}),
-  '  aaa bbb ccc dddd',
-  '02.05.05')
-})
-
-test('02.06 - sequences of spaces outside of string - opts.trimEnd', t => {
+test('02.04 - sequences of spaces outside of string - opts.trimEnd', t => {
   // opts.trimEnd
   t.is(collapse('  a b  ', {trimEnd: false}),
   'a b ',
-  '02.06.01 - nothing to collapse, only trim')
+  '02.04.01 - nothing to collapse, only trim')
   t.is(collapse(' a b ', {trimEnd: false}),
   'a b ',
-  '02.06.02 - trims single spaces')
+  '02.04.02 - trims single spaces')
   t.is(collapse('\ta b\t', {trimEnd: false}),
   'a b\t',
-  '02.06.03 - trims single tabs')
+  '02.04.03 - trims single tabs')
   t.is(collapse('\n \ta b\t \n', {trimEnd: false}),
-  'a b\n',
-  '02.06.04 - trims with line breaks')
+  'a b\t \n',
+  '02.04.04 - trims with line breaks')
+  t.is(collapse('\n \ta b\t    \n', {trimEnd: false}),
+  'a b\t \n',
+  '02.04.05 - trims with line breaks')
   t.is(collapse('  a  b  ', {trimEnd: false}),
   'a b ',
-  '02.06.05')
+  '02.04.06')
   t.is(collapse('  aaa     bbb    ccc   dddd  ', {trimEnd: false}),
   'aaa bbb ccc dddd ',
-  '02.06.06')
+  '02.04.07')
 })
 
-test('02.07 - sequences of spaces outside of string - opts.dontTouchTrailingWhiteSpace', t => {
-  // only opts.dontTouchTrailingWhiteSpace
-  t.is(collapse('  a b  ', {dontTouchTrailingWhiteSpace: true}),
-  'a b  ',
-  '02.07.01 - nothing to collapse, only trim')
-  t.is(collapse(' a b ', {dontTouchTrailingWhiteSpace: true}),
-  'a b ',
-  '02.07.02 - trims single spaces')
-  t.is(collapse('\ta b\t', {dontTouchTrailingWhiteSpace: true}),
-  'a b\t',
-  '02.07.03 - trims single tabs')
-  t.is(collapse('\n \ta b\t \n', {dontTouchTrailingWhiteSpace: true}),
-  'a b\t \n',
-  '02.07.04 - trims single tabs')
-  t.is(collapse('  a  b  ', {dontTouchTrailingWhiteSpace: true}),
-  'a b  ',
-  '02.07.05')
-  t.is(collapse('  aaa     bbb    ccc   dddd  ', {dontTouchTrailingWhiteSpace: true}),
-  'aaa bbb ccc dddd  ',
-  '02.07.06')
+test('02.05 - sequences of line breaks', t => {
+  t.is(collapse('a\nb\nc\n\n\n\n\nd'),
+  'a\nb\nc\n\n\n\n\nd',
+  '02.05.01')
+  t.is(collapse('a\nb\nc\n   \n\n\n\nd'),
+  'a\nb\nc\n \n\n\n\nd',
+  '02.05.02')
 })
 
-test('02.08 - sequences of spaces outside of string - opts.dontTouchTrailingWhiteSpace + opts.trimEnd', t => {
-  // opts.dontTouchTrailingWhiteSpace + opts.trimEnd
-  t.is(collapse('  a b  ', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'a b  ',
-  '02.08.01 - nothing to collapse, only trim')
-  t.is(collapse(' a b ', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'a b ',
-  '02.08.02 - trims single spaces')
-  t.is(collapse('\ta b\t', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'a b\t',
-  '02.08.03 - trims single tabs')
-  t.is(collapse('\n \ta b\t \n', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'a b\t \n',
-  '02.08.04 - trims single tabs')
-  t.is(collapse('  a  b  ', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'a b  ',
-  '02.08.05')
-  t.is(collapse('  aaa     bbb    ccc   dddd  ', {dontTouchTrailingWhiteSpace: true, trimEnd: false}),
-  'aaa bbb ccc dddd  ',
-  '02.08.06')
+// -----------------------------------------------------------------------------
+// 03. More tests on trimming, targetting algorithm's weakest spots
+// -----------------------------------------------------------------------------
+
+test('03.01 - trimming mixed lumps of trimmable characters', t => {
+  // defaults
+  t.is(collapse('\t\t\t   \t\t\taaa\t\t\t   \t\t\t'),
+  'aaa',
+  '03.01.01')
+  t.is(collapse('   \t\t\t   aaa   \t\t\t   '),
+  'aaa',
+  '03.01.02')
+  t.is(collapse('   \t \t \t   aaa   \t \t \t   '),
+  'aaa',
+  '03.01.03')
+  t.is(collapse('\t \n \t \r \naaa\t \r \t \n \t \n \r \t'),
+  'aaa',
+  '03.01.04')
+})
+
+test('03.02 - trims mixed white space lump into empty string', t => {
+  // defaults
+  t.is(collapse('      '),
+  '',
+  '03.02.01')
+  t.is(collapse('\t\t\t   \t\t\t'),
+  '',
+  '03.02.02')
+  t.is(collapse('\t\t\t'),
+  '',
+  '03.02.03')
+  t.is(collapse('\n\n\n'),
+  '',
+  '03.02.04')
 })

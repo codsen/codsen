@@ -64,9 +64,7 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 ```js
 {
   trimStart: true,
-  trimEnd: true,
-  dontTouchLeadingWhiteSpace: false,
-  dontTouchTrailingWhiteSpace: false
+  trimEnd: true
 }
 ```
 
@@ -75,10 +73,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `options` object's key         | Type     | Obligatory? | Default     | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
-`trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be collapsed to a single space.
-`trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be collapsed to a single space.
-`dontTouchLeadingWhiteSpace`   | Boolean  | no          | `false`     | if `true`, leading whitespace won't be touched. Overrides trimStart.
-`dontTouchTrailingWhiteSpace`  | Boolean  | no          | `false`     | if `true`, trailing whitespace won't be touched. Overrides trimEnd.
+`trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.
+`trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be just collapsed.
 }                              |          |             |             |
 
 **[⬆ &nbsp;back to top](#)**
@@ -87,13 +83,9 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 
 ```js
 const collapse = require('string-collapse-white-space')
-let res1 = collapse('  aaa     bbb    ccc   dddd  ')
-console.log('res1 = ' + JSON.stringify(res1, null, 4))
+let res = collapse('  aaa     bbb    ccc   dddd  ')
+console.log('res = ' + JSON.stringify(res1, null, 4))
 // => "aaa bbb ccc dddd"
-
-let res2 = collapse('\n \ta b\t \n', {dontTouchLeadingWhiteSpace: true})
-console.log('res2 = ' + JSON.stringify(res2, null, 4))
-// => "\n \ta b"
 ```
 
 **[⬆ &nbsp;back to top](#)**
