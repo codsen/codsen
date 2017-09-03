@@ -72,8 +72,8 @@ function collapse(str, opts) {
     }
 
     // white space clauses
-    if (str[i].trim() === '') {
-      // it's some sort of white space character
+    if (str[i].trim() === '' && str[i] !== '\xa0') {
+      // it's some sort of white space character, but not a non-breaking space
       if (whiteSpaceEndsAt === null) {
         whiteSpaceEndsAt = i;
         if (DEBUG) {
