@@ -1,5 +1,5 @@
 'use strict'
-const checkTypes = require('check-types-mini')
+const checkTypes = require('check-types-mini/es5')
 const isObj = require('lodash.isplainobject')
 
 function within (str, opts) {
@@ -12,7 +12,8 @@ function within (str, opts) {
 
   // declare defaults, so we can enforce types later:
   let defaults = {
-    messageOnly: false
+    messageOnly: false,
+    checkLineLength: true
   }
 
   // fill any settings with defaults if missing:
@@ -33,7 +34,10 @@ function within (str, opts) {
   // Naturally, above #126 is not allowed. This concerns #127, DEL too!
   // Often #127, DEL, is overlooked, yet it is not good in email.
 
-  for (let i = 0, len = str.length; i < len; i++) {
+  var counter = 0
+  for (var i = 0, len = str.length; i < len; i++) {
+    counter++
+    // throw if non-ASCII
     if (
       (str[i].codePointAt(0) > 126) ||
       (str[i].codePointAt(0) < 9) ||
@@ -42,6 +46,13 @@ function within (str, opts) {
       ((str[i].codePointAt(0) > 13) && (str[i].codePointAt(0) < 32))
     ) {
       throw new Error(`${opts.messageOnly ? '' : 'email-all-chars-within-ascii: '}Non ascii character found at index ${i}, equal to: ${str[i]}, its decimal code point is ${str[i].codePointAt(0)}.`)
+    }
+    // check line lengths
+    if ((counter > 997) && opts.checkLineLength) {
+      throw new Error(`${opts.messageOnly ? '' : 'email-all-chars-within-ascii: '}Line length is beyond 999 characters!`)
+    }
+    if ((str[i] === '\r') || (str[i] === '\n')) {
+      counter = 0
     }
   }
 }

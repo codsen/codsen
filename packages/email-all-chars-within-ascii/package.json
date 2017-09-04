@@ -2,10 +2,12 @@
   "name": "email-all-chars-within-ascii",
   "version": "1.1.1",
   "description": "Scans all characters within a string and checks are they within ASCII range",
-  "main": "index.js",
+  "main": "es5/index.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-dir es5",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
+    "prepare": "npm run build",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/email-all-chars-within-ascii",
@@ -36,6 +38,8 @@
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "coveralls": "*",
     "husky": "*",
     "nyc": "*",
@@ -46,5 +50,10 @@
   },
   "engines": {
     "node": ">=5.11.0"
+  },
+  "standard": {
+    "ignore": [
+      "es5"
+    ]
   }
 }

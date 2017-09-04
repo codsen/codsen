@@ -6,7 +6,7 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -14,6 +14,9 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+
+Other siblings of this package:
+* CLI, command-line version: [email-all-chars-within-ascii-cli](https://github.com/codsen/email-all-chars-within-ascii-cli)
 
 ## Table of Contents
 
@@ -38,6 +41,8 @@
 $ npm i email-all-chars-within-ascii
 ```
 
+A transpiled ES5 version is served (`/es5/index.js`).
+
 **[⬆ &nbsp;back to top](#)**
 
 ## Idea
@@ -53,6 +58,8 @@ We don't want any invisible control characters (anything below decimal point 32)
 Often decimal point 127, DEL, is overlooked, yet it is not right in your templates, especially email.
 
 In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and the likes are dangerous to validate your email template code because they are too lax.
+
+Also, we want an error `throw`n if any lines exceed the permitted length, 1000 characters. Our algorithm will `throw` earlier, at more than `997` consecutive non-CR/non-LR characters because line lengths count `CRLR` in the end (which is two extra characters, and we don't want to reach 1000).
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -73,6 +80,7 @@ Options object is sanitised by [check-types-mini](https://github.com/codsen/chec
 ```js
     {
       messageOnly: false
+      checkLineLength: true
     }
 ```
 
@@ -82,6 +90,7 @@ Options object is sanitised by [check-types-mini](https://github.com/codsen/chec
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
 `messageOnly`                  | Boolean  | no          | `false`     | Should we not append `email-all-chars-within-ascii: ` in front of each error message? Set to `true` to turn it off, like in [CLI app](https://github.com/codsen/email-all-chars-within-ascii-cli/).
+`checkLineLength`              | Boolean  | no          | `true`      | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters".
 }                              |          |             |             |
 
 **[⬆ &nbsp;back to top](#)**
@@ -148,8 +157,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/email-all-chars-within-ascii/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/email-all-chars-within-ascii?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii
+[overall-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii
 
 [deps-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii/master/dependencies/npm
@@ -166,5 +175,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-all-chars-within-ascii
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/email-all-chars-within-ascii
