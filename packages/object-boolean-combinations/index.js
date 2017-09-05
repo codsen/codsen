@@ -14,7 +14,7 @@ function combinations (n) {
   for (var i = 0; i < (1 << n); i++) {
     var c = []
     for (var j = 0; j < n; j++) {
-      c.push(i & (1 << j) ? 'true' : 'false')
+      c.push(i & (1 << j) ? 1 : 0)
     }
     r.push(c)
   }
@@ -27,7 +27,7 @@ function existy (x) { return x != null }
 /**
  * Checks if input is a true Object (checking against null and Array)
  * @param {Object} a reference object to use the properties from. Values don't matter. For example, {a:true, b:true, c:false}
- * @param [Object] an optional override object. For example, you want all properties "a" to be true – pass {a:true}
+ * @param [Object] an optional override object. For example, you want all properties 'a' to be true - pass {a:true}
  * @returns {Array} of objects with all possible combinations optionally including override. In our examle, an array of 2^(3-1) objects, each containing a:true. Without override we would have got 2^3 objects array
  */
 function objectBooleanCombinations (originalIncomingObject, originalOverrideObject) {
@@ -53,9 +53,9 @@ function objectBooleanCombinations (originalIncomingObject, originalOverrideObje
 
   if (existy(overrideObject) && isObject(overrideObject)) {
     // check overrideObject's contents - must be Boolean:
-    Object.keys(overrideObject).forEach(elem5 => {
-      if (typeof overrideObject[elem5] !== 'boolean') {
-        throw new Error('override object must contain only Boolean values')
+    Object.keys(overrideObject).forEach(val => {
+      if ((overrideObject[val] !== 0) && (overrideObject[val] !== 1) && (overrideObject[val] !== true) && (overrideObject[val] !== false)) {
+        throw new Error('override object\'s values must contain only true/valse or 0/1')
       }
     })
   }
@@ -81,7 +81,7 @@ function objectBooleanCombinations (originalIncomingObject, originalOverrideObje
   boolCombinations.forEach(function (elem1, index1) {
     tempObject = {}
     propertiesToMix.forEach(function (elem2, index2) {
-      tempObject[elem2] = (boolCombinations[index1][index2] === 'true')
+      tempObject[elem2] = (boolCombinations[index1][index2] === 1 ? 1 : 0)
     })
     outcomingObjectsArray.push(tempObject)
   })
