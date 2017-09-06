@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
+    "precommit": "npm test",
     "test": "clear && standard && nyc --reporter=html --reporter=text ava",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
@@ -40,8 +40,8 @@
   "homepage": "https://github.com/codsen/json-variables#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
-    "ast-monkey": "^6.2.1",
-    "check-types-mini": "^2.3.0",
+    "ast-monkey": "^6.3.2",
+    "check-types-mini": "^2.4.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "lodash.trim": "*",
@@ -61,8 +61,8 @@
     "doctoc": "*",
     "husky": "*",
     "nodemon": "*",
-    "nyc": "^11.0.3",
-    "standard": "^10.0.2"
+    "nyc": "^11.2.1",
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": false

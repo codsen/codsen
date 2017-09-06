@@ -2,7 +2,6 @@
 /* eslint padded-blocks: 0 */
 
 const type = require('type-detect')
-const objectAssign = require('object-assign')
 const clone = require('lodash.clonedeep')
 const includes = require('lodash.includes')
 const monkey = require('ast-monkey')
@@ -60,7 +59,7 @@ function jsonVariables (inputOriginal, opts) {
     resolveToFalseIfAnyValuesContainBool: true, // resolve whole value to false, even if some values contain Boolean true. Otherwise, the whole value will resolve to the first encountered Boolean.
     throwWhenNonStringInsertedInString: false
   }
-  opts = objectAssign(clone(defaults), opts)
+  opts = Object.assign({}, defaults, opts)
 
   opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars)
 
