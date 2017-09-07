@@ -6,7 +6,7 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -125,8 +125,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/email-all-chars-within-ascii-cli/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/email-all-chars-within-ascii-cli?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli
+[overall-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli
 
 [deps-img]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/master/dependencies/npm
@@ -143,5 +143,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-all-chars-within-ascii-cli
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/email-all-chars-within-ascii-cli

@@ -40,9 +40,9 @@
   "homepage": "https://github.com/codsen/email-all-chars-within-ascii-cli#readme",
   "dependencies": {
     "chalk": "^2.1.0",
-    "email-all-chars-within-ascii": "^1.1.1",
+    "email-all-chars-within-ascii": "^1.2.0",
     "globby": "^6.1.0",
-    "inquirer": "^3.2.2",
+    "inquirer": "^3.2.3",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
     "meow": "^3.7.0",
