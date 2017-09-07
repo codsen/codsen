@@ -1,6 +1,6 @@
 {
   "name": "html-img-alt",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Adds missing ALT attributes to IMG tags and cleans within IMG tags. No HTML parsing used.",
   "main": "index.js",
   "scripts": {
