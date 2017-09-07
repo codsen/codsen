@@ -6,13 +6,14 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -273,8 +274,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
+[overall-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
 
 [deps-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
@@ -290,3 +291,6 @@ SOFTWARE.
 
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-referencing
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[runkit-url]: https://npm.runkit.com/object-flatten-referencing
