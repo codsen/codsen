@@ -4,10 +4,13 @@
 
 > Remove unused CSS from email templates
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 
 _If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/issues) issue tracker._
 
@@ -122,6 +125,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg
+[npm-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
+
 [travis-img]: https://travis-ci.org/codsen/gulp-email-remove-unused-css.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/gulp-email-remove-unused-css
 
@@ -133,3 +139,9 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg
 [downloads-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/gulp-email-remove-unused-css/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/gulp-email-remove-unused-css
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/gulp-email-remove-unused-css

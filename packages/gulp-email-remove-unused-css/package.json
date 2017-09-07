@@ -35,11 +35,11 @@
   },
   "homepage": "https://emailcomb.com",
   "dependencies": {
-    "email-remove-unused-css": "^2.0.0",
+    "email-remove-unused-css": "^2.8.2",
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {
     "husky": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   }
 }
