@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc README.md",
+    "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/object-set-all-values-to",
@@ -23,7 +23,7 @@
     "write"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -34,15 +34,14 @@
   "homepage": "https://github.com/codsen/object-set-all-values-to#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "type-detect": "^4.0.0"
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true
