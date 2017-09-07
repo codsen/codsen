@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc README.md",
+    "precommit": "npm test",
     "test": "clear && standard && nyc --reporter=html --reporter=text ava",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
@@ -38,17 +38,16 @@
   "homepage": "https://github.com/codsen/object-fill-missing-keys#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "object-merge-advanced": "^6.5.0",
+    "object-merge-advanced": "^7.0.2",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "clear-cli": "*",
     "coveralls": "*",
-    "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": true

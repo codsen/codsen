@@ -9,7 +9,6 @@
       "ava",
       "clear-cli",
       "coveralls",
-      "doctoc",
       "husky",
       "lodash.clonedeep",
       "nyc"
