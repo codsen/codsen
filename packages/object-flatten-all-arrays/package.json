@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc README.md",
+    "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/object-flatten-all-arrays",
@@ -23,7 +23,7 @@
     "write"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },
@@ -40,10 +40,9 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "doctoc": "*",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.2"
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": false
