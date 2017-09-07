@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "main": "index.js",
   "scripts": {
