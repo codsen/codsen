@@ -1,9 +1,19 @@
 {
   "critics": {
-    "lint": {"engine": "standard"}
+    "lint": {
+      "engine": "standard"
+    }
   },
   "dependencies": {
-      "mute": ["is-natural-number", "is-natural-number-string", "lodash.toarray", "ava", "coveralls", "husky", "nyc"]
+    "mute": [
+      "ava",
+      "coveralls",
+      "husky",
+      "is-natural-number",
+      "is-natural-number-string",
+      "lodash.toarray",
+      "nyc"
+    ]
   },
   "test": [
     "test.js"

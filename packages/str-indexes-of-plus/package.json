@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
+    "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/str-indexes-of-plus",
@@ -22,7 +22,7 @@
     "astral"
   ],
   "author": {
-    "name": "Roy Reveltas",
+    "name": "Roy Revelt",
     "email": "roy@codsen.com",
     "url": "codsen.com"
   },

@@ -4,12 +4,16 @@
 
 > Search for a string in another string. Get array of indexes. Full Unicode support.
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -98,7 +102,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 > MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Reveltas
+> Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -118,14 +122,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/str-indexes-of-plus.svg
+[npm-url]: https://www.npmjs.com/package/str-indexes-of-plus
+
 [travis-img]: https://travis-ci.org/codsen/str-indexes-of-plus.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/str-indexes-of-plus
 
 [cov-img]: https://coveralls.io/repos/github/codsen/str-indexes-of-plus/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/str-indexes-of-plus?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus
+[overall-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus
 
 [deps-img]: https://www.bithound.io/github/codsen/str-indexes-of-plus/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/str-indexes-of-plus/master/dependencies/npm
@@ -135,3 +142,12 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/str-indexes-of-plus.svg
 [downloads-url]: https://www.npmjs.com/package/str-indexes-of-plus
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/str-indexes-of-plus/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/str-indexes-of-plus
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/str-indexes-of-plus
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[runkit-url]: https://npm.runkit.com/str-indexes-of-plus
