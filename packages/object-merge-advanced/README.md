@@ -6,13 +6,14 @@
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -303,3 +304,6 @@ SOFTWARE.
 
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-merge-advanced
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[runkit-url]: https://npm.runkit.com/object-merge-advanced
