@@ -32,20 +32,20 @@
   },
   "homepage": "https://github.com/codsen/object-flatten-referencing#readme",
   "dependencies": {
-    "check-types-mini": "^2.3.0",
+    "check-types-mini": "^2.4.1",
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "matcher": "^1.0.0",
-    "str-indexes-of-plus": "^1.0.1",
-    "type-detect": "^4.0.0"
+    "str-indexes-of-plus": "^1.0.2",
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
     "husky": "*",
-    "nyc": "^11.1.0",
-    "standard": "^10.0.2"
+    "nyc": "^11.2.1",
+    "standard": "^10.0.3"
   },
   "ava": {
     "verbose": false
