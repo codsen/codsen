@@ -229,5 +229,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-slices-array-push
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/string-slices-array-push
