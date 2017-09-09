@@ -5,7 +5,7 @@
   "main": "er.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc README.md",
+    "precommit": "npm test",
     "test": "standard && nyc --reporter=html --reporter=text ava"
   },
   "repository": "codsen/easy-replace",
@@ -40,7 +40,6 @@
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
-    "doctoc": "*",
     "husky": "*",
     "nyc": "*",
     "standard": "^10.0.2"

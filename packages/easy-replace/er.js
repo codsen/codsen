@@ -166,7 +166,7 @@ module.exports = function (source, options, replacement) {
       rightOutsideNot: false
     }
   }
-  let o = Object.assign(defaults, options)
+  let o = Object.assign({}, defaults, options)
   checkTypes(o, defaults, {
     schema: {
       leftOutsideNot: ['string', 'number', 'null', 'undefined'],
@@ -277,8 +277,6 @@ module.exports = function (source, options, replacement) {
       }
       if (!found) {
         continue
-        // foundBeginningIndex = -1
-        // foundEndingIndex = -1
       }
     }
     // ===================== rightOutside =====================
@@ -293,8 +291,6 @@ module.exports = function (source, options, replacement) {
       }
       if (!found) {
         continue
-        // foundBeginningIndex = -1
-        // foundEndingIndex = -1
       }
     }
     // ===================== leftOutsideNot =====================
@@ -329,6 +325,7 @@ module.exports = function (source, options, replacement) {
     }
     // ===================== the rest =====================
     replacementRecipe.push([foundBeginningIndex, foundEndingIndex])
+    // TODO - set the array-slices here
   }
   // =====
   // first we need to remove any overlaps in the recipe, cases like:

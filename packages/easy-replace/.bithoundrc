@@ -8,7 +8,6 @@
     "mute": [
       "ava",
       "coveralls",
-      "doctoc",
       "husky",
       "lodash.toarray",
       "lodash.without",

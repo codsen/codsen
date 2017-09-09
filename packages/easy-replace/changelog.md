@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.11.0] - 2017-09-09
+### Added
+- Prevented defaults object's mutation. Don't know if it affects the final result anyhow, (looking from unit tests, it does not).
+
 ## [2.10.0] - 2017-07-08
 
 Fresh morning and fresh head yields new improvements.
@@ -55,3 +59,4 @@ Fresh morning and fresh head yields new improvements.
 [2.8.0]: https://github.com/codsen/easy-replace/compare/v2.7.0...v2.8.0
 [2.9.0]: https://github.com/codsen/easy-replace/compare/v2.8.0...v2.9.0
 [2.10.0]: https://github.com/codsen/easy-replace/compare/v2.9.0...v2.10.0
+[2.11.0]: https://github.com/codsen/easy-replace/compare/v2.10.0...v2.11.0
