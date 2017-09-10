@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "main": "index.js",
   "scripts": {
