@@ -51,7 +51,7 @@ For example,
 [ [5, 9], [5, 3] ] => [ [5, 3], [5, 9] ]
 ```
 
-**Output:** Sorted input array. First we sort by the first argument of each child range array, then by second.
+**Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
 
 ## Contributing & testing
