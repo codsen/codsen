@@ -3,6 +3,7 @@
 > Sort natural number index ranges [ \[5, 6], \[1, 3] ] => [ \[1, 3], \[5, 6] ]
 
 [![Link to npm page][npm-img]][npm-url]
+[![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
@@ -74,6 +75,9 @@ If you want to contribute, don't hesitate. If it's a code contribution, please s
 
 [npm-img]: https://img.shields.io/npm/v/ranges-sort.svg
 [npm-url]: https://www.npmjs.com/package/ranges-sort
+
+[travis-img]: https://travis-ci.org/codsen/ranges-sort.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/ranges-sort
 
 [cov-img]: https://coveralls.io/repos/github/codsen/ranges-sort/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/ranges-sort?branch=master
