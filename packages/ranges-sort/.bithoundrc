@@ -1,0 +1,18 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "clear-cli",
+      "coveralls",
+      "husky",
+      "nodemon"
+    ]
+  },
+  "test": [
+    "test.js"
+  ]
+}
