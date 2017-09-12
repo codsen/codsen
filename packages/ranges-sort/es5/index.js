@@ -4,6 +4,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var isNatNum = require('is-natural-number');
 var ordinalSuffix = require('ordinal-number-suffix');
+var checkTypes = require('check-types-mini');
 
 var isArr = Array.isArray;
 
@@ -19,25 +20,42 @@ var isArr = Array.isArray;
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-function srt(arrOfRanges) {
+function srt(arrOfRanges, o) {
+  // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
     throw new TypeError('ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ' + (typeof arrOfRanges === 'undefined' ? 'undefined' : _typeof(arrOfRanges)) + ', equal to: ' + JSON.stringify(arrOfRanges, null, 4));
   }
   if (arrOfRanges.length === 0) {
     return arrOfRanges;
   }
+
+  // opts validation
+
+  // declare defaults, so we can enforce types later:
+  var defaults = {
+    strictlyTwoElementsInRangeArrays: false
+    // fill any settings with defaults if missing:
+  };var opts = Object.assign({}, defaults, o);
+  // the check:
+  checkTypes(opts, defaults, { msg: 'ranges-sort: [THROW_ID_02*]' });
+
+  // arrOfRanges validation
+
   var culpritsIndex = void 0;
   var culpritsLen = void 0;
-  // validate does every range consist of exactly two indexes:
-  if (!arrOfRanges.every(function (rangeArr, indx) {
-    if (rangeArr.length !== 2) {
-      culpritsIndex = indx;
-      culpritsLen = rangeArr.length;
-      return false;
+
+  if (opts.strictlyTwoElementsInRangeArrays) {
+    // validate does every range consist of exactly two indexes:
+    if (!arrOfRanges.every(function (rangeArr, indx) {
+      if (rangeArr.length !== 2) {
+        culpritsIndex = indx;
+        culpritsLen = rangeArr.length;
+        return false;
+      }
+      return true;
+    })) {
+      throw new TypeError('ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ') has not two but ' + culpritsLen + ' elements!');
     }
-    return true;
-  })) {
-    throw new TypeError('ranges-sort: [THROW_ID_02] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ') has not two but ' + culpritsLen + ' elements!');
   }
   // validate are range indexes natural numbers:
   if (!arrOfRanges.every(function (rangeArr, indx) {
