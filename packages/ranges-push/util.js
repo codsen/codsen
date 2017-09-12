@@ -1,52 +1,17 @@
-'use strict'
+const sortRanges = require('ranges-sort')
 
 // utils
-
-//                              /\___/\
-//                             ( o   o )
-//                             (  =^=  )
-//                             (        )
-//                             (         )
-//                             (          )))))))))))
-
-//
-
-// does [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
-// sorts first by first element, then by second. Retains possible third element.
-function sortRanges (arrOfRanges) {
-  if (!Array.isArray(arrOfRanges)) {
-    return arrOfRanges
-  }
-  return arrOfRanges.sort((range1, range2) => {
-    if (range1[0] === range2[0]) {
-      if (range1[1] < range2[1]) {
-        return -1
-      }
-      if (range1[1] > range2[1]) {
-        return 1
-      }
-      return 0
-    } else {
-      if (range1[0] < range2[0]) {
-        return -1
-      } else {
-        return 1
-      }
-    }
-  })
-}
 
 // merges the overlapping ranges
 // case #1. exact extension:
 // [ [1, 5], [5, 10] ] => [ [1, 10] ]
 // case #2. overlap:
 // [ [1, 4], [3, 5] ] => [ [1, 5] ]
-function mergeRanges (arrOfRanges) {
-  var sortedRanges
+function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges
   }
-  sortedRanges = sortRanges(arrOfRanges)
+  const sortedRanges = sortRanges(arrOfRanges)
   for (let i = sortedRanges.length - 1; i >= 0; i--) {
     if (
       (i > 0) &&
@@ -62,7 +27,10 @@ function mergeRanges (arrOfRanges) {
         if (sortedRanges[i - 1][2] !== undefined) {
           sortedRanges[i - 1][2] += sortedRanges[i][2]
         } else {
-          sortedRanges[i - 1][2] = sortedRanges[i][2]
+          // instead of:
+          // sortedRanges[i - 1][2] = sortedRanges[i][2]
+          // let's use ES6 destructuring:
+          [,, sortedRanges[i - 1][2]] = sortedRanges[i]
         }
       }
       sortedRanges.splice(i, 1)
@@ -73,4 +41,4 @@ function mergeRanges (arrOfRanges) {
   return sortedRanges
 }
 
-module.exports = { sortRanges, mergeRanges }
+module.exports = { mergeRanges, sortRanges }

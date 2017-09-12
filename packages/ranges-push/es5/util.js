@@ -1,41 +1,10 @@
 'use strict';
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var sortRanges = require('ranges-sort');
+
 // utils
-
-//                              /\___/\
-//                             ( o   o )
-//                             (  =^=  )
-//                             (        )
-//                             (         )
-//                             (          )))))))))))
-
-//
-
-// does [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
-// sorts first by first element, then by second. Retains possible third element.
-
-function sortRanges(arrOfRanges) {
-  if (!Array.isArray(arrOfRanges)) {
-    return arrOfRanges;
-  }
-  return arrOfRanges.sort(function (range1, range2) {
-    if (range1[0] === range2[0]) {
-      if (range1[1] < range2[1]) {
-        return -1;
-      }
-      if (range1[1] > range2[1]) {
-        return 1;
-      }
-      return 0;
-    } else {
-      if (range1[0] < range2[0]) {
-        return -1;
-      } else {
-        return 1;
-      }
-    }
-  });
-}
 
 // merges the overlapping ranges
 // case #1. exact extension:
@@ -43,11 +12,10 @@ function sortRanges(arrOfRanges) {
 // case #2. overlap:
 // [ [1, 4], [3, 5] ] => [ [1, 5] ]
 function mergeRanges(arrOfRanges) {
-  var sortedRanges;
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  sortedRanges = sortRanges(arrOfRanges);
+  var sortedRanges = sortRanges(arrOfRanges);
   for (var i = sortedRanges.length - 1; i >= 0; i--) {
     if (i > 0 && (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1])) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
@@ -57,7 +25,13 @@ function mergeRanges(arrOfRanges) {
         if (sortedRanges[i - 1][2] !== undefined) {
           sortedRanges[i - 1][2] += sortedRanges[i][2];
         } else {
-          sortedRanges[i - 1][2] = sortedRanges[i][2];
+          var _sortedRanges$i = _slicedToArray(sortedRanges[i], 3);
+          // instead of:
+          // sortedRanges[i - 1][2] = sortedRanges[i][2]
+          // let's use ES6 destructuring:
+
+
+          sortedRanges[i - 1][2] = _sortedRanges$i[2];
         }
       }
       sortedRanges.splice(i, 1);
@@ -68,4 +42,4 @@ function mergeRanges(arrOfRanges) {
   return sortedRanges;
 }
 
-module.exports = { sortRanges: sortRanges, mergeRanges: mergeRanges };
+module.exports = { mergeRanges: mergeRanges, sortRanges: sortRanges };

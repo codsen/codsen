@@ -7,7 +7,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var isInt = require('is-natural-number');
 var isNumStr = require('is-natural-number-string');
 var ordinal = require('ordinal-number-suffix');
-var mergeRanges = require('./util').mergeRanges;
+
+var _require = require('./util'),
+    mergeRanges = _require.mergeRanges;
 
 function mandatory(i) {
   throw new Error('string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ' + i + ordinal(i) + ' parameter');
@@ -26,20 +28,16 @@ var Slices = function () {
     // A D D ()
     // ==================
     value: function add() {
-      var from = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
-      var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
+      var originalFrom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
+      var originalTo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
       var addVal = arguments[2];
 
       function existy(x) {
         return x != null;
       }
       // validation
-      if (isNumStr(from)) {
-        from = parseInt(from, 10);
-      }
-      if (isNumStr(to)) {
-        to = parseInt(to, 10);
-      }
+      var from = isNumStr(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
+      var to = isNumStr(originalTo) ? parseInt(originalTo, 10) : originalTo;
       if (!isInt(from, { includeZero: true })) {
         throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_02] "from" value, first input argument, must be a natural number or zero! Currently it\'s equal to: ' + JSON.stringify(from, null, 4));
       }
@@ -87,9 +85,8 @@ var Slices = function () {
       }
       if (existy(this.slices)) {
         return mergeRanges(this.slices);
-      } else {
-        return null;
       }
+      return null;
     }
 
     // W I P E ()
@@ -109,9 +106,8 @@ var Slices = function () {
     value: function last() {
       if (this.slices !== undefined && Array.isArray(this.slices)) {
         return this.slices[this.slices.length - 1];
-      } else {
-        return null;
       }
+      return null;
     }
   }]);
 

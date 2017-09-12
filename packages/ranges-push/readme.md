@@ -1,7 +1,5 @@
 # string-slices-array-push
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Manage the array of slices referencing the index ranges within the string
 
 [![Link to npm page][npm-img]][npm-url]
@@ -168,13 +166,17 @@ This library is part one of two library combo, second one being [string-replace-
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
-
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-slices-array-push/issues). If you file a pull request, I'll do my best to merge it quickly. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
 
 If something doesn't work as you wished or you don't understand the inner working of this library, _do raise an issue_. I'm happy to explain what's happening. Often some part of my README documentation is woolly, and I can't spot it myself. I need user feedback.
 
 Also, if you miss a feature, request it by [raising](https://github.com/codsen/string-slices-array-push/issues) an issue as well.
+
+I know it never happens but if you would ever forked it and worked on a new feature, before filing a pull request, please make sure code is following the rules set in `.eslintrc` and `npm run test` passes fine. It's basically an `airbnb-base` rules preset of `eslint` with two exceptions^:
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+
+I dropped JS Standard because it misses many useful ESLint rules and has been neglected by its maintainers, using half-year-old version of ESLint.
 
 Cheers!
 
