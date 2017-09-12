@@ -1,176 +1,182 @@
-'use strict'
-
-import checkTypes from './index'
 import test from 'ava'
+import checkTypes from './index'
 
-test('01.01 - throws when all/first args are missing', t => {
-  t.throws(function () {
+test('01.01 - throws when all/first args are missing', (t) => {
+  t.throws(() => {
     checkTypes()
   }, 'check-types-mini/checkTypes(): Missing all arguments!')
 })
 
-test('01.02 - throws when second arg is missing', t => {
-  t.throws(function () {
+test('01.02 - throws when second arg is missing', (t) => {
+  t.throws(() => {
     checkTypes('zzzz')
   }, 'check-types-mini/checkTypes(): Missing second argument!')
 })
 
-test('01.03 - throws when one of the arguments is of a wrong type', t => {
-  t.throws(function () {
+test('01.03 - throws when one of the arguments is of a wrong type', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'false',
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: false,
-        option3: false
-      }
+        option3: false,
+      },
     )
   }, 'check-types-mini/checkTypes(): opts.option2 was customised to "false" which is not boolean but string')
 })
 
-test('01.04 - opts.msg or opts.optsVarName args are wrong-type', t => {
-  t.throws(function () {
+test('01.04 - opts.msg or opts.optsVarName args are wrong-type', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         msg: 'zzz',
-        optsVarName: 1
-      }
+        optsVarName: 1,
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         msg: 1,
-        optsVarName: 'zzz'
-      }
+        optsVarName: 'zzz',
+      },
     )
   })
 })
 
-test('01.05 - throws if fourth argument is missing', t => {
-  t.throws(function () {
-    checkTypes(
-      {
-        option1: 'setting1',
-        option2: 'false',
-        option3: false
-      },
-      {
-        option1: 'setting1',
-        option2: false,
-        option3: false
-      },
-      {
-        msg: 'newLibrary/index.js [THROW_ID_01]' // << no trailing space
-      }
-    )
-  },
-    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string'
+test('01.05 - throws if fourth argument is missing', (t) => {
+  t.throws(
+    () => {
+      checkTypes(
+        {
+          option1: 'setting1',
+          option2: 'false',
+          option3: false,
+        },
+        {
+          option1: 'setting1',
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: 'newLibrary/index.js [THROW_ID_01]', // << no trailing space
+        },
+      )
+    },
+    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string',
   )
-  t.throws(function () {
-    checkTypes(
-      {
-        option1: 'setting1',
-        option2: 'false',
-        option3: false
-      },
-      {
-        option1: 'setting1',
-        option2: false,
-        option3: false
-      },
-      {
-        msg: 'newLibrary/index.js [THROW_ID_01]:        ' // << trailing space
-      }
-    )
-  },
-    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string'
+  t.throws(
+    () => {
+      checkTypes(
+        {
+          option1: 'setting1',
+          option2: 'false',
+          option3: false,
+        },
+        {
+          option1: 'setting1',
+          option2: false,
+          option3: false,
+        },
+        {
+          msg: 'newLibrary/index.js [THROW_ID_01]:        ', // << trailing space
+        },
+      )
+    },
+    'newLibrary/index.js [THROW_ID_01]: opts.option2 was customised to "false" which is not boolean but string',
   )
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'false',
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'newLibrary/index.js [THROW_ID_01]: ',
-        ignoreKeys: ['option2']
-      }
+        ignoreKeys: ['option2'],
+      },
     )
   })
 })
 
-test('01.06 - throws when opts are set wrong', t => {
-  t.throws(function () {
+test('01.06 - throws when opts are set wrong', (t) => {
+  t.throws(
+    () => {
+      checkTypes(
+        { somekey: 'a' },
+        { somekey: 'b' },
+        {
+          msg: 'aa',
+          optsVarName: 'bbb',
+          ignoreKeys: false,
+        },
+      )
+    },
+    'check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: boolean',
+  )
+  t.throws(
+    () => {
+      checkTypes(
+        { somekey: 'a' },
+        { somekey: 'b' },
+        {
+          msg: 1,
+          optsVarName: 'bbb',
+          ignoreKeys: false,
+        },
+      )
+    },
+    'check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: number, equal to 1',
+  )
+  t.notThrows(() => {
     checkTypes(
-      {a: 'a'},
-      {a: 'b'},
+      { somekey: 'a' }, { somekey: 'b' },
       {
         msg: 'aa',
         optsVarName: 'bbb',
-        ignoreKeys: false
-      }
-    )
-  },
-  'check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: boolean')
-  t.throws(function () {
-    checkTypes(
-      {a: 'a'},
-      {a: 'b'},
-      {
-        msg: 1,
-        optsVarName: 'bbb',
-        ignoreKeys: false
-      }
-    )
-  },
-  'check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: number, equal to 1')
-  t.notThrows(function () {
-    checkTypes({a: 'a'}, {a: 'b'},
-      {
-        msg: 'aa',
-        optsVarName: 'bbb',
-        ignoreKeys: 'a'
-      }
+        ignoreKeys: 'a',
+      },
     )
   })
-  t.notThrows(function () {
-    checkTypes({a: 'a'}, {a: 'b'},
+  t.notThrows(() => {
+    checkTypes(
+      { somekey: 'a' }, { somekey: 'b' },
       {
         msg: 'aa',
         optsVarName: 'bbb',
-        ignoreKeys: ''
-      }
+        ignoreKeys: '',
+      },
     )
   })
 })
@@ -179,326 +185,326 @@ test('01.06 - throws when opts are set wrong', t => {
 // 02. Arrays
 // ======================
 
-test('02.01 - opts.acceptArrays, strings+arrays', t => {
-  t.throws(function () {
+test('02.01 - opts.acceptArrays, strings+arrays', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: ['setting3', 'setting4'],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
-      }
+        option3: false,
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: ['setting3', 'setting4'],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         msg: 'message',
         optsVarName: 'varname',
-        acceptArrays: true
-      }
+        acceptArrays: true,
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: ['setting3', true, 'setting4'],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: 'setting2',
-        option3: false
+        option3: false,
       },
       {
         msg: 'message',
         optsVarName: 'varname',
-        acceptArrays: true
-      }
+        acceptArrays: true,
+      },
     )
   })
 })
 
-test('02.02 - opts.acceptArrays, Booleans+arrays', t => {
-  t.throws(function () {
+test('02.02 - opts.acceptArrays, Booleans+arrays', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: false,
-        option3: false
-      }
+        option3: false,
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'message',
         optsVarName: 'varname',
-        acceptArrays: true
-      }
+        acceptArrays: true,
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: [true, true, 1],
-        option3: false
+        option3: false,
       },
       {
         option1: 'setting1',
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'message',
         optsVarName: 'varname',
-        acceptArrays: true
-      }
+        acceptArrays: true,
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 0,
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'test: [THROW_ID_01]',
         optsVarName: 'opts',
         acceptArrays: 'this string will cause the throw',
-        acceptArraysIgnore: []
-      }
+        acceptArraysIgnore: [],
+      },
     )
   })
 })
 
-test('02.03 - opts.acceptArraysIgnore', t => {
-  t.notThrows(function () {
+test('02.03 - opts.acceptArraysIgnore', (t) => {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 0,
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'test: [THROW_ID_01]',
         optsVarName: 'opts',
         acceptArrays: true,
-        acceptArraysIgnore: []
-      }
+        acceptArraysIgnore: [],
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 0,
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'test: [THROW_ID_01]',
         optsVarName: 'opts',
         acceptArrays: true,
-        acceptArraysIgnore: ['zzz', 'option1']
-      }
+        acceptArraysIgnore: ['zzz', 'option1'],
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 0,
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'test: [THROW_ID_01]',
         optsVarName: 'opts',
         acceptArrays: false,
-        acceptArraysIgnore: ['zzz', 'option1']
-      }
+        acceptArraysIgnore: ['zzz', 'option1'],
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
         option2: [true, true],
-        option3: false
+        option3: false,
       },
       {
         option1: 0,
         option2: false,
-        option3: false
+        option3: false,
       },
       {
         msg: 'test: [THROW_ID_01]',
         optsVarName: 'opts',
         acceptArrays: true,
-        acceptArraysIgnore: true
-      }
+        acceptArraysIgnore: true,
+      },
     )
   })
 })
 
-test('02.05 - involving null values', t => {
-  t.throws(function () {
+test('02.05 - involving null values', (t) => {
+  t.throws(() => {
     checkTypes(
       {
-        'key': 1,
-        'val': null,
-        'cleanup': true
+        key: 1,
+        val: null,
+        cleanup: true,
       },
       {
-        'key': null,
-        'val': null,
-        'cleanup': true
-      }
+        key: null,
+        val: null,
+        cleanup: true,
+      },
     )
   })
 })
 
-test('02.06 - throws/notThrows when keysets mismatch', t => {
-  t.throws(function () {
+test('02.06 - throws/notThrows when keysets mismatch', (t) => {
+  t.throws(() => {
     checkTypes(
       {
-        'key': null,
-        'val': null,
-        'cleanup': true
+        key: null,
+        val: null,
+        cleanup: true,
       },
       {
-        'key': null,
-        'val': null
-      }
+        key: null,
+        val: null,
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
-        'key': null,
-        'val': null
+        key: null,
+        val: null,
       },
       {
-        'key': null,
-        'val': null,
-        'cleanup': true
-      }
+        key: null,
+        val: null,
+        cleanup: true,
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        'key': null,
-        'val': null,
-        'cleanup': true
+        key: null,
+        val: null,
+        cleanup: true,
       },
       {
-        'key': null,
-        'val': null
+        key: null,
+        val: null,
       },
       {
-        enforceStrictKeyset: false
-      }
+        enforceStrictKeyset: false,
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        'key': null,
-        'val': null
+        key: null,
+        val: null,
       },
       {
-        'key': null,
-        'val': null,
-        'cleanup': true
+        key: null,
+        val: null,
+        cleanup: true,
       },
       {
-        enforceStrictKeyset: false
-      }
-    )
-  })
-})
-
-test('02.07 - opts.enforceStrictKeyset set to a wrong thing', t => {
-  t.throws(function () {
-    checkTypes(
-      {
-        'key': 1,
-        'val': null,
-        'cleanup': true
+        enforceStrictKeyset: false,
       },
-      {
-        'key': null,
-        'val': null,
-        'cleanup': true
-      },
-      {
-        enforceStrictKeyset: 1
-      }
     )
   })
 })
 
-test('02.08 - throws when reference and schema are both missing', t => {
-  t.throws(function () {
+test('02.07 - opts.enforceStrictKeyset set to a wrong thing', (t) => {
+  t.throws(() => {
     checkTypes(
       {
-        'key': 1,
-        'val': null,
-        'cleanup': true
+        key: 1,
+        val: null,
+        cleanup: true,
       },
-      {}
+      {
+        key: null,
+        val: null,
+        cleanup: true,
+      },
+      {
+        enforceStrictKeyset: 1,
+      },
+    )
+  })
+})
+
+test('02.08 - throws when reference and schema are both missing', (t) => {
+  t.throws(() => {
+    checkTypes(
+      {
+        key: 1,
+        val: null,
+        cleanup: true,
+      },
+      {},
     )
   })
 })
@@ -507,34 +513,34 @@ test('02.08 - throws when reference and schema are both missing', t => {
 // 03. opts.enforceStrictKeyset
 // ======================
 
-test('03.01 - opts.acceptArrays, strings+arrays', t => {
-  t.throws(function () {
+test('03.01 - opts.acceptArrays, strings+arrays', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'setting2',
-        rogueKey: false
+        rogueKey: false,
       },
       {
         option1: 'zz',
-        option2: 'yy'
-      }
+        option2: 'yy',
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
         option2: 'setting2',
-        rogueKey: false
+        rogueKey: false,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
-        enforceStrictKeyset: false
-      }
+        enforceStrictKeyset: false,
+      },
     )
   })
 })
@@ -543,354 +549,354 @@ test('03.01 - opts.acceptArrays, strings+arrays', t => {
 // 04. opts.schema
 // ======================
 
-test('04.01 - opts.schema only', t => {
-  t.throws(function () {
+test('04.01 - opts.schema only', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: null
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
-      }
+        option2: 'yy',
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: null
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
-          option2: ['stRing', null]
-        }
-      }
+          option2: ['stRing', null],
+        },
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: null
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
-          option2: ['string', 'boolean']
-        }
-      }
+          option2: ['string', 'boolean'],
+        },
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: null
+        option2: null,
       },
       null, // << reference object is completely omitted!!!
       {
         schema: {
           option1: 'String',
-          option2: ['stRing', null]
-        }
-      }
+          option2: ['stRing', null],
+        },
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: null
+        option2: null,
       },
       null,
       {
         schema: { // <<< notice how option1 is missing AND also missing in reference obj
-          option2: ['stRing', null]
-        }
-      }
+          option2: ['stRing', null],
+        },
+      },
     )
   })
 })
 
-test('04.02 - opts.schema values as strings + "whatever" keys', t => {
-  t.throws(function () {
+test('04.02 - opts.schema values as strings + "whatever" keys', (t) => {
+  t.throws(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
-      }
+        option2: 'yy',
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
           option1: ['object', 'string'],
-          option2: ['whatever']
-        }
-      }
+          option2: ['whatever'],
+        },
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
           option1: 'object', // << observe it's a string, not an array
-          option2: ['whatever']
-        }
-      }
+          option2: ['whatever'],
+        },
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
           option1: 'string', // << will throw because this type is not followed
-          option2: ['whatever']
-        }
-      }
+          option2: ['whatever'],
+        },
+      },
     )
   })
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
           option1: ['string', 'any'], // <<< observe how "any" is among other types
-          option2: 'whatever' // also observe that it's not an array. Should work anyway!
-        }
-      }
+          option2: 'whatever', // also observe that it's not an array. Should work anyway!
+        },
+      },
     )
   })
 })
 
-test('04.03 - opts.schema falling back to reference object', t => {
+test('04.03 - opts.schema falling back to reference object', (t) => {
   // with throwing consequences:
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
         schema: {
-          option1: 'number'
-        }
-      }
+          option1: 'number',
+        },
+      },
     )
   })
   // without throwing consequences:
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: 'zz'
+        option1: { somekey: 'setting1' },
+        option2: 'zz',
       },
       {
-        option1: {ww: 'zz'},
-        option2: 'yy'
+        option1: { ww: 'zz' },
+        option2: 'yy',
       },
       {
         schema: {
-          option99: 'number' // << that's useless, so falls back to reference object
-        }
-      }
+          option99: 'number', // << that's useless, so falls back to reference object
+        },
+      },
     )
   })
 })
 
-test('04.04 - opts.schema is set to a wrong thing - throws', t => {
-  t.throws(function () {
+test('04.04 - opts.schema is set to a wrong thing - throws', (t) => {
+  t.throws(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
-        schema: 'zzz'
-      }
+        schema: 'zzz',
+      },
     )
   })
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
-        option1: {a: 'setting1'},
-        option2: null
+        option1: { somekey: 'setting1' },
+        option2: null,
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
-        schema: null
-      }
+        schema: null,
+      },
     )
   })
 })
 
-test('04.05 - opts.schema understands opts.acceptArrays', t => {
-  t.throws(function () {
+test('04.05 - opts.schema understands opts.acceptArrays', (t) => {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2']
+        option2: ['setting2'],
       },
       {
         option1: 'zz',
-        option2: 'yy'
-      }
+        option2: 'yy',
+      },
     )
   }) // throws because reference's type mismatches.
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2']
+        option2: ['setting2'],
       },
       {
         option1: 'zz',
-        option2: 'yy'
+        option2: 'yy',
       },
       {
-        acceptArrays: true
-      }
+        acceptArrays: true,
+      },
     )
   }) // does not throw because of opts.acceptArrays is matching against reference
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2']
+        option2: ['setting2'],
       },
       {
-        option1: 'zz'
+        option1: 'zz',
       },
       {
         acceptArrays: true,
         schema: {
-          option2: 'string'
-        }
-      }
+          option2: 'string',
+        },
+      },
     )
   }) // does not throw because of opts.acceptArrays is matching against schema's keys
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2', 999]
+        option2: ['setting2', 999],
       },
       {
-        option1: 'zz'
+        option1: 'zz',
       },
       {
         acceptArrays: true,
         schema: {
-          option2: 'string'
-        }
-      }
+          option2: 'string',
+        },
+      },
     )
   }) // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2', 999]
+        option2: ['setting2', 999],
       },
       {
-        option1: 'zz'
+        option1: 'zz',
       },
       {
         acceptArrays: true,
         schema: {
-          option2: ['string', 'number']
-        }
-      }
+          option2: ['string', 'number'],
+        },
+      },
     )
   }) // number is allowed now
-  t.throws(function () {
+  t.throws(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2', 999]
+        option2: ['setting2', 999],
       },
       {
-        option1: 'zz'
+        option1: 'zz',
       },
       {
         acceptArrays: false,
         schema: {
-          option2: ['string', 'number']
-        }
-      }
+          option2: ['string', 'number'],
+        },
+      },
     )
   }) // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
-  t.notThrows(function () {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: 'setting1',
-        option2: ['setting2', 999]
+        option2: ['setting2', 999],
       },
       {
-        option1: 'zz'
+        option1: 'zz',
       },
       {
         acceptArrays: false,
         schema: {
-          option2: ['string', 'number', 'array']
-        }
-      }
+          option2: ['string', 'number', 'array'],
+        },
+      },
     )
   }) // does not throw because blanked permission for array's is on.
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.

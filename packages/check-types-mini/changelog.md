@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2017-09-12
+### Changed
+- Removed JS Standard and replaced it with raw ESLint running on `airbnb-base` preset, with two exceptions: 1. no semicolons; 2. allow plus-plus in `for` loops.
+
 ## [2.4.0] - 2017-08-07
 ### Updated
 - **Readme**. I was thinking, we don't even need to use `lodash.clonedeep`, because the defaults are always flat, plain objects. Since `Object.assign` takes many sources, it makes our life simpler:
@@ -83,3 +87,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.2.0]: https://github.com/codsen/check-types-mini/compare/v2.1.0...v2.2.0
 [2.3.0]: https://github.com/codsen/check-types-mini/compare/v2.2.0...v2.3.0
 [2.4.0]: https://github.com/codsen/check-types-mini/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/codsen/check-types-mini/compare/v2.4.0...v2.5.0
