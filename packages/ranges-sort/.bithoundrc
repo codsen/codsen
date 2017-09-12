@@ -6,10 +6,12 @@
   },
   "dependencies": {
     "mute": [
+      "ava",
       "clear-cli",
       "coveralls",
       "husky",
-      "nodemon"
+      "nodemon",
+      "nyc"
     ]
   },
   "test": [

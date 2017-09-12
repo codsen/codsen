@@ -22,19 +22,29 @@ test('00.01 - not array', (t) => {
 
 test('00.02 - not two arguments in one of ranges', (t) => {
   t.throws(() => {
-    srt([[1, 2, 3]])
+    srt([[1, 2, 3]], { strictlyTwoElementsInRangeArrays: true })
   })
   t.throws(() => {
-    srt([[1, 2, 3], [4, 5, 6]])
+    srt([[1, 2, 3], [4, 5, 6]], { strictlyTwoElementsInRangeArrays: true })
   })
   t.throws(() => {
-    srt([[1, 2], [4, 5, 6], [7, 8]])
+    srt([[1, 2], [4, 5, 6], [7, 8]], { strictlyTwoElementsInRangeArrays: true })
   })
   t.notThrows(() => {
     srt([[1, 2], [4, 5], [7, 8]])
   })
   t.notThrows(() => {
     srt([])
+  })
+  // with defaults opts
+  t.notThrows(() => {
+    srt([[1, 2, 3]])
+  })
+  t.notThrows(() => {
+    srt([[1, 2, 3], [4, 5, 6]])
+  })
+  t.notThrows(() => {
+    srt([[1, 2], [4, 5, 6], [7, 8]])
   })
 })
 
@@ -78,7 +88,12 @@ test('01.02 - only one range given', (t) => {
   t.deepEqual(
     srt([[0, 3]]),
     [[0, 3]],
-    '01.02',
+    '01.02.01',
+  )
+  t.deepEqual(
+    srt([[0, 3, 'zzz']]),
+    [[0, 3, 'zzz']],
+    '01.02.02',
   )
 })
 
@@ -92,6 +107,16 @@ test('01.03 - two ranges', (t) => {
     srt([[5, 6], [0, 3]]),
     [[0, 3], [5, 6]],
     '01.03.02',
+  )
+  t.deepEqual(
+    srt([[0, 3, 'zzz'], [5, 6]]),
+    [[0, 3, 'zzz'], [5, 6]],
+    '01.03.03',
+  )
+  t.deepEqual(
+    srt([[5, 6], [0, 3, 'zzz']]),
+    [[0, 3, 'zzz'], [5, 6]],
+    '01.03.04',
   )
 })
 
@@ -117,9 +142,17 @@ test('01.04 - many ranges', (t) => {
     '01.04.04 - same ranges',
   )
   t.deepEqual(
+    srt([[5, 6], [5, 6, 'zzz']]),
+    [[5, 6], [5, 6, 'zzz']],
+    '01.04.05 - same ranges',
+  )
+  t.throws(() => {
+    srt([[5, 6], [5, 6, 'zzz']], { strictlyTwoElementsInRangeArrays: true })
+  })
+  t.deepEqual(
     srt([[9, 12], [9, 15]]),
     [[9, 12], [9, 15]],
-    '01.04.05',
+    '01.04.07',
   )
 })
 

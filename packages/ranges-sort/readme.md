@@ -33,6 +33,7 @@ We are serving code transpiled down to ES5.
 
 - [Rationale](#rationale)
 - [API](#api)
+  - [Options object](#options-object)
 - [Contributing & testing](#contributing--testing)
 - [Licence](#licence)
 
@@ -43,7 +44,13 @@ We are serving code transpiled down to ES5.
 
 ## API
 
-**Input:** Array of zero or more arrays meaning natural number ranges (2 elements each).
+**rangesSort(arr[, opts])**
+
+Input argument   | Type         | Obligatory? | Description
+-----------------|--------------|-------------|--------------
+`arrOfRanges`    | Plain object | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each)
+`opts`           | Plain object | no          | Optional options go here.
+
 This package does not mutate the input array.
 
 For example,
@@ -52,8 +59,15 @@ For example,
 [ [5, 9], [5, 3] ] => [ [5, 3], [5, 9] ]
 ```
 
-**Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
+### Options object
 
+`options` object's key             | Type     | Obligatory? | Default     | Description
+-----------------------------------|----------|-------------|-------------|----------------------
+{                                  |          |             |             |
+`strictlyTwoElementsInRangeArrays` | Boolean  | no          | `false`     | If set to true, when there are more or less than 3 elements in any of the ranges, it will `throw`. For example, input being `[ [1, 2, 'zzz'] ]` would throw.
+}                                  |          |             |             |
+
+**Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
 ## Contributing & testing
 
