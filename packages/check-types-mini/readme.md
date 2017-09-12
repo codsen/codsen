@@ -7,7 +7,7 @@
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
@@ -260,5 +260,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/check-types-mini
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/check-types-mini
