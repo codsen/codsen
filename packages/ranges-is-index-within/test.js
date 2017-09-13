@@ -171,31 +171,6 @@ test('02.01 - more than two ranges, uneven count, not inclusive', (t) => {
   )
 })
 
-test.only('02.02 - even more ranges, not inclusive', (t) => {
-  t.is(
-    wthn(
-      79,
-      [
-        [5, 10],
-        [15, 20],
-        [25, 30],
-        [35, 40],
-        [45, 50],
-        [55, 60],
-        [65, 70],
-        [75, 80],
-        [85, 90],
-        [95, 100],
-        [105, 110],
-        [115, 120],
-        [125, 130],
-      ],
-    ),
-    true,
-    '02.02.100',
-  )
-})
-
 test('02.02 - even more ranges, not inclusive', (t) => {
   t.is(
     wthn(
