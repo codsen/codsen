@@ -1,0 +1,19 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "clear-cli",
+      "coveralls",
+      "husky",
+      "lodash.isplainobject",
+      "nodemon"
+    ]
+  },
+  "test": [
+    "test.js"
+  ]
+}
