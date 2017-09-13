@@ -37,6 +37,9 @@ function wthn(originalIndex, rangesArr, originalOpts) {
     throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_04] Second input argument, rangesArr must be not empty! Currently it\'s empty.');
   }
   var culpritsIndex = null;
+  if (isArr(rangesArr) && rangesArr.length > 0 && !isArr(rangesArr[0])) {
+    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_05] Second input argument, rangesArr must be an array of (index range) arrays! Currently it\'s equal to: ' + rangesArr + '.');
+  }
   if (!rangesArr.every(function (rangeArr, indx) {
     if (!isNatNum(rangeArr[0], { includeZero: true }) || !isNatNum(rangeArr[1], { includeZero: true })) {
       culpritsIndex = indx;
@@ -63,62 +66,62 @@ function wthn(originalIndex, rangesArr, originalOpts) {
   // ====================
 
   if (rangesArr.length < 3) {
+    // if equals 1
     if (rangesArr.length === 1) {
       if (opts.inclusiveRangeEnds) {
         return index >= rangesArr[0][0] && index <= rangesArr[0][1];
       }
       return index > rangesArr[0][0] && index < rangesArr[0][1];
-    } else if (rangesArr.length === 2) {
-      if (opts.inclusiveRangeEnds) {
-        return index >= rangesArr[0][0] && index <= rangesArr[0][1] || index >= rangesArr[1][0] && index <= rangesArr[1][1];
-      }
-      return index > rangesArr[0][0] && index < rangesArr[0][1] || index > rangesArr[1][0] && index < rangesArr[1][1];
     }
-  } else {
-    // more than two
+    // if not, equals 2 then because we checked for zero already, see row #30
+    if (opts.inclusiveRangeEnds) {
+      return index >= rangesArr[0][0] && index <= rangesArr[0][1] || index >= rangesArr[1][0] && index <= rangesArr[1][1];
+    }
+    return index > rangesArr[0][0] && index < rangesArr[0][1] || index > rangesArr[1][0] && index < rangesArr[1][1];
+  }
+  // more than two
 
-    // 0. Get the ranges array sorted because few upcoming approaches depend on it.
-    var rarr = rangesSort(rangesArr); // TODO attach sort when it's published
+  // 0. Get the ranges array sorted because few upcoming approaches depend on it.
+  var rarr = rangesSort(rangesArr); // TODO attach sort when it's published
 
-    // 1. check for quick wins - maybe given index is outside of the edge values?
-    if (index < rarr[0][0] || index > rarr[rarr.length - 1][1]) {
-      return false;
-    } else if (index === rarr[0][0] || index === rarr[rarr.length - 1][1]) {
-      // index we're checking is equal to the outermost edges of a given indexes
-      // all depends then on opts.inclusiveRangeEnds
+  // 1. check for quick wins - maybe given index is outside of the edge values?
+  if (index < rarr[0][0] || index > rarr[rarr.length - 1][1]) {
+    return false;
+  } else if (index === rarr[0][0] || index === rarr[rarr.length - 1][1]) {
+    // index we're checking is equal to the outermost edges of a given indexes
+    // all depends then on opts.inclusiveRangeEnds
+    return opts.inclusiveRangeEnds;
+  }
+  // 2. if not, then do some work and find out
+  var dontStop = true;
+
+  // the plan is the following.
+  // We got bunch of ranges. Find the middle-one of them and check, is our
+  // index within or below or above it. If it's within, Bob's your uncle,
+  // return `true`. Else, fun continues:
+  // - if it's below, set upper index to the index number of this range, essentially
+  // shortening our searches to half.
+  // - if index is above this range in the middle, set lower index to the index number
+  // of this range.
+  // ----
+  // REPEAT above until the lower and upper index numbers are too close.
+
+  var lowerIndex = 0; // at first, it's zero because we count how many ranges there are, from zero
+  var upperIndex = rarr.length - 1; // at first, it's the total number of indexes.
+
+  while (dontStop && Math.floor(upperIndex - lowerIndex) > 1) {
+    // pick the middle index.
+    var theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
+    if (index < rarr[theIndexOfTheRangeInTheMiddle][0]) {
+      upperIndex = theIndexOfTheRangeInTheMiddle;
+    } else if (index > rarr[theIndexOfTheRangeInTheMiddle][1]) {
+      lowerIndex = theIndexOfTheRangeInTheMiddle;
+    } else if (index === rarr[theIndexOfTheRangeInTheMiddle][0] || index === rarr[theIndexOfTheRangeInTheMiddle][1]) {
+      // it's on one of the edges! YAY! found!
       return opts.inclusiveRangeEnds;
-    }
-    // 2. if not, then do some work and find out
-    var dontStop = true;
-
-    // the plan is the following.
-    // We got bunch of ranges. Find the middle-one of them and check, is our
-    // index within or below or above it. If it's within, Bob's your uncle,
-    // return `true`. Else, fun continues:
-    // - if it's below, set upper index to the index number of this range, essentially
-    // shortening our searches to half.
-    // - if index is above this range in the middle, set lower index to the index number
-    // of this range.
-    // ----
-    // REPEAT above until the lower and upper index numbers are too close.
-
-    var lowerIndex = 0; // at first, it's zero because we count how many ranges there are, from zero
-    var upperIndex = rarr.length - 1; // at first, it's the total number of indexes.
-
-    while (dontStop && Math.floor(upperIndex - lowerIndex) > 1) {
-      // pick the middle index.
-      var theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
-      if (index < rarr[theIndexOfTheRangeInTheMiddle][0]) {
-        upperIndex = theIndexOfTheRangeInTheMiddle;
-      } else if (index > rarr[theIndexOfTheRangeInTheMiddle][1]) {
-        lowerIndex = theIndexOfTheRangeInTheMiddle;
-      } else if (index === rarr[theIndexOfTheRangeInTheMiddle][0] || index === rarr[theIndexOfTheRangeInTheMiddle][1]) {
-        // it's on one of the edges! YAY! found!
-        return opts.inclusiveRangeEnds;
-      } else {
-        // Bob's your uncle - index is within this middle range we calculated.
-        return true;
-      }
+    } else {
+      // Bob's your uncle - index is within this middle range we calculated.
+      return true;
     }
   }
 

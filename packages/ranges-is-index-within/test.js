@@ -35,6 +35,69 @@ test('00.03 - 1st arg can be a natural number string', (t) => {
   })
 })
 
+test('00.04 - ranges contain non-natural numbers', (t) => {
+  t.throws(() => {
+    wthn(1, [[0, 3.1], [4, 5]])
+  })
+})
+
+test('00.05 - second input, ranges, is missing', (t) => {
+  t.throws(() => {
+    wthn(1)
+  })
+})
+
+test('00.05 - second input, ranges, is of a wrong type', (t) => {
+  t.throws(() => {
+    wthn(1, 1)
+  })
+  t.throws(() => {
+    wthn(1, ['1'])
+  })
+  t.throws(() => {
+    wthn(1, ['1, 2'])
+  })
+  t.throws(() => {
+    wthn(1, null)
+  })
+  t.throws(() => {
+    wthn(1, true)
+  })
+  t.throws(() => {
+    wthn(1, 1.5)
+  })
+})
+
+test('00.06 - second input, ranges, is array, but it\'s empty', (t) => {
+  t.throws(() => {
+    wthn(1, [])
+  })
+})
+
+test('00.07 - opts is of a wrong type', (t) => {
+  t.throws(() => {
+    wthn(2, [[1, 3]], 1)
+  })
+  t.throws(() => {
+    wthn(2, [[1, 3]], [])
+  })
+  t.throws(() => {
+    wthn(2, [[1, 3]], true)
+  })
+  t.throws(() => {
+    wthn(2, [[1, 3]], 'a')
+  })
+  t.notThrows(() => {
+    wthn(2, [[1, 3]], {})
+  })
+  t.notThrows(() => {
+    wthn(2, [[1, 3]], null) // can be falsey - will be ignored
+  })
+  t.notThrows(() => {
+    wthn(2, [[1, 3]], undefined) // can be hard-coded literal undefined - will be ignored
+  })
+})
+
 // ==============================
 // 01. One range
 // ==============================
