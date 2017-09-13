@@ -9,6 +9,7 @@
       "ava",
       "clear-cli",
       "coveralls",
+      "eslint-plugin-import",
       "husky",
       "nodemon",
       "nyc"

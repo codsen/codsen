@@ -16,7 +16,7 @@ const isArr = Array.isArray
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-function srt(arrOfRanges, o) {
+function srt(arrOfRanges, originalOptions) {
   // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
     throw new TypeError(`ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(arrOfRanges, null, 4)}`)
@@ -32,7 +32,7 @@ function srt(arrOfRanges, o) {
     strictlyTwoElementsInRangeArrays: false,
   }
   // fill any settings with defaults if missing:
-  const opts = Object.assign({}, defaults, o)
+  const opts = Object.assign({}, defaults, originalOptions)
   // the check:
   checkTypes(opts, defaults, { msg: 'ranges-sort: [THROW_ID_02*]' })
 

@@ -8,7 +8,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
     "prepare": "npm run build",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/ranges-sort",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/codsen/ranges-sort#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.2",
+    "check-types-mini": "^2.5.0",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.1"
   },
@@ -42,7 +42,7 @@
     "coveralls": "*",
     "eslint": "^4.6.1",
     "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-import": "*",
     "husky": "*",
     "nodemon": "*",
     "nyc": "*"

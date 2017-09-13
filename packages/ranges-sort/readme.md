@@ -41,6 +41,20 @@ We are serving code transpiled down to ES5.
 
 ## Rationale
 
+It sorts the array of index arrays, for example:
+
+```js
+[ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
+[ [5, 6], [5, 3], [5, 0] ] => [ [5, 0], [5, 3], [5, 6] ]
+[] => []
+
+[[1, 2], []] => // throws, because there's at least one empty range
+[['a']] => // throws, because range is given as string
+[[1], [2]] => // throws, because one index is not a range
+
+// 3rd argument and onwards are ignored:
+[[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']] => [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']]
+```
 
 ## API
 

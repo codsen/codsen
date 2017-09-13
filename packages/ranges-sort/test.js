@@ -16,7 +16,7 @@ test('00.01 - not array', (t) => {
     srt(true)
   })
   t.throws(() => {
-    srt({ a: true })
+    srt({ e: true })
   })
 })
 
@@ -167,5 +167,57 @@ test('02.01 - does not mutate the input arg', (t) => {
     original,
     [[5, 6], [3, 4], [1, 2]],
     '02.01',
+  )
+})
+
+// ==============================
+// 3. EXAMPLES FROM README
+// ==============================
+
+test('03.01 - readme example #1', (t) => {
+  t.deepEqual(
+    srt([[5, 6], [1, 3]]),
+    [[1, 3], [5, 6]],
+    '03.01',
+  )
+})
+
+test('03.02 - readme example #2', (t) => {
+  t.deepEqual(
+    srt([[5, 6], [5, 3], [5, 0]]),
+    [[5, 0], [5, 3], [5, 6]],
+    '03.02',
+  )
+})
+
+test('03.03 - readme example #3', (t) => {
+  t.throws(() => {
+    srt([[1, 2], []]) // throws, because there's at least one empty range
+  })
+})
+
+test('03.04 - readme example #4', (t) => {
+  t.throws(() => {
+    srt([['a']]) // throws, because range is given as string
+  })
+})
+
+test('03.05 - an extra for readme example #4', (t) => {
+  t.throws(() => {
+    srt([[1, 'a']]) // throws, because range is given as string
+  })
+})
+
+test('03.06 readme example #5', (t) => {
+  t.throws(() => {
+    srt([[1], [2]]) // throws, because one index is not a range
+  })
+})
+
+test('03.07 readme example #6', (t) => {
+  t.deepEqual(
+    srt([[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']]),
+    [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']],
+    '03.07 - 3rd argument and onwards are ignored',
   )
 })
