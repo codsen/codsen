@@ -91,7 +91,6 @@ function wthn(originalIndex, rangesArr, originalOpts) {
     } else if ((index === rarr[0][0]) || (index === rarr[rarr.length - 1][1])) {
       // index we're checking is equal to the outermost edges of a given indexes
       // all depends then on opts.inclusiveRangeEnds
-      console.log('\nQUICK WIN, INDEX EQUALS TO THE TIPS OF THE RANGE')
       return opts.inclusiveRangeEnds
     }
     // 2. if not, then do some work and find out
@@ -110,39 +109,26 @@ function wthn(originalIndex, rangesArr, originalOpts) {
 
     let lowerIndex = 0 // at first, it's zero because we count how many ranges there are, from zero
     let upperIndex = rarr.length - 1 // at first, it's the total number of indexes.
-    console.log(`lowerIndex: ${lowerIndex}`)
-    console.log(`upperIndex: ${upperIndex}`)
 
     while (dontStop && (Math.floor(upperIndex - lowerIndex) > 1)) {
-      console.log('------')
       // pick the middle index.
       const theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2)
-      console.log(`theIndexOfTheRangeInTheMiddle = ${theIndexOfTheRangeInTheMiddle}`)
-      console.log(`> we're talking about range: [${rarr[theIndexOfTheRangeInTheMiddle]}]`)
       if (index < (
         rarr[theIndexOfTheRangeInTheMiddle][0]
       )) {
         upperIndex = theIndexOfTheRangeInTheMiddle
-        console.log('> updated: upperIndex')
-        console.log(`lowerIndex: ${lowerIndex}, rarr = [${rarr[lowerIndex]}]`)
-        console.log(`upperIndex: ${upperIndex}, rarr = [${rarr[upperIndex]}]`)
       } else if (index > (
         rarr[theIndexOfTheRangeInTheMiddle][1]
       )) {
         lowerIndex = theIndexOfTheRangeInTheMiddle
-        console.log('> updated: lowerIndex')
-        console.log(`lowerIndex: ${lowerIndex}, rarr = [${rarr[lowerIndex]}]`)
-        console.log(`upperIndex: ${upperIndex}, rarr = [${rarr[upperIndex]}]`)
       } else if (
         (index === rarr[theIndexOfTheRangeInTheMiddle][0]) ||
         (index === rarr[theIndexOfTheRangeInTheMiddle][1])
       ) {
         // it's on one of the edges! YAY! found!
-        console.log(`> IT'S ON EDGE! returning opts.inclusiveRangeEnds = ${opts.inclusiveRangeEnds}`)
         return opts.inclusiveRangeEnds
       } else {
         // Bob's your uncle - index is within this middle range we calculated.
-        console.log('> TRUE!')
         return true
       }
     }
