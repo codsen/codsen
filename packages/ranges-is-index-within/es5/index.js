@@ -47,11 +47,21 @@ function wthn(originalIndex, rangesArr, originalOpts) {
     }
     return true;
   })) {
-    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_05] Second input argument, rangesArr must consist of arrays which are natural number indexes representing string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(rangesArr[culpritsIndex], null, 4) + ') does not consist of only natural numbers!');
+    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_06] Second input argument, rangesArr must consist of arrays which are natural number indexes representing string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(rangesArr[culpritsIndex], null, 4) + ') does not consist of only natural numbers!');
+  }
+  // check if each of the range has ending larger or equal to beginning
+  if (!rangesArr.every(function (rangeArr, indx) {
+    if (rangeArr[0] > rangeArr[1]) {
+      culpritsIndex = indx;
+      return false;
+    }
+    return true;
+  })) {
+    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_07] The ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(rangesArr[culpritsIndex], null, 4) + ') in the ranges array has beginning of the index bigger than ending! They can be equal but in the backwards order.');
   }
   // - originalOpts
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_06] Options object must be a plain object! Currently its type is: ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to: ' + JSON.stringify(originalOpts, null, 4));
+    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_08] Options object must be a plain object! Currently its type is: ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to: ' + JSON.stringify(originalOpts, null, 4));
   }
 
   //      D E F A U L T S

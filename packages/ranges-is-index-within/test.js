@@ -2458,3 +2458,337 @@ test('02.02 - even more ranges, not inclusive', (t) => {
     '02.02.100',
   )
 })
+
+
+test('02.03 - small ranges - zero', (t) => {
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+      ],
+    ),
+    false,
+    '02.03.01 - no opts',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.03.02 - hardcoded opts defaults',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.03.03 - inclusive',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+        [2, 3],
+      ],
+    ),
+    false,
+    '02.03.04',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+        [1, 3],
+      ],
+    ),
+    false,
+    '02.03.05 - overlap',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 1],
+        [0, 3],
+      ],
+    ),
+    false,
+    '02.03.06 - overlap #2',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 10],
+        [0, 3],
+      ],
+    ),
+    false,
+    '02.03.06 - overlap and wrong order',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 10],
+        [0, 3],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.03.07 - overlap and wrong order - inclusive',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [1, 10],
+        [0, 3],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.03.08 - overlap and wrong order - inclusive',
+  )
+})
+
+test('02.04 - small ranges - one', (t) => {
+  t.is(
+    wthn(
+      1,
+      [
+        [0, 1],
+      ],
+    ),
+    false,
+    '02.04.01 - no opts',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [0, 1],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.04.02 - hardcoded opts defaults',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [0, 1],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.04.03 - inclusive',
+  )
+})
+
+test('02.05 - identical range endings', (t) => {
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 0],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.01',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [1, 1],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.02',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [0, 0],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.05.03',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [1, 1],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.05.04',
+  )
+  t.is(
+    wthn(
+      0,
+      [
+        [1, 1],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    false,
+    '02.05.05 - identical range ends, index under',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    false,
+    '02.05.06 - identical range ends, index above',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.07 - identical range ends, index above',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.08 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.09 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.10 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      1,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.05.11 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.05.12 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      3,
+      [
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    true,
+    '02.05.13 - identical consecutive',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4],
+      ],
+      { inclusiveRangeEnds: true },
+    ),
+    false,
+    '02.05.14 - identical consecutive with gap',
+  )
+  t.is(
+    wthn(
+      2,
+      [
+        [1, 1],
+        [3, 3],
+        [4, 4],
+      ],
+      { inclusiveRangeEnds: false },
+    ),
+    false,
+    '02.05.15 - identical consecutive with gap',
+  )
+})
+
+test('02.06 - out of whack ranges - throw', (t) => {
+  t.throws(() => {
+    wthn(
+      1,
+      [
+        [10, 2],
+      ],
+    )
+  })
+})
