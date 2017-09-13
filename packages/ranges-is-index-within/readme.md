@@ -60,9 +60,9 @@ Imagine you have a natural number (let's call it `index`), for example, `79` and
 ]
 ```
 
-This library would answer the question, is your index within any of the ranges.
+This library would answer the question, is your index `79` within any of the ranges.
 
-In the example above, yes, because it's within a range `[75, 80]`. If you want range ends to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
+In the example above, yes, because `79` is within a range `[75, 80]`. If you want range ends to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
 
 ### API - Input
 
@@ -229,32 +229,32 @@ If you want to contribute, don't hesitate. If it's a code contribution, please s
 
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[npm-img]: https://img.shields.io/npm/v/ranges-sort.svg
-[npm-url]: https://www.npmjs.com/package/ranges-sort
+[npm-img]: https://img.shields.io/npm/v/ranges-is-index-within.svg
+[npm-url]: https://www.npmjs.com/package/ranges-is-index-within
 
-[travis-img]: https://travis-ci.org/codsen/ranges-sort.svg?branch=master
-[travis-url]: https://travis-ci.org/codsen/ranges-sort
+[travis-img]: https://travis-ci.org/codsen/ranges-is-index-within.svg?branch=master
+[travis-url]: https://travis-ci.org/codsen/ranges-is-index-within
 
-[cov-img]: https://coveralls.io/repos/github/codsen/ranges-sort/badge.svg?branch=master
-[cov-url]: https://coveralls.io/github/codsen/ranges-sort?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/ranges-is-index-within/badge.svg?branch=master
+[cov-url]: https://coveralls.io/github/codsen/ranges-is-index-within?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/ranges-sort/badges/score.svg
-[overall-url]: https://www.bithound.io/github/codsen/ranges-sort
+[overall-img]: https://www.bithound.io/github/codsen/ranges-is-index-within/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/ranges-is-index-within
 
-[deps-img]: https://www.bithound.io/github/codsen/ranges-sort/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/codsen/ranges-sort/master/dependencies/npm
+[deps-img]: https://www.bithound.io/github/codsen/ranges-is-index-within/badges/dependencies.svg
+[deps-url]: https://www.bithound.io/github/codsen/ranges-is-index-within/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/ranges-sort/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/ranges-sort/master/dependencies/npm
+[dev-img]: https://www.bithound.io/github/codsen/ranges-is-index-within/badges/devDependencies.svg
+[dev-url]: https://www.bithound.io/github/codsen/ranges-is-index-within/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/ranges-sort.svg
-[downloads-url]: https://npm-stat.com/charts.html?package=ranges-sort
+[downloads-img]: https://img.shields.io/npm/dm/ranges-is-index-within.svg
+[downloads-url]: https://npm-stat.com/charts.html?package=ranges-is-index-within
 
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ranges-sort/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ranges-sort
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/ranges-is-index-within/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/ranges-is-index-within
 
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-sort
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-is-index-within
 
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
-[runkit-url]: https://npm.runkit.com/ranges-sort
+[runkit-url]: https://npm.runkit.com/ranges-is-index-within
