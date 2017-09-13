@@ -62,24 +62,24 @@ Imagine you have a natural number (let's call it `index`), for example, `79` and
 
 This library would answer the question, is your index `79` within any of the ranges.
 
-In the example above, yes, because `79` is within a range `[75, 80]`. If you want range ends to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
+In the example above, yes, because `79` is within range `[75, 80]`. If you want range endings to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
 
 ### API - Input
 
 Input argument   | Type                          | Obligatory? | Description
 -----------------|-------------------------------|-------------|-----------
 `index`          | Natural number                | yes         | The natural number index you're checking
-`rangesArr`      | Array of zero ore more arrays | yes         | Array of ranges, for example, `[ [1, 5], [10, 20] ]`
+`rangesArr`      | Array of zero or more arrays | yes         | Array of ranges, for example, `[ [1, 5], [10, 20] ]`
 `options`        | Plain object                  | no          | Optional options object. See below for its API.
 
-Wrong type will cause `throw`s.
+A wrong type will cause `throw`s.
 
 ### Options object
 
 options object's key    | Type of its value | Default     | Description
 ------------------------|-------------------|-------------|----------------------
 {                       |                   |             |
-`inclusiveRangeEnds`    | Boolean           | `false`     | That is, do we consider `1` or `5` to be within range `[1, 5]`? Default answer is "no", but if set to `true`, answer would be "yes."
+`inclusiveRangeEnds`    | Boolean           | `false`     | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes.
 }                       |                   |             |
 
 Options object is "patrolled" using [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
@@ -201,13 +201,13 @@ wthn(
 
 Let's say we're checking index number `79`. Question: is it within any of the ranges above?
 
-First algorithm would pick the middle range, `[65,70]`. Index (`79`) is apparently above it. Narrow-down the ranges we work on to `[65,70]`-`[125,130]` (6th - 12th counting from zero).
+The first algorithm would pick the middle range, `[65,70]`. Index (`79`) is apparently above it. Narrow-down the ranges we work on to `[65,70]`-`[125,130]` (6th - 12th counting from zero).
 
 Pick the middle range of `[65,70]`-`[125,130]`, which is 9th, `[95,100]`. Index (`79`) is apparently under it. Narrow-down the ranges we work on to `[65,70]`-`[95,100]` (6th - 9th, counting zero-inclusive).
 
 Pick the middle range of `[65,70]`-`[95,100]`, which is `[75,80]`. Bob's your uncle, `79` is within that.
 
-It took three iterations of a `while` loop to measure `13` ranges. Would could have checked it using `Array.some` but it would have been the less efficient the more our index would be towards the end of the array. The most inefficient way would be `for` loop without `break`, checking all ranges even if one was detected.
+It took three iterations of a `while` loop to measure `13` ranges. Would could have checked it using `Array.some` but it would have been the less efficient, the more our index would be towards the end of the array. The most inefficient way would be `for` loop without `break`, checking all ranges even if one was detected.
 
 In our example above, `for` loop with `break` or `Array.some` would have stopped after checking 8th range. Our algorithm did it in 3 checks. That's the meaning of "efficient" I'm talking about.
 
