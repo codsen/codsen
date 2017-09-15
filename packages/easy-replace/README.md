@@ -1,7 +1,5 @@
 # easy-replace
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > string replacement with positive and negative lookahead and lookbehind, no regexes
 
 Emphasis on _no regexes_
@@ -36,8 +34,7 @@ Emphasis on _no regexes_
   - [Negative lookbehind - if you want to match something that is NOT preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
   - [Real life scenario](#real-life-scenario)
 - [Rationale](#rationale)
-- [Testing](#testing)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -46,6 +43,13 @@ Emphasis on _no regexes_
 
 ```bash
 $ npm install --save easy-replace
+```
+
+```js
+// ES6 flavour:
+const er = require('easy-replace')
+// If you want a transpiled ES5 version, consume `/es5` folder contents, like:
+var er = require('easy-replace/es5')
 ```
 
 ## Usage
@@ -97,7 +101,7 @@ String       | String with things replaced
 * **Solution using this library:**:
 
 ```js
-var er = require('easy-replace');
+const er = require('easy-replace');
 
 er(
   'a x c x d',
@@ -366,19 +370,17 @@ Options object is fool-proof — you can omit keys or pass non-existing ones or 
 
 Same with replacment — empty, `null`, `boolean` or `undefined` are accepted and interpreted as a request to delete any results found. There's no replacement, only deletion in such case (see tests 10.1–10.7).
 
-## Testing
+## Testing and Contributing
 
 ```bash
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
 
-## Contributing
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/easy-replace/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, just email me.
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
-
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/easy-replace/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 

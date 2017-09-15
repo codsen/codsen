@@ -2,11 +2,14 @@
   "name": "easy-replace",
   "version": "2.11.0",
   "description": "Replace strings with optional lookarounds, but without regexes",
-  "main": "er.js",
+  "main": "er-es5.js",
   "scripts": {
+    "build": "babel er.js --presets babel-preset-es2015 --out-file er-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint er.js && nyc --reporter=html --reporter=text ava && npm run build",
+    "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/easy-replace",
   "keywords": [
@@ -33,16 +36,21 @@
   },
   "homepage": "https://github.com/codsen/easy-replace#readme",
   "dependencies": {
-    "check-types-mini": "^2.3.0",
-    "lodash.toarray": "*",
-    "lodash.without": "*"
+    "check-types-mini": "^2.5.0",
+    "lodash.toarray": "*"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "*",
-    "standard": "^10.0.2"
+    "nodemon": "^1.12.1",
+    "nyc": "*"
   },
   "ava": {
     "verbose": false

@@ -1,11 +1,13 @@
-'use strict'
+/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: true, array: false}}] */
+/* eslint no-continue: 0 */
 
 const toArray = require('lodash.toarray')
-const without = require('lodash.without')
-// const isNumber = require('lodash.isnumber')
 const checkTypes = require('check-types-mini')
 
 // ===========================
+
+function existy(something) { return something != null }
+function isBool(something) { return typeof something === 'boolean' }
 
 /**
  * astralAwareSearch - searches for strings and returns the findings in an array
@@ -14,17 +16,16 @@ const checkTypes = require('check-types-mini')
  * @param  {String} whatToLookFor  string depicting what we are looking for
  * @return {Array}                 findings array, indexes of each first "letter" found
  */
-function astralAwareSearch (whereToLook, whatToLookFor, opts) {
-  function existy (x) { return x != null }
+function astralAwareSearch(whereToLook, whatToLookFor, opts) {
   if (
     (typeof whereToLook !== 'string') || (whereToLook.length === 0) ||
     (typeof whatToLookFor !== 'string') || (whatToLookFor.length === 0)
   ) {
     return []
   }
-  let foundIndexArray = []
-  let arrWhereToLook = toArray(whereToLook)
-  let arrWhatToLookFor = toArray(whatToLookFor)
+  const foundIndexArray = []
+  const arrWhereToLook = toArray(whereToLook)
+  const arrWhatToLookFor = toArray(whatToLookFor)
   let found
 
   for (let i = 0; i < arrWhereToLook.length; i++) {
@@ -48,20 +49,18 @@ function astralAwareSearch (whereToLook, whatToLookFor, opts) {
           foundIndexArray.push(i)
         }
       }
-    } else {
-      if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
-        found = true
-        // this means first character matches
-        // match the rest:
-        for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
-          if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
-            found = false
-            break
-          }
+    } else if (arrWhereToLook[i] === arrWhatToLookFor[0]) {
+      found = true
+      // this means first character matches
+      // match the rest:
+      for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+        if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
+          found = false
+          break
         }
-        if (found) {
-          foundIndexArray.push(i)
-        }
+      }
+      if (found) {
+        foundIndexArray.push(i)
       }
     }
   }
@@ -78,66 +77,60 @@ function astralAwareSearch (whereToLook, whatToLookFor, opts) {
  * @param  {whatever} incoming     can be anything
  * @return {String/Array}          string or array of strings
  */
-function stringise (incoming) {
-  if ((incoming === undefined) || (incoming === null) || (typeof incoming === 'boolean')) {
+function stringise(incoming) {
+  if (!existy(incoming) || isBool(incoming)) {
     return ['']
   } else if (Array.isArray(incoming)) {
-    incoming.forEach(function (elem, i) {
-      if (elem === undefined || elem === null || typeof elem === 'boolean') {
-        incoming[i] = ''
-      } else {
-        incoming[i] = String(incoming[i])
-      }
-    })
-    // check if not incoming !== [''] already
-    if ((incoming.length !== 1) && (incoming[0] !== '')) {
-      incoming = without(incoming, '')
-    }
-  } else {
-    let tempArr = []
-    tempArr.push(String(incoming))
-    incoming = tempArr
+    return incoming
+      .filter(el => existy(el) && !isBool(el))
+      .map(el => String(el))
+      .filter(el => el.length > 0)
   }
-  return incoming
+  return [String(incoming)]
 }
 
 // ===========================
 
-function iterateLeft (elem, arrSource, foundBeginningIndex, i) {
+function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
   let matched = true
-  let charsArray = toArray(elem)
+  const charsArray = toArray(elem)
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
-      if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()) {
+      if (
+        charsArray[i2].toLowerCase() !==
+        arrSource[(foundBeginningIndex - toArray(elem).length) + i2].toLowerCase()
+      ) {
         matched = false
         break
       }
-    } else {
-      if (charsArray[i2] !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
-        matched = false
-        break
-      }
+    } else if (
+      charsArray[i2] !==
+      arrSource[(foundBeginningIndex - toArray(elem).length) + i2]
+    ) {
+      matched = false
+      break
     }
   }
   return matched
 }
 
-function iterateRight (elem, arrSource, foundEndingIndex, i) {
+function iterateRight(elem, arrSource, foundEndingIndex, i) {
   let matched = true
-  let charsArray = toArray(elem)
+  const charsArray = toArray(elem)
   for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
-      if (charsArray[i2].toLowerCase() !== arrSource[foundEndingIndex + i2].toLowerCase()) {
+      if (
+        charsArray[i2].toLowerCase() !==
+        arrSource[foundEndingIndex + i2].toLowerCase()
+      ) {
         matched = false
         break
       }
-    } else {
-      if (charsArray[i2] !== arrSource[foundEndingIndex + i2]) {
-        matched = false
-        break
-      }
+    } else if (charsArray[i2] !== arrSource[foundEndingIndex + i2]) {
+      matched = false
+      break
     }
   }
   return matched
@@ -150,12 +143,12 @@ function iterateRight (elem, arrSource, foundEndingIndex, i) {
 //
 //                     .=O=.
 
-// ===========================
-// M O D U L E . E X P O R T S
-// ===========================
+// =========================
+// M A I N   F U N C T I O N
+// =========================
 
-module.exports = function (source, options, replacement) {
-  let defaults = {
+function er(originalSource, options, originalReplacement) {
+  const defaults = {
     i: {
       leftOutsideNot: false,
       leftOutside: false,
@@ -163,11 +156,11 @@ module.exports = function (source, options, replacement) {
       searchFor: false,
       rightMaybe: false,
       rightOutside: false,
-      rightOutsideNot: false
-    }
+      rightOutsideNot: false,
+    },
   }
-  let o = Object.assign({}, defaults, options)
-  checkTypes(o, defaults, {
+  const opts = Object.assign({}, defaults, options)
+  checkTypes(opts, defaults, {
     schema: {
       leftOutsideNot: ['string', 'number', 'null', 'undefined'],
       leftOutside: ['string', 'number', 'null', 'undefined'],
@@ -175,64 +168,74 @@ module.exports = function (source, options, replacement) {
       searchFor: ['string', 'number'],
       rightMaybe: ['string', 'number', 'null', 'undefined'],
       rightOutside: ['string', 'number', 'null', 'undefined'],
-      rightOutsideNot: ['string', 'number', 'null', 'undefined']
+      rightOutsideNot: ['string', 'number', 'null', 'undefined'],
     },
     msg: 'easy-replace/module.exports():',
     optsVarName: 'options',
     acceptArrays: true,
-    acceptArraysIgnore: ['i']
+    acceptArraysIgnore: ['i'],
   })
 
   // enforce the peace and order:
-  source = stringise(source)
-  o.leftOutsideNot = stringise(o.leftOutsideNot)
-  o.leftOutside = stringise(o.leftOutside)
-  o.leftMaybe = stringise(o.leftMaybe)
-  o.searchFor = String(o.searchFor)
-  o.rightMaybe = stringise(o.rightMaybe)
-  o.rightOutside = stringise(o.rightOutside)
-  o.rightOutsideNot = stringise(o.rightOutsideNot)
-  replacement = stringise(replacement)
+  const source = stringise(originalSource)
+  opts.leftOutsideNot = stringise(opts.leftOutsideNot)
+  opts.leftOutside = stringise(opts.leftOutside)
+  opts.leftMaybe = stringise(opts.leftMaybe)
+  opts.searchFor = String(opts.searchFor)
+  opts.rightMaybe = stringise(opts.rightMaybe)
+  opts.rightOutside = stringise(opts.rightOutside)
+  opts.rightOutsideNot = stringise(opts.rightOutsideNot)
+  const replacement = stringise(originalReplacement)
 
-  let arrSource = toArray(source[0])
+  const arrSource = toArray(source[0])
   let foundBeginningIndex
   let foundEndingIndex
   let matched
   let found
-  let replacementRecipe = []
+  const replacementRecipe = []
   let result = ''
 
   //  T H E   L O O P
 
-  for (let oneOfFoundIndexes of astralAwareSearch(source[0], o.searchFor, {i: o.i.searchFor})) {
+  const allResults = astralAwareSearch(source[0], opts.searchFor, { i: opts.i.searchFor })
+
+  for (let resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
+    const oneOfFoundIndexes = allResults[resIndex]
+
     // oneOfFoundIndexes is the index of starting index of found
-    // the principle of replacement is after finding the searchFor string, the boundaries optionally expand. That's left/right Maybe's from the options object. When done, the outsides are checked, first positive (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
-    // that's the plan.
-    //
+    // the principle of replacement is after finding the searchFor string,
+    // the boundaries optionally expand. That's left/right Maybe's from the
+    // options object. When done, the outsides are checked, first positive
+    // (leftOutside, rightOutside), then negative (leftOutsideNot, rightOutsideNot).
+    // That's the plan.
+
     foundBeginningIndex = oneOfFoundIndexes
-    foundEndingIndex = oneOfFoundIndexes + toArray(o.searchFor).length
+    foundEndingIndex = oneOfFoundIndexes + toArray(opts.searchFor).length
     //
     // ===================== leftMaybe =====================
     // commence with maybe's
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
-    if (o.leftMaybe.length > 0) {
-      for (let i = 0, len = o.leftMaybe.length; i < len; i++) {
+    if (opts.leftMaybe.length > 0) {
+      for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true
-        let splitLeftMaybe = toArray(o.leftMaybe[i])
-        for (let i2 = 0, len = splitLeftMaybe.length; i2 < len; i2++) {
+        const splitLeftMaybe = toArray(opts.leftMaybe[i])
+        for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
-          if (o.i.leftMaybe) {
-            if (splitLeftMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2].toLowerCase()) {
+          if (opts.i.leftMaybe) {
+            if (
+              splitLeftMaybe[i2].toLowerCase() !==
+              arrSource[(oneOfFoundIndexes - splitLeftMaybe.length) + i2].toLowerCase()
+            ) {
               matched = false
               break
             }
-          } else {
-            if (splitLeftMaybe[i2] !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2]) {
-              matched = false
-              break
-            }
+          } else if (
+            splitLeftMaybe[i2] !== arrSource[(oneOfFoundIndexes - splitLeftMaybe.length) + i2]
+          ) {
+            matched = false
+            break
           }
         }
         if (matched && (oneOfFoundIndexes - splitLeftMaybe.length) < foundBeginningIndex) {
@@ -241,36 +244,56 @@ module.exports = function (source, options, replacement) {
       }
     }
     // ===================== rightMaybe =====================
-    if (o.rightMaybe.length > 0) {
-      for (let i = 0, len = o.rightMaybe.length; i < len; i++) {
+    if (opts.rightMaybe.length > 0) {
+      for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true
-        let splitRightMaybe = toArray(o.rightMaybe[i])
-        for (let i2 = 0, len = splitRightMaybe.length; i2 < len; i2++) {
+        const splitRightMaybe = toArray(opts.rightMaybe[i])
+        for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
-          if (o.i.rightMaybe) {
-            if (splitRightMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes + toArray(o.searchFor).length + i2].toLowerCase()) {
+          if (opts.i.rightMaybe) {
+            if (
+              splitRightMaybe[i2].toLowerCase() !==
+              arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + i2].toLowerCase()
+            ) {
               matched = false
               break
             }
-          } else {
-            if (splitRightMaybe[i2] !== arrSource[oneOfFoundIndexes + toArray(o.searchFor).length + i2]) {
-              matched = false
-              break
-            }
+          } else if (
+            splitRightMaybe[i2] !==
+            arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + i2]
+          ) {
+            matched = false
+            break
           }
         }
-        if (matched && (oneOfFoundIndexes + toArray(o.searchFor).length + splitRightMaybe.length) > foundEndingIndex) {
-          foundEndingIndex = oneOfFoundIndexes + toArray(o.searchFor).length + splitRightMaybe.length
+        if (
+          matched &&
+          (
+            foundEndingIndex < (
+              oneOfFoundIndexes +
+              toArray(opts.searchFor).length +
+              splitRightMaybe.length
+            )
+          )
+        ) {
+          foundEndingIndex = oneOfFoundIndexes +
+            toArray(opts.searchFor).length +
+            splitRightMaybe.length
         }
       }
     }
     // ===================== leftOutside =====================
-    if (o.leftOutside[0] !== '') {
+    if (opts.leftOutside[0] !== '') {
       found = false
-      for (let i = 0, len = o.leftOutside.length; i < len; i++) {
+      for (let i = 0, len = opts.leftOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(o.leftOutside[i], arrSource, foundBeginningIndex, o.i.leftOutside)
+        matched = iterateLeft(
+          opts.leftOutside[i],
+          arrSource,
+          foundBeginningIndex,
+          opts.i.leftOutside,
+        )
         if (matched) {
           found = true
         }
@@ -280,11 +303,16 @@ module.exports = function (source, options, replacement) {
       }
     }
     // ===================== rightOutside =====================
-    if (o.rightOutside[0] !== '') {
+    if (opts.rightOutside[0] !== '') {
       found = false
-      for (let i = 0, len = o.rightOutside.length; i < len; i++) {
+      for (let i = 0, len = opts.rightOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(o.rightOutside[i], arrSource, foundEndingIndex, o.i.rightOutside)
+        matched = iterateRight(
+          opts.rightOutside[i],
+          arrSource,
+          foundEndingIndex,
+          opts.i.rightOutside,
+        )
         if (matched) {
           found = true
         }
@@ -294,10 +322,15 @@ module.exports = function (source, options, replacement) {
       }
     }
     // ===================== leftOutsideNot =====================
-    if (o.leftOutsideNot[0] !== '') {
-      for (let i = 0, len = o.leftOutsideNot.length; i < len; i++) {
+    if (opts.leftOutsideNot[0] !== '') {
+      for (let i = 0, len = opts.leftOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(o.leftOutsideNot[i], arrSource, foundBeginningIndex, o.i.leftOutsideNot)
+        matched = iterateLeft(
+          opts.leftOutsideNot[i],
+          arrSource,
+          foundBeginningIndex,
+          opts.i.leftOutsideNot,
+        )
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
@@ -309,10 +342,15 @@ module.exports = function (source, options, replacement) {
       }
     }
     // ===================== rightOutsideNot =====================
-    if (o.rightOutsideNot[0] !== '') {
-      for (let i = 0, len = o.rightOutsideNot.length; i < len; i++) {
+    if (opts.rightOutsideNot[0] !== '') {
+      for (let i = 0, len = opts.rightOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(o.rightOutsideNot[i], arrSource, foundEndingIndex, o.i.rightOutsideNot)
+        matched = iterateRight(
+          opts.rightOutsideNot[i],
+          arrSource,
+          foundEndingIndex,
+          opts.i.rightOutsideNot,
+        )
         if (matched) {
           foundBeginningIndex = -1
           foundEndingIndex = -1
@@ -325,20 +363,22 @@ module.exports = function (source, options, replacement) {
     }
     // ===================== the rest =====================
     replacementRecipe.push([foundBeginningIndex, foundEndingIndex])
-    // TODO - set the array-slices here
   }
   // =====
   // first we need to remove any overlaps in the recipe, cases like:
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
   if (replacementRecipe.length > 0) {
-    replacementRecipe.forEach(function (elem, i) {
+    replacementRecipe.forEach((elem, i) => {
       // iterate through all replacement-recipe-array's elements:
-      if ((replacementRecipe[i + 1] !== undefined) && (replacementRecipe[i][1] > replacementRecipe[i + 1][0])) {
+      if (
+        (replacementRecipe[i + 1] !== undefined) &&
+        (replacementRecipe[i][1] > replacementRecipe[i + 1][0])
+      ) {
         replacementRecipe[i + 1][0] = replacementRecipe[i][1]
       }
     })
     // iterate the recipe array again, cleaning up elements like [12,12]
-    replacementRecipe.forEach(function (elem, i) {
+    replacementRecipe.forEach((elem, i) => {
       if (elem[0] === elem[1]) {
         replacementRecipe.splice(i, 1)
       }
@@ -351,18 +391,21 @@ module.exports = function (source, options, replacement) {
   // iterate the recipe array and perform the replacement:
   // first, if replacements don't start with 0, attach this part onto result let:
   if ((replacementRecipe.length > 0) && (replacementRecipe[0][0] !== 0)) {
-    result = result + arrSource.slice(0, replacementRecipe[0][0]).join('')
+    result += arrSource.slice(0, replacementRecipe[0][0]).join('')
   }
-  replacementRecipe.forEach(function (elem, i) {
+  replacementRecipe.forEach((elem, i) => {
     // first position is replacement string:
     result += replacement.join('')
     if (replacementRecipe[i + 1] !== undefined) {
       // if next element exists, add content between current and next finding
       result += arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join('')
     } else {
-      // if this is the last element in the replacement recipe array, add remainder of the string after last replacement and the end:
+      // if this is the last element in the replacement recipe array, add
+      // remainder of the string after last replacement and the end:
       result += arrSource.slice(replacementRecipe[i][1]).join('')
     }
   })
   return result
 }
+
+module.exports = er
