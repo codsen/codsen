@@ -46,7 +46,6 @@ $ npm install --save easy-replace
 ```
 
 ```js
-// ES6 flavour:
 const er = require('easy-replace')
 ```
 
