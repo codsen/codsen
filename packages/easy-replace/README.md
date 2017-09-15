@@ -48,9 +48,9 @@ $ npm install --save easy-replace
 ```js
 // ES6 flavour:
 const er = require('easy-replace')
-// If you want a transpiled ES5 version, consume `/es5` folder contents, like:
-var er = require('easy-replace/es5')
 ```
+
+A transpiled code is served. Original source is in root, `./er.js`, it's transpiled and served from `./er-es5.js`.
 
 ## Usage
 
