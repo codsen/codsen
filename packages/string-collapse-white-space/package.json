@@ -2,13 +2,13 @@
   "name": "string-collapse-white-space",
   "version": "2.1.0",
   "description": "Efficient collapsing of white space within strings with optional trimming",
-  "main": "es5/index.js",
+  "main": "index-es5",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-dir es5",
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "prepublish": "npm run build",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint detergent.js util.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
   },
   "repository": "codsen/string-collapse-white-space",
   "keywords": [
@@ -32,29 +32,27 @@
   },
   "homepage": "https://github.com/codsen/string-collapse-white-space#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.0",
+    "check-types-mini": "^2.5.0",
     "lodash.isplainobject": "*",
     "string-replace-slices-array": "^1.3.1",
-    "string-slices-array-push": "^1.3.3"
+    "string-slices-array-push": "^1.4.0"
   },
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.7.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "*",
-    "standard": "^10.0.3"
+    "nyc": "*"
   },
   "ava": {
     "verbose": true
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "standard": {
-    "ignore": [
-      "es5"
-    ]
   }
 }

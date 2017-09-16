@@ -7,101 +7,96 @@ var isObj = require('lodash.isplainobject');
 var replaceSlicesArr = require('string-replace-slices-array/es5');
 var Slices = require('string-slices-array-push/es5');
 
-function collapse(str, opts) {
+function collapse(str, originalOpts) {
   if (typeof str !== 'string') {
     throw new Error('string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
   }
-  if (opts !== undefined && opts !== null && !isObj(opts)) {
-    throw new Error('string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to:\n' + JSON.stringify(str, null, 4));
+  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+    throw new Error('string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to:\n' + JSON.stringify(originalOpts, null, 4));
   }
   if (str.length === 0) {
     return '';
   }
 
-  var DEBUG = 0;
   var finalIndexesToDelete = new Slices();
 
   // declare defaults, so we can enforce types later:
   var defaults = {
     trimStart: true, // otherwise, leading whitespace will be collapsed to a single space
-    trimEnd: true // otherwise, trailing whitespace will be collapsed to a single space
+    trimEnd: true, // otherwise, trailing whitespace will be collapsed to a single space
+    trimLines: false, // activates trim per-line basis
+    trimnbsp: false // non-breaking spaces are trimmed too
 
 
     // fill any settings with defaults if missing:
-  };opts = Object.assign({}, defaults, opts);
+  };var opts = Object.assign({}, defaults, originalOpts);
 
   // the check:
   checkTypes(opts, defaults, { msg: 'string-collapse-white-space/collapse(): [THROW_ID_03*]' });
 
   // -----------------------------------------------------------------------------
 
-  var res;
+  var res = void 0;
   var spacesEndAt = null;
   var whiteSpaceEndsAt = null;
+  var lineWhiteSpaceEndsAt = null;
+  var endingOfTheLine = false;
 
   // looping backwards for better efficiency
   for (var i = str.length; i--;) {
-    if (DEBUG) {
-      console.log('------------------------------- str[' + i + '] = ' + (str[i].trim() !== '' ? str[i] : 'space'));
-    }
-
     // space clauses
     if (str[i] === ' ') {
       // it's a space character
       if (spacesEndAt === null) {
         spacesEndAt = i;
-        if (DEBUG) {
-          console.log('START spacesEndAt = ' + JSON.stringify(spacesEndAt, null, 4));
-        }
       }
-    } else {
+    } else if (spacesEndAt !== null) {
       // it's not a space character
       // if we have a sequence of spaces, this character terminates that sequence
-      if (spacesEndAt !== null) {
-        if (i + 1 !== spacesEndAt) {
-          if (DEBUG) {
-            console.log('!!! adding range (' + (i + 1) + ',' + spacesEndAt + ')');
-          }
-          finalIndexesToDelete.add(i + 1, spacesEndAt);
-        }
-        if (DEBUG) {
-          console.log('STOP spacesEndAt');
-        }
-        spacesEndAt = null;
+      if (i + 1 !== spacesEndAt) {
+        finalIndexesToDelete.add(i + 1, spacesEndAt);
       }
+      spacesEndAt = null;
     }
 
     // white space clauses
-    if (str[i].trim() === '' && str[i] !== '\xa0') {
+    if (str[i].trim() === '' && (!opts.trimnbsp && str[i] !== '\xa0' || opts.trimnbsp)) {
       // it's some sort of white space character, but not a non-breaking space
       if (whiteSpaceEndsAt === null) {
         whiteSpaceEndsAt = i;
-        if (DEBUG) {
-          console.log('START whiteSpaceEndsAt = ' + JSON.stringify(whiteSpaceEndsAt, null, 4));
+      }
+      // line trimming:
+      if (str[i] !== '\n' && str[i] !== '\r' && lineWhiteSpaceEndsAt === null) {
+        lineWhiteSpaceEndsAt = i + 1;
+      }
+      if (str[i] === '\n' || str[i] === '\r') {
+        if (lineWhiteSpaceEndsAt !== null) {
+          if (opts.trimLines) {
+            finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+          }
+          lineWhiteSpaceEndsAt = null;
+        }
+        if (str[i - 1] !== '\n' && str[i - 1] !== '\r') {
+          lineWhiteSpaceEndsAt = i;
+          endingOfTheLine = true;
         }
       }
     } else {
       // it's not white space character
       if (whiteSpaceEndsAt !== null) {
-        if (DEBUG) {
-          console.log('\n* whiteSpaceEndsAt = ' + JSON.stringify(whiteSpaceEndsAt, null, 4));
-        }
-        if (DEBUG) {
-          console.log('* str.length - 1 = ' + JSON.stringify(str.length - 1, null, 4));
-        }
-        if (DEBUG) {
-          console.log('');
-        }
         if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
-          if (DEBUG) {
-            console.log('!!!* adding range (' + (i + 1) + ',' + (whiteSpaceEndsAt + 1) + ')');
-          }
           finalIndexesToDelete.add(i + 1, whiteSpaceEndsAt + 1);
         }
-        if (DEBUG) {
-          console.log('STOP whiteSpaceEndsAt');
-        }
         whiteSpaceEndsAt = null;
+      }
+
+      // encountered letter resets line trim counters:
+      if (lineWhiteSpaceEndsAt !== null) {
+        if (endingOfTheLine && opts.trimLines) {
+          endingOfTheLine = false; // apply either way
+          finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
+        }
+        lineWhiteSpaceEndsAt = null;
       }
     }
 
@@ -110,21 +105,11 @@ function collapse(str, opts) {
     // therefore it's less code if we put zero index clauses here.
     if (i === 0) {
       if (whiteSpaceEndsAt !== null && opts.trimStart) {
-        if (DEBUG) {
-          console.log('2!!! adding range (0,' + whiteSpaceEndsAt + ')');
-        }
         finalIndexesToDelete.add(0, whiteSpaceEndsAt + 1);
       } else if (spacesEndAt !== null) {
-        if (DEBUG) {
-          console.log('1!!! adding range (' + (i + 1) + ',' + (spacesEndAt + 1) + ')');
-        }
         finalIndexesToDelete.add(i + 1, spacesEndAt + 1);
       }
     }
-  }
-
-  if (DEBUG) {
-    console.log('\n\n====\n\n\nfinalIndexesToDelete.current() = ' + JSON.stringify(finalIndexesToDelete.current(), null, 4));
   }
 
   // apply the ranges
@@ -132,13 +117,9 @@ function collapse(str, opts) {
     res = replaceSlicesArr(str, finalIndexesToDelete.current());
     finalIndexesToDelete.wipe();
     finalIndexesToDelete = undefined; // putting up our class for garbage collector
-    if (DEBUG) {
-      console.log('\n\n\nres = >>>' + JSON.stringify(res, null, 4) + '<<<\n\n\n');
-    }
     return res;
-  } else {
-    return str;
   }
+  return str;
 }
 
 module.exports = collapse;

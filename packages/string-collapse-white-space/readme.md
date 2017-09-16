@@ -28,7 +28,7 @@
   - [Optional Options Object's API:](#optional-options-objects-api)
 - [Usage](#usage)
 - [Practical use](#practical-use)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -39,7 +39,7 @@
 $ npm i string-collapse-white-space
 ```
 
-Transpiled ES5 code (`es5/index.js`) is served. Source (`./index.js`) is in ES6.
+Transpiled code is served.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -64,7 +64,9 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 ```js
 {
   trimStart: true,
-  trimEnd: true
+  trimEnd: true,
+  trimLines: false,
+  trimnbsp: false
 }
 ```
 
@@ -75,6 +77,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 {                              |          |             |             |
 `trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.
 `trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be just collapsed.
+`trimLines`                    | Boolean  | no          | `false`     | if `true`, every line will be trimmed
+`trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes")
 }                              |          |             |             |
 
 **[⬆ &nbsp;back to top](#)**
@@ -98,11 +102,17 @@ I'm going to use it first in [Detergent](https://github.com/codsen/detergent), b
 
 **[⬆ &nbsp;back to top](#)**
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-collapse-white-space/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-collapse-white-space/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 
