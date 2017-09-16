@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Efficient collapsing of white space within strings with optional trimming",
   "main": "index-es5",
   "scripts": {
