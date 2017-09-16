@@ -24,9 +24,9 @@
 
 - [Install](#install)
 - [Idea](#idea)
+- [Usage](#usage)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
-- [Usage](#usage)
 - [Practical use](#practical-use)
 - [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
@@ -45,7 +45,37 @@ Transpiled code is served.
 
 ## Idea
 
-Traverse the string once, gather a list of ranges indicating white space indexes, calculate the result once and return it.
+Traverse the string once, gather a list of ranges indicating white space indexes, delete them all in one go and return the new string.
+
+This library traverses the string only once and perform the deletion only once. It recognises Windows, Unix and Linux line endings.
+
+**[⬆ &nbsp;back to top](#)**
+
+## Usage
+
+```js
+const collapse = require('string-collapse-white-space')
+
+let res1 = collapse('  aaa     bbb    ccc   dddd  ')
+console.log('res1 = ' + res1)
+// => "aaa bbb ccc dddd"
+
+let res2 = collapse('   \t\t\t   aaa   \t\t\t   ')
+console.log('res2 = ' + res2)
+// => 'aaa'
+
+let res3 = collapse('   aaa   bbb  \n    ccc   ddd   ', { trimLines: true })
+console.log('res3 = ' + res3)
+// => 'aaa bbb\nccc ddd'
+
+// \xa0 is an unencoded non-breaking space:
+let res4 = collapse(
+  '     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ',
+  { trimLines: true, trimnbsp: true }
+)
+console.log('res4 = ' + res4)
+// => 'aaa bbb\nccc ddd'
+```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -80,17 +110,6 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `trimLines`                    | Boolean  | no          | `false`     | if `true`, every line will be trimmed
 `trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes")
 }                              |          |             |             |
-
-**[⬆ &nbsp;back to top](#)**
-
-## Usage
-
-```js
-const collapse = require('string-collapse-white-space')
-let res = collapse('  aaa     bbb    ccc   dddd  ')
-console.log('res = ' + JSON.stringify(res1, null, 4))
-// => "aaa bbb ccc dddd"
-```
 
 **[⬆ &nbsp;back to top](#)**
 
