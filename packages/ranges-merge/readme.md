@@ -39,9 +39,9 @@ If, after sorting, two ranges in the vicinity have the same edge value (like `2`
 
 ```js
 const rangesMerge = require('ranges-merge')
-rangesMerge('[
+rangesMerge([
   [1, 2], [2, 3], [9, 10]
-]')
+])
 // => [
 //   [1, 3], [9, 10]
 // ]
@@ -52,9 +52,9 @@ If ranges overlap, merge them too:
 
 ```js
 const rangesMerge = require('ranges-merge')
-rangesMerge('[
+rangesMerge([
   [1, 5], [2, 10]
-]')
+])
 // => [
 //   [1, 10]
 // ]
