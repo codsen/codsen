@@ -1,19 +1,19 @@
-'use strict'
-var isArray = Array.isArray
-var isPlainObject = require('lodash.isplainobject')
-var isString = something => typeof something === 'string'
+/* eslint consistent-return: 0 */
 
-function nonEmpty (input) {
+const { isArray } = Array
+const isPlainObject = require('lodash.isplainobject')
+
+const isString = something => typeof something === 'string'
+
+function nonEmpty(input) {
   if (arguments.length === 0 || input === undefined) {
     return
-  }
-  if (isArray(input) || isString(input)) {
+  } else if (isArray(input) || isString(input)) {
     return input.length > 0
   } else if (isPlainObject(input)) {
     return Object.keys(input).length > 0
-  } else {
-    return false
   }
+  return false
 }
 
 module.exports = nonEmpty

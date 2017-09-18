@@ -21,15 +21,29 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Purpose](#purpose)
 - [Install](#install)
 - [Use](#use)
+- [Purpose](#purpose)
 - [API](#api)
-- [Testing](#testing)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Install
+
+```bash
+$ npm install --save util-nonempty
+```
+
+You'll get a transpiled code, served from `index-es5.js`. The original (`index.js`) is in ES6.
+
+## Use
+
+```js
+var nonEmpty = require('util-nonempty')
+console.log(nonEmpty('a'))
+```
 
 ## Purpose
 
@@ -64,19 +78,6 @@ If you want to check _non-emptiness_ of complex nested trees of objects, arrays 
 * If you want to check for strict emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
 * If your "emptiness" definition is wider — anything (plain object, array or string or a mix of thereof) that contains only whitespace (spaces, line breaks, tabs and so on), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
 
-## Install
-
-```bash
-$ npm install --save util-nonempty
-```
-
-## Use
-
-```js
-var nonEmpty = require('util-nonempty')
-console.log(nonEmpty('a'))
-```
-
 ## API
 
 ```js
@@ -86,19 +87,17 @@ nonEmpty (
 // => Boolean|undefined
 ```
 
-## Testing
+## Testing and Contributing
 
 ```bash
 $ npm test
 ```
 
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. I aim to have 100% unit test coverage.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
 
-## Contributing
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
-
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 
