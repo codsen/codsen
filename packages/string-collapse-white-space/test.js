@@ -1,6 +1,6 @@
 import test from 'ava'
 
-const collapse = require('./index.js')
+const collapse = require('./index-es5.js')
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
