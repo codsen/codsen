@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2017-09-18
+### Changed
+- ✨ Separated the merging function into a separate library, [ranges-merge](https://github.com/codsen/ranges-merge).
+
 ## [1.4.0] - 2017-09-12
 ### Added
 - ✨ Separated ranges sorting function into a [separate library](https://github.com/codsen/ranges-sort) because it will be needed in [Detergent](https://github.com/codsen/detergent).
@@ -25,6 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/codsen/string-slices-array-push/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/codsen/string-slices-array-push/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/string-slices-array-push/compare/v1.1.0...v1.2.0

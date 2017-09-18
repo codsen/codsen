@@ -7,13 +7,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var isInt = require('is-natural-number');
 var isNumStr = require('is-natural-number-string');
 var ordinal = require('ordinal-number-suffix');
-
-var _require = require('./util'),
-    mergeRanges = _require.mergeRanges;
+var mergeRanges = require('ranges-merge');
 
 function mandatory(i) {
   throw new Error('string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ' + i + ordinal(i) + ' parameter');
 }
+
+// -----------------------------------------------------------------------------
 
 var Slices = function () {
   function Slices() {

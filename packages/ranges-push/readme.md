@@ -172,9 +172,7 @@ If something doesn't work as you wished or you don't understand the inner workin
 
 Also, if you miss a feature, request it by [raising](https://github.com/codsen/string-slices-array-push/issues) an issue as well.
 
-I know it never happens but if you would ever forked it and worked on a new feature, before filing a pull request, please make sure code is following the rules set in `.eslintrc` and `npm run test` passes fine. It's basically an `airbnb-base` rules preset of `eslint` with two exceptions^:
-
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+I know it never happens but if you would ever forked it and worked on a new feature, before filing a pull request, please make sure code is following the rules set in `.eslintrc` and `npm run test` passes fine. It's basically an `airbnb-base` rules preset of `eslint` with few exceptions: 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`.
 
 I dropped JS Standard because it misses many useful ESLint rules and has been neglected by its maintainers, using half-year-old version of ESLint.
 

@@ -7,16 +7,15 @@
   "dependencies": {
     "mute": [
       "ava",
+      "clear-cli",
       "coveralls",
       "husky",
       "is-natural-number",
       "is-natural-number-string",
-      "nodemon",
       "nyc"
     ]
   },
   "test": [
-    "test-util.js",
     "test.js"
   ]
 }

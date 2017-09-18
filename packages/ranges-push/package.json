@@ -2,14 +2,13 @@
   "name": "string-slices-array-push",
   "version": "1.4.0",
   "description": "Manage the array of slices referencing the index ranges within the string",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
-    "build": "babel index.js util.js --presets babel-preset-es2015 --out-dir es5",
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
     "prepare": "npm run build",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js util.js test-util.js && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
   },
   "repository": "codsen/string-slices-array-push",
   "keywords": [
@@ -38,24 +37,24 @@
     "is-natural-number": "*",
     "is-natural-number-string": "*",
     "ordinal-number-suffix": "^0.1.1",
-    "ranges-sort": "^2.0.0"
+    "ranges-merge": "^1.0.2"
   },
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
     "coveralls": "*",
-    "eslint": "^4.6.1",
+    "eslint": "^4.7.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nodemon": "*",
     "nyc": "*"
   },
   "ava": {
     "verbose": true
   },
   "engines": {
-    "node": ">=5.11.0"
+    "node": ">=0.10.0"
   }
 }
