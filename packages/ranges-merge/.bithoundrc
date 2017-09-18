@@ -1,0 +1,19 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "clear-cli",
+      "coveralls",
+      "husky",
+      "nyc"
+    ]
+  },
+  "test": [
+    "test.js"
+  ]
+}
