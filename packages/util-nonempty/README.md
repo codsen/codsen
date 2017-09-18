@@ -38,12 +38,16 @@ $ npm install --save util-nonempty
 
 You'll get a transpiled code, served from `index-es5.js`. The original (`index.js`) is in ES6.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Use
 
 ```js
 var nonEmpty = require('util-nonempty')
 console.log(nonEmpty('a'))
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Purpose
 
@@ -78,6 +82,8 @@ If you want to check _non-emptiness_ of complex nested trees of objects, arrays 
 * If you want to check for strict emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
 * If your "emptiness" definition is wider — anything (plain object, array or string or a mix of thereof) that contains only whitespace (spaces, line breaks, tabs and so on), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 ```js
@@ -86,6 +92,8 @@ nonEmpty (
 );
 // => Boolean|undefined
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Testing and Contributing
 
@@ -98,6 +106,8 @@ If you want to contribute, don't hesitate. If it's a code contribution, please s
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
 
 <small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
