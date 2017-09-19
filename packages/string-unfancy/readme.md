@@ -5,8 +5,6 @@
 
 # string-unfancy
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Replace all fancy dashes, quotes, etc. with their simpler equivalents
 
 [![Link to npm page][npm-img]][npm-url]
@@ -31,7 +29,7 @@
 - [Usage](#usage)
 - [API](#api)
 - [Example - treating the image alt attributes - Gulp and stream-tapping](#example---treating-the-image-alt-attributes---gulp-and-stream-tapping)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -43,6 +41,8 @@ $ npm i -S string-unfancy
 ```
 
 > or, if you work with image `alt` attributes, check out [html-img-alt](https://github.com/codsen/html-img-alt) which uses `string-unfancy`.
+
+Code is served transpiled using Babel. Source is in ES6 but you'll consume transpiled ES5.
 
 ## Idea
 
@@ -113,11 +113,17 @@ As you see above, we're running an [inline function](https://developer.mozilla.o
 
 And that's it! All image `alt` attributes will lose their HTML encoding and will have their fancy special characters converted to simple ASCII letter equivalents.
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-unfancy/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-unfancy/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 

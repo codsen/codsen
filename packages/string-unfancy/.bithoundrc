@@ -1,12 +1,13 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
       "ava",
+      "clear-cli",
       "coveralls",
       "husky",
       "nyc"

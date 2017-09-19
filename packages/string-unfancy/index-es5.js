@@ -2,7 +2,10 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/* eslint quote-props:0 */
+
 var he = require('he');
+
 function existy(x) {
   return x != null;
 }
@@ -39,15 +42,16 @@ function unfancy(str) {
     throw new Error('string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)));
   }
   // decode anticipating multiple encoding on top of one another
-  while (he.decode(str) !== str) {
-    str = he.decode(str);
+  var res = str;
+  while (he.decode(res) !== res) {
+    res = he.decode(res);
   }
-  for (var i = 0, len = str.length; i < len; i++) {
-    if (CHARS.hasOwnProperty(str[i])) {
-      str = str.slice(0, i) + CHARS[str[i]] + str.slice(i + 1);
+  for (var i = 0, len = res.length; i < len; i++) {
+    if (Object.prototype.hasOwnProperty.call(CHARS, res[i])) {
+      res = res.slice(0, i) + CHARS[res[i]] + res.slice(i + 1);
     }
   }
-  return str;
+  return res;
 }
 
 module.exports = unfancy;
