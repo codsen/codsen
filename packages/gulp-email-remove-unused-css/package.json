@@ -1,6 +1,6 @@
 {
   "name": "gulp-email-remove-unused-css",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "main": "index-es5.js",
   "repository": "codsen/gulp-email-remove-unused-css",
