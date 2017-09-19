@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Merge arrays meaning string slice ranges.",
   "main": "index-es5.js",
   "scripts": {
