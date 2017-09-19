@@ -2,15 +2,15 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var checkTypes = require('check-types-mini/es5');
+var checkTypes = require('check-types-mini');
 var isObj = require('lodash.isplainobject');
 
-function within(str, opts) {
+function within(str, originalOpts) {
   if (typeof str !== 'string') {
     throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
   }
-  if (opts !== undefined && opts !== null && !isObj(opts)) {
-    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to:\n' + JSON.stringify(str, null, 4));
+  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
+    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to:\n' + JSON.stringify(originalOpts, null, 4));
   }
 
   // declare defaults, so we can enforce types later:
@@ -19,7 +19,7 @@ function within(str, opts) {
     checkLineLength: true
 
     // fill any settings with defaults if missing:
-  };opts = Object.assign({}, defaults, opts);
+  };var opts = Object.assign({}, defaults, originalOpts);
 
   // the check:
   checkTypes(opts, defaults, { msg: 'email-all-chars-within-ascii/within(): [THROW_ID_03*]' });
@@ -38,7 +38,7 @@ function within(str, opts) {
 
   var counter = 0;
   for (var i = 0, len = str.length; i < len; i++) {
-    counter++;
+    counter += 1;
     // throw if non-ASCII
     if (str[i].codePointAt(0) > 126 || str[i].codePointAt(0) < 9 || str[i].codePointAt(0) === 11 || str[i].codePointAt(0) === 12 || str[i].codePointAt(0) > 13 && str[i].codePointAt(0) < 32) {
       throw new Error((opts.messageOnly ? '' : 'email-all-chars-within-ascii: ') + 'Non ascii character found at index ' + i + ', equal to: ' + str[i] + ', its decimal code point is ' + str[i].codePointAt(0) + '.');

@@ -1,28 +1,27 @@
-'use strict'
-const checkTypes = require('check-types-mini/es5')
+const checkTypes = require('check-types-mini')
 const isObj = require('lodash.isplainobject')
 
-function within (str, opts) {
+function within(str, originalOpts) {
   if (typeof str !== 'string') {
-    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ' + typeof str + ', equal to: ' + JSON.stringify(str, null, 4))
+    throw new Error(`email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`)
   }
-  if ((opts !== undefined) && (opts !== null) && (!isObj(opts))) {
-    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ' + typeof str + ', equal to:\n' + JSON.stringify(str, null, 4))
+  if ((originalOpts !== undefined) && (originalOpts !== null) && (!isObj(originalOpts))) {
+    throw new Error(`email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(originalOpts, null, 4)}`)
   }
 
   // declare defaults, so we can enforce types later:
-  let defaults = {
+  const defaults = {
     messageOnly: false,
-    checkLineLength: true
+    checkLineLength: true,
   }
 
   // fill any settings with defaults if missing:
-  opts = Object.assign({}, defaults, opts)
+  const opts = Object.assign({}, defaults, originalOpts)
 
   // the check:
-  checkTypes(opts, defaults, {msg: 'email-all-chars-within-ascii/within(): [THROW_ID_03*]'})
+  checkTypes(opts, defaults, { msg: 'email-all-chars-within-ascii/within(): [THROW_ID_03*]' })
 
-// -----------------------------------------------------------------------------
+  // -----------------------------------------------------------------------------
 
   // allowed control characters:
   //
@@ -34,9 +33,9 @@ function within (str, opts) {
   // Naturally, above #126 is not allowed. This concerns #127, DEL too!
   // Often #127, DEL, is overlooked, yet it is not good in email.
 
-  var counter = 0
-  for (var i = 0, len = str.length; i < len; i++) {
-    counter++
+  let counter = 0
+  for (let i = 0, len = str.length; i < len; i++) {
+    counter += 1
     // throw if non-ASCII
     if (
       (str[i].codePointAt(0) > 126) ||
