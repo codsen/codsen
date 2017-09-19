@@ -1,5 +1,5 @@
 import test from 'ava'
-import Slices from './index-es5'
+import Slices from './index'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
