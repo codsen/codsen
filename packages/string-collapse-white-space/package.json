@@ -32,10 +32,10 @@
   },
   "homepage": "https://github.com/codsen/string-collapse-white-space#readme",
   "dependencies": {
-    "check-types-mini": "^2.5.0",
+    "check-types-mini": "^2.6.0",
     "lodash.isplainobject": "*",
-    "string-replace-slices-array": "^1.3.1",
-    "string-slices-array-push": "^1.4.0"
+    "string-replace-slices-array": "^1.4.0",
+    "string-slices-array-push": "^1.5.2"
   },
   "devDependencies": {
     "ava": "*",
@@ -43,7 +43,7 @@
     "babel-preset-es2015": "^6.24.1",
     "clear-cli": "*",
     "coveralls": "*",
-    "eslint": "^4.7.0",
+    "eslint": "^4.7.1",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",

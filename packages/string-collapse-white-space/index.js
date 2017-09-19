@@ -1,7 +1,7 @@
-const checkTypes = require('check-types-mini/es5')
+const checkTypes = require('check-types-mini')
 const isObj = require('lodash.isplainobject')
-const replaceSlicesArr = require('string-replace-slices-array/es5')
-const Slices = require('string-slices-array-push/es5')
+const replaceSlicesArr = require('string-replace-slices-array')
+const Slices = require('string-slices-array-push')
 
 function collapse(str, originalOpts) {
   if (typeof str !== 'string') {

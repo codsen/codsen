@@ -2,10 +2,10 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var checkTypes = require('check-types-mini/es5');
+var checkTypes = require('check-types-mini');
 var isObj = require('lodash.isplainobject');
-var replaceSlicesArr = require('string-replace-slices-array/es5');
-var Slices = require('string-slices-array-push/es5');
+var replaceSlicesArr = require('string-replace-slices-array');
+var Slices = require('string-slices-array-push');
 
 function collapse(str, originalOpts) {
   if (typeof str !== 'string') {
