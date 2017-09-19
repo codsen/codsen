@@ -58,9 +58,9 @@ class Slices {
   // C U R R E N T ()
   // ==================
   current() {
-    function existy(x) { return x != null }
-    if (existy(this.slices)) {
-      return mergeRanges(this.slices)
+    if (this.slices != null) { // != is intentional
+      this.slices = mergeRanges(this.slices)
+      return this.slices
     }
     return null
   }

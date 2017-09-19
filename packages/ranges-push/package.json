@@ -2,7 +2,7 @@
   "name": "string-slices-array-push",
   "version": "1.5.1",
   "description": "Manage the array of slices referencing the index ranges within the string",
-  "main": "index-es5.js",
+  "main": "index.js",
   "scripts": {
     "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -37,7 +37,7 @@
     "is-natural-number": "*",
     "is-natural-number-string": "*",
     "ordinal-number-suffix": "^0.1.1",
-    "ranges-merge": "^1.0.2"
+    "ranges-merge": "^1.0.3"
   },
   "devDependencies": {
     "ava": "*",

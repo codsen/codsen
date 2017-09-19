@@ -80,11 +80,10 @@ var Slices = function () {
   }, {
     key: 'current',
     value: function current() {
-      function existy(x) {
-        return x != null;
-      }
-      if (existy(this.slices)) {
-        return mergeRanges(this.slices);
+      if (this.slices != null) {
+        // != is intentional
+        this.slices = mergeRanges(this.slices);
+        return this.slices;
       }
       return null;
     }
