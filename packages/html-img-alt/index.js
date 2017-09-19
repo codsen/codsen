@@ -1,41 +1,42 @@
-'use strict'
-const unfancy = require('string-unfancy/es5')
-const repl = require('string-replace-slices-array/es5')
-const Slices = require('string-slices-array-push/es5')
-const checkTypes = require('check-types-mini/es5')
+/* eslint no-console:0 */
+
+const unfancy = require('string-unfancy')
+const repl = require('string-replace-slices-array')
+const Slices = require('string-slices-array-push')
+const checkTypes = require('check-types-mini')
 const isObj = require('lodash.isplainobject')
 
-function alts (str, opts) {
-  function existy (x) { return x != null }
+function alts(str, originalOpts) {
+  function existy(x) { return x != null }
 
   // validate
   // ================
   if (typeof str !== 'string') {
-    throw new TypeError('html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ' + typeof str + ', equal to: ' + JSON.stringify(str, null, 4))
+    throw new TypeError(`html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`)
   }
-  if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ' + typeof opts + ', equal to: ' + JSON.stringify(opts, null, 4))
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new TypeError(`html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`)
   }
 
   // vars
   // ================
-  var DEBUG = 0
-  var finalSpaceNeeded
-  var withinImageTag = false
-  var withinQuotes = false
-  var imageTagStartedAt = 0
-  var whitespaceStarted = 0
-  var slashStartedAt = 0
-  var altContentsStart = 0
-  var withinAlt = false // marker to catch the beginning of the ALT attribute's value
+  const DEBUG = 0
+  let finalSpaceNeeded
+  let withinImageTag = false
+  let withinQuotes = false
+  let imageTagStartedAt = 0
+  let whitespaceStarted = 0
+  let slashStartedAt = 0
+  let altContentsStart = 0
+  let withinAlt = false // marker to catch the beginning of the ALT attribute's value
 
-  var thereShouldBeEqualCharacterHere = 0
-  var thereShouldBeTheFirstDoubleQuoteHere = 0
-  var thereShouldBeTheSecondDoubleQuoteHere = 0
-  var addSpaceInTheFutureBeforeSlashOrBracket = false
+  let thereShouldBeEqualCharacterHere = 0
+  let thereShouldBeTheFirstDoubleQuoteHere = 0
+  let thereShouldBeTheSecondDoubleQuoteHere = 0
+  let addSpaceInTheFutureBeforeSlashOrBracket = false
 
-  var altBegins = null
-  var rangesArr = new Slices()
+  let altBegins = null
+  const rangesArr = new Slices()
 
   // plausibleWithinQuotesRanges - some ranges should be included only if they are
   // not within double quotes. However, there can be cases when double quotes are
@@ -43,15 +44,15 @@ function alts (str, opts) {
   // closing bracket. In this case, the condition "within double quotes" is false
   // regarding characters that follow that first unclosed double quote.
   // This is the temporary array which houses such "plausible" ranges.
-  var plausibleWithinQuotesRanges = new Slices()
+  const plausibleWithinQuotesRanges = new Slices()
 
   // opts
   // ================
-  var defaults = {
-    unfancyTheAltContents: true
+  const defaults = {
+    unfancyTheAltContents: true,
   }
-  opts = Object.assign(Object.assign({}, defaults), opts)
-  checkTypes(opts, defaults, {msg: 'html-img-alt/alts(): [THROW_ID_03]'})
+  const opts = Object.assign({}, defaults, originalOpts)
+  checkTypes(opts, defaults, { msg: 'html-img-alt/alts(): [THROW_ID_03]' })
 
   // traverse the string
   // ================
@@ -65,7 +66,7 @@ function alts (str, opts) {
         withinImageTag = true
         imageTagStartedAt = i
       } else {
-        throw new TypeError('html-img-alt/alts(): [THROW_ID_02] Something is wrong with the code - there\'s an image tag within an image tag. First image tag was: ' + str.slice(imageTagStartedAt - 20, imageTagStartedAt + 20) + ', then before it was closed, we\'ve got this: ' + str.slice(i - 20, i + 20))
+        throw new TypeError(`html-img-alt/alts(): [THROW_ID_02] Something is wrong with the code - there's an image tag within an image tag. First image tag was: ${str.slice(imageTagStartedAt - 20, imageTagStartedAt + 20)}, then before it was closed, we've got this: ${str.slice(i - 20, i + 20)}`)
       }
 
       // console.log('!!! 91 SETTING finalSpaceNeeded = true')
@@ -75,7 +76,7 @@ function alts (str, opts) {
     // catch closing slash
     // ================
     if (withinImageTag && (str[i] === '/')) {
-      if (DEBUG) { console.log('!!! setting slashStartedAt = ' + i) }
+      if (DEBUG) { console.log(`!!! setting slashStartedAt = ${i}`) }
       slashStartedAt = i
     }
 
@@ -87,7 +88,7 @@ function alts (str, opts) {
     ) {
       if (`${str[i]}${str[i + 1]}${str[i + 2]}` === 'alt') {
         altBegins = i
-        if (DEBUG) { console.log('\n\n!!! setting altBegins = ' + altBegins) }
+        if (DEBUG) { console.log(`\n\n!!! setting altBegins = ${altBegins}`) }
       } else if (`${str[i - 3]}${str[i - 2]}${str[i - 1]}` === 'alt') {
         withinAlt = true // this flag is necessary only until we catch the first
         // double quote of the alt attribute
@@ -151,16 +152,16 @@ function alts (str, opts) {
       if (DEBUG) { console.log('!!! whitespace ends') }
       // put up excessive whitespace for deletion
 
-      if (DEBUG) { console.log('!!! withinQuotes = ' + JSON.stringify(withinQuotes, null, 4)) }
-      if (whitespaceStarted < (i - 1 + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))) {
+      if (DEBUG) { console.log(`!!! withinQuotes = ${JSON.stringify(withinQuotes, null, 4)}`) }
+      if (whitespaceStarted < ((i - 1) + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))) {
         if (!withinQuotes) {
-          if (DEBUG) { console.log(`!!! add no.1.1 - adding whitespace to rangesArr: [${whitespaceStarted}, ${i - 1 + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0)}]`) }
+          if (DEBUG) { console.log(`!!! add no.1.1 - adding whitespace to rangesArr: [${whitespaceStarted}, ${(i - 1) + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0)}]`) }
 
-          rangesArr.add(whitespaceStarted, i - 1 + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))
+          rangesArr.add(whitespaceStarted, (i - 1) + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))
         } else {
-          if (DEBUG) { console.log(`!!! add no.1.2 - adding whitespace to plausibleWithinQuotesRanges: [${whitespaceStarted}, ${i - 1 + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0)}]`) }
+          if (DEBUG) { console.log(`!!! add no.1.2 - adding whitespace to plausibleWithinQuotesRanges: [${whitespaceStarted}, ${(i - 1) + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0)}]`) }
 
-          plausibleWithinQuotesRanges.add(whitespaceStarted, i - 1 + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))
+          plausibleWithinQuotesRanges.add(whitespaceStarted, (i - 1) + (((str[i] === '>') || (str[i] === '\'') || slashStartedAt || thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere || thereShouldBeTheSecondDoubleQuoteHere) ? 1 : 0))
         }
 
         if ((str[i] === '>') || (str[i] === '/')) {
@@ -173,22 +174,24 @@ function alts (str, opts) {
           (thereShouldBeEqualCharacterHere && (str[i] !== '=') && (i >= thereShouldBeEqualCharacterHere)) ||
           (thereShouldBeTheFirstDoubleQuoteHere && (str[i] !== '"') && (i >= thereShouldBeTheFirstDoubleQuoteHere))
         ) {
-          let missingTrailingSpace = ''
-          let location = thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere
+          const missingTrailingSpace = ''
+          const location = thereShouldBeEqualCharacterHere || thereShouldBeTheFirstDoubleQuoteHere
 
           let thingToAdd = ''
           if (thereShouldBeEqualCharacterHere) {
             thingToAdd += '='
           }
-          if (DEBUG) { console.log('!!! add no.2 - adding ="" at location:' + location) }
+          if (DEBUG) { console.log(`!!! add no.2 - adding ="" at location:${location}`) }
           if (!withinQuotes) {
-            rangesArr.add(location, location, thingToAdd + '""' + missingTrailingSpace)
+            rangesArr.add(location, location, `${thingToAdd}""${missingTrailingSpace}`)
           } // else {
-            // it might be that first double quote in alt=" is unclosed, and closing bracket follows.
-            // that's why we add such range into a separate "plausibles" ranges list,
-            // which would get merged into regular rangesArr in case second double quote is
-            // never found.
-            // plausibleWithinQuotesRanges.add(location, location, thingToAdd + '""' + missingTrailingSpace)
+          // it might be that first double quote in alt=" is unclosed, and closing bracket follows.
+          // that's why we add such range into a separate "plausibles" ranges list,
+          // which would get merged into regular rangesArr in case second double quote is
+          // never found.
+          // plausibleWithinQuotesRanges.add(
+          //   location, location, thingToAdd + '""' + missingTrailingSpace
+          // )
           // }
           thereShouldBeEqualCharacterHere = 0
           thereShouldBeTheFirstDoubleQuoteHere = 0
@@ -225,12 +228,15 @@ function alts (str, opts) {
         // also, if the character after first double quote is closing slash (XHTML)
         // or closing bracket (HTML), add a missing space in front of it:
         if ((str[i + 1].trim() === '/') || (str[i + 1].trim() === '>')) {
-          if (DEBUG) { console.log('!!! Adding empty space on i + 1 = ' + (i + 1)) }
+          if (DEBUG) { console.log(`!!! Adding empty space on i + 1 = ${i + 1}`) }
           addSpaceInTheFutureBeforeSlashOrBracket = true
           if (DEBUG) { console.log('!!! 93 SETTING finalSpaceNeeded = false') }
           finalSpaceNeeded = false
         }
-      } else if (thereShouldBeTheSecondDoubleQuoteHere && (i >= thereShouldBeTheSecondDoubleQuoteHere)) {
+      } else if (
+        thereShouldBeTheSecondDoubleQuoteHere &&
+        (i >= thereShouldBeTheSecondDoubleQuoteHere)
+      ) {
         if (DEBUG) { console.log('!!! TRUE for: i >= thereShouldBeTheSecondDoubleQuoteHere') }
         // If double quotes are closed properly, wipe the plausibles
         // that practically means we don't delete the whitespace within double quotes.
@@ -251,10 +257,10 @@ function alts (str, opts) {
         }
 
         // reset altContentsStart
-        if (DEBUG) { console.log('!!! ALT TAG CONTENTS: >>>' + str.slice(altContentsStart, i) + `<<< (${str.slice(altContentsStart, i).length})`) }
+        if (DEBUG) { console.log(`!!! ALT TAG CONTENTS: >>>${str.slice(altContentsStart, i)}<<< (${str.slice(altContentsStart, i).length})`) }
 
         if (altContentsStart && opts.unfancyTheAltContents) {
-          let altContents = str.slice(altContentsStart, i)
+          const altContents = str.slice(altContentsStart, i)
           if (unfancy(altContents).trim() !== altContents) {
             rangesArr.add(altContentsStart, i, unfancy(altContents).trim())
           }
@@ -276,9 +282,9 @@ function alts (str, opts) {
     // catch the closing IMG tag and perform all the tasks
     // ================
     if (withinImageTag && (str[i] === '>')) {
-      if (DEBUG) { console.log('!!! complete img tag: ' + str.slice(imageTagStartedAt, i + 1)) }
-      if (DEBUG) { console.log('!!! thereShouldBeTheFirstDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheFirstDoubleQuoteHere, null, 4)) }
-      if (DEBUG) { console.log('!!! thereShouldBeTheSecondDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheSecondDoubleQuoteHere, null, 4)) }
+      if (DEBUG) { console.log(`!!! complete img tag: ${str.slice(imageTagStartedAt, i + 1)}`) }
+      if (DEBUG) { console.log(`!!! thereShouldBeTheFirstDoubleQuoteHere = ${JSON.stringify(thereShouldBeTheFirstDoubleQuoteHere, null, 4)}`) }
+      if (DEBUG) { console.log(`!!! thereShouldBeTheSecondDoubleQuoteHere = ${JSON.stringify(thereShouldBeTheSecondDoubleQuoteHere, null, 4)}`) }
 
       imageTagStartedAt = 0
       withinQuotes = false
@@ -286,14 +292,14 @@ function alts (str, opts) {
       // add ALT attr if missing:
       if (altBegins === null) {
         if (DEBUG) { console.log('NO ALT ATTR!') }
-        if (DEBUG) { console.log('slashStartedAt = ' + JSON.stringify(slashStartedAt, null, 4)) }
+        if (DEBUG) { console.log(`slashStartedAt = ${JSON.stringify(slashStartedAt, null, 4)}`) }
         if (slashStartedAt) {
           // XHTML.
-          if (DEBUG) { console.log('!!! add no.3 - adding >>>alt="" <<< at slashStartedAt=' + slashStartedAt) }
+          if (DEBUG) { console.log(`!!! add no.3 - adding >>>alt="" <<< at slashStartedAt=${slashStartedAt}`) }
           rangesArr.add(slashStartedAt, slashStartedAt, ' alt="" ')
         } else {
           // HTML.
-          if (DEBUG) { console.log('!!! add no.4 - adding >>> alt="" <<< at i=' + i) }
+          if (DEBUG) { console.log(`!!! add no.4 - adding >>> alt="" <<< at i=${i}`) }
           rangesArr.add(i, i, ' alt="" ')
         }
         if (DEBUG) { console.log('!!! 95 SETTING finalSpaceNeeded = false') }
@@ -304,41 +310,53 @@ function alts (str, opts) {
       if (!slashStartedAt && (thereShouldBeEqualCharacterHere === i)) {
         // if ALT has no equal and is right before closing bracket
         // HTML
-        if (DEBUG) { console.log('!!! add no.5 - adding >>>="" <<< at i=' + i) }
+        if (DEBUG) { console.log(`!!! add no.5 - adding >>>="" <<< at i=${i}`) }
         rangesArr.add(i, i, '="" ')
         if (DEBUG) { console.log('!!! 96 SETTING finalSpaceNeeded = false') }
         finalSpaceNeeded = false
       } else if (slashStartedAt && (thereShouldBeEqualCharacterHere === (i - 1))) {
         // if ALT has no equal and is right before closing bracket
         // XHTML
-        if (DEBUG) { console.log('!!! add no.6 - adding >>>="" <<< at i-1=' + i - 1) }
+        if (DEBUG) { console.log(`!!! add no.6 - adding >>>="" <<< at i-1=${i}` - 1) }
         rangesArr.add(i - 1, i - 1, '="" ')
         if (DEBUG) { console.log('!!! 97 SETTING finalSpaceNeeded = false') }
         finalSpaceNeeded = false
       }
 
-      if (!slashStartedAt && thereShouldBeTheFirstDoubleQuoteHere && (thereShouldBeTheFirstDoubleQuoteHere <= i)) {
+      if (
+        !slashStartedAt &&
+        thereShouldBeTheFirstDoubleQuoteHere &&
+        (thereShouldBeTheFirstDoubleQuoteHere <= i)
+      ) {
         // HTML
-        if (DEBUG) { console.log('!!! add no.7 - adding >>>="" <<< at i=' + i) }
+        if (DEBUG) { console.log(`!!! add no.7 - adding >>>="" <<< at i=${i}`) }
         rangesArr.add(i, i, '"" ')
         addSpaceInTheFutureBeforeSlashOrBracket = false
-      } else if (slashStartedAt && thereShouldBeTheFirstDoubleQuoteHere && (thereShouldBeTheFirstDoubleQuoteHere <= i)) {
+      } else if (
+        slashStartedAt &&
+        thereShouldBeTheFirstDoubleQuoteHere &&
+        (thereShouldBeTheFirstDoubleQuoteHere <= i)
+      ) {
         // XHTML
-        if (DEBUG) { console.log('!!! add no.8 - adding >>>="" <<< at i-1=' + i - 1) }
+        if (DEBUG) { console.log(`!!! add no.8 - adding >>>="" <<< at i-1=${i}` - 1) }
         rangesArr.add(i - 1, i - 1, '"" ')
         addSpaceInTheFutureBeforeSlashOrBracket = false
-      } else if (!slashStartedAt && thereShouldBeTheSecondDoubleQuoteHere && (thereShouldBeTheSecondDoubleQuoteHere <= i)) {
+      } else if (
+        !slashStartedAt &&
+        thereShouldBeTheSecondDoubleQuoteHere &&
+        (thereShouldBeTheSecondDoubleQuoteHere <= i)
+      ) {
         if (DEBUG) { console.log('!!! add no.9 - adding the missing double quote before HTML closing bracket') }
         // HTML
         rangesArr.add(i, i, '"')
-        if (DEBUG) { console.log('* rangesArr.current() = ' + JSON.stringify(rangesArr.current(), null, 4)) }
+        if (DEBUG) { console.log(`* rangesArr.current() = ${JSON.stringify(rangesArr.current(), null, 4)}`) }
         addSpaceInTheFutureBeforeSlashOrBracket = true
         // so if the second double quote is missing, merge in the plausible ranges, if any
         if (DEBUG) { console.log('!!! merging in plausibleWithinQuotesRanges') }
 
         // and now the actual merging of plausible ranges:
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach(key => {
+          plausibleWithinQuotesRanges.current().forEach((key) => {
             rangesArr.add(key[0], key[1], key[2])
           })
         }
@@ -349,18 +367,24 @@ function alts (str, opts) {
         // normalising them.
 
         plausibleWithinQuotesRanges.wipe()
-      } else if (slashStartedAt && thereShouldBeTheSecondDoubleQuoteHere && (thereShouldBeTheSecondDoubleQuoteHere <= i)) {
+      } else if (
+        slashStartedAt &&
+        thereShouldBeTheSecondDoubleQuoteHere &&
+        (thereShouldBeTheSecondDoubleQuoteHere <= i)
+      ) {
         if (DEBUG) { console.log('!!! add no.10 - adding the missing double quote before XHTML closing slash') }
         // XHTML
 
-        // if (DEBUG) { console.log('\n!!! str[thereShouldBeTheSecondDoubleQuoteHere] = ' + JSON.stringify(str[thereShouldBeTheSecondDoubleQuoteHere], null, 4)) }
-        // if (DEBUG) { console.log('str[thereShouldBeTheSecondDoubleQuoteHere + 1] = ' + JSON.stringify(str[thereShouldBeTheSecondDoubleQuoteHere + 1], null, 4)) }
-        rangesArr.add(thereShouldBeTheSecondDoubleQuoteHere + 1, thereShouldBeTheSecondDoubleQuoteHere + 1, '"')
-        if (DEBUG) { console.log('UPDATED rangesArr.current(): ' + JSON.stringify(rangesArr.current(), null, 4)) }
+        rangesArr.add(
+          thereShouldBeTheSecondDoubleQuoteHere + 1,
+          thereShouldBeTheSecondDoubleQuoteHere + 1,
+          '"',
+        )
+        if (DEBUG) { console.log(`UPDATED rangesArr.current(): ${JSON.stringify(rangesArr.current(), null, 4)}`) }
 
         // so if the second double quote is missing, merge in the plausible ranges, if any
         if (plausibleWithinQuotesRanges.current()) {
-          plausibleWithinQuotesRanges.current().forEach(key => {
+          plausibleWithinQuotesRanges.current().forEach((key) => {
             rangesArr.add(key[0], key[1], key[2])
           })
         }
@@ -370,14 +394,7 @@ function alts (str, opts) {
         rangesArr.current()
         // .current will mutate the ranges in the memory, cleaning, merging,
         // normalising them.
-      } // else if ((str[i - 1].trim() !== '') && (str[i - 1] !== '/')) {
-      //   if (DEBUG) { console.log('!!! add no.11 - adding the missing space before HTML closing bracket') }
-      //   if (finalSpaceNeeded) {
-      //     rangesArr.add(i, i, ' ')
-      //   }
-      //   if (DEBUG) { console.log('!!! 98 SETTING finalSpaceNeeded = false') }
-      //   finalSpaceNeeded = false
-      // }
+      }
 
       if (finalSpaceNeeded || addSpaceInTheFutureBeforeSlashOrBracket) {
         if (slashStartedAt) {
@@ -387,7 +404,7 @@ function alts (str, opts) {
           if (DEBUG) { console.log('!!! add no.12.2 - FINAL - adding missing space at i (HTML)') }
           rangesArr.add(i, i, ' ')
         }
-        if (DEBUG) { console.log('new rangesArr: ' + JSON.stringify(rangesArr.current(), null, 4)) }
+        if (DEBUG) { console.log(`new rangesArr: ${JSON.stringify(rangesArr.current(), null, 4)}`) }
       }
 
       withinImageTag = false
@@ -416,43 +433,38 @@ function alts (str, opts) {
       whitespaceStarted = i
     }
 
-    // delete the slash marker if something different from whitespace or
-    // closing bracket follows it.
-    // if (slashStartedAt && (slashStartedAt < i) && (str[i].trim() !== '') && (str[i] !== '>')) {
-    //   if (DEBUG) { console.log('\n!!! resetting slashStartedAt to zero because something else than whitespace or closing bracket was detected: ' + str[i]) }
-    //   slashStartedAt = 0
-    // }
-
     // ================================================================
     // ================================================================
 
     if (DEBUG) { console.log('') }
     if (whitespaceStarted) {
-      if (DEBUG) { console.log('!!! whitespaceStarted = ' + JSON.stringify(whitespaceStarted, null, 4)) }
+      if (DEBUG) { console.log(`!!! whitespaceStarted = ${JSON.stringify(whitespaceStarted, null, 4)}`) }
     }
-    if (DEBUG) { console.log('* withinImageTag = ' + withinImageTag) }
-    if (DEBUG) { console.log('* altBegins = ' + JSON.stringify(altBegins, null, 4)) }
-    if (DEBUG) { console.log('* slashStartedAt = ' + JSON.stringify(slashStartedAt, null, 4)) }
-    if (DEBUG) { console.log('* thereShouldBeEqualCharacterHere = ' + JSON.stringify(thereShouldBeEqualCharacterHere, null, 4)) }
-    if (DEBUG) { console.log('* thereShouldBeTheFirstDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheFirstDoubleQuoteHere, null, 4)) }
-    if (DEBUG) { console.log('* thereShouldBeTheSecondDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheSecondDoubleQuoteHere, null, 4)) }
-    if (DEBUG) { console.log('* withinQuotes = ' + JSON.stringify(withinQuotes, null, 4)) }
-    if (DEBUG) { console.log('* addSpaceInTheFutureBeforeSlashOrBracket = ' + JSON.stringify(addSpaceInTheFutureBeforeSlashOrBracket, null, 4)) }
-    if (DEBUG) { console.log('* finalSpaceNeeded = ' + JSON.stringify(finalSpaceNeeded, null, 4)) }
-    if (DEBUG) { console.log('* withinAlt = ' + JSON.stringify(withinAlt, null, 4)) }
-    if (DEBUG) { console.log('* altContentsStart = ' + JSON.stringify(altContentsStart, null, 4)) }
+    if (DEBUG) { console.log(`* withinImageTag = ${withinImageTag}`) }
+    if (DEBUG) { console.log(`* altBegins = ${altBegins}`) }
+    if (DEBUG) { console.log(`* slashStartedAt = ${slashStartedAt}`) }
+    if (DEBUG) { console.log(`* thereShouldBeEqualCharacterHere = ${thereShouldBeEqualCharacterHere}`) }
+    if (DEBUG) { console.log(`* thereShouldBeTheFirstDoubleQuoteHere = ${thereShouldBeTheFirstDoubleQuoteHere}`) }
+    if (DEBUG) { console.log(`* thereShouldBeTheSecondDoubleQuoteHere = ${thereShouldBeTheSecondDoubleQuoteHere}`) }
+    if (DEBUG) { console.log(`* withinQuotes = ${withinQuotes}`) }
+    if (DEBUG) { console.log(`* addSpaceInTheFutureBeforeSlashOrBracket = ${addSpaceInTheFutureBeforeSlashOrBracket}`) }
+    if (DEBUG) { console.log(`* finalSpaceNeeded = ${finalSpaceNeeded}`) }
+    if (DEBUG) { console.log(`* withinAlt = ${withinAlt}`) }
+    if (DEBUG) { console.log(`* altContentsStart = ${altContentsStart}`) }
 
-    if (DEBUG) { console.log('\n* rangesArr.current() = ' + JSON.stringify(rangesArr.current(), null, 4)) }
-    if (DEBUG) { console.log('* plausibleWithinQuotesRanges.current() = ' + JSON.stringify(plausibleWithinQuotesRanges.current(), null, 4)) }
+    if (DEBUG) { console.log(`\n CULPRIT * rangesArr.current() = ${rangesArr.current()}`) }
+    if (DEBUG) { console.log(`\n CULPRIT * rangesArr.current() = ${rangesArr.current()}`) }
+    if (DEBUG) { console.log(`\n CULPRIT * rangesArr.current() = ${rangesArr.current()}`) }
+    if (DEBUG) { console.log(`\n CULPRIT * rangesArr.current() = ${rangesArr.current()}`) }
+    if (DEBUG) { console.log(`* plausibleWithinQuotesRanges.current() = ${plausibleWithinQuotesRanges.current()}`) }
   }
 
   // crunch all the slices from rangesArr:
   // ================
-  if (DEBUG) { console.log('\n\n\n=============\n\nFINAL rangesArr.current() = ' + JSON.stringify(rangesArr.current(), null, 4) + '\n\n\n\n\n\n') }
+  if (DEBUG) { console.log(`\n\n\n=============\n\nFINAL rangesArr.current() = ${JSON.stringify(rangesArr.current(), null, 4)}\n\n\n\n\n\n`) }
   if (existy(rangesArr.current()) && rangesArr.current().length > 0) {
-    str = repl(str, rangesArr.current())
+    return repl(str, rangesArr.current())
   }
-
   return str
 }
 

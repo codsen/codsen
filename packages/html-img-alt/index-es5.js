@@ -2,13 +2,15 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var unfancy = require('string-unfancy/es5');
-var repl = require('string-replace-slices-array/es5');
-var Slices = require('string-slices-array-push/es5');
-var checkTypes = require('check-types-mini/es5');
+/* eslint no-console:0 */
+
+var unfancy = require('string-unfancy');
+var repl = require('string-replace-slices-array');
+var Slices = require('string-slices-array-push');
+var checkTypes = require('check-types-mini');
 var isObj = require('lodash.isplainobject');
 
-function alts(str, opts) {
+function alts(str, originalOpts) {
   function existy(x) {
     return x != null;
   }
@@ -18,14 +20,14 @@ function alts(str, opts) {
   if (typeof str !== 'string') {
     throw new TypeError('html-img-alt/alts(): [THROW_ID_01] Input must be string! Currently its type is: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
   }
-  if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ' + (typeof opts === 'undefined' ? 'undefined' : _typeof(opts)) + ', equal to: ' + JSON.stringify(opts, null, 4));
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new TypeError('html-img-alt/alts(): [THROW_ID_02] Options object must be a plain object! Currently its type is: ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to: ' + JSON.stringify(originalOpts, null, 4));
   }
 
   // vars
   // ================
   var DEBUG = 0;
-  var finalSpaceNeeded;
+  var finalSpaceNeeded = void 0;
   var withinImageTag = false;
   var withinQuotes = false;
   var imageTagStartedAt = 0;
@@ -55,7 +57,7 @@ function alts(str, opts) {
   var defaults = {
     unfancyTheAltContents: true
   };
-  opts = Object.assign(Object.assign({}, defaults), opts);
+  var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, { msg: 'html-img-alt/alts(): [THROW_ID_03]' });
 
   // traverse the string
@@ -202,7 +204,9 @@ function alts(str, opts) {
           // that's why we add such range into a separate "plausibles" ranges list,
           // which would get merged into regular rangesArr in case second double quote is
           // never found.
-          // plausibleWithinQuotesRanges.add(location, location, thingToAdd + '""' + missingTrailingSpace)
+          // plausibleWithinQuotesRanges.add(
+          //   location, location, thingToAdd + '""' + missingTrailingSpace
+          // )
           // }
           thereShouldBeEqualCharacterHere = 0;
           thereShouldBeTheFirstDoubleQuoteHere = 0;
@@ -278,7 +282,7 @@ function alts(str, opts) {
 
         // reset altContentsStart
         if (DEBUG) {
-          console.log('!!! ALT TAG CONTENTS: >>>' + str.slice(altContentsStart, i) + ('<<< (' + str.slice(altContentsStart, i).length + ')'));
+          console.log('!!! ALT TAG CONTENTS: >>>' + str.slice(altContentsStart, i) + '<<< (' + str.slice(altContentsStart, i).length + ')');
         }
 
         if (altContentsStart && opts.unfancyTheAltContents) {
@@ -419,8 +423,6 @@ function alts(str, opts) {
         }
         // XHTML
 
-        // if (DEBUG) { console.log('\n!!! str[thereShouldBeTheSecondDoubleQuoteHere] = ' + JSON.stringify(str[thereShouldBeTheSecondDoubleQuoteHere], null, 4)) }
-        // if (DEBUG) { console.log('str[thereShouldBeTheSecondDoubleQuoteHere + 1] = ' + JSON.stringify(str[thereShouldBeTheSecondDoubleQuoteHere + 1], null, 4)) }
         rangesArr.add(thereShouldBeTheSecondDoubleQuoteHere + 1, thereShouldBeTheSecondDoubleQuoteHere + 1, '"');
         if (DEBUG) {
           console.log('UPDATED rangesArr.current(): ' + JSON.stringify(rangesArr.current(), null, 4));
@@ -438,14 +440,7 @@ function alts(str, opts) {
         rangesArr.current();
         // .current will mutate the ranges in the memory, cleaning, merging,
         // normalising them.
-      } // else if ((str[i - 1].trim() !== '') && (str[i - 1] !== '/')) {
-      //   if (DEBUG) { console.log('!!! add no.11 - adding the missing space before HTML closing bracket') }
-      //   if (finalSpaceNeeded) {
-      //     rangesArr.add(i, i, ' ')
-      //   }
-      //   if (DEBUG) { console.log('!!! 98 SETTING finalSpaceNeeded = false') }
-      //   finalSpaceNeeded = false
-      // }
+      }
 
       if (finalSpaceNeeded || addSpaceInTheFutureBeforeSlashOrBracket) {
         if (slashStartedAt) {
@@ -492,13 +487,6 @@ function alts(str, opts) {
       whitespaceStarted = i;
     }
 
-    // delete the slash marker if something different from whitespace or
-    // closing bracket follows it.
-    // if (slashStartedAt && (slashStartedAt < i) && (str[i].trim() !== '') && (str[i] !== '>')) {
-    //   if (DEBUG) { console.log('\n!!! resetting slashStartedAt to zero because something else than whitespace or closing bracket was detected: ' + str[i]) }
-    //   slashStartedAt = 0
-    // }
-
     // ================================================================
     // ================================================================
 
@@ -514,41 +502,50 @@ function alts(str, opts) {
       console.log('* withinImageTag = ' + withinImageTag);
     }
     if (DEBUG) {
-      console.log('* altBegins = ' + JSON.stringify(altBegins, null, 4));
+      console.log('* altBegins = ' + altBegins);
     }
     if (DEBUG) {
-      console.log('* slashStartedAt = ' + JSON.stringify(slashStartedAt, null, 4));
+      console.log('* slashStartedAt = ' + slashStartedAt);
     }
     if (DEBUG) {
-      console.log('* thereShouldBeEqualCharacterHere = ' + JSON.stringify(thereShouldBeEqualCharacterHere, null, 4));
+      console.log('* thereShouldBeEqualCharacterHere = ' + thereShouldBeEqualCharacterHere);
     }
     if (DEBUG) {
-      console.log('* thereShouldBeTheFirstDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheFirstDoubleQuoteHere, null, 4));
+      console.log('* thereShouldBeTheFirstDoubleQuoteHere = ' + thereShouldBeTheFirstDoubleQuoteHere);
     }
     if (DEBUG) {
-      console.log('* thereShouldBeTheSecondDoubleQuoteHere = ' + JSON.stringify(thereShouldBeTheSecondDoubleQuoteHere, null, 4));
+      console.log('* thereShouldBeTheSecondDoubleQuoteHere = ' + thereShouldBeTheSecondDoubleQuoteHere);
     }
     if (DEBUG) {
-      console.log('* withinQuotes = ' + JSON.stringify(withinQuotes, null, 4));
+      console.log('* withinQuotes = ' + withinQuotes);
     }
     if (DEBUG) {
-      console.log('* addSpaceInTheFutureBeforeSlashOrBracket = ' + JSON.stringify(addSpaceInTheFutureBeforeSlashOrBracket, null, 4));
+      console.log('* addSpaceInTheFutureBeforeSlashOrBracket = ' + addSpaceInTheFutureBeforeSlashOrBracket);
     }
     if (DEBUG) {
-      console.log('* finalSpaceNeeded = ' + JSON.stringify(finalSpaceNeeded, null, 4));
+      console.log('* finalSpaceNeeded = ' + finalSpaceNeeded);
     }
     if (DEBUG) {
-      console.log('* withinAlt = ' + JSON.stringify(withinAlt, null, 4));
+      console.log('* withinAlt = ' + withinAlt);
     }
     if (DEBUG) {
-      console.log('* altContentsStart = ' + JSON.stringify(altContentsStart, null, 4));
+      console.log('* altContentsStart = ' + altContentsStart);
     }
 
     if (DEBUG) {
-      console.log('\n* rangesArr.current() = ' + JSON.stringify(rangesArr.current(), null, 4));
+      console.log('\n CULPRIT * rangesArr.current() = ' + rangesArr.current());
     }
     if (DEBUG) {
-      console.log('* plausibleWithinQuotesRanges.current() = ' + JSON.stringify(plausibleWithinQuotesRanges.current(), null, 4));
+      console.log('\n CULPRIT * rangesArr.current() = ' + rangesArr.current());
+    }
+    if (DEBUG) {
+      console.log('\n CULPRIT * rangesArr.current() = ' + rangesArr.current());
+    }
+    if (DEBUG) {
+      console.log('\n CULPRIT * rangesArr.current() = ' + rangesArr.current());
+    }
+    if (DEBUG) {
+      console.log('* plausibleWithinQuotesRanges.current() = ' + plausibleWithinQuotesRanges.current());
     }
   }
 
@@ -558,9 +555,8 @@ function alts(str, opts) {
     console.log('\n\n\n=============\n\nFINAL rangesArr.current() = ' + JSON.stringify(rangesArr.current(), null, 4) + '\n\n\n\n\n\n');
   }
   if (existy(rangesArr.current()) && rangesArr.current().length > 0) {
-    str = repl(str, rangesArr.current());
+    return repl(str, rangesArr.current());
   }
-
   return str;
 }
 
