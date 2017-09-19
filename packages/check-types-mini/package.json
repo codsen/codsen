@@ -2,9 +2,9 @@
   "name": "check-types-mini",
   "version": "2.5.0",
   "description": "Check the types of your options object's values after user has customised them",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-dir es5",
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
     "prepare": "npm run build",
@@ -49,7 +49,7 @@
     "babel-preset-es2015": "^6.24.1",
     "clear-cli": "*",
     "coveralls": "*",
-    "eslint": "^4.6.1",
+    "eslint": "^4.7.0",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
@@ -60,6 +60,6 @@
     "verbose": true
   },
   "engines": {
-    "node": ">=5.11.0"
+    "node": ">=0.10.0"
   }
 }

@@ -37,6 +37,8 @@
 $ npm i -S check-types-mini
 ```
 
+Transpiled code (ES5) is served.
+
 ## Idea
 
 Imagine you have a library where you let users set the options object which comes as one of the input arguments.
