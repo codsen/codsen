@@ -1,5 +1,5 @@
 import test from 'ava'
-import Slices from './index'
+import Slices from './index-es5'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -341,6 +341,37 @@ test('04.01  -  CURRENT() - calling on blank yields null', (t) => {
     slices.current(),
     null,
     '04.01',
+  )
+})
+
+test('04.02  -  CURRENT() - multiple calls on the same should yield the same', (t) => {
+  const slices = new Slices()
+  slices.add(7, 14)
+  slices.add(24, 28, ' ')
+  slices.current()
+  slices.add(29, 31)
+  slices.current()
+  slices.current()
+  slices.current()
+  slices.current()
+  t.deepEqual(
+    slices.current(),
+    [
+      [
+        7,
+        14,
+      ],
+      [
+        24,
+        28,
+        ' ',
+      ],
+      [
+        29,
+        31,
+      ],
+    ],
+    '04.02',
   )
 })
 
