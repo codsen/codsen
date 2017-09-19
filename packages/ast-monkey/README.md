@@ -40,8 +40,10 @@
 ## Install
 
 ```bash
-$ npm install --save ast-monkey
+$ npm install ast-monkey
 ```
+
+Transpiled (ES5) code is served.
 
 ## Idea
 
