@@ -1017,3 +1017,29 @@ test('08.04 - adds an ALT within a nunjucks-sprinkled HTML', (t) => {
     '08.04.02',
   )
 })
+
+test('08.05 - Nunjucks code following straight after character g of "img"', (t) => {
+  t.deepEqual(
+    alt('<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;">'),
+    '<img{% if not state_colour_col %} class="test"{% endif %} style="display: block;" alt="" >',
+    '08.05',
+  )
+})
+
+test('08.06 - Nunjucks code tight before ALT', (t) => {
+  t.deepEqual(
+    alt('<img {% if variables %}class="variables" {% endif %}alt=>'),
+    '<img {% if variables %}class="variables" {% endif %}alt="" >',
+    '08.06.01 - alt with equal with no quotes',
+  )
+  t.deepEqual(
+    alt('<img {% if variables %}class="variables" {% endif %}alt=">'),
+    '<img {% if variables %}class="variables" {% endif %}alt="" >',
+    '08.06.02 - alt with equal and single quote, second is missing',
+  )
+  t.deepEqual(
+    alt('<img {% if variables %}class="variables" {% endif %}alt>'),
+    '<img {% if variables %}class="variables" {% endif %}alt="" >',
+    '08.06.03 - alt with both equal and quotes missing',
+  )
+})
