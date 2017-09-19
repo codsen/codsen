@@ -2,11 +2,13 @@
   "name": "ast-monkey",
   "version": "6.3.2",
   "description": "Utility library for operations on parsed HTML (AST's)",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "clear && standard && nyc --reporter=html --reporter=text ava",
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/ast-monkey",
@@ -39,26 +41,30 @@
   },
   "homepage": "https://github.com/codsen/ast-monkey#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.0",
+    "check-types-mini": "^2.6.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
     "lodash.isplainobject": "*",
-    "util-array-object-or-both": "^1.1.0"
+    "util-array-object-or-both": "^1.1.2"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "clear-cli": "*",
     "coveralls": "*",
-    "husky": "^0.14.3",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.1.0",
-    "standard": "^10.0.3"
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "*",
+    "nyc": "*",
+    "nodemon": "*"
   },
   "ava": {
     "verbose": true
   },
   "engines": {
-    "node": ">=5.11.0"
+    "node": ">=0.10.0"
   }
 }

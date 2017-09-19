@@ -1,19 +1,17 @@
 # 🐒 ast-monkey
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Utility library for operations on parsed HTML (AST's)
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![Test in browser][runkit-img]][runkit-url]
+[![Test in browser][runkit-img]][runkit-xurl]
 
 ## Table of Contents
 
@@ -34,7 +32,7 @@
   - [.traverse()](#traverse)
     - [innerObj in the callback](#innerobj-in-the-callback)
 - [The name of this library](#the-name-of-this-library)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -656,11 +654,17 @@ HTML is parsed into nested objects and arrays which are called Abstract Syntax T
 
 **[⬆ back to top](#)**
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. I know this doesn't happen ever, but if you have any comments on the code, including ideas how to improve something, just email me.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 
@@ -695,8 +699,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/ast-monkey/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/ast-monkey?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/ast-monkey
+[overall-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/ast-monkey
 
 [deps-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/ast-monkey/master/dependencies/npm
@@ -713,5 +717,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/ast-monkey

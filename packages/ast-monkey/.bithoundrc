@@ -1,7 +1,7 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
@@ -9,9 +9,12 @@
       "ava",
       "clear-cli",
       "coveralls",
+      "husky",
       "lodash.clonedeep",
       "lodash.isequal",
-      "lodash.isplainobject"
+      "lodash.isplainobject",
+      "nodemon",
+      "nyc"
     ]
   },
   "test": [
