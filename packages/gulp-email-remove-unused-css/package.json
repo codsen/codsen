@@ -2,7 +2,7 @@
   "name": "gulp-email-remove-unused-css",
   "version": "2.0.1",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
-  "main": "index.js",
+  "main": "index-es5.js",
   "repository": "codsen/gulp-email-remove-unused-css",
   "keywords": [
     "gulp",
@@ -22,7 +22,9 @@
     "index.js"
   ],
   "scripts": {
-    "precommit": "standard"
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
+    "precommit": "npm test",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && npm run build"
   },
   "author": {
     "name": "Roy Revelt",
@@ -35,11 +37,16 @@
   },
   "homepage": "https://emailcomb.com",
   "dependencies": {
-    "email-remove-unused-css": "^2.8.2",
+    "email-remove-unused-css": "^2.9.0",
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {
-    "husky": "*",
-    "standard": "^10.0.3"
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "*"
   }
 }

@@ -1,11 +1,12 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
+      "clear-cli",
       "husky"
     ]
   }
