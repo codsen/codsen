@@ -2,10 +2,12 @@
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/* eslint no-param-reassign:0 */
+
 var isInt = require('is-natural-number');
 var isNumStr = require('is-natural-number-string');
-var isObj = require('lodash.isplainobject');
 var ordinal = require('ordinal-number-suffix');
+
 var isArr = Array.isArray;
 
 function existy(x) {
@@ -15,7 +17,7 @@ function isStr(something) {
   return typeof something === 'string';
 }
 
-function srsa(str, rangesArr, opts) {
+function srsa(str, rangesArr) {
   if (arguments.length === 0) {
     throw new Error('string-replace-slices-array/srsa(): [THROW_ID_01] inputs missing!');
   }
@@ -24,13 +26,6 @@ function srsa(str, rangesArr, opts) {
   }
   if (!isArr(rangesArr)) {
     throw new TypeError('string-replace-slices-array/srsa(): [THROW_ID_03] second input argument must be an array! Currently it\'s: ' + (typeof rangesArr === 'undefined' ? 'undefined' : _typeof(rangesArr)) + ', equal to: ' + rangesArr);
-  }
-  if (arguments.length > 2) {
-    if (!existy(opts) || isObj(opts) && Object.keys(opts).length === 0) {
-      opts = {}; // null is passed, for example
-    } else {
-      throw new TypeError('string-replace-slices-array/srsa(): [THROW_ID_04] third input argument, opts, must be a plain object! Currently it\'s: ' + opts + ', equal to: ' + opts);
-    }
   }
   rangesArr.forEach(function (el, i) {
     if (!isArr(el)) {

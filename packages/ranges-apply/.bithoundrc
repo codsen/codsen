@@ -1,17 +1,17 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
       "ava",
+      "clear-cli",
       "coveralls",
       "husky",
       "is-natural-number",
       "is-natural-number-string",
-      "lodash.isplainobject",
       "nyc"
     ]
   },

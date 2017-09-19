@@ -1,12 +1,10 @@
 # string-replace-slices-array
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Delete or replace an array of slices in string
 
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Coverage Status][cov-img]][cov-url]
@@ -29,7 +27,7 @@
 - [Usage](#usage)
 - [The algorithm](#the-algorithm)
 - [In my case](#in-my-case)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -43,6 +41,8 @@ $ npm i -S string-replace-slices-array
 ```js
 const replaceSlicesArr = require('string-replace-slices-array')
 ```
+
+Code is served transpiled to ES5 (using Babel).
 
 ## Idea
 
@@ -136,11 +136,17 @@ Originally this library was part of [email-remove-unused-css](https://github.com
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-replace-slices-array/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-replace-slices-array/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 
@@ -175,8 +181,8 @@ SOFTWARE.
 [cov-img]: https://coveralls.io/repos/github/codsen/string-replace-slices-array/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-replace-slices-array?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/string-replace-slices-array/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/string-replace-slices-array
+[overall-img]: https://www.bithound.io/github/codsen/string-replace-slices-array/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/string-replace-slices-array
 
 [deps-img]: https://www.bithound.io/github/codsen/string-replace-slices-array/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/string-replace-slices-array/master/dependencies/npm
@@ -193,5 +199,5 @@ SOFTWARE.
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-replace-slices-array
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
 [runkit-url]: https://npm.runkit.com/string-replace-slices-array
