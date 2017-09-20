@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Validate and normalise user choice: array, object or both?",
   "main": "index-es5.js",
   "scripts": {
