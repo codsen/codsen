@@ -1,7 +1,7 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
@@ -12,6 +12,7 @@
       "husky",
       "lodash.includes",
       "lodash.isplainobject",
+      "nodemon",
       "nyc"
     ]
   },

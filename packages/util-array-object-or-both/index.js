@@ -1,30 +1,28 @@
-'use strict'
-
 const includes = require('lodash.includes')
 const checkTypes = require('check-types-mini')
 const isObj = require('lodash.isplainobject')
 
-function validate (str, opts) {
-  function existy (x) { return x != null }
+function validate(str, originalOpts) {
+  function existy(x) { return x != null }
   if (!existy(str)) {
     throw new Error(`util-array-object-or-both/validate(): [THROW_ID_01] Please provide a string to work on. Currently it's equal to ${JSON.stringify(str, null, 4)}`)
   }
   if (typeof str !== 'string') {
     throw new Error(`util-array-object-or-both/validate(): [THROW_ID_02] Input must be string! Currently it's ${typeof str}, equal to: ${JSON.stringify(str, null, 4)}`)
   }
-  if (existy(opts) && !isObj(opts)) {
-    throw new Error(`util-array-object-or-both/validate(): [THROW_ID_03] Second argument, options object, must be, well, object! Currenlty it's: ${typeof opts}, equal to: ${JSON.stringify(opts, null, 4)}`)
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new Error(`util-array-object-or-both/validate(): [THROW_ID_03] Second argument, options object, must be, well, object! Currenlty it's: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`)
   }
 
   const onlyObjectValues = ['object', 'objects', 'obj', 'ob', 'o']
   const onlyArrayValues = ['array', 'arrays', 'arr', 'aray', 'arr', 'a']
   const onlyAnyValues = ['any', 'all', 'everything', 'both', 'either', 'each', 'whatever', 'whatevs', 'e']
 
-  var defaults = {
+  const defaults = {
     msg: '',
-    optsVarName: 'given variable'
+    optsVarName: 'given variable',
   }
-  opts = Object.assign({}, defaults, opts)
+  const opts = Object.assign({}, defaults, originalOpts)
   checkTypes(
     opts,
     defaults,
@@ -33,15 +31,15 @@ function validate (str, opts) {
       optsVarName: 'opts',
       schema: {
         msg: ['string', null],
-        optsVarName: ['string', null]
-      }
-    }
+        optsVarName: ['string', null],
+      },
+    },
   )
   if (existy(opts.msg) && opts.msg.length > 0) {
-    opts.msg = opts.msg.trim() + ' '
+    opts.msg = `${opts.msg.trim()} `
   }
   if (opts.optsVarName !== 'given variable') {
-    opts.optsVarName = 'variable "' + opts.optsVarName + '"'
+    opts.optsVarName = `variable "${opts.optsVarName}"`
   }
 
   if (includes(onlyObjectValues, str.toLowerCase().trim())) {
@@ -50,9 +48,8 @@ function validate (str, opts) {
     return 'array'
   } else if (includes(onlyAnyValues, str.toLowerCase().trim())) {
     return 'any'
-  } else {
-    throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`)
   }
+  throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`)
 }
 
 module.exports = validate

@@ -2,11 +2,13 @@
   "name": "util-array-object-or-both",
   "version": "1.1.2",
   "description": "Validate and normalise user choice: array, object or both?",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "clear && standard && nyc --reporter=html --reporter=text ava",
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "repository": "codsen/util-array-object-or-both",
@@ -32,18 +34,22 @@
   },
   "homepage": "https://github.com/codsen/util-array-object-or-both#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.0",
+    "check-types-mini": "^2.6.0",
     "lodash.includes": "*",
     "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.7.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nodemon": "^1.11.0",
-    "nyc": "*",
-    "standard": "^10.0.3"
+    "nodemon": "*",
+    "nyc": "*"
   },
   "ava": {
     "verbose": true
