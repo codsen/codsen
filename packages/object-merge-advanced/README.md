@@ -1,7 +1,5 @@
 # object-merge-advanced
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
 [![Link to npm page][npm-img]][npm-url]
@@ -31,7 +29,7 @@
 - [Testing](#testing)
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `object-assign`](#difference-from-object-assign)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -220,7 +218,7 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 $ npm test
 ```
 
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
+For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [ESLint](https://npmjs.com/eslint-config-airbnb-base) on `airbnb-base` config, except without semicolons.
 
 I aim to have 100% code coverage (which is the case at the moment).
 
@@ -248,11 +246,7 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 **[⬆ &nbsp;back to top](#)**
 
-## Testing and Contributing
-
-```bash
-$ npm test
-```
+## Contributing
 
 If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
 
