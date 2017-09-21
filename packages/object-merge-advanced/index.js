@@ -1,29 +1,26 @@
-'use strict'
+/* eslint max-len:0, no-prototype-builtins:0 */
 
 // ===================================
 // V A R S
 
-var type = require('type-detect')
-var clone = require('lodash.clonedeep')
-var includes = require('array-includes-with-glob')
-var checkTypes = require('check-types-mini')
+const type = require('type-detect')
+const clone = require('lodash.clonedeep')
+const includes = require('array-includes-with-glob')
+const checkTypes = require('check-types-mini')
 
-var existy = require('./util').existy
-var isBool = require('./util').isBool
-var nonEmpty = require('./util').nonEmpty
-var equalOrSubsetKeys = require('./util').equalOrSubsetKeys
-var arrayiffyString = require('./util').arrayiffyString
-var arrayContainsStr = require('./util').arrayContainsStr
+const {
+  existy, isBool, nonEmpty, equalOrSubsetKeys, arrayiffyString, arrayContainsStr,
+} = require('./util')
 
 // ===================================
 // F U N C T I O N S
 
-function isObj (something) { return type(something) === 'Object' }
-function isArr (something) { return Array.isArray(something) }
-function isStr (something) { return type(something) === 'string' }
-function isNum (something) { return type(something) === 'number' }
+function isObj(something) { return type(something) === 'Object' }
+function isArr(something) { return Array.isArray(something) }
+function isStr(something) { return type(something) === 'string' }
+function isNum(something) { return type(something) === 'number' }
 
-function mergeAdvanced (input1orig, input2orig, opts) {
+function mergeAdvanced(input1orig, input2orig, originalOpts) {
   //
   // VARS AND PRECAUTIONS
   // ---------------------------------------------------------------------------
@@ -31,29 +28,29 @@ function mergeAdvanced (input1orig, input2orig, opts) {
   if (arguments.length === 0) {
     throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing')
   }
-  if (existy(opts) && !isObj(opts)) {
+  if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object')
   }
-  var i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
-  var i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
+  let i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
+  const i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
 
   // DEFAULTS
   // ---------------------------------------------------------------------------
 
-  var defaults = {
+  const defaults = {
     mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
     ignoreKeys: [],
     hardMergeKeys: [],
     mergeArraysContainingStringsToBeEmpty: false,
     oneToManyArrayObjectMerge: false,
     hardMergeEverything: false,
-    ignoreEverything: false
+    ignoreEverything: false,
   }
-  opts = Object.assign(clone(defaults), opts)
+  const opts = Object.assign(clone(defaults), originalOpts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 
-  checkTypes(opts, defaults, {msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06]'})
+  checkTypes(opts, defaults, { msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06]' })
 
   // ACTION
   // ---------------------------------------------------------------------------
@@ -74,38 +71,35 @@ function mergeAdvanced (input1orig, input2orig, opts) {
         // two array merge
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           return []
-        } else {
-          var temp = []
-          for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-            if (
-              isObj(i1[index]) &&
+        }
+        const temp = []
+        for (let index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+          if (
+            isObj(i1[index]) &&
               isObj(i2[index]) &&
               (
                 (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index])) ||
                 !opts.mergeObjectsOnlyWhenKeysetMatches
               )
-            ) {
-              temp.push(mergeAdvanced(i1[index], i2[index], opts))
-            } else {
-              if (
-                opts.oneToManyArrayObjectMerge &&
+          ) {
+            temp.push(mergeAdvanced(i1[index], i2[index], opts))
+          } else if (
+            opts.oneToManyArrayObjectMerge &&
                 (
                   (i1.length === 1) || (i2.length === 1)
                 )
-              ) {
-                temp.push((i1.length === 1) ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts))
-              } else {
-                if (index < i1.length) {
-                  temp.push(i1[index])
-                }
-                if (index < i2.length) {
-                  temp.push(i2[index])
-                }
-              }
+          ) {
+            temp.push((i1.length === 1) ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts))
+          } else {
+            if (index < i1.length) {
+              temp.push(i1[index])
+            }
+            if (index < i2.length) {
+              temp.push(i2[index])
             }
           }
-          i1 = clone(temp)
         }
+        i1 = clone(temp)
       } else {
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         return i1
@@ -115,10 +109,9 @@ function mergeAdvanced (input1orig, input2orig, opts) {
       if (nonEmpty(i2)) {
         // cases 11, 13, 15, 17
         return i2
-      } else {
-        // cases 12, 14, 16, 18, 19, 20
-        return i1
       }
+      // cases 12, 14, 16, 18, 19, 20
+      return i1
     }
   } else if (isObj(i1)) {
     // first, exclusions.
@@ -140,27 +133,26 @@ function mergeAdvanced (input1orig, input2orig, opts) {
         if (nonEmpty(i2)) {
           // case 21
           return i2
-        } else {
-          // case 22
-          return i1
         }
+        // case 22
+        return i1
       } else if (isObj(i2)) {
         // case 23
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
-        Object.keys(i2).forEach(function (key) {
+        Object.keys(i2).forEach((key) => {
           if (i1.hasOwnProperty(key)) {
             // key clash
             if (includes(key, opts.ignoreKeys)) {
               // set the ignoreEverything for all deeper recursive traversals,
               // otherwise, it will get lost, yet, ignores apply to all children
-              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, {ignoreEverything: true}))
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { ignoreEverything: true }))
             } else if (includes(key, opts.hardMergeKeys)) {
               // set the hardMergeEverything for all deeper recursive traversals.
               // The user requested this key to be hard-merged, but in deeper branches
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
-              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, {hardMergeEverything: true}))
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }))
             } else {
               // regular merge
               i1[key] = mergeAdvanced(i1[key], i2[key], opts)
@@ -179,10 +171,9 @@ function mergeAdvanced (input1orig, input2orig, opts) {
       if (isArr(i2) || isObj(i2) || nonEmpty(i2)) {
         // cases 31, 32, 33, 34, 35, 37
         return i2
-      } else {
-        // 36, 38, 39, 40
-        return i1
       }
+      // 36, 38, 39, 40
+      return i1
     }
   } else if (isStr(i1)) {
     // first, exclusions.
@@ -198,21 +189,18 @@ function mergeAdvanced (input1orig, input2orig, opts) {
         // cases 41, 43, 45
         // take care of hard merge setting cases, opts.hardMergeKeys
         return i2
-      } else {
-        // cases 42, 44, 46, 47, 48, 49, 50
-        return i1
       }
-    } else {
-      // i1 is empty string
-      // cases 51-60
-      if ((i2 != null) && !isBool(i2)) {
-        // cases 51, 52, 53, 54, 55, 56, 57
-        return i2
-      } else {
-        // 58, 59, 60
-        return i1
-      }
+      // cases 42, 44, 46, 47, 48, 49, 50
+      return i1
     }
+    // i1 is empty string
+    // cases 51-60
+    if ((i2 != null) && !isBool(i2)) {
+      // cases 51, 52, 53, 54, 55, 56, 57
+      return i2
+    }
+    // 58, 59, 60
+    return i1
   } else if (isNum(i1)) {
     // first, exclusions.
     if (opts.ignoreEverything) {
@@ -225,10 +213,9 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     if (nonEmpty(i2)) {
       // cases 61, 63, 65, 67
       return i2
-    } else {
-      // cases 62, 64, 66, 68, 69, 70
-      return i1
     }
+    // cases 62, 64, 66, 68, 69, 70
+    return i1
   } else if (isBool(i1)) {
     // first, exclusions.
     if (opts.ignoreEverything) {
@@ -244,11 +231,10 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
       return i2
-    } else {
-      // i2 is null or undefined
-      // cases 79, 80
-      return i1
     }
+    // i2 is null or undefined
+    // cases 79, 80
+    return i1
   } else if (i1 === null) {
     // first, exclusions.
     if (opts.ignoreEverything) {
@@ -261,21 +247,19 @@ function mergeAdvanced (input1orig, input2orig, opts) {
     if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88
       return i2
-    } else {
-      // cases 89, 90
-      return i1
     }
+    // cases 89, 90
+    return i1
   } else {
     // first, exclusions.
     if (opts.ignoreEverything) {
       return i1
     } else if (opts.hardMergeEverything) {
       return i2
-    } else {
-      // now the business as usual onwards...
-      // cases 91-100
-      return i2
     }
+    // now the business as usual onwards...
+    // cases 91-100
+    return i2
   }
   return i1
 }

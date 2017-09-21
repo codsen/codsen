@@ -2,12 +2,13 @@
   "name": "object-merge-advanced",
   "version": "7.0.2",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
   },
   "repository": "codsen/object-merge-advanced",
   "keywords": [
@@ -39,11 +40,15 @@
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.7.0",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nodemon": "*",
-    "nyc": "*",
-    "standard": "^10.0.2"
+    "nyc": "*"
   },
   "ava": {
     "verbose": true

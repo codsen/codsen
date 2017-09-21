@@ -31,7 +31,7 @@
 - [Testing](#testing)
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `object-assign`](#difference-from-object-assign)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -41,6 +41,8 @@
 ```sh
 $ npm install --save object-merge-advanced
 ```
+
+Transpiled version is served.
 
 ## Purpose
 
@@ -246,11 +248,29 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 **[⬆ &nbsp;back to top](#)**
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues). If you file a pull request, I'll do my best to help you to get it merged promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+
+If saw a typo or English style error in this readme, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+
+If you want to request a new feature, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+
+If you want to assistance with wiring it up, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues). Just please be specific and isolate the case.
+
+If you have ideas how to improve the algorithm - some fundamental ideas how the library should be done - ... - do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+
+Cheers!
 
 **[⬆ &nbsp;back to top](#)**
 
