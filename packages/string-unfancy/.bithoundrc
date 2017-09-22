@@ -13,6 +13,9 @@
       "nyc"
     ]
   },
+  "ignore": [
+    "index-es5.js"
+  ],
   "test": [
     "test.js"
   ]
