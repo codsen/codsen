@@ -2,11 +2,13 @@
   "name": "string-remove-thousand-separators",
   "version": "1.1.2",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
-  "main": "index.js",
+  "main": "index-es5.js",
   "scripts": {
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+    "prepare": "npm run build",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
   },
   "repository": "codsen/string-remove-thousand-separators",
   "keywords": [
@@ -28,21 +30,29 @@
   },
   "homepage": "https://github.com/codsen/string-remove-thousand-separators#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.0",
+    "check-types-mini": "^2.6.0",
     "is-numeric": "0.0.5",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
-    "string-replace-slices-array": "^1.1.0",
-    "string-slices-array-push": "^1.2.0"
+    "string-replace-slices-array": "^1.4.0",
+    "string-slices-array-push": "^1.5.3"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "*",
-    "standard": "^10.0.3"
+    "nyc": "*"
   },
   "ava": {
     "verbose": true
+  },
+  "engines": {
+    "node": ">=0.10.0"
   }
 }
