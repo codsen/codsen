@@ -4,7 +4,7 @@
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "main": "index-es5.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
+    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js && babel util.js --presets babel-preset-es2015 --out-file util-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
     "prepare": "npm run build",

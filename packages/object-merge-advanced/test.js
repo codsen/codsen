@@ -1,8 +1,7 @@
 import test from 'ava'
+import clone from 'lodash.clonedeep'
 import { equalOrSubsetKeys, arrayContainsStr } from './util'
-
-const mergeAdvanced = require('./index')
-const clone = require('lodash.clonedeep')
+import mergeAdvanced from './index-es5'
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards

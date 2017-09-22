@@ -10,7 +10,7 @@ const checkTypes = require('check-types-mini')
 
 const {
   existy, isBool, nonEmpty, equalOrSubsetKeys, arrayiffyString, arrayContainsStr,
-} = require('./util')
+} = require('./util-es5')
 
 // ===================================
 // F U N C T I O N S

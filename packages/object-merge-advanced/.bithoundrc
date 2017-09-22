@@ -16,7 +16,8 @@
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "index-es5.js",
+    "util-es5.js"
   ],
   "test": [
     "test.js"

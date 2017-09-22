@@ -10,7 +10,7 @@ var clone = require('lodash.clonedeep');
 var includes = require('array-includes-with-glob');
 var checkTypes = require('check-types-mini');
 
-var _require = require('./util'),
+var _require = require('./util-es5'),
     existy = _require.existy,
     isBool = _require.isBool,
     nonEmpty = _require.nonEmpty,
