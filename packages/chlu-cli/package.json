@@ -3,21 +3,30 @@
   "version": "1.7.1",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
+  "engines": {
+    "node": ">=4"
+  },
   "repository": "codsen/chlu-cli",
+  "bugs": {
+    "url": "https://github.com/codsen/chlu-cli/issues"
+  },
+  "homepage": "https://github.com/codsen/chlu-cli#readme",
   "author": {
-    "name": "Roy Revelt",
     "email": "roy@codsen.com",
+    "name": "Roy Revelt",
     "url": "codsen.com"
   },
   "bin": {
     "chlu": "cli.js"
   },
-  "engines": {
-    "node": ">=4"
-  },
   "scripts": {
-    "precommit": "npm test",
-    "test": "standard"
+    "format:pkg": "format-package -w -q",
+    "precommit": "npm test && npm run prepare",
+    "prepare": "npm run format:pkg",
+    "test": "./node_modules/.bin/eslint cli.js"
+  },
+  "ava": {
+    "verbose": true
   },
   "files": [
     "cli.js"
@@ -39,10 +48,6 @@
     "cli",
     "cli-app"
   ],
-  "bugs": {
-    "url": "https://github.com/codsen/chlu-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/chlu-cli#readme",
   "dependencies": {
     "chlu": "^2.5.1",
     "meow": "^3.7.0",
@@ -50,11 +55,11 @@
   },
   "devDependencies": {
     "ava": "*",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
     "execa": "^0.8.0",
-    "husky": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": true
+    "format-package": "^3.0.1",
+    "husky": "*"
   }
 }

@@ -19,3 +19,5 @@ config.json
 .editorconfig
 .travis.yml
 test.js
+chlu_adds_missing_diff_links.gif
+feature1.gif

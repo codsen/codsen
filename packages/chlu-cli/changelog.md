@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2017-09-24
+### Changed
+- Removed JS Standard and swiched to raw ESLint on `airbnb-base` preset with config override to ban semicolons.
+- Made all linting checks to pass
+- Tweaked readme
+- Added gif files to `npmignore` so they don't get `npm i`nstalled
+- Updated bithound config to reflect the new setup
+
 ## [1.7.0] - 2017-08-22
 ### Added
 - More badges to `readme`
@@ -54,3 +62,4 @@ Updated to the new version of the API package, CHLU, enabling new features:
 [1.5.0]: https://github.com/codsen/chlu-cli/compare/v1.4.0...v1.5.0
 [1.6.0]: https://github.com/codsen/chlu-cli/compare/v1.5.0...v1.6.0
 [1.7.0]: https://github.com/codsen/chlu-cli/compare/v1.6.0...v1.7.0
+[1.8.0]: https://github.com/codsen/chlu-cli/compare/v1.7.0...v1.8.0

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-'use strict'
 
 const meow = require('meow')
 const chlu = require('chlu')
 const fs = require('fs')
+
 const pack = './package.json'
 const change = './changelog.md'
 const updateNotifier = require('update-notifier')
@@ -18,11 +18,11 @@ const cli = meow(`
   Example
     Just call it in the root, where your package.json is located
 `, {
-  alias: {
-    l: 'loud'
-  }
-})
-updateNotifier({pkg: cli.pkg}).notify()
+    alias: {
+      l: 'loud',
+    },
+  })
+updateNotifier({ pkg: cli.pkg }).notify()
 
 fs.readFile(change, 'utf8', (changelogErr, changelogData) => {
   let res

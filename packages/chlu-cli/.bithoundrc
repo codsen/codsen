@@ -1,16 +1,16 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
       "ava",
-      "doctoc",
       "husky"
     ]
   },
+  "ignore": [],
   "test": [
     "test_bak.js"
   ]

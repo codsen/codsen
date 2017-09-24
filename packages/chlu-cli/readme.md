@@ -1,7 +1,5 @@
 # chlu-cli
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Link to npm page][npm-img]][npm-url]
@@ -28,6 +26,7 @@
 - [Extras](#extras)
 - [A nifty setup idea](#a-nifty-setup-idea)
 - [Updating it](#updating-it)
+- [Wishlist](#wishlist)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -55,7 +54,12 @@ npx chlu-cli
 
 ## What it does
 
-`chlu` stands for CHangeLog Update. Your changelogs should follow the rules given by http://keepachangelog.com. However, errors happen and `chlu` automatically and silently fixes known common errors in changelogs. Let me go through the most common mistakes (from my experience):
+`chlu` stands for CHangeLog Update. To start, your changelogs should follow the rules given by http://keepachangelog.com. In practice, often two things happen:
+
+1. I copy a changelog from one library to another to use as a template and forget to amend everything that needed to be amended. CHLU would fix that.
+2. I am too lazy and deliberately leave some work for CHLU, for example, linking titles with magic GitHub diff URL's. I know CHLU will fix those.
+
+**Here are all the fixes that CHLU can apply:**
 
 ### 1. Missing diff URLs in the footer for newly-added titles
 
@@ -177,6 +181,16 @@ The example above is growing; I want to automate _everything_. Literally.
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
 
+## Wishlist
+
+My biggest next challenge for CHLU is to tap the Git data. If we did that, we could automatically fill/fix the versions! Also, diff links currently calculate the GitHub diff URL from the latest entry in the changelog. This can be imprecise, because often between the minor releases, I create bunch of minor edits on readme etc. bumping the patch digit. Those patch releases never reach into changelog, so they get included in the diff.
+
+For example, I released `1.1.0` and put entry in changelog. Then I edited readme and patched to `1.1.1`. Then new feature is released with `1.2.0` and its diff link is (currently) generated between `1.1.0` and `1.2.0`, including my readme patch `1.1.1`. That would be fixed if I tapped the Git data.
+
+Also, with Git data, even if you cloned the last entry, I would be able to detect that and delete its contents, set today's date, bump minor version and link diff correctly to the latest commit in Git.
+
+That would be awesome!
+
 ## Contributing
 
 All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
@@ -213,8 +227,8 @@ SOFTWARE.
 [travis-img]: https://travis-ci.org/codsen/chlu-cli.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/chlu-cli
 
-[bithound-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/chlu-cli
+[overall-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/chlu-cli
 
 [deps-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
