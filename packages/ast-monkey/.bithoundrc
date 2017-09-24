@@ -13,10 +13,12 @@
       "lodash.clonedeep",
       "lodash.isequal",
       "lodash.isplainobject",
-      "nodemon",
       "nyc"
     ]
   },
+  "ignore": [
+    "index-es5.js"
+  ],
   "test": [
     "test.js"
   ]

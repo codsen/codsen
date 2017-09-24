@@ -11,7 +11,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![Test in browser][runkit-img]][runkit-xurl]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
