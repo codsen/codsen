@@ -5,6 +5,7 @@ coverage
 src
 test
 logs
+media
 
 # files
 *.log

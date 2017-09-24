@@ -40,9 +40,9 @@ $ npm install util-nonempty
 
 type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled to ES5, that contains `require` and `module.exports`  | `main`                | `dist/util-nonempty.cjs.js` | 624B
-**UMD build** for browsers, transpiled to ES5, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 4KB
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/util-nonempty.cjs.js` | 624B
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 471B
+**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 898B
 
 **[⬆ &nbsp;back to top](#)**
 

@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.4.0] - 2017-09-23
 ### Added
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
-- ✨ [Automatic](https://github.com/camacho/format-package) `package.json` sorting.
 
 ## [1.3.0] - 2017-09-18
 ### Added
