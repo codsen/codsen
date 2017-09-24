@@ -1,6 +1,6 @@
 # util-nonempty
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+
 
 > Is the input (plain object, array, string or whatever) not empty?
 
@@ -33,10 +33,16 @@
 ## Install
 
 ```bash
-$ npm install --save util-nonempty
+$ npm install util-nonempty
 ```
 
-You'll get a transpiled code, served from `index-es5.js`. The original (`index.js`) is in ES6.
+**What you'll get:**
+
+type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+main export - **CommonJS version**, transpiled to ES5, that contains `require` and `module.exports`  | `main`                | `dist/util-nonempty.cjs.js` | 624B
+**UMD build** for browsers, transpiled to ES5, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 4KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 471B
 
 **[⬆ &nbsp;back to top](#)**
 

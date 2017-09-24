@@ -1,8 +1,6 @@
-/* eslint consistent-return: 0 */
+import isPlainObject from 'lodash.isplainobject'
 
 const { isArray } = Array
-const isPlainObject = require('lodash.isplainobject')
-
 const isString = something => typeof something === 'string'
 
 function nonEmpty(input) {
@@ -16,4 +14,4 @@ function nonEmpty(input) {
   return false
 }
 
-module.exports = nonEmpty
+export default nonEmpty

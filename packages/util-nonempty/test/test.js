@@ -1,6 +1,6 @@
 import test from 'ava'
 
-const nonEmpty = require('./index.js')
+const nonEmpty = require('../dist/util-nonempty.cjs.js')
 
 // ==============================
 // Precautions
