@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2017-09-25
+### Changed
+- ✨ Actually serving the transpiled version as default. Sorry about that. Now the transpiled source is wired to `package.json` `main`. The proper Rollup setup (UMD, ESJ and ESM builds) is in coming next.
+
 ## [1.5.0] - 2017-09-18
 ### Changed
 - ✨ Separated the merging function into a separate library, [ranges-merge](https://github.com/codsen/ranges-merge).
@@ -29,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/codsen/string-slices-array-push/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/codsen/string-slices-array-push/compare/v1.2.0...v1.3.0

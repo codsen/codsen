@@ -2,7 +2,21 @@
   "name": "string-slices-array-push",
   "version": "1.5.3",
   "description": "Manage the array of slices referencing the index ranges within the string",
-  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "repository": "codsen/string-slices-array-push",
+  "bugs": {
+    "url": "https://github.com/codsen/string-slices-array-push/issues"
+  },
+  "homepage": "https://github.com/codsen/string-slices-array-push#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "index-es5.js",
   "scripts": {
     "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -10,7 +24,9 @@
     "prepare": "npm run build",
     "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
   },
-  "repository": "codsen/string-slices-array-push",
+  "ava": {
+    "verbose": true
+  },
   "keywords": [
     "string",
     "delete",
@@ -23,16 +39,6 @@
     "from",
     "splice"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/string-slices-array-push/issues"
-  },
-  "homepage": "https://github.com/codsen/string-slices-array-push#readme",
   "dependencies": {
     "is-natural-number": "*",
     "is-natural-number-string": "*",
@@ -50,11 +56,5 @@
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
     "nyc": "*"
-  },
-  "ava": {
-    "verbose": true
-  },
-  "engines": {
-    "node": ">=0.10.0"
   }
 }
