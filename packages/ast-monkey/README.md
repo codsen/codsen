@@ -90,16 +90,16 @@ Either `opts.key` or `opts.val` or both must be present. If both are missing, `a
 
 `opts.only` is validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
-Interpreted as array-type | Interpreted as object-type | either type
---------------------------|----------------------------|---------------
- `array`                  | `object`                   | `any`
- `arrays`                 | `objects`                  | `all`
- `arr`                    | `obj`                      | `everything`
- `aray`                   | `ob`                       | `both`
- `arr`                    | `o`                        | `either`
- `a`                      |                            | `each`
-<br/>                     |                            | `whatever`
-<br/>                     |                            | `e`
+Either type  | Interpreted as array-type | Interpreted as object-type |
+-------------|---------------------------|----------------------------|-
+`any`        |  `array`                  | `object`                   |
+`all`        |  `arrays`                 | `objects`                  |
+`everything` |  `arr`                    | `obj`                      |
+`both`       |  `aray`                   | `ob`                       |
+`either`     |  `arr`                    | `o`                        |
+`each`       |  `a`                      |                            |
+`whatever`   |                           |                            |
+`e`          |                           |                            |
 
 If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
@@ -446,16 +446,16 @@ If you set only `key`, any value will be deleted as long as `key` matches. Same 
 
 `opts.only` values are validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
-Interpreted as array-type | Interpreted as object-type | either type
---------------------------|----------------------------|---------------
- `array`                  | `object`                   | `any`
- `arrays`                 | `objects`                  | `all`
- `arr`                    | `obj`                      | `everything`
- `aray`                   | `ob`                       | `both`
- `arr`                    | `o`                        | `either`
- `a`                      |                            | `each`
-                          |                            | `whatever`
-                          |                            | `e`
+Either type  | Interpreted as array-type | Interpreted as object-type |
+-------------|---------------------------|----------------------------|-
+`any`        |  `array`                  | `object`                   |
+`all`        |  `arrays`                 | `objects`                  |
+`everything` |  `arr`                    | `obj`                      |
+`both`       |  `aray`                   | `ob`                       |
+`either`     |  `arr`                    | `o`                        |
+`each`       |  `a`                      |                            |
+`whatever`   |                           |                            |
+`e`          |                           |                            |
 
 If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
@@ -670,27 +670,15 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [npm-img]: https://img.shields.io/npm/v/ast-monkey.svg
 [npm-url]: https://www.npmjs.com/package/ast-monkey

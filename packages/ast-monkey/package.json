@@ -12,8 +12,8 @@
   },
   "homepage": "https://github.com/codsen/ast-monkey#readme",
   "author": {
-    "name": "Roy Revelt",
     "email": "roy@codsen.com",
+    "name": "Roy Revelt",
     "url": "codsen.com"
   },
   "main": "index-es5.js",
