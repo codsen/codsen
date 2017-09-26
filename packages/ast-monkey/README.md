@@ -90,16 +90,16 @@ Either `opts.key` or `opts.val` or both must be present. If both are missing, `a
 
 `opts.only` is validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
-Either type  | Interpreted as array-type | Interpreted as object-type |
--------------|---------------------------|----------------------------|-
-`any`        |  `array`                  | `object`                   |
-`all`        |  `arrays`                 | `objects`                  |
-`everything` |  `arr`                    | `obj`                      |
-`both`       |  `aray`                   | `ob`                       |
-`either`     |  `arr`                    | `o`                        |
-`each`       |  `a`                      |                            |
-`whatever`   |                           |                            |
-`e`          |                           |                            |
+Either type  | Interpreted as array-type | Interpreted as object-type
+-------------|---------------------------|----------------------------
+`any`        |  `array`                  | `object`
+`all`        |  `arrays`                 | `objects`
+`everything` |  `arr`                    | `obj`
+`both`       |  `aray`                   | `ob`
+`either`     |  `arr`                    | `o`
+`each`       |  `a`                      |
+`whatever`   |                           |
+`e`          |                           |
 
 If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
@@ -446,16 +446,16 @@ If you set only `key`, any value will be deleted as long as `key` matches. Same 
 
 `opts.only` values are validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
-Either type  | Interpreted as array-type | Interpreted as object-type |
--------------|---------------------------|----------------------------|-
-`any`        |  `array`                  | `object`                   |
-`all`        |  `arrays`                 | `objects`                  |
-`everything` |  `arr`                    | `obj`                      |
-`both`       |  `aray`                   | `ob`                       |
-`either`     |  `arr`                    | `o`                        |
-`each`       |  `a`                      |                            |
-`whatever`   |                           |                            |
-`e`          |                           |                            |
+Either type  | Interpreted as array-type | Interpreted as object-type
+-------------|---------------------------|----------------------------
+`any`        |  `array`                  | `object`
+`all`        |  `arrays`                 | `objects`
+`everything` |  `arr`                    | `obj`
+`both`       |  `aray`                   | `ob`
+`either`     |  `arr`                    | `o`
+`each`       |  `a`                      |
+`whatever`   |                           |
+`e`          |                           |
 
 If `opts.only` is set to any string longer than zero characters and is not case-insensitively equal to one of the above, the `ast-monkey` will throw an error.
 
