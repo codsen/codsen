@@ -1,11 +1,18 @@
+# folders
+.nyc_output
+lib-cov
+coverage
+src
+test
 logs
+media
+
+# files
 *.log
 npm-debug.log*
 pids
 *.pid
 *.seed
-lib-cov
-coverage
 .lock-wscript
 .npm
 .node_repl_history
@@ -14,8 +21,11 @@ Thumbs.db
 config.json
 .sublime-project
 .sublime-workspace
-.nyc_output
 .bithoundrc
 .editorconfig
 .travis.yml
-test.js
+.babelrc
+.eslintrc
+.eslintrc.json
+rollup.config.js
+package-lock.json

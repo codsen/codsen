@@ -1,6 +1,126 @@
 import test from 'ava'
+import collapse from '../dist/string-collapse-white-space.cjs'
 
-const collapse = require('./index.js')
+const htmlTags = [
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'a',
+  'area',
+  'textarea',
+  'data',
+  'meta',
+  'b',
+  'rb',
+  'sub',
+  'rtc',
+  'head',
+  'thead',
+  'kbd',
+  'dd',
+  'embed',
+  'legend',
+  'td',
+  'source',
+  'aside',
+  'code',
+  'table',
+  'article',
+  'title',
+  'style',
+  'iframe',
+  'time',
+  'pre',
+  'figure',
+  'picture',
+  'base',
+  'template',
+  'cite',
+  'blockquote',
+  'img',
+  'strong',
+  'dialog',
+  'svg',
+  'th',
+  'math',
+  'i',
+  'bdi',
+  'li',
+  'track',
+  'link',
+  'mark',
+  'dl',
+  'label',
+  'del',
+  'small',
+  'html',
+  'ol',
+  'col',
+  'ul',
+  'param',
+  'em',
+  'menuitem',
+  'form',
+  'span',
+  'keygen',
+  'dfn',
+  'main',
+  'section',
+  'caption',
+  'figcaption',
+  'option',
+  'button',
+  'bdo',
+  'video',
+  'audio',
+  'p',
+  'map',
+  'samp',
+  'rp',
+  'hgroup',
+  'colgroup',
+  'optgroup',
+  'sup',
+  'q',
+  'var',
+  'br',
+  'abbr',
+  'wbr',
+  'header',
+  'meter',
+  'footer',
+  'hr',
+  'tr',
+  's',
+  'canvas',
+  'details',
+  'ins',
+  'address',
+  'progress',
+  'object',
+  'select',
+  'dt',
+  'fieldset',
+  'slot',
+  'tfoot',
+  'script',
+  'noscript',
+  'rt',
+  'datalist',
+  'input',
+  'output',
+  'u',
+  'menu',
+  'nav',
+  'div',
+  'ruby',
+  'body',
+  'tbody',
+  'summary',
+]
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -324,5 +444,207 @@ test('04.04 - line and outer trims and \\r', (t) => {
     collapse('\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0', { trimLines: true, trimnbsp: true }),
     'a b\r\nc d\re f\n\n\ng h',
     '04.04.03 bunch of non-breaking spaces to be trimmed',
+  )
+})
+
+// -----------------------------------------------------------------------------
+// group 05. `opts.recogniseHTML`
+// -----------------------------------------------------------------------------
+
+test('05.01 - action around the HTML brackets', (t) => {
+  //
+  // .oO0000Oo.
+  //    HTML
+  // .oO0000Oo.
+  //
+  t.is(
+    collapse('   <   html    >  '),
+    '<html>',
+    '05.01.01 - defaults: whitespace everywhere',
+  )
+  t.is(
+    collapse('    <    html      blablabla="zzz"    >  '),
+    '<html blablabla="zzz">',
+    '05.01.02 - html',
+  )
+  t.is(
+    collapse('<   html   >'),
+    '<html>',
+    '05.01.03 - defaults: as 01, but no trim',
+  )
+  t.is(
+    collapse('<\thtml\r>'),
+    '<html>',
+    '05.01.04 - defaults: tab and carriage return within html tag. Pretty messed up, isn\'t it?',
+  )
+  t.is(
+    collapse('\n\n\r\r\t\t<\thtml\r\t\t>\n\r\t\n'),
+    '<html>',
+    '05.01.05 - defaults: like 03, but with more non-space white space for trimming',
+  )
+  t.is(
+    collapse('\n \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  '),
+    '<html>',
+    '05.01.06 - defaults: like 04 but with sprinkled spaces',
+  )
+
+  //
+  // .oO00000Oo.
+  //    XHTML
+  // .oO00000Oo.
+  //
+  t.is(
+    collapse('   <   html  /  >  '),
+    '<html/>',
+    '05.01.07',
+  )
+  t.is(
+    collapse('    <    html      blablabla="zzz"  /  >  '),
+    '<html blablabla="zzz"/>',
+    '05.01.08',
+  )
+  t.is(
+    collapse('<   html  / >'),
+    '<html/>',
+    '05.01.09',
+  )
+  t.is(
+    collapse('<\thtml\r/>'),
+    '<html/>',
+    '05.01.10',
+  )
+  t.is(
+    collapse('<\thtml/\r>'),
+    '<html/>',
+    '05.01.11',
+  )
+  t.is(
+    collapse('\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n'),
+    '<html/>',
+    '05.01.12',
+  )
+  t.is(
+    collapse('\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n'),
+    '<html/>',
+    '05.01.13',
+  )
+  t.is(
+    collapse('\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n'),
+    '<html/>',
+    '05.01.14',
+  )
+  t.is(
+    collapse('\n \n    \r\r   \t\t  <  \t   html   \r   \t \t  / >\n  \r \t    \n  '),
+    '<html/>',
+    '05.01.15',
+  )
+})
+
+test('05.02 - testing all recognised (X)HTML tags', (t) => {
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <   ${tag}    >  `),
+      `<${tag}>`,
+      `05.02.01.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <   ${tag}  /  >  `),
+      `<${tag}/>`,
+      `05.02.02.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <    z  ${tag}  /  >  `),
+      `< z ${tag} / >`, // <----- only collapses the whitespace
+      `05.02.03.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <   z${tag}  /  >  `),
+      `< z${tag} / >`,
+      `05.02.04.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <   z${tag}>  `),
+      `< z${tag}>`,
+      `05.02.05.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(` a      ${tag}>  `),
+      `a ${tag}>`, // <------- no opening bracket
+      `05.02.06.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(` ${tag}>  `),
+      `${tag}>`, // <------- space-tagname
+      `05.02.07.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(` ${tag}>  `),
+      `${tag}>`, // <------- string starts with tagname
+      `05.02.08.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`  <  ${tag}  `),
+      `< ${tag}`, // <------- checking case when tag is at the end of string
+      `05.02.09.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`Just like a <    b, the tag  ${tag} is my <3... `),
+      `Just like a < b, the tag ${tag} is my <3...`,
+      `05.02.10.${i}`,
+    )
+  })
+  htmlTags.forEach((tag, i) => {
+    t.is(
+      collapse(`   <   z${tag} >   >  `),
+      `< z${tag} > >`,
+      `05.02.11.${i}`,
+    )
+  })
+})
+
+test('05.03 - testing against false positives', (t) => {
+  t.is(
+    collapse('We have equations: a < b and c > d which should not be mangled.'),
+    'We have equations: a < b and c > d which should not be mangled.',
+    '05.03.01 - defaults: whitespace everywhere',
+  )
+})
+
+test('05.04 - going from right to left, tag was recognised but string follows to the left', (t) => {
+  t.is(
+    collapse('    < zzz   form      blablabla="zzz"  /  >  '),
+    '< zzz form blablabla="zzz" / >',
+    '05.04.01 - unrecognised string to the left',
+  )
+  t.is(
+    collapse('    < form   form      blablabla="zzz"  /  >  '),
+    '< form form blablabla="zzz" / >',
+    '05.04.02 - even valid HTML tag to the left - does not matter. Will freak out.',
+  )
+})
+
+test.only('05.05 - HTML closing tag', (t) => {
+  t.is(
+    collapse('    <   a    class="h"  style="display:  block;"  >    Something   here   < / a  >    '),
+    '<a class="h" style="display: block;"> Something here </a>',
+    '05.05.01',
   )
 })

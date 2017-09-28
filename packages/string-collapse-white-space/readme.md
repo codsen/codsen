@@ -1,9 +1,10 @@
 # string-collapse-white-space
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
 
-> Efficient collapsing of white space within strings with optional trimming
+> Efficient collapsing of white space within strings with optional trimming and HTML tag recognition
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -22,8 +23,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+- [TLDR;](#tldr)
 - [Install](#install)
-- [Idea](#idea)
+- [Algorithm](#algorithm)
 - [Usage](#usage)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
@@ -33,21 +35,42 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## TLDR;
+
+First trim outsides, then collapse two and more spaces into one.
+`'    aaa    bbbb    '` → `'aaa bbbb'`
+
+When trimming, any whitespace will be collapsed, including tabs, line breaks and so on.
+When collapsing, only spaces are collapsed. Non-space whitespace won't be touched.
+`'   \t\t\t   aaa     \t     bbbb  \t\t\t\t  '` → `'aaa \t bbbb'`
+
+Optionally, when collapsing around recognised HTML tags, collapse to nothing.
+`'   text    <   div   >    contents   <  /  div   >    more    text   '` → `'text <div> contents </div> more text'`
+
+
 ## Install
 
 ```bash
 $ npm i string-collapse-white-space
 ```
 
-Transpiled code is served.
+**What you'll get:**
+
+type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/string-collapse-white-space.cjs.js` | 13KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 13KB
+**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 29KB
 
 **[⬆ &nbsp;back to top](#)**
 
-## Idea
+## Algorithm
 
 Traverse the string once, gather a list of ranges indicating white space indexes, delete them all in one go and return the new string.
 
 This library traverses the string only once and perform the deletion only once. It recognises Windows, Unix and Linux line endings.
+
+Optionally (on by default), it can recognise (X)HTML tags and for example collapse `< div` -> `<div`.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -156,6 +179,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[node-img]: https://img.shields.io/node/v/detergent.svg
+[node-url]: https://www.npmjs.com/package/n
 
 [npm-img]: https://img.shields.io/npm/v/string-collapse-white-space.svg
 [npm-url]: https://www.npmjs.com/package/string-collapse-white-space
