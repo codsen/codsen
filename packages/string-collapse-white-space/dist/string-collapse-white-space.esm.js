@@ -76,6 +76,8 @@ function collapse(str, originalOpts) {
     console.log('--------------------str[' + i + ']=' + (str[i].trim().length > 0 ? str[i] : 'space'));
     console.log('* tagMatched = ' + JSON.stringify(tagMatched, null, 4));
     console.log('* stateWithinTag = ' + JSON.stringify(stateWithinTag, null, 4));
+    console.log('* preliminaryIndexesToDelete = ' + JSON.stringify(preliminaryIndexesToDelete, null, 4));
+    console.log('* tagCanEndHere = ' + JSON.stringify(tagCanEndHere, null, 4));
     //
     // space clauses
     if (str[i] === ' ') {
@@ -160,6 +162,7 @@ function collapse(str, originalOpts) {
           tagMatched = false;
           stateWithinTag = false;
           preliminaryIndexesToDelete.wipe();
+          console.log('!!! WIPE - ROW 165');
         }
       } else {
         // N O T   W H I T E S P A C E
@@ -180,6 +183,7 @@ function collapse(str, originalOpts) {
           if (stateWithinTag) {
             // this is bad, another closing bracket
             preliminaryIndexesToDelete.wipe();
+            console.log('!!! WIPE - ROW 185');
           } else {
             stateWithinTag = true;
             if (str[i - 1] !== undefined && str[i - 1].trim() === '' && !whiteSpaceWithinTagEndsAt) {
@@ -231,14 +235,15 @@ function collapse(str, originalOpts) {
             }
           } else if (str[i] === '=' || str[i] === '"') {
             tagCanEndHere = false;
-          } else {
-            if (!tagCanEndHere) {
-              tagCanEndHere = true;
-            }
-          }
+          } // else {
+          //   if (!tagCanEndHere) {
+          //     tagCanEndHere = true
+          //   }
+          // }
         }
       }
     }
+    console.log('* tagCanEndHere = ' + JSON.stringify(tagCanEndHere, null, 4));
   }
 
   // apply the ranges, creating the result string
