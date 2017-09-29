@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.0] - 2017-09-25
+## [2.3.0] - 2017-09-29
 ### Added
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
