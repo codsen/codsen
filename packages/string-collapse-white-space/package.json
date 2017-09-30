@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "2.2.4",
+  "version": "3.0.0",
   "description": "Efficient collapsing of white space within strings with optional trimming and HTML tag recognition",
   "license": "MIT",
   "engines": {
