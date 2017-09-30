@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.3.0] - 2017-09-29
+## [3.0.0] - 2017-09-30
 ### Added
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
-[2.3.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v2.3.0
+[3.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v1.0.0...v2.0.0

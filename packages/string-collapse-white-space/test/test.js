@@ -458,8 +458,8 @@ test('05.01 - action around the HTML brackets', (t) => {
   // .oO0000Oo.
   //
   t.is(
-    collapse('   <   html    >  '),
-    '<html>',
+    collapse('   <   html    abc="cde"    >  '),
+    '<html abc="cde">',
     '05.01.01 - defaults: whitespace everywhere',
   )
   t.is(
@@ -534,7 +534,7 @@ test('05.01 - action around the HTML brackets', (t) => {
     '05.01.14',
   )
   t.is(
-    collapse('\n \n    \r\r   \t\t  <  \t   html   \r   \t \t  / >\n  \r \t    \n  '),
+    collapse('\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  '),
     '<html/>',
     '05.01.15',
   )
@@ -620,11 +620,21 @@ test('05.02 - testing all recognised (X)HTML tags', (t) => {
   })
 })
 
-test.skip('05.03 - testing against false positives', (t) => {
+test('05.03 - testing against false positives', (t) => {
   t.is(
-    collapse('We have equations: a < b and c > d which should not be mangled.'),
-    'We have equations: a < b and c > d which should not be mangled.',
-    '05.03.01 - defaults: whitespace everywhere',
+    collapse('zz a < b and c > d yy'),
+    'zz a < b and c > d yy',
+    '05.03.01',
+  )
+  t.is(
+    collapse('We have equations: a < b and c > d not to be mangled.'),
+    'We have equations: a < b and c > d not to be mangled.',
+    '05.03.02 - the "< b" part is sneaky close to the real thing!!!',
+  )
+  t.is(
+    collapse('We have equations: * a < b \n * c > d \n \n and others.'),
+    'We have equations: * a < b \n * c > d \n \n and others.',
+    '05.03.02 - the "< b" part is sneaky close to the real thing!!!',
   )
 })
 
@@ -637,7 +647,7 @@ test('05.04 - going from right to left, tag was recognised but string follows to
   t.is(
     collapse('    < form   form      blablabla="zzz"  /  >  '),
     '< form form blablabla="zzz" / >',
-    '05.04.02 - even valid HTML tag to the left - does not matter. Will freak out.',
+    '05.04.02 - even valid HTML tag to the left - does not matter. Will not collapse around tag.',
   )
 })
 
@@ -651,5 +661,18 @@ test('05.05 - HTML closing tag', (t) => {
     collapse('    <   a    class="h"  style="display:  block;"  >    Something   here   < / a  >    '),
     '<a class="h" style="display: block;"> Something here </a>',
     '05.05.02',
+  )
+  t.is(
+    collapse('< a > zzz < / a >'),
+    '<a> zzz </a>',
+    '05.05.03',
+  )
+})
+
+test('05.06 - some weird letter casing', (t) => {
+  t.is(
+    collapse('test text is being < StRoNg >set in bold<   StRoNg class="wrong1" / > here'),
+    'test text is being <StRoNg>set in bold<StRoNg class="wrong1"/> here',
+    '05.06.01',
   )
 })

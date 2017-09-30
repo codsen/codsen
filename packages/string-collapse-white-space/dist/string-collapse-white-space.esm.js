@@ -23,7 +23,7 @@ function collapse(str, originalOpts) {
     }
 
     return whatToMatch.some(function (el) {
-      return string.slice(position - el.length + 1, position + 1) === el && tagsFront(str[position - el.length]);
+      return string.slice(position - el.length + 1, position + 1).toLowerCase() === el && tagsFront(str[position - el.length]);
     });
   }
 
@@ -70,14 +70,26 @@ function collapse(str, originalOpts) {
   var whiteSpaceWithinTagEndsAt = null;
   var tagMatched = false;
   var tagCanEndHere = false;
+  var count = void 0;
+  var bail = false; // bool flag to notify when false positive detected, used in HTML detection
+  var resetCounts = function resetCounts() {
+    return {
+      equalDoubleQuoteCombo: 0,
+      equalOnly: 0,
+      doubleQuoteOnly: 0,
+      spacesBetweenLetterChunks: 0,
+      linebreaks: 0
+    };
+  };
+  var bracketJustFound = false; // dumb state switch, activated by > and terminated by
+  // first non-whitespace char
+
+  if (opts.recogniseHTML) {
+    count = resetCounts(); // initiates the count object, assigning all keys to zero
+  }
 
   // looping backwards for better efficiency
   for (var i = str.length; i--;) {
-    console.log('--------------------str[' + i + ']=' + (str[i].trim().length > 0 ? str[i] : 'space'));
-    console.log('* tagMatched = ' + JSON.stringify(tagMatched, null, 4));
-    console.log('* stateWithinTag = ' + JSON.stringify(stateWithinTag, null, 4));
-    console.log('* preliminaryIndexesToDelete = ' + JSON.stringify(preliminaryIndexesToDelete, null, 4));
-    console.log('* tagCanEndHere = ' + JSON.stringify(tagCanEndHere, null, 4));
     //
     // space clauses
     if (str[i] === ' ') {
@@ -162,10 +174,43 @@ function collapse(str, originalOpts) {
           tagMatched = false;
           stateWithinTag = false;
           preliminaryIndexesToDelete.wipe();
-          console.log('!!! WIPE - ROW 165');
+        }
+        if (!bail && !bracketJustFound && str[i].trim() === '' && str[i - 1] !== '<' && (str[i + 1] === undefined || str[i + 1].trim() !== '' && str[i + 1].trim() !== '/')) {
+          if (str[i - 1] === undefined || str[i - 1].trim() !== '' && str[i - 1] !== '<' && str[i - 1] !== '/') {
+            count.spacesBetweenLetterChunks += 1;
+          } else {
+            // loop backwards and check, is the first non-space char being "<".
+            for (var y = i - 1; y--;) {
+              if (str[y].trim() !== '') {
+                if (str[y] === '<') {
+                  bail = true;
+                } else {
+                  count.spacesBetweenLetterChunks += i - y;
+                }
+                break;
+              }
+            }
+          }
         }
       } else {
         // N O T   W H I T E S P A C E
+
+        // =========
+        // count equal characters and double quotes
+        if (str[i] === '=') {
+          count.equalOnly += 1;
+          if (str[i + 1] === '"') {
+            count.equalDoubleQuoteCombo += 1;
+          }
+        } else if (str[i] === '"') {
+          count.doubleQuoteOnly += 1;
+        }
+
+        // if the dumb flag is on, turn it off.
+        // first non-whitespace character deactivates it.
+        if (bracketJustFound) {
+          bracketJustFound = false;
+        }
 
         // =========
         // terminate existing range, push the captured range into preliminaries' array
@@ -179,11 +224,14 @@ function collapse(str, originalOpts) {
         // html detection bits:
         // mind you, we're iterating backwards, so tag starts with ">"
         if (str[i] === '>') {
+          // first, reset the count obj.
+          count = resetCounts(count);
+          // set dumb bracket flag to on
+          bracketJustFound = true;
           // two cases:
           if (stateWithinTag) {
             // this is bad, another closing bracket
             preliminaryIndexesToDelete.wipe();
-            console.log('!!! WIPE - ROW 185');
           } else {
             stateWithinTag = true;
             if (str[i - 1] !== undefined && str[i - 1].trim() === '' && !whiteSpaceWithinTagEndsAt) {
@@ -195,7 +243,19 @@ function collapse(str, originalOpts) {
             // tag name might be ending with bracket: <br>
           }
         } else if (str[i] === '<') {
+          // the rest of calculations:
           stateWithinTag = false;
+          // reset bail flag
+          if (bail) {
+            bail = false;
+          }
+          // bail clause, when false positives are detected, such as "a < b and c > d" -
+          // the part: < b and c > looks really deceptive, b is valid tag name...
+          // this bail will detect such cases, freak out and bail, wiping preliminary ranges.
+          if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
+            tagMatched = false;
+            preliminaryIndexesToDelete.wipe();
+          }
           // if somehow we're within a tag and there are already provisional ranges
           if (tagMatched) {
             preliminaryIndexesToDelete.current().forEach(function (_ref) {
@@ -207,6 +267,8 @@ function collapse(str, originalOpts) {
             });
             tagMatched = false;
           }
+          // finally, reset the count obj.
+          count = resetCounts(count);
         } else if (stateWithinTag && str[i] === '/') {
           whiteSpaceWithinTagEndsAt = i;
         } else if (stateWithinTag && !tagMatched) {
@@ -243,7 +305,6 @@ function collapse(str, originalOpts) {
         }
       }
     }
-    console.log('* tagCanEndHere = ' + JSON.stringify(tagCanEndHere, null, 4));
   }
 
   // apply the ranges, creating the result string

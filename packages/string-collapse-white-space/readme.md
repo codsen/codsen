@@ -29,6 +29,7 @@
 - [Usage](#usage)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
+- [Smart bits](#smart-bits)
 - [Practical use](#practical-use)
 - [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
@@ -138,6 +139,16 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 }                              |          |             |             |
 
 **[⬆ &nbsp;back to top](#)**
+
+## Smart bits
+
+There are some sneaky false-positive cases, for example:
+
+`Equations: a < b and c > d for example.`
+
+Notice `< b and c >` part almost matches the tag description - is wrapped with brackets, starts with legit HTML tag name (`b`) and even space follows it. The current version of the algorithm will detect false-positives by counting amount of space, equal, double quote and line break characters within suspected tag (string part between the brackets).
+
+**The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
 ## Practical use
 
