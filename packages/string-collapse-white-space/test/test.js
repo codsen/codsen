@@ -676,3 +676,11 @@ test('05.06 - some weird letter casing', (t) => {
     '05.06.01',
   )
 })
+
+test('05.07 - adhoc case #1', (t) => {
+  t.is(
+    collapse('test text is being < b >set in bold< /  b > here'),
+    'test text is being <b>set in bold</b> here',
+    '05.07',
+  )
+})
