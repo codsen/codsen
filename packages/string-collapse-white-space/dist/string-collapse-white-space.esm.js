@@ -448,7 +448,7 @@ function collapse(str, originalOpts) {
             preliminaryIndexesToDelete.wipe();
           }
           // if somehow we're within a tag and there are already provisional ranges
-          if (tagMatched) {
+          if (tagMatched && preliminaryIndexesToDelete.current()) {
             preliminaryIndexesToDelete.current().forEach(function (_ref) {
               var _ref2 = slicedToArray(_ref, 2),
                   rangeStart = _ref2[0],

@@ -267,7 +267,7 @@ function collapse(str, originalOpts) {
             preliminaryIndexesToDelete.wipe()
           }
           // if somehow we're within a tag and there are already provisional ranges
-          if (tagMatched) {
+          if (tagMatched && preliminaryIndexesToDelete.current()) {
             preliminaryIndexesToDelete.current().forEach(([rangeStart, rangeEnd]) =>
               finalIndexesToDelete.add(rangeStart, rangeEnd))
             tagMatched = false
