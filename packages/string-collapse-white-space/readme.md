@@ -100,8 +100,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 {                              |          |             |             |
 `trimStart`                    | Boolean  | no          | `true`      | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.
 `trimEnd`                      | Boolean  | no          | `true`      | if `false`, trailing whitespace will be just collapsed.
-`trimLines`                    | Boolean  | no          | `false`     | if `true`, every line will be trimmed
-`trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes")
+`trimLines`                    | Boolean  | no          | `false`     | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)
+`trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.
 `recogniseHTML`                | Boolean  | no          | `true`      | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`.
 }                              |          |             |             |
 
@@ -113,7 +113,7 @@ Traverse the string once, gather a list of ranges indicating white space indexes
 
 This library traverses the string _only once_ and performs the deletion _only once_. It recognises Windows, Unix and Linux line endings.
 
-Optionally (on by default), it can recognise (X)HTML tags and for example collapse `< div..` → `<div..`.
+Optionally (on by default), it can recognise (X)HTML tags (any out of 118) and for example collapse `< div..` → `<div..`.
 
 This algorithm **does not use regexes**.
 
@@ -153,7 +153,7 @@ There are some sneaky false-positive cases, for example:
 
 `Equations: a < b and c > d, for example.`
 
-Notice the part `< b and c >` almost matches the HTML tag description - it's wrapped with brackets, starts with legit HTML tag name (`b`) and even space follows it. The current version of the algorithm will detect false-positives by counting amount of space, equal, double quote and line break characters within suspected tag (string part between the brackets).
+Notice the part `< b and c >` almost matches the HTML tag description - it's wrapped with brackets, starts with legit HTML tag name (one out of 118, for example, `b`) and even space follows it. The current version of the algorithm will detect false-positives by counting amount of space, equal, double quote and line break characters within suspected tag (string part between the brackets).
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
