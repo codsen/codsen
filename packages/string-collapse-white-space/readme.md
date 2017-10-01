@@ -25,10 +25,10 @@
 
 - [TLDR;](#tldr)
 - [Install](#install)
-- [Algorithm](#algorithm)
-- [Usage](#usage)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
+- [Algorithm](#algorithm)
+- [Usage](#usage)
 - [Smart bits](#smart-bits)
 - [Practical use](#practical-use)
 - [Testing and Contributing](#testing-and-contributing)
@@ -38,15 +38,22 @@
 
 ## TLDR;
 
-First trim outsides, then collapse two and more spaces into one.
+Take string. First **trim** the outsides, then **collapse** two and more spaces into one.
+
 `'    aaa    bbbb    '` → `'aaa bbbb'`
 
 When trimming, any whitespace will be collapsed, including tabs, line breaks and so on.
-When collapsing, only spaces are collapsed. Non-space whitespace won't be touched.
+When collapsing, _only spaces_ are collapsed. Non-space whitespace within text won't be collapsed.
+
 `'   \t\t\t   aaa     \t     bbbb  \t\t\t\t  '` → `'aaa \t bbbb'`
 
-(Optional) Collapse more aggressively within recognised HTML tags:
-`'text <   span   >    contents   <  /  span   > more text'` → `'text <div> contents </div> more text'`
+(Optional, on by default) **Collapse** more aggressively within recognised **HTML tags**:
+
+`'text <   span   >    contents   <  /  span   > more text'` → `'text <span> contents </span> more text'`
+
+(Optional, off by default) **Trim** each line:
+
+`'   aaa   \n   bbb   '` → `'aaa\nbbb'`
 
 ## Install
 
@@ -61,46 +68,6 @@ type            | Key in `package.json` | Path  | Size
 main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/string-collapse-white-space.cjs.js` | 18KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 18KB
 **UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 29KB
-
-**[⬆ &nbsp;back to top](#)**
-
-## Algorithm
-
-Traverse the string once, gather a list of ranges indicating white space indexes, delete them all in one go and return the new string.
-
-This library traverses the string only once and perform the deletion only once. It recognises Windows, Unix and Linux line endings.
-
-Optionally (on by default), it can recognise (X)HTML tags and for example collapse `< div` → `<div`.
-
-This algorithm does not use regexes, it just traverses the string, records what needs to be deleted and returns you a newly assembled string.
-
-**[⬆ &nbsp;back to top](#)**
-
-## Usage
-
-```js
-const collapse = require('string-collapse-white-space')
-
-let res1 = collapse('  aaa     bbb    ccc   dddd  ')
-console.log('res1 = ' + res1)
-// => "aaa bbb ccc dddd"
-
-let res2 = collapse('   \t\t\t   aaa   \t\t\t   ')
-console.log('res2 = ' + res2)
-// => 'aaa'
-
-let res3 = collapse('   aaa   bbb  \n    ccc   ddd   ', { trimLines: true })
-console.log('res3 = ' + res3)
-// => 'aaa bbb\nccc ddd'
-
-// \xa0 is an unencoded non-breaking space:
-let res4 = collapse(
-  '     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ',
-  { trimLines: true, trimnbsp: true }
-)
-console.log('res4 = ' + res4)
-// => 'aaa bbb\nccc ddd'
-```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -140,13 +107,53 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 
 **[⬆ &nbsp;back to top](#)**
 
+## Algorithm
+
+Traverse the string once, gather a list of ranges indicating white space indexes, delete them all in one go and return the new string.
+
+This library traverses the string _only once_ and performs the deletion _only once_. It recognises Windows, Unix and Linux line endings.
+
+Optionally (on by default), it can recognise (X)HTML tags and for example collapse `< div..` → `<div..`.
+
+This algorithm **does not use regexes**.
+
+**[⬆ &nbsp;back to top](#)**
+
+## Usage
+
+```js
+const collapse = require('string-collapse-white-space')
+
+let res1 = collapse('  aaa     bbb    ccc   dddd  ')
+console.log('res1 = ' + res1)
+// => "aaa bbb ccc dddd"
+
+let res2 = collapse('   \t\t\t   aaa   \t\t\t   ')
+console.log('res2 = ' + res2)
+// => 'aaa'
+
+let res3 = collapse('   aaa   bbb  \n    ccc   ddd   ', { trimLines: true })
+console.log('res3 = ' + res3)
+// => 'aaa bbb\nccc ddd'
+
+// \xa0 is an unencoded non-breaking space:
+let res4 = collapse(
+  '     \xa0    aaa   bbb    \xa0    \n     \xa0     ccc   ddd   \xa0   ',
+  { trimLines: true, trimnbsp: true }
+)
+console.log('res4 = ' + res4)
+// => 'aaa bbb\nccc ddd'
+```
+
+**[⬆ &nbsp;back to top](#)**
+
 ## Smart bits
 
 There are some sneaky false-positive cases, for example:
 
-`Equations: a < b and c > d for example.`
+`Equations: a < b and c > d, for example.`
 
-Notice `< b and c >` part almost matches the tag description - is wrapped with brackets, starts with legit HTML tag name (`b`) and even space follows it. The current version of the algorithm will detect false-positives by counting amount of space, equal, double quote and line break characters within suspected tag (string part between the brackets).
+Notice the part `< b and c >` almost matches the HTML tag description - it's wrapped with brackets, starts with legit HTML tag name (`b`) and even space follows it. The current version of the algorithm will detect false-positives by counting amount of space, equal, double quote and line break characters within suspected tag (string part between the brackets).
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
