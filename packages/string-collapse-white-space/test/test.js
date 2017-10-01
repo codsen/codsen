@@ -685,7 +685,7 @@ test('05.07 - adhoc case #1', (t) => {
   )
 })
 
-test.only('05.08 - adhoc case #2', (t) => {
+test('05.08 - adhoc case #2', (t) => {
   t.is(
     collapse('aaa<bbb'),
     'aaa<bbb',
