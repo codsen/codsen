@@ -10,7 +10,6 @@
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -58,8 +57,8 @@ $ npm i string-collapse-white-space
 
 type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/string-collapse-white-space.cjs.js` | 16KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 16KB
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/string-collapse-white-space.cjs.js` | 18KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 18KB
 **UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 29KB
 
 **[⬆ &nbsp;back to top](#)**
