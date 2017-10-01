@@ -9,11 +9,12 @@
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-badge]][license]
 
 
 ## Table of Contents
@@ -193,35 +194,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[node-img]: https://img.shields.io/node/v/detergent.svg
+[node-img]: https://img.shields.io/node/v/detergent.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/n
 
-[npm-img]: https://img.shields.io/npm/v/string-collapse-white-space.svg
+[npm-img]: https://img.shields.io/npm/v/string-collapse-white-space.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/string-collapse-white-space
 
-[travis-img]: https://travis-ci.org/codsen/string-collapse-white-space.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/string-collapse-white-space.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-collapse-white-space
 
-[cov-img]: https://coveralls.io/repos/github/codsen/string-collapse-white-space/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/string-collapse-white-space/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-collapse-white-space?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/string-collapse-white-space/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-collapse-white-space.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-collapse-white-space
 
-[deps-img]: https://www.bithound.io/github/codsen/string-collapse-white-space/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-collapse-white-space.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/string-collapse-white-space/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg
-[downloads-url]: https://www.npmjs.com/package/string-collapse-white-space
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-collapse-white-space/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-collapse-white-space
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-collapse-white-space
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-collapse-white-space.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/string-collapse-white-space
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-collapse-white-space/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-collapse-white-space
+
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-collapse-white-space
+
+[license-badge]: https://img.shields.io/npm/l/string-collapse-white-space.svg?style=flat-square
+[license]: https://github.com/codsen/string-collapse-white-space/blob/master/license.md
