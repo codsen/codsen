@@ -2,13 +2,32 @@
   "name": "object-flatten-referencing",
   "version": "3.3.1",
   "description": "Flatten complex nested objects according to a reference objects",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+  "license": "MIT",
+  "engines": {
+    "node": ">=5.11.0"
   },
   "repository": "codsen/object-flatten-referencing",
+  "bugs": {
+    "url": "https://github.com/codsen/object-flatten-referencing/issues"
+  },
+  "homepage": "https://github.com/codsen/object-flatten-referencing#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "index-es5.js",
+  "scripts": {
+    "build": "babel index.js --presets babel-preset-env --out-file index-es5.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint index.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": false
+  },
   "keywords": [
     "object",
     "plain",
@@ -21,36 +40,25 @@
     "advanced",
     "email"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/object-flatten-referencing/issues"
-  },
-  "homepage": "https://github.com/codsen/object-flatten-referencing#readme",
   "dependencies": {
-    "check-types-mini": "^2.4.1",
+    "check-types-mini": "^2.6.0",
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "matcher": "^1.0.0",
-    "str-indexes-of-plus": "^1.0.2",
+    "str-indexes-of-plus": "^1.0.3",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-cli": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
     "coveralls": "*",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "^11.2.1",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": false
-  },
-  "engines": {
-    "node": ">=5.11.0"
+    "nyc": "^11.2.1"
   }
 }

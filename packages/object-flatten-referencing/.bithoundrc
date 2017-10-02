@@ -1,7 +1,7 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
@@ -13,6 +13,9 @@
       "lodash.includes"
     ]
   },
+  "ignore": [
+    "index-es5.js"
+  ],
   "test": [
     "test.js"
   ]

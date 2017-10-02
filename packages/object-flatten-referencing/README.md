@@ -1,6 +1,6 @@
 # object-flatten-referencing
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
 
 > Flatten complex nested objects according to a reference
 
@@ -29,16 +29,20 @@
     - [options](#options)
 - [The algorithm](#the-algorithm)
 - [In practice](#in-practice)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Install
 
 ```bash
 $ npm i -S object-flatten-referencing
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Idea
 
@@ -66,6 +70,8 @@ but, you need the key to have its value as string:
 ```
 
 This library does such object "flattening".
+
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -128,6 +134,8 @@ An optional third argument - options object.
 `mergeArraysWithoutLineBreaks` | Boolean  | no          | `true`            | Should we merge arrays using `<br />`'s? It's handy to turn it off when mapping variables on email templates where values in data arrays are IF statements, and `<br />`'s are hardcoded inside of them.
 }                              |          |             |                   |
 
+**[⬆ &nbsp;back to top](#)**
+
 ## The algorithm
 
 In its core, this library uses two functions:
@@ -157,6 +165,8 @@ Arrays are flattened into strings:
 ```
 
 This library recursively traverses both inputs, compares their types and if one type is lesser in the food chain (object vs. string), it uses the above functions to flatten all mismatching elements into strings.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## In practice
 
@@ -235,11 +245,21 @@ console.log(JSON.stringify(mergedDataFile, null, 4))
 
 Voilà!
 
-## Contributing
+**[⬆ &nbsp;back to top](#)**
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+## Testing and Contributing
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-referencing/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+```bash
+$ npm test
+```
+
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-referencing/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 

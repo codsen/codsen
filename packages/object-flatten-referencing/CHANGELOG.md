@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0] - 2017-10-02
+### Added
+- ✨ Now serving a transpiled version.
+- ✨ Raw ESLint, removed JS Standard.
+
 ## [3.3.0] - 2017-08-21
 ### Added
 - ✨ `opts.mergeArraysWithoutLineBreaks` to skip adding the `<br />`'s when merging arrays. The problem was that we do need the `br`'s but when rows are wrapped with conditional statements, those `br`'s end up _inside_ the conditional statements, so we need to turn off automatic addition of `br`'s because otherwise we would always see them.
@@ -75,3 +80,4 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 [3.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.0.0...v3.1.0
 [3.2.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.1.0...v3.2.0
 [3.3.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.2.0...v3.3.0
+[3.4.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.3.1...v3.4.0
