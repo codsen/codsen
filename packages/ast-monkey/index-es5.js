@@ -212,7 +212,7 @@ function find(input, opts) {
   } else {
     opts.only = 'any';
   }
-  return monkey(input, Object.assign(clone(opts), { mode: 'find' }));
+  return monkey(input, Object.assign({}, opts, { mode: 'find' }));
 }
 
 function get(input, opts) {
@@ -234,7 +234,7 @@ function get(input, opts) {
   if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error('ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ' + opts.index);
   }
-  return monkey(input, Object.assign(clone(opts), { mode: 'get' }));
+  return monkey(input, Object.assign({}, opts, { mode: 'get' }));
 }
 
 function set(input, opts) {
@@ -263,7 +263,7 @@ function set(input, opts) {
       index: 'number'
     }
   });
-  return monkey(input, Object.assign(clone(opts), { mode: 'set' }));
+  return monkey(input, Object.assign({}, opts, { mode: 'set' }));
 }
 
 function drop(input, opts) {
@@ -285,7 +285,7 @@ function drop(input, opts) {
       index: 'number'
     }
   });
-  return monkey(input, Object.assign(clone(opts), { mode: 'drop' }));
+  return monkey(input, Object.assign({}, opts, { mode: 'drop' }));
 }
 
 function info(input) {
@@ -311,7 +311,7 @@ function del(input, opts) {
   } else {
     opts.only = 'any';
   }
-  return monkey(input, Object.assign(clone(opts), { mode: 'del' }));
+  return monkey(input, Object.assign({}, opts, { mode: 'del' }));
 }
 
 function arrayFirstOnly(input) {
