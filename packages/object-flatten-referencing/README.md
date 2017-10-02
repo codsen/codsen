@@ -2,18 +2,19 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
 
-> Flatten complex nested objects according to a reference
+> Flatten complex nested objects according to a reference objects
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-badge]][license]
 
 ## Table of Contents
 
@@ -115,7 +116,9 @@ An optional third argument - options object.
   preventDoubleWrapping: true,
   objectKeyAndValueJoinChar: '.',
   wrapGlobalFlipSwitch: true,
-  ignore: []
+  ignore: [],
+  whatToDoWhenReferenceIsMissing: 0,
+  mergeArraysWithoutLineBreaks: true
 }
 ```
 

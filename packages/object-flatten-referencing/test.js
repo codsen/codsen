@@ -282,6 +282,26 @@ test('02.02 - opts.preventDoubleWrapping', (t) => {
   t.deepEqual(
     ofr(
       {
+        key1: '%%_val11.val12_%%',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        preventDoubleWrapping: false,
+      },
+    ),
+    {
+      key1: '%%_%%_val11.val12_%%_%%',
+      key2: '%%_val21.val22_%%',
+    },
+    '02.02.02 - preventDoubleWrapping off',
+  )
+  t.deepEqual(
+    ofr(
+      {
         key1: '{val11.val12}',
         key2: 'val21.val22',
       },
@@ -298,7 +318,7 @@ test('02.02 - opts.preventDoubleWrapping', (t) => {
       key1: '{val11.val12}',
       key2: '{val21.val22}',
     },
-    '02.02.02 - preventDoubleWrapping reading default heads/tails',
+    '02.02.03 - preventDoubleWrapping reading default heads/tails',
   )
   t.deepEqual(
     ofr(
@@ -319,7 +339,7 @@ test('02.02 - opts.preventDoubleWrapping', (t) => {
       key1: 'aaa %%val11.val12%% bbb',
       key2: '%%val21.val22%%',
     },
-    '02.02.03 - preventDoubleWrapping reading default heads/tails',
+    '02.02.04 - preventDoubleWrapping reading default heads/tails',
   )
 })
 
@@ -1214,6 +1234,108 @@ test('02.12 - deeper level - array within array VS. string #2', (t) => {
       ],
     },
     '02.12.02 - innermost array is second element',
+  )
+})
+
+test.skip('02.13 - one ignore works on multiple keys', (t) => {
+  t.deepEqual(
+    ofr(
+      {
+        modules: [
+          {
+            part1: [
+              {
+                ccc: [
+                  {
+                    kkk: [
+                      'm',
+                      'n',
+                      'o',
+                      'p',
+                    ],
+                  },
+                ],
+                ddd: 'ddd_val',
+              },
+            ],
+            part2: [
+              {
+                ccc: [
+                  {
+                    kkk: [
+                      'r',
+                      's',
+                      't',
+                      'u',
+                    ],
+                  },
+                ],
+                ddd: 'ddd_val',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        modules: [
+          {
+            part1: [
+              {
+                ccc: [
+                  {
+                    kkk: 'kkk_ref1',
+                  },
+                ],
+                ddd: 'ddd_val',
+              },
+            ],
+            part2: [
+              {
+                ccc: [
+                  {
+                    kkk: 'kkk_ref2',
+                  },
+                ],
+                ddd: 'ddd_val',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        dontWrapKeys: ['kkk'],
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+        xhtml: true,
+      },
+    ),
+    {
+      modules: [
+        {
+          part1: [
+            {
+              ccc: [
+                {
+                  kkk: '{{ m }}<br />{{ n }}<br />{{ o }}<br />{{ p }}',
+                },
+              ],
+              ddd: '{{ ddd_val }}',
+            },
+          ],
+          part2: [
+            {
+              ccc: [
+                {
+                  kkk: '{{ r }}<br />{{ s }}<br />{{ t }}<br />{{ u }}',
+                },
+              ],
+              ddd: '{{ ddd_val }}',
+            },
+          ],
+        },
+      ],
+    },
+    '02.13.01',
   )
 })
 

@@ -35,6 +35,8 @@ function outer(originalInput1, originalReference1, opts1) {
   }
 
   function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs) {
+    // console.log(`\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
+    // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}\n`)
     var input = clone(originalInput);
     var reference = clone(originalReference);
 
