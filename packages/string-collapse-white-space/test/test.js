@@ -689,6 +689,16 @@ test('05.08 - adhoc case #2', (t) => {
   t.is(
     collapse('aaa<bbb'),
     'aaa<bbb',
-    '05.08',
+    '05.08.01 - defaults',
+  )
+  t.is(
+    collapse('aaa<bbb', { trimLines: false }),
+    'aaa<bbb',
+    '05.08.02 - hardcoded default for trimLines = false',
+  )
+  t.is(
+    collapse('aaa<bbb', { trimLines: true }),
+    'aaa<bbb',
+    '05.08.03 - trimLines = true',
   )
 })
