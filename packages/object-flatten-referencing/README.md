@@ -285,32 +285,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[npm-img]: https://img.shields.io/npm/v/object-flatten-referencing.svg
+[node-img]: https://img.shields.io/node/v/object-flatten-referencing.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/object-flatten-referencing
+
+[npm-img]: https://img.shields.io/npm/v/object-flatten-referencing.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/object-flatten-referencing
 
-[travis-img]: https://travis-ci.org/codsen/object-flatten-referencing.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/object-flatten-referencing.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
 
-[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-flatten-referencing.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
 
-[deps-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-flatten-referencing.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/object-flatten-referencing/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg
-[downloads-url]: https://www.npmjs.com/package/object-flatten-referencing
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-referencing/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-referencing
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-referencing
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-flatten-referencing.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/object-flatten-referencing
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-referencing/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-referencing
+
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-flatten-referencing
+
+[license-badge]: https://img.shields.io/npm/l/object-flatten-referencing.svg?style=flat-square
+[license]: https://github.com/codsen/object-flatten-referencing/blob/master/license.md
