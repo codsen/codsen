@@ -201,8 +201,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[node-img]: https://img.shields.io/node/v/detergent.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/detergent
+[node-img]: https://img.shields.io/node/v/string-collapse-white-space.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/string-collapse-white-space
 
 [npm-img]: https://img.shields.io/npm/v/string-collapse-white-space.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/string-collapse-white-space
