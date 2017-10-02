@@ -1237,7 +1237,7 @@ test('02.12 - deeper level - array within array VS. string #2', (t) => {
   )
 })
 
-test.skip('02.13 - one ignore works on multiple keys', (t) => {
+test('02.13 - one ignore works on multiple keys', (t) => {
   t.deepEqual(
     ofr(
       {
@@ -1255,7 +1255,7 @@ test.skip('02.13 - one ignore works on multiple keys', (t) => {
                     ],
                   },
                 ],
-                ddd: 'ddd_val',
+                ddd: 'ddd_val1',
               },
             ],
             part2: [
@@ -1270,7 +1270,7 @@ test.skip('02.13 - one ignore works on multiple keys', (t) => {
                     ],
                   },
                 ],
-                ddd: 'ddd_val',
+                ddd: 'ddd_val2',
               },
             ],
           },
@@ -1286,7 +1286,7 @@ test.skip('02.13 - one ignore works on multiple keys', (t) => {
                     kkk: 'kkk_ref1',
                   },
                 ],
-                ddd: 'ddd_val',
+                ddd: 'ddd_ref1',
               },
             ],
             part2: [
@@ -1296,14 +1296,14 @@ test.skip('02.13 - one ignore works on multiple keys', (t) => {
                     kkk: 'kkk_ref2',
                   },
                 ],
-                ddd: 'ddd_val',
+                ddd: 'ddd_ref2',
               },
             ],
           },
         ],
       },
       {
-        dontWrapKeys: ['kkk'],
+        dontWrapPaths: ['modules[0].part2[0].ccc[0].kkk'],
         wrapHeadsWith: '{{ ',
         wrapTailsWith: ' }}',
         xhtml: true,
@@ -1319,17 +1319,17 @@ test.skip('02.13 - one ignore works on multiple keys', (t) => {
                   kkk: '{{ m }}<br />{{ n }}<br />{{ o }}<br />{{ p }}',
                 },
               ],
-              ddd: '{{ ddd_val }}',
+              ddd: '{{ ddd_val1 }}',
             },
           ],
           part2: [
             {
               ccc: [
                 {
-                  kkk: '{{ r }}<br />{{ s }}<br />{{ t }}<br />{{ u }}',
+                  kkk: 'r<br />s<br />t<br />u',
                 },
               ],
-              ddd: '{{ ddd_val }}',
+              ddd: '{{ ddd_val2 }}',
             },
           ],
         },

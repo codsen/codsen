@@ -26,9 +26,9 @@ function outer(originalInput1, originalReference1, opts1) {
     throw new Error(`object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it's: ${typeof opts1}`)
   }
 
-  function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs) {
-    // console.log(`\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
-    // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}\n`)
+  function ofr(originalInput, originalReference, opts, wrap, joinArraysUsingBrs, currentRoot) {
+    // console.log(`\n\n* originalInput = ${JSON.stringify(originalInput, null, 4)}`)
+    // console.log(`* originalReference = ${JSON.stringify(originalReference, null, 4)}`)
     let input = clone(originalInput)
     const reference = clone(originalReference)
 
@@ -38,10 +38,18 @@ function outer(originalInput1, originalReference1, opts1) {
     if (joinArraysUsingBrs === undefined) {
       joinArraysUsingBrs = true
     }
+    if (currentRoot === undefined) {
+      currentRoot = ''
+    }
+    // console.log(`* currentRoot = ${JSON.stringify(currentRoot, null, 4)}`)
     const defaults = {
       wrapHeadsWith: '%%_',
       wrapTailsWith: '_%%',
       dontWrapKeys: [],
+      dontWrapPaths: [], // More precise version of simple "dontWrapKeys" above. You can target
+      // paths exactly like for exampl: "modules[0].part2[0].ccc[0].kkk". Remember to
+      // put the index if it's an array, like modules[0] if key "modules" is equal to
+      // array and you want its first element (0-th index), hence "modules[0]".
       xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
       objectKeyAndValueJoinChar: '.',
@@ -54,6 +62,7 @@ function outer(originalInput1, originalReference1, opts1) {
     }
     opts = Object.assign(clone(defaults), opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
+    opts.dontWrapPaths = util.arrayiffyString(opts.dontWrapPaths)
     opts.ignore = util.arrayiffyString(opts.ignore)
     opts.whatToDoWhenReferenceIsMissing = util
       .reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
@@ -66,6 +75,8 @@ function outer(originalInput1, originalReference1, opts1) {
 
     if (isObj(input)) {
       Object.keys(input).forEach((key) => {
+        const currentPath = currentRoot + (currentRoot.length === 0 ? key : `.${key}`)
+        // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
         if ((opts.ignore.length === 0) || !includes(opts.ignore, key)) {
 
           if (opts.wrapGlobalFlipSwitch) {
@@ -73,6 +84,9 @@ function outer(originalInput1, originalReference1, opts1) {
           }
           if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeys.length > 0) {
             wrap = wrap && !opts.dontWrapKeys.some(elem => matcher.isMatch(key, elem))
+          }
+          if (opts.wrapGlobalFlipSwitch && opts.dontWrapPaths.length > 0) {
+            wrap = wrap && !opts.dontWrapPaths.some(elem => elem === currentPath)
           }
 
           if (
@@ -118,7 +132,14 @@ function outer(originalInput1, originalReference1, opts1) {
                     joinArraysUsingBrs = false
                   }
                 }
-                input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
+                input[key] = ofr(
+                  input[key],
+                  reference[key],
+                  opts,
+                  wrap,
+                  joinArraysUsingBrs,
+                  currentPath,
+                )
               }
             } else if (isObj(input[key])) {
               if ((opts.whatToDoWhenReferenceIsMissing === 2) || isStr(reference[key])) {
@@ -145,12 +166,27 @@ function outer(originalInput1, originalReference1, opts1) {
                   Object.assign(clone(opts), { wrapGlobalFlipSwitch: false }),
                   wrap,
                   joinArraysUsingBrs,
+                  currentPath,
                 )
               } else {
-                input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
+                input[key] = ofr(
+                  input[key],
+                  reference[key],
+                  opts,
+                  wrap,
+                  joinArraysUsingBrs,
+                  currentPath,
+                )
               }
             } else if (isStr(input[key])) {
-              input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs)
+              input[key] = ofr(
+                input[key],
+                reference[key],
+                opts,
+                wrap,
+                joinArraysUsingBrs,
+                currentPath,
+              )
             }
           } else if (type(input[key]) !== type(reference[key])) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
@@ -166,9 +202,9 @@ function outer(originalInput1, originalReference1, opts1) {
       if (isArr(reference)) {
         input.forEach((el, i) => {
           if (existy(input[i]) && existy(reference[i])) {
-            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs)
+            input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, `${currentRoot}[${i}]`)
           } else {
-            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs)
+            input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, `${currentRoot}[${i}]`)
           }
         })
       } else if (isStr(reference)) {
