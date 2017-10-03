@@ -10,13 +10,14 @@
       "coveralls",
       "husky",
       "lodash.clonedeep",
-      "lodash.includes"
+      "lodash.includes",
+      "nyc"
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "dist/**"
   ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

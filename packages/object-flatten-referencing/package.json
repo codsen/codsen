@@ -18,17 +18,25 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index-es5.js",
+  "main": "dist/object-flatten-referencing.cjs.js",
+  "module": "dist/object-flatten-referencing.esm.js",
+  "browser": "dist/object-flatten-referencing.umd.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-env --out-file index-es5.js",
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
     "precommit": "npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint index.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/main.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
   },
   "keywords": [
     "object",
@@ -53,7 +61,6 @@
   },
   "devDependencies": {
     "ava": "*",
-    "babel-cli": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.0",
     "coveralls": "*",
@@ -61,6 +68,12 @@
     "eslint-config-airbnb-base": "^12.0.1",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "^11.2.1"
+    "nyc": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.3"
   }
 }

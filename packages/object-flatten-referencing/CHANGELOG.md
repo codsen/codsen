@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.6.0] - 2017-10-02
+### Added
+- ✨ The main source now is in ES2015 modules with `import`/`export`.
+- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`. As a bonus, the Babel setup does not ignore `node_modules` where all dependencies sit, what means no matter were they transpiled or not (I'm looking at you, Sindre), this library will not cause problems in `create-react-app` and the likes.
+
 ## [3.5.0] - 2017-10-02
 ### Added
 - ✨ `opts.dontWrapPaths` - let's you ignore the paths precisely, for example, you can put an exact path leading to the key like: `modules[0].part2[1].ccc[0].kkk`.
@@ -86,3 +91,4 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 [3.3.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.2.0...v3.3.0
 [3.4.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.3.1...v3.4.0
 [3.5.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.4.0...v3.5.0
+[3.6.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.5.0...v3.6.0

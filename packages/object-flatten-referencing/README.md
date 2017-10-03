@@ -25,9 +25,9 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-    - [plainObject](#plainobject)
-    - [searchValue](#searchvalue)
-    - [options](#options)
+    - [1st argument - `plainObject`](#1st-argument---plainobject)
+    - [2nd argument - `searchValue`](#2nd-argument---searchvalue)
+    - [3rd argument - `options`](#3rd-argument---options)
 - [The algorithm](#the-algorithm)
 - [In practice](#in-practice)
 - [Testing and Contributing](#testing-and-contributing)
@@ -42,6 +42,14 @@
 ```bash
 $ npm i -S object-flatten-referencing
 ```
+
+**What you'll get:**
+
+type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/object-flatten-referencing.cjs.js` | 15KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-flatten-referencing.esm.js` | 15KB
+**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 37KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -86,21 +94,21 @@ var res = ofr(plainObject, referenceObject, options)
 console.log('res = ' + JSON.stringify(res, null, 4))
 ```
 
-#### plainObject
+#### 1st argument - `plainObject`
 
 Type: `object` (plain object)
 Obligatory: `yes`
 
 First input argument — the object which you want to flatten.
 
-#### searchValue
+#### 2nd argument - `searchValue`
 
 Type: `object` (plain object)
 Obligatory: `yes`
 
 A reference object — according to what you want to flatten the `plainObject`.
 
-#### options
+#### 3rd argument - `options`
 
 Type: `object` (plain object)
 Obligatory: `no`
@@ -297,9 +305,6 @@ SOFTWARE.
 
 [travis-img]: https://img.shields.io/travis/codsen/object-flatten-referencing.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
-
-[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
 
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/object-flatten-referencing.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-flatten-referencing

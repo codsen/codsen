@@ -1,19 +1,18 @@
 /* eslint padded-blocks: 0 */
 
-const type = require('type-detect')
-const clone = require('lodash.clonedeep')
-const search = require('str-indexes-of-plus')
+import typ from 'type-detect'
+import clone from 'lodash.clonedeep'
+import search from 'str-indexes-of-plus'
+import includes from 'lodash.includes'
+import matcher from 'matcher'
+import checkTypes from 'check-types-mini'
+import util from './util'
 
 const isArr = Array.isArray
-const util = require('./util')
-const includes = require('lodash.includes')
-const matcher = require('matcher')
-const checkTypes = require('check-types-mini')
 
 function existy(x) { return x != null }
-function isStr(something) { return type(something) === 'string' }
-function isObj(something) { return type(something) === 'Object' }
-// function isBool (something) { return typeof something === 'boolean' }
+function isStr(something) { return typ(something) === 'string' }
+function isObj(something) { return typ(something) === 'Object' }
 
 function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 0) {
@@ -188,7 +187,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 currentPath,
               )
             }
-          } else if (type(input[key]) !== type(reference[key])) {
+          } else if (typ(input[key]) !== typ(reference[key])) {
             if (opts.whatToDoWhenReferenceIsMissing === 1) {
               throw new Error(`object-flatten-referencing/ofr(): [THROW_ID_06] reference object does not have the key ${key} and we need it. TIP: Turn off throwing via opts.whatToDoWhenReferenceIsMissing.`)
             }
@@ -230,4 +229,4 @@ function outer(originalInput1, originalReference1, opts1) {
 
 }
 
-module.exports = outer
+export default outer

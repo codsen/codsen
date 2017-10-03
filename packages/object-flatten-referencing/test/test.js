@@ -1,8 +1,14 @@
 /* eslint no-template-curly-in-string: 0 */
 
 import test from 'ava'
-import ofr from './index-es5'
-import { checkTypes, flattenObject, flattenArr, arrayiffyString, reclaimIntegerString } from './util'
+import ofr from '../dist/object-flatten-referencing.cjs'
+import {
+  checkTypes,
+  flattenObject,
+  flattenArr,
+  arrayiffyString,
+  reclaimIntegerString,
+} from '../dist/util.cjs'
 
 // -----------------------------------------------------------------------------
 // 01. various throws

@@ -1,10 +1,11 @@
 /* eslint padded-blocks: 0 */
 
-const type = require('type-detect')
-const clone = require('lodash.clonedeep')
-const isStringInt = require('is-string-int')
+import type from 'type-detect'
+import clone from 'lodash.clonedeep'
+import isStringInt from 'is-string-int'
 
 const isArr = Array.isArray
+
 function isStr(something) { return type(something) === 'string' }
 function isObj(something) { return type(something) === 'Object' }
 
@@ -101,7 +102,7 @@ function reclaimIntegerString(something) {
   return something
 }
 
-module.exports = {
+export default {
   flattenObject,
   flattenArr,
   arrayiffyString,
