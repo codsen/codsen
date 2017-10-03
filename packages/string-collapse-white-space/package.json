@@ -33,6 +33,11 @@
   "ava": {
     "verbose": true
   },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "string",
     "collapse",

@@ -1,4 +1,4 @@
-/* eslint no-lonely-if:0, no-loop-func:0 */
+/* eslint no-lonely-if:0, no-loop-func:0, max-len:0 */
 
 import checkTypes from 'check-types-mini'
 import isObj from 'lodash.isplainobject'
@@ -53,7 +53,7 @@ function collapse(str, originalOpts) {
 
   // -----------------------------------------------------------------------------
 
-  const DEBUG = 0
+  // const DEBUG = 0
   let res = str
   let spacesEndAt = null
   let whiteSpaceEndsAt = null
@@ -81,7 +81,7 @@ function collapse(str, originalOpts) {
 
   // looping backwards for better efficiency
   for (let i = str.length; i--;) {
-    if (DEBUG) { console.log(`------------------------ ${str[i].trim() !== '' ? str[i] : 'space'}`) }
+    // if (DEBUG) { console.log(`------------------------ ${str[i].trim() !== '' ? str[i] : 'space'}`) }
     //
     // space clauses
     if (str[i] === ' ') {
@@ -175,7 +175,7 @@ function collapse(str, originalOpts) {
           tagMatched = false
           stateWithinTag = false
           preliminaryIndexesToDelete.wipe()
-          if (DEBUG) { console.log('wipe at row 176') }
+          // if (DEBUG) { console.log('wipe at row 176') }
         }
         if (
           !bail &&
@@ -188,9 +188,9 @@ function collapse(str, originalOpts) {
             (str[i - 1] === undefined) ||
             ((str[i - 1].trim() !== '') && (str[i - 1] !== '<') && (str[i - 1] !== '/'))
           ) {
-            if (DEBUG) { console.log(`190: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
+            // if (DEBUG) { console.log(`190: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
             count.spacesBetweenLetterChunks += 1
-            if (DEBUG) { console.log(`192: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
+            // if (DEBUG) { console.log(`192: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
           } else {
             // loop backwards and check, is the first non-space char being "<".
             for (let y = i - 1; y--;) {
@@ -198,9 +198,9 @@ function collapse(str, originalOpts) {
                 if (str[y] === '<') {
                   bail = true
                 } else if (str[y] !== '/') {
-                  if (DEBUG) { console.log(`199: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
+                  // if (DEBUG) { console.log(`199: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
                   count.spacesBetweenLetterChunks += i - y
-                  if (DEBUG) { console.log(`201: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
+                  // if (DEBUG) { console.log(`201: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
                 }
                 break
               }
@@ -247,7 +247,7 @@ function collapse(str, originalOpts) {
           if (stateWithinTag) {
             // this is bad, another closing bracket
             preliminaryIndexesToDelete.wipe()
-            if (DEBUG) { console.log('wipe at row 244') }
+            // if (DEBUG) { console.log('wipe at row 244') }
           } else {
             stateWithinTag = true
             if ((str[i - 1] !== undefined) && (str[i - 1].trim() === '') && !whiteSpaceWithinTagEndsAt) {
@@ -259,7 +259,7 @@ function collapse(str, originalOpts) {
             // tag name might be ending with bracket: <br>
           }
         } else if (str[i] === '<') {
-          if (DEBUG) { console.log(`preliminaryIndexesToDelete.current() = ${JSON.stringify(preliminaryIndexesToDelete.current(), null, 4)}`) }
+          // if (DEBUG) { console.log(`preliminaryIndexesToDelete.current() = ${JSON.stringify(preliminaryIndexesToDelete.current(), null, 4)}`) }
           // the rest of calculations:
           stateWithinTag = false
           // reset bail flag
@@ -274,7 +274,7 @@ function collapse(str, originalOpts) {
           ) {
             tagMatched = false
             preliminaryIndexesToDelete.wipe()
-            if (DEBUG) { console.log('wipe at row 270') }
+            // if (DEBUG) { console.log('wipe at row 270') }
           }
           // if somehow we're within a tag and there are already provisional ranges
           if (tagMatched && preliminaryIndexesToDelete.current()) {
