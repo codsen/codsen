@@ -51,18 +51,18 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     if (joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
         if (isStr(arr[i])) {
-          var lineBreak = '';
-          if (opts.mergeArraysWithoutLineBreaks && i > 0) {
+          var lineBreak = void 0;
+          lineBreak = '';
+          if (opts.mergeArraysWithLineBreaks && i > 0 && (!opts.mergeWithoutTrailingBrIfLineContainsBr || typeof arr[i - 1] !== 'string' || opts.mergeWithoutTrailingBrIfLineContainsBr && arr[i - 1] !== undefined && !arr[i - 1].toLowerCase().includes('<br'))) {
             lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
           }
           res += lineBreak + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '');
         } else if (isArr(arr[i])) {
-
           // there's an array among elements
           if (arr[i].length > 0 && arr[i].every(isStr)) {
             (function () {
               var lineBreak = '';
-              if (opts.mergeArraysWithoutLineBreaks && res.length > 0) {
+              if (opts.mergeArraysWithLineBreaks && res.length > 0) {
                 lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
               }
               res = arr[i].reduce(function (acc, val, i2, arr2) {
@@ -79,7 +79,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce(function (acc, val, i, arr2) {
         var lineBreak = '';
-        if (opts.mergeArraysWithoutLineBreaks && res.length > 0) {
+        if (opts.mergeArraysWithLineBreaks && res.length > 0) {
           lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
         }
         var trailingSpace = '';

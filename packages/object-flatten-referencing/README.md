@@ -40,14 +40,14 @@
 ## Install
 
 ```bash
-$ npm i -S object-flatten-referencing
+$ npm i object-flatten-referencing
 ```
 
 **What you'll get:**
 
 type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/object-flatten-referencing.cjs.js` | 15KB
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/object-flatten-referencing.cjs.js` | 16KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-flatten-referencing.esm.js` | 15KB
 **UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 37KB
 
@@ -126,24 +126,25 @@ An optional third argument - options object.
   wrapGlobalFlipSwitch: true,
   ignore: [],
   whatToDoWhenReferenceIsMissing: 0,
-  mergeArraysWithoutLineBreaks: true
+  mergeArraysWithLineBreaks: true
 }
 ```
 
 `options` object's key         | Type     | Obligatory? | Default           | Description
 -------------------------------|----------|-------------|-------------------|----------------------
 {                              |          |             |                   |
-`wrapHeadsWith`                    | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
-`wrapTailsWith`                    | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
+`wrapHeadsWith`                | String   | no          | `%%_`             | Prepend this to each value, each result of flattening or simply other encountered value.
+`wrapTailsWith`                | String   | no          | `_%%`             | Append this to each value, each result of flattening or simply other encountered value.
 `dontWrapKeys`                 | Array of strings or String | no | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/codsen/json-variables#data-containers), for example. You can put wildcards (*) to match zero or more characters.
-`dontWrapPaths`                 | Array of strings or String | no | empty array | This is a more precise cousin of `dontWrapKeys`. Put the exact path(s) to the key you want to ignore. Remember to append `[number]` after keys that have values as arrays. For example, here's a path: `modules[0].part2[1].ccc[0].kkk` - key `modules` in root, equal to array. Take zero'th element from that array, it's an object. Take that object's key `part2`, it's equal to an array. Take that array's second element (index `1`)... and so on.
+`dontWrapPaths`                | Array of strings or String | no | empty array | This is a more precise cousin of `dontWrapKeys`. Put the exact path(s) to the key you want to ignore. Remember to append `[number]` after keys that have values as arrays. For example, here's a path: `modules[0].part2[1].ccc[0].kkk` - key `modules` in root, equal to array. Take zero'th element from that array, it's an object. Take that object's key `part2`, it's equal to an array. Take that array's second element (index `1`)... and so on.
 `xhtml`                        | Boolean  | no          | `true`            | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)
 `preventDoubleWrapping`        | Boolean  | no          | `true`            | If the current value already contains a string from `wrapHeadsWith` or `wrapTailsWith`, don't wrap to prevent double wrapping.
 `objectKeyAndValueJoinChar`    | String   | no          | `.`               | When an object is turned into a string, its key is joined with its value, with another string in-between. This controls what that in-between string is.
 `wrapGlobalFlipSwitch`         | Boolean  | no          | `true`            | You can turn off the wrapping function completely using this.
 `ignore`                       | Array or String | no   | empty array       | Don't apply any flattening to any of these keys. Naturally, don't wrap them with anything either.
 `whatToDoWhenReferenceIsMissing` | Integer or Integer as String | no | `0`  | 0 = skip, 1 = throw, 2 = flatten to string
-`mergeArraysWithoutLineBreaks` | Boolean  | no          | `true`            | Should we merge arrays using `<br />`'s? It's handy to turn it off when mapping variables on email templates where values in data arrays are IF statements, and `<br />`'s are hardcoded inside of them.
+`mergeArraysWithLineBreaks`    | Boolean  | no          | `true`            | Should we merge arrays using `<br />`'s? It's handy to turn it off when mapping variables on email templates where values in data arrays are IF statements, and `<br />`'s are hardcoded inside of them.
+`mergeWithoutTrailingBrIfLineContainsBr` | Boolean | no | `true`            | When merging arrays to produce a string, each row's contents will be checked do they contain `<br`, and if so, line break in front of it will not be added. Added in `v4`.
 }                              |          |             |                   |
 
 **[⬆ &nbsp;back to top](#)**
@@ -215,7 +216,7 @@ To achieve that, you use another JSON _mapping file_,
 }
 ```
 
-It's easy to merge the _mapping file_ onto the _data file_, but you get:
+It's easy to [merge](https://github.com/codsen/object-merge-advanced) the _mapping file_ onto the _data file_, but you get:
 
 ```js
 // intermediate data file after merging the mapping file over data file
@@ -275,21 +276,21 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
+Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER

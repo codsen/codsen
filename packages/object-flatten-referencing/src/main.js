@@ -56,8 +56,10 @@ function outer(originalInput1, originalReference1, opts1) {
       ignore: [], // Ignore these keys, don't flatten their values.
       whatToDoWhenReferenceIsMissing: 0, // 0 = leave that key's value as it is,
       // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
-      mergeArraysWithoutLineBreaks: true, // when merging arrays, should we
+      mergeArraysWithLineBreaks: true, // when merging arrays, should we
       // add <br /> between the rows?
+      mergeWithoutTrailingBrIfLineContainsBr: true, // if line already contains BR,
+      // don't add another, trailing-one
     }
     opts = Object.assign(clone(defaults), opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)

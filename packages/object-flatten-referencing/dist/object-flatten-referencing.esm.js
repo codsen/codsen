@@ -51,18 +51,18 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     if (joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
         if (isStr$1(arr[i])) {
-          var lineBreak = '';
-          if (opts.mergeArraysWithoutLineBreaks && i > 0) {
+          var lineBreak = void 0;
+          lineBreak = '';
+          if (opts.mergeArraysWithLineBreaks && i > 0 && (!opts.mergeWithoutTrailingBrIfLineContainsBr || typeof arr[i - 1] !== 'string' || opts.mergeWithoutTrailingBrIfLineContainsBr && arr[i - 1] !== undefined && !arr[i - 1].toLowerCase().includes('<br'))) {
             lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
           }
           res += lineBreak + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '');
         } else if (isArr$1(arr[i])) {
-
           // there's an array among elements
           if (arr[i].length > 0 && arr[i].every(isStr$1)) {
             (function () {
               var lineBreak = '';
-              if (opts.mergeArraysWithoutLineBreaks && res.length > 0) {
+              if (opts.mergeArraysWithLineBreaks && res.length > 0) {
                 lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
               }
               res = arr[i].reduce(function (acc, val, i2, arr2) {
@@ -79,7 +79,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce(function (acc, val, i, arr2) {
         var lineBreak = '';
-        if (opts.mergeArraysWithoutLineBreaks && res.length > 0) {
+        if (opts.mergeArraysWithLineBreaks && res.length > 0) {
           lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
         }
         var trailingSpace = '';
@@ -296,8 +296,10 @@ function outer(originalInput1, originalReference1, opts1) {
       ignore: [], // Ignore these keys, don't flatten their values.
       whatToDoWhenReferenceIsMissing: 0, // 0 = leave that key's value as it is,
       // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
-      mergeArraysWithoutLineBreaks: true // when merging arrays, should we
+      mergeArraysWithLineBreaks: true, // when merging arrays, should we
       // add <br /> between the rows?
+      mergeWithoutTrailingBrIfLineContainsBr: true // if line already contains BR,
+      // don't add another, trailing-one
     };
     opts = Object.assign(clone(defaults$$1), opts);
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys);

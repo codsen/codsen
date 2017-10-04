@@ -555,7 +555,7 @@ test('02.03 - flattens an array value but doesn\'t touch other one', (t) => {
         },
       },
       {
-        mergeArraysWithoutLineBreaks: false,
+        mergeArraysWithLineBreaks: false,
       },
     ),
     {
@@ -1342,6 +1342,100 @@ test('02.13 - one ignore works on multiple keys', (t) => {
       ],
     },
     '02.13.01',
+  )
+})
+
+test('02.14 - opts.mergeWithoutTrailingBrIfLineContainsBr', (t) => {
+  t.deepEqual(
+    ofr(
+      {
+        key1: [
+          '{% if val1 %}{{ val1 }}<br />{% endif %}',
+          '{% if val2 %}{{ val2 }}<br />{% endif %}',
+          '{% if val3 %}{{ val3 }}{% endif %}',
+        ],
+      },
+      {
+        key1: 'Contact us',
+      },
+      {
+        wrapGlobalFlipSwitch: false,
+      },
+    ),
+    {
+      key1: '{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}',
+    },
+    '02.14.01 - default - BRs are detected and no additional BRs are added',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: [
+          '{% if val1 %}{{ val1 }}<br />{% endif %}',
+          '{% if val2 %}{{ val2 }}<br />{% endif %}',
+          '{% if val3 %}{{ val3 }}{% endif %}',
+        ],
+      },
+      {
+        key1: 'Contact us',
+      },
+      {
+        wrapGlobalFlipSwitch: false,
+        mergeWithoutTrailingBrIfLineContainsBr: true,
+      },
+    ),
+    {
+      key1: '{% if val1 %}{{ val1 }}<br />{% endif %}{% if val2 %}{{ val2 }}<br />{% endif %}{% if val3 %}{{ val3 }}{% endif %}',
+    },
+    '02.14.02 - hardcoded default - same as #01',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: [
+          '{% if val1 %}{{ val1 }}<br />{% endif %}',
+          '{% if val2 %}{{ val2 }}<br />{% endif %}',
+          '{% if val3 %}{{ val3 }}{% endif %}',
+        ],
+      },
+      {
+        key1: 'Contact us',
+      },
+      {
+        wrapGlobalFlipSwitch: false,
+        mergeWithoutTrailingBrIfLineContainsBr: false,
+      },
+    ),
+    {
+      key1: '{% if val1 %}{{ val1 }}<br />{% endif %}<br />{% if val2 %}{{ val2 }}<br />{% endif %}<br />{% if val3 %}{{ val3 }}{% endif %}',
+    },
+    '02.14.03 - off - will add excessive BRs',
+  )
+
+  // NOW COMBOS:
+
+  t.deepEqual(
+    ofr(
+      {
+        key1: [
+          '{% if val1 %}{{ val1 }}<br />{% endif %}',
+          '{% if val2 %}{{ val2 }}<br />{% endif %}',
+          '{% if val3 %}{{ val3 }}{% endif %}',
+        ],
+      },
+      {
+        key1: 'Contact us',
+      },
+      {
+        wrapGlobalFlipSwitch: false,
+        xhtml: false,
+        mergeWithoutTrailingBrIfLineContainsBr: false,
+      },
+    ),
+    {
+      key1: '{% if val1 %}{{ val1 }}<br />{% endif %}<br>{% if val2 %}{{ val2 }}<br />{% endif %}<br>{% if val3 %}{{ val3 }}{% endif %}',
+    },
+    '02.14.04 - xhtml = false',
   )
 })
 

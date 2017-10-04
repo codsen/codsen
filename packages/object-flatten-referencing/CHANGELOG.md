@@ -4,6 +4,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2017-10-04
+
+New: `opts.mergeWithoutTrailingBrIfLineContainsBr` - affects default behaviour
+Changed: `opts.mergeArraysWithoutLineBreaks` renamed to `opts.mergeArraysWithLineBreaks`
+
+---
+
+### Added
+- ✨ `opts.mergeWithoutTrailingBrIfLineContainsBr` - then we have an array (of strings, for example), but the reference is string we need to flatten that array. Now the default would be separate each line's content by `<br />`. However, sometimes, rows contain conditional content, which is wrapped with IF statements. In those cases, BR is "moved" inside those IF statements, so that when there's nothing to show, BR is not shown either. This option checks the row's content for BR's and if finds any, doesn't add trailing BR.
+
+```JSON
+[
+  ...
+  "row1_line": "\n{%- if %%-row1_var-%% -%}%%_row1_var_%%<br />{%- endif -%}",
+  "row2_line": "\n{%- if %%-row2_var-%% -%}%%_row2_var_%%<br />{%- endif -%}",
+  ...
+]
+```
+
+Notice how in the example above, `<br />`'s are inside IF conditionals. We wouldn't want the above flattened to:
+
+```
+\n{%- if %%-row1_var-%% -%}%%_row1_var_%%<br />{%- endif -%}<br />
+\n{%- if %%-row2_var-%% -%}%%_row2_var_%%<br />{%- endif -%}
+```
+
+instead, we want:
+
+```
+\n{%- if %%-row1_var-%% -%}%%_row1_var_%%<br />{%- endif -%}
+\n{%- if %%-row2_var-%% -%}%%_row2_var_%%<br />{%- endif -%}
+```
+
+That's what this feature is about.
+
+### Changed
+- ✨ `opts.mergeArraysWithoutLineBreaks` renamed to `opts.mergeArraysWithLineBreaks`. I don't know what happend in back then in the summer but this setting is named opposite it should have been named.
+
 ## [3.6.0] - 2017-10-02
 ### Added
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
@@ -92,3 +130,4 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 [3.4.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.3.1...v3.4.0
 [3.5.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.4.0...v3.5.0
 [3.6.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.5.0...v3.6.0
+[4.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.6.0...v4.0.0
