@@ -1913,6 +1913,119 @@ test('05.01 - double-wrapping prevention when markers have white space', (t) => 
   )
 })
 
+test('05.02 - double-wrapping prevention from setting opts.preventWrappingIfContains', (t) => {
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{% if some_module.some_special_value %}some text{% endif %}',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      key1: '{{ {% if some_module.some_special_value %}some text{% endif %} }}',
+      key2: '{{ val21.val22 }}',
+    },
+    '05.02.01 - default - double wrapping on key1 because {%...%} is not recognised',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{% if some_module.some_special_value %}some text{% endif %}',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+        preventWrappingIfContains: '{%',
+      },
+    ),
+    {
+      key1: '{% if some_module.some_special_value %}some text{% endif %}',
+      key2: '{{ val21.val22 }}',
+    },
+    '05.02.02 - opts.preventWrappingIfContains, value as string',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{% if some_module.some_special_value %}some text{% endif %}',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+        preventWrappingIfContains: ['zzz', '{%'],
+      },
+    ),
+    {
+      key1: '{% if some_module.some_special_value %}some text{% endif %}',
+      key2: '{{ val21.val22 }}',
+    },
+    '05.02.03 - opts.preventWrappingIfContains, value as array',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{% if some_module.some_special_value %}some text{% endif %}',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+        preventWrappingIfContains: ['yyy', 'zzz'],
+      },
+    ),
+    {
+      key1: '{{ {% if some_module.some_special_value %}some text{% endif %} }}',
+      key2: '{{ val21.val22 }}',
+    },
+    '05.02.04 - opts.preventWrappingIfContains contents don\'t match and thus string get double-wrapped',
+  )
+  t.deepEqual(
+    ofr(
+      {
+        key1: '{% if some_module.some_special_value %}some text{% endif %}',
+        key2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+        preventWrappingIfContains: ['yyy', 'zzz'],
+        wrapGlobalFlipSwitch: false,
+      },
+    ),
+    {
+      key1: '{% if some_module.some_special_value %}some text{% endif %}',
+      key2: 'val21.val22',
+    },
+    '05.02.05 - opts.preventWrappingIfContains and opts.wrapGlobalFlipSwitch kill switch on',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 95. util.reclaimIntegerString
 // -----------------------------------------------------------------------------

@@ -104,8 +104,8 @@ function arrayiffyString(something) {
 }
 
 function reclaimIntegerString(something) {
-  if (isStr(something) && isStringInt(something)) {
-    return parseInt(something, 10);
+  if (isStr(something) && isStringInt(something.trim())) {
+    return parseInt(something.trim(), 10);
   }
   return something;
 }

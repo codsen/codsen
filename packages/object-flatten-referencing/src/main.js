@@ -51,6 +51,7 @@ function outer(originalInput1, originalReference1, opts1) {
       // array and you want its first element (0-th index), hence "modules[0]".
       xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
+      preventWrappingIfContains: [],
       objectKeyAndValueJoinChar: '.',
       wrapGlobalFlipSwitch: true, // Allow disabling the wrapping feature. Used on deeper branches.
       ignore: [], // Ignore these keys, don't flatten their values.
@@ -61,8 +62,9 @@ function outer(originalInput1, originalReference1, opts1) {
       mergeWithoutTrailingBrIfLineContainsBr: true, // if line already contains BR,
       // don't add another, trailing-one
     }
-    opts = Object.assign(clone(defaults), opts)
+    opts = Object.assign({}, defaults, opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
+    opts.preventWrappingIfContains = util.arrayiffyString(opts.preventWrappingIfContains)
     opts.dontWrapPaths = util.arrayiffyString(opts.dontWrapPaths)
     opts.ignore = util.arrayiffyString(opts.ignore)
     opts.whatToDoWhenReferenceIsMissing = util
@@ -82,12 +84,16 @@ function outer(originalInput1, originalReference1, opts1) {
 
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true // reset it for the new key.
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeys.length > 0) {
-            wrap = wrap && !opts.dontWrapKeys.some(elem => matcher.isMatch(key, elem))
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapPaths.length > 0) {
-            wrap = wrap && !opts.dontWrapPaths.some(elem => elem === currentPath)
+            if (opts.dontWrapKeys.length > 0) {
+              wrap = wrap && !opts.dontWrapKeys.some(elem => matcher.isMatch(key, elem))
+            }
+            if (opts.dontWrapPaths.length > 0) {
+              wrap = wrap && !opts.dontWrapPaths.some(elem => elem === currentPath)
+            }
+            if (opts.preventWrappingIfContains.length > 0) {
+              wrap = wrap &&
+                !opts.preventWrappingIfContains.some(elem => input[key].includes(elem))
+            }
           }
 
           if (
@@ -164,7 +170,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 input[key] = ofr(
                   input[key],
                   reference[key],
-                  Object.assign(clone(opts), { wrapGlobalFlipSwitch: false }),
+                  Object.assign({}, opts, { wrapGlobalFlipSwitch: false }),
                   wrap,
                   joinArraysUsingBrs,
                   currentPath,

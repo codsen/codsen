@@ -104,8 +104,8 @@ function arrayiffyString(something) {
 }
 
 function reclaimIntegerString(something) {
-  if (isStr$1(something) && isStringInt(something)) {
-    return parseInt(something, 10);
+  if (isStr$1(something) && isStringInt(something.trim())) {
+    return parseInt(something.trim(), 10);
   }
   return something;
 }
@@ -291,6 +291,7 @@ function outer(originalInput1, originalReference1, opts1) {
       // array and you want its first element (0-th index), hence "modules[0]".
       xhtml: true, // when flattening arrays, put <br /> (XHTML) or <br> (HTML)
       preventDoubleWrapping: true,
+      preventWrappingIfContains: [],
       objectKeyAndValueJoinChar: '.',
       wrapGlobalFlipSwitch: true, // Allow disabling the wrapping feature. Used on deeper branches.
       ignore: [], // Ignore these keys, don't flatten their values.
@@ -301,8 +302,9 @@ function outer(originalInput1, originalReference1, opts1) {
       mergeWithoutTrailingBrIfLineContainsBr: true // if line already contains BR,
       // don't add another, trailing-one
     };
-    opts = Object.assign(clone(defaults$$1), opts);
+    opts = Object.assign({}, defaults$$1, opts);
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys);
+    opts.preventWrappingIfContains = util.arrayiffyString(opts.preventWrappingIfContains);
     opts.dontWrapPaths = util.arrayiffyString(opts.dontWrapPaths);
     opts.ignore = util.arrayiffyString(opts.ignore);
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing);
@@ -321,16 +323,21 @@ function outer(originalInput1, originalReference1, opts1) {
 
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true; // reset it for the new key.
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapKeys.length > 0) {
-            wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
-              return matcher.isMatch(key, elem);
-            });
-          }
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapPaths.length > 0) {
-            wrap = wrap && !opts.dontWrapPaths.some(function (elem) {
-              return elem === currentPath;
-            });
+            if (opts.dontWrapKeys.length > 0) {
+              wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
+                return matcher.isMatch(key, elem);
+              });
+            }
+            if (opts.dontWrapPaths.length > 0) {
+              wrap = wrap && !opts.dontWrapPaths.some(function (elem) {
+                return elem === currentPath;
+              });
+            }
+            if (opts.preventWrappingIfContains.length > 0) {
+              wrap = wrap && !opts.preventWrappingIfContains.some(function (elem) {
+                return input[key].includes(elem);
+              });
+            }
           }
 
           if (existy(reference[key]) || !existy(reference[key]) && opts.whatToDoWhenReferenceIsMissing === 2) {
@@ -388,7 +395,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 // to prevent that, we flip the switch on the global wrap
                 // setting for all deeper child nodes.
                 // we also clone the options object so as not to mutate it.
-                input[key] = ofr(input[key], reference[key], Object.assign(clone(opts), { wrapGlobalFlipSwitch: false }), wrap, joinArraysUsingBrs, currentPath);
+                input[key] = ofr(input[key], reference[key], Object.assign({}, opts, { wrapGlobalFlipSwitch: false }), wrap, joinArraysUsingBrs, currentPath);
               } else {
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }

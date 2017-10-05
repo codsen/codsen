@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2017-10-05
+### Added
+- ✨ `opts.preventWrappingIfContains`. It lets you extend functionality of `opts.wrapHeadsWith` - more variable patterns can be added to be ignored.
+
 ## [4.0.0] - 2017-10-04
 
 New: `opts.mergeWithoutTrailingBrIfLineContainsBr` - affects default behaviour
@@ -131,3 +135,4 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 [3.5.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.4.0...v3.5.0
 [3.6.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.5.0...v3.6.0
 [4.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.6.0...v4.0.0
+[4.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v4.0.0...v4.1.0
