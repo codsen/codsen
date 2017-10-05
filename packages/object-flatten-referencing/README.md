@@ -126,7 +126,8 @@ An optional third argument - options object.
   wrapGlobalFlipSwitch: true,
   ignore: [],
   whatToDoWhenReferenceIsMissing: 0,
-  mergeArraysWithLineBreaks: true
+  mergeArraysWithLineBreaks: true,
+  mergeWithoutTrailingBrIfLineContainsBr: true,
 }
 ```
 
