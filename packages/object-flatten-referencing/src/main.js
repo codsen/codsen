@@ -90,7 +90,7 @@ function outer(originalInput1, originalReference1, opts1) {
             if (opts.dontWrapPaths.length > 0) {
               wrap = wrap && !opts.dontWrapPaths.some(elem => elem === currentPath)
             }
-            if (opts.preventWrappingIfContains.length > 0) {
+            if ((opts.preventWrappingIfContains.length > 0) && (typeof input[key] === 'string')) {
               wrap = wrap &&
                 !opts.preventWrappingIfContains.some(elem => input[key].includes(elem))
             }

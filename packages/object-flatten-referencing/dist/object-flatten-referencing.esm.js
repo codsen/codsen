@@ -333,7 +333,7 @@ function outer(originalInput1, originalReference1, opts1) {
                 return elem === currentPath;
               });
             }
-            if (opts.preventWrappingIfContains.length > 0) {
+            if (opts.preventWrappingIfContains.length > 0 && typeof input[key] === 'string') {
               wrap = wrap && !opts.preventWrappingIfContains.some(function (elem) {
                 return input[key].includes(elem);
               });
