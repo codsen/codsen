@@ -175,9 +175,6 @@ function findUnused(arrOriginal, opts) {
       //
       if (arr1.length > 1) {
         const unusedKeys = Object.keys(keySet).filter(key => arr1.every(obj =>
-          // console.log(`key = ${JSON.stringify(key, null, 4)}`)
-          // console.log(`includes(key, opts1.comments) = ${JSON.stringify(includes(key, opts1.comments), null, 4)}`)
-          // console.log('')
           (
             (obj[key] === opts1.placeholder) ||
                 (obj[key] === undefined)
@@ -193,18 +190,19 @@ function findUnused(arrOriginal, opts) {
       // no matter how many objects are there within our arr1ay, if any values
       // contain objects or arr1ays, traverse them recursively
       //
-      const keys = [].concat.apply([], Object.keys(keySet).filter(key => (isObj(keySet[key]) || isArr(keySet[key]))))
+      const keys = [].concat(...Object.keys(keySet)
+        .filter(key => (isObj(keySet[key]) || isArr(keySet[key]))))
       const keysContents = keys.map(key => type(keySet[key]))
 
       // can't use map() because we want to prevent nulls being written.
       // hence the reduce() contraption
-      const extras = keys.map(el => [].concat.apply([], arr1.reduce((res, obj) => {
+      const extras = keys.map(el => [].concat(...arr1.reduce((res1, obj) => {
         if (existy(obj[el]) && (obj[el] !== opts1.placeholder)) {
           if (!opts1.comments || !includes(obj[el], opts1.comments)) {
-            res.push(obj[el])
+            res1.push(obj[el])
           }
         }
-        return res
+        return res1
       }, [])))
       let appendix = ''
       let innerDot = ''

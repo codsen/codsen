@@ -2087,47 +2087,87 @@ test('05.13 - findUnused() - simple case of not normalised input', (t) => {
   )
 })
 
-test.skip('05.14 - findUnused() - opts.comments', (t) => {
-  // t.deepEqual(
-  //   findUnused(
-  //     [
-  //       {
-  //         a: false,
-  //         b: 'bbb1',
-  //         b__comment__: 'this is a comment',
-  //         c: false
-  //       },
-  //       {
-  //         a: 'aaa',
-  //         b: 'bbb2',
-  //         b__comment__: 'this is also a comment',
-  //         c: false
-  //       }
-  //     ]
-  //   ),
-  //   ['c'],
-  //   '05.14.01 - ignores comment fields because they match default value'
-  // )
+test('05.14 - findUnused() - opts.comments', (t) => {
+  t.deepEqual(
+    findUnused([
+      {
+        a: false,
+        b: 'bbb1',
+        b__comment__this_is_a_comment_for_key_b: false,
+        c: false,
+      },
+      {
+        a: 'aaa',
+        b: 'bbb2',
+        b__comment__this_is_a_comment_for_key_b: false,
+        c: false,
+      },
+    ]),
+    ['c'],
+    '05.14.01 - defaults recognise the comment substring within the key',
+  )
   t.deepEqual(
     findUnused(
       [
         {
           a: false,
           b: 'bbb1',
-          b__comment__: 'this is a comment',
+          b__comment__this_is_a_comment_for_key_b: false,
           c: false,
         },
         {
           a: 'aaa',
           b: 'bbb2',
-          b__comment__: 'this is also a comment',
+          b__comment__this_is_a_comment_for_key_b: false,
           c: false,
         },
       ],
       { comments: 'zzz' },
     ),
-    ['b__comment__', 'c'],
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
     '05.14.02 - ignores comment fields because they match default value',
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: false },
+    ),
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
+    '05.14.03 - falsey opts.comments - instruction to turn it off',
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: 0 },
+    ),
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
+    '05.14.04 - falsey opts.comments - instruction to turn it off',
   )
 })
 

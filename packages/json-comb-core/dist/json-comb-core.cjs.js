@@ -12,6 +12,177 @@ var includes = _interopDefault(require('lodash.includes'));
 var type = _interopDefault(require('type-detect'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type$$1, value) {
+      switch (type$$1) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var toConsumableArray = function (arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  } else {
+    return Array.from(arr);
+  }
+};
+
 // -----------------------------------------------------------------------------
 
 function existy(x) {
@@ -52,11 +223,11 @@ function getKeyset(arrOriginal, opts) {
 
   var schemaObj = {};
   var arr = clone(arrOriginal);
-  var defaults = {
+  var defaults$$1 = {
     placeholder: false
   };
-  opts = Object.assign(clone(defaults), opts);
-  checkTypes(opts, defaults, {
+  opts = Object.assign(clone(defaults$$1), opts);
+  checkTypes(opts, defaults$$1, {
     msg: 'json-comb-core/getKeyset(): [THROW_ID_10*]',
     schema: {
       placeholder: ['null', 'number', 'string', 'boolean', 'object']
@@ -132,12 +303,12 @@ function findUnused(arrOriginal, opts) {
   if (arguments.length > 1 && !isObj(opts)) {
     throw new TypeError('json-comb-core/findUnused(): [THROW_ID_42] The second argument, options object, must be a plain object, not ' + type(opts));
   }
-  var defaults = {
+  var defaults$$1 = {
     placeholder: false,
     comments: '__comment__'
   };
-  opts = Object.assign({}, defaults, opts);
-  checkTypes(opts, defaults, {
+  opts = Object.assign({}, defaults$$1, opts);
+  checkTypes(opts, defaults$$1, {
     msg: 'json-comb-core/findUnused(): [THROW_ID_40]',
     schema: {
       placeholder: ['null', 'number', 'string', 'boolean'],
@@ -174,6 +345,8 @@ function findUnused(arrOriginal, opts) {
     if (arr1.every(function (el) {
       return type(el) === 'Object';
     })) {
+      var _ref;
+
       keySet = getKeyset(arr1);
       //
       // ------ PART 1 ------
@@ -182,12 +355,7 @@ function findUnused(arrOriginal, opts) {
       if (arr1.length > 1) {
         var unusedKeys = Object.keys(keySet).filter(function (key) {
           return arr1.every(function (obj) {
-            return (
-              // console.log(`key = ${JSON.stringify(key, null, 4)}`)
-              // console.log(`includes(key, opts1.comments) = ${JSON.stringify(includes(key, opts1.comments), null, 4)}`)
-              // console.log('')
-              (obj[key] === opts1.placeholder || obj[key] === undefined) && (!opts1.comments || !includes(key, opts1.comments))
-            );
+            return (obj[key] === opts1.placeholder || obj[key] === undefined) && (!opts1.comments || !includes(key, opts1.comments));
           });
         });
         // console.log(`unusedKeys = ${JSON.stringify(unusedKeys, null, 4)}`)
@@ -200,9 +368,9 @@ function findUnused(arrOriginal, opts) {
       // no matter how many objects are there within our arr1ay, if any values
       // contain objects or arr1ays, traverse them recursively
       //
-      var keys = [].concat.apply([], Object.keys(keySet).filter(function (key) {
+      var keys = (_ref = []).concat.apply(_ref, toConsumableArray(Object.keys(keySet).filter(function (key) {
         return isObj(keySet[key]) || isArr(keySet[key]);
-      }));
+      })));
       var keysContents = keys.map(function (key) {
         return type(keySet[key]);
       });
@@ -210,14 +378,16 @@ function findUnused(arrOriginal, opts) {
       // can't use map() because we want to prevent nulls being written.
       // hence the reduce() contraption
       var extras = keys.map(function (el) {
-        return [].concat.apply([], arr1.reduce(function (res, obj) {
+        var _ref2;
+
+        return (_ref2 = []).concat.apply(_ref2, toConsumableArray(arr1.reduce(function (res1, obj) {
           if (existy(obj[el]) && obj[el] !== opts1.placeholder) {
             if (!opts1.comments || !includes(obj[el], opts1.comments)) {
-              res.push(obj[el]);
+              res1.push(obj[el]);
             }
           }
-          return res;
-        }, []));
+          return res1;
+        }, [])));
       });
       var appendix = '';
       var innerDot = '';

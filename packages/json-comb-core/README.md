@@ -1,17 +1,20 @@
 # json-comb-core
 
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+
 > Utility library to maintain a set of JSON files
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-badge]][license]
 
 ## Table of Contents
 
@@ -21,29 +24,28 @@
 
 - [Install](#install)
 - [Idea](#idea)
-- [getKeyset()](#getkeyset)
+- [`getKeyset()`](#getkeyset)
   - [input](#input)
   - [output](#output)
   - [example](#example)
-- [enforceKeyset()](#enforcekeyset)
+- [`enforceKeyset()`](#enforcekeyset)
   - [input](#input-1)
   - [output](#output-1)
   - [example](#example-1)
-- [noNewKeys()](#nonewkeys)
+- [`noNewKeys()`](#nonewkeys)
   - [input](#input-2)
   - [output](#output-2)
   - [example](#example-2)
-- [findUnused()](#findunused)
+- [`findUnused()`](#findunused)
   - [input](#input-3)
   - [output](#output-3)
   - [example](#example-3)
-- [sortIfObject()](#sortifobject)
+- [`sortIfObject()`](#sortifobject)
   - [input](#input-4)
   - [output](#output-4)
   - [example](#example-4)
-- [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
-- [Contributing](#contributing)
+- [Testing and Contributing](#testing-and-contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -82,7 +84,7 @@ It's when we can't/won't normalise files, yet we need some insurance. It would b
 
 A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is unused and probably can be deleted.
 
-## getKeyset()
+## `getKeyset()`
 
 This function produces a reference object according to which you can normalise JSON files.
 
@@ -184,7 +186,7 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 //    }
 ```
 
-## enforceKeyset()
+## `enforceKeyset()`
 
 Reads an input plain object and a keyset schema object and normalises the input plain object, adding any missing keys.
 
@@ -221,7 +223,7 @@ console.log('inputObj = ' + JSON.stringify(inputObj, null, 4))
 //    }
 ```
 
-## noNewKeys()
+## `noNewKeys()`
 
 Reads an array and a reference keyset object, returns an array of zero or more keys that are in the array, but not in keyset.
 
@@ -295,13 +297,11 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 // => ['z[0].c', 'z[1].c']
 ```
 
-## findUnused()
+## `findUnused()`
 
 Reads a set of objects (array of plain objects, probably parsed JSON files) and tells, are there any keys throughout the whole set that have only the placeholder values. You can customise the placeholder value via an optional options object.
 
 Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
-
-As a rule, it will flag up all comments, because they are always equal to a placeholder (`false` in my case), so take it with a grain of salt. Also, sometimes you want to keep keys even if they are unused for consistency purposes. Sometimes modules are repeated, and it's handy to see all the available keys.
 
 ### input
 
@@ -310,11 +310,12 @@ Input argument | Type                                | Obligatory? | Description
 `input`        | Array of zero or more plain objects | yes         | Array of parsed JSON files.
 `options`      | Object                              | no          | Options object. See below.
 
-`options` object's key         | Type     | Obligatory? | Default   | Description
--------------------------------|----------|-------------|-----------|----------------------
-{                              |          |             |           |
-`placeholder`                  | Any      | no          | `false`   | What value is being used to mark unused key?
-}                              |          |             |           |
+`options` object's key         | Type     | Obligatory? | Default       | Description
+-------------------------------|----------|-------------|---------------|----------------------
+{                              |          |             |               |
+`placeholder`                  | any      | no          | `false`       | What value is being used to mark unused key?
+`comments`                     | string   | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it actually was unused). Set it to any falsey value to turn it off.
+}                              |          |             |               |
 
 ### output
 
@@ -391,7 +392,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 // => ['c', 'a[0].l']
 ```
 
-## sortIfObject()
+## `sortIfObject()`
 
 This is an auxiliary function to help with sorting object keys. Yes, object keys can be sorted. This function is flexible if non-object is passed, it's returned without messing it up. You can freely assign things to the result of this function.
 
@@ -426,14 +427,6 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
-## Unit testing and code coverage
-
-```bash
-$ npm test
-```
-
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Unit test code coverage is calculated using [Istanbul CLI](https://www.npmjs.com/package/nyc).
-
 ## Difference between Normalising JSON and JSON Schemas
 
 In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, does all the values have the same types as values in schema. We're not particularly concerned about the **existence** of the keys, we're more concerned is all we've got match the schema.
@@ -444,29 +437,35 @@ So, normalisation is a process of making bunch of JSON files to have the same ke
 
 When performing a normalisation, all JSON files are read and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to placeholder.
 
-## Contributing
+## Testing and Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+```bash
+$ npm test
+```
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/json-comb-core/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-collapse-white-space/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+
+<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
+Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -474,32 +473,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[npm-img]: https://img.shields.io/npm/v/json-comb-core.svg
+[node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/json-comb-core
+
+[npm-img]: https://img.shields.io/npm/v/json-comb-core.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/json-comb-core
 
-[travis-img]: https://travis-ci.org/codsen/json-comb-core.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/json-comb-core.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/json-comb-core
 
-[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/json-comb-core.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/json-comb-core
 
-[deps-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/json-comb-core.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg
-[downloads-url]: https://www.npmjs.com/package/json-comb-core
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-comb-core
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-comb-core.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/json-comb-core
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
+
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-comb-core
+
+[license-badge]: https://img.shields.io/npm/l/json-comb-core.svg?style=flat-square
+[license]: https://github.com/codsen/json-comb-core/blob/master/license.md
