@@ -1,15 +1,17 @@
 # json-comb-core
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
-
 > Utility library to maintain a set of JSON files
 
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Coverage Status][cov-img]][cov-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Test in browser][runkit-img]][runkit-url]
 
 ## Table of Contents
 
@@ -21,23 +23,23 @@
 - [Idea](#idea)
 - [getKeyset()](#getkeyset)
   - [input](#input)
-  - [ouput](#ouput)
+  - [output](#output)
   - [example](#example)
 - [enforceKeyset()](#enforcekeyset)
   - [input](#input-1)
-  - [ouput](#ouput-1)
+  - [output](#output-1)
   - [example](#example-1)
 - [noNewKeys()](#nonewkeys)
   - [input](#input-2)
-  - [ouput](#ouput-2)
+  - [output](#output-2)
   - [example](#example-2)
 - [findUnused()](#findunused)
   - [input](#input-3)
-  - [output](#output)
+  - [output](#output-3)
   - [example](#example-3)
 - [sortIfObject()](#sortifobject)
   - [input](#input-4)
-  - [output](#output-1)
+  - [output](#output-4)
   - [example](#example-4)
 - [Unit testing and code coverage](#unit-testing-and-code-coverage)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
@@ -51,6 +53,14 @@
 ```bash
 $ npm i json-comb-core
 ```
+
+**What you'll get:**
+
+type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/json-comb-core.cjs.js` | 9KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 9KB
+**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/json-comb-core.umd.js` | 52KB
 
 ## Idea
 
@@ -66,7 +76,7 @@ For that, we'll need tools to [extract](#getkeyset) a keyset and [enforce](#enfo
 
 **Alert when JSON's have unique keys**
 
-It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an alert if my objects contain unique keys that none of the other objects has.
+It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an alert if my objects contain unique keys that none of the other objects have.
 
 **Find unused keys in a set of JSONs**
 
@@ -98,7 +108,7 @@ Input argument   | Type                   | Obligatory? | Description
 `placeholder`          | Any   | no          | `false`   | When adding a missing key, this will be assigned to its value.
 }                      |       |             |           |
 
-### ouput
+### output
 
 A plain object, which can be used in `enforceKeyset()`. See below.
 
@@ -185,7 +195,7 @@ Input argument | Type     | Obligatory? | Description
 `input`        | Object   | yes         | What should we normalise?
 `schema`       | Object   | yes         | According to what schema should we normalise?
 
-### ouput
+### output
 
 A clone of an input object, with the same key set as the `schema` object.
 
@@ -224,7 +234,7 @@ Input argument | Type     | Obligatory? | Description
 `input`        | Object   | yes         | What should we check?
 `schema`       | Object   | yes         | According to what schema should we normalise?
 
-### ouput
+### output
 
 An array of zero or more paths.
 
@@ -426,15 +436,13 @@ Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://sta
 
 ## Difference between Normalising JSON and JSON Schemas
 
-In simple terms, a _JSON Schema_ is a way to define and enforce key presence and their value types. It is used when dealing with reading/writing objects to network sources.
+In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, does all the values have the same types as values in schema. We're not particularly concerned about the **existence** of the keys, we're more concerned is all we've got match the schema.
 
-JSON file normalisation (what this library does, among other things) is making so that every JSON in a given set has the same keys as all others. Missing values are simply set to a placeholder (normally Boolean `false`).
+When you choose to separate email content from templates, content is put into JSON files. When you add a new field in one file, you want that field added on all other files. Same way, if a field has placeholder (normally a Boolean value `false`) on every file, you want to be informed about that. Maybe that key/value pair is unused across all JSON files. You are not concerned very much what _type_ the particular value is in your JSON - normally they're `string`, `number` or `Boolean` anyway - you're more concerned about the **consistence** of the set of your JSON files.
 
-See the difference between the two concepts?
+So, normalisation is a process of making bunch of JSON files to have the same keys. JSON Schema is a description of all keys and their value types within a JSON.
 
-JSON Schema is usually set. You've agreed on the API and now enforce it. Data files, on the other hand, have evolving API - new keys are added (and removed) regularly, and we're concerned only to keep the keysets the same.
-
-Schemas are used when dealing with API's and network. Normalisation is used when dealing with local files on a hard drive.
+When performing a normalisation, all JSON files are read and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to placeholder.
 
 ## Contributing
 
@@ -466,14 +474,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+[npm-img]: https://img.shields.io/npm/v/json-comb-core.svg
+[npm-url]: https://www.npmjs.com/package/json-comb-core
+
 [travis-img]: https://travis-ci.org/codsen/json-comb-core.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/json-comb-core
 
 [cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?branch=master
 [cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/json-comb-core
+[overall-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/json-comb-core
 
 [deps-img]: https://www.bithound.io/github/codsen/json-comb-core/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
@@ -483,3 +494,12 @@ SOFTWARE.
 
 [downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg
 [downloads-url]: https://www.npmjs.com/package/json-comb-core
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/json-comb-core
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[runkit-url]: https://npm.runkit.com/json-comb-core

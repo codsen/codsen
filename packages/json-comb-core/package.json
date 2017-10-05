@@ -2,14 +2,42 @@
   "name": "json-comb-core",
   "version": "2.4.0",
   "description": "The inner core of json-comb",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test && doctoc readme.md",
-    "test": "standard && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
   "repository": "codsen/json-comb-core",
+  "bugs": {
+    "url": "https://github.com/codsen/json-comb-core/issues"
+  },
+  "homepage": "https://github.com/codsen/json-comb-core#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/json-comb-core.cjs.js",
+  "module": "dist/json-comb-core.esm.js",
+  "browser": "dist/json-comb-core.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/main.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "json",
     "normalize",
@@ -22,38 +50,33 @@
     "same",
     "comb"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/json-comb-core/issues"
-  },
-  "homepage": "https://github.com/codsen/json-comb-core#readme",
   "dependencies": {
-    "check-types-mini": "^2.3.0",
+    "check-types-mini": "^2.4.1",
     "lodash.clonedeep": "*",
-    "object-fill-missing-keys": "^2.1.2",
+    "lodash.includes": "*",
+    "object-fill-missing-keys": "^2.1.3",
     "object-flatten-all-arrays": "^3.1.2",
-    "object-merge-advanced": "^6.5.0",
+    "object-merge-advanced": "^7.0.1",
     "object-no-new-keys": "^1.1.0",
     "object-set-all-values-to": "^2.0.2",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
     "coveralls": "*",
-    "husky": "^0.14.3",
-    "nodemon": "^1.11.0",
-    "nyc": "^11.0.3",
-    "standard": "^10.0.2"
-  },
-  "ava": {
-    "verbose": false
-  },
-  "engines": {
-    "node": ">=5.11.0"
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "*",
+    "nyc": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.3"
   }
 }

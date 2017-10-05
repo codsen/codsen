@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-10-05
+### Added
+- ✨ The main source now is in ES2015 modules with `import`/`export`.
+- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`. As a bonus, the Babel setup does not ignore `node_modules` where all dependencies sit, what means no matter were they transpiled or not, this library will not cause problems in `create-react-app` and the likes.
+
+## [2.5.0] - 2017-09-06
+### Added
+- ✨ `findUnused()` new options key: `opts.comments`. It let's you ignore and exclude the comment keys from reports.
+
 ## [2.4.0] - 2017-07-29
 ### Added
 - `object-assign` replaced with ES6 `Object.assign`
@@ -37,6 +46,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 🆕 First public release
 - Unit test coverage is solid 100%
 
+[3.0.0]: https://github.com/codsen/json-comb-core/compare/v2.5.0...v3.0.0
+[2.5.0]: https://github.com/codsen/json-comb-core/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/codsen/json-comb-core/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/codsen/json-comb-core/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/json-comb-core/compare/v2.1.0...v2.2.0
