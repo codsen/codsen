@@ -129,6 +129,7 @@ An optional third argument - options object.
   whatToDoWhenReferenceIsMissing: 0,
   mergeArraysWithLineBreaks: true,
   mergeWithoutTrailingBrIfLineContainsBr: true,
+  enforceStrictKeyset: true,
 }
 ```
 
@@ -148,6 +149,7 @@ An optional third argument - options object.
 `whatToDoWhenReferenceIsMissing` | Integer or Integer as String | no | `0`  | 0 = skip, 1 = throw, 2 = flatten to string
 `mergeArraysWithLineBreaks`    | Boolean  | no          | `true`            | Should we merge arrays using `<br />`'s? It's handy to turn it off when mapping variables on email templates where values in data arrays are IF statements, and `<br />`'s are hardcoded inside of them.
 `mergeWithoutTrailingBrIfLineContainsBr` | Boolean | no | `true`            | When merging arrays to produce a string, each row's contents will be checked do they contain `<br`, and if so, line break in front of it will not be added. Added in `v4`.
+`enforceStrictKeyset`          | Boolean  | no          | `true`            | Are you allowed to pass in an unrecognised keys in the options object?
 }                              |          |             |                   |
 
 **[⬆ &nbsp;back to top](#)**

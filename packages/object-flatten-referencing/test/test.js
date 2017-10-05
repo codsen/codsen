@@ -80,6 +80,15 @@ test('01.07 - throws when opts object has wrong opts.objectKeyAndValueJoinChar',
   })
 })
 
+test('01.08 - opts.enforceStrictKeyset', (t) => {
+  t.throws(() => {
+    ofr({ a: 'a' }, { b: 'b' }, { zzzz: 1 })
+  })
+  t.notThrows(() => {
+    ofr({ a: 'a' }, { b: 'b' }, { zzzz: 1, enforceStrictKeyset: false })
+  })
+})
+
 // -----------------------------------------------------------------------------
 // 02. B.A.U.
 // -----------------------------------------------------------------------------

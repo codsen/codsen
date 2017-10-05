@@ -61,6 +61,8 @@ function outer(originalInput1, originalReference1, opts1) {
       // add <br /> between the rows?
       mergeWithoutTrailingBrIfLineContainsBr: true, // if line already contains BR,
       // don't add another, trailing-one
+      enforceStrictKeyset: true, // are you allowed to pass-in any unrecognised
+      // keys in an options object?
     }
     opts = Object.assign({}, defaults, opts)
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys)
@@ -70,7 +72,15 @@ function outer(originalInput1, originalReference1, opts1) {
     opts.whatToDoWhenReferenceIsMissing = util
       .reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing)
 
-    checkTypes(opts, defaults, 'object-flatten-referencing/ofr(): [THROW_ID_05*] ', 'opts')
+    checkTypes(
+      opts,
+      defaults,
+      {
+        msg: 'object-flatten-referencing/ofr(): [THROW_ID_05*]',
+        optsVarName: 'opts',
+        enforceStrictKeyset: opts.enforceStrictKeyset,
+      },
+    )
 
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false

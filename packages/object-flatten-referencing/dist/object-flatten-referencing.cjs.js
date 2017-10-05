@@ -303,8 +303,10 @@ function outer(originalInput1, originalReference1, opts1) {
       // 1 = throw, 2 = flatten to string & wrap if wrapping feature is enabled
       mergeArraysWithLineBreaks: true, // when merging arrays, should we
       // add <br /> between the rows?
-      mergeWithoutTrailingBrIfLineContainsBr: true // if line already contains BR,
+      mergeWithoutTrailingBrIfLineContainsBr: true, // if line already contains BR,
       // don't add another, trailing-one
+      enforceStrictKeyset: true // are you allowed to pass-in any unrecognised
+      // keys in an options object?
     };
     opts = Object.assign({}, defaults$$1, opts);
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys);
@@ -313,7 +315,11 @@ function outer(originalInput1, originalReference1, opts1) {
     opts.ignore = util.arrayiffyString(opts.ignore);
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing);
 
-    checkTypes(opts, defaults$$1, 'object-flatten-referencing/ofr(): [THROW_ID_05*] ', 'opts');
+    checkTypes(opts, defaults$$1, {
+      msg: 'object-flatten-referencing/ofr(): [THROW_ID_05*]',
+      optsVarName: 'opts',
+      enforceStrictKeyset: opts.enforceStrictKeyset
+    });
 
     if (!opts.wrapGlobalFlipSwitch) {
       wrap = false;
