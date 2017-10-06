@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.0.0] - 2017-10-06
 
-API-wise, there's no changes, but since it's rewrite in ES modules and the arrangement of files is different, I'll bump _semver major_ just in case. Cheers!
+API-wise, there are no changes, but since it's rewrite in ES modules and the arrangement of files is different, I'll bump _semver major_ just in case. Cheers!
 
 ### Added
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
