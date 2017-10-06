@@ -314,7 +314,7 @@ Input argument | Type                                | Obligatory? | Description
 -------------------------------|----------|-------------|---------------|----------------------
 {                              |          |             |               |
 `placeholder`                  | any      | no          | `false`       | What value is being used to mark unused key?
-`comments`                     | string   | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it actually was unused). Set it to any falsey value to turn it off.
+`comments`                     | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it actually was unused). Set it to any falsey value to turn it off.
 }                              |          |             |               |
 
 ### output

@@ -2169,6 +2169,145 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     ['b__comment__this_is_a_comment_for_key_b', 'c'],
     '05.14.04 - falsey opts.comments - instruction to turn it off',
   )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: null },
+    ),
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
+    '05.14.05 - falsey opts.comments - instruction to turn it off',
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: undefined },
+    ),
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
+    '05.14.06 - falsey opts.comments - instruction to turn it off',
+  )
+  t.deepEqual(
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: '' },
+    ),
+    ['b__comment__this_is_a_comment_for_key_b', 'c'],
+    '05.14.07 - falsey opts.comments - instruction to turn it off',
+  )
+  t.throws(() => {
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: 1 },
+    )
+  })
+  t.throws(() => {
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: '1' },
+    )
+  })
+  t.throws(() => {
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: true },
+    )
+  })
+  t.throws(() => {
+    findUnused(
+      [
+        {
+          a: false,
+          b: 'bbb1',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+        {
+          a: 'aaa',
+          b: 'bbb2',
+          b__comment__this_is_a_comment_for_key_b: false,
+          c: false,
+        },
+      ],
+      { comments: 'true' },
+    )
+  })
 })
 
 // -----------------------------------------------------------------------------

@@ -11,6 +11,7 @@ import checkTypes from 'check-types-mini'
 // -----------------------------------------------------------------------------
 
 function existy(x) { return x != null }
+function truthy(x) { return (x !== false) && existy(x) }
 function isObj(something) { return type(something) === 'Object' }
 function isArr(something) { return Array.isArray(something) }
 
@@ -131,6 +132,15 @@ function findUnused(arrOriginal, opts) {
     comments: '__comment__',
   }
   opts = Object.assign({}, defaults, opts)
+  if (opts.comments === 1 || opts.comments === '1') {
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_43] opts.comments was set to Number 1, but it does not make sense. Either it\'s string or falsey. Please fix.')
+  }
+  if (opts.comments === true || opts.comments === 'true') {
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_43] opts.comments was set to Boolean "true", but it does not make sense. Either it\'s string or falsey. Please fix.')
+  }
+  if (!truthy(opts.comments) || (opts.comments === 0)) {
+    opts.comments = false
+  }
   checkTypes(
     opts,
     defaults,
@@ -142,9 +152,6 @@ function findUnused(arrOriginal, opts) {
       },
     },
   )
-  if (opts.comments === true) {
-    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_43] opts.comments was set to Boolean "true", but it does not make sense. Either it\'s Boolean false or a string value. Please fix.')
-  }
   if (opts.comments === '') {
     opts.comments = false
   }
