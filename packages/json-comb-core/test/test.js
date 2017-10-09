@@ -1,5 +1,5 @@
 import test from 'ava'
-import { getKeyset, enforceKeyset, noNewKeys, findUnused, sortIfObject } from '../dist/json-comb-core.cjs'
+import { getKeyset, enforceKeyset, noNewKeys, findUnused, sortAllObjects } from '../dist/json-comb-core.cjs'
 
 let schema
 let obj1
@@ -2311,12 +2311,12 @@ test('05.14 - findUnused() - opts.comments', (t) => {
 })
 
 // -----------------------------------------------------------------------------
-// 06. sortIfObject()
+// 06. sortAllObjects()
 // -----------------------------------------------------------------------------
 
-test('06.01 - sortIfObject() - sorts', (t) => {
+test('06.01 - sortAllObjects() - plain object', (t) => {
   t.deepEqual(
-    sortIfObject({
+    sortAllObjects({
       a: 'a',
       c: 'c',
       b: 'b',
@@ -2330,11 +2330,100 @@ test('06.01 - sortIfObject() - sorts', (t) => {
   )
 })
 
-test('06.02 - sortIfObject() - wrong inputs are bypassed', (t) => {
+test('06.02 - sortAllObjects() - non-sortable input types', (t) => {
   t.deepEqual(
-    sortIfObject(1),
+    sortAllObjects(null),
+    null,
+    '06.02.01',
+  )
+  t.deepEqual(
+    sortAllObjects(1),
     1,
-    '06.02',
+    '06.02.02',
+  )
+  t.deepEqual(
+    sortAllObjects('zzz'),
+    'zzz',
+    '06.02.03',
+  )
+  t.deepEqual(
+    sortAllObjects(undefined),
+    undefined,
+    '06.02.04',
+  )
+  const f = a => a
+  t.deepEqual(
+    sortAllObjects(f),
+    f,
+    '06.02.05',
+  )
+})
+
+test('06.03 - sortAllObjects() - object-array-object', (t) => {
+  t.deepEqual(
+    sortAllObjects({
+      a: 'a',
+      c: [
+        {
+          m: 'm',
+          l: 'l',
+          k: 'k',
+        },
+        {
+          s: 's',
+          r: 'r',
+          p: 'p',
+        },
+      ],
+      b: 'b',
+    }),
+    {
+      a: 'a',
+      b: 'b',
+      c: [
+        {
+          k: 'k',
+          l: 'l',
+          m: 'm',
+        },
+        {
+          p: 'p',
+          r: 'r',
+          s: 's',
+        },
+      ],
+    },
+    '06.03',
+  )
+})
+
+test('06.04 - sortAllObjects() - object very deep', (t) => {
+  t.deepEqual(
+    sortAllObjects({
+      a: [[[[[[[[[[[[[[{
+        b: {
+          c: [[[[[[
+            {
+              n: 'kdjfsjf;j',
+              m: 'flslfjlsjdf',
+            },
+          ]]]]]],
+        },
+      }]]]]]]]]]]]]]],
+    }),
+    {
+      a: [[[[[[[[[[[[[[{
+        b: {
+          c: [[[[[[
+            {
+              m: 'flslfjlsjdf',
+              n: 'kdjfsjf;j',
+            },
+          ]]]]]],
+        },
+      }]]]]]]]]]]]]]],
+    },
+    '06.04',
   )
 })
 
@@ -2342,26 +2431,45 @@ test('06.02 - sortIfObject() - wrong inputs are bypassed', (t) => {
 // 07. input arg mutation tests
 // -----------------------------------------------------------------------------
 
+/* eslint prefer-const:0 */
+// we deliberately use VAR to "allow" mutation. In theory, of course, because it does not happen.
+
 test('07.01 - does not mutate input args: enforceKeyset()', (t) => {
-  const source = {
+  let source = {
     a: 'a',
   }
-  const frozen = {
+  let frozen = {
     a: 'a',
   }
-  const dummyResult = enforceKeyset(source, { a: false, b: false })
+  let dummyResult = enforceKeyset(source, { a: false, b: false })
   t.pass(dummyResult) // a mickey assertion to trick the Standard
   t.deepEqual(source, frozen)
 })
 
 test('07.02 - does not mutate input args: noNewKeys()', (t) => {
-  const source = {
+  let source = {
     a: 'a',
   }
-  const frozen = {
+  let frozen = {
     a: 'a',
   }
-  const dummyResult = noNewKeys(source, { a: false, b: false })
-  t.pass(dummyResult) // a mickey assertion to trick the Standard
+  let dummyResult = noNewKeys(source, { a: false, b: false })
+  t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
+  t.deepEqual(source, frozen)
+})
+
+test('07.03 - does not mutate input args: sortAllObjects()', (t) => {
+  let source = {
+    a: 'a',
+    c: 'c',
+    b: 'b',
+  }
+  let frozen = {
+    a: 'a',
+    c: 'c',
+    b: 'b',
+  }
+  let dummyResult = sortAllObjects(source)
+  t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
   t.deepEqual(source, frozen)
 })

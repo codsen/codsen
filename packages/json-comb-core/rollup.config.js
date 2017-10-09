@@ -30,6 +30,7 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'ast-monkey',
       'check-types-mini',
       'lodash.clonedeep',
       'lodash.includes',

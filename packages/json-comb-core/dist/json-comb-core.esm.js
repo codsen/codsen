@@ -7,8 +7,11 @@ import clone from 'lodash.clonedeep';
 import includes from 'lodash.includes';
 import type from 'type-detect';
 import checkTypes from 'check-types-mini';
+import monkey from 'ast-monkey';
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/* eslint no-unused-vars:0 */
 
 // -----------------------------------------------------------------------------
 
@@ -25,14 +28,30 @@ function isArr(something) {
   return Array.isArray(something);
 }
 
-function sortIfObject(obj) {
-  if (isObj(obj)) {
+// -----------------------------------------------------------------------------
+// SORT THEM THINGIES
+
+function sortAllObjects(input) {
+  function sortObject(obj) {
     return Object.keys(obj).sort().reduce(function (result, key) {
       result[key] = obj[key];
       return result;
     }, {});
   }
-  return obj;
+  // we sort only container-like structures: plain objects or array (containing some
+  // plain objects hidden somewhere deeper within)
+  if (isObj(input) || isArr(input)) {
+    return monkey.traverse(clone(input), function (key, val) {
+      var current = val !== undefined ? val : key;
+      // console.log(`current = ${JSON.stringify(current, null, 4)}`)
+      if (val !== undefined && isObj(val)) {
+        return sortObject(val);
+      }
+      return current;
+    });
+  }
+  // otherwise, just bypass:
+  return input;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +93,7 @@ function getKeyset(arrOriginal, opts) {
     }
     schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), { mergeArraysContainingStringsToBeEmpty: true });
   });
-  schemaObj = sortIfObject(setAllValuesTo(schemaObj, opts.placeholder));
+  schemaObj = sortAllObjects(setAllValuesTo(schemaObj, opts.placeholder));
   return schemaObj;
 }
 
@@ -93,7 +112,7 @@ function enforceKeyset(obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s: ' + type(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
   }
-  return sortIfObject(fillMissingKeys(clone(obj), schemaKeyset));
+  return sortAllObjects(fillMissingKeys(clone(obj), schemaKeyset));
 }
 
 // -----------------------------------------------------------------------------
@@ -257,7 +276,7 @@ function findUnused(arrOriginal, opts) {
 var main = {
   getKeyset: getKeyset,
   enforceKeyset: enforceKeyset,
-  sortIfObject: sortIfObject,
+  sortAllObjects: sortAllObjects,
   noNewKeys: noNewKeys,
   findUnused: findUnused
 };

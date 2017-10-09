@@ -40,7 +40,7 @@
   - [input](#input-3)
   - [output](#output-3)
   - [example](#example-3)
-- [`sortIfObject()`](#sortifobject)
+- [`sortAllObjects()`](#sortallobjects)
   - [input](#input-4)
   - [output](#output-4)
   - [example](#example-4)
@@ -60,9 +60,9 @@ $ npm i json-comb-core
 
 type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/json-comb-core.cjs.js` | 9KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 9KB
-**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/json-comb-core.umd.js` | 52KB
+main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/json-comb-core.cjs.js` | 11KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 10KB
+**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/json-comb-core.umd.js` | 70KB
 
 ## Idea
 
@@ -119,7 +119,7 @@ A plain object, which can be used in `enforceKeyset()`. See below.
 For example, keeping placeholder the default:
 
 ```js
-const getKeyset = require('json-comb-core').getKeyset
+const { getKeyset } = require('json-comb-core')
 let schema = getKeyset([
   { // <- object #1
     a: 'a',
@@ -153,7 +153,7 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 Customising the placeholder:
 
 ```js
-const getKeyset = require('json-comb-core').getKeyset
+const { getKeyset } = require('json-comb-core')
 let schema = getKeyset([
     { // <- object #1
       a: 'a',
@@ -204,8 +204,8 @@ A clone of an input object, with the same key set as the `schema` object.
 ### example
 
 ```js
-const getKeyset = require('json-comb-core').getKeyset
-const enforceKeyset = require('json-comb-core').enforceKeyset
+const { getKeyset } = require('json-comb-core')
+const { enforceKeyset } = require('json-comb-core')
 let inputObj = {
   a: 'ccc'
 }
@@ -245,7 +245,7 @@ An array of zero or more paths.
 We are going to catch the rogue key `b`:
 
 ```js
-const noNewKeys = require('json-comb-core').noNewKeys
+const { noNewKeys } = require('json-comb-core')
 let res = noNewKeys(
   { // <- input we're checking
     a: 'a',
@@ -264,7 +264,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 More advanced example:
 
 ```js
-const noNewKeys = require('json-comb-core').noNewKeys
+const { noNewKeys } = require('json-comb-core')
 let res = noNewKeys(
   { // <- input we're checking
     z: [
@@ -324,7 +324,7 @@ An array of zero or more paths leading to keys which are either missing or have 
 ### example
 
 ```js
-const findUnused = require('json-comb-core').findUnused
+const { findUnused } = require('json-comb-core')
 let res = findUnused(
   [
     { // <- object #1
@@ -349,7 +349,7 @@ This function will work on arrays of both normalised and not normalised object s
 More complex example:
 
 ```js
-const findUnused = require('json-comb-core').findUnused
+const { findUnused } = require('json-comb-core')
 let res = findUnused(
   [
     {
@@ -392,26 +392,27 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 // => ['c', 'a[0].l']
 ```
 
-## `sortIfObject()`
+## `sortAllObjects()`
 
-This is an auxiliary function to help with sorting object keys. Yes, object keys can be sorted. This function is flexible if non-object is passed, it's returned without messing it up. You can freely assign things to the result of this function.
+This method sorts objects (no matter how deeply-nested) and it will sort objects within arrays within objects and so on. For example, you can input an array which has some plain objects within and those objects will be sorted.
+
+This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc).
 
 ### input
 
 Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
-`input`        | Whatever | no          | If it's an object, its keys will get sorted
-
-It is not recursive or deep function. Only topmost level keys will get sorted.
+`input`        | Whatever | no          | If it's a plain object or contains a plain objects deeper, a copy of it will be created with all its plain objects sorted. Otherwise, untouched input will be returned.
 
 ### output
 
-If the input were a plain object, the output would be a clone of it, with keys sorted. Otherwise, it will be the same input, returned.
+If the input is **a plain object or array** containing some plain objects within, output is a copy of the input with all plain objects sorted.
+If the input is **something else**, output is same thing as input.
 
 ### example
 
 ```js
-const sortIfObject = require('json-comb-core').sortIfObject
+const { sortIfObject } = require('json-comb-core')
 let res = sortIfObject(
   {
     a: 'a',

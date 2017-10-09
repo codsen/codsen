@@ -51,6 +51,7 @@
     "comb"
   ],
   "dependencies": {
+    "ast-monkey": "^6.4.4",
     "check-types-mini": "^2.4.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",

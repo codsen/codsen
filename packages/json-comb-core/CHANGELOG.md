@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2017-10-09
+### Changed
+- 🔧 method `sortIfObject()` renamed to `sortAllObjects()`. It now performs a _deep sort_ of any objects within anything. If a non-array and non-object is given, same thing is returned bypassing the operations, so it's safe to apply on any JS types. That's thanks to [ast-monkey](https://github.com/codsen/ast-monkey#traverse) which performs the deep traversal.
+
 ## [3.0.0] - 2017-10-06
 
 API-wise, there are no changes, but since it's rewrite in ES modules and the arrangement of files is different, I'll bump _semver major_ just in case. Cheers!
@@ -49,10 +53,11 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 - 🆕 First public release
 - Unit test coverage is solid 100%
 
-[3.0.0]: https://github.com/codsen/json-comb-core/compare/v2.5.0...v3.0.0
-[2.5.0]: https://github.com/codsen/json-comb-core/compare/v2.4.0...v2.5.0
-[2.4.0]: https://github.com/codsen/json-comb-core/compare/v2.3.0...v2.4.0
-[2.3.0]: https://github.com/codsen/json-comb-core/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/codsen/json-comb-core/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/codsen/json-comb-core/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/json-comb-core/compare/v1.0.1...v2.0.0
+[2.1.0]: https://github.com/codsen/json-comb-core/compare/v2.0.0...v2.1.0
+[2.2.0]: https://github.com/codsen/json-comb-core/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/json-comb-core/compare/v2.2.0...v2.3.0
+[2.4.0]: https://github.com/codsen/json-comb-core/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/codsen/json-comb-core/compare/v2.4.0...v2.5.0
+[3.0.0]: https://github.com/codsen/json-comb-core/compare/v2.5.0...v3.0.0
+[4.0.0]: https://github.com/codsen/json-comb-core/compare/v3.0.0...v4.0.0

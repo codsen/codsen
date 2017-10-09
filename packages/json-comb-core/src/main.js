@@ -1,3 +1,5 @@
+/* eslint no-unused-vars:0 */
+
 import setAllValuesTo from 'object-set-all-values-to'
 import flattenAllArrays from 'object-flatten-all-arrays'
 import mergeAdvanced from 'object-merge-advanced'
@@ -7,6 +9,7 @@ import clone from 'lodash.clonedeep'
 import includes from 'lodash.includes'
 import type from 'type-detect'
 import checkTypes from 'check-types-mini'
+import monkey from 'ast-monkey'
 
 // -----------------------------------------------------------------------------
 
@@ -15,14 +18,30 @@ function truthy(x) { return (x !== false) && existy(x) }
 function isObj(something) { return type(something) === 'Object' }
 function isArr(something) { return Array.isArray(something) }
 
-function sortIfObject(obj) {
-  if (isObj(obj)) {
+// -----------------------------------------------------------------------------
+// SORT THEM THINGIES
+
+function sortAllObjects(input) {
+  function sortObject(obj) {
     return Object.keys(obj).sort().reduce((result, key) => {
       result[key] = obj[key]
       return result
     }, {})
   }
-  return obj
+  // we sort only container-like structures: plain objects or array (containing some
+  // plain objects hidden somewhere deeper within)
+  if (isObj(input) || isArr(input)) {
+    return monkey.traverse(clone(input), (key, val) => {
+      const current = (val !== undefined) ? val : key
+      // console.log(`current = ${JSON.stringify(current, null, 4)}`)
+      if ((val !== undefined) && isObj(val)) {
+        return sortObject(val)
+      }
+      return current
+    })
+  }
+  // otherwise, just bypass:
+  return input
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +87,7 @@ function getKeyset(arrOriginal, opts) {
       { mergeArraysContainingStringsToBeEmpty: true },
     )
   })
-  schemaObj = sortIfObject(setAllValuesTo(schemaObj, opts.placeholder))
+  schemaObj = sortAllObjects(setAllValuesTo(schemaObj, opts.placeholder))
   return schemaObj
 }
 
@@ -87,7 +106,7 @@ function enforceKeyset(obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error(`json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it's: ${type(schemaKeyset)}, equal to: ${JSON.stringify(schemaKeyset, null, 4)}`)
   }
-  return sortIfObject(fillMissingKeys(clone(obj), schemaKeyset))
+  return sortAllObjects(fillMissingKeys(clone(obj), schemaKeyset))
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +260,7 @@ function findUnused(arrOriginal, opts) {
 export default {
   getKeyset,
   enforceKeyset,
-  sortIfObject,
+  sortAllObjects,
   noNewKeys,
   findUnused,
 }
