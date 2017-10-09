@@ -1,17 +1,20 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
-      "doctoc",
       "glob-fs",
       "husky",
       "lodash.split",
       "lodash.trimend",
       "lodash.trimstart"
     ]
-  }
+  },
+  "ignore": [],
+  "test": [
+    "test.js"
+  ]
 }

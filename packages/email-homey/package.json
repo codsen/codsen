@@ -1,13 +1,31 @@
 {
   "name": "email-homey",
   "version": "1.8.1",
-  "description": "Generate homepage in the Browsersync root with links/screenshots of all your templates",
+  "description": "Generate homepage in the Browsersync root with links/screenshots of all your email templates",
+  "license": "MIT",
+  "repository": "codsen/email-homey",
+  "bugs": {
+    "url": "https://github.com/codsen/email-homey/issues"
+  },
+  "homepage": "https://github.com/codsen/email-homey#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
   "main": "index.js",
   "scripts": {
-    "precommit": "npm test && doctoc README.md",
-    "test": "standard"
+    "precommit": "npm test",
+    "test": "./node_modules/.bin/eslint index.js test.js && ava"
   },
-  "repository": "codsen/email-homey",
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "email",
     "templates",
@@ -23,29 +41,21 @@
     "homepage",
     "browsersync"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/email-homey/issues"
-  },
-  "homepage": "https://github.com/codsen/email-homey#readme",
   "dependencies": {
+    "check-types-mini": "^2.6.0",
     "glob-fs": "*",
+    "lodash.isplainobject": "^4.0.6",
     "lodash.split": "*",
     "lodash.trimend": "*",
-    "lodash.trimstart": "*",
-    "plates": "^0.4.11"
+    "lodash.trimstart": "*"
   },
   "devDependencies": {
-    "doctoc": "*",
-    "husky": "*",
-    "standard": "^10.0.2"
-  },
-  "ava": {
-    "verbose": true
+    "ava": "^0.22.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "execa": "^0.8.0",
+    "husky": "*"
   }
 }

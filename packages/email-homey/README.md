@@ -1,10 +1,20 @@
 # email-homey
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
 
 > Generate homepage in the root containing all your templates, by folder
 
-[![bitHound Score](https://www.bithound.io/github/codsen/email-homey/badges/score.svg)](https://www.bithound.io/github/codsen/email-homey) [![bitHound Dependencies](https://www.bithound.io/github/codsen/email-homey/badges/dependencies.svg)](https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm) [![bitHound Dev Dependencies](https://www.bithound.io/github/codsen/email-homey/badges/devDependencies.svg)](https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm)
+[![Minimum Node version required][node-img]][node-url]
+[![Link to npm page][npm-img]][npm-url]
+[![Build Status][travis-img]][travis-url]
+[![bitHound Overall Score][overall-img]][overall-url]
+[![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
+[![Downloads/Month][downloads-img]][downloads-url]
+[![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-badge]][license]
 
 ## Table of Contents
 
@@ -25,7 +35,7 @@
 ## Install
 
 ```sh
-$ npm install --save-dev email-homey
+$ npm i -D email-homey
 ```
 
 ## Purpose
@@ -79,7 +89,6 @@ How nice would it be if a script could generate a homepage containing the list o
 I recommend using [pageres](https://www.npmjs.com/package/pageres) in Gulp to generate screenshots. I tried [gulp-webshot](https://www.npmjs.com/package/gulp-webshot) but it failed on certain HTML's, timing out. `pageres` captured screenshots fine, so it's my current favourite.
 
 ## API
-
 
 Input argument   | Type                  | Obligatory? | Default val      | Description
 -----------------|-----------------------|-------------|------------------|-------------
@@ -140,28 +149,55 @@ Both files must be placed in the root of your template folder. Feel free to cust
 $ npm test
 ```
 
-If you see anything incorrect whatsoever, [raise an issue](https://github.com/codsen/email-homey/issues). Pull requests are welcome — fork, hack and pull-request. I'll do my best to merge soon.
+If you see anything incorrect whatsoever, [raise an issue](https://github.com/codsen/email-homey/issues). Pull requests are welcome — fork, hack and pull-request. I'll do my best to merge as soon as possible.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
+Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+[node-img]: https://img.shields.io/node/v/email-homey.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/email-homey
+
+[npm-img]: https://img.shields.io/npm/v/email-homey.svg?style=flat-square&label=release
+[npm-url]: https://www.npmjs.com/package/email-homey
+
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/email-homey.svg?style=flat-square
+[overall-url]: https://www.bithound.io/github/codsen/email-homey
+
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/email-homey.svg?style=flat-square
+[deps-url]: https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/email-homey
+
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/email-homey.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm
+
+[downloads-img]: https://img.shields.io/npm/dm/email-homey.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/email-homey
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/email-homey/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/email-homey
+
+[license-badge]: https://img.shields.io/npm/l/email-homey.svg?style=flat-square
+[license]: https://github.com/codsen/email-homey/blob/master/license.md
