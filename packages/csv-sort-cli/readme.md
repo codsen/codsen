@@ -1,9 +1,10 @@
 # csv-sort-cli
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
 
 > Sorts double-entry CSVs coming from internet banking statements (and accounting, in general)
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Score][bithound-img]][bithound-url]
@@ -57,6 +58,8 @@ $ csvsort --help
 
 ![Calling csv-sort-cli directly on a file](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example1.gif)
 
+alternatively, the call `sortcsv` will work as well.
+
 ## or, omit the file's name, it will let you pick a CSV:
 
 ```bash
@@ -107,21 +110,21 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
+Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
+The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -129,17 +132,23 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[npm-img]: https://img.shields.io/npm/v/csv-sort-cli.svg
+[node-img]: https://img.shields.io/node/v/csv-sort-cli.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/csv-sort-cli
+
+[npm-img]: https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/csv-sort-cli
 
 [travis-img]: https://travis-ci.org/codsen/csv-sort-cli.svg?branch=master
 [travis-url]: https://travis-ci.org/codsen/csv-sort-cli
 
-[bithound-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/csv-sort-cli
+[overall-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/score.svg
+[overall-url]: https://www.bithound.io/github/codsen/csv-sort-cli
 
 [deps-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/dependencies.svg
 [deps-url]: https://www.bithound.io/github/codsen/csv-sort-cli/master/dependencies/npm
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort-cli
 
 [dev-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/devDependencies.svg
 [dev-url]: https://www.bithound.io/github/codsen/csv-sort-cli/master/dependencies/npm
@@ -150,5 +159,5 @@ SOFTWARE.
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-sort-cli/badge.svg
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-sort-cli
 
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort-cli
+[license-badge]: https://img.shields.io/npm/l/csv-sort-cli.svg?style=flat-square
+[license]: https://github.com/codsen/csv-sort-cli/blob/master/license.md

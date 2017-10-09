@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-'use strict'
+
+/* eslint array-callback-return:0, consistent-return:0, no-loop-func:0 */
 
 // VARS
 // -----------------------------------------------------------------------------
@@ -9,19 +10,21 @@ const csvSort = require('csv-sort')
 const fs = require('fs')
 const globby = require('globby')
 const inquirer = require('inquirer')
-const log = console.log
+
+const { log } = console
 const meow = require('meow')
 const path = require('path')
 const updateNotifier = require('update-notifier')
 const pullAll = require('lodash.pullall')
 const uniq = require('lodash.uniq')
+
 const isArr = Array.isArray
 
-var state = {}
+const state = {}
 state.toDoList = [] // default
 state.overwrite = false // default
-var ui = new inquirer.ui.BottomBar()
-var cli = meow(`
+const ui = new inquirer.ui.BottomBar()
+const cli = meow(`
   Usage
     $ csvsort YOURFILE.csv
   or, just type "csvsort" and it will let you pick a file.
@@ -34,61 +37,63 @@ var cli = meow(`
   Example
     Just call it in the root, where your csv file is located
 `, {
-  alias: {
-    o: 'overwrite'
-  }
-})
-updateNotifier({pkg: cli.pkg}).notify()
+    alias: {
+      o: 'overwrite',
+    },
+  })
+updateNotifier({ pkg: cli.pkg }).notify()
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function isStr (something) { return typeof something === 'string' }
+function isStr(something) { return typeof something === 'string' }
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop)
+}
 
 // consumes a plain object: {
 //   toDoList - array,
 //   overwrite - boolean
 // }
-function offerAListOfCSVsToPickFrom (stateObj) {
+function offerAListOfCSVsToPickFrom(stateObj) {
   // this means, it was called without any arguments.
   // that's fine
-  let allCSVsHere = globby.sync('./*.csv')
+  const allCSVsHere = globby.sync('./*.csv')
   if (allCSVsHere.length === 0) {
-    // log(chalk.red(`\ncsv-sort-cli: Alas, computer couldn't find any CSV files in this folder and bailed on us!`))
-    return Promise.reject(new Error(`\ncsv-sort-cli: Alas, computer couldn't find any CSV files in this folder and bailed on us!`))
+    // log(chalk.red(`\ncsv-sort-cli: Alas, computer couldn't find any CSV files
+    // in this folder and bailed on us!`))
+    return Promise.reject(new Error('\ncsv-sort-cli: Alas, computer couldn\'t find any CSV files in this folder and bailed on us!'))
   }
   ui.log.write(chalk.grey('To quit, press CTRL+C'))
-  let questions = [
+  const questions = [
     {
       type: 'list',
       name: 'file',
       message: 'Which CSV would you like to check?',
-      choices: allCSVsHere
-    }
+      choices: allCSVsHere,
+    },
   ]
   if (
     (stateObj === undefined) ||
-    !stateObj.hasOwnProperty('overwrite') ||
-    (stateObj.hasOwnProperty('overwrite') && (stateObj.overwrite === false)) ||
+    !hasOwnProperty(stateObj, 'overwrite') ||
+    (hasOwnProperty(stateObj, 'overwrite') && (stateObj.overwrite === false)) ||
     (typeof stateObj.overwrite !== 'boolean')
   ) {
     questions.push({
       type: 'list',
       name: 'overwrite',
-      message: `Do you want to overwrite this file with a sorted result?`,
+      message: 'Do you want to overwrite this file with a sorted result?',
       choices: [
         { name: 'yes', value: true },
-        { name: 'no', value: false }
-      ]
+        { name: 'no', value: false },
+      ],
     })
   }
   ui.log.write(chalk.yellow('Please pick a file:'))
-  return inquirer.prompt(questions).then(answer => {
-    return {
-      toDoList: [path.basename(answer.file)],
-      overwrite: answer.overwrite || false
-    }
-  })
+  return inquirer.prompt(questions).then(answer => ({
+    toDoList: [path.basename(answer.file)],
+    overwrite: answer.overwrite || false,
+  }))
 }
 
 // Step #0. take care of -v and -h flags that are left out in meow.
@@ -109,11 +114,12 @@ if (cli.input.length > 0) {
   state.toDoList = cli.input
 }
 
-// if --overwrite/-o flag is used, the following argument will be put as flag's value, not in "cli.input[]":
+// if --overwrite/-o flag is used, the following argument will be put as flag's
+// value, not in "cli.input[]":
 // we anticipate the can be multiple, potentially-false flags mixed with valid file names
 if (Object.keys(cli.flags).length !== 0) {
   // each non-boolean cli.flags value must be added to the `toDoList`
-  Object.keys(cli.flags).forEach(function (key) {
+  Object.keys(cli.flags).forEach((key) => {
     if (typeof cli.flags[key] !== 'boolean') {
       if (!isArr(cli.flags[key])) {
         state.toDoList.push(cli.flags[key])
@@ -125,16 +131,17 @@ if (Object.keys(cli.flags).length !== 0) {
   state.toDoList = uniq(state.toDoList)
 }
 
-if ((Object.keys(cli.flags) !== 0) && cli.flags.hasOwnProperty('overwrite')) {
+if ((Object.keys(cli.flags) !== 0) && hasOwnProperty(cli.flags, 'overwrite')) {
   // variables that can be misinterpreted as falsey, yet the flag still be in
-  // for example, in "csvsort -o false simples.csv simples2.csv", the cli.flags.overwrite === false (WTF?)
+  // for example, in "csvsort -o false simples.csv simples2.csv",
+  // the cli.flags.overwrite === false (WTF?)
   state.overwrite = true // we normalise the flag since its value in CLI can precede
 }
 
 // Step #2. create a promise variable and assign it to one of the promises,
 // depending on was the acceptable file passed via args or queries afterwards.
 // -----------------------------------------------------------------------------
-var thePromise
+let thePromise
 if ((state.toDoList.length === 0) && (Object.keys(cli.flags).length === 0)) {
   // ---------------------------------  1  -------------------------------------
   // if no arguments were given, offer a list:
@@ -142,14 +149,14 @@ if ((state.toDoList.length === 0) && (Object.keys(cli.flags).length === 0)) {
 } else if (state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync).length > 0) {
   // ---------------------------------  2  -------------------------------------
   // basically achieving: (!fs.existsSync)
-  let erroneous = pullAll(
+  const erroneous = pullAll(
     state.toDoList.map(onePath => path.resolve(onePath)),
-    state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync)
+    state.toDoList.map(onePath => path.resolve(onePath)).filter(fs.existsSync),
   ).map(singlePath => path.basename(singlePath)) // then filtering file names-only
 
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
-    log(chalk.red(`\ncsv-sort-cli: Alas, the following file${(erroneous.length > 1) ? `s don't` : ` doesn't`} exist: "${erroneous.join('", "')}"`))
+    log(chalk.red(`\ncsv-sort-cli: Alas, the following file${(erroneous.length > 1) ? 's don\'t' : ' doesn\'t'} exist: "${erroneous.join('", "')}"`))
   }
 
   // remove non-existing paths from toDoList:
@@ -161,7 +168,7 @@ if ((state.toDoList.length === 0) && (Object.keys(cli.flags).length === 0)) {
   // ---------------------------------  3  -------------------------------------
   let butStateWasRecognisedMsg = ''
   if (state.overwrite) {
-    butStateWasRecognisedMsg = `But it recognised your "-o" flag.`
+    butStateWasRecognisedMsg = 'But it recognised your "-o" flag.'
   }
   log(chalk.yellow(`\ncsv-sort-cli: Computer didn't recognise any CSV files in your input!\n${butStateWasRecognisedMsg}`))
 
@@ -174,13 +181,13 @@ if ((state.toDoList.length === 0) && (Object.keys(cli.flags).length === 0)) {
 // -----------------------------------------------------------------------------
 
 thePromise
-  .then(receivedState => {
-    receivedState.toDoList.map(requestedCSVsPath => {
+  .then((receivedState) => {
+    receivedState.toDoList.map((requestedCSVsPath) => {
       // read the source
       fs.readFile(requestedCSVsPath, 'utf8', (csvError, csvData) => {
         if (csvData) {
           try {
-            let cleaned = csvSort(csvData)
+            const cleaned = csvSort(csvData)
             if (receivedState.overwrite) {
               // overwrite
               fs.writeFile(path.basename(requestedCSVsPath), cleaned.res.join('\n'), 'utf8', (err) => {
@@ -190,9 +197,9 @@ thePromise
               })
             } else {
               // create a new file with appended hyphen+integer before extension
-              var proposedNewFileName
+              let proposedNewFileName
               for (let i = 1; i < 1001; i++) {
-                proposedNewFileName = path.basename(requestedCSVsPath, path.extname(requestedCSVsPath)) + '-' + i + path.extname(requestedCSVsPath)
+                proposedNewFileName = `${path.basename(requestedCSVsPath, path.extname(requestedCSVsPath))}-${i}${path.extname(requestedCSVsPath)}`
                 if (!fs.existsSync(path.resolve(proposedNewFileName))) {
                   fs.writeFile(proposedNewFileName, cleaned.res.join('\n'), 'utf8', (err) => {
                     if (err) throw err
@@ -214,7 +221,7 @@ thePromise
       })
     })
   })
-  .catch(err => {
+  .catch((err) => {
     log(chalk.red(err))
     process.exit(1)
   })

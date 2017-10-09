@@ -3,21 +3,36 @@
   "version": "1.0.3",
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
   "repository": "codsen/csv-sort-cli",
+  "bugs": {
+    "url": "https://github.com/codsen/csv-sort-cli/issues"
+  },
+  "homepage": "https://github.com/codsen/csv-sort-cli#readme",
   "author": {
-    "name": "Roy Revelt",
     "email": "roy@codsen.com",
+    "name": "Roy Revelt",
     "url": "codsen.com"
   },
   "bin": {
-    "csvsort": "cli.js"
-  },
-  "engines": {
-    "node": ">=6.8.0"
+    "csvsort": "cli.js",
+    "sortcsv": "cli.js"
   },
   "scripts": {
     "precommit": "npm test",
-    "test": "standard"
+    "test": "./node_modules/.bin/eslint cli.js"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
   },
   "files": [
     "cli.js"
@@ -39,10 +54,6 @@
     "file",
     "files"
   ],
-  "bugs": {
-    "url": "https://github.com/codsen/csv-sort-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/csv-sort-cli#readme",
   "dependencies": {
     "chalk": "^2.1.0",
     "csv-sort": "^1.0.3",
@@ -54,11 +65,10 @@
     "update-notifier": "^2.2.0"
   },
   "devDependencies": {
-    "ava": "*",
-    "husky": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": true
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "*"
   }
 }
