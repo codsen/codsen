@@ -412,8 +412,8 @@ If the input is **something else**, output is same thing as input.
 ### example
 
 ```js
-const { sortIfObject } = require('json-comb-core')
-let res = sortIfObject(
+const { sortAllObjects } = require('json-comb-core')
+let res = sortAllObjects(
   {
     a: 'a',
     c: 'c',
