@@ -41,7 +41,7 @@ function sortAllObjects(input) {
   // we sort only container-like structures: plain objects or array (containing some
   // plain objects hidden somewhere deeper within)
   if (isObj(input) || isArr(input)) {
-    return monkey.traverse(clone(input), function (key, val) {
+    return monkey.traverse(clone(isObj(input) ? sortObject(input) : input), function (key, val) {
       var current = val !== undefined ? val : key;
       // console.log(`current = ${JSON.stringify(current, null, 4)}`)
       if (val !== undefined && isObj(val)) {

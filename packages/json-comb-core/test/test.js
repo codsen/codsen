@@ -2315,19 +2315,18 @@ test('05.14 - findUnused() - opts.comments', (t) => {
 // -----------------------------------------------------------------------------
 
 test('06.01 - sortAllObjects() - plain object', (t) => {
-  t.deepEqual(
-    sortAllObjects({
-      a: 'a',
-      c: 'c',
-      b: 'b',
-    }),
-    {
-      a: 'a',
-      b: 'b',
-      c: 'c',
-    },
-    '06.01',
-  )
+  let inp1 = {
+    a: 'a',
+    c: 'c',
+    b: 'b',
+  }
+  let inp2 = {
+    a: 'a',
+    b: 'b',
+    c: 'c',
+  }
+  t.notDeepEqual(JSON.stringify(inp1), JSON.stringify(inp2)) // control
+  t.deepEqual(JSON.stringify(sortAllObjects(inp1)), JSON.stringify(inp2), '06.01') // control
 })
 
 test('06.02 - sortAllObjects() - non-sortable input types', (t) => {
