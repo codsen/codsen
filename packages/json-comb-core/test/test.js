@@ -2469,7 +2469,7 @@ test('07.01 - does not mutate input args: enforceKeyset()', (t) => {
   }
   let dummyResult = enforceKeyset(source, { a: false, b: false })
   t.pass(dummyResult) // a mickey assertion to trick the Standard
-  t.deepEqual(source, frozen)
+  t.is(JSON.stringify(source), JSON.stringify(frozen))
 })
 
 test('07.02 - does not mutate input args: noNewKeys()', (t) => {
@@ -2481,7 +2481,7 @@ test('07.02 - does not mutate input args: noNewKeys()', (t) => {
   }
   let dummyResult = noNewKeys(source, { a: false, b: false })
   t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
-  t.deepEqual(source, frozen)
+  t.is(JSON.stringify(source), JSON.stringify(frozen))
 })
 
 test('07.03 - does not mutate input args: sortAllObjects()', (t) => {
@@ -2495,7 +2495,7 @@ test('07.03 - does not mutate input args: sortAllObjects()', (t) => {
     c: 'c',
     b: 'b',
   }
-  let dummyResult = sortAllObjects(source)
+  let dummyResult = sortAllObjects(source) // let's try to mutate "source"
   t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
-  t.deepEqual(source, frozen)
+  t.is(JSON.stringify(source), JSON.stringify(frozen))
 })
