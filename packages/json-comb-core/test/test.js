@@ -2315,18 +2315,18 @@ test('05.14 - findUnused() - opts.comments', (t) => {
 // -----------------------------------------------------------------------------
 
 test('06.01 - sortAllObjects() - plain object', (t) => {
-  let inp1 = {
+  let original = {
     a: 'a',
     c: 'c',
     b: 'b',
   }
-  let inp2 = {
+  let sorted = {
     a: 'a',
     b: 'b',
     c: 'c',
   }
-  t.notDeepEqual(JSON.stringify(inp1), JSON.stringify(inp2)) // control
-  t.deepEqual(JSON.stringify(sortAllObjects(inp1)), JSON.stringify(inp2), '06.01') // control
+  t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted)) // control
+  t.deepEqual(JSON.stringify(sortAllObjects(original)), JSON.stringify(sorted), '06.01') // test
 })
 
 test('06.02 - sortAllObjects() - non-sortable input types', (t) => {
@@ -2424,6 +2424,33 @@ test('06.04 - sortAllObjects() - object very deep', (t) => {
     },
     '06.04',
   )
+})
+
+test('06.05 - sortAllObjects() - nested case', (t) => {
+  let original = {
+    b: 'bbb',
+    a: [
+      {
+        z: 'fdggdfg',
+        m: 'gdfgdf',
+        a: 'asdasd',
+      },
+    ],
+    c: 'ccc',
+  }
+  let sorted = {
+    a: [
+      {
+        a: 'asdasd',
+        m: 'gdfgdf',
+        z: 'fdggdfg',
+      },
+    ],
+    b: 'bbb',
+    c: 'ccc',
+  }
+  t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted), '06.05.01') // control
+  t.deepEqual(JSON.stringify(sortAllObjects(original)), JSON.stringify(sorted), '06.05.02') // test
 })
 
 // -----------------------------------------------------------------------------

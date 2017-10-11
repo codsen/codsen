@@ -51,7 +51,6 @@
     "comb"
   ],
   "dependencies": {
-    "ast-monkey": "^6.4.4",
     "check-types-mini": "^2.4.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
@@ -60,6 +59,7 @@
     "object-merge-advanced": "^7.0.1",
     "object-no-new-keys": "^1.1.0",
     "object-set-all-values-to": "^2.0.2",
+    "sort-keys": "^2.0.0",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {

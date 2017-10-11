@@ -9,7 +9,7 @@ import clone from 'lodash.clonedeep'
 import includes from 'lodash.includes'
 import type from 'type-detect'
 import checkTypes from 'check-types-mini'
-import monkey from 'ast-monkey'
+import sortKeys from 'sort-keys'
 
 // -----------------------------------------------------------------------------
 
@@ -22,25 +22,9 @@ function isArr(something) { return Array.isArray(something) }
 // SORT THEM THINGIES
 
 function sortAllObjects(input) {
-  function sortObject(obj) {
-    return Object.keys(obj).sort().reduce((result, key) => {
-      result[key] = obj[key]
-      return result
-    }, {})
-  }
-  // we sort only container-like structures: plain objects or array (containing some
-  // plain objects hidden somewhere deeper within)
   if (isObj(input) || isArr(input)) {
-    return monkey.traverse(clone(isObj(input) ? sortObject(input) : input), (key, val) => {
-      const current = (val !== undefined) ? val : key
-      // console.log(`current = ${JSON.stringify(current, null, 4)}`)
-      if ((val !== undefined) && isObj(val)) {
-        return sortObject(val)
-      }
-      return current
-    })
+    return sortKeys(input, { deep: true })
   }
-  // otherwise, just bypass:
   return input
 }
 

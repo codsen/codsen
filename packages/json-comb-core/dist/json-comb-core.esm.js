@@ -7,7 +7,7 @@ import clone from 'lodash.clonedeep';
 import includes from 'lodash.includes';
 import type from 'type-detect';
 import checkTypes from 'check-types-mini';
-import monkey from 'ast-monkey';
+import sortKeys from 'sort-keys';
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -32,25 +32,9 @@ function isArr(something) {
 // SORT THEM THINGIES
 
 function sortAllObjects(input) {
-  function sortObject(obj) {
-    return Object.keys(obj).sort().reduce(function (result, key) {
-      result[key] = obj[key];
-      return result;
-    }, {});
-  }
-  // we sort only container-like structures: plain objects or array (containing some
-  // plain objects hidden somewhere deeper within)
   if (isObj(input) || isArr(input)) {
-    return monkey.traverse(clone(isObj(input) ? sortObject(input) : input), function (key, val) {
-      var current = val !== undefined ? val : key;
-      // console.log(`current = ${JSON.stringify(current, null, 4)}`)
-      if (val !== undefined && isObj(val)) {
-        return sortObject(val);
-      }
-      return current;
-    });
+    return sortKeys(input, { deep: true });
   }
-  // otherwise, just bypass:
   return input;
 }
 
