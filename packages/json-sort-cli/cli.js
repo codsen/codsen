@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint no-param-reassign:0 */
-
 // VARS
 // -----------------------------------------------------------------------------
 
@@ -18,10 +16,6 @@ const loadJsonFile = require('load-json-file')
 const writeJsonFile = require('write-json-file')
 
 const { log } = console
-const state = {}
-state.toDoList = [] // default
-state.overwrite = false // default
-// const ui = new inquirer.ui.BottomBar()
 const cli = meow(`
   Usage
     $ jsonsort YOURFILE.json
@@ -69,7 +63,7 @@ if (cli.flags.v) {
   process.exit(0)
 }
 
-// Step #1. gather the to-do list of files.
+// Step #1. set up the cli
 // -----------------------------------------------------------------------------
 
 let { input } = cli
@@ -84,11 +78,9 @@ if (cli.flags) {
     }
   })
 }
-// console.log(`cli = ${JSON.stringify(cli, null, 4)}`)
 
-// const pathsArray = globby.sync(input, { nonull: true })
-//   .map(onePath => path.resolve(onePath))
-//   .filter(pathExists.sync)
+// Step #2. query the glob and follow the pipeline
+// -----------------------------------------------------------------------------
 
 globby(input)
   .then((resolvedPathsArray) => {
@@ -97,13 +89,6 @@ globby(input)
       log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.red('The inputs don\'t lead to any json files! Exiting.')}`)
       process.exit(0)
     }
-    // let folderPaths
-    // let filePaths
-    // ([folderPaths, filePaths] = partition(resolvedPathsArray, oneOfPaths =>
-    // isDirectory(oneOfPaths)))
-    // console.log(`folderPaths = ${JSON.stringify(folderPaths, null, 4)}`)
-    // console.log(`filePaths = ${JSON.stringify(filePaths, null, 4)}`)
-    // console.log(`resolvedPathsArray = ${JSON.stringify(resolvedPathsArray, null, 4)}`)
     return resolvedPathsArray
   })
   // glob each directory, reduce'ing all results (in promise shape) until all are resolved
