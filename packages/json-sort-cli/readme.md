@@ -80,7 +80,7 @@ Under the bonnet, this application uses [globby](https://github.com/sindresorhus
 
 If you pass a folder name, for example, `jsonsort templates/`, it will catch all JSON files in there. Sometimes, config files can be in JSON format but have a different extension, yet you want to sort them. For example, ESLint config can be in JSON but be [dot files](https://en.wikipedia.org/wiki/Dot-file) `.eslintrc`.
 
-If you want to sort JSON files not having `.json` extensions, you'll need to target each file separately. For example, you should query: `jsonsort .eslintrc` as opposed to lazy glob `jsonsort *`.
+If you want to sort JSON files that don't have `.json` extensions, you'll need to target each file separately. For example, you should query: `jsonsort .eslintrc` as opposed to lazy glob `jsonsort *`.
 
 **[⬆ &nbsp;back to top](#)**
 
