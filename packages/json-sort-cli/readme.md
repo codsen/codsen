@@ -68,11 +68,11 @@ short | long            | description
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is, algorithm will traverse the input if it's an array or a plain object and will sort _every encountered plain object_.
+It **sorts JSON files deeply**. That is, the algorithm will traverse the input if it's an array or a plain object and will sort _every encountered plain object_.
 
-As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace is fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used. If you want a different indentation, raise an [issue](https://github.com/codsen/json-sort-cli/issues), we can discuss that.
+As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used. If you want a different indentation, raise an [issue](https://github.com/codsen/json-sort-cli/issues), we can discuss that.
 
-Under bonnet this application uses [globby](https://github.com/sindresorhus/globby), so refer to its glob patterns.
+Under the bonnet, this application uses [globby](https://github.com/sindresorhus/globby), so refer to its glob patterns.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -94,7 +94,7 @@ When you install it globally, it will check occasionally, are there newer versio
 
 This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/json-sort-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on an aforementioned issue link.
+If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/json-sort-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a link above.
 
 I also gladly accept feature requests and try to help people using my libraries. Like a rudimentary Customer Support, except on Monday mornings. On Monday mornings I'm very grumpy.
 
