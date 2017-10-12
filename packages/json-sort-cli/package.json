@@ -1,0 +1,75 @@
+{
+  "name": "json-sort-cli",
+  "version": "1.0.0",
+  "description": "Command line app to deep sort JSON files. Accepts globs, works fully async.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": "codsen/json-sort-cli",
+  "bugs": {
+    "url": "https://github.com/codsen/json-sort-cli/issues"
+  },
+  "homepage": "https://github.com/codsen/json-sort-cli#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "bin": {
+    "jsonsort": "cli.js",
+    "sortjson": "cli.js"
+  },
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "precommit": "npm test",
+    "test": "./node_modules/.bin/eslint *.js"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "files": [
+    "cli.js"
+  ],
+  "keywords": [
+    "json",
+    "sort",
+    "fix",
+    "utility",
+    "file",
+    "files",
+    "cli",
+    "command line",
+    "tool",
+    "app"
+  ],
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "globby": "^6.1.0",
+    "is-d": "^1.0.0",
+    "listr": "^0.12.0",
+    "load-json-file": "^3.0.0",
+    "lodash.uniq": "*",
+    "meow": "^3.7.0",
+    "p-reduce": "^1.0.0",
+    "update-notifier": "^2.3.0",
+    "write-json-file": "^2.3.0"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "coveralls": "*",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
+    "husky": "*",
+    "nyc": "*"
+  }
+}
