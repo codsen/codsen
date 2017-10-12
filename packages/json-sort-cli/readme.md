@@ -15,8 +15,6 @@
 [![Downloads/Month][downloads-img]][downloads-url]
 [![MIT License][license-badge]][license]
 
-Also see its sorting API coming from [json-comb-core](https://github.com/codsen/json-comb-core) which itself is driven by [sort-keys](https://github.com/sindresorhus/sort-keys).
-
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
