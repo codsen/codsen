@@ -2,14 +2,31 @@
   "name": "object-fill-missing-keys",
   "version": "2.1.4",
   "description": "Add missing keys into plain objects, according to a provided schema object.",
+  "license": "MIT",
+  "repository": "codsen/object-fill-missing-keys",
+  "bugs": {
+    "url": "https://github.com/codsen/object-fill-missing-keys/issues"
+  },
+  "homepage": "https://github.com/codsen/object-fill-missing-keys#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "clear && standard && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+    "test": "./node_modules/.bin/eslint *.js"
   },
-  "repository": "codsen/object-fill-missing-keys",
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "ast",
     "json",
@@ -26,30 +43,19 @@
     "normalise",
     "normalize"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/object-fill-missing-keys/issues"
-  },
-  "homepage": "https://github.com/codsen/object-fill-missing-keys#readme",
   "dependencies": {
     "lodash.clonedeep": "*",
-    "object-merge-advanced": "^7.0.2",
+    "object-merge-advanced": "^7.1.2",
     "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
-    "clear-cli": "*",
     "coveralls": "*",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.7.0",
     "husky": "*",
-    "nyc": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": true
+    "nyc": "*"
   }
 }

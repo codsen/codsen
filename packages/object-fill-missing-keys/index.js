@@ -1,80 +1,57 @@
-'use strict'
+/* eslint no-prototype-builtins:0 */
 
 // ===================================
 // V A R S
 
-var clone = require('lodash.clonedeep')
-var type = require('type-detect')
-var merge = require('object-merge-advanced')
+const clone = require('lodash.clonedeep')
+const type = require('type-detect')
+const merge = require('object-merge-advanced')
 
 // ===================================
 // F U N C T I O N S
 
-function isObj (something) { return type(something) === 'Object' }
-function isArr (something) { return Array.isArray(something) }
-function isStr (something) { return type(something) === 'string' }
+function isObj(something) { return type(something) === 'Object' }
+function isArr(something) { return Array.isArray(something) }
+function isStr(something) { return type(something) === 'string' }
 
-/**
- * sort - sorts object's keys
- *
- * @param  {Object} obj input object
- * @return {Object}     sorted object
- */
-function sort (obj) {
-  if (isObj(obj)) {
-    return Object.keys(obj).sort().reduce(function (result, key) {
-      result[key] = obj[key]
-      return result
-    }, {})
-  } else {
-    return obj
-  }
-}
-
-function fillMissingKeys (originalIncomplete, originalSchema) {
+function fillMissingKeys(originalIncomplete, originalSchema) {
+  // validations
   if (arguments.length === 0) {
-    return
+    throw new Error('object-fill-missing-keys: [THROW_ID_01]: All inputs are missing!')
   }
   if (type(originalIncomplete) !== type(originalSchema)) {
-    return
+    throw new Error(`object-fill-missing-keys: [THROW_ID_02]: The types of object to fill (${type(originalIncomplete)}) and schema (${type(originalSchema)}) are different!`)
   }
-  var incomplete = clone(originalIncomplete)
-  var schema = clone(originalSchema)
+  const incomplete = clone(originalIncomplete)
+  const schema = clone(originalSchema)
 
   if (isObj(incomplete) && isObj(schema)) {
     // both are objects
-    Object.keys(schema).forEach(function (key) {
+    Object.keys(schema).forEach((key) => {
       if (!incomplete.hasOwnProperty(key)) {
         // if key is missing, simply add it:
         incomplete[key] = schema[key]
-      } else {
-        // obj key clash
-        // console.log('\n=======\n')
-        // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
-        // console.log('schema[key] = ' + JSON.stringify(schema[key], null, 4))
+      } else
+      // obj key clash
+      // console.log('\n=======\n')
+      // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
+      // console.log('schema[key] = ' + JSON.stringify(schema[key], null, 4))
 
-        if (isStr(incomplete[key]) && isStr(schema[key])) {
-          // nothing
-        } else if (!isArr(incomplete[key]) || (isArr(incomplete[key]) && incomplete[key].length === 0)) {
-          incomplete[key] = merge(incomplete[key], schema[key])
-        } else {
-          // console.log('zzzz')
-          incomplete[key] = fillMissingKeys(incomplete[key], schema[key])
-        }
-        // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
+      if (!isArr(incomplete[key]) || (isArr(incomplete[key]) && incomplete[key].length === 0)) {
+        incomplete[key] = merge(incomplete[key], schema[key])
+      } else if (!(isStr(incomplete[key]) && isStr(schema[key]))) {
+        incomplete[key] = fillMissingKeys(incomplete[key], schema[key])
       }
+      // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
     })
   } else if (isArr(incomplete) && isArr(schema)) {
     // both are arrays
-    incomplete.forEach(function (el, i) {
-      incomplete[i] = sort(fillMissingKeys(incomplete[i], schema[0]))
+    incomplete.forEach((el, i) => {
+      incomplete[i] = fillMissingKeys(incomplete[i], schema[0])
     })
-  }// else {
-    // both are probably strings
-  //   incomplete = schema
-  // }
+  }
 
-  return sort(incomplete)
+  return incomplete
 }
 
 module.exports = fillMissingKeys

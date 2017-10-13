@@ -1,6 +1,6 @@
 # object-fill-missing-keys
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+
 
 > Add missing keys into plain objects, according to a provided schema object
 
