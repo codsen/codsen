@@ -3,6 +3,11 @@
   "version": "2.1.4",
   "description": "Add missing keys into plain objects, according to a provided schema object.",
   "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
   "repository": "codsen/object-fill-missing-keys",
   "bugs": {
     "url": "https://github.com/codsen/object-fill-missing-keys/issues"
@@ -17,7 +22,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint *.js"
+    "test": "./node_modules/.bin/eslint *.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "verbose": true

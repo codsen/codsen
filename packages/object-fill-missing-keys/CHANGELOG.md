@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-10-13
+### Changed
+- 🔧 Hardened the API - strange cases with no arguments or wrong-ones will `throw` an error. Hence bumping the major semver release.
+
 ## [2.3.0] - 2017-10-13
 ### Added
 - ✨ Dropped JS Standard and moved to raw ESLint on `airbnb-base` preset with semicolons off. JS Standard does not have many important rules on, beware.
@@ -33,3 +37,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.1.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.0.0...v2.1.0
 [2.2.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.1.0...v2.2.0
 [2.3.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.2.0...v2.3.0
+[3.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.3.0...v3.0.0

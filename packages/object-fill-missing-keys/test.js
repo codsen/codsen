@@ -678,7 +678,7 @@ test('03.07 - multiple levels of nested arrays #2', (t) => {
 // ==============================
 
 test('04.01 - number as input', (t) => {
-  t.deepEqual(
+  t.throws(() => {
     fillMissingKeys(
       1,
       {
@@ -686,14 +686,12 @@ test('04.01 - number as input', (t) => {
           b: false,
         },
       },
-    ),
-    undefined,
-    '04.01',
-  )
+    )
+  })
 })
 
 test('04.02 - boolean as input', (t) => {
-  t.deepEqual(
+  t.throws(() => {
     fillMissingKeys(
       true,
       {
@@ -701,14 +699,12 @@ test('04.02 - boolean as input', (t) => {
           b: false,
         },
       },
-    ),
-    undefined,
-    '04.02',
-  )
+    )
+  })
 })
 
 test('04.03 - null as input', (t) => {
-  t.deepEqual(
+  t.throws(() => {
     fillMissingKeys(
       null,
       {
@@ -716,10 +712,8 @@ test('04.03 - null as input', (t) => {
           b: false,
         },
       },
-    ),
-    undefined,
-    '04.03',
-  )
+    )
+  })
 })
 
 test('04.04 - both args missing (as in undefined-missing)', (t) => {
@@ -734,11 +728,9 @@ test('04.04 - both args missing (as in undefined-missing)', (t) => {
 })
 
 test('04.05 - both args completely missing', (t) => {
-  t.deepEqual(
-    fillMissingKeys(),
-    undefined,
-    '04.05',
-  )
+  t.throws(() => {
+    fillMissingKeys()
+  })
 })
 
 // ================================

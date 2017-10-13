@@ -15,12 +15,11 @@ function isArr(something) { return Array.isArray(something) }
 function isStr(something) { return type(something) === 'string' }
 
 function fillMissingKeys(originalIncomplete, originalSchema) {
-  // validations
   if (arguments.length === 0) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_01]: All inputs are missing!')
+    throw new Error('object-fill-missing-keys: [THROW_ID_01] All arguments are missing!')
   }
   if (type(originalIncomplete) !== type(originalSchema)) {
-    throw new Error(`object-fill-missing-keys: [THROW_ID_02]: The types of object to fill (${type(originalIncomplete)}) and schema (${type(originalSchema)}) are different!`)
+    throw new Error('object-fill-missing-keys: [THROW_ID_02] The types of input object and schema reference are different!')
   }
   const incomplete = clone(originalIncomplete)
   const schema = clone(originalSchema)
@@ -36,13 +35,13 @@ function fillMissingKeys(originalIncomplete, originalSchema) {
       // console.log('\n=======\n')
       // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
       // console.log('schema[key] = ' + JSON.stringify(schema[key], null, 4))
-
-      if (!isArr(incomplete[key]) || (isArr(incomplete[key]) && incomplete[key].length === 0)) {
-        incomplete[key] = merge(incomplete[key], schema[key])
-      } else if (!(isStr(incomplete[key]) && isStr(schema[key]))) {
-        incomplete[key] = fillMissingKeys(incomplete[key], schema[key])
+      if (!isStr(incomplete[key]) || !isStr(schema[key])) {
+        if (!isArr(incomplete[key]) || (isArr(incomplete[key]) && incomplete[key].length === 0)) {
+          incomplete[key] = merge(incomplete[key], schema[key])
+        } else {
+          incomplete[key] = fillMissingKeys(incomplete[key], schema[key])
+        }
       }
-      // console.log('incomplete[key] = ' + JSON.stringify(incomplete[key], null, 4))
     })
   } else if (isArr(incomplete) && isArr(schema)) {
     // both are arrays
