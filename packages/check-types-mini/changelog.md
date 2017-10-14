@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.7.0] - 2017-10-14
+### Improved
+- 🔧 Moved to Babel's `babel-preset-env` preset, created `.babelrc` config file.
+- 🔧 Set up to run unit tests against the transpiled version
+
 ## [2.6.0] - 2017-09-19
 ### Changed
 - Now serving the main export transpiled, straight from root, `index-es5.js`.
@@ -93,3 +98,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.4.0]: https://github.com/codsen/check-types-mini/compare/v2.3.0...v2.4.0
 [2.5.0]: https://github.com/codsen/check-types-mini/compare/v2.4.0...v2.5.0
 [2.6.0]: https://github.com/codsen/check-types-mini/compare/v2.5.0...v2.6.0
+[2.7.0]: https://github.com/codsen/check-types-mini/compare/v2.6.0...v2.7.0

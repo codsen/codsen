@@ -1,5 +1,5 @@
 import test from 'ava'
-import checkTypes from './index'
+import checkTypes from './index-es5'
 
 test('01.01 - throws when all/first args are missing', (t) => {
   t.throws(() => {

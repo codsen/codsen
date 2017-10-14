@@ -4,7 +4,9 @@
   "description": "Check the types of your options object's values after user has customised them",
   "license": "MIT",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
   "repository": "codsen/check-types-mini",
   "bugs": {
@@ -18,11 +20,11 @@
   },
   "main": "index-es5.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
+    "build": "babel index.js --presets babel-preset-env --out-file index-es5.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
     "prepare": "npm run build",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build",
+    "test": "clear && ./node_modules/.bin/eslint index.js test.js && npm run build && nyc --reporter=html --reporter=text ava",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
   "ava": {
@@ -52,11 +54,12 @@
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
     "clear-cli": "*",
     "coveralls": "*",
     "eslint": "^4.8.0",
     "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-ava": "^4.2.2",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
     "nodemon": "*",
