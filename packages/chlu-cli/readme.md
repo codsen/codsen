@@ -2,14 +2,16 @@
 
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Score][overall-img]][overall-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![MIT License][license-badge]][license]
 
 ## Table of Contents
 
@@ -199,48 +201,42 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright (c) 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[npm-img]: https://img.shields.io/npm/v/chlu-cli.svg
+[node-img]: https://img.shields.io/node/v/chlu-cli.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/chlu-cli
+
+[npm-img]: https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/chlu-cli
 
-[travis-img]: https://travis-ci.org/codsen/chlu-cli.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/chlu-cli.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/chlu-cli
 
-[overall-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/chlu-cli.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/chlu-cli
 
-[deps-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/chlu-cli.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/chlu-cli/badges/devDependencies.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu-cli
+
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/chlu-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg
-[downloads-url]: https://www.npmjs.com/package/chlu-cli
+[downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/chlu-cli
 
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu-cli
 
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu-cli
+[license-badge]: https://img.shields.io/npm/l/chlu-cli.svg?style=flat-square
+[license]: https://github.com/codsen/chlu-cli/blob/master/license.md
