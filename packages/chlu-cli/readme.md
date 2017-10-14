@@ -156,7 +156,7 @@ For example, edit your `.zshrc` (or Bash config, or whatever-you-are-using-shell
 my-git-add() {
   [ -e readme.md ] && doctoc readme.md
   [ -e readme.md ] && bitsausage
-  [ -e changelog.md ] && chlu changelog.md
+  [ -e changelog.md ] && chlu
   npm-check
   git add .
 }
