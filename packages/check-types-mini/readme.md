@@ -100,7 +100,7 @@ const checkTypes = require('check-types-mini')
 
 function yourFunction (input, opts) {
   // declare defaults, so we can enforce types later:
-  let defaults = {
+  const defaults = {
     placeholder: false
   }
   // fill any settings with defaults if missing:

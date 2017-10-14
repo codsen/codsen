@@ -2,6 +2,20 @@
   "name": "check-types-mini",
   "version": "2.6.0",
   "description": "Check the types of your options object's values after user has customised them",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "repository": "codsen/check-types-mini",
+  "bugs": {
+    "url": "https://github.com/codsen/check-types-mini/issues"
+  },
+  "homepage": "https://github.com/codsen/check-types-mini#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
   "main": "index-es5.js",
   "scripts": {
     "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
@@ -11,7 +25,9 @@
     "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build",
     "watch": "nodemon --quiet --watch . --exec npm run test"
   },
-  "repository": "codsen/check-types-mini",
+  "ava": {
+    "verbose": true
+  },
   "keywords": [
     "plain",
     "object",
@@ -26,22 +42,12 @@
     "schema",
     "validate"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/check-types-mini/issues"
-  },
-  "homepage": "https://github.com/codsen/check-types-mini#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
     "lodash.includes": "*",
     "lodash.intersection": "*",
     "lodash.pullall": "*",
-    "type-detect": "^4.0.0"
+    "type-detect": "^4.0.3"
   },
   "devDependencies": {
     "ava": "*",
@@ -49,17 +55,11 @@
     "babel-preset-es2015": "^6.24.1",
     "clear-cli": "*",
     "coveralls": "*",
-    "eslint": "^4.7.0",
-    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
     "nodemon": "*",
     "nyc": "*"
-  },
-  "ava": {
-    "verbose": true
-  },
-  "engines": {
-    "node": ">=0.10.0"
   }
 }
