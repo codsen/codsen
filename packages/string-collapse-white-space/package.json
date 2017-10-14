@@ -28,7 +28,7 @@
     "precommit": "npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/main.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "verbose": true
@@ -49,7 +49,7 @@
     "string-utility"
   ],
   "dependencies": {
-    "check-types-mini": "^2.6.0",
+    "check-types-mini": "^2.7.0",
     "lodash.isplainobject": "*",
     "string-replace-slices-array": "^1.4.0",
     "string-slices-array-push": "^1.6.0"
@@ -60,7 +60,7 @@
     "babel-preset-env": "^1.6.0",
     "coveralls": "*",
     "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint-config-airbnb-base": "^12.0.2",
     "eslint-plugin-import": "^2.7.0",
     "husky": "*",
     "nyc": "*",
