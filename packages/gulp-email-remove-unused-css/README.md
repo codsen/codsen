@@ -25,6 +25,7 @@ _If you have any difficulties with the output of this plugin, please use the [em
 - [Install](#install)
 - [Example](#example)
   - [Options](#options)
+- [Next level](#next-level)
 - [Regarding removing unused CSS from web pages & competition](#regarding-removing-unused-css-from-web-pages--competition)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -46,11 +47,11 @@ var gulp = require('gulp');
 var remove = require('gulp-email-remove-unused-css');
 
 gulp.task('default', function () {
-  return gulp.src('site.css')
+  return gulp.src('src/*.html')
     .pipe(remove({
       whitelist: ['.ExternalClass', '.ReadMsgBody', '.yshortcuts', '.Mso*', '.maxwidth-apple-mail-fix', '#outlook', '.module-*']
     }))
-    .pipe(gulp.dest('./out'));
+    .pipe(gulp.dest('./dist'));
 });
 ```
 
@@ -79,6 +80,30 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
   whitelist: ['.ExternalClass', '.ReadMsgBody', '.yshortcuts', '.Mso*', '.maxwidth-apple-mail-fix', '#outlook', '.module-*']
 }))
 // => all class names that begin with ".module-" will not be touched by this library.
+```
+
+## Next level
+
+If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](email-remove-unused-css) library of it instead.
+
+The idea is the following: in Gulp, everything flows as a vinyl Buffer streams. You [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations, then convert it back to Buffer and place it back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
+
+Code-wise, here's the idea:
+
+```js
+const tap = require('gulp-tap')
+const removeUnused = require('email-remove-unused-css')
+const util = require('gulp-util')
+const whitelist = ['.External*', '.ReadMsgBody', '.yshortcuts', '.Mso*', '#outlook', '.module*']
+
+gulp.task('build', () => {
+  return gulp.src('emails/*.html')
+    .pipe(tap((file) => {
+      const cleanedHtmlResult = removeUnused(file.contents.toString(), { whitelist })
+      util.log(util.colors.green(`\nremoved ${cleanedHtmlResult.deletedFromHead.length} from head: ${cleanedHtmlResult.deletedFromHead.join(' ')}`))
+      util.log(util.colors.green(`\nremoved ${cleanedHtmlResult.deletedFromBody.length} from body: ${cleanedHtmlResult.deletedFromBody.join(' ')}`))
+      file.contents = Buffer.from(cleanedHtmlResult.result)
+}))
 ```
 
 ## Regarding removing unused CSS from web pages & competition

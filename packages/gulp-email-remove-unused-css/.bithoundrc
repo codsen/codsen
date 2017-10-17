@@ -9,5 +9,8 @@
       "clear-cli",
       "husky"
     ]
-  }
+  },
+  "ignore": [
+    "index-es5.js"
+  ]
 }
