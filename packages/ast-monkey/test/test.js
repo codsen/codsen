@@ -1,5 +1,6 @@
 import test from 'ava'
-import { find, get, set, drop, info, del, arrayFirstOnly, traverse } from './index'
+import isEqual from 'lodash.isequal'
+import { find, get, set, drop, info, del, arrayFirstOnly, traverse } from '../dist/ast-monkey.cjs'
 
 let actual
 let intended
@@ -11,7 +12,6 @@ let input = {
   a: { b: [{ c: { d: 'e' } }] },
   c: { d: 'e' },
 }
-const isEqual = require('lodash.isequal')
 
 // -----------------------------------------------------------------------------
 // all throws

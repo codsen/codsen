@@ -1,17 +1,21 @@
 # 🐒 ast-monkey
 
-> Utility library for operations on parsed HTML (AST's)
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
+> Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -32,18 +36,36 @@
   - [.traverse()](#traverse)
     - [innerObj in the callback](#innerobj-in-the-callback)
 - [The name of this library](#the-name-of-this-library)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Install
 
 ```bash
-$ npm install ast-monkey
+$ npm i ast-monkey
 ```
 
-Transpiled (ES5) code is served.
+Then, consume either in CommonJS format (`requite`) or as a ES Module (`import`):
+
+```js
+const monkey = require('ast-monkey')
+// or
+import monkey from `ast-monkey`
+```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-monkey.cjs.js` | 10 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-monkey.esm.js` | 10 KB
+**UMD build** for browsers, transpiled, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-monkey.umd.js` | 42 KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Idea
 
@@ -61,7 +83,7 @@ Using this library, you can delete the particular piece of AST (method [.drop()]
 
 Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -142,7 +164,7 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .get()
 
@@ -190,7 +212,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .set()
 
@@ -238,7 +260,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .drop()
 
@@ -284,7 +306,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .info()
 
@@ -419,7 +441,7 @@ data.gatherPath = [
 -----------
 ```
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .del()
 
@@ -483,7 +505,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .arrayFirstOnly()
 
@@ -526,7 +548,7 @@ Output           | Type             | Description
 -----------------|------------------|--------------------
 `input`          | Same as `input`  | The amended `input`
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
 ### .traverse()
 
@@ -560,6 +582,8 @@ It's very important to **return the value on the callback function** (point mark
 
 If you definitely want to delete, return `NaN`.
 
+**[⬆ &nbsp;back to top](#)**
+
 #### innerObj in the callback
 
 When you call `traverse()` like this:
@@ -587,7 +611,7 @@ If monkey is currently traversing an array, going through all elements, a `key` 
 `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. It's purpose is to allow you to query the **siblings** of the current element.
 `}`                     |                |
 
-Allow me to show you how to tap the `innerObj` practically;
+Allow me to show you how to practically tap the `innerObj`;
 
 ```js
 const monkey = require('ast-monkey')
@@ -604,6 +628,7 @@ ast = monkey.traverse(ast, function (key, val, innerObj) {
   console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
   return current
 })
+// ...
 ```
 
 CONSOLE OUTPUT WILL BE:
@@ -648,64 +673,62 @@ innerObj = {
 }
 ```
 
-**[⬆ back to top](#)**
-
 ## The name of this library
 
-HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**.
+HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**. Anything-nested is can also be considered a tree – tree of plain objects, arrays and strings, for example. Monkey can [traverse](#traverse) anything really.
 
-**[⬆ back to top](#)**
+**[⬆ &nbsp;back to top](#)**
 
-## Testing and Contributing
+## Contributing
 
-```bash
-$ npm test
-```
+Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
 
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-monkey/issues). Also, you can [email me](mailto:roy@codsen.com).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/ast-monkey/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-monkey/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-monkey/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/ast-monkey.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/ast-monkey
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/ast-monkey.svg
+[npm-img]: https://img.shields.io/npm/v/ast-monkey.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/ast-monkey
 
-[travis-img]: https://travis-ci.org/codsen/ast-monkey.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/ast-monkey.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/ast-monkey
 
-[cov-img]: https://coveralls.io/repos/github/codsen/ast-monkey/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/ast-monkey/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/ast-monkey?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/ast-monkey.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/ast-monkey
 
-[deps-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ast-monkey.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/ast-monkey/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/ast-monkey/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/ast-monkey/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/ast-monkey.svg
-[downloads-url]: https://www.npmjs.com/package/ast-monkey
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-monkey/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-monkey
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-monkey
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-monkey.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/ast-monkey/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-monkey/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-monkey
+
+[downloads-img]: https://img.shields.io/npm/dm/ast-monkey.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/ast-monkey
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ast-monkey
+
+[license-img]: https://img.shields.io/npm/l/ast-monkey.svg?style=flat-square
+[license-url]: https://github.com/codsen/ast-monkey/blob/master/license.md

@@ -1,11 +1,11 @@
 /* eslint no-param-reassign:0, no-console:0 */
 
-const clone = require('lodash.clonedeep')
-const isObj = require('lodash.isplainobject')
-const isEqual = require('lodash.isequal')
-const arrayObjectOrBoth = require('util-array-object-or-both')
-const checkTypes = require('check-types-mini')
-const isNaturalNumber = require('is-natural-number')
+import clone from 'lodash.clonedeep'
+import isObj from 'lodash.isplainobject'
+import isEqual from 'lodash.isequal'
+import arrayObjectOrBoth from 'util-array-object-or-both'
+import checkTypes from 'check-types-mini'
+import isNaturalNumber from 'is-natural-number'
 
 const isArr = Array.isArray
 const DEBUG = false
@@ -306,7 +306,7 @@ function arrayFirstOnly(input) {
 
 // -----------------------------------------------------------------------------
 
-module.exports = {
+export default {
   find,
   get,
   set,

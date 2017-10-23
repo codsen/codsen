@@ -1,13 +1,11 @@
-'use strict';
+import clone from 'lodash.clonedeep';
+import isObj from 'lodash.isplainobject';
+import isEqual from 'lodash.isequal';
+import arrayObjectOrBoth from 'util-array-object-or-both';
+import checkTypes from 'check-types-mini';
+import isNaturalNumber from 'is-natural-number';
 
 /* eslint no-param-reassign:0, no-console:0 */
-
-var clone = require('lodash.clonedeep');
-var isObj = require('lodash.isplainobject');
-var isEqual = require('lodash.isequal');
-var arrayObjectOrBoth = require('util-array-object-or-both');
-var checkTypes = require('check-types-mini');
-var isNaturalNumber = require('is-natural-number');
 
 var isArr = Array.isArray;
 var DEBUG = false;
@@ -320,7 +318,7 @@ function arrayFirstOnly(input) {
 
 // -----------------------------------------------------------------------------
 
-module.exports = {
+var main = {
   find: find,
   get: get,
   set: set,
@@ -330,3 +328,5 @@ module.exports = {
   arrayFirstOnly: arrayFirstOnly,
   traverse: traverse
 };
+
+export default main;

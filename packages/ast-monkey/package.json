@@ -1,10 +1,12 @@
 {
   "name": "ast-monkey",
   "version": "6.4.4",
-  "description": "Utility library for operations on parsed HTML (AST's)",
+  "description": "Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
   "repository": "codsen/ast-monkey",
   "bugs": {
@@ -16,16 +18,25 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index-es5.js",
+  "main": "dist/ast-monkey.cjs.js",
+  "module": "dist/ast-monkey.esm.js",
+  "browser": "dist/ast-monkey.umd.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
     "precommit": "npm test",
     "prepare": "npm run build",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js && nyc --reporter=html --reporter=text ava && npm run build"
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
   },
   "keywords": [
     "ast",
@@ -46,7 +57,7 @@
     "value"
   ],
   "dependencies": {
-    "check-types-mini": "^2.6.0",
+    "check-types-mini": "^2.7.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "*",
     "lodash.isequal": "*",
@@ -55,14 +66,20 @@
   },
   "devDependencies": {
     "ava": "*",
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "clear-cli": "*",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.1",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nyc": "*"
+    "nyc": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.4",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.5"
   }
 }

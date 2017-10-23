@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2017-10-23
+### Changed
+- ✨ The main source now is in ES2015 modules with `import`/`export`.
+- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+
 ## [6.4.0] - 2017-09-19
 ### Removed
 - 🔧 JS Standard and replaced it with raw ESLint on `airbnb-base` config, with override to ban semicolons.
@@ -188,8 +193,9 @@ BREAKING API CHANGES.
 [5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0
 [5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
 [6.0.0]: https://github.com/codsen/ast-monkey/compare/v5.5.0...v6.0.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [6.1.0]: https://github.com/codsen/ast-monkey/compare/v6.0.0...v6.1.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [6.2.0]: https://github.com/codsen/ast-monkey/compare/v6.1.0...v6.2.0
 [6.3.0]: https://github.com/codsen/ast-monkey/compare/v6.2.0...v6.3.0
 [6.4.0]: https://github.com/codsen/ast-monkey/compare/v6.3.0...v6.4.0
+[7.0.0]: https://github.com/codsen/ast-monkey/compare/v6.4.0...v7.0.0
