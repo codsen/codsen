@@ -57,7 +57,7 @@
     "value"
   ],
   "dependencies": {
-    "ast-monkey": "^6.4.4",
+    "ast-monkey": "^7.0.1",
     "check-types-mini": "^2.7.0",
     "lodash.clonedeep": "*",
     "posthtml-ast-is-empty": "^2.1.2",

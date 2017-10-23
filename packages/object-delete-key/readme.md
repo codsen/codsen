@@ -101,7 +101,7 @@ Input argument   | Type     | Obligatory? | Description
 `key`                  | String   | no^         | n/a         | Key to find and delete.
 `val`                  | Whatever | no^         | n/a         | Key's value to find and delete. Can be a massively nested AST tree or whatever.
 `cleanup`              | Boolean  | no          | true        | Should this package delete any empty carcases of arrays/objects left after deletion?
-`only`                 | String   | no          | `any`       | If you want to delete only key/value pairs from objects, set it to `object` or one of alternative values from the table below. If you want to delete only keys from arrays, set it to `array` or one of the alternative values from the table below. Default is `any`. See all the accepted values table below.
+`only`                 | String   | no          | `any`       | Default setting will delete from both arrays and objects. If you want to delete from plain objects only, set this to one of "object-type" values below. If you want to delete keys from arrays only, set this to one of "array-type" values below. In this case "key" means array element's value and "value" is not meant to be used.
 }                      |          |             |             |
 
 ^ - at least one, `key` or `val` must be present.
@@ -213,7 +213,7 @@ deleteKey(
 // => { a: 'a' }
 ```
 
-The example above didn't specified the `cleanup`, so this package will delete all empty carcases of objects/arrays. When `cleanup` is off, the result would be this:
+The example above didn't specified the `cleanup`, so this package _will_ delete all empty carcases of objects/arrays by default. When `cleanup` is off, the result would be this:
 
 ```js
 deleteKey(
