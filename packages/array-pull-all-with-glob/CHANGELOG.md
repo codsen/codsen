@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
-- ✨ `opts.recogniseHTML` (default true) - if string contains HTML, whitespace around brackets will be collapsed completely, for example: `<  img` => `<img`, not `<  img` => `< img` as before. The "before" result _now_ would yield only with this new setting turned off. Total 118 opening HTML tags are recognised (with or without attributes).
 
 ## [3.1.0] - 2017-08-31
 ### Added
