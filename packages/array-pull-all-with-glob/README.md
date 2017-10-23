@@ -1,32 +1,43 @@
 # array-pull-all-with-glob
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
 > pullAllWithGlob - like _.pullAll but pulling stronger, with globs
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Install
 
 ```bash
-$ npm install --save array-pull-all-with-glob
+$ npm i array-pull-all-with-glob
 ```
 
 ```js
-// Main file is ES6:
 const pullWithGlob = require('array-pull-all-with-glob')
-// You can get transpiled ES5 version from /es5/ folder:
-var pullWithGlob = require('array-pull-all-with-glob/es5')
+// or
+import pullWithGlob from 'array-pull-all-with-glob'
 ```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 3 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3 KB
+**UMD build** for browsers, transpiled, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/array-pull-all-with-glob.umd.js` | 4 KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Table of Contents
 
@@ -39,10 +50,12 @@ var pullWithGlob = require('array-pull-all-with-glob/es5')
   - [API - Input](#api---input)
   - [API - Output](#api---output)
 - [Test](#test)
-- [Contributing & testing](#contributing--testing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Pulling
 
@@ -62,6 +75,8 @@ console.dir(pullAllWithGlob(sourceArray, removeThese))
 
 Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 ```js
@@ -70,6 +85,8 @@ pullAllWithGlob (
   removeThese    // array of strings to pull
 );
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -94,62 +111,58 @@ $ npm test
 
 For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
 
-## Contributing & testing
+**[⬆ &nbsp;back to top](#)**
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+## Contributing
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/array-pull-all-with-glob/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email. Everybody belong to Open Source community.
+Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
+
+* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/array-pull-all-with-glob/issues). Also, you can [email me](mailto:roy@codsen.com).
+
+* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/array-pull-all-with-glob/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/array-pull-all-with-glob/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/array-pull-all-with-glob.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/array-pull-all-with-glob
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/array-pull-all-with-glob.svg
+[npm-img]: https://img.shields.io/npm/v/array-pull-all-with-glob.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/array-pull-all-with-glob
 
-[travis-img]: https://travis-ci.org/codsen/array-pull-all-with-glob.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/array-pull-all-with-glob.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/array-pull-all-with-glob
 
-[overall-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/score.svg
-[overall-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
-
-[deps-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
-
-[dev-img]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
-
-[cov-img]: https://coveralls.io/repos/github/codsen/array-pull-all-with-glob/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/array-pull-all-with-glob/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/array-pull-all-with-glob?branch=master
 
-[downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg
-[downloads-url]: https://www.npmjs.com/package/array-pull-all-with-glob
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/array-pull-all-with-glob.svg?style=flat-square
+[overall-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
 
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/array-pull-all-with-glob/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/array-pull-all-with-glob
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/array-pull-all-with-glob.svg?style=flat-square
+[deps-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
 
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-pull-all-with-glob
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-pull-all-with-glob.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/array-pull-all-with-glob/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/array-pull-all-with-glob
+
+[downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/array-pull-all-with-glob
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/array-pull-all-with-glob
+
+[license-img]: https://img.shields.io/npm/l/array-pull-all-with-glob.svg?style=flat-square
+[license-url]: https://github.com/codsen/array-pull-all-with-glob/blob/master/license.md

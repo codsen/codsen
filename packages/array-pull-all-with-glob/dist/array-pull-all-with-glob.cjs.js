@@ -1,9 +1,12 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var pullAll = _interopDefault(require('lodash.pullall'));
+var matcher = _interopDefault(require('matcher'));
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var pullAll = require('lodash.pullall');
-var matcher = require('matcher');
 var isArr = Array.isArray;
 
 /**
