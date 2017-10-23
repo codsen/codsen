@@ -1,0 +1,22 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "coveralls",
+      "husky",
+      "lodash.clonedeep",
+      "nyc"
+    ]
+  },
+  "ignore": [
+    "dist/**"
+  ],
+  "test": [
+    "test/test.js"
+  ]
+}
