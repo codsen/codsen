@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards",
   "license": "MIT",
   "engines": {
