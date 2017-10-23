@@ -49,7 +49,7 @@
 $ npm i ast-monkey
 ```
 
-Then, consume either in CommonJS format (`requite`) or as a ES Module (`import`):
+Then, consume either in CommonJS format (`require`) or as an ES Module (`import`):
 
 ```js
 const monkey = require('ast-monkey')
