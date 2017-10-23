@@ -106,8 +106,6 @@ Input argument   | Type     | Obligatory? | Description
 
 ^ - at least one, `key` or `val` must be present.
 
-The difference between the `v2.x` and `v1.x` of this library is that on `v1.x` cleanup was performed on the whole file. The stump of the branch was removed, but also stumps on other branches as well! That's not good because those stumps could have been empty `alt` attributes on the HTML!!! That is fixed in `v2.x` with the help of `ast-monkey` which can traverse AST branches up and down, not only down and therefore can properly identify the path from deleted piece to highest level (and then do the operations only along this path).
-
 **[⬆ &nbsp;back to top](#)**
 
 #### Accepted `opts.only` values
