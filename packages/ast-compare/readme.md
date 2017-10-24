@@ -93,8 +93,6 @@ Main purpose is to compare two parsed HTML/CSS trees or their branches but you c
 var compare = require('ast-compare')
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## API
 
 The output of this library is binary and boolean: `true` or `false`.
