@@ -1,0 +1,83 @@
+{
+  "name": "ast-compare",
+  "version": "1.0.0",
+  "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": "codsen/ast-compare",
+  "bugs": {
+    "url": "https://github.com/codsen/ast-compare/issues"
+  },
+  "homepage": "https://github.com/codsen/ast-compare#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/ast-compare.cjs.js",
+  "module": "dist/ast-compare.esm.js",
+  "browser": "dist/ast-compare.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": false
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "ast",
+    "posthtml",
+    "compare",
+    "object",
+    "array",
+    "tree",
+    "posthtml-tree",
+    "posthtmltree",
+    "html",
+    "xml",
+    "parser",
+    "subset",
+    "equal"
+  ],
+  "dependencies": {
+    "lodash.clonedeep": "*",
+    "lodash.pullall": "*",
+    "posthtml-ast-contains-only-empty-space": "^1.6.1",
+    "type-detect": "^4.0.3"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "coveralls": "*",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.8.0",
+    "husky": "*",
+    "nyc": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.4",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.5"
+  }
+}
