@@ -31,7 +31,7 @@
     "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   },
   "clinton": {
     "rules": {
@@ -57,8 +57,10 @@
     "equal"
   ],
   "dependencies": {
+    "check-types-mini": "^2.7.0",
     "lodash.clonedeep": "*",
     "lodash.pullall": "*",
+    "matcher": "^1.0.0",
     "posthtml-ast-contains-only-empty-space": "^1.6.1",
     "type-detect": "^4.0.3"
   },

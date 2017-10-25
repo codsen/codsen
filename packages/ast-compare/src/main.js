@@ -1,7 +1,9 @@
 import clone from 'lodash.clonedeep'
 import pullAll from 'lodash.pullall'
-import type from 'type-detect'
+import typeDetect from 'type-detect'
 import empty from 'posthtml-ast-contains-only-empty-space'
+import matcher from 'matcher'
+import checkTypes from 'check-types-mini'
 import util from './util'
 
 const {
@@ -20,13 +22,13 @@ function compare(bo, so, originalOpts) {
   }
 
   if (existy(bo) && !isTheTypeLegit(bo)) {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${type(bo)}, equal to: ${JSON.stringify(bo, null, 4)}`)
+    throw new TypeError(`ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${typeDetect(bo)}, equal to: ${JSON.stringify(bo, null, 4)}`)
   }
   if (existy(so) && !isTheTypeLegit(so)) {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ${type(so)}, equal to: ${JSON.stringify(so, null, 4)}`)
+    throw new TypeError(`ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, ${typeDetect(so)}, equal to: ${JSON.stringify(so, null, 4)}`)
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ${type(originalOpts)} and equal to: ${JSON.stringify(originalOpts, null, 4)}`)
+    throw new TypeError(`ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: ${typeDetect(originalOpts)} and equal to: ${JSON.stringify(originalOpts, null, 4)}`)
   }
 
   // clone to prevent an accidental mutation
@@ -42,17 +44,10 @@ function compare(bo, so, originalOpts) {
     hungryForWhitespace: false,
     matchStrictly: false,
     verboseWhenMismatches: false,
+    useWildcards: false,
   }
-  const opts = Object.assign(defaults, originalOpts)
-  if (typeof opts.hungryForWhitespace !== 'boolean') {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_06] opts.hungryForWhitespace was customised to be not boolean but ${type(opts.hungryForWhitespace)}`)
-  }
-  if (typeof opts.matchStrictly !== 'boolean') {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_07] opts.matchStrictly was customised to be not boolean but ${type(opts.matchStrictly)}`)
-  }
-  if (typeof opts.verboseWhenMismatches !== 'boolean') {
-    throw new TypeError(`ast-compare/compare(): [THROW_ID_08] opts.verboseWhenMismatches was customised to be not boolean but ${type(opts.verboseWhenMismatches)}`)
-  }
+  const opts = Object.assign({}, defaults, originalOpts)
+  checkTypes(opts, defaults, { msg: 'ast-compare/compare(): [THROW_ID_06*]' })
 
   // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
   if (
@@ -76,7 +71,7 @@ function compare(bo, so, originalOpts) {
       (Object.keys(so).length === 0)
     ) ||
     (
-      (type(bo) !== type(so)) &&
+      (typeDetect(bo) !== typeDetect(so)) &&
       (
         !opts.hungryForWhitespace ||
         (
@@ -97,7 +92,7 @@ function compare(bo, so, originalOpts) {
     if (opts.verboseWhenMismatches) {
       return (b === s) ? true : `Given string ${s} is not matched! We have ${b} on the other end.`
     }
-    return b === s
+    return opts.useWildcards ? matcher.isMatch(b, s) : (b === s)
   } else if (isArr(b) && isArr(s)) {
     if (
       opts.hungryForWhitespace &&
@@ -160,16 +155,26 @@ function compare(bo, so, originalOpts) {
 
     for (let i = 0, len = sKeys.length; i < len; i++) {
       if (!existy(b[sKeys[i]])) {
+        if (!opts.useWildcards || (opts.useWildcards && !sKeys[i].includes('*'))) {
+          if (!opts.verboseWhenMismatches) {
+            return false
+          }
+          return `The given object has key ${sKeys[i]} which the other-one does not have.`
+        } else // so wildcards are on and sKeys[i] contains a wildcard
+        if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKeys[i]))) {
+          // so some keys do match. Return true
+          return true
+        }
         if (!opts.verboseWhenMismatches) {
           return false
         }
         return `The given object has key ${sKeys[i]} which the other-one does not have.`
       }
-      if (!isTheTypeLegit(b[sKeys[i]])) {
-        throw new TypeError(`ast-compare/compare(): [THROW_ID_09] The input ${JSON.stringify(b, null, 4)} contains a value of a wrong type, ${type(b[sKeys[i]])} at index ${i}, equal to: ${JSON.stringify(b[sKeys[i]], null, 4)}`)
+      if ((b[sKeys[i]] !== undefined) && !isTheTypeLegit(b[sKeys[i]])) {
+        throw new TypeError(`ast-compare/compare(): [THROW_ID_07] The input ${JSON.stringify(b, null, 4)} contains a value of a wrong type, ${typeDetect(b[sKeys[i]])} at index ${i}, equal to: ${JSON.stringify(b[sKeys[i]], null, 4)}`)
       } else if (!isTheTypeLegit(s[sKeys[i]])) {
-        throw new TypeError(`ast-compare/compare(): [THROW_ID_10] The input ${JSON.stringify(s, null, 4)} contains a value of a wrong type, ${type(s[sKeys[i]])} at index ${i}, equal to: ${JSON.stringify(s[sKeys[i]], null, 4)}`)
-      } else if (existy(b[sKeys[i]]) && (type(b[sKeys[i]]) !== type(s[sKeys[i]]))) {
+        throw new TypeError(`ast-compare/compare(): [THROW_ID_08] The input ${JSON.stringify(s, null, 4)} contains a value of a wrong type, ${typeDetect(s[sKeys[i]])} at index ${i}, equal to: ${JSON.stringify(s[sKeys[i]], null, 4)}`)
+      } else if (existy(b[sKeys[i]]) && (typeDetect(b[sKeys[i]]) !== typeDetect(s[sKeys[i]]))) {
         // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
@@ -177,7 +182,7 @@ function compare(bo, so, originalOpts) {
           if (!opts.verboseWhenMismatches) {
             return false
           }
-          return `The given key ${sKeys[i]} is of a different type on both objects. On the first-one, it's ${type(s[sKeys[i]])}, on the second-one, it's ${type(b[sKeys[i]])}`
+          return `The given key ${sKeys[i]} is of a different type on both objects. On the first-one, it's ${typeDetect(s[sKeys[i]])}, on the second-one, it's ${typeDetect(b[sKeys[i]])}`
         }
       } else
       // so key does exist and type matches

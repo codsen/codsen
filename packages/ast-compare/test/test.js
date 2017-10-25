@@ -465,14 +465,22 @@ test('02.03 - comparing two empty plain objects', (t) => {
   )
 })
 
-test('02.04 - sneaky similarity', (t) => {
+test('02.04 - catching row 199 for 100% coverage', (t) => {
+  t.deepEqual(
+    compare({ a: { b: [] } }, { a: { b: {} } }, { hungryForWhitespace: true, matchStrictly: true }),
+    true,
+    '02.04.01',
+  )
+})
+
+test('02.05 - sneaky similarity', (t) => {
   t.deepEqual(
     compare(
       { a: '1', b: '2', c: '3' },
       { a: '1', b: '2', c: ['3'] },
     ),
     false,
-    '02.04.01',
+    '02.05.01',
   )
   t.deepEqual(
     compare(
@@ -480,7 +488,7 @@ test('02.04 - sneaky similarity', (t) => {
       { a: '1', b: '2', c: 3 },
     ),
     false,
-    '02.04.02',
+    '02.05.02',
   )
   t.deepEqual(
     compare(
@@ -488,33 +496,33 @@ test('02.04 - sneaky similarity', (t) => {
       { a: '1', b: '2', c: { d: '3' } },
     ),
     false,
-    '02.04.03',
+    '02.05.03',
   )
 })
 
-test('02.05 - big object has one element extra', (t) => {
+test('02.06 - big object has one element extra', (t) => {
   t.deepEqual(
     compare(
       { a: '1', b: '2', c: 3 },
       { a: '1', b: '2' },
     ),
     true,
-    '02.05',
+    '02.06',
   )
 })
 
-test('02.06 - small object has one element extra', (t) => {
+test('02.07 - small object has one element extra', (t) => {
   t.deepEqual(
     compare(
       { a: '1', b: '2' },
       { a: '1', b: '2', c: 3 },
     ),
     false,
-    '02.06',
+    '02.07',
   )
 })
 
-test('02.07 - object values are arrays, one has a string, another has none', (t) => {
+test('02.08 - object values are arrays, one has a string, another has none', (t) => {
   t.deepEqual(
     compare(
       {
@@ -525,7 +533,7 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       },
     ),
     false,
-    '02.07.01 - relying on default',
+    '02.08.01 - relying on default',
   )
   t.not(
     compare(
@@ -540,7 +548,7 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       },
     ),
     true,
-    '02.07.02 - relying on default',
+    '02.08.02 - relying on default',
   )
   t.deepEqual(
     compare(
@@ -553,7 +561,7 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       { hungryForWhitespace: false, matchStrictly: false },
     ),
     false,
-    '02.07.03 - same, default hardcoded',
+    '02.08.03 - same, default hardcoded',
   )
   t.deepEqual(
     compare(
@@ -566,7 +574,7 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       { hungryForWhitespace: true, matchStrictly: false },
     ),
     true,
-    '02.07.04 - hungryForWhitespace',
+    '02.08.04 - hungryForWhitespace',
   )
   t.deepEqual(
     compare(
@@ -579,7 +587,7 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       { hungryForWhitespace: false, matchStrictly: true },
     ),
     false,
-    '02.07.05 - same, default hardcoded',
+    '02.08.05 - same, default hardcoded',
   )
   t.deepEqual(
     compare(
@@ -592,11 +600,11 @@ test('02.07 - object values are arrays, one has a string, another has none', (t)
       { hungryForWhitespace: true, matchStrictly: true },
     ),
     false,
-    '02.07.06 - matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result',
+    '02.08.06 - matchStrictly trump hungryForWhitespace - element count is uneven hence a falsey result',
   )
 })
 
-test('02.08 - empty object with keys vs object with no keys', (t) => {
+test('02.09 - empty object with keys vs object with no keys', (t) => {
   t.deepEqual(
     compare(
       { a: '\n' },
@@ -604,7 +612,7 @@ test('02.08 - empty object with keys vs object with no keys', (t) => {
       { hungryForWhitespace: false, matchStrictly: false },
     ),
     false,
-    '02.08.01',
+    '02.09.01',
   )
   t.deepEqual(
     compare(
@@ -613,7 +621,7 @@ test('02.08 - empty object with keys vs object with no keys', (t) => {
       { hungryForWhitespace: false, matchStrictly: true },
     ),
     false,
-    '02.08.02',
+    '02.09.02',
   )
   t.deepEqual(
     compare(
@@ -622,7 +630,7 @@ test('02.08 - empty object with keys vs object with no keys', (t) => {
       { hungryForWhitespace: true, matchStrictly: false },
     ),
     true,
-    '02.08.03',
+    '02.09.03',
   )
   t.deepEqual(
     compare(
@@ -631,18 +639,18 @@ test('02.08 - empty object with keys vs object with no keys', (t) => {
       { hungryForWhitespace: true, matchStrictly: true },
     ),
     true,
-    '02.08.04',
+    '02.09.04',
   )
 })
 
-test('02.09 - Boolean and numeric values', (t) => {
+test('02.10 - Boolean and numeric values', (t) => {
   t.deepEqual(
     compare(
       { a: false, b: 2, c: '3' },
       { a: false, b: 2 },
     ),
     true,
-    '02.09.01 - control - booleans and numbers as obj values',
+    '02.10.01 - control - booleans and numbers as obj values',
   )
   t.throws(() => {
     compare(
@@ -665,14 +673,14 @@ test('02.09 - Boolean and numeric values', (t) => {
   })
 })
 
-test('02.10 - s is zero length, b is empty', (t) => {
+test('02.11 - s is zero length, b is empty', (t) => {
   t.deepEqual(
     compare(
       { a: '\n\n\n   \t\t\t', b: '2' },
       { a: '', b: '2' },
     ),
     false,
-    '02.10.01 - defaults',
+    '02.11.01 - defaults',
   )
   t.deepEqual(
     compare(
@@ -681,7 +689,7 @@ test('02.10 - s is zero length, b is empty', (t) => {
       { hungryForWhitespace: true },
     ),
     true,
-    '02.10.02 - opts.hungryForWhitespace',
+    '02.11.02 - opts.hungryForWhitespace',
   )
   t.deepEqual(
     compare(
@@ -690,18 +698,18 @@ test('02.10 - s is zero length, b is empty', (t) => {
       { hungryForWhitespace: true },
     ),
     true,
-    '02.10.03 - opts.hungryForWhitespace, no keys array vs array with all empty vales',
+    '02.11.03 - opts.hungryForWhitespace, no keys array vs array with all empty vales',
   )
 })
 
-test('02.11 - matching empty arrays', (t) => {
+test('02.12 - matching empty arrays', (t) => {
   t.deepEqual(
     compare(
       { a: '1', b: '2', c: 3 },
       {},
     ),
     false,
-    '02.11.01 - blank vs. normal - defaults',
+    '02.12.01 - blank vs. normal - defaults',
   )
   t.deepEqual(
     compare(
@@ -709,7 +717,7 @@ test('02.11 - matching empty arrays', (t) => {
       {},
     ),
     false,
-    '02.11.02 - blank vs. empty - defaults',
+    '02.12.02 - blank vs. empty - defaults',
   )
 
   t.deepEqual(
@@ -719,7 +727,7 @@ test('02.11 - matching empty arrays', (t) => {
       { hungryForWhitespace: true },
     ),
     false,
-    '02.11.03 - blank vs. normal - opts.hungryForWhitespace',
+    '02.12.03 - blank vs. normal - opts.hungryForWhitespace',
   )
   t.deepEqual(
     compare(
@@ -728,7 +736,7 @@ test('02.11 - matching empty arrays', (t) => {
       { hungryForWhitespace: true },
     ),
     true,
-    '02.11.04 - blank vs. empty - opts.hungryForWhitespace',
+    '02.12.04 - blank vs. empty - opts.hungryForWhitespace',
   )
 
   t.deepEqual(
@@ -738,7 +746,7 @@ test('02.11 - matching empty arrays', (t) => {
       { matchStrictly: true },
     ),
     false,
-    '02.11.05 - blank vs. normal - opts.matchStrictly',
+    '02.12.05 - blank vs. normal - opts.matchStrictly',
   )
   t.deepEqual(
     compare(
@@ -747,7 +755,7 @@ test('02.11 - matching empty arrays', (t) => {
       { matchStrictly: true },
     ),
     false,
-    '02.11.06 - blank vs. empty - opts.matchStrictly',
+    '02.12.06 - blank vs. empty - opts.matchStrictly',
   )
 
   t.deepEqual(
@@ -757,7 +765,7 @@ test('02.11 - matching empty arrays', (t) => {
       { hungryForWhitespace: true, matchStrictly: true },
     ),
     false,
-    '02.11.07 - blank vs. normal - both opts',
+    '02.12.07 - blank vs. normal - both opts',
   )
   t.deepEqual(
     compare(
@@ -766,7 +774,7 @@ test('02.11 - matching empty arrays', (t) => {
       { hungryForWhitespace: true, matchStrictly: true },
     ),
     true,
-    '02.11.08 - blank vs. empty - both opts',
+    '02.12.08 - blank vs. empty - both opts',
   )
 })
 
@@ -2688,6 +2696,140 @@ test('08.01 - hungryForWhitespace, empty strings within arrays', (t) => {
     ),
     true,
     '08.01.04',
+  )
+})
+
+// =================
+// Wildcard matching
+// =================
+
+test('09.01 - wildcards against values within object', (t) => {
+  t.deepEqual(
+    compare(
+      { a: '1', b: '2a', c: '3' },
+      { a: '1', b: '2*' },
+    ),
+    false,
+    '09.01.01 - default',
+  )
+  t.deepEqual(
+    compare(
+      { a: '1', b: '2a', c: '3' },
+      { a: '1', b: '2*' },
+      { useWildcards: false },
+    ),
+    false,
+    '09.01.02 - hardcoded default',
+  )
+  t.deepEqual(
+    compare(
+      { a: '1', b: '2a', c: '3' },
+      { a: '1', b: '2*' },
+      { useWildcards: true },
+    ),
+    true,
+    '09.01.03 - wildcards enabled',
+  )
+
+  t.deepEqual(
+    compare(
+      { a: '1', b: '2*' },
+      { a: '1', b: '2a', c: '3' },
+      { useWildcards: true },
+    ),
+    false,
+    '09.01.04 - weird',
+  )
+  t.deepEqual(
+    compare(
+      { a: '1', b: '2*' },
+      { a: '1', b: '2a', c: '3' },
+      { useWildcards: false },
+    ),
+    false,
+    '09.01.05 - weird, false anyway',
+  )
+})
+
+test('09.02 - wildcards against keys within object', (t) => {
+  t.deepEqual(
+    compare(
+      { az: '1', bz: '2a', cz: '3' },
+      { 'a*': '1', 'b*': '2*' },
+    ),
+    false,
+    '09.02.01 - default',
+  )
+  t.deepEqual(
+    compare(
+      { az: '1', bz: '2a', cz: '3' },
+      { 'a*': '1', 'b*': '2a' },
+      { useWildcards: true },
+    ),
+    true,
+    '09.02.02 - wildcards on',
+  )
+  t.deepEqual(
+    compare(
+      { az: '1', bz: '2a', cz: '3' },
+      { 'x*': '1', 'b*': '2*' },
+    ),
+    false,
+    '09.02.03 - won\'t find, despite wildcards, which are turned off',
+  )
+  t.deepEqual(
+    compare(
+      { az: '1', bz: '2a', cz: '3' },
+      { 'x*': '1', 'b*': '2a' },
+      { useWildcards: true },
+    ),
+    false,
+    '09.02.04 - won\'t find, despite wildcards, which are turned on',
+  )
+})
+
+test('09.03 - wildcards in deeper levels', (t) => {
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            b: 'horn',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: '*orn',
+          },
+        ],
+      },
+      { useWildcards: false },
+    ),
+    false,
+    '09.03.01 - default (control), wildcards are turned off',
+  )
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            b: 'horn',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: '*orn',
+          },
+        ],
+      },
+      { useWildcards: true },
+    ),
+    true,
+    '09.03.02 - default (control), wildcards are turned off',
   )
 })
 

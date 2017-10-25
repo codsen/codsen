@@ -30,6 +30,8 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'check-types-mini',
+      'matcher',
       'lodash.clonedeep',
       'lodash.pullall',
       'posthtml-ast-contains-only-empty-space',
