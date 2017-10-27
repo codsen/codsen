@@ -1,12 +1,13 @@
 # string-collapse-white-space
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
 > Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -14,8 +15,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
-[![MIT License][license-badge]][license]
-
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -31,10 +31,12 @@
 - [Usage](#usage)
 - [Smart bits](#smart-bits)
 - [Practical use](#practical-use)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+**[⬆ &nbsp;back to top](#)**
 
 ## TLDR;
 
@@ -55,19 +57,21 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 
 `'   aaa   \n   bbb   '` → `'aaa\nbbb'`
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Install
 
 ```bash
 $ npm i string-collapse-white-space
 ```
 
-**What you'll get:**
+Here's what you'll get:
 
-type            | Key in `package.json` | Path  | Size
+Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/string-collapse-white-space.cjs.js` | 18KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 18KB
-**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 29KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 16 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 16 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 29 KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -93,6 +97,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### Optional Options Object's API:
 
 `options` object's key         | Type     | Obligatory? | Default     | Description
@@ -104,8 +110,6 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.
 `recogniseHTML`                | Boolean  | no          | `true`      | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`.
 }                              |          |             |             |
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Algorithm
 
@@ -157,6 +161,8 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's w
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Practical use
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
@@ -165,41 +171,23 @@ I'm going to use it first in [Detergent](https://github.com/codsen/detergent), b
 
 **[⬆ &nbsp;back to top](#)**
 
-## Testing and Contributing
+## Contributing
 
-```bash
-$ npm test
-```
+Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
 
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Also, you can [email me](mailto:roy@codsen.com).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-collapse-white-space/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-collapse-white-space.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-collapse-white-space
@@ -225,15 +213,14 @@ SOFTWARE.
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-collapse-white-space.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/string-collapse-white-space
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-collapse-white-space/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-collapse-white-space
 
+[downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/string-collapse-white-space
 
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-collapse-white-space
 
-[license-badge]: https://img.shields.io/npm/l/string-collapse-white-space.svg?style=flat-square
-[license]: https://github.com/codsen/string-collapse-white-space/blob/master/license.md
+[license-img]: https://img.shields.io/npm/l/string-collapse-white-space.svg?style=flat-square
+[license-url]: https://github.com/codsen/string-collapse-white-space/blob/master/license.md
