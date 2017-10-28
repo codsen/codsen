@@ -119,6 +119,19 @@ test('02.02 - matchLeftIncl()  case insensitive', (t) => {
   )
 })
 
+test('02.03 - matchLeftIncl()  left substring to check is longer than what\'s on the left', (t) => {
+  t.is(
+    matchLeftIncl('abc', 2, ['cjsldfdjshfjkdfhgkdkgfhkd']),
+    false,
+    '02.03.01',
+  )
+  t.is(
+    matchLeftIncl('abc', 2, ['cjsldfdjshfjkdfhgkdkgfhkd'], { i: true }),
+    false,
+    '02.03.02 - opts should not affect anything here',
+  )
+})
+
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
