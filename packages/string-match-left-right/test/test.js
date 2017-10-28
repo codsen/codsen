@@ -12,6 +12,10 @@ test('01.01 - throws', (t) => {
   t.throws(() => {
     matchRightIncl('zzz', 1)
   })
+  // third arg wrong
+  t.throws(() => {
+    matchRightIncl('zzz', 1, 1)
+  })
   // no second arg
   t.throws(() => {
     matchLeftIncl('zzz', null, ['aaa'])
@@ -59,6 +63,10 @@ test('01.01 - throws', (t) => {
   })
   t.throws(() => {
     matchLeftIncl(-1)
+  })
+  // fourth arg not a plain object
+  t.throws(() => {
+    matchRightIncl('zzz', 1, ['aaa'], true)
   })
 })
 
