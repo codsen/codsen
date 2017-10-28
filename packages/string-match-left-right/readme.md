@@ -27,7 +27,7 @@
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
 - [`opts.cbLeft` and `opts.cbRight`](#optscbleft-and-optscbright)
-- [Why my code coverage sucks](#why-my-code-coverage-sucks)
+- [Why my code coverage ~~sucks~~ is not perfect](#why-my-code-coverage-sucks-is-not-perfect)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -159,7 +159,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // => res = true
 ```
 
-## Why my code coverage sucks
+## Why my code coverage ~~sucks~~ is not perfect
 
 You may ask: why is the [coverage](https://coveralls.io/github/codsen/string-match-left-right?branch=master) not proper 100%?
 
