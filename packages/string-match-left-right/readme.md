@@ -59,7 +59,7 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 
 ## The API
 
-There are four methods, all have the same arguments of the same type.
+There are four methods; all have the same arguments of the same type.
 
 **matchLeftIncl()**
 **matchRightIncl()**
