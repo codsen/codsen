@@ -290,3 +290,60 @@ test('05.03 - matchRight()     on a simple string, case insensitive', (t) => {
     '05.03.02',
   )
 })
+
+// 6. opts.cbLeft and opts.cbLeft callbacks
+// -----------------------------------------------------------------------------
+
+test('06.01 - opts.cbLeft()    callback is called back. haha!', (t) => {
+  function isSpace(char) {
+    return (typeof char === 'string') && (char.trim() === '')
+  }
+  t.is(
+    matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace }),
+    true,
+    '06.01.01',
+  )
+  t.is(
+    matchLeft('<a superclass="something">', 13, 'class', { cbLeft: isSpace }),
+    false,
+    '06.01.02',
+  )
+  t.is(
+    matchLeftIncl('<a class="something">', 8, 'class=', { cbLeft: isSpace }),
+    true,
+    '06.01.03',
+  )
+  t.is(
+    matchLeftIncl('<a superclass="something">', 13, 'class=', { cbLeft: isSpace }),
+    false,
+    '06.01.04',
+  )
+})
+
+test('06.02 - opts.cbRight()   callback is called back', (t) => {
+  function isSpace(char) {
+    return (typeof char === 'string') && (char.trim() === '')
+  }
+  t.is(
+    // we will catch closing double quote, index #19 and check does closing bracket follow
+    // if and also does the space follow after it
+    matchRight('<a class="something"> text', 19, '>', { cbRight: isSpace }),
+    true,
+    '06.02.01',
+  )
+  t.is(
+    matchRight('<a class="something">text', 19, '>', { cbRight: isSpace }),
+    false,
+    '06.02.02',
+  )
+  t.is(
+    matchRightIncl('<a class="something"> text', 19, '">', { cbRight: isSpace }),
+    true,
+    '06.02.03',
+  )
+  t.is(
+    matchRightIncl('<a class="something">text', 19, '">', { cbRight: isSpace }),
+    false,
+    '06.02.04',
+  )
+})

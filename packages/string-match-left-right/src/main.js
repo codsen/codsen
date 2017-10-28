@@ -27,40 +27,54 @@ function main(mode, str, position, whatToMatch, opts) {
     i: false,
   }
   opts = Object.assign({}, defaults, opts)
-  checkTypes(opts, defaults, { msg: 'string-match-left-right: [THROW_ID_05*]' })
+  checkTypes(opts, defaults, {
+    msg: 'string-match-left-right: [THROW_ID_05*]',
+    schema: {
+      cbLeft: ['null', 'undefined', 'function'],
+      cbRight: ['null', 'undefined', 'function'],
+    },
+  })
 
   switch (mode) {
     case 'matchLeftIncl':
       return whatToMatch.some((el) => {
         const temp = str.slice((position - el.length) + 1, position + 1)
         if (opts.i) {
-          return (temp === el.toLowerCase())
+          return (temp === el.toLowerCase()) &&
+            (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true)
         }
-        return (temp === el)
+        return (temp === el) &&
+          (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true)
       })
     case 'matchLeft':
       return whatToMatch.some((el) => {
         const temp = str.slice((position - el.length), position)
         if (opts.i) {
-          return (temp === el.toLowerCase())
+          return (temp === el.toLowerCase()) &&
+            (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true)
         }
-        return (temp === el)
+        return (temp === el) &&
+          (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true)
       })
     case 'matchRightIncl':
       return whatToMatch.some((el) => {
         const temp = str.slice(position, position + el.length)
         if (opts.i) {
-          return (temp === el.toLowerCase())
+          return (temp === el.toLowerCase()) &&
+            (opts.cbRight ? opts.cbRight(str[position + el.length]) : true)
         }
-        return (temp === el)
+        return (temp === el) &&
+          (opts.cbRight ? opts.cbRight(str[position + el.length]) : true)
       })
     case 'matchRight':
       return whatToMatch.some((el) => {
         const temp = str.slice(position + 1, position + el.length + 1)
         if (opts.i) {
-          return (temp === el.toLowerCase())
+          return (temp === el.toLowerCase()) &&
+            (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true)
         }
-        return (temp === el)
+        return (temp === el) &&
+          (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true)
       })
   }
 }

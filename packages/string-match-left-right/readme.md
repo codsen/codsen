@@ -26,6 +26,8 @@
 - [Install](#install)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
+- [`opts.cbLeft` and `opts.cbRight`](#optscbleft-and-optscbright)
+- [Regarding the unit test code coverage](#regarding-the-unit-test-code-coverage)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -78,6 +80,8 @@ Input argument   | Type                       | Obligatory? | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
 `i`                            | Boolean  | no          | `false`     | if `false`, it's case sensitive. If `true`, it's insensitive.
+`cbLeft`                       | Function | no          | `undefined` | if you supply a callback function as a value of this key, it will be fed with the character that right outside on the left of substring being checked.
+`cbRight`                      | Function | no          | `undefined` | if you supply a callback function as a value of this key, it will be fed with the character that right outside on the left of substring being checked.
 }                              |          |             |             |
 
 **Options' defaults**:
@@ -130,6 +134,40 @@ console.log(`res4 = ${res4}`)
 ```
 
 **[⬆ &nbsp;back to top](#)**
+
+## `opts.cbLeft` and `opts.cbRight`
+
+Often you need not only to match what's on the left/right of the given index within string, but also to perform checks on what's outside.
+
+For example, if you are traversing the string and want to match the `class` attribute, you traverse backwards, "catch" equals character `=`, then check, what's on the left of it using method `matchLeft`. That's not enough, because you also need to check, is the character further to the left of it is a space, or in algorithm terms, "trims to length zero", that is `(trim(char).length === 0)`. How do you apply this check?
+
+Using `opts.cbLeft` callback ("cb" in it's name stands for CallBack):
+
+```js
+const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
+// imagine you looped the string and wanted to catch where does attribute "class" start
+// and end (not to mention to ensure that it's a real attribute, not something ending with this
+// string "class").
+// You catch "=", index number 8.
+// This library can check, is "class" to the left of it and feed what's to the left of it
+// to your supplied callback function, which happens to be a checker "is it a space":
+function isSpace(char) {
+  return (typeof char === 'string') && (char.trim() === '')
+}
+let res = matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace }),
+console.log(`res = ${JSON.stringify(res, null, 4)}`)
+// => res = true
+```
+
+## Regarding the unit test code coverage
+
+You may ask: why is the coverage for proper 100%?
+
+I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node does not support ES modules yet, I have to transpile the code (using Rollup + Babel). This means, we run unit tests not against the source code, but against what Babel generated out of it. Since Babel adds more stuff and that stuff can change since we're using "floating" preset `babel-preset-env`, I can't 100% guarantee that unit tests will cover transpiled code 100%.
+
+However, at least we cover 100% of the lines:
+
+
 
 ## Contributing
 
