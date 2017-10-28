@@ -161,11 +161,11 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 
 ## Why my code coverage sucks
 
-You may ask: why is the [coverage](https://coveralls.io/github/codsen/string-match-left-right?branch=master) for proper 100%?
+You may ask: why is the [coverage](https://coveralls.io/github/codsen/string-match-left-right?branch=master) not proper 100%?
 
-I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node does not support ES modules yet, I have to transpile the code (using Rollup + Babel). This means, we run unit tests not against the source code, but against what Babel generated out of it. Since Babel adds more stuff and that stuff can change since we're using "floating" preset `babel-preset-env`, I can't 100% guarantee that unit tests will cover transpiled code 100%.
+I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node (and together with it, AVA, natively) does not support ES modules yet, I have to _transpile_ the code (using Rollup + Babel). This means, we run unit tests not against the source code, but against what Babel generated out of it. Since Babel adds more stuff and that stuff can change (since we're using "floating" preset `babel-preset-env`), I can't 100% guarantee that unit tests will cover transpiled code 100%.
 
-However, at least we cover 100% of the lines:
+At least we cover 100% of the lines:
 
 ![current coverage situation](https://cdn.rawgit.com/codsen/string-match-left-right/45b3724d/media/coverage.png)
 
