@@ -1,0 +1,73 @@
+{
+  "name": "string-match-left-right",
+  "version": "1.0.0",
+  "description": "Do substrings match what's on the left or right of the given index?",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": "codsen/string-match-left-right",
+  "bugs": {
+    "url": "https://github.com/codsen/string-match-left-right/issues"
+  },
+  "homepage": "https://github.com/codsen/string-match-left-right#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/string-match-left-right.cjs.js",
+  "module": "dist/string-match-left-right.esm.js",
+  "browser": "dist/string-match-left-right.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "keywords": [
+    "string",
+    "march",
+    "match",
+    "left",
+    "right",
+    "traverse",
+    "no-parsing",
+    "utility"
+  ],
+  "dependencies": {
+    "check-types-mini": "^2.7.0",
+    "is-natural-number": "^4.0.1",
+    "lodash.isplainobject": "*"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "babel-preset-env": "^1.6.1",
+    "coveralls": "*",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.8.0",
+    "husky": "*",
+    "nyc": "*",
+    "rollup": "^0.50.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.5",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.5"
+  }
+}
