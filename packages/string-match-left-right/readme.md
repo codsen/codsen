@@ -25,7 +25,6 @@
 
 - [Install](#install)
 - [The API](#the-api)
-  - [Each of four functions' API:](#each-of-four-functions-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -59,18 +58,12 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 
 ## The API
 
-There are four methods; all have the same arguments of the same type.
+There are four methods; all have the same API's:
 
-**matchLeftIncl()**
-**matchRightIncl()**
-**matchLeft()**
-**matchRight()**
-
-----
-
-**[⬆ &nbsp;back to top](#)**
-
-### Each of four functions' API:
+* **`matchLeftIncl`** — at least one of given substrings has to match what's on the **left** and including character at a given index
+* **`matchRightIncl`** — at least one of given substrings has to match what's on the **right** and including character at a given index
+* **`matchLeft`** — at least one of given substrings has to match what's on the **left** of the given index
+* **`matchRight`** — at least one of given substrings has to match what's on the **right** of the given index
 
 Input argument   | Type                       | Obligatory? | Description
 -----------------|----------------------------|-------------|--------------
@@ -149,6 +142,8 @@ Hi! 99% of society are passive people, consumers. They wait for others to take a
 * If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-match-left-right/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
