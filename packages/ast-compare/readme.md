@@ -51,9 +51,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 9 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 8 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 49 KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 51 KB
 
 **[⬆ &nbsp;back to top](#)**
 

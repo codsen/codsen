@@ -2833,6 +2833,129 @@ test('09.03 - wildcards in deeper levels', (t) => {
   )
 })
 
+test('09.04 - wildcards in deeper levels within arrays', (t) => {
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            z: 'zzz',
+          },
+          {
+            b: 'horn',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: '*orn',
+          },
+        ],
+      },
+      { useWildcards: false },
+    ),
+    false,
+    '09.04.01',
+  )
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            z: 'zzz',
+          },
+          {
+            b: 'horn',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: '*orn',
+          },
+        ],
+      },
+      { useWildcards: true },
+    ),
+    true,
+    '09.04.02',
+  )
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            z: 'zzz',
+          },
+          {
+            b: 'horn',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: 'ccc',
+          },
+        ],
+      },
+      { useWildcards: true },
+    ),
+    false,
+    '09.04.03',
+  )
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            z: 'zzz',
+          },
+          {
+            b: 'ccc', // <---- !
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            '*': 'ccc',
+          },
+        ],
+      },
+      { useWildcards: false },
+    ),
+    false,
+    '09.04.04',
+  )
+  t.deepEqual(
+    compare(
+      {
+        a: [
+          {
+            z: 'zzz',
+          },
+          {
+            b: 'yyy', // <---- !
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            '*': 'ccc',
+          },
+        ],
+      },
+      { useWildcards: true },
+    ),
+    true,
+    '09.04.05',
+  )
+})
+
 // ==============
 // UTIL
 // ==============
