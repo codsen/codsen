@@ -63,7 +63,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-monkey.cjs.js` | 10 KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-monkey.esm.js` | 10 KB
-**UMD build** for browsers, transpiled, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-monkey.umd.js` | 42 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-monkey.umd.js` | 56 KB
 
 **[⬆ &nbsp;back to top](#)**
 
