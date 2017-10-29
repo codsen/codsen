@@ -6,6 +6,7 @@ var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var replaceSlicesArr = _interopDefault(require('string-replace-slices-array'));
 var Slices = _interopDefault(require('string-slices-array-push'));
+var stringMatchLeftRight = require('string-match-left-right');
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -18,18 +19,14 @@ function collapse(str, originalOpts) {
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
-  function tagsFront(character) {
+  function isSpaceOrLeftBracket(character) {
     return character === '<' || character.trim() === '';
   }
-  function matchBackwards(string, position) {
-    for (var _len = arguments.length, whatToMatch = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-      whatToMatch[_key - 2] = arguments[_key];
-    }
-
-    return whatToMatch.some(function (el) {
-      return string.slice(position - el.length + 1, position + 1).toLowerCase() === el && tagsFront(str[position - el.length]);
-    });
-  }
+  // function matchBackwards(string, position, ...whatToMatch) {
+  //   return whatToMatch.some(el =>
+  //     (string.slice((position - el.length) + 1, position + 1).toLowerCase() === el) &&
+  //     tagsFront(str[position - el.length]))
+  // }
 
   if (typeof str !== 'string') {
     throw new Error('string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
@@ -292,12 +289,12 @@ function collapse(str, originalOpts) {
             tagCanEndHere = false;
             if (charCodeBetweenInclusive(str[i], 97, 110)) {
               // if letters a-n, inclusive:
-              if (str[i] === 'a' && (str[i - 1] === 'e' && matchBackwards(str, i, 'area', 'textarea') || str[i - 1] === 't' && matchBackwards(str, i, 'data', 'meta') || tagsFront(str[i - 1])) || str[i] === 'b' && (matchBackwards(str, i, 'rb', 'sub') || tagsFront(str[i - 1])) || str[i] === 'c' && matchBackwards(str, i, 'rtc') || str[i] === 'd' && (str[i - 1] === 'a' && matchBackwards(str, i, 'head', 'thead') || matchBackwards(str, i, 'kbd', 'dd', 'embed', 'legend', 'td')) || str[i] === 'e' && (matchBackwards(str, i, 'source') || str[i - 1] === 'd' && matchBackwards(str, i, 'aside', 'code') || str[i - 1] === 'l' && matchBackwards(str, i, 'table', 'article', 'title', 'style') || str[i - 1] === 'm' && matchBackwards(str, i, 'iframe', 'time') || str[i - 1] === 'r' && matchBackwards(str, i, 'pre', 'figure', 'picture') || str[i - 1] === 't' && matchBackwards(str, i, 'template', 'cite', 'blockquote') || matchBackwards(str, i, 'base') || tagsFront(str[i - 1])) || str[i] === 'g' && matchBackwards(str, i, 'img', 'strong', 'dialog', 'svg') || str[i] === 'h' && matchBackwards(str, i, 'th', 'math') || str[i] === 'i' && (matchBackwards(str, i, 'bdi', 'li') || tagsFront(str[i - 1])) || str[i] === 'k' && matchBackwards(str, i, 'track', 'link', 'mark') || str[i] === 'l' && matchBackwards(str, i, 'html', 'ol', 'ul', 'dl', 'label', 'del', 'small', 'col') || str[i] === 'm' && matchBackwards(str, i, 'param', 'em', 'menuitem', 'form') || str[i] === 'n' && (str[i - 1] === 'o' && matchBackwards(str, i, 'section', 'caption', 'figcaption', 'option', 'button') || matchBackwards(str, i, 'span', 'keygen', 'dfn', 'main'))) {
+              if (str[i] === 'a' && (str[i - 1] === 'e' && stringMatchLeftRight.matchLeftIncl(str, i, ['area', 'textarea'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 't' && stringMatchLeftRight.matchLeftIncl(str, i, ['data', 'meta'], { cbLeft: isSpaceOrLeftBracket, i: true }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === 'b' && (stringMatchLeftRight.matchLeftIncl(str, i, ['rb', 'sub'], { cbLeft: isSpaceOrLeftBracket, i: true }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === 'c' && stringMatchLeftRight.matchLeftIncl(str, i, 'rtc', { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'd' && (str[i - 1] === 'a' && stringMatchLeftRight.matchLeftIncl(str, i, ['head', 'thead'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['kbd', 'dd', 'embed', 'legend', 'td'], { cbLeft: isSpaceOrLeftBracket, i: true })) || str[i] === 'e' && (stringMatchLeftRight.matchLeftIncl(str, i, 'source', { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'd' && stringMatchLeftRight.matchLeftIncl(str, i, ['aside', 'code'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'l' && stringMatchLeftRight.matchLeftIncl(str, i, ['table', 'article', 'title', 'style'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'm' && stringMatchLeftRight.matchLeftIncl(str, i, ['iframe', 'time'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'r' && stringMatchLeftRight.matchLeftIncl(str, i, ['pre', 'figure', 'picture'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 't' && stringMatchLeftRight.matchLeftIncl(str, i, ['template', 'cite', 'blockquote'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, 'base', { cbLeft: isSpaceOrLeftBracket, i: true }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === 'g' && stringMatchLeftRight.matchLeftIncl(str, i, ['img', 'strong', 'dialog', 'svg'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'h' && stringMatchLeftRight.matchLeftIncl(str, i, ['th', 'math'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'i' && (stringMatchLeftRight.matchLeftIncl(str, i, ['bdi', 'li'], { cbLeft: isSpaceOrLeftBracket, i: true }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === 'k' && stringMatchLeftRight.matchLeftIncl(str, i, ['track', 'link', 'mark'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'l' && stringMatchLeftRight.matchLeftIncl(str, i, ['html', 'ol', 'ul', 'dl', 'label', 'del', 'small', 'col'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'm' && stringMatchLeftRight.matchLeftIncl(str, i, ['param', 'em', 'menuitem', 'form'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'n' && (str[i - 1] === 'o' && stringMatchLeftRight.matchLeftIncl(str, i, ['section', 'caption', 'figcaption', 'option', 'button'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['span', 'keygen', 'dfn', 'main'], { cbLeft: isSpaceOrLeftBracket, i: true }))) {
                 tagMatched = true;
               }
             } else {
               // o-z, inclusive. codes 111-122, inclusive
-              if (str[i] === 'o' && matchBackwards(str, i, 'bdo', 'video', 'audio') || str[i] === 'p' && (tagsFront(str[i - 1]) || str[i - 1] === 'u' && matchBackwards(str, i, 'hgroup', 'colgroup', 'optgroup', 'sup') || matchBackwards(str, i, 'map', 'samp', 'rp')) || str[i] === 'q' && tagsFront(str[i - 1]) || str[i] === 'r' && (str[i - 1] === 'e' && matchBackwards(str, i, 'header', 'meter', 'footer') || matchBackwards(str, i, 'var', 'br', 'abbr', 'wbr', 'hr', 'tr')) || str[i] === 's' && (str[i - 1] === 's' && matchBackwards(str, i, 'address', 'progress') || matchBackwards(str, i, 'canvas', 'details', 'ins') || tagsFront(str[i - 1])) || str[i] === 't' && (str[i - 1] === 'c' && matchBackwards(str, i, 'object', 'select') || str[i - 1] === 'o' && matchBackwards(str, i, 'slot', 'tfoot') || str[i - 1] === 'p' && matchBackwards(str, i, 'script', 'noscript') || str[i - 1] === 'u' && matchBackwards(str, i, 'input', 'output') || matchBackwards(str, i, 'fieldset', 'rt', 'datalist', 'dt')) || str[i] === 'u' && (tagsFront(str[i - 1]) || matchBackwards(str, i, 'menu')) || str[i] === 'v' && matchBackwards(str, i, 'nav', 'div') || str[i] === 'y' && matchBackwards(str, i, 'ruby', 'body', 'tbody', 'summary')) {
+              if (str[i] === 'o' && stringMatchLeftRight.matchLeftIncl(str, i, ['bdo', 'video', 'audio'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'p' && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === 'u' && stringMatchLeftRight.matchLeftIncl(str, i, ['hgroup', 'colgroup', 'optgroup', 'sup'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['map', 'samp', 'rp'], { cbLeft: isSpaceOrLeftBracket, i: true })) || str[i] === 'q' && isSpaceOrLeftBracket(str[i - 1]) || str[i] === 'r' && (str[i - 1] === 'e' && stringMatchLeftRight.matchLeftIncl(str, i, ['header', 'meter', 'footer'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['var', 'br', 'abbr', 'wbr', 'hr', 'tr'], { cbLeft: isSpaceOrLeftBracket, i: true })) || str[i] === 's' && (str[i - 1] === 's' && stringMatchLeftRight.matchLeftIncl(str, i, ['address', 'progress'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['canvas', 'details', 'ins'], { cbLeft: isSpaceOrLeftBracket, i: true }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === 't' && (str[i - 1] === 'c' && stringMatchLeftRight.matchLeftIncl(str, i, ['object', 'select'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'o' && stringMatchLeftRight.matchLeftIncl(str, i, ['slot', 'tfoot'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'p' && stringMatchLeftRight.matchLeftIncl(str, i, ['script', 'noscript'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i - 1] === 'u' && stringMatchLeftRight.matchLeftIncl(str, i, ['input', 'output'], { cbLeft: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ['fieldset', 'rt', 'datalist', 'dt'], { cbLeft: isSpaceOrLeftBracket, i: true })) || str[i] === 'u' && (isSpaceOrLeftBracket(str[i - 1]) || stringMatchLeftRight.matchLeftIncl(str, i, 'menu', { cbLeft: isSpaceOrLeftBracket, i: true })) || str[i] === 'v' && stringMatchLeftRight.matchLeftIncl(str, i, ['nav', 'div'], { cbLeft: isSpaceOrLeftBracket, i: true }) || str[i] === 'y' && stringMatchLeftRight.matchLeftIncl(str, i, ['ruby', 'body', 'tbody', 'summary'], { cbLeft: isSpaceOrLeftBracket, i: true })) {
                 tagMatched = true;
               }
             }
@@ -311,11 +308,7 @@ function collapse(str, originalOpts) {
             }
           } else if (str[i] === '=' || str[i] === '"') {
             tagCanEndHere = false;
-          } // else {
-          //   if (!tagCanEndHere) {
-          //     tagCanEndHere = true
-          //   }
-          // }
+          }
         }
       }
     }

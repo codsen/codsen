@@ -34,6 +34,7 @@ export default [
       'lodash.isplainobject',
       'string-replace-slices-array',
       'string-slices-array-push',
+      'string-match-left-right',
     ],
     plugins: [
       babel(),

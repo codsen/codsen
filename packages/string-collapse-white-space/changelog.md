@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.0] - 2017-10-29
+### Added
+- ✨ Removed the look left-right matching function into a separate library, [string-match-left-right](https://github.com/codsen/string-match-left-right) and tapped it. Also did some tiny code rebasing.
+
 ## [3.1.0] - 2017-10-27
 ### Added
 - ✨ AVA unit test linting via ESLint plugin
@@ -32,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
+[3.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.1.0...v2.2.0
