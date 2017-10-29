@@ -52,9 +52,10 @@ $ npm i ast-monkey
 Then, consume either in CommonJS format (`require`) or as an ES Module (`import`):
 
 ```js
+// as CommonJS require:
 const monkey = require('ast-monkey')
-// or
-import monkey from `ast-monkey`
+// or as ES Module:
+import { find, get, set, drop, info, del, arrayFirstOnly, traverse } from 'ast-monkey'
 ```
 
 Here's what you'll get:
