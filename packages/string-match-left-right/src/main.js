@@ -95,6 +95,6 @@ function matchRight(str, position, whatToMatch, opts) {
   return main('matchRight', str, position, whatToMatch, opts)
 }
 
-export default {
+export {
   matchLeftIncl, matchRightIncl, matchLeft, matchRight,
 }

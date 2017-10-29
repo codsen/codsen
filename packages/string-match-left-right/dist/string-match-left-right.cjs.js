@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var isNaturalNumber = _interopDefault(require('is-natural-number'));
@@ -97,8 +99,7 @@ function matchRight(str, position, whatToMatch, opts) {
   return main('matchRight', str, position, whatToMatch, opts);
 }
 
-var main$1 = {
-  matchLeftIncl: matchLeftIncl, matchRightIncl: matchRightIncl, matchLeft: matchLeft, matchRight: matchRight
-};
-
-module.exports = main$1;
+exports.matchLeftIncl = matchLeftIncl;
+exports.matchRightIncl = matchRightIncl;
+exports.matchLeft = matchLeft;
+exports.matchRight = matchRight;

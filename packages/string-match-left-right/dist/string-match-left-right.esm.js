@@ -93,8 +93,4 @@ function matchRight(str, position, whatToMatch, opts) {
   return main('matchRight', str, position, whatToMatch, opts);
 }
 
-var main$1 = {
-  matchLeftIncl: matchLeftIncl, matchRightIncl: matchRightIncl, matchLeft: matchLeft, matchRight: matchRight
-};
-
-export default main$1;
+export { matchLeftIncl, matchRightIncl, matchLeft, matchRight };
