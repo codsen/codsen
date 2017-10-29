@@ -22,12 +22,6 @@ function collapse(str, originalOpts) {
   function isSpaceOrLeftBracket(character) {
     return character === '<' || character.trim() === '';
   }
-  // function matchBackwards(string, position, ...whatToMatch) {
-  //   return whatToMatch.some(el =>
-  //     (string.slice((position - el.length) + 1, position + 1).toLowerCase() === el) &&
-  //     tagsFront(str[position - el.length]))
-  // }
-
   if (typeof str !== 'string') {
     throw new Error('string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
   }
