@@ -30,11 +30,13 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'ast-compare',
       'check-types-mini',
       'is-natural-number',
       'lodash.clonedeep',
       'lodash.isequal',
       'lodash.isplainobject',
+      'type-detect',
       'util-array-object-or-both',
     ],
     plugins: [

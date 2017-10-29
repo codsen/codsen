@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.0] - 2017-10-29
+### Added
+- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://github.com/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
+- ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
+
 ## [7.0.0] - 2017-10-23
 ### Changed
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
@@ -194,8 +199,9 @@ BREAKING API CHANGES.
 [5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
 [6.0.0]: https://github.com/codsen/ast-monkey/compare/v5.5.0...v6.0.0
 [6.1.0]: https://github.com/codsen/ast-monkey/compare/v6.0.0...v6.1.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [6.2.0]: https://github.com/codsen/ast-monkey/compare/v6.1.0...v6.2.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [6.3.0]: https://github.com/codsen/ast-monkey/compare/v6.2.0...v6.3.0
 [6.4.0]: https://github.com/codsen/ast-monkey/compare/v6.3.0...v6.4.0
 [7.0.0]: https://github.com/codsen/ast-monkey/compare/v6.4.0...v7.0.0
+[7.1.0]: https://github.com/codsen/ast-monkey/compare/v7.0.0...v7.1.0

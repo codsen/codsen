@@ -1,14 +1,18 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
-import isEqual from 'lodash.isequal';
 import arrayObjectOrBoth from 'util-array-object-or-both';
 import checkTypes from 'check-types-mini';
+import types from 'type-detect';
 import isNaturalNumber from 'is-natural-number';
+import astCompare from 'ast-compare';
 
-/* eslint no-param-reassign:0, no-console:0 */
+/* eslint no-param-reassign:0, no-console:0, max-len:0 */
 
 var isArr = Array.isArray;
 var DEBUG = false;
+
+// import isEqual from 'lodash.isequal'
+// import matcher from 'matcher'
 
 // -----------------------------------------------------------------------------
 
@@ -17,6 +21,13 @@ function existy(x) {
 }
 function notUndef(x) {
   return x !== undefined;
+}
+// function isStr(x) { return typeof x === 'string' }
+function compareIsEqual(a, b) {
+  if (types(a) !== types(b)) {
+    return false;
+  }
+  return astCompare(a, b, { matchStrictly: true, useWildcards: true });
 }
 
 function traverse(tree1, cb1) {
@@ -142,9 +153,9 @@ function monkey(inputOriginal, opts) {
         }
       }
     } else if (opts.mode === 'find' || opts.mode === 'del') {
-      if (( // match
-      ko && key === opts.key || vo && isEqual(val, opts.val) || !ko && !vo && key === opts.key && isEqual(val, opts.val)) && ( // opts.only satisfied
-      opts.only === 'any' || opts.only === 'array' && val === undefined || opts.only === 'object' && val !== undefined)) {
+      if (( // opts.only satisfied
+      opts.only === 'any' || opts.only === 'array' && val === undefined || opts.only === 'object' && val !== undefined) && ( // match
+      ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
         if (opts.mode === 'find') {
           temp = {};
           temp.index = data.count;
@@ -316,17 +327,4 @@ function arrayFirstOnly(input) {
   return monkey(input, { mode: 'arrayFirstOnly' });
 }
 
-// -----------------------------------------------------------------------------
-
-var main = {
-  find: find,
-  get: get,
-  set: set,
-  drop: drop,
-  info: info,
-  del: del,
-  arrayFirstOnly: arrayFirstOnly,
-  traverse: traverse
-};
-
-export default main;
+export { find, get, set, drop, info, del, arrayFirstOnly, traverse };

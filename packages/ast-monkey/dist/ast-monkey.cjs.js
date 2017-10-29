@@ -1,18 +1,24 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
-var isEqual = _interopDefault(require('lodash.isequal'));
 var arrayObjectOrBoth = _interopDefault(require('util-array-object-or-both'));
 var checkTypes = _interopDefault(require('check-types-mini'));
+var types = _interopDefault(require('type-detect'));
 var isNaturalNumber = _interopDefault(require('is-natural-number'));
+var astCompare = _interopDefault(require('ast-compare'));
 
-/* eslint no-param-reassign:0, no-console:0 */
+/* eslint no-param-reassign:0, no-console:0, max-len:0 */
 
 var isArr = Array.isArray;
 var DEBUG = false;
+
+// import isEqual from 'lodash.isequal'
+// import matcher from 'matcher'
 
 // -----------------------------------------------------------------------------
 
@@ -21,6 +27,13 @@ function existy(x) {
 }
 function notUndef(x) {
   return x !== undefined;
+}
+// function isStr(x) { return typeof x === 'string' }
+function compareIsEqual(a, b) {
+  if (types(a) !== types(b)) {
+    return false;
+  }
+  return astCompare(a, b, { matchStrictly: true, useWildcards: true });
 }
 
 function traverse(tree1, cb1) {
@@ -146,9 +159,9 @@ function monkey(inputOriginal, opts) {
         }
       }
     } else if (opts.mode === 'find' || opts.mode === 'del') {
-      if (( // match
-      ko && key === opts.key || vo && isEqual(val, opts.val) || !ko && !vo && key === opts.key && isEqual(val, opts.val)) && ( // opts.only satisfied
-      opts.only === 'any' || opts.only === 'array' && val === undefined || opts.only === 'object' && val !== undefined)) {
+      if (( // opts.only satisfied
+      opts.only === 'any' || opts.only === 'array' && val === undefined || opts.only === 'object' && val !== undefined) && ( // match
+      ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
         if (opts.mode === 'find') {
           temp = {};
           temp.index = data.count;
@@ -320,17 +333,11 @@ function arrayFirstOnly(input) {
   return monkey(input, { mode: 'arrayFirstOnly' });
 }
 
-// -----------------------------------------------------------------------------
-
-var main = {
-  find: find,
-  get: get,
-  set: set,
-  drop: drop,
-  info: info,
-  del: del,
-  arrayFirstOnly: arrayFirstOnly,
-  traverse: traverse
-};
-
-module.exports = main;
+exports.find = find;
+exports.get = get;
+exports.set = set;
+exports.drop = drop;
+exports.info = info;
+exports.del = del;
+exports.arrayFirstOnly = arrayFirstOnly;
+exports.traverse = traverse;

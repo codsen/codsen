@@ -135,7 +135,7 @@ test('01.10 - drop - throws when there\'s no index', (t) => {
 // find
 // -----------------------------------------------------------------------------
 
-test('02.01 - finds by key in a simple object #1', (t) => {
+test('02.01.pt1 - finds by key in a simple object #1', (t) => {
   input = {
     a: {
       b: 'c',
@@ -172,7 +172,58 @@ test('02.01 - finds by key in a simple object #1', (t) => {
   )
 })
 
-test('02.02 - finds by key in a simple object #2', (t) => {
+test('02.01.pt2 - finds by key in a simple object, with glob', (t) => {
+  input = {
+    a1: {
+      b1: 'c1',
+    },
+    a2: {
+      b2: 'c2',
+    },
+    z1: {
+      x1: 'y1',
+    },
+  }
+  intended = [
+    {
+      index: 1,
+      key: 'a1',
+      val: {
+        b1: 'c1',
+      },
+      path: [1],
+    },
+    {
+      index: 3,
+      key: 'a2',
+      val: {
+        b2: 'c2',
+      },
+      path: [3],
+    },
+  ]
+  t.deepEqual(
+    find(input, { key: 'a*', val: undefined }),
+    intended,
+    '02.01.04',
+  )
+
+  // absence of the second arg:
+  t.deepEqual(
+    find(input, { key: 'a*' }),
+    intended,
+    '02.01.05',
+  )
+
+  // null would mean actual null being there (which is not), so it's not going to find any:
+  t.deepEqual(
+    find(input, { key: 'a*', val: null }),
+    null, // <---- !!!! null means no findings !!!!
+    '02.01.06',
+  )
+})
+
+test('02.02.pt1 - finds by key in a simple object #2', (t) => {
   input = {
     a: {
       b: 'c',
@@ -208,7 +259,51 @@ test('02.02 - finds by key in a simple object #2', (t) => {
   )
 })
 
-test('02.03 - does not find by key in a simple object', (t) => {
+test('02.02.pt2 - finds by key in a simple object, with glob', (t) => {
+  input = {
+    a: {
+      b1: 'c1',
+      b2: 'c2',
+      z: 'y',
+    },
+  }
+  intended = [
+    {
+      index: 2,
+      key: 'b1',
+      val: 'c1',
+      path: [1, 2],
+    },
+    {
+      index: 3,
+      key: 'b2',
+      val: 'c2',
+      path: [1, 3],
+    },
+  ]
+  // second arg hardcoded null - won't find any because input has no null's:
+  t.deepEqual(
+    find(input, { key: 'b*', val: null }),
+    null,
+    '02.02.04',
+  )
+
+  // absence of the second arg:
+  t.deepEqual(
+    find(input, { key: 'b*' }),
+    intended,
+    '02.02.05',
+  )
+
+  // second arg hardcoded undefined:
+  t.deepEqual(
+    find(input, { key: 'b*', val: undefined }),
+    intended,
+    '02.02.06',
+  )
+})
+
+test('02.03.pt1 - does not find by key in a simple object', (t) => {
   input = {
     a: {
       b: 'c',
@@ -222,11 +317,29 @@ test('02.03 - does not find by key in a simple object', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.03',
+    '02.03.01',
   )
 })
 
-test('02.04 - finds by key in simple arrays #1', (t) => {
+test('02.03.pt2 - does not find by key in a simple object, with glob', (t) => {
+  input = {
+    a: {
+      b: 'c',
+    },
+  }
+  key = 'z*'
+  val = null
+  actual = find(input, { key })
+  intended = null
+
+  t.deepEqual(
+    actual,
+    intended,
+    '02.03.02',
+  )
+})
+
+test('02.04.pt1 - finds by key in simple arrays #1', (t) => {
   input = ['a', [['b'], 'c']]
   key = 'a'
   actual = find(input, { key })
@@ -241,11 +354,36 @@ test('02.04 - finds by key in simple arrays #1', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.04',
+    '02.04.01',
   )
 })
 
-test('02.05 - finds by key in simple arrays #2', (t) => {
+test('02.04.pt2 - finds by key in simple arrays, with glob', (t) => {
+  input = ['a', 'azzz', [['b'], 'c']]
+  key = 'a*'
+  actual = find(input, { key })
+  intended = [
+    {
+      index: 1,
+      key: 'a',
+      val: undefined,
+      path: [1],
+    },
+    {
+      index: 2,
+      key: 'azzz',
+      val: undefined,
+      path: [2],
+    },
+  ]
+  t.deepEqual(
+    actual,
+    intended,
+    '02.04.02',
+  )
+})
+
+test('02.05.pt1 - finds by key in simple arrays #2', (t) => {
   input = ['a', [['b'], 'c']]
   key = 'b'
   actual = find(input, { key })
@@ -260,11 +398,36 @@ test('02.05 - finds by key in simple arrays #2', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.05',
+    '02.05.01',
   )
 })
 
-test('02.06 - finds by key in simple arrays #3', (t) => {
+test('02.05.pt2 - finds by key in simple arrays, with globs', (t) => {
+  input = ['a', [['zzz', 'b', 'bbb'], 'c']]
+  key = 'b*'
+  actual = find(input, { key })
+  intended = [
+    {
+      index: 5,
+      key: 'b',
+      val: undefined,
+      path: [2, 3, 5],
+    },
+    {
+      index: 6,
+      key: 'bbb',
+      val: undefined,
+      path: [2, 3, 6],
+    },
+  ]
+  t.deepEqual(
+    actual,
+    intended,
+    '02.05.02',
+  )
+})
+
+test('02.06.pt1 - finds by key in simple arrays #3', (t) => {
   input = ['a', [['b'], 'c']]
   key = 'c'
   actual = find(input, { key, val: undefined })
@@ -279,11 +442,36 @@ test('02.06 - finds by key in simple arrays #3', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.06',
+    '02.06.01',
   )
 })
 
-test('02.07 - does not find by key in simple arrays', (t) => {
+test('02.06.pt2 - finds by key in simple arrays, with glob', (t) => {
+  input = ['apples', [['hackles'], 'crackles']]
+  key = '*ackles'
+  actual = find(input, { key, val: undefined })
+  intended = [
+    {
+      index: 4,
+      key: 'hackles',
+      val: undefined,
+      path: [2, 3, 4],
+    },
+    {
+      index: 5,
+      key: 'crackles',
+      val: undefined,
+      path: [2, 5],
+    },
+  ]
+  t.deepEqual(
+    actual,
+    intended,
+    '02.06.02',
+  )
+})
+
+test('02.07.pt1 - does not find by key in simple arrays', (t) => {
   input = ['a', [['b'], 'c']]
   key = 'd'
   actual = find(input, { key })
@@ -291,7 +479,19 @@ test('02.07 - does not find by key in simple arrays', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.07',
+    '02.07.01',
+  )
+})
+
+test('02.07.pt2 - does not find by key in simple arrays, with globs', (t) => {
+  input = ['a', [['b'], 'c']]
+  key = 'lexicographer*'
+  actual = find(input, { key })
+  intended = null
+  t.deepEqual(
+    actual,
+    intended,
+    '02.07.02',
   )
 })
 
@@ -338,7 +538,7 @@ test('02.09 - finds by value in a simple object - string', (t) => {
   )
 })
 
-test('02.10 - finds by value in a simple object - object', (t) => {
+test('02.10.pt1 - finds by value in a simple object - object', (t) => {
   input = {
     a: {
       b: 'c',
@@ -358,7 +558,43 @@ test('02.10 - finds by value in a simple object - object', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '02.10',
+    '02.10.01',
+  )
+})
+
+test('02.10.pt2 - finds by value in a simple object - object, with globs', (t) => {
+  input = {
+    a: {
+      b: 'c1',
+    },
+    k: {
+      b: 'c2',
+    },
+    z: {
+      x: 'y',
+    },
+  }
+  key = null
+  val = { b: 'c*' }
+  actual = find(input, { key, val })
+  intended = [
+    {
+      index: 1,
+      key: 'a',
+      val: { b: 'c1' },
+      path: [1],
+    },
+    {
+      index: 3,
+      key: 'k',
+      val: { b: 'c2' },
+      path: [3],
+    },
+  ]
+  t.deepEqual(
+    actual,
+    intended,
+    '02.10.02',
   )
 })
 
