@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
   "license": "MIT",
   "engines": {
