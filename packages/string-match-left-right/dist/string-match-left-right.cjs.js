@@ -52,7 +52,7 @@ function main(mode, str, position, whatToMatch, opts) {
       return whatToMatch.some(function (el) {
         var temp = str.slice(position - el.length + 1, position + 1);
         if (opts.i) {
-          return temp === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true);
+          return temp.toLowerCase() === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true);
         }
         return temp === el && (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true);
       });
@@ -60,7 +60,7 @@ function main(mode, str, position, whatToMatch, opts) {
       return whatToMatch.some(function (el) {
         var temp = str.slice(position - el.length, position);
         if (opts.i) {
-          return temp === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true);
+          return temp.toLowerCase() === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true);
         }
         return temp === el && (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true);
       });
@@ -68,7 +68,7 @@ function main(mode, str, position, whatToMatch, opts) {
       return whatToMatch.some(function (el) {
         var temp = str.slice(position, position + el.length);
         if (opts.i) {
-          return temp === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length]) : true);
+          return temp.toLowerCase() === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length]) : true);
         }
         return temp === el && (opts.cbRight ? opts.cbRight(str[position + el.length]) : true);
       });
@@ -76,7 +76,7 @@ function main(mode, str, position, whatToMatch, opts) {
       return whatToMatch.some(function (el) {
         var temp = str.slice(position + 1, position + el.length + 1);
         if (opts.i) {
-          return temp === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true);
+          return temp.toLowerCase() === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true);
         }
         return temp === el && (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true);
       });

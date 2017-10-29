@@ -115,7 +115,12 @@ test('02.02 - matchLeftIncl()  case insensitive', (t) => {
   t.is(
     matchLeftIncl('abc', 2, 'BC', { i: true }),
     true,
-    '02.02.03 - opts.i',
+    '02.02.03',
+  )
+  t.is(
+    matchLeftIncl('abC', 2, 'c', { i: true }),
+    true,
+    '02.02.04 - source is uppercase, needle is lowercase',
   )
 })
 
