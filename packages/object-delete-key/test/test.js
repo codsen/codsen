@@ -719,6 +719,13 @@ test('05.04 - wrong input args - throws', (t) => {
       cleanup: 'zzz',
     })
   })
+  t.throws(() => {
+    deleteKey(
+      { a: 'a' },
+      { key: 1 },
+      'third arg',
+    )
+  })
 })
 
 // ==============================
