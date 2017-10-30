@@ -11,7 +11,7 @@ let intended
 // One-level plain objects
 // ==============================
 
-test('1.1 - delete a value which is string', (t) => {
+test('01.01 - delete a value which is string', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -29,11 +29,11 @@ test('1.1 - delete a value which is string', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.1',
+    '01.01',
   )
 })
 
-test('1.2 - delete a value which is plain object', (t) => {
+test('01.02 - delete a value which is plain object', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -51,11 +51,11 @@ test('1.2 - delete a value which is plain object', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.2',
+    '01.02',
   )
 })
 
-test('1.3 - delete two values, plain objects, cleanup=false', (t) => {
+test('01.03 - delete two values, plain objects, cleanup=false', (t) => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: 'd' } }] },
@@ -74,11 +74,11 @@ test('1.3 - delete two values, plain objects, cleanup=false', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.3',
+    '01.03',
   )
 })
 
-test('1.4 - delete two values, plain objects, cleanup=true', (t) => {
+test('01.04 - delete two values, plain objects, cleanup=true', (t) => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: 'd' } }] },
@@ -95,11 +95,11 @@ test('1.4 - delete two values, plain objects, cleanup=true', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.4',
+    '01.04',
   )
 })
 
-test('1.5 - delete two values which are plain objects (on default)', (t) => {
+test('01.05 - delete two values which are plain objects (on default)', (t) => {
   actual = deleteKey(
     {
       a: { e: [{ b: { c: 'd' } }] },
@@ -115,11 +115,11 @@ test('1.5 - delete two values which are plain objects (on default)', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.5',
+    '01.05',
   )
 })
 
-test('1.6 - delete a value which is an array', (t) => {
+test('01.06 - delete a value which is an array', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -137,11 +137,11 @@ test('1.6 - delete a value which is an array', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.6',
+    '01.06',
   )
 })
 
-test('1.7 - delete two values which are arrays, cleanup=false', (t) => {
+test('01.07 - delete two values which are arrays, cleanup=false', (t) => {
   actual = deleteKey(
     {
       a: { e: [{ b: ['c', 'd'] }] },
@@ -160,11 +160,11 @@ test('1.7 - delete two values which are arrays, cleanup=false', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.7',
+    '01.07',
   )
 })
 
-test('1.8 - delete two values which are arrays, cleanup=default', (t) => {
+test('01.08 - delete two values which are arrays, cleanup=default', (t) => {
   actual = deleteKey(
     {
       a: { e: [{ b: ['c', 'd'] }] },
@@ -180,7 +180,7 @@ test('1.8 - delete two values which are arrays, cleanup=default', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '1.8',
+    '01.08',
   )
 })
 
@@ -188,7 +188,7 @@ test('1.8 - delete two values which are arrays, cleanup=default', (t) => {
 // Omit value to target all keys
 // ==============================
 
-test('2.1 - simple plain object, couple instances found', (t) => {
+test('02.01 - simple plain object, couple instances found', (t) => {
   t.deepEqual(
     deleteKey(
       {
@@ -203,7 +203,7 @@ test('2.1 - simple plain object, couple instances found', (t) => {
     {
       a: 'a',
     },
-    '2.1.1 - no settings',
+    '02.01.01 - no settings',
   )
   t.deepEqual(
     deleteKey(
@@ -220,7 +220,7 @@ test('2.1 - simple plain object, couple instances found', (t) => {
     {
       a: 'a',
     },
-    '2.1.2 - objects only (same outcome as 2.1.1)',
+    '02.01.02 - objects only (same outcome as 2.1.1)',
   )
   t.deepEqual(
     deleteKey(
@@ -239,7 +239,7 @@ test('2.1 - simple plain object, couple instances found', (t) => {
       b: 'whatever',
       c: [{ b: 'whatever as well' }],
     },
-    '2.1.3 - arrays only (none found)',
+    '02.01.03 - arrays only (none found)',
   )
   t.deepEqual(
     deleteKey(
@@ -256,11 +256,85 @@ test('2.1 - simple plain object, couple instances found', (t) => {
     {
       a: 'a',
     },
-    '2.1.4 - only=any',
+    '02.01.04 - only=any',
+  )
+  t.deepEqual(
+    deleteKey(
+      {
+        a: 'a',
+        b: 'whatever',
+        c: ['a'],
+      },
+      {
+        key: 'a',
+        only: 'array',
+      },
+    ),
+    {
+      a: 'a',
+      b: 'whatever',
+    },
+    '02.01.05 - does not touch key within object; cleanup will remove up to and including key "c"',
+  )
+  t.deepEqual(
+    deleteKey(
+      {
+        a: 'a',
+        b: 'whatever',
+        c: ['a'],
+      },
+      {
+        key: 'a',
+        only: 'object',
+      },
+    ),
+    {
+      b: 'whatever',
+      c: ['a'],
+    },
+    '02.01.06 - does not touch key within array',
+  )
+  t.deepEqual(
+    deleteKey(
+      {
+        a: 'apples',
+        b: 'whatever',
+        c: ['chapels'],
+      },
+      {
+        key: '*s',
+        only: 'a', // only target arrays
+      },
+    ),
+    {
+      a: 'apples',
+      b: 'whatever',
+    },
+    '02.01.06 - does not touch key within array',
+  )
+  t.deepEqual(
+    deleteKey(
+      {
+        a: 'apples',
+        b: 'whatever',
+        c: ['chapels'],
+      },
+      {
+        key: '*s',
+        only: 'a', // only target arrays
+        cleanup: false,
+      },
+    ),
+    {
+      a: 'apples',
+      b: 'whatever',
+      c: [],
+    },
+    '02.01.07 - same as #06 but without cleanup',
   )
 })
 
-test('2.2 - nested array/plain objects, multiple instances found', (t) => {
+test('02.02 - nested array/plain objects, multiple instances found', (t) => {
   t.deepEqual(
     deleteKey(
       [{
@@ -277,7 +351,7 @@ test('2.2 - nested array/plain objects, multiple instances found', (t) => {
       },
     ),
     [{ a: 'a' }],
-    '2.2.1, default cleanup',
+    '02.02.01, default cleanup',
   )
   t.deepEqual(
     deleteKey(
@@ -296,7 +370,7 @@ test('2.2 - nested array/plain objects, multiple instances found', (t) => {
       },
     ),
     [{ a: 'a' }],
-    '2.2.2, only=object (same)',
+    '02.02.02, only=object (same)',
   )
   t.deepEqual(
     deleteKey(
@@ -323,11 +397,11 @@ test('2.2 - nested array/plain objects, multiple instances found', (t) => {
       b: ['and this key too', 'together with this'],
       d: { e: { f: { g: { b: 'and this, no matter how deep-nested' } } } },
     }],
-    '2.2.3, only=array (nothing done)',
+    '02.02.03, only=array (nothing done)',
   )
 })
 
-test('2.3 - nested array/plain objects, multiple instances found, false', (t) => {
+test('02.03 - nested array/plain objects, multiple instances found, false', (t) => {
   t.deepEqual(
     deleteKey(
       [
@@ -355,11 +429,11 @@ test('2.3 - nested array/plain objects, multiple instances found, false', (t) =>
         d: { e: { f: { g: {} } } },
       },
     ],
-    '2.3 - cleanup=false',
+    '02.03 - cleanup=false',
   )
 })
 
-test('2.4 - mixed array and object findings', (t) => {
+test('02.04 - mixed array and object findings', (t) => {
   t.deepEqual(
     deleteKey(
       [{
@@ -376,7 +450,7 @@ test('2.4 - mixed array and object findings', (t) => {
       },
     ),
     [{ a: 'a' }],
-    '2.4.1, default cleanup',
+    '02.04.01, default cleanup',
   )
   t.deepEqual(
     deleteKey(
@@ -395,7 +469,7 @@ test('2.4 - mixed array and object findings', (t) => {
       },
     ),
     [{ a: 'a' }],
-    '2.4.2, only=any',
+    '02.04.02, only=any',
   )
   t.deepEqual(
     deleteKey(
@@ -413,7 +487,7 @@ test('2.4 - mixed array and object findings', (t) => {
       a: 'a',
       c: ['b', 'b'],
     }],
-    '2.4.3, only=object, mini case',
+    '02.04.03, only=object, mini case',
   )
   t.deepEqual(
     deleteKey(
@@ -440,7 +514,7 @@ test('2.4 - mixed array and object findings', (t) => {
       b: ['and this key too', 'together with this'],
       d: { e: { f: { g: [{ b: 'and this, no matter how deep-nested' }] } } },
     }],
-    '2.4.4, only=arrays',
+    '02.04.04, only=arrays',
   )
   t.deepEqual(
     deleteKey(
@@ -465,7 +539,7 @@ test('2.4 - mixed array and object findings', (t) => {
     {
       d: { e: { f: { g: ['b'] } } },
     }],
-    '2.4.5, only=object, bigger example',
+    '02.04.05, only=object, bigger example',
   )
 })
 
@@ -473,7 +547,7 @@ test('2.4 - mixed array and object findings', (t) => {
 // Omit key to target all keys with a given value
 // ==============================
 
-test('3.1 - targets all keys by value, cleanup=true', (t) => {
+test('03.01 - targets all keys by value, cleanup=true', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -491,11 +565,11 @@ test('3.1 - targets all keys by value, cleanup=true', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '3.1',
+    '03.01',
   )
 })
 
-test('3.2 - targets all keys by value, cleanup=false', (t) => {
+test('03.02 - targets all keys by value, cleanup=false', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -515,7 +589,7 @@ test('3.2 - targets all keys by value, cleanup=false', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '3.2',
+    '03.02',
   )
 })
 
@@ -527,7 +601,7 @@ test('3.2 - targets all keys by value, cleanup=false', (t) => {
 // empty tag's parent will be deleted just if it does not have any non-empty values in other keys
 // in the following case, key "d" is deleted because it's dead branch.
 // But once we go "upstream" from "d" to higher, we don't touch "cousin" key "b":
-test('4.1 - deletion limited to level where non-empty "uncles" exist', (t) => {
+test('04.01 - deletion limited to level where non-empty "uncles" exist', (t) => {
   actual = deleteKey(
     {
       a: 'a',
@@ -552,11 +626,11 @@ test('4.1 - deletion limited to level where non-empty "uncles" exist', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '4.1',
+    '04.01',
   )
 })
 
-test('4.2 - deletion of empty things is limited in arrays too', (t) => {
+test('04.02 - deletion of empty things is limited in arrays too', (t) => {
   actual = deleteKey(
     [
       [{
@@ -585,7 +659,7 @@ test('4.2 - deletion of empty things is limited in arrays too', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '4.2',
+    '04.02',
   )
 })
 
@@ -593,7 +667,7 @@ test('4.2 - deletion of empty things is limited in arrays too', (t) => {
 // Throws
 // ==============================
 
-test('5.1 - both key and value missing - throws', (t) => {
+test('05.01 - both key and value missing - throws', (t) => {
   t.throws(() => {
     deleteKey(
       { a: 'a' },
@@ -602,7 +676,7 @@ test('5.1 - both key and value missing - throws', (t) => {
   })
 })
 
-test('5.2 - nonsensical options object - throws', (t) => {
+test('05.02 - nonsensical options object - throws', (t) => {
   t.throws(() => {
     deleteKey(
       { a: 'a' },
@@ -617,13 +691,13 @@ test('5.2 - nonsensical options object - throws', (t) => {
   })
 })
 
-test('5.3 - no input args - throws', (t) => {
+test('05.03 - no input args - throws', (t) => {
   t.throws(() => {
     deleteKey()
   })
 })
 
-test('5.4 - wrong input args - throws', (t) => {
+test('05.04 - wrong input args - throws', (t) => {
   t.throws(() => {
     deleteKey({ a: 'a' }, {
       key: 'yyy',
@@ -651,7 +725,7 @@ test('5.4 - wrong input args - throws', (t) => {
 // Tests on real HTML
 // ==============================
 
-test('6.1 - deletes from real parsed HTML', (t) => {
+test('06.01 - deletes from real parsed HTML', (t) => {
   const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -697,11 +771,11 @@ test('6.1 - deletes from real parsed HTML', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '6.1',
+    '06.01',
   )
 })
 
-test('6.2 - real parsed HTML #1', (t) => {
+test('06.02 - real parsed HTML #1', (t) => {
   actual = deleteKey(
     [
       '<!DOCTYPE html>',
@@ -817,11 +891,11 @@ test('6.2 - real parsed HTML #1', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '6.2',
+    '06.02',
   )
 })
 
-test('6.3 - real parsed HTML #2', (t) => {
+test('06.03 - real parsed HTML #2', (t) => {
   actual = deleteKey(
     [
       {
@@ -848,11 +922,11 @@ test('6.3 - real parsed HTML #2', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '6.3',
+    '06.03',
   )
 })
 
-test('6.4 - real parsed HTML #3', (t) => {
+test('06.04 - real parsed HTML #3', (t) => {
   actual = deleteKey(
     {
       a: {
@@ -876,11 +950,11 @@ test('6.4 - real parsed HTML #3', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '6.4',
+    '06.04',
   )
 })
 
-test('6.5 - real parsed HTML #4', (t) => {
+test('06.05 - real parsed HTML #4', (t) => {
   actual = deleteKey(
     {
       a: {
@@ -902,7 +976,7 @@ test('6.5 - real parsed HTML #4', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '6.5',
+    '06.05',
   )
 })
 
@@ -910,7 +984,7 @@ test('6.5 - real parsed HTML #4', (t) => {
 // Prove input args are not being mutated
 // ======================================
 
-test('7.1 - does not mutate input args', (t) => {
+test('07.01 - does not mutate input args', (t) => {
   const obj1 = {
     a: 'a',
     b: 'b',
@@ -929,7 +1003,7 @@ test('7.1 - does not mutate input args', (t) => {
       a: 'a',
       b: 'b',
     },
-    '7.1',
+    '07.01',
   ) // real deal
 })
 
@@ -937,7 +1011,7 @@ test('7.1 - does not mutate input args', (t) => {
 // Tests on arrays
 // ===============
 
-test('8.1 - delete a value which is string', (t) => {
+test('08.01 - delete a value which is empty string', (t) => {
   actual = deleteKey(
     {
       a: ['b', '', 'c'],
@@ -953,6 +1027,221 @@ test('8.1 - delete a value which is string', (t) => {
   t.deepEqual(
     actual,
     intended,
-    '8.1',
+    '08.01',
+  )
+})
+
+test('08.02 - delete a value which is non-empty string', (t) => {
+  actual = deleteKey(
+    {
+      a: ['b', '', 'c', 'b'],
+    },
+    {
+      key: 'b',
+    },
+  )
+  intended = {
+    a: ['', 'c'],
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.02',
+  )
+})
+
+test('08.03 - delete a value which is non-empty string, with wildcards', (t) => {
+  actual = deleteKey(
+    {
+      a: ['beep', '', 'c', 'boop'],
+    },
+    {
+      key: 'b*p',
+    },
+  )
+  intended = {
+    a: ['', 'c'],
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.03',
+  )
+})
+
+test('08.04 - delete a value which is a non-empty string, with wildcards, only on arrays', (t) => {
+  actual = deleteKey(
+    {
+      a: ['beep', '', 'c', 'boop'],
+      bap: 'bap',
+    },
+    {
+      key: 'b*p',
+      only: 'array',
+    },
+  )
+  intended = {
+    a: ['', 'c'],
+    bap: 'bap',
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '08.04',
+  )
+})
+
+// ==============================
+// Globbing tests
+// ==============================
+
+test('09.01 - wildcard deletes two keys have string values', (t) => {
+  // by key
+
+  actual = deleteKey(
+    {
+      axx: 'xxxx',
+      ayy: 'yyyy',
+      b: 'b',
+    },
+    {
+      key: 'a*',
+    },
+  )
+  intended = {
+    b: 'b',
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.01.02',
+  )
+
+  // by value
+  // ---------------------------------------------------------------------------
+
+  actual = deleteKey(
+    {
+      axx: 'xxxx',
+      ayy: 'yyyy',
+      b: 'b',
+    },
+    {
+      key: '*xx',
+    },
+  )
+  intended = {
+    ayy: 'yyyy',
+    b: 'b',
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.01.02',
+  )
+
+  // by both key and value, with wildcards, includes sneaky close positives
+  // ---------------------------------------------------------------------------
+
+  actual = deleteKey(
+    {
+      axx: 'yyy x',
+      notmatching_key: 'yyy x',
+      ayy: 'zzz x',
+      azz: 'not matching value',
+      b: 'b',
+    },
+    {
+      key: 'a*',
+      val: '*x',
+    },
+  )
+  intended = {
+    notmatching_key: 'yyy x',
+    azz: 'not matching value',
+    b: 'b',
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.01.03',
+  )
+})
+
+test('09.02 - wildcard deletes keys with plain object values, by key', (t) => {
+  actual = deleteKey(
+    {
+      apples: 'a',
+      brambles: { c: 'd' },
+      crawls: 'e',
+    },
+    {
+      key: '*les',
+    },
+  )
+  intended = {
+    crawls: 'e',
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.02',
+  )
+})
+
+test('09.03 - wildcard delete two values, plain objects', (t) => {
+  //
+  // cleanup=false
+  // ---------------------------------------------------------------------------
+
+  actual = deleteKey(
+    {
+      a: { e: [{ brunch: { c: 'd' } }] },
+      brother: { c: 'd' },
+    },
+    {
+      key: 'br*',
+      val: { c: 'd' },
+      cleanup: false,
+    },
+  )
+  intended = {
+    a: { e: [{}] },
+  }
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.03.01',
+  )
+
+  //
+  // cleanup=true
+  // ---------------------------------------------------------------------------
+
+  actual = deleteKey(
+    {
+      a: { e: [{ brunch: { c: 'd' } }] },
+      brother: { c: 'd' },
+    },
+    {
+      key: 'br*',
+      val: { c: 'd' },
+      cleanup: true,
+    },
+  )
+  intended = {}
+
+  t.deepEqual(
+    actual,
+    intended,
+    '09.03.02',
   )
 })

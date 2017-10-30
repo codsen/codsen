@@ -2,7 +2,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var monkey = _interopDefault(require('ast-monkey'));
+var astMonkey = require('ast-monkey');
 var isEmpty = _interopDefault(require('posthtml-ast-is-empty'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var checkTypes = _interopDefault(require('check-types-mini'));
@@ -18,6 +18,9 @@ function deleteKey(originalInput, originalOpts) {
   if (!existy(originalInput)) {
     throw new Error('object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.');
   }
+  if (arguments.length > 2) {
+    throw new Error('object-delete-key/deleteKey(): [THROW_ID_02] Third argument detected! Computer does not like this...');
+  }
   var defaults = {
     key: null,
     val: undefined,
@@ -26,7 +29,7 @@ function deleteKey(originalInput, originalOpts) {
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: 'object-delete-key/deleteKey(): [THROW_ID_00]',
+    msg: 'object-delete-key/deleteKey(): [THROW_ID_00*]',
     ignoreKeys: 'val',
     schema: {
       key: ['null', 'string'],
@@ -40,31 +43,28 @@ function deleteKey(originalInput, originalOpts) {
   // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
 
   if (!existy(opts.key) && !existy(opts.val)) {
-    throw new Error('object-delete-key/deleteKey(): [THROW_ID_02] Please provide at least a key or a value.');
+    throw new Error('object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.');
   }
   var input = clone(originalInput);
 
   if (opts.cleanup) {
-    var findings = monkey.find(input, { key: opts.key, val: opts.val, only: opts.only });
-
-    // let tests = monkey.drop(input, {index: 8})
-
+    var findings = astMonkey.find(input, { key: opts.key, val: opts.val, only: opts.only });
     var currentIndex = void 0;
     var nodeToDelete = void 0;
     while (findings) {
       nodeToDelete = findings[0].index;
       for (var i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
-        if (isEmpty(monkey.del(monkey.get(input, { index: currentIndex }), { key: opts.key, val: opts.val, only: opts.only }))) {
+        if (isEmpty(astMonkey.del(astMonkey.get(input, { index: currentIndex }), { key: opts.key, val: opts.val, only: opts.only }))) {
           nodeToDelete = currentIndex;
         }
       }
-      input = monkey.drop(input, { index: nodeToDelete });
-      findings = monkey.find(input, { key: opts.key, val: opts.val, only: opts.only });
+      input = astMonkey.drop(input, { index: nodeToDelete });
+      findings = astMonkey.find(input, { key: opts.key, val: opts.val, only: opts.only });
     }
     return input;
   }
-  return monkey.del(input, { key: opts.key, val: opts.val, only: opts.only });
+  return astMonkey.del(input, { key: opts.key, val: opts.val, only: opts.only });
 }
 
 module.exports = deleteKey;

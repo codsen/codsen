@@ -53,5 +53,3 @@ config.json
 
 # nyc test coverage
 .nyc_output
-
-src

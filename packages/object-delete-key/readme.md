@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards
+> Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -32,13 +32,10 @@
 - [Example](#example)
 - [Rationale](#rationale)
 - [This library vs. _.omit](#this-library-vs-_omit)
-- [Arrays vs Plain objects](#arrays-vs-plain-objects)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Install
 
@@ -60,7 +57,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-delete-key.cjs.js` | 2 KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-delete-key.esm.js` | 2 KB
-**UMD build** for browsers, transpiled, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 43 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 56 KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -300,12 +297,6 @@ In conclusion, Lodash `_.omit` is different from this library in that:
 * `_.omit` will not clean up any stumps left after the deletion.
 
 If you want to save time, `object-delete-key` is better than Lodash because former is _specialised tool for dealing with AST's_.
-
-**[⬆ &nbsp;back to top](#)**
-
-## Arrays vs Plain objects
-
-You know, both are the same _type_ in JavaScript, _object_. This library uses [ast-monkey](https://github.com/codsen/ast-monkey) which is quite liberal when it comes to distinguishing the two.
 
 **[⬆ &nbsp;back to top](#)**
 

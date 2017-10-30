@@ -1,7 +1,7 @@
 {
   "name": "object-delete-key",
   "version": "1.0.2",
-  "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards",
+  "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "engines": {
     "node": ">=6",
@@ -31,7 +31,7 @@
     "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
-    "verbose": false
+    "verbose": true
   },
   "clinton": {
     "rules": {
@@ -57,7 +57,7 @@
     "value"
   ],
   "dependencies": {
-    "ast-monkey": "^7.0.1",
+    "ast-monkey": "^7.1.2",
     "check-types-mini": "^2.7.0",
     "lodash.clonedeep": "*",
     "posthtml-ast-is-empty": "^2.1.2",
@@ -68,7 +68,7 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.9.0",
+    "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.2.2",
     "eslint-plugin-import": "^2.8.0",
@@ -77,9 +77,9 @@
     "posthtml-parser": "^0.2.1",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-commonjs": "^8.2.4",
+    "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.1.5"
+    "uglify-es": "^3.1.6"
   }
 }

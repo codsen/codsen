@@ -1,4 +1,4 @@
-import monkey from 'ast-monkey'
+import { find, get, drop, del } from 'ast-monkey'
 import isEmpty from 'posthtml-ast-is-empty'
 import clone from 'lodash.clonedeep'
 import checkTypes from 'check-types-mini'
@@ -12,6 +12,9 @@ function deleteKey(originalInput, originalOpts) {
   if (!existy(originalInput)) {
     throw new Error('object-delete-key/deleteKey(): [THROW_ID_01] Please provide the first argument, something to work upon.')
   }
+  if (arguments.length > 2) {
+    throw new Error('object-delete-key/deleteKey(): [THROW_ID_02] Third argument detected! Computer does not like this...')
+  }
   const defaults = {
     key: null,
     val: undefined,
@@ -22,7 +25,7 @@ function deleteKey(originalInput, originalOpts) {
   checkTypes(
     opts, defaults,
     {
-      msg: 'object-delete-key/deleteKey(): [THROW_ID_00]',
+      msg: 'object-delete-key/deleteKey(): [THROW_ID_00*]',
       ignoreKeys: 'val',
       schema: {
         key: ['null', 'string'],
@@ -37,15 +40,12 @@ function deleteKey(originalInput, originalOpts) {
   // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
 
   if (!existy(opts.key) && !existy(opts.val)) {
-    throw new Error('object-delete-key/deleteKey(): [THROW_ID_02] Please provide at least a key or a value.')
+    throw new Error('object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.')
   }
   let input = clone(originalInput)
 
   if (opts.cleanup) {
-    let findings = monkey.find(input, { key: opts.key, val: opts.val, only: opts.only })
-
-    // let tests = monkey.drop(input, {index: 8})
-
+    let findings = find(input, { key: opts.key, val: opts.val, only: opts.only })
     let currentIndex
     let nodeToDelete
     while (findings) {
@@ -53,8 +53,8 @@ function deleteKey(originalInput, originalOpts) {
       for (let i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i]
         if (
-          isEmpty(monkey.del(
-            monkey.get(
+          isEmpty(del(
+            get(
               input,
               { index: currentIndex },
             ),
@@ -64,12 +64,12 @@ function deleteKey(originalInput, originalOpts) {
           nodeToDelete = currentIndex
         }
       }
-      input = monkey.drop(input, { index: nodeToDelete })
-      findings = monkey.find(input, { key: opts.key, val: opts.val, only: opts.only })
+      input = drop(input, { index: nodeToDelete })
+      findings = find(input, { key: opts.key, val: opts.val, only: opts.only })
     }
     return input
   }
-  return monkey.del(input, { key: opts.key, val: opts.val, only: opts.only })
+  return del(input, { key: opts.key, val: opts.val, only: opts.only })
 }
 
 export default deleteKey
