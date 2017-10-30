@@ -118,9 +118,9 @@ Interpreted as "array-type" | Interpreted as "object-type" | Interpreted as "any
 <br/>                       |                              | `whatever`
 <br/>                       |                              | `e`
 
-If `opts.only` is set to any string longer than zero characters and is **not** case-insensitively equal to one of the above, the `ast-monkey` will **throw an error**.
+If `opts.only` is set to any string longer than zero characters and is **not** case-insensitively equal to one of the above, the `object-delete-key` will **throw an error**.
 
-I wanted to relieve users from having to check the documentation for it.
+I want to relieve users from having to check the documentation for `opts.only` values.
 
 ### API - Output
 
