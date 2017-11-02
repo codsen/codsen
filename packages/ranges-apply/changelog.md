@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-11-02
+### Added
+- ✨ The main source now is in ES2015 modules with `import`/`export`.
+- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+
 ## [1.4.0] - 2017-09-19
 ### Changed
 - 🔧 Switching to ESLint on `airbnb-base` preset with semicolons-off override. JS Standard is rubbish because it's too relaxed and it's been using half-year-old ESLint. Actually it's even flagged as insecure by BitHound at the moment because of shell.js dependency two levels deep. ESLint itself is fine however.
@@ -28,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
+[2.0.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.4.0...v2.0.0
 [1.4.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.1.0...v1.2.0

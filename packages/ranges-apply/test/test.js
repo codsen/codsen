@@ -1,5 +1,5 @@
 import test from 'ava'
-import repl from './index'
+import repl from '../dist/string-replace-slices-array.cjs'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -14,6 +14,9 @@ test('01.01 - wrong inputs', (t) => {
   // first arg not string
   t.throws(() => {
     repl(1)
+  })
+  t.throws(() => {
+    repl(1, [[4, 13]])
   })
 
   // second arg not array
