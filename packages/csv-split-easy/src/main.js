@@ -1,35 +1,40 @@
-'use strict'
+/* eslint security/detect-object-injection:0, no-param-reassign:0 */
 
-const remSep = require('string-remove-thousand-separators')
-const checkTypes = require('check-types-mini')
+import remSep from 'string-remove-thousand-separators'
+import checkTypes from 'check-types-mini'
+import isObj from 'lodash.isplainobject'
 
-function split (str, opts) {
+function split(str, originalOpts) {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
-  var colStarts = 0
-  var lineBreakStarts = 0
-  var rowArray = []
-  var resArray = []
-  var ignoreCommasThatFollow = false
-  var thisRowContainsOnlyEmptySpace = true // we need at least one non-empty element to flip it to `false` on each line
+  let colStarts = 0
+  let lineBreakStarts = 0
+  let rowArray = []
+  const resArray = []
+  let ignoreCommasThatFollow = false
+  let thisRowContainsOnlyEmptySpace = true // we need at least one non-empty element to
+  // flip it to `false` on each line
+
+  if ((originalOpts !== undefined) && !isObj(originalOpts)) {
+    throw new Error(`csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type ${typeof originalOpts} equal to:\n${JSON.stringify(originalOpts, null, 4)}`)
+  }
 
   // prep opts
-  var defaults = {
+  const defaults = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
-    forceUKStyle: false
+    forceUKStyle: false,
   }
-  opts = Object.assign({}, defaults, opts)
-  checkTypes(opts, defaults, {msg: 'csv-split-easy/split(): [THROW_ID_01*]'})
+  const opts = Object.assign({}, defaults, originalOpts)
+  checkTypes(opts, defaults, { msg: 'csv-split-easy/split(): [THROW_ID_03*]' })
 
   if (typeof str !== 'string') {
-    throw new TypeError('csv-split-easy/split(): [THROW_ID_02] input must be string! Currently it\'s: ' + typeof (str) + ', equal to: ' + JSON.stringify(str, null, 4))
+    throw new TypeError(`csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: ${typeof (str)}, equal to: ${JSON.stringify(str, null, 4)}`)
   } else {
     if (str === '') {
       return [['']]
-    } else {
-      str = str.trim()
     }
+    str = str.trim()
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (thisRowContainsOnlyEmptySpace && (str[i] !== '"') && (str[i] !== ',') && (str[i].trim() !== '')) {
@@ -43,20 +48,21 @@ function split (str, opts) {
         // 1. turn off the flag:
         ignoreCommasThatFollow = false
         // 2. dump the value that ends here:
-        let newElem = str.slice(colStarts, i)
+        const newElem = str.slice(colStarts, i)
         // if the element contains only empty space,
         if (newElem.trim() !== '') {
           thisRowContainsOnlyEmptySpace = false
         }
-        rowArray.push(remSep(newElem,  // push it anyway, if it's empty or not.
+        rowArray.push(remSep(
+          newElem, // push it anyway, if it's empty or not.
           {
             removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-            forceUKStyle: opts.forceUKStyle
-          }
+            forceUKStyle: opts.forceUKStyle,
+          },
         ))
-        // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still equals `true`),
-        // we won't push that `rowArray` into `resArray`.
+        // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still
+        // equals `true`), we won't push that `rowArray` into `resArray`.
       } else {
         ignoreCommasThatFollow = true
         colStarts = i + 1
@@ -69,17 +75,18 @@ function split (str, opts) {
       if ((str[i - 1] !== '"') && !ignoreCommasThatFollow) {
         // dump the previous value into array if the character before it, the double
         // quote, hasn't dumped the value already:
-        let newElem = str.slice(colStarts, i)
+        const newElem = str.slice(colStarts, i)
         // if the element contains only empty space,
         if (newElem.trim() !== '') {
           thisRowContainsOnlyEmptySpace = false
         }
-        rowArray.push(remSep(newElem, // same, push anyway. We'll check `resArray` in the end
+        rowArray.push(remSep(
+          newElem, // same, push anyway. We'll check `resArray` in the end
           {
             removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-            forceUKStyle: opts.forceUKStyle
-          }
+            forceUKStyle: opts.forceUKStyle,
+          },
         ))
         // for emptiness via `thisRowContainsOnlyEmptySpace`
       }
@@ -100,17 +107,18 @@ function split (str, opts) {
         lineBreakStarts = i
         // 2. dump the value into rowArray only if closing double quote hasn't dumped already:
         if (!ignoreCommasThatFollow && (str[i - 1] !== '"')) {
-          let newElem = str.slice(colStarts, i)
+          const newElem = str.slice(colStarts, i)
           // if the element contains only empty space,
           if (newElem.trim() !== '') {
             thisRowContainsOnlyEmptySpace = false
           }
-          rowArray.push(remSep(newElem,
+          rowArray.push(remSep(
+            newElem,
             {
               removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
               padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-              forceUKStyle: opts.forceUKStyle
-            }
+              forceUKStyle: opts.forceUKStyle,
+            },
           ))
         }
         // 3. dump the whole row's array into result array:
@@ -126,17 +134,16 @@ function split (str, opts) {
         rowArray = []
       }
       colStarts = i + 1
-    } else {
-      // if ((str[i] !== '\n') && (str[i] !== '\r'))
-      //
-      // but then, take care if line break state is actice
-      //
-      if (lineBreakStarts) {
-        // 1. first, turn off the line break state flag:
-        lineBreakStarts = 0
-        // 2. second, new column's value starts here, so mark that:
-        colStarts = i
-      }
+    } else
+    // if ((str[i] !== '\n') && (str[i] !== '\r'))
+    //
+    // but then, take care if line break state is actice
+    //
+    if (lineBreakStarts) {
+      // 1. first, turn off the line break state flag:
+      lineBreakStarts = 0
+      // 2. second, new column's value starts here, so mark that:
+      colStarts = i
     }
     //
     // detect the end of the file/string
@@ -145,17 +152,18 @@ function split (str, opts) {
       // dump the value into rowArray, but only if the current character is
       // not a double quote, because it will have dumped already:
       if (str[i] !== '"') {
-        let newElem = str.slice(colStarts, i + 1)
+        const newElem = str.slice(colStarts, i + 1)
         // if the element contains only empty space,
         if (newElem.trim() !== '') {
           thisRowContainsOnlyEmptySpace = false
         }
-        rowArray.push(remSep(newElem,
+        rowArray.push(remSep(
+          newElem,
           {
             removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
             padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
-            forceUKStyle: opts.forceUKStyle
-          }
+            forceUKStyle: opts.forceUKStyle,
+          },
         ))
       }
       // in any case, dump the whole row's array into result array.
@@ -177,9 +185,8 @@ function split (str, opts) {
   }
   if (resArray.length === 0) {
     return [['']] // because in some cases only [] reaches here
-  } else {
-    return resArray
   }
+  return resArray
 }
 
-module.exports = split
+export { split as default }

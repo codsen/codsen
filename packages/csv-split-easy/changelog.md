@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-11-08
+### Added
+- ✨ Rewrote in ES modules, set up the Rollup
+- ✨ Removes Standard and set up raw ESLint on `airbnb-base` config with semicolons off
+- ✨ Additional checks on options object
+
 ## [1.3.0] - 2017-08-16
 ### Added
 - ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's [string-remove-thousand-separators](https://github.com/codsen/string-remove-thousand-separators) internally doing it.
@@ -22,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[2.0.0]: https://github.com/codsen/csv-split-easy/compare/v1.3.0...v2.0.0
 [1.3.0]: https://github.com/codsen/csv-split-easy/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/csv-split-easy/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/csv-split-easy/compare/v1.0.2...v1.1.0

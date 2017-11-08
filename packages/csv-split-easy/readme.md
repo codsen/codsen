@@ -1,16 +1,21 @@
 # csv-split-easy
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
 > Splits the CSV string into array of arrays, each representing a row of columns
 
+[![Minimum Node version required][node-img]][node-url]
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![Coverage][cov-img]][cov-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -36,7 +41,13 @@
 $ npm i csv-split-easy
 ```
 
-**[⬆ &nbsp;back to top](#)**
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 7&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 7&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 29&nbsp;KB
 
 ## Idea
 
@@ -60,8 +71,6 @@ Outside of the scope:
 - Parsing numeric values. Parse them yourself. It's outside of the scope of this lib.
 - Smart detection of the offset columns. See [csv-fix-offset](https://github.com/codsen/csv-fix-offset)
 - Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://github.com/codsen/csv-sort)
-
-**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -128,8 +137,6 @@ console.log('source = ' + JSON.stringify(source, null, 4))
 //    ]
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## The algorithm
 
 CSV files, especially accounting-ones, are different from _any_ files. We assume that **we don't want any empty rows** in the parsed arrays. It means, [conventional](https://github.com/sindresorhus/split-lines/) string splitting libraries would be inefficient here because after splitting, we'd have to clean up any empty rows.
@@ -142,57 +149,56 @@ The requirements mentioned above pretty much rule out the conventional regex-bas
 
 So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://github.com/codsen/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/csv-split-easy/issues). If you file a pull request, I'll do my best to help you to get it merged as soon as possible. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/csv-split-easy/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-**[⬆ &nbsp;back to top](#)**
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/csv-split-easy/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-split-easy/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/csv-split-easy.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/csv-split-easy
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+[npm-img]: https://img.shields.io/npm/v/csv-split-easy.svg?style=flat-square&label=release
+[npm-url]: https://www.npmjs.com/package/csv-split-easy
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[travis-img]: https://travis-ci.org/codsen/csv-split-easy.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/csv-split-easy.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/csv-split-easy
 
-[cov-img]: https://coveralls.io/repos/github/codsen/csv-split-easy/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/csv-split-easy/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/csv-split-easy?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/csv-split-easy/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/csv-split-easy
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/csv-split-easy.svg?style=flat-square
+[overall-url]: https://www.bithound.io/github/codsen/csv-split-easy
 
-[deps-img]: https://www.bithound.io/github/codsen/csv-split-easy/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/csv-split-easy.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/csv-split-easy/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/csv-split-easy/badges/devDependencies.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-split-easy
+
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/csv-split-easy.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/csv-split-easy/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/csv-split-easy.svg
-[downloads-url]: https://www.npmjs.com/package/csv-split-easy
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-split-easy/badge.svg
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-split-easy/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-split-easy
+
+[downloads-img]: https://img.shields.io/npm/dm/csv-split-easy.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/csv-split-easy
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/csv-split-easy
+
+[license-img]: https://img.shields.io/npm/l/csv-split-easy.svg?style=flat-square
+[license-url]: https://github.com/codsen/csv-split-easy/blob/master/license.md
