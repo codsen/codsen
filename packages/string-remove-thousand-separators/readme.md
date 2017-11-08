@@ -27,7 +27,7 @@ $ npm i string-remove-thousand-separators
 // consume as a CommonJS require:
 const remSep = require('string-remove-thousand-separators')
 // or as an ES Module:
-import { remSep } from 'string-remove-thousand-separators'
+import remSep from 'string-remove-thousand-separators'
 
 // feed a numeric string to it:
 let res = remSep('100,000.01') // => 100000.01
