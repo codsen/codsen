@@ -1,13 +1,17 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var replaceSlicesArr = _interopDefault(require('string-replace-slices-array'));
+var Slices = _interopDefault(require('string-slices-array-push'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+var isNum = _interopDefault(require('is-numeric'));
+var trimChars = _interopDefault(require('lodash.trim'));
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var repl = require('string-replace-slices-array');
-var Slices = require('string-slices-array-push');
-var isObj = require('lodash.isplainobject');
-var checkTypes = require('check-types-mini');
-var isNum = require('is-numeric');
-var trimChars = require('lodash.trim');
+/* eslint security/detect-object-injection:0 */
 
 function remSep(str, originalOpts) {
   // vars
@@ -146,7 +150,7 @@ function remSep(str, originalOpts) {
   }
 
   if (allOK && rangesToDelete.current()) {
-    return repl(res, rangesToDelete.current());
+    return replaceSlicesArr(res, rangesToDelete.current());
   }
   return res;
 }

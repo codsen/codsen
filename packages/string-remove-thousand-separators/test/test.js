@@ -1,6 +1,5 @@
 import test from 'ava'
-
-const r = require('./index.js')
+import r from '../dist/string-remove-thousand-separators.cjs'
 
 // ==============================
 // normal use cases
