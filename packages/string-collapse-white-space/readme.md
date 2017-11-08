@@ -36,8 +36,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-**[⬆ &nbsp;back to top](#)**
-
 ## TLDR;
 
 Take string. First **trim** the outsides, then **collapse** two and more spaces into one.
@@ -57,8 +55,6 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 
 `'   aaa   \n   bbb   '` → `'aaa\nbbb'`
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Install
 
 ```bash
@@ -69,11 +65,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 16 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 16 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 29 KB
-
-**[⬆ &nbsp;back to top](#)**
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 18&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 17&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 31&nbsp;KB
 
 ## The API
 
@@ -97,8 +91,6 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ### Optional Options Object's API:
 
 `options` object's key         | Type     | Obligatory? | Default     | Description
@@ -120,8 +112,6 @@ This library traverses the string _only once_ and performs the deletion _only on
 Optionally (on by default), it can recognise (X)HTML tags (any out of 118) and for example collapse `< div..` → `<div..`.
 
 This algorithm **does not use regexes**.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Usage
 
@@ -149,8 +139,6 @@ console.log('res4 = ' + res4)
 // => 'aaa bbb\nccc ddd'
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Smart bits
 
 There are some sneaky false-positive cases, for example:
@@ -161,27 +149,23 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's w
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Practical use
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
 
 I'm going to use it first in [Detergent](https://github.com/codsen/detergent), but you never know, it might prove handy in email template building in general.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Also, you can [email me](mailto:roy@codsen.com).
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 

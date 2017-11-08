@@ -8,7 +8,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint no-lonely-if:0, no-loop-func:0, max-len:0 */
+/* eslint no-lonely-if:0, no-loop-func:0, max-len:0, security/detect-object-injection:0 */
 
 function collapse(str, originalOpts) {
   // f's

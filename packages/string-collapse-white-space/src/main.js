@@ -1,4 +1,4 @@
-/* eslint no-lonely-if:0, no-loop-func:0, max-len:0 */
+/* eslint no-lonely-if:0, no-loop-func:0, max-len:0, security/detect-object-injection:0 */
 
 import checkTypes from 'check-types-mini'
 import isObj from 'lodash.isplainobject'
