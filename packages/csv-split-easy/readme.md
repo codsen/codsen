@@ -41,6 +41,13 @@
 $ npm i csv-split-easy
 ```
 
+```js
+// consume its main function as a CommonJS require:
+const splitEasy = require('csv-split-easy')
+// or as a ES module:
+import splitEasy from 'csv-split-easy'
+```
+
 Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size

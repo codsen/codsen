@@ -4,7 +4,7 @@ import remSep from 'string-remove-thousand-separators'
 import checkTypes from 'check-types-mini'
 import isObj from 'lodash.isplainobject'
 
-function split(str, originalOpts) {
+function splitEasy(str, originalOpts) {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
   let colStarts = 0
@@ -189,4 +189,4 @@ function split(str, originalOpts) {
   return resArray
 }
 
-export { split as default }
+export { splitEasy as default }

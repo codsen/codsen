@@ -6,7 +6,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /* eslint security/detect-object-injection:0, no-param-reassign:0 */
 
-function split(str, originalOpts) {
+function splitEasy(str, originalOpts) {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array
   var colStarts = 0;
@@ -181,4 +181,4 @@ function split(str, originalOpts) {
   return resArray;
 }
 
-export default split;
+export default splitEasy;
