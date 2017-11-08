@@ -36,8 +36,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Install
 
 ```bash
@@ -57,15 +55,24 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-replace-slices-array.cjs.js` | 3&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-replace-slices-array.esm.js` | 3&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`           | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB
-
-**[⬆ &nbsp;back to top](#)**
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB
 
 ## Idea
 
-You [compile](https://github.com/codsen/string-slices-array-push) an array of string slices, feed it to this library, and it deletes/replaces pieces of string according to those slices.
+Let's say you want to delete bunch of characters from a string and also to replace some. Technically this means you need to mark the indexes of the characters where you start deletion and where you end. That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
 
-If a range is detected (array of two natural number elements), substring between those indexes is deleted. Optional third element is placed there.
+```js
+[
+  [10, 15], // <-- delete this string slice range
+  [18, 20, 'replace with this'] // <-- delete from 18th to 20th, then insert string there
+]
+```
+
+Now what happens when you have a few slices? You put them into a _parent array_.
+
+This library consumes such parent array and does the actual job crunching your string according to the list of _slices_.
+
+Now, let's do it practically.
 
 First, make sure you found the exact boundaries of the slice - preview each using `String.slice`:
 
@@ -73,15 +80,7 @@ First, make sure you found the exact boundaries of the slice - preview each usin
 console.log('>>>' + someString.slice(sliceFrom, sliceTo) + '<<<') // <--- make sure what you see is exactly what you want deleted/replaced or the place where it starts is exactly where you want string inserted
 ```
 
-Now that you have "from" index, `sliceFrom` and "to" index `sliceTo`, put them into an array and push them into another array, `rangesArray`. You can push many such "from"-"to" arrays into it.
-
-For replacement, set the new value as a third element in the ranges array: `[sliceFrom, sliceTo, replaceWith]`
-
-That's it. Feed that array of ranges into this package, together with your source string and your deletion/replacement will be done for you.
-
-**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap or new ones are behind previous ones.
-
-**[⬆ &nbsp;back to top](#)**
+**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
 ## API
 
@@ -90,8 +89,6 @@ stringReplaceSlicesArray(inputString, rangesArray) // options will come in later
 ```
 
 Returns a string with requested slices deleted/replaced.
-
-**[⬆ &nbsp;back to top](#)**
 
 #### inputString
 
@@ -147,23 +144,17 @@ console.log('str = ' + str)
 // 'aaa bbb ccc'
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## The algorithm
 
 The plan is simple - we `array.reduce` your given ranges array, slicing the input string accordingly.
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## In my case
 
 Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -176,8 +167,6 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-replace-slices-array/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 

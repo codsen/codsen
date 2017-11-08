@@ -3,13 +3,15 @@
     "es6": true
   },
   "extends": [
-    "airbnb-base"
+    "airbnb-base",
+    "plugin:security/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2017
   },
   "plugins": [
-    "ava"
+    "ava",
+    "security"
   ],
   "rules": {
     "ava/assertion-arguments": "error",

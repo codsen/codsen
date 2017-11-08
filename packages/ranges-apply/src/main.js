@@ -1,4 +1,4 @@
-/* eslint no-param-reassign:0 */
+/* eslint no-param-reassign:0, security/detect-object-injection:0 */
 
 import isInt from 'is-natural-number'
 import isNumStr from 'is-natural-number-string'
