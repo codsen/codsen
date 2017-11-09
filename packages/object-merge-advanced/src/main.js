@@ -3,22 +3,24 @@
 // ===================================
 // V A R S
 
-const type = require('type-detect')
-const clone = require('lodash.clonedeep')
-const includes = require('array-includes-with-glob')
-const checkTypes = require('check-types-mini')
+import typeDetect from 'type-detect'
+import clone from 'lodash.clonedeep'
+import includes from 'array-includes-with-glob'
+import checkTypes from 'check-types-mini'
+import lodashIncludes from 'lodash.includes'
+import uniq from 'lodash.uniq'
+import arrayiffyString from 'arrayiffy-if-string'
+import nonEmpty from 'util-nonempty'
 
-const {
-  existy, isBool, nonEmpty, equalOrSubsetKeys, arrayiffyString, arrayContainsStr,
-} = require('./util-es5')
+import { existy, isBool, equalOrSubsetKeys, arrayContainsStr } from './util'
 
 // ===================================
 // F U N C T I O N S
 
-function isObj(something) { return type(something) === 'Object' }
+function isObj(something) { return typeDetect(something) === 'Object' }
 function isArr(something) { return Array.isArray(something) }
-function isStr(something) { return type(something) === 'string' }
-function isNum(something) { return type(something) === 'number' }
+function isStr(something) { return typeDetect(something) === 'string' }
+function isNum(something) { return typeDetect(something) === 'number' }
 
 function mergeAdvanced(input1orig, input2orig, originalOpts) {
   //
@@ -45,6 +47,8 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     oneToManyArrayObjectMerge: false,
     hardMergeEverything: false,
     ignoreEverything: false,
+    concatInsteadOfMerging: true,
+    dedupeStringsInArrayValues: false,
   }
   const opts = Object.assign(clone(defaults), originalOpts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
@@ -72,32 +76,47 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           return []
         }
-        const temp = []
+        let temp = []
         for (let index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
           if (
             isObj(i1[index]) &&
-              isObj(i2[index]) &&
-              (
-                (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index])) ||
-                !opts.mergeObjectsOnlyWhenKeysetMatches
-              )
+            isObj(i2[index]) &&
+            (
+              (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index])) ||
+              !opts.mergeObjectsOnlyWhenKeysetMatches
+            )
           ) {
             temp.push(mergeAdvanced(i1[index], i2[index], opts))
           } else if (
             opts.oneToManyArrayObjectMerge &&
                 (
-                  (i1.length === 1) || (i2.length === 1)
+                  (i1.length === 1) || (i2.length === 1) // either of arrays has one elem.
                 )
           ) {
             temp.push((i1.length === 1) ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts))
-          } else {
+          } else if (opts.concatInsteadOfMerging) {
+            // case1 - concatenation no matter what contents
             if (index < i1.length) {
               temp.push(i1[index])
             }
             if (index < i2.length) {
               temp.push(i2[index])
             }
+          } else {
+            // case2 - merging, evaluating contents
+
+            // push each element of i1 into temp
+            if (index < i1.length) {
+              temp.push(i1[index])
+            }
+            if ((index < i2.length) && (!lodashIncludes(i1, i2[index]))) {
+              temp.push(i2[index])
+            }
           }
+        }
+        // optionally dedupe:
+        if (opts.dedupeStringsInArrayValues && temp.every(el => isStr(el))) {
+          temp = uniq(temp)
         }
         i1 = clone(temp)
       } else {
@@ -264,4 +283,4 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   return i1
 }
 
-module.exports = mergeAdvanced
+export { mergeAdvanced as default }

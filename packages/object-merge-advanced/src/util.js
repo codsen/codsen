@@ -1,31 +1,18 @@
 // ===================================
 // V A R S
 
-const includesAll = require('array-includes-all')
-const type = require('type-detect')
+import includesAll from 'array-includes-all'
+import typeDetect from 'type-detect'
 
 // ===================================
 // F U N C T I O N S
 
 function existy(x) { return x != null }
 
-function isObj(something) { return type(something) === 'Object' }
+function isObj(something) { return typeDetect(something) === 'Object' }
 function isArr(something) { return Array.isArray(something) }
-function isStr(something) { return type(something) === 'string' }
-function isNum(something) { return type(something) === 'number' }
 function isBool(bool) {
   return typeof bool === 'boolean'
-}
-
-function nonEmpty(something) {
-  if (isArr(something) || isStr(something)) {
-    return something.length > 0
-  } else if (isObj(something)) {
-    return Object.keys(something).length > 0
-  } else if (isNum(something)) {
-    return true
-  }
-  return false
 }
 
 function equalOrSubsetKeys(obj1, obj2) {
@@ -42,16 +29,6 @@ function equalOrSubsetKeys(obj1, obj2) {
     includesAll(Object.keys(obj2), Object.keys(obj1))
 }
 
-function arrayiffyString(something) {
-  if (type(something) === 'string') {
-    if (something.length > 0) {
-      return [something]
-    }
-    return []
-  }
-  return something
-}
-
 function arrayContainsStr(arr) {
   if (arguments.length === 0) {
     return false
@@ -62,11 +39,9 @@ function arrayContainsStr(arr) {
   return arr.some(val => typeof val === 'string')
 }
 
-module.exports = {
+export {
   existy,
   isBool,
-  nonEmpty,
   equalOrSubsetKeys,
-  arrayiffyString,
   arrayContainsStr,
 }

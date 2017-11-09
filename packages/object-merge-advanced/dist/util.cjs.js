@@ -1,12 +1,16 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var includesAll = _interopDefault(require('array-includes-all'));
+var typeDetect = _interopDefault(require('type-detect'));
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // ===================================
 // V A R S
-
-var includesAll = require('array-includes-all');
-var type = require('type-detect');
 
 // ===================================
 // F U N C T I O N S
@@ -16,30 +20,13 @@ function existy(x) {
 }
 
 function isObj(something) {
-  return type(something) === 'Object';
+  return typeDetect(something) === 'Object';
 }
 function isArr(something) {
   return Array.isArray(something);
 }
-function isStr(something) {
-  return type(something) === 'string';
-}
-function isNum(something) {
-  return type(something) === 'number';
-}
 function isBool(bool) {
   return typeof bool === 'boolean';
-}
-
-function nonEmpty(something) {
-  if (isArr(something) || isStr(something)) {
-    return something.length > 0;
-  } else if (isObj(something)) {
-    return Object.keys(something).length > 0;
-  } else if (isNum(something)) {
-    return true;
-  }
-  return false;
 }
 
 function equalOrSubsetKeys(obj1, obj2) {
@@ -55,16 +42,6 @@ function equalOrSubsetKeys(obj1, obj2) {
   return includesAll(Object.keys(obj1), Object.keys(obj2)) || includesAll(Object.keys(obj2), Object.keys(obj1));
 }
 
-function arrayiffyString(something) {
-  if (type(something) === 'string') {
-    if (something.length > 0) {
-      return [something];
-    }
-    return [];
-  }
-  return something;
-}
-
 function arrayContainsStr(arr) {
   if (arguments.length === 0) {
     return false;
@@ -77,11 +54,7 @@ function arrayContainsStr(arr) {
   });
 }
 
-module.exports = {
-  existy: existy,
-  isBool: isBool,
-  nonEmpty: nonEmpty,
-  equalOrSubsetKeys: equalOrSubsetKeys,
-  arrayiffyString: arrayiffyString,
-  arrayContainsStr: arrayContainsStr
-};
+exports.existy = existy;
+exports.isBool = isBool;
+exports.equalOrSubsetKeys = equalOrSubsetKeys;
+exports.arrayContainsStr = arrayContainsStr;

@@ -1,7 +1,7 @@
 import test from 'ava'
 import clone from 'lodash.clonedeep'
-import { equalOrSubsetKeys, arrayContainsStr } from './util'
-import mergeAdvanced from './index-es5'
+import { equalOrSubsetKeys, arrayContainsStr } from '../dist/util.cjs'
+import mergeAdvanced from '../dist/object-merge-advanced.cjs'
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
@@ -2201,7 +2201,7 @@ test('09.04 - number - #81-90', (t) => {
       [],
     ),
     1,
-    '09.04.05',
+    '09.04.06',
   )
 })
 
@@ -3277,6 +3277,270 @@ test('14.01 - objects within arrays', (t) => {
     '14.01.05 - with mergeObjectsOnlyWhenKeysetMatches=false objects will clash, plus we got hard merge',
   )
 })
+
+
+// ==============================
+// 15. combo of opts.oneToManyArrayObjectMerge and unidirectional merge,
+// either opts.ignoreKeys, opts.hardMergeKeys, opts.hardMergeEverything or opts.ignoreEverything
+// ==============================
+
+test('15.01 - hard merge on clashing keys only case #1', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: '888',
+            c: '111',
+          },
+          {
+            b: '999',
+            c: '222',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            c: '333',
+          },
+        ],
+      },
+    ),
+    {
+      a: [
+        {
+          b: '888',
+          c: '333', // <------ overwrites just this
+        },
+        {
+          b: '999',
+          c: '222', // <------ not this
+        },
+      ],
+    },
+    '15.01.01 - default behaviour',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: '888',
+            c: '111',
+          },
+          {
+            b: '999',
+            c: '222',
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            c: '333', // <------ imagine this is an override, used in mapping
+          },
+        ],
+      },
+      {
+        oneToManyArrayObjectMerge: true,
+      },
+    ),
+    {
+      a: [
+        {
+          b: '888',
+          c: '333', // <------ gets overwritten as standard
+        },
+        {
+          b: '999',
+          c: '333', // <------ BUT ALSO THIS TOO
+        },
+      ],
+    },
+    '15.01.02 - one-to-many',
+  )
+
+  // PRESS PAUSE HERE.
+
+  // LET'S TEST TYPE CLASHES.
+
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: '888',
+            c: ['111'], // <------ OOPS! array!
+          },
+          {
+            b: '999',
+            c: ['222'], // <------ OOPS! array!
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            c: '333', // <------ now it's a string vs array...
+          },
+        ],
+      },
+      {
+        oneToManyArrayObjectMerge: true,
+      },
+    ),
+    {
+      a: [
+        {
+          b: '888',
+          c: ['111'], // <------ nothing happens because array is higher in food chain
+        },
+        {
+          b: '999',
+          c: ['222'], // <------ nothing happens because array is higher in food chain
+        },
+      ],
+    },
+    '15.01.03 - one to many, string tries override arrays, against the food chain order',
+  )
+
+  // WHAT DO WE DO? HOW CAN WE OVERWRITE LIKE IN 15.01.02 ?
+
+  // LET'S TRY HARD OVERWRITE!
+
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: '888',
+            c: ['111'], // <------ will this get overwritten by '333'?
+          },
+          {
+            b: '999',
+            c: ['222'], // <------ will this get overwritten by '333'?
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            c: '333',
+          },
+        ],
+      },
+      {
+        oneToManyArrayObjectMerge: true,
+        hardMergeKeys: ['c'], // <------ is this the solution?
+      },
+    ),
+    {
+      a: [
+        {
+          b: '888',
+          c: '333',
+        },
+        {
+          b: '999',
+          c: '333',
+        },
+      ],
+    },
+    '15.01.04 - hard overwrite, per-key setting',
+  )
+})
+
+// ==============================
+// 16. Object values are arrays and they contain strings.
+// We test their various merge cases.
+// ==============================
+
+test('16.01 - values as arrays that contain strings', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['a'],
+      },
+      {
+        a: ['b'],
+      },
+    ),
+    {
+      a: ['a', 'b'],
+    },
+    '16.01.01 - default behaviour, different strings',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['a'],
+      },
+      {
+        a: ['a'],
+      },
+    ),
+    {
+      a: ['a', 'a'],
+    },
+    '16.01.02 - default behaviour, same string',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['a'],
+      },
+      {
+        a: ['a'],
+      },
+      {
+        concatInsteadOfMerging: false,
+      },
+    ),
+    {
+      a: ['a'],
+    },
+    '16.01.03 - opts.concatInsteadOfMerging',
+  )
+  // now the first array goes straight to result, so three "zzz" will come.
+  // then second array's "zzz" will be matched as existing and won't be let in.
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['zzz', 'zzz', 'zzz'],
+      },
+      {
+        a: ['zzz'],
+      },
+      {
+        concatInsteadOfMerging: false,
+      },
+    ),
+    {
+      a: ['zzz', 'zzz', 'zzz'],
+    },
+    '16.01.04 - opts.concatInsteadOfMerging pt2.',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['bbb', 'zzz', 'zzz', 'bbb', 'zzz', 'bbb'],
+      },
+      {
+        a: ['zzz', 'bbb'],
+      },
+      {
+        concatInsteadOfMerging: false,
+        dedupeStringsInArrayValues: true,
+      },
+    ),
+    {
+      a: ['bbb', 'zzz'],
+    },
+    '16.01.05 - opts.concatInsteadOfMerging + opts.dedupeStringsInArrayValues',
+  )
+})
+
 
 // ============================================================
 //                   U T I L   T E S T S

@@ -1,17 +1,21 @@
 # object-merge-advanced
 
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
+
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -26,7 +30,6 @@
 - [API](#api)
   - [API - Input](#api---input)
   - [API - Output](#api---output)
-- [Testing](#testing)
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `object-assign`](#difference-from-object-assign)
 - [Contributing](#contributing)
@@ -37,10 +40,23 @@
 ## Install
 
 ```sh
-$ npm install --save object-merge-advanced
+$ npm i object-merge-advanced
 ```
 
-Transpiled version is served.
+```js
+// consume as CommonJS require:
+const mergeAdvanced = require('object-merge-advanced')
+// or import as an ES module:
+import mergeAdvanced from 'object-merge-advanced'
+```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 12&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 12&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB
 
 ## Purpose
 
@@ -82,7 +98,7 @@ There are ten possible combinations: 10 types of first input (object #1) and ten
 
 ![matching algorithm](https://cdn.rawgit.com/codsen/object-merge-advanced/54bac472/media/object-merge-advanced_algorithm.png)
 
-A Large number in the centre of a square shows which value prevails.
+A large number in the centre of a square shows which value prevails.
 
 In the diagram above, the squares show **which value gets assigned to the merge result** — the first object's (marked `1`, pink fields) or second one's (marked `2`, sky blue fields).
 
@@ -94,15 +110,11 @@ In some cases, we perform a custom actions:
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## In practice
 
 In practice I needed this library to normalise JSON files - [generate](https://github.com/codsen/json-comb-core#getkeyset) a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates - it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
 
 I use unidirectional merging when dealing with content mapping JSON files which are by definition unidirectional-flow (always overwrite normal data JSON files).
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Use
 
@@ -115,8 +127,6 @@ var mergeAdvanced = require('object-merge-advanced')
 ```js
 mergeAdvanced(input1, input2 [, { options }])
 ```
-
-**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -136,6 +146,8 @@ Options object's key                    | Value   | Default | Description
 `oneToManyArrayObjectMerge`             | Boolean | `false` | If one array has one object, but another array has many objects, when `oneToManyArrayObjectMerge` is `true`, each object from "many-objects" array will be merged with that one object from "one-object" array. Handy when setting defaults on JSON data structures.
 `hardMergeEverything`                   | Boolean | `false` | If there's a clash of anywhere, second argument's value will always overwrite first one's. That's a unidirectional merge.
 `ignoreEverything`                      | Boolean | `false` | If there's a clash of anywhere, first argument's value will always overwrite the second one's. That's a unidirectional merge.
+`concatInsteadOfMerging`                | Boolean | `true`  | If it's `true` (default), when object keys clash and their values are arrays, when merging, concatenate those arrays (simply combine elements). If it's `false`, array contents from the first argument object's key will go intact into final result, but second array's contents will be added into result only if they don't exist in the first array.
+`dedupeStringsInArrayValues`            | Boolean | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings.
 `}`                                     |         |         |
 
 `mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).
@@ -204,31 +216,15 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ### API - Output
 
 A merged thing is returned. It's probably the same type of your inputs.
 
 Objects or arrays in the inputs are **not mutated**. This is very important.
 
-**[⬆ &nbsp;back to top](#)**
-
-## Testing
-
-```bash
-$ npm test
-```
-
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [ESLint](https://npmjs.com/eslint-config-airbnb-base) on `airbnb-base` config, except without semicolons.
-
-I aim to have 100% code coverage (which is the case at the moment).
-
 ## Difference from Lodash `_.merge`
 
 Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Difference from `object-assign`
 
@@ -246,80 +242,56 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If saw a typo or English style error in this readme, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-If you want to request a new feature, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-If you want to assistance with wiring it up, do [raise an issue](https://github.com/codsen/object-merge-advanced/issues). Just please be specific and isolate the case.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-merge-advanced/issues) or [email](mailto:roy@codsen.com), your choice.
 
-If you have ideas how to improve the algorithm - some fundamental ideas how the library should be done - ... - do [raise an issue](https://github.com/codsen/object-merge-advanced/issues).
-
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
-
-If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
-
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
-
-Cheers!
-
-**[⬆ &nbsp;back to top](#)**
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/object-merge-advanced
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/object-merge-advanced.svg
+[npm-img]: https://img.shields.io/npm/v/object-merge-advanced.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/object-merge-advanced
 
-[travis-img]: https://travis-ci.org/codsen/object-merge-advanced.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/object-merge-advanced.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-merge-advanced
 
-[cov-img]: https://coveralls.io/repos/github/codsen/object-merge-advanced/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-merge-advanced/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/object-merge-advanced?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-merge-advanced.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-merge-advanced
 
-[deps-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-merge-advanced.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/object-merge-advanced/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg
-[downloads-url]: https://www.npmjs.com/package/object-merge-advanced
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-merge-advanced/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-merge-advanced
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-flat-db0097.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-merge-advanced
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-merge-advanced.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-merge-advanced/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-merge-advanced
+
+[downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/object-merge-advanced
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
+
+[license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
+[license-url]: https://github.com/codsen/object-merge-advanced/blob/master/license.md

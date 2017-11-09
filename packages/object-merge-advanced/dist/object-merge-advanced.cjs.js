@@ -1,37 +1,83 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var typeDetect = _interopDefault(require('type-detect'));
+var clone = _interopDefault(require('lodash.clonedeep'));
+var includes = _interopDefault(require('array-includes-with-glob'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+var lodashIncludes = _interopDefault(require('lodash.includes'));
+var uniq = _interopDefault(require('lodash.uniq'));
+var arrayiffyString = _interopDefault(require('arrayiffy-if-string'));
+var nonEmpty = _interopDefault(require('util-nonempty'));
+var includesAll = _interopDefault(require('array-includes-all'));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+// ===================================
+// V A R S
+
+// ===================================
+// F U N C T I O N S
+
+function existy(x) {
+  return x != null;
+}
+
+function isObj$1(something) {
+  return typeDetect(something) === 'Object';
+}
+function isArr$1(something) {
+  return Array.isArray(something);
+}
+function isBool(bool) {
+  return typeof bool === 'boolean';
+}
+
+function equalOrSubsetKeys(obj1, obj2) {
+  if (!isObj$1(obj1)) {
+    throw new TypeError('object-merge-advanced/util.js/equalOrSubsetKeys(): [THROW_ID_03] First input is not an object, it\'s ' + (typeof obj1 === 'undefined' ? 'undefined' : _typeof(obj1)));
+  }
+  if (!isObj$1(obj2)) {
+    throw new TypeError('object-merge-advanced/util.js/equalOrSubsetKeys(): [THROW_ID_04] Second input is not an object, it\'s ' + (typeof obj2 === 'undefined' ? 'undefined' : _typeof(obj2)));
+  }
+  if (Object.keys(obj1).length === 0 || Object.keys(obj2).length === 0) {
+    return true;
+  }
+  return includesAll(Object.keys(obj1), Object.keys(obj2)) || includesAll(Object.keys(obj2), Object.keys(obj1));
+}
+
+function arrayContainsStr(arr) {
+  if (arguments.length === 0) {
+    return false;
+  }
+  if (!isArr$1(arr)) {
+    throw new TypeError('object-merge-advanced/util.js/arrayContainsStr(): [THROW_ID_05] input must be array');
+  }
+  return arr.some(function (val) {
+    return typeof val === 'string';
+  });
+}
+
 /* eslint max-len:0, no-prototype-builtins:0 */
 
 // ===================================
 // V A R S
 
-var type = require('type-detect');
-var clone = require('lodash.clonedeep');
-var includes = require('array-includes-with-glob');
-var checkTypes = require('check-types-mini');
-
-var _require = require('./util-es5'),
-    existy = _require.existy,
-    isBool = _require.isBool,
-    nonEmpty = _require.nonEmpty,
-    equalOrSubsetKeys = _require.equalOrSubsetKeys,
-    arrayiffyString = _require.arrayiffyString,
-    arrayContainsStr = _require.arrayContainsStr;
-
 // ===================================
 // F U N C T I O N S
 
 function isObj(something) {
-  return type(something) === 'Object';
+  return typeDetect(something) === 'Object';
 }
 function isArr(something) {
   return Array.isArray(something);
 }
 function isStr(something) {
-  return type(something) === 'string';
+  return typeDetect(something) === 'string';
 }
 function isNum(something) {
-  return type(something) === 'number';
+  return typeDetect(something) === 'number';
 }
 
 function mergeAdvanced(input1orig, input2orig, originalOpts) {
@@ -58,7 +104,9 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     mergeArraysContainingStringsToBeEmpty: false,
     oneToManyArrayObjectMerge: false,
     hardMergeEverything: false,
-    ignoreEverything: false
+    ignoreEverything: false,
+    concatInsteadOfMerging: true,
+    dedupeStringsInArrayValues: false
   };
   var opts = Object.assign(clone(defaults), originalOpts);
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
@@ -90,16 +138,34 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
           for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
             if (isObj(i1[index]) && isObj(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
               temp.push(mergeAdvanced(i1[index], i2[index], opts));
-            } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1)) {
+            } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1 // either of arrays has one elem.
+            )) {
               temp.push(i1.length === 1 ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts));
-            } else {
+            } else if (opts.concatInsteadOfMerging) {
+              // case1 - concatenation no matter what contents
               if (index < i1.length) {
                 temp.push(i1[index]);
               }
               if (index < i2.length) {
                 temp.push(i2[index]);
               }
+            } else {
+              // case2 - merging, evaluating contents
+
+              // push each element of i1 into temp
+              if (index < i1.length) {
+                temp.push(i1[index]);
+              }
+              if (index < i2.length && !lodashIncludes(i1, i2[index])) {
+                temp.push(i2[index]);
+              }
             }
+          }
+          // optionally dedupe:
+          if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
+            return isStr(el);
+          })) {
+            temp = uniq(temp);
           }
           i1 = clone(temp);
         } else {

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0] - 2017-11-09
+### Added
+- ✨ Recoded everything in ES modules, set up Rollup and now generating 3 flavours: CommonJS, UMD and ES modules.
+- ✨ opts.concatInsteadOfMerging
+- ✨ opts.dedupeStringsInArrayValues
+
+Bumping major just in case.
+
 ## [7.1.0] - 2017-09-21
 ### Added
 - ✨ Switched from JS Standard to ESLint on `airbnb-base` preset with override to ban semicolons. 3 reasons: 1. JS Standard uses outdated ESLint which has `shell.js` one level-deep which is insecure. 2. JS Standard cares pretty much only about semicolons and doesn't activate many useful rules that `airbnb-*` have on. 3. Using raw ESLint guarantees, well, latest ESLint, always.
@@ -98,3 +106,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [6.5.0]: https://github.com/codsen/object-merge-advanced/compare/v6.4.0...v6.5.0
 [7.0.0]: https://github.com/codsen/object-merge-advanced/compare/v6.5.0...v7.0.0
 [7.1.0]: https://github.com/codsen/object-merge-advanced/compare/v7.0.2...v7.1.0
+[8.0.0]: https://github.com/codsen/object-merge-advanced/compare/v7.1.0...v8.0.0
