@@ -6,9 +6,9 @@ const nonEmpty = require('../dist/util-nonempty.cjs.js')
 // Precautions
 // ==============================
 
-test('1.1 - inputs missing - returns undefined', (t) => {
+test('1.1 - inputs missing - returns false', (t) => {
   t.is(
-    nonEmpty(), undefined,
+    nonEmpty(), false,
     '1.1',
   )
 })
@@ -57,9 +57,9 @@ test('2.4 - null', (t) => {
   )
 })
 
-test('2.5 - undefined - same as missing input', (t) => {
+test('2.5 - hardcoded "undefined" - same as missing input', (t) => {
   t.is(
-    nonEmpty(undefined), undefined,
+    nonEmpty(undefined), false,
     '2.5',
   )
 })
@@ -80,5 +80,16 @@ test('2.6 - function - still empty, no matter what\'s returned (!)', (t) => {
   t.is(
     nonEmpty(f), false,
     '2.6',
+  )
+})
+
+test('2.7 - Number', (t) => {
+  t.is(
+    nonEmpty(10), true,
+    '2.7.1',
+  )
+  t.is(
+    nonEmpty(0), true,
+    '2.7.2',
   )
 })

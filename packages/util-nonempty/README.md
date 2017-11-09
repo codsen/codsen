@@ -4,16 +4,18 @@
 
 > Is the input (plain object, array, string or whatever) not empty?
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -22,10 +24,9 @@
 
 
 - [Install](#install)
-- [Use](#use)
 - [Purpose](#purpose)
 - [API](#api)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -33,27 +34,26 @@
 ## Install
 
 ```bash
-$ npm install util-nonempty
+$ npm i util-nonempty
 ```
 
-**What you'll get:**
-
-type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/util-nonempty.cjs.js` | 624B
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 471B
-**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 898B
-
-**[⬆ &nbsp;back to top](#)**
-
-## Use
-
 ```js
-var nonEmpty = require('util-nonempty')
+// consume as a CommonJS require:
+const nonEmpty = require('util-nonempty')
+// or as ES module:
+import nonEmpty from 'util-nonempty'
+
+// then call as a function:
 console.log(nonEmpty('a'))
 ```
 
-**[⬆ &nbsp;back to top](#)**
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 757&nbsp;B
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 604&nbsp;B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 904&nbsp;B
 
 ## Purpose
 
@@ -67,6 +67,9 @@ nonEmpty('')
 // => false
 
 nonEmpty(['a'])
+// => true
+
+nonEmpty([123])
 // => true
 
 nonEmpty([])
@@ -88,83 +91,65 @@ If you want to check _non-emptiness_ of complex nested trees of objects, arrays 
 * If you want to check for strict emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
 * If your "emptiness" definition is wider — anything (plain object, array or string or a mix of thereof) that contains only whitespace (spaces, line breaks, tabs and so on), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
 
-**[⬆ &nbsp;back to top](#)**
-
 ## API
 
 ```js
 nonEmpty (
   input // Array, plain object or string will be checked, rest will be instantly "false", unless input's missing (then returns undefined).
 );
-// => Boolean|undefined
+// => Boolean
 ```
 
-**[⬆ &nbsp;back to top](#)**
+## Contributing
 
-## Testing and Contributing
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-```bash
-$ npm test
-```
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-nonempty/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-nonempty/issues) or [email](mailto:roy@codsen.com), your choice.
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
-
-**[⬆ &nbsp;back to top](#)**
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/util-nonempty.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/util-nonempty
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/util-nonempty.svg
+[npm-img]: https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/util-nonempty
 
-[travis-img]: https://travis-ci.org/codsen/util-nonempty.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/util-nonempty.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/util-nonempty
 
-[cov-img]: https://coveralls.io/repos/github/codsen/util-nonempty/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/util-nonempty/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/util-nonempty?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/util-nonempty.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/util-nonempty
 
-[deps-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/util-nonempty.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/util-nonempty/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/util-nonempty/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/util-nonempty/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/util-nonempty.svg
-[downloads-url]: https://www.npmjs.com/package/util-nonempty
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-nonempty/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-nonempty
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/util-nonempty
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/util-nonempty.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/util-nonempty/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-nonempty/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-nonempty
+
+[downloads-img]: https://img.shields.io/npm/dm/util-nonempty.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/util-nonempty
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/util-nonempty
+
+[license-img]: https://img.shields.io/npm/l/util-nonempty.svg?style=flat-square
+[license-url]: https://github.com/codsen/util-nonempty/blob/master/license.md
