@@ -39,8 +39,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Install
 
 ```bash
@@ -51,11 +49,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 51 KB
-
-**[⬆ &nbsp;back to top](#)**
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 50&nbsp;KB
 
 ## Purpose
 
@@ -84,8 +80,6 @@ console.log(result)
 ```
 
 Main purpose is to compare two parsed HTML/CSS trees or their branches but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Use
 
@@ -184,21 +178,15 @@ compare(null)
 // => false.
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## opts.verboseWhenMismatches
 
 Sometimes you just want a yes/no answer is something a subset or equal to something. But sometimes, the whole point of comparison is to inform the user _exactly what_ is mismatching. In the latter cases, set `opts.verboseWhenMismatches` to `true`. When there is no match, instead of Boolean `false` the main function will return **a string** with an explanatory message.
 
 If you use this setting, you have to anticipate Boolean `true` OR something else (Boolean `false` or string) coming out from this library.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Rationale
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Differences from _.isMatch
 
@@ -215,19 +203,17 @@ var res = compare(
 // now, res === false
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Also, you can [email me](mailto:roy@codsen.com).
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-compare/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-compare/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
