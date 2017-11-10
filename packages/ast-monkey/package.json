@@ -8,7 +8,10 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": "codsen/ast-monkey",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/ast-monkey.git"
+  },
   "bugs": {
     "url": "https://github.com/codsen/ast-monkey/issues"
   },
@@ -77,11 +80,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.50.0",
+    "rollup": "^0.51.2",
     "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-commonjs": "^8.2.5",
+    "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.1.6"
+    "uglify-es": "^3.1.8"
   }
 }
