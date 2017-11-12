@@ -1,15 +1,17 @@
-'use strict'
-const split = require('csv-split-easy')
-const pull = require('lodash.pull')
-const ordinal = require('ordinal')
-const { findtype } = require('./util')
-const isArr = Array.isArray
-const BigNumber = require('bignumber.js')
+/* eslint prefer-destructuring:0, max-len:0 */
 
-function s (input) {
-  var content
-  var msgContent = null
-  var msgType = null
+import split from 'csv-split-easy'
+import pull from 'lodash.pull'
+import ordinal from 'ordinal'
+import BigNumber from 'bignumber.js'
+import findtype from './util'
+
+const isArr = Array.isArray
+
+function csvSort(input) {
+  let content
+  let msgContent = null
+  let msgType = null
 
   // step 1.
   // ===========================
@@ -17,11 +19,11 @@ function s (input) {
   if (typeof input === 'string') {
     if (input.length === 0) {
       return [['']]
-    } else {
-      content = split(input)
     }
+    content = split(input)
   } else if (isArr(input)) {
-    let culpritVal, culpritIndex
+    let culpritVal
+    let culpritIndex
     if (!input.every((val, index) => {
       if (!isArr(val)) {
         culpritVal = val
@@ -29,10 +31,10 @@ function s (input) {
       }
       return isArr(val)
     })) {
-      throw new TypeError(`csv-sort/s(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ${ordinal(culpritIndex)} element is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(culpritVal, null, 4)}`)
+      throw new TypeError(`csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ${ordinal(culpritIndex)} element is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(culpritVal, null, 4)}`)
     }
   } else {
-    throw new TypeError(`csv-sort/s(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(input, null, 4)}`)
+    throw new TypeError(`csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(input, null, 4)}`)
   }
 
   // step 2.
@@ -42,13 +44,13 @@ function s (input) {
   // - first row can have different amount of columns
   // - think about 2D trim feature
 
-  var schema = null
-  var stateHeaderRowPresent = false
-  var stateDataColumnRowLengthIsConsistent = true
-  var stateColumnsContainingSameValueEverywhere = []
+  let schema = null
+  let stateHeaderRowPresent = false
+  let stateDataColumnRowLengthIsConsistent = true
+  const stateColumnsContainingSameValueEverywhere = []
 
   // used for 2D trimming:
-  var indexAtWhichEmptyCellsStart = null
+  let indexAtWhichEmptyCellsStart = null
 
   for (let i = content.length - 1; i >= 0; i--) {
     if (!schema) {
@@ -70,14 +72,13 @@ function s (input) {
         // Check is this header row.
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
-        stateHeaderRowPresent = content[i].every(el => {
-          return (findtype(el) === 'text') || (findtype(el) === 'empty')
-        })
+        stateHeaderRowPresent = content[i].every(el => (findtype(el) === 'text') || (findtype(el) === 'empty'))
 
         // if schema was calculated (this means there's header row and at least one content row),
         // find out if the column length in the header differs from schema's
-        if (stateHeaderRowPresent && (schema.length !== content[i].length)) {
-        }
+
+        // if (stateHeaderRowPresent && (schema.length !== content[i].length)) {
+        // }
       }
       if (!stateHeaderRowPresent && (schema.length !== content[i].length)) {
         stateDataColumnRowLengthIsConsistent = false
@@ -94,19 +95,19 @@ function s (input) {
         }
         // checking schema
         if ((findtype(content[i][y].trim()) !== schema[y]) && !stateHeaderRowPresent) {
-          let toAdd = findtype(content[i][y].trim())
+          const toAdd = findtype(content[i][y].trim())
           if (isArr(schema[y])) {
             if (!schema[y].includes(toAdd)) {
               schema[y].push(findtype(content[i][y].trim()))
             }
           } else if (schema[y] !== toAdd) {
-            let temp = schema[y]
+            const temp = schema[y]
             schema[y] = []
             schema[y].push(temp)
             schema[y].push(toAdd)
           }
-        } else {
-        }
+        } // else {
+        // }
       }
       // when row has finished, get the perRowIndexAtWhichEmptyCellsStart
       // that's to cover cases where last row got schema calculated, but it
@@ -140,7 +141,7 @@ function s (input) {
   }
 
   // find out at which index non-empty columns start. This is effectively left-side trimming.
-  var nonEmptyColsStartAt = 0
+  let nonEmptyColsStartAt = 0
   for (let i = 0, len = schema.length; i < len; i++) {
     if (schema[i] === 'empty') {
       nonEmptyColsStartAt = i
@@ -168,21 +169,21 @@ function s (input) {
 
   // swoop in traversing the schema array to get "numeric" columns:
   // ----------------
-  let numericSchemaColumns = []
-  var balanceColumnIndex
-  schema.forEach(function (colType, i) {
+  const numericSchemaColumns = []
+  let balanceColumnIndex
+  schema.forEach((colType, i) => {
     if (colType === 'numeric') {
       numericSchemaColumns.push(i)
     }
   })
 
-  var traverseUpToThisIndexAtTheTop = stateHeaderRowPresent ? 1 : 0
+  const traverseUpToThisIndexAtTheTop = stateHeaderRowPresent ? 1 : 0
 
   if (numericSchemaColumns.length === 1) {
     // Bob's your uncle, the only numeric column is your Balance column
     balanceColumnIndex = numericSchemaColumns[0]
   } else if (numericSchemaColumns.length === 0) {
-    throw new Error(`csv-sort/s(): [THROW_ID_03] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!`)
+    throw new Error('csv-sort/csvSort(): [THROW_ID_03] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!')
   } else {
     // So (numericSchemaColumns > 0) and we'll have to do some work.
     // Fine.
@@ -190,17 +191,19 @@ function s (input) {
     // Clone numericSchemaColumns array, remove columns that have the same value
     // among consecutive rows.
     // For example, accounting CSV's will have "Account number" repeated.
-    // Balance is never the same on two rows, otherwise what's the point of accounting if nothing happened?
-    // traverse the CSV vertically on each column from numericSchemaColumns and find out `balanceColumnIndex`:
+    // Balance is never the same on two rows, otherwise what's the point of
+    // accounting if nothing happened?
+    // Traverse the CSV vertically on each column from numericSchemaColumns and
+    // find out `balanceColumnIndex`:
     // ----------------
 
-    var potentialBalanceColumnIndexesList = Array.from(numericSchemaColumns)
+    let potentialBalanceColumnIndexesList = Array.from(numericSchemaColumns)
     // iterate through `potentialBalanceColumnIndexesList`
-    let deleteFromPotentialBalanceColumnIndexesList = []
+    const deleteFromPotentialBalanceColumnIndexesList = []
 
-    for (var i = 0, len = potentialBalanceColumnIndexesList.length; i < len; i++) {
+    for (let i = 0, len = potentialBalanceColumnIndexesList.length; i < len; i++) {
       // if any two rows are in sequence currently and they are equal, this column is out
-      let suspectedBalanceColumnsIndexNumber = potentialBalanceColumnIndexesList[i]
+      const suspectedBalanceColumnsIndexNumber = potentialBalanceColumnIndexesList[i]
       // we traverse column suspected to be "Balance" with index `index` vertically,
       // from the top to bottom. Depending if there's heading row, we start at 0 or 1,
       // which is set by `traverseUpToThisIndexAtTheTop`.
@@ -214,30 +217,31 @@ function s (input) {
       let firstValue // to check if all are the same
       let lookForAllTheSame = true
 
-      for (let rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length; rowNum < len2; rowNum++) {
+      for (
+        let rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length;
+        rowNum < len2;
+        rowNum++
+      ) {
         // 1. check for two consecutive equal values
         if (lookForTwoEqualAndConsecutive) {
           if (previousValue === undefined) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber]
+          } else if (previousValue === content[rowNum][suspectedBalanceColumnsIndexNumber]) {
+            // potentialBalanceColumnIndexesList.splice(suspectedBalanceColumnsIndexNumber, 1)
+            // don't mutate the `potentialBalanceColumnIndexesList`, do it later.
+            // Let's compile TO-DELETE list instead:
+            deleteFromPotentialBalanceColumnIndexesList.push(suspectedBalanceColumnsIndexNumber)
+            lookForTwoEqualAndConsecutive = false
           } else {
-            if (previousValue === content[rowNum][suspectedBalanceColumnsIndexNumber]) {
-              // potentialBalanceColumnIndexesList.splice(suspectedBalanceColumnsIndexNumber, 1)
-              // don't mutate the `potentialBalanceColumnIndexesList`, do it later. Let's compile TO-DELETE list instead:
-              deleteFromPotentialBalanceColumnIndexesList.push(suspectedBalanceColumnsIndexNumber)
-              lookForTwoEqualAndConsecutive = false
-            } else {
-              previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber]
-            }
+            previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber]
           }
         }
         // 2. also, tell if ALL values are the same:
         if (lookForAllTheSame) {
           if (firstValue === undefined) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber]
-          } else {
-            if (content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue) {
-              lookForAllTheSame = false
-            }
+          } else if (content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue) {
+            lookForAllTheSame = false
           }
         }
         if (!lookForTwoEqualAndConsecutive) {
@@ -250,13 +254,14 @@ function s (input) {
       }
     }
 
-    // now mutate the `potentialBalanceColumnIndexesList` using `deleteFromPotentialBalanceColumnIndexesList`:
+    // now mutate the `potentialBalanceColumnIndexesList` using
+    // `deleteFromPotentialBalanceColumnIndexesList`:
     potentialBalanceColumnIndexesList = pull(potentialBalanceColumnIndexesList, ...deleteFromPotentialBalanceColumnIndexesList)
 
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0]
     } else if (potentialBalanceColumnIndexesList.length === 0) {
-      throw new Error(`csv-sort/s(): [THROW_ID_04] The computer can't find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!`)
+      throw new Error('csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!')
     } else {
       // TODO - continue processing interpolating horizontally and vertically.
       //
@@ -277,7 +282,7 @@ function s (input) {
   }
 
   if (!balanceColumnIndex) {
-    throw new Error('csv-sort/s(): [THROW_ID_05] Sadly computer couldn\'t find its way in this CSV and had to stop working on it.')
+    throw new Error('csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn\'t find its way in this CSV and had to stop working on it.')
   }
 
   // step 4.
@@ -286,19 +291,17 @@ function s (input) {
 
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
-  var potentialCreditDebitColumns = pull(Array.from(schema.reduce(
-    (result, el, index) => {
-      if (((typeof el === 'string') && el === 'numeric') || (isArr(el) && el.includes('numeric'))) {
-        result.push(index)
-      }
-      return result
-    }, []
-  )), balanceColumnIndex, ...stateColumnsContainingSameValueEverywhere)
+  const potentialCreditDebitColumns = pull(Array.from(schema.reduce((result, el, index) => {
+    if (((typeof el === 'string') && el === 'numeric') || (isArr(el) && el.includes('numeric'))) {
+      result.push(index)
+    }
+    return result
+  }, [])), balanceColumnIndex, ...stateColumnsContainingSameValueEverywhere)
 
   // step 5.
   // ===========================
 
-  var resContent = []
+  const resContent = []
 
   // Now that we know the `balanceColumnIndex`, traverse the CSV rows again,
   // assembling a new array
@@ -310,9 +313,9 @@ function s (input) {
 
   resContent.push(content[content.length - 1].slice(0, indexAtWhichEmptyCellsStart))
 
-  var usedUpRows = []
+  const usedUpRows = []
 
-  var bottom = stateHeaderRowPresent ? 1 : 0
+  const bottom = stateHeaderRowPresent ? 1 : 0
   for (let y = content.length - 2; y >= bottom; y--) {
     // for each row above the last-one (which is already in place), we'll traverse
     // all the rows above to find the match.
@@ -374,8 +377,8 @@ function s (input) {
             usedUpRows.push(suspectedRowsIndex)
             thisRowIsDone = true
             break
-          } else {
-          }
+          } // else {
+          // }
         }
         if (thisRowIsDone) {
           thisRowIsDone = false
@@ -403,8 +406,8 @@ function s (input) {
   return {
     res: resContent,
     msgContent,
-    msgType
+    msgType,
   }
 }
 
-module.exports = s
+export { csvSort as default }

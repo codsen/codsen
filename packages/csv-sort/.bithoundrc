@@ -1,7 +1,7 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
@@ -13,6 +13,9 @@
       "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
     "test/test-util.js",
     "test/test.js"

@@ -2,13 +2,45 @@
   "name": "csv-sort",
   "version": "1.0.4",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
-  "repository": "codsen/csv-sort",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/csv-sort.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codsen/csv-sort/issues"
+  },
+  "homepage": "https://github.com/codsen/csv-sort#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/csv-sort.cjs.js",
+  "module": "dist/csv-sort.esm.js",
+  "browser": "dist/csv-sort.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "csv",
     "sort",
@@ -26,35 +58,94 @@
     "file",
     "files"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
+  "lector": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": [
+        "List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)"
+      ]
+    }
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/csv-sort/issues"
-  },
-  "homepage": "https://github.com/codsen/csv-sort#readme",
   "dependencies": {
-    "bignumber.js": "^4.0.2",
-    "csv-split-easy": "^1.3.0",
-    "currency-symbol-map": "^4.0.2",
+    "bignumber.js": "^4.1.0",
+    "csv-split-easy": "^2.0.1",
     "is-numeric": "0.0.5",
     "lodash.pull": "*",
     "ordinal": "^1.0.2"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": true
-  },
-  "engines": {
-    "node": ">=5.11.0"
+    "rollup": "^0.51.5",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.9"
   }
 }

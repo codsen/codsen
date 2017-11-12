@@ -1,19 +1,21 @@
 # csv-sort
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Sorts double-entry CSVs coming from internet banking statements (and accounting, in general)
+> Sorts double-entry bookkeeping CSV coming from internet banking
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![Coverage][cov-img]][cov-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 Other siblings of this package:
 <!-- * Front end: [csvpony.com](https://csvpony.com) -->
@@ -38,8 +40,16 @@ Other siblings of this package:
 ## Install
 
 ```bash
-$ npm i -S csv-sort
+$ npm i csv-sort
 ```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/csv-sort.cjs.js` | 19&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-sort.esm.js` | 19&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-sort.umd.js` | 54&nbsp;KB
 
 ## TLDR;
 
@@ -48,8 +58,6 @@ $ npm i -S csv-sort
 ![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
 
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## This lib does two twings:
 
@@ -62,16 +70,12 @@ In later releases I would like to be able to recognise and fix any offset column
 
 <small>^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.</small>
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Usage
 
 ```js
 const csvSort = require('csv-sort')
 // ...
 ```
-
-**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -89,71 +93,58 @@ output object                  | Type     | Description
 If the input is anything else than a `string`, it will `throw`.
 If the input is an empty string, the output object's `res` key will be equal to `[['']]`.
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-I promise to merge pull requests as soon as possible and to be supportive and positive to all collaborators, including JS newbies.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-- Now, _you_ have to promise to stick to [Standard JavaScript](https://standardjs.com) and to write unit tests for your features.
-- If you are raising an [issue](https://github.com/codsen/csv-sort/issues) regarding a bug, you have to promise to describe it so that I can recreate it.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/csv-sort/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-I also gladly accept feature requests – chuck them in as [issues](https://github.com/codsen/csv-sort/issues).
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/csv-sort/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-I also gladly accept all constructive critique regarding the code inefficiencies. This has never happened yet, but I know the time will come one day when somebody will actually take time to analyse my code, look for its deficiencies and let me know about that.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-sort/issues) or [email](mailto:roy@codsen.com), your choice.
 
-**[⬆ &nbsp;back to top](#)**
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Copyright © 2017 Ben Gourley - see its [BSD-2-Clause disclaimer](https://opensource.org/licenses/BSD-2-Clause)
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+[node-img]: https://img.shields.io/node/v/csv-sort.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/csv-sort
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/csv-sort.svg
+[npm-img]: https://img.shields.io/npm/v/csv-sort.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/csv-sort
 
-[travis-img]: https://travis-ci.org/codsen/csv-sort.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/csv-sort.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/csv-sort
 
-[cov-img]: https://coveralls.io/repos/github/codsen/csv-sort/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/csv-sort/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/csv-sort?branch=master
 
-[bithound-img]: https://www.bithound.io/github/codsen/csv-sort/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/csv-sort
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/csv-sort.svg?style=flat-square
+[overall-url]: https://www.bithound.io/github/codsen/csv-sort
 
-[deps-img]: https://www.bithound.io/github/codsen/csv-sort/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/csv-sort.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/csv-sort/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/csv-sort/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/csv-sort/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/csv-sort.svg
-[downloads-url]: https://www.npmjs.com/package/csv-sort
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-sort/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-sort
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/csv-sort.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/csv-sort/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-sort/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-sort
+
+[downloads-img]: https://img.shields.io/npm/dm/csv-sort.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/csv-sort
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/csv-sort
+
+[license-img]: https://img.shields.io/npm/l/csv-sort.svg?style=flat-square
+[license-url]: https://github.com/codsen/csv-sort/blob/master/license.md

@@ -21,3 +21,5 @@ config.json
 test
 csv_real.csv
 csv_real2.csv
+.babelrc
+rollup.config.js
