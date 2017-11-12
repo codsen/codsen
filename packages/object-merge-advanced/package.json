@@ -113,6 +113,12 @@
     },
     "licence": {
       "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
     }
   },
   "dependencies": {

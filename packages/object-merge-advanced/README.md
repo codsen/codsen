@@ -58,6 +58,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 11&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Purpose
 
 It's like `_.merge`, but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
@@ -110,11 +112,15 @@ In some cases, we perform a custom actions:
 
 I challenge you to check `test.js` unit tests to see this library in action.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## In practice
 
 In practice I needed this library to normalise JSON files - [generate](https://github.com/codsen/json-comb-core#getkeyset) a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates - it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
 
 I use unidirectional merging when dealing with content mapping JSON files which are by definition unidirectional-flow (always overwrite normal data JSON files).
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Use
 
@@ -122,11 +128,15 @@ I use unidirectional merging when dealing with content mapping JSON files which 
 var mergeAdvanced = require('object-merge-advanced')
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 ```js
 mergeAdvanced(input1, input2 [, { options }])
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -217,6 +227,8 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### API - Output
 
 A merged thing is returned. It's probably the same type of your inputs.
@@ -226,6 +238,8 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 ## Difference from Lodash `_.merge`
 
 Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Difference from `object-assign`
 
@@ -243,6 +257,8 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
@@ -254,6 +270,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-merge-advanced/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
