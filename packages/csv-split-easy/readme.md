@@ -52,9 +52,11 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 7&nbsp;KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 8&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 29&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 30&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Idea
 
@@ -79,12 +81,16 @@ Outside of the scope:
 - Smart detection of the offset columns. See [csv-fix-offset](https://github.com/codsen/csv-fix-offset)
 - Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://github.com/codsen/csv-sort)
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 **splitEasy(str[, opts])**
 
 String-in, an array of arrays-out.
 Empty values, same as numbers too, are set as empty strings.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### Options object
 
@@ -105,6 +111,8 @@ Empty values, same as numbers too, are set as empty strings.
 `padSingleDecimalPlaceNumbers`        | Boolean  | no          | `true`      | Should we pad one decimal place numbers with zero? `100.2` → `100.20`?
 `forceUKStyle`                        | Boolean  | no          | `false`     | Should we convert the decimal separator commas into dots? `1,5` → `1.5`?
 }                                     |          |             |             |
+
+**[⬆ &nbsp;back to top](#)**
 
 ### Returns
 
@@ -144,6 +152,8 @@ console.log('source = ' + JSON.stringify(source, null, 4))
 //    ]
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## The algorithm
 
 CSV files, especially accounting-ones, are different from _any_ files. We assume that **we don't want any empty rows** in the parsed arrays. It means, [conventional](https://github.com/sindresorhus/split-lines/) string splitting libraries would be inefficient here because after splitting, we'd have to clean up any empty rows.
@@ -156,6 +166,8 @@ The requirements mentioned above pretty much rule out the conventional regex-bas
 
 So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://github.com/codsen/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
@@ -167,6 +179,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-split-easy/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
