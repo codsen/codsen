@@ -927,6 +927,7 @@ test('01.19 - merging null', (t) => {
 })
 
 test('01.20 - boolean vs boolean merge (#78)', (t) => {
+  // base 2^2 combinations, default behaviour - OR logical operation
   t.deepEqual(
     mergeAdvanced(
       {
@@ -958,6 +959,115 @@ test('01.20 - boolean vs boolean merge (#78)', (t) => {
       b: 'b',
     },
     '01.20.02',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        b: 'b',
+        a: false,
+      },
+    ),
+    {
+      a: false,
+      b: 'b',
+    },
+    '01.20.03',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: true,
+      },
+      {
+        b: 'b',
+        a: true,
+      },
+    ),
+    {
+      a: true,
+      b: 'b',
+    },
+    '01.20.04',
+  )
+  // !opts.mergeBoolsUsingOrNotAnd - AND logical operation
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        b: 'b',
+        a: true,
+      },
+      {
+        a: false,
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false,
+      },
+    ),
+    {
+      a: false,
+      b: 'b',
+    },
+    '01.20.05',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        b: 'b',
+        a: true,
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false,
+      },
+    ),
+    {
+      a: false,
+      b: 'b',
+    },
+    '01.20.06',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        b: 'b',
+        a: false,
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false,
+      },
+    ),
+    {
+      a: false,
+      b: 'b',
+    },
+    '01.20.07',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: true,
+      },
+      {
+        b: 'b',
+        a: true,
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false,
+      },
+    ),
+    {
+      a: true,
+      b: 'b',
+    },
+    '01.20.08',
   )
 })
 

@@ -106,7 +106,8 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     hardMergeEverything: false,
     ignoreEverything: false,
     concatInsteadOfMerging: true,
-    dedupeStringsInArrayValues: false
+    dedupeStringsInArrayValues: false,
+    mergeBoolsUsingOrNotAnd: true
   };
   var opts = Object.assign(clone(defaults), originalOpts);
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
@@ -298,8 +299,11 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       // now the business as usual onwards...
       // cases 71-80
       if (isBool(i2)) {
-        // case 78
-        return i1 || i2;
+        // case 78 - two Booleans
+        if (opts.mergeBoolsUsingOrNotAnd) {
+          return i1 || i2; // default - OR
+        }
+        return i1 && i2; // alternative merge using AND
       } else if (i2 != null) {
         // DELIBERATE LOOSE EQUAL - existy()
         // cases 71, 72, 73, 74, 75, 76, 77
