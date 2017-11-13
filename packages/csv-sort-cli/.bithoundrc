@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "mute": [
-      "husky",
       "lodash.pullall",
       "lodash.uniq"
     ]

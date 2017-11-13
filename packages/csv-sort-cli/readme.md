@@ -1,18 +1,19 @@
 # csv-sort-cli
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Sorts double-entry CSVs coming from internet banking statements (and accounting, in general)
+> Command line app to sort double-entry CSVs coming from internet banking statements
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Score][overall-img]][overall-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![MIT License][license-img]][license-url]
 
 Other siblings of this package:
 <!-- * Front end: [csvpony.com](https://csvpony.com) -->
@@ -32,8 +33,6 @@ Other siblings of this package:
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Install globally, call `csvsort` on a file
 
@@ -76,8 +75,6 @@ You can even try it without installing — use `npx`:
 $ npx csv-sort-cli YOURFILE.csv
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## What it does exactly
 
 1. It **sorts CSV file rows** to correspond to the [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) principles:
@@ -92,45 +89,27 @@ Sometimes internet banking CSV's have rows in a wrong order, especially when ent
 
 3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. It's the [same tool](https://www.npmjs.com/package/update-notifier) that AVA and [npm](https://www.npmjs.com/package/npm) themselves use!
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/csv-sort-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a mentioned issue link.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/csv-sort-cli/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-**[⬆ &nbsp;back to top](#)**
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/csv-sort-cli/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-sort-cli/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 ## Licence
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/csv-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/csv-sort-cli
@@ -138,26 +117,26 @@ SOFTWARE.
 [npm-img]: https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/csv-sort-cli
 
-[travis-img]: https://travis-ci.org/codsen/csv-sort-cli.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/csv-sort-cli.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/csv-sort-cli
 
-[overall-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/csv-sort-cli.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/csv-sort-cli
 
-[deps-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/csv-sort-cli.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/csv-sort-cli/master/dependencies/npm
 
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort-cli
 
-[dev-img]: https://www.bithound.io/github/codsen/csv-sort-cli/badges/devDependencies.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/csv-sort-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/csv-sort-cli/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/csv-sort-cli.svg
-[downloads-url]: https://www.npmjs.com/package/csv-sort-cli
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-sort-cli/badge.svg
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-sort-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-sort-cli
 
-[license-badge]: https://img.shields.io/npm/l/csv-sort-cli.svg?style=flat-square
-[license]: https://github.com/codsen/csv-sort-cli/blob/master/license.md
+[downloads-img]: https://img.shields.io/npm/dm/csv-sort-cli.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/csv-sort-cli
+
+[license-img]: https://img.shields.io/npm/l/csv-sort-cli.svg?style=flat-square
+[license-url]: https://github.com/codsen/csv-sort-cli/blob/master/license.md
