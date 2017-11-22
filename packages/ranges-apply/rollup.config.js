@@ -12,7 +12,7 @@ export default [
     output: {
       file: pkg.browser,
       format: 'umd',
-      name: 'stringCollapseWhiteSpace',
+      name: 'replaceSlicesArr',
     },
     plugins: [
       resolve(), // so Rollup can find deps

@@ -46,7 +46,7 @@ $ npm i string-replace-slices-array
 // consume as CommonJS require:
 const replaceSlicesArr = require('string-replace-slices-array')
 // or as ES Module:
-import { replaceSlicesArr } from 'string-replace-slices-array'
+import replaceSlicesArr from 'string-replace-slices-array'
 ```
 
 Here's what you'll get:
@@ -56,6 +56,8 @@ Type            | Key in `package.json` | Path  | Size
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-replace-slices-array.cjs.js` | 3&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-replace-slices-array.esm.js` | 3&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Idea
 
@@ -82,6 +84,8 @@ console.log('>>>' + someString.slice(sliceFrom, sliceTo) + '<<<') // <--- make s
 
 **PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 ```js
@@ -106,6 +110,8 @@ For example,
   [18, 20, 'replace with this'] // <-- replacement
 ]
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Usage
 
@@ -144,17 +150,23 @@ console.log('str = ' + str)
 // 'aaa bbb ccc'
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## The algorithm
 
 The plan is simple - we `array.reduce` your given ranges array, slicing the input string accordingly.
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## In my case
 
 Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -167,6 +179,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-replace-slices-array/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
