@@ -18,7 +18,7 @@ test('01.01 - string input', (t) => {
   )
 })
 
-test('01.02 - string input', (t) => {
+test('01.02 - non-string input', (t) => {
   t.deepEqual(
     a(1),
     1,
