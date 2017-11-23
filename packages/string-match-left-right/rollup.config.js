@@ -35,6 +35,7 @@ export default [
       'lodash.isplainobject',
       'lodash.trimstart',
       'lodash.trimend',
+      'arrayiffy-if-string',
     ],
     plugins: [
       babel(),

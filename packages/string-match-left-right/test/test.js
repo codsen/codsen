@@ -597,3 +597,50 @@ test('06.04 - opts.cbRight()       callback is called, pt.2', (t) => {
     '06.04.11',
   )
 })
+
+// 7. opts.trimCharsBeforeMatching
+// -----------------------------------------------------------------------------
+
+test('07.01 - opts.trimCharsBeforeMatching       pt.1', (t) => {
+  function isSpace(char) {
+    return (typeof char === 'string') && (char.trim() === '')
+  }
+  // control
+  t.is(
+    matchRight('</div>', 0, ['div']),
+    false,
+    '07.01.01',
+  )
+  t.is(
+    matchRight('</div>', 0, ['div'], { trimCharsBeforeMatching: ['/ '] }),
+    true,
+    '07.01.02',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { trimCharsBeforeMatching: ['/ '] }),
+    true,
+    '07.01.03',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { trimCharsBeforeMatching: ['/'] }),
+    false,
+    '07.01.04',
+  )
+
+  // opts.cbRight
+  t.is(
+    matchRight('</div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/ '] }),
+    false,
+    '07.01.05',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/ '] }),
+    false,
+    '07.01.06',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/'] }),
+    false,
+    '07.01.07',
+  )
+})

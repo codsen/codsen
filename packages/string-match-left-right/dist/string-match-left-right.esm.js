@@ -3,6 +3,7 @@ import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import trimStart from 'lodash.trimstart';
 import trimEnd from 'lodash.trimend';
+import arrayiffy from 'arrayiffy-if-string';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -33,9 +34,11 @@ function main(mode, str, position, whatToMatch, opts) {
   }
   var defaults = {
     i: false,
-    trimBeforeMatching: false
+    trimBeforeMatching: false,
+    trimCharsBeforeMatching: []
   };
   opts = Object.assign({}, defaults, opts);
+  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
   checkTypes(opts, defaults, {
     msg: 'string-match-left-right: [THROW_ID_05*]',
     schema: {
@@ -43,13 +46,14 @@ function main(mode, str, position, whatToMatch, opts) {
       cbRight: ['null', 'undefined', 'function']
     }
   });
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(String);
 
   switch (mode) {
     case 'matchLeftIncl':
       return whatToMatch.some(function (el) {
         var temp = void 0;
-        if (opts.trimBeforeMatching) {
-          temp = trimEnd(str.slice(0, position - 1)) + str[position];
+        if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
+          temp = trimEnd(str.slice(0, position), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r') + str[position];
         } else {
           temp = str.slice(0, position + 1);
         }
@@ -61,8 +65,8 @@ function main(mode, str, position, whatToMatch, opts) {
     case 'matchLeft':
       return whatToMatch.some(function (el) {
         var temp = void 0;
-        if (opts.trimBeforeMatching) {
-          temp = trimEnd(str.slice(0, position));
+        if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
+          temp = trimEnd(str.slice(0, position), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r');
         } else {
           temp = str.slice(0, position);
         }
@@ -74,8 +78,8 @@ function main(mode, str, position, whatToMatch, opts) {
     case 'matchRightIncl':
       return whatToMatch.some(function (el) {
         var temp = void 0;
-        if (opts.trimBeforeMatching) {
-          temp = str[position] + trimStart(str.slice(position + 1));
+        if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
+          temp = str[position] + trimStart(str.slice(position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r');
         } else {
           temp = str.slice(position);
         }
@@ -87,8 +91,8 @@ function main(mode, str, position, whatToMatch, opts) {
     case 'matchRight':
       return whatToMatch.some(function (el) {
         var temp = void 0;
-        if (opts.trimBeforeMatching) {
-          temp = trimStart(str.slice(position + 1));
+        if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
+          temp = trimStart(str.slice(position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r');
         } else {
           temp = str.slice(position + 1);
         }

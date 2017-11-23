@@ -28,6 +28,7 @@
   - [Optional Options Object's API:](#optional-options-objects-api)
 - [`opts.cbLeft` and `opts.cbRight`](#optscbleft-and-optscbright)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
+- [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
 - [Why my code coverage ~~sucks~~ is not perfect](#why-my-code-coverage-sucks-is-not-perfect)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -51,9 +52,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 5&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 5&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 23&nbsp;KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 6&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 6&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 24&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -84,6 +85,7 @@ Input argument   | Type                       | Obligatory? | Description
 `cbLeft`                       | Function | no          | `undefined` | If you feed this library a function under `cbLeft` key, in turn, it will be fed the next character outside to the thing being matched. If it's left-side method (`matchLeftIncl`/`matchLeft`), that will be the next character to the left of what's being matched. Function's Boolean result will be used with "AND" logical operator to calculate the final result. I use `cbLeft` mainly to check for whitespace.
 `cbRight`                      | Function | no          | `undefined` | Same as `cbLeft`, it's a function you supply that gets fed the first character that's outside on the right of the string being matched. Function has to return a Boolean and it will be "AND" logically chained with the result of string matching.
 `trimBeforeMatching`           | Boolean  | no          | `false`     | If set to `true`, there can be whitespace before what's being checked starts. Basically, this means, substring can begin (when using right side methods) or end (when using left side methods) with a whitespace.
+`trimCharsBeforeMatching`      | String or Array of zero or more strings | no          | `[]`     | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.
 }                              |          |             |             |
 
 **Options' defaults**:
@@ -168,6 +170,12 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 For example, [string-strip-html](https://github.com/codsen/string-strip-html) is using this library to check, is there a known HTML tag name to the right of the opening bracket character (`<`). Like `<div` or `<img`. Now, we want to allow dirty code cases when there's whitespace after the bracket, like `< div`, just in case somebody would sneak in `< script` and some browser would "patch it up". In `string-strip-html`, we want to be able to detect and strip even `<\n\n\nscript>`. That's easy, we set `opts.trimBeforeMatching` to `true`. When matching is performed, substring on the right of `<`, the `\n\n\nscript`, is trimmed into `script`, then matched.
 
 By the way it's not on by default because such scenarios are rare. Default comparison should be a strict-one.
+
+**[⬆ &nbsp;back to top](#)**
+
+## `opts.trimCharsBeforeMatching`
+
+For example, [string-strip-html](https://github.com/codsen/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
 
 **[⬆ &nbsp;back to top](#)**
 
