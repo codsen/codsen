@@ -33,6 +33,8 @@ export default [
       'check-types-mini',
       'is-natural-number',
       'lodash.isplainobject',
+      'lodash.trimstart',
+      'lodash.trimend',
     ],
     plugins: [
       babel(),

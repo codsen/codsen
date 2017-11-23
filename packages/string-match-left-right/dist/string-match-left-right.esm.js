@@ -1,6 +1,8 @@
 import isNaturalNumber from 'is-natural-number';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
+import trimStart from 'lodash.trimstart';
+import trimEnd from 'lodash.trimend';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -27,10 +29,11 @@ function main(mode, str, position, whatToMatch, opts) {
     throw new Error('string-match-left-right/' + mode + '(): [THROW_ID_03] there\'s nothing to match! Third argument (and onwards) is missing!');
   }
   if (existy(opts) && !isObj(opts)) {
-    throw new Error('string-match-left-right/' + mode + '(): [THROW_ID_04] the third argument, options object, should be a plain object. Currently it\'s of a type "' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + '", and equal to:\n' + JSON.stringify(str, null, 4));
+    throw new Error('string-match-left-right/' + mode + '(): [THROW_ID_04] the third argument, options object, should be a plain object. Currently it\'s of a type "' + (typeof opts === 'undefined' ? 'undefined' : _typeof(opts)) + '", and equal to:\n' + JSON.stringify(opts, null, 4));
   }
   var defaults = {
-    i: false
+    i: false,
+    trimBeforeMatching: false
   };
   opts = Object.assign({}, defaults, opts);
   checkTypes(opts, defaults, {
@@ -44,35 +47,55 @@ function main(mode, str, position, whatToMatch, opts) {
   switch (mode) {
     case 'matchLeftIncl':
       return whatToMatch.some(function (el) {
-        var temp = str.slice(position - el.length + 1, position + 1);
-        if (opts.i) {
-          return temp.toLowerCase() === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true);
+        var temp = void 0;
+        if (opts.trimBeforeMatching) {
+          temp = trimEnd(str.slice(0, position - 1)) + str[position];
+        } else {
+          temp = str.slice(0, position + 1);
         }
-        return temp === el && (opts.cbLeft ? opts.cbLeft(str[position - el.length]) : true);
+        if (opts.i) {
+          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+        }
+        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
       });
     case 'matchLeft':
       return whatToMatch.some(function (el) {
-        var temp = str.slice(position - el.length, position);
-        if (opts.i) {
-          return temp.toLowerCase() === el.toLowerCase() && (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true);
+        var temp = void 0;
+        if (opts.trimBeforeMatching) {
+          temp = trimEnd(str.slice(0, position));
+        } else {
+          temp = str.slice(0, position);
         }
-        return temp === el && (opts.cbLeft ? opts.cbLeft(str[position - el.length - 1]) : true);
+        if (opts.i) {
+          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+        }
+        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
       });
     case 'matchRightIncl':
       return whatToMatch.some(function (el) {
-        var temp = str.slice(position, position + el.length);
-        if (opts.i) {
-          return temp.toLowerCase() === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length]) : true);
+        var temp = void 0;
+        if (opts.trimBeforeMatching) {
+          temp = str[position] + trimStart(str.slice(position + 1));
+        } else {
+          temp = str.slice(position);
         }
-        return temp === el && (opts.cbRight ? opts.cbRight(str[position + el.length]) : true);
+        if (opts.i) {
+          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+        }
+        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
       });
     case 'matchRight':
       return whatToMatch.some(function (el) {
-        var temp = str.slice(position + 1, position + el.length + 1);
-        if (opts.i) {
-          return temp.toLowerCase() === el.toLowerCase() && (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true);
+        var temp = void 0;
+        if (opts.trimBeforeMatching) {
+          temp = trimStart(str.slice(position + 1));
+        } else {
+          temp = str.slice(position + 1);
         }
-        return temp === el && (opts.cbRight ? opts.cbRight(str[position + el.length + 1]) : true);
+        if (opts.i) {
+          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+        }
+        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
       });
   }
 }
