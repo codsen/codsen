@@ -96,7 +96,7 @@ Here it is with defaults, in one place, ready for copying:
   cbLeft: undefined,
   cbRight: undefined,
   trimBeforeMatching: false,
-  trimCharsBeforeMatching: [],
+  trimCharsBeforeMatching: []
 }
 ```
 
