@@ -62,8 +62,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 
 There are four methods; all have the same API's:
 
-* **`matchLeftIncl`** — at least one of given substrings has to match what's on the **left** and including character at a given index
-* **`matchRightIncl`** — at least one of given substrings has to match what's on the **right** and including character at a given index
+* **`matchLeftIncl`** — at least one of given substrings has to match what's on the **left** and including character at the given index
+* **`matchRightIncl`** — at least one of given substrings has to match what's on the **right** and including character at the given index
 * **`matchLeft`** — at least one of given substrings has to match what's on the **left** of the given index
 * **`matchRight`** — at least one of given substrings has to match what's on the **right** of the given index
 
