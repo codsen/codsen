@@ -108,8 +108,10 @@ The Optional Options Object is sanitized by [check-types-mini](https://github.co
 // -----
 // test string with character indexes to help you count:
 //
-// test string:  abcdefghi
-// indexes:      012345678
+// test string:                abcdefghi
+// indexes of letters above:   012345678
+//
+// a is #0, b is #1 and so on. Look the digit under letter above.
 //
 // that is, c is number (term "number" further abbreviated as hash character "#") 2 or i is #8.
 //
