@@ -316,6 +316,14 @@ test('05.03 - matchRight()         on a simple string, case insensitive', (t) =>
   )
 })
 
+test('05.04 - matchRight()         adhoc test #1', (t) => {
+  t.is(
+    matchRight('aaaa<<<<<<div>>>>something</div>bbbbb', 13, '>'),
+    true,
+    '05.04.01',
+  )
+})
+
 // 6. opts.cbLeft and opts.cbLeft callbacks
 // -----------------------------------------------------------------------------
 
