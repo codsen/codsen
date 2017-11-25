@@ -72,7 +72,7 @@ Input argument   | Type                       | Obligatory? | Description
 `str`            | String                     | yes         | Source string to work on
 `position`       | Natural number incl. zero  | yes         | Starting index. Can be zero. Otherwise, a natural number.
 `whatToMatch`    | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches will yield in result `true`
-`opts`           | Plain object               | no          | Optional options object. See below.
+`opts`           | Plain object               | no          | The Optional Options Object. See below.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -88,11 +88,15 @@ Input argument   | Type                       | Obligatory? | Description
 `trimCharsBeforeMatching`      | String or Array of zero or more strings | no          | `[]`     | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.
 }                              |          |             |             |
 
-**Options' defaults**:
+Here it is with defaults, in one place, ready for copying:
 
 ```js
 {
-  i: false
+  i: false,
+  cbLeft: undefined,
+  cbRight: undefined,
+  trimBeforeMatching: false,
+  trimCharsBeforeMatching: [],
 }
 ```
 
