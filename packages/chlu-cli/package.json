@@ -127,7 +127,7 @@
     }
   },
   "dependencies": {
-    "chlu": "^2.5.1",
+    "chlu": "^2.6.0",
     "meow": "^4.0.0",
     "update-notifier": "^2.3.0"
   },
