@@ -1,5 +1,7 @@
 # chlu-cli
 
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
+
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Minimum Node version required][node-img]][node-url]
@@ -11,7 +13,7 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![MIT License][license-badge]][license]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -48,11 +50,7 @@ chlu
 
 There's no config, if just silently does the job, checks and fixes your Changelog.
 
-Or, you can even run `chlu` without any installation, just use `npx`:
-
-```bash
-npx chlu-cli
-```
+**[⬆ &nbsp;back to top](#)**
 
 ## What it does
 
@@ -62,6 +60,8 @@ npx chlu-cli
 2. I am too lazy and deliberately leave some work for CHLU, for example, linking titles with magic GitHub diff URL's. I know CHLU will fix those.
 
 **Here are all the fixes that CHLU can apply:**
+
+**[⬆ &nbsp;back to top](#)**
 
 ### 1. Missing diff URLs in the footer for newly-added titles
 
@@ -75,6 +75,8 @@ In practice, this means your titles become actually linked (before/after example
 
 ![](feature1.gif)
 
+**[⬆ &nbsp;back to top](#)**
+
 ### 2. Wrong package/user in the diff URL
 
 This has happened to me before, actually on Detergent's repo even. I copied and edited the changelog from my other library and forgot to edit the package name in the footer diff links. For example, `PUT_A_WRONG_NAME_OF_THE_PACKAGE_HERE` below would get replaced by the correct name fresh from your `package.json`:
@@ -84,6 +86,8 @@ This has happened to me before, actually on Detergent's repo even. I copied and 
 ```
 
 Same with wrong user names in the URL.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### 3. Automatic title linking (where it's missing)
 
@@ -108,6 +112,8 @@ blablabla
 ```
 
 If would add links on `3.1.2` (comparing it against `3.1.1`) and `3.1.1` (comparing it against `3.1.0`).
+
+**[⬆ &nbsp;back to top](#)**
 
 ### 4. Automatic date conversion
 
@@ -141,9 +147,13 @@ For example, all titles below would get converted to the same thing: `## [3.1.2]
 
 That's thanks to amazing [dehumanize-date](https://www.npmjs.com/package/dehumanize-date).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Extras
 
 Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## A nifty setup idea
 
@@ -179,9 +189,13 @@ It means, you always get your readme, changelog, BitHound config (`.bithoundrc`)
 
 The example above is growing; I want to automate _everything_. Literally.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Wishlist
 
@@ -193,23 +207,27 @@ Also, with Git data, even if you cloned the last entry, I would be able to detec
 
 That would be awesome!
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/chlu-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a mentioned issue link.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/chlu-cli/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/chlu-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/chlu-cli
@@ -232,11 +250,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/chlu-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/chlu-cli
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu-cli
 
-[license-badge]: https://img.shields.io/npm/l/chlu-cli.svg?style=flat-square
-[license]: https://github.com/codsen/chlu-cli/blob/master/license.md
+[downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/chlu-cli
+
+[license-img]: https://img.shields.io/npm/l/chlu-cli.svg?style=flat-square
+[license-url]: https://github.com/codsen/chlu-cli/blob/master/license.md

@@ -8,7 +8,10 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": "codsen/chlu-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/chlu-cli.git"
+  },
   "bugs": {
     "url": "https://github.com/codsen/chlu-cli/issues"
   },
@@ -27,6 +30,11 @@
   },
   "ava": {
     "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
   },
   "files": [
     "cli.js"
@@ -48,17 +56,87 @@
     "cli",
     "cli-app"
   ],
+  "lector": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
+  },
   "dependencies": {
     "chlu": "^2.5.1",
-    "meow": "^3.7.0",
+    "meow": "^4.0.0",
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {
     "ava": "*",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-ava": "^4.2.2",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.12.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.3.0",
+    "eslint-plugin-import": "^2.8.0",
     "execa": "^0.8.0",
     "husky": "*"
   }
