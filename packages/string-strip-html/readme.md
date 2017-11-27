@@ -72,18 +72,20 @@ I strongly believe JS libraries should do one thing and do it well.
 
 In this case, it should strip HTML tags and **only** HTML tags. If we detect something else, only resembling a tag, we should not delete it, right?
 
-Speaking about competitor libs, this is not the case currently. They excuse their algorithm imperfections saying unencoded brackets are not allowed within HTML.
+I think stripping anything else than an HTML tag would be _not doing it well_.
 
-But hey, isn't that a breach of scope if a string library that strips substrings is concerned will the ouput work in HTML?
+Speaking about competitor libs, they excuse their algorithm imperfections saying unencoded brackets are not allowed within HTML.
 
-For comparison, other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ the output must be HTML too. As a consequence, they:
+But hey, what if somebody wanted to strip HTML tags within simple text? Both inputs and outputs then _could_ contain brackets and they would not be encoded, right?
 
-1. Limit their functionality and algorithm creativity, not concerning with false positive cases, legit brackets in non-HTML scenarios, ...
+Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ the output must be HTML too. As a consequence, they:
+
+1. Limit their functionality and algorithm creativity, not concerning with false positive cases, legit brackets in non-HTML scenarios,
 2. thus preventing other libraries that accept HTML too as input (besides other things) to use their HTML stripping.
 
-I had emotional debates in GitHub with other people that were explaining me HTML must have to unencoded brackets. That was their response to me saying HTML stripping libraries should strip **only HTML tags** (not `a < b and c > d` for example). If it's deemed to be **not** an HTML tag, **it should not be stripped** and I don't care if unencoded brackets _are_ not allowed it HTML. It's outside the scope. My algorithm didn't detect it as a tag and thus left it out. End of scope.
+I had emotional debates on GitHub with other people that were explaining to me HTML must have to unencoded brackets. That was their response to me saying HTML stripping libraries should strip **only HTML tags** (not `a < b and c > d` for example). If it's deemed to be **not** an HTML tag, **it should not be stripped** and I don't care if unencoded brackets _are_ not allowed in HTML. It's outside the scope. My algorithm didn't detect it as a tag and thus left it out. End of scope.
 
-For example, text cleaning libraries (like [Detergent](https://github.com/codsen/detergent)) might implement HTML stripping and their outputs will most of the cases be not-HTML (strictly speaking, since you can paste any text into HTML). String like `a < b and c > d` should be able to pass the HTML stripping intact. Then, encode the brackets, but the HTML stripping should not strip `< b and c >`.
+For example, text cleaning libraries (like [Detergent](https://github.com/codsen/detergent)) might implement HTML stripping, and their outputs will most of the cases be not-HTML (strictly speaking, since you can paste any text into HTML). A string like `a < b and c > d` should be able to pass the HTML stripping intact. Then, encode the brackets, but the HTML stripping should not strip `< b and c >`.
 
 The scope of this library is to take HTML and strip HTML tags and only HTML tags. If there's something else there besides tags, what doesn't belong in HTML, I don't care. Use different tool to process your string further.
 
@@ -91,9 +93,9 @@ The scope of this library is to take HTML and strip HTML tags and only HTML tags
 
 ## Bigger picture
 
-I scratched my own itch producing [detergent](https://github.com/codsen/detergent) - I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
+I scratched my itch, producing [detergent](https://github.com/codsen/detergent) - I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
 
-Detergent would remove excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input - stripping the tags, cleanning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
+Detergent would remove excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input - stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
 
 In September 2017, [string.js](https://www.npmjs.com/package/string) which originally performed the HTML-stripping was discovered as having [vulnerabilities](https://snyk.io/vuln/npm:string).
 
@@ -114,7 +116,7 @@ Input argument | Type         | Obligatory? | Description
 `input`        | String       | yes         | Text you want to strip HTML tags from
 `opts`         | Plain object | no          | Optional options object, see below
 
-If input arguments are supplied have any other types, error will be `throw`n.
+If input arguments are supplied have any other types, an error will be `throw`n.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -124,7 +126,7 @@ options object's key             | Type of its value             | Default      
 ---------------------------------|-------------------------------|-----------------------|----------------------
 {                                |                               |                       |
 `ignoreTags`                     | Array of zero or more strings | `[]`                  | Any tags provided here will not be stripped from the input
-`stripTogetherWithTheirContents` | Array of zero or more strings, `something falsey` | `['script', 'style']` | My idea is you should be able to paste HTML and see only the text that would be visible in browser window. Not CSS, not stuff from `script` tags. To turn this off, just set it to an empty array. Or something falsey.
+`stripTogetherWithTheirContents` | Array of zero or more strings, `something falsey` | `['script', 'style']` | My idea is you should be able to paste HTML and see only the text that would be visible in a browser window. Not CSS, not stuff from `script` tags. To turn this off, just set it to an empty array. Or something falsey.
 }                                |                               |         |
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
@@ -145,7 +147,7 @@ stripHtml(
 
 ### API - Output
 
-String of zero or more characters-length.
+A string of zero or more characters-length.
 
 ## Contributing
 
