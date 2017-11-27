@@ -2,17 +2,39 @@
   "name": "chlu",
   "version": "2.5.1",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
-  "main": "index.js",
+  "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/chlu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codsen/chlu/issues"
+  },
+  "homepage": "https://github.com/codsen/chlu#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "precommit": "npm test",
-    "test": "standard --verbose && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
-  "repository": "codsen/chlu",
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "update",
     "changelog",
@@ -28,41 +50,100 @@
     "automated",
     "tool"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
+  "lector": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/chlu/issues"
-  },
-  "homepage": "https://github.com/codsen/chlu#readme",
   "dependencies": {
     "dehumanize-date": "^2.5.0",
-    "easy-replace": "^2.10.2",
+    "easy-replace": "^2.12.2",
     "emoji-regex": "^6.5.1",
     "get-pkg-repo": "^1.4.0",
     "is-natural-number": "^4.0.1",
-    "just-insert": "^1.0.0",
+    "just-insert": "^2.0.0",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "lodash.min": "*",
     "lodash.reverse": "*",
     "lodash.trim": "*",
-    "posthtml-ast-contains-only-empty-space": "^1.6.0",
+    "posthtml-ast-contains-only-empty-space": "^1.6.1",
     "semver-compare": "^1.0.0",
     "split-lines": "^1.1.0"
   },
   "devDependencies": {
     "ava": "*",
     "coveralls": "*",
+    "eslint": "^4.12.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.3.0",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nodemon": "*",
-    "nyc": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": true
+    "nyc": "*"
   }
 }

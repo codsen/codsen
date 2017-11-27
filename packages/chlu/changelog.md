@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## [2.6.0] - 2017-11-27
+### Changed
+- ✨ Removed JS Standard and switched to raw ESLint on `airbnb-base` preset, with no-semicolons override.
+- ✨ Since JS Standard is lagging on checks, I had to make some rebasing too.
+- ✨ Tweaked the algorithm, specifically the part which identifies the titles (like `## [2.6.0] - 2017-11-27` above this bullet list, as opposed to the link lines in the footer). Now it's required for a title to have a `#` to be considered a title.
+
 ## [2.5.0] - 2017-07-23
 ### Added
 - ✨ Now mixed marker dates such as `2014/04-20` are recognised. Updated unit tests accordingly. Thanks to [dehumanize-date](https://github.com/ForbesLindesay/dehumanize-date/commit/7b4a27477a2bfdb614a4eb74c7972d5eea529480) by [forbeslindsay](https://github.com/ForbesLindesay).
@@ -70,3 +76,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 [2.3.0]: https://github.com/codsen/chlu/compare/v2.2.1...v2.3.0
 [2.4.0]: https://github.com/codsen/chlu/compare/v2.3.0...v2.4.0
 [2.5.0]: https://github.com/codsen/chlu/compare/v2.4.0...v2.5.0
+[2.6.0]: https://github.com/codsen/chlu/compare/v2.5.0...v2.6.0

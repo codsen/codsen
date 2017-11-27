@@ -1,18 +1,21 @@
-# chlu
+# Chlu
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> CH-ange-L-og U-pdate - Automatically update and fix your changelog file
+> CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![bitHound Score][bithound-img]][bithound-url]
+[![Coverage][cov-img]][cov-url]
+[![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -23,78 +26,74 @@
 - [Install](#install)
 - [What it does](#what-it-does)
 - [Contributing](#contributing)
-- [Licences](#licences)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Install
 
 ```sh
-$ npm i -g chlu-cli
+$ npm i chlu
 ```
 
 ## What it does
 
 `chlu` stands for CHangeLog Update. This library is the API for [`chlu-cli`](https://github.com/codsen/chlu-cli) which you should install with a `-g` flag. You probably should check it [instead](https://github.com/codsen/chlu-cli).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/chlu/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise a GitHub issue.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/chlu/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-## Licences
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/chlu/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-- Changelog code used in unit test no.13 - [`giu`](https://github.com/guigrpa/giu/), copyright Guillermo Grau Panea, MIT licence
-- Changelog code used in unit test no.14 - [`keystone`](https://github.com/keystonejs/keystone/), copyright Jed Watson, MIT licence
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/chlu/issues) or [email](mailto:roy@codsen.com), your choice.
 
----
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
-> MIT License (MIT)
+**[⬆ &nbsp;back to top](#)**
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+## Licence
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+MIT License (MIT)
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+[node-img]: https://img.shields.io/node/v/chlu.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/chlu
 
-[npm-img]: https://img.shields.io/npm/v/chlu.svg
+[npm-img]: https://img.shields.io/npm/v/chlu.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/chlu
 
-[travis-img]: https://travis-ci.org/codsen/chlu.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/chlu.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/chlu
 
-[bithound-img]: https://www.bithound.io/github/codsen/chlu/badges/score.svg
-[bithound-url]: https://www.bithound.io/github/codsen/chlu
+[cov-img]: https://coveralls.io/repos/github/codsen/chlu/badge.svg?style=flat-square?branch=master
+[cov-url]: https://coveralls.io/github/codsen/chlu?branch=master
 
-[deps-img]: https://www.bithound.io/github/codsen/chlu/badges/dependencies.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/chlu.svg?style=flat-square
+[overall-url]: https://www.bithound.io/github/codsen/chlu
+
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/chlu.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/chlu/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/chlu/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/chlu/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/chlu.svg
-[downloads-url]: https://www.npmjs.com/package/chlu
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-ff9900.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/chlu.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/chlu/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu
+
+[downloads-img]: https://img.shields.io/npm/dm/chlu.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/chlu
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/chlu
+
+[license-img]: https://img.shields.io/npm/l/chlu.svg?style=flat-square
+[license-url]: https://github.com/codsen/chlu/blob/master/license.md
