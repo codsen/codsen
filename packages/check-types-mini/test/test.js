@@ -1,5 +1,5 @@
 import test from 'ava'
-import checkTypes from './index-es5'
+import checkTypes from '../dist/check-types-mini.cjs'
 
 test('01.01 - throws when all/first args are missing', (t) => {
   t.throws(() => {

@@ -8,7 +8,10 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": "codsen/check-types-mini",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/check-types-mini.git"
+  },
   "bugs": {
     "url": "https://github.com/codsen/check-types-mini/issues"
   },
@@ -18,17 +21,25 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index-es5.js",
+  "main": "dist/check-types-mini.cjs.js",
+  "module": "dist/check-types-mini.esm.js",
+  "browser": "dist/check-types-mini.umd.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-env --out-file index-es5.js",
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
     "precommit": "npm test",
     "prepare": "npm run build",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js && npm run build && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
   },
   "keywords": [
     "plain",
@@ -44,25 +55,98 @@
     "schema",
     "validate"
   ],
+  "lector": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
+  },
   "dependencies": {
     "arrayiffy-if-string": "*",
     "lodash.includes": "*",
     "lodash.intersection": "*",
     "lodash.pullall": "*",
-    "type-detect": "^4.0.3"
+    "type-detect": "^4.0.5"
   },
   "devDependencies": {
-    "ava": "*",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "clear-cli": "*",
+    "ava": "^0.24.0",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-ava": "^4.2.2",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.3.0",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nodemon": "*",
-    "nyc": "*"
+    "nyc": "*",
+    "rollup": "^0.52.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.0"
   }
 }

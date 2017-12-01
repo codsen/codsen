@@ -7,21 +7,18 @@
   "dependencies": {
     "mute": [
       "arrayiffy-if-string",
-      "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "lodash.includes",
       "lodash.intersection",
       "lodash.pullall",
-      "nodemon",
       "nyc"
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "dist/**"
   ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-11-30
+### Changed
+- 🔧 Rebased all the source to be in ES Modules.
+- ✨ Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)
+
+Bumping major just in case. API is the same, just when you consume from Rollup setups, `package.json` key entry `module` will be recognised and ES Modules build will be used natively. You'll get all the benefits of ES Modules, like tree-shaking.
+
 ## [2.7.0] - 2017-10-14
 ### Improved
 - 🔧 Moved to Babel's `babel-preset-env` preset, created `.babelrc` config file.
@@ -99,3 +106,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.5.0]: https://github.com/codsen/check-types-mini/compare/v2.4.0...v2.5.0
 [2.6.0]: https://github.com/codsen/check-types-mini/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/codsen/check-types-mini/compare/v2.6.0...v2.7.0
+[3.0.0]: https://github.com/codsen/check-types-mini/compare/v2.7.0...v3.0.0

@@ -1,23 +1,25 @@
 'use strict';
 
-var type = require('type-detect');
-var includes = require('lodash.includes');
-var pullAll = require('lodash.pullall');
-var intersection = require('lodash.intersection');
-var arrayiffyIfString = require('arrayiffy-if-string');
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-function checkTypes(obj, originalRef, originalOptions) {
+var typ = _interopDefault(require('type-detect'));
+var includes = _interopDefault(require('lodash.includes'));
+var pullAll = _interopDefault(require('lodash.pullall'));
+var intersection = _interopDefault(require('lodash.intersection'));
+var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
+
+function checkTypesMini(obj, originalRef, originalOptions) {
   function existy(something) {
     return something != null;
   }
   function isBool(something) {
-    return type(something) === 'boolean';
+    return typ(something) === 'boolean';
   }
   function isStr(something) {
-    return type(something) === 'string';
+    return typ(something) === 'string';
   }
   function isObj(something) {
-    return type(something) === 'Object';
+    return typ(something) === 'Object';
   }
   var NAMESFORANYTYPE = ['any', 'anything', 'every', 'everything', 'all', 'whatever', 'whatevs'];
   var isArr = Array.isArray;
@@ -47,14 +49,14 @@ function checkTypes(obj, originalRef, originalOptions) {
     opts = Object.assign({}, defaults);
   }
   if (!isStr(opts.msg)) {
-    throw new Error('check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: ' + type(opts.msg) + ', equal to ' + JSON.stringify(opts.msg, null, 4));
+    throw new Error('check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: ' + typ(opts.msg) + ', equal to ' + JSON.stringify(opts.msg, null, 4));
   }
   opts.msg = opts.msg.trim();
   if (opts.msg[opts.msg.length - 1] === ':') {
     opts.msg = opts.msg.slice(0, opts.msg.length - 1);
   }
   if (!isStr(opts.optsVarName)) {
-    throw new Error('check-types-mini/checkTypes(): opts.optsVarName must be string! Currently it\'s: ' + type(opts.optsVarName) + ', equal to ' + JSON.stringify(opts.optsVarName, null, 4));
+    throw new Error('check-types-mini/checkTypes(): opts.optsVarName must be string! Currently it\'s: ' + typ(opts.optsVarName) + ', equal to ' + JSON.stringify(opts.optsVarName, null, 4));
   }
 
   opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
@@ -62,16 +64,16 @@ function checkTypes(obj, originalRef, originalOptions) {
   // make every schema object key's value to be an array:
 
   if (!isArr(opts.ignoreKeys)) {
-    throw new TypeError('check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: ' + type(opts.ignoreKeys));
+    throw new TypeError('check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: ' + typ(opts.ignoreKeys));
   }
   if (!isBool(opts.acceptArrays)) {
-    throw new TypeError('check-types-mini/checkTypes(): opts.acceptArrays should be a Boolean, currently it\'s: ' + type(opts.acceptArrays));
+    throw new TypeError('check-types-mini/checkTypes(): opts.acceptArrays should be a Boolean, currently it\'s: ' + typ(opts.acceptArrays));
   }
   if (!isArr(opts.acceptArraysIgnore)) {
-    throw new TypeError('check-types-mini/checkTypes(): opts.acceptArraysIgnore should be an array, currently it\'s: ' + type(opts.acceptArraysIgnore));
+    throw new TypeError('check-types-mini/checkTypes(): opts.acceptArraysIgnore should be an array, currently it\'s: ' + typ(opts.acceptArraysIgnore));
   }
   if (!isBool(opts.enforceStrictKeyset)) {
-    throw new TypeError('check-types-mini/checkTypes(): opts.enforceStrictKeyset should be a Boolean, currently it\'s: ' + type(opts.enforceStrictKeyset));
+    throw new TypeError('check-types-mini/checkTypes(): opts.enforceStrictKeyset should be a Boolean, currently it\'s: ' + typ(opts.enforceStrictKeyset));
   }
   Object.keys(opts.schema).forEach(function (oneKey) {
     if (!isArr(opts.schema[oneKey])) {
@@ -111,7 +113,7 @@ function checkTypes(obj, originalRef, originalOptions) {
       // first check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(opts.schema[key], NAMESFORANYTYPE).length) {
         // because, if not, it means we need to do some work, check types:
-        if (!includes(opts.schema[key], type(obj[key]).toLowerCase())) {
+        if (!includes(opts.schema[key], typ(obj[key]).toLowerCase())) {
           // new in v.2.2
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
           // If it is, then iterate through the array, checking does each value conform to the
@@ -119,29 +121,29 @@ function checkTypes(obj, originalRef, originalOptions) {
           if (isArr(obj[key]) && opts.acceptArrays) {
             // check each key:
             for (var i = 0, len = obj[key].length; i < len; i++) {
-              if (!includes(opts.schema[key], type(obj[key][i]).toLowerCase())) {
-                throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' is of type ' + type(obj[key][i]).toLowerCase() + ', but only the following are allowed in ' + opts.optsVarName + '.schema: ' + opts.schema[key]);
+              if (!includes(opts.schema[key], typ(obj[key][i]).toLowerCase())) {
+                throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' is of type ' + typ(obj[key][i]).toLowerCase() + ', but only the following are allowed in ' + opts.optsVarName + '.schema: ' + opts.schema[key]);
               }
             }
           } else {
             // only then, throw
-            throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not among the allowed types in schema (' + opts.schema[key] + ') but ' + type(obj[key]));
+            throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not among the allowed types in schema (' + opts.schema[key] + ') but ' + typ(obj[key]));
           }
         }
       }
-    } else if (existy(ref) && Object.prototype.hasOwnProperty.call(ref, key) && type(obj[key]) !== type(ref[key]) && !includes(opts.ignoreKeys, key)) {
+    } else if (existy(ref) && Object.prototype.hasOwnProperty.call(ref, key) && typ(obj[key]) !== typ(ref[key]) && !includes(opts.ignoreKeys, key)) {
       if (opts.acceptArrays && isArr(obj[key]) && !includes(opts.acceptArraysIgnore, key)) {
         var allMatch = obj[key].every(function (el) {
-          return type(el) === type(ref[key]);
+          return typ(el) === typ(ref[key]);
         });
         if (!allMatch) {
-          throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to be array, but not all of its elements are ' + type(ref[key]) + '-type');
+          throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to be array, but not all of its elements are ' + typ(ref[key]) + '-type');
         }
       } else {
-        throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + type(ref[key]) + ' but ' + type(obj[key]));
+        throw new TypeError(opts.msg + ': ' + opts.optsVarName + '.' + key + ' was customised to ' + JSON.stringify(obj[key], null, 4) + ' which is not ' + typ(ref[key]) + ' but ' + typ(obj[key]));
       }
     }
   });
 }
 
-module.exports = checkTypes;
+module.exports = checkTypesMini;
