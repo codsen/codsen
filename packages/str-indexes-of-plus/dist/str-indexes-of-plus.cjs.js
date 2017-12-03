@@ -8,6 +8,8 @@ var isNumStr = _interopDefault(require('is-natural-number-string'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+/* eslint no-param-reassign:0 */
+
 function existy(x) {
   return x != null;
 }
@@ -42,7 +44,7 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
 
   var res = [];
   var matchMode = false;
-  var potentialFinding;
+  var potentialFinding = void 0;
 
   for (var i = fromIndex, len = strArr.length; i < len; i++) {
     if (matchMode) {
