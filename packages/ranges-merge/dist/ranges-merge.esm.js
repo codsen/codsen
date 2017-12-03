@@ -1,9 +1,4 @@
-'use strict';
-
-// const isInt = require('is-natural-number')
-// const isNumStr = require('is-natural-number-string')
-// const ordinal = require('ordinal-number-suffix')
-var sortRanges = require('ranges-sort');
+import sortRanges from 'ranges-sort';
 
 // merges the overlapping ranges
 // case #1. exact extension:
@@ -36,4 +31,4 @@ function mergeRanges(arrOfRanges) {
   return sortedRanges;
 }
 
-module.exports = mergeRanges;
+export default mergeRanges;

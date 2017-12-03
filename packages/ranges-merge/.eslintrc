@@ -1,8 +1,0 @@
-{
-  "extends": "airbnb-base",
-  "rules": {
-    "semi": [2, "never"],
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
-    "prefer-destructuring": ["error", {"object": true, "array": false}]
-  }
-}

@@ -6,14 +6,15 @@
   },
   "dependencies": {
     "mute": [
-      "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

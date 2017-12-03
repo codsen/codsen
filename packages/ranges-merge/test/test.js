@@ -1,5 +1,5 @@
 import test from 'ava'
-import mergeRanges from './index'
+import mergeRanges from '../dist/ranges-merge.cjs'
 
 // mergeRanges()
 // ==========================

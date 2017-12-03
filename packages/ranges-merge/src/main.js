@@ -1,7 +1,6 @@
-// const isInt = require('is-natural-number')
-// const isNumStr = require('is-natural-number-string')
-// const ordinal = require('ordinal-number-suffix')
-const sortRanges = require('ranges-sort')
+/* eslint prefer-destructuring:0 */
+
+import sortRanges from 'ranges-sort'
 
 // merges the overlapping ranges
 // case #1. exact extension:
@@ -40,4 +39,4 @@ function mergeRanges(arrOfRanges) {
   return sortedRanges
 }
 
-module.exports = mergeRanges
+export default mergeRanges
