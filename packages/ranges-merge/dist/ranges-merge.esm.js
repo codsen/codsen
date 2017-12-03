@@ -1,5 +1,7 @@
 import sortRanges from 'ranges-sort';
 
+/* eslint prefer-destructuring:0 */
+
 // merges the overlapping ranges
 // case #1. exact extension:
 // [ [1, 5], [5, 10] ] => [ [1, 10] ]
