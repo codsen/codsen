@@ -1,5 +1,5 @@
-const test = require('ava')
-const srt = require('./index')
+import test from 'ava'
+import srt from '../dist/ranges-sort.cjs'
 
 // ==============================
 // 0. THROWS

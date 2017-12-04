@@ -1,10 +1,12 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNatNum = require('is-natural-number');
-var ordinalSuffix = require('ordinal-number-suffix');
-var checkTypes = require('check-types-mini');
+var isNatNum = _interopDefault(require('is-natural-number'));
+var ordinalSuffix = _interopDefault(require('ordinal-number-suffix'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isArr = Array.isArray;
 
@@ -20,7 +22,7 @@ var isArr = Array.isArray;
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
 // sorts first by first element, then by second. Retains possible third element.
 
-function srt(arrOfRanges, originalOptions) {
+function rangesSort(arrOfRanges, originalOptions) {
   // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
     throw new TypeError('ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ' + (typeof arrOfRanges === 'undefined' ? 'undefined' : _typeof(arrOfRanges)) + ', equal to: ' + JSON.stringify(arrOfRanges, null, 4));
@@ -84,4 +86,4 @@ function srt(arrOfRanges, originalOptions) {
   });
 }
 
-module.exports = srt;
+module.exports = rangesSort;

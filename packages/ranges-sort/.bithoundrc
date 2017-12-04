@@ -7,15 +7,15 @@
   "dependencies": {
     "mute": [
       "ava",
-      "clear-cli",
       "coveralls",
-      "eslint-plugin-import",
       "husky",
-      "nodemon",
       "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }
