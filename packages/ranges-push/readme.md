@@ -121,7 +121,7 @@ In essence, `.add()` behaves two ways:
 1) `.add(1, 2)`, later `.add(2, 3)` will not create a new `[2, 3]` but extend `[1, 2]` into `[1, 3]`. This is to save time because we prevent bunch of connecting ranges from being recorded as separate ones.
 2) all other cases, if it's not an exact extension of a previous range, new range is added into the array. `.add(2, 3)`, later `.add(1, 2)` will result in `[ [2, 3], [1, 2] ]`. The `.current()` method will clean it later. Read on...
 
-Additionally, when `.add` merges two ranges and one completely overlaps another, the superset (larger) range will wipe out any "to-add", third argument values of the subset (smaller) range.
+Additionally, when `.add` merges two ranges and one completely overlaps another, the superset (larger) range will wipe out any "to-add" (third-argument) values of the subset (smaller) range(s).
 
 **[⬆ &nbsp;back to top](#)**
 
