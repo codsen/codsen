@@ -146,3 +146,87 @@ test('01.06 - more merging examples', (t) => {
     '01.06.01',
   )
 })
+
+test('01.07 - superset range discards to-add content of their subset ranges #1', (t) => {
+  t.deepEqual(
+    mergeRanges([
+      [5, 6, ' '],
+      [1, 10],
+    ]),
+    [
+      [1, 10],
+    ],
+    '01.07',
+  )
+})
+
+test('01.08 - superset range discards to-add content of their subset ranges #2', (t) => {
+  t.deepEqual(
+    mergeRanges([
+      [5, 7, ' '],
+      [6, 8, ' '],
+      [7, 9, ' '],
+      [1, 10],
+    ]),
+    [
+      [1, 10],
+    ],
+    '01.08',
+  )
+})
+
+test('01.09 - superset range discards to-add content of their subset ranges #3', (t) => {
+  t.deepEqual(
+    mergeRanges([
+      [5, 7, ' '],
+      [1, 3, ' '],
+      [6, 8, ' '],
+      [7, 9, ' '],
+      [3, 10],
+    ]),
+    [
+      [1, 10, ' '],
+    ],
+    '01.09.01',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [3, 10],
+      [5, 7, ' '],
+      [1, 3, ' '],
+      [6, 8, ' '],
+      [7, 9, ' '],
+    ]),
+    [
+      [1, 10, ' '],
+    ],
+    '01.09.02',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [5, 7, ' '],
+      [1, 3, ' '],
+      [3, 10],
+      [6, 8, ' '],
+      [7, 9, ' '],
+    ]),
+    [
+      [1, 10, ' '],
+    ],
+    '01.09.03',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [5, 7, ' '],
+      [1, 2, ' '],
+      [6, 8, ' '],
+      [7, 9, ' '],
+      [3, 10],
+    ]),
+    [
+      [1, 2, ' '],
+      [3, 10],
+    ],
+    '01.09.04',
+  )
+})

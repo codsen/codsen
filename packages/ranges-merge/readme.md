@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Merge arrays meaning string slice ranges
+> Merge and sort arrays which mean string slice ranges
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -48,7 +48,7 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ranges-merge.cjs.js` | 1&nbsp;KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ranges-merge.cjs.js` | 2&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-merge.esm.js` | 1&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-merge.umd.js` | 18&nbsp;KB
 

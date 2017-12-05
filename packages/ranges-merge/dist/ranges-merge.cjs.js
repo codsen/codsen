@@ -21,11 +21,12 @@ function mergeRanges(arrOfRanges) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
       sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
 
-      if (sortedRanges[i][2] !== undefined) {
+      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+        // console.log(`sortedRanges = ${JSON.stringify(sortedRanges, null, 4)}`)
+        // console.log(`sortedRanges[i][2] = ${JSON.stringify(sortedRanges[i][2], null, 4)}`)
         if (sortedRanges[i - 1][2] !== undefined) {
           sortedRanges[i - 1][2] += sortedRanges[i][2];
         } else {
-          // instead of:
           sortedRanges[i - 1][2] = sortedRanges[i][2];
         }
       }
