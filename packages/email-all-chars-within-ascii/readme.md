@@ -71,7 +71,7 @@ Also, we want an error `throw`n if any lines exceed the permitted length, 1000 c
 
 ## The API
 
-**within (str\[, opts])**
+**within(str\[, opts])**
 
 Input:
 - the first argument - string only or will `throw`.
