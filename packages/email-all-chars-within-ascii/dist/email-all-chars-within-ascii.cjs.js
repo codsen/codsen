@@ -1,9 +1,11 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var checkTypes = require('check-types-mini');
-var isObj = require('lodash.isplainobject');
+var checkTypes = _interopDefault(require('check-types-mini'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function within(str, originalOpts) {
   if (typeof str !== 'string') {
@@ -26,7 +28,7 @@ function within(str, originalOpts) {
 
   // -----------------------------------------------------------------------------
 
-  // allowed control characters:
+  // allowed ASCII control characters:
   //
   // #9  - HT, horizontal tab
   // #10 - LF, new line

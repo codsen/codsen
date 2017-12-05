@@ -1,7 +1,7 @@
 /* eslint no-tabs: 0 */
 
 import test from 'ava'
-import within from './index'
+import within from '../dist/email-all-chars-within-ascii.cjs'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

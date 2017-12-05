@@ -1,5 +1,5 @@
-const checkTypes = require('check-types-mini')
-const isObj = require('lodash.isplainobject')
+import checkTypes from 'check-types-mini'
+import isObj from 'lodash.isplainobject'
 
 function within(str, originalOpts) {
   if (typeof str !== 'string') {
@@ -23,7 +23,7 @@ function within(str, originalOpts) {
 
   // -----------------------------------------------------------------------------
 
-  // allowed control characters:
+  // allowed ASCII control characters:
   //
   // #9  - HT, horizontal tab
   // #10 - LF, new line
@@ -56,4 +56,4 @@ function within(str, originalOpts) {
   }
 }
 
-module.exports = within
+export default within
