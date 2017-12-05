@@ -4,7 +4,7 @@ const ordinal = require('ordinal-number-suffix')
 const mergeRanges = require('ranges-merge')
 
 function mandatory(i) {
-  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${i}${ordinal(i)} parameter`)
+  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${i}${ordinal(i)} parameter!`)
 }
 
 // -----------------------------------------------------------------------------

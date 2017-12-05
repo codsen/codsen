@@ -7,7 +7,6 @@
   "dependencies": {
     "mute": [
       "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "is-natural-number",
@@ -16,9 +15,9 @@
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "dist/**"
   ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

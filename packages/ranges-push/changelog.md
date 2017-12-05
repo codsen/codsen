@@ -4,6 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-12-05
+### Changed
+- ✨ Rewrite in ES modules
+- ✨ Now serving three builds: CommonJS, UMD and ES modules, all wired up to appropriate end-points on `package.json`
+
+### Added
+- ✨ If you have two ranges where second-one completely overlaps the first-one and the first has third argument, something to insert in its place, that third argument will be discarded upon merge.
+
+Let's say you got these two ranges:
+
+```js
+[
+  [5, 6, ' '],
+  [1, 10]
+]
+```
+
+Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.
+
 ## [1.6.0] - 2017-09-25
 ### Changed
 - ✨ Actually serving the transpiled version as default. Sorry about that. Now the transpiled source is wired to `package.json` `main`. The proper Rollup setup (UMD, ESJ and ESM builds) is in coming next.
@@ -33,6 +52,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0
 [1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/codsen/string-slices-array-push/compare/v1.3.0...v1.4.0

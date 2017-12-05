@@ -1,5 +1,5 @@
 import test from 'ava'
-import Slices from './index'
+import Slices from '../dist/string-slices-array-push.cjs'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -277,13 +277,13 @@ test('03.04  -  ADD() - jumped over values have third args and they get concaten
   slices.add(6, 10)
   slices.add(16, 20, 'bbb')
   slices.add(11, 15, 'aaa')
-  slices.add(10, 30)
+  slices.add(10, 30) // this superset range will wipe the `aaa` and `bbb` above
   slices.add(1, 5)
   t.deepEqual(
     slices.current(),
     [
       [1, 5],
-      [6, 30, 'aaabbb'],
+      [6, 30],
     ],
     '03.04',
   )
@@ -328,6 +328,19 @@ test('03.07  -  ADD() - v1.1.0 - do not merge add-only entries with deletion ent
       [4, 10],
     ],
     '03.07',
+  )
+})
+
+test('03.08  -  ADD() - v2.1.0 - overlapping ranges discard their inner range to-add values', (t) => {
+  const slices = new Slices()
+  slices.add(5, 6, ' ')
+  slices.add(1, 10)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 10],
+    ],
+    '03.08',
   )
 })
 
