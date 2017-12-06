@@ -163,7 +163,7 @@ If there is nothing to fix, `color-shorthand-hex-to-six-digit` behaves well, ret
 
 ## API
 
-One input argument can be anything: string, plain object, nested array of whatever; you name it.
+The one and only input argument can be anything: string, plain object, nested array of whatever; you name it.
 If input is not workable, for example, it's a function; it's simply returned intact.
 This way, this library acts like a safety valve that acts when wrong hex codes pass through it, converting them.
 
