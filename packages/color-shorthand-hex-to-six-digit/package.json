@@ -1,6 +1,6 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "1.5.1",
+  "version": "2.0.0",
   "description": "Convert shorthand hex color codes into full",
   "license": "MIT",
   "engines": {
