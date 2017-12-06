@@ -19,7 +19,7 @@ Let's say you got these two ranges:
 
 Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.
 
-This change is logical and natural but I'm bumping major semver version just in case it breaks somebody's unit tests.
+This change is logical and natural but I'm bumping major version just in case it breaks somebody's unit tests.
 
 ## [2.0.0] - 2017-12-04
 ### Changed
