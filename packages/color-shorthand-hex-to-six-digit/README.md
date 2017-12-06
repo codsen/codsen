@@ -27,7 +27,6 @@
 
 - [Install](#install)
 - [Purpose](#purpose)
-- [Concept](#concept)
 - [Examples](#examples)
 - [Usage in Gulp environment](#usage-in-gulp-environment)
 - [API](#api)
@@ -60,16 +59,6 @@ Certain contemporary email consumption software doesn't accept shorthand hex col
 `color-shorthand-hex-to-six-digit` is an internal library either to be used in JS applications, or as a core dependency for plugins (for example [PostHTML](https://github.com/codsen/posthtml-color-shorthand-hex-to-six-digit)).
 
 This library takes any input: **array** (of strings, plain objects, other arrays or nested combination thereof), **plain object** (containing anything in values, including nested plain objects, arrays or strings) or **string**. Once received, it traverses the input and converts all found shorthand hex colour codes (#abc) into full-length (#aabbcc).
-
-**[⬆ &nbsp;back to top](#)**
-
-## Concept
-
-Here's the idea of this library:
-* `color-shorthand-hex-to-six-digit` is one-way only: any the hex code is accepted, but all and only shorthand is converted to full-hand.
-* `color-shorthand-hex-to-six-digit` doesn't throw errors when it encounters full hex codes (or, for actually, even stupid things in the input — simply returns them)
-* `color-shorthand-hex-to-six-digit` is AST-ready and accept whatever, including nested spaghetti trees, not just strings. You can pass anything: plain objects, arrays or strings — that's fine, shorthand hexes will be found and converted.
-* if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it. This is on purpose, to play well inside other libraries.
 
 Additionally, all letters in all hex codes are converted to lowercase.
 
@@ -167,7 +156,7 @@ The one and only input argument can be anything: string, plain object, nested ar
 If input is not workable, for example, it's a function; it's simply returned intact.
 This way, this library acts like a safety valve that acts when wrong hex codes pass through it, converting them.
 
-PS. Input arguments are not mutated in any way. This package will clone the inputs and work on the copies.
+PS. Input argument (in case of plain objects and arrays) is not mutated in any way. This package will clone the input and work on its copy. This is important. No ~~teenage turtle~~ mutations here.
 
 **[⬆ &nbsp;back to top](#)**
 
