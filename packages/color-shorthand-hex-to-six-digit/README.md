@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Convert shorthand hex color codes into full
+> Convert shorthand hex colour codes into full
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -67,9 +67,9 @@ This library takes any input: **array** (of strings, plain objects, other arrays
 
 Here's the idea of this library:
 * `color-shorthand-hex-to-six-digit` is one-way only: any the hex code is accepted, but all and only shorthand is converted to full-hand.
-* `color-shorthand-hex-to-six-digit` doesn't throw errors when it encounters full hex codes (or, for actually, even stupid things in the input — simply returns them back)
+* `color-shorthand-hex-to-six-digit` doesn't throw errors when it encounters full hex codes (or, for actually, even stupid things in the input — simply returns them)
 * `color-shorthand-hex-to-six-digit` is AST-ready and accept whatever, including nested spaghetti trees, not just strings. You can pass anything: plain objects, arrays or strings — that's fine, shorthand hexes will be found and converted.
-* if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it back. This is on purpose, to play well inside other libraries.
+* if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it. This is on purpose, to play well inside other libraries.
 
 Additionally, all letters in all hex codes are converted to lowercase.
 
@@ -128,7 +128,7 @@ conv(null)
 
 ## Usage in Gulp environment
 
-You don't need a Gulp plugin, you can simply use this library whenever you get in control of the final stream, or especially, SCSS variables.
+You don't need a Gulp plugin; you can simply use this library whenever you get in control of the final stream, or especially, SCSS variables.
 
 For example, tap the `color-shorthand-hex-to-six-digit` right after importing the SCSS variables. I hope you are not misbehaving and all your colour variables are in one place only, as variables.
 
@@ -163,15 +163,11 @@ If there is nothing to fix, `color-shorthand-hex-to-six-digit` behaves well, ret
 
 ## API
 
-Input arguments are not mutated in any way. This package will clone the inputs and work on the copies.
+One input argument can be anything: string, plain object, nested array of whatever; you name it.
+If input is not workable, for example, it's a function; it's simply returned intact.
+This way, this library acts like a safety valve that acts when wrong hex codes pass through it, converting them.
 
-```js
-conv(
-  input  // Anything: array, plain object or string or anything else
-)
-// => Anything, with all shorthand hex occurrences inside of it, converted to full hand.
-// if an input is of an unrecognised type (array, plain object or string), it will be returned without errors.
-```
+PS. Input arguments are not mutated in any way. This package will clone the inputs and work on the copies.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -189,7 +185,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
