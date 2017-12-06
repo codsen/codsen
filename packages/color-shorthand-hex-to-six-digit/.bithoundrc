@@ -1,14 +1,13 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
       "ava",
       "coveralls",
-      "doctoc",
       "hex-color-regex",
       "husky",
       "lodash.clonedeep",
@@ -17,7 +16,10 @@
       "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

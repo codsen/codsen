@@ -19,3 +19,7 @@ config.json
 .editorconfig
 .travis.yml
 test.js
+.babelrc
+rollup.config.js
+src
+test

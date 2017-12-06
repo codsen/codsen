@@ -1,15 +1,21 @@
 # color-shorthand-hex-to-six-digit
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Convert shorthand hex colour codes into full. #abc => #aabbcc
+> Convert shorthand hex color codes into full
 
+[![Minimum Node version required][node-img]][node-url]
+[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
-[![Coverage Status][cov-img]][cov-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 * PostHTML Plugin: [posthtml-color-shorthand-hex-to-six-digit](https://github.com/codsen/posthtml-color-shorthand-hex-to-six-digit)
 
@@ -26,7 +32,6 @@
 - [Usage in Gulp environment](#usage-in-gulp-environment)
 - [API](#api)
 - [Reliability](#reliability)
-- [Testing, linting and coverage](#testing-linting-and-coverage)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,8 +40,16 @@
 ## Install
 
 ```sh
-$ npm install --save color-shorthand-hex-to-six-digit
+$ npm i color-shorthand-hex-to-six-digit
 ```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/color-shorthand-hex-to-six-digit.cjs.js` | 1&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 1&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/color-shorthand-hex-to-six-digit.umd.js` | 11&nbsp;KB
 
 ## Purpose
 
@@ -48,6 +61,8 @@ Certain contemporary email consumption software doesn't accept shorthand hex col
 
 This library takes any input: **array** (of strings, plain objects, other arrays or nested combination thereof), **plain object** (containing anything in values, including nested plain objects, arrays or strings) or **string**. Once received, it traverses the input and converts all found shorthand hex colour codes (#abc) into full-length (#aabbcc).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Concept
 
 Here's the idea of this library:
@@ -57,6 +72,8 @@ Here's the idea of this library:
 * if you pass something weird as input into `color-shorthand-hex-to-six-digit`, it will not throw, but simply return it back. This is on purpose, to play well inside other libraries.
 
 Additionally, all letters in all hex codes are converted to lowercase.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Examples
 
@@ -107,6 +124,8 @@ conv(null)
 
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Usage in Gulp environment
 
 You don't need a Gulp plugin, you can simply use this library whenever you get in control of the final stream, or especially, SCSS variables.
@@ -140,6 +159,8 @@ I coded the `color-shorthand-hex-to-six-digit` to be recursive, that is, you can
 
 If there is nothing to fix, `color-shorthand-hex-to-six-digit` behaves well, returning whatever was given, so feel free to assign your sources to the output of `color-shorthand-hex-to-six-digit`.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 Input arguments are not mutated in any way. This package will clone the inputs and work on the copies.
@@ -152,62 +173,66 @@ conv(
 // if an input is of an unrecognised type (array, plain object or string), it will be returned without errors.
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Reliability
 
 I'm using only the best ingredients, namely [hex-color-regex](https://www.npmjs.com/package/hex-color-regex) by [@tunnckocore](https://www.npmjs.com/~tunnckocore) and standalone Lodash functions (`_.clonedeep`, `_.isplainobject` and `_.isstring`). This library is being currently used in commercial projects.
 
-## Testing, linting and coverage
-
-```bash
-$ npm test
-```
-
-Unit tests use [AVA](https://github.com/avajs/ava) and [JS Standard](https://standardjs.com) notation. Coverage is measured by [Istanbul CLI](https://www.npmjs.com/package/nyc), which we aim to be 100%.
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues). If you file a pull request, I'll do my best to review it promptly. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/color-shorthand-hex-to-six-digit.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/color-shorthand-hex-to-six-digit
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+[npm-img]: https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square&label=release
+[npm-url]: https://www.npmjs.com/package/color-shorthand-hex-to-six-digit
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[travis-img]: https://travis-ci.org/codsen/color-shorthand-hex-to-six-digit.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/color-shorthand-hex-to-six-digit
 
-[cov-img]: https://coveralls.io/repos/github/codsen/color-shorthand-hex-to-six-digit/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/color-shorthand-hex-to-six-digit?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit
 
-[deps-img]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/badges/devDependencies.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/color-shorthand-hex-to-six-digit
+
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/color-shorthand-hex-to-six-digit.svg
-[downloads-url]: https://www.npmjs.com/package/color-shorthand-hex-to-six-digit
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/color-shorthand-hex-to-six-digit
+
+[downloads-img]: https://img.shields.io/npm/dm/color-shorthand-hex-to-six-digit.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/color-shorthand-hex-to-six-digit
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/color-shorthand-hex-to-six-digit
+
+[license-img]: https://img.shields.io/npm/l/color-shorthand-hex-to-six-digit.svg?style=flat-square
+[license-url]: https://github.com/codsen/color-shorthand-hex-to-six-digit/blob/master/license.md
