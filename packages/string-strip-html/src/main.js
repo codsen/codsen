@@ -81,7 +81,7 @@ function stripHtml(str, originalOpts) {
   // End sooner if it's an empty or empty-ish string:
 
   if ((str === '') || (str.trim() === '')) {
-    console.log('ENDING EARLY, empty input')
+    // console.log('ENDING EARLY, empty input')
     return str
   }
 
@@ -137,7 +137,7 @@ function stripHtml(str, originalOpts) {
       stripTogetherWithTheirContentsRange = stripTogetherWithTheirContentsRange[0]
     }
   }
-  console.log(`stripTogetherWithTheirContentsRange = ${JSON.stringify(stripTogetherWithTheirContentsRange, null, 4)}\n\n\n`)
+  // console.log(`stripTogetherWithTheirContentsRange = ${JSON.stringify(stripTogetherWithTheirContentsRange, null, 4)}\n\n\n`)
 
   // At this moment, stripTogetherWithTheirContentsRange is found and it's an
   // array or a natural number.
@@ -174,7 +174,7 @@ function stripHtml(str, originalOpts) {
 
   // traverse the string indexes
   for (i = 0, len = str.length; i < len; i++) {
-    console.log(`-------------------------------------------------------  ${str[i].trim().length > 0 ? str[i] : 'space'}  ----------------  ${i}`)
+    // console.log(`-------------------------------------------------------  ${str[i].trim().length > 0 ? str[i] : 'space'}  ----------------  ${i}`)
 
     // -----------------------------------------------------
     // catch the opening bracket, "<"
@@ -261,7 +261,7 @@ function stripHtml(str, originalOpts) {
         }
 
         rangesToDelete.add(deleteFromIndex, deleteUpToIndex, insertThisInPlace)
-        console.log(`! 258: added range for deletion: [${deleteFromIndex}, ${deleteUpToIndex}, '${insertThisInPlace}']`)
+        // console.log(`! 258: added range for deletion: [${deleteFromIndex}, ${deleteUpToIndex}, '${insertThisInPlace}']`)
         // reset everything:
         state = 'normal'
       } else if (state === 'sensitive') {
@@ -271,9 +271,9 @@ function stripHtml(str, originalOpts) {
             .concat(singleLetterTags)
             .includes(trimChars(str.slice(deleteFromIndex + 1, i).trim().toLowerCase(), ' /'))
         ) {
-          console.log(`* adding range: ${str.slice(deleteFromIndex, i + 1)}`)
-          console.log(`! str[deleteFromIndex] = ${JSON.stringify(str[deleteFromIndex], null, 4)}`)
-          console.log(`! str[i + 1] = ${JSON.stringify(str[i + 1], null, 4)}`)
+          // console.log(`* adding range: ${str.slice(deleteFromIndex, i + 1)}`)
+          // console.log(`! str[deleteFromIndex] = ${JSON.stringify(str[deleteFromIndex], null, 4)}`)
+          // console.log(`! str[i + 1] = ${JSON.stringify(str[i + 1], null, 4)}`)
           if (
             existy(str[deleteFromIndex - 1]) &&
             (str[deleteFromIndex - 1].trim() !== '') &&
@@ -281,14 +281,14 @@ function stripHtml(str, originalOpts) {
             (str[i + 1].trim() !== '') &&
             !punctuation.includes(str[i + 1])
           ) {
-            console.log('3')
+            // console.log('3')
             rangesToDelete.add(deleteFromIndex, i + 1, ' ')
-            console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}, ' ']`)
+            // console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}, ' ']`)
             state = 'normal'
           } else {
-            console.log('4')
+            // console.log('4')
             rangesToDelete.add(deleteFromIndex, i + 1)
-            console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}]`)
+            // console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}]`)
             state = 'normal'
           }
           state = 'normal'
@@ -310,26 +310,26 @@ function stripHtml(str, originalOpts) {
       if (
         matchedRangeTag.name
       ) {
-        console.log('1 = true')
+        // console.log('1 = true')
       } else {
-        console.log('1 = false')
+        // console.log('1 = false')
       }
 
       if (
         matchRightIncl(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' })
       ) {
-        console.log('2 = true')
+        // console.log('2 = true')
       } else {
-        console.log('2 = false')
+        // console.log('2 = false')
       }
 
       if (
         matchedRangeTag.name &&
         matchRight(str, i, matchedRangeTag.name, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })
       ) {
-        console.log('3 = true')
+        // console.log('3 = true')
       } else {
-        console.log('3 = false')
+        // console.log('3 = false')
       }
 
 
@@ -338,8 +338,8 @@ function stripHtml(str, originalOpts) {
         matchRightIncl(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' }) &&
         matchRight(str, i, matchedRangeTag.name, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })
       ) {
-        console.log('* case #1')
-        console.log(`i = ${JSON.stringify(i, null, 4)}`)
+        // console.log('* case #1')
+        // console.log(`i = ${JSON.stringify(i, null, 4)}`)
         // first, traverse forward and add everything from matchedRangeTag.i upto closing
         // bracket for deletion
         for (let y = i; y < len; y++) {
@@ -354,7 +354,7 @@ function stripHtml(str, originalOpts) {
               (str[y + 1].trim() === '')
             ) {
               rangesToDelete.add(matchedRangeTag.i - 2, y + 1) // expand to include space before
-              console.log(`! 350: added range for deletion: [${matchedRangeTag.i - 2}, ${y + 1}]`)
+              // console.log(`! 350: added range for deletion: [${matchedRangeTag.i - 2}, ${y + 1}]`)
             } else if (
               // if it's too tight and there are no spaces surrounding the range:
               existy(str[matchedRangeTag.i - 2]) &&
@@ -364,7 +364,7 @@ function stripHtml(str, originalOpts) {
               !matchRight(str, y, '<', { trimCharsBeforeMatching: ' \n\t\r/' })
             ) {
               rangesToDelete.add(matchedRangeTag.i - 1, y + 1, ' ') // add a space
-              console.log(`! 360: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}, ' ']`)
+              // console.log(`! 360: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}, ' ']`)
               // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> row_322: ADDING A SPACE')
               // console.log(`str[matchedRangeTag.i - 2] = ${JSON.stringify(str[matchedRangeTag.i - 2], null, 4)}`)
               // console.log(`str[y + 1] = ${JSON.stringify(str[y + 1], null, 4)}`)
@@ -372,7 +372,7 @@ function stripHtml(str, originalOpts) {
             } else if (existy(matchedRangeTag.i)) {
               // We might need to trim even tighter if punctuation follows right immediately and there's whitespace in front. In such case we'd collapse all the whitespace in front if it's lowercase letter preceding that whitespace. For example, "This is text <div>remove me</div>." => "This is text." Not "This is text ."
               if (punctuation.includes(str[y + 1]) && str[matchedRangeTag.i - 2].trim() === '') {
-                console.log('***')
+                // console.log('***')
                 for (let zzz = matchedRangeTag.i - 2; zzz--;) {
                   if (existy(str[zzz]) && str[zzz].trim() !== '') {
                     if (
@@ -393,18 +393,18 @@ function stripHtml(str, originalOpts) {
                 }
               } else {
                 rangesToDelete.add(matchedRangeTag.i - 1, y + 1) // just delete the range
-                console.log(`! 376: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}]`)
+                // console.log(`! 376: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}]`)
               }
-              console.log(`str[y + 1]=${str[y + 1]}`)
-              console.log(`str[matchedRangeTag.i - 2]=>>>>${str[matchedRangeTag.i - 2]}<<<<`)
+              // console.log(`str[y + 1]=${str[y + 1]}`)
+              // console.log(`str[matchedRangeTag.i - 2]=>>>>${str[matchedRangeTag.i - 2]}<<<<`)
             }
             i = y - 1 // + 1
-            console.log(`i = ${JSON.stringify(i, null, 4)}`)
+            // console.log(`i = ${JSON.stringify(i, null, 4)}`)
             matchedRangeTag = {}
-            console.log(`matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
+            // console.log(`matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
             state = 'normal'
             deleteFromIndex = null
-            console.log(`state = ${JSON.stringify(state, null, 4)}`)
+            // console.log(`state = ${JSON.stringify(state, null, 4)}`)
             break
           }
         }
@@ -425,19 +425,19 @@ function stripHtml(str, originalOpts) {
           (str[i].charCodeAt(0) === stripTogetherWithTheirContentsRange)
           )
         )) {
-        console.log('* case #2')
+        // console.log('* case #2')
         if (opts.stripTogetherWithTheirContents.some((tag) => {
-          console.log(`checking tag: ${tag}`)
+          // console.log(`checking tag: ${tag}`)
           if (matchRightIncl(str, i, tag, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/' })) {
             matchedRangeTag.name = tag
             matchedRangeTag.i = i
-            console.log(`\n\n\n\n\n!!!\n\nmatchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
+            // console.log(`\n\n\n\n\n!!!\n\nmatchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
             // i += tag.length
             return true
           }
           return false
         })) {
-          console.log(`\n\n\n${matchedRangeTag.name} MATCHED! index = ${i}\n\n\n`)
+          // console.log(`\n\n\n${matchedRangeTag.name} MATCHED! index = ${i}\n\n\n`)
         }
       }
     }
@@ -450,13 +450,13 @@ function stripHtml(str, originalOpts) {
       state = 'delete'
     }
 
-    console.log(`\n\n* ended with state: ${state}`)
-    console.log(`* matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
-    console.log(`* ended with deleteFromIndex = ${deleteFromIndex}`)
-    console.log(`* ended with state = ${state}`)
+    // console.log(`\n\n* ended with state: ${state}`)
+    // console.log(`* matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
+    // console.log(`* ended with deleteFromIndex = ${deleteFromIndex}`)
+    // console.log(`* ended with state = ${state}`)
   }
 
-  console.log(`FINAL rangesToDelete = ${JSON.stringify(rangesToDelete, null, 4)}`)
+  // console.log(`FINAL rangesToDelete = ${JSON.stringify(rangesToDelete, null, 4)}`)
   if (rangesToDelete.current()) {
     return replaceSlicesArr(str, rangesToDelete.current()).trim()
   }

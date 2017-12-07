@@ -41,9 +41,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 7&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 35&nbsp;KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 20&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 19&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 38&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -159,6 +159,8 @@ Two rules:
 
 1. Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
 2. Any whitespace between the tags will be deleted too. For example, `z<a>     <a>y` => `zy`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b>    \t\t\t    <b>y` => `zy`.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
