@@ -331,11 +331,12 @@ function stripHtml(str, originalOpts) {
               console.log('str[y + 1]=' + str[y + 1]);
               console.log('str[matchedRangeTag.i - 2]=>>>>' + str[matchedRangeTag.i - 2] + '<<<<');
             }
-            i = y + 1;
+            i = y - 1; // + 1
             console.log('i = ' + JSON.stringify(i, null, 4));
             matchedRangeTag = {};
             console.log('matchedRangeTag = ' + JSON.stringify(matchedRangeTag, null, 4));
             state = 'normal';
+            deleteFromIndex = null;
             console.log('state = ' + JSON.stringify(state, null, 4));
             break;
           }

@@ -318,7 +318,7 @@ test('01.09 - checking can script slip through in any way', (t) => {
   )
 })
 
-test.skip('01.10 - strips style tags', (t) => {
+test('01.10 - strips style tags', (t) => {
   t.deepEqual(
     stripHtml(`<html><head>
 <style type="text/css">#outlook a{ padding:0;}
@@ -381,7 +381,7 @@ test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
 // XML (sprinkled within HTML)
 // ==============================
 
-test.skip('02.01 - strips XML', (t) => {
+test('02.01 - strips XML', (t) => {
   t.deepEqual(
     stripHtml(`abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
