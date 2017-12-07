@@ -6,7 +6,6 @@
   },
   "dependencies": {
     "mute": [
-      "ava",
       "coveralls",
       "husky",
       "lodash.isplainobject",

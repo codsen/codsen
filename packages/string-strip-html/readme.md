@@ -59,6 +59,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
   - [API - Input](#api---input)
   - [Optional Options Object](#optional-options-object)
   - [API - Output](#api---output)
+- [Devil is in the details...](#devil-is-in-the-details)
+  - [Whitespace management](#whitespace-management)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -148,6 +150,15 @@ stripHtml(
 ### API - Output
 
 A string of zero or more characters-length.
+
+## Devil is in the details...
+
+### Whitespace management
+
+Two rules:
+
+1. Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
+2. Any whitespace between the tags will be deleted too. For example, `z<a>     <a>y` => `zy`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b>    \t\t\t    <b>y` => `zy`.
 
 ## Contributing
 

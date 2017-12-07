@@ -19,3 +19,4 @@ config.json
 .editorconfig
 .travis.yml
 test.js
+ideas.md
