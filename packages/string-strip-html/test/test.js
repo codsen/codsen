@@ -318,9 +318,9 @@ test('01.09 - checking can script slip through in any way', (t) => {
   )
 })
 
-test('01.10 - strips style tags', (t) => {
+test.skip('01.10 - strips style tags', (t) => {
   t.deepEqual(
-    stripHtml(`<html>
+    stripHtml(`<html><head>
 <style type="text/css">#outlook a{ padding:0;}
 .ExternalClass, .ReadMsgBody{ background-color:#ffffff; width:100%;}
 @media only screen and (max-width: 660px){
@@ -334,17 +334,17 @@ test('01.10 - strips style tags', (t) => {
   )
 })
 
-test.only('01.11 - opts.stripTogetherWithTheirContents', (t) => {
-  // t.deepEqual(
-  //   stripHtml(
-  //     'a<b>c</b>d',
-  //     {
-  //       stripTogetherWithTheirContents: ['e', 'b'],
-  //     },
-  //   ),
-  //   'a d',
-  //   '01.11.01',
-  // )
+test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
+  t.deepEqual(
+    stripHtml(
+      'a<b>c</b>d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.01',
+  )
   t.deepEqual(
     stripHtml(
       'a<b>c</b>d<e>f</e>g',
@@ -355,33 +355,33 @@ test.only('01.11 - opts.stripTogetherWithTheirContents', (t) => {
     'a d g',
     '01.11.02',
   )
-  // t.deepEqual(
-  //   stripHtml(
-  //     'a<bro>c</bro>d<e>f</e>g',
-  //     {
-  //       stripTogetherWithTheirContents: ['b', 'e'],
-  //     },
-  //   ),
-  //   'a c d g',
-  //   '01.11.03',
-  // )
-  // t.deepEqual(
-  //   stripHtml(
-  //     'Text <div class="" id="3" >here</div> and some more <article>text</article>.',
-  //     {
-  //       stripTogetherWithTheirContents: ['div', 'section', 'article'],
-  //     },
-  //   ),
-  //   'Text and some more.',
-  //   '01.11.04',
-  // )
+  t.deepEqual(
+    stripHtml(
+      'a<bro>c</bro>d<e>f</e>g',
+      {
+        stripTogetherWithTheirContents: ['b', 'e'],
+      },
+    ),
+    'a c d g',
+    '01.11.03 - sneaky similarity, bro starts with b',
+  )
+  t.deepEqual(
+    stripHtml(
+      'Text <div class="" id="3" >here</div> and some more <article>text</article>.',
+      {
+        stripTogetherWithTheirContents: ['div', 'section', 'article'],
+      },
+    ),
+    'Text and some more.',
+    '01.11.04 - strips with attributes. Now resembling real life.',
+  )
 })
 
 // ==============================
 // XML (sprinkled within HTML)
 // ==============================
 
-test('02.01 - strips XML', (t) => {
+test.skip('02.01 - strips XML', (t) => {
   t.deepEqual(
     stripHtml(`abc<!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
