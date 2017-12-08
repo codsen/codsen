@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Convert shorthand hex colour codes into full
+> Convert shorthand hex color codes into full
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -49,6 +49,8 @@ Type            | Key in `package.json` | Path  | Size
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/color-shorthand-hex-to-six-digit.cjs.js` | 1&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 1&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/color-shorthand-hex-to-six-digit.umd.js` | 11&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Purpose
 
@@ -174,7 +176,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 

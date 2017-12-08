@@ -56,7 +56,7 @@
     "email",
     "newsletters"
   ],
-  "lector": {
+  "lect": {
     "babelrc": {
       "override": false,
       "set": false
