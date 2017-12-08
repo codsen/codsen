@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2017-12-08
+### Updated
+- ✨ Serving transpiled code now. Node version requirements are way lower, not `6.8.0` as before. I test on Travis against Node `v.4` now.
+
 ## [1.2.0] - 2017-11-12
 ### Updated
 - The to the latest API, v.2
@@ -17,5 +21,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
+[1.3.0]: https://github.com/codsen/csv-sort-cli/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/csv-sort-cli/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/csv-sort-cli/compare/v1.0.0...v1.1.0
