@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.0.0] - 2017-11-30
+## [3.0.0] - 2017-12-08
 ### Changed
 - 🔧 Rebased all the source to be in ES Modules.
 - ✨ Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)

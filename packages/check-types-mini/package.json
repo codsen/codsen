@@ -55,7 +55,7 @@
     "schema",
     "validate"
   ],
-  "lector": {
+  "lect": {
     "babelrc": {
       "override": false,
       "set": false
@@ -138,15 +138,15 @@
     "coveralls": "*",
     "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.3.0",
+    "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.0",
+    "rollup": "^0.52.1",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.2.0"
+    "uglify-es": "^3.2.1"
   }
 }
