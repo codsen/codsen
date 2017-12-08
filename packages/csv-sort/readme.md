@@ -51,6 +51,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-sort.esm.js` | 19&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-sort.umd.js` | 54&nbsp;KB
 
+**[⬆ &nbsp;back to top](#)**
+
 ## TLDR;
 
 `csv-sort` can correct the order of rows of _any_ accounting CSV files that come in [double entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) format:
@@ -58,6 +60,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 ![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
 
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## This lib does two twings:
 
@@ -69,6 +73,8 @@ Currently (late 2017) Lloyds Bank website exports CSV files with some rows from 
 In later releases I would like to be able to recognise and fix any offset columns caused by misinterpreted commas as values.
 
 <small>^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.</small>
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Usage
 
@@ -93,6 +99,8 @@ output object                  | Type     | Description
 If the input is anything else than a `string`, it will `throw`.
 If the input is an empty string, the output object's `res` key will be equal to `[['']]`.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
@@ -104,6 +112,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-sort/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
