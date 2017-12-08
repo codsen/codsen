@@ -22,3 +22,5 @@ test.js
 .eslintrc
 package-lock.json
 dist/util.cjs.js
+src
+test

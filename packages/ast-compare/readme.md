@@ -51,7 +51,9 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 50&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 58&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Purpose
 
@@ -81,6 +83,8 @@ console.log(result)
 
 Main purpose is to compare two parsed HTML/CSS trees or their branches but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Use
 
 ```js
@@ -105,6 +109,8 @@ Input argument   | Type                            | Obligatory? | Description
 * If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
 * Otherwise, if there's a mismatch or something wrong with input args, returns `false`.
 
+**[⬆ &nbsp;back to top](#)**
+
 ### Options object
 
 `options` object's key  | Type    | Obligatory? | Default | Description
@@ -115,6 +121,8 @@ Input argument   | Type                            | Obligatory? | Description
 `verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be string with a message explaining what didn't match. It's for cases when it's important to report what didn't match.
 }                       |         |             |         |
 
+**[⬆ &nbsp;back to top](#)**
+
 ### Output
 
 If `smallObj` **is** equal or a superset of `bigObj`, the returned value is always Boolean `true`.
@@ -123,6 +131,8 @@ If it's **not** a superset or equal, the value depends on `opts.verboseWhenMisma
 
  - Default, `opts.verboseWhenMismatches===false` will yield `false`
  - Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Examples
 
@@ -178,15 +188,21 @@ compare(null)
 // => false.
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## opts.verboseWhenMismatches
 
 Sometimes you just want a yes/no answer is something a subset or equal to something. But sometimes, the whole point of comparison is to inform the user _exactly what_ is mismatching. In the latter cases, set `opts.verboseWhenMismatches` to `true`. When there is no match, instead of Boolean `false` the main function will return **a string** with an explanatory message.
 
 If you use this setting, you have to anticipate Boolean `true` OR something else (Boolean `false` or string) coming out from this library.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Rationale
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Differences from _.isMatch
 
@@ -203,6 +219,8 @@ var res = compare(
 // now, res === false
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
@@ -214,6 +232,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-compare/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
