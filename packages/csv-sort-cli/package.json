@@ -4,7 +4,7 @@
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
+    "node": ">=4",
     "npm": ">=5",
     "yarn": ">=1"
   },
@@ -22,12 +22,15 @@
     "url": "codsen.com"
   },
   "bin": {
-    "csvsort": "cli.js",
-    "sortcsv": "cli.js"
+    "csvsort": "cli-es5.js",
+    "sortcsv": "cli-es5.js"
   },
   "scripts": {
+    "build": "babel cli.js --presets babel-preset-env --out-file cli-es5.js",
     "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint cli.js && npm run build"
   },
   "ava": {
     "verbose": true
@@ -38,7 +41,7 @@
     }
   },
   "files": [
-    "cli.js"
+    "cli-es5.js"
   ],
   "keywords": [
     "csv",
@@ -57,7 +60,7 @@
     "file",
     "files"
   ],
-  "lector": {
+  "lect": {
     "babelrc": {
       "override": false,
       "set": false
@@ -119,22 +122,31 @@
     },
     "licence": {
       "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
     }
   },
   "dependencies": {
     "chalk": "^2.3.0",
     "csv-sort": "^2.0.0",
-    "globby": "^6.1.0",
-    "inquirer": "^4.0.0",
+    "globby": "^7.1.1",
+    "inquirer": "^4.0.1",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
-    "meow": "^3.7.0",
+    "meow": "^4.0.0",
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.2.2",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-import": "^2.8.0",
+    "husky": "*"
   }
 }

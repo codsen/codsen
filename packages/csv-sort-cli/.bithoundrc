@@ -6,9 +6,12 @@
   },
   "dependencies": {
     "mute": [
+      "husky",
       "lodash.pullall",
       "lodash.uniq"
     ]
   },
-  "ignore": []
+  "ignore": [
+    "cli-es5.js"
+  ]
 }

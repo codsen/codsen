@@ -59,6 +59,8 @@ $ csvsort --help
 
 alternatively, the call `sortcsv` will work as well.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## or, omit the file's name, it will let you pick a CSV:
 
 ```bash
@@ -75,6 +77,8 @@ You can even try it without installing — use `npx`:
 $ npx csv-sort-cli YOURFILE.csv
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## What it does exactly
 
 1. It **sorts CSV file rows** to correspond to the [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) principles:
@@ -89,9 +93,13 @@ Sometimes internet banking CSV's have rows in a wrong order, especially when ent
 
 3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. It's the [same tool](https://www.npmjs.com/package/update-notifier) that AVA and [npm](https://www.npmjs.com/package/npm) themselves use!
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -104,6 +112,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/csv-sort-cli/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
