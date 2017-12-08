@@ -64,6 +64,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-monkey.esm.js` | 10&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-monkey.umd.js` | 55&nbsp;KB
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Idea
 
 The main purpose of this library is to do operations on parsed HTML, but more and more I'm [using](#traverse) it everywhere else where I have nested arrays and/or plain objects.
@@ -80,9 +82,9 @@ Using this library, you can delete the particular piece of AST (method [.drop()]
 
 Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
-
-
 
 ### .find()
 
@@ -161,6 +163,8 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
+**[⬆ &nbsp;back to top](#)**
+
 ### .get()
 
 Use method `monkey.get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `monkey.find()` or you can pick a number manually, possibly choosing one of the indexes from `monkey.info()` output.
@@ -206,6 +210,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 ```
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### .set()
 
@@ -253,6 +259,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### .drop()
 
 Use method `monkey.drop()` to delete a piece of an AST with a known index.
@@ -296,6 +304,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //      f: {g: []}
 //    }
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ### .info()
 
@@ -430,6 +440,8 @@ data.gatherPath = [
 -----------
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### .del()
 
 Use method `monkey.del()` to delete all chosen key/value pairs from all objects found within an AST, or all chosen elements from all arrays.
@@ -492,6 +504,8 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### .arrayFirstOnly()
 
 (ex-`flatten()` on versions `v.<3`)
@@ -533,6 +547,8 @@ Output           | Type             | Description
 -----------------|------------------|--------------------
 `input`          | Same as `input`  | The amended `input`
 
+**[⬆ &nbsp;back to top](#)**
+
 ### .traverse()
 
 This one is a bit advanced and riskier in wrong hands.
@@ -565,6 +581,8 @@ ast = monkey.traverse(ast, function (key, val, innerObj) {
 It's very important to **return the value on the callback function** (point marked `#1` above) because otherwise whatever you return will be written over the current AST piece being iterated.
 
 If you definitely want to delete, return `NaN`.
+
+**[⬆ &nbsp;back to top](#)**
 
 #### innerObj in the callback
 
@@ -655,9 +673,13 @@ innerObj = {
 }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## The name of this library
 
 HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**. Anything-nested is can also be considered a tree – tree of plain objects, arrays and strings, for example. Monkey can [traverse](#traverse) anything really.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -670,6 +692,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-monkey/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
