@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: 0, padded-blocks: 0, ava/no-only-test:0 */
 
 const test = require('ava')
-const c = require('..')
+const c = require('../dist/chlu.cjs')
 const { readFileSync } = require('fs')
 const path = require('path')
 

@@ -1,11 +1,11 @@
 /* eslint prefer-destructuring:0, no-param-reassign:0 */
 
-const cmp = require('semver-compare')
-const clone = require('lodash.clonedeep')
-const isNum = require('is-natural-number')
-const trim = require('lodash.trim')
-const easyReplace = require('easy-replace')
-const emojiRegexLib = require('emoji-regex')
+import cmp from 'semver-compare'
+import clone from 'lodash.clonedeep'
+import isNum from 'is-natural-number'
+import trim from 'lodash.trim'
+import easyReplace from 'easy-replace'
+import emojiRegexLib from 'emoji-regex'
 
 const emojiRegex = emojiRegexLib()
 
@@ -222,7 +222,7 @@ function filterDate(someString) {
 // FIN
 // -----------------------------------------------------------------------------
 
-module.exports = {
+export {
   isTitle,
   isFooterLink,
   versionWithBracketsRegex,

@@ -21,10 +21,16 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index.js",
+  "main": "dist/chlu.cjs.js",
+  "module": "dist/chlu.esm.js",
+  "browser": "dist/chlu.umd.js",
   "scripts": {
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
     "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
     "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
@@ -50,7 +56,7 @@
     "automated",
     "tool"
   ],
-  "lector": {
+  "lect": {
     "babelrc": {
       "override": false,
       "set": false
@@ -124,7 +130,7 @@
     "dehumanize-date": "^2.5.0",
     "easy-replace": "^2.12.2",
     "emoji-regex": "^6.5.1",
-    "get-pkg-repo": "^1.4.0",
+    "get-pkg-repo": "^2.0.0",
     "is-natural-number": "^4.0.1",
     "just-insert": "^2.0.0",
     "lodash.clonedeep": "*",
@@ -138,12 +144,21 @@
   },
   "devDependencies": {
     "ava": "*",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.12.0",
+    "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.3.0",
+    "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nyc": "*"
+    "nyc": "*",
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.1"
   }
 }

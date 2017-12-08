@@ -3,7 +3,7 @@
 const test = require('ava')
 const {
   isTitle, isFooterLink, getPreviousVersion, aContainsB, getSetFooterLink, getRow, filterDate,
-} = require('../util')
+} = require('../dist/util.cjs')
 
 // isTitle
 // -------

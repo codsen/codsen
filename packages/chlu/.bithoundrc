@@ -17,7 +17,9 @@
       "nyc"
     ]
   },
-  "ignore": [],
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
     "test/test-end2end.js",
     "test/test-util.js"

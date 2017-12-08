@@ -1,26 +1,17 @@
 /* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
 
-const reverse = require('lodash.reverse')
-const splitLines = require('split-lines')
-const util = require('./util')
-const getPkgRepo = require('get-pkg-repo')
-const serverCompare = require('semver-compare')
-const empty = require('posthtml-ast-contains-only-empty-space')
-const insert = require('just-insert')
-const clone = require('lodash.clonedeep')
-const includes = require('lodash.includes')
-const min = require('lodash.min')
-const dd = require('dehumanize-date')
+import reverse from 'lodash.reverse'
+import splitLines from 'split-lines'
+import getPkgRepo from 'get-pkg-repo'
+import serverCompare from 'semver-compare'
+import empty from 'posthtml-ast-contains-only-empty-space'
+import insert from 'just-insert'
+import clone from 'lodash.clonedeep'
+import includes from 'lodash.includes'
+import min from 'lodash.min'
+import dd from 'dehumanize-date'
 
-// F'S
-// -----------------------------------------------------------------------------
-
-function existy(x) { return x != null }
-
-// UTIL
-// -----------------------------------------------------------------------------
-
-const {
+import {
   getPreviousVersion,
   getTitlesAndFooterLinks,
   getSetFooterLink,
@@ -28,7 +19,12 @@ const {
   getRow,
   versionSort,
   filterDate,
-} = util
+} from './util'
+
+// F'S
+// -----------------------------------------------------------------------------
+
+function existy(x) { return x != null }
 
 // ACTION
 // -----------------------------------------------------------------------------
@@ -281,4 +277,4 @@ function chlu(changelogContents, packageJsonContents) {
   return newLinesArr.join('\n')
 }
 
-module.exports = chlu
+export default chlu
