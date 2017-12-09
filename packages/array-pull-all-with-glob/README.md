@@ -24,9 +24,10 @@ $ npm i array-pull-all-with-glob
 ```
 
 ```js
-const pullWithGlob = require('array-pull-all-with-glob')
-// or
-import pullWithGlob from 'array-pull-all-with-glob'
+// consume as CommonJS require():
+const pullAllWithGlob = require('array-pull-all-with-glob')
+// or as ES Module:
+import pullAllWithGlob from 'array-pull-all-with-glob'
 ```
 
 Here's what you'll get:
