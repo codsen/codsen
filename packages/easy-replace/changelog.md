@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2017-12-09
+### Added
+- ✨ Rebased in ES Modules
+- ✨ Set up the Rollup (nice rhyme). Now serving three builds: CommonJS, UMD and ES Module. all wired-up to separate package.json keys. This way, Rollup and WebPack can tap ES Modules instead of CommonJS. This also solves problems with transpiling. CommonJS is transpiled, ES Modules are not. No more problems with `create-react-app` not being able to uglify the source in ES6.
+
 ## [2.12.0] - 2017-09-15
 ### Removed
 - Removed JS Standard and moved onto ESLint with tweaked AirBnB preset with semicolons off. Blimey, so many issues were reported by ESLint that JS Standard missed!
@@ -65,3 +70,4 @@ Fresh morning and fresh head yields new improvements.
 [2.10.0]: https://github.com/codsen/easy-replace/compare/v2.9.0...v2.10.0
 [2.11.0]: https://github.com/codsen/easy-replace/compare/v2.10.0...v2.11.0
 [2.12.0]: https://github.com/codsen/easy-replace/compare/v2.11.0...v2.12.0
+[3.0.0]: https://github.com/codsen/easy-replace/compare/v2.12.0...v3.0.0

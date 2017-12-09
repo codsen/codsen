@@ -1,10 +1,8 @@
-'use strict';
+import toArray from 'lodash.toarray';
+import checkTypes from 'check-types-mini';
 
 /* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: true, array: false}}] */
 /* eslint no-continue: 0 */
-
-var toArray = require('lodash.toarray');
-var checkTypes = require('check-types-mini');
 
 // ===========================
 
@@ -356,4 +354,4 @@ function er(originalSource, options, originalReplacement) {
   return result;
 }
 
-module.exports = er;
+export default er;

@@ -1,5 +1,5 @@
 import test from 'ava'
-import er from './er'
+import er from '../dist/easy-replace.cjs'
 
 // ==============================
 // only the string to search for
@@ -3170,7 +3170,7 @@ test('12.13 - rightOutsideNot with L-R maybes', (t) => {
   )
 })
 
-test('12.14 - all of \'em', (t) => {
+test('12.14 - all of \'em #1', (t) => {
   t.is(
     er(
       'zb🐴cy',
@@ -3190,7 +3190,7 @@ test('12.14 - all of \'em', (t) => {
   )
 })
 
-test('12.14 - all of \'em', (t) => {
+test('12.14 - all of \'em #2', (t) => {
   t.is(
     er(
       'zb🐴cy',

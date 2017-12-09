@@ -7,14 +7,16 @@
   "dependencies": {
     "mute": [
       "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "lodash.toarray",
       "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }
