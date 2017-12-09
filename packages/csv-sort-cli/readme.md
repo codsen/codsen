@@ -91,7 +91,7 @@ Sometimes internet banking CSV's have rows in a wrong order, especially when ent
 
 ![2D trim of a CSV contents](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img2.png)
 
-3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
+3. Not to mention, the [our custom CSV parse](https://github.com/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with a double quotes. Read more in [its repo's readme](https://github.com/codsen/csv-split-easy).
 
 **[⬆ &nbsp;back to top](#)**
 
