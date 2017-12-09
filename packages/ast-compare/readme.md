@@ -81,7 +81,7 @@ console.log(result)
 // => true
 ```
 
-Main purpose is to compare two parsed HTML/CSS trees or their branches but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
+The main purpose is to compare two parsed HTML/CSS trees or their branches, but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -118,7 +118,7 @@ Input argument   | Type                            | Obligatory? | Description
 {                       |         |             |         |
 `hungryForWhitespace`   | Boolean | no          | `false` | The any whitespace (tabs, spaces, line breaks and so on) will match any other white space.
 `matchStrictly`         | Boolean | no          | `false` | When you want to match like `===`.
-`verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be string with a message explaining what didn't match. It's for cases when it's important to report what didn't match.
+`verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match.
 }                       |         |             |         |
 
 **[⬆ &nbsp;back to top](#)**
@@ -200,7 +200,7 @@ If you use this setting, you have to anticipate Boolean `true` OR something else
 
 ## Rationale
 
-I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
+I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arrays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -208,7 +208,7 @@ I want to check, does a deeply-nested array of objects/strings/arrays (for examp
 
 > "Partial comparisons will match empty array and empty object source values against any array or object value, respectively." — [Lodash documentation](https://lodash.com/docs/4.16.4#isMatch)
 
-[_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. Empty array will not be reported as equal to non-empty array.
+[_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. An empty array will not be reported as equal to a non-empty array.
 
 ```js
 // in this library:
