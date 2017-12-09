@@ -28,7 +28,7 @@ Consume:
 ```js
 // Consume as CommonJS require:
 const arrayIncludesWithGlob = require('array-includes-with-glob')
-// or tap the original source in ES Modules format:
+// or tap the original ES Modules source:
 import arrayIncludesWithGlob from 'array-includes-with-glob'
 ```
 
