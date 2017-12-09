@@ -611,7 +611,7 @@ If monkey is currently traversing an array, going through all elements, a `key` 
 `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. It's purpose is to allow you to query the **siblings** of the current element.
 `}`                     |                |
 
-Allow me to show you how to practically tap the `innerObj`;
+Allow me to show you how to practically tap the `innerObj`:
 
 ```js
 const monkey = require('ast-monkey')
