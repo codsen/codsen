@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "license": "MIT",
   "engines": {
