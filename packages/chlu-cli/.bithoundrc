@@ -6,11 +6,12 @@
   },
   "dependencies": {
     "mute": [
-      "ava",
       "husky"
     ]
   },
-  "ignore": [],
+  "ignore": [
+    "cli-es5.js"
+  ],
   "test": [
     "test_bak.js"
   ]
