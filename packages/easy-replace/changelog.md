@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Rebased in ES Modules
 - ✨ Set up the Rollup (nice rhyme). Now serving three builds: CommonJS, UMD and ES Module. all wired-up to separate package.json keys. This way, Rollup and WebPack can tap ES Modules instead of CommonJS. This also solves problems with transpiling. CommonJS is transpiled, ES Modules are not. No more problems with `create-react-app` not being able to uglify the source in ES6.
 
-API didn't change, it actually becase even more flexible. `main`, `module` and `browser` keys in `package.json` lead to different build flavours.
+API didn't change, it actually became even more flexible. `main`, `module` and `browser` keys in `package.json` lead to different build flavours.
 
 ## [2.12.0] - 2017-09-15
 ### Removed
