@@ -46,7 +46,7 @@ Consume:
 ```js
 // as CommonJS require:
 const checkTypes = require('check-types-mini')
-// or as ES Module:
+// or native source directly, as an ES Module:
 import checkTypes from 'check-types-mini'
 ```
 
