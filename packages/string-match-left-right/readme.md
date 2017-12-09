@@ -119,7 +119,7 @@ The Optional Options Object is sanitized by [check-types-mini](https://github.co
 
 const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
 
-let res1 = matchLeftIncl('abcdefghi', 3, ['bcd']),
+let res1 = matchLeftIncl('abcdefghi', 3, ['bcd'])
 // 3rd character is "d" because indexes start from zero.
 // We're checking the string to the left of it, "bcd", inclusive of current character ("d").
 // This means, "bcd" has to end with existing character and the other chars to the left
@@ -127,17 +127,17 @@ let res1 = matchLeftIncl('abcdefghi', 3, ['bcd']),
 console.log(`res1 = ${res1}`)
 // => res1 = true
 
-let res2 = matchLeft('abcdefghi', 3, ['ab', `zz`]),
+let res2 = matchLeft('abcdefghi', 3, ['ab', `zz`])
 // neither "ab" nor "zz" are to the left of 3rd index, "d":
 console.log(`res2 = ${res2}`)
 // => res2 = false
 
-let res3 = matchRightIncl('abcdefghi', 3, ['def', `zzz`]),
+let res3 = matchRightIncl('abcdefghi', 3, ['def', `zzz`])
 // "def" is to the right of 3rd index (including it), "d":
 console.log(`res3 = ${res3}`)
 // => res3 = true
 
-let res4 = matchRight('abcdefghi', 3, ['ef', `zz`]),
+let res4 = matchRight('abcdefghi', 3, ['ef', `zz`])
 // One of values, "ef" is exactly to the right of 3rd index, "d":
 console.log(`res4 = ${res4}`)
 // => res4 = true
@@ -164,7 +164,7 @@ const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string
 function isSpace(char) {
   return (typeof char === 'string') && (char.trim() === '')
 }
-let res = matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace }),
+let res = matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace })
 console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // => res = true
 ```

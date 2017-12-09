@@ -40,7 +40,9 @@ function main(mode, str, position, whatToMatch, opts) {
       cbRight: ['null', 'undefined', 'function'],
     },
   })
-  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(String)
+  opts.trimCharsBeforeMatching = opts
+    .trimCharsBeforeMatching
+    .map(el => (isStr(el) ? el : String(el)))
 
   switch (mode) {
     case 'matchLeftIncl':

@@ -12,7 +12,7 @@ export default [
     output: {
       file: pkg.browser,
       format: 'umd',
-      name: 'stringCollapseWhiteSpace',
+      name: 'stringMatchLeftRight',
     },
     plugins: [
       resolve(), // so Rollup can find deps
@@ -30,12 +30,12 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'arrayiffy-if-string',
       'check-types-mini',
       'is-natural-number',
       'lodash.isplainobject',
       'lodash.trimstart',
       'lodash.trimend',
-      'arrayiffy-if-string',
     ],
     plugins: [
       babel(),
