@@ -42,6 +42,13 @@
 $ npm i color-shorthand-hex-to-six-digit
 ```
 
+```js
+// consume as CommonJS require():
+const conv = require('color-shorthand-hex-to-six-digit')
+// or as an ES Module:
+import conv from 'color-shorthand-hex-to-six-digit'
+```
+
 Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
@@ -69,7 +76,7 @@ Additionally, all letters in all hex codes are converted to lowercase.
 ## Examples
 
 ```js
-var conv = require('color-shorthand-hex-to-six-digit')
+const conv = require('color-shorthand-hex-to-six-digit')
 
 // converts shorthand hex color codes within strings:
 conv('aaaa #f0c zzzz\n\t\t\t#fc0')
