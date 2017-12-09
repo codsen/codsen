@@ -20,3 +20,5 @@ config.json
 .editorconfig
 .travis.yml
 test.js
+.babelrc
+cli.js

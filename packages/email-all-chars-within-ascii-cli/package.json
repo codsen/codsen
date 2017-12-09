@@ -4,7 +4,7 @@
   "description": "Command line app to scans email templates, are all their characters within ASCII range",
   "license": "MIT",
   "engines": {
-    "node": ">=6.8.0",
+    "node": ">=4.0.0",
     "npm": ">=5",
     "yarn": ">=1"
   },
@@ -22,12 +22,15 @@
     "url": "codsen.com"
   },
   "bin": {
-    "tinaturner": "cli.js",
-    "withinascii": "cli.js"
+    "tinaturner": "cli-es5.js",
+    "withinascii": "cli-es5.js"
   },
   "scripts": {
+    "build": "babel cli.js --presets babel-preset-env --out-file cli-es5.js",
     "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint cli.js && npm run build"
   },
   "ava": {
     "verbose": true
@@ -51,7 +54,7 @@
     "7bit",
     "validate"
   ],
-  "lector": {
+  "lect": {
     "babelrc": {
       "override": false,
       "set": false
@@ -123,7 +126,7 @@
   },
   "dependencies": {
     "chalk": "^2.3.0",
-    "email-all-chars-within-ascii": "^2.0.0",
+    "email-all-chars-within-ascii": "^2.0.1",
     "globby": "^7.1.1",
     "inquirer": "^4.0.1",
     "lodash.pullall": "*",
@@ -132,7 +135,9 @@
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {
-    "eslint": "^4.12.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.13.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
