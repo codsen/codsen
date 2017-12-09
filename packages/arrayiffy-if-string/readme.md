@@ -37,10 +37,10 @@ $ npm i arrayiffy-if-string
 ```
 
 ```js
-// consume as ES module:
-import arrayiffy from 'arrayiffy-if-string'
-// or as CommonJS require:
+// consume as CommonJS require:
 const arrayiffy = require('require arrayiffy-if-string')
+// or as an ES module:
+import arrayiffy from 'arrayiffy-if-string'
 ```
 
 Here's what you'll get:
