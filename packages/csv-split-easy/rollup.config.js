@@ -12,7 +12,7 @@ export default [
     output: {
       file: pkg.browser,
       format: 'umd',
-      name: 'stringCollapseWhiteSpace',
+      name: 'splitEasy',
     },
     plugins: [
       resolve(), // so Rollup can find deps
@@ -31,8 +31,8 @@ export default [
     ],
     external: [
       'check-types-mini',
-      'string-remove-thousand-separators',
       'lodash.isplainobject',
+      'string-remove-thousand-separators',
     ],
     plugins: [
       babel(),
