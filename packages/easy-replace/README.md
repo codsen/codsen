@@ -48,10 +48,11 @@ $ npm i easy-replace
 ```
 
 ```js
+// consume via CommonJS require:
 const er = require('easy-replace')
+// or as native ES Module:
+import er from 'easy-replace'
 ```
-
-A transpiled code is served. Original source is in root, `./er.js`, it's transpiled and served from `./er-es5.js`.
 
 Here's what you'll get:
 
