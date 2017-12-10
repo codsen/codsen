@@ -1,4 +1,4 @@
-/* eslint no-param-reassign:0, default-case:0, consistent-return:0 */
+/* eslint no-param-reassign:0, default-case:0, consistent-return:0, max-len:0, no-mixed-operators:0 */
 
 import isNaturalNumber from 'is-natural-number'
 import checkTypes from 'check-types-mini'
@@ -55,10 +55,10 @@ function main(mode, str, position, whatToMatch, opts) {
         }
         if (opts.i) {
           return temp.toLowerCase().endsWith(el.toLowerCase()) &&
-            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true)
+            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
         }
         return temp.endsWith(el) &&
-          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true)
+          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
       })
     case 'matchLeft':
       return whatToMatch.some((el) => {
@@ -70,10 +70,10 @@ function main(mode, str, position, whatToMatch, opts) {
         }
         if (opts.i) {
           return temp.toLowerCase().endsWith(el.toLowerCase()) &&
-            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true)
+            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
         }
         return (temp.endsWith(el)) &&
-          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true)
+          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
       })
     case 'matchRightIncl':
       return whatToMatch.some((el) => {
@@ -85,10 +85,10 @@ function main(mode, str, position, whatToMatch, opts) {
         }
         if (opts.i) {
           return (temp.toLowerCase().startsWith(el.toLowerCase())) &&
-            (opts.cbRight ? opts.cbRight(temp[el.length]) : true)
+            (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
         }
         return (temp.startsWith(el)) &&
-          (opts.cbRight ? opts.cbRight(temp[el.length]) : true)
+          (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
       })
     case 'matchRight':
       return whatToMatch.some((el) => {
@@ -100,10 +100,10 @@ function main(mode, str, position, whatToMatch, opts) {
         }
         if (opts.i) {
           return (temp.toLowerCase().startsWith(el.toLowerCase())) &&
-            (opts.cbRight ? opts.cbRight(temp[el.length]) : true)
+            (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
         }
         return (temp.startsWith(el)) &&
-          (opts.cbRight ? opts.cbRight(temp[el.length]) : true)
+          (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
       })
   }
 }
@@ -127,3 +127,5 @@ function matchRight(str, position, whatToMatch, opts) {
 export {
   matchLeftIncl, matchRightIncl, matchLeft, matchRight,
 }
+
+// TODO: unify left and right callbacks

@@ -7,7 +7,7 @@ import arrayiffy from 'arrayiffy-if-string';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint no-param-reassign:0, default-case:0, consistent-return:0 */
+/* eslint no-param-reassign:0, default-case:0, consistent-return:0, max-len:0, no-mixed-operations:0 */
 
 function isStr(something) {
   return typeof something === 'string';
@@ -60,9 +60,9 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(0, position + 1);
         }
         if (opts.i) {
-          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true);
         }
-        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true);
       });
     case 'matchLeft':
       return whatToMatch.some(function (el) {
@@ -73,9 +73,9 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(0, position);
         }
         if (opts.i) {
-          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+          return temp.toLowerCase().endsWith(el.toLowerCase()) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true);
         }
-        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length]) : true);
+        return temp.endsWith(el) && (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true);
       });
     case 'matchRightIncl':
       return whatToMatch.some(function (el) {
@@ -86,9 +86,9 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(position);
         }
         if (opts.i) {
-          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true);
         }
-        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true);
       });
     case 'matchRight':
       return whatToMatch.some(function (el) {
@@ -99,9 +99,9 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(position + 1);
         }
         if (opts.i) {
-          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+          return temp.toLowerCase().startsWith(el.toLowerCase()) && (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true);
         }
-        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length]) : true);
+        return temp.startsWith(el) && (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true);
       });
   }
 }
@@ -121,5 +121,9 @@ function matchRightIncl(str, position, whatToMatch, opts) {
 function matchRight(str, position, whatToMatch, opts) {
   return main('matchRight', str, position, whatToMatch, opts);
 }
+
+
+
+// TODO: unify left and right callbacks
 
 export { matchLeftIncl, matchRightIncl, matchLeft, matchRight };

@@ -1,3 +1,5 @@
+/* eslint ava/no-only-test:0 */
+
 import test from 'ava'
 import { matchLeftIncl, matchRightIncl, matchLeft, matchRight } from '../dist/string-match-left-right.cjs'
 
@@ -650,5 +652,146 @@ test('07.01 - opts.trimCharsBeforeMatching       pt.1', (t) => {
     matchRight('< / div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/'] }),
     false,
     '07.01.07',
+  )
+})
+
+// 8. opts.cbLeft and opts.cbRight callbacks
+// -----------------------------------------------------------------------------
+
+test('08.01 - new in v1.5.0 - second arg in callback - matchRight()', (t) => {
+  function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.trim().startsWith('class=""')
+  }
+
+  t.is(
+    matchRight('</div class="">', 0, ['div'], { cbRight: hasEmptyClassRightAfterTheTagName }),
+    false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
+    '08.01.01',
+  )
+  t.is(
+    matchRight('</div class="">', 0, ['div'], { cbRight: hasEmptyClassRightAfterTheTagName, trimCharsBeforeMatching: ['/ '] }),
+    true, // trims slash, finds div, calls the callback with args, they trim and check for "class".
+    '08.01.02',
+  )
+})
+
+test('08.02 - new in v1.5.0 - second arg in callback - matchRightIncl()', (t) => {
+  function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.trim().startsWith('class=""')
+  }
+  function startsWithDiv(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.startsWith('div')
+  }
+  function startsWithDivWithTrim(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.trim().startsWith('div')
+  }
+
+  t.is(
+    matchRightIncl('</div class="">', 0, ['</']),
+    true, // base from where we start
+    '08.02.01',
+  )
+  t.is(
+    matchRightIncl('</div class="">', 0, ['</'], { cbRight: hasEmptyClassRightAfterTheTagName }),
+    false, // wrong callback function
+    '08.02.02',
+  )
+  t.is(
+    matchRightIncl('</div class="">', 0, ['</'], { cbRight: startsWithDiv }),
+    true, // fails because space (before "class") is not accounted for
+    '08.02.03',
+  )
+  t.is(
+    matchRightIncl('</ div class="">', 0, ['</'], { cbRight: startsWithDiv }),
+    false, // fails because space (before "class") is not accounted for
+    '08.02.04',
+  )
+  t.is(
+    matchRightIncl('</div class="">', 0, ['</'], { cbRight: startsWithDivWithTrim }),
+    true, // trims slash, finds div, calls the callback with args, they trim and check for "class".
+    '08.02.05',
+  )
+})
+
+test('08.03 - new in v1.5.0 - second arg in callback - matchLeft()', (t) => {
+  function startsWithZ(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.startsWith('z')
+  }
+
+  t.is(
+    matchLeft('<div><b>aaa</b></div>', 5, ['<div>']),
+    true, // 5th index is left bracket of <b>. Yes, <div> is on the left.
+    '08.03.01',
+  )
+  t.is(
+    matchLeft('z<div ><b>aaa</b></div>', 7, ['<div>']),
+    false, // 7th index is left bracket of <b>. Yes, <div> is on the left.
+    '08.03.02',
+  )
+  t.is(
+    matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { trimCharsBeforeMatching: [' >'] }),
+    true, // 7th index is left bracket of <b>. Yes, <div> is on the left.
+    '08.03.03',
+  )
+  t.is(
+    matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+    true, // 7th index is left bracket of <b>. Yes, <div> is on the left.
+    '08.03.04',
+  )
+  t.is(
+    matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+    false, // cheeky - deliberately making the second arg of cb to be blank and fail startsWithZ
+    '08.03.05',
+  )
+})
+
+test('08.04 - new in v1.5.0 - second arg in callback - matchLeftIncl()', (t) => {
+  function startsWithZ(firstCharacter, wholeSubstring) {
+    // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+    // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+    return wholeSubstring.startsWith('z')
+  }
+
+  t.is(
+    matchLeftIncl('<div><b>aaa</b></div>', 4, ['<div>']),
+    true, // 4th index is right bracket of <div>, but it's inclusive so it will get included.
+    // not inclusive would give "<div" by the way, that is, given index would not
+    // be included in the slice.
+    '08.04.01',
+  )
+  t.is(
+    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['<div>']),
+    false,
+    '08.04.02',
+  )
+  t.is(
+    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['<div >']),
+    true,
+    '08.04.03',
+  )
+  t.is(
+    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['<div >'], { cbLeft: startsWithZ }),
+    true,
+    '08.04.04',
+  )
+  t.is(
+    matchLeftIncl('zxy<div ><b>aaa</b></div>', 8, ['krbd', '<div >'], { cbLeft: startsWithZ }),
+    true,
+    '08.04.05',
+  )
+  t.is(
+    matchLeftIncl('<div ><b>aaa</b></div>', 0, ['krbd', '<div >'], { cbLeft: startsWithZ }),
+    false,
+    '08.04.06 - cheeky - nothing for callback to hang onto',
   )
 })
