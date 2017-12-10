@@ -51,6 +51,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/email-all-chars-within-ascii.esm.js` | 3&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/email-all-chars-within-ascii.umd.js` | 17&nbsp;KB
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Idea
 
 Traverse the string and check if all characters are suitable for 7bit encoding, in other words, are within the basic ASCII range, first 126 characters, and does not include any invisible control characters.
