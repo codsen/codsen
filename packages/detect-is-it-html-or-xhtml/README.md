@@ -44,7 +44,7 @@ $ npm i detect-is-it-html-or-xhtml
 // consume using a CommonJS require:
 const detect = require('detect-is-it-html-or-xhtml')
 // or as a native ES Module:
-import detect = from 'detect-is-it-html-or-xhtml'
+import detect from 'detect-is-it-html-or-xhtml'
 // then, pass it a string containing HTML:
 console.log(detect('<img src="some.jpg" width="zzz" height="zzz" border="0" style="display:block;" alt="zzz"/>'))
 // => 'xhtml'
