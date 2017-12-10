@@ -169,6 +169,43 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // => res = true
 ```
 
+The callback function will receive two arguments:
+
+* first argument - the character on the left/right side (depending which side method this is)
+* second argment - whole substring that begins or ends with first argument. This might come handy if you want to perform check on more than one character outside of the matched characters.
+
+For example:
+
+```js
+const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
+
+function startsWithZ(firstCharacter, wholeSubstring) {
+  // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
+  // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+  return wholeSubstring.startsWith('z')
+}
+
+const test01 = matchLeft('<div><b>aaa</b></div>', 5, ['<div>'])
+console.log(`test01 = ${JSON.stringify(test01, null, 4)}`)
+// => true, // the 5th index is left bracket of <b>. Yes, <div> is on the left.
+
+const test02 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div>'])
+console.log(`test02 = ${JSON.stringify(test02, null, 4)}`)
+// => false, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
+
+const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { trimCharsBeforeMatching: [' >'] })
+console.log(`test03 = ${JSON.stringify(test03, null, 4)}`)
+// => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
+
+const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] })
+console.log(`test04 = ${JSON.stringify(test04, null, 4)}`)
+// => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
+
+const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+console.log(`test05 = ${JSON.stringify(test05, null, 4)}`)
+// => false, // deliberately making the second arg of cb to be blank and fail startsWithZ
+```
+
 **[⬆ &nbsp;back to top](#)**
 
 ## `opts.trimBeforeMatching`
@@ -189,9 +226,9 @@ For example, [string-strip-html](https://github.com/codsen/string-strip-html) wi
 
 You may ask: why is the [coverage](https://coveralls.io/github/codsen/string-match-left-right?branch=master) not proper 100%?
 
-I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node (and together with it, AVA, natively) does not support ES modules yet, I have to _transpile_ the code (using Rollup + Babel). This means, we run unit tests not against the _source code_, but against _what Babel generated out of it_. Since Babel adds more stuff and that stuff can change (since we're using "floating" preset `babel-preset-env`), I can't 100% guarantee that unit tests will cover transpiled code 100%.
+I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node (and together with it, AVA, natively) does not support ES modules yet, I have to _transpile_ the code (using Rollup + Babel). Sometimes Babel adds its own code which I can't target with my unit tests, for example the auxiliary functions responsible for CommonJS modules thingies. But sometimes it's because of my ~~laziness~~ lack of time.
 
-At least we cover 100% of the lines:
+At least we aim to cover 100% of the lines:
 
 ![current coverage situation](https://cdn.rawgit.com/codsen/string-match-left-right/45b3724d/media/coverage.png)
 
