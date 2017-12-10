@@ -39,9 +39,6 @@
       "xo": 0
     }
   },
-  "files": [
-    "cli.js"
-  ],
   "keywords": [
     "update",
     "changelog",
@@ -130,14 +127,14 @@
     }
   },
   "dependencies": {
-    "chlu": "^2.6.0",
+    "chlu": "^2.7.0",
     "meow": "^4.0.0",
     "update-notifier": "^2.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "eslint": "^4.12.1",
+    "eslint": "^4.13.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
