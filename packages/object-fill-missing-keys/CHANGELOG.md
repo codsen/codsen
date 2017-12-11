@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2017-12-11
+### Changed
+- ✨ Rebased in ES Modules
+- ✨ Set up Rollup. Now serving 3 flavours: CommonJS, UMD and ES Module. When this library is used as a dependency, WebPack and Rollup should recognise ES Module wiring via `module` key in package.json and should switch to ES Modules version automatically.
+- ✨ Fixed few tiny bugs
+- ✨ Improved unit test coverage to be 100%-lines. I can't do 100%-branches because Babel adds functions which I can't target and we're testing transpiled code. The source is now in ES Modules and everything's covered there.
+- 👾 Some other setup tweaks to reflect my latest understanding what's best for npm libraries.
+
+## [3.1.0] - 2017-10-14
+### Added
+- ✨ `opts.placeholder`
+- ✨ `opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder`
+
 ## [3.0.0] - 2017-10-13
 ### Changed
 - 🔧 Hardened the API - strange cases with no arguments or wrong-ones will `throw` an error. Hence bumping the major semver release.
@@ -38,3 +51,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [2.2.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.1.0...v2.2.0
 [2.3.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.2.0...v2.3.0
 [3.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.3.0...v3.0.0
+[3.1.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.0.0...v3.1.0
+[4.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.1.0...v4.0.0

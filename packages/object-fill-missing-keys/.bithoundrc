@@ -13,8 +13,10 @@
       "nyc"
     ]
   },
-  "ignore": [],
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

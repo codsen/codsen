@@ -1,6 +1,5 @@
 import test from 'ava'
-
-const fillMissingKeys = require('./index.js')
+import fillMissingKeys from '../dist/object-fill-missing-keys.cjs'
 
 // ==============================
 // 1. Adds missing keys
@@ -716,20 +715,33 @@ test('04.03 - null as input', (t) => {
   })
 })
 
-test('04.04 - both args missing (as in undefined-missing)', (t) => {
-  t.deepEqual(
+test('04.04 - both args missing (as in hardcoded undefined)', (t) => {
+  t.throws(() => {
     fillMissingKeys(
       undefined,
       undefined,
-    ),
-    undefined,
-    '04.04',
-  )
+    )
+  })
 })
 
 test('04.05 - both args completely missing', (t) => {
   t.throws(() => {
     fillMissingKeys()
+  })
+})
+
+test('04.06 - second arg is not a plain object', (t) => {
+  t.throws(() => {
+    fillMissingKeys({ a: 'b' }, 1)
+  })
+})
+
+test('04.07 - opts is not a plain object', (t) => {
+  t.throws(() => {
+    fillMissingKeys({ a: 'c' }, { a: 'b' }, 1)
+  })
+  t.notThrows(() => {
+    fillMissingKeys({ a: 'c' }, { a: 'b' }, null)
   })
 })
 

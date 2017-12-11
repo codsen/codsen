@@ -1,14 +1,17 @@
 {
   "name": "object-fill-missing-keys",
   "version": "3.0.0",
-  "description": "Add missing keys into plain objects, according to a provided schema object.",
+  "description": "Add missing keys into plain objects, according to a provided schema object",
   "license": "MIT",
   "engines": {
     "node": ">=6",
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": "codsen/object-fill-missing-keys",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/object-fill-missing-keys.git"
+  },
   "bugs": {
     "url": "https://github.com/codsen/object-fill-missing-keys/issues"
   },
@@ -18,11 +21,17 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index.js",
+  "main": "dist/object-fill-missing-keys.cjs.js",
+  "module": "dist/object-fill-missing-keys.esm.js",
+  "browser": "dist/object-fill-missing-keys.umd.js",
   "scripts": {
+    "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
     "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint *.js && nyc --reporter=html --reporter=text ava"
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "verbose": true
@@ -48,19 +57,98 @@
     "normalise",
     "normalize"
   ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
+  },
   "dependencies": {
+    "arrayiffy-if-string": "^3.0.3",
+    "check-types-mini": "^3.0.0",
     "lodash.clonedeep": "*",
-    "object-merge-advanced": "^7.1.2",
-    "type-detect": "^4.0.3"
+    "object-merge-advanced": "^8.2.0",
+    "type-detect": "^4.0.5"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-ava": "^4.2.2",
-    "eslint-plugin-import": "^2.7.0",
+    "eslint": "^4.13.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nyc": "*"
+    "nyc": "*",
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.2"
   }
 }
