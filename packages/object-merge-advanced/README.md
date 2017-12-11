@@ -56,7 +56,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 12&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 11&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -128,15 +128,11 @@ I use unidirectional merging when dealing with content mapping JSON files which 
 var mergeAdvanced = require('object-merge-advanced')
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
 ## API
 
 ```js
 mergeAdvanced(input1, input2 [, { options }])
 ```
-
-**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -238,8 +234,6 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 ## Difference from Lodash `_.merge`
 
 Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Difference from `object-assign`
 

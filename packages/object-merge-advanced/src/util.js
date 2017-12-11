@@ -10,10 +10,10 @@ import typeDetect from 'type-detect'
 function existy(x) { return x != null }
 
 function isObj(something) { return typeDetect(something) === 'Object' }
+
 function isArr(something) { return Array.isArray(something) }
-function isBool(bool) {
-  return typeof bool === 'boolean'
-}
+
+function isBool(bool) { return typeof bool === 'boolean' }
 
 function equalOrSubsetKeys(obj1, obj2) {
   if (!isObj(obj1)) {
@@ -38,6 +38,9 @@ function arrayContainsStr(arr) {
   }
   return arr.some(val => typeof val === 'string')
 }
+
+// ===================================
+// E X P O R T S
 
 export {
   existy,

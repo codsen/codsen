@@ -27,9 +27,11 @@ function existy(x) {
 function isObj$1(something) {
   return typeDetect(something) === 'Object';
 }
+
 function isArr$1(something) {
   return Array.isArray(something);
 }
+
 function isBool(bool) {
   return typeof bool === 'boolean';
 }
@@ -107,7 +109,8 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     ignoreEverything: false,
     concatInsteadOfMerging: true,
     dedupeStringsInArrayValues: false,
-    mergeBoolsUsingOrNotAnd: true
+    mergeBoolsUsingOrNotAnd: true,
+    useNullAsExplicitFalse: true
   };
   var opts = Object.assign(clone(defaults), originalOpts);
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);

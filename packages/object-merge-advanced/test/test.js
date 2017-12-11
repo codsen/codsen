@@ -2771,7 +2771,7 @@ test('11.06 - case #9 (mirror to #81)', (t) => {
   )
 })
 
-test('11.07 - case #8 and its mirrow #71', (t) => {
+test('11.07 - case #8 and its mirror, #71', (t) => {
   t.deepEqual(
     mergeAdvanced(
       { a: ['a'] },
@@ -2792,7 +2792,7 @@ test('11.07 - case #8 and its mirrow #71', (t) => {
   )
 })
 
-test('11.08 - case #7 and its mirrow #61', (t) => {
+test('11.08 - case #7 and its mirror, #61', (t) => {
   t.deepEqual(
     mergeAdvanced(
       { a: ['a'] },
@@ -3651,6 +3651,68 @@ test('16.01 - values as arrays that contain strings', (t) => {
   )
 })
 
+// ===============================
+// 17. opts.useNullAsExplicitFalse
+// ===============================
+
+test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        a: null,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.01.01 - control, case #79 - false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: true,
+      },
+      {
+        a: null,
+      },
+    ),
+    {
+      a: true,
+    },
+    '17.01.01.02 - control, case #79 - true',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: false,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.02.01 - control, case #88 - false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: true,
+      },
+    ),
+    {
+      a: true,
+    },
+    '17.01.02.02 - control, case #88 - true',
+  )
+})
 
 // ============================================================
 //                   U T I L   T E S T S

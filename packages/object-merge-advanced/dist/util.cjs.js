@@ -22,9 +22,11 @@ function existy(x) {
 function isObj(something) {
   return typeDetect(something) === 'Object';
 }
+
 function isArr(something) {
   return Array.isArray(something);
 }
+
 function isBool(bool) {
   return typeof bool === 'boolean';
 }

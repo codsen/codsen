@@ -50,6 +50,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     concatInsteadOfMerging: true,
     dedupeStringsInArrayValues: false,
     mergeBoolsUsingOrNotAnd: true,
+    useNullAsExplicitFalse: true,
   }
   const opts = Object.assign(clone(defaults), originalOpts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
