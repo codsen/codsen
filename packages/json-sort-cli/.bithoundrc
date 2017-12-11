@@ -6,12 +6,11 @@
   },
   "dependencies": {
     "mute": [
-      "ava",
-      "coveralls",
       "husky",
-      "lodash.uniq",
-      "nyc"
+      "lodash.uniq"
     ]
   },
-  "ignore": []
+  "ignore": [
+    "cli-es5.js"
+  ]
 }

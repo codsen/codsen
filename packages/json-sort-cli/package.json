@@ -4,11 +4,14 @@
   "description": "Command line app to deep sort JSON files. Accepts globs, works fully async.",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
+    "node": ">=4",
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": "codsen/json-sort-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/json-sort-cli.git"
+  },
   "bugs": {
     "url": "https://github.com/codsen/json-sort-cli/issues"
   },
@@ -19,13 +22,15 @@
     "url": "codsen.com"
   },
   "bin": {
-    "jsonsort": "cli.js",
-    "sortjson": "cli.js"
+    "jsonsort": "cli-es5.js",
+    "sortjson": "cli-es5.js"
   },
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "build": "babel cli.js --presets babel-preset-env --out-file cli-es5.js",
     "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint *.js"
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint cli.js && npm run build"
   },
   "ava": {
     "verbose": true
@@ -35,9 +40,6 @@
       "xo": 0
     }
   },
-  "files": [
-    "cli.js"
-  ],
   "keywords": [
     "json",
     "sort",
@@ -50,26 +52,95 @@
     "tool",
     "app"
   ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
+  },
   "dependencies": {
-    "chalk": "^2.1.0",
-    "globby": "^6.1.0",
+    "chalk": "^2.3.0",
+    "globby": "^7.1.1",
     "is-d": "^1.0.0",
-    "listr": "^0.12.0",
-    "load-json-file": "^3.0.0",
+    "listr": "^0.13.0",
+    "load-json-file": "^4.0.0",
     "lodash.uniq": "*",
-    "meow": "^3.7.0",
+    "meow": "^4.0.0",
     "p-reduce": "^1.0.0",
     "update-notifier": "^2.3.0",
     "write-json-file": "^2.3.0"
   },
   "devDependencies": {
-    "ava": "*",
-    "coveralls": "*",
-    "eslint": "^4.8.0",
-    "eslint-config-airbnb-base": "^12.0.2",
-    "eslint-plugin-ava": "^4.2.2",
-    "eslint-plugin-import": "^2.7.0",
-    "husky": "*",
-    "nyc": "*"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.13.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-import": "^2.8.0",
+    "husky": "*"
   }
 }

@@ -1,6 +1,6 @@
 # json-sort-cli
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
 > Command line app to deep sort JSON files. Accepts globs, works fully async.
 
@@ -13,7 +13,7 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![MIT License][license-badge]][license]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -30,8 +30,6 @@
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-**[⬆ &nbsp;back to top](#)**
 
 ## Install globally, call anywhere
 
@@ -66,6 +64,8 @@ short | long            | description
 `-h`  | `--help`        | shows (similar to this) **h**elp
 `-v`  | `--version`     | shows the installed **v**ersion of your `json-sort-cli`
 
+**[⬆ &nbsp;back to top](#)**
+
 ## What it does exactly
 
 It **sorts JSON files deeply**. That is, the algorithm will traverse the input if it's an array or a plain object and will sort _every encountered plain object_.
@@ -92,13 +92,15 @@ When you install it globally, it will check occasionally, are there newer versio
 
 ## Contributing
 
-This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/json-sort-cli/issues). If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email, Twitter or raise an issue on a link above.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-I also gladly accept feature requests and try to help people using my libraries. Like a rudimentary Customer Support, except on Monday mornings. On Monday mornings I'm very grumpy.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/json-sort-cli/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -106,25 +108,7 @@ I also gladly accept feature requests and try to help people using my libraries.
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-sort-cli
@@ -147,11 +131,11 @@ SOFTWARE.
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-sort-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/json-sort-cli/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/json-sort-cli.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/json-sort-cli
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/json-sort-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/json-sort-cli
 
-[license-badge]: https://img.shields.io/npm/l/json-sort-cli.svg?style=flat-square
-[license]: https://github.com/codsen/json-sort-cli/blob/master/license.md
+[downloads-img]: https://img.shields.io/npm/dm/json-sort-cli.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/json-sort-cli
+
+[license-img]: https://img.shields.io/npm/l/json-sort-cli.svg?style=flat-square
+[license-url]: https://github.com/codsen/json-sort-cli/blob/master/license.md

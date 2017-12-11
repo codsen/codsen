@@ -21,3 +21,5 @@ config.json
 .travis.yml
 test.js
 test.zip
+cli.js
+.babelrc
