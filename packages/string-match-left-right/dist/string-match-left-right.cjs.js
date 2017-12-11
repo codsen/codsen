@@ -13,7 +13,7 @@ var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint no-param-reassign:0, default-case:0, consistent-return:0, max-len:0, no-mixed-operations:0 */
+/* eslint no-param-reassign:0, default-case:0, consistent-return:0, max-len:0, no-mixed-operators:0 */
 
 function isStr(something) {
   return typeof something === 'string';
