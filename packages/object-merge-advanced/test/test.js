@@ -1,7 +1,15 @@
 import test from 'ava'
 import clone from 'lodash.clonedeep'
-import { equalOrSubsetKeys, arrayContainsStr } from '../dist/util.cjs'
+import { equalOrSubsetKeys, arrayContainsStr, existy, isBool } from '../dist/util.cjs'
 import mergeAdvanced from '../dist/object-merge-advanced.cjs'
+
+//
+//                           ____
+//          massive hammer  |    |
+//        O=================|    |
+//          upon all bugs   |____|
+//
+//                         .=O=.
 
 // !!! There should be two (or more) tests in each, with input args swapped, in order to
 // guarantee that there are no sneaky things happening when argument order is backwards
@@ -2417,6 +2425,30 @@ test('10.01 - OPTS > opts.ignoreKeys - basic cases', (t) => {
     },
     '10.01.04 - #2, backward, ignoreKeys as array',
   )
+  //
+  // more array vs. array clashes:
+  //
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['b', 'c', 'd'],
+        k: 'l',
+      },
+      {
+        a: ['c', 'd', 'e'],
+        m: 'n',
+      },
+      {
+        concatInsteadOfMerging: false,
+      },
+    ),
+    {
+      a: ['b', 'c', 'd', 'e'],
+      k: 'l',
+      m: 'n',
+    },
+    '10.01.05',
+  )
 })
 
 test('10.02 - OPTS > opts.ignoreKeys - multiple keys ignored, multiple merged', (t) => {
@@ -3656,6 +3688,12 @@ test('16.01 - values as arrays that contain strings', (t) => {
 // ===============================
 
 test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
+  //
+  // ===
+  // ===  PART 1. Baseline.
+  // ===
+
+  // So, first let's establish the default behaviour
   t.deepEqual(
     mergeAdvanced(
       {
@@ -3684,6 +3722,9 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
     },
     '17.01.01.02 - control, case #79 - true',
   )
+
+  // ===
+
   t.deepEqual(
     mergeAdvanced(
       {
@@ -3712,18 +3753,126 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
     },
     '17.01.02.02 - control, case #88 - true',
   )
+
+  // ===
+  // ===  PART 2. Real deal.
+  // ===
+
+  // Onto the null-as-explicit-false mode then.
+
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.03.01 - null-as-explicit-false, case #79 - false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: true,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.03.02 - null-as-explicit-false, case #79 - true',
+  )
+
+  // ===
+
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: false,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.04.01 - null-as-explicit-false, case #88 - false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: true,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.01.04.02 - null-as-explicit-false, case #88 - true',
+  )
+})
+
+test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans and backwards', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'a',
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: 'a',
+    },
+    '17.02.01.01 - forwards, case #49',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: 'a',
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: 'a',
+    },
+    '17.02.01.01 - backwards, case #85',
+  )
 })
 
 // ============================================================
 //                   U T I L   T E S T S
 // ============================================================
-
-//                           ____
-//          massive hammer  |    |
-//        O=================|    |
-//          upon all bugs   |____|
-//
-//                         .=O=.
 
 // ==============================
 // util/arrayContainsStr()
@@ -3737,6 +3886,9 @@ test('98.01 - UTIL > arrayContainsStr - throws when there\'s no input', (t) => {
   )
   t.throws(() => {
     arrayContainsStr(1)
+  })
+  t.throws(() => {
+    arrayContainsStr('a')
   })
 })
 
@@ -3851,5 +4003,81 @@ test('99.06 - UTIL > first input is missing - throws', (t) => {
 test('99.07 - UTIL > second input is not an object - throws', (t) => {
   t.throws(() => {
     equalOrSubsetKeys({ a: 'a' }, 'z')
+  })
+  t.throws(() => {
+    equalOrSubsetKeys({ a: 'a' }, () => undefined)
+  })
+})
+
+test('99.08 - UTIL > existy()', (t) => {
+  t.is(
+    existy(undefined),
+    false,
+    '99.08.01',
+  )
+  t.is(
+    existy(null),
+    false,
+    '99.08.02',
+  )
+  t.is(
+    existy(1),
+    true,
+    '99.08.03',
+  )
+  t.is(
+    existy('a'),
+    true,
+    '99.08.04',
+  )
+})
+
+test('99.09 - UTIL > isBool()', (t) => {
+  t.is(
+    isBool(true),
+    true,
+    '99.09.01',
+  )
+  t.is(
+    isBool(false),
+    true,
+    '99.09.02',
+  )
+  t.is(
+    isBool(1),
+    false,
+    '99.09.03',
+  )
+  t.is(
+    isBool('a'),
+    false,
+    '99.09.04',
+  )
+})
+
+test('99.10 - UTIL > arrayContainsStr()', (t) => {
+  t.is(
+    arrayContainsStr([]),
+    false,
+    '99.10.01',
+  )
+  t.is(
+    arrayContainsStr([1, 2, 3]),
+    false,
+    '99.10.02',
+  )
+  t.is(
+    arrayContainsStr([null, 'a']),
+    true,
+    '99.10.03',
+  )
+  t.throws(() => {
+    arrayContainsStr(1)
+  })
+  t.throws(() => {
+    arrayContainsStr('a')
+  })
+  t.throws(() => {
+    arrayContainsStr(null)
   })
 })

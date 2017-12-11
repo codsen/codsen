@@ -21,3 +21,5 @@ config.json
 test.js
 .babelrc
 rollup.config.js
+src
+test

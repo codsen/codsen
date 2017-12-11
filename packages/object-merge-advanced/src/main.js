@@ -50,7 +50,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     concatInsteadOfMerging: true,
     dedupeStringsInArrayValues: false,
     mergeBoolsUsingOrNotAnd: true,
-    useNullAsExplicitFalse: true,
+    useNullAsExplicitFalse: false,
   }
   const opts = Object.assign(clone(defaults), originalOpts)
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
@@ -252,12 +252,14 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         return i1 || i2 // default - OR
       }
       return i1 && i2 // alternative merge using AND
+    } else if (opts.useNullAsExplicitFalse && (i2 === null)) {
+      return false
     } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
       return i2
     }
     // i2 is null or undefined
-    // cases 79, 80
+    // cases 79*, 80
     return i1
   } else if (i1 === null) {
     // first, exclusions.
@@ -268,8 +270,10 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     } else
     // now the business as usual onwards...
     // cases 81-90
-    if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
-      // case 81, 82, 83, 84, 85, 86, 87, 88
+    if (opts.useNullAsExplicitFalse && isBool(i2)) {
+      return false
+    } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
+      // case 81, 82, 83, 84, 85, 86, 87, 88*
       return i2
     }
     // cases 89, 90

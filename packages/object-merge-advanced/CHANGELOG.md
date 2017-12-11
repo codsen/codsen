@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.2.0] - 2017-12-11
+### Added
+- ✨ opts.useNullAsExplicitFalse
+
 ## [8.1.0] - 2017-11-12
 ### Added
 - ✨ opts.mergeBoolsUsingOrNotAnd
@@ -112,3 +116,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [7.1.0]: https://github.com/codsen/object-merge-advanced/compare/v7.0.2...v7.1.0
 [8.0.0]: https://github.com/codsen/object-merge-advanced/compare/v7.1.0...v8.0.0
 [8.1.0]: https://github.com/codsen/object-merge-advanced/compare/v8.0.0...v8.1.0
+[8.2.0]: https://github.com/codsen/object-merge-advanced/compare/v8.1.0...v8.2.0
