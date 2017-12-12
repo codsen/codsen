@@ -106,7 +106,7 @@ console.log('f = ' + JSON.stringify(f, null, 4))
 fillMissingKeys(incompleteObj, schemaObj)
 ```
 
-Input arguments are not mutated, inputs are cloned before being used.
+Input arguments are not mutated, inputs are cloned before being used. There is no third, options argument.
 
 ### API - Input
 
@@ -115,9 +115,7 @@ Input argument           | Type           | Obligatory? | Description
 `incompleteObj`          | Plain object   | yes         | Plain object. Can have nested values.
 `schemaObj`              | Plain object   | yes         | Schema object which contains a desired set of values. Can be nested or hold arrays of things.
 
-This library is meant for innards of other libraries, that's why it's docile, it will not throw if the input types are wrong — it will silently return `undefined`, that's it. Please enforce your input data types on the parent libraries. You know the API.
-
-To repeat, library does not mutate the input arguments.
+This library does not mutate the input arguments. It's very important.
 
 **[⬆ &nbsp;back to top](#)**
 
