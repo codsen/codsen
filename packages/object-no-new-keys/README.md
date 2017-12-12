@@ -101,7 +101,7 @@ This library has two modes:
 1. Strict comparing, having no assumptions about the `reference`.
 2. Comparing, assuming that the `reference` will be NORMALISED.
 
-By _normalised_ I mean if any arrays have object children, those objects have the same keys.
+By "_normalised_" I mean if any arrays have object children, those objects have the same keys.
 
 These two modes mainly concern the case when both `input` and `reference` have an array, but `reference` has fewer elements and there's nothing to compare the `input` element to:
 
