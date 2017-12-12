@@ -4,7 +4,7 @@
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "license": "MIT",
   "engines": {
-    "node": ">=5.11.0",
+    "node": ">=6",
     "npm": ">=5",
     "yarn": ">=1"
   },
