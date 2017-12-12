@@ -155,7 +155,16 @@ Options object's key                    | Value   | Default | Description
 `concatInsteadOfMerging`                | Boolean | `true`  | If it's `true` (default), when object keys clash and their values are arrays, when merging, concatenate those arrays (simply combine elements). If it's `false`, array contents from the first argument object's key will go intact into final result, but second array's contents will be added into result only if they don't exist in the first array.
 `dedupeStringsInArrayValues`            | Boolean | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings.
 `mergeBoolsUsingOrNotAnd`               | Boolean | `true`  | When two values are Booleans, by default, result will be calculated using logical `OR` on them. If you switch this to `false`, merging will use logical `AND`. Former setting is handy when dealing with JSON content driving email templates, latter is handy when merging [settings](https://github.com/codsen/csv-sort-cli/blob/master/cli.js) ("off", `false` overrides default "on", `true`).
+`mergeBoolsUsingOrNotAnd`               | Boolean | `false` | When set to `true`, `null` vs. anything (argument order doesn't matter) will yield `false`. This is used in data structures as an explicit "false" to "turn off" incoming defaults for good without the need of extra values or wrapping with conditionals in templates.
 `}`                                     |         |         |
+
+Here are all defaults in one place:
+
+```js
+{
+  useNullAsExplicitFalse:
+}
+```
 
 `mergeObjectsOnlyWhenKeysetMatches` is an extra insurance from accidental merging two objects within arrays, where key sets are too different (both have at least one unique key).
 

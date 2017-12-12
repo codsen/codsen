@@ -3833,23 +3833,23 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
   )
 })
 
-test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans and backwards', (t) => {
+test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90', (t) => {
   t.deepEqual(
     mergeAdvanced(
       {
-        a: 'a',
+        a: null,
       },
       {
-        a: null,
+        a: ['a'],
       },
       {
         useNullAsExplicitFalse: true,
       },
     ),
     {
-      a: 'a',
+      a: false,
     },
-    '17.02.01.01 - forwards, case #49',
+    '17.02.01 - #81 - null vs non-empty array',
   )
   t.deepEqual(
     mergeAdvanced(
@@ -3857,16 +3857,359 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans and backwards',
         a: null,
       },
       {
-        a: 'a',
+        a: [],
       },
       {
         useNullAsExplicitFalse: true,
       },
     ),
     {
-      a: 'a',
+      a: false,
     },
-    '17.02.01.01 - backwards, case #85',
+    '17.02.02 - #82 - null vs. empty array',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: { b: 'c' },
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.03 - #83 - null vs. non-empty plain object',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: {},
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.04 - #84 - null vs. empty plain object',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: 'zzz',
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.05 - #85 - null vs. non-empty string',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: '',
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.06 - #86 - null vs. non-empty string',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: 1,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.07 - #87 - null vs. num',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: true,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.08.01 - #88 - null vs. bool, true',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: false,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.08.02 - #88 - null vs. bool, false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.09 - #89 - null vs. null',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: undefined,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.02.10 - #90 - null vs. null',
+  )
+})
+
+test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: ['a'],
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.01 - #9 - null vs non-empty array',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [],
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.02 - #19 - null vs. empty array',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: { b: 'c' },
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.03 - #29 - null vs. non-empty plain object',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {},
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.04 - #39 - null vs. empty plain object',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 'zzz',
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.05 - #49 - null vs. non-empty string',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: '',
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.06 - #59 - null vs. non-empty string',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: 1,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.07 - #69 - null vs. num',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: true,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.08.01 - #79 - null vs. bool, true',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: false,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.08.02 - #79 - null vs. bool, false',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: null,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.09 - #89 - null vs. null',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: undefined,
+      },
+      {
+        a: null,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: false,
+    },
+    '17.03.10 - #99 - null vs. null',
   )
 })
 

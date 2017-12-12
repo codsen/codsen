@@ -33,8 +33,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object')
   }
-  let i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
-  const i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
 
   // DEFAULTS
   // ---------------------------------------------------------------------------
@@ -56,10 +54,17 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys)
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys)
 
-  checkTypes(opts, defaults, { msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06]' })
+  checkTypes(opts, defaults, { msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]' })
 
   // ACTION
   // ---------------------------------------------------------------------------
+
+  if (opts.useNullAsExplicitFalse && ((input1orig === null) || (input2orig === null))) {
+    return false
+  }
+
+  let i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
+  const i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
 
   if (isArr(i1)) {
     // first, exclusions.
@@ -252,8 +257,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         return i1 || i2 // default - OR
       }
       return i1 && i2 // alternative merge using AND
-    } else if (opts.useNullAsExplicitFalse && (i2 === null)) {
-      return false
     } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
       return i2
@@ -267,11 +270,8 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       return i1
     } else if (opts.hardMergeEverything) {
       return i2
-    } else
     // now the business as usual onwards...
     // cases 81-90
-    if (opts.useNullAsExplicitFalse && isBool(i2)) {
-      return false
     } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88*
       return i2
