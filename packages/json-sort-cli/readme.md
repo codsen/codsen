@@ -50,7 +50,7 @@ $ jsonsort -h
 $ jsonsort --help
 ```
 
-or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`).
+or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`). Transpiled code is served, so requirements for your Node install are `v.4` and above.
 
 **[⬆ &nbsp;back to top](#)**
 
