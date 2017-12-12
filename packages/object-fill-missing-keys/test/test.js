@@ -1,3 +1,5 @@
+/* eslint ava/no-only-test:0 */
+
 import test from 'ava'
 import fillMissingKeys from '../dist/object-fill-missing-keys.cjs'
 
@@ -770,3 +772,79 @@ test('05.01 - does not mutate the input args', (t) => {
     '05.01',
   ) // real deal
 })
+
+// ========================================================
+// 6. opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder
+// ========================================================
+
+test.only('06.01 - some keys filled, some ignored because they have placeholders-only', (t) => {
+  // baseline behaviour
+
+  // t.deepEqual(
+  //   fillMissingKeys(
+  //     {
+  //       a: {
+  //         b: false,
+  //         x: 'x',
+  //       },
+  //       z: 'z',
+  //     },
+  //     {
+  //       a: {
+  //         b: {
+  //           c: false,
+  //           d: false,
+  //         },
+  //         x: false,
+  //       },
+  //       z: false,
+  //     },
+  //   ),
+  //   {
+  //     a: {
+  //       b: {
+  //         c: false,
+  //         d: false,
+  //       },
+  //       x: 'x',
+  //     },
+  //     z: 'z',
+  //   },
+  //   '06.01.01 - default behaviour - keys are added',
+  // )
+
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: false,
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillTheseKeysIfAllTheirValuesArePlaceholder: ['a.b'],
+      },
+    ),
+    {
+      a: {
+        b: false, // <---------------- observe, the keys were not added because it had a placeholder
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.02 - opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder',
+  )
+})
+
+// TODO: test array notation, like a[0].b[0][0].c

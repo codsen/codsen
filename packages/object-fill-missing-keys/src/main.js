@@ -36,6 +36,21 @@ function fillMissingKeys(originalIncomplete, originalSchema, originalOpts) {
       placeholder: ['object', 'array', 'string', 'null', 'boolean', 'number'],
     },
   })
+  let culpritsVal = null
+  let culpritsIndex = null
+  if (
+    (opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder.length > 0) &&
+    !opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder.every((key, idx) => {
+      if (!isStr(key)) {
+        culpritsVal = key
+        culpritsIndex = idx
+        return false
+      }
+      return true
+    })
+  ) {
+    throw new Error(`object-fill-missing-keys: [THROW_ID_06] opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder element with an index number ${culpritsIndex} is not a string! It's ${typeof culpritsVal}, equal to:\n${JSON.stringify(culpritsVal, null, 4)}`)
+  }
 
   const incomplete = clone(originalIncomplete)
   const schema = clone(originalSchema)

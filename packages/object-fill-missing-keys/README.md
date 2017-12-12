@@ -28,6 +28,7 @@
 - [Use](#use)
 - [API](#api)
   - [API - Input](#api---input)
+  - [Optional Options Object](#optional-options-object)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -106,7 +107,7 @@ console.log('f = ' + JSON.stringify(f, null, 4))
 fillMissingKeys(incompleteObj, schemaObj)
 ```
 
-Input arguments are not mutated, inputs are cloned before being used. There is no third, options argument.
+Input arguments are not mutated, inputs are cloned before being used.
 
 ### API - Input
 
@@ -114,8 +115,16 @@ Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
 `incompleteObj`          | Plain object   | yes         | Plain object. Can have nested values.
 `schemaObj`              | Plain object   | yes         | Schema object which contains a desired set of values. Can be nested or hold arrays of things.
+`opts`                   | Plain object   | no          | Optional Options Object, see below for its API
 
-This library does not mutate the input arguments. It's very important.
+### Optional Options Object
+
+options object's key                               | Type of its value             | Default               | Description
+---------------------------------------------------|-------------------------------|-----------------------|----------------------
+{                                                  |                               |                       |
+`placeholder`                                      | Anything                      | `false`               | What should we use to put as a placeholder value when adding a key. Default is Boolean `false`.
+`doNotFillTheseKeysIfAllTheirValuesArePlaceholder` | Array of zero or more strings | `[]`                  | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.
+}                                                  |                               |                       |
 
 **[⬆ &nbsp;back to top](#)**
 

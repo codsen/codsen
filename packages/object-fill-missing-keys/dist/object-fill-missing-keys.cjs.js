@@ -8,6 +8,8 @@ var merge = _interopDefault(require('object-merge-advanced'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /* eslint no-prototype-builtins:0, max-len:0, no-param-reassign:0 */
 
 // ===================================
@@ -45,6 +47,18 @@ function fillMissingKeys(originalIncomplete, originalSchema, originalOpts) {
       placeholder: ['object', 'array', 'string', 'null', 'boolean', 'number']
     }
   });
+  var culpritsVal = null;
+  var culpritsIndex = null;
+  if (opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder.length > 0 && !opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder.every(function (key, idx) {
+    if (!isStr(key)) {
+      culpritsVal = key;
+      culpritsIndex = idx;
+      return false;
+    }
+    return true;
+  })) {
+    throw new Error('object-fill-missing-keys: [THROW_ID_06] opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder element with an index number ' + culpritsIndex + ' is not a string! It\'s ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
+  }
 
   var incomplete = clone(originalIncomplete);
   var schema = clone(originalSchema);
