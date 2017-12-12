@@ -5,13 +5,13 @@ import fillMissingKeys from 'object-fill-missing-keys';
 import nnk from 'object-no-new-keys';
 import clone from 'lodash.clonedeep';
 import includes from 'lodash.includes';
-import type from 'type-detect';
+import typ from 'type-detect';
 import checkTypes from 'check-types-mini';
 import sortKeys from 'sort-keys';
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-/* eslint no-unused-vars:0 */
+/* eslint no-param-reassign:0 */
 
 // -----------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ function truthy(x) {
   return x !== false && existy(x);
 }
 function isObj(something) {
-  return type(something) === 'Object';
+  return typ(something) === 'Object';
 }
 function isArr(something) {
   return Array.isArray(something);
@@ -40,18 +40,18 @@ function sortAllObjects(input) {
 
 // -----------------------------------------------------------------------------
 
-function getKeyset(arrOriginal, opts) {
+function getKeyset(arrOriginal, originalOpts) {
   if (arguments.length === 0) {
     throw new Error('json-comb-core/getKeyset(): [THROW_ID_11] Inputs missing!');
   }
   if (!isArr(arrOriginal)) {
-    throw new Error('json-comb-core/getKeyset(): [THROW_ID_12] Input must be array! Currently it\'s: ' + type(arrOriginal));
+    throw new Error('json-comb-core/getKeyset(): [THROW_ID_12] Input must be array! Currently it\'s: ' + typ(arrOriginal));
   }
   if (arrOriginal.length === 0) {
     throw new Error('json-comb-core/getKeyset(): [THROW_ID_13] Input array is empty!');
   }
-  if (existy(opts) && !isObj(opts)) {
-    throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_14] Options object must be a plain object! Currently it\'s: ' + type(opts) + ', equal to: ' + JSON.stringify(opts, null, 4));
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_14] Options object must be a plain object! Currently it\'s: ' + typ(originalOpts) + ', equal to: ' + JSON.stringify(originalOpts, null, 4));
   }
 
   var schemaObj = {};
@@ -59,7 +59,7 @@ function getKeyset(arrOriginal, opts) {
   var defaults = {
     placeholder: false
   };
-  opts = Object.assign(clone(defaults), opts);
+  var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
     msg: 'json-comb-core/getKeyset(): [THROW_ID_10*]',
     schema: {
@@ -73,7 +73,7 @@ function getKeyset(arrOriginal, opts) {
 
   arr.forEach(function (obj, i) {
     if (!isObj(obj)) {
-      throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_15] Non-object (' + type(obj) + ') detected within an array! It\'s the ' + i + 'th element: ' + JSON.stringify(obj, null, 4));
+      throw new TypeError('json-comb-core/getKeyset(): [THROW_ID_15] Non-object (' + typ(obj) + ') detected within an array! It\'s the ' + i + 'th element: ' + JSON.stringify(obj, null, 4));
     }
     schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), { mergeArraysContainingStringsToBeEmpty: true });
   });
@@ -91,10 +91,10 @@ function enforceKeyset(obj, schemaKeyset) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_22] Second arg missing!');
   }
   if (!isObj(obj)) {
-    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_23] Input must be a plain object! Currently it\'s: ' + type(obj) + ', equal to: ' + JSON.stringify(obj, null, 4));
+    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_23] Input must be a plain object! Currently it\'s: ' + typ(obj) + ', equal to: ' + JSON.stringify(obj, null, 4));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s: ' + type(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
+    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_24] Schema object must be a plain object! Currently it\'s: ' + typ(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
   }
   return sortAllObjects(fillMissingKeys(clone(obj), schemaKeyset));
 }
@@ -111,17 +111,17 @@ function noNewKeys(obj, schemaKeyset) {
     throw new Error('json-comb-core/noNewKeys(): [THROW_ID_32] Schema object is missing!');
   }
   if (!isObj(obj)) {
-    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_33] Main input (1st arg.) must be a plain object! Currently it\'s: ' + type(obj) + ', equal to: ' + JSON.stringify(obj, null, 4));
+    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_33] Main input (1st arg.) must be a plain object! Currently it\'s: ' + typ(obj) + ', equal to: ' + JSON.stringify(obj, null, 4));
   }
   if (!isObj(schemaKeyset)) {
-    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_34] Schema input (2nd arg.) must be a plain object! Currently it\'s: ' + type(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
+    throw new Error('json-comb-core/noNewKeys(): [THROW_ID_34] Schema input (2nd arg.) must be a plain object! Currently it\'s: ' + typ(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
   }
   return nnk(obj, schemaKeyset);
 }
 
 // -----------------------------------------------------------------------------
 
-function findUnused(arrOriginal, opts) {
+function findUnused(arrOriginal, originalOpts) {
   //
   // PREPARATIONS AND TYPE CHECKS
   // ============================
@@ -131,16 +131,16 @@ function findUnused(arrOriginal, opts) {
       return [];
     }
   } else {
-    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_41] The first argument should be an array. Currently it\'s: ' + type(arrOriginal));
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_41] The first argument should be an array. Currently it\'s: ' + typ(arrOriginal));
   }
-  if (arguments.length > 1 && !isObj(opts)) {
-    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_42] The second argument, options object, must be a plain object, not ' + type(opts));
+  if (arguments.length > 1 && !isObj(originalOpts)) {
+    throw new TypeError('json-comb-core/findUnused(): [THROW_ID_42] The second argument, options object, must be a plain object, not ' + typ(originalOpts));
   }
   var defaults = {
     placeholder: false,
     comments: '__comment__'
   };
-  opts = Object.assign({}, defaults, opts);
+  var opts = Object.assign({}, defaults, originalOpts);
   if (opts.comments === 1 || opts.comments === '1') {
     throw new TypeError('json-comb-core/findUnused(): [THROW_ID_43] opts.comments was set to Number 1, but it does not make sense. Either it\'s string or falsey. Please fix.');
   }
@@ -182,7 +182,7 @@ function findUnused(arrOriginal, opts) {
     }
     var keySet = void 0;
     if (arr1.every(function (el) {
-      return type(el) === 'Object';
+      return typ(el) === 'Object';
     })) {
       var _ref;
 
@@ -211,7 +211,7 @@ function findUnused(arrOriginal, opts) {
         return isObj(keySet[key]) || isArr(keySet[key]);
       })));
       var keysContents = keys.map(function (key) {
-        return type(keySet[key]);
+        return typ(keySet[key]);
       });
 
       // can't use map() because we want to prevent nulls being written.
@@ -241,12 +241,12 @@ function findUnused(arrOriginal, opts) {
         });
       }
     } else if (arr1.every(function (el) {
-      return type(el) === 'Array';
+      return typ(el) === 'Array';
     })) {
       arr1.forEach(function (singleArray, i) {
         res = findUnusedInner(singleArray, opts1, res, path + '[' + i + ']');
       });
-    } // else if (arr1.every(el => type(el) === 'string')) {
+    } // else if (arr1.every(el => typ(el) === 'string')) {
     // }
 
     return removeLeadingDot(res);

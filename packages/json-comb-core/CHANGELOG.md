@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2017-12-12
+### Changed
+- ✨ Small rebasing, improvements to the setup and proper deps refresh.
+
 ## [4.1.0] - 2017-10-11
 ### Added
 - ✨ Tapped [`sort-keys`](https://www.npmjs.com/package/sort-keys) on a `deep` setting, replacing the existing deep sort function.
@@ -66,3 +70,4 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 [3.0.0]: https://github.com/codsen/json-comb-core/compare/v2.5.0...v3.0.0
 [4.0.0]: https://github.com/codsen/json-comb-core/compare/v3.0.0...v4.0.0
 [4.1.0]: https://github.com/codsen/json-comb-core/compare/v4.0.0...v4.1.0
+[4.2.0]: https://github.com/codsen/json-comb-core/compare/v4.1.0...v4.2.0

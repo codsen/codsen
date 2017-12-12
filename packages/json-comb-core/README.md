@@ -1,12 +1,13 @@
 # json-comb-core
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Utility library to maintain a set of JSON files
+> The inner core of json-comb
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -14,7 +15,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
-[![MIT License][license-badge]][license]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -45,7 +46,7 @@
   - [output](#output-4)
   - [example](#example-4)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -56,13 +57,23 @@
 $ npm i json-comb-core
 ```
 
-**What you'll get:**
+```js
+// consume as a CommonJS require:
+const { getKeyset, enforceKeyset, sortAllObjects, noNewKeys, findUnused } = require('json-comb-core')
+// or as a ES Module:
+import { getKeyset, enforceKeyset, sortAllObjects, noNewKeys, findUnused } from 'json-comb-core'
+}
+```
 
-type            | Key in `package.json` | Path  | Size
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/json-comb-core.cjs.js` | 11KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 10KB
-**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/json-comb-core.umd.js` | 70KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/json-comb-core.cjs.js` | 10&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 9&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 56&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Idea
 
@@ -84,6 +95,8 @@ It's when we can't/won't normalise files, yet we need some insurance. It would b
 
 A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is unused and probably can be deleted.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## `getKeyset()`
 
 This function produces a reference object according to which you can normalise JSON files.
@@ -97,6 +110,8 @@ Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
+**[⬆ &nbsp;back to top](#)**
+
 ### input
 
 Input argument   | Type                   | Obligatory? | Description
@@ -109,6 +124,8 @@ Input argument   | Type                   | Obligatory? | Description
 {                      |       |             |           |
 `placeholder`          | Any   | no          | `false`   | When adding a missing key, this will be assigned to its value.
 }                      |       |             |           |
+
+**[⬆ &nbsp;back to top](#)**
 
 ### output
 
@@ -186,6 +203,8 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## `enforceKeyset()`
 
 Reads an input plain object and a keyset schema object and normalises the input plain object, adding any missing keys.
@@ -196,6 +215,8 @@ Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
 `input`        | Object   | yes         | What should we normalise?
 `schema`       | Object   | yes         | According to what schema should we normalise?
+
+**[⬆ &nbsp;back to top](#)**
 
 ### output
 
@@ -223,11 +244,15 @@ console.log('inputObj = ' + JSON.stringify(inputObj, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## `noNewKeys()`
 
 Reads an array and a reference keyset object, returns an array of zero or more keys that are in the array, but not in keyset.
 
 Practically this is handy to tame the JSON's that we don't/can't normalise. At least we can ensure there are no new keys. For example, all data mapping files could be validated through `noNewKeys()`.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### input
 
@@ -235,6 +260,8 @@ Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
 `input`        | Object   | yes         | What should we check?
 `schema`       | Object   | yes         | According to what schema should we normalise?
+
+**[⬆ &nbsp;back to top](#)**
 
 ### output
 
@@ -297,11 +324,15 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 // => ['z[0].c', 'z[1].c']
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## `findUnused()`
 
 Reads a set of objects (array of plain objects, probably parsed JSON files) and tells, are there any keys throughout the whole set that have only the placeholder values. You can customise the placeholder value via an optional options object.
 
 Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### input
 
@@ -316,6 +347,8 @@ Input argument | Type                                | Obligatory? | Description
 `placeholder`                  | any      | no          | `false`       | What value is being used to mark unused key?
 `comments`                     | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it actually was unused). Set it to any falsey value to turn it off.
 }                              |          |             |               |
+
+**[⬆ &nbsp;back to top](#)**
 
 ### output
 
@@ -392,11 +425,15 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 // => ['c', 'a[0].l']
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## `sortAllObjects()`
 
 This method sorts objects (no matter how deeply-nested) and it will sort objects within arrays within objects and so on. For example, you can input an array which has some plain objects within and those objects will be sorted.
 
 This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc).
+
+**[⬆ &nbsp;back to top](#)**
 
 ### input
 
@@ -404,10 +441,14 @@ Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
 `input`        | Whatever | no          | If it's a plain object or contains a plain objects deeper, a copy of it will be created with all its plain objects sorted. Otherwise, untouched input will be returned.
 
+**[⬆ &nbsp;back to top](#)**
+
 ### output
 
 If the input is **a plain object or array** containing some plain objects within, output is a copy of the input with all plain objects sorted.
 If the input is **something else**, output is same thing as input.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### example
 
@@ -428,6 +469,8 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 //    }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Difference between Normalising JSON and JSON Schemas
 
 In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, does all the values have the same types as values in schema. We're not particularly concerned about the **existence** of the keys, we're more concerned is all we've got match the schema.
@@ -438,41 +481,27 @@ So, normalisation is a process of making bunch of JSON files to have the same ke
 
 When performing a normalisation, all JSON files are read and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to placeholder.
 
-## Testing and Contributing
+**[⬆ &nbsp;back to top](#)**
 
-```bash
-$ npm test
-```
+## Contributing
 
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/string-collapse-white-space/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/json-comb-core/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-comb-core
@@ -498,15 +527,14 @@ SOFTWARE.
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-comb-core.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/json-comb-core
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
 
+[downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/json-comb-core
 
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-comb-core
 
-[license-badge]: https://img.shields.io/npm/l/json-comb-core.svg?style=flat-square
-[license]: https://github.com/codsen/json-comb-core/blob/master/license.md
+[license-img]: https://img.shields.io/npm/l/json-comb-core.svg?style=flat-square
+[license-url]: https://github.com/codsen/json-comb-core/blob/master/license.md

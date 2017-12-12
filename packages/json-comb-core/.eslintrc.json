@@ -2,24 +2,21 @@
   "env": {
     "es6": true
   },
+  "extends": [
+    "airbnb-base"
+  ],
   "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
+    "ecmaVersion": 2017
   },
   "plugins": [
     "ava"
   ],
-  "extends": [
-    "airbnb-base"
-  ],
   "rules": {
-    "semi": [2, "never"],
-    "no-plusplus": ["error", {
-      "allowForLoopAfterthoughts": true
-    }],
-    "no-param-reassign": 0,
     "ava/assertion-arguments": "error",
-    "ava/max-asserts": ["off", 5],
+    "ava/max-asserts": [
+      "off",
+      5
+    ],
     "ava/no-async-fn-without-await": "error",
     "ava/no-cb-test": "off",
     "ava/no-duplicate-modifiers": "error",
@@ -37,10 +34,23 @@
     "ava/prefer-async-await": "error",
     "ava/prefer-power-assert": "off",
     "ava/test-ended": "error",
-    "ava/test-title": ["error", "if-multiple"],
-    "ava/use-t-well": "error",
+    "ava/test-title": [
+      "error",
+      "if-multiple"
+    ],
     "ava/use-t": "error",
+    "ava/use-t-well": "error",
     "ava/use-test": "error",
-    "ava/use-true-false": "error"
+    "ava/use-true-false": "error",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "semi": [
+      2,
+      "never"
+    ]
   }
 }
