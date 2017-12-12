@@ -2,13 +2,45 @@
   "name": "object-flatten-all-arrays",
   "version": "3.1.4",
   "description": "Merge and flatten any arrays found in all values within plain objects",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
-    "test": "standard && nyc --reporter=html --reporter=text ava"
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
-  "repository": "codsen/object-flatten-all-arrays",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/object-flatten-all-arrays.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codsen/object-flatten-all-arrays/issues"
+  },
+  "homepage": "https://github.com/codsen/object-flatten-all-arrays#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/object-flatten-all-arrays.cjs.js",
+  "module": "dist/object-flatten-all-arrays.esm.js",
+  "browser": "dist/object-flatten-all-arrays.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "ast",
     "plain",
@@ -22,29 +54,97 @@
     "nested",
     "write"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/object-flatten-all-arrays/issues"
-  },
-  "homepage": "https://github.com/codsen/object-flatten-all-arrays#readme",
   "dependencies": {
+    "check-types-mini": "^3.0.0",
     "lodash.clonedeep": "*",
     "lodash.merge": "*",
-    "type-detect": "^4.0.3"
+    "type-detect": "^4.0.5"
   },
   "devDependencies": {
     "ava": "*",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": false
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.2"
   }
 }

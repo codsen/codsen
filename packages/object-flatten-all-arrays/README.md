@@ -1,19 +1,21 @@
 # object-flatten-all-arrays
 
-<a href="https://standardjs.com" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Recursively flatten any arrays found in all values within plain objects
+> Merge and flatten any arrays found in all values within plain objects
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -26,7 +28,6 @@
 - [For example](#for-example)
 - [API](#api)
   - [API - Input](#api---input)
-- [Testing](#testing)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -35,8 +36,25 @@
 ## Install
 
 ```sh
-$ npm install --save object-flatten-all-arrays
+$ npm i object-flatten-all-arrays
 ```
+
+```js
+// consume as a CommonJS require:
+const flattenAllArrays = require('object-flatten-all-arrays')
+// or as an ES Module:
+import flattenAllArrays from 'object-flatten-all-arrays'
+```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-flatten-all-arrays.cjs.js` | 2&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-flatten-all-arrays.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-flatten-all-arrays.umd.js` | 35&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Purpose
 
@@ -45,8 +63,8 @@ Recursively traverse the cloned input and merge all plain objects within each ar
 ## For example
 
 ```js
-var flatten = require('object-flatten-all-arrays')
-var object = {
+const flattenAllArrays = require('object-flatten-all-arrays')
+const object = {
   a: 'a',
   b: 'b',
   c: [
@@ -60,7 +78,7 @@ var object = {
     }
   ]
 }
-var flattened = flatten(object)
+const flattened = flattenAllArrays(object)
 console.log('flattened = ' + JSON.stringify(flattened, null, 4))
 // => {
 // a: 'a',
@@ -74,6 +92,8 @@ console.log('flattened = ' + JSON.stringify(flattened, null, 4))
 //   }
 // ]}
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -99,70 +119,60 @@ Input argument           | Type           | Obligatory? | Description
 `flattenArraysContainingStringsToBeEmpty`  | Boolean  | no          | `false`     | If any arrays contain strings, flatten them to be empty thing. This is turned off by default, but it's what you actually need most of the time.
 }                                          |          |             |             |
 
-## Testing
-
-```bash
-$ npm test
-```
-
-For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https://github.com/istanbuljs/nyc) and [JS Standard](https://standardjs.com) notation.
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
-All contributions are welcome. Please stick to [Standard JavaScript](https://standardjs.com) notation and supplement the `test.js` with new unit tests covering your feature(s).
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-all-arrays/issues). If you file a pull request, I'll do my best to help you to get it merged in a timely manner. If you have any comments on the code, including ideas how to improve things, don't hesitate to contact me by email.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-flatten-all-arrays/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-flatten-all-arrays/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-flatten-all-arrays/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/object-flatten-all-arrays.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/object-flatten-all-arrays
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/object-flatten-all-arrays.svg
+[npm-img]: https://img.shields.io/npm/v/object-flatten-all-arrays.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/object-flatten-all-arrays
 
-[travis-img]: https://travis-ci.org/codsen/object-flatten-all-arrays.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/object-flatten-all-arrays.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-flatten-all-arrays
 
-[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-all-arrays/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-all-arrays/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/object-flatten-all-arrays?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-flatten-all-arrays.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays
 
-[deps-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-flatten-all-arrays.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/object-flatten-all-arrays.svg
-[downloads-url]: https://www.npmjs.com/package/object-flatten-all-arrays
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-all-arrays/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-all-arrays
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-all-arrays
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-flatten-all-arrays.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/object-flatten-all-arrays/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-all-arrays/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-all-arrays
+
+[downloads-img]: https://img.shields.io/npm/dm/object-flatten-all-arrays.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/object-flatten-all-arrays
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-flatten-all-arrays
+
+[license-img]: https://img.shields.io/npm/l/object-flatten-all-arrays.svg?style=flat-square
+[license-url]: https://github.com/codsen/object-flatten-all-arrays/blob/master/license.md
