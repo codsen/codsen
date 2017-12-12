@@ -40,7 +40,7 @@ $ npm i object-fill-missing-keys
 ```
 
 ```js
-// consume as CommonJS require:
+// consume as a CommonJS require:
 const fillMissingKeys = require('object-fill-missing-keys')
 // or as an ES Module:
 import fillMissingKeys from 'object-fill-missing-keys'
