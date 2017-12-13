@@ -28,6 +28,7 @@
 - [Use](#use)
 - [API](#api)
   - [API - Input](#api---input)
+  - [API - Output](#api---output)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -60,7 +61,7 @@ Take any input: nested array, nested plain object or whatever really, no matter 
 
 It does not mutate the input arguments. Operations are done on a cloned input.
 
-I needed this library to overwrite all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
+I needed this library to [overwrite](https://github.com/codsen/json-comb-core) all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
 
 This library is well-tested and is being used in commercial projects.
 
@@ -97,6 +98,10 @@ Input argument           | Type           | Obligatory? | Default     | Descript
 `value`                  | Whatever       | no          | `false`     | Assign all found plain object values to this
 
 **[⬆ &nbsp;back to top](#)**
+
+### API - Output
+
+Same thing that you gave in the first argument, except with values **overwritten** (where applicable).
 
 ## Contributing
 
