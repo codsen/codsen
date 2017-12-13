@@ -62,7 +62,6 @@ $ npm i json-comb-core
 const { getKeyset, enforceKeyset, sortAllObjects, noNewKeys, findUnused } = require('json-comb-core')
 // or as a ES Module:
 import { getKeyset, enforceKeyset, sortAllObjects, noNewKeys, findUnused } from 'json-comb-core'
-}
 ```
 
 Here's what you'll get:
