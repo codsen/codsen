@@ -55,6 +55,8 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 
 `'   aaa   \n   bbb   '` → `'aaa\nbbb'`
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Install
 
 ```bash
@@ -67,7 +69,9 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 18&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 17&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 31&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 41&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## The API
 
@@ -91,6 +95,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ### Optional Options Object's API:
 
 `options` object's key         | Type     | Obligatory? | Default     | Description
@@ -103,6 +109,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `recogniseHTML`                | Boolean  | no          | `true`      | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`.
 }                              |          |             |             |
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Algorithm
 
 Traverse the string once, gather a list of ranges indicating white space indexes, delete them all in one go and return the new string.
@@ -112,6 +120,8 @@ This library traverses the string _only once_ and performs the deletion _only on
 Optionally (on by default), it can recognise (X)HTML tags (any out of 118) and for example collapse `< div..` → `<div..`.
 
 This algorithm **does not use regexes**.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Usage
 
@@ -139,6 +149,8 @@ console.log('res4 = ' + res4)
 // => 'aaa bbb\nccc ddd'
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Smart bits
 
 There are some sneaky false-positive cases, for example:
@@ -149,11 +161,15 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's w
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Practical use
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
 
 I'm going to use it first in [Detergent](https://github.com/codsen/detergent), but you never know, it might prove handy in email template building in general.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -166,6 +182,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
