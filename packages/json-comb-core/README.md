@@ -88,11 +88,11 @@ For that, we'll need tools to [extract](#getkeyset) a keyset and [enforce](#enfo
 
 **Alert when JSON's have unique keys**
 
-It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an alert if my objects contain unique keys that none of the other objects have.
+It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an [alert](#nonewkeys) if my objects contain unique keys that none of the other objects have.
 
 **Find unused keys in a set of JSONs**
 
-A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is unused and probably can be deleted.
+A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is [unused](#findunused) and probably can be deleted.
 
 **[⬆ &nbsp;back to top](#)**
 
