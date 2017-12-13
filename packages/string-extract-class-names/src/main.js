@@ -1,6 +1,6 @@
-const replace = require('lodash.replace')
-const without = require('lodash.without')
-const flattenDeep = require('lodash.flattendeep')
+import replace from 'lodash.replace'
+import without from 'lodash.without'
+import flattenDeep from 'lodash.flattendeep'
 
 /**
  * stringExtractClassNames - extracts CSS classes/id names (like `.class-name`) from things like:
@@ -12,25 +12,23 @@ const flattenDeep = require('lodash.flattendeep')
  * @return {Array}                       each detected class/id put into an array
  */
 
-function stringExtractClassNames (input) {
+function stringExtractClassNames(input) {
   if (input === undefined) {
     throw new Error()
   }
-  var temp = ''
-  function chopBeginning (str) {
+  function chopBeginning(str) {
     // everything up to the first full stop or hash
     return replace(str, /[^.#]*/m, '')
   }
-  function chopEnding (str) {
+  function chopEnding(str) {
     // ~!@$%^&*()+=,./';:"?><[]\{}|`# ++++ space char
     return replace(str, /[ ~\\!@$%^&*()+=,/';:"?><[\]\\{}|`].*/g, '')
   }
-  function existy (x) { return x != null }
-  input = input.replace(/[\0'"\\\n\r\v\t\b\f]/g, ' ')
-  temp = input.split(/([.#])/)
+  function existy(x) { return x != null }
+  let temp = input.replace(/[\0'"\\\n\r\v\t\b\f]/g, ' ').split(/([.#])/)
   // now each full stop or hash are put as a separate element.
   // let's join them back to the next element that follows them
-  temp.forEach(function (el, i) {
+  temp.forEach((el, i) => {
     if (el === '.' || el === '#') {
       if (existy(temp[i + 1])) {
         temp[i + 1] = el + temp[i + 1]
@@ -38,7 +36,7 @@ function stringExtractClassNames (input) {
       temp[i] = ''
     }
   })
-  temp.forEach(function (el, i) {
+  temp.forEach((el, i) => {
     temp[i] = without(chopEnding(chopBeginning(temp[i])).split(/([.#][^.#]*)/), '')
   })
   temp = flattenDeep(temp)
@@ -47,4 +45,4 @@ function stringExtractClassNames (input) {
   return temp
 }
 
-module.exports = stringExtractClassNames
+export default stringExtractClassNames
