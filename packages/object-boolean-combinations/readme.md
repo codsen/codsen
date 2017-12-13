@@ -90,7 +90,7 @@ Sometimes you want to override the object keys, for example, in the a settings o
 const objectBooleanCombinations = require('object-boolean-combinations')
 const test = objectBooleanCombinations(
   {a: 0, b: 0, c: 0},
-  {a: 1, b: 1} // <---- Override. These values will be on all combinations.
+  {a: 1, b: 1} // <----- Override. These values will be on all combinations.
 )
 console.log(`test = ${JSON.stringify(test, null, 4)}`)
 // => [
