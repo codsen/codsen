@@ -37,7 +37,7 @@
 ## Install
 
 ```sh
-npm i object-boolean-combinations
+$ npm i object-boolean-combinations
 ```
 
 ```js
@@ -46,6 +46,16 @@ const objectBooleanCombinations = require('object-boolean-combinations')
 // or as an ES Module:
 import objectBooleanCombinations from 'object-boolean-combinations'
 ```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-boolean-combinations.cjs.js` | 4&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-boolean-combinations.esm.js` | 4&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-boolean-combinations.umd.js` | 17&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## What it does
 
@@ -66,6 +76,8 @@ console.log(`test = ${JSON.stringify(test, null, 4)}`)
 PS. Observe how input values don't matter, we had: `{ a: 'whatever' }`.
 
 Sometimes, you don't want all the combinations, you might want to "pin" certain values to be constant across all combinations. In those cases, use [overrides](#overriding), see below.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
