@@ -1,6 +1,5 @@
 import test from 'ava'
-
-const aoob = require('./index.js')
+import aoob from '../dist/util-array-object-or-both.cjs'
 
 // ===========
 // precautions

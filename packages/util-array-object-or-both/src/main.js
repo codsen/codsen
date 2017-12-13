@@ -1,8 +1,8 @@
-const includes = require('lodash.includes')
-const checkTypes = require('check-types-mini')
-const isObj = require('lodash.isplainobject')
+import includes from 'lodash.includes'
+import checkTypes from 'check-types-mini'
+import isObj from 'lodash.isplainobject'
 
-function validate(str, originalOpts) {
+function arrObjOrBoth(str, originalOpts) {
   function existy(x) { return x != null }
   if (!existy(str)) {
     throw new Error(`util-array-object-or-both/validate(): [THROW_ID_01] Please provide a string to work on. Currently it's equal to ${JSON.stringify(str, null, 4)}`)
@@ -52,4 +52,4 @@ function validate(str, originalOpts) {
   throw new TypeError(`${opts.msg}The ${opts.optsVarName} was customised to an unrecognised value: ${str}. Please check it against the API documentation.`)
 }
 
-module.exports = validate
+export default arrObjOrBoth

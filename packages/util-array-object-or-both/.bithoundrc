@@ -7,19 +7,17 @@
   "dependencies": {
     "mute": [
       "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "lodash.includes",
       "lodash.isplainobject",
-      "nodemon",
       "nyc"
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "dist/**"
   ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

@@ -1,17 +1,21 @@
 # util-array-object-or-both
 
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
+
 > Validate and normalise user choice: array, object or both?
 
+[![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Coverage Status][cov-img]][cov-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -24,7 +28,6 @@
 - [API](#api)
 - [Use](#use)
 - [Critique](#critique)
-- [Testing](#testing)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -33,10 +36,25 @@
 ## Install
 
 ```bash
-$ npm install util-array-object-or-both
+$ npm i util-array-object-or-both
 ```
 
-The source is in ES6, but transpiled code (ES5) is served.
+```js
+// consume via a CommonJS require:
+const arrObjOrBoth = require('util-array-object-or-both')
+// or as an ES Module:
+import arrObjOrBoth from 'util-array-object-or-both'
+```
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/util-array-object-or-both.cjs.js` | 3&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-array-object-or-both.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-array-object-or-both.umd.js` | 18&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Purpose
 
@@ -59,6 +77,8 @@ When I give the user ability to choose their preference out of: `array`, `object
 <br>        |            |               | `e`
 <br>        | `----`     | `----`        | `----`
 **Output string:** | `array`    | `object`      | `any`
+
+**[⬆ &nbsp;back to top](#)**
 
 ## API
 
@@ -84,11 +104,13 @@ For example, set `optsVarName` to `opts.only` and set `msg` to `posthtml-ast-del
 
     posthtml-ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: sweetcarrots. Please check it against the API documentation.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Use
 
 ```js
 // require this library:
-const arrayOrObjectOrBoth = require('util-array-object-or-both')
+const arrObjOrBoth = require('util-array-object-or-both')
 // and friends:
 const clone = require('lodash.clonedeep')
 const checkTypes = require('check-types-mini')
@@ -119,7 +141,7 @@ function myPrecious (input, opts) {
   )
   // by this point, we can guarantee that opts.only is either `null` or `string`.
   // if it's a `string`, let's validate is its values among accepted-ones:
-  opts.only = arrayOrObjectOrBoth(opts.only, {
+  opts.only = arrObjOrBoth(opts.only, {
     msg: 'my-library/myPrecious(): [THROW_ID_02]',
     optsVarName: 'opts.only'
   })
@@ -134,13 +156,15 @@ function myPrecious (input, opts) {
 }
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Critique
 
 You may ask, why on Earth you would need a package for such thing? It's not very universal to be useful for society, is it?
 
 Actually, it is.
 
-I discovered that when working with AST's, you often need to tell your tools to process (traverse, delete, and so on) EITHER objects OR arrays or both. That's where this library comes in: standardise the choice out of three options and give a user a wide amount of values to use.
+I discovered that when working with AST's, you often need to tell your tools to process (traverse, delete, and so on) EITHER objects OR arrays or both. That's where this library comes in: standardise the choice (from three options) and relieve the user from the need to remember the exact value.
 
 I think the API should accept a very wide spectrum of values, so users would not even need to check the API documentation - they'd just describe what they want, in plain English.
 
@@ -151,78 +175,60 @@ I'm going to use it in:
 
 and others. So, it's not that niche as it might seem!
 
-## Testing
-
-```bash
-$ npm test
-```
-
-Unit tests use [AVA](https://github.com/avajs/ava), linting is done via ESLint on `airbnb-base` preset. I aim to have 100% unit test coverage (per-_line_, _function_ and _branch_).
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/util-array-object-or-both/issues). If you file a pull request, I'll do my best to merge it quickly. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If something doesn't work as you wished or you don't understand the inner working of this library, _do raise an issue_. I'm happy to explain what's happening. Often some part of my README documentation is woolly, and I can't spot it myself. I need user feedback.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/util-array-object-or-both/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-Also, if you miss a feature, request it by [raising](https://github.com/codsen/util-array-object-or-both/issues) an issue as well.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-array-object-or-both/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-I know it never happens but if you would ever forked it and worked on a new feature, before filing a pull request, please make sure code is following the rules set in `.eslintrc` and `npm run test` passes fine. It's basically an `airbnb-base` rules preset of `eslint` with few exceptions: 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-array-object-or-both/issues) or [email](mailto:roy@codsen.com), your choice.
 
-I dropped JS Standard because it misses many useful ESLint rules and has been neglected by its maintainers, using half-year-old version of ESLint.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
-Cheers!
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+[node-img]: https://img.shields.io/node/v/util-array-object-or-both.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/util-array-object-or-both
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[npm-img]: https://img.shields.io/npm/v/util-array-object-or-both.svg
+[npm-img]: https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square&label=release
 [npm-url]: https://www.npmjs.com/package/util-array-object-or-both
 
-[travis-img]: https://travis-ci.org/codsen/util-array-object-or-both.svg?branch=master
+[travis-img]: https://img.shields.io/travis/codsen/util-array-object-or-both.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/util-array-object-or-both
 
-[cov-img]: https://coveralls.io/repos/github/codsen/util-array-object-or-both/badge.svg?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/util-array-object-or-both/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/util-array-object-or-both?branch=master
 
-[overall-img]: https://www.bithound.io/github/codsen/util-array-object-or-both/badges/score.svg
+[overall-img]: https://img.shields.io/bithound/code/github/codsen/util-array-object-or-both.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/util-array-object-or-both
 
-[deps-img]: https://www.bithound.io/github/codsen/util-array-object-or-both/badges/dependencies.svg
+[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/util-array-object-or-both.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/util-array-object-or-both/master/dependencies/npm
 
-[dev-img]: https://www.bithound.io/github/codsen/util-array-object-or-both/badges/devDependencies.svg
-[dev-url]: https://www.bithound.io/github/codsen/util-array-object-or-both/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/util-array-object-or-both.svg
-[downloads-url]: https://www.npmjs.com/package/util-array-object-or-both
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-array-object-or-both/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-array-object-or-both
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/util-array-object-or-both
 
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg
+[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/util-array-object-or-both.svg?style=flat-square
+[dev-url]: https://www.bithound.io/github/codsen/util-array-object-or-both/master/dependencies/npm
+
+[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-array-object-or-both/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-array-object-or-both
+
+[downloads-img]: https://img.shields.io/npm/dm/util-array-object-or-both.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/util-array-object-or-both
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/util-array-object-or-both
+
+[license-img]: https://img.shields.io/npm/l/util-array-object-or-both.svg?style=flat-square
+[license-url]: https://github.com/codsen/util-array-object-or-both/blob/master/license.md

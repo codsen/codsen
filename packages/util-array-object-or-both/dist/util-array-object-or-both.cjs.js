@@ -1,12 +1,14 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var includes = _interopDefault(require('lodash.includes'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var includes = require('lodash.includes');
-var checkTypes = require('check-types-mini');
-var isObj = require('lodash.isplainobject');
-
-function validate(str, originalOpts) {
+function arrObjOrBoth(str, originalOpts) {
   function existy(x) {
     return x != null;
   }
@@ -54,4 +56,4 @@ function validate(str, originalOpts) {
   throw new TypeError(opts.msg + 'The ' + opts.optsVarName + ' was customised to an unrecognised value: ' + str + '. Please check it against the API documentation.');
 }
 
-module.exports = validate;
+module.exports = arrObjOrBoth;

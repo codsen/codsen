@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-12-13
+### Changed
+- ✨ Rebased in ES Modules
+- ✨ Set up Rollup. Now we serve three builds: CommonJS, UMD and ES Module.
+
 ## [1.2.0] - 2017-09-20
 ### Changed
 - Dropped JS Standard and switched to raw ESLint on `airbnb-base` preset. Of course, with overrides to ban semicolons and allow plus-plus in loops.
@@ -17,5 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - Public release
 
+[2.0.0]: https://github.com/codsen/util-array-object-or-both/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/codsen/util-array-object-or-both/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/util-array-object-or-both/compare/v1.0.0...v1.1.0
