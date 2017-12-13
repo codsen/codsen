@@ -75,7 +75,7 @@ const object = {
     {
       d: 'd',
       c: 'c'
-    }
+    },
   ]
 }
 const flattened = flattenAllArrays(object)
