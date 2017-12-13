@@ -20,7 +20,7 @@
 ## Install
 
 ```sh
-$ npm i string-remove-thousand-separators
+npm i string-remove-thousand-separators
 ```
 
 ```js
