@@ -39,7 +39,14 @@
 ## Install
 
 ```bash
-$ npm i string-slices-array-push
+npm i string-slices-array-push
+```
+
+```js
+// consume via a CommonJS require:
+const Slices = require('string-slices-array-push')
+// or as an ES Module:
+import Slices from 'string-slices-array-push'
 ```
 
 ```js
