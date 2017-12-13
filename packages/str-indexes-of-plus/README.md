@@ -50,6 +50,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/str-indexes-of-plus.esm.js` | 2&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/str-indexes-of-plus.umd.js` | 7&nbsp;KB
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Idea
 
 Search for a string in another string. Return the array of indexes of any findings. Astral character-friendly. Allows to optionally offset the starting point of the search (3rd argument).
