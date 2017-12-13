@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Does the AST/nested-plain-pbject/array/whatever contain only one kind of value?
+> Does the AST/nested-plain-object/array/whatever contain only one kind of value?
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -61,7 +61,7 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 
 ## Purpose
 
-It answers the question: does the given AST/nested-plain-pbject/array/whatever contain only one kind of value?
+It answers the question: does the given AST/nested-plain-object/array/whatever contain only one kind of value?
 
 The equality is not explicit, that is, we're just checking, that all values are **not unequal** to the given-one.
 
@@ -101,9 +101,9 @@ console.log(allValuesEqualTo({
 
 ### `opts.arraysMustNotContainPlaceholders`
 
-When working with data structures, this library would be used to check, is the certain piece of JSON data (some key's value, a nested object) is all blank, that is contains placeholders throughout.
+When working with data structures, this library would be used to check, is the certain piece of JSON data (some key's value, a nested object) is all blank, that is, contains only placeholders everywhere.
 
-Now, with regards to arrays, default arrays should not contain placeholders directly. For example key `b` is actually customised, it's not really a placeholder:
+Now, with regards to arrays, default arrays should not contain placeholders directly. For example key `b` is customised, it's not a placeholder:
 
 ```json
 {
@@ -121,9 +121,9 @@ It should be instead:
 }
 ```
 
-When checking against second aegument `false`, this library will yield `false` for former and `true` for latter.
+When checking against second argument `false`, this library will yield `false` for former and `true` for latter.
 
-Now, this is relevant only when working on data structures. When dealing with all other kinds of nested objects and arrays, placeholders within arrays count as placeholders and should yield `true`.
+Now, this is relevant only when working with data structures. When dealing with all other kinds of nested objects and arrays, placeholders within arrays count as placeholders and should yield `true`.
 
 For that, turn off the `opts.arraysMustNotContainPlaceholders`, set it to `false`.
 
@@ -164,9 +164,9 @@ options object's key               | Type of its value  | Default  | Description
 `arraysMustNotContainPlaceholders` | Boolean            | `true`   | When set to `true`, `value` within array should not be present and will yield `false` result. Set this to `false` to allow one or more `value`'s within arrays in the `input`.
 }                                  |                    |          |
 
-The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
-Here is the Optional Options Object's defaults in one place (in case you ever want to copy and tweak it):
+Here are the Optional Options Object's defaults in one place (in case you ever want to copy and tweak it):
 
 ```js
 {
@@ -184,7 +184,7 @@ Boolean: `true` or `false`.
 
 For example, I was working on [object-fill-missing-keys](https://github.com/codsen/object-fill-missing-keys). The library takes an object, a reference object, and fills in missing keys according to the reference. I was implementing a feature, a options switch, which let to skip filling for chosen keys if they currently contain only placeholders.
 
-Basically, you'll need this library when you will want to check, does the AST contain only certain value throughout the whole tree. Also, it can be a simple object, in which case, we'd be checking, are all values of all keys equal to something.
+You'll need this library when you want to check, does the AST contain only certain value throughout the whole tree. Also, it can be a simple object, in which case, we'd be checking, are all values of all keys equal to something.
 
 **[⬆ &nbsp;back to top](#)**
 

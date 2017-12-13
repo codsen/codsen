@@ -1,7 +1,7 @@
 {
   "name": "object-all-values-equal-to",
   "version": "1.0.0",
-  "description": "Does the AST/nested-plain-pbject/array/whatever contain only one kind of value?",
+  "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
   "license": "MIT",
   "engines": {
     "node": ">=6",
