@@ -439,7 +439,7 @@ This method does not mutate the input and is fine if you pass _any_ JS type (`ar
 
 Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
-`input`        | Whatever | no          | If it's a plain object or contains a plain objects deeper, a copy of it will be created with all its plain objects sorted. Otherwise, untouched input will be returned.
+`input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, untouched input will be returned.
 
 **[⬆ &nbsp;back to top](#)**
 
