@@ -39,7 +39,9 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-remove-thousand-separators.cjs.js` | 6&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-thousand-separators.esm.js` | 6&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-thousand-separators.umd.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-thousand-separators.umd.js` | 32&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Table of Contents
 
@@ -64,6 +66,8 @@ This library detects and removes a thousand separators from numeric strings.
 The main consumer will be [csv-split-easy](https://github.com/codsen/csv-split-easy) which deals with exported Internet Banking CSV files in a double-entry accounting format.
 
 The numeric string must be NUMERIC, that is, not contain any letters or other unrelated characters. It can contain empty space though, which will be automatically trimmed.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Examples
 
@@ -105,12 +109,16 @@ console.log(remSep('100\'000.2'))
 // => "100000.20" (Swiss notation)
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 **remSep('str'[, opts])**
 
 If first argument (input) is not `string`, it will `throw` and error.
 Second input argument, `opts`, is optional. However, if _it is_ present and is not `null`, not `undefined` and not a plain object, it will `throw` and error.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### options
 
@@ -132,11 +140,15 @@ Second input argument, `opts`, is optional. However, if _it is_ present and is n
 `forceUKStyle`                        | Boolean  | no          | `false`     | Should we convert the decimal separator commas into dots? `1,5` → `1.5`?
 }                                     |          |             |             |
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Algorithm
 
 This library uses my new favourite, string trickle-class ("strickle-class") algorithm. The string is looped (we aim once, but it depends on the complexity of the task) and the characters trickle one-by-one through our "traps" where we flip boolean flags and count stuff accordingly to what's passing by.
 
 That's a different approach from using regexes. Regexes are an easy solution when it is possible to achieve it using them. However, most of the cases, limits of regexes dictate the limits of the algorithms, and as a result, we sometimes see crippled web apps that are not smart and not really universal. For example, when I banked with Metro Bank back in 2015, they used to export CSV's with some numbers having a thousand separators and some not having them. Also, separately from that, some numbers were wrapped with double quotes, and some were not. That drew my accounting software crazy, and I had to manually edit the CSV's each time. Funnily, a combination of this library and [csv-split-easy](https://github.com/codsen/csv-split-easy) would solve such issues. The question is, how come corporate software can't do things that open source can? Is it corporate ceilings of all kinds or is it the power of JavaScript?
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
@@ -149,6 +161,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-remove-thousand-separators/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
