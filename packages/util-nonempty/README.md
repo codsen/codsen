@@ -55,6 +55,8 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 604&nbsp;B
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 904&nbsp;B
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Purpose
 
 I want a quick utility function, to be able to detect is the input not empty.
@@ -91,14 +93,11 @@ If you want to check _non-emptiness_ of complex nested trees of objects, arrays 
 * If you want to check for strict emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
 * If your "emptiness" definition is wider — anything (plain object, array or string or a mix of thereof) that contains only whitespace (spaces, line breaks, tabs and so on), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
-```js
-nonEmpty (
-  input // Array, plain object or string will be checked, rest will be instantly "false", unless input's missing (then returns undefined).
-);
-// => Boolean
-```
+Anything-in, Boolean-out.
 
 ## Contributing
 
@@ -111,6 +110,8 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 * If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-nonempty/issues) or [email](mailto:roy@codsen.com), your choice.
 
 * If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
