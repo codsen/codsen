@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
+> Check does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -26,7 +26,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-  - [options](#options)
+  - [`opts` - an Optional Options Object](#opts---an-optional-options-object)
 - [Two modes](#two-modes)
 - [For example](#for-example)
 - [Competition](#competition)
@@ -60,7 +60,7 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 
 ## Idea
 
-Check, does a `given thing` (probably a nested plain object) have any keys, not present in a `reference thing` (probably an another nested plain object). I'm using a term "thing" because this library uses recursive algorithm which means both inputs can be _whatever_-type (string, plain object or an array).
+Check, does a `given thing` (probably a nested plain object) have any keys, not present in a `reference thing` (probably an another nested plain object). I'm using a term "thing" because this library uses a recursive algorithm which means both inputs can be _whatever_-type (string, plain object or an array).
 
 This library will try to perform a **deep, recursive traversal** of both inputs and will not mutate the input arguments.
 
@@ -76,9 +76,7 @@ Personally, I use this library to look for any rogue keys in email template cont
 
 Returns zero or more long array of the paths to each key/element in the `input` which does not exist in `reference`.
 
-### options
-
-Type: `object` - an optional options object.
+### `opts` - an Optional Options Object
 
 **Defaults**:
 
@@ -88,11 +86,11 @@ Type: `object` - an optional options object.
   }
 ```
 
-`options` object's key | Type           | Obligatory? | Default     | Description
------------------------|----------------|-------------|-------------|----------------------
-{                      |                |             |             |
-`mode`                 | Integer number | no          | `2`         | Choose mode: `1` or `2`. See below.
-{                      |                |             |             |
+Optional Options Object's key | Type           | Obligatory? | Default     | Description
+------------------------------|----------------|-------------|-------------|----------------------
+{                             |                |             |             |
+`mode`                        | Integer number | no          | `2`         | Choose mode: `1` or `2`. See below.
+{                             |                |             |             |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -105,7 +103,7 @@ This library has two modes:
 
 By _normalised_ I mean if any arrays have object children, those objects have the same keys.
 
-These two modes mainly concern the case when both `input` and `reference` have an array, but `reference` has less elements and there's nothing to compare the `input` element to:
+These two modes mainly concern the case when both `input` and `reference` have an array, but `reference` has fewer elements and there's nothing to compare the `input` element to:
 
 ```js
 const input = {
@@ -134,9 +132,9 @@ const reference = {
 
 First mode will report that `a[1].b` and `a[1].c` and `a[1].x` are all rogue keys, not present in `reference.`
 
-Second mode will anticipate that `reference` will be normalised, that is, we can **compare input array elements to the first element of array in reference**. We'll get the same thing — all objects within an array should have the same keys. This means, `input` has only one rogue key — `a[1].x`. And algotithm will identify it by comparing `input` object `a[1]` to `reference` object `a[0]` — second/third/whatever element in the `input` to **ALWAYS THE FIRST ELEMENT IN REFERENCE**, `a[0]`.
+The second mode will anticipate that `reference` will be normalised, that is, we can **compare input array elements to the first element of an array in reference**. We'll get the same thing — all objects within an array should have the same keys. This means, `input` has only one rogue key — `a[1].x`. And algorithm will identify it by comparing `input` object `a[1]` to `reference` object `a[0]` — second/third/whatever element in the `input` to **ALWAYS THE FIRST ELEMENT IN REFERENCE**, `a[0]`.
 
-I need the second mode, but I give people chance to use first mode as well. Maybe somebody will find it useful.
+I need the second mode, but I give people chance to use the first mode as well. Maybe somebody will find it useful.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -198,7 +196,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## Competition
 
-You could try to use a [missing-deep-keys](https://github.com/vladgolubev/missing-deep-keys) but it won't work if your inputs have **arrays**. For posterity, the algorithm of it is quite wise: run `lodash.difference` against [deep-keys](https://www.npmjs.com/package/deep-keys)-flattened, stringified key schemas of both object and reference. However, `deep-keys` does not support **arrays**, so it's not that easy.
+You could try to use a [missing-deep-keys](https://github.com/vladgolubev/missing-deep-keys), but it won't work if your inputs have **arrays**. For posterity, the algorithm of it is quite wise: run `lodash.difference` against [deep-keys](https://www.npmjs.com/package/deep-keys)-flattened stringified key schemas of both object and reference. However, `deep-keys` does not support **arrays**, so it's not that easy.
 
 In short, `missing-deep-keys` is for cases when you have only objects-within-objects. `object-no-new-keys` is for work with parsed HTML (AST's) or JSON. Higher-end.
 
