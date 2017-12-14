@@ -43,7 +43,7 @@ const nonEmpty = require('util-nonempty')
 // or as ES module:
 import nonEmpty from 'util-nonempty'
 
-// then call as a function:
+// then call as a function, pass it anything:
 console.log(nonEmpty('a'))
 ```
 
@@ -74,7 +74,7 @@ nonEmpty(['a'])
 nonEmpty([123])
 // => true
 
-nonEmpty([])
+nonEmpty([[[[[[[[[[[]]]]]]]]]]])
 // => false
 
 nonEmpty({a: 'a'})
