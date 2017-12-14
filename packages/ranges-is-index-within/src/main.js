@@ -1,13 +1,13 @@
-const isObj = require('lodash.isplainobject')
-const checkTypes = require('check-types-mini')
-const isNatStr = require('is-natural-number-string')
-const isNatNum = require('is-natural-number')
-const ordinalSuffix = require('ordinal-number-suffix')
-const rangesSort = require('ranges-sort')
+import isObj from 'lodash.isplainobject'
+import checkTypes from 'check-types-mini'
+import isNatStr from 'is-natural-number-string'
+import isNatNum from 'is-natural-number'
+import ordinalSuffix from 'ordinal-number-suffix'
+import rangesSort from 'ranges-sort'
 
 const isArr = Array.isArray
 
-function wthn(originalIndex, rangesArr, originalOpts) {
+function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   function existy(something) { return something != null }
   let index
 
@@ -20,19 +20,19 @@ function wthn(originalIndex, rangesArr, originalOpts) {
   } else if (isNatStr(originalIndex, { includeZero: true })) {
     index = parseInt(originalIndex, 10)
   } else {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_01] Input must mean an index, so it has to be either a natural number or a string containing natural number! Currently its type is: ${typeof originalIndex}, equal to: ${JSON.stringify(originalIndex, null, 4)}`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_01] Input must mean an index, so it has to be either a natural number or a string containing natural number! Currently its type is: ${typeof originalIndex}, equal to: ${JSON.stringify(originalIndex, null, 4)}`)
   }
   // - rangesArr
   if (!existy(rangesArr)) {
-    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_02] We\'re missing the second input, rangesArr. It\'s meant to be an array of one or more range arrays.')
+    throw new TypeError('ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_02] We\'re missing the second input, rangesArr. It\'s meant to be an array of one or more range arrays.')
   } else if (!isArr(rangesArr)) {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_03] Second input argument, rangesArr must be an array! Currently its type is: ${typeof originalIndex}, equal to: ${JSON.stringify(originalIndex, null, 4)}`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_03] Second input argument, rangesArr must be an array! Currently its type is: ${typeof originalIndex}, equal to: ${JSON.stringify(originalIndex, null, 4)}`)
   } else if (rangesArr.length === 0) {
-    throw new TypeError('ranges-is-index-within/wthn(): [THROW_ID_04] Second input argument, rangesArr must be not empty! Currently it\'s empty.')
+    throw new TypeError('ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_04] Second input argument, rangesArr must be not empty! Currently it\'s empty.')
   }
   let culpritsIndex = null
   if (isArr(rangesArr) && (rangesArr.length > 0) && !isArr(rangesArr[0])) {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_05] Second input argument, rangesArr must be an array of (index range) arrays! Currently it's equal to: ${rangesArr}.`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_05] Second input argument, rangesArr must be an array of (index range) arrays! Currently it's equal to: ${rangesArr}.`)
   }
   if (!rangesArr.every((rangeArr, indx) => {
     if (
@@ -44,7 +44,7 @@ function wthn(originalIndex, rangesArr, originalOpts) {
     }
     return true
   })) {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_06] Second input argument, rangesArr must consist of arrays which are natural number indexes representing string index ranges. However, ${ordinalSuffix(culpritsIndex)} range (${JSON.stringify(rangesArr[culpritsIndex], null, 4)}) does not consist of only natural numbers!`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_06] Second input argument, rangesArr must consist of arrays which are natural number indexes representing string index ranges. However, ${ordinalSuffix(culpritsIndex)} range (${JSON.stringify(rangesArr[culpritsIndex], null, 4)}) does not consist of only natural numbers!`)
   }
   // check if each of the range has ending larger or equal to beginning
   if (!rangesArr.every((rangeArr, indx) => {
@@ -56,11 +56,11 @@ function wthn(originalIndex, rangesArr, originalOpts) {
     }
     return true
   })) {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_07] The ${ordinalSuffix(culpritsIndex)} range (${JSON.stringify(rangesArr[culpritsIndex], null, 4)}) in the ranges array has beginning of the index bigger than ending! They can be equal but in the backwards order.`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_07] The ${ordinalSuffix(culpritsIndex)} range (${JSON.stringify(rangesArr[culpritsIndex], null, 4)}) in the ranges array has beginning of the index bigger than ending! They can be equal but in the backwards order.`)
   }
   // - originalOpts
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError(`ranges-is-index-within/wthn(): [THROW_ID_08] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`)
+    throw new TypeError(`ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_08] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(originalOpts, null, 4)}`)
   }
 
   //      D E F A U L T S
@@ -69,7 +69,7 @@ function wthn(originalIndex, rangesArr, originalOpts) {
   }
 
   const opts = Object.assign(Object.assign({}, defaults), originalOpts)
-  checkTypes(opts, defaults, { msg: 'ranges-is-index-within/wthn(): [THROW_ID_07*]' })
+  checkTypes(opts, defaults, { msg: 'ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_07*]' })
 
   // now some real action
   // ====================
@@ -153,4 +153,4 @@ function wthn(originalIndex, rangesArr, originalOpts) {
   return false
 }
 
-module.exports = wthn
+export default rangesIsIndexWithin

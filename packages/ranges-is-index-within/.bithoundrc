@@ -6,14 +6,15 @@
   },
   "dependencies": {
     "mute": [
-      "clear-cli",
       "coveralls",
       "husky",
-      "lodash.isplainobject",
-      "nodemon"
+      "lodash.isplainobject"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

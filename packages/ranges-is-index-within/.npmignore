@@ -21,3 +21,8 @@ config.json
 .travis.yml
 test.js
 entity-test.json
+src
+test
+rollup.config.js
+.babelrc
+.eslintrc.json

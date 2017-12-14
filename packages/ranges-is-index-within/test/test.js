@@ -1,5 +1,5 @@
 const test = require('ava')
-const wthn = require('./index')
+const wthn = require('../dist/ranges-is-index-within.cjs')
 
 // ==============================
 // 0. THROWS
