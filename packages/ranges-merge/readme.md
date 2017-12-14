@@ -34,7 +34,7 @@
 ## Install
 
 ```bash
-$ npm i ranges-merge
+npm i ranges-merge
 ```
 
 ```js
