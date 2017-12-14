@@ -39,7 +39,7 @@
 ## Install
 
 ```bash
-$ npm i string-replace-slices-array
+npm i string-replace-slices-array
 ```
 
 ```js
