@@ -94,6 +94,10 @@ globby(input).then(function (resolvedPathsArray) {
   return !cli.flags.n ? res.filter(function (oneOfPaths) {
     return !oneOfPaths.includes('node_modules') && !oneOfPaths.includes('package-lock.json');
   }) : res;
+}).then(function (paths) {
+  return paths.filter(function (singlePath) {
+    return path.extname(singlePath) === '.json';
+  });
 }).then(function (received) {
   if (cli.flags.d) {
     log('' + chalk.grey('✨  json-sort-cli: ') + chalk.yellow('We\'d sort the following files:') + '\n' + received.join('\n'));

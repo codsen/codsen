@@ -108,6 +108,7 @@ globby(input)
     [],
   ))).then(res =>
     (!cli.flags.n ? res.filter(oneOfPaths => (!oneOfPaths.includes('node_modules')) && !oneOfPaths.includes('package-lock.json')) : res))
+  .then(paths => paths.filter(singlePath => path.extname(singlePath) === '.json'))
   .then((received) => {
     if (cli.flags.d) {
       log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.yellow('We\'d sort the following files:')}\n${received.join('\n')}`)
