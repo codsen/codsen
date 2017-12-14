@@ -7,16 +7,15 @@
   "dependencies": {
     "mute": [
       "ava",
-      "clear-cli",
       "coveralls",
       "husky",
       "nyc"
     ]
   },
   "ignore": [
-    "index-es5.js"
+    "dist/**"
   ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

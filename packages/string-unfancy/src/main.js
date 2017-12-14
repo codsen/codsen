@@ -1,6 +1,6 @@
 /* eslint quote-props:0 */
 
-const he = require('he')
+import he from 'he'
 
 function existy(x) { return x != null }
 
@@ -48,4 +48,4 @@ function unfancy(str) {
   return res
 }
 
-module.exports = unfancy
+export default unfancy

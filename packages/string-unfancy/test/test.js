@@ -1,5 +1,5 @@
 import test from 'ava'
-import unfancy from './index'
+import unfancy from '../dist/string-unfancy.cjs'
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
