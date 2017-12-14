@@ -20,7 +20,7 @@
 ## Install
 
 ```sh
-$ npm i string-extract-class-names
+npm i string-extract-class-names
 ```
 
 Here's what you'll get:
