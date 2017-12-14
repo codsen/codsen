@@ -20,13 +20,13 @@
 ## Install
 
 ```bash
-$ npm i ranges-sort
+npm i ranges-sort
 ```
 
 ```js
 // consume as CommonJS require:
 const rangesSort = require('ranges-sort')
-// or as native ES module:
+// or as a native ES module:
 import rangesSort from 'ranges-sort'
 ```
 
