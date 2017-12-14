@@ -34,7 +34,7 @@
 ## Install globally, call anywhere
 
 ```bash
-$ npm i -g json-sort-cli
+npm i -g json-sort-cli
 ```
 
 - then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without globs:
