@@ -38,7 +38,7 @@
 ## Install
 
 ```bash
-$ npm i string-match-left-right
+npm i string-match-left-right
 ```
 
 ```js
