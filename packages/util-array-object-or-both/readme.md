@@ -36,7 +36,7 @@
 ## Install
 
 ```bash
-$ npm i util-array-object-or-both
+npm i util-array-object-or-both
 ```
 
 ```js
