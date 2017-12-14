@@ -4,7 +4,7 @@
   "description": "Replace all fancy dashes, quotes etc with their simpler equivalents",
   "license": "MIT",
   "engines": {
-    "node": ">=0.10.0",
+    "node": ">=6",
     "npm": ">=5",
     "yarn": ">=1"
   },

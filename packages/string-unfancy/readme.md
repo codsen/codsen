@@ -46,7 +46,12 @@ $ npm i string-unfancy
 
 > or, if you work with image `alt` attributes, check out [html-img-alt](https://github.com/codsen/html-img-alt) which uses `string-unfancy`.
 
-Code is served transpiled using Babel. Source is in ES6 but you'll consume transpiled ES5.
+```js
+// consume via a CommonJS require:
+const unfancy = require('string-unfancy')
+// or as an ES Module:
+import unfancy from 'string-unfancy'
+```
 
 Here's what you'll get:
 
@@ -76,12 +81,12 @@ PS. If you want a higher-level tool, [html-img-alt](https://github.com/codsen/ht
 
 ```js
 const unfancy = require('string-unfancy')
-var res = unfancy('someone’s')
+const res = unfancy('someone’s')
 console.log('res = ' + JSON.stringify(res1, null, 4))
 // => "someone's"
 
 // works with encoded HTML:
-var res2 = unfancy('someone&rsquo;s')
+const res2 = unfancy('someone&rsquo;s')
 console.log('res2 = ' + JSON.stringify(res2, null, 4))
 // => "someone's"
 ```
