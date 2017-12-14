@@ -60,7 +60,7 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 ## Install
 
 ```bash
-$ npm i string-collapse-white-space
+npm i string-collapse-white-space
 ```
 
 Here's what you'll get:
