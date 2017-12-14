@@ -39,7 +39,7 @@
 ## Install
 
 ```bash
-$ npm i str-indexes-of-plus
+npm i str-indexes-of-plus
 ```
 
 Here's what you'll get:
