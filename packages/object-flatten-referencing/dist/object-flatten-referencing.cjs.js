@@ -121,130 +121,9 @@ var util = {
   reclaimIntegerString: reclaimIntegerString
 };
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-/* eslint padded-blocks: 0 */
+/* eslint padded-blocks: 0, no-param-reassign:0 */
 
 var isArr = Array.isArray;
 
@@ -285,7 +164,7 @@ function outer(originalInput1, originalReference1, opts1) {
       currentRoot = '';
     }
     // console.log(`* currentRoot = ${JSON.stringify(currentRoot, null, 4)}`)
-    var defaults$$1 = {
+    var defaults = {
       wrapHeadsWith: '%%_',
       wrapTailsWith: '_%%',
       dontWrapKeys: [],
@@ -308,14 +187,14 @@ function outer(originalInput1, originalReference1, opts1) {
       enforceStrictKeyset: true // are you allowed to pass-in any unrecognised
       // keys in an options object?
     };
-    opts = Object.assign({}, defaults$$1, opts);
+    opts = Object.assign({}, defaults, opts);
     opts.dontWrapKeys = util.arrayiffyString(opts.dontWrapKeys);
     opts.preventWrappingIfContains = util.arrayiffyString(opts.preventWrappingIfContains);
     opts.dontWrapPaths = util.arrayiffyString(opts.dontWrapPaths);
     opts.ignore = util.arrayiffyString(opts.ignore);
     opts.whatToDoWhenReferenceIsMissing = util.reclaimIntegerString(opts.whatToDoWhenReferenceIsMissing);
 
-    checkTypes(opts, defaults$$1, {
+    checkTypes(opts, defaults, {
       msg: 'object-flatten-referencing/ofr(): [THROW_ID_05*]',
       optsVarName: 'opts',
       enforceStrictKeyset: opts.enforceStrictKeyset

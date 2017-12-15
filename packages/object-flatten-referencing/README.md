@@ -1,12 +1,13 @@
 # object-flatten-referencing
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
+<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
 > Flatten complex nested objects according to a reference objects
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
+[![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -14,7 +15,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
-[![MIT License][license-badge]][license]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
@@ -27,29 +28,34 @@
 - [API](#api)
     - [1st argument - `plainObject`](#1st-argument---plainobject)
     - [2nd argument - `searchValue`](#2nd-argument---searchvalue)
-    - [3rd argument - `options`](#3rd-argument---options)
+    - [3rd argument (optional) - `options`](#3rd-argument-optional---options)
 - [The algorithm](#the-algorithm)
 - [In practice](#in-practice)
-- [Testing and Contributing](#testing-and-contributing)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-**[⬆ &nbsp;back to top](#)**
-
 ## Install
 
 ```bash
-$ npm i object-flatten-referencing
+npm i object-flatten-referencing
 ```
 
-**What you'll get:**
+```js
+// consume via CommonJS require():
+const ofr = require('object-flatten-referencing')
+// or as an ES Module:
+import ofr from 'object-flatten-referencing'
+```
 
-type            | Key in `package.json` | Path  | Size
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-main export - **CommonJS version**, transpiled, contains `require` and `module.exports`  | `main`                | `dist/object-flatten-referencing.cjs.js` | 16KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-flatten-referencing.esm.js` | 15KB
-**UMD build** for browsers, transpiled and minified, containing `iife`'s and has all dependencies transpiled, baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 37KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-flatten-referencing.cjs.js` | 14&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-flatten-referencing.esm.js` | 13&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-flatten-referencing.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -86,13 +92,15 @@ This library does such object "flattening".
 
 **ofr(plainObject, referenceObject\[, options])**
 
-Returns a plain object, flattened according to your supplied reference object.
+Returns a new plain object, flattened according to your supplied reference object.
 
 ```js
 const ofr = require('object-flatten-referencing')
-var res = ofr(plainObject, referenceObject, options)
+const res = ofr(plainObject, referenceObject, options)
 console.log('res = ' + JSON.stringify(res, null, 4))
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 #### 1st argument - `plainObject`
 
@@ -108,12 +116,14 @@ Obligatory: `yes`
 
 A reference object — according to what you want to flatten the `plainObject`.
 
-#### 3rd argument - `options`
+#### 3rd argument (optional) - `options`
 
 Type: `object` (plain object)
 Obligatory: `no`
 
 An optional third argument - options object.
+
+Here are all the defaults, compiled in one place just in case you want to copy and tweak:
 
 ```js
 {
@@ -236,13 +246,13 @@ It's easy to [merge](https://github.com/codsen/object-merge-advanced) the _mappi
 Now you need to **flatten** the above object, so that the key called `name` has a value of `string` type, not `object`. This library helps to achieve that:
 
 ```js
-var mergedDataFile = {
+const mergedDataFile = {
   "title": "Welcome",
   "name": {
     "object": "name"
   }
 }
-var reference = {
+const reference = {
   "title": "Welcome",
   "name": "John"
 }
@@ -265,17 +275,17 @@ Voilà!
 
 **[⬆ &nbsp;back to top](#)**
 
-## Testing and Contributing
+## Contributing
 
-```bash
-$ npm test
-```
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-If you want to contribute, don't hesitate. If it's a code contribution, please supplement `test.js` with tests covering your code. This library uses `airbnb-base` rules preset of `eslint` with few exceptions^ and follows the Semver rules.
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-flatten-referencing/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/object-flatten-referencing/issues). If you file a pull request, I'll do my best to help you to get it quickly. If you have any comments on the code, including ideas how to improve things, just email me.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-flatten-referencing/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-<small>^ 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`</small>
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-flatten-referencing/issues) or [email](mailto:roy@codsen.com), your choice.
+
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -283,25 +293,7 @@ If you see anything incorrect whatsoever, do [raise an issue](https://github.com
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2017 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-flatten-referencing.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-flatten-referencing
@@ -311,6 +303,9 @@ SOFTWARE.
 
 [travis-img]: https://img.shields.io/travis/codsen/object-flatten-referencing.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
+
+[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?style=flat-square?branch=master
+[cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
 
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/object-flatten-referencing.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
@@ -324,14 +319,14 @@ SOFTWARE.
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-flatten-referencing.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
 
-[downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/object-flatten-referencing
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-referencing/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-referencing
+
+[downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/object-flatten-referencing
 
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-flatten-referencing
 
-[license-badge]: https://img.shields.io/npm/l/object-flatten-referencing.svg?style=flat-square
-[license]: https://github.com/codsen/object-flatten-referencing/blob/master/license.md
+[license-img]: https://img.shields.io/npm/l/object-flatten-referencing.svg?style=flat-square
+[license-url]: https://github.com/codsen/object-flatten-referencing/blob/master/license.md

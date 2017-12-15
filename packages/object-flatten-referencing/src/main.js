@@ -1,4 +1,4 @@
-/* eslint padded-blocks: 0 */
+/* eslint padded-blocks: 0, no-param-reassign:0 */
 
 import typ from 'type-detect'
 import clone from 'lodash.clonedeep'
