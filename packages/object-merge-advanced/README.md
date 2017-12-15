@@ -44,7 +44,7 @@ npm i object-merge-advanced
 ```
 
 ```js
-// consume as CommonJS require:
+// consume via CommonJS require():
 const mergeAdvanced = require('object-merge-advanced')
 // or import as an ES module:
 import mergeAdvanced from 'object-merge-advanced'
