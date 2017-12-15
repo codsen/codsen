@@ -20,7 +20,7 @@
 ## Install
 
 ```bash
-$ npm i ranges-is-index-within
+npm i ranges-is-index-within
 ```
 
 ```js
