@@ -40,7 +40,7 @@
 ## Install
 
 ```bash
-$ npm i object-delete-key
+npm i object-delete-key
 ```
 
 then,
@@ -55,9 +55,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-delete-key.cjs.js` | 2 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-delete-key.esm.js` | 2 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 56 KB
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-delete-key.cjs.js` | 2&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-delete-key.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 68&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -82,8 +82,6 @@ var result = deleteKey(input, options)
 ```
 
 Input arguments are not mutated; this package clones them first before using.
-
-**[⬆ &nbsp;back to top](#)**
 
 ### API - Input
 
@@ -121,6 +119,8 @@ Interpreted as "array-type" | Interpreted as "object-type" | Interpreted as "any
 If `opts.only` is set to any string longer than zero characters and is **not** case-insensitively equal to one of the above, the `object-delete-key` will **throw an error**.
 
 I want to relieve users from having to check the documentation for `opts.only` values.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### API - Output
 
@@ -302,15 +302,17 @@ If you want to save time, `object-delete-key` is better than Lodash because form
 
 ## Contributing
 
-Hi! 99% of society are passive people, consumers. They wait for others to take action, they prefer to blend in. Rest 1% are proactive, vocal (usually also opinionated) citizens who will _do_ something rather than _wait_, hoping others will do it eventually. If you are one of that 1 %, you're in luck because I am the same and together we can make something happen.
+Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
 
-* If you want a new feature in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues). Also, you can [email me](mailto:roy@codsen.com).
+* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
 
-* If you tried to use this library but it misbehaves, or you need an advice setting it up, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to advise how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-delete-key/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/object-delete-key/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to add or change some features, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, just without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
