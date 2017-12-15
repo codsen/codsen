@@ -26,7 +26,6 @@
 - [Install](#install)
 - [Purpose](#purpose)
 - [In practice](#in-practice)
-- [Use](#use)
 - [API](#api)
   - [API - Input](#api---input)
   - [`opts.mergeObjectsOnlyWhenKeysetMatches` use cases](#optsmergeobjectsonlywhenkeysetmatches-use-cases)
@@ -41,7 +40,7 @@
 ## Install
 
 ```sh
-$ npm i object-merge-advanced
+npm i object-merge-advanced
 ```
 
 ```js
@@ -56,7 +55,7 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 12&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 11&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 12&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
@@ -123,12 +122,6 @@ I use unidirectional merging when dealing with content mapping JSON files which 
 
 **[⬆ &nbsp;back to top](#)**
 
-## Use
-
-```js
-var mergeAdvanced = require('object-merge-advanced')
-```
-
 ## API
 
 ```js
@@ -140,7 +133,7 @@ mergeAdvanced(input1, input2 [, { options }])
 Input argument           | Type           | Obligatory? | Description
 -------------------------|----------------|-------------|-------------
 `input1`                 | Anything       | yes         | Normally an object literal, but array or string or whatever else will work too. Can be deeply nested.
-`input2`                 | Anything       | yes         | Another thing, normally an object, but can be array or something else.
+`input2`                 | Anything       | yes         | Second thing to merge with first-one, normally an object, but can be an array or something else.
 `options`                | Plain object   | no          | Optionally, pass all settings in a plain object, as a third argument
 
 Options object's key                    | Value   | Default | Description
@@ -176,6 +169,8 @@ Here are all defaults in one place:
   useNullAsExplicitFalse: false,
 }
 ```
+
+**[⬆ &nbsp;back to top](#)**
 
 ### `opts.mergeObjectsOnlyWhenKeysetMatches` use cases
 
@@ -255,7 +250,7 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 
 ## Difference from Lodash `_.merge`
 
-Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's not suitable for merging AST's, nor deep recursive merging.
+Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's neither suitable for merging AST's, nor for deep recursive merging.
 
 ## Difference from `object-assign`
 

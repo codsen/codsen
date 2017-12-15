@@ -130,14 +130,14 @@
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
     "type-detect": "*",
-    "util-nonempty": "^2.0.0"
+    "util-nonempty": "^2.0.1"
   },
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.13.0",
+    "eslint": "^4.13.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
