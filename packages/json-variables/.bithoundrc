@@ -1,24 +1,25 @@
 {
   "critics": {
     "lint": {
-      "engine": "standard"
+      "engine": "eslint"
     }
   },
   "dependencies": {
     "mute": [
       "arrayiffy-if-string",
       "ava",
-      "clear-cli",
       "coveralls",
-      "doctoc",
       "husky",
       "lodash.clonedeep",
       "lodash.includes",
       "lodash.trim",
-      "nodemon"
+      "nyc"
     ]
   },
+  "ignore": [
+    "dist/**"
+  ],
   "test": [
-    "test.js"
+    "test/test.js"
   ]
 }

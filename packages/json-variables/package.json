@@ -2,14 +2,45 @@
   "name": "json-variables",
   "version": "4.6.1",
   "description": "Postprocessor for JSON to allow keys referencing keys",
-  "main": "index.js",
-  "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "precommit": "npm test",
-    "test": "clear && standard && nyc --reporter=html --reporter=text ava",
-    "watch": "nodemon --quiet --watch . --exec npm run test"
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
   },
-  "repository": "codsen/json-variables",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/json-variables.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codsen/json-variables/issues"
+  },
+  "homepage": "https://github.com/codsen/json-variables#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/json-variables.cjs.js",
+  "module": "dist/json-variables.esm.js",
+  "browser": "dist/json-variables.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
   "keywords": [
     "json",
     "normalize",
@@ -28,20 +59,80 @@
     "processor",
     "process"
   ],
-  "author": {
-    "name": "Roy Revelt",
-    "email": "roy@codsen.com",
-    "url": "codsen.com"
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Answering Questions",
+      "Blogposts",
+      "Bug reports*",
+      "Code*",
+      "Documentation*",
+      "Design",
+      "Examples",
+      "Event Organizers",
+      "Financial Support",
+      "Funding/Grant Finders",
+      "Ideas & Planning",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Reviewed Pull Requests",
+      "Tools",
+      "Translation",
+      "Tests*",
+      "Tutorials",
+      "Talks",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/codsen/json-variables/issues"
-  },
-  "homepage": "https://github.com/codsen/json-variables#readme",
   "dependencies": {
     "arrayiffy-if-string": "*",
-    "ast-monkey": "^6.3.2",
-    "check-types-mini": "^2.4.1",
+    "ast-monkey": "^7.1.5",
+    "check-types-mini": "^3.0.0",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "lodash.trim": "*",
@@ -49,25 +140,26 @@
     "num-sort": "^1.0.0",
     "object-path": "^0.11.4",
     "splice-string": "^2.0.0",
-    "str-indexes-of-plus": "^1.0.2",
+    "str-indexes-of-plus": "^2.0.1",
     "string-length": "^2.0.0",
     "string-slice": "^0.1.0",
-    "type-detect": "^4.0.3"
+    "type-detect": "^4.0.5"
   },
   "devDependencies": {
     "ava": "*",
-    "clear-cli": "*",
+    "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "doctoc": "*",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nodemon": "*",
-    "nyc": "^11.2.1",
-    "standard": "^10.0.3"
-  },
-  "ava": {
-    "verbose": false
-  },
-  "engines": {
-    "node": ">=5.11.0"
+    "nyc": "*",
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.2.2"
   }
 }
