@@ -22,3 +22,4 @@ test
 src
 .eslintrc
 .babelrc
+rollup.config.js
