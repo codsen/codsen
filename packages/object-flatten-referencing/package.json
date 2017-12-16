@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Flatten complex nested objects according to a reference objects",
   "license": "MIT",
   "engines": {
