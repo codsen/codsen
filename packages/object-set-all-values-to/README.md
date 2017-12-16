@@ -97,7 +97,7 @@ setAllValuesTo(input, value)
 Input argument           | Type           | Obligatory? | Default     | Description
 -------------------------|----------------|-------------|-------------|-------------
 `input`                  | Whatever       | yes         | `undefined` | AST tree, or object or array or whatever. Can be deeply-nested. Hopefully contains some plain objects.
-`value`                  | Whatever       | no          | `false`     | Assign all found plain object values to this
+`value`                  | Whatever       | no          | `false`     | Assign all the found plain object values to this
 
 **[⬆ &nbsp;back to top](#)**
 
