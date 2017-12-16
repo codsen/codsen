@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2017-12-15
+### Changed
+- ✨ Rebased in ES Modules
+- ✨ Set up Rollup to generate three builds: CommonJS, UMD and ES Modules
+- ✨ Dropped JS Standard and tapped raw ESLint on `airbnb-base` preset, with an override to ban semicolons
+
 ## [4.6.0] - 2017-07-29
 ### Removed
 - Replaced `object-assign` with ES6 `Object.assign`
@@ -106,3 +112,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [4.4.0]: https://github.com/codsen/json-variables/compare/v4.3.0...v4.4.0
 [4.5.0]: https://github.com/codsen/json-variables/compare/v4.4.0...v4.5.0
 [4.6.0]: https://github.com/codsen/json-variables/compare/v4.5.0...v4.6.0
+[5.0.0]: https://github.com/codsen/json-variables/compare/v4.6.0...v5.0.0
