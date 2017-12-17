@@ -33,7 +33,7 @@
 ## Install
 
 ```bash
-$ npm i arrayiffy-if-string
+npm i arrayiffy-if-string
 ```
 
 ```js
