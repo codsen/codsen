@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Check does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
+> Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -38,7 +38,7 @@
 ## Install
 
 ```bash
-$ npm i object-no-new-keys
+npm i object-no-new-keys
 ```
 
 ```js
