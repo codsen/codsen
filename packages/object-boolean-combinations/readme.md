@@ -37,7 +37,7 @@
 ## Install
 
 ```sh
-$ npm i object-boolean-combinations
+npm i object-boolean-combinations
 ```
 
 ```js
