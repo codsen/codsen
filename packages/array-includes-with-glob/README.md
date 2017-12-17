@@ -20,7 +20,7 @@
 ## Install
 
 ```bash
-$ npm i array-includes-with-glob
+npm i array-includes-with-glob
 ```
 
 Consume:
