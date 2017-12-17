@@ -33,7 +33,7 @@
 ## Install
 
 ```sh
-$ npm i chlu
+npm i chlu
 ```
 
 Here's what you'll get:
@@ -42,7 +42,9 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/chlu.cjs.js` | 17&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/chlu.esm.js` | 16&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/chlu.umd.js` | 153&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/chlu.umd.js` | 139&nbsp;KB
+
+**[⬆ &nbsp;back to top](#)**
 
 ## What it does
 
