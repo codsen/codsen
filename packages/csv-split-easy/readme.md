@@ -38,7 +38,7 @@
 ## Install
 
 ```bash
-$ npm i csv-split-easy
+npm i csv-split-easy
 ```
 
 ```js
@@ -54,7 +54,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 8&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 38&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 30&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
