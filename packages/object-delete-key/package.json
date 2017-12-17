@@ -130,8 +130,8 @@
     }
   },
   "dependencies": {
-    "ast-monkey": "^7.1.5",
-    "check-types-mini": "^3.0.0",
+    "ast-monkey": "^7.1.6",
+    "check-types-mini": "^3.0.1",
     "lodash.clonedeep": "*",
     "posthtml-ast-is-empty": "^3.0.1",
     "util-array-object-or-both": "^2.0.0"
@@ -147,7 +147,7 @@
     "husky": "*",
     "nyc": "*",
     "posthtml-parser": "^0.3.0",
-    "rollup": "^0.52.1",
+    "rollup": "^0.52.2",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",

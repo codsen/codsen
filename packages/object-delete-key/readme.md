@@ -57,7 +57,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/object-delete-key.cjs.js` | 2&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-delete-key.esm.js` | 2&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 68&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-delete-key.umd.js` | 41&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
