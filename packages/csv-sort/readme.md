@@ -40,7 +40,7 @@ Other siblings of this package:
 ## Install
 
 ```bash
-$ npm i csv-sort
+npm i csv-sort
 ```
 
 Here's what you'll get:
