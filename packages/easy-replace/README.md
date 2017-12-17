@@ -44,7 +44,7 @@
 ## Install
 
 ```bash
-$ npm i easy-replace
+npm i easy-replace
 ```
 
 ```js
