@@ -51,7 +51,7 @@ Call on multiple files all at once:
 ## Install
 
 ```bash
-$ npm i -g email-all-chars-within-ascii-cli
+npm i -g email-all-chars-within-ascii-cli
 ```
 
 Then, call it by a name `withinascii YOURFILE.html` or `tinaturner YOURFILE.html`. Whichever easier for you to remember. The transpiled version is served, so the source is not in ES6 and you can use it on Node `v.4` and above. It's not necessary to have Node `6.8.0+` installed (which supports ES6).
