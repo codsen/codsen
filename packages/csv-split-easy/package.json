@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "license": "MIT",
   "engines": {
