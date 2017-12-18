@@ -36,7 +36,7 @@
 ## Install
 
 ```sh
-$ npm i object-flatten-all-arrays
+npm i object-flatten-all-arrays
 ```
 
 ```js
