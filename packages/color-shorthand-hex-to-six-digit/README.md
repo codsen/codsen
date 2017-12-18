@@ -39,7 +39,7 @@
 ## Install
 
 ```sh
-$ npm i color-shorthand-hex-to-six-digit
+npm i color-shorthand-hex-to-six-digit
 ```
 
 ```js
