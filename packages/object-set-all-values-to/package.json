@@ -1,6 +1,6 @@
 {
   "name": "object-set-all-values-to",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Recursively walk the input and set all found values in plain objects to something",
   "license": "MIT",
   "engines": {
