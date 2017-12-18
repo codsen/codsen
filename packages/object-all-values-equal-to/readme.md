@@ -39,7 +39,7 @@
 ## Install
 
 ```sh
-$ npm i object-all-values-equal-to
+npm i object-all-values-equal-to
 ```
 
 ```js

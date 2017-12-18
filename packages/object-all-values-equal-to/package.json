@@ -125,7 +125,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.0",
+    "check-types-mini": "^3.0.1",
     "lodash.isequal": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
@@ -139,7 +139,7 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.1",
+    "rollup": "^0.52.2",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
