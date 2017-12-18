@@ -40,7 +40,7 @@ Other siblings of this package:
 ## Install
 
 ```bash
-$ npm i email-all-chars-within-ascii
+npm i email-all-chars-within-ascii
 ```
 
 Here's what you'll get:
