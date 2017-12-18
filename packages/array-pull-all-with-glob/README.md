@@ -20,7 +20,7 @@
 ## Install
 
 ```bash
-$ npm i array-pull-all-with-glob
+npm i array-pull-all-with-glob
 ```
 
 ```js
