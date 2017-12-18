@@ -52,6 +52,14 @@ const jsonVariables = require('json-variables')
 import jsonVariables from 'json-variables'
 ```
 
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 24&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 23&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 63&nbsp;KB
+
 ## Idea
 
 Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This library is a simple postprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
