@@ -124,7 +124,7 @@
   "dependencies": {
     "check-types-mini": "^3.0.1",
     "lodash.isplainobject": "*",
-    "string-match-left-right": "^1.4.3",
+    "string-match-left-right": "^1.4.4",
     "string-replace-slices-array": "^2.0.5",
     "string-slices-array-push": "^2.0.1"
   },
