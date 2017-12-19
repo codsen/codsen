@@ -127,7 +127,7 @@
     "ranges-sort": "^3.0.1"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
     "eslint": "^4.13.1",
@@ -135,9 +135,9 @@
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
-    "nyc": "^11.3.0",
-    "rollup": "^0.52.3",
-    "rollup-plugin-babel": "^3.0.3",
+    "nyc": "*",
+    "rollup": "^0.52.1",
+    "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",

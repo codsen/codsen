@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "mute": [
+      "ava",
       "coveralls",
       "husky",
-      "lodash.isplainobject"
+      "lodash.isplainobject",
+      "nyc"
     ]
   },
   "ignore": [
