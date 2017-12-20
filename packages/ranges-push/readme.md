@@ -81,10 +81,10 @@ Imagine you want to delete a bunch of characters from a string. Like making a bu
 `[deleteFromIndex1, deleteToIndex1]`, `[deleteFromIndex2, deteleToIndex2]` and so on.
 
 - What happens when ranges overlap? We need to merge them.
-- What happens if new range is located before the last-one? We need to sort them.
+- What happens if new range is located before the last one? We need to sort them.
 - How do you prevent damage when the same range is added multiple times?
-- What happens if you want not only to delete, but also, **to add** something? We need to accept third argument, the value to add.
-- What happens if you want to only add something, without deletion? We need to accept first and second argument as the same index.
+- What happens if you want not only to delete but also, **to add** something? We need to accept the third argument, the value to add.
+- What happens if you want to only add something, without deletion? We need to accept the first and second argument as the same index.
 
 ---
 
@@ -121,7 +121,7 @@ options object's key             | Type of its value | Default | Description
 `limitToBeAddedWhitespace`       | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases)
 }                                |                   |         |
 
-The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
 Here is the Optional Options Object in one place (in case you ever want to copy it):
 
@@ -146,7 +146,7 @@ Input argument | Type                    | Obligatory? | Description
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
 
 * If the arguments are of a wrong type, it will `throw` and error.
-* Also, if you _overload_ it, providing fourth, fifth input argument and so on if will `throw` too. It's for your own safety because it might flag up something wrong happening in your code.
+* Also, if you _overload_ it, providing fourth, fifth input argument and so on if will `throw` too. It's for your safety because it might flag up something wrong happening in your code.
 
 In essence, `.add()` behaves two ways:
 
@@ -185,7 +185,7 @@ Result is either
 [[2, 5], [2, 3], [1, 10]] => [[1, 10]] // there was an overlap, so ranges were merged
 ```
 
-In theory, since `.current()` does not mutate our slices array in the memory, you could add more ranges and call `.current()` again, this time possibly with slightly different result. However, be aware that merging will lose some of the data in the ranges.
+In theory, since `.current()` does not mutate our slices array in the memory, you could add more ranges and call `.current()` again, this time possibly with a slightly different result. However, be aware that merging will lose some of the data in the ranges.
 
 Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and became `[ [10, 20, 'bbbaaa'] ]`. Now if you use this range in [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to amend the string, but then later discover that you left out the range `[12, 17, ccc]`, that is, you wanted to delete between indexes 12 and 17, and then insert `ccc`, you'll be in trouble. Since you amended your string, you can't "stick in" `ccc` between original `bbb` and `aaa` — your desired place to add `ccc`, at index 17 has been "merged" by `bbb` and `aaa`.
 
@@ -218,7 +218,7 @@ PSST. Later, feed your ranges array into [string-replace-slices-array](https://g
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://github.com/codsen/html-img-alt). Since then, [Detergent](https://github.com/codsen/detergent) also uses it, so its unit test wouldn't take an hour, calculating all possible combinations of the options, while input string is mutated again and again in the for loop.
+Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://github.com/codsen/html-img-alt). Since then, [Detergent](https://github.com/codsen/detergent) also uses it, so its unit test wouldn't take an hour, calculating all possible combinations of the options, while input string is mutated again and again in the for a loop.
 
 This library is part one of two library combo, second one being [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array).
 
@@ -232,9 +232,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-slices-array-push/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-slices-array-push/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-slices-array-push/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
