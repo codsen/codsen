@@ -119,7 +119,7 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.0",
+    "check-types-mini": "^3.0.1",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.1"
   },
@@ -134,8 +134,8 @@
     "eslint-plugin-security": "^1.4.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.1",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup": "^0.52.3",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
