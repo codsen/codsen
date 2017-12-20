@@ -1,13 +1,16 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var isInt = _interopDefault(require('is-natural-number'));
+var isNumStr = _interopDefault(require('is-natural-number-string'));
+var ordinal = _interopDefault(require('ordinal-number-suffix'));
+var mergeRanges = _interopDefault(require('ranges-merge'));
+var checkTypes = _interopDefault(require('check-types-mini'));
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var isInt = require('is-natural-number');
-var isNumStr = require('is-natural-number-string');
-var ordinal = require('ordinal-number-suffix');
-var mergeRanges = require('ranges-merge');
 
 function mandatory(i) {
   throw new Error('string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ' + i + ordinal(i) + ' parameter!');
@@ -16,17 +19,31 @@ function mandatory(i) {
 // -----------------------------------------------------------------------------
 
 var Slices = function () {
-  function Slices() {
+  //
+
+  // O P T I O N S
+  // ==================
+  function Slices(originalOpts) {
     _classCallCheck(this, Slices);
+
+    // validation first:
+    var defaults = {
+      limitToBeAddedWhitespace: false
+    };
+    var opts = Object.assign({}, defaults, originalOpts);
+    checkTypes(opts, defaults, {
+      msg: 'string-slices-array-push: [THROW_ID_00*]'
+    });
+    // so it's correct, let's get it in:
+    this.opts = opts;
   }
+
+  // A D D ()
+  // ==================
+
 
   _createClass(Slices, [{
     key: 'add',
-
-    //
-
-    // A D D ()
-    // ==================
     value: function add() {
       var originalFrom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
       var originalTo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
@@ -74,7 +91,7 @@ var Slices = function () {
       }
     }
 
-    // C U R R E N T ()
+    // C U R R E N T () - kindof a getter
     // ==================
 
   }, {
@@ -83,6 +100,17 @@ var Slices = function () {
       if (this.slices != null) {
         // != is intentional
         this.slices = mergeRanges(this.slices);
+        if (this.opts.limitToBeAddedWhitespace) {
+          return this.slices.map(function (val) {
+            if (val[2] !== undefined && val[2].length > 0 && val[2].trim() === '') {
+              if (val[2].includes('\n') || val[2].includes('\r')) {
+                return [val[0], val[1], '\n'];
+              }
+              return [val[0], val[1], ' '];
+            }
+            return val;
+          });
+        }
         return this.slices;
       }
       return null;

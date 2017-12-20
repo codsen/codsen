@@ -1,3 +1,5 @@
+/* eslint ava/no-only-test:0 */
+
 import test from 'ava'
 import Slices from '../dist/string-slices-array-push.cjs'
 
@@ -303,7 +305,7 @@ test('03.05  -  ADD() - combo of third arg and jumping behind previous range', (
   )
 })
 
-test('03.06  -  ADD() - combo of third arg merging and extending previous range', (t) => {
+test('03.06  -  ADD() - combo of third arg merging and extending previous range (default)', (t) => {
   const slices = new Slices()
   slices.add(1, 2)
   slices.add(2, 4, 'zzz')
@@ -312,7 +314,7 @@ test('03.06  -  ADD() - combo of third arg merging and extending previous range'
     [
       [1, 4, 'zzz'],
     ],
-    '03.06',
+    '03.06.01',
   )
 })
 
@@ -426,5 +428,165 @@ test('06.02  -  LAST() - fetches the last range from non-empty', (t) => {
     slices.last(),
     [1, 2, 'bbb'],
     '06.02',
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 07. limitToBeAddedWhitespace()
+// -----------------------------------------------------------------------------
+
+test('07.01  -  opts.limitToBeAddedWhitespace - spaces grouped - #1', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' ')
+  slices.add(2, 4, '   ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.01 - both with spaces only',
+  )
+})
+
+test('07.02  -  opts.limitToBeAddedWhitespace - spaces grouped - #2', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' \t\t\t        ')
+  slices.add(2, 4, '   ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.02 - with tabs',
+  )
+})
+
+test('07.03  -  opts.limitToBeAddedWhitespace - spaces grouped - #3', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2)
+  slices.add(2, 4, '   ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.03 - first slice has none',
+  )
+})
+
+test('07.04  -  opts.limitToBeAddedWhitespace - spaces grouped - #4', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '')
+  slices.add(2, 4, '   ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.04 - first slice has empty str',
+  )
+})
+
+test('07.05  -  opts.limitToBeAddedWhitespace - spaces grouped - #5', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '')
+  slices.add(2, 4, ' \t\t\t        ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.05 - first empty second with tabs',
+  )
+})
+
+test('07.06  -  opts.limitToBeAddedWhitespace - spaces grouped - #6', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '   ')
+  slices.add(2, 4)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.06 - second slice has none',
+  )
+})
+
+test('07.07  -  opts.limitToBeAddedWhitespace - spaces grouped - #7', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '   ')
+  slices.add(2, 4, '')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.07 - first slice has empty str',
+  )
+})
+
+test('07.08  -  opts.limitToBeAddedWhitespace - spaces grouped - #8', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' \t\t\t        ')
+  slices.add(2, 4, '')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' '],
+    ],
+    '07.08 - first empty second with tabs',
+  )
+})
+
+test('07.09  -  opts.limitToBeAddedWhitespace - linebreaks - #1', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' \t\t\t     \n   ')
+  slices.add(2, 4, '    ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, '\n'],
+    ],
+    '07.09 - only 1st-one has line break',
+  )
+})
+
+test('07.10  -  opts.limitToBeAddedWhitespace - linebreaks - #2', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' \t\t\t     \n   ')
+  slices.add(2, 4, '  \n  ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, '\n'],
+    ],
+    '07.10 - both have \\n',
+  )
+})
+
+test('07.11  -  opts.limitToBeAddedWhitespace - linebreaks - #3', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, ' \t\t\t        ')
+  slices.add(2, 4, '  \n  ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, '\n'],
+    ],
+    '07.11',
+  )
+})
+
+test('07.12  -  opts.limitToBeAddedWhitespace - linebreaks - #4', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '')
+  slices.add(2, 4, '')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ''],
+    ],
+    '07.12',
   )
 })

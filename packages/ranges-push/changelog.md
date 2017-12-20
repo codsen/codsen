@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2017-12-20
+### Added
+- ✨ `opts.limitToBeAddedWhitespace` - makes life easier when cleaning HTML. Now, chunk ranges can contain any amount of whitespace - the `current()` will run `string-collapse` on the to-be-inserted, third argument. Now, if there are any line breaks among the whitespace characters, the result will be a single line break instead. Basically, when this setting is active, only space or linebreak will be inserted in place of deleted range.
+
+What this feature gives you is you can activate it and freely push chunks of string in, extracting whitespace along it and pushing it too. You don't need to care about excessive amount of it - this library will truncate it automatically. It's very handy when stripping strings from [HTML tags](https://github.com/codsen/string-strip-html) for example.
+
 ## [2.0.0] - 2017-12-05
 ### Changed
 - ✨ Rewrite in ES modules
@@ -52,6 +58,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0
 [1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0

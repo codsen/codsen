@@ -12,7 +12,7 @@ export default [
     output: {
       file: pkg.browser,
       format: 'umd',
-      name: 'stringCollapseWhiteSpace',
+      name: 'slices',
     },
     plugins: [
       resolve(), // so Rollup can find deps
@@ -30,9 +30,11 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'check-types-mini',
       'is-natural-number',
       'is-natural-number-string',
       'ordinal-number-suffix',
+      'ranges-merge',
     ],
     plugins: [
       babel(),

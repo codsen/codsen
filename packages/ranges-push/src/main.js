@@ -1,7 +1,8 @@
-const isInt = require('is-natural-number')
-const isNumStr = require('is-natural-number-string')
-const ordinal = require('ordinal-number-suffix')
-const mergeRanges = require('ranges-merge')
+import isInt from 'is-natural-number'
+import isNumStr from 'is-natural-number-string'
+import ordinal from 'ordinal-number-suffix'
+import mergeRanges from 'ranges-merge'
+import checkTypes from 'check-types-mini'
 
 function mandatory(i) {
   throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${i}${ordinal(i)} parameter!`)
@@ -11,6 +12,24 @@ function mandatory(i) {
 
 class Slices {
   //
+
+  // O P T I O N S
+  // ==================
+  constructor(originalOpts) {
+    // validation first:
+    const defaults = {
+      limitToBeAddedWhitespace: false,
+    }
+    const opts = Object.assign({}, defaults, originalOpts)
+    checkTypes(
+      opts, defaults,
+      {
+        msg: 'string-slices-array-push: [THROW_ID_00*]',
+      },
+    )
+    // so it's correct, let's get it in:
+    this.opts = opts
+  }
 
   // A D D ()
   // ==================
@@ -55,11 +74,26 @@ class Slices {
     }
   }
 
-  // C U R R E N T ()
+  // C U R R E N T () - kindof a getter
   // ==================
   current() {
     if (this.slices != null) { // != is intentional
       this.slices = mergeRanges(this.slices)
+      if (this.opts.limitToBeAddedWhitespace) {
+        return this.slices.map((val) => {
+          if (
+            (val[2] !== undefined) &&
+            (val[2].length > 0) &&
+            (val[2].trim() === '')
+          ) {
+            if (val[2].includes('\n') || val[2].includes('\r')) {
+              return [val[0], val[1], '\n']
+            }
+            return [val[0], val[1], ' ']
+          }
+          return val
+        })
+      }
       return this.slices
     }
     return null
@@ -81,4 +115,4 @@ class Slices {
   }
 }
 
-module.exports = Slices
+export default Slices
