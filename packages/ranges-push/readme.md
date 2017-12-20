@@ -102,12 +102,14 @@ This package exports a constructor, Slices, which you first `require`, then call
 
 ```js
 const Slices = require('string-slices-array-push')
-let slices = new Slices([opts])
+let slices = new Slices()
+// or, with Optional Options Object:
+let slices = new Slices({ limitToBeAddedWhitespace: true })
 ```
 
 The `slices` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
 
-You can also provide an Optional Options Object when creating the class. See below for its API.
+You can also provide an Optional Options Object when creating the class:
 
 **[⬆ &nbsp;back to top](#)**
 
