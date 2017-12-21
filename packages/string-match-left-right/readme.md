@@ -26,7 +26,7 @@
 - [Install](#install)
 - [The API](#the-api)
   - [Optional Options Object's API:](#optional-options-objects-api)
-- [`opts.cbLeft` and `opts.cbRight`](#optscbleft-and-optscbright)
+- [`opts.cb`](#optscb)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
 - [Why my code coverage ~~sucks~~ is not perfect](#why-my-code-coverage-sucks-is-not-perfect)
@@ -50,11 +50,11 @@ import { matchLeftIncl, matchRightIncl, matchLeft, matchRight } from 'string-mat
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 6&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 6&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 24&nbsp;KB
+Type                                                                                                    | Key in `package.json` | Path                                  | Size
+--------------------------------------------------------------------------------------------------------|-----------------------|---------------------------------------|--------
+Main export - **CommonJS version**, transpiled, contains `require` and `module.exports`                 | `main`                | `dist/string-match-left-right.cjs.js` | 6&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 6&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 24&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -82,8 +82,7 @@ Input argument   | Type                       | Obligatory? | Description
 -------------------------------|----------|-------------|-------------|----------------------
 {                              |          |             |             |
 `i`                            | Boolean  | no          | `false`     | If `false`, it's case sensitive. If `true`, it's insensitive.
-`cbLeft`                       | Function | no          | `undefined` | If you feed this library a function under `cbLeft` key, in turn, it will be fed the next character outside to the thing being matched. If it's left-side method (`matchLeftIncl`/`matchLeft`), that will be the next character to the left of what's being matched. Function's Boolean result will be used with "AND" logical operator to calculate the final result. I use `cbLeft` mainly to check for whitespace.
-`cbRight`                      | Function | no          | `undefined` | Same as `cbLeft`, it's a function you supply that gets fed the first character that's outside on the right of the string being matched. Function has to return a Boolean and it will be "AND" logically chained with the result of string matching.
+`cb`                           | Function | no          | `undefined` | If you feed a function to this key, that function will be called with the remainder of the string. Which side, it depends on which side method (left side for `matchLeft` and `matchLeftIncl` and others for right accordingly) is being called. The result of this callback will be joined using "AND" logical operator to calculate the final result. I use `cb` mainly to check for whitespace.
 `trimBeforeMatching`           | Boolean  | no          | `false`     | If set to `true`, there can be whitespace before what's being checked starts. Basically, this means, substring can begin (when using right side methods) or end (when using left side methods) with a whitespace.
 `trimCharsBeforeMatching`      | String or Array of zero or more strings | no          | `[]`     | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.
 }                              |          |             |             |
@@ -93,8 +92,7 @@ Here it is with defaults, in one place, ready for copying:
 ```js
 {
   i: false,
-  cbLeft: undefined,
-  cbRight: undefined,
+  cb: undefined,
   trimBeforeMatching: false,
   trimCharsBeforeMatching: []
 }
@@ -108,8 +106,8 @@ The Optional Options Object is sanitized by [check-types-mini](https://github.co
 // -----
 // test string with character indexes to help you count:
 //
-// test string:                abcdefghi
-// indexes of letters above:   012345678
+// test string:                a  b  c  d  e  f  g  h  i
+// indexes of letters above:   0  1  2  3  4  5  6  7  8
 //
 // a is #0, b is #1 and so on. Look the digit under letter above.
 //
@@ -145,13 +143,13 @@ console.log(`res4 = ${res4}`)
 
 **[⬆ &nbsp;back to top](#)**
 
-## `opts.cbLeft` and `opts.cbRight`
+## `opts.cb`
 
 Often you need not only to match what's on the left/right of the given index within string, but also to perform checks on what's outside.
 
 For example, if you are traversing the string and want to match the `class` attribute, you traverse backwards, "catch" equals character `=`, then check, what's on the left of it using method `matchLeft`. That's not enough, because you also need to check, is the next character outside it is a space, or in algorithm terms, "trims to length zero", that is `(trim(char).length === 0)`. How do you apply this check?
 
-Using `opts.cbLeft`/`opts.cbRight` callbacks ("cb" in it's name stands for CallBack):
+Using `opts.cb` callbacks ("cb" in it's name stands for CallBack):
 
 ```js
 const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
@@ -164,7 +162,7 @@ const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string
 function isSpace(char) {
   return (typeof char === 'string') && (char.trim() === '')
 }
-let res = matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace })
+let res = matchLeft('<a class="something">', 8, 'class', { cb: isSpace })
 console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // => res = true
 ```
@@ -197,11 +195,11 @@ const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { trimCharsBefo
 console.log(`test03 = ${JSON.stringify(test03, null, 4)}`)
 // => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] })
+const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] })
 console.log(`test04 = ${JSON.stringify(test04, null, 4)}`)
 // => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
 console.log(`test05 = ${JSON.stringify(test05, null, 4)}`)
 // => false, // deliberately making the second arg of cb to be blank and fail startsWithZ
 ```

@@ -1,4 +1,4 @@
-/* eslint no-param-reassign:0, default-case:0, consistent-return:0, max-len:0, no-mixed-operators:0 */
+/* eslint default-case:0, consistent-return:0, max-len:0, no-mixed-operators:0 */
 
 import isNaturalNumber from 'is-natural-number'
 import checkTypes from 'check-types-mini'
@@ -6,44 +6,56 @@ import isObj from 'lodash.isplainobject'
 import trimStart from 'lodash.trimstart'
 import trimEnd from 'lodash.trimend'
 import arrayiffy from 'arrayiffy-if-string'
+import clone from 'lodash.clonedeep'
 
 function isStr(something) { return typeof something === 'string' }
 
-function main(mode, str, position, whatToMatch, opts) {
+function main(mode, str, position, originalWhatToMatch, originalOpts) {
   function existy(x) { return x != null }
+  const isArr = Array.isArray
   if (!isStr(str)) {
     throw new Error(`string-match-left-right/${mode}(): [THROW_ID_01] the first argument should be a string. Currently it's of a type: ${typeof str}, equal to:\n${JSON.stringify(str, null, 4)}`)
+  } else if (str.length === 0) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!`)
   }
+
   if (!isNaturalNumber(position, { includeZero: true })) {
-    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_02] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`)
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(position, null, 4)}`)
   }
-  if (isStr(whatToMatch)) {
-    whatToMatch = [whatToMatch]
+  let whatToMatch
+
+  if (!existy(originalWhatToMatch)) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_04] Third argument, whatToMatch, is missing!`)
   }
-  if (!existy(whatToMatch) || (whatToMatch.length === 0)) {
-    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_03] there's nothing to match! Third argument (and onwards) is missing!`)
+  if (isStr(originalWhatToMatch)) {
+    whatToMatch = [originalWhatToMatch]
+  } else if (isArr(originalWhatToMatch)) {
+    whatToMatch = clone(originalWhatToMatch)
+  } else {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`)
   }
-  if (existy(opts) && !isObj(opts)) {
-    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_04] the third argument, options object, should be a plain object. Currently it's of a type "${typeof opts}", and equal to:\n${JSON.stringify(opts, null, 4)}`)
+
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type "${typeof originalOpts}", and equal to:\n${JSON.stringify(originalOpts, null, 4)}`)
   }
   const defaults = {
     i: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
   }
-  opts = Object.assign({}, defaults, opts)
+  const opts = Object.assign({}, defaults, originalOpts)
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching)
   checkTypes(opts, defaults, {
-    msg: 'string-match-left-right: [THROW_ID_05*]',
+    msg: 'string-match-left-right: [THROW_ID_07*]',
     schema: {
-      cbLeft: ['null', 'undefined', 'function'],
-      cbRight: ['null', 'undefined', 'function'],
+      cb: ['null', 'undefined', 'function'],
     },
   })
   opts.trimCharsBeforeMatching = opts
     .trimCharsBeforeMatching
     .map(el => (isStr(el) ? el : String(el)))
 
+  let matchedElem
   switch (mode) {
     case 'matchLeftIncl':
       return whatToMatch.some((el) => {
@@ -54,14 +66,27 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(0, position + 1)
         }
         if (opts.i) {
-          return temp.toLowerCase().endsWith(el.toLowerCase()) &&
-            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
+          if (
+            temp.toLowerCase().endsWith(el.toLowerCase()) &&
+            (opts.cb ? opts.cb(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
+          ) {
+            matchedElem = el
+            return true
+          }
+          return false
         }
-        return temp.endsWith(el) &&
-          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
-      })
+        if (
+          temp.endsWith(el) &&
+          (opts.cb ? opts.cb(temp[temp.length - 1 - el.length], temp.slice(0, position - el.length + 1)) : true)
+        ) {
+          matchedElem = el
+          return true
+        }
+        return false
+      }) ? matchedElem : false
+
     case 'matchLeft':
-      return whatToMatch.some((el) => {
+      return (whatToMatch.some((el) => {
         let temp
         if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
           temp = trimEnd(str.slice(0, position), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r')
@@ -69,14 +94,26 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(0, position)
         }
         if (opts.i) {
-          return temp.toLowerCase().endsWith(el.toLowerCase()) &&
-            (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
+          if (
+            temp.toLowerCase().endsWith(el.toLowerCase()) &&
+            (opts.cb ? opts.cb(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
+          ) {
+            matchedElem = el
+            return true
+          }
+          return false
         }
-        return (temp.endsWith(el)) &&
-          (opts.cbLeft ? opts.cbLeft(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
-      })
+        if (
+          (temp.endsWith(el)) &&
+          (opts.cb ? opts.cb(temp[temp.length - 1 - el.length], str.slice(0, position - el.length)) : true)
+        ) {
+          matchedElem = el
+          return true
+        }
+        return false
+      })) ? matchedElem : false
     case 'matchRightIncl':
-      return whatToMatch.some((el) => {
+      return (whatToMatch.some((el) => {
         let temp
         if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
           temp = str[position] + trimStart(str.slice(position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r')
@@ -84,14 +121,26 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(position)
         }
         if (opts.i) {
-          return (temp.toLowerCase().startsWith(el.toLowerCase())) &&
-            (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
+          if (
+            (temp.toLowerCase().startsWith(el.toLowerCase())) &&
+            (opts.cb ? opts.cb(temp[el.length], temp.slice(el.length)) : true)
+          ) {
+            matchedElem = el
+            return true
+          }
+          return false
         }
-        return (temp.startsWith(el)) &&
-          (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
-      })
+        if (
+          (temp.startsWith(el)) &&
+          (opts.cb ? opts.cb(temp[el.length], temp.slice(el.length)) : true)
+        ) {
+          matchedElem = el
+          return true
+        }
+        return false
+      })) ? matchedElem : false
     case 'matchRight':
-      return whatToMatch.some((el) => {
+      return (whatToMatch.some((el) => {
         let temp
         if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
           temp = trimStart(str.slice(position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r')
@@ -99,12 +148,24 @@ function main(mode, str, position, whatToMatch, opts) {
           temp = str.slice(position + 1)
         }
         if (opts.i) {
-          return (temp.toLowerCase().startsWith(el.toLowerCase())) &&
-            (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
+          if (
+            (temp.toLowerCase().startsWith(el.toLowerCase())) &&
+            (opts.cb ? opts.cb(temp[el.length], temp.slice(el.length)) : true)
+          ) {
+            matchedElem = el
+            return true
+          }
+          return false
         }
-        return (temp.startsWith(el)) &&
-          (opts.cbRight ? opts.cbRight(temp[el.length], temp.slice(el.length)) : true)
-      })
+        if (
+          (temp.startsWith(el)) &&
+          (opts.cb ? opts.cb(temp[el.length], temp.slice(el.length)) : true)
+        ) {
+          matchedElem = el
+          return true
+        }
+        return false
+      })) ? matchedElem : false
   }
 }
 
@@ -127,5 +188,3 @@ function matchRight(str, position, whatToMatch, opts) {
 export {
   matchLeftIncl, matchRightIncl, matchLeft, matchRight,
 }
-
-// TODO: unify left and right callbacks

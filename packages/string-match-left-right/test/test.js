@@ -12,11 +12,26 @@ test('01.01 - throws', (t) => {
     matchLeftIncl('zzz', 1)
   })
   t.throws(() => {
+    matchLeftIncl('', 1)
+  })
+  t.throws(() => {
     matchRightIncl('zzz', 1)
   })
   // third arg wrong
   t.throws(() => {
     matchRightIncl('zzz', 1, 1)
+  })
+  t.throws(() => {
+    matchRightIncl('zzz', 'aaa', 1)
+  })
+  t.throws(() => {
+    matchRightIncl('zzz', 'aaa', '')
+  })
+  t.throws(() => {
+    matchRightIncl('zzz', 'aaa', [''])
+  })
+  t.throws(() => {
+    matchRightIncl('zzz', 'aaa', ['', ''])
   })
   // no second arg
   t.throws(() => {
@@ -78,22 +93,22 @@ test('01.01 - throws', (t) => {
 test('02.01 - matchLeftIncl()      on a simple string', (t) => {
   t.is(
     matchLeftIncl('abc', 2, 'c'),
-    true,
+    'c',
     '02.01.01 - pointless, but still',
   )
   t.is(
     matchLeftIncl('abcdefghi', 3, ['bcd']),
-    true,
+    'bcd',
     '02.01.02 - one elem to match',
   )
   t.is(
     matchLeftIncl('abcdefghi', 3, ['cd', 'bcd']),
-    true,
+    'cd', // first match
     '02.01.03 - multiple to match',
   )
   t.is(
     matchLeftIncl('abcdefghi', 3, ['aaa', 'bcd']),
-    true,
+    'bcd',
     '02.01.04',
   )
   t.is(
@@ -116,17 +131,17 @@ test('02.02 - matchLeftIncl()      case insensitive', (t) => {
   )
   t.is(
     matchLeftIncl('abc', 2, 'C', { i: true }),
-    true,
+    'C',
     '02.02.02 - opts.i',
   )
   t.is(
     matchLeftIncl('abc', 2, 'BC', { i: true }),
-    true,
+    'BC',
     '02.02.03',
   )
   t.is(
     matchLeftIncl('abC', 2, 'c', { i: true }),
-    true,
+    'c',
     '02.02.04 - source is uppercase, needle is lowercase',
   )
 })
@@ -150,22 +165,22 @@ test('02.03 - matchLeftIncl()      left substring to check is longer than what\'
 test('03.01 - matchLeft()          on a simple string', (t) => {
   t.is(
     matchLeft('abc', 2, 'b'),
-    true,
+    'b',
     '03.01.01',
   )
   t.is(
     matchLeft('abcdefghi', 3, ['abc']),
-    true,
+    'abc',
     '03.01.02 - one elem to match',
   )
   t.is(
     matchLeft('abcdefghi', 3, ['c', 'bc']),
-    true,
+    'c', // first one matched returned, although both did match
     '03.01.03 - multiple to match',
   )
   t.is(
     matchLeft('abcdefghi', 3, ['aaa', 'bc']),
-    true,
+    'bc',
     '03.01.04',
   )
   t.is(
@@ -188,7 +203,7 @@ test('03.02 - matchLeft()          case insensitive', (t) => {
   )
   t.is(
     matchLeft('abc', 2, 'B', { i: true }),
-    true,
+    'B',
     '03.02.02 - opts.i',
   )
 })
@@ -199,41 +214,51 @@ test('03.02 - matchLeft()          case insensitive', (t) => {
 test('04.01 - matchRightIncl()     on a simple string, non zero arg', (t) => {
   t.is(
     matchRightIncl('abcdef', 2, 'c'),
-    true,
+    'c',
     '04.01.01',
   )
   t.is(
     matchRightIncl('abcdef', 2, 'cde'),
-    true,
+    'cde',
     '04.01.02',
   )
   t.is(
     matchRightIncl('abcdef', 2, ['cde']),
-    true,
+    'cde',
     '04.01.03',
+  )
+  t.is(
+    matchRightIncl('abcdef', 2, ['gjd', 'cde']),
+    'cde',
+    '04.01.04',
   )
   t.is(
     matchRightIncl('abcdef', 99, ['cde']),
     false,
-    '04.01.04',
+    '04.01.05',
   )
 })
 
 test('04.02 - matchRightIncl()     on a simple string, index zero', (t) => {
   t.is(
     matchRightIncl('abcdef', 0, 'a'),
-    true,
+    'a',
     '04.02.01',
   )
   t.is(
     matchRightIncl('abcdef', 0, 'abc'),
-    true,
+    'abc',
     '04.02.02',
   )
   t.is(
     matchRightIncl('abcdef', 0, ['abc']),
-    true,
+    'abc',
     '04.02.03',
+  )
+  t.is(
+    matchRightIncl('abcdef', 0, ['fiuhjd', 'gfds', 'abc']),
+    'abc',
+    '04.02.04',
   )
 })
 
@@ -246,8 +271,18 @@ test('04.03 - matchRightIncl()     on a simple string, case insensitive', (t) =>
   )
   t.is(
     matchRightIncl('abcdef', 2, 'C', { i: true }),
-    true,
+    'C',
     '04.03.02',
+  )
+  t.is(
+    matchRightIncl('abcdef', 2, ['C'], { i: true }),
+    'C',
+    '04.03.03',
+  )
+  t.is(
+    matchRightIncl('abcdef', 2, ['JFHG', 'URR', 'C'], { i: true }),
+    'C',
+    '04.03.04',
   )
 })
 
@@ -257,22 +292,22 @@ test('04.03 - matchRightIncl()     on a simple string, case insensitive', (t) =>
 test('05.01 - matchRight()         on a simple string, non zero arg', (t) => {
   t.is(
     matchRight('abcdef', 2, 'd'),
-    true,
+    'd',
     '05.01.01',
   )
   t.is(
     matchRight('abcdef', 2, ['d']),
-    true,
+    'd',
     '05.01.02',
   )
   t.is(
     matchRight('abcdef', 2, 'def'),
-    true,
+    'def',
     '05.01.03',
   )
   t.is(
     matchRight('abcdef', 2, ['def']),
-    true,
+    'def',
     '05.01.04',
   )
   t.is(
@@ -290,18 +325,23 @@ test('05.01 - matchRight()         on a simple string, non zero arg', (t) => {
 test('05.02 - matchRight()         on a simple string, non zero arg', (t) => {
   t.is(
     matchRight('abcdef', 0, 'b'),
-    true,
+    'b',
     '05.02.01',
   )
   t.is(
     matchRight('abcdef', 0, ['b']),
-    true,
+    'b',
     '05.02.02',
   )
   t.is(
     matchRight('abcdef', 0, ['bc']),
-    true,
+    'bc',
     '05.02.03',
+  )
+  t.is(
+    matchRight('abcdef', 0, ['hfd', 'ghja', 'bc']),
+    'bc',
+    '05.02.04',
   )
 })
 
@@ -313,48 +353,63 @@ test('05.03 - matchRight()         on a simple string, case insensitive', (t) =>
   )
   t.is(
     matchRight('abcdef', 2, 'D', { i: true }),
-    true,
+    'D',
     '05.03.02',
+  )
+  t.is(
+    matchRight('abcdef', 2, ['D'], { i: true }),
+    'D',
+    '05.03.03',
+  )
+  t.is(
+    matchRight('abcdef', 2, ['gDSS', 'D'], { i: true }),
+    'D',
+    '05.03.04',
   )
 })
 
 test('05.04 - matchRight()         adhoc test #1', (t) => {
   t.is(
     matchRight('aaaa<<<<<<div>>>>something</div>bbbbb', 13, '>'),
-    true,
+    '>',
     '05.04.01',
+  )
+  t.is(
+    matchRight('aaaa<<<<<<div>>>>something</div>bbbbb', 10, '>'),
+    false,
+    '05.04.02',
   )
 })
 
-// 6. opts.cbLeft and opts.cbLeft callbacks
+// 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 
-test('06.01 - opts.cbLeft()        callback is called back. haha!', (t) => {
+test('06.01 - opts.cb()        callback is called back. haha!', (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
   t.is(
-    matchLeft('<a class="something">', 8, 'class', { cbLeft: isSpace }),
-    true,
+    matchLeft('<a class="something">', 8, 'class', { cb: isSpace }),
+    'class',
     '06.01.01',
   )
   t.is(
-    matchLeft('<a superclass="something">', 13, 'class', { cbLeft: isSpace }),
+    matchLeft('<a superclass="something">', 13, 'class', { cb: isSpace }),
     false,
     '06.01.02',
   )
   t.is(
-    matchLeftIncl('<a class="something">', 8, 'class=', { cbLeft: isSpace }),
-    true,
+    matchLeftIncl('<a class="something">', 8, 'class=', { cb: isSpace }),
+    'class=',
     '06.01.03',
   )
   t.is(
-    matchLeftIncl('<a superclass="something">', 13, 'class=', { cbLeft: isSpace }),
+    matchLeftIncl('<a superclass="something">', 13, 'class=', { cb: isSpace }),
     false,
     '06.01.04',
   )
   t.is(
-    matchLeftIncl('a', 13, 'class=', { cbLeft: isSpace }),
+    matchLeftIncl('a', 13, 'class=', { cb: isSpace }),
     false,
     '06.01.05 - result will fail because substring is not matched',
   )
@@ -363,14 +418,14 @@ test('06.01 - opts.cbLeft()        callback is called back. haha!', (t) => {
   // the first part (string matching) is true, "b" is to the left of the character at index #2.
   // the second part of result calculation (callback against outside character) is true too.
   t.is(
-    matchLeft(' bc', 2, 'b', { cbLeft: isSpace }),
-    true,
+    matchLeft(' bc', 2, 'b', { cb: isSpace }),
+    'b',
     '06.01.06',
   )
 
   // PART 2. LET'S MAKE VERSION OF '06.01.06' FAIL BECAUSE OF THE CALLBACK.
   t.is(
-    matchLeft('abc', 2, 'b', { cbLeft: isSpace }),
+    matchLeft('abc', 2, 'b', { cb: isSpace }),
     false,
     '06.01.07',
   )
@@ -383,7 +438,7 @@ test('06.01 - opts.cbLeft()        callback is called back. haha!', (t) => {
   // We're checking is "b" to the left of it, plus, is there a space to the left of "b".
   // Answer is no, because there are bunch of line breaks to the left of "c".
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'b', { cbLeft: isSpace }),
+    matchLeft(' b\n\n\nc', 5, 'b', { cb: isSpace }),
     false,
     '06.01.08',
   )
@@ -391,8 +446,8 @@ test('06.01 - opts.cbLeft()        callback is called back. haha!', (t) => {
   // PART 4.
   // Now let's enable the opts.trimBeforeMatching:
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'b', { cbLeft: isSpace, trimBeforeMatching: true }),
-    true,
+    matchLeft(' b\n\n\nc', 5, 'b', { cb: isSpace, trimBeforeMatching: true }),
+    'b',
     '06.01.09',
   )
   // Answer is now true, because character at index #5 is "c", we look to the left of it, skip
@@ -404,7 +459,7 @@ test('06.01 - opts.cbLeft()        callback is called back. haha!', (t) => {
   // Let's make it fail because of a callback.
   // Replacing space to the left of "b" with "a".
   t.is(
-    matchLeft('ab\n\n\nc', 5, 'b', { cbLeft: isSpace, trimBeforeMatching: true }),
+    matchLeft('ab\n\n\nc', 5, 'b', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.01.10',
   )
@@ -415,32 +470,32 @@ test('06.02 - opts.matchLeft()     various combos', (t) => {
     return (typeof char === 'string') && (char.trim() === '')
   }
   t.is(
-    matchLeft('ab\n\n\nc', 5, 'b', { cbLeft: isSpace, trimBeforeMatching: true }),
+    matchLeft('ab\n\n\nc', 5, 'b', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.02.01',
   )
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'b', { cbLeft: isSpace, trimBeforeMatching: true }),
-    true,
+    matchLeft(' b\n\n\nc', 5, 'b', { cb: isSpace, trimBeforeMatching: true }),
+    'b',
     '06.02.02',
   )
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'b', { cbLeft: isSpace }),
+    matchLeft(' b\n\n\nc', 5, 'b', { cb: isSpace }),
     false,
     '06.02.03',
   )
   t.is(
-    matchLeft('ab\n\n\nc', 5, 'B', { cbLeft: isSpace, trimBeforeMatching: true, i: true }),
+    matchLeft('ab\n\n\nc', 5, 'B', { cb: isSpace, trimBeforeMatching: true, i: true }),
     false,
     '06.02.04',
   )
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'B', { cbLeft: isSpace, trimBeforeMatching: true, i: true }),
-    true,
+    matchLeft(' b\n\n\nc', 5, 'B', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'B',
     '06.02.05',
   )
   t.is(
-    matchLeft(' b\n\n\nc', 5, 'B', { cbLeft: isSpace, i: true }),
+    matchLeft(' b\n\n\nc', 5, 'B', { cb: isSpace, i: true }),
     false,
     '06.02.06',
   )
@@ -451,160 +506,175 @@ test('06.02 - opts.matchLeftIncl() callback and trimming', (t) => {
     return (typeof char === 'string') && (char.trim() === '')
   }
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cbLeft: isSpace }),
+    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cb: isSpace }),
     false,
     '06.02.01',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cbLeft: isSpace, trimBeforeMatching: true }),
-    true,
+    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    'bc',
     '06.02.02',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'bc', { cbLeft: isSpace, trimBeforeMatching: true }),
+    matchLeftIncl('ab\n\n\nc', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.02.03',
   )
   t.is(
     matchLeftIncl('ab\n\n\nc', 5, 'bc', { trimBeforeMatching: true }),
-    true,
+    'bc',
     '06.02.04',
   )
 
   // opts.i
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cbLeft: isSpace, i: true }),
+    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cb: isSpace, i: true }),
     false,
     '06.02.05',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cbLeft: isSpace, trimBeforeMatching: true, i: true }),
-    true,
+    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'BC',
     '06.02.06',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'BC', { cbLeft: isSpace, trimBeforeMatching: true, i: true }),
-    false,
+    matchLeftIncl(' b\n\n\nc', 5, ['BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'BC',
     '06.02.07',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'BC', { trimBeforeMatching: true, i: true }),
-    true,
+    matchLeftIncl(' b\n\n\nc', 5, ['AAA', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'BC',
     '06.02.08',
+  )
+  t.is(
+    matchLeftIncl('ab\n\n\nc', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    false,
+    '06.02.09',
+  )
+  t.is(
+    matchLeftIncl('ab\n\n\nc', 5, 'BC', { trimBeforeMatching: true, i: true }),
+    'BC',
+    '06.02.10',
   )
 })
 
-test('06.03 - opts.cbRight()       callback is called back, pt.1', (t) => {
+test('06.03 - opts.cb()       callback is called back, pt.1', (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
   t.is(
     // we will catch closing double quote, index #19 and check does closing bracket follow
     // if and also does the space follow after it
-    matchRight('<a class="something"> text', 19, '>', { cbRight: isSpace }),
-    true,
+    matchRight('<a class="something"> text', 19, '>', { cb: isSpace }),
+    '>',
     '06.03.01',
   )
   t.is(
-    matchRight('<a class="something">text', 19, '>', { cbRight: isSpace }),
+    matchRight('<a class="something">text', 19, '>', { cb: isSpace }),
     false,
     '06.03.02',
   )
   t.is(
-    matchRightIncl('<a class="something"> text', 19, '">', { cbRight: isSpace }),
-    true,
+    matchRightIncl('<a class="something"> text', 19, '">', { cb: isSpace }),
+    '">',
     '06.03.03',
   )
   t.is(
-    matchRightIncl('<a class="something">text', 19, '">', { cbRight: isSpace }),
+    matchRightIncl('<a class="something">text', 19, '">', { cb: isSpace }),
     false,
     '06.03.04',
   )
 })
 
-test('06.04 - opts.cbRight()       callback is called, pt.2', (t) => {
+test('06.04 - opts.cb()       callback is called, pt.2', (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
   // control
   t.is(
-    matchRight('b\n\n\nc z', 0, 'c', { cbRight: isSpace }),
+    matchRight('b\n\n\nc z', 0, 'c', { cb: isSpace }),
     false,
     '06.04.01',
   )
   t.is(
-    matchRight('b\n\n\nc z', 0, 'c', { cbRight: isSpace, trimBeforeMatching: true }),
-    true,
+    matchRight('b\n\n\nc z', 0, 'c', { cb: isSpace, trimBeforeMatching: true }),
+    'c',
     '06.04.02',
   )
   t.is(
-    matchRight('b\n\n\ncz', 0, 'c', { cbRight: isSpace, trimBeforeMatching: true }),
+    matchRight('b\n\n\ncz', 0, 'c', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.04.03',
   )
   t.is(
-    matchRight('b\n\n\nc z', 0, 'C', { cbRight: isSpace, i: true }),
+    matchRight('b\n\n\nc z', 0, 'C', { cb: isSpace, i: true }),
     false,
     '06.04.04',
   )
   t.is(
-    matchRight('b\n\n\nc z', 0, 'C', { cbRight: isSpace, trimBeforeMatching: true, i: true }),
-    true,
+    matchRight('b\n\n\nc z', 0, 'C', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'C',
     '06.04.05',
   )
   t.is(
-    matchRight('b\n\n\ncz', 0, 'C', { cbRight: isSpace, trimBeforeMatching: true, i: true }),
+    matchRight('b\n\n\ncz', 0, 'C', { cb: isSpace, trimBeforeMatching: true, i: true }),
     false,
     '06.04.06',
   )
 
   // control
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'bc', { cbRight: isSpace }),
+    matchRightIncl('b\n\n\nc z', 0, 'bc', { cb: isSpace }),
     false,
     '06.04.03',
   )
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'bc', { cbRight: isSpace, trimBeforeMatching: true }),
-    true,
+    matchRightIncl('b\n\n\nc z', 0, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    'bc',
     '06.04.04',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'bc', { cbRight: isSpace, trimBeforeMatching: true }),
+    matchRightIncl('b\n\n\ncz', 0, 'bc', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.04.05',
   )
   t.is(
     matchRightIncl('b\n\n\ncz', 0, 'bc', { trimBeforeMatching: true }),
-    true,
+    'bc',
     '06.04.06',
   )
 
   // opts.i
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'BC', { cbRight: isSpace, i: true }),
+    matchRightIncl('b\n\n\nc z', 0, 'BC', { cb: isSpace, i: true }),
     false,
     '06.04.07',
   )
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'BC', { cbRight: isSpace, trimBeforeMatching: true, i: true }),
-    true,
+    matchRightIncl('b\n\n\nc z', 0, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'BC',
     '06.04.08',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'BC', { cbRight: isSpace, trimBeforeMatching: true, i: true }),
-    false,
+    matchRightIncl('b\n\n\nc z', 0, ['KJG', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    'BC',
     '06.04.09',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'BC', { trimBeforeMatching: true, i: true }),
-    true,
+    matchRightIncl('b\n\n\ncz', 0, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    false,
     '06.04.10',
+  )
+  t.is(
+    matchRightIncl('b\n\n\ncz', 0, 'BC', { trimBeforeMatching: true, i: true }),
+    'BC',
+    '06.04.11',
   )
   t.is(
     matchRightIncl('b\n\n\ncz', 0, 'BC', { i: true }),
     false,
-    '06.04.11',
+    '06.04.12',
   )
 })
 
@@ -623,39 +693,49 @@ test('07.01 - opts.trimCharsBeforeMatching       pt.1', (t) => {
   )
   t.is(
     matchRight('</div>', 0, ['div'], { trimCharsBeforeMatching: ['/ '] }),
-    true,
+    'div',
     '07.01.02',
   )
   t.is(
     matchRight('< / div>', 0, ['div'], { trimCharsBeforeMatching: ['/ '] }),
-    true,
+    'div',
     '07.01.03',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['hgfdf', 'hkjh', 'div', '00'], { trimCharsBeforeMatching: ['/ '] }),
+    'div',
+    '07.01.04',
   )
   t.is(
     matchRight('< / div>', 0, ['div'], { trimCharsBeforeMatching: ['/'] }),
     false,
-    '07.01.04',
-  )
-
-  // opts.cbRight
-  t.is(
-    matchRight('</div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/ '] }),
-    false,
     '07.01.05',
   )
+
+  // opts.cb
   t.is(
-    matchRight('< / div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/ '] }),
+    matchRight('</div>', 0, ['div'], { cb: isSpace, trimCharsBeforeMatching: ['/ '] }),
     false,
     '07.01.06',
   )
   t.is(
-    matchRight('< / div>', 0, ['div'], { cbRight: isSpace, trimCharsBeforeMatching: ['/'] }),
+    matchRight('< / div>', 0, ['zzzz', 'div'], { cb: isSpace, trimCharsBeforeMatching: ['/ '] }),
     false,
     '07.01.07',
   )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { cb: isSpace, trimCharsBeforeMatching: ['/ '] }),
+    false,
+    '07.01.08',
+  )
+  t.is(
+    matchRight('< / div>', 0, ['div'], { cb: isSpace, trimCharsBeforeMatching: ['/'] }),
+    false,
+    '07.01.09',
+  )
 })
 
-// 8. opts.cbLeft and opts.cbRight callbacks
+// 8. opts.cb and opts.cb callbacks
 // -----------------------------------------------------------------------------
 
 test('08.01 - new in v1.5.0 - second arg in callback - matchRight()', (t) => {
@@ -666,14 +746,19 @@ test('08.01 - new in v1.5.0 - second arg in callback - matchRight()', (t) => {
   }
 
   t.is(
-    matchRight('</div class="">', 0, ['div'], { cbRight: hasEmptyClassRightAfterTheTagName }),
+    matchRight('</div class="">', 0, ['div'], { cb: hasEmptyClassRightAfterTheTagName }),
     false, // because slash hasn't been accounted for, it's to the right of index 0 character, "<".
     '08.01.01',
   )
   t.is(
-    matchRight('</div class="">', 0, ['div'], { cbRight: hasEmptyClassRightAfterTheTagName, trimCharsBeforeMatching: ['/ '] }),
-    true, // trims slash, finds div, calls the callback with args, they trim and check for "class".
+    matchRight('</div class="">', 0, ['div'], { cb: hasEmptyClassRightAfterTheTagName, trimCharsBeforeMatching: ['/ '] }),
+    'div', // trims slash, finds div, calls the callback with args, they trim and check for "class".
     '08.01.02',
+  )
+  t.is(
+    matchRight('</div class="">', 0, ['ghjs', 'div'], { cb: hasEmptyClassRightAfterTheTagName, trimCharsBeforeMatching: ['/ '] }),
+    'div', // trims slash, finds div, calls the callback with args, they trim and check for "class".
+    '08.01.03',
   )
 })
 
@@ -695,28 +780,28 @@ test('08.02 - new in v1.5.0 - second arg in callback - matchRightIncl()', (t) =>
   }
 
   t.is(
-    matchRightIncl('</div class="">', 0, ['</']),
-    true, // base from where we start
+    matchRightIncl('</div class="">', 0, ['</', 'Khg']),
+    '</', // base from where we start
     '08.02.01',
   )
   t.is(
-    matchRightIncl('</div class="">', 0, ['</'], { cbRight: hasEmptyClassRightAfterTheTagName }),
+    matchRightIncl('</div class="">', 0, ['</'], { cb: hasEmptyClassRightAfterTheTagName }),
     false, // wrong callback function
     '08.02.02',
   )
   t.is(
-    matchRightIncl('</div class="">', 0, ['</'], { cbRight: startsWithDiv }),
-    true, // fails because space (before "class") is not accounted for
+    matchRightIncl('</div class="">', 0, ['</', '>'], { cb: startsWithDiv }),
+    '</', // fails because space (before "class") is not accounted for
     '08.02.03',
   )
   t.is(
-    matchRightIncl('</ div class="">', 0, ['</'], { cbRight: startsWithDiv }),
+    matchRightIncl('</ div class="">', 0, ['</'], { cb: startsWithDiv }),
     false, // fails because space (before "class") is not accounted for
     '08.02.04',
   )
   t.is(
-    matchRightIncl('</div class="">', 0, ['</'], { cbRight: startsWithDivWithTrim }),
-    true, // trims slash, finds div, calls the callback with args, they trim and check for "class".
+    matchRightIncl('</div class="">', 0, ['yo', '</'], { cb: startsWithDivWithTrim }),
+    '</', // trims slash, finds div, calls the callback with args, they trim and check for "class".
     '08.02.05',
   )
 })
@@ -729,8 +814,8 @@ test('08.03 - new in v1.5.0 - second arg in callback - matchLeft()', (t) => {
   }
 
   t.is(
-    matchLeft('<div><b>aaa</b></div>', 5, ['<div>']),
-    true, // 5th index is left bracket of <b>. Yes, <div> is on the left.
+    matchLeft('<div><b>aaa</b></div>', 5, ['<article>', '<div>']),
+    '<div>', // 5th index is left bracket of <b>. Yes, <div> is on the left.
     '08.03.01',
   )
   t.is(
@@ -739,17 +824,17 @@ test('08.03 - new in v1.5.0 - second arg in callback - matchLeft()', (t) => {
     '08.03.02',
   )
   t.is(
-    matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { trimCharsBeforeMatching: [' >'] }),
-    true, // 7th index is left bracket of <b>. Yes, <div> is on the left.
+    matchLeft('z<div ><b>aaa</b></div>', 7, ['<b', '<div'], { trimCharsBeforeMatching: [' >'] }),
+    '<div', // 7th index is left bracket of <b>. Yes, <div> is on the left.
     '08.03.03',
   )
   t.is(
-    matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
-    true, // 7th index is left bracket of <b>. Yes, <div> is on the left.
+    matchLeft('z<div ><b>aaa</b></div>', 7, ['yo yo yo', '<div', 'gkhjg'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+    '<div', // 7th index is left bracket of <b>. Yes, <div> is on the left.
     '08.03.04',
   )
   t.is(
-    matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cbLeft: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+    matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
     false, // cheeky - deliberately making the second arg of cb to be blank and fail startsWithZ
     '08.03.05',
   )
@@ -763,8 +848,8 @@ test('08.04 - new in v1.5.0 - second arg in callback - matchLeftIncl()', (t) => 
   }
 
   t.is(
-    matchLeftIncl('<div><b>aaa</b></div>', 4, ['<div>']),
-    true, // 4th index is right bracket of <div>, but it's inclusive so it will get included.
+    matchLeftIncl('<div><b>aaa</b></div>', 4, ['<div>', 'and this']),
+    '<div>', // 4th index is right bracket of <div>, but it's inclusive so it will get included.
     // not inclusive would give "<div" by the way, that is, given index would not
     // be included in the slice.
     '08.04.01',
@@ -775,22 +860,22 @@ test('08.04 - new in v1.5.0 - second arg in callback - matchLeftIncl()', (t) => 
     '08.04.02',
   )
   t.is(
-    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['<div >']),
-    true,
+    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['111', '<div >']),
+    '<div >',
     '08.04.03',
   )
   t.is(
-    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['<div >'], { cbLeft: startsWithZ }),
-    true,
+    matchLeftIncl('z<div ><b>aaa</b></div>', 6, ['222', '<div >'], { cb: startsWithZ }),
+    '<div >',
     '08.04.04',
   )
   t.is(
-    matchLeftIncl('zxy<div ><b>aaa</b></div>', 8, ['krbd', '<div >'], { cbLeft: startsWithZ }),
-    true,
+    matchLeftIncl('zxy<div ><b>aaa</b></div>', 8, ['krbd', '<div >'], { cb: startsWithZ }),
+    '<div >',
     '08.04.05',
   )
   t.is(
-    matchLeftIncl('<div ><b>aaa</b></div>', 0, ['krbd', '<div >'], { cbLeft: startsWithZ }),
+    matchLeftIncl('<div ><b>aaa</b></div>', 0, ['krbd', '<div >'], { cb: startsWithZ }),
     false,
     '08.04.06 - cheeky - nothing for callback to hang onto',
   )

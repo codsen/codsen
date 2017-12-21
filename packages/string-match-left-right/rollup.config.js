@@ -36,6 +36,7 @@ export default [
       'lodash.isplainobject',
       'lodash.trimstart',
       'lodash.trimend',
+      'lodash.clonedeep',
     ],
     plugins: [
       babel(),

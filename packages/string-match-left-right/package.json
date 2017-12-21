@@ -125,6 +125,7 @@
     "arrayiffy-if-string": "^3.0.3",
     "check-types-mini": "^3.0.1",
     "is-natural-number": "^4.0.1",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "*",
     "lodash.trimend": "^4.5.1",
     "lodash.trimstart": "^4.5.1"

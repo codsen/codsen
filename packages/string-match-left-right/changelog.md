@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2017-12-21
+### Changed
+- ✨ Let's say you want to check, does a string contain "something" to the right or to the left of somewhere in it (a given index). We allow "something" to be an **array** of strings. If those strings are of a varying length, how do you find out, what exactly did match from the "something" array and especially, how long it is? As a solution for that, I'm going to return a positive result not Boolean `true` which is meaningless, but actually the value of a matched string from "something". It is equally `truthy` but you can now query it further, like find its `length`.
+
+**Instructions to upgrade from `1.x`**
+
+If you relied on the result being explicitly Boolean, `true` or `false`, prepare that truthy outcome now will be string. Just us double negation `!!` and you'll convert it to `true`. Or better, you can just use the truthy (string) result in the Boolean logic. It's `truthy` anyway.
+
+- ✨ `opts.cbLeft` and `opts.cbRight` were joined into one, `opts.cb`. Same behaviour, except there's less to think about. Just pass the callback function - it will be called with the substring which is on the left or right, depending if you called left-side (`matchLeftIncl`/`matchLeft`) or right-side (`matchRightIncl`/`matchRight`) method.
+
 ## [1.4.0] - 2017-12-10
 ### Added
 - ✨ Stringifying of `opts.trimCharsBeforeMatching` now occurs only if element is not string.
@@ -34,6 +44,7 @@ They have to be callbacks because I can't predict what checks you will want to c
 ### New
 - ✨ First public release
 
+[2.0.0]: https://github.com/codsen/string-match-left-right/compare/v1.4.0...v2.0.0
 [1.4.0]: https://github.com/codsen/string-match-left-right/compare/v1.3.6...v1.4.0
 [1.3.0]: https://github.com/codsen/string-match-left-right/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/string-match-left-right/compare/v1.1.0...v1.2.0
