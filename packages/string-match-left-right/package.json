@@ -4,7 +4,7 @@
   "description": "Do substrings match what's on the left or right of the given index?",
   "license": "MIT",
   "engines": {
-    "node": ">=4",
+    "node": ">=6",
     "npm": ">=5",
     "yarn": ">=1"
   },
