@@ -50,11 +50,11 @@ import { matchLeftIncl, matchRightIncl, matchLeft, matchRight } from 'string-mat
 
 Here's what you'll get:
 
-Type                                                                                                    | Key in `package.json` | Path                                  | Size
---------------------------------------------------------------------------------------------------------|-----------------------|---------------------------------------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports`                 | `main`                | `dist/string-match-left-right.cjs.js` | 6&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 6&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 24&nbsp;KB
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled down to Node `v.4` spec, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 8&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 7&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 33&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -240,9 +240,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-match-left-right/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-match-left-right/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-match-left-right/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
