@@ -26,6 +26,7 @@
 - [Install](#install)
 - [The Idea](#the-idea)
 - [API](#api)
+  - [Optional Options Object](#optional-options-object)
   - [slices.add(from, to[, str])](#slicesaddfrom-to-str)
   - [slices.current()](#slicescurrent)
   - [slices.wipe()](#sliceswipe)
@@ -97,16 +98,38 @@ Imagine you want to delete a bunch of characters from a string. Like making a bu
 
 ## API
 
-This package exports a constructor, Slices which you first `require`, then call using `new`:
+This package exports a constructor, Slices, which you first `require`, then call using `new`:
 
 ```js
 const Slices = require('string-slices-array-push')
-let slices = new Slices()
+let slices = new Slices([opts])
 ```
 
 The `slices` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
 
-You then interact with it calling its _methods_:
+You can also provide an Optional Options Object when creating the class. See below for its API.
+
+**[⬆ &nbsp;back to top](#)**
+
+### Optional Options Object
+
+options object's key             | Type of its value | Default | Description
+---------------------------------|-------------------|---------|----------------------
+{                                |                   |         |
+`limitToBeAddedWhitespace`       | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases)
+}                                |                   |         |
+
+The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+
+Here is the Optional Options Object in one place (in case you ever want to copy it):
+
+```js
+{
+  limitToBeAddedWhitespace: false,
+}
+```
+
+You then interact with your newly-created slices class by calling its _methods_:
 
 **[⬆ &nbsp;back to top](#)**
 
