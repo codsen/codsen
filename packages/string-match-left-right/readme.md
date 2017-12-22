@@ -29,7 +29,6 @@
 - [`opts.cb`](#optscb)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
-- [Why my code coverage ~~sucks~~ is not perfect](#why-my-code-coverage-sucks-is-not-perfect)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -149,7 +148,7 @@ Often you need not only to match what's on the left/right of the given index wit
 
 For example, if you are traversing the string and want to match the `class` attribute, you traverse backwards, "catch" equals character `=`, then check, what's on the left of it using method `matchLeft`. That's not enough, because you also need to check, is the next character outside it is a space, or in algorithm terms, "trims to length zero", that is `(trim(char).length === 0)`. How do you apply this check?
 
-Using `opts.cb` callbacks ("cb" in it's name stands for CallBack):
+Using `opts.cb` callbacks ("cb" stands for CallBack):
 
 ```js
 const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
@@ -217,18 +216,6 @@ By the way it's not on by default because such scenarios are rare. Default compa
 ## `opts.trimCharsBeforeMatching`
 
 For example, [string-strip-html](https://github.com/codsen/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
-
-**[⬆ &nbsp;back to top](#)**
-
-## Why my code coverage ~~sucks~~ is not perfect
-
-You may ask: why is the [coverage](https://coveralls.io/github/codsen/string-match-left-right?branch=master) not proper 100%?
-
-I will answer: it's because the source is in ES Modules (`import`/`export`) and because Node (and together with it, AVA, natively) does not support ES modules yet, I have to _transpile_ the code (using Rollup + Babel). Sometimes Babel adds its own code which I can't target with my unit tests, for example the auxiliary functions responsible for CommonJS modules thingies. But sometimes it's because of my ~~laziness~~ lack of time.
-
-At least we aim to cover 100% of the lines:
-
-![current coverage situation](https://cdn.rawgit.com/codsen/string-match-left-right/45b3724d/media/coverage.png)
 
 **[⬆ &nbsp;back to top](#)**
 
