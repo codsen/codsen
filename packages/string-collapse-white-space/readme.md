@@ -67,9 +67,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 18&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-collapse-white-space.cjs.js` | 18&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-collapse-white-space.esm.js` | 17&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 37&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-collapse-white-space.umd.js` | 46&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -82,18 +82,6 @@ Input:
 - the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
 
 Options object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
-
-**Defaults**:
-
-```js
-{
-  trimStart: true,
-  trimEnd: true,
-  trimLines: false,
-  trimnbsp: false,
-  recogniseHTML: true
-}
-```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -108,6 +96,18 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 `trimnbsp`                     | Boolean  | no          | `false`     | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.
 `recogniseHTML`                | Boolean  | no          | `true`      | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`.
 }                              |          |             |             |
+
+**Defaults**:
+
+```js
+{
+  trimStart: true,
+  trimEnd: true,
+  trimLines: false,
+  trimnbsp: false,
+  recogniseHTML: true
+}
+```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -179,9 +179,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-collapse-white-space/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
