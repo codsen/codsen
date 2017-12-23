@@ -10,8 +10,6 @@
       "coveralls",
       "husky",
       "lodash.clonedeep",
-      "lodash.isequal",
-      "lodash.isplainobject",
       "nyc"
     ]
   },

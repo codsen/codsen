@@ -551,7 +551,7 @@ Output           | Type             | Description
 
 ### .traverse()
 
-This one is a bit advanced and riskier in wrong hands.
+`traverse()` comes from a standalone library, [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse) and you can install and use it as a standalone. Since all methods depend on it, we are exporting it along all other methods. However, it "comes from outside", it's not part of this package's code and the true source of its API is on its own readme. Here, we're just reiterating how to use it.
 
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 

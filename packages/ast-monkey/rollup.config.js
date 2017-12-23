@@ -31,11 +31,10 @@ export default [
     ],
     external: [
       'ast-compare',
+      'ast-monkey-traverse',
       'check-types-mini',
       'is-natural-number',
       'lodash.clonedeep',
-      'lodash.isequal',
-      'lodash.isplainobject',
       'type-detect',
       'util-array-object-or-both',
     ],
