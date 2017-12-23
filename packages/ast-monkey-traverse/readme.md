@@ -77,8 +77,7 @@ ast = traverse(ast, function (key, val, innerObj) {
   // you can detect either using the principle above.
   // you can also now change "current" - what you return will be overwritten.
   // return `NaN` to give instruction to delete currently traversed piece of AST.
-  return current // it's obligatory to return it, unless you want to assign that
-  // node to an "undefined"
+  return current // #1 <------ it's obligatory to return it, unless you want to assign it to "undefined"
 })
 ```
 
