@@ -147,9 +147,9 @@ Find out, what is the path to the key that equals 'b'.
 
 ```js
 const monkey = require('ast-monkey')
-var input = ['a', [['b'], 'c']]
-var key = 'b'
-var result = monkey.find(input, {key: key})
+const input = ['a', [['b'], 'c']]
+const key = 'b'
+const result = monkey.find(input, {key: key})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => [
 //      {
@@ -198,13 +198,13 @@ If you know that you want an index number two, you can query it using `monkey.ge
 
 ```js
 const monkey = require('ast-monkey')
-var input = {
+const input = {
   a: {
     b: 'c'
   }
 }
-var index = 2
-var result = monkey.get(input, {index: index})
+const index = 2
+const result = monkey.get(input, {index: index})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => {
 //      b: 'c'
@@ -247,13 +247,13 @@ Let's say you identified the `index` of a piece of AST you want to write over:
 
 ```js
 const monkey = require('ast-monkey')
-var input = {
+const input = {
   a: {b: [{c: {d: 'e'}}]},
   f: {g: ['h']}
 }
-var index = '7'
-var val = 'zzz'
-var result = monkey.set(input, {index: index, val: val})
+const index = '7'
+const val = 'zzz'
+const result = monkey.set(input, {index: index, val: val})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => {
 //      a: {b: [{c: {d: 'e'}}]},
@@ -294,12 +294,12 @@ Let's say you want to delete the piece of AST with an index number 8. That's `'h
 
 ```js
 const monkey = require('ast-monkey')
-var input = {
+const input = {
   a: {b: [{c: {d: 'e'}}]},
   f: {g: ['h']}
 }
-var index = '8' // can be integer as well
-var result = monkey.drop(input, {index: index})
+const index = '8' // can be integer as well
+const result = monkey.drop(input, {index: index})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => {
 //      a: {b: [{c: {d: 'e'}}]},
@@ -319,7 +319,7 @@ Let's create a file `testing.js` in the root of this library, at the same level 
 'use strict'
 const monkey = require('./index');
 (function () {
-  var input = {
+  const input = {
     a: {b: [{c: {d: 'e'}}]},
     f: {g: ['h']}
   }
@@ -494,12 +494,12 @@ Let's say you want to delete all key/value pairs from objects that have a key eq
 
 ```js
 const monkey = require('ast-monkey')
-var input = {
+const input = {
   a: {b: [{c: {d: 'e'}}]},
   c: {d: ['h']}
 }
-var key = 'c'
-var result = monkey.del(input, {key: key})
+const key = 'c'
+const result = monkey.del(input, {key: key})
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => {
 //      a: {b: [{}]}
@@ -516,7 +516,7 @@ console.log('result = ' + JSON.stringify(result, null, 4))
 
 ```js
 const monkey = require('ast-monkey')
-var input = [
+const input = [
   {
     a: 'a'
   },
@@ -524,7 +524,7 @@ var input = [
     b: 'b'
   }
 ]
-var result = monkey.arrayFirstOnly(input)
+const result = monkey.arrayFirstOnly(input)
 console.log('result = ' + JSON.stringify(result, null, 4))
 // => [
 //      {
@@ -559,7 +559,7 @@ Output           | Type             | Description
 
 ```js
 const monkey = require('ast-monkey')
-var ast = [{a: 'a', b: 'b'}]
+let ast = [{a: 'a', b: 'b'}]
 ast = monkey.traverse(ast, function (key, val, innerObj) {
   // use key, val, innerObj
   return (val !== undefined) ? val : key // (point #1)
@@ -570,9 +570,9 @@ Also, I like to use it this way:
 
 ```js
 const monkey = require('ast-monkey')
-var ast = [{a: 'a', b: 'b'}]
+let ast = [{a: 'a', b: 'b'}]
 ast = monkey.traverse(ast, function (key, val, innerObj) {
-  var current = (val !== undefined) ? val : key
+  let current = (val !== undefined) ? val : key
   // All action with variable `current` goes here.
   // It's the same name for any array element or any object key's value.
   return current // it's obligatory to return it, unless you want to assign that
@@ -617,14 +617,14 @@ Allow me to show you how to practically tap the `innerObj`:
 
 ```js
 const monkey = require('ast-monkey')
-var ast = {
+let ast = {
             a: {
               b: 'b val'
             },
             c: 'c val'
           }
 ast = monkey.traverse(ast, function (key, val, innerObj) {
-  var current = monkey.existy(val) ? val : key
+  let current = (val !== undefined) ? val : key
   console.log('\nkey = ' + JSON.stringify(key, null, 4))
   console.log('val = ' + JSON.stringify(val, null, 4))
   console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
