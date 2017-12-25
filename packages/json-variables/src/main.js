@@ -3,7 +3,7 @@
 import typ from 'type-detect'
 import clone from 'lodash.clonedeep'
 import includes from 'lodash.includes'
-import { traverse } from 'ast-monkey'
+import traverse from 'ast-monkey-traverse'
 import search from 'str-indexes-of-plus'
 import strLen from 'string-length'
 import spliceStr from 'splice-string'
@@ -183,6 +183,9 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
     let dontWrapTheseVarsStartingWithIndexes = []
     let found
 
+    console.log(`search(current, opts.heads) = ${JSON.stringify(search(current, opts.heads), null, 4)}`)
+    console.log(`search(current, opts.headsNoWrap) = ${JSON.stringify(search(current, opts.headsNoWrap), null, 4)}`)
+
     // loop will be skipped completely with the help of "loopKillSwitch" if
     // opts.noSingleMarkers=false and "current" has the value of "opts.heads" or
     // "opts.tails"
@@ -201,10 +204,7 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
         )
       ) {
         // console.log('\n------------------')
-        foundHeads = search(
-          current,
-          opts.heads,
-        )
+        foundHeads = search(current, opts.heads)
           .concat(search(current, opts.headsNoWrap))
           .sort(numSort.asc)
         foundTails = search(current, opts.tails)
@@ -215,6 +215,8 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
           [opts.heads, opts.headsNoWrap],
           [opts.tails, opts.tailsNoWrap],
         )[0]
+        console.log(`\n\n\n* foundHeads = ${JSON.stringify(foundHeads, null, 4)}`)
+        console.log(`* innerVar = ${JSON.stringify(innerVar, null, 4)}\n\n\n`)
 
         // catch recursion after one full cycle
         // [!] cases when recursionLoopSize === 1 are not covered here because of

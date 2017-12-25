@@ -12,8 +12,9 @@ var trim = _interopDefault(require('lodash.trim'));
 var includes = _interopDefault(require('lodash.includes'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var numSort = _interopDefault(require('num-sort'));
-var astMonkey = require('ast-monkey');
+var traverse = _interopDefault(require('ast-monkey-traverse'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
+var stringFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
 
 /* eslint padded-blocks: 0, no-param-reassign:0, no-loop-func:0 */
 
@@ -58,12 +59,15 @@ function findLastInArray(array, val) {
 // since v.1.1 str can be equal to heads or tails - there won't be any results
 // though (result will be empty array)
 function extractVarsFromString(str, heads, tails) {
+  console.log('--------------------\nstr = ' + JSON.stringify(str, null, 4));
+  console.log('heads = ' + JSON.stringify(heads, null, 4));
+  console.log('tails = ' + JSON.stringify(tails, null, 4));
   if (arguments.length === 0) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): inputs missing!');
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_01] inputs missing!');
   }
   var res = [];
   if (typ(str) !== 'string') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): first arg must be string-type. Currently it\'s: ' + typ(str));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_02] first arg must be string-type. Currently it\'s: ' + typ(str));
   }
   if (heads === undefined) {
     heads = ['%%_'];
@@ -72,10 +76,10 @@ function extractVarsFromString(str, heads, tails) {
     tails = ['_%%'];
   }
   if (typ(heads) !== 'string' && typ(heads) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): second arg must be a string or an array of strings. Currently it\'s: ' + typ(heads));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_03] second arg must be a string or an array of strings. Currently it\'s: ' + typ(heads));
   }
   if (typ(tails) !== 'string' && typ(tails) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be a string or an array of strings. Currently it\'s: ' + typ(tails));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_04] third arg must be a string or an array of strings. Currently it\'s: ' + typ(tails));
   }
   heads = arrayiffyIfString(clone(heads));
   tails = arrayiffyIfString(clone(tails));
@@ -96,7 +100,7 @@ function extractVarsFromString(str, heads, tails) {
   }, []).sort(numSort.asc);
 
   if (foundHeads.length !== foundTails.length && !includes(heads, str) && !includes(tails, str)) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): Mismatching heads and tails in the input:' + str);
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_05] Mismatching heads and tails in the input:\n' + str);
   }
 
   var to = void 0;
@@ -126,7 +130,7 @@ function extractVarsFromString(str, heads, tails) {
 //
 // it's for internal use, so there is no input type validation
 function fixOffset(whatever, position, amount) {
-  whatever = astMonkey.traverse(whatever, function (key, val) {
+  whatever = traverse(whatever, function (key, val) {
     var current = existy(val) ? val : key;
     if (val === undefined && typeof key === 'number') {
       if (existy(amount) && amount !== 0 && key > position) {

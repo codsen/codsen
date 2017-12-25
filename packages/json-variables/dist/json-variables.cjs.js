@@ -5,7 +5,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var typ = _interopDefault(require('type-detect'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var includes = _interopDefault(require('lodash.includes'));
-var astMonkey = require('ast-monkey');
+var traverse = _interopDefault(require('ast-monkey-traverse'));
 var search = _interopDefault(require('str-indexes-of-plus'));
 var strLen = _interopDefault(require('string-length'));
 var spliceStr = _interopDefault(require('splice-string'));
@@ -16,6 +16,7 @@ var objectPath = _interopDefault(require('object-path'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var trim = _interopDefault(require('lodash.trim'));
+var stringFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
 
 /* eslint padded-blocks: 0, no-param-reassign:0, no-loop-func:0 */
 
@@ -60,12 +61,15 @@ function findLastInArray(array, val) {
 // since v.1.1 str can be equal to heads or tails - there won't be any results
 // though (result will be empty array)
 function extractVarsFromString(str, heads, tails) {
+  console.log('--------------------\nstr = ' + JSON.stringify(str, null, 4));
+  console.log('heads = ' + JSON.stringify(heads, null, 4));
+  console.log('tails = ' + JSON.stringify(tails, null, 4));
   if (arguments.length === 0) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): inputs missing!');
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_01] inputs missing!');
   }
   var res = [];
   if (typ(str) !== 'string') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): first arg must be string-type. Currently it\'s: ' + typ(str));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_02] first arg must be string-type. Currently it\'s: ' + typ(str));
   }
   if (heads === undefined) {
     heads = ['%%_'];
@@ -74,10 +78,10 @@ function extractVarsFromString(str, heads, tails) {
     tails = ['_%%'];
   }
   if (typ(heads) !== 'string' && typ(heads) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): second arg must be a string or an array of strings. Currently it\'s: ' + typ(heads));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_03] second arg must be a string or an array of strings. Currently it\'s: ' + typ(heads));
   }
   if (typ(tails) !== 'string' && typ(tails) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): third arg must be a string or an array of strings. Currently it\'s: ' + typ(tails));
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_04] third arg must be a string or an array of strings. Currently it\'s: ' + typ(tails));
   }
   heads = arrayiffyIfString(clone(heads));
   tails = arrayiffyIfString(clone(tails));
@@ -98,7 +102,7 @@ function extractVarsFromString(str, heads, tails) {
   }, []).sort(numSort.asc);
 
   if (foundHeads.length !== foundTails.length && !includes(heads, str) && !includes(tails, str)) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): Mismatching heads and tails in the input:' + str);
+    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_05] Mismatching heads and tails in the input:\n' + str);
   }
 
   var to = void 0;
@@ -128,7 +132,7 @@ function extractVarsFromString(str, heads, tails) {
 //
 // it's for internal use, so there is no input type validation
 function fixOffset(whatever, position, amount) {
-  whatever = astMonkey.traverse(whatever, function (key, val) {
+  whatever = traverse(whatever, function (key, val) {
     var current = existy$1(val) ? val : key;
     if (val === undefined && typeof key === 'number') {
       if (existy$1(amount) && amount !== 0 && key > position) {
@@ -262,7 +266,7 @@ function jsonVariables(inputOriginal) {
   var resolvedValue = void 0;
   var wrap = opts.wrapGlobalFlipSwitch;
 
-  input = astMonkey.traverse(input, function (key, val, innerObj) {
+  input = traverse(input, function (key, val, innerObj) {
     // console.log('\n========================================')
     if (existy(val) && (aContainsB(key, opts.heads) || aContainsB(key, opts.tails) || aContainsB(key, opts.headsNoWrap) || aContainsB(key, opts.tailsNoWrap))) {
       throw new Error('json-variables/jsonVariables(): [THROW_ID_14] Object keys can\'t contain variables!\nPlease check the following key: ' + key);
@@ -300,6 +304,9 @@ function jsonVariables(inputOriginal) {
     var dontWrapTheseVarsStartingWithIndexes = [];
     var found = void 0;
 
+    console.log('search(current, opts.heads) = ' + JSON.stringify(search(current, opts.heads), null, 4));
+    console.log('search(current, opts.headsNoWrap) = ' + JSON.stringify(search(current, opts.headsNoWrap), null, 4));
+
     // loop will be skipped completely with the help of "loopKillSwitch" if
     // opts.noSingleMarkers=false and "current" has the value of "opts.heads" or
     // "opts.tails"
@@ -315,6 +322,8 @@ function jsonVariables(inputOriginal) {
         foundHeads = search(current, opts.heads).concat(search(current, opts.headsNoWrap)).sort(numSort.asc);
         foundTails = search(current, opts.tails).concat(search(current, opts.tailsNoWrap)).sort(numSort.asc);
         innerVar = extractVarsFromString(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0];
+        console.log('\n\n\n* foundHeads = ' + JSON.stringify(foundHeads, null, 4));
+        console.log('* innerVar = ' + JSON.stringify(innerVar, null, 4) + '\n\n\n');
 
         // catch recursion after one full cycle
         // [!] cases when recursionLoopSize === 1 are not covered here because of

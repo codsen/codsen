@@ -2382,6 +2382,64 @@ test('11.04 - multi-level + from array + root data store + ignores', (t) => {
 })
 
 // -----------------------------------------------------------------------------
+// 12. Potentially clashing combos of characters
+// -----------------------------------------------------------------------------
+
+test.only('12.01 - surrounding underscores - sneaky similarity with wrong side brackets', (t) => {
+  t.deepEqual(
+    jv({
+      a: 'joined with an underscores: %%_var1_%%_%%_var2_%%',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'joined with an underscores: value1_value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '12.01.01',
+  )
+  // t.deepEqual(
+  //   jv({
+  //     a: 'joined with an underscores: {{var1}{var2}',
+  //     b: 'something',
+  //     var1: 'value1',
+  //     var2: 'value2',
+  //   }, {
+  //     heads: '{',
+  //     tails: '}',
+  //   }),
+  //   {
+  //     a: 'joined with an underscores: {value1value2',
+  //     b: 'something',
+  //     var1: 'value1',
+  //     var2: 'value2',
+  //   },
+  //   '12.01.02',
+  // )
+  // t.deepEqual(
+  //   jv({
+  //     a: 'joined with an underscores: }{var1}{var2}',
+  //     b: 'something',
+  //     var1: 'value1',
+  //     var2: 'value2',
+  //   }, {
+  //     heads: '{',
+  //     tails: '}',
+  //   }),
+  //   {
+  //     a: 'joined with an underscores: }value1value2',
+  //     b: 'something',
+  //     var1: 'value1',
+  //     var2: 'value2',
+  //   },
+  //   '12.01.03',
+  // )
+})
+
+// -----------------------------------------------------------------------------
 // 93. UTIL - splitObjectPath()
 // -----------------------------------------------------------------------------
 

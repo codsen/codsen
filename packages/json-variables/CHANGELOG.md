@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2017-12-25
+### Changed
+- ✨ Improved _head_ and _tail_ detection algorithm. Previously we used simple string search, without considering the order of the findings. Wrong order now will help to rule-out more false positives.
+- ✨ Tapped [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) directly, without the need for the whole [ast-monkey](https://www.npmjs.com/package/ast-monkey).
+- ✨ Many other improvements on the setup
+
 ## [5.0.0] - 2017-12-15
 ### Changed
 - ✨ Rebased in ES Modules
@@ -113,3 +119,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [4.5.0]: https://github.com/codsen/json-variables/compare/v4.4.0...v4.5.0
 [4.6.0]: https://github.com/codsen/json-variables/compare/v4.5.0...v4.6.0
 [5.0.0]: https://github.com/codsen/json-variables/compare/v4.6.0...v5.0.0
+[5.1.0]: https://github.com/codsen/json-variables/compare/v5.0.0...v5.1.0
