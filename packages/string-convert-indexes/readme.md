@@ -186,6 +186,8 @@ Here are all the defaults in one place:
 
 I have created quite a few string processing libraries, and some are using native JS indexes, while some are using Unicode character count-based indexing. This library will make them all more universal.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Contributing
 
 Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
