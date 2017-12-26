@@ -65,7 +65,7 @@ We are talking about indexes, the numbers used in, for example, `String.slice`.
 Some libraries use JS native indexing where emoji counts as two characters.
 Some libraries use indexing based on character-count where one emoji counts as one character.
 
-This is the converter that converts between the two systems.
+This is a converter that converts between the two systems.
 
 Highlights:
 
