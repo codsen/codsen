@@ -17,7 +17,7 @@
 [![Test in browser][runkit-img]][runkit-url]
 [![MIT License][license-img]][license-url]
 
-* If you only need traversal function, install on it: [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse)
+* If you only need traversal function, install just it: [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse)
 
 ## Table of Contents
 
