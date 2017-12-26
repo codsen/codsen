@@ -34,7 +34,7 @@
 ## Install
 
 ```bash
-$ npm i util-nonempty
+npm i util-nonempty
 ```
 
 ```js
@@ -51,9 +51,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 757&nbsp;B
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 757&nbsp;B
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 604&nbsp;B
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 904&nbsp;B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 916&nbsp;B
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -88,10 +88,10 @@ nonEmpty(f)
 // => false (answer is instantly false if input is not array, plain object or string)
 ```
 
-If you want to check _non-emptiness_ of complex nested trees of objects, arrays and strings (like parsed HTML [AST](https://github.com/posthtml/posthtml-parser)), you need a library which can recursively traverse that. There are two options:
+If you want to check _non-emptiness_ of complex nested trees of objects, arrays and strings (like parsed HTML [AST](https://github.com/posthtml/posthtml-parser)), you need a library which can **recursively traverse that**. There are two options:
 
-* If you want to check for strict emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
-* If your "emptiness" definition is wider — anything (plain object, array or string or a mix of thereof) that contains only whitespace (spaces, line breaks, tabs and so on), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
+* If you want to check for **strict** emptiness, that is `[]` or `{}` is empty, but `{aaa: '   \n\n\n   ', '   \t'}` is not, see [posthtml-ast-is-empty](https://www.npmjs.com/package/posthtml-ast-is-empty)
+* If your "emptiness" definition is "everything that `String.trim()`'s to an empty string'" (this includes tabs, spaces and line breaks for example, but not letters), see [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space).
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -107,9 +107,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-nonempty/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-nonempty/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
