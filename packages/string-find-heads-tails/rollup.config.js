@@ -31,8 +31,11 @@ export default [
     ],
     external: [
       'arrayiffy-if-string',
+      'check-types-mini',
       'is-natural-number',
       'is-natural-number-string',
+      'lodash.includes',
+      'lodash.isplainobject',
       'ordinal-number-suffix',
       'string-match-left-right',
     ],

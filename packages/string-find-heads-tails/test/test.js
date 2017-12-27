@@ -77,15 +77,69 @@ test('01.04 - throws when the third argument, tails, is not a string', (t) => {
   })
 })
 
-test('01.05 - throws when the fourth argument is not a natural number', (t) => {
+test('01.05 - throws when the fourth argument, opts, is of a wrong type', (t) => {
   t.throws(() => {
     strFindHeadsTails('a', 'a', 'a', 'a')
   })
   t.notThrows(() => {
-    strFindHeadsTails('a', 'a', 'a', '1') // OK, will be parsed
+    strFindHeadsTails('a', 'a', 'a', null) // falsey is OK
   })
   t.notThrows(() => {
-    strFindHeadsTails('a', 'a', 'a', 1) // OK
+    strFindHeadsTails('a', 'a', 'a', undefined) // falsey is OK
+  })
+  t.notThrows(() => {
+    strFindHeadsTails('a', 'a', 'a', { fromIndex: '1' }) // OK, will be parsed
+  })
+  t.notThrows(() => {
+    strFindHeadsTails('a', 'a', 'a', { fromIndex: 1 }) // canonical
+  })
+  t.throws(() => {
+    strFindHeadsTails('a', 'a', 'a', { fromIndex: 1.5 }) // not a natural number
+  })
+})
+
+test('01.06 - unmatched heads and tails', (t) => {
+  t.throws(() => {
+    strFindHeadsTails('abc%%_def_%ghi', '%%_', '_%%')
+  }) // sneaky - tails' second percentage char is missing, hence unrecognised and throws
+  t.throws(() => {
+    strFindHeadsTails('abcdef', 'x', 'e') // heads not found
+  })
+  t.throws(() => {
+    strFindHeadsTails('abcdef', 'x', ['e', '$']) // heads not found
+  })
+  t.throws(() => {
+    strFindHeadsTails('abcdef', ['_', 'x'], ['e', '$']) // heads not found
+  })
+  t.throws(() => {
+    strFindHeadsTails('abcdef', 'b', 'x') // tails not found
+  })
+  t.throws(() => {
+    strFindHeadsTails('abcdef', ['&', 'b'], 'x') // tails not found
+  })
+  t.notThrows(() => {
+    strFindHeadsTails('abcdef', 'x', 'z') // both heads and tails not found - OK
+  })
+})
+
+test('01.07 - both heads and tails found but wrong order', (t) => {
+  t.throws(() => {
+    strFindHeadsTails('abc___def---ghi', '---', '___') // opposite order
+  })
+  t.throws(() => {
+    strFindHeadsTails('abc___def---ghi', ['***', '---'], '___') // opposite order
+  })
+  t.throws(() => {
+    strFindHeadsTails('abc___def---ghi', ['***', '---'], ['^^^', '___']) // opposite order
+  })
+  t.throws(() => {
+    strFindHeadsTails('--a__bcdef**', ['--', '__'], ['**', '^^']) // two consecutive heads
+  })
+  t.throws(() => {
+    strFindHeadsTails('--a**bcdefghij^^', ['--', '__'], ['**', '^^']) // two consecutive tails
+  })
+  t.throws(() => {
+    strFindHeadsTails('--a^^bc__defghij', ['--', '__'], ['**', '^^']) // second heads unmatched
   })
 })
 
@@ -129,8 +183,12 @@ test('02.02 - multi-char markers', (t) => {
     ],
     '02.02.01',
   )
+  t.throws(() => {
+    strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', { fromIndex: 4 })
+  }) // fromIndex prevented heads from being caught. Tails were caught, but
+  // since opts.throwWhenSomethingWrongIsDetected is on, error is thrown.
   t.deepEqual(
-    strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', 4),
+    strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', { fromIndex: 4, throwWhenSomethingWrongIsDetected: false }),
     [],
     '02.02.02 - offset meant we started beyond first heads, so no tails were accepted',
   )
@@ -180,10 +238,13 @@ test('02.03 - sneaky "casual" underscores try to blend in with legit heads/tails
 })
 
 test('02.04 - sneaky tails precede heads', (t) => {
+  t.throws(() => {
+    strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%')
+  })
   t.deepEqual(
-    strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%'),
+    strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: false }),
     [],
-    '02.03',
+    '02.04.02',
   )
 })
 
@@ -206,4 +267,34 @@ test('02.05 - arrays of heads and tails', (t) => {
     ],
     '02.05',
   )
+})
+
+test('02.06 - input is equal to heads or tails', (t) => {
+  t.deepEqual(
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: false }),
+    [],
+    '02.06.01',
+  )
+  t.deepEqual(
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true }),
+    [],
+    '02.06.02',
+  )
+  t.deepEqual(
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: true }),
+    [],
+    '02.06.03',
+  )
+  t.deepEqual(
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: false, allowWholeValueToBeOnlyHeadsOrTails: true }),
+    [],
+    '02.06.04',
+  )
+  // only this settings combo will cause a throw:
+  t.throws(() => {
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false })
+  }) // equal to heads
+  t.throws(() => {
+    strFindHeadsTails('_%%', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false })
+  }) // equal to tails
 })

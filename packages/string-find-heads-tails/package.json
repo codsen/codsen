@@ -125,8 +125,11 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.0.4",
+    "check-types-mini": "^3.0.2",
     "is-natural-number": "*",
     "is-natural-number-string": "*",
+    "lodash.includes": "^4.3.0",
+    "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.1",
     "string-match-left-right": "^2.0.3"
   },

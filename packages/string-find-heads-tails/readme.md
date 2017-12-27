@@ -52,9 +52,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-find-heads-tails.cjs.js` | 9&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-find-heads-tails.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-find-heads-tails.umd.js` | 37&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-find-heads-tails.cjs.js` | 13&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-find-heads-tails.esm.js` | 12&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-find-heads-tails.umd.js` | 39&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -90,6 +90,8 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 ]
 ```
 
+**[⬆ &nbsp;back to top](#)**
+
 ## API
 
 **strFindHeadsTails(str, heads, tails\[, fromIndex])**
@@ -109,6 +111,8 @@ Input argument   | Type                                       | Obligatory? | De
 `fromIndex`      | Natural number or zero as number or string | no          | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.
 
 Input arguments are not mutated.
+
+**[⬆ &nbsp;back to top](#)**
 
 ### API - Output
 
