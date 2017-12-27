@@ -29,6 +29,7 @@
 - [Usage](#usage)
 - [API](#api)
   - [API - Input](#api---input)
+  - [Optional Options Object](#optional-options-object)
   - [API - Output](#api---output)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -103,14 +104,38 @@ The index is based on native JavaScript string indexing where each astral charac
 
 ### API - Input
 
-Input argument   | Type                                       | Obligatory? | Description
------------------|--------------------------------------------|-------------|-----------
-`str`            | String                                     | yes         | The string in which you want to perform a search
-`heads`          | String or Array of strings                 | yes         | One or more string, the first half of the set. For example, `['%%-', '%%_']`.
-`tails`          | String or Array of strings                 | yes         | One or more string, the second half of the set. For example, `['-%%', '_%%']`.
-`fromIndex`      | Natural number or zero as number or string | no          | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.
+Input argument   | Type                       | Obligatory? | Description
+-----------------|----------------------------|-------------|-----------
+`str`            | String                     | yes         | The string in which you want to perform a search
+`heads`          | String or Array of strings | yes         | One or more string, the first half of the set. For example, `['%%-', '%%_']`.
+`tails`          | String or Array of strings | yes         | One or more string, the second half of the set. For example, `['-%%', '_%%']`.
+`opts`           | Plain object               | no          | An Optional Options Object. See its API below.
 
-Input arguments are not mutated.
+PS. Input arguments are not mutated.
+
+**[⬆ &nbsp;back to top](#)**
+
+### Optional Options Object
+
+options object's key                               | Type of its value                          | Default                   | Description
+---------------------------------------------------|--------------------------------------------|---------------------------|----------------------
+{                                                  |                                            |                           |
+`fromIndex`                                        | Natural number or zero as number or string | `0`                       | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.
+`throwWhenSomethingWrongIsDetected`                | Boolean                                    | `true`                    | By default, if anything wrong is detected, error will be thrown. For example, tails precede heads. Or two conescutive heads or tails are detected. If you want to turn this functionality off, set to `false`. Turning this off automatically sets the `allowWholeValueToBeOnlyHeadsOrTails` (see below) to `true`, that is, error won't be thrown when whole input is equal to one of heads or tails.
+`allowWholeValueToBeOnlyHeadsOrTails`              | Boolean                                    | `true`                    | If whole input `str` is equal to one of `heads` or `tails` AND `opts.throwWhenSomethingWrongIsDetected` is `true`, THEN error won't be thrown and that input will not be processed. But if you set this to `false` AND error throwing is on (`opts.throwWhenSomethingWrongIsDetected` is `true`), error will be thrown. This feature is activated only when `opts.throwWhenSomethingWrongIsDetected` is `true`.
+`source`                                           | String                                     | `string-find-heads-tails` | Packages that consume this package as a dependency might rely on some of our error `throw`ing functionality. Since `throw`n message mentions the name of the `throw`ee, you can override it, setting to parent package's name.
+}
+
+Here is the Optional Options Object in one place with all default settings:
+
+```js
+{
+  fromIndex: 0,
+  throwWhenSomethingWrongIsDetected: true,
+  allowWholeValueToBeOnlyHeadsOrTails: true,
+  source: 'string-find-heads-tails',
+}
+```
 
 **[⬆ &nbsp;back to top](#)**
 
