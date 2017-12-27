@@ -30,6 +30,7 @@ function strFindHeadsTails() {
   var tails = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : mandatory(3);
   var fromIndex = arguments[3];
 
+  // const DEBUG = 0
   //
   // insurance
   // ---------
@@ -103,8 +104,40 @@ function strFindHeadsTails() {
   }
 
   //
-  // prep
+  // prep stage.
   // ----
+  // We are going to traverse the input string, checking each character one-by-one,
+  // is it a first character of a sub-string, heads or tails.
+  // The easy but inefficient algorithm is to traverse the input string, then
+  // for each of the character, run another loop, slicing and matching, is there
+  // one of heads or tails on the right of it.
+
+  // Let's cut corners a little bit.
+
+  // We know that heads and tails often start with special characters, not letters.
+  // For example, "%%-" and "-%%".
+  // There might be few types of heads and tails, for example, ones that will be
+  // further processed (like wrapped with other strings) and ones that won't.
+
+  // So, you might have two sets of heads and tails:
+  // "%%-" and "-%%"; "%%_" and "_%%".
+
+  // Notice they're quite similar and don't contain letters.
+
+  // Imagine we're traversing the string and looking for above set of heads and
+  // tails. We're concerned only if the current character is equal to "%", "-" or "_".
+  // Practically, that "String.charCodeAt(0)" values:
+  // '%'.charCodeAt(0) = 37
+  // '-'.charCodeAt(0) = 45
+  // '_'.charCodeAt(0) = 95
+
+  // Since we don't know how many head and tail sets there will be nor their values,
+  // conceptually, we are going to extract the RANGE OF CHARCODES, in the case above,
+  // [37, 95].
+
+  // This means, we traverse the string and check, is its charcode in range [37, 95].
+  // If so, then we'll do all slicing/comparing.
+
   // take array of strings, heads, and extract the upper and lower range of indexes
   // of their first letters using charCodeAt(0)
   var headsAndTailsFirstCharIndexesRange = heads.concat(tails).map(function (value) {
@@ -120,20 +153,25 @@ function strFindHeadsTails() {
     return res;
   }, [heads[0].charCodeAt(0), // base is the 1st char index of 1st el.
   heads[0].charCodeAt(0)]);
-  // console.log(`headsAndTailsFirstCharIndexesRange = ${JSON.stringify(headsAndTailsFirstCharIndexesRange, null, 4)}`)
+  // if (DEBUG) { console.log(`headsAndTailsFirstCharIndexesRange = ${JSON.stringify(headsAndTailsFirstCharIndexesRange, null, 4)}`) }
 
-  var res = [[], []]; // first sub-array is for found head indexes, second is for tails'
+  var res = [];
   var oneHeadFound = false;
+  var tempResObj = void 0;
 
   for (var i = fromIndex, len = str.length; i < len; i++) {
     var firstCharsIndex = str[i].charCodeAt(0);
-    // console.log(`---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`)
+    // if (DEBUG) { console.log(`---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`) }
     if (firstCharsIndex <= headsAndTailsFirstCharIndexesRange[1] && firstCharsIndex >= headsAndTailsFirstCharIndexesRange[0]) {
       var matchedHeads = stringMatchLeftRight.matchRightIncl(str, i, heads);
+      // if (DEBUG) { console.log(`matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`) }
       if (!oneHeadFound && matchedHeads) {
-        res[0].push(i);
+        // res[0].push(i)
+        tempResObj = {};
+        tempResObj.headsStartAt = i;
+        tempResObj.headsEndAt = i + matchedHeads.length;
         oneHeadFound = true;
-        // console.log('head pushed')
+        // if (DEBUG) { console.log('head pushed') }
         // offset the index so the characters of the confirmed heads can't be "reused"
         // again for subsequent, false detections:
         i += matchedHeads.length - 1;
@@ -141,16 +179,18 @@ function strFindHeadsTails() {
       }
       var matchedTails = stringMatchLeftRight.matchRightIncl(str, i, tails);
       if (oneHeadFound && matchedTails) {
-        res[1].push(i);
+        tempResObj.tailsStartAt = i;
+        tempResObj.tailsEndAt = i + matchedTails.length;
+        res.push(tempResObj);
         oneHeadFound = false;
-        // console.log('tail pushed')
+        // if (DEBUG) { console.log('tail pushed') }
         // same for tails, offset the index to prevent partial, erroneous detections:
         i += matchedTails.length - 1;
         continue;
       }
     }
   }
-  // console.log(`final res = ${JSON.stringify(res, null, 4)}`)
+  // if (DEBUG) { console.log(`final res = ${JSON.stringify(res, null, 4)}`) }
   return res;
 }
 

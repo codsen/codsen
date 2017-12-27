@@ -96,33 +96,85 @@ test('01.05 - throws when the fourth argument is not a natural number', (t) => {
 test('02.01 - single char markers', (t) => {
   t.deepEqual(
     strFindHeadsTails('abcdef', 'b', 'e'),
-    [[1], [4]],
+    [{
+      headsStartAt: 1,
+      headsEndAt: 2,
+      tailsStartAt: 4,
+      tailsEndAt: 5,
+    }],
     '02.01.01 - easies',
+  )
+  t.deepEqual(
+    strFindHeadsTails('ab', 'a', 'b'),
+    [{
+      headsStartAt: 0,
+      headsEndAt: 1,
+      tailsStartAt: 1,
+      tailsEndAt: 2,
+    }],
+    '02.01.02 - tight',
   )
 })
 
 test('02.02 - multi-char markers', (t) => {
   t.deepEqual(
     strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%'),
-    [[3], [9]],
+    [
+      {
+        headsStartAt: 3,
+        headsEndAt: 6,
+        tailsStartAt: 9,
+        tailsEndAt: 12,
+      },
+    ],
     '02.02.01',
   )
   t.deepEqual(
     strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', 4),
-    [[], []],
+    [],
     '02.02.02 - offset meant we started beyond first heads, so no tails were accepted',
   )
   t.deepEqual(
     strFindHeadsTails('abczz-def--aghi', 'zz-', '--a'),
-    [[3], [9]],
+    [
+      {
+        headsStartAt: 3,
+        headsEndAt: 6,
+        tailsStartAt: 9,
+        tailsEndAt: 12,
+      },
+    ],
     '02.02.03',
+  )
+  t.deepEqual(
+    strFindHeadsTails('abc%%_def_%%ghi%%-jkl-%%', ['%%_', '%%-'], ['_%%', '-%%']),
+    [
+      {
+        headsStartAt: 3,
+        headsEndAt: 6,
+        tailsStartAt: 9,
+        tailsEndAt: 12,
+      },
+      {
+        headsStartAt: 15,
+        headsEndAt: 18,
+        tailsStartAt: 21,
+        tailsEndAt: 24,
+      },
+    ],
+    '02.02.04',
   )
 })
 
 test('02.03 - sneaky "casual" underscores try to blend in with legit heads/tails', (t) => {
   t.deepEqual(
     strFindHeadsTails('aaa_%%_bbb_%%_ccc', '%%_', '_%%'),
-    [[4], [10]],
+    [{
+      headsStartAt: 4,
+      headsEndAt: 7,
+      tailsStartAt: 10,
+      tailsEndAt: 13,
+    }],
     '02.03',
   )
 })
@@ -130,15 +182,28 @@ test('02.03 - sneaky "casual" underscores try to blend in with legit heads/tails
 test('02.04 - sneaky tails precede heads', (t) => {
   t.deepEqual(
     strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%'),
-    [[9], []],
-    '02.04',
+    [],
+    '02.03',
   )
 })
 
 test('02.05 - arrays of heads and tails', (t) => {
   t.deepEqual(
     strFindHeadsTails('zzz_%%-zz_cmp_id-%%_%%-lnk_id-%%', ['%%_', '%%-'], ['_%%', '-%%']),
-    [[4, 20], [16, 29]],
+    [
+      {
+        headsStartAt: 4,
+        headsEndAt: 7,
+        tailsStartAt: 16,
+        tailsEndAt: 19,
+      },
+      {
+        headsStartAt: 20,
+        headsEndAt: 23,
+        tailsStartAt: 29,
+        tailsEndAt: 32,
+      },
+    ],
     '02.05',
   )
 })
