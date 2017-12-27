@@ -92,9 +92,9 @@ console.log(`res1 = ${JSON.stringify(res1, null, 4)}`)
 // => 0
 
 // at index #1 we have second surrogate of Unicode astral symbol which has index number #0
-const res2 = nativeToUnicode('\uD834\uDF06aa', 1)
+const res2 = nativeToUnicode('\uD834\uDF06aa', '1')
 console.log(`res2 = ${JSON.stringify(res2, null, 4)}`)
-// => 0
+// => '0'
 
 // at position index #2 we have first letter a
 // its Unicode-based index, character count starting at zero, would be 1:

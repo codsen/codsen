@@ -93,6 +93,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     return indexes
   }
   toDoList = customSort(toDoList)
+  // if (DEBUG) { console.log(`STEP 2. FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`) }
 
   // STEP 3.
   // ---------------------------------------------------------------------------
@@ -103,7 +104,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
 
   let unicodeIndex = -1
   let surrogateDetected = false
-  for (let i = 0, len = str.length; i < len; i++) {
+  for (let i = 0, len = str.length; i <= len; i++) {
     // if (DEBUG) { console.log(`---------------------------------------- ${str[i]}  (${i})`) }
     // if (DEBUG) { console.log(`* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`) }
     // if (DEBUG) { console.log(`* unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`) }
@@ -114,7 +115,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     // so the JS native index is "i"
     // we just need to keep track of Unicode character count
 
-    if ((str[i].charCodeAt(0) >= 55296) && (str[i].charCodeAt(0) <= 57343)) {
+    if (str[i] === undefined) {
+      // this means it's the first character outside of the input characters.
+      // we can convert it nonetheless.
+      unicodeIndex += 1
+    } else if ((str[i].charCodeAt(0) >= 55296) && (str[i].charCodeAt(0) <= 57343)) {
       // if it's one of surrogate pair characters:
 
       // if there is no preceding surrogate:
@@ -190,10 +195,10 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       (
         (
           (mode === 'n') &&
-          (prep(toDoList[toDoList.length - 1].val) >= len)
+          (prep(toDoList[toDoList.length - 1].val) > len)
         ) || (
           (mode === 'u') &&
-          (prep(toDoList[toDoList.length - 1].val) > unicodeIndex)
+          (prep(toDoList[toDoList.length - 1].val) > unicodeIndex + 1)
         )
       )
     ) {
