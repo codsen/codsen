@@ -96,7 +96,7 @@ For that, we'll need tools to [extract](#getkeyset) a keyset and [enforce](#enfo
 
 **Alert when JSON's have unique keys**
 
-It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an [alert](#nonewkeys) if my objects contain unique keys that none of the other objects have.
+It's when we can't/won't normalise files, yet we need some insurance. It would be nice to get an [alert](#nonewkeys) if my objects contain unique keys that none of the other objects has.
 
 **Find unused keys in a set of JSONs**
 
@@ -128,7 +128,7 @@ Input argument   | Type                                                 | Obliga
 `input`          | Array of promises, each resolving into plain objects | yes         | Each plain object would usually be a promise of one JSON file's contents.
 `options`        | Object                                               | no          | An Optional Options Object, being synchronous (not a promise). See below for its API.
 
-PS. The input is normal, synchronous array full of promises. Not a promise of an array which contains promises.
+PS. The input is normal, a synchronous array full of promises. Not a promise of an array which contains promises.
 
 `options` object's key | Type  | Obligatory? | Default   | Description
 -----------------------|-------|-------------|-----------|----------------------
@@ -519,7 +519,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## `findUnused()`
 
-Reads a set of objects (array of plain objects, probably parsed JSON files) and tells, are there any keys throughout the whole set that have only the placeholder values. You can customise the placeholder value via an optional options object.
+Reads a set of objects (array of plain objects, probably parsed JSON files) and tells, are there any keys throughout the whole set that has only the placeholder values. You can customise the placeholder value via an optional options object.
 
 Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
 
@@ -536,7 +536,7 @@ Input argument | Type                                | Obligatory? | Description
 -------------------------------|----------|-------------|---------------|----------------------
 {                              |          |             |               |
 `placeholder`                  | any      | no          | `false`       | What value is being used to mark unused key?
-`comments`                     | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it actually was unused). Set it to any falsey value to turn it off.
+`comments`                     | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it was unused). Set it to any falsey value to turn it off.
 }                              |          |             |               |
 
 **[⬆ &nbsp;back to top](#)**
@@ -620,9 +620,9 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## `sortAllObjects()`
 
-This method sorts objects (no matter how deeply-nested) and it will sort objects within arrays within objects and so on. For example, you can input an array which has some plain objects within and those objects will be sorted.
+This method sorts objects (no matter how deeply-nested), and it will sort objects within arrays within objects and so on. For example, you can input an array which has some plain objects within, and those objects will be sorted.
 
-This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc).
+This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc.).
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -630,14 +630,14 @@ This method does not mutate the input and is fine if you pass _any_ JS type (`ar
 
 Input argument | Type     | Obligatory? | Description
 ---------------|----------|-------------|--------------
-`input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, untouched input will be returned.
+`input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, the untouched input will be returned.
 
 **[⬆ &nbsp;back to top](#)**
 
 ### output
 
-If the input is **a plain object or array** containing some plain objects within, output is a copy of the input with all plain objects sorted.
-If the input is **something else**, output is same thing as input.
+If the input is **a plain object or array** containing some plain objects within, an output is a copy of the input with all plain objects sorted.
+If the input is **something else**, an output is the same thing as input.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -664,13 +664,13 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## Difference between Normalising JSON and JSON Schemas
 
-In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, does all the values have the same types as values in schema. We're not particularly concerned about the **existence** of the keys, we're more concerned is all we've got match the schema.
+In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, do all the values have the same types as values in a schema. We're not particularly concerned about the **existence** of the keys; we're more concerned does what we've got match the schema.
 
-When you choose to separate email content from templates, content is put into JSON files. When you add a new field in one file, you want that field added on all other files. Same way, if a field has placeholder (normally a Boolean value `false`) on every file, you want to be informed about that. Maybe that key/value pair is unused across all JSON files. You are not concerned very much what _type_ the particular value is in your JSON - normally they're `string`, `number` or `Boolean` anyway - you're more concerned about the **consistence** of the set of your JSON files.
+When you choose to separate email content from templates, content is put into JSON files. When you add a new field in one file, you want that field added on all other files. Same way, if a field has a placeholder (normally a Boolean value `false`) on every file, you want to be informed about that. Maybe that key/value pair is unused across all JSON files. You are not concerned very much what _type_ the particular value is in your JSON - normally they're `string`, `number` or `Boolean` anyway - you're more concerned about the **consistence** of the set of your JSON files.
 
-So, normalisation is a process of making bunch of JSON files to have the same keys. JSON Schema is a description of all keys and their value types within a JSON.
+So, normalisation is a process of making a bunch of JSON files to have the same keys. JSON Schema is a description of all keys and their value types within a JSON.
 
-When performing a normalisation, all JSON files are read and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to placeholder.
+When performing a normalisation, all JSON files are read, and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to a placeholder.
 
 **[⬆ &nbsp;back to top](#)**
 
