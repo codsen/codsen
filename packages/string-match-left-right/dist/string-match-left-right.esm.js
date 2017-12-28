@@ -67,7 +67,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       return whatToMatch.some(function (el) {
         var temp = void 0;
         if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
-          temp = trimEnd(str.slice(0, position), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r') + str[position];
+          temp = trimEnd(str.slice(0, position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r');
         } else {
           temp = str.slice(0, position + 1);
         }

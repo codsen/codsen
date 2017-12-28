@@ -505,55 +505,63 @@ test('06.02 - opts.matchLeftIncl() callback and trimming', (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
+  function isA(char) {
+    return char === 'a'
+  }
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cb: isSpace }),
+    matchLeftIncl(' bc\n\n\n', 5, 'bc', { cb: isSpace }),
     false,
     '06.02.01',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    matchLeftIncl(' bc\n\n\n', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
     'bc',
     '06.02.02',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    matchLeftIncl('abc\n\n\n', 5, 'bc', { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.02.03',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'bc', { trimBeforeMatching: true }),
+    matchLeftIncl('abc\n\n\n', 5, 'bc', { cb: isA, trimBeforeMatching: true }),
     'bc',
     '06.02.04',
+  )
+  t.is(
+    matchLeftIncl('abc\n\n\n', 5, 'bc', { trimBeforeMatching: true }),
+    'bc',
+    '06.02.05',
   )
 
   // opts.i
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cb: isSpace, i: true }),
+    matchLeftIncl(' bc\n\n\n', 5, 'BC', { cb: isSpace, i: true }),
     false,
     '06.02.05',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchLeftIncl(' bc\n\n\n', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
     'BC',
     '06.02.06',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, ['BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchLeftIncl(' bc\n\n\n', 5, ['BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
     'BC',
     '06.02.07',
   )
   t.is(
-    matchLeftIncl(' b\n\n\nc', 5, ['AAA', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchLeftIncl(' bc\n\n\n', 5, ['AAA', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
     'BC',
     '06.02.08',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchLeftIncl('abc\n\n\n', 5, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
     false,
     '06.02.09',
   )
   t.is(
-    matchLeftIncl('ab\n\n\nc', 5, 'BC', { trimBeforeMatching: true, i: true }),
+    matchLeftIncl('abc\n\n\n', 5, 'BC', { trimBeforeMatching: true, i: true }),
     'BC',
     '06.02.10',
   )
