@@ -29,6 +29,7 @@
 - [Usage](#usage)
 - [API](#api)
   - [API - Input](#api---input)
+  - [API - Output](#api---output)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -76,17 +77,22 @@ It will be used in JSON [pre-processing](https://github.com/codsen/json-variable
 ## Usage
 
 ```js
+
 const strFindHeadsTails = require('string-find-heads-tails')
 const res1 = strFindHeadsTails('abcdef', 'b', 'e'),
 console.log('res1 = ' + JSON.stringify(res1, null, 4))
-// => [[1], [4]]
+// => [{
+//      headsStartAt: 1,
+//      headsEndAt: 2,
+//      tailsStartAt: 4,
+//      tailsEndAt: 5,
+//    }]
+]
 ```
 
 ## API
 
 **strFindHeadsTails(str, heads, tails\[, fromIndex])**
-
-Returns an array which has two arrays inside, each containing zero or more natural numbers which indicate the index of each finding's first character.
 
 **IMPORTANT**
 The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://github.com/codsen/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
@@ -101,6 +107,25 @@ Input argument   | Type                                       | Obligatory? | De
 `heads`          | String or Array of strings                 | yes         | One or more string, the first half of the set. For example, `['%%-', '%%_']`.
 `tails`          | String or Array of strings                 | yes         | One or more string, the second half of the set. For example, `['-%%', '_%%']`.
 `fromIndex`      | Natural number or zero as number or string | no          | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.
+
+Input arguments are not mutated.
+
+### API - Output
+
+Returns an array of zero or more plain objects, each having format:
+
+```js
+{
+  headsStartAt: 1,
+  headsEndAt: 2,
+  tailsStartAt: 4,
+  tailsEndAt: 5,
+}
+```
+
+The whole idea is that you should be able to get the `heads` if you put `str.slice(headsStartAt, headsEndAt)`.
+
+If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://github.com/codsen/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
 
 **[⬆ &nbsp;back to top](#)**
 
