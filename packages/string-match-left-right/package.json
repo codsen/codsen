@@ -122,8 +122,8 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.0.3",
-    "check-types-mini": "^3.0.1",
+    "arrayiffy-if-string": "^3.0.4",
+    "check-types-mini": "^3.0.2",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "*",
@@ -145,6 +145,6 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.2.2"
+    "uglify-es": "^3.3.2"
   }
 }

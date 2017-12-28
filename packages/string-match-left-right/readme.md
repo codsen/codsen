@@ -25,7 +25,6 @@
 
 - [Install](#install)
 - [The API](#the-api)
-  - [Optional Options Object's API:](#optional-options-objects-api)
 - [`opts.cb`](#optscb)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
