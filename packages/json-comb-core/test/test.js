@@ -1,47 +1,47 @@
-import test from 'ava'
-import { getKeyset, enforceKeyset, noNewKeys, findUnused, sortAllObjects } from '../dist/json-comb-core.cjs'
+/* eslint ava/no-only-test:0 */
 
-let schema
-let obj1
-let obj2
-let obj3
+import test from 'ava'
+import pMap from 'p-map'
+import { getKeysetSync, getKeyset, enforceKeyset, enforceKeysetSync, noNewKeysSync, findUnusedSync, sortAllObjectsSync } from '../dist/json-comb-core.cjs'
+
+function prepArraySync(arr) {
+  const keySet = getKeysetSync(arr)
+  return arr.map(obj => enforceKeysetSync(obj, keySet))
+}
 
 function prepArray(arr) {
-  const keySet = getKeyset(arr)
-  const res = []
-  arr.forEach((obj) => {
-    // console.log('obj = ' + JSON.stringify(obj, null, 4))
-    // console.log('keySet = ' + JSON.stringify(keySet, null, 4))
-    res.push(enforceKeyset(obj, keySet))
-  })
-  return res
+  return getKeyset(arr).then(keySet => pMap(arr, obj => enforceKeyset(obj, keySet)))
+}
+
+function makePromise(arr) {
+  return arr.map(el => Promise.resolve(el))
 }
 
 // -----------------------------------------------------------------------------
-// 01. getKeyset()
+// 01. getKeysetSync()
 // -----------------------------------------------------------------------------
 
-test('01.01 - getKeyset() - throws when there\'s no input', (t) => {
+test('01.01 - getKeysetSync() - throws when there\'s no input', (t) => {
   t.throws(() => {
-    getKeyset()
+    getKeysetSync()
   })
 })
 
-test('01.02 - getKeyset() - throws when input is not an array', (t) => {
+test('01.02 - getKeysetSync() - throws when input is not an array', (t) => {
   t.throws(() => {
-    getKeyset('aa')
+    getKeysetSync('aa')
   })
 })
 
-test('01.03 - getKeyset() - throws when input array is empty', (t) => {
+test('01.03 - getKeysetSync() - throws when input array is empty', (t) => {
   t.throws(() => {
-    getKeyset([])
+    getKeysetSync([])
   })
 })
 
-test('01.04 - getKeyset() - throws when input array contains not only plain objects', (t) => {
+test('01.04 - getKeysetSync() - throws when input array contains not only plain objects', (t) => {
   t.throws(() => {
-    getKeyset([
+    getKeysetSync([
       {
         a: 'a',
         b: 'b',
@@ -54,9 +54,9 @@ test('01.04 - getKeyset() - throws when input array contains not only plain obje
   })
 })
 
-test('01.05 - getKeyset() - calculates - three objects - default placeholder', (t) => {
+test('01.05 - getKeysetSync() - calculates - three objects - default placeholder', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: 'a',
         b: 'c',
@@ -87,9 +87,9 @@ test('01.05 - getKeyset() - calculates - three objects - default placeholder', (
   )
 })
 
-test('01.06 - getKeyset() - calculates - three objects - custom placeholder', (t) => {
+test('01.06 - getKeysetSync() - calculates - three objects - custom placeholder', (t) => {
   t.deepEqual(
-    getKeyset(
+    getKeysetSync(
       [
         {
           a: 'a',
@@ -122,7 +122,7 @@ test('01.06 - getKeyset() - calculates - three objects - custom placeholder', (t
     '01.06.01',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: 'a',
         b: 'c',
@@ -152,7 +152,7 @@ test('01.06 - getKeyset() - calculates - three objects - custom placeholder', (t
     '01.06.02',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: 'a',
         b: 'c',
@@ -183,15 +183,15 @@ test('01.06 - getKeyset() - calculates - three objects - custom placeholder', (t
   )
 })
 
-test('01.07 - getKeyset() - settings argument is not a plain object - throws', (t) => {
+test('01.07 - getKeysetSync() - settings argument is not a plain object - throws', (t) => {
   t.throws(() => {
-    getKeyset([{ a: 'a' }, { b: 'b' }], 'zzz')
+    getKeysetSync([{ a: 'a' }, { b: 'b' }], 'zzz')
   })
 })
 
-test('01.08 - getKeyset() - multiple levels of nested arrays', (t) => {
+test('01.08 - getKeysetSync() - multiple levels of nested arrays', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         key2: [
           {
@@ -234,9 +234,9 @@ test('01.08 - getKeyset() - multiple levels of nested arrays', (t) => {
   )
 })
 
-test('01.09 - getKeyset() - objects that are directly in values', (t) => {
+test('01.09 - getKeysetSync() - objects that are directly in values', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: {
           b: 'c',
@@ -266,7 +266,7 @@ test('01.09 - getKeyset() - objects that are directly in values', (t) => {
     '01.09.01',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: {
           f: 'g',
@@ -297,9 +297,9 @@ test('01.09 - getKeyset() - objects that are directly in values', (t) => {
   )
 })
 
-test('01.10 - getKeyset() - deeper level arrays containing only strings', (t) => {
+test('01.10 - getKeysetSync() - deeper level arrays containing only strings', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -324,9 +324,9 @@ test('01.10 - getKeyset() - deeper level arrays containing only strings', (t) =>
   )
 })
 
-test('01.11 - getKeyset() - deeper level array with string vs false', (t) => {
+test('01.11 - getKeysetSync() - deeper level array with string vs false', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -351,9 +351,9 @@ test('01.11 - getKeyset() - deeper level array with string vs false', (t) => {
   )
 })
 
-test('01.12 - getKeyset() - two deeper level arrays with strings', (t) => {
+test('01.12 - getKeysetSync() - two deeper level arrays with strings', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -382,9 +382,9 @@ test('01.12 - getKeyset() - two deeper level arrays with strings', (t) => {
   )
 })
 
-test('01.13 - getKeyset() - two deeper level arrays with mixed contents', (t) => {
+test('01.13 - getKeysetSync() - two deeper level arrays with mixed contents', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -413,9 +413,9 @@ test('01.13 - getKeyset() - two deeper level arrays with mixed contents', (t) =>
   )
 })
 
-test('01.14 - getKeyset() - two deeper level arrays with plain objects', (t) => {
+test('01.14 - getKeysetSync() - two deeper level arrays with plain objects', (t) => {
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -455,7 +455,7 @@ test('01.14 - getKeyset() - two deeper level arrays with plain objects', (t) => 
     '01.14.01 - object vs object',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -483,7 +483,7 @@ test('01.14 - getKeyset() - two deeper level arrays with plain objects', (t) => 
     '01.14.02 - object vs object',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -511,7 +511,7 @@ test('01.14 - getKeyset() - two deeper level arrays with plain objects', (t) => 
     '01.14.03 - object vs object',
   )
   t.deepEqual(
-    getKeyset([
+    getKeysetSync([
       {
         a: false,
         b: {
@@ -541,11 +541,11 @@ test('01.14 - getKeyset() - two deeper level arrays with plain objects', (t) => 
 })
 
 // -----------------------------------------------------------------------------
-// 02. enforceKeyset()
+// 02. enforceKeysetSync()
 // -----------------------------------------------------------------------------
 
-test('02.01 - enforceKeyset() - enforces a simple schema', (t) => {
-  schema = getKeyset([
+test('02.01 - enforceKeysetSync() - enforces a simple schema', (t) => {
+  const schema = getKeysetSync([
     {
       a: 'aaa',
       b: 'bbb',
@@ -555,7 +555,7 @@ test('02.01 - enforceKeyset() - enforces a simple schema', (t) => {
     },
   ])
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       {
         a: 'ccc',
       },
@@ -569,8 +569,8 @@ test('02.01 - enforceKeyset() - enforces a simple schema', (t) => {
   )
 })
 
-test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
-  obj1 = {
+test('02.02 - enforceKeysetSync() - enforces a more complex schema', (t) => {
+  const obj1 = {
     b: [
       {
         c: 'ccc',
@@ -579,14 +579,14 @@ test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
     ],
     a: 'aaa',
   }
-  obj2 = {
+  const obj2 = {
     a: 'ccc',
     e: 'eee',
   }
-  obj3 = {
+  const obj3 = {
     a: 'zzz',
   }
-  schema = getKeyset([
+  const schema = getKeysetSync([
     obj1,
     obj2,
     obj3,
@@ -603,10 +603,10 @@ test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
       ],
       e: false,
     },
-    '02.02 - .getKeyset',
+    '02.02 - .getKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj1,
       schema,
     ),
@@ -620,10 +620,10 @@ test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
       ],
       e: false,
     },
-    '02.02.01 - .enforceKeyset',
+    '02.02.01 - .enforceKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj2,
       schema,
     ),
@@ -637,10 +637,10 @@ test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
       ],
       e: 'eee',
     },
-    '02.02.02 - .enforceKeyset',
+    '02.02.02 - .enforceKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj3,
       schema,
     ),
@@ -654,22 +654,22 @@ test('02.02 - enforceKeyset() - enforces a more complex schema', (t) => {
       ],
       e: false,
     },
-    '02.02.03 - .enforceKeyset',
+    '02.02.03 - .enforceKeysetSync',
   )
 })
 
-test('02.03 - enforceKeyset() - enforces a schema involving arrays', (t) => {
-  obj1 = {
+test('02.03 - enforceKeysetSync() - enforces a schema involving arrays', (t) => {
+  const obj1 = {
     a: [
       {
         b: 'b',
       },
     ],
   }
-  obj2 = {
+  const obj2 = {
     a: false,
   }
-  schema = getKeyset([
+  const schema = getKeysetSync([
     obj1,
     obj2,
   ])
@@ -682,10 +682,10 @@ test('02.03 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         },
       ],
     },
-    '02.03 - .getKeyset',
+    '02.03 - .getKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj1,
       schema,
     ),
@@ -696,10 +696,10 @@ test('02.03 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         },
       ],
     },
-    '02.03.01 - .enforceKeyset',
+    '02.03.01 - .enforceKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj2,
       schema,
     ),
@@ -710,13 +710,13 @@ test('02.03 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         },
       ],
     },
-    '02.03.02 - .enforceKeyset',
+    '02.03.02 - .enforceKeysetSync',
   )
 })
 
-test('02.04 - enforceKeyset() - another set involving arrays', (t) => {
+test('02.04 - enforceKeysetSync() - another set involving arrays', (t) => {
   t.deepEqual(
-    prepArray([
+    prepArraySync([
       {
         c: 'c val',
       },
@@ -756,9 +756,9 @@ test('02.04 - enforceKeyset() - another set involving arrays', (t) => {
   )
 })
 
-test('02.05 - enforceKeyset() - deep-nested arrays', (t) => {
+test('02.05 - enforceKeysetSync() - deep-nested arrays', (t) => {
   t.deepEqual(
-    prepArray([
+    prepArraySync([
       {
         a: [{
           b: [{
@@ -820,16 +820,16 @@ test('02.05 - enforceKeyset() - deep-nested arrays', (t) => {
   )
 })
 
-test('02.06 - enforceKeyset() - enforces a schema involving arrays', (t) => {
-  obj1 = {
+test('02.06 - enforceKeysetSync() - enforces a schema involving arrays', (t) => {
+  const obj1 = {
     a: [{
       b: 'b',
     }],
   }
-  obj2 = {
+  const obj2 = {
     a: 'a',
   }
-  schema = getKeyset([
+  const schema = getKeysetSync([
     obj1,
     obj2,
   ])
@@ -840,10 +840,10 @@ test('02.06 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         b: false,
       }],
     },
-    '02.06.01 - .getKeyset',
+    '02.06.01 - .getKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj1,
       schema,
     ),
@@ -852,10 +852,10 @@ test('02.06 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         b: 'b',
       }],
     },
-    '02.06.02 - .enforceKeyset',
+    '02.06.02 - .enforceKeysetSync',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj2,
       schema,
     ),
@@ -864,13 +864,13 @@ test('02.06 - enforceKeyset() - enforces a schema involving arrays', (t) => {
         b: false,
       }],
     },
-    '02.06.03 - .enforceKeyset',
+    '02.06.03 - .enforceKeysetSync',
   )
 })
 
-test('02.07 - enforceKeyset() - multiple objects within an array', (t) => {
+test('02.07 - enforceKeysetSync() - multiple objects within an array', (t) => {
   t.deepEqual(
-    prepArray([
+    prepArraySync([
       {
         a: 'a',
       },
@@ -935,8 +935,8 @@ test('02.07 - enforceKeyset() - multiple objects within an array', (t) => {
   )
 })
 
-test('02.08 - enforceKeyset() - multiple levels of arrays', (t) => {
-  obj1 = {
+test('02.08 - enforceKeysetSync() - multiple levels of arrays', (t) => {
+  const obj1 = {
     b: [
       {
         e: [
@@ -953,12 +953,12 @@ test('02.08 - enforceKeyset() - multiple levels of arrays', (t) => {
     ],
     a: 'aaa',
   }
-  obj2 = {
+  const obj2 = {
     c: 'ccc',
     a: false,
   }
   t.deepEqual(
-    prepArray([
+    prepArraySync([
       obj1,
       obj2,
     ]),
@@ -1004,9 +1004,9 @@ test('02.08 - enforceKeyset() - multiple levels of arrays', (t) => {
   )
 })
 
-test('02.09 - enforceKeyset() - array vs string clashes', (t) => {
+test('02.09 - enforceKeysetSync() - array vs string clashes', (t) => {
   t.deepEqual(
-    prepArray([
+    prepArraySync([
       {
         a: 'aaa',
       },
@@ -1038,32 +1038,32 @@ test('02.09 - enforceKeyset() - array vs string clashes', (t) => {
   )
 })
 
-test('02.10 - enforceKeyset() - all inputs missing - throws', (t) => {
+test('02.10 - enforceKeysetSync() - all inputs missing - throws', (t) => {
   t.throws(() => {
-    enforceKeyset()
+    enforceKeysetSync()
   })
 })
 
-test('02.11 - enforceKeyset() - second input arg missing - throws', (t) => {
+test('02.11 - enforceKeysetSync() - second input arg missing - throws', (t) => {
   t.throws(() => {
-    enforceKeyset({ a: 'a' })
+    enforceKeysetSync({ a: 'a' })
   })
 })
 
-test('02.12 - enforceKeyset() - second input arg is not a plain obj - throws', (t) => {
+test('02.12 - enforceKeysetSync() - second input arg is not a plain obj - throws', (t) => {
   t.throws(() => {
-    enforceKeyset({ a: 'a' }, 'zzz')
+    enforceKeysetSync({ a: 'a' }, 'zzz')
   })
 })
 
-test('02.13 - enforceKeyset() - first input arg is not a plain obj - throws', (t) => {
+test('02.13 - enforceKeysetSync() - first input arg is not a plain obj - throws', (t) => {
   t.throws(() => {
-    enforceKeyset('zzz', 'zzz')
+    enforceKeysetSync('zzz', 'zzz')
   })
 })
 
-test('02.14 - enforceKeyset() - array over empty array', (t) => {
-  obj1 = {
+test('02.14 - enforceKeysetSync() - array over empty array', (t) => {
+  const obj1 = {
     a: [
       {
         d: 'd',
@@ -1074,11 +1074,11 @@ test('02.14 - enforceKeyset() - array over empty array', (t) => {
     ],
     c: 'c',
   }
-  obj2 = {
+  const obj2 = {
     a: [],
     b: 'b',
   }
-  schema = getKeyset([
+  const schema = getKeysetSync([
     obj1,
     obj2,
   ])
@@ -1097,7 +1097,7 @@ test('02.14 - enforceKeyset() - array over empty array', (t) => {
     '02.14.01',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj1,
       schema,
     ),
@@ -1118,7 +1118,7 @@ test('02.14 - enforceKeyset() - array over empty array', (t) => {
     '02.14.02',
   )
   t.deepEqual(
-    enforceKeyset(
+    enforceKeysetSync(
       obj2,
       schema,
     ),
@@ -1140,8 +1140,8 @@ test('02.14 - enforceKeyset() - array over empty array', (t) => {
 // 03. guards against input arg mutation
 // -----------------------------------------------------------------------------
 
-test('03.01 - enforceKeyset() - does not mutate the input args', (t) => {
-  obj1 = {
+test('03.01 - enforceKeysetSync() - does not mutate the input args', (t) => {
+  const obj1 = {
     b: [
       {
         e: [
@@ -1158,11 +1158,11 @@ test('03.01 - enforceKeyset() - does not mutate the input args', (t) => {
     ],
     a: 'aaa',
   }
-  obj2 = {
+  const obj2 = {
     c: 'ccc',
     a: false,
   }
-  const dummyResult = enforceKeyset(obj2, getKeyset([obj1, obj2]))
+  const dummyResult = enforceKeysetSync(obj2, getKeysetSync([obj1, obj2]))
   t.pass(dummyResult) // necessary to avoid unused vars
   t.deepEqual(
     obj2,
@@ -1175,12 +1175,12 @@ test('03.01 - enforceKeyset() - does not mutate the input args', (t) => {
 })
 
 // -----------------------------------------------------------------------------
-// 04. noNewKeys()
+// 04. noNewKeysSync()
 // -----------------------------------------------------------------------------
 
-test('04.01 - noNewKeys() - BAU', (t) => {
+test('04.01 - noNewKeysSync() - BAU', (t) => {
   t.deepEqual(
-    noNewKeys(
+    noNewKeysSync(
       {
         a: 'a',
         c: 'c',
@@ -1195,7 +1195,7 @@ test('04.01 - noNewKeys() - BAU', (t) => {
     '04.01.01 - no new keys',
   )
   t.deepEqual(
-    noNewKeys(
+    noNewKeysSync(
       {
         a: 'a',
         b: 'b',
@@ -1211,9 +1211,9 @@ test('04.01 - noNewKeys() - BAU', (t) => {
   )
 })
 
-test('04.02 - noNewKeys() - objects within arrays within objects', (t) => {
+test('04.02 - noNewKeysSync() - objects within arrays within objects', (t) => {
   t.deepEqual(
-    noNewKeys(
+    noNewKeysSync(
       {
         z: [
           {
@@ -1247,7 +1247,7 @@ test('04.02 - noNewKeys() - objects within arrays within objects', (t) => {
     '04.02.01 - same key set, just values differ',
   )
   t.deepEqual(
-    noNewKeys(
+    noNewKeysSync(
       {
         z: [
           {
@@ -1279,7 +1279,7 @@ test('04.02 - noNewKeys() - objects within arrays within objects', (t) => {
     '04.02.02 - less keys',
   )
   t.deepEqual(
-    noNewKeys(
+    noNewKeysSync(
       {
         z: [
           {
@@ -1312,31 +1312,31 @@ test('04.02 - noNewKeys() - objects within arrays within objects', (t) => {
   )
 })
 
-test('04.03 - noNewKeys() - various throws', (t) => {
+test('04.03 - noNewKeysSync() - various throws', (t) => {
   t.throws(() => {
-    noNewKeys()
+    noNewKeysSync()
   })
   t.throws(() => {
-    noNewKeys({ a: 'a' })
+    noNewKeysSync({ a: 'a' })
   })
   t.throws(() => {
-    noNewKeys(1, { a: 'a' })
+    noNewKeysSync(1, { a: 'a' })
   })
   t.throws(() => {
-    noNewKeys({ a: 'a' }, 1)
+    noNewKeysSync({ a: 'a' }, 1)
   })
   t.throws(() => {
-    noNewKeys(['a'], ['a'])
+    noNewKeysSync(['a'], ['a'])
   })
 })
 
 // -----------------------------------------------------------------------------
-// 05. findUnused()
+// 05. findUnusedSync()
 // -----------------------------------------------------------------------------
 
-test('05.01 - findUnused() - single-level plain objects', (t) => {
+test('05.01 - findUnusedSync() - single-level plain objects', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: false,
         b: 'bbb1',
@@ -1352,7 +1352,7 @@ test('05.01 - findUnused() - single-level plain objects', (t) => {
     '05.01.01 - running on defaults',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: false,
         b: 'bbb1',
@@ -1370,9 +1370,9 @@ test('05.01 - findUnused() - single-level plain objects', (t) => {
   )
 })
 
-test('05.02 - findUnused() - multiple-level plain objects', (t) => {
+test('05.02 - findUnusedSync() - multiple-level plain objects', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           {
@@ -1410,7 +1410,7 @@ test('05.02 - findUnused() - multiple-level plain objects', (t) => {
     '05.02.01 - multiple levels, two objects, two unused keys, defaults',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           {
@@ -1451,9 +1451,9 @@ test('05.02 - findUnused() - multiple-level plain objects', (t) => {
   )
 })
 
-test('05.03 - findUnused() - double-nested arrays', (t) => {
+test('05.03 - findUnusedSync() - double-nested arrays', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           [
@@ -1495,7 +1495,7 @@ test('05.03 - findUnused() - double-nested arrays', (t) => {
     '05.03.01',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           [
@@ -1541,39 +1541,39 @@ test('05.03 - findUnused() - double-nested arrays', (t) => {
   )
 })
 
-test('05.04 - findUnused() - works on empty arrays', (t) => {
+test('05.04 - findUnusedSync() - works on empty arrays', (t) => {
   t.deepEqual(
-    findUnused([]),
+    findUnusedSync([]),
     [],
     '05.04.01',
   )
   t.deepEqual(
-    findUnused([{}]),
+    findUnusedSync([{}]),
     [],
     '05.04.02',
   )
   t.deepEqual(
-    findUnused([{}, {}]),
+    findUnusedSync([{}, {}]),
     [],
     '05.04.03',
   )
 })
 
-test('05.05 - findUnused() - various throws', (t) => {
+test('05.05 - findUnusedSync() - various throws', (t) => {
   t.throws(() => {
-    findUnused(1, { placeholder: false })
+    findUnusedSync(1, { placeholder: false })
   })
   t.notThrows(() => {
-    findUnused([1, 2, 3])
+    findUnusedSync([1, 2, 3])
   })
   t.throws(() => {
-    findUnused([{ a: 'a' }, { a: 'b' }], 1)
+    findUnusedSync([{ a: 'a' }, { a: 'b' }], 1)
   })
 })
 
-test('05.06 - findUnused() - case of empty array within an array', (t) => {
+test('05.06 - findUnusedSync() - case of empty array within an array', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [[]],
         b: 'bbb1',
@@ -1589,7 +1589,7 @@ test('05.06 - findUnused() - case of empty array within an array', (t) => {
     '05.06.01 - normal',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [[]],
         b: 'bbb1',
@@ -1608,9 +1608,9 @@ test('05.06 - findUnused() - case of empty array within an array', (t) => {
   )
 })
 
-test('05.07 - findUnused() - case of empty array within an array', (t) => {
+test('05.07 - findUnusedSync() - case of empty array within an array', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [[]],
         b: 'bbb1',
@@ -1621,7 +1621,7 @@ test('05.07 - findUnused() - case of empty array within an array', (t) => {
     '05.07.01 - normalised',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [[]],
         b: 'bbb1',
@@ -1635,9 +1635,9 @@ test('05.07 - findUnused() - case of empty array within an array', (t) => {
   )
 })
 
-test('05.08 - findUnused() - objects containing objects (2 in total)', (t) => {
+test('05.08 - findUnusedSync() - objects containing objects (2 in total)', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1659,7 +1659,7 @@ test('05.08 - findUnused() - objects containing objects (2 in total)', (t) => {
     '05.08.01',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1691,7 +1691,7 @@ test('05.08 - findUnused() - objects containing objects (2 in total)', (t) => {
     '05.08.02',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1725,9 +1725,9 @@ test('05.08 - findUnused() - objects containing objects (2 in total)', (t) => {
   )
 })
 
-test('05.09 - findUnused() - objects containing objects (3 in total)', (t) => {
+test('05.09 - findUnusedSync() - objects containing objects (3 in total)', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1757,7 +1757,7 @@ test('05.09 - findUnused() - objects containing objects (3 in total)', (t) => {
     '05.09.01 - normalised, on default placeholder',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1790,9 +1790,9 @@ test('05.09 - findUnused() - objects containing objects (3 in total)', (t) => {
   )
 })
 
-test('05.10 - findUnused() - objects containing objects, mixed with arrays', (t) => {
+test('05.10 - findUnusedSync() - objects containing objects, mixed with arrays', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1846,7 +1846,7 @@ test('05.10 - findUnused() - objects containing objects, mixed with arrays', (t)
     '05.10.01',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1900,7 +1900,7 @@ test('05.10 - findUnused() - objects containing objects, mixed with arrays', (t)
     '05.10.02 - even deeper',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: {
           x: false,
@@ -1957,9 +1957,9 @@ test('05.10 - findUnused() - objects containing objects, mixed with arrays', (t)
   )
 })
 
-test('05.11 - findUnused() - array contents are not objects/arrays', (t) => {
+test('05.11 - findUnusedSync() - array contents are not objects/arrays', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       false,
       false,
       false,
@@ -1968,7 +1968,7 @@ test('05.11 - findUnused() - array contents are not objects/arrays', (t) => {
     '05.11.01 - topmost level, Booleans',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       'zzz',
       'zzz',
       'zzz',
@@ -1977,7 +1977,7 @@ test('05.11 - findUnused() - array contents are not objects/arrays', (t) => {
     '05.11.02 - topmost level, strings',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {},
       {},
       {},
@@ -1987,9 +1987,9 @@ test('05.11 - findUnused() - array contents are not objects/arrays', (t) => {
   )
 })
 
-test('05.12 - findUnused() - array > single object > array > unused inside', (t) => {
+test('05.12 - findUnusedSync() - array > single object > array > unused inside', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           {
@@ -2016,7 +2016,7 @@ test('05.12 - findUnused() - array > single object > array > unused inside', (t)
     '05.12.01 - topmost array has a single object',
   )
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: [
           {
@@ -2065,9 +2065,9 @@ test('05.12 - findUnused() - array > single object > array > unused inside', (t)
   )
 })
 
-test('05.13 - findUnused() - simple case of not normalised input', (t) => {
+test('05.13 - findUnusedSync() - simple case of not normalised input', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: false,
         b: false,
@@ -2087,9 +2087,9 @@ test('05.13 - findUnused() - simple case of not normalised input', (t) => {
   )
 })
 
-test('05.14 - findUnused() - opts.comments', (t) => {
+test('05.14 - findUnusedSync() - opts.comments', (t) => {
   t.deepEqual(
-    findUnused([
+    findUnusedSync([
       {
         a: false,
         b: 'bbb1',
@@ -2107,7 +2107,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.01 - defaults recognise the comment substring within the key',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2128,7 +2128,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.02 - ignores comment fields because they match default value',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2149,7 +2149,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.03 - falsey opts.comments - instruction to turn it off',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2170,7 +2170,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.04 - falsey opts.comments - instruction to turn it off',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2191,7 +2191,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.05 - falsey opts.comments - instruction to turn it off',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2212,7 +2212,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.06 - falsey opts.comments - instruction to turn it off',
   )
   t.deepEqual(
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2233,7 +2233,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     '05.14.07 - falsey opts.comments - instruction to turn it off',
   )
   t.throws(() => {
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2252,7 +2252,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     )
   })
   t.throws(() => {
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2271,7 +2271,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     )
   })
   t.throws(() => {
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2290,7 +2290,7 @@ test('05.14 - findUnused() - opts.comments', (t) => {
     )
   })
   t.throws(() => {
-    findUnused(
+    findUnusedSync(
       [
         {
           a: false,
@@ -2311,10 +2311,10 @@ test('05.14 - findUnused() - opts.comments', (t) => {
 })
 
 // -----------------------------------------------------------------------------
-// 06. sortAllObjects()
+// 06. sortAllObjectsSync()
 // -----------------------------------------------------------------------------
 
-test('06.01 - sortAllObjects() - plain object', (t) => {
+test('06.01 - sortAllObjectsSync() - plain object', (t) => {
   let original = {
     a: 'a',
     c: 'c',
@@ -2326,41 +2326,41 @@ test('06.01 - sortAllObjects() - plain object', (t) => {
     c: 'c',
   }
   t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted)) // control
-  t.deepEqual(JSON.stringify(sortAllObjects(original)), JSON.stringify(sorted), '06.01') // test
+  t.deepEqual(JSON.stringify(sortAllObjectsSync(original)), JSON.stringify(sorted), '06.01') // test
 })
 
-test('06.02 - sortAllObjects() - non-sortable input types', (t) => {
+test('06.02 - sortAllObjectsSync() - non-sortable input types', (t) => {
   t.deepEqual(
-    sortAllObjects(null),
+    sortAllObjectsSync(null),
     null,
     '06.02.01',
   )
   t.deepEqual(
-    sortAllObjects(1),
+    sortAllObjectsSync(1),
     1,
     '06.02.02',
   )
   t.deepEqual(
-    sortAllObjects('zzz'),
+    sortAllObjectsSync('zzz'),
     'zzz',
     '06.02.03',
   )
   t.deepEqual(
-    sortAllObjects(undefined),
+    sortAllObjectsSync(undefined),
     undefined,
     '06.02.04',
   )
   const f = a => a
   t.deepEqual(
-    sortAllObjects(f),
+    sortAllObjectsSync(f),
     f,
     '06.02.05',
   )
 })
 
-test('06.03 - sortAllObjects() - object-array-object', (t) => {
+test('06.03 - sortAllObjectsSync() - object-array-object', (t) => {
   t.deepEqual(
-    sortAllObjects({
+    sortAllObjectsSync({
       a: 'a',
       c: [
         {
@@ -2396,9 +2396,9 @@ test('06.03 - sortAllObjects() - object-array-object', (t) => {
   )
 })
 
-test('06.04 - sortAllObjects() - object very deep', (t) => {
+test('06.04 - sortAllObjectsSync() - object very deep', (t) => {
   t.deepEqual(
-    sortAllObjects({
+    sortAllObjectsSync({
       a: [[[[[[[[[[[[[[{
         b: {
           c: [[[[[[
@@ -2426,7 +2426,7 @@ test('06.04 - sortAllObjects() - object very deep', (t) => {
   )
 })
 
-test('06.05 - sortAllObjects() - nested case', (t) => {
+test('06.05 - sortAllObjectsSync() - nested case', (t) => {
   let original = {
     b: 'bbb',
     a: [
@@ -2450,7 +2450,7 @@ test('06.05 - sortAllObjects() - nested case', (t) => {
     c: 'ccc',
   }
   t.notDeepEqual(JSON.stringify(original), JSON.stringify(sorted), '06.05.01') // control
-  t.deepEqual(JSON.stringify(sortAllObjects(original)), JSON.stringify(sorted), '06.05.02') // test
+  t.deepEqual(JSON.stringify(sortAllObjectsSync(original)), JSON.stringify(sorted), '06.05.02') // test
 })
 
 // -----------------------------------------------------------------------------
@@ -2460,31 +2460,31 @@ test('06.05 - sortAllObjects() - nested case', (t) => {
 /* eslint prefer-const:0 */
 // we deliberately use VAR to "allow" mutation. In theory, of course, because it does not happen.
 
-test('07.01 - does not mutate input args: enforceKeyset()', (t) => {
+test('07.01 - does not mutate input args: enforceKeysetSync()', (t) => {
   let source = {
     a: 'a',
   }
   let frozen = {
     a: 'a',
   }
-  let dummyResult = enforceKeyset(source, { a: false, b: false })
+  let dummyResult = enforceKeysetSync(source, { a: false, b: false })
   t.pass(dummyResult) // a mickey assertion to trick the Standard
   t.is(JSON.stringify(source), JSON.stringify(frozen))
 })
 
-test('07.02 - does not mutate input args: noNewKeys()', (t) => {
+test('07.02 - does not mutate input args: noNewKeysSync()', (t) => {
   let source = {
     a: 'a',
   }
   let frozen = {
     a: 'a',
   }
-  let dummyResult = noNewKeys(source, { a: false, b: false })
+  let dummyResult = noNewKeysSync(source, { a: false, b: false })
   t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
   t.is(JSON.stringify(source), JSON.stringify(frozen))
 })
 
-test('07.03 - does not mutate input args: sortAllObjects()', (t) => {
+test('07.03 - does not mutate input args: sortAllObjectsSync()', (t) => {
   let source = {
     a: 'a',
     c: 'c',
@@ -2495,7 +2495,1128 @@ test('07.03 - does not mutate input args: sortAllObjects()', (t) => {
     c: 'c',
     b: 'b',
   }
-  let dummyResult = sortAllObjects(source) // let's try to mutate "source"
+  let dummyResult = sortAllObjectsSync(source) // let's try to mutate "source"
   t.pass(dummyResult) // a mickey assertion to trick ESLint to think it's used
   t.is(JSON.stringify(source), JSON.stringify(frozen))
+})
+
+
+// -----------------------------------------------------------------------------
+// 08. getKeyset()  - async version of getKeysetSync()
+// -----------------------------------------------------------------------------
+
+test('08.01 - getKeyset() - throws when there\'s no input', (t) => {
+  t.throws(() => {
+    getKeyset()
+  })
+})
+
+test('08.02 - getKeyset() - throws when input is not an array of promises', (t) => {
+  t.throws(() => {
+    getKeyset(makePromise('aa'))
+  })
+})
+
+test('08.03 - getKeyset() - resolves to a rejected promise when input array contains not only plain objects', async (t) => {
+  await getKeyset(makePromise([
+    {
+      a: 'a',
+      b: 'b',
+    },
+    {
+      a: 'a',
+    },
+    'zzzz', // <----- problem!
+  ]))
+    .then(() => { t.fail('not ok') })
+    .catch(() => {
+      t.pass('ok')
+    })
+})
+
+test('08.04 - getKeyset() - calculates - three objects - default placeholder', async (t) => {
+  t.deepEqual(
+    await getKeyset(makePromise([
+      {
+        a: 'a',
+        b: 'c',
+        c: {
+          d: 'd',
+          e: 'e',
+        },
+      },
+      {
+        a: 'a',
+      },
+      {
+        c: {
+          f: 'f',
+        },
+      },
+    ])),
+    {
+      a: false,
+      b: false,
+      c: {
+        d: false,
+        e: false,
+        f: false,
+      },
+    },
+    '08.04',
+  )
+})
+
+test('08.05 - getKeyset() - calculates - three objects - custom placeholder', async (t) => {
+  t.deepEqual(
+    await getKeyset(
+      [
+        {
+          a: 'a',
+          b: 'c',
+          c: {
+            d: 'd',
+            e: 'e',
+          },
+        },
+        {
+          a: 'a',
+        },
+        {
+          c: {
+            f: 'f',
+          },
+        },
+      ],
+      { placeholder: true },
+    ),
+    {
+      a: true,
+      b: true,
+      c: {
+        d: true,
+        e: true,
+        f: true,
+      },
+    },
+    '08.05.01',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: 'a',
+        b: 'c',
+        c: {
+          d: 'd',
+          e: 'e',
+        },
+      },
+      {
+        a: 'a',
+      },
+      {
+        c: {
+          f: 'f',
+        },
+      },
+    ], { placeholder: '' }),
+    {
+      a: '',
+      b: '',
+      c: {
+        d: '',
+        e: '',
+        f: '',
+      },
+    },
+    '08.05.02',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: 'a',
+        b: 'c',
+        c: {
+          d: 'd',
+          e: 'e',
+        },
+      },
+      {
+        a: 'a',
+      },
+      {
+        c: {
+          f: 'f',
+        },
+      },
+    ], { placeholder: { a: 'a' } }),
+    {
+      a: { a: 'a' },
+      b: { a: 'a' },
+      c: {
+        d: { a: 'a' },
+        e: { a: 'a' },
+        f: { a: 'a' },
+      },
+    },
+    '08.05.03',
+  )
+})
+
+test('08.06 - getKeyset() - settings argument is not a plain object - throws', (t) => {
+  t.throws(() => {
+    getKeyset([{ a: 'a' }, { b: 'b' }], 'zzz')
+  })
+})
+
+test('08.07 - getKeyset() - multiple levels of nested arrays', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        key2: [
+          {
+            key5: 'val5',
+            key4: 'val4',
+            key6: [
+              {
+                key8: 'val8',
+              },
+              {
+                key7: 'val7',
+              },
+            ],
+          },
+        ],
+        key1: 'val1',
+      },
+      {
+        key1: false,
+        key3: 'val3',
+      },
+    ]),
+    {
+      key1: false,
+      key2: [
+        {
+          key4: false,
+          key5: false,
+          key6: [
+            {
+              key7: false,
+              key8: false,
+            },
+          ],
+        },
+      ],
+      key3: false,
+    },
+    '08.07',
+  )
+})
+
+test('08.08 - getKeyset() - objects that are directly in values', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: {
+          b: 'c',
+          d: 'e',
+        },
+        k: 'l',
+      },
+      {
+        a: {
+          f: 'g',
+          b: 'c',
+          h: 'i',
+        },
+        m: 'n',
+      },
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    '08.08.01',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: {
+          f: 'g',
+          b: 'c',
+          h: 'i',
+        },
+        m: 'n',
+      },
+      {
+        a: {
+          b: 'c',
+          d: 'e',
+        },
+        k: 'l',
+      },
+    ]),
+    {
+      a: {
+        b: false,
+        d: false,
+        f: false,
+        h: false,
+      },
+      k: false,
+      m: false,
+    },
+    '08.08.02',
+  )
+})
+
+test('08.09 - getKeyset() - deeper level arrays containing only strings', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ['eee'],
+          },
+        },
+      },
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    '08.09',
+  )
+})
+
+test('08.10 - getKeyset() - deeper level array with string vs false', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ['eee'],
+          },
+        },
+      },
+      {
+        a: false,
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    '08.10 - if arrays contain any strings, result is empty array',
+  )
+})
+
+test('08.11 - getKeyset() - two deeper level arrays with strings', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ['eee'],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: ['eee', 'fff', 'ggg'],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [],
+        },
+      },
+    },
+    '08.11 - if arrays contain any strings, result is empty array',
+  )
+})
+
+test('08.12 - getKeyset() - two deeper level arrays with mixed contents', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: ['eee'],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ a: 'zzz' }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false }],
+        },
+      },
+    },
+    '08.12 - plain object vs string',
+  )
+})
+
+test('08.13 - getKeyset() - two deeper level arrays with plain objects', async (t) => {
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: [{ a: 'aaa' }],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ b: 'bbb', c: 'ccc' }],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: false,
+          },
+        },
+      },
+      {
+        b: {
+          c: false,
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ a: false, b: false, c: false }],
+        },
+      },
+    },
+    '08.13.01 - object vs object',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: [],
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ b: 'bbb', c: 'ccc' }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
+        },
+      },
+    },
+    '08.13.02 - object vs object',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: false,
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ b: 'bbb', c: 'ccc' }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
+        },
+      },
+    },
+    '08.13.03 - object vs object',
+  )
+  t.deepEqual(
+    await getKeyset([
+      {
+        a: false,
+        b: {
+          c: {
+            d: 'text',
+          },
+        },
+      },
+      {
+        b: {
+          c: {
+            d: [{ b: 'bbb', c: 'ccc' }],
+          },
+        },
+      },
+    ]),
+    {
+      a: false,
+      b: {
+        c: {
+          d: [{ b: false, c: false }],
+        },
+      },
+    },
+    '08.13.04 - object vs object',
+  )
+})
+
+
+// -----------------------------------------------------------------------------
+// 09. enforceKeyset()
+// -----------------------------------------------------------------------------
+
+test('09.01 - enforceKeyset() - enforces a simple schema', async (t) => {
+  const schema = await getKeyset(makePromise([
+    {
+      a: 'aaa',
+      b: 'bbb',
+    },
+    {
+      a: 'ccc',
+    },
+  ]))
+  t.deepEqual(
+    await enforceKeyset(
+      {
+        a: 'ccc',
+      },
+      schema,
+    ),
+    {
+      a: 'ccc',
+      b: false,
+    },
+    '09.01',
+  )
+})
+
+test('09.02 - enforceKeyset() - enforces a more complex schema', async (t) => {
+  const obj1 = {
+    b: [
+      {
+        c: 'ccc',
+        d: 'ddd',
+      },
+    ],
+    a: 'aaa',
+  }
+  const obj2 = {
+    a: 'ccc',
+    e: 'eee',
+  }
+  const obj3 = {
+    a: 'zzz',
+  }
+  const schema = await getKeyset([
+    obj1,
+    obj2,
+    obj3,
+  ])
+  t.deepEqual(
+    schema,
+    {
+      a: false,
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    '09.02.00 - .getKeyset itself',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj1,
+      schema,
+    ),
+    {
+      a: 'aaa',
+      b: [
+        {
+          c: 'ccc',
+          d: 'ddd',
+        },
+      ],
+      e: false,
+    },
+    '09.02.01 - .enforceKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj2,
+      schema,
+    ),
+    {
+      a: 'ccc',
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: 'eee',
+    },
+    '09.02.02 - .enforceKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj3,
+      schema,
+    ),
+    {
+      a: 'zzz',
+      b: [
+        {
+          c: false,
+          d: false,
+        },
+      ],
+      e: false,
+    },
+    '09.02.03 - .enforceKeyset',
+  )
+})
+
+test('09.03 - enforceKeyset() - enforces a schema involving arrays', async (t) => {
+  const obj1 = {
+    a: [
+      {
+        b: 'b',
+      },
+    ],
+  }
+  const obj2 = {
+    a: false,
+  }
+  const schema = await getKeyset([
+    obj1,
+    obj2,
+  ])
+  t.deepEqual(
+    schema,
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    '09.03 - .getKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj1,
+      schema,
+    ),
+    {
+      a: [
+        {
+          b: 'b',
+        },
+      ],
+    },
+    '09.03.01 - .enforceKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj2,
+      schema,
+    ),
+    {
+      a: [
+        {
+          b: false,
+        },
+      ],
+    },
+    '09.03.02 - .enforceKeyset',
+  )
+})
+
+test('09.04 - enforceKeyset() - another set involving arrays', async (t) => {
+  t.deepEqual(
+    await prepArray(makePromise([
+      {
+        c: 'c val',
+      },
+      {
+        b: [
+          {
+            b2: 'b2 val',
+            b1: 'b1 val',
+          },
+        ],
+        a: 'a val',
+      },
+    ])),
+    [
+      {
+        a: false,
+        b: [
+          {
+            b1: false,
+            b2: false,
+          },
+        ],
+        c: 'c val',
+      },
+      {
+        a: 'a val',
+        b: [
+          {
+            b1: 'b1 val',
+            b2: 'b2 val',
+          },
+        ],
+        c: false,
+      },
+    ],
+    '09.04',
+  )
+})
+
+test('09.05 - enforceKeyset() - deep-nested arrays', async (t) => {
+  t.deepEqual(
+    await prepArray([
+      {
+        a: [{
+          b: [{
+            c: [{
+              d: [{
+                e: [{
+                  f: [{
+                    g: [{
+                      h: 'h',
+                    }],
+                  }],
+                }],
+              }],
+            }],
+          }],
+        }],
+      },
+      {
+        a: 'zzz',
+      },
+    ]),
+    [
+      {
+        a: [{
+          b: [{
+            c: [{
+              d: [{
+                e: [{
+                  f: [{
+                    g: [{
+                      h: 'h',
+                    }],
+                  }],
+                }],
+              }],
+            }],
+          }],
+        }],
+      },
+      {
+        a: [{
+          b: [{
+            c: [{
+              d: [{
+                e: [{
+                  f: [{
+                    g: [{
+                      h: false,
+                    }],
+                  }],
+                }],
+              }],
+            }],
+          }],
+        }],
+      },
+    ],
+    '09.05',
+  )
+})
+
+test('09.06 - enforceKeyset() - enforces a schema involving arrays', async (t) => {
+  const obj1 = {
+    a: [{
+      b: 'b',
+    }],
+  }
+  const obj2 = {
+    a: 'a',
+  }
+  const schema = await getKeyset([
+    obj1,
+    obj2,
+  ])
+  t.deepEqual(
+    schema,
+    {
+      a: [{
+        b: false,
+      }],
+    },
+    '09.06.01 - .getKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj1,
+      schema,
+    ),
+    {
+      a: [{
+        b: 'b',
+      }],
+    },
+    '09.06.02 - .enforceKeyset',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj2,
+      schema,
+    ),
+    {
+      a: [{
+        b: false,
+      }],
+    },
+    '09.06.03 - .enforceKeyset',
+  )
+})
+
+test('09.07 - enforceKeyset() - multiple objects within an array', async (t) => {
+  t.deepEqual(
+    await prepArray([
+      {
+        a: 'a',
+      },
+      {
+        a: [
+          {
+            d: 'd',
+          },
+          {
+            c: 'c',
+          },
+          {
+            a: 'a',
+          },
+          {
+            b: 'b',
+          },
+        ],
+      },
+    ]),
+    [
+      {
+        a: [
+          {
+            a: false,
+            b: false,
+            c: false,
+            d: false,
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            a: false,
+            b: false,
+            c: false,
+            d: 'd',
+          },
+          {
+            a: false,
+            b: false,
+            c: 'c',
+            d: false,
+          },
+          {
+            a: 'a',
+            b: false,
+            c: false,
+            d: false,
+          },
+          {
+            a: false,
+            b: 'b',
+            c: false,
+            d: false,
+          },
+        ],
+      },
+    ],
+    '09.07',
+  )
+})
+
+test('09.08 - enforceKeyset() - multiple levels of arrays', async (t) => {
+  const obj1 = {
+    b: [
+      {
+        e: [
+          {
+            f: 'fff',
+          },
+          {
+            g: 'ggg',
+          },
+        ],
+        d: 'ddd',
+        c: 'ccc',
+      },
+    ],
+    a: 'aaa',
+  }
+  const obj2 = {
+    c: 'ccc',
+    a: false,
+  }
+  t.deepEqual(
+    await prepArray([
+      obj1,
+      obj2,
+    ]),
+    [
+      {
+        a: 'aaa',
+        b: [
+          {
+            c: 'ccc',
+            d: 'ddd',
+            e: [
+              {
+                f: 'fff',
+                g: false,
+              },
+              {
+                f: false,
+                g: 'ggg',
+              },
+            ],
+          },
+        ],
+        c: false,
+      },
+      {
+        a: false,
+        b: [
+          {
+            c: false,
+            d: false,
+            e: [
+              {
+                f: false,
+                g: false,
+              },
+            ],
+          },
+        ],
+        c: 'ccc',
+      },
+    ],
+    '09.08',
+  )
+})
+
+test('09.09 - enforceKeyset() - array vs string clashes', async (t) => {
+  t.deepEqual(
+    await prepArray([
+      {
+        a: 'aaa',
+      },
+      {
+        a: [
+          {
+            b: 'bbb',
+          },
+        ],
+      },
+    ]),
+    [
+      {
+        a: [
+          {
+            b: false,
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: 'bbb',
+          },
+        ],
+      },
+    ],
+    '09.09',
+  )
+})
+
+test('09.10 - enforceKeyset() - all inputs missing - resolves to rejected promise', (t) => {
+  t.throws(() => {
+    enforceKeyset()
+  })
+})
+
+test('09.11 - enforceKeyset() - second input arg missing - resolves to rejected promise', (t) => {
+  t.throws(() => {
+    enforceKeyset({ a: 'a' })
+  })
+})
+
+test('09.12 - enforceKeyset() - second input arg is not a plain obj - resolves to rejected promise', async (t) => {
+  await enforceKeyset({ a: 'a' }, 'zzz')
+    .then(() => { t.fail('not ok') })
+    .catch(() => {
+      t.pass('ok')
+    })
+})
+
+test('09.13 - enforceKeyset() - first input arg is not a plain obj - resolves to rejected promise', async (t) => {
+  await enforceKeyset('zzz', 'zzz')
+    .then(() => { t.fail('not ok') })
+    .catch(() => {
+      t.pass('ok')
+    })
+})
+
+test('09.14 - enforceKeyset() - array over empty array', async (t) => {
+  const obj1 = {
+    a: [
+      {
+        d: 'd',
+      },
+      {
+        e: 'e',
+      },
+    ],
+    c: 'c',
+  }
+  const obj2 = {
+    a: [],
+    b: 'b',
+  }
+  const schema = await getKeyset([
+    obj1,
+    obj2,
+  ])
+  t.deepEqual(
+    schema,
+    {
+      a: [
+        {
+          d: false,
+          e: false,
+        },
+      ],
+      b: false,
+      c: false,
+    },
+    '09.14.01',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj1,
+      schema,
+    ),
+    {
+      a: [
+        {
+          d: 'd',
+          e: false,
+        },
+        {
+          d: false,
+          e: 'e',
+        },
+      ],
+      b: false,
+      c: 'c',
+    },
+    '09.14.02',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      obj2,
+      schema,
+    ),
+    {
+      a: [
+        {
+          d: false,
+          e: false,
+        },
+      ],
+      b: 'b',
+      c: false,
+    },
+    '09.14.03',
+  )
 })

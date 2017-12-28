@@ -29,22 +29,30 @@
   - [input](#input)
   - [output](#output)
   - [example](#example)
-- [`enforceKeyset()`](#enforcekeyset)
+- [`getKeysetSync()`](#getkeysetsync)
   - [input](#input-1)
   - [output](#output-1)
   - [example](#example-1)
-- [`noNewKeys()`](#nonewkeys)
+- [`enforceKeyset()`](#enforcekeyset)
   - [input](#input-2)
   - [output](#output-2)
   - [example](#example-2)
-- [`findUnused()`](#findunused)
+- [`enforceKeysetSync()`](#enforcekeysetsync)
   - [input](#input-3)
   - [output](#output-3)
   - [example](#example-3)
-- [`sortAllObjects()`](#sortallobjects)
+- [`noNewKeys()`](#nonewkeys)
   - [input](#input-4)
   - [output](#output-4)
   - [example](#example-4)
+- [`findUnused()`](#findunused)
+  - [input](#input-5)
+  - [output](#output-5)
+  - [example](#example-5)
+- [`sortAllObjects()`](#sortallobjects)
+  - [input](#input-6)
+  - [output](#output-6)
+  - [example](#example-6)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -54,7 +62,7 @@
 ## Install
 
 ```bash
-$ npm i json-comb-core
+npm i json-comb-core
 ```
 
 ```js
@@ -68,9 +76,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/json-comb-core.cjs.js` | 10&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 10&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 56&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-comb-core.cjs.js` | 14&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 14&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 60&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -98,9 +106,93 @@ A set of JSON files might be normalised, but certain keys can have placeholder v
 
 ## `getKeyset()`
 
+**getKeyset(input, \[opts])**
+
 This function produces a reference object according to which you can normalise JSON files.
 
-It reads an array of plain objects (parsed JSON files) and extracts a "schema keyset", a plain object, from them.
+It consumes an array of promises, where each promise should resolve into a plain object. Once first promises start to resolve, it coalesces them one-by-one into a "schema object".
+
+Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
+
+1. Each object of the same level between different JSON files should have same keys.
+2. If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
+
+The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
+
+**[⬆ &nbsp;back to top](#)**
+
+### input
+
+Input argument   | Type                                                 | Obligatory? | Description
+-----------------|------------------------------------------------------|-------------|--------------
+`input`          | Array of promises, each resolving into plain objects | yes         | Each plain object would usually be a promise of one JSON file's contents.
+`options`        | Object                                               | no          | An Optional Options Object, being synchronous (not a promise). See below for its API.
+
+PS. The input is normal, synchronous array full of promises. Not a promise of an array which contains promises.
+
+`options` object's key | Type  | Obligatory? | Default   | Description
+-----------------------|-------|-------------|-----------|----------------------
+{                      |       |             |           |
+`placeholder`          | Any   | no          | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
+}                      |       |             |           |
+
+**[⬆ &nbsp;back to top](#)**
+
+### output
+
+A promise of a plain object, which can be used in `enforceKeyset()` (and `enforceKeysetSync()` if you really want to suddenly switch to async).
+
+### example
+
+```js
+// turn array of plain objects into array of promises of thereof
+const source = [
+  {
+    a: 'a',
+    b: 'c',
+    c: {
+      d: 'd',
+      e: 'e',
+    },
+  },
+  {
+    a: 'a',
+  },
+  {
+    c: {
+      f: 'f',
+    },
+  },
+].map(el => Promise.resolve(el))
+// use async/await to avoid using .then
+async test1 () => {
+  const res = await getKeyset(source)
+  console.log(`res = ${JSON.stringify(res, null, 4)}`)
+}
+// call the function:
+test1()
+
+// result:
+// {
+//   a: false,
+//   b: false,
+//   c: {
+//     d: false,
+//     e: false,
+//     f: false,
+//   },
+// }
+```
+
+**[⬆ &nbsp;back to top](#)**
+
+## `getKeysetSync()`
+
+**getKeyset(input, \[opts])**
+
+This function produces a reference object according to which you can normalise JSON files.
+
+It consumes an array of plain objects (parsed JSON files) and extracts a "schema keyset", a plain object from them.
 
 Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
@@ -115,13 +207,13 @@ The merging is done on a premise to retain [as much information](https://github.
 
 Input argument   | Type                   | Obligatory? | Description
 -----------------|------------------------|-------------|--------------
-`input`          | Array of plain objects | yes         | AST tree, or object or array or whatever. Can be deeply-nested.
-`options`        | Object                 | no          | Options object. See below.
+`input`          | Array of plain objects | yes         | Each plain object would usually be one JSON file's contents.
+`options`        | Object                 | no          | An Optional Options Object. See below for its API.
 
 `options` object's key | Type  | Obligatory? | Default   | Description
 -----------------------|-------|-------------|-----------|----------------------
 {                      |       |             |           |
-`placeholder`          | Any   | no          | `false`   | When adding a missing key, this will be assigned to its value.
+`placeholder`          | Any   | no          | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
 }                      |       |             |           |
 
 **[⬆ &nbsp;back to top](#)**
@@ -205,6 +297,106 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 **[⬆ &nbsp;back to top](#)**
 
 ## `enforceKeyset()`
+
+Reads an input plain object and a keyset schema object and normalises the input plain object, adding any missing keys.
+
+### input
+
+Input argument | Type     | Obligatory? | Description
+---------------|----------|-------------|--------------
+`input`        | Object   | yes         | What should we normalise?
+`schema`       | Object   | yes         | According to what schema should we normalise?
+
+**[⬆ &nbsp;back to top](#)**
+
+### output
+
+A clone of an input object, with the same key set as the `schema` object.
+
+### example
+
+```js
+// let's create three plain objects, each somewhat overlapping with others:
+const obj1 = {
+  b: [
+    {
+      c: 'ccc',
+      d: 'ddd',
+    },
+  ],
+  a: 'aaa',
+}
+const obj2 = {
+  a: 'ccc',
+  e: 'eee',
+}
+const obj3 = {
+  a: 'zzz',
+}
+// calculate the schema:
+const schema = await getKeyset(
+  [
+    obj1,
+    obj2,
+    obj3,
+  ]
+)
+// log the schema:
+console.log(`schema = ${JSON.stringify(schema, null, 4)}`)
+// => {
+//      a: false,
+//      b: [
+//        {
+//          c: false,
+//          d: false,
+//        },
+//      ],
+//      e: false,
+//    }
+
+const obj1Normalised = await enforceKeyset(obj1, schema)
+console.log(`obj1Normalised = ${JSON.stringify(obj1Normalised, null, 4)}`)
+// => {
+//      a: 'aaa',
+//      b: [
+//        {
+//          c: 'ccc',
+//          d: 'ddd',
+//        },
+//      ],
+//      e: false, // <------ new key added
+//    }
+
+const obj2Normalised = await enforceKeyset(obj2, schema)
+console.log(`obj2Normalised = ${JSON.stringify(obj2Normalised, null, 4)}`)
+// => {
+//      a: 'ccc',
+//      b: [ // <------- new key added
+//        {
+//          c: false,
+//          d: false,
+//        },
+//      ],
+//      e: 'eee',
+//    }
+
+const obj3Normalised = await enforceKeyset(obj3, schema)
+console.log(`obj3Normalised = ${JSON.stringify(obj3Normalised, null, 4)}`)
+// => {
+//      a: 'zzz',
+//      b: [ // <------- new key added
+//        {
+//          c: false,
+//          d: false,
+//        },
+//      ],
+//      e: false, // <------- new key added
+//    }
+```
+
+**[⬆ &nbsp;back to top](#)**
+
+## `enforceKeysetSync()`
 
 Reads an input plain object and a keyset schema object and normalises the input plain object, adding any missing keys.
 
@@ -490,9 +682,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/json-comb-core/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/json-comb-core/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
