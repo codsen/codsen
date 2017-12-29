@@ -116,7 +116,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       return (whatToMatch.some((el) => {
         let temp
         if (opts.trimCharsBeforeMatching.length || opts.trimBeforeMatching) {
-          temp = str[position] + trimStart(str.slice(position + 1), opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r')
+          temp = trimStart(
+            str.slice(position),
+            opts.trimCharsBeforeMatching.length ? opts.trimCharsBeforeMatching.join('') : ' \n\t\r',
+          )
         } else {
           temp = str.slice(position)
         }

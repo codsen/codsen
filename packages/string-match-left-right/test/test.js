@@ -625,54 +625,54 @@ test('06.04 - opts.cb()       callback is called, pt.2', (t) => {
 
   // control
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'bc', { cb: isSpace }),
+    matchRightIncl('\n\n\nbc z', 0, ['aa', 'bc'], { cb: isSpace }),
     false,
     '06.04.03',
   )
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    matchRightIncl('\n\n\nbc z', 0, ['aa', 'bc'], { cb: isSpace, trimBeforeMatching: true }),
     'bc',
     '06.04.04',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'bc', { cb: isSpace, trimBeforeMatching: true }),
+    matchRightIncl('\n\n\nbcz', 0, ['aa', 'bc'], { cb: isSpace, trimBeforeMatching: true }),
     false,
     '06.04.05',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'bc', { trimBeforeMatching: true }),
+    matchRightIncl('\n\n\nbcz', 0, ['aa', 'bc'], { trimBeforeMatching: true }),
     'bc',
     '06.04.06',
   )
 
   // opts.i
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'BC', { cb: isSpace, i: true }),
+    matchRightIncl('\n\n\nbc z', 0, ['ZZ', 'BC'], { cb: isSpace, i: true }),
     false,
     '06.04.07',
   )
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchRightIncl('\n\n\nbc z', 0, ['ZZ', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
     'BC',
     '06.04.08',
   )
   t.is(
-    matchRightIncl('b\n\n\nc z', 0, ['KJG', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchRightIncl('\n\n\nbc z', 0, ['KJG', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
     'BC',
     '06.04.09',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'BC', { cb: isSpace, trimBeforeMatching: true, i: true }),
+    matchRightIncl('\n\n\nbcz', 0, ['ZZ', 'BC'], { cb: isSpace, trimBeforeMatching: true, i: true }),
     false,
     '06.04.10',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'BC', { trimBeforeMatching: true, i: true }),
+    matchRightIncl('\n\n\nbcz', 0, ['ZZ', 'BC'], { trimBeforeMatching: true, i: true }),
     'BC',
     '06.04.11',
   )
   t.is(
-    matchRightIncl('b\n\n\ncz', 0, 'BC', { i: true }),
+    matchRightIncl('\n\n\nbcz', 0, ['ZZ', 'BC'], { i: true }),
     false,
     '06.04.12',
   )
