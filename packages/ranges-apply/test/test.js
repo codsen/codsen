@@ -191,6 +191,64 @@ test('02.07 - replace with ending index zero', (t) => {
   )
 })
 
+test('02.08 - null in third arg does nothing', (t) => {
+  const str = 'aaa delete me bbb and me too ccc'
+  // console.log('\n===============\n02.08')
+  // console.log('slice 1: >>>' + str.slice(4, 14) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(18, 29) + '<<<\n')
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [4, 14, null],
+        [18, 29],
+      ],
+    ),
+    'aaa bbb ccc',
+    '02.08.01',
+  )
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [4, 14],
+        [18, 29, null],
+      ],
+    ),
+    'aaa bbb ccc',
+    '02.08.02',
+  )
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [4, 14, null],
+        [18, 29, null],
+      ],
+    ),
+    'aaa bbb ccc',
+    '02.08.03',
+  )
+})
+
+test('02.09 - replaces multiple chunks correctly', (t) => {
+  const str = 'aaa delete me bbb and me too ccc'
+  // console.log('\n===============\n02.09')
+  // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
+  t.deepEqual(
+    repl(
+      str,
+      [
+        [4, 13, 'zzz'],
+        [18, 28, null],
+      ],
+    ),
+    'aaa zzz bbb  ccc',
+    '02.09',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
@@ -222,5 +280,18 @@ test('03.02 - multiple replacement pieces', (t) => {
     ),
     'aaa bbb ccc ddd eee',
     '03.02',
+  )
+})
+
+test('03.03 - null in replacement op - does nothing', (t) => {
+  t.deepEqual(
+    repl(
+      'aaa  ccc',
+      [
+        [4, 4, null],
+      ],
+    ),
+    'aaa  ccc',
+    '03.03',
   )
 })
