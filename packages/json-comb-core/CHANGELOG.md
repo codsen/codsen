@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ✨✨✨  ASYNC! ✨✨✨
 
-- ✨ All ~~methods~~ exported functions up until now were synchronous. Now all were renamed:
+- ✨ All functions up until now were synchronous. Now all were renamed:
 
 ```
 getKeyset      => getKeysetSync
@@ -19,7 +19,7 @@ noNewKeys      => noNewKeysSync
 findUnused     => findUnusedSync
 ```
 
-In their place, async methods are placed. For starters we have async `getKeyset` and `enforceKeyset` - both consume and return promises.
+In their place, **async-alternatives** were placed. For starters, we have async `getKeyset` and `enforceKeyset` - both consume and return _promises_.
 
 Please update your API's appending "Sync" on the function names, or better, tap async-ones instead.
 
