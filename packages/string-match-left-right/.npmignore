@@ -1,11 +1,11 @@
 # folders
 .nyc_output
-lib-cov
-coverage
-src
-test
-logs
-media
+lib-cov/
+coverage/
+src/
+test/
+logs/
+media/
 
 # files
 *.log
