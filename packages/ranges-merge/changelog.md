@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2017-12-29
+### Added
+- ✨ If third argument is `null` on any side being merged, output is always `null`. This will stand for explicit "no" to remove any content to be added. Sibling [libraries](https://github.com/codsen/string-slices-array-push) will tap this feature.
+
+Previously `null` would have been turned into string and shown/concatenated like that which was meaningless and kindof erroneous. We never used `null` anyway. That's why this is not a major semver bump but minor - it's only feature, an extension of the API.
+
 ## [3.0.0] - 2017-12-05
 ### Changed
 - ✨ If you have two ranges where second-one completely overlaps the first-one and the first has third argument, something to insert in its place, that third argument will be discarded upon merge.
@@ -30,5 +36,6 @@ This change is logical and natural but I'm bumping major version just in case it
 ### New
 - First public release
 
+[3.1.0]: https://github.com/codsen/ranges-merge/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/ranges-merge/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/codsen/ranges-merge/compare/v1.0.3...v2.0.0

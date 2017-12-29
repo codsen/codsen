@@ -230,3 +230,78 @@ test('01.09 - superset range discards to-add content of their subset ranges #3',
     '01.09.04',
   )
 })
+
+test('01.10 - third arg is null', (t) => {
+  t.deepEqual(
+    mergeRanges([
+      [3, 8, 'c'],
+      [1, 4, null],
+      [2, 5, 'b'],
+    ]),
+    [
+      [1, 8, null],
+    ],
+    '01.10.01',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [3, 8, 'c'],
+      [1, 4, null],
+    ]),
+    [
+      [1, 8, null],
+    ],
+    '01.10.02',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [1, 4, null],
+      [3, 8, 'c'],
+    ]),
+    [
+      [1, 8, null],
+    ],
+    '01.10.03',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [1, 4, 'c'],
+      [3, 8, null],
+    ]),
+    [
+      [1, 8, null],
+    ],
+    '01.10.04',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [3, 8, null],
+      [1, 4, 'c'],
+    ]),
+    [
+      [1, 8, null],
+    ],
+    '01.10.05',
+  )
+})
+
+test('01.11 - only one range, nothing to merge', (t) => {
+  t.deepEqual(
+    mergeRanges([
+      [1, 4, null],
+    ]),
+    [
+      [1, 4, null],
+    ],
+    '01.11.01',
+  )
+  t.deepEqual(
+    mergeRanges([
+      [1, 4],
+    ]),
+    [
+      [1, 4],
+    ],
+    '01.11.02',
+  )
+})
