@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2017-12-29
+### Added
+- ✨ When third argument is `null`, any merged range results will have there `null`.
+
 ## [2.1.0] - 2017-12-20
 ### Added
 - ✨ `opts.limitToBeAddedWhitespace` - makes life easier when cleaning HTML. Now, chunk ranges can contain any amount of whitespace - the `current()` will run `string-collapse` on the to-be-inserted, third argument. Now, if there are any line breaks among the whitespace characters, the result will be a single line break instead. Basically, when this setting is active, only space or linebreak will be inserted in place of deleted range.
@@ -58,6 +62,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0
 [1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0

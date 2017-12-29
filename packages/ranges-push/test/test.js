@@ -259,7 +259,7 @@ test('03.03  -  ADD() - adds third argument onto existing and adds more', (t) =>
   )
 })
 
-test('03.03  -  ADD() - existing "add" values get concatenated with incoming-ones', (t) => {
+test('03.04  -  ADD() - existing "add" values get concatenated with incoming-ones', (t) => {
   const slices = new Slices()
   slices.add(1, 2, 'aaa')
   slices.add(2, 4, 'zzz')
@@ -270,11 +270,11 @@ test('03.03  -  ADD() - existing "add" values get concatenated with incoming-one
       [1, 4, 'aaazzz'],
       [5, 6],
     ],
-    '03.03',
+    '03.04',
   )
 })
 
-test('03.04  -  ADD() - jumped over values have third args and they get concatenated', (t) => {
+test('03.05  -  ADD() - jumped over values have third args and they get concatenated', (t) => {
   const slices = new Slices()
   slices.add(6, 10)
   slices.add(16, 20, 'bbb')
@@ -287,11 +287,11 @@ test('03.04  -  ADD() - jumped over values have third args and they get concaten
       [1, 5],
       [6, 30],
     ],
-    '03.04',
+    '03.05',
   )
 })
 
-test('03.05  -  ADD() - combo of third arg and jumping behind previous range', (t) => {
+test('03.06  -  ADD() - combo of third arg and jumping behind previous range', (t) => {
   const slices = new Slices()
   slices.add(10, 11, 'aaa')
   slices.add(3, 4, 'zzz')
@@ -301,11 +301,11 @@ test('03.05  -  ADD() - combo of third arg and jumping behind previous range', (
       [3, 4, 'zzz'],
       [10, 11, 'aaa'],
     ],
-    '03.05',
+    '03.06',
   )
 })
 
-test('03.06  -  ADD() - combo of third arg merging and extending previous range (default)', (t) => {
+test('03.07  -  ADD() - combo of third arg merging and extending previous range (default)', (t) => {
   const slices = new Slices()
   slices.add(1, 2)
   slices.add(2, 4, 'zzz')
@@ -314,11 +314,11 @@ test('03.06  -  ADD() - combo of third arg merging and extending previous range 
     [
       [1, 4, 'zzz'],
     ],
-    '03.06.01',
+    '03.07',
   )
 })
 
-test('03.07  -  ADD() - v1.1.0 - do not merge add-only entries with deletion entries case #1', (t) => {
+test('03.08  -  ADD() - v1.1.0 - do not merge add-only entries with deletion entries case #1', (t) => {
   const slices = new Slices()
   slices.add(1, 3)
   slices.add(4, 10)
@@ -329,11 +329,11 @@ test('03.07  -  ADD() - v1.1.0 - do not merge add-only entries with deletion ent
       [1, 3, 'zzz'],
       [4, 10],
     ],
-    '03.07',
+    '03.08',
   )
 })
 
-test('03.08  -  ADD() - v2.1.0 - overlapping ranges discard their inner range to-add values', (t) => {
+test('03.09  -  ADD() - v2.1.0 - overlapping ranges discard their inner range to-add values', (t) => {
   const slices = new Slices()
   slices.add(5, 6, ' ')
   slices.add(1, 10)
@@ -342,7 +342,23 @@ test('03.08  -  ADD() - v2.1.0 - overlapping ranges discard their inner range to
     [
       [1, 10],
     ],
-    '03.08',
+    '03.09',
+  )
+})
+
+test('03.10  -  ADD() - adds third argument with null', (t) => {
+  const slices = new Slices()
+  slices.add(1, 2)
+  slices.add(3, 4, null)
+  slices.add(5, 6)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 2],
+      [3, 4, null],
+      [5, 6],
+    ],
+    '03.10',
   )
 })
 
@@ -588,5 +604,75 @@ test('07.12  -  opts.limitToBeAddedWhitespace - linebreaks - #4', (t) => {
       [1, 4, ''],
     ],
     '07.12',
+  )
+})
+
+test('07.13  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #1', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, null)
+  slices.add(2, 4, ' z  ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, null],
+    ],
+    '07.13',
+  )
+})
+
+test('07.14  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true })
+  slices.add(1, 2, '   ')
+  slices.add(2, 3, 'z')
+  slices.add(2, 4, null)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, null],
+    ],
+    '07.14',
+  )
+})
+
+test('07.15  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #1', (t) => {
+  const slices = new Slices() // <---- no opts
+  slices.add(1, 2, null)
+  slices.add(2, 4, ' z  ')
+  slices.add(10, 20, ' x  ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, null],
+      [10, 20, ' x  '],
+    ],
+    '07.15 - no opts',
+  )
+})
+
+test('07.16  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2', (t) => {
+  const slices = new Slices() // <---- no opts
+  slices.add(1, 2, '   ')
+  slices.add(2, 3, 'z')
+  slices.add(2, 4, null)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, null],
+    ],
+    '07.16 - no opts',
+  )
+})
+
+test('03.17  -  ADD() - null wipes third arg values', (t) => {
+  const slices = new Slices()
+  slices.add(1, 2, 'aaa')
+  slices.add(2, 4, 'zzz')
+  slices.add(1, 6, null)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 6, null],
+    ],
+    '03.17',
   )
 })

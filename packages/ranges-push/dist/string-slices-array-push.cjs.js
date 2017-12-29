@@ -12,6 +12,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function existy(x) {
+  return x != null;
+}
 function mandatory(i) {
   throw new Error('string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ' + i + ordinal(i) + ' parameter!');
 }
@@ -49,9 +52,6 @@ var Slices = function () {
       var originalTo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
       var addVal = arguments[2];
 
-      function existy(x) {
-        return x != null;
-      }
       // validation
       var from = isNumStr(originalFrom) ? parseInt(originalFrom, 10) : originalFrom;
       var to = isNumStr(originalTo) ? parseInt(originalTo, 10) : originalTo;
@@ -61,8 +61,8 @@ var Slices = function () {
       if (!isInt(to, { includeZero: true })) {
         throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_03] "to" value, second input argument, must be a natural number! Currently it\'s equal to: ' + JSON.stringify(to, null, 4));
       }
-      if (existy(addVal) && typeof addVal !== 'string') {
-        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_04] "addVal" value, third input argument, must be a string! Currently it\'s equal to: ' + JSON.stringify(addVal, null, 4));
+      if (existy(addVal) && typeof addVal !== 'string' && addVal !== null) {
+        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_04] "addVal" value, third input argument, must be a string (or null)! Currently it\'s equal to: ' + JSON.stringify(addVal, null, 4));
       }
 
       for (var _len = arguments.length, etc = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
@@ -80,14 +80,15 @@ var Slices = function () {
         // the incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to;
-        if (existy(addVal)) {
+        // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
+        if (this.last()[2] !== null && existy(addVal)) {
           this.last()[2] = existy(this.last()[2]) && this.last()[2].length > 0 ? this.last()[2] + addVal : addVal;
         }
       } else {
         if (!this.slices) {
           this.slices = [];
         }
-        this.slices.push(addVal ? [from, to, addVal] : [from, to]);
+        this.slices.push(addVal !== undefined ? [from, to, addVal] : [from, to]);
       }
     }
 
@@ -102,7 +103,7 @@ var Slices = function () {
         this.slices = mergeRanges(this.slices);
         if (this.opts.limitToBeAddedWhitespace) {
           return this.slices.map(function (val) {
-            if (val[2] !== undefined && val[2].length > 0 && val[2].trim() === '') {
+            if (existy(val[2]) && val[2].length > 0 && val[2].trim() === '') {
               if (val[2].includes('\n') || val[2].includes('\r')) {
                 return [val[0], val[1], '\n'];
               }
