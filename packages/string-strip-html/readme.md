@@ -20,7 +20,7 @@
 ## Install
 
 ```sh
-$ npm i string-strip-html
+npm i string-strip-html
 ```
 
 ```js
@@ -41,9 +41,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 20&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 19&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 38&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 21&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 20&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 49&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -56,11 +56,7 @@ Main export - **CommonJS version**, transpiled, contains `require` and `module.e
 - [Purpose](#purpose)
 - [Bigger picture](#bigger-picture)
 - [API](#api)
-  - [API - Input](#api---input)
-  - [Optional Options Object](#optional-options-object)
-  - [API - Output](#api---output)
 - [Devil is in the details...](#devil-is-in-the-details)
-  - [Whitespace management](#whitespace-management)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -116,7 +112,7 @@ Basically, string-in string-out, with optional second input argument - an Option
 Input argument | Type         | Obligatory? | Description
 ---------------|--------------|-------------|-----------
 `input`        | String       | yes         | Text you want to strip HTML tags from
-`opts`         | Plain object | no          | Optional options object, see below
+`opts`         | Plain object | no          | The Optional Options Object, see below for its API
 
 If input arguments are supplied have any other types, an error will be `throw`n.
 
@@ -133,16 +129,13 @@ options object's key             | Type of its value             | Default      
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
-Here is the O.O.O. in one place (in case you ever want to copy it):
+Here is the Optional Options Object in one place (in case you ever want to copy it):
 
 ```js
-stripHtml(
-  str,
-  {
-    ignoreTags: [],
-    stripTogetherWithTheirContents: ['script', 'style'],
-  }
-);
+{
+  ignoreTags: [],
+  stripTogetherWithTheirContents: ['script', 'style'],
+}
 ```
 
 **[⬆ &nbsp;back to top](#)**
@@ -170,9 +163,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-strip-html/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/string-strip-html/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 

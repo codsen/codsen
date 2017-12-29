@@ -5,9 +5,13 @@ import Slices from 'string-slices-array-push'
 import isObj from 'lodash.isplainobject'
 import checkTypes from 'check-types-mini'
 import trimChars from 'lodash.trim'
-import { matchRight, matchRightIncl } from 'string-match-left-right'
+import {
+  matchRight,
+  matchRightIncl,
+} from 'string-match-left-right'
 
 function stripHtml(str, originalOpts) {
+  const DEBUG = 1
   function existy(x) { return x != null }
   const isArr = Array.isArray
   function isStr(something) { return typeof something === 'string' }
@@ -35,7 +39,7 @@ function stripHtml(str, originalOpts) {
   const suspiciousList = ['=']
   const punctuation = ['.', ',', '!', '?', ';', ')', '\u2026', '"'] // \u2026 is &hellip - ellipsis
   const stripTogetherWithTheirContentsDefaults = ['script', 'style', 'xml']
-  // ! also see opts.stripTogetherWithTheirContents array
+  // ! above can get overwritten by opts.stripTogetherWithTheirContents
 
   // validation
   if (typeof str !== 'string') {
@@ -81,7 +85,7 @@ function stripHtml(str, originalOpts) {
   // End sooner if it's an empty or empty-ish string:
 
   if ((str === '') || (str.trim() === '')) {
-    // console.log('ENDING EARLY, empty input')
+    if (DEBUG) { console.log('ENDING EARLY, empty input') }
     return str
   }
 
@@ -110,14 +114,16 @@ function stripHtml(str, originalOpts) {
   // This is opposed to gung-ho slicing and checking each single character of the
   // input, is it equal in whole to each of the elements in
   // opts.stripTogetherWithTheirContents
-  //
-  // Hardcoding the single index of defaults', "style" and "script",
-  // the common first character, "s".
+
 
   let stripTogetherWithTheirContentsRange
 
+  // Hardcoding the single index of defaults', "style", "script" and "xml",
+  // the common first character, "s".
   if (opts.stripTogetherWithTheirContents.join('') === stripTogetherWithTheirContentsDefaults.join('')) {
-    stripTogetherWithTheirContentsRange = [115, 120] // letter "s".charCodeAt(0)
+    stripTogetherWithTheirContentsRange = [115, 120] //
+    // style/script tags: letter "s".charCodeAt(0)=115
+    // xml tag: "x".charCodeAt(0)=120
   } else {
     stripTogetherWithTheirContentsRange = opts.stripTogetherWithTheirContents
       .map(value => value.charAt(0)) // get first letters
@@ -137,7 +143,7 @@ function stripHtml(str, originalOpts) {
       stripTogetherWithTheirContentsRange = stripTogetherWithTheirContentsRange[0]
     }
   }
-  // console.log(`stripTogetherWithTheirContentsRange = ${JSON.stringify(stripTogetherWithTheirContentsRange, null, 4)}\n\n\n`)
+  if (DEBUG) { console.log(`stripTogetherWithTheirContentsRange = ${JSON.stringify(stripTogetherWithTheirContentsRange, null, 4)}\n\n\n`) }
 
   // At this moment, stripTogetherWithTheirContentsRange is found and it's an
   // array or a natural number.
@@ -148,7 +154,7 @@ function stripHtml(str, originalOpts) {
   // step 2.
 
   // we'll manage the TO-DELETE string slice ranges using this class:
-  const rangesToDelete = new Slices()
+  const rangesToDelete = new Slices({ limitToBeAddedWhitespace: true })
   // it comes from string-slices-array-push, see its API on GitHub or npm
 
   let state = 'normal'
@@ -164,9 +170,14 @@ function stripHtml(str, originalOpts) {
 
   // When delete flag is active, we definitely want to delete everything form last
   // opening bracket to the next closing bracket. "Delete" state is reset after
-  // deletion is performed and becomes "normal".
+  // deletion is performed and it then becomes "normal".
 
   let deleteFromIndex = null
+
+  let noNeedToAddWhiteSpace = null // if there are consecutive tags in a row, this
+  // flag will enable second tag and onwards to know that we should not add any
+  // extra whitespace
+
   let tagMightHaveStarted = false
   let matchedRangeTag = {}
   let i
@@ -174,7 +185,8 @@ function stripHtml(str, originalOpts) {
 
   // traverse the string indexes
   for (i = 0, len = str.length; i < len; i++) {
-    // console.log(`-------------------------------------------------------  ${str[i].trim().length > 0 ? str[i] : 'space'}  ----------------  ${i}`)
+    if (DEBUG) { console.log(`-------------------------------------------------------  ${str[i].trim().length > 0 ? str[i] : 'space'}  ----------------  ${i}`) }
+    if (DEBUG) { console.log(`noNeedToAddWhiteSpace = ${JSON.stringify(noNeedToAddWhiteSpace, null, 4)}`) }
 
     // -----------------------------------------------------
     // catch the opening bracket, "<"
@@ -187,7 +199,7 @@ function stripHtml(str, originalOpts) {
       if (
         (
           (opts.ignoreTags.length === 0) ||
-          !matchRight(str, i, opts.ignoreTags, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })
+          !matchRight(str, i, opts.ignoreTags, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })
         ) &&
         (
           matchedRangeTag.name ||
@@ -206,8 +218,23 @@ function stripHtml(str, originalOpts) {
       // * * *
       // * * *
       // * * *
-      // we need to track tag's outermost boundaries separately
-      // from "state" because there might be consecutive brackets.
+      // if there are multiple tags following each other, the ones on the right
+      // need a way to know, is there some whitespace on the left-most tag.
+      // If not, the last tag from the chain should add a space.
+      if ((str[i - 1] !== undefined) && (noNeedToAddWhiteSpace === null)) {
+        if (str[i - 1].trim() === '') {
+          noNeedToAddWhiteSpace = true
+        } else {
+          noNeedToAddWhiteSpace = false
+        }
+      }
+
+      // * * *
+      // * * *
+      // * * *
+      // * * *
+      // we need to track tag's outermost boundaries separately from the
+      // "state" because there might be consecutive brackets.
       if (!tagMightHaveStarted) {
         tagMightHaveStarted = true
       }
@@ -246,14 +273,19 @@ function stripHtml(str, originalOpts) {
         // Let's traverse the string to the right of the current index and check,
         // is there an opening bracket.
         for (let z = i + 1; z < len; z++) {
+          // console.log('1')
           if ((str[z].trim() !== '') && !matchedRangeTag.name) {
+            if (DEBUG) { console.log('1.1') }
             if (str[z] === '<') {
+              if (DEBUG) { console.log('1.1.1') }
               deleteUpToIndex = z
             } else if (
               (z === i + 1) &&
               !punctuation.includes(str[z]) &&
-              (existy(str[deleteFromIndex - 1]) && (str[deleteFromIndex - 1].trim() !== ''))
+              (existy(str[deleteFromIndex - 1]) && (str[deleteFromIndex - 1].trim() !== '')) &&
+              (noNeedToAddWhiteSpace !== true)
             ) {
+              if (DEBUG) { console.log('1.1.2') }
               insertThisInPlace = ' '
             }
             break
@@ -261,7 +293,7 @@ function stripHtml(str, originalOpts) {
         }
 
         rangesToDelete.add(deleteFromIndex, deleteUpToIndex, insertThisInPlace)
-        // console.log(`! 258: added range for deletion: [${deleteFromIndex}, ${deleteUpToIndex}, '${insertThisInPlace}']`)
+        if (DEBUG) { console.log(`! 295: added range for deletion: [${deleteFromIndex}, ${deleteUpToIndex}, '${insertThisInPlace}']`) }
         // reset everything:
         state = 'normal'
       } else if (state === 'sensitive') {
@@ -271,9 +303,9 @@ function stripHtml(str, originalOpts) {
             .concat(singleLetterTags)
             .includes(trimChars(str.slice(deleteFromIndex + 1, i).trim().toLowerCase(), ' /'))
         ) {
-          // console.log(`* adding range: ${str.slice(deleteFromIndex, i + 1)}`)
-          // console.log(`! str[deleteFromIndex] = ${JSON.stringify(str[deleteFromIndex], null, 4)}`)
-          // console.log(`! str[i + 1] = ${JSON.stringify(str[i + 1], null, 4)}`)
+          if (DEBUG) { console.log(`* adding range: ${str.slice(deleteFromIndex, i + 1)}`) }
+          if (DEBUG) { console.log(`! str[deleteFromIndex] = ${JSON.stringify(str[deleteFromIndex], null, 4)}`) }
+          if (DEBUG) { console.log(`! str[i + 1] = ${JSON.stringify(str[i + 1], null, 4)}`) }
           if (
             existy(str[deleteFromIndex - 1]) &&
             (str[deleteFromIndex - 1].trim() !== '') &&
@@ -281,18 +313,29 @@ function stripHtml(str, originalOpts) {
             (str[i + 1].trim() !== '') &&
             !punctuation.includes(str[i + 1])
           ) {
-            // console.log('3')
+            if (DEBUG) { console.log('3') }
             rangesToDelete.add(deleteFromIndex, i + 1, ' ')
-            // console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}, ' ']`)
+            if (DEBUG) { console.log(`! 317: added range for deletion: [${deleteFromIndex}, ${i + 1}, ' ']`) }
             state = 'normal'
           } else {
-            // console.log('4')
+            if (DEBUG) { console.log('4') }
             rangesToDelete.add(deleteFromIndex, i + 1)
-            // console.log(`! 279: added range for deletion: [${deleteFromIndex}, ${i + 1}]`)
+            if (DEBUG) { console.log(`! 322: added range for deletion: [${deleteFromIndex}, ${i + 1}]`) }
             state = 'normal'
           }
           state = 'normal'
         }
+      }
+
+      // if the sequence of tags ended, turn off noNeedToAddWhiteSpace
+
+      // if (str[i + 1] !== '<') {
+      if (
+        (matchedRangeTag === {}) &&
+        !matchRight(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' })
+      ) {
+        if (DEBUG) { console.log('row 337 reset noNeedToAddWhiteSpace = null') }
+        noNeedToAddWhiteSpace = null
       }
     }
 
@@ -308,38 +351,12 @@ function stripHtml(str, originalOpts) {
       // delete the whole range if positive.
 
       if (
-        matchedRangeTag.name
-      ) {
-        // console.log('1 = true')
-      } else {
-        // console.log('1 = false')
-      }
-
-      if (
-        matchRightIncl(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' })
-      ) {
-        // console.log('2 = true')
-      } else {
-        // console.log('2 = false')
-      }
-
-      if (
-        matchedRangeTag.name &&
-        matchRight(str, i, matchedRangeTag.name, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })
-      ) {
-        // console.log('3 = true')
-      } else {
-        // console.log('3 = false')
-      }
-
-
-      if (
         matchedRangeTag.name &&
         matchRightIncl(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' }) &&
-        matchRight(str, i, matchedRangeTag.name, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })
+        matchRight(str, i, matchedRangeTag.name, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })
       ) {
-        // console.log('* case #1')
-        // console.log(`i = ${JSON.stringify(i, null, 4)}`)
+        if (DEBUG) { console.log('* case #1') }
+        if (DEBUG) { console.log(`i = ${JSON.stringify(i, null, 4)}`) }
         // first, traverse forward and add everything from matchedRangeTag.i upto closing
         // bracket for deletion
         for (let y = i; y < len; y++) {
@@ -354,7 +371,7 @@ function stripHtml(str, originalOpts) {
               (str[y + 1].trim() === '')
             ) {
               rangesToDelete.add(matchedRangeTag.i - 2, y + 1) // expand to include space before
-              // console.log(`! 350: added range for deletion: [${matchedRangeTag.i - 2}, ${y + 1}]`)
+              if (DEBUG) { console.log(`! 374: added range for deletion: [${matchedRangeTag.i - 2}, ${y + 1}]`) }
             } else if (
               // if it's too tight and there are no spaces surrounding the range:
               existy(str[matchedRangeTag.i - 2]) &&
@@ -364,15 +381,15 @@ function stripHtml(str, originalOpts) {
               !matchRight(str, y, '<', { trimCharsBeforeMatching: ' \n\t\r/' })
             ) {
               rangesToDelete.add(matchedRangeTag.i - 1, y + 1, ' ') // add a space
-              // console.log(`! 360: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}, ' ']`)
-              // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> row_322: ADDING A SPACE')
-              // console.log(`str[matchedRangeTag.i - 2] = ${JSON.stringify(str[matchedRangeTag.i - 2], null, 4)}`)
-              // console.log(`str[y + 1] = ${JSON.stringify(str[y + 1], null, 4)}`)
-              // console.log(`str[y + 2] = ${JSON.stringify(str[y + 2], null, 4)}`)
+              if (DEBUG) { console.log(`! 384: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}, ' ']`) }
+              if (DEBUG) { console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> row_322: ADDING A SPACE') }
+              if (DEBUG) { console.log(`str[matchedRangeTag.i - 2] = ${JSON.stringify(str[matchedRangeTag.i - 2], null, 4)}`) }
+              if (DEBUG) { console.log(`str[y + 1] = ${JSON.stringify(str[y + 1], null, 4)}`) }
+              if (DEBUG) { console.log(`str[y + 2] = ${JSON.stringify(str[y + 2], null, 4)}`) }
             } else if (existy(matchedRangeTag.i)) {
               // We might need to trim even tighter if punctuation follows right immediately and there's whitespace in front. In such case we'd collapse all the whitespace in front if it's lowercase letter preceding that whitespace. For example, "This is text <div>remove me</div>." => "This is text." Not "This is text ."
               if (punctuation.includes(str[y + 1]) && str[matchedRangeTag.i - 2].trim() === '') {
-                // console.log('***')
+                if (DEBUG) { console.log('***') }
                 for (let zzz = matchedRangeTag.i - 2; zzz--;) {
                   if (existy(str[zzz]) && str[zzz].trim() !== '') {
                     if (
@@ -393,18 +410,18 @@ function stripHtml(str, originalOpts) {
                 }
               } else {
                 rangesToDelete.add(matchedRangeTag.i - 1, y + 1) // just delete the range
-                // console.log(`! 376: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}]`)
+                if (DEBUG) { console.log(`! 412: added range for deletion: [${matchedRangeTag.i - 1}, ${y + 1}]`) }
               }
-              // console.log(`str[y + 1]=${str[y + 1]}`)
-              // console.log(`str[matchedRangeTag.i - 2]=>>>>${str[matchedRangeTag.i - 2]}<<<<`)
+              if (DEBUG) { console.log(`str[y + 1]=${str[y + 1]}`) }
+              if (DEBUG) { console.log(`str[matchedRangeTag.i - 2]=>>>>${str[matchedRangeTag.i - 2]}<<<<`) }
             }
             i = y - 1 // + 1
-            // console.log(`i = ${JSON.stringify(i, null, 4)}`)
+            if (DEBUG) { console.log(`i = ${JSON.stringify(i, null, 4)}`) }
             matchedRangeTag = {}
-            // console.log(`matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
+            if (DEBUG) { console.log(`matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`) }
             state = 'normal'
             deleteFromIndex = null
-            // console.log(`state = ${JSON.stringify(state, null, 4)}`)
+            if (DEBUG) { console.log(`state = ${JSON.stringify(state, null, 4)}`) }
             break
           }
         }
@@ -425,19 +442,19 @@ function stripHtml(str, originalOpts) {
           (str[i].charCodeAt(0) === stripTogetherWithTheirContentsRange)
           )
         )) {
-        // console.log('* case #2')
+        if (DEBUG) { console.log('* case #2') }
         if (opts.stripTogetherWithTheirContents.some((tag) => {
-          // console.log(`checking tag: ${tag}`)
-          if (matchRightIncl(str, i, tag, { cbRight: tagName, trimCharsBeforeMatching: ' \n\t\r/' })) {
+          if (DEBUG) { console.log(`checking tag: ${tag}`) }
+          if (matchRightIncl(str, i, tag, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/' })) {
             matchedRangeTag.name = tag
             matchedRangeTag.i = i
-            // console.log(`\n\n\n\n\n!!!\n\nmatchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
+            if (DEBUG) { console.log(`\n\n\n\n\n!!!\n\nmatchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`) }
             // i += tag.length
             return true
           }
           return false
         })) {
-          // console.log(`\n\n\n${matchedRangeTag.name} MATCHED! index = ${i}\n\n\n`)
+          if (DEBUG) { console.log(`\n\n\n${matchedRangeTag.name} MATCHED! index = ${i}\n\n\n`) }
         }
       }
     }
@@ -450,13 +467,14 @@ function stripHtml(str, originalOpts) {
       state = 'delete'
     }
 
-    // console.log(`\n\n* ended with state: ${state}`)
-    // console.log(`* matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`)
-    // console.log(`* ended with deleteFromIndex = ${deleteFromIndex}`)
-    // console.log(`* ended with state = ${state}`)
+    if (DEBUG) { console.log(`\n\n* ended with state: ${state}`) }
+    if (DEBUG) { console.log(`* matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`) }
+    if (DEBUG) { console.log(`* ended with deleteFromIndex = ${deleteFromIndex}`) }
+    if (DEBUG) { console.log(`* ended with state = ${state}`) }
   }
 
-  // console.log(`FINAL rangesToDelete = ${JSON.stringify(rangesToDelete, null, 4)}`)
+  if (DEBUG) { console.log(`FINAL rangesToDelete = ${JSON.stringify(rangesToDelete, null, 4)}`) }
+  if (DEBUG) { console.log(`FINAL rangesToDelete.current() = ${JSON.stringify(rangesToDelete.current(), null, 4)}`) }
   if (rangesToDelete.current()) {
     return replaceSlicesArr(str, rangesToDelete.current()).trim()
   }

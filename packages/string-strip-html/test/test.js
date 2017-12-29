@@ -381,24 +381,102 @@ test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
 // XML (sprinkled within HTML)
 // ==============================
 
-test('02.01 - strips XML', (t) => {
+test.skip('02.01 - strips XML', (t) => {
+//   t.deepEqual(
+//     stripHtml(`abc<!--[if gte mso 9]><xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml><![endif]-->def`),
+//     'abc def',
+//     '02.01.01',
+//   )
+//   t.deepEqual(
+//     stripHtml(`abc <!--[if gte mso 9]><xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml><![endif]-->def`),
+//     'abc def',
+//     '02.01.02',
+//   )
+//   t.deepEqual(
+//     stripHtml(`abc<!--[if gte mso 9]><xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml><![endif]--> def`),
+//     'abc def',
+//     '02.01.03',
+//   )
   t.deepEqual(
-    stripHtml(`abc<!--[if gte mso 9]><xml>
+    stripHtml(`abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
 <o:AllowPNG/>
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
-</xml><![endif]-->def`),
-    'abc def',
-    '02.01',
+</xml><![endif]--> def`),
+    'abc\ndef',
+    '02.01.04',
   )
+//   t.deepEqual(
+//     stripHtml(`abc <!--[if gte mso 9]><xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml><![endif]-->
+//
+//   def`),
+//     'abc def',
+//     '02.01.05',
+//   )
+//   t.deepEqual(
+//     stripHtml(`abc <!--[if gte mso 9]><xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml><![endif]-->
+//
+//   `),
+//     'abc',
+//     '02.01.06 - lots of trailing space after normal tag',
+//   )
+//   t.deepEqual(
+//     stripHtml(`abc <xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml>
+//
+//   `),
+//     'abc',
+//     '02.01.06 - lots of trailing space after tag from delete-whole',
+//   )
+//   t.deepEqual(
+//     stripHtml(`      <xml>
+// <o:OfficeDocumentSettings>
+// <o:AllowPNG/>
+// <o:PixelsPerInch>96</o:PixelsPerInch>
+// </o:OfficeDocumentSettings>
+// </xml>
+//
+//   abc`),
+//     'abc',
+//     '02.01.07 - lots of trailing space before the tag from delete-whole',
+//   )
 })
 
 // ==============================
 // false positives
 // ==============================
 
-test('03.01 - very sneaky considering b is legit tag name', (t) => {
+test('03.01 - very sneaky considering b is a legit tag name', (t) => {
   t.deepEqual(
     stripHtml('Equations are: a < b and c > d'),
     'Equations are: a < b and c > d',
@@ -491,8 +569,16 @@ shown for everything except Outlook
   )
 })
 
+test('03.06 consecutive tags', (t) => {
+  t.deepEqual(
+    stripHtml('Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after'),
+    'Text First point Second point Third point Text straight after',
+    '03.06',
+  )
+})
+
 // ==============================
-// opts.ignoreTags
+// 04. opts.ignoreTags
 // ==============================
 
 test('04.01 - opts.ignoreTags', (t) => {
@@ -500,6 +586,40 @@ test('04.01 - opts.ignoreTags', (t) => {
     stripHtml('Some <b>text</b> and some more <i>text</i>.', { ignoreTags: ['b'] }),
     'Some <b>text</b> and some more text.',
     '04.01',
+  )
+})
+
+// ==============================
+// 05. whitespace control
+// ==============================
+
+test.only('05.01 - adds a space', (t) => {
+  // t.deepEqual(
+  //   stripHtml('a<div>b</div>c'),
+  //   'a b c',
+  //   '05.01.01',
+  // )
+  // t.deepEqual(
+  //   stripHtml('a <div>   b    </div>    c'),
+  //   'a b c',
+  //   '05.01.02 - stays on one line because it was on one line',
+  // )
+  t.deepEqual(
+    stripHtml('\t\t\ta <div>   b    </div>    c\n\n\n'),
+    'a b c',
+    '05.01.03 - like 02 above but with trimming',
+  )
+})
+
+test.skip('05.02 - adds a linebreak', (t) => {
+  t.deepEqual(
+    stripHtml(`a
+  <div>
+    b
+  </div>
+c`),
+    'a\nb\nc',
+    '05.02',
   )
 })
 
