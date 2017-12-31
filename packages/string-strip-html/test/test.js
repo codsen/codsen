@@ -1,4 +1,4 @@
-/* eslint ava/no-only-test:0 */
+/* eslint ava/no-only-test:0, max-len:0 */
 
 import test from 'ava'
 import stripHtml from '../dist/string-strip-html.cjs'
@@ -347,13 +347,83 @@ test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
   )
   t.deepEqual(
     stripHtml(
+      'a<    b    >c<   /   b   >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.02 - whitespace within the tag',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<     b   /    >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.03 - closing slash wrong side',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<   /    b   /    >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.04 - two closing slashes',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<   //    b   //    >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.05 - multiple duplicated closing slashes',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<   //  <  b   // >   >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.06 - multiple duplicated closing slashes',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<   /    b   /    >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a d',
+    '01.11.07 - no closing slashes',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >     c \n\n\n        <   /    b   /    >d',
+      {
+        stripTogetherWithTheirContents: ['e', 'b'],
+      },
+    ),
+    'a\nd',
+    '01.11.08 - no closing slashes',
+  )
+  t.deepEqual(
+    stripHtml(
       'a<b>c</b>d<e>f</e>g',
       {
         stripTogetherWithTheirContents: ['b', 'e'],
       },
     ),
     'a d g',
-    '01.11.02',
+    '01.11.09',
   )
   t.deepEqual(
     stripHtml(
@@ -363,7 +433,7 @@ test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
       },
     ),
     'a c d g',
-    '01.11.03 - sneaky similarity, bro starts with b',
+    '01.11.10 - sneaky similarity, bro starts with b',
   )
   t.deepEqual(
     stripHtml(
@@ -373,45 +443,113 @@ test('01.11 - opts.stripTogetherWithTheirContents', (t) => {
       },
     ),
     'Text and some more.',
-    '01.11.04 - strips with attributes. Now resembling real life.',
+    '01.11.11 - strips with attributes. Now resembling real life.',
   )
+  t.deepEqual(
+    stripHtml(
+      'Text < div class="" id="3"  >here<  / div > and some more < article >text<    / article >.',
+      {
+        stripTogetherWithTheirContents: ['div', 'section', 'article'],
+      },
+    ),
+    'Text and some more.',
+    '01.11.12 - lots of spaces within tags',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<     b   /    >d',
+      {
+        stripTogetherWithTheirContents: [],
+      },
+    ),
+    'a c d',
+    '01.11.13 - override stripTogetherWithTheirContents to an empty array',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<     b   /    >d',
+      {
+        stripTogetherWithTheirContents: null,
+      },
+    ),
+    'a c d',
+    '01.11.14 - override stripTogetherWithTheirContents to an empty array',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<     b   /    >d',
+      {
+        stripTogetherWithTheirContents: false,
+      },
+    ),
+    'a c d',
+    '01.11.15 - override stripTogetherWithTheirContents to an empty array',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b    >c<   //  <  b   // >   >d',
+      {
+        stripTogetherWithTheirContents: 'b',
+      },
+    ),
+    'a d',
+    '01.11.16 - opts.stripTogetherWithTheirContents is not array but string',
+  )
+  t.deepEqual(
+    stripHtml(
+      'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
+      {
+        stripTogetherWithTheirContents: 'b',
+      },
+    ),
+    'a d',
+    '01.11.17',
+  )
+  t.throws(() => {
+    stripHtml(
+      'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
+      {
+        stripTogetherWithTheirContents: ['zzz', true, 'b'],
+      },
+    )
+  })
 })
 
 // ==============================
 // XML (sprinkled within HTML)
 // ==============================
 
-test.skip('02.01 - strips XML', (t) => {
-//   t.deepEqual(
-//     stripHtml(`abc<!--[if gte mso 9]><xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml><![endif]-->def`),
-//     'abc def',
-//     '02.01.01',
-//   )
-//   t.deepEqual(
-//     stripHtml(`abc <!--[if gte mso 9]><xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml><![endif]-->def`),
-//     'abc def',
-//     '02.01.02',
-//   )
-//   t.deepEqual(
-//     stripHtml(`abc<!--[if gte mso 9]><xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml><![endif]--> def`),
-//     'abc def',
-//     '02.01.03',
-//   )
+test('02.01 - strips XML', (t) => {
+  t.deepEqual(
+    stripHtml(`abc<!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->def`),
+    'abc\ndef',
+    '02.01.01',
+  )
+  t.deepEqual(
+    stripHtml(`abc <!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->def`),
+    'abc\ndef',
+    '02.01.02',
+  )
+  t.deepEqual(
+    stripHtml(`abc<!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]--> def`),
+    'abc\ndef',
+    '02.01.03',
+  )
   t.deepEqual(
     stripHtml(`abc <!--[if gte mso 9]><xml>
 <o:OfficeDocumentSettings>
@@ -422,54 +560,54 @@ test.skip('02.01 - strips XML', (t) => {
     'abc\ndef',
     '02.01.04',
   )
-//   t.deepEqual(
-//     stripHtml(`abc <!--[if gte mso 9]><xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml><![endif]-->
-//
-//   def`),
-//     'abc def',
-//     '02.01.05',
-//   )
-//   t.deepEqual(
-//     stripHtml(`abc <!--[if gte mso 9]><xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml><![endif]-->
-//
-//   `),
-//     'abc',
-//     '02.01.06 - lots of trailing space after normal tag',
-//   )
-//   t.deepEqual(
-//     stripHtml(`abc <xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml>
-//
-//   `),
-//     'abc',
-//     '02.01.06 - lots of trailing space after tag from delete-whole',
-//   )
-//   t.deepEqual(
-//     stripHtml(`      <xml>
-// <o:OfficeDocumentSettings>
-// <o:AllowPNG/>
-// <o:PixelsPerInch>96</o:PixelsPerInch>
-// </o:OfficeDocumentSettings>
-// </xml>
-//
-//   abc`),
-//     'abc',
-//     '02.01.07 - lots of trailing space before the tag from delete-whole',
-//   )
+  t.deepEqual(
+    stripHtml(`abc <!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->
+
+  def`),
+    'abc\ndef',
+    '02.01.05',
+  )
+  t.deepEqual(
+    stripHtml(`abc <!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->
+
+  `),
+    'abc',
+    '02.01.06',
+  )
+  t.deepEqual(
+    stripHtml(`abc <xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+
+  `),
+    'abc',
+    '02.01.07',
+  )
+  t.deepEqual(
+    stripHtml(`      <xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+
+  abc`),
+    'abc',
+    '02.01.08',
+  )
 })
 
 // ==============================
@@ -593,17 +731,17 @@ test('04.01 - opts.ignoreTags', (t) => {
 // 05. whitespace control
 // ==============================
 
-test.only('05.01 - adds a space', (t) => {
-  // t.deepEqual(
-  //   stripHtml('a<div>b</div>c'),
-  //   'a b c',
-  //   '05.01.01',
-  // )
-  // t.deepEqual(
-  //   stripHtml('a <div>   b    </div>    c'),
-  //   'a b c',
-  //   '05.01.02 - stays on one line because it was on one line',
-  // )
+test('05.01 - adds a space', (t) => {
+  t.deepEqual(
+    stripHtml('a<div>b</div>c'),
+    'a b c',
+    '05.01.01',
+  )
+  t.deepEqual(
+    stripHtml('a <div>   b    </div>    c'),
+    'a b c',
+    '05.01.02 - stays on one line because it was on one line',
+  )
   t.deepEqual(
     stripHtml('\t\t\ta <div>   b    </div>    c\n\n\n'),
     'a b c',
@@ -611,15 +749,37 @@ test.only('05.01 - adds a space', (t) => {
   )
 })
 
-test.skip('05.02 - adds a linebreak', (t) => {
+test('05.02 - adds a linebreak between each substring piece', (t) => {
   t.deepEqual(
     stripHtml(`a
+
+
   <div>
     b
   </div>
 c`),
     'a\nb\nc',
     '05.02',
+  )
+})
+
+test('05.03 - multiple tag combo case #1', (t) => {
+  t.deepEqual(
+    stripHtml('z<a><b>c</b></a>y'),
+    'z c y',
+    '05.03.01',
+  )
+  t.deepEqual(
+    stripHtml(`
+      z
+        <a>
+          <b class="something anything">
+            c
+          </b>
+        </a>
+      y`),
+    'z\nc\ny',
+    '05.03.02',
   )
 })
 

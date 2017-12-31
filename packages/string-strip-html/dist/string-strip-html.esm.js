@@ -3,14 +3,14 @@ import Slices from 'string-slices-array-push';
 import isObj from 'lodash.isplainobject';
 import checkTypes from 'check-types-mini';
 import trimChars from 'lodash.trim';
-import { matchRight, matchRightIncl } from 'string-match-left-right';
+import { matchRight } from 'string-match-left-right';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /* eslint prefer-destructuring:0, no-loop-func:0, max-len:0, no-continue:0 */
 
 function stripHtml(str, originalOpts) {
-  var DEBUG = 1;
+  // const DEBUG = 0
   function existy(x) {
     return x != null;
   }
@@ -31,7 +31,6 @@ function stripHtml(str, originalOpts) {
   var suspiciousList = ['='];
   var punctuation = ['.', ',', '!', '?', ';', ')', '\u2026', '"']; // \u2026 is &hellip - ellipsis
   var stripTogetherWithTheirContentsDefaults = ['script', 'style', 'xml'];
-  // ! above can get overwritten by opts.stripTogetherWithTheirContents
 
   // validation
   if (typeof str !== 'string') {
@@ -47,12 +46,19 @@ function stripHtml(str, originalOpts) {
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'string-strip-html/stripHtml(): [THROW_ID_03*]' });
-  if (!isArr(opts.stripTogetherWithTheirContents) || opts.stripTogetherWithTheirContents.length === 0) {
-    opts.stripTogetherWithTheirContents = false;
+  if (!opts.stripTogetherWithTheirContents) {
+    opts.stripTogetherWithTheirContents = [];
+  } else if (typeof opts.stripTogetherWithTheirContents === 'string' && opts.stripTogetherWithTheirContents.length > 0) {
+    opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
+  checkTypes(opts, defaults, {
+    msg: 'string-strip-html/stripHtml(): [THROW_ID_03*]',
+    schema: {
+      stripTogetherWithTheirContents: ['array']
+    }
+  });
 
-  var somethingCaught = void 0;
+  var somethingCaught = {};
   if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length > 0 && !opts.stripTogetherWithTheirContents.every(function (el, i) {
     if (!isStr(el)) {
       somethingCaught.el = el;
@@ -61,7 +67,7 @@ function stripHtml(str, originalOpts) {
     }
     return true;
   })) {
-    throw new TypeError('string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object\'s key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ' + somethingCaught.i + ' has a value ' + somethingCaught.el + '.');
+    throw new TypeError('string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object\'s key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ' + somethingCaught.i + ' has a value ' + somethingCaught.el + ' which is not string but ' + _typeof(somethingCaught.el) + '.');
   }
 
   // ---------------------------------------------------------------------------
@@ -69,9 +75,7 @@ function stripHtml(str, originalOpts) {
   // End sooner if it's an empty or empty-ish string:
 
   if (str === '' || str.trim() === '') {
-    if (DEBUG) {
-      console.log('ENDING EARLY, empty input');
-    }
+    // if (DEBUG) { console.log('ENDING EARLY, empty input') }
     return str;
   }
 
@@ -106,31 +110,31 @@ function stripHtml(str, originalOpts) {
 
   // Hardcoding the single index of defaults', "style", "script" and "xml",
   // the common first character, "s".
-  if (opts.stripTogetherWithTheirContents.join('') === stripTogetherWithTheirContentsDefaults.join('')) {
-    stripTogetherWithTheirContentsRange = [115, 120]; //
-    // style/script tags: letter "s".charCodeAt(0)=115
-    // xml tag: "x".charCodeAt(0)=120
-  } else {
-    stripTogetherWithTheirContentsRange = opts.stripTogetherWithTheirContents.map(function (value) {
-      return value.charAt(0);
-    }) // get first letters
-    .reduce(function (res, val) {
-      if (val.charCodeAt(0) > res[1]) {
-        return [res[0], val.charCodeAt(0)]; // find the char index of the max char index out of all
+  if (opts.stripTogetherWithTheirContents && isArr(opts.stripTogetherWithTheirContents) && opts.stripTogetherWithTheirContents.length > 0) {
+    if (opts.stripTogetherWithTheirContents.join('') === stripTogetherWithTheirContentsDefaults.join('')) {
+      stripTogetherWithTheirContentsRange = [115, 120]; //
+      // style/script tags: letter "s".charCodeAt(0)=115
+      // xml tag: "x".charCodeAt(0)=120
+    } else {
+      stripTogetherWithTheirContentsRange = opts.stripTogetherWithTheirContents.map(function (value) {
+        return value.charAt(0);
+      }) // get first letters
+      .reduce(function (res, val) {
+        if (val.charCodeAt(0) > res[1]) {
+          return [res[0], val.charCodeAt(0)]; // find the char index of the max char index out of all
+        }
+        if (val.charCodeAt(0) < res[0]) {
+          return [val.charCodeAt(0), res[1]]; // find the char index of the min char index out of all
+        }
+        return res;
+      }, [opts.stripTogetherWithTheirContents[0].charCodeAt(0), // base is the 1st char of 1st el.
+      opts.stripTogetherWithTheirContents[0].charCodeAt(0)]);
+      if (stripTogetherWithTheirContentsRange[0] === stripTogetherWithTheirContentsRange[1]) {
+        stripTogetherWithTheirContentsRange = stripTogetherWithTheirContentsRange[0];
       }
-      if (val.charCodeAt(0) < res[0]) {
-        return [val.charCodeAt(0), res[1]]; // find the char index of the min char index out of all
-      }
-      return res;
-    }, [opts.stripTogetherWithTheirContents[0].charCodeAt(0), // base is the 1st char of 1st el.
-    opts.stripTogetherWithTheirContents[0].charCodeAt(0)]);
-    if (stripTogetherWithTheirContentsRange[0] === stripTogetherWithTheirContentsRange[1]) {
-      stripTogetherWithTheirContentsRange = stripTogetherWithTheirContentsRange[0];
     }
   }
-  if (DEBUG) {
-    console.log('stripTogetherWithTheirContentsRange = ' + JSON.stringify(stripTogetherWithTheirContentsRange, null, 4) + '\n\n\n');
-  }
+  // if (DEBUG) { console.log(`stripTogetherWithTheirContentsRange = ${JSON.stringify(stripTogetherWithTheirContentsRange, null, 4)}\n\n\n`) }
 
   // At this moment, stripTogetherWithTheirContentsRange is found and it's an
   // array or a natural number.
@@ -161,10 +165,6 @@ function stripHtml(str, originalOpts) {
 
   var deleteFromIndex = null;
 
-  var noNeedToAddWhiteSpace = null; // if there are consecutive tags in a row, this
-  // flag will enable second tag and onwards to know that we should not add any
-  // extra whitespace
-
   var tagMightHaveStarted = false;
   var matchedRangeTag = {};
   var i = void 0;
@@ -172,12 +172,7 @@ function stripHtml(str, originalOpts) {
 
   // traverse the string indexes
   for (i = 0, len = str.length; i < len; i++) {
-    if (DEBUG) {
-      console.log('-------------------------------------------------------  ' + (str[i].trim().length > 0 ? str[i] : 'space') + '  ----------------  ' + i);
-    }
-    if (DEBUG) {
-      console.log('noNeedToAddWhiteSpace = ' + JSON.stringify(noNeedToAddWhiteSpace, null, 4));
-    }
+    // if (DEBUG) { console.log(`-------------------------------------------------------  ${str[i].trim().length > 0 ? str[i] : 'space'}  ----------------  ${i}`) }
 
     // -----------------------------------------------------
     // catch the opening bracket, "<"
@@ -187,6 +182,7 @@ function stripHtml(str, originalOpts) {
       // * * *
       // * * *
       // the main flipping of a state
+      // if (DEBUG) { console.log('! < caught') }
       if ((opts.ignoreTags.length === 0 || !matchRight(str, i, opts.ignoreTags, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })) && (matchedRangeTag.name || !matchedRangeTag.name && !tagMightHaveStarted)) {
         if (existy(str[i + 1]) && str[i + 1].trim() === '') {
           state = 'sensitive';
@@ -200,14 +196,19 @@ function stripHtml(str, originalOpts) {
       // * * *
       // * * *
       // * * *
-      // if there are multiple tags following each other, the ones on the right
-      // need a way to know, is there some whitespace on the left-most tag.
-      // If not, the last tag from the chain should add a space.
-      if (str[i - 1] !== undefined && noNeedToAddWhiteSpace === null) {
-        if (str[i - 1].trim() === '') {
-          noNeedToAddWhiteSpace = true;
+      var tagMatchedOnTheRight = matchRight(str, i, opts.stripTogetherWithTheirContents, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true });
+      if (opts.stripTogetherWithTheirContents && tagMatchedOnTheRight) {
+        // if (DEBUG) { console.log('* ranged tag matched') }
+        if (!matchedRangeTag.name) {
+          // if (DEBUG) { console.log('! new ranged tag detected') }
+          matchedRangeTag.name = tagMatchedOnTheRight;
+          matchedRangeTag.i = i;
+          // if (DEBUG) { console.log(`NEWLY SET matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`) }
         } else {
-          noNeedToAddWhiteSpace = false;
+          deleteFromIndex = matchedRangeTag.i;
+          // if (DEBUG) { console.log(`* deleteFromIndex = ${JSON.stringify(deleteFromIndex, null, 4)}`) }
+          state = 'delete';
+          matchedRangeTag = {};
         }
       }
 
@@ -231,6 +232,7 @@ function stripHtml(str, originalOpts) {
         // matchedRangeTag.name is set, meaning we are traversing in between
         // tags which should be deleted together with their content between the
         // tags.
+        // if (DEBUG) { console.log('! > caught') }
         if (!matchedRangeTag.name && tagMightHaveStarted && !matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })) {
           tagMightHaveStarted = false;
         }
@@ -238,217 +240,95 @@ function stripHtml(str, originalOpts) {
         // PS. to see the slice visually, use string.slice() method:
         // to see content with brackets: str.slice(deleteFromIndex, i + 1)
         // to see it without brackets: str.slice(deleteFromIndex + 1, i)
-        if (state === 'delete' && deleteFromIndex < i && !matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })) {
+        if (state === 'delete' && isNum(deleteFromIndex) && deleteFromIndex < i && !matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })) {
           var deleteUpToIndex = i + 1;
           var insertThisInPlace = '';
 
-          // in case another HTML tag follows this, we need to include all the
-          // white space leading to it as well.
-          // Let's traverse the string to the right of the current index and check,
-          // is there an opening bracket.
-          for (var z = i + 1; z < len; z++) {
-            // console.log('1')
-            if (str[z].trim() !== '' && !matchedRangeTag.name) {
-              if (DEBUG) {
-                console.log('1.1');
+          // Let's traverse the string to the left of deleteFromIndex and extend
+          // to cover any whitespace.
+
+          if (deleteFromIndex > 0) {
+            for (var z = deleteFromIndex; z--;) {
+              if (str[z].trim() !== '') {
+                // if it's not a whitespace
+                deleteFromIndex = z + 1; // ...extend the to-be-deleted range
+                // if (DEBUG) { console.log(`I. deleteFromIndex extended to the left to be ${z + 1}`) }
+                break;
+              } else if (z === 0) {
+                // or beginning of the file reached...
+                deleteFromIndex = 0; // ...extend the to-be-deleted range
+                // if (DEBUG) { console.log('II. deleteFromIndex extended to the left to be zero') }
+                break;
               }
-              if (str[z] === '<') {
-                if (DEBUG) {
-                  console.log('1.1.1');
-                }
-                deleteUpToIndex = z;
-              } else if (z === i + 1 && !punctuation.includes(str[z]) && existy(str[deleteFromIndex - 1]) && str[deleteFromIndex - 1].trim() !== '' && noNeedToAddWhiteSpace !== true) {
-                if (DEBUG) {
-                  console.log('1.1.2');
-                }
-                insertThisInPlace = ' ';
-              }
-              break;
             }
           }
 
-          rangesToDelete.add(deleteFromIndex, deleteUpToIndex, insertThisInPlace);
-          if (DEBUG) {
-            console.log('! 295: added range for deletion: [' + deleteFromIndex + ', ' + deleteUpToIndex + ', \'' + insertThisInPlace + '\']');
-          }
-          // reset everything:
-          state = 'normal';
-        } else if (state === 'sensitive') {
-          if (deleteFromIndex + 1 < i && definitelyTagNames.concat(singleLetterTags).includes(trimChars(str.slice(deleteFromIndex + 1, i).trim().toLowerCase(), ' /'))) {
-            if (DEBUG) {
-              console.log('* adding range: ' + str.slice(deleteFromIndex, i + 1));
-            }
-            if (DEBUG) {
-              console.log('! str[deleteFromIndex] = ' + JSON.stringify(str[deleteFromIndex], null, 4));
-            }
-            if (DEBUG) {
-              console.log('! str[i + 1] = ' + JSON.stringify(str[i + 1], null, 4));
-            }
-            if (existy(str[deleteFromIndex - 1]) && str[deleteFromIndex - 1].trim() !== '' && existy(str[i + 1]) && str[i + 1].trim() !== '' && !punctuation.includes(str[i + 1])) {
-              if (DEBUG) {
-                console.log('3');
-              }
-              rangesToDelete.add(deleteFromIndex, i + 1, ' ');
-              if (DEBUG) {
-                console.log('! 317: added range for deletion: [' + deleteFromIndex + ', ' + (i + 1) + ', \' \']');
-              }
-              state = 'normal';
-            } else {
-              if (DEBUG) {
-                console.log('4');
-              }
-              rangesToDelete.add(deleteFromIndex, i + 1);
-              if (DEBUG) {
-                console.log('! 322: added range for deletion: [' + deleteFromIndex + ', ' + (i + 1) + ']');
-              }
-              state = 'normal';
-            }
-            state = 'normal';
-          }
-        }
-
-        // if the sequence of tags ended, turn off noNeedToAddWhiteSpace
-
-        // if (str[i + 1] !== '<') {
-        if (matchedRangeTag === {} && !matchRight(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' })) {
-          if (DEBUG) {
-            console.log('row 337 reset noNeedToAddWhiteSpace = null');
-          }
-          noNeedToAddWhiteSpace = null;
-        }
-      }
-
-    // -----------------------------------------------------
-    if (opts.stripTogetherWithTheirContents) {
-      //
-      // case 1.
-      // if the tag in question is among to be removed together with its contents,
-      // and we already have matched and recorded the whereabouts of the opening
-      // tag and we suspect this is its closing counterpart, check that and
-      // delete the whole range if positive.
-
-      if (matchedRangeTag.name && matchRightIncl(str, i, '<', { trimCharsBeforeMatching: ' \n\t\r' }) && matchRight(str, i, matchedRangeTag.name, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<' })) {
-        if (DEBUG) {
-          console.log('* case #1');
-        }
-        if (DEBUG) {
-          console.log('i = ' + JSON.stringify(i, null, 4));
-        }
-        // first, traverse forward and add everything from matchedRangeTag.i upto closing
-        // bracket for deletion
-        for (var y = i; y < len; y++) {
-          if (str[y] === '>') {
-            // if there are spaces in right before and right after the to-be-deleted
-            // range, we expand the range by one char to compensate for that
-            // excessive whitespace that would otherwise result after deletion
-            if (existy(str[matchedRangeTag.i - 2]) && str[matchedRangeTag.i - 2].trim() === '' && existy(str[y + 1]) && str[y + 1].trim() === '') {
-              rangesToDelete.add(matchedRangeTag.i - 2, y + 1); // expand to include space before
-              if (DEBUG) {
-                console.log('! 374: added range for deletion: [' + (matchedRangeTag.i - 2) + ', ' + (y + 1) + ']');
-              }
-            } else if (
-            // if it's too tight and there are no spaces surrounding the range:
-            existy(str[matchedRangeTag.i - 2]) && str[matchedRangeTag.i - 2].trim() !== '' && existy(str[y + 1]) && str[y + 1].trim() !== '' && !matchRight(str, y, '<', { trimCharsBeforeMatching: ' \n\t\r/' })) {
-              rangesToDelete.add(matchedRangeTag.i - 1, y + 1, ' '); // add a space
-              if (DEBUG) {
-                console.log('! 384: added range for deletion: [' + (matchedRangeTag.i - 1) + ', ' + (y + 1) + ', \' \']');
-              }
-              if (DEBUG) {
-                console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> row_322: ADDING A SPACE');
-              }
-              if (DEBUG) {
-                console.log('str[matchedRangeTag.i - 2] = ' + JSON.stringify(str[matchedRangeTag.i - 2], null, 4));
-              }
-              if (DEBUG) {
-                console.log('str[y + 1] = ' + JSON.stringify(str[y + 1], null, 4));
-              }
-              if (DEBUG) {
-                console.log('str[y + 2] = ' + JSON.stringify(str[y + 2], null, 4));
-              }
-            } else if (existy(matchedRangeTag.i)) {
-              // We might need to trim even tighter if punctuation follows right immediately and there's whitespace in front. In such case we'd collapse all the whitespace in front if it's lowercase letter preceding that whitespace. For example, "This is text <div>remove me</div>." => "This is text." Not "This is text ."
-              if (punctuation.includes(str[y + 1]) && str[matchedRangeTag.i - 2].trim() === '') {
-                if (DEBUG) {
-                  console.log('***');
-                }
-                for (var zzz = matchedRangeTag.i - 2; zzz--;) {
-                  if (existy(str[zzz]) && str[zzz].trim() !== '') {
-                    if (str[zzz].toLowerCase() !== str[zzz].toUpperCase() && // is letter
-                    str[zzz] === str[zzz].toLowerCase() // turning to lowercase result is the same thing
-                    ) {
-                        // delete whitespace in front
-                        rangesToDelete.add(zzz + 1, y + 1);
-                      } else {
-                      // normal deletion range - bail, don't include the whitespace
-                      rangesToDelete.add(matchedRangeTag.i - 1, y + 1); // just delete the range
-                    }
-                  } else {
-                    // still delete but without whitespace
-                    rangesToDelete.add(matchedRangeTag.i - 1, y + 1); // just delete the range
-                  }
+          // Let's traverse the string to the right of the current index and extend
+          // to cover any whitespace.
+          if (str[i + 1] !== undefined) {
+            for (var _z = i + 1; _z < len; _z++) {
+              if (str[_z].trim() !== '' || // if it's not a whitespace
+              _z === len - 1 // or end of file reached...
+              ) {
+                  deleteUpToIndex = _z; // ...extend the to-be-deleted range
                   break;
                 }
-              } else {
-                rangesToDelete.add(matchedRangeTag.i - 1, y + 1); // just delete the range
-                if (DEBUG) {
-                  console.log('! 412: added range for deletion: [' + (matchedRangeTag.i - 1) + ', ' + (y + 1) + ']');
-                }
-              }
-              if (DEBUG) {
-                console.log('str[y + 1]=' + str[y + 1]);
-              }
-              if (DEBUG) {
-                console.log('str[matchedRangeTag.i - 2]=>>>>' + str[matchedRangeTag.i - 2] + '<<<<');
+            }
+          }
+
+          // At this moment, we have the range [deleteFromIndex, deleteUpToIndex]
+
+          // The only question left is, do we need to compensate for deleted
+          // whitespace? There are quite few considerations to make before answering...
+
+          if (deleteFromIndex !== 0 && // if deletion happens up to the beginning,
+          // there's no need to add any whitespace to compensate.
+
+          deleteUpToIndex !== len && // if deletion reached up to the end of
+          // the string, also, there's no need to add any whitespace to compensate.
+
+          !punctuation.includes(str[deleteUpToIndex]) // make sure the character that follows
+          // the to-be-deleted range is not punctuation mark. We don't want
+          // to add any spaces/linebreaks in front of punctuation marks.
+          ) {
+              insertThisInPlace = ' ';
+              var temp = str.slice(deleteFromIndex, deleteUpToIndex);
+              if (temp.includes('\n') || temp.includes('\r')) {
+                insertThisInPlace = '\n';
               }
             }
-            i = y - 1; // + 1
-            if (DEBUG) {
-              console.log('i = ' + JSON.stringify(i, null, 4));
-            }
-            matchedRangeTag = {};
-            if (DEBUG) {
-              console.log('matchedRangeTag = ' + JSON.stringify(matchedRangeTag, null, 4));
+          // if (DEBUG) { console.log(`insertThisInPlace = ${JSON.stringify(insertThisInPlace, null, 4)}`) }
+
+          if (str[deleteUpToIndex] !== undefined && punctuation.includes(str[deleteUpToIndex])) {
+            insertThisInPlace = null;
+          }
+          rangesToDelete.add(deleteFromIndex, deleteUpToIndex, insertThisInPlace);
+          // if (DEBUG) { console.log(`! 328: added range for deletion: [${deleteFromIndex}, ${deleteUpToIndex}, '${insertThisInPlace}']`) }
+          // reset everything:
+          state = 'normal';
+          deleteFromIndex = null;
+          tagMightHaveStarted = false;
+        } else if (state === 'sensitive') {
+          if (deleteFromIndex + 1 < i && definitelyTagNames.concat(singleLetterTags).includes(trimChars(str.slice(deleteFromIndex + 1, i).trim().toLowerCase(), ' /'))) {
+            // if (DEBUG) { console.log(`* adding range: ${str.slice(deleteFromIndex, i + 1)}`) }
+            // if (DEBUG) { console.log(`! str[deleteFromIndex] = ${JSON.stringify(str[deleteFromIndex], null, 4)}`) }
+            // if (DEBUG) { console.log(`! str[i + 1] = ${JSON.stringify(str[i + 1], null, 4)}`) }
+            if (existy(str[deleteFromIndex - 1]) && str[deleteFromIndex - 1].trim() !== '' && existy(str[i + 1]) && str[i + 1].trim() !== '' && !punctuation.includes(str[i + 1])) {
+              // if (DEBUG) { console.log('3') }
+              rangesToDelete.add(deleteFromIndex, i + 1, ' ');
+              // if (DEBUG) { console.log(`! 350: added range for deletion: [${deleteFromIndex}, ${i + 1}, ' ']`) }
+            } else {
+              // if (DEBUG) { console.log('4') }
+              rangesToDelete.add(deleteFromIndex, i + 1);
+              // if (DEBUG) { console.log(`! 355: added range for deletion: [${deleteFromIndex}, ${i + 1}]`) }
+              deleteFromIndex = null;
             }
             state = 'normal';
             deleteFromIndex = null;
-            if (DEBUG) {
-              console.log('state = ' + JSON.stringify(state, null, 4));
-            }
-            break;
-          }
-        }
-        continue;
-      } else if (!matchedRangeTag.name && (
-      //
-      // case 2.
-      // if no opening tags from the "whole-tag-pair-with-their-contents-to-delete"
-      // list were detected yet, perform some checks based on efficient current
-      // character's index comparison to save CPU rounds and make it run faster.
-      isArr(stripTogetherWithTheirContentsRange) && str[i].charCodeAt(0) >= stripTogetherWithTheirContentsRange[0] && str[i].charCodeAt(0) <= stripTogetherWithTheirContentsRange[1] || isNum(stripTogetherWithTheirContentsRange) && str[i].charCodeAt(0) === stripTogetherWithTheirContentsRange)) {
-        if (DEBUG) {
-          console.log('* case #2');
-        }
-        if (opts.stripTogetherWithTheirContents.some(function (tag) {
-          if (DEBUG) {
-            console.log('checking tag: ' + tag);
-          }
-          if (matchRightIncl(str, i, tag, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/' })) {
-            matchedRangeTag.name = tag;
-            matchedRangeTag.i = i;
-            if (DEBUG) {
-              console.log('\n\n\n\n\n!!!\n\nmatchedRangeTag = ' + JSON.stringify(matchedRangeTag, null, 4));
-            }
-            // i += tag.length
-            return true;
-          }
-          return false;
-        })) {
-          if (DEBUG) {
-            console.log('\n\n\n' + matchedRangeTag.name + ' MATCHED! index = ' + i + '\n\n\n');
+            tagMightHaveStarted = false;
           }
         }
       }
-    }
 
     // -----------------------------------------------------
     // catch characters that are red flags what means now, more than likely, it's
@@ -458,26 +338,15 @@ function stripHtml(str, originalOpts) {
       state = 'delete';
     }
 
-    if (DEBUG) {
-      console.log('\n\n* ended with state: ' + state);
-    }
-    if (DEBUG) {
-      console.log('* matchedRangeTag = ' + JSON.stringify(matchedRangeTag, null, 4));
-    }
-    if (DEBUG) {
-      console.log('* ended with deleteFromIndex = ' + deleteFromIndex);
-    }
-    if (DEBUG) {
-      console.log('* ended with state = ' + state);
-    }
+    // if (DEBUG) { console.log(`\n\n* ended with state: ${state}`) }
+    // if (DEBUG) { console.log(`* matchedRangeTag = ${JSON.stringify(matchedRangeTag, null, 4)}`) }
+    // if (DEBUG) { console.log(`* ended with deleteFromIndex = ${deleteFromIndex}`) }
+    // if (DEBUG) { console.log(`* ended with state = ${state}`) }
+    // if (DEBUG) { console.log(`* ended with tagMightHaveStarted = ${tagMightHaveStarted}`) }
   }
 
-  if (DEBUG) {
-    console.log('FINAL rangesToDelete = ' + JSON.stringify(rangesToDelete, null, 4));
-  }
-  if (DEBUG) {
-    console.log('FINAL rangesToDelete.current() = ' + JSON.stringify(rangesToDelete.current(), null, 4));
-  }
+  // if (DEBUG) { console.log(`FINAL rangesToDelete = ${JSON.stringify(rangesToDelete, null, 4)}`) }
+  // if (DEBUG) { console.log(`FINAL rangesToDelete.current() = ${JSON.stringify(rangesToDelete.current(), null, 4)}`) }
   if (rangesToDelete.current()) {
     return replaceSlicesArr(str, rangesToDelete.current()).trim();
   }

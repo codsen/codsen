@@ -128,9 +128,9 @@
     "check-types-mini": "^3.0.2",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
-    "string-match-left-right": "^2.0.4",
-    "string-replace-slices-array": "^2.0.6",
-    "string-slices-array-push": "^2.1.4"
+    "string-match-left-right": "^2.0.6",
+    "string-replace-slices-array": "^2.0.7",
+    "string-slices-array-push": "^2.2.0"
   },
   "devDependencies": {
     "ava": "^0.24.0",
@@ -142,11 +142,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.53.0",
+    "rollup": "^0.53.2",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.2"
+    "uglify-es": "^3.3.4"
   }
 }
