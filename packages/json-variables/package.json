@@ -137,11 +137,12 @@
     "lodash.includes": "*",
     "lodash.trim": "*",
     "matcher": "^1.0.0",
-    "num-sort": "^1.0.0",
     "object-path": "^0.11.4",
+    "posthtml-ast-is-empty": "^3.0.3",
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^2.0.2",
-    "string-find-heads-tails": "^1.0.1",
+    "string-convert-indexes": "^1.1.0",
+    "string-find-heads-tails": "^3.1.0",
     "string-length": "^2.0.0",
     "string-slice": "^0.1.0",
     "type-detect": "^4.0.5"
@@ -156,11 +157,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.53.0",
+    "rollup": "^0.53.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.2"
+    "uglify-es": "^3.3.4"
   }
 }

@@ -26,14 +26,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-    - [inputOriginal](#inputoriginal)
-    - [options](#options)
 - [Use examples](#use-examples)
-  - [Data containers](#data-containers)
-  - [Ignores with wildcards](#ignores-with-wildcards)
-  - [Wrapping](#wrapping)
-    - [In practice:](#in-practice)
-  - [Mixing Booleans and strings](#mixing-booleans-and-strings)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -56,9 +49,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 24&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 24&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 63&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 26&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 26&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 87&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -551,7 +544,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables

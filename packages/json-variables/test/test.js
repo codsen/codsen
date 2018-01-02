@@ -2,7 +2,7 @@
 
 import test from 'ava'
 import jv from '../dist/json-variables.cjs'
-import { aContainsB, extractVarsFromString, findLastInArray, aStartsWithB, fixOffset, front, splitObjectPath } from '../dist/utils.cjs'
+import { extractVarsFromString, findLastInArray, fixOffset, front, splitObjectPath } from '../dist/utils.cjs'
 
 // -----------------------------------------------------------------------------
 // 02. BAU
@@ -1460,48 +1460,6 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
   t.deepEqual(
     jv(
       {
-        a: 'some text %%_var1-%% more text %%_var2_%%',
-        b: 'something',
-        var1: 'value1',
-        var2: 'value2',
-      },
-      {
-        wrapHeadsWith: '{{ ',
-        wrapTailsWith: ' }}',
-      },
-    ),
-    {
-      a: 'some text {{ value1 more text {{ value2 }}',
-      b: 'something',
-      var1: 'value1',
-      var2: 'value2',
-    },
-    '07.01.02 - left side wrapped only, defaults',
-  )
-  t.deepEqual(
-    jv(
-      {
-        a: 'some text %%-var1_%% more text %%_var2_%%',
-        b: 'something',
-        var1: 'value1',
-        var2: 'value2',
-      },
-      {
-        wrapHeadsWith: '{{ ',
-        wrapTailsWith: ' }}',
-      },
-    ),
-    {
-      a: 'some text value1 }} more text {{ value2 }}',
-      b: 'something',
-      var1: 'value1',
-      var2: 'value2',
-    },
-    '07.01.03 - right side wrapped only, defaults',
-  )
-  t.deepEqual(
-    jv(
-      {
         a: 'some text (( var1 )) more text %%_var2_%%',
         b: 'something',
         var1: 'value1',
@@ -1525,7 +1483,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
   t.deepEqual(
     jv(
       {
-        a: 'some text %%_var1 )) more text %%_var2_%%',
+        a: 'some text (( var1 )) more text %%_var2_%%',
         b: 'something',
         var1: 'value1',
         var2: 'value2',
@@ -1538,7 +1496,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
       },
     ),
     {
-      a: 'some text {{ value1 more text {{ value2 }}',
+      a: 'some text value1 more text {{ value2 }}',
       b: 'something',
       var1: 'value1',
       var2: 'value2',
@@ -1548,7 +1506,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
   t.deepEqual(
     jv(
       {
-        a: 'some text (( var1_%% more text %%_var2_%%',
+        a: 'some text (( var1 )) more text %%_var2_%%',
         b: 'something',
         var1: 'value1',
         var2: 'value2',
@@ -1561,7 +1519,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
       },
     ),
     {
-      a: 'some text value1 }} more text {{ value2 }}',
+      a: 'some text value1 more text {{ value2 }}',
       b: 'something',
       var1: 'value1',
       var2: 'value2',
@@ -2385,7 +2343,7 @@ test('11.04 - multi-level + from array + root data store + ignores', (t) => {
 // 12. Potentially clashing combos of characters
 // -----------------------------------------------------------------------------
 
-test.only('12.01 - surrounding underscores - sneaky similarity with wrong side brackets', (t) => {
+test('12.01 - surrounding underscores - sneaky similarity with wrong side brackets', (t) => {
   t.deepEqual(
     jv({
       a: 'joined with an underscores: %%_var1_%%_%%_var2_%%',
@@ -2401,42 +2359,21 @@ test.only('12.01 - surrounding underscores - sneaky similarity with wrong side b
     },
     '12.01.01',
   )
-  // t.deepEqual(
-  //   jv({
-  //     a: 'joined with an underscores: {{var1}{var2}',
-  //     b: 'something',
-  //     var1: 'value1',
-  //     var2: 'value2',
-  //   }, {
-  //     heads: '{',
-  //     tails: '}',
-  //   }),
-  //   {
-  //     a: 'joined with an underscores: {value1value2',
-  //     b: 'something',
-  //     var1: 'value1',
-  //     var2: 'value2',
-  //   },
-  //   '12.01.02',
-  // )
-  // t.deepEqual(
-  //   jv({
-  //     a: 'joined with an underscores: }{var1}{var2}',
-  //     b: 'something',
-  //     var1: 'value1',
-  //     var2: 'value2',
-  //   }, {
-  //     heads: '{',
-  //     tails: '}',
-  //   }),
-  //   {
-  //     a: 'joined with an underscores: }value1value2',
-  //     b: 'something',
-  //     var1: 'value1',
-  //     var2: 'value2',
-  //   },
-  //   '12.01.03',
-  // )
+  t.deepEqual(
+    jv({
+      a: 'joined with an dashes: %%-var1-%%-%%-var2-%%',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'joined with an dashes: value1-value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '12.01.02',
+  )
 })
 
 // -----------------------------------------------------------------------------
@@ -2548,46 +2485,6 @@ test('95.01 - UTIL > fixOffset', (t) => {
 })
 
 // -----------------------------------------------------------------------------
-// 96. UTIL - aStartsWithB()
-// -----------------------------------------------------------------------------
-
-test('96.01 - UTIL > aStartsWithB - when inputs are falsey, always return false', (t) => {
-  t.deepEqual(
-    aStartsWithB(),
-    false,
-    '96.01.01',
-  )
-  t.deepEqual(
-    aStartsWithB('zzz'),
-    false,
-    '96.01.02',
-  )
-})
-
-test('96.02 - UTIL > aStartsWithB - normal working', (t) => {
-  t.deepEqual(
-    aStartsWithB('aaa', 'a'),
-    true,
-    '96.02.01',
-  )
-  t.deepEqual(
-    aStartsWithB('aaa', 'z'),
-    false,
-    '96.02.02',
-  )
-  t.deepEqual(
-    aStartsWithB('aaa', 'A'),
-    false,
-    '96.02.03',
-  )
-  t.deepEqual(
-    aStartsWithB('', 'A'),
-    false,
-    '96.02.04',
-  )
-})
-
-// -----------------------------------------------------------------------------
 // 97. UTIL - findLastInArray()
 // -----------------------------------------------------------------------------
 
@@ -2596,36 +2493,6 @@ test('97.01 - UTIL > findLastInArray - normal use', (t) => {
     findLastInArray(['something', 'anything']),
     null,
     '97.01',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 98. UTIL - aContainsB()
-// -----------------------------------------------------------------------------
-
-test('98.01 - UTIL > aContainsB - false', (t) => {
-  t.deepEqual(
-    aContainsB(),
-    false,
-    '98.01.01',
-  )
-  t.deepEqual(
-    aContainsB('a'),
-    false,
-    '98.01.02',
-  )
-})
-
-test('98.02 - UTIL > aContainsB - normal contains function', (t) => {
-  t.deepEqual(
-    aContainsB('a b c', 'c'),
-    true,
-    '98.02.01',
-  )
-  t.deepEqual(
-    aContainsB('a b c', 'd'),
-    false,
-    '98.02.02',
   )
 })
 
@@ -2721,8 +2588,8 @@ test('99.11 - UTIL > extractVarsFromString - multiple heads/tails', (t) => {
   t.deepEqual(
     extractVarsFromString(
       'text %%-var1-%% more text\n%%_var2_%% and more text',
-      ['%%_', '%%-'],
-      ['_%%', '-%%'],
+      ['%%-', '%%_'],
+      ['-%%', '_%%'],
     ),
     ['var1', 'var2'],
     '99.11',

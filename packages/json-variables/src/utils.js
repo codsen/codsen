@@ -7,27 +7,10 @@ import strLen from 'string-length'
 import trim from 'lodash.trim'
 import includes from 'lodash.includes'
 import clone from 'lodash.clonedeep'
-import numSort from 'num-sort'
 import traverse from 'ast-monkey-traverse'
 import arrayiffyIfString from 'arrayiffy-if-string'
-import strFindHeadsTails from 'string-find-heads-tails'
 
 function existy(x) { return x != null }
-function truthy(x) { return (x !== false) && existy(x) }
-
-function aContainsB(a, b) {
-  if (arguments.length < 2) {
-    return false
-  }
-  return String(a).indexOf(String(b)) >= 0
-}
-
-function aStartsWithB(a, b) {
-  if (!truthy(a) || !truthy(b)) {
-    return false
-  }
-  return a.indexOf(b) === 0
-}
 
 function isStr(something) { return typ(something) === 'string' }
 
@@ -44,12 +27,19 @@ function findLastInArray(array, val) {
   return res
 }
 
+// This function consumes a string, a set of heads and tails, and returns an
+// array of substrings between each head and tail.
+// For example,
+// some text %%_var1_%% more text %%_var2_%%
+// would yield:
+// [ "var1", "var2" ]
+//
 // since v.1.1 str can be equal to heads or tails - there won't be any results
 // though (result will be empty array)
 function extractVarsFromString(str, heads, tails) {
-  console.log(`--------------------\nstr = ${JSON.stringify(str, null, 4)}`)
-  console.log(`heads = ${JSON.stringify(heads, null, 4)}`)
-  console.log(`tails = ${JSON.stringify(tails, null, 4)}`)
+  // console.log(`--------------------\nstr = ${JSON.stringify(str, null, 4)}`)
+  // console.log(`heads = ${JSON.stringify(heads, null, 4)}`)
+  // console.log(`tails = ${JSON.stringify(tails, null, 4)}`)
   if (arguments.length === 0) {
     throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_01] inputs missing!')
   }
@@ -71,17 +61,15 @@ function extractVarsFromString(str, heads, tails) {
   }
   heads = arrayiffyIfString(clone(heads))
   tails = arrayiffyIfString(clone(tails))
-  if (includes(heads, str) || includes(tails, str)) {
+  if (includes(heads, str) || includes(tails, str) || (str.length === 0)) {
     return []
   }
-  if (str.length === 0) {
-    return res
-  }
+
   // var foundHeads = search(str, heads)
   // var foundTails = search(str, tails)
-  const foundHeads = heads.reduce((acc, val) => acc.concat(search(str, val)), []).sort(numSort.asc)
+  const foundHeads = heads.reduce((acc, val) => acc.concat(search(str, val)), [])
 
-  const foundTails = tails.reduce((acc, val) => acc.concat(search(str, val)), []).sort(numSort.asc)
+  const foundTails = tails.reduce((acc, val) => acc.concat(search(str, val)), [])
 
   if ((foundHeads.length !== foundTails.length) && !includes(heads, str) && !includes(tails, str)) {
     throw new Error(`json-variables/util.js/extractVarsFromString(): [THROW_ID_05] Mismatching heads and tails in the input:\n${str}`)
@@ -92,7 +80,7 @@ function extractVarsFromString(str, heads, tails) {
   let currentHeadLength
   for (let i = 0, len = foundHeads.length; i < len; i++) {
     heads.forEach((el) => {
-      if (aStartsWithB(slice(str, foundHeads[i]), el)) {
+      if (slice(str, foundHeads[i]).startsWith(el)) {
         currentHeadLength = strLen(el)
       }
     })
@@ -147,8 +135,6 @@ function splitObjectPath(str) {
 }
 
 export {
-  aContainsB,
-  aStartsWithB,
   extractVarsFromString,
   findLastInArray,
   fixOffset,
