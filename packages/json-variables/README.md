@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Postprocessor for JSON to allow keys referencing keys
+> Preprocessor for JSON to allow keys referencing keys
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
