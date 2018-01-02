@@ -28,9 +28,6 @@
 - [Purpose](#purpose)
 - [Usage](#usage)
 - [API](#api)
-  - [API - Input](#api---input)
-  - [Optional Options Object](#optional-options-object)
-  - [API - Output](#api---output)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -54,7 +51,7 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-find-heads-tails.cjs.js` | 13&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-find-heads-tails.esm.js` | 12&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-find-heads-tails.esm.js` | 13&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-find-heads-tails.umd.js` | 39&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
@@ -176,7 +173,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-find-heads-tails.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-find-heads-tails

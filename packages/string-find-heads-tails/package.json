@@ -131,7 +131,7 @@
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.1",
-    "string-match-left-right": "^2.0.3"
+    "string-match-left-right": "^2.0.6"
   },
   "devDependencies": {
     "ava": "*",
@@ -144,11 +144,11 @@
     "eslint-plugin-security": "^1.4.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.53.0",
+    "rollup": "^0.53.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.2"
+    "uglify-es": "^3.3.4"
   }
 }

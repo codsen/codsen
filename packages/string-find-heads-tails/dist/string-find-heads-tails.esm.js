@@ -60,7 +60,7 @@ function strFindHeadsTails() {
       throw new TypeError('string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
     } else if (!heads.every(function (val, index) {
       culpritsIndex = index;
-      return val.length > 0 && val.trim() !== '';
+      return isStr(val) && val.length > 0 && val.trim() !== '';
     })) {
       throw new TypeError('string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
     }
@@ -86,7 +86,7 @@ function strFindHeadsTails() {
       throw new TypeError('string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
     } else if (!tails.every(function (val, index) {
       culpritsIndex = index;
-      return val.length > 0 && val.trim() !== '';
+      return isStr(val) && val.length > 0 && val.trim() !== '';
     })) {
       throw new TypeError('string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
     }
@@ -107,16 +107,20 @@ function strFindHeadsTails() {
   };
   opts = Object.assign({}, defaults, opts);
   checkTypes(opts, defaults, { msg: 'string-find-heads-tails: [THROW_ID_14*]' });
+
+  // inner variable meaning is opts.source the default-one
+  var s = opts.source === defaults.source;
+
   if (opts.throwWhenSomethingWrongIsDetected && !opts.allowWholeValueToBeOnlyHeadsOrTails) {
     if (includes(arrayiffy(heads), str)) {
-      throw new Error(opts.source + ': [THROW_ID_16] the whole input string can\'t be equal to ' + (isStr(heads) ? '' : 'one of ') + 'heads (' + str + ')!');
+      throw new Error('' + opts.source + (s ? ': [THROW_ID_16]' : '') + ' the whole input string can\'t be equal to ' + (isStr(heads) ? '' : 'one of ') + 'heads (' + str + ')!');
     } else if (includes(arrayiffy(tails), str)) {
-      throw new Error(opts.source + ': [THROW_ID_17] the whole input string can\'t be equal to ' + (isStr(tails) ? '' : 'one of ') + 'tails (' + str + ')!');
+      throw new Error('' + opts.source + (s ? ': [THROW_ID_17]' : '') + ' the whole input string can\'t be equal to ' + (isStr(tails) ? '' : 'one of ') + 'tails (' + str + ')!');
     }
   }
 
   if (!isInt(opts.fromIndex, { includeZero: true }) && !isNumStr(opts.fromIndex, { includeZero: true })) {
-    throw new TypeError(opts.source + ': [THROW_ID_18] the fourth input argument must be a natural number! Currently it\'s: ' + opts.fromIndex);
+    throw new TypeError('' + opts.source + (s ? ': [THROW_ID_18]' : '') + ' the fourth input argument must be a natural number! Currently it\'s: ' + opts.fromIndex);
   }
 
   //
@@ -199,7 +203,7 @@ function strFindHeadsTails() {
           }
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
-          throw new TypeError(opts.source + ': [THROW_ID_19] When processing "' + str + '", we found heads (' + str.slice(i, i + matchedHeads.length) + ') but there were no tails preceding it! Instead there was another set of heads before it! That\'s very naughty!');
+          throw new TypeError('' + opts.source + (s ? ': [THROW_ID_19]' : '') + ' When processing "' + str + '", we found heads (' + str.slice(i, i + matchedHeads.length) + ') but there were no tails preceding it! Instead there was another set of heads before it! That\'s very naughty!');
         }
       }
       var matchedTails = matchRightIncl(str, i, tails);
@@ -217,7 +221,7 @@ function strFindHeadsTails() {
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
           // this means it's tails found, without preceding heads
-          tailSuspicionRaised = opts.source + ': [THROW_ID_20] When processing "' + str + '", we found tails (' + str.slice(i, i + matchedTails.length) + ') but there were no heads preceding it. That\'s very naughty!';
+          tailSuspicionRaised = '' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we found tails (' + str.slice(i, i + matchedTails.length) + ') but there were no heads preceding it. That\'s very naughty!';
           // if (DEBUG) { console.log(`!!! tailSuspicionRaised = ${!!tailSuspicionRaised}`) }
         }
       }
@@ -231,7 +235,7 @@ function strFindHeadsTails() {
       // if (DEBUG) { console.log('1.') }
       if (Object.keys(tempResObj).length !== 0) {
         // if (DEBUG) { console.log('2.') }
-        throw new TypeError(opts.source + ': [THROW_ID_21] When processing "' + str + '", we reached the end of the string and yet didn\'t find any tails (' + JSON.stringify(tails, null, 4) + ') to match the last detected heads (' + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ')!');
+        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_21]' : '') + ' When processing "' + str + '", we reached the end of the string and yet didn\'t find any tails (' + JSON.stringify(tails, null, 4) + ') to match the last detected heads (' + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ')!');
       } else if (tailSuspicionRaised) {
         // if (DEBUG) { console.log('3.') }
         throw new Error(tailSuspicionRaised);

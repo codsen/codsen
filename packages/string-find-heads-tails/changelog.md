@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2018-01-02
+No new features, only under-bonnet improvements.
+
+### Added
+- ✨ Pinned all unit tests' throws to exact errors. Practically, this means we test not only does it throw in particular case, but also does it raise the exact error that we intended to raise.
+
 ## [3.0.0] - 2017-12-28
 ### Breaking API changes
 - ✨ Moved fourth argument, `fromIndex`, into `opts` because it stood in the way.
@@ -51,5 +57,6 @@ now the same example in `v.2` API:
 ### New
 - ✨ First public release
 
+[3.1.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/string-find-heads-tails/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/codsen/string-find-heads-tails/compare/v1.0.0...v2.0.0
