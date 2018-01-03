@@ -23,74 +23,8 @@ function mandatory(i) {
   throw new Error('string-find-heads-tails: [THROW_ID_01*] Missing ' + ordinal(i) + ' parameter!');
 }
 
-function strFindHeadsTails() {
-  var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
-  var heads = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
-  var tails = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : mandatory(3);
-  var opts = arguments[3];
-
+function strFindHeadsTails(str, heads, tails, opts) {
   // const DEBUG = 0
-  //
-  // insurance
-  // ---------
-  if (!isStr(str) || str.length === 0) {
-    throw new TypeError('string-find-heads-tails: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + str);
-  }
-
-  var culpritsVal = void 0;
-  var culpritsIndex = void 0;
-
-  // - for heads
-  if (!isStr(heads) && !isArr(heads)) {
-    throw new TypeError('string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it\'s: ' + (typeof heads === 'undefined' ? 'undefined' : _typeof(heads)) + ', equal to:\n' + JSON.stringify(heads, null, 4));
-  } else if (isStr(heads)) {
-    if (heads.length === 0) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it\'s empty.');
-    } else {
-      heads = arrayiffy(heads);
-    }
-  } else if (isArr(heads)) {
-    if (heads.length === 0) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_05] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it\'s empty.');
-    } else if (!heads.every(function (val, index) {
-      culpritsVal = val;
-      culpritsIndex = index;
-      return isStr(val);
-    })) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
-    } else if (!heads.every(function (val, index) {
-      culpritsIndex = index;
-      return isStr(val) && val.length > 0 && val.trim() !== '';
-    })) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
-    }
-  }
-
-  // - for tails
-  if (!isStr(tails) && !isArr(tails)) {
-    throw new TypeError('string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it\'s: ' + (typeof tails === 'undefined' ? 'undefined' : _typeof(tails)) + ', equal to:\n' + JSON.stringify(tails, null, 4));
-  } else if (isStr(tails)) {
-    if (tails.length === 0) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it\'s empty.');
-    } else {
-      tails = arrayiffy(tails);
-    }
-  } else if (isArr(tails)) {
-    if (tails.length === 0) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_10] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it\'s empty.');
-    } else if (!tails.every(function (val, index) {
-      culpritsVal = val;
-      culpritsIndex = index;
-      return isStr(val);
-    })) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
-    } else if (!tails.every(function (val, index) {
-      culpritsIndex = index;
-      return isStr(val) && val.length > 0 && val.trim() !== '';
-    })) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
-    }
-  }
   // prep opts
   if (existy(opts)) {
     if (!isObj(opts)) {
@@ -104,10 +38,142 @@ function strFindHeadsTails() {
     throwWhenSomethingWrongIsDetected: true,
     allowWholeValueToBeOnlyHeadsOrTails: true,
     source: 'string-find-heads-tails',
-    matchHeadsAndTailsStrictlyInPairsByTheirOrder: false
+    matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
+    relaxedAPI: false
   };
   opts = Object.assign({}, defaults, opts);
   checkTypes(opts, defaults, { msg: 'string-find-heads-tails: [THROW_ID_14*]' });
+
+  //
+  // insurance
+  // ---------
+  if (!opts.relaxedAPI) {
+    if (str === undefined) {
+      mandatory(1);
+    }
+    if (heads === undefined) {
+      mandatory(2);
+    }
+    if (tails === undefined) {
+      mandatory(3);
+    }
+  }
+
+  if (!isStr(str) || str.length === 0) {
+    if (opts.relaxedAPI) {
+      return [];
+    }
+    throw new TypeError('string-find-heads-tails: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + str);
+  }
+
+  var culpritsVal = void 0;
+  var culpritsIndex = void 0;
+
+  // - for heads
+  if (!isStr(heads) && !isArr(heads)) {
+    if (opts.relaxedAPI) {
+      return [];
+    }
+    throw new TypeError('string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it\'s: ' + (typeof heads === 'undefined' ? 'undefined' : _typeof(heads)) + ', equal to:\n' + JSON.stringify(heads, null, 4));
+  } else if (isStr(heads)) {
+    if (heads.length === 0) {
+      if (opts.relaxedAPI) {
+        return [];
+      }
+      throw new TypeError('string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it\'s empty.');
+    } else {
+      heads = arrayiffy(heads);
+    }
+  } else if (isArr(heads)) {
+    if (heads.length === 0) {
+      if (opts.relaxedAPI) {
+        return [];
+      }
+      throw new TypeError('string-find-heads-tails: [THROW_ID_05] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it\'s empty.');
+    } else if (!heads.every(function (val, index) {
+      culpritsVal = val;
+      culpritsIndex = index;
+      return isStr(val);
+    })) {
+      if (opts.relaxedAPI) {
+        heads = heads.filter(function (el) {
+          return isStr(el) && el.length > 0;
+        });
+        if (heads.length === 0) {
+          return [];
+        }
+      } else {
+        throw new TypeError('string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
+      }
+    } else if (!heads.every(function (val, index) {
+      culpritsIndex = index;
+      return isStr(val) && val.length > 0 && val.trim() !== '';
+    })) {
+      if (opts.relaxedAPI) {
+        heads = heads.filter(function (el) {
+          return isStr(el) && el.length > 0;
+        });
+        if (heads.length === 0) {
+          return [];
+        }
+      } else {
+        throw new TypeError('string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
+      }
+    }
+  }
+
+  // - for tails
+  if (!isStr(tails) && !isArr(tails)) {
+    if (opts.relaxedAPI) {
+      return [];
+    }
+    throw new TypeError('string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it\'s: ' + (typeof tails === 'undefined' ? 'undefined' : _typeof(tails)) + ', equal to:\n' + JSON.stringify(tails, null, 4));
+  } else if (isStr(tails)) {
+    if (tails.length === 0) {
+      if (opts.relaxedAPI) {
+        return [];
+      }
+      throw new TypeError('string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it\'s empty.');
+    } else {
+      tails = arrayiffy(tails);
+    }
+  } else if (isArr(tails)) {
+    if (tails.length === 0) {
+      if (opts.relaxedAPI) {
+        return [];
+      }
+      throw new TypeError('string-find-heads-tails: [THROW_ID_10] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it\'s empty.');
+    } else if (!tails.every(function (val, index) {
+      culpritsVal = val;
+      culpritsIndex = index;
+      return isStr(val);
+    })) {
+      if (opts.relaxedAPI) {
+        tails = tails.filter(function (el) {
+          return isStr(el) && el.length > 0;
+        });
+        if (tails.length === 0) {
+          return [];
+        }
+      } else {
+        throw new TypeError('string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
+      }
+    } else if (!tails.every(function (val, index) {
+      culpritsIndex = index;
+      return isStr(val) && val.length > 0 && val.trim() !== '';
+    })) {
+      if (opts.relaxedAPI) {
+        tails = tails.filter(function (el) {
+          return isStr(el) && el.length > 0;
+        });
+        if (tails.length === 0) {
+          return [];
+        }
+      } else {
+        throw new TypeError('string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '.');
+      }
+    }
+  }
 
   // inner variable meaning is opts.source the default-one
   var s = opts.source === defaults.source;

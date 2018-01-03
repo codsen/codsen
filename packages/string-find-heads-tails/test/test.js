@@ -71,6 +71,11 @@ test('01.03 - throws when the second argument, heads, is not a string', (t) => {
 })
 
 test('01.04 - throws when the third argument, tails, is not a string', (t) => {
+  const err0 = t.throws(() => {
+    strFindHeadsTails('a', 'a') // THROW_ID_01
+  })
+  t.truthy(err0.message.includes('THROW_ID_01'))
+
   const err1 = t.throws(() => {
     strFindHeadsTails('a', 'a', null) // THROW_ID_08
   })
@@ -540,4 +545,102 @@ test('02.06 - input is equal to heads or tails', (t) => {
   }) // equal to tails
   t.falsy(err32.message.includes('THROW_ID_17'))
   t.truthy(err32.message.includes('TEST 3.2'))
+})
+
+// -----------------------------------------------------------------------------
+// 03. opts.relaxedAPI
+// -----------------------------------------------------------------------------
+
+test('03.01 - opts.relaxedAPI - input string', (t) => {
+  t.deepEqual(
+    strFindHeadsTails(undefined, '%%_', '_%%', { relaxedAPI: true }),
+    [],
+    '03.01.01',
+  )
+  t.deepEqual(
+    strFindHeadsTails('', '%%_', '_%%', { relaxedAPI: true }),
+    [],
+    '03.01.02',
+  )
+  t.deepEqual(
+    strFindHeadsTails(null, '%%_', '_%%', { relaxedAPI: true }),
+    [],
+    '03.01.03',
+  )
+})
+
+test('03.02 - opts.relaxedAPI - heads', (t) => {
+  t.deepEqual(
+    strFindHeadsTails('aaa', undefined, '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.01',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '', '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.02',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', [], '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.03',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', [''], '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.04',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', null, '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.05',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', [null], '_%%', { relaxedAPI: true }),
+    [],
+    '03.02.06',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa %%_test_%% bbb', ['', '%%_', undefined, 1], ['_%%', '', null], { relaxedAPI: true }),
+    [{
+      headsStartAt: 4,
+      headsEndAt: 7,
+      tailsStartAt: 11,
+      tailsEndAt: 14,
+    }],
+    '03.02.07',
+  )
+})
+
+test('03.03 - opts.relaxedAPI - tails', (t) => {
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', undefined, { relaxedAPI: true }),
+    [],
+    '03.03.01',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', '', { relaxedAPI: true }),
+    [],
+    '03.03.02',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', [], { relaxedAPI: true }),
+    [],
+    '03.03.03',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', [''], { relaxedAPI: true }),
+    [],
+    '03.03.04',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', null, { relaxedAPI: true }),
+    [],
+    '03.03.05',
+  )
+  t.deepEqual(
+    strFindHeadsTails('aaa', '%%_', [null, 1], { relaxedAPI: true }),
+    [],
+    '03.03.06',
+  )
 })
