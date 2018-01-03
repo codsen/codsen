@@ -135,38 +135,53 @@ test('01.05 - throws when the fourth argument, opts, is of a wrong type', (t) =>
     strFindHeadsTails('a', 'a', 'a', { fromIndex: 1.5 }) // not a natural number
   })
   t.truthy(err2.message.includes('THROW_ID_18'))
+  const err22 = t.throws(() => {
+    strFindHeadsTails('a', 'a', 'a', { fromIndex: 1.5, source: 'TEST 1.8:' }) // not a natural number
+  })
+  t.falsy(err22.message.includes('THROW_ID_18'))
+  t.truthy(err22.message.includes('TEST 1.8'))
 })
 
 test('01.06 - unmatched heads and tails', (t) => {
   const err1 = t.throws(() => {
     strFindHeadsTails('abc%%_def_%ghi', '%%_', '_%%')
   }) // sneaky - tails' second percentage char is missing, hence unrecognised and throws
-  t.truthy(err1.message.includes('THROW_ID_21'))
+  t.truthy(err1.message.includes('THROW_ID_22'))
 
   const err2 = t.throws(() => {
     strFindHeadsTails('abcdef', 'x', 'e') // heads not found
   })
-  t.truthy(err2.message.includes('THROW_ID_20'))
+  t.truthy(err2.message.includes('THROW_ID_21'))
 
   const err3 = t.throws(() => {
     strFindHeadsTails('abcdef', 'x', ['e', '$']) // heads not found
   })
-  t.truthy(err3.message.includes('THROW_ID_20'))
+  t.truthy(err3.message.includes('THROW_ID_21'))
 
   const err4 = t.throws(() => {
     strFindHeadsTails('abcdef', ['_', 'x'], ['e', '$']) // heads not found
   })
-  t.truthy(err4.message.includes('THROW_ID_20'))
+  t.truthy(err4.message.includes('THROW_ID_21'))
+  const err42 = t.throws(() => {
+    strFindHeadsTails('abcdef', ['_', 'x'], ['e', '$'], { source: 'TEST 4.2:' }) // heads not found
+  })
+  t.falsy(err42.message.includes('THROW_ID_21'))
+  t.truthy(err42.message.includes('TEST 4.2'))
 
   const err5 = t.throws(() => {
     strFindHeadsTails('abcdef', 'b', 'x') // tails not found
   })
-  t.truthy(err5.message.includes('THROW_ID_21'))
+  t.truthy(err5.message.includes('THROW_ID_22'))
+  const err52 = t.throws(() => {
+    strFindHeadsTails('abcdef', 'b', 'x', { source: 'TEST 5.2:' }) // tails not found
+  })
+  t.falsy(err52.message.includes('THROW_ID_22'))
+  t.truthy(err52.message.includes('TEST 5.2'))
 
   const err6 = t.throws(() => {
     strFindHeadsTails('abcdef', ['&', 'b'], 'x') // tails not found
   })
-  t.truthy(err6.message.includes('THROW_ID_21'))
+  t.truthy(err6.message.includes('THROW_ID_22'))
 
   t.notThrows(() => {
     strFindHeadsTails('abcdef', 'x', 'z') // both heads and tails not found - OK
@@ -177,32 +192,84 @@ test('01.07 - both heads and tails found but wrong order', (t) => {
   const err1 = t.throws(() => {
     strFindHeadsTails('abc___def---ghi', '---', '___') // opposite order
   })
-  t.truthy(err1.message.includes('THROW_ID_21'))
+  t.truthy(err1.message.includes('THROW_ID_22'))
 
   const err2 = t.throws(() => {
     strFindHeadsTails('abc___def---ghi', ['***', '---'], '___') // opposite order
   })
-  t.truthy(err2.message.includes('THROW_ID_21'))
+  t.truthy(err2.message.includes('THROW_ID_22'))
 
   const err3 = t.throws(() => {
     strFindHeadsTails('abc___def---ghi', ['***', '---'], ['^^^', '___']) // opposite order
   })
-  t.truthy(err3.message.includes('THROW_ID_21'))
+  t.truthy(err3.message.includes('THROW_ID_22'))
 
   const err4 = t.throws(() => {
     strFindHeadsTails('--a__bcdef**', ['--', '__'], ['**', '^^']) // two consecutive heads
   })
   t.truthy(err4.message.includes('THROW_ID_19'))
+  const err43 = t.throws(() => {
+    strFindHeadsTails('--a__bcdef**', ['--', '__'], ['**', '^^'], { source: 'TEST 4.3:' }) // two consecutive heads
+  })
+  t.falsy(err43.message.includes('THROW_ID_19'))
+  t.truthy(err43.message.includes('TEST 4.3'))
 
   const err5 = t.throws(() => {
     strFindHeadsTails('--a**bcdefghij^^', ['--', '__'], ['**', '^^']) // two consecutive tails
   })
-  t.truthy(err5.message.includes('THROW_ID_20'))
+  t.truthy(err5.message.includes('THROW_ID_21'))
 
   const err6 = t.throws(() => {
     strFindHeadsTails('--a^^bc__defghij', ['--', '__'], ['**', '^^']) // second heads unmatched
   })
-  t.truthy(err6.message.includes('THROW_ID_21'))
+  t.truthy(err6.message.includes('THROW_ID_22'))
+})
+
+test('01.08 - heads of one type, tails of another', (t) => {
+  t.deepEqual(
+    strFindHeadsTails(
+      'some text %%_var1-%% more text %%_var2_%%',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+    ),
+    [{
+      headsStartAt: 10,
+      headsEndAt: 13,
+      tailsStartAt: 17,
+      tailsEndAt: 20,
+    }, {
+      headsStartAt: 31,
+      headsEndAt: 34,
+      tailsStartAt: 38,
+      tailsEndAt: 41,
+    }],
+    '01.08 - default behaviour - not strict pair matching',
+  )
+  const err1 = t.throws(() => {
+    strFindHeadsTails(
+      'some text %%_var1-%% more text %%_var2_%%',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      {
+        matchHeadsAndTailsStrictlyInPairsByTheirOrder: true,
+      },
+    )
+  })
+  t.truthy(err1.message.includes('THROW_ID_20'))
+
+  const err2 = t.throws(() => {
+    strFindHeadsTails(
+      'some text %%_var1-%% more text %%_var2_%%',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      {
+        matchHeadsAndTailsStrictlyInPairsByTheirOrder: true,
+        source: 'TEST 1.08:',
+      },
+    )
+  })
+  t.falsy(err2.message.includes('THROW_ID_20'))
+  t.truthy(err2.message.includes('TEST 1.08'))
 })
 
 // -----------------------------------------------------------------------------
@@ -249,7 +316,7 @@ test('02.02 - multi-char markers', (t) => {
     strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', { fromIndex: 4 })
   }) // fromIndex prevented heads from being caught. Tails were caught, but
   // since opts.throwWhenSomethingWrongIsDetected is on, error is thrown.
-  t.truthy(err1.message.includes('THROW_ID_20'))
+  t.truthy(err1.message.includes('THROW_ID_21'))
 
   t.deepEqual(
     strFindHeadsTails('abc%%_def_%%ghi', '%%_', '_%%', { fromIndex: 4, throwWhenSomethingWrongIsDetected: false }),
@@ -305,7 +372,7 @@ test('02.04 - sneaky tails precede heads', (t) => {
   const err = t.throws(() => {
     strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%')
   })
-  t.truthy(err.message.includes('THROW_ID_21'))
+  t.truthy(err.message.includes('THROW_ID_22'))
 
   t.deepEqual(
     strFindHeadsTails('aaa_%%bbb%%_ccc', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: false }),
@@ -361,6 +428,11 @@ test('02.06 - input is equal to heads or tails', (t) => {
     strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false })
   }) // equal to heads
   t.truthy(err1.message.includes('THROW_ID_16'))
+  const err12 = t.throws(() => {
+    strFindHeadsTails('%%_', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false, source: 'TEST 1.6' })
+  }) // equal to heads
+  t.falsy(err12.message.includes('THROW_ID_16'))
+  t.truthy(err12.message.includes('TEST 1.6'))
 
   const err2 = t.throws(() => {
     strFindHeadsTails(
@@ -380,4 +452,9 @@ test('02.06 - input is equal to heads or tails', (t) => {
     strFindHeadsTails('_%%', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false })
   }) // equal to tails
   t.truthy(err3.message.includes('THROW_ID_17'))
+  const err32 = t.throws(() => {
+    strFindHeadsTails('_%%', '%%_', '_%%', { throwWhenSomethingWrongIsDetected: true, allowWholeValueToBeOnlyHeadsOrTails: false, source: 'TEST 3.2' })
+  }) // equal to tails
+  t.falsy(err32.message.includes('THROW_ID_17'))
+  t.truthy(err32.message.includes('TEST 3.2'))
 })

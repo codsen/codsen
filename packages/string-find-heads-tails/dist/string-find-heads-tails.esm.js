@@ -103,7 +103,8 @@ function strFindHeadsTails() {
     fromIndex: 0,
     throwWhenSomethingWrongIsDetected: true,
     allowWholeValueToBeOnlyHeadsOrTails: true,
-    source: 'string-find-heads-tails'
+    source: 'string-find-heads-tails',
+    matchHeadsAndTailsStrictlyInPairsByTheirOrder: false
   };
   opts = Object.assign({}, defaults, opts);
   checkTypes(opts, defaults, { msg: 'string-find-heads-tails: [THROW_ID_14*]' });
@@ -180,11 +181,24 @@ function strFindHeadsTails() {
   var tempResObj = {};
   var tailSuspicionRaised = false;
 
+  // if opts.opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder is on and heads
+  // matched was i-th in the array, we will record its index "i" and later match
+  // the next tails to be also "i-th". Or throw.
+  var strictMatcingIndex = void 0;
+
   for (var i = opts.fromIndex, len = str.length; i < len; i++) {
     var firstCharsIndex = str[i].charCodeAt(0);
     // if (DEBUG) { console.log(`---------------------------------------> ${str[i]} i=${i} (#${firstCharsIndex})`) }
     if (firstCharsIndex <= headsAndTailsFirstCharIndexesRange[1] && firstCharsIndex >= headsAndTailsFirstCharIndexesRange[0]) {
       var matchedHeads = matchRightIncl(str, i, heads);
+      if (matchedHeads && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder) {
+        for (var z = heads.length; z--;) {
+          if (heads[z] === matchedHeads) {
+            strictMatcingIndex = z;
+            break;
+          }
+        }
+      }
       // if (DEBUG) { console.log(`matchedHeads = ${JSON.stringify(matchedHeads, null, 4)}`) }
       if (matchedHeads) {
         if (!oneHeadFound) {
@@ -208,6 +222,19 @@ function strFindHeadsTails() {
       }
       var matchedTails = matchRightIncl(str, i, tails);
       // if (DEBUG) { console.log(`matchedTails = ${JSON.stringify(matchedTails, null, 4)}`) }
+
+      if (matchedTails && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder && tails[strictMatcingIndex] !== matchedTails) {
+        var temp = void 0;
+        // find out which index is "matchedTails" does have "tails":
+        for (var _z = tails.length; _z--;) {
+          if (tails[_z] === matchedTails) {
+            temp = _z;
+            break;
+          }
+        }
+        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (' + heads[strictMatcingIndex] + ') but the tails the followed it were not of the same index, ' + strictMatcingIndex + ' (' + tails[strictMatcingIndex] + ') but ' + temp + ' (' + matchedTails + ').');
+      }
+
       if (matchedTails) {
         if (oneHeadFound) {
           tempResObj.tailsStartAt = i;
@@ -221,7 +248,7 @@ function strFindHeadsTails() {
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
           // this means it's tails found, without preceding heads
-          tailSuspicionRaised = '' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we found tails (' + str.slice(i, i + matchedTails.length) + ') but there were no heads preceding it. That\'s very naughty!';
+          tailSuspicionRaised = '' + opts.source + (s ? ': [THROW_ID_21]' : '') + ' When processing "' + str + '", we found tails (' + str.slice(i, i + matchedTails.length) + ') but there were no heads preceding it. That\'s very naughty!';
           // if (DEBUG) { console.log(`!!! tailSuspicionRaised = ${!!tailSuspicionRaised}`) }
         }
       }
@@ -235,7 +262,7 @@ function strFindHeadsTails() {
       // if (DEBUG) { console.log('1.') }
       if (Object.keys(tempResObj).length !== 0) {
         // if (DEBUG) { console.log('2.') }
-        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_21]' : '') + ' When processing "' + str + '", we reached the end of the string and yet didn\'t find any tails (' + JSON.stringify(tails, null, 4) + ') to match the last detected heads (' + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ')!');
+        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_22]' : '') + ' When processing "' + str + '", we reached the end of the string and yet didn\'t find any tails (' + JSON.stringify(tails, null, 4) + ') to match the last detected heads (' + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ')!');
       } else if (tailSuspicionRaised) {
         // if (DEBUG) { console.log('3.') }
         throw new Error(tailSuspicionRaised);
