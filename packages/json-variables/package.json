@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "6.0.3",
+  "version": "6.0.4",
   "description": "Preprocessor for JSON to allow keys referencing keys",
   "license": "MIT",
   "engines": {
