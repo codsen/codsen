@@ -2394,6 +2394,36 @@ test('12.01 - surrounding underscores - sneaky similarity with wrong side bracke
     },
     '12.01.02',
   )
+  t.deepEqual(
+    jv({
+      a: 'zzz_%%-var1-%%_%%-var2-%%_yyy',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'zzz_value1_value2_yyy',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '12.01.03',
+  )
+  t.deepEqual(
+    jv({
+      a: 'zzz_%%-var1-%%_%%-var2-%%',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'zzz_value1_value2',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '12.01.04',
+  )
 })
 
 // -----------------------------------------------------------------------------
