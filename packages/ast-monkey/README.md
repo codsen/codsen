@@ -28,15 +28,6 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-  - [.find()](#find)
-  - [.get()](#get)
-  - [.set()](#set)
-  - [.drop()](#drop)
-  - [.info()](#info)
-  - [.del()](#del)
-  - [.arrayFirstOnly()](#arrayfirstonly)
-  - [.traverse()](#traverse)
-    - [innerObj in the callback](#innerobj-in-the-callback)
 - [The name of this library](#the-name-of-this-library)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -609,71 +600,10 @@ If monkey is currently traversing an array, going through all elements, a `key` 
 ------------------------|----------------|----------------------
 `{`                     |                |
 `depth`                 | Integer number | Zero is root, topmost level. Every level deeper increments `depth` by `1`.
+`path`                  | String         | The path to the current value. The path uses exactly the same notation as the popular [object-path](https://www.npmjs.com/package/object-path) package. For example, `a.1.b` would be: input object's key `a` > value is array, take `1`st index (second element in a row, since indexes start from zero) > value is object, take it's key `b`.
 `topmostKey`            | String         | When you are very deep, this is the topmost parent's key.
-`parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. It's purpose is to allow you to query the **siblings** of the current element.
+`parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.
 `}`                     |                |
-
-Allow me to show you how to practically tap the `innerObj`:
-
-```js
-const monkey = require('ast-monkey')
-let ast = {
-            a: {
-              b: 'b val'
-            },
-            c: 'c val'
-          }
-ast = monkey.traverse(ast, function (key, val, innerObj) {
-  let current = (val !== undefined) ? val : key
-  console.log('\nkey = ' + JSON.stringify(key, null, 4))
-  console.log('val = ' + JSON.stringify(val, null, 4))
-  console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
-  return current
-})
-// ...
-```
-
-CONSOLE OUTPUT WILL BE:
-
-```js
-key = "a"
-val = {
-    "b": "b val"
-}
-innerObj = {
-    "depth": 0,
-    "topmostKey": "a",
-    "parent": {
-        "a": {
-            "b": "b val"
-        },
-        "c": "c val"
-    }
-}
-
-key = "b"
-val = "b val"
-innerObj = {
-    "depth": 1,
-    "topmostKey": "a",
-    "parent": {
-        "b": "b val"
-    }
-}
-
-key = "c"
-val = "c val"
-innerObj = {
-    "depth": 0,
-    "topmostKey": "c",
-    "parent": {
-        "a": {
-            "b": "b val"
-        },
-        "c": "c val"
-    }
-}
-```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -701,7 +631,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-monkey.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-monkey
