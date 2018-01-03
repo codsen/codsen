@@ -180,12 +180,14 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
         current,
         strFindHeadsTails(current, opts.heads, opts.tails, {
           source: 'json-variables/jsonVariables(): [THROW_ID_17]',
+          relaxedAPI: true,
         }),
       )
       const allNoWrapHeadsAndTails = nativeToUnicode(
         current,
         strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap, {
           source: 'json-variables/jsonVariables(): [THROW_ID_18]',
+          relaxedAPI: true,
         }),
       )
       // if there are no heads found at all, return (doing nothing)
@@ -230,8 +232,14 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
       while (
         isStr(current) &&
         (
-          !isEmpty(strFindHeadsTails(current, opts.heads, opts.tails)) ||
-          !isEmpty(strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap))
+          !isEmpty(strFindHeadsTails(
+            current, opts.heads, opts.tails,
+            { relaxedAPI: true },
+          )) ||
+          !isEmpty(strFindHeadsTails(
+            current, opts.headsNoWrap, opts.tailsNoWrap,
+            { relaxedAPI: true },
+          ))
         )
       ) {
         const extractedHeadsAndTails = nativeToUnicode(
@@ -240,7 +248,7 @@ function jsonVariables(inputOriginal, originalOpts = {}) {
             current,
             [opts.heads, opts.headsNoWrap],
             [opts.tails, opts.tailsNoWrap],
-            { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true },
+            { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true, relaxedAPI: true },
           ),
         )
 

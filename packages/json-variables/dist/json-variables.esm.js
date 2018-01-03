@@ -296,10 +296,12 @@ function jsonVariables(inputOriginal) {
 
     if (isStr(current)) {
       var allHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.heads, opts.tails, {
-        source: 'json-variables/jsonVariables(): [THROW_ID_17]'
+        source: 'json-variables/jsonVariables(): [THROW_ID_17]',
+        relaxedAPI: true
       }));
       var allNoWrapHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap, {
-        source: 'json-variables/jsonVariables(): [THROW_ID_18]'
+        source: 'json-variables/jsonVariables(): [THROW_ID_18]',
+        relaxedAPI: true
       }));
       // if there are no heads found at all, return (doing nothing)
       if (allHeadsAndTails === [] && allNoWrapHeadsAndTails === []) {
@@ -336,7 +338,7 @@ function jsonVariables(inputOriginal) {
 
     if (!opts.noSingleMarkers && loopKillSwitch || opts.noSingleMarkers) {
       var _loop = function _loop() {
-        var extractedHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }));
+        var extractedHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true, relaxedAPI: true }));
 
         // "innerVar" contains the string value of the variable we're currently working on.
         // In other words, the string between first pair of heads and tails.
@@ -547,7 +549,7 @@ function jsonVariables(inputOriginal) {
         }
       };
 
-      while (isStr(current) && (!isEmpty(strFindHeadsTails(current, opts.heads, opts.tails)) || !isEmpty(strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap)))) {
+      while (isStr(current) && (!isEmpty(strFindHeadsTails(current, opts.heads, opts.tails, { relaxedAPI: true })) || !isEmpty(strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap, { relaxedAPI: true })))) {
         _loop();
       }
     }
