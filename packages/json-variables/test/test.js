@@ -531,6 +531,26 @@ test('02.06 - emoji in variable keys', (t) => {
   )
 })
 
+test('02.06 - empty strings with the input AST', (t) => {
+  t.deepEqual(
+    jv({
+      a: 'some text %%_var1_%% more text %%_var2_%%',
+      b: 'something',
+      c: '',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'some text value1 more text value2',
+      b: 'something',
+      c: '',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '02.06.01 - defaults',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // group 03. sneaky-ones, like recursion
 // -----------------------------------------------------------------------------

@@ -286,6 +286,10 @@ function jsonVariables(inputOriginal) {
     // End sooner, case #1. If the "current" that monkey brought us is
     // equal to whole heads or tails.
 
+    if (current === '') {
+      return current;
+    }
+
     if (opts.heads.length !== 0 && current === opts.heads || opts.tails.length !== 0 && current === opts.tails || opts.headsNoWrap.length !== 0 && current === opts.headsNoWrap || opts.tailsNoWrap.length !== 0 && current === opts.tailsNoWrap) {
       if (!opts.noSingleMarkers) {
         return current;
