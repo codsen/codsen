@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - ✨ Mismatching wrapping/nonwrapping heads and tails are not permitted any more. Either both are wrapping or both are non-wrapping. If you used this library in normal ways you should not see the difference. The benefits of this changes are huge - we have completely rehauled _head_ and _tail_ detection (see below) and accepting only matching pairs allows us to identify more false-positives.
 
-Bumping _semver major_ just in case (could have bumped minor) but let's better safe than sorry 😉
+Bumping _semver major_ just in case (could have bumped minor) but let's better be safe than sorry 😉
 
 ### Improved
 - ✨ Improved _head_ and _tail_ detection algorithm. Previously we used simple string search, without considering the order of the findings. Wrong order now will help to rule-out more false positives.
