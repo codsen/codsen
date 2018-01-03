@@ -57,7 +57,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Idea
 
-Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This library is a simple postprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
+Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This library is a simple preprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
 
 ```js
 // IN:
@@ -479,7 +479,7 @@ content JSON for PROD build:
 }
 ```
 
-Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the postprocessor to **skip wrapping, no matter what**.
+Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the program to **skip wrapping, no matter what**.
 
 **[⬆ &nbsp;back to top](#)**
 
