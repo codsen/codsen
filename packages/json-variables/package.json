@@ -142,7 +142,7 @@
     "splice-string": "^2.0.0",
     "str-indexes-of-plus": "^2.0.2",
     "string-convert-indexes": "^1.1.0",
-    "string-find-heads-tails": "^3.1.0",
+    "string-find-heads-tails": "^3.3.0",
     "string-length": "^2.0.0",
     "string-slice": "^0.1.0",
     "type-detect": "^4.0.5"

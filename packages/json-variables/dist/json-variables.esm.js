@@ -295,8 +295,12 @@ function jsonVariables(inputOriginal) {
     // return it back, skipping all the action.
 
     if (isStr(current)) {
-      var allHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.heads, opts.tails, { source: 'json-variables/jsonVariables(): [THROW_ID_17]' }));
-      var allNoWrapHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap));
+      var allHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.heads, opts.tails, {
+        source: 'json-variables/jsonVariables(): [THROW_ID_17]'
+      }));
+      var allNoWrapHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, opts.headsNoWrap, opts.tailsNoWrap, {
+        source: 'json-variables/jsonVariables(): [THROW_ID_18]'
+      }));
       // if there are no heads found at all, return (doing nothing)
       if (allHeadsAndTails === [] && allNoWrapHeadsAndTails === []) {
         return current;
@@ -332,14 +336,7 @@ function jsonVariables(inputOriginal) {
 
     if (!opts.noSingleMarkers && loopKillSwitch || opts.noSingleMarkers) {
       var _loop = function _loop() {
-        var extractedHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap]));
-
-        // foundHeads = search(current, opts.heads)
-        //   .concat(search(current, opts.headsNoWrap))
-        //   .sort(numSort.asc)
-        // foundTails = search(current, opts.tails)
-        //   .concat(search(current, opts.tailsNoWrap))
-        //   .sort(numSort.asc)
+        var extractedHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true }));
 
         // "innerVar" contains the string value of the variable we're currently working on.
         // In other words, the string between first pair of heads and tails.
@@ -372,7 +369,7 @@ function jsonVariables(inputOriginal) {
               patience -= 1;
             }
             if (patience < 1) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_18] Recursion detected!\nPlease check following key: ' + current);
+              throw new Error('json-variables/jsonVariables(): [THROW_ID_19] Recursion detected!\nPlease check following key: ' + current);
             }
           }
         } else {
@@ -381,7 +378,7 @@ function jsonVariables(inputOriginal) {
         innerPath.push(innerVar);
 
         if (innerVar === currentObjKey || innerVar === innerObj.topmostKey) {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_19] Recursion detected!\nPlease check the following key: ' + (currentObjKey || current));
+          throw new Error('json-variables/jsonVariables(): [THROW_ID_20] Recursion detected!\nPlease check the following key: ' + (currentObjKey || current));
         }
 
         // if (DEBUG) { console.log(`innerVar = ${JSON.stringify(innerVar, null, 4)}`) }
@@ -392,7 +389,7 @@ function jsonVariables(inputOriginal) {
           resolvedValue = objectPath.get(innerObj.parent, innerVar);
           // if (DEBUG) { console.log(`resolvedValue = ${JSON.stringify(resolvedValue, null, 4)}`) }
           if (!isStr(resolvedValue) && opts.throwWhenNonStringInsertedInString) {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_20] We were going to replace the variable "' + innerVar + '" in ' + JSON.stringify(current, null, 4) + ' and it was not string but ' + typ(resolvedValue));
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_21] We were going to replace the variable "' + innerVar + '" in ' + JSON.stringify(current, null, 4) + ' and it was not string but ' + typ(resolvedValue));
           } else {
             replacement = resolvedValue;
           }
@@ -450,14 +447,14 @@ function jsonVariables(inputOriginal) {
                   }
               });
               if (!replacement) {
-                throw new Error('json-variables/jsonVariables(): [THROW_ID_21] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input');
+                throw new Error('json-variables/jsonVariables(): [THROW_ID_22] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input');
               }
             }
           } else {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_22] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input. We wanted to resolve: ' + current + (existy(key) ? ' coming from key: ' + key : ''));
+            throw new Error('json-variables/jsonVariables(): [THROW_ID_23] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input. We wanted to resolve: ' + current + (existy(key) ? ' coming from key: ' + key : ''));
           }
         } else {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_23] Required key ' + innerVar + ' is missing and you turned off the feature to search for key containing data (opts.lookForDataContainers=false). Now the value is missing and we\'re in trouble.');
+          throw new Error('json-variables/jsonVariables(): [THROW_ID_24] Required key ' + innerVar + ' is missing and you turned off the feature to search for key containing data (opts.lookForDataContainers=false). Now the value is missing and we\'re in trouble.');
         }
 
         if (isStr(replacement) && found) {
@@ -526,9 +523,9 @@ function jsonVariables(inputOriginal) {
         if (found) {
           if (isStr(replacement)) {
             if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), currentObjKey)) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_24] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey);
+              throw new Error('json-variables/jsonVariables(): [THROW_ID_25] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey);
             } else if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), innerVar)) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_25] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar);
+              throw new Error('json-variables/jsonVariables(): [THROW_ID_26] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar);
             }
           }
 
