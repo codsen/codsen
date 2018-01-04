@@ -5,6 +5,16 @@ import isObj from 'lodash.isplainobject'
 
 const isArr = Array.isArray
 
+function trimFirstDot(str) {
+  if (
+    (typeof str === 'string') &&
+    (str.length > 0) &&
+    str[0] === '.'
+  ) {
+    return str.slice(1)
+  }
+  return str
+}
 function existy(x) { return x != null }
 function astMonkeyTraverse(tree1, cb1) {
   //
@@ -18,13 +28,19 @@ function astMonkeyTraverse(tree1, cb1) {
     let res
     let allKeys
     let key
-    innerObj = Object.assign({ depth: -1 }, innerObj)
+    innerObj = Object.assign({ depth: -1, path: '' }, innerObj)
     innerObj.depth += 1
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
+        const path = `${innerObj.path}.${i}`
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree)
-          res = traverseInner(callback(tree[i], undefined, innerObj), callback, innerObj)
+          // innerObj.path = `${innerObj.path}[${i}]`
+          res = traverseInner(
+            callback(tree[i], undefined, Object.assign({}, innerObj, { path: trimFirstDot(path) })),
+            callback,
+            Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+          )
           if ((Number.isNaN(res)) && (i < tree.length)) {
             tree.splice(i, 1)
             i -= 1
@@ -39,11 +55,16 @@ function astMonkeyTraverse(tree1, cb1) {
       allKeys = Object.keys(tree)
       for (i = 0, len = allKeys.length; i < len; i++) {
         key = allKeys[i]
+        const path = `${innerObj.path}.${key}`
         if (innerObj.depth === 0 && existy(key)) {
           innerObj.topmostKey = key
         }
         innerObj.parent = clone(tree)
-        res = traverseInner(callback(key, tree[key], innerObj), callback, innerObj)
+        res = traverseInner(
+          callback(key, tree[key], Object.assign({}, innerObj, { path: trimFirstDot(path) })),
+          callback,
+          Object.assign({}, innerObj, { path: trimFirstDot(path) }),
+        )
         if (Number.isNaN(res)) {
           delete tree[key]
         } else {

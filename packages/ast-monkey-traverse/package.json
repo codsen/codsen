@@ -143,11 +143,12 @@
     "husky": "*",
     "lodash.isequal": "^4.5.0",
     "nyc": "*",
-    "rollup": "^0.53.0",
+    "object-path": "^0.11.4",
+    "rollup": "^0.53.3",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.0"
+    "uglify-es": "^3.3.4"
   }
 }

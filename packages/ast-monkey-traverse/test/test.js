@@ -1,5 +1,6 @@
 import test from 'ava'
 import isEqual from 'lodash.isequal'
+import objectPath from 'object-path'
 import traverse from '../dist/ast-monkey-traverse.cjs'
 
 let input = {
@@ -207,4 +208,65 @@ test('01.05 - delete key-value pair from plain object in root', (t) => {
     intended,
     '01.05',
   )
+})
+
+test('01.06 - only traversal, #1', (t) => {
+  input = {
+    a: ['1', '2', '3'],
+  }
+  const actual = traverse(input, (key1, val1, innerObj) => {
+    const current = (val1 !== undefined) ? val1 : key1
+    t.deepEqual(
+      current,
+      objectPath.get(input, innerObj.path),
+      innerObj.path,
+    )
+    return current
+  })
+  t.pass(actual)
+})
+
+test('01.07 - only traversal, #2', (t) => {
+  input = {
+    a: {
+      b: {
+        c: 'c_val',
+        d: 'd_val',
+        e: 'e_val',
+      },
+      f: {
+        g: {
+          h: ['1', '2', '3'],
+          i: ['4', '5', {
+            j: 'k',
+          }],
+          l: ['7', '8', '9'],
+        },
+      },
+    },
+  }
+  const actual = traverse(input, (key1, val1, innerObj) => {
+    const current = (val1 !== undefined) ? val1 : key1
+    t.deepEqual(
+      current,
+      objectPath.get(input, innerObj.path),
+      innerObj.path,
+    )
+    return current
+  })
+  t.pass(actual)
+})
+
+test('01.08 - only traversal, #3', (t) => {
+  input = ['1', '2', { a: '3' }]
+  const actual = traverse(input, (key1, val1, innerObj) => {
+    const current = (val1 !== undefined) ? val1 : key1
+    t.deepEqual(
+      current,
+      objectPath.get(input, innerObj.path),
+      innerObj.path,
+    )
+    return current
+  })
+  t.pass(actual)
 })

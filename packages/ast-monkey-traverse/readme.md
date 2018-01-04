@@ -28,7 +28,6 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-    - [innerObj in the callback](#innerobj-in-the-callback)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -110,6 +109,7 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 ------------------------|----------------|----------------------
 `{`                     |                |
 `depth`                 | Integer number | Zero is root, topmost level. Every level deeper increments `depth` by `1`.
+`path`                  | String         | The path to the current value. The path uses exactly the same notation as the popular [object-path](https://www.npmjs.com/package/object-path) package. For example, `a.1.b` would be: input object's key `a` > value is array, take `1`st index (second element in a row, since indexes start from zero) > value is object, take it's key `b`.
 `topmostKey`            | String         | When you are very deep, this is the topmost parent's key.
 `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.
 `}`                     |                |
@@ -196,7 +196,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-monkey-traverse.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-monkey-traverse
