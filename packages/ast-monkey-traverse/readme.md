@@ -114,68 +114,6 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.
 `}`                     |                |
 
-Allow me to show you how to practically tap the `innerObj`:
-
-```js
-const traverse = require('ast-monkey-traverse')
-let ast = {
-            a: {
-              b: 'b val'
-            },
-            c: 'c val'
-          }
-ast = traverse(ast, function (key, val, innerObj) {
-  let current = (val !== undefined) ? val : key
-  console.log('\nkey = ' + JSON.stringify(key, null, 4))
-  console.log('val = ' + JSON.stringify(val, null, 4))
-  console.log('innerObj = ' + JSON.stringify(innerObj, null, 4))
-  return current
-})
-// ...
-```
-
-CONSOLE OUTPUT WILL BE:
-
-```js
-key = "a"
-val = {
-    "b": "b val"
-}
-innerObj = {
-    "depth": 0,
-    "topmostKey": "a",
-    "parent": {
-        "a": {
-            "b": "b val"
-        },
-        "c": "c val"
-    }
-}
-
-key = "b"
-val = "b val"
-innerObj = {
-    "depth": 1,
-    "topmostKey": "a",
-    "parent": {
-        "b": "b val"
-    }
-}
-
-key = "c"
-val = "c val"
-innerObj = {
-    "depth": 0,
-    "topmostKey": "c",
-    "parent": {
-        "a": {
-            "b": "b val"
-        },
-        "c": "c val"
-    }
-}
-```
-
 **[⬆ &nbsp;back to top](#)**
 
 ## Contributing
