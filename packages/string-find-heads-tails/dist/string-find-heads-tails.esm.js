@@ -184,7 +184,7 @@ function strFindHeadsTails() {
   // if opts.opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder is on and heads
   // matched was i-th in the array, we will record its index "i" and later match
   // the next tails to be also "i-th". Or throw.
-  var strictMatcingIndex = void 0;
+  var strictMatchingIndex = void 0;
 
   for (var i = opts.fromIndex, len = str.length; i < len; i++) {
     var firstCharsIndex = str[i].charCodeAt(0);
@@ -194,7 +194,7 @@ function strFindHeadsTails() {
       if (matchedHeads && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder) {
         for (var z = heads.length; z--;) {
           if (heads[z] === matchedHeads) {
-            strictMatcingIndex = z;
+            strictMatchingIndex = z;
             break;
           }
         }
@@ -223,7 +223,7 @@ function strFindHeadsTails() {
       var matchedTails = matchRightIncl(str, i, tails);
       // if (DEBUG) { console.log(`matchedTails = ${JSON.stringify(matchedTails, null, 4)}`) }
 
-      if (matchedTails && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder && tails[strictMatcingIndex] !== matchedTails) {
+      if (oneHeadFound && matchedTails && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder && strictMatchingIndex !== undefined && tails[strictMatchingIndex] !== undefined && tails[strictMatchingIndex] !== matchedTails) {
         var temp = void 0;
         // find out which index is "matchedTails" does have "tails":
         for (var _z = tails.length; _z--;) {
@@ -232,7 +232,7 @@ function strFindHeadsTails() {
             break;
           }
         }
-        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (' + heads[strictMatcingIndex] + ') but the tails the followed it were not of the same index, ' + strictMatcingIndex + ' (' + tails[strictMatcingIndex] + ') but ' + temp + ' (' + matchedTails + ').');
+        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (' + heads[strictMatchingIndex] + ') but the tails the followed it were not of the same index, ' + strictMatchingIndex + ' (' + tails[strictMatchingIndex] + ') but ' + temp + ' (' + matchedTails + ').');
       }
 
       if (matchedTails) {

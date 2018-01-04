@@ -230,7 +230,7 @@ test('01.08 - heads of one type, tails of another', (t) => {
     strFindHeadsTails(
       'some text %%_var1-%% more text %%_var2_%%',
       ['%%_', '%%-'],
-      ['_%%', '-%%'],
+      ['-%%', '_%%'],
     ),
     [{
       headsStartAt: 10,
@@ -270,6 +270,89 @@ test('01.08 - heads of one type, tails of another', (t) => {
   })
   t.falsy(err2.message.includes('THROW_ID_20'))
   t.truthy(err2.message.includes('TEST 1.08'))
+})
+
+test('01.09 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder', (t) => {
+  t.deepEqual(
+    strFindHeadsTails(
+      'some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: false },
+    ),
+    [{
+      headsStartAt: 11,
+      headsEndAt: 14,
+      tailsStartAt: 18,
+      tailsEndAt: 21,
+    }, {
+      headsStartAt: 34,
+      headsEndAt: 37,
+      tailsStartAt: 41,
+      tailsEndAt: 44,
+    }, {
+      headsStartAt: 61,
+      headsEndAt: 64,
+      tailsStartAt: 68,
+      tailsEndAt: 71,
+    }],
+    '01.09.01 - default behaviour - no strict pair matching',
+  )
+  t.deepEqual(
+    strFindHeadsTails(
+      'some text -%%-var1-%%- more text _%%_var2_%%_ and even more -%%-var3-%%-.',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true },
+    ),
+    [{
+      headsStartAt: 11,
+      headsEndAt: 14,
+      tailsStartAt: 18,
+      tailsEndAt: 21,
+    }, {
+      headsStartAt: 34,
+      headsEndAt: 37,
+      tailsStartAt: 41,
+      tailsEndAt: 44,
+    }, {
+      headsStartAt: 61,
+      headsEndAt: 64,
+      tailsStartAt: 68,
+      tailsEndAt: 71,
+    }],
+    '01.09.02 - strict pair matching',
+  )
+  t.deepEqual(
+    strFindHeadsTails(
+      'some text _%-var1-%_ more text _%_var2_%_ and even more -%-var3-%- and -%_var4_%-.',
+      ['%_', '%-'],
+      ['_%', '-%'],
+      { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true },
+    ),
+    [{
+      headsStartAt: 11,
+      headsEndAt: 13,
+      tailsStartAt: 17,
+      tailsEndAt: 19,
+    }, {
+      headsStartAt: 32,
+      headsEndAt: 34,
+      tailsStartAt: 38,
+      tailsEndAt: 40,
+    }, {
+      headsStartAt: 57,
+      headsEndAt: 59,
+      tailsStartAt: 63,
+      tailsEndAt: 65,
+    }, {
+      headsStartAt: 72,
+      headsEndAt: 74,
+      tailsStartAt: 78,
+      tailsEndAt: 80,
+    }],
+    '01.09.03 - strict pair matching',
+  )
 })
 
 // -----------------------------------------------------------------------------

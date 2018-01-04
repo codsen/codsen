@@ -186,7 +186,7 @@ function strFindHeadsTails(
   // if opts.opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder is on and heads
   // matched was i-th in the array, we will record its index "i" and later match
   // the next tails to be also "i-th". Or throw.
-  let strictMatcingIndex
+  let strictMatchingIndex
 
   for (let i = opts.fromIndex, len = str.length; i < len; i++) {
     const firstCharsIndex = str[i].charCodeAt(0)
@@ -199,7 +199,7 @@ function strFindHeadsTails(
       if (matchedHeads && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder) {
         for (let z = heads.length; z--;) {
           if (heads[z] === matchedHeads) {
-            strictMatcingIndex = z
+            strictMatchingIndex = z
             break
           }
         }
@@ -229,9 +229,12 @@ function strFindHeadsTails(
       // if (DEBUG) { console.log(`matchedTails = ${JSON.stringify(matchedTails, null, 4)}`) }
 
       if (
+        oneHeadFound &&
         matchedTails &&
         opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder &&
-        tails[strictMatcingIndex] !== matchedTails
+        strictMatchingIndex !== undefined &&
+        tails[strictMatchingIndex] !== undefined &&
+        tails[strictMatchingIndex] !== matchedTails
       ) {
         let temp
         // find out which index is "matchedTails" does have "tails":
@@ -241,7 +244,7 @@ function strFindHeadsTails(
             break
           }
         }
-        throw new TypeError(`${opts.source}${s ? ': [THROW_ID_20]' : ''} When processing "${str}", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (${heads[strictMatcingIndex]}) but the tails the followed it were not of the same index, ${strictMatcingIndex} (${tails[strictMatcingIndex]}) but ${temp} (${matchedTails}).`)
+        throw new TypeError(`${opts.source}${s ? ': [THROW_ID_20]' : ''} When processing "${str}", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (${heads[strictMatchingIndex]}) but the tails the followed it were not of the same index, ${strictMatchingIndex} (${tails[strictMatchingIndex]}) but ${temp} (${matchedTails}).`)
       }
 
       if (matchedTails) {

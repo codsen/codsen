@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0] - 2018-01-04
+### Added
+- ✨ Improvements to the algorithm. If the situation is vague and there's overlap of tails and heads (tails slightly preceding heads), algorithm will pick heads and ignore tails in front.
+
 ## [3.2.0] - 2018-01-03
 ### Added
 - ✨ `opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder`
@@ -60,6 +64,7 @@ now the same example in `v.2` API:
 ### New
 - ✨ First public release
 
+[3.3.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/string-find-heads-tails/compare/v2.0.0...v3.0.0
