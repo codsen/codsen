@@ -92,7 +92,7 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 
 ## API
 
-**strFindHeadsTails(str, heads, tails\[, fromIndex])**
+**strFindHeadsTails(str, heads, tails, \[fromIndex])**
 
 **IMPORTANT**
 The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://github.com/codsen/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
