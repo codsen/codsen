@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.3.0] - 2018-01-03
+### Added
+- ✨ Updated to the latest release of [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
+
 ## [7.2.0] - 2017-12-23
 ### Changed
 - ✨ Separated `traverse()` into a [standalone library](https://github.com/codsen/ast-monkey-traverse) and then tapped it
@@ -205,8 +209,9 @@ BREAKING API CHANGES.
 [6.1.0]: https://github.com/codsen/ast-monkey/compare/v6.0.0...v6.1.0
 [6.2.0]: https://github.com/codsen/ast-monkey/compare/v6.1.0...v6.2.0
 [6.3.0]: https://github.com/codsen/ast-monkey/compare/v6.2.0...v6.3.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [6.4.0]: https://github.com/codsen/ast-monkey/compare/v6.3.0...v6.4.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [7.0.0]: https://github.com/codsen/ast-monkey/compare/v6.4.0...v7.0.0
 [7.1.0]: https://github.com/codsen/ast-monkey/compare/v7.0.0...v7.1.0
 [7.2.0]: https://github.com/codsen/ast-monkey/compare/v7.1.0...v7.2.0
+[7.3.0]: https://github.com/codsen/ast-monkey/compare/v7.2.0...v7.3.0
