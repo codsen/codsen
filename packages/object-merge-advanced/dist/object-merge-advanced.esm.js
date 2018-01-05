@@ -170,7 +170,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
           if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
             return isStr(el);
           })) {
-            temp = uniq(temp);
+            temp = uniq(temp).sort();
           }
           i1 = clone(temp);
         } else {

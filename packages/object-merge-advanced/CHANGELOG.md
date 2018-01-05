@@ -4,19 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.3.0] - 2018-01-05
+### Added
+- ✨ `opts.dedupeStringsInArrayValues` now returns sorted arrays
+
 ## [8.2.0] - 2017-12-11
 ### Added
-- ✨ opts.useNullAsExplicitFalse
+- ✨ `opts.useNullAsExplicitFalse`
 
 ## [8.1.0] - 2017-11-12
 ### Added
-- ✨ opts.mergeBoolsUsingOrNotAnd
+- ✨ `opts.mergeBoolsUsingOrNotAnd`
 
 ## [8.0.0] - 2017-11-09
 ### Added
 - ✨ Recoded everything in ES modules, set up Rollup and now generating 3 flavours: CommonJS, UMD and ES modules.
-- ✨ opts.concatInsteadOfMerging
-- ✨ opts.dedupeStringsInArrayValues
+- ✨ `opts.concatInsteadOfMerging`
+- ✨ `opts.dedupeStringsInArrayValues`
 
 Bumping major just in case.
 
@@ -117,3 +121,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [8.0.0]: https://github.com/codsen/object-merge-advanced/compare/v7.1.0...v8.0.0
 [8.1.0]: https://github.com/codsen/object-merge-advanced/compare/v8.0.0...v8.1.0
 [8.2.0]: https://github.com/codsen/object-merge-advanced/compare/v8.1.0...v8.2.0
+[8.3.0]: https://github.com/codsen/object-merge-advanced/compare/v8.2.0...v8.3.0

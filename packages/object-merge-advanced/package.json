@@ -123,31 +123,31 @@
   },
   "dependencies": {
     "array-includes-all": "^1.0.0",
-    "array-includes-with-glob": "^2.0.1",
-    "arrayiffy-if-string": "^3.0.3",
-    "check-types-mini": "^3.0.1",
+    "array-includes-with-glob": "^2.0.2",
+    "arrayiffy-if-string": "^3.0.4",
+    "check-types-mini": "^3.0.2",
     "lodash.clonedeep": "*",
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
     "type-detect": "*",
-    "util-nonempty": "^2.0.1"
+    "util-nonempty": "^2.0.2"
   },
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.2",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup": "^0.53.3",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.2.2"
+    "uglify-es": "^3.3.4"
   }
 }

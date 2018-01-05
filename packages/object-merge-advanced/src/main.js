@@ -123,7 +123,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         }
         // optionally dedupe:
         if (opts.dedupeStringsInArrayValues && temp.every(el => isStr(el))) {
-          temp = uniq(temp)
+          temp = uniq(temp).sort()
         }
         i1 = clone(temp)
       } else {
