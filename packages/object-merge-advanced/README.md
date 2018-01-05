@@ -179,7 +179,7 @@ Let's merge these two objects. Notice that each has a unique key (`yyyy` and `xx
 
 ```js
 // #1
-var obj1 = {
+const obj1 = {
   a: [
     {
       a: 'a',
@@ -189,7 +189,7 @@ var obj1 = {
   ]
 }
 
-var obj2 = {
+const obj2 = {
   a: [
     {
       xxxx: 'xxxx',
@@ -199,7 +199,7 @@ var obj2 = {
   ]
 }
 
-var res1 = mergeAdvanced(object1, object2)
+const res1 = mergeAdvanced(object1, object2)
 
 console.log('res1 = ' + JSON.stringify(res1, null, 4))
 // => {
@@ -222,7 +222,7 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 but if you turn off the safeguard, `{ mergeObjectsOnlyWhenKeysetMatches: false }` each object within an array is merged no matter their differences in the keysets:
 
 ```js
-var res2 = mergeAdvanced(object1, object2, { mergeObjectsOnlyWhenKeysetMatches: false })
+const res2 = mergeAdvanced(object1, object2, { mergeObjectsOnlyWhenKeysetMatches: false })
 console.log('res2 = ' + JSON.stringify(res2, null, 4))
 // => {
 //      a: [
