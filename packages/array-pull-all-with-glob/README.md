@@ -48,8 +48,6 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 - [Pulling](#pulling)
 - [API](#api)
-  - [API - Input](#api---input)
-  - [API - Output](#api---output)
 - [Test](#test)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -128,7 +126,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/array-pull-all-with-glob.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-pull-all-with-glob
