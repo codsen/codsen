@@ -76,21 +76,21 @@
       "Blogposts",
       "Bug reports*",
       "Code*",
-      "Documentation*",
       "Design",
-      "Examples",
+      "Documentation*",
       "Event Organizers",
+      "Examples",
       "Financial Support",
       "Funding/Grant Finders",
       "Ideas & Planning",
       "Infrastructure (Hosting, Build-Tools, etc)",
       "Plugin/utility libraries",
       "Reviewed Pull Requests",
+      "Talks",
+      "Tests*",
       "Tools",
       "Translation",
-      "Tests*",
       "Tutorials",
-      "Talks",
       "Videos"
     ],
     "contributors": [
@@ -123,7 +123,7 @@
   },
   "dependencies": {
     "array-includes-all": "^1.0.0",
-    "array-includes-with-glob": "^2.0.2",
+    "array-includes-with-glob": "^2.0.3",
     "arrayiffy-if-string": "^3.0.4",
     "check-types-mini": "^3.0.2",
     "lodash.clonedeep": "*",
@@ -137,7 +137,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.14.0",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
@@ -148,6 +148,6 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.4"
+    "uglify-es": "^3.3.5"
   }
 }
