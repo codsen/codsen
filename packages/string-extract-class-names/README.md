@@ -29,7 +29,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-extract-class-names.cjs.js` | 2&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-extract-class-names.esm.js` | 2&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-extract-class-names.umd.js` | 8&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-extract-class-names.umd.js` | 7&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -102,7 +102,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-extract-class-names.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-extract-class-names
