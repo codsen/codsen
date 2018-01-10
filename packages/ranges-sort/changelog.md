@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2018-01-10
+### Added
+- ✨ Updated all dependencies and setup in general
+
 ## [3.0.0] - 2017-12-03
 ### Added
 - ✨ Set up Rollup, generating three builds: CommonJS, UMD and ES Modules
@@ -24,6 +28,7 @@ Bumping major just in case this breaks API endpoints.
 ### Added
 - ✨ Initial release
 
+[3.1.0]: https://github.com/codsen/ranges-sort/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/ranges-sort/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/codsen/ranges-sort/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/ranges-sort/compare/v1.0.0...v2.0.0
