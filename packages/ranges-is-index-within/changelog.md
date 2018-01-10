@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2018-01-10
+### Added
+- ✨ `opts.returnMatchedRangeInsteadOfTrue`
+
 ## [1.2.0] - 2017-11-29
 ### Added
 - ✨ Set up Rollup and now we generate three builds: CommonJS, UMD and ES Modules.
@@ -18,5 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - ✨ Initial release
 
+[1.3.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.0.0...v1.1.0

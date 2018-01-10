@@ -73,21 +73,21 @@
       "Blogposts",
       "Bug reports*",
       "Code*",
-      "Documentation*",
       "Design",
-      "Examples",
+      "Documentation*",
       "Event Organizers",
+      "Examples",
       "Financial Support",
       "Funding/Grant Finders",
       "Ideas & Planning",
       "Infrastructure (Hosting, Build-Tools, etc)",
       "Plugin/utility libraries",
       "Reviewed Pull Requests",
+      "Talks",
+      "Tests*",
       "Tools",
       "Translation",
-      "Tests*",
       "Tutorials",
-      "Talks",
       "Videos"
     ],
     "contributors": [
@@ -119,28 +119,28 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.1",
+    "check-types-mini": "^3.0.2",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.isplainobject": "*",
     "ordinal-number-suffix": "^0.1.1",
-    "ranges-sort": "^3.0.1"
+    "ranges-sort": "^3.1.0"
   },
   "devDependencies": {
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.13.1",
+    "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.1",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup": "^0.53.4",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.2.2"
+    "uglify-es": "^3.3.5"
   }
 }

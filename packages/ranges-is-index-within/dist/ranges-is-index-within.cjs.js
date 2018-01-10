@@ -68,7 +68,8 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
 
   //      D E F A U L T S
   var defaults = {
-    inclusiveRangeEnds: false
+    inclusiveRangeEnds: false,
+    returnMatchedRangeInsteadOfTrue: false
   };
 
   var opts = Object.assign(Object.assign({}, defaults), originalOpts);
@@ -80,29 +81,60 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   if (rangesArr.length < 3) {
     // if equals 1
     if (rangesArr.length === 1) {
+      var res = void 0;
       if (opts.inclusiveRangeEnds) {
-        return index >= rangesArr[0][0] && index <= rangesArr[0][1];
+        res = index >= rangesArr[0][0] && index <= rangesArr[0][1];
+      } else {
+        res = index > rangesArr[0][0] && index < rangesArr[0][1];
       }
-      return index > rangesArr[0][0] && index < rangesArr[0][1];
+      if (opts.returnMatchedRangeInsteadOfTrue && res) {
+        return rangesArr[0];
+      }
+      return res;
     }
-    // if not, equals 2 then because we checked for zero already, see row #30
+    // ELSE - if not, equals 2 then because we checked for zero already, see row #30
+    var res1 = void 0;
+    var res2 = void 0;
     if (opts.inclusiveRangeEnds) {
-      return index >= rangesArr[0][0] && index <= rangesArr[0][1] || index >= rangesArr[1][0] && index <= rangesArr[1][1];
+      res1 = index >= rangesArr[0][0] && index <= rangesArr[0][1];
+      res2 = index >= rangesArr[1][0] && index <= rangesArr[1][1];
+    } else {
+      res1 = index > rangesArr[0][0] && index < rangesArr[0][1];
+      res2 = index > rangesArr[1][0] && index < rangesArr[1][1];
     }
-    return index > rangesArr[0][0] && index < rangesArr[0][1] || index > rangesArr[1][0] && index < rangesArr[1][1];
+    if (opts.returnMatchedRangeInsteadOfTrue && (res1 || res2)) {
+      return res1 ? rangesArr[0] : rangesArr[1];
+    }
+    return res1 || res2;
   }
   // more than two
 
   // 0. Get the ranges array sorted because few upcoming approaches depend on it.
-  var rarr = rangesSort(rangesArr); // TODO attach sort when it's published
+  var rarr = rangesSort(rangesArr);
 
   // 1. check for quick wins - maybe given index is outside of the edge values?
   if (index < rarr[0][0] || index > rarr[rarr.length - 1][1]) {
     return false;
-  } else if (index === rarr[0][0] || index === rarr[rarr.length - 1][1]) {
+  } else if (index === rarr[0][0]) {
     // index we're checking is equal to the outermost edges of a given indexes
     // all depends then on opts.inclusiveRangeEnds
-    return opts.inclusiveRangeEnds;
+    if (opts.inclusiveRangeEnds) {
+      if (opts.returnMatchedRangeInsteadOfTrue) {
+        return rarr[0];
+      }
+      return true;
+    }
+    return false;
+  } else if (index === rarr[rarr.length - 1][1]) {
+    // index we're checking is equal to the outermost edges of a given indexes
+    // all depends then on opts.inclusiveRangeEnds
+    if (opts.inclusiveRangeEnds) {
+      if (opts.returnMatchedRangeInsteadOfTrue) {
+        return rarr[rarr.length - 1];
+      }
+      return true;
+    }
+    return false;
   }
   // 2. if not, then do some work and find out
   var dontStop = true;
@@ -120,23 +152,51 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
 
   var lowerIndex = 0; // at first, it's zero because we count how many ranges there are, from zero
   var upperIndex = rarr.length - 1; // at first, it's the total number of indexes.
-
-  while (dontStop && Math.floor(upperIndex - lowerIndex) > 1) {
+  var theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
+  while (dontStop && Math.floor(upperIndex - lowerIndex) > 1 && theIndexOfTheRangeInTheMiddle !== 0) {
     // pick the middle index.
-    var theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
+    theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
+
     if (index < rarr[theIndexOfTheRangeInTheMiddle][0]) {
       upperIndex = theIndexOfTheRangeInTheMiddle;
     } else if (index > rarr[theIndexOfTheRangeInTheMiddle][1]) {
       lowerIndex = theIndexOfTheRangeInTheMiddle;
     } else if (index === rarr[theIndexOfTheRangeInTheMiddle][0] || index === rarr[theIndexOfTheRangeInTheMiddle][1]) {
-      // it's on one of the edges! YAY! found!
-      return opts.inclusiveRangeEnds;
+      // it's on one of the edges!
+      if (opts.inclusiveRangeEnds) {
+        if (opts.returnMatchedRangeInsteadOfTrue) {
+          return rarr[theIndexOfTheRangeInTheMiddle];
+        }
+        return true;
+      }
+      return false;
     } else {
       // Bob's your uncle - index is within this middle range we calculated.
+      if (opts.returnMatchedRangeInsteadOfTrue) {
+        return rarr[theIndexOfTheRangeInTheMiddle];
+      }
       return true;
     }
   }
 
+  if (upperIndex - lowerIndex === 1) {
+    // this means we narrowed down to two ranges
+    var _res = void 0;
+    var _res2 = void 0;
+    if (opts.inclusiveRangeEnds) {
+      _res = index >= rangesArr[lowerIndex][0] && index <= rangesArr[lowerIndex][1];
+      _res2 = index >= rangesArr[upperIndex][0] && index <= rangesArr[upperIndex][1];
+    } else {
+      _res = index > rangesArr[lowerIndex][0] && index < rangesArr[lowerIndex][1];
+      _res2 = index > rangesArr[upperIndex][0] && index < rangesArr[upperIndex][1];
+    }
+    if (opts.returnMatchedRangeInsteadOfTrue && (_res || _res2)) {
+      return _res ? rangesArr[lowerIndex] : rangesArr[upperIndex];
+    }
+    return _res || _res2;
+  }
+
+  // this point will never be reached, but let's set up a default return value anyway:
   return false;
 }
 
