@@ -547,6 +547,46 @@ test('02.06 - input is equal to heads or tails', (t) => {
   t.truthy(err32.message.includes('TEST 3.2'))
 })
 
+test('02.07 - more clashing with outside characters', (t) => {
+  t.deepEqual(
+    strFindHeadsTails('aaa_%%-bbb-%%_%%-ccc-%%', ['%%_', '%%-'], ['_%%', '-%%']),
+    [{
+      headsStartAt: 4,
+      headsEndAt: 7,
+      tailsStartAt: 10,
+      tailsEndAt: 13,
+    }, {
+      headsStartAt: 14,
+      headsEndAt: 17,
+      tailsStartAt: 20,
+      tailsEndAt: 23,
+    }],
+    '02.07.01',
+  )
+  t.deepEqual(
+    strFindHeadsTails(
+      'aaa_%%-bbb-%%_%%-ccc-%%',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      {
+        relaxedAPI: true,
+      },
+    ),
+    [{
+      headsStartAt: 4,
+      headsEndAt: 7,
+      tailsStartAt: 10,
+      tailsEndAt: 13,
+    }, {
+      headsStartAt: 14,
+      headsEndAt: 17,
+      tailsStartAt: 20,
+      tailsEndAt: 23,
+    }],
+    '02.07.02',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. opts.relaxedAPI
 // -----------------------------------------------------------------------------
