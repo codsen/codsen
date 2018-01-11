@@ -26,6 +26,7 @@
 - [Install](#install)
 - [Idea](#idea)
 - [Purpose](#purpose)
+- [Context](#context)
 - [Usage](#usage)
 - [API](#api)
 - [Contributing](#contributing)
@@ -58,6 +59,16 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Idea
 
+This package helps to find self-created **variables** within a string. _Variables_ are marked with _heads_ and _tails_. For example:
+
+```
+Hello %%-first_name-%%!
+```
+
+Now, if you know heads (`%%-`) and tails (`-%%`), you want to find out, where are they located in a given string.
+
+The algorithm goes like this:
+
 Take a string, search for a **pair** of strings in it. Let's call the first-one **heads** and second-one **tails**. Finding is the index of the first character of a found string.
 
 There are few rules:
@@ -71,6 +82,19 @@ There are few rules:
 ## Purpose
 
 It will be used in JSON [pre-processing](https://github.com/codsen/json-variables), replacing the dumb string search being used currently.
+
+## Context
+
+Different programming languages, templating languages and even proprietary notations (such as used by Email Service Providers) use different `heads` and `tails` to mark variable names.
+
+For example,
+
+* Nunjucks templating language would use `{%` and `%}`, then `{{` and `}}` (among others).
+* Java JSP's would use `${` and `}` (among others).
+* Oracle Responsys, ESP, would use `$(` and `)`.
+* ex-eDialog/ex-eBay Enterprise/Zeta Interactive ESP use `_` and `__`.
+
+This library enables to build tools which process such code. All processing starts with searching for variables in a string and `string-find-heads-tails` will help you here.
 
 ## Usage
 
