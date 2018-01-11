@@ -58,6 +58,8 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## The API
 
+### Input
+
 There are four methods; all have the same API's:
 
 * **`matchLeftIncl`** — at least one of given substrings has to match what's on the **left** and including character at the given index
@@ -71,6 +73,13 @@ Input argument   | Type                       | Obligatory? | Description
 `position`       | Natural number incl. zero  | yes         | Starting index. Can be zero. Otherwise, a natural number.
 `whatToMatch`    | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches will yield in result `true`
 `opts`           | Plain object               | no          | The Optional Options Object. See below.
+
+### Output
+
+Returns Boolean `false` or value of the string that was matched, that is,
+
+* if `whatToMatch` was a string, then returns it, OR
+* if `whatToMatch` was an array, then returns the first match from this array's elements.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -121,7 +130,7 @@ let res1 = matchLeftIncl('abcdefghi', 3, ['bcd'])
 // This means, "bcd" has to end with existing character and the other chars to the left
 // must match exactly:
 console.log(`res1 = ${res1}`)
-// => res1 = true
+// => res1 = 'bcd'
 
 let res2 = matchLeft('abcdefghi', 3, ['ab', `zz`])
 // neither "ab" nor "zz" are to the left of 3rd index, "d":
@@ -131,12 +140,12 @@ console.log(`res2 = ${res2}`)
 let res3 = matchRightIncl('abcdefghi', 3, ['def', `zzz`])
 // "def" is to the right of 3rd index (including it), "d":
 console.log(`res3 = ${res3}`)
-// => res3 = true
+// => res3 = 'def'
 
 let res4 = matchRight('abcdefghi', 3, ['ef', `zz`])
 // One of values, "ef" is exactly to the right of 3rd index, "d":
 console.log(`res4 = ${res4}`)
-// => res4 = true
+// => res4 = 'ef'
 ```
 
 **[⬆ &nbsp;back to top](#)**
@@ -162,7 +171,7 @@ function isSpace(char) {
 }
 let res = matchLeft('<a class="something">', 8, 'class', { cb: isSpace })
 console.log(`res = ${JSON.stringify(res, null, 4)}`)
-// => res = true
+// => res = 'class'
 ```
 
 The callback function will receive two arguments:
@@ -181,26 +190,30 @@ function startsWithZ(firstCharacter, wholeSubstring) {
   return wholeSubstring.startsWith('z')
 }
 
-const test01 = matchLeft('<div><b>aaa</b></div>', 5, ['<div>'])
-console.log(`test01 = ${JSON.stringify(test01, null, 4)}`)
-// => true, // the 5th index is left bracket of <b>. Yes, <div> is on the left.
+// "zzz" and "yyy" are dummies to show there can be multiple values to match against
 
-const test02 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div>'])
+const test01 = matchLeft('<div><b>aaa</b></div>', 5, ['zzz', 'yyy', '<div>'])
+console.log(`test01 = ${JSON.stringify(test01, null, 4)}`)
+// => '<div>', // the 5th index is left bracket of <b>. Yes, <div> is on the left.
+
+const test02 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div>'])
 console.log(`test02 = ${JSON.stringify(test02, null, 4)}`)
 // => false, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { trimCharsBeforeMatching: [' >'] })
+const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { trimCharsBeforeMatching: [' >'] })
 console.log(`test03 = ${JSON.stringify(test03, null, 4)}`)
-// => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
+// => '<div', // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] })
+const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] })
 console.log(`test04 = ${JSON.stringify(test04, null, 4)}`)
-// => true, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
+// => '<div', // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
 console.log(`test05 = ${JSON.stringify(test05, null, 4)}`)
 // => false, // deliberately making the second arg of cb to be blank and fail startsWithZ
 ```
+
+Notice how we matched against three values including `zzz` and `yyy` but only third element `...div...` was matched and returned.
 
 **[⬆ &nbsp;back to top](#)**
 
