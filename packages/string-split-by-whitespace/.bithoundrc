@@ -1,0 +1,21 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ava",
+      "coveralls",
+      "husky",
+      "nyc"
+    ]
+  },
+  "ignore": [
+    "dist/**"
+  ],
+  "test": [
+    "test/test.js"
+  ]
+}
