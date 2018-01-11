@@ -30,6 +30,8 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'check-types-mini',
+      'ranges-is-index-within',
     ],
     plugins: [
       babel(),

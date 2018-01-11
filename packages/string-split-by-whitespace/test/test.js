@@ -1,3 +1,4 @@
+import strFindHeadsTails from 'string-find-heads-tails'
 import test from 'ava'
 import split from '../dist/string-split-by-whitespace.cjs'
 
@@ -36,6 +37,12 @@ test('01.02 - empty string as input', (t) => {
     [],
     '01.02',
   )
+})
+
+test('01.03 opts contain non-array elements', (t) => {
+  t.throws(() => {
+    split('a b', { ignoreRanges: ['a'] })
+  })
 })
 
 // -----------------------------------------------------------------------------
@@ -120,5 +127,64 @@ test('02.02 - single substring', (t) => {
     split('0'),
     ['0'],
     '02.02.06',
+  )
+})
+
+// -----------------------------------------------------------------------------
+// 03. opts.ignoreRanges
+// -----------------------------------------------------------------------------
+
+test('03.01 - opts.ignoreRanges offset the start', (t) => {
+  t.deepEqual(
+    split('a b c d e', {
+      ignoreRanges: [
+        [0, 2],
+      ],
+    }),
+    ['b', 'c', 'd', 'e'],
+    '03.01.01',
+  )
+})
+
+test('03.02 - starts from the middle of a string', (t) => {
+  t.deepEqual(
+    split('abcdef', {
+      ignoreRanges: [
+        [1, 5],
+      ],
+    }),
+    ['a', 'f'],
+    '03.02.01',
+  )
+})
+
+test('03.03 - in tandem with package "strFindHeadsTails" - ignores heads and tails', (t) => {
+  const input = 'some interesting {{text}} {% and %} {{ some more }} text.'
+  const headsAndTails = strFindHeadsTails(input, ['{{', '{%'], ['}}', '%}']).reduce((acc, curr) => {
+    acc.push([curr.headsStartAt, curr.headsEndAt])
+    acc.push([curr.tailsStartAt, curr.tailsEndAt])
+    return acc
+  }, [])
+  t.deepEqual(
+    split(input, {
+      ignoreRanges: headsAndTails,
+    }),
+    ['some', 'interesting', 'text', 'and', 'some', 'more', 'text.'],
+    '03.03.01',
+  )
+})
+
+test('03.04 - in tandem with package "strFindHeadsTails" - ignores whole variables', (t) => {
+  const input = 'some interesting {{text}} {% and %} {{ some more }} text.'
+  const wholeVariables = strFindHeadsTails(input, ['{{', '{%'], ['}}', '%}']).reduce((acc, curr) => {
+    acc.push([curr.headsStartAt, curr.tailsEndAt])
+    return acc
+  }, [])
+  t.deepEqual(
+    split(input, {
+      ignoreRanges: wholeVariables,
+    }),
+    ['some', 'interesting', 'text.'],
+    '03.04',
   )
 })

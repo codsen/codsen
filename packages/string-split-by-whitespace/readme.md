@@ -48,9 +48,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-split-by-whitespace.cjs.js` | 1&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-split-by-whitespace.esm.js` | 1009&nbsp;B
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-split-by-whitespace.umd.js` | 530&nbsp;B
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-split-by-whitespace.cjs.js` | 2&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-split-by-whitespace.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-split-by-whitespace.umd.js` | 23&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -72,9 +72,99 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 
 ## API
 
-API is simple: `string` in, `array` out.
+```js
+splitByWhitespace(str, [opts])
+```
 
-If input is non-string-type, it will be returned back, bypassing all the operations.
+### API - Input
+
+Input argument           | Type           | Obligatory? | Description
+-------------------------|----------------|-------------|-------------
+`str`                    | String         | yes         | Source string upon which to perform the operation
+`opts`                   | Plain object   | no          | Optional Options Object, see below for its API
+
+**[⬆ &nbsp;back to top](#)**
+
+### An Optional Options Object
+
+Optional Options Object's key                      | Type of its value                  | Default               | Description
+---------------------------------------------------|------------------------------------|-----------------------|----------------------
+{                                                  |                                    |                       |
+`ignoreRanges`                                     | Array of zero or more range arrays | `[]`                  | Feed zero or more string slice ranges, arrays of two natural number indexes, like `[[1, 5], [6, 10]]`. Algorithm will not include these string index ranges in the results.
+}                                                  |                                    |                       |
+
+The `opts.ignoreRanges` can be an empty array, but if it contains anything else then arrays inside, error will be thrown.
+
+**[⬆ &nbsp;back to top](#)**
+
+### `opts.ignoreRanges`
+
+It works like cropping the ranges. The characters in those ranges will not be included in the result.
+
+For example, use library [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
+
+```js
+const input = 'some interesting {{text}} {% and %} {{ some more }} text.'
+const headsAndTails = strFindHeadsTails(input, ['{{', '{%'], ['}}', '%}']).reduce((acc, curr) => {
+  acc.push([curr.headsStartAt, curr.headsEndAt])
+  acc.push([curr.tailsStartAt, curr.tailsEndAt])
+  return acc
+}, [])
+const res1 = split(input, {
+  ignoreRanges: headsAndTails,
+})
+console.log(`res1 = ${JSON.stringify(res1, null, 4)}`)
+// => ['some', 'interesting', 'text', 'and', 'some', 'more', 'text.']
+```
+
+Equally, you can ignore whole variables, from _heads_ to _tails_, including variable's names:
+
+```js
+const input = 'some interesting {{text}} {% and %} {{ some more }} text.'
+const wholeVariables = strFindHeadsTails(input, ['{{', '{%'], ['}}', '%}']).reduce((acc, curr) => {
+  acc.push([curr.headsStartAt, curr.tailsEndAt])
+  return acc
+}, [])
+const res2 = split(input, {
+  ignoreRanges: wholeVariables,
+})
+// => ['some', 'interesting', 'text.']
+```
+
+We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails) output, which is in format:
+
+```js
+[
+  {
+    headsStartAt: 1,
+    headsEndAt: 2,
+    tailsStartAt: 4,
+    tailsEndAt: 5,
+  },
+  ...
+]
+```
+
+and with the help of `array.reduce` we turn it into our format:
+
+(first example with `res1`)
+```js
+[
+  [headsStartAt, headsEndAt],
+  [tailsStartAt, tailsEndAt],
+  ...
+]
+```
+
+(second example with `res2`)
+```js
+[
+  [headsStartAt, tailsEndAt],
+  ...
+]
+```
+
+**[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
