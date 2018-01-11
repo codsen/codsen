@@ -96,30 +96,31 @@ A wrong type will cause `throw`s.
 
 ### Options object
 
-options object's key    | Type of its value | Default     | Description
-------------------------|-------------------|-------------|----------------------
-{                       |                   |             |
-`inclusiveRangeEnds`    | Boolean           | `false`     | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes.
-}                       |                   |             |
+options object's key              | Type of its value | Default     | Description
+----------------------------------|-------------------|-------------|----------------------
+{                                 |                   |             |
+`inclusiveRangeEnds`              | Boolean           | `false`     | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes.
+`returnMatchedRangeInsteadOfTrue` | Boolean           | `false`     | If set to `true`, instead of result `true` it will return the matched range. `false` is still used as a negative answer. It's handy when you want to know **which** range it matched.
+}                                 |                   |             |
 
 Options object is "patrolled" using [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
 
 Here is the options object in one place (in case you ever want to copy it):
 
 ```js
-rangesIsIndexWithin(
-  index, rangesArr,
-  {
-    inclusiveRangeEnds: false
-  }
-);
+{
+  inclusiveRangeEnds: false,
+  returnMatchedRangeInsteadOfTrue: false,
+}
 ```
 
 **[⬆ &nbsp;back to top](#)**
 
 ### API - Output
 
-Boolean `true` or `false`, answering the question, is the given `index` found within any of the ranges.
+Boolean `true`^ or `false`, answering the question, is the given `index` found within any of the ranges.
+
+^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
 
 ## Example
 
@@ -190,6 +191,28 @@ let res3 = rangesIsIndexWithin(
 )
 console.log(res3);
 // > true
+
+let res4 = rangesIsIndexWithin(
+  30,
+  [
+    [5, 10],
+    [15, 20],
+    [25, 30], // <-- "true" because opts.inclusiveRangeEnds=true and "30" is on the edge of the range.
+    [35, 40],
+    [45, 50],
+    [55, 60],
+    [65, 70],
+    [75, 80],
+    [85, 90],
+    [95, 100],
+    [105, 110],
+    [115, 120],
+    [125, 130],
+  ],
+  { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true },
+)
+console.log(res4);
+// > [25, 30]  <------ ! not Boolean, but the range itself.
 ```
 
 **[⬆ &nbsp;back to top](#)**
