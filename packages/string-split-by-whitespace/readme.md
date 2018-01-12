@@ -131,15 +131,15 @@ const res2 = split(input, {
 // => ['some', 'interesting', 'text.']
 ```
 
-We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails) output, which is in format:
+We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails) output, which is in format (index numbers are only examples):
 
 ```js
 [
   {
-    headsStartAt: 1,
-    headsEndAt: 2,
-    tailsStartAt: 4,
-    tailsEndAt: 5,
+    headsStartAt: ...,
+    headsEndAt: ...,
+    tailsStartAt: ...,
+    tailsEndAt: ...,
   },
   ...
 ]
