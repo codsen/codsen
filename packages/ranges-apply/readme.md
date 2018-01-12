@@ -59,7 +59,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Idea
 
-Let's say you want to delete bunch of characters from a string and also to replace some. Technically this means you need to mark the indexes of the characters where you start deletion and where you end. That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
+Let's say you want to delete bunch of characters from a string and also to replace some. Technically, this means you need to mark the indexes of the characters where you start deletion and where you end. That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
 
 ```js
 [
