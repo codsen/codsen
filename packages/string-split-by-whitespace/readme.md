@@ -63,7 +63,7 @@ const res1 = splitByWhitespace('aaa bbb')
 console.log('res1 = ' + JSON.stringify(res1, null, 4))
 // => ['aaa', 'bbb']
 
-const res2 = splitByWhitespace('\\n\\n\\n\\n  aaa \\t\\t\\t bbb  \\n\\n\\n')
+const res2 = splitByWhitespace('\n\n\n\n  aaa \t\t\t bbb  \n\n\n')
 console.log('res2 = ' + JSON.stringify(res2, null, 4))
 // => ['aaa', 'bbb']
 ```
