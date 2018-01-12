@@ -74,7 +74,7 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 
 API is simple: `string` in, `array` out.
 
-If input is non-string-type, it will be returned back, bypassing the operations.
+If input is non-string-type, it will be returned back, bypassing all the operations.
 
 ## Contributing
 
