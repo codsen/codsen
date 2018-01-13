@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Delete or replace an array of slices in string
+> Take an array of string slice ranges, delete/replace the string according to them
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -59,7 +59,23 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Idea
 
-Let's say you want to delete bunch of characters from a string and also to replace some. Technically, this means you need to mark the indexes of the characters where you start deletion and where you end. That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
+Let's say you want to delete bunch of characters from a string and also to replace some. Technically, this means you need to mark the **indexes** of the characters where you start deletion and where you end.
+
+For example, in this string, "a" has index `7` and "e" has index `14`.
+
+```
+some example text
+       ^  || |^ |
+0123456789|11|14|
+          10|13|16
+            12 15
+```
+
+If you want to do something about word "example", that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
+
+
+
+That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
 
 ```js
 [
