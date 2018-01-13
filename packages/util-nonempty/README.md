@@ -53,7 +53,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 757&nbsp;B
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 604&nbsp;B
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 916&nbsp;B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 865&nbsp;B
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -117,7 +117,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/util-nonempty.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/util-nonempty
