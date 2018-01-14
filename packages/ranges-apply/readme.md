@@ -26,7 +26,6 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-- [Usage](#usage)
 - [The algorithm](#the-algorithm)
 - [In my case](#in-my-case)
 - [Contributing](#contributing)
@@ -73,7 +72,7 @@ some example text
 
 If you want to do something about word "example", that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
 
-
+![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/string-replace-slices-array/cc202bd4/media/finding_range_indexes_in_atom.gif)
 
 That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
 
@@ -88,22 +87,38 @@ Now what happens when you have a few slices? You put them into a _parent array_.
 
 This library consumes such parent array and does the actual job crunching your string according to the list of _slices_.
 
-Now, let's do it practically.
-
-First, make sure you found the exact boundaries of the slice - preview each using `String.slice`:
+Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check is the slice you want correspond to the indexes you've got.
 
 ```js
-console.log('>>>' + someString.slice(sliceFrom, sliceTo) + '<<<') // <--- make sure what you see is exactly what you want deleted/replaced or the place where it starts is exactly where you want string inserted
+const repl = require('string-replace-slices-array')
+let str = 'aaa delete me bbb and me too ccc'
+// we preview the slice #1, "delete me", is it actually indexes from 4 to 13:
+console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
+// preview slice #2, "and me too", is it actually indexes from 18 to 28:
+console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
+//
+// then instruct this library to replace each with `zzz` and `yyy`:
+str = repl(
+  str,
+  [
+    [4, 13, 'zzz'],
+    [18, 28, 'yyy']
+  ]
+)
+console.log('str = ' + str)
+// => 'aaa zzz bbb yyy ccc',
 ```
 
-**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+If you omit the third argument, that slice will be deleted.
+
+Slice ranges can be the **same index**. In that case, if there is third argument, its value will be inserted **before** the string at given index. If there's no third argument, nothing will happen.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## API
 
 ```js
-stringReplaceSlicesArray(inputString, rangesArray) // options will come in later releases
+stringReplaceSlicesArray(inputString, rangesArray)
 ```
 
 Returns a string with requested slices deleted/replaced.
@@ -125,44 +140,7 @@ For example,
 ]
 ```
 
-**[⬆ &nbsp;back to top](#)**
-
-## Usage
-
-```js
-const repl = require('string-replace-slices-array')
-let str = 'aaa delete me bbb and me too ccc'
-// we preview the slice #1 - we're happy to replace it:
-console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
-// slice #2 will be replaced too:
-console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
-//
-str = repl(
-  str,
-  [
-    [4, 13, 'zzz'],
-    [18, 28, 'yyy']
-  ]
-)
-console.log('str = ' + str)
-// => 'aaa zzz bbb yyy ccc',
-```
-
-To insert a piece of string into a string pass the index where you want the string inserted as both "from" and "to" values:
-
-```js
-const repl = require('string-replace-slices-array')
-let str = 'aaa  ccc'
-//
-str = repl(
-  str,
-  [
-    [4, 4, 'bbb']
-  ]
-)
-console.log('str = ' + str)
-// 'aaa bbb ccc'
-```
+**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
 **[⬆ &nbsp;back to top](#)**
 
