@@ -26,33 +26,12 @@
 - [Install](#install)
 - [Idea](#idea)
 - [`getKeyset()`](#getkeyset)
-  - [input](#input)
-  - [output](#output)
-  - [example](#example)
 - [`getKeysetSync()`](#getkeysetsync)
-  - [input](#input-1)
-  - [output](#output-1)
-  - [example](#example-1)
 - [`enforceKeyset()`](#enforcekeyset)
-  - [input](#input-2)
-  - [output](#output-2)
-  - [example](#example-2)
 - [`enforceKeysetSync()`](#enforcekeysetsync)
-  - [input](#input-3)
-  - [output](#output-3)
-  - [example](#example-3)
 - [`noNewKeys()`](#nonewkeys)
-  - [input](#input-4)
-  - [output](#output-4)
-  - [example](#example-4)
 - [`findUnused()`](#findunused)
-  - [input](#input-5)
-  - [output](#output-5)
-  - [example](#example-5)
 - [`sortAllObjects()`](#sortallobjects)
-  - [input](#input-6)
-  - [output](#output-6)
-  - [example](#example-6)
 - [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -95,7 +74,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-comb-core.cjs.js` | 14&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 14&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 60&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 59&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -709,7 +688,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-comb-core
