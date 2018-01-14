@@ -117,6 +117,12 @@
     "licence": {
       "extras": []
     },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -125,11 +131,11 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.2",
+    "check-types-mini": "^3.0.3",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
     "string-match-left-right": "^2.0.6",
-    "string-replace-slices-array": "^2.0.10",
+    "string-replace-slices-array": "^2.0.11",
     "string-slices-array-push": "^2.2.2"
   },
   "devDependencies": {
@@ -147,6 +153,6 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.5"
+    "uglify-es": "^3.3.7"
   }
 }
