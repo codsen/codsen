@@ -26,15 +26,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
-  - [API - Input](#api---input)
-    - [Options object:](#options-object)
-  - [API - Output](#api---output)
 - [Examples](#examples)
-  - ["Maybes" — optional surrounding strings to be replaced as well](#maybes--optional-surrounding-strings-to-be-replaced-as-well)
-  - [Negative lookahead - if you want to match something _not followed_ by something else](#negative-lookahead---if-you-want-to-match-something-_not-followed_-by-something-else)
-  - [Positive lookbehind - if you want to match something that is _preceded_ by something else](#positive-lookbehind---if-you-want-to-match-something-that-is-_preceded_-by-something-else)
-  - [Negative lookbehind - if you want to match something that is NOT preceded by something else](#negative-lookbehind---if-you-want-to-match-something-that-is-not-preceded-by-something-else)
-  - [Real life scenario](#real-life-scenario)
 - [Rationale](#rationale)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -58,7 +50,7 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled, contains `require` and `module.exports` | `main`                | `dist/easy-replace.cjs.js` | 13&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/easy-replace.cjs.js` | 13&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/easy-replace.esm.js` | 13&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/easy-replace.umd.js` | 23&nbsp;KB
 
@@ -409,9 +401,9 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 * If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/easy-replace/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
 
-* If you don't like the code in here and would like to **give an advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/easy-replace/issues) or [email](mailto:roy@codsen.com), your choice.
+* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/easy-replace/issues) or [email](mailto:roy@codsen.com), your choice.
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -419,7 +411,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/easy-replace.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/easy-replace
