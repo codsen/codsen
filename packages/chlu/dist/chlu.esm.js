@@ -29,11 +29,11 @@ var versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g;
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
-function existy$1(x) {
+function existy(x) {
   return x != null;
 }
 function truthy(x) {
-  return x !== false && existy$1(x);
+  return x !== false && existy(x);
 }
 function isArr(something) {
   return Array.isArray(something);
@@ -54,7 +54,7 @@ function isFooterLink(str) {
   } else if (!isStr(str)) {
     throw new TypeError('chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string');
   }
-  return str.length > 0 && existy$1(str.match(versionWithBracketsRegex)) && aContainsB(str, ']:');
+  return str.length > 0 && existy(str.match(versionWithBracketsRegex)) && aContainsB(str, ']:');
 }
 
 // Is current string (line as input one-by-one) a title?
@@ -67,7 +67,7 @@ function isTitle(str) {
     throw new TypeError('chlu/util.js/isTitle(): [THROW_ID_01] The input must be string');
   }
   var stringInFrontOfVersion = void 0;
-  if (existy$1(str.match(versionWithoutBracketsRegex))) {
+  if (existy(str.match(versionWithoutBracketsRegex))) {
     stringInFrontOfVersion = str.split(str.match(versionWithoutBracketsRegex)[0]);
     if (stringInFrontOfVersion === null) {
       stringInFrontOfVersion = '';
@@ -75,7 +75,7 @@ function isTitle(str) {
       stringInFrontOfVersion = stringInFrontOfVersion[0];
     }
   }
-  return str.length > 0 && existy$1(str.match(versionWithoutBracketsRegex)) && !str.includes('http') && !str.includes(']:') && trim(stringInFrontOfVersion, '[# \t') === '' && str.includes('#');
+  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes('http') && !str.includes(']:') && trim(stringInFrontOfVersion, '[# \t') === '' && str.includes('#');
 }
 
 function getTitlesAndFooterLinks(linesArr) {
@@ -91,7 +91,7 @@ function getTitlesAndFooterLinks(linesArr) {
       titles.push({
         version: firstEncounteredVersion,
         rowNum: i,
-        linked: existy$1(linesArr[i].match(versionWithBracketsRegex)),
+        linked: existy(linesArr[i].match(versionWithBracketsRegex)),
         content: linesArr[i],
         beforeVersion: linesArr[i].split(firstEncounteredVersion)[0],
         afterVersion: linesArr[i].split(firstEncounteredVersion)[1]
@@ -129,7 +129,7 @@ function getPreviousVersion(currVers, originalVersionsArr) {
   }
   // next, iterate versions array and try to get the previous version:
   for (var i = 0, len = versionsArr.length; i < len; i++) {
-    if (versionsArr[i] === currVers && existy$1(versionsArr[i - 1])) {
+    if (versionsArr[i] === currVers && existy(versionsArr[i - 1])) {
       return versionsArr[i - 1];
     }
   }
@@ -148,10 +148,10 @@ function setRow(rowsArray, index, content) {
 }
 
 function getRow(rowsArray, index) {
-  if (!existy$1(index) || !isNum(index)) {
+  if (!existy(index) || !isNum(index)) {
     throw new TypeError('chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it\'s given as: ' + (typeof index === 'undefined' ? 'undefined' : _typeof(index)) + ' and equal: ' + JSON.stringify(index, null, 4));
   }
-  if (!existy$1(rowsArray) || !isArr(rowsArray)) {
+  if (!existy(rowsArray) || !isArr(rowsArray)) {
     throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it\'s given as: ' + (typeof rowsArray === 'undefined' ? 'undefined' : _typeof(rowsArray)) + ' and equal: ' + JSON.stringify(rowsArray, null, 4));
   }
   for (var i = 0, len = rowsArray.length; i < len; i++) {
@@ -166,7 +166,7 @@ function getRow(rowsArray, index) {
 // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
 function getSetFooterLink(str, o) {
   var mode = void 0;
-  if (existy$1(o)) {
+  if (existy(o)) {
     mode = 'set';
   } else {
     mode = 'get';o = {};
@@ -179,19 +179,19 @@ function getSetFooterLink(str, o) {
 
   for (var i = 0, len = split.length; i < len; i++) {
     if (split[i] === 'github.com') {
-      res.user = existy$1(o.user) ? o.user : split[i + 1];
-      res.project = existy$1(o.project) ? o.project : split[i + 2];
+      res.user = existy(o.user) ? o.user : split[i + 1];
+      res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === 'compare') {
       if (split[i + 1].includes('...')) {
         var splitVersions = split[i + 1].split('...');
-        res.versBefore = existy$1(o.versBefore) ? o.versBefore : trim(splitVersions[0], 'v');
-        res.versAfter = existy$1(o.versAfter) ? o.versAfter : trim(splitVersions[1], 'v');
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], 'v');
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], 'v');
       } else {
         // incurance against broken compare links:
         return null;
       }
     } else if (i === 0) {
-      res.version = existy$1(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0];
+      res.version = existy(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
   if (mode === 'get') {
@@ -232,7 +232,7 @@ function filterDate(someString) {
 // F'S
 // -----------------------------------------------------------------------------
 
-function existy(x) {
+function existy$1(x) {
   return x != null;
 }
 
@@ -240,7 +240,7 @@ function existy(x) {
 // -----------------------------------------------------------------------------
 
 function chlu(changelogContents, packageJsonContents) {
-  if (arguments.length === 0 || !existy(changelogContents)) {
+  if (arguments.length === 0 || !existy$1(changelogContents)) {
     return;
   }
 
@@ -278,7 +278,7 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 2: remove any invalid footer links
 
   for (var i = 0, len = footerLinks.length; i < len; i++) {
-    if (!existy(getSetFooterLink(footerLinks[i].content))) {
+    if (!existy$1(getSetFooterLink(footerLinks[i].content))) {
       linesArr.splice(footerLinks[i].rowNum, 1);
     }
   }
@@ -365,7 +365,7 @@ function chlu(changelogContents, packageJsonContents) {
     // if last non-empty line has "]:" in it, place right after it.
     // otherwise, insert an empty line. This means there's content only and no links yet.
     for (var _i3 = linesArr.length - 1, start = 0; _i3 >= start; _i3--) {
-      if (existy(linesArr[_i3]) && !empty(linesArr[_i3])) {
+      if (existy$1(linesArr[_i3]) && !empty(linesArr[_i3])) {
         whereToPlaceIt = _i3 + 2;
         break;
       }
@@ -406,7 +406,7 @@ function chlu(changelogContents, packageJsonContents) {
       });
     }
     // versBefore can't be lesser than the version of the previous title
-    if (existy(getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) && serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) < 0) {
+    if (existy$1(getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) && serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) < 0) {
       footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
         versBefore: getPreviousVersion(extracted.version, sortedTitlesArray)
       });
@@ -464,7 +464,7 @@ function chlu(changelogContents, packageJsonContents) {
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
 
-  if (existy(footerLinks) && footerLinks.length > 0 && !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
+  if (existy$1(footerLinks) && footerLinks.length > 0 && !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, '');
   }
 
