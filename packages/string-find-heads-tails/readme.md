@@ -96,6 +96,8 @@ For example,
 
 This library enables to build tools which process such code. All processing starts with searching for variables in a string and `string-find-heads-tails` will help you here.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Usage
 
 ```js
