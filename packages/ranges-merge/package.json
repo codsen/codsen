@@ -116,6 +116,12 @@
     "licence": {
       "extras": []
     },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -136,11 +142,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.53.4",
+    "rollup": "^0.54.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.5"
+    "uglify-es": "^3.3.7"
   }
 }
