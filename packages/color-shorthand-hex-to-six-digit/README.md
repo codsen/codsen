@@ -17,8 +17,6 @@
 [![Test in browser][runkit-img]][runkit-url]
 [![MIT License][license-img]][license-url]
 
-* PostHTML Plugin: [posthtml-color-shorthand-hex-to-six-digit](https://github.com/codsen/posthtml-color-shorthand-hex-to-six-digit)
-
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -64,8 +62,6 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 Email newsletters use a lot of styling using HTML attributes, for example, `<td bgcolor='#cccccc'>`. As you know, there is alternative way to write color codes in HEX — [shorthand](https://en.wikipedia.org/wiki/Web_colors#Shorthand_hexadecimal_form), for example, `<td bgcolor='#ccc'>`.
 
 Certain contemporary email consumption software doesn't accept shorthand hex colour codes, what means you have to ensure all your email templates use **only full-length colour codes**. Some tooling libraries that work with SASS shorten the colour hex codes, and that's a best practice for web development, but not for email. We need a tool/library which could convert any shorthand hex codes from any input (array, plain object or string) into full notation.
-
-`color-shorthand-hex-to-six-digit` is an internal library either to be used in JS applications, or as a core dependency for plugins (for example [PostHTML](https://github.com/codsen/posthtml-color-shorthand-hex-to-six-digit)).
 
 This library takes any input: **array** (of strings, plain objects, other arrays or nested combination thereof), **plain object** (containing anything in values, including nested plain objects, arrays or strings) or **string**. Once received, it traverses the input and converts all found shorthand hex colour codes (#abc) into full-length (#aabbcc).
 
