@@ -1,25 +1,27 @@
-logs
-*.log
-npm-debug.log*
-pids
-media
-*.pid
-*.seed
-lib-cov
-coverage
-.lock-wscript
-.npm
-.node_repl_history
-Thumbs.db
-.cfcli.yml
-config.json
-.sublime-project
-.sublime-workspace
+# .... generated using www.npmjs.com/package/lect ....
+#
+#
+#       __         ______     ______     ______
+#      /\ \       /\  ___\   /\  ___\   /\__  _\
+#      \ \ \____  \ \  __\   \ \ \____  \/_/\ \/
+#       \ \_____\  \ \_____\  \ \_____\    \ \_\
+#        \/_____/   \/_____/   \/_____/     \/_/
+#
+#
+
+# folders:
+
 .nyc_output
+coverage
+
+# files:
+
+.babelrc
 .bithoundrc
 .editorconfig
+.eslintrc.json
+.gitattributes
+.gitignore
+.npmignore
 .travis.yml
-test.js
 test.zip
-cli.js
-.babelrc
