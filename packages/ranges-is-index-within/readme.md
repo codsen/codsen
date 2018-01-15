@@ -122,6 +122,8 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 
 ^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
 
+**[⬆ &nbsp;back to top](#)**
+
 ## Example
 
 Simple encoding using default settings:
