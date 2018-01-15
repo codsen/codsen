@@ -29,7 +29,6 @@ Other siblings of this package:
 - [Install](#install)
 - [Idea](#idea)
 - [The API](#the-api)
-  - [Optional Options Object's API:](#optional-options-objects-api)
 - [Usage](#usage)
 - [Practical use](#practical-use)
 - [Contributing](#contributing)
@@ -146,7 +145,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/email-all-chars-within-ascii.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/email-all-chars-within-ascii
