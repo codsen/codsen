@@ -12,12 +12,12 @@ var isStringInt = _interopDefault(require('is-string-int'));
 
 /* eslint padded-blocks: 0 */
 
-var isArr$1 = Array.isArray;
+var isArr = Array.isArray;
 
-function isStr$1(something) {
+function isStr(something) {
   return typ(something) === 'string';
 }
-function isObj$1(something) {
+function isObj(something) {
   return typ(something) === 'Object';
 }
 
@@ -27,17 +27,17 @@ function flattenObject(objOrig, opts) {
   }
   var obj = clone(objOrig);
   var res = [];
-  if (isObj$1(obj)) {
+  if (isObj(obj)) {
     Object.keys(obj).forEach(function (key) {
-      if (isObj$1(obj[key])) {
+      if (isObj(obj[key])) {
         obj[key] = flattenObject(obj[key], opts);
       }
-      if (isArr$1(obj[key])) {
+      if (isArr(obj[key])) {
         res = res.concat(obj[key].map(function (el) {
           return key + opts.objectKeyAndValueJoinChar + el;
         }));
       }
-      if (isStr$1(obj[key])) {
+      if (isStr(obj[key])) {
         res.push(key + opts.objectKeyAndValueJoinChar + obj[key]);
       }
     });
@@ -54,16 +54,16 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   if (arr.length > 0) {
     if (joinArraysUsingBrs) {
       for (var i = 0, len = arr.length; i < len; i++) {
-        if (isStr$1(arr[i])) {
+        if (isStr(arr[i])) {
           var lineBreak = void 0;
           lineBreak = '';
           if (opts.mergeArraysWithLineBreaks && i > 0 && (!opts.mergeWithoutTrailingBrIfLineContainsBr || typeof arr[i - 1] !== 'string' || opts.mergeWithoutTrailingBrIfLineContainsBr && arr[i - 1] !== undefined && !arr[i - 1].toLowerCase().includes('<br'))) {
             lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
           }
           res += lineBreak + (wrap ? opts.wrapHeadsWith : '') + arr[i] + (wrap ? opts.wrapTailsWith : '');
-        } else if (isArr$1(arr[i])) {
+        } else if (isArr(arr[i])) {
           // there's an array among elements
-          if (arr[i].length > 0 && arr[i].every(isStr$1)) {
+          if (arr[i].length > 0 && arr[i].every(isStr)) {
             (function () {
               var lineBreak = '';
               if (opts.mergeArraysWithLineBreaks && res.length > 0) {
@@ -98,7 +98,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
 }
 
 function arrayiffyString(something) {
-  if (isStr$1(something)) {
+  if (isStr(something)) {
     if (something.length > 0) {
       return [something];
     }
@@ -108,7 +108,7 @@ function arrayiffyString(something) {
 }
 
 function reclaimIntegerString(something) {
-  if (isStr$1(something) && isStringInt(something.trim())) {
+  if (isStr(something) && isStringInt(something.trim())) {
     return parseInt(something.trim(), 10);
   }
   return something;
@@ -125,15 +125,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /* eslint padded-blocks: 0, no-param-reassign:0 */
 
-var isArr = Array.isArray;
+var isArr$1 = Array.isArray;
 
 function existy(x) {
   return x != null;
 }
-function isStr(something) {
+function isStr$1(something) {
   return typ(something) === 'string';
 }
-function isObj(something) {
+function isObj$1(something) {
   return typ(something) === 'Object';
 }
 
@@ -144,7 +144,7 @@ function outer(originalInput1, originalReference1, opts1) {
   if (arguments.length === 1) {
     throw new Error('object-flatten-referencing/ofr(): [THROW_ID_02] reference object missing!');
   }
-  if (existy(opts1) && !isObj(opts1)) {
+  if (existy(opts1) && !isObj$1(opts1)) {
     throw new Error('object-flatten-referencing/ofr(): [THROW_ID_03] third input, options object must be a plain object. Currently it\'s: ' + (typeof opts1 === 'undefined' ? 'undefined' : _typeof(opts1)));
   }
 
@@ -204,7 +204,7 @@ function outer(originalInput1, originalReference1, opts1) {
       wrap = false;
     }
 
-    if (isObj(input)) {
+    if (isObj$1(input)) {
       Object.keys(input).forEach(function (key) {
         var currentPath = currentRoot + (currentRoot.length === 0 ? key : '.' + key);
         // console.log(`* currentPath = ${JSON.stringify(currentPath, null, 4)}\n\n`)
@@ -230,8 +230,8 @@ function outer(originalInput1, originalReference1, opts1) {
           }
 
           if (existy(reference[key]) || !existy(reference[key]) && opts.whatToDoWhenReferenceIsMissing === 2) {
-            if (isArr(input[key])) {
-              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr(reference[key])) {
+            if (isArr$1(input[key])) {
+              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 // reference is string
                 // that's array vs. string clash:
                 input[key] = util.flattenArr(input[key], opts, wrap, joinArraysUsingBrs);
@@ -263,7 +263,7 @@ function outer(originalInput1, originalReference1, opts1) {
                   var allOK = true;
                   input[key].forEach(function (oneOfElements) {
                     // check that child arrays contain only string elements
-                    if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr)) {
+                    if (Array.isArray(oneOfElements) && !oneOfElements.every(isStr$1)) {
                       allOK = false;
                     }
                   });
@@ -273,8 +273,8 @@ function outer(originalInput1, originalReference1, opts1) {
                 }
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
-            } else if (isObj(input[key])) {
-              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr(reference[key])) {
+            } else if (isObj$1(input[key])) {
+              if (opts.whatToDoWhenReferenceIsMissing === 2 || isStr$1(reference[key])) {
                 input[key] = util.flattenArr(util.flattenObject(input[key], opts), opts, wrap, joinArraysUsingBrs);
               } else if (!wrap) {
                 // when calling recursively, the parent key might get
@@ -288,7 +288,7 @@ function outer(originalInput1, originalReference1, opts1) {
               } else {
                 input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
               }
-            } else if (isStr(input[key])) {
+            } else if (isStr$1(input[key])) {
               input[key] = ofr(input[key], reference[key], opts, wrap, joinArraysUsingBrs, currentPath);
             }
           } else if (typ(input[key]) !== typ(reference[key])) {
@@ -300,8 +300,8 @@ function outer(originalInput1, originalReference1, opts1) {
           }
         }
       });
-    } else if (isArr(input)) {
-      if (isArr(reference)) {
+    } else if (isArr$1(input)) {
+      if (isArr$1(reference)) {
         input.forEach(function (el, i) {
           if (existy(input[i]) && existy(reference[i])) {
             input[i] = ofr(input[i], reference[i], opts, wrap, joinArraysUsingBrs, currentRoot + '[' + i + ']');
@@ -309,10 +309,10 @@ function outer(originalInput1, originalReference1, opts1) {
             input[i] = ofr(input[i], reference[0], opts, wrap, joinArraysUsingBrs, currentRoot + '[' + i + ']');
           }
         });
-      } else if (isStr(reference)) {
+      } else if (isStr$1(reference)) {
         input = util.flattenArr(input, opts, wrap, joinArraysUsingBrs);
       }
-    } else if (isStr(input)) {
+    } else if (isStr$1(input)) {
       if (input.length > 0 && (opts.wrapHeadsWith || opts.wrapTailsWith)) {
         if (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === '' || !search(input, opts.wrapHeadsWith.trim()).length) && (opts.wrapTailsWith === '' || !search(input, opts.wrapTailsWith.trim()).length)) {
           input = (wrap ? opts.wrapHeadsWith : '') + input + (wrap ? opts.wrapTailsWith : '');
