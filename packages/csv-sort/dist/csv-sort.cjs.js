@@ -8,13 +8,13 @@ var ordinal = _interopDefault(require('ordinal'));
 var BigNumber = _interopDefault(require('bignumber.js'));
 var isNumeric = _interopDefault(require('is-numeric'));
 
-var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var currencySigns = ['د.إ', '؋', 'L', '֏', 'ƒ', 'Kz', '$', 'ƒ', '₼', 'KM', '৳', 'лв', '.د.ب', 'FBu', '$b', 'R$', '฿', 'Nu.', 'P', 'p.', 'BZ$', 'FC', 'CHF', '¥', '₡', '₱', 'Kč', 'Fdj', 'kr', 'RD$', 'دج', 'kr', 'Nfk', 'Br', 'Ξ', '€', '₾', '₵', 'GH₵', 'D', 'FG', 'Q', 'L', 'kn', 'G', 'Ft', 'Rp', '₪', '₹', 'ع.د', '﷼', 'kr', 'J$', 'JD', '¥', 'KSh', 'лв', '៛', 'CF', '₩', '₩', 'KD', 'лв', '₭', '₨', 'M', 'Ł', 'Lt', 'Ls', 'LD', 'MAD', 'lei', 'Ar', 'ден', 'K', '₮', 'MOP$', 'UM', '₨', 'Rf', 'MK', 'RM', 'MT', '₦', 'C$', 'kr', '₨', '﷼', 'B/.', 'S/.', 'K', '₱', '₨', 'zł', 'Gs', '﷼', '￥', 'lei', 'Дин.', '₽', 'R₣', '﷼', '₨', 'ج.س.', 'kr', '£', 'Le', 'S', 'Db', 'E', '฿', 'SM', 'T', 'د.ت', 'T$', '₤', '₺', 'TT$', 'NT$', 'TSh', '₴', 'USh', '$U', 'лв', 'Bs', '₫', 'VT', 'WS$', 'FCFA', 'Ƀ', 'CFA', '₣', '﷼', 'R', 'Z$'];
 
 function findtype(something) {
   if (typeof something !== 'string') {
-    throw new Error('csv-sort/util/findtype(): input must be string! Currently it\'s: ' + (typeof something === 'undefined' ? 'undefined' : _typeof$1(something)));
+    throw new Error('csv-sort/util/findtype(): input must be string! Currently it\'s: ' + (typeof something === 'undefined' ? 'undefined' : _typeof(something)));
   }
   if (isNumeric(something)) {
     return 'numeric';
@@ -32,7 +32,7 @@ function findtype(something) {
   return 'text';
 }
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /* eslint prefer-destructuring:0, max-len:0 */
 
@@ -61,10 +61,10 @@ function csvSort(input) {
       }
       return isArr(val);
     })) {
-      throw new TypeError('csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ' + ordinal(culpritIndex) + ' element is not array but: ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof(culpritVal)) + ', equal to:\n' + JSON.stringify(culpritVal, null, 4));
+      throw new TypeError('csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ' + ordinal(culpritIndex) + ' element is not array but: ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof$1(culpritVal)) + ', equal to:\n' + JSON.stringify(culpritVal, null, 4));
     }
   } else {
-    throw new TypeError('csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ' + (typeof input === 'undefined' ? 'undefined' : _typeof(input)) + ', equal to:\n' + JSON.stringify(input, null, 4));
+    throw new TypeError('csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ' + (typeof input === 'undefined' ? 'undefined' : _typeof$1(input)) + ', equal to:\n' + JSON.stringify(input, null, 4));
   }
 
   // step 2.
