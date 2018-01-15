@@ -105,7 +105,7 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 ```js
 {
   ignoreTags: [],
-  stripTogetherWithTheirContents: ['script', 'style'],
+  stripTogetherWithTheirContents: ['script', 'style', 'xml'],
 }
 ```
 
