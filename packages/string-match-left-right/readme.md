@@ -50,9 +50,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 8&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 33&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 10&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 10&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 20&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -74,6 +74,8 @@ Input argument   | Type                       | Obligatory? | Description
 `whatToMatch`    | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches will yield in result `true`
 `opts`           | Plain object               | no          | The Optional Options Object. See below.
 
+**[⬆ &nbsp;back to top](#)**
+
 ### Output
 
 Returns Boolean `false` or value of the string that was matched, that is,
@@ -91,7 +93,7 @@ Returns Boolean `false` or value of the string that was matched, that is,
 `i`                            | Boolean  | no          | `false`     | If `false`, it's case sensitive. If `true`, it's insensitive.
 `cb`                           | Function | no          | `undefined` | If you feed a function to this key, that function will be called with the remainder of the string. Which side, it depends on which side method (left side for `matchLeft` and `matchLeftIncl` and others for right accordingly) is being called. The result of this callback will be joined using "AND" logical operator to calculate the final result. I use `cb` mainly to check for whitespace.
 `trimBeforeMatching`           | Boolean  | no          | `false`     | If set to `true`, there can be whitespace before what's being checked starts. Basically, this means, substring can begin (when using right side methods) or end (when using left side methods) with a whitespace.
-`trimCharsBeforeMatching`      | String or Array of zero or more strings | no          | `[]`     | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.
+`trimCharsBeforeMatching`      | String or Array of zero or more strings, each 1 character-long | no          | `[]`     | If set to `true`, similarly like `trimBeforeMatching` will remove whitespace, this will remove any characters you provide in an array. For example, useful when checking for tag names to the right of `<`, with or without closing slash, `<div` or `</div`.
 }                              |          |             |             |
 
 Here it is with defaults, in one place, ready for copying:
@@ -174,19 +176,21 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // => res = 'class'
 ```
 
-The callback function will receive two arguments:
+The callback function will receive three arguments:
 
 * first argument - the character on the left/right side (depending which side method this is)
 * second argment - whole substring that begins or ends with first argument. This might come handy if you want to perform check on more than one character outside of the matched characters.
+* third argment - the index of the character that was given at the first argument.
 
 For example:
 
 ```js
 const { matchLeftIncl, matchRightIncl, matchLeft, matchRight } = require('string-match-left-right')
 
-function startsWithZ(firstCharacter, wholeSubstring) {
+function startsWithZ(firstCharacter, wholeSubstring, index) {
   // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
   // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
+  // console.log(`index = ${JSON.stringify(index, null, 4)}`)
   return wholeSubstring.startsWith('z')
 }
 
@@ -200,20 +204,57 @@ const test02 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div>'])
 console.log(`test02 = ${JSON.stringify(test02, null, 4)}`)
 // => false, // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { trimCharsBeforeMatching: [' >'] })
+const test03 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { trimCharsBeforeMatching: ['>', ' '] })
 console.log(`test03 = ${JSON.stringify(test03, null, 4)}`)
 // => '<div', // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] })
+const test04 = matchLeft('z<div ><b>aaa</b></div>', 7, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: ['>', ' '] })
 console.log(`test04 = ${JSON.stringify(test04, null, 4)}`)
 // => '<div', // the 7th index is left bracket of <b>. Yes, <div> is on the left.
 
-const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: [' >'] }),
+const test05 = matchLeft('<div ><b>aaa</b></div>', 6, ['zzz', 'yyy', '<div'], { cb: startsWithZ, trimCharsBeforeMatching: ['>', ' '] }),
 console.log(`test05 = ${JSON.stringify(test05, null, 4)}`)
 // => false, // deliberately making the second arg of cb to be blank and fail startsWithZ
 ```
 
-Notice how we matched against three values including `zzz` and `yyy` but only third element `...div...` was matched and returned.
+Notice how the first matched element is being returned (or Boolean `false`).
+
+**VERY IMPORTANT**
+
+Callback's returned value will be used to calculate the final result.
+
+Final result = Boolean value of **matching** AND Boolean value of **callback**
+
+This means, if you set a callback and forget to return a truthy value from it, even if there was a match, return would be `false`, because both match comparison AND the callback have to be _truthy_ to yield _truthy_ output (which is output not as `true` but as matched string value).
+
+You can also use the callback inline:
+
+```js
+const res = matchRightIncl('ab      cdef', 2, 'cd', {
+  trimBeforeMatching: true,
+  cb: (char, theRemainderOfTheString, index) => {
+    t.is(
+      char,
+      'e',
+      '04.01.07',
+    )
+    t.is(
+      theRemainderOfTheString,
+      'ef',
+      '04.01.08',
+    )
+    t.is(
+      index,
+      10,
+      '04.01.09',
+    )
+  },
+})
+console.log(`res = ${JSON.stringify(res, null, 4)}`)
+// res = false,
+// because callback didn't return anything (so returned undefined), even
+// though the "cd" was matched!
+```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -249,7 +290,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 
 MIT License (MIT)
 
-Copyright © 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-match-left-right.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-match-left-right
