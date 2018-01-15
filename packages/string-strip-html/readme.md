@@ -54,9 +54,9 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 
 - [Purpose](#purpose)
-- [Bigger picture](#bigger-picture)
 - [API](#api)
 - [Devil is in the details...](#devil-is-in-the-details)
+- [Bigger picture](#bigger-picture)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -64,42 +64,13 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Purpose
 
-Imagine you have a string with some HTML tags in it. This library makes those tags go poof.
+This library deletes HTML tags from strings and doesn't assume anything about the output.
 
-I strongly believe JS libraries should do one thing and do it well.
+You might take HTML and strip all tags and paste it back into HTML. But equally, you can take a photo of a christmas card from your grandmother and OCR it, remove all cheeky HTML tags she put around her greetings, then print out this cleaned text and stick it on the wall. OK, I'm exaggerating, but the idea is, we will not assume anything about the input source or destination of the output of this library. We will dilligently identify and delete all and only all HTML tags.
 
-In this case, it should strip HTML tags and **only** HTML tags. If we detect something else, only resembling a tag, we should not delete it, right?
+Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ too much. For example, they will remove legit brackets, such as ` a < b and c > d` arguing that they don't belong in HTML at the first place and that's some sneaky attack vector. But again, if you stripped HTML tags, then by definition it's not HTML any more and HTML requirements don't apply, do they?
 
-I think stripping anything else than an HTML tag would be _not doing it well_.
-
-Speaking about competitor libs, they excuse their algorithm imperfections saying unencoded brackets are not allowed within HTML.
-
-But hey, what if somebody wanted to strip HTML tags within simple text? Both inputs and outputs then _could_ contain brackets and they would not be encoded, right?
-
-Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ the output must be HTML too. As a consequence, they:
-
-1. Limit their functionality and algorithm creativity, not concerning with false positive cases, legit brackets in non-HTML scenarios,
-2. thus preventing other libraries that accept HTML too as input (besides other things) to use their HTML stripping.
-
-I had emotional debates on GitHub with other people that were explaining to me HTML must have to unencoded brackets. That was their response to me saying HTML stripping libraries should strip **only HTML tags** (not `a < b and c > d` for example). If it's deemed to be **not** an HTML tag, **it should not be stripped** and I don't care if unencoded brackets _are_ not allowed in HTML. It's outside the scope. My algorithm didn't detect it as a tag and thus left it out. End of scope.
-
-For example, text cleaning libraries (like [Detergent](https://github.com/codsen/detergent)) might implement HTML stripping, and their outputs will most of the cases be not-HTML (strictly speaking, since you can paste any text into HTML). A string like `a < b and c > d` should be able to pass the HTML stripping intact. Then, encode the brackets, but the HTML stripping should not strip `< b and c >`.
-
-The scope of this library is to take HTML and strip HTML tags and only HTML tags. If there's something else there besides tags, what doesn't belong in HTML, I don't care. Use different tool to process your string further.
-
-**[⬆ &nbsp;back to top](#)**
-
-## Bigger picture
-
-I scratched my itch, producing [detergent](https://github.com/codsen/detergent) - I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
-
-Detergent would remove excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input - stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
-
-In September 2017, [string.js](https://www.npmjs.com/package/string) which originally performed the HTML-stripping was discovered as having [vulnerabilities](https://snyk.io/vuln/npm:string).
-
-I was able to quickly replace all functions that Detergent was consuming from `string.js` except **HTML-stripping**.
-
-This library is the last missing piece of a puzzle to drop `string.js` from Detergent dependencies.
+The scope of this library is to take the HTML and strip HTML tags and only HTML tags. If there's something else there besides tags such as greater than signs that doesn't belong in HTML, I don't care. Use different tool to process your string further.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -120,11 +91,11 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 ### Optional Options Object
 
-options object's key             | Type of its value             | Default               | Description
+An Optional Options Object's key | Type of its value             | Default               | Description
 ---------------------------------|-------------------------------|-----------------------|----------------------
 {                                |                               |                       |
 `ignoreTags`                     | Array of zero or more strings | `[]`                  | Any tags provided here will not be stripped from the input
-`stripTogetherWithTheirContents` | Array of zero or more strings, `something falsey` | `['script', 'style']` | My idea is you should be able to paste HTML and see only the text that would be visible in a browser window. Not CSS, not stuff from `script` tags. To turn this off, just set it to an empty array. Or something falsey.
+`stripTogetherWithTheirContents` | Array of zero or more strings, `something falsey` | `['script', 'style', 'xml']` | My idea is you should be able to paste HTML and see only the text that would be visible in a browser window. Not CSS, not stuff from `script` tags. To turn this off, just set it to an empty array. Or something falsey.
 }                                |                               |         |
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
@@ -152,6 +123,20 @@ Two rules:
 
 1. Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
 2. Any whitespace between the tags will be deleted too. For example, `z<a>     <a>y` => `zy`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b>    \t\t\t    <b>y` => `zy`.
+
+**[⬆ &nbsp;back to top](#)**
+
+## Bigger picture
+
+I scratched my itch, producing [detergent](https://github.com/codsen/detergent) - I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
+
+Detergent would remove the excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input - stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
+
+In September 2017, [string.js](https://www.npmjs.com/package/string) which originally performed the HTML-stripping was discovered as having [vulnerabilities](https://snyk.io/vuln/npm:string).
+
+I was able to quickly replace all functions that Detergent was consuming from `string.js` except **HTML-stripping**.
+
+This library is the last missing piece of a puzzle to get rid of `string.js`.
 
 **[⬆ &nbsp;back to top](#)**
 
