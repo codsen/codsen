@@ -24,4 +24,5 @@ coverage
 .gitignore
 .npmignore
 .travis.yml
+cli.js
 test.zip

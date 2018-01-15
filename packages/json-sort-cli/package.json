@@ -116,7 +116,9 @@
       "extras": []
     },
     "npmignore": {
-      "badFiles": [],
+      "badFiles": [
+        "cli.js"
+      ],
       "badFolders": [],
       "goodFiles": [],
       "goodFolders": []
