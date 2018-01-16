@@ -107,7 +107,7 @@ Here it is with defaults, in one place, ready for copying:
 }
 ```
 
-The Optional Options Object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys.
+The Optional Options Object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add any unrecognized keys.
 
 ```js
 
