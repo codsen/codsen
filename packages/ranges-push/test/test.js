@@ -64,6 +64,63 @@ test('01.03  -  ADD() - overloading', (t) => {
   }, 'string-slices-array-push/Slices/add(): [THROW_ID_05] Please don\'t overload the add() method. From the 4th input argument onwards we see these redundant arguments: [\n    1\n]')
 })
 
+test('01.04  -  PUSH() - wrong inputs', (t) => {
+  // missing
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push()
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push('a')
+  })
+  // wrong types
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push('a', 'a')
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(1, 'a')
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push('a', 1)
+  })
+  t.notThrows(() => {
+    const slices = new Slices()
+    slices.push(1, 1)
+  })
+  // hardcoded undefined
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(undefined, 1)
+  })
+  // numbers but not natural integers
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(1.2, 1)
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(1, 1.3)
+  })
+})
+
+test('01.05  -  PUSH() - third input arg is not string', (t) => {
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(1, 2, 3)
+  })
+})
+
+test('01.06  -  PUSH() - overloading', (t) => {
+  t.throws(() => {
+    const slices = new Slices()
+    slices.push(1, 2, 'aaa', 1)
+  })
+})
+
 // -----------------------------------------------------------------------------
 // 02. BAU - no adding string, only ranges for deletion
 // -----------------------------------------------------------------------------
@@ -210,6 +267,33 @@ test('02.10  -  ADD() - wrong order is fine', (t) => {
       [3, 4],
     ],
     '02.10',
+  )
+})
+
+test('02.11  -  PUSH() - adds two non-overlapping ranges', (t) => {
+  const slices = new Slices()
+  slices.push(1, 2)
+  slices.push(3, 4)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    '02.11',
+  )
+})
+
+test('02.12  -  PUSH() - adds two overlapping ranges', (t) => {
+  const slices = new Slices()
+  slices.push(0, 5)
+  slices.push(3, 9)
+  t.deepEqual(
+    slices.current(),
+    [
+      [0, 9],
+    ],
+    '02.12',
   )
 })
 

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-01-16
+### Added
+- ✨ `.push` as an alias for `.add`. Both do the same thing. I thought the name of this package has "push" so why there is no such method? Until now, that is.
+
 ## [2.2.0] - 2017-12-29
 ### Added
 - ✨ When third argument is `null`, any merged range results will have there `null`.
@@ -62,6 +66,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0

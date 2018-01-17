@@ -76,6 +76,12 @@ class Slices {
     }
   }
 
+  // P U S H  ()  -  A L I A S   F O R   A D D ()
+  // ==================
+  push(originalFrom, originalTo, addVal, ...etc) {
+    this.add(originalFrom, originalTo, addVal, ...etc)
+  }
+
   // C U R R E N T () - kindof a getter
   // ==================
   current() {

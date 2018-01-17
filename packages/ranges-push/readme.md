@@ -61,8 +61,8 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-slices-array-push.cjs.js` | 5&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-slices-array-push.esm.js` | 5&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-slices-array-push.cjs.js` | 6&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-slices-array-push.esm.js` | 6&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-slices-array-push.umd.js` | 21&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
@@ -132,6 +132,8 @@ You then interact with your newly-created slices class by calling its _methods_:
 
 ### slices.add(from, to[, str])
 
+alias - **.push**
+
 Input argument | Type                    | Obligatory? | Description
 ---------------|-------------------------|-------------|--------------------
 `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice
@@ -149,6 +151,8 @@ In essence, `.add()` behaves two ways:
 2) all other cases, if it's not an exact extension of a previous range, new range is added into the array. `.add(2, 3)`, later `.add(1, 2)` will result in `[ [2, 3], [1, 2] ]`. The `.current()` method will clean it later. Read on...
 
 Additionally, when `.add` merges two ranges and one completely overlaps another, the superset (larger) range will wipe out any "to-add" (third-argument) values of the subset (smaller) range(s).
+
+You can use either `.add` or `.push`, both do the same thing.
 
 **[⬆ &nbsp;back to top](#)**
 

@@ -92,6 +92,19 @@ var Slices = function () {
       }
     }
 
+    // P U S H  ()  -  A L I A S   F O R   A D D ()
+    // ==================
+
+  }, {
+    key: 'push',
+    value: function push(originalFrom, originalTo, addVal) {
+      for (var _len2 = arguments.length, etc = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
+        etc[_key2 - 3] = arguments[_key2];
+      }
+
+      this.add.apply(this, [originalFrom, originalTo, addVal].concat(etc));
+    }
+
     // C U R R E N T () - kindof a getter
     // ==================
 
