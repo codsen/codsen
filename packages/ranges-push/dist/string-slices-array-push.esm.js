@@ -117,11 +117,8 @@ var Slices = function () {
         this.slices = mergeRanges(this.slices);
         if (this.opts.limitToBeAddedWhitespace) {
           return this.slices.map(function (val) {
-            if (existy(val[2]) && val[2].length > 0 && val[2].trim() === '') {
-              if (val[2].includes('\n') || val[2].includes('\r')) {
-                return [val[0], val[1], '\n'];
-              }
-              return [val[0], val[1], ' '];
+            if (existy(val[2])) {
+              return [val[0], val[1], collapseLeadingWhitespace(val[2])];
             }
             return val;
           });

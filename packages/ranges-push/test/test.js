@@ -816,3 +816,19 @@ test('07.21.03  -  opts.limitToBeAddedWhitespace - leading whitespace #2', (t) =
     '07.21.03',
   )
 })
+
+test('07.21.04  -  opts.limitToBeAddedWhitespace - leading whitespace #3', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true }) // <---- with opts
+  slices.add(4, 4, null)
+  slices.add(7, 14, ' ')
+  slices.add(7, 11)
+  slices.add(14, 14, ' alt=""')
+  t.deepEqual(
+    slices.current(),
+    [
+      [4, 4, null],
+      [7, 14, ' alt=""'],
+    ],
+    '07.21.04',
+  )
+})

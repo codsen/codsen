@@ -99,14 +99,9 @@ class Slices {
       if (this.opts.limitToBeAddedWhitespace) {
         return this.slices.map((val) => {
           if (
-            existy(val[2]) &&
-            (val[2].length > 0) &&
-            (val[2].trim() === '')
+            existy(val[2])
           ) {
-            if (val[2].includes('\n') || val[2].includes('\r')) {
-              return [val[0], val[1], '\n']
-            }
-            return [val[0], val[1], ' ']
+            return [val[0], val[1], collapseLeadingWhitespace(val[2])]
           }
           return val
         })
