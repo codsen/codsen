@@ -1,6 +1,6 @@
 {
   "name": "string-slices-array-push",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Manage the array of slices referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
