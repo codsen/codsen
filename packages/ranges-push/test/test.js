@@ -747,7 +747,7 @@ test('07.16  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #2', (t) =>
   )
 })
 
-test('03.17  -  ADD() - null wipes third arg values', (t) => {
+test('07.17  -  ADD() - null wipes third arg values', (t) => {
   const slices = new Slices()
   slices.add(1, 2, 'aaa')
   slices.add(2, 4, 'zzz')
@@ -757,6 +757,20 @@ test('03.17  -  ADD() - null wipes third arg values', (t) => {
     [
       [1, 6, null],
     ],
-    '03.17',
+    '07.17',
+  )
+})
+
+test('07.18  -  ADD() - adds two non-overlapping ranges', (t) => {
+  const slices = new Slices()
+  slices.add(1, 2)
+  slices.add(3, 4)
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    '07.18',
   )
 })
