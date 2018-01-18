@@ -134,7 +134,8 @@
     "is-natural-number": "*",
     "is-natural-number-string": "*",
     "ordinal-number-suffix": "^0.1.1",
-    "ranges-merge": "^3.1.2"
+    "ranges-merge": "^3.1.2",
+    "string-collapse-leading-whitespace": "^1.0.1"
   },
   "devDependencies": {
     "ava": "*",

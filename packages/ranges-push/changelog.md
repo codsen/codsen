@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-01-18
+### Added
+- ✨ `opts.limitToBeAddedWhitespace` now also collapses the leading and trailing whitespace. If any chunk of leading whitespace (anything that would get `trim()`'med) contain line break `\n`, it's turned into `\n`. Otherwise, it's turned into single space.
+
+```js
+// does nothing to trimmed strings:
+'aaa' => 'aaa'
+// if leading or trailing whitespace doesn't contain \n, collapse to a single space
+'  aaa   ' => ' aaa '
+// otherwise, collapse to a single \n
+'     \n\n   aaa  \n\n\n    ' => '\naaa\n'
+```
+
 ## [2.3.0] - 2018-01-16
 ### Added
 - ✨ `.push` as an alias for `.add`. Both do the same thing. I thought the name of this package has "push" so why there is no such method? Until now, that is.
@@ -66,6 +79,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.4.0]: https://github.com/codsen/string-slices-array-push/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0

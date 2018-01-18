@@ -7,6 +7,7 @@ var isNumStr = _interopDefault(require('is-natural-number-string'));
 var ordinal = _interopDefault(require('ordinal-number-suffix'));
 var mergeRanges = _interopDefault(require('ranges-merge'));
 var checkTypes = _interopDefault(require('check-types-mini'));
+var collapseLeadingWhitespace = _interopDefault(require('string-collapse-leading-whitespace'));
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -82,13 +83,17 @@ var Slices = function () {
         this.last()[1] = to;
         // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
         if (this.last()[2] !== null && existy(addVal)) {
-          this.last()[2] = existy(this.last()[2]) && this.last()[2].length > 0 ? this.last()[2] + addVal : addVal;
+          var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 ? this.last()[2] + addVal : addVal;
+          if (this.opts.limitToBeAddedWhitespace) {
+            calculatedVal = collapseLeadingWhitespace(calculatedVal);
+          }
+          this.last()[2] = calculatedVal;
         }
       } else {
         if (!this.slices) {
           this.slices = [];
         }
-        this.slices.push(addVal !== undefined ? [from, to, addVal] : [from, to]);
+        this.slices.push(addVal !== undefined ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal) : addVal] : [from, to]);
       }
     }
 

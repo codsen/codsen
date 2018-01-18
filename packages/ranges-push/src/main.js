@@ -3,6 +3,7 @@ import isNumStr from 'is-natural-number-string'
 import ordinal from 'ordinal-number-suffix'
 import mergeRanges from 'ranges-merge'
 import checkTypes from 'check-types-mini'
+import collapseLeadingWhitespace from 'string-collapse-leading-whitespace'
 
 function existy(x) { return x != null }
 function mandatory(i) {
@@ -63,16 +64,24 @@ class Slices {
       this.last()[1] = to
       // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
       if ((this.last()[2] !== null) && existy(addVal)) {
-        this.last()[2] = (
+        let calculatedVal = (
           existy(this.last()[2]) &&
           this.last()[2].length > 0
         ) ? this.last()[2] + addVal : addVal
+        if (this.opts.limitToBeAddedWhitespace) {
+          calculatedVal = collapseLeadingWhitespace(calculatedVal)
+        }
+        this.last()[2] = calculatedVal
       }
     } else {
       if (!this.slices) {
         this.slices = []
       }
-      this.slices.push(addVal !== undefined ? [from, to, addVal] : [from, to])
+      this.slices.push(addVal !== undefined ? [
+        from,
+        to,
+        this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal) : addVal,
+      ] : [from, to])
     }
   }
 

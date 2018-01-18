@@ -35,6 +35,7 @@ export default [
       'is-natural-number-string',
       'ordinal-number-suffix',
       'ranges-merge',
+      'string-collapse-leading-whitespace',
     ],
     plugins: [
       babel(),

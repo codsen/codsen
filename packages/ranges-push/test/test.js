@@ -774,3 +774,45 @@ test('07.18  -  ADD() - adds two non-overlapping ranges', (t) => {
     '07.18',
   )
 })
+
+test('07.19.01  -  opts.limitToBeAddedWhitespace - leading whitespace - control', (t) => {
+  const slices = new Slices() // <---- no opts
+  slices.add(1, 2, '   ')
+  slices.add(2, 3, 'z')
+  slices.add(2, 4, ' ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, '   z '],
+    ],
+    '07.19.01 - control, no opts',
+  )
+})
+
+test('07.20.02  -  opts.limitToBeAddedWhitespace - leading whitespace #1', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true }) // <---- with opts
+  slices.add(1, 2, '   ')
+  slices.add(2, 3, 'z')
+  slices.add(2, 4, ' ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, ' z '],
+    ],
+    '07.20.02',
+  )
+})
+
+test('07.21.03  -  opts.limitToBeAddedWhitespace - leading whitespace #2', (t) => {
+  const slices = new Slices({ limitToBeAddedWhitespace: true }) // <---- with opts
+  slices.add(1, 2, ' \n  ')
+  slices.add(2, 3, 'z')
+  slices.add(2, 4, ' ')
+  t.deepEqual(
+    slices.current(),
+    [
+      [1, 4, '\nz '],
+    ],
+    '07.21.03',
+  )
+})
