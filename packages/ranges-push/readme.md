@@ -93,7 +93,7 @@ Imagine, you want to delete a bunch of characters from a string. Like making a b
 
 ## API
 
-This package exports a constructor, Slices, which you first `require`, then call using `new`:
+This package exports a constructor, Slices, which you first `require()`, then call using `new`:
 
 ```js
 const Slices = require('string-slices-array-push')
