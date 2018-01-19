@@ -1,6 +1,6 @@
 {
   "name": "string-remove-duplicate-heads-tails",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Detect and remove erroneous heads and tails that wrap strings",
   "license": "MIT",
   "engines": {
