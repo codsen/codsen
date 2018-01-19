@@ -113,7 +113,7 @@ You can also provide an Optional Options Object when creating the class:
 options object's key             | Type of its value | Default | Description
 ---------------------------------|-------------------|---------|----------------------
 {                                |                   |         |
-`limitToBeAddedWhitespace`       | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases)
+`limitToBeAddedWhitespace`       | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases). Same for leading/trailing whitespace.
 }                                |                   |         |
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
