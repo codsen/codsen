@@ -72,7 +72,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 API is simple: `string` in, `string` out.
 
-If it's not string, it will be simply returned back.
+If input is not a string, it will be just returned back, untouched.
 
 ## Purpose
 
