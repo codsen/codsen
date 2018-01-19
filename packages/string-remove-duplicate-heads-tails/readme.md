@@ -65,7 +65,7 @@ For example:
 'Hi {{ first_name }}!'
 ```
 
-This library detects and deletes redundant heads and tails wrapped around the whole string:
+This library detects and deletes redundant heads and tails wrapped around the input string:
 
 ```js
 '{{ Hi {{ first_name }}! }}' => 'Hi {{ first_name }}!'
