@@ -117,6 +117,12 @@
     "licence": {
       "extras": []
     },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -132,13 +138,13 @@
     "ava": "^0.24.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.4.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.54.0",
+    "rollup": "^0.54.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",

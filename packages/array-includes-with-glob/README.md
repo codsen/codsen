@@ -12,6 +12,7 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![greenkeeper][greenkeeper-img]][greenkeeper-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -232,6 +233,9 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-includes-with-glob.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/array-includes-with-glob/master/dependencies/npm
+
+[greenkeeper-img]: https://badges.greenkeeper.io/codsen/array-includes-with-glob.svg
+[greenkeeper-url]: https://greenkeeper.io/
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/array-includes-with-glob/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/array-includes-with-glob
