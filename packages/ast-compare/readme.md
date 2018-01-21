@@ -12,6 +12,7 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![greenkeeper][greenkeeper-img]][greenkeeper-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -48,7 +49,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 33&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 34&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -261,6 +262,9 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-compare.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
+
+[greenkeeper-img]: https://badges.greenkeeper.io/codsen/ast-compare.svg
+[greenkeeper-url]: https://greenkeeper.io/
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-compare/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-compare
