@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2018-01-21
+### Added
+- ✨ Shortened the error source function paths in error messages. There's no point to report the name of the main function when there's only one function. The package name will suffice.
+
 ## [4.0.0] - 2017-10-23
 ### Changed
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
@@ -35,3 +39,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [3.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v2.0.0...v3.0.0
 [3.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v3.1.0...v4.0.0
+[4.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.0.0...v4.1.0

@@ -30,7 +30,6 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
-      'lodash.pullall',
       'matcher',
     ],
     plugins: [

@@ -12,6 +12,7 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
+[![greenkeeper][greenkeeper-img]][greenkeeper-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -35,8 +36,8 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 3&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/array-pull-all-with-glob.umd.js` | 4&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/array-pull-all-with-glob.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/array-pull-all-with-glob.umd.js` | 3&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -151,6 +152,9 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-pull-all-with-glob.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
+
+[greenkeeper-img]: https://badges.greenkeeper.io/codsen/array-pull-all-with-glob.svg
+[greenkeeper-url]: https://greenkeeper.io/
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/array-pull-all-with-glob/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/array-pull-all-with-glob

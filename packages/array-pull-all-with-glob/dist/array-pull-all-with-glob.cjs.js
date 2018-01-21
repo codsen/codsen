@@ -2,7 +2,6 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var pullAll = _interopDefault(require('lodash.pullall'));
 var matcher = _interopDefault(require('matcher'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -27,16 +26,16 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   }
   // insurance
   if (!existy(originalInput)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_01] first argument is missing!');
+    throw new Error('array-pull-all-with-glob: [THROW_ID_01] first argument is missing!');
   }
   if (!existy(originalToBeRemoved)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_02] second argument is missing!');
+    throw new Error('array-pull-all-with-glob: [THROW_ID_02] second argument is missing!');
   }
   if (!isArr(originalInput)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_03] first argument must be an array! Currently it\'s ' + (typeof originalInput === 'undefined' ? 'undefined' : _typeof(originalInput)) + ', equal to: ' + JSON.stringify(originalInput, null, 4));
+    throw new Error('array-pull-all-with-glob: [THROW_ID_03] first argument must be an array! Currently it\'s ' + (typeof originalInput === 'undefined' ? 'undefined' : _typeof(originalInput)) + ', equal to: ' + JSON.stringify(originalInput, null, 4));
   }
   if (!isArr(originalToBeRemoved)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_04] first argument must be an array! Currently it\'s ' + (typeof originalToBeRemoved === 'undefined' ? 'undefined' : _typeof(originalToBeRemoved)) + ', equal to: ' + JSON.stringify(originalToBeRemoved, null, 4));
+    throw new Error('array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it\'s ' + (typeof originalToBeRemoved === 'undefined' ? 'undefined' : _typeof(originalToBeRemoved)) + ', equal to: ' + JSON.stringify(originalToBeRemoved, null, 4));
   }
   if (originalInput.length === 0 || originalToBeRemoved.length === 0) {
     return originalInput;
@@ -44,15 +43,19 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   if (!originalInput.every(function (el) {
     return isStr(el);
   })) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ' + JSON.stringify(originalInput, null, 4));
+    throw new Error('array-pull-all-with-glob: [THROW_ID_05] first argument array contains non-string elements: ' + JSON.stringify(originalInput, null, 4));
   }
   if (!originalToBeRemoved.every(function (el) {
     return isStr(el);
   })) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ' + JSON.stringify(originalToBeRemoved, null, 4));
+    throw new Error('array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ' + JSON.stringify(originalToBeRemoved, null, 4));
   }
 
-  return pullAll(Array.from(originalInput), matcher(originalInput, originalToBeRemoved));
+  return Array.from(originalInput).filter(function (originalVal) {
+    return !originalToBeRemoved.some(function (remVal) {
+      return matcher.isMatch(originalVal, remVal);
+    });
+  });
 }
 
 module.exports = pullAllWithGlob;

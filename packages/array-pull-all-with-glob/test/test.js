@@ -60,6 +60,17 @@ test('1.5 - no glob, deletes last remaining thing', (t) => {
   )
 })
 
+test('1.6 - no glob, case insensitive', (t) => {
+  t.deepEqual(
+    pull(
+      ['One', 'two', 'Three'],
+      ['one', 'three'],
+    ),
+    ['two'],
+    '1.6.1 - default',
+  )
+})
+
 // ====
 // glob
 // ====
@@ -194,11 +205,10 @@ test('3.5 - wrong inputs - throws', (t) => {
 // checks for accidental input arg mutation
 // ========================================
 
-const arr1 = ['a', 'b', 'c']
-const arr2 = ['c']
-const unneededResult = pull(arr1, arr2)
-
 test('4.1 - does not mutate the input args', (t) => {
+  const arr1 = ['a', 'b', 'c']
+  const arr2 = ['c']
+  const unneededResult = pull(arr1, arr2)
   t.pass(unneededResult) // filler to shut up the JS Standard complaining
   t.deepEqual(
     arr1,

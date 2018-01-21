@@ -1,4 +1,3 @@
-import pullAll from 'lodash.pullall'
 import matcher from 'matcher'
 
 const isArr = Array.isArray
@@ -17,31 +16,30 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   function isStr(something) { return typeof something === 'string' }
   // insurance
   if (!existy(originalInput)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_01] first argument is missing!')
+    throw new Error('array-pull-all-with-glob: [THROW_ID_01] first argument is missing!')
   }
   if (!existy(originalToBeRemoved)) {
-    throw new Error('array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_02] second argument is missing!')
+    throw new Error('array-pull-all-with-glob: [THROW_ID_02] second argument is missing!')
   }
   if (!isArr(originalInput)) {
-    throw new Error(`array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_03] first argument must be an array! Currently it's ${typeof originalInput}, equal to: ${JSON.stringify(originalInput, null, 4)}`)
+    throw new Error(`array-pull-all-with-glob: [THROW_ID_03] first argument must be an array! Currently it's ${typeof originalInput}, equal to: ${JSON.stringify(originalInput, null, 4)}`)
   }
   if (!isArr(originalToBeRemoved)) {
-    throw new Error(`array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_04] first argument must be an array! Currently it's ${typeof originalToBeRemoved}, equal to: ${JSON.stringify(originalToBeRemoved, null, 4)}`)
+    throw new Error(`array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it's ${typeof originalToBeRemoved}, equal to: ${JSON.stringify(originalToBeRemoved, null, 4)}`)
   }
   if ((originalInput.length === 0) || (originalToBeRemoved.length === 0)) {
     return originalInput
   }
   if (!originalInput.every(el => isStr(el))) {
-    throw new Error(`array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ${JSON.stringify(originalInput, null, 4)}`)
+    throw new Error(`array-pull-all-with-glob: [THROW_ID_05] first argument array contains non-string elements: ${JSON.stringify(originalInput, null, 4)}`)
   }
   if (!originalToBeRemoved.every(el => isStr(el))) {
-    throw new Error(`array-pull-all-with-glob/pullAllWithGlob(): [THROW_ID_05] first argument array contains non-string elements: ${JSON.stringify(originalToBeRemoved, null, 4)}`)
+    throw new Error(`array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(originalToBeRemoved, null, 4)}`)
   }
 
-  return pullAll(Array.from(originalInput), matcher(
-    originalInput,
-    originalToBeRemoved,
-  ))
+  return Array.from(originalInput)
+    .filter(originalVal => !originalToBeRemoved
+      .some(remVal => matcher.isMatch(originalVal, remVal)))
 }
 
 export default pullAllWithGlob
