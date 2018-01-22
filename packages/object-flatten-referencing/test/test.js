@@ -2241,3 +2241,226 @@ test('99.02 - util.flattenArr > simple array', (t) => {
     '99.02.02',
   )
 })
+
+test('99.03 - util.flattenArr + joinArraysUsingBrs', (t) => {
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      true,
+      false, // joinArraysUsingBrs
+    ),
+    '%%_a_%% %%_b,c,d_%% %%_e_%%',
+    '99.03.01',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      false,
+      false, // joinArraysUsingBrs
+    ),
+    'a b,c,d e',
+    '99.03.02',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: false,
+      },
+      true,
+      false, // joinArraysUsingBrs
+    ),
+    '%%_a_%% %%_b,c,d_%% %%_e_%%',
+    '99.03.03',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: false,
+      },
+      false,
+      false, // joinArraysUsingBrs
+    ),
+    'a b,c,d e',
+    '99.03.04',
+  )
+
+  // joinArraysUsingBrs = true
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      true,
+      true, // joinArraysUsingBrs
+    ),
+    '%%_a_%%<br />%%_b_%% %%_c_%% %%_d_%%<br />%%_e_%%',
+    '99.03.05',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      false,
+      true, // joinArraysUsingBrs
+    ),
+    'a<br />b c d<br />e',
+    '99.03.06',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: false,
+      },
+      true,
+      true, // joinArraysUsingBrs
+    ),
+    '%%_a_%%%%_b_%% %%_c_%% %%_d_%%%%_e_%%',
+    '99.03.07',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: true,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: false,
+      },
+      false,
+      true, // joinArraysUsingBrs
+    ),
+    'ab c de',
+    '99.03.08',
+  )
+
+  // HTML - no slashes
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: false,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      true,
+      true, // joinArraysUsingBrs
+    ),
+    '%%_a_%%<br>%%_b_%% %%_c_%% %%_d_%%<br>%%_e_%%',
+    '99.03.09',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: false,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      false,
+      true, // joinArraysUsingBrs
+    ),
+    'a<br>b c d<br>e',
+    '99.03.10',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: false,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      true,
+      false, // joinArraysUsingBrs
+    ),
+    '%%_a_%% %%_b,c,d_%% %%_e_%%',
+    '99.03.11',
+  )
+  t.deepEqual(
+    flattenArr(
+      ['a', ['b', 'c', 'd'], 'e'],
+      {
+        wrapHeadsWith: '%%_',
+        wrapTailsWith: '_%%',
+        dontWrapKeys: [],
+        xhtml: false,
+        preventDoubleWrapping: true,
+        objectKeyAndValueJoinChar: '.',
+        mergeArraysWithLineBreaks: true,
+      },
+      false,
+      false, // joinArraysUsingBrs
+    ),
+    'a b,c,d e',
+    '99.03.12',
+  )
+})

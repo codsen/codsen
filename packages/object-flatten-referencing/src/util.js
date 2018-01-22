@@ -81,7 +81,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce((acc, val, i, arr2) => {
         let lineBreak = ''
-        if (opts.mergeArraysWithLineBreaks && (res.length > 0)) {
+        if (opts.mergeArraysWithLineBreaks && (i > 0)) {
           lineBreak = `<br${opts.xhtml ? ' /' : ''}>`
         }
         let trailingSpace = ''

@@ -83,7 +83,7 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
     } else {
       res = arr.reduce(function (acc, val, i, arr2) {
         var lineBreak = '';
-        if (opts.mergeArraysWithLineBreaks && res.length > 0) {
+        if (opts.mergeArraysWithLineBreaks && i > 0) {
           lineBreak = '<br' + (opts.xhtml ? ' /' : '') + '>';
         }
         var trailingSpace = '';
