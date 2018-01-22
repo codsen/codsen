@@ -291,7 +291,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
 
       if (oneHeadFound && matchedTails && opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder && strictMatchingIndex !== undefined && tails[strictMatchingIndex] !== undefined && tails[strictMatchingIndex] !== matchedTails) {
         var temp = void 0;
-        // find out which index is "matchedTails" does have "tails":
+        // find out which index in "matchedTails" does have "tails":
         for (var _z = tails.length; _z--;) {
           if (tails[_z] === matchedTails) {
             temp = _z;
