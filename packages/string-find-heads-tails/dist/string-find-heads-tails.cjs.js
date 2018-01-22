@@ -287,7 +287,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           }
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
-          throw new TypeError('' + opts.source + (s ? ': [THROW_ID_19]' : '') + ' When processing "' + str + '", we found heads (' + str.slice(i, i + matchedHeads.length) + ') starting at character with index number "' + i + '" but there were no tails preceding it! Instead there was another set of heads before it! That\'s very naughty!');
+          throw new TypeError('' + opts.source + (s ? ': [THROW_ID_19]' : '') + ' When processing "' + str + '", we found heads (' + str.slice(i, i + matchedHeads.length) + ') starting at character with index number "' + i + '" and there was another set of heads before it! Generally speaking, there should be "heads-tails-heads-tails", not "heads-heads-tails"!\nWe\'re talking about the area of the code:\n\n\n--------------------------------------starts\n' + str.slice(Math.max(i - 200, 0), i) + '\n      -------> ' + str.slice(i, i + matchedHeads.length) + ' <-------\n' + str.slice(i + matchedHeads.length, Math.min(len, i + 200)) + '\n--------------------------------------ends\n\n\nTo turn off this error being thrown, set opts.throwWhenSomethingWrongIsDetected to Boolean false.');
         }
       }
       var matchedTails = stringMatchLeftRight.matchRightIncl(str, i, tails);

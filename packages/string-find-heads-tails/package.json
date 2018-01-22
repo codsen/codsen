@@ -103,6 +103,18 @@
           "Tests"
         ],
         "username": "revelt"
+      },
+      {
+        "contribution": [
+          "Bug reports"
+        ],
+        "username": "stevenvachon"
+      },
+      {
+        "contribution": [
+          "Bug reports"
+        ],
+        "username": "hellocosmin"
       }
     ],
     "eslintrc": {
