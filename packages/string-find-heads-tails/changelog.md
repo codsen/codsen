@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.0] - 2018-01-22
+### Added
+- ✨ Improvements to error messages - now reporting index of the heads or tails in question.
+
 ## [3.4.0] - 2018-01-04
 ### Added
 - ✨ `opts.relaxedAPI`
@@ -68,6 +72,7 @@ now the same example in `v.2` API:
 ### New
 - ✨ First public release
 
+[3.5.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.1.0...v3.2.0
