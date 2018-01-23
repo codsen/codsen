@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [3.5.0] - 2018-01-22
 ### Added
-- ✨ Improvements to error messages - now reporting index of the heads or tails in question.
+- ✨ Improvements to error messages — now reporting index of the heads or tails in question.
 
 ## [3.4.0] - 2018-01-04
 ### Added
