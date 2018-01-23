@@ -1,17 +1,17 @@
-import reverse from 'lodash.reverse';
-import splitLines from 'split-lines';
-import getPkgRepo from 'get-pkg-repo';
 import serverCompare from 'semver-compare';
-import empty from 'posthtml-ast-contains-only-empty-space';
-import insert from 'just-insert';
 import clone from 'lodash.clonedeep';
-import includes from 'lodash.includes';
-import min from 'lodash.min';
-import dd from 'dehumanize-date';
 import isNum from 'is-natural-number';
 import trim from 'lodash.trim';
 import easyReplace from 'easy-replace';
 import emojiRegexLib from 'emoji-regex';
+import reverse from 'lodash.reverse';
+import splitLines from 'split-lines';
+import getPkgRepo from 'get-pkg-repo';
+import empty from 'posthtml-ast-contains-only-empty-space';
+import insert from 'just-insert';
+import includes from 'lodash.includes';
+import min from 'lodash.min';
+import dd from 'dehumanize-date';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

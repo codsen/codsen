@@ -2,20 +2,20 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var reverse = _interopDefault(require('lodash.reverse'));
-var splitLines = _interopDefault(require('split-lines'));
-var getPkgRepo = _interopDefault(require('get-pkg-repo'));
 var serverCompare = _interopDefault(require('semver-compare'));
-var empty = _interopDefault(require('posthtml-ast-contains-only-empty-space'));
-var insert = _interopDefault(require('just-insert'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var includes = _interopDefault(require('lodash.includes'));
-var min = _interopDefault(require('lodash.min'));
-var dd = _interopDefault(require('dehumanize-date'));
 var isNum = _interopDefault(require('is-natural-number'));
 var trim = _interopDefault(require('lodash.trim'));
 var easyReplace = _interopDefault(require('easy-replace'));
 var emojiRegexLib = _interopDefault(require('emoji-regex'));
+var reverse = _interopDefault(require('lodash.reverse'));
+var splitLines = _interopDefault(require('split-lines'));
+var getPkgRepo = _interopDefault(require('get-pkg-repo'));
+var empty = _interopDefault(require('posthtml-ast-contains-only-empty-space'));
+var insert = _interopDefault(require('just-insert'));
+var includes = _interopDefault(require('lodash.includes'));
+var min = _interopDefault(require('lodash.min'));
+var dd = _interopDefault(require('dehumanize-date'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

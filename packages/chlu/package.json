@@ -117,7 +117,10 @@
       "rightFloatedBadge": ""
     },
     "licence": {
-      "extras": []
+      "extras": [
+        "Unit test #13 - uses changelog of **giu 0.13.4** to test automated error fixing, released under MIT License (MIT) Copyright © 2016-2018 Guillermo Grau Panea",
+        "Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated error fixing, released under MIT License (MIT) Copyright © 2016 Jed Watson"
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -134,7 +137,7 @@
   },
   "dependencies": {
     "dehumanize-date": "^2.5.0",
-    "easy-replace": "^3.0.2",
+    "easy-replace": "^3.0.3",
     "emoji-regex": "^6.5.1",
     "get-pkg-repo": "^2.0.0",
     "is-natural-number": "^4.0.1",
@@ -144,7 +147,7 @@
     "lodash.min": "*",
     "lodash.reverse": "*",
     "lodash.trim": "*",
-    "posthtml-ast-contains-only-empty-space": "^2.1.0",
+    "posthtml-ast-contains-only-empty-space": "^2.1.2",
     "semver-compare": "^1.0.0",
     "split-lines": "^1.1.0"
   },
@@ -152,19 +155,19 @@
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.54.0",
+    "rollup": "^0.55.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.7"
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.8"
   }
 }
