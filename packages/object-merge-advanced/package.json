@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "8.3.3",
+  "version": "8.3.4",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "engines": {
