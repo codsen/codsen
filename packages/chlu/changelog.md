@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## [2.8.0] - 2018-01-23
+### Added
+- ✨ Test-fodder libraries' licences at the bottom of readme
+- ✨ Updated all depdendencies
+
 ## [2.7.0] - 2017-12-08
 ### Improved
 - ✨ Set up Rollup and now we generate 3 flavours: CommonJS, UMD and ES Modules. Source is now in ES Modules.
@@ -82,3 +87,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 [2.5.0]: https://github.com/codsen/chlu/compare/v2.4.0...v2.5.0
 [2.6.0]: https://github.com/codsen/chlu/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/codsen/chlu/compare/v2.6.0...v2.7.0
+[2.8.0]: https://github.com/codsen/chlu/compare/v2.7.0...v2.8.0
