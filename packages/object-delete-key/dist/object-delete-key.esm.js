@@ -1,4 +1,4 @@
-import { del, drop, find, get } from 'ast-monkey';
+import { find, get, drop, del } from 'ast-monkey';
 import isEmpty from 'posthtml-ast-is-empty';
 import clone from 'lodash.clonedeep';
 import checkTypes from 'check-types-mini';

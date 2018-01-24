@@ -139,7 +139,7 @@
     "ast-monkey": "^7.3.1",
     "check-types-mini": "^3.0.3",
     "lodash.clonedeep": "*",
-    "posthtml-ast-is-empty": "^3.0.4",
+    "posthtml-ast-is-empty": "^3.0.5",
     "util-array-object-or-both": "^2.0.1"
   },
   "devDependencies": {
@@ -152,8 +152,8 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "posthtml-parser": "^0.3.3",
-    "rollup": "^0.54.1",
+    "posthtml-parser": "^0.4.0",
+    "rollup": "^0.55.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",
