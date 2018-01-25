@@ -292,7 +292,7 @@ test('01.07 - cheeky case, custom placeholder on schema has value null', (t) => 
 // 2. Normalises array contents
 // ==============================
 
-test('02.01 - one level-deep array', (t) => {
+test('02.01 - array one level-deep', (t) => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -354,7 +354,7 @@ test('02.01 - one level-deep array', (t) => {
   )
 })
 
-test('02.02 - multiple levels of nested arrays)', (t) => {
+test('02.02 - multiple levels of nested arrays', (t) => {
   t.deepEqual(
     fillMissingKeys(
       {
@@ -747,6 +747,24 @@ test('04.07 - opts is not a plain object', (t) => {
   })
 })
 
+test('04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders', (t) => {
+  t.throws(() => {
+    fillMissingKeys({ a: 'c' }, { a: 'b' }, {
+      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', 1],
+    })
+  })
+  t.throws(() => {
+    fillMissingKeys({ a: 'c' }, [{ a: 'b' }], {
+      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', { a: 1 }],
+    })
+  })
+  t.throws(() => {
+    fillMissingKeys({ a: 'c' }, { a: 'b' }, {
+      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', { a: 1 }],
+    })
+  })
+})
+
 // ================================
 // 5. Input arg mutation prevention
 // ================================
@@ -774,44 +792,44 @@ test('05.01 - does not mutate the input args', (t) => {
 })
 
 // ========================================================
-// 6. opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder
+// 6. opts.doNotFillThesePathsIfTheyContainPlaceholders
 // ========================================================
 
-test.only('06.01 - some keys filled, some ignored because they have placeholders-only', (t) => {
+test('06.01 - some keys filled, some ignored because they have placeholders-only', (t) => {
   // baseline behaviour
 
-  // t.deepEqual(
-  //   fillMissingKeys(
-  //     {
-  //       a: {
-  //         b: false,
-  //         x: 'x',
-  //       },
-  //       z: 'z',
-  //     },
-  //     {
-  //       a: {
-  //         b: {
-  //           c: false,
-  //           d: false,
-  //         },
-  //         x: false,
-  //       },
-  //       z: false,
-  //     },
-  //   ),
-  //   {
-  //     a: {
-  //       b: {
-  //         c: false,
-  //         d: false,
-  //       },
-  //       x: 'x',
-  //     },
-  //     z: 'z',
-  //   },
-  //   '06.01.01 - default behaviour - keys are added',
-  // )
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: false,
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+    ),
+    {
+      a: {
+        b: {
+          c: false,
+          d: false,
+        },
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.01 - default behaviour - keys are added',
+  )
 
   t.deepEqual(
     fillMissingKeys(
@@ -833,7 +851,7 @@ test.only('06.01 - some keys filled, some ignored because they have placeholders
         z: false,
       },
       {
-        doNotFillTheseKeysIfAllTheirValuesArePlaceholder: ['a.b'],
+        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
       },
     ),
     {
@@ -843,7 +861,43 @@ test.only('06.01 - some keys filled, some ignored because they have placeholders
       },
       z: 'z',
     },
-    '06.01.02 - opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder',
+    '06.01.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders',
+  )
+
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: true, // <-- not placeholder but lower in data hierarchy (boolean)
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: { // <-- value of path "a.b" is this object
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
+      },
+    ),
+    {
+      a: {
+        b: {
+          c: false,
+          d: false,
+        }, // <---------------- observe, the keys were not added because it had a placeholder
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.03 - triggering the normalisation when it\'s off from opts',
   )
 })
 

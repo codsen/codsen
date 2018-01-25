@@ -33,8 +33,9 @@ export default [
       'arrayiffy-if-string',
       'check-types-mini',
       'lodash.clonedeep',
+      'lodash.isplainobject',
+      'object-all-values-equal-to',
       'object-merge-advanced',
-      'type-detect',
     ],
     plugins: [
       babel(),

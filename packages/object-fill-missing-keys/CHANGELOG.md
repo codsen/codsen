@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2018-01-25
+### Changed
+- ✨ Complete recode from scratch in order to control key creation more precisely (necessary for new features). Previously `object-merge-advanced` did all the job.
+- ✨ `opts.doNotFillThesePathsIfTheyContainPlaceholders`
+- ✨ I exposed `opts.placeholder` on the API `v.4` release but it didn't fully work. Now it does.
+
 ## [4.0.0] - 2017-12-11
 ### Changed
 - ✨ Rebased in ES Modules
@@ -15,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [3.1.0] - 2017-10-14
 ### Added
 - ✨ `opts.placeholder`
-- ✨ `opts.doNotFillTheseKeysIfAllTheirValuesArePlaceholder`
+- ✨ `opts.doNotFillThesePathsIfTheyContainPlaceholders`
 
 ## [3.0.0] - 2017-10-13
 ### Changed
@@ -53,3 +59,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [3.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.3.0...v3.0.0
 [3.1.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.1.0...v4.0.0
+[5.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v4.0.0...v5.0.0

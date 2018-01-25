@@ -1,7 +1,7 @@
 {
   "name": "object-fill-missing-keys",
   "version": "4.0.1",
-  "description": "Add missing keys into plain objects, according to a provided schema object",
+  "description": "Add missing keys into plain objects, according to a reference object",
   "license": "MIT",
   "engines": {
     "node": ">=6",
@@ -82,21 +82,21 @@
       "Blogposts",
       "Bug reports*",
       "Code*",
-      "Documentation*",
       "Design",
-      "Examples",
+      "Documentation*",
       "Event Organizers",
+      "Examples",
       "Financial Support",
       "Funding/Grant Finders",
       "Ideas & Planning",
       "Infrastructure (Hosting, Build-Tools, etc)",
       "Plugin/utility libraries",
       "Reviewed Pull Requests",
+      "Talks",
+      "Tests*",
       "Tools",
       "Translation",
-      "Tests*",
       "Tutorials",
-      "Talks",
       "Videos"
     ],
     "contributors": [
@@ -120,6 +120,12 @@
     "licence": {
       "extras": []
     },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
     "various": {
       "back_to_top": {
         "enabled": true,
@@ -128,27 +134,28 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.0.3",
-    "check-types-mini": "^3.0.0",
+    "arrayiffy-if-string": "^3.0.5",
+    "check-types-mini": "^3.0.3",
     "lodash.clonedeep": "*",
-    "object-merge-advanced": "^8.2.0",
-    "type-detect": "^4.0.5"
+    "lodash.isplainobject": "*",
+    "object-all-values-equal-to": "^1.0.6",
+    "object-merge-advanced": "^8.3.4"
   },
   "devDependencies": {
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.13.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.52.1",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup": "^0.55.0",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.2.2"
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.8"
   }
 }
