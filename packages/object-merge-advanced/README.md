@@ -283,6 +283,7 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
 [node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-merge-advanced
 
@@ -318,5 +319,3 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
 [license-url]: https://github.com/codsen/object-merge-advanced/blob/master/license.md
-
-[all-contributors]: https://github.com/kentcdodds/all-contributors

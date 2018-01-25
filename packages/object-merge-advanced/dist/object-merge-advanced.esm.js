@@ -1,3 +1,4 @@
+import includesAll from 'array-includes-all';
 import typeDetect from 'type-detect';
 import clone from 'lodash.clonedeep';
 import includes from 'array-includes-with-glob';
@@ -6,7 +7,6 @@ import lodashIncludes from 'lodash.includes';
 import uniq from 'lodash.uniq';
 import arrayiffyString from 'arrayiffy-if-string';
 import nonEmpty from 'util-nonempty';
-import includesAll from 'array-includes-all';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

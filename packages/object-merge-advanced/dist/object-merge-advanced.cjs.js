@@ -2,6 +2,7 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var includesAll = _interopDefault(require('array-includes-all'));
 var typeDetect = _interopDefault(require('type-detect'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var includes = _interopDefault(require('array-includes-with-glob'));
@@ -10,7 +11,6 @@ var lodashIncludes = _interopDefault(require('lodash.includes'));
 var uniq = _interopDefault(require('lodash.uniq'));
 var arrayiffyString = _interopDefault(require('arrayiffy-if-string'));
 var nonEmpty = _interopDefault(require('util-nonempty'));
-var includesAll = _interopDefault(require('array-includes-all'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
