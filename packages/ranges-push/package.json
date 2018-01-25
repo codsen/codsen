@@ -135,23 +135,23 @@
     "is-natural-number-string": "*",
     "ordinal-number-suffix": "^0.1.1",
     "ranges-merge": "^3.1.2",
-    "string-collapse-leading-whitespace": "^1.0.1"
+    "string-collapse-leading-whitespace": "^1.0.2"
   },
   "devDependencies": {
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.54.1",
+    "rollup": "^0.55.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-uglify": "^2.0.1",
-    "uglify-es": "^3.3.7"
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.8"
   }
 }
