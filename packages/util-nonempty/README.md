@@ -53,7 +53,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/util-nonempty.cjs.js` | 757&nbsp;B
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/util-nonempty.esm.js` | 604&nbsp;B
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 865&nbsp;B
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/util-nonempty.umd.js` | 929&nbsp;B
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -101,15 +101,11 @@ Anything-in, Boolean-out.
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-nonempty/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/util-nonempty/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -118,6 +114,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
+
 
 [node-img]: https://img.shields.io/node/v/util-nonempty.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/util-nonempty
