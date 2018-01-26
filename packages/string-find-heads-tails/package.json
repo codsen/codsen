@@ -162,7 +162,7 @@
     "eslint-plugin-security": "^1.4.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.54.1",
+    "rollup": "^0.55.0",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.2",
