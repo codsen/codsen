@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.0.0] - 2018-01-25
+## [5.0.0] - 2018-01-27
 ### Changed
 - ✨ Complete recode from scratch in order to control key creation more precisely (necessary for new features). Previously `object-merge-advanced` did all the job.
 - ✨ `opts.doNotFillThesePathsIfTheyContainPlaceholders`
-- ✨ I exposed `opts.placeholder` on the API `v.4` release but it didn't fully work. Now it does.
+- ✨ `opts.placeholder`
 
 ## [4.0.0] - 2017-12-11
 ### Changed

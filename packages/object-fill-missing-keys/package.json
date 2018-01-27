@@ -134,8 +134,8 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.0.5",
-    "check-types-mini": "^3.0.3",
+    "arrayiffy-if-string": "^3.0.6",
+    "check-types-mini": "^3.0.4",
     "lodash.clonedeep": "*",
     "lodash.isplainobject": "*",
     "object-all-values-equal-to": "^1.0.6",
@@ -151,11 +151,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.0",
+    "rollup": "^0.55.1",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.8"
+    "uglify-es": "^3.3.9"
   }
 }

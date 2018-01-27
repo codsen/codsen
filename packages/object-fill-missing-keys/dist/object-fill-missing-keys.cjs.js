@@ -33,6 +33,9 @@ function typ(something) {
 function isStr(something) {
   return typeof something === 'string';
 }
+function existy(x) {
+  return x != null;
+}
 
 // this function does the job, but it is not exposed because its first argument
 // requirements are loose - it can be anything since it will be calling itself recursively
@@ -41,7 +44,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
   var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
   var incomplete = clone(incompleteOriginal);
-  if (incomplete === undefined || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
+  if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
     if (isObj(schema) && isObj(incomplete)) {
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach(function (key) {
@@ -49,9 +52,9 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
         var currentPath = '' + (path ? path + '.' : '') + key;
 
         if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
-          if (incomplete[key] !== undefined) {
+          if (existy(incomplete[key])) {
             if (allValuesEqualTo(incomplete[key], opts.placeholder)) {
-              incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
+              incomplete[key] = opts.placeholder;
             }
           } else {
             // just create the key and set to placeholder value
@@ -59,7 +62,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
           }
         }
 
-        if (incomplete[key] === undefined || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo(incomplete[key], opts.placeholder))) {
+        if (!existy(incomplete[key]) || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo(incomplete[key], opts.placeholder))) {
           incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
         }
       });

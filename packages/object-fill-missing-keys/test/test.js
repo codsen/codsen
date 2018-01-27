@@ -931,6 +931,27 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
     },
     '06.01.04 - key in given path is missing completely',
   )
+
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: 'zzz',
+        b: false,
+      },
+      {
+        a: false,
+        b: { c: false },
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['b'],
+      },
+    ),
+    {
+      a: 'zzz',
+      b: false,
+    },
+    '06.01.05',
+  )
 })
 
 // TODO: test array notation, like a[0].b[0][0].c
