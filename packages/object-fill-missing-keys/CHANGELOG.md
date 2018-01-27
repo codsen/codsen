@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [5.0.0] - 2018-01-27
+## [6.0.0] - 2018-01-27
 ### Changed
 - ✨ Complete recode from scratch in order to control key creation more precisely (necessary for new features). Previously `object-merge-advanced` did all the job.
 - ✨ `opts.doNotFillThesePathsIfTheyContainPlaceholders`
@@ -59,4 +59,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [3.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v2.3.0...v3.0.0
 [3.1.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.1.0...v4.0.0
-[5.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v4.0.0...v5.0.0
+[6.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v4.0.0...v6.0.0
