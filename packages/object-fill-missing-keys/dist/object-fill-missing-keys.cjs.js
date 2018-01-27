@@ -41,14 +41,25 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
   var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
   var incomplete = clone(incompleteOriginal);
-  if (!(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
+  if (incomplete === undefined || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
     if (isObj(schema) && isObj(incomplete)) {
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach(function (key) {
         // calculate the path for current key
         var currentPath = '' + (path ? path + '.' : '') + key;
 
-        if (!(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo(incomplete[key], opts.placeholder))) {
+        if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
+          if (incomplete[key] !== undefined) {
+            if (allValuesEqualTo(incomplete[key], opts.placeholder)) {
+              incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
+            }
+          } else {
+            // just create the key and set to placeholder value
+            incomplete[key] = opts.placeholder;
+          }
+        }
+
+        if (incomplete[key] === undefined || !(opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) && allValuesEqualTo(incomplete[key], opts.placeholder))) {
           incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath);
         }
       });

@@ -30,6 +30,7 @@ function isStr(something) { return typeof something === 'string' }
 function fillMissingKeys(incompleteOriginal, schema, opts, path = '') {
   const incomplete = clone(incompleteOriginal)
   if (
+    (incomplete === undefined) ||
     !(
       path.length &&
       opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) &&
@@ -42,7 +43,19 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = '') {
         // calculate the path for current key
         const currentPath = `${path ? `${path}.` : ''}${key}`
 
+        if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
+          if (incomplete[key] !== undefined) {
+            if (allValuesEqualTo(incomplete[key], opts.placeholder)) {
+              incomplete[key] = fillMissingKeys(incomplete[key], schema[key], opts, currentPath)
+            }
+          } else {
+            // just create the key and set to placeholder value
+            incomplete[key] = opts.placeholder
+          }
+        }
+
         if (
+          (incomplete[key] === undefined) ||
           !(
             opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath) &&
             allValuesEqualTo(incomplete[key], opts.placeholder)

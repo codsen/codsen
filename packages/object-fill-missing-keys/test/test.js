@@ -899,6 +899,38 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
     },
     '06.01.03 - triggering the normalisation when it\'s off from opts',
   )
+
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
+      },
+    ),
+    {
+      a: {
+        b: false, // <---------------- observe, the keys were not added because it had a placeholder
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.04 - key in given path is missing completely',
+  )
 })
 
 // TODO: test array notation, like a[0].b[0][0].c
