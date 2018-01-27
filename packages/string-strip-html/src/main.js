@@ -204,7 +204,16 @@ function stripHtml(str, originalOpts) {
       if (
         (
           (opts.ignoreTags.length === 0) ||
-          !matchRight(str, i, opts.ignoreTags, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })
+          !matchRight(
+            str,
+            i,
+            opts.ignoreTags,
+            {
+              cb: tagName,
+              trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/', '<'],
+              i: true,
+            },
+          )
         ) &&
         (
           matchedRangeTag.name ||
@@ -223,7 +232,16 @@ function stripHtml(str, originalOpts) {
       // * * *
       // * * *
       // * * *
-      const tagMatchedOnTheRight = matchRight(str, i, opts.stripTogetherWithTheirContents, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })
+      const tagMatchedOnTheRight = matchRight(
+        str,
+        i,
+        opts.stripTogetherWithTheirContents,
+        {
+          cb: tagName,
+          trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/', '<'],
+          i: true,
+        },
+      )
       if (
         opts.stripTogetherWithTheirContents &&
         tagMatchedOnTheRight
@@ -266,7 +284,14 @@ function stripHtml(str, originalOpts) {
       if (
         !matchedRangeTag.name &&
         tagMightHaveStarted &&
-        !matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })
+        !matchRight(
+          str,
+          i,
+          '>',
+          {
+            trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/'],
+          },
+        )
       ) {
         tagMightHaveStarted = false
       }
@@ -278,7 +303,14 @@ function stripHtml(str, originalOpts) {
         (state === 'delete') &&
         isNum(deleteFromIndex) &&
         (deleteFromIndex < i) &&
-        !matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })
+        !matchRight(
+          str,
+          i,
+          '>',
+          {
+            trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/'],
+          },
+        )
       ) {
         let deleteUpToIndex = i + 1
         let insertThisInPlace = ''

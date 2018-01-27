@@ -187,7 +187,11 @@ function stripHtml(str, originalOpts) {
       // * * *
       // the main flipping of a state
       // if (DEBUG) { console.log('! < caught') }
-      if ((opts.ignoreTags.length === 0 || !stringMatchLeftRight.matchRight(str, i, opts.ignoreTags, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true })) && (matchedRangeTag.name || !matchedRangeTag.name && !tagMightHaveStarted)) {
+      if ((opts.ignoreTags.length === 0 || !stringMatchLeftRight.matchRight(str, i, opts.ignoreTags, {
+        cb: tagName,
+        trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/', '<'],
+        i: true
+      })) && (matchedRangeTag.name || !matchedRangeTag.name && !tagMightHaveStarted)) {
         if (existy(str[i + 1]) && str[i + 1].trim() === '') {
           state = 'sensitive';
         } else {
@@ -200,7 +204,11 @@ function stripHtml(str, originalOpts) {
       // * * *
       // * * *
       // * * *
-      var tagMatchedOnTheRight = stringMatchLeftRight.matchRight(str, i, opts.stripTogetherWithTheirContents, { cb: tagName, trimCharsBeforeMatching: ' \n\t\r/<', i: true });
+      var tagMatchedOnTheRight = stringMatchLeftRight.matchRight(str, i, opts.stripTogetherWithTheirContents, {
+        cb: tagName,
+        trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/', '<'],
+        i: true
+      });
       if (opts.stripTogetherWithTheirContents && tagMatchedOnTheRight) {
         // if (DEBUG) { console.log('* ranged tag matched') }
         if (!matchedRangeTag.name) {
@@ -237,14 +245,18 @@ function stripHtml(str, originalOpts) {
         // tags which should be deleted together with their content between the
         // tags.
         // if (DEBUG) { console.log('! > caught') }
-        if (!matchedRangeTag.name && tagMightHaveStarted && !stringMatchLeftRight.matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })) {
+        if (!matchedRangeTag.name && tagMightHaveStarted && !stringMatchLeftRight.matchRight(str, i, '>', {
+          trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/']
+        })) {
           tagMightHaveStarted = false;
         }
 
         // PS. to see the slice visually, use string.slice() method:
         // to see content with brackets: str.slice(deleteFromIndex, i + 1)
         // to see it without brackets: str.slice(deleteFromIndex + 1, i)
-        if (state === 'delete' && isNum(deleteFromIndex) && deleteFromIndex < i && !stringMatchLeftRight.matchRight(str, i, '>', { trimCharsBeforeMatching: ' \n\t\r/' })) {
+        if (state === 'delete' && isNum(deleteFromIndex) && deleteFromIndex < i && !stringMatchLeftRight.matchRight(str, i, '>', {
+          trimCharsBeforeMatching: [' ', '\n', '\t', '\r', '/']
+        })) {
           var deleteUpToIndex = i + 1;
           var insertThisInPlace = '';
 
