@@ -1136,6 +1136,111 @@ test('02.14 - enforceKeysetSync() - array over empty array', (t) => {
   )
 })
 
+test('02.15.01 - enforceKeysetSync() - opts', (t) => {
+  const schema = getKeysetSync([
+    {
+      a: 'aaa',
+      b: { c: 'ccc' },
+    },
+    {
+      a: 'ddd',
+      b: false,
+    },
+  ])
+  t.deepEqual(
+    enforceKeysetSync(
+      {
+        a: 'zzz',
+        b: false,
+      },
+      schema,
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['b'],
+      },
+    ),
+    {
+      a: 'zzz',
+      b: false,
+    },
+    '02.15.01',
+  )
+})
+
+test('02.15.02 - enforceKeysetSync() - opts', (t) => {
+  const schema = getKeysetSync([
+    {
+      a: 'aaa',
+      b: { c: 'ccc' },
+    },
+    {
+      a: 'ddd',
+      b: false,
+    },
+  ])
+  t.deepEqual(
+    enforceKeysetSync(
+      {
+        a: 'zzz',
+      },
+      schema,
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['b'],
+      },
+    ),
+    {
+      a: 'zzz',
+      b: false,
+    },
+    '02.15.02 - opts-targeted key is absent',
+  )
+})
+
+test('02.15.03 - enforceKeysetSync() - opts off', (t) => {
+  const schema = getKeysetSync([
+    {
+      a: 'aaa',
+      b: { c: 'ccc' },
+    },
+    {
+      a: 'ddd',
+      b: false,
+    },
+  ])
+  t.deepEqual(
+    enforceKeysetSync(
+      {
+        a: 'zzz',
+      },
+      schema,
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: [],
+      },
+    ),
+    {
+      a: 'zzz',
+      b: { c: false },
+    },
+    '02.15.03',
+  )
+})
+
+test('02.16 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceholders is wrong', (t) => {
+  t.throws(() => {
+    enforceKeysetSync(
+      { a: 'a' },
+      { a: 'a', b: 'b' },
+      { doNotFillThesePathsIfTheyContainPlaceholders: 1 },
+    )
+  })
+  t.throws(() => {
+    enforceKeysetSync(
+      { a: 'a' },
+      { a: 'a', b: 'b' },
+      { doNotFillThesePathsIfTheyContainPlaceholders: [1] },
+    )
+  })
+})
+
 // -----------------------------------------------------------------------------
 // 03. guards against input arg mutation
 // -----------------------------------------------------------------------------
@@ -3619,4 +3724,32 @@ test('09.14 - enforceKeyset() - array over empty array', async (t) => {
     },
     '09.14.03',
   )
+})
+
+test('09.15.01 - enforceKeyset() - wrong opts - resolves to rejected promise #1', (t) => {
+  t.throws(() => {
+    enforceKeyset(
+      { a: 'a' },
+      { a: 'false', b: 'b' },
+      { doNotFillThesePathsIfTheyContainPlaceholders: 1 },
+    )
+      .then(() => { t.fail('not ok') })
+      .catch(() => {
+        t.pass('ok')
+      })
+  })
+})
+
+test('09.15.02 - enforceKeyset() - wrong opts - resolves to rejected promise #2', (t) => {
+  t.throws(() => {
+    enforceKeyset(
+      { a: 'a' },
+      { a: 'false', b: 'b' },
+      { doNotFillThesePathsIfTheyContainPlaceholders: ['a', 1] },
+    )
+      .then(() => { t.fail('not ok') })
+      .catch(() => {
+        t.pass('ok')
+      })
+  })
 })

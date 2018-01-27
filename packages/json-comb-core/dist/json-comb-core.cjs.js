@@ -39,6 +39,9 @@ function isObj(something) {
 function isArr(something) {
   return Array.isArray(something);
 }
+function isStr(something) {
+  return typ(something) === 'string';
+}
 
 // -----------------------------------------------------------------------------
 // SORT THEM THINGIES
@@ -145,12 +148,28 @@ function getKeysetSync(arrOriginal, originalOpts) {
 
 // -----------------------------------------------------------------------------
 
-function enforceKeyset(obj, schemaKeyset) {
+function enforceKeyset(obj, schemaKeyset, originalOpts) {
   if (arguments.length === 0) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_31] Inputs missing!');
   }
   if (arguments.length === 1) {
     throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_32] Second arg missing!');
+  }
+  var defaults = {
+    doNotFillThesePathsIfTheyContainPlaceholders: [],
+    placeholder: false
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  checkTypes(opts, defaults, {
+    msg: 'json-comb-core/enforceKeyset(): [THROW_ID_30*]',
+    schema: {
+      placeholder: ['null', 'number', 'string', 'boolean', 'object']
+    }
+  });
+  if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
+    return isStr(val);
+  })) {
+    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_33] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n' + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
   }
   return new Promise(function (resolve, reject) {
     Promise.all([obj, schemaKeyset]).then(function (_ref) {
@@ -159,19 +178,19 @@ function enforceKeyset(obj, schemaKeyset) {
           schemaKeysetResolved = _ref2[1];
 
       if (!isObj(obj)) {
-        return reject(Error('json-comb-core/enforceKeyset(): [THROW_ID_33] Input must resolve to a plain object! Currently it\'s: ' + typ(obj) + ', equal to: ' + JSON.stringify(obj, null, 4)));
+        return reject(Error('json-comb-core/enforceKeyset(): [THROW_ID_34] Input must resolve to a plain object! Currently it\'s: ' + typ(obj) + ', equal to: ' + JSON.stringify(obj, null, 4)));
       }
       if (!isObj(schemaKeyset)) {
-        return reject(Error('json-comb-core/enforceKeyset(): [THROW_ID_34] Schema, 2nd arg, must resolve to a plain object! Currently it\'s resolving to: ' + typ(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4)));
+        return reject(Error('json-comb-core/enforceKeyset(): [THROW_ID_35] Schema, 2nd arg, must resolve to a plain object! Currently it\'s resolving to: ' + typ(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4)));
       }
-      return resolve(sortAllObjectsSync(clone(fillMissingKeys(clone(objResolved), clone(schemaKeysetResolved)))));
+      return resolve(sortAllObjectsSync(clone(fillMissingKeys(clone(objResolved), clone(schemaKeysetResolved), opts))));
     });
   });
 }
 
 // -----------------------------------------------------------------------------
 
-function enforceKeysetSync(obj, schemaKeyset) {
+function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   if (arguments.length === 0) {
     throw new Error('json-comb-core/enforceKeysetSync(): [THROW_ID_41] Inputs missing!');
   }
@@ -184,7 +203,23 @@ function enforceKeysetSync(obj, schemaKeyset) {
   if (!isObj(schemaKeyset)) {
     throw new Error('json-comb-core/enforceKeysetSync(): [THROW_ID_44] Schema object must be a plain object! Currently it\'s: ' + typ(schemaKeyset) + ', equal to: ' + JSON.stringify(schemaKeyset, null, 4));
   }
-  return sortAllObjectsSync(fillMissingKeys(clone(obj), schemaKeyset));
+  var defaults = {
+    doNotFillThesePathsIfTheyContainPlaceholders: [],
+    placeholder: false
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  checkTypes(opts, defaults, {
+    msg: 'json-comb-core/enforceKeysetSync(): [THROW_ID_40*]',
+    schema: {
+      placeholder: ['null', 'number', 'string', 'boolean', 'object']
+    }
+  });
+  if (opts.doNotFillThesePathsIfTheyContainPlaceholders.length > 0 && !opts.doNotFillThesePathsIfTheyContainPlaceholders.every(function (val) {
+    return isStr(val);
+  })) {
+    throw new Error('json-comb-core/enforceKeyset(): [THROW_ID_45] Array opts.doNotFillThesePathsIfTheyContainPlaceholders contains non-string values:\n' + JSON.stringify(opts.doNotFillThesePathsIfTheyContainPlaceholders, null, 4));
+  }
+  return sortAllObjectsSync(fillMissingKeys(clone(obj), schemaKeyset, opts));
 }
 
 // -----------------------------------------------------------------------------

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2018-01-27
+### Added
+- ✨ `doNotFillThesePathsIfTheyContainPlaceholders` on both `enforceKeysetSync()` and `enforceKeyset`
+- ✨ `placeholder` on both `enforceKeysetSync()` and `enforceKeyset`
+
 ## [5.0.0] - 2017-12-28
 ### Changed
 
@@ -91,3 +96,4 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 [4.1.0]: https://github.com/codsen/json-comb-core/compare/v4.0.0...v4.1.0
 [4.2.0]: https://github.com/codsen/json-comb-core/compare/v4.1.0...v4.2.0
 [5.0.0]: https://github.com/codsen/json-comb-core/compare/v4.2.0...v5.0.0
+[5.1.0]: https://github.com/codsen/json-comb-core/compare/v5.0.0...v5.1.0
