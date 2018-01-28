@@ -1,8 +1,8 @@
+import isNumeric from 'is-numeric';
 import split from 'csv-split-easy';
 import pull from 'lodash.pull';
 import ordinal from 'ordinal';
 import BigNumber from 'bignumber.js';
-import isNumeric from 'is-numeric';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
