@@ -12,7 +12,6 @@
 [![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![bitHound Dev Dependencies][dev-img]][dev-url]
-[![greenkeeper][greenkeeper-img]][greenkeeper-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -221,15 +220,11 @@ var res = compare(
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ast-compare/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -238,6 +233,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
+
 
 [node-img]: https://img.shields.io/node/v/ast-compare.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-compare
@@ -262,9 +258,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-compare.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
-
-[greenkeeper-img]: https://badges.greenkeeper.io/codsen/ast-compare.svg
-[greenkeeper-url]: https://greenkeeper.io/
 
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-compare/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-compare

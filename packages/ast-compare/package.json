@@ -133,28 +133,28 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.2",
+    "check-types-mini": "^3.0.3",
     "lodash.clonedeep": "*",
     "lodash.pullall": "*",
     "matcher": "^1.0.0",
-    "posthtml-ast-contains-only-empty-space": "^2.1.0",
-    "type-detect": "^4.0.5"
+    "posthtml-ast-contains-only-empty-space": "^2.1.2",
+    "type-detect": "^4.0.7"
   },
   "devDependencies": {
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.15.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.4.0",
+    "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.54.0",
+    "rollup": "^0.55.1",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.7"
+    "uglify-es": "^3.3.8"
   }
 }
