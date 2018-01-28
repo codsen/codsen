@@ -104,7 +104,7 @@ Input argument   | Type                            | Obligatory? | Description
 `opts`           | Plain object                    | no          | A plain object containing settings.
 
 * If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
-* Otherwise, if there's a mismatch or something wrong with input args, returns `false`.
+* Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
 
 **[⬆ &nbsp;back to top](#)**
 
