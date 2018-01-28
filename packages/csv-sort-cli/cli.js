@@ -37,10 +37,10 @@ const cli = meow(`
   Example
     Just call it in the root, where your csv file is located
 `, {
-    alias: {
-      o: 'overwrite',
-    },
-  })
+  alias: {
+    o: 'overwrite',
+  },
+})
 updateNotifier({ pkg: cli.pkg }).notify()
 
 // FUNCTIONS
