@@ -15,7 +15,6 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
-[![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
@@ -31,7 +30,6 @@
 - [Usage](#usage)
 - [API](#api)
 - [Contributing](#contributing)
-- [Contributors](#contributors)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -197,20 +195,6 @@ If you want to use Unicode-character-count-based indexing, first convert the out
 
 **[⬆ &nbsp;back to top](#)**
 
-## Contributors
-
-Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/string-find-heads-tails/commits?author=revelt "Code") [📖](https://github.com/codsen/string-find-heads-tails/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/string-find-heads-tails/commits?author=revelt "Tests") | [<img src="https://avatars0.githubusercontent.com/u/170197?v=4" width="100px;"/><br /><sub><b>Steven Vachon</b></sub>](https://github.com/stevenvachon)<br /> [🐛](https://github.com/codsen/string-find-heads-tails/issues?q=author%3Astevenvachon "Bug reports") | [<img src="https://avatars3.githubusercontent.com/u/1656595?v=4" width="100px;"/><br /><sub><b>Cosmin Popovici</b></sub>](https://github.com/hellocosmin)<br /> [🐛](https://github.com/codsen/string-find-heads-tails/issues?q=author%3Ahellocosmin "Bug reports") |
-| :---: | :---: | :---: |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors][all-contributors] specification.
-Contributions of any kind are welcome!
-
-**[⬆ &nbsp;back to top](#)**
-
 ## Licence
 
 MIT License (MIT)
@@ -251,10 +235,5 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-find-heads-tails
 
-[contributors-img]: https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square
-[contributors-url]: #contributors
-
 [license-img]: https://img.shields.io/npm/l/string-find-heads-tails.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-find-heads-tails/blob/master/license.md
-
-[all-contributors]: https://github.com/kentcdodds/all-contributors
