@@ -1,5 +1,4 @@
 import typ from 'type-detect'
-import includes from 'lodash.includes'
 import pullAll from 'lodash.pullall'
 import intersection from 'lodash.intersection'
 import arrayiffyIfString from 'arrayiffy-if-string'
@@ -13,10 +12,10 @@ function checkTypesMini(obj, originalRef, originalOptions) {
   const isArr = Array.isArray
 
   if (arguments.length === 0) {
-    throw new Error('check-types-mini/checkTypes(): Missing all arguments!')
+    throw new Error('check-types-mini: [THROW_ID_01] Missing all arguments!')
   }
   if (arguments.length === 1) {
-    throw new Error('check-types-mini/checkTypes(): Missing second argument!')
+    throw new Error('check-types-mini: [THROW_ID_02] Missing second argument!')
   }
 
   const ref = isObj(originalRef) ? originalRef : {}
@@ -27,7 +26,7 @@ function checkTypesMini(obj, originalRef, originalOptions) {
     acceptArraysIgnore: [],
     enforceStrictKeyset: true,
     schema: {},
-    msg: 'check-types-mini/checkTypes()',
+    msg: 'check-types-mini',
     optsVarName: 'opts',
   }
   let opts
@@ -37,14 +36,14 @@ function checkTypesMini(obj, originalRef, originalOptions) {
     opts = Object.assign({}, defaults)
   }
   if (!isStr(opts.msg)) {
-    throw new Error(`check-types-mini/checkTypes(): opts.msg must be string! Currently it's: ${typ(opts.msg)}, equal to ${JSON.stringify(opts.msg, null, 4)}`)
+    throw new Error(`check-types-mini: [THROW_ID_03] opts.msg must be string! Currently it's: ${typ(opts.msg)}, equal to ${JSON.stringify(opts.msg, null, 4)}`)
   }
   opts.msg = opts.msg.trim()
   if (opts.msg[opts.msg.length - 1] === ':') {
     opts.msg = opts.msg.slice(0, opts.msg.length - 1)
   }
   if (!isStr(opts.optsVarName)) {
-    throw new Error(`check-types-mini/checkTypes(): opts.optsVarName must be string! Currently it's: ${typ(opts.optsVarName)}, equal to ${JSON.stringify(opts.optsVarName, null, 4)}`)
+    throw new Error(`check-types-mini: [THROW_ID_04] opts.optsVarName must be string! Currently it's: ${typ(opts.optsVarName)}, equal to ${JSON.stringify(opts.optsVarName, null, 4)}`)
   }
 
   opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys)
@@ -52,16 +51,16 @@ function checkTypesMini(obj, originalRef, originalOptions) {
   // make every schema object key's value to be an array:
 
   if (!isArr(opts.ignoreKeys)) {
-    throw new TypeError(`check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it's: ${typ(opts.ignoreKeys)}`)
+    throw new TypeError(`check-types-mini: [THROW_ID_05] opts.ignoreKeys should be an array, currently it's: ${typ(opts.ignoreKeys)}`)
   }
   if (!isBool(opts.acceptArrays)) {
-    throw new TypeError(`check-types-mini/checkTypes(): opts.acceptArrays should be a Boolean, currently it's: ${typ(opts.acceptArrays)}`)
+    throw new TypeError(`check-types-mini: [THROW_ID_06] opts.acceptArrays should be a Boolean, currently it's: ${typ(opts.acceptArrays)}`)
   }
   if (!isArr(opts.acceptArraysIgnore)) {
-    throw new TypeError(`check-types-mini/checkTypes(): opts.acceptArraysIgnore should be an array, currently it's: ${typ(opts.acceptArraysIgnore)}`)
+    throw new TypeError(`check-types-mini: [THROW_ID_07] opts.acceptArraysIgnore should be an array, currently it's: ${typ(opts.acceptArraysIgnore)}`)
   }
   if (!isBool(opts.enforceStrictKeyset)) {
-    throw new TypeError(`check-types-mini/checkTypes(): opts.enforceStrictKeyset should be a Boolean, currently it's: ${typ(opts.enforceStrictKeyset)}`)
+    throw new TypeError(`check-types-mini: [THROW_ID_08] opts.enforceStrictKeyset should be a Boolean, currently it's: ${typ(opts.enforceStrictKeyset)}`)
   }
   Object.keys(opts.schema).forEach((oneKey) => {
     if (!isArr(opts.schema[oneKey])) {
@@ -106,10 +105,18 @@ function checkTypesMini(obj, originalRef, originalOptions) {
       // first check does our schema contain any blanket names, "any", "whatever" etc.
       if (!intersection(opts.schema[key], NAMESFORANYTYPE).length) {
         // because, if not, it means we need to do some work, check types:
-        if (!includes(
-          opts.schema[key],
-          typ(obj[key]).toLowerCase(),
-        )
+        if (
+          (
+            (obj[key] !== true) &&
+            (obj[key] !== false) &&
+            !opts.schema[key].includes(typ(obj[key]).toLowerCase())
+          ) || (
+            (
+              (obj[key] === true) || (obj[key] === false)
+            ) &&
+            !opts.schema[key].includes(String(obj[key])) &&
+            !opts.schema[key].includes('boolean')
+          )
         ) {
           // new in v.2.2
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
@@ -120,11 +127,7 @@ function checkTypesMini(obj, originalRef, originalOptions) {
           ) {
             // check each key:
             for (let i = 0, len = obj[key].length; i < len; i++) {
-              if (!includes(
-                opts.schema[key],
-                typ(obj[key][i]).toLowerCase(),
-              )
-              ) {
+              if (!opts.schema[key].includes(typ(obj[key][i]).toLowerCase())) {
                 throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} is of type ${typ(obj[key][i]).toLowerCase()}, but only the following are allowed in ${opts.optsVarName}.schema: ${opts.schema[key]}`)
               }
             }
@@ -138,9 +141,9 @@ function checkTypesMini(obj, originalRef, originalOptions) {
       existy(ref) &&
       Object.prototype.hasOwnProperty.call(ref, key) &&
       (typ(obj[key]) !== typ(ref[key])) &&
-      !includes(opts.ignoreKeys, key)
+      !opts.ignoreKeys.includes(key)
     ) {
-      if (opts.acceptArrays && isArr(obj[key]) && !includes(opts.acceptArraysIgnore, key)) {
+      if (opts.acceptArrays && isArr(obj[key]) && !opts.acceptArraysIgnore.includes(key)) {
         const allMatch = obj[key].every(el => typ(el) === typ(ref[key]))
         if (!allMatch) {
           throw new TypeError(`${opts.msg}: ${opts.optsVarName}.${key} was customised to be array, but not all of its elements are ${typ(ref[key])}-type`)

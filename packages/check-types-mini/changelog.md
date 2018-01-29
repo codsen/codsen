@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2018-01-29
+### Added
+- ✨ `true` and `false` as precise types in `opts.schema`
+### Removed
+- 💥 `lodash.includes` (replaced with `Array.includes`)
+
 ## [3.0.0] - 2017-12-08
 ### Changed
 - 🔧 Rebased all the source to be in ES Modules.
@@ -107,3 +113,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.6.0]: https://github.com/codsen/check-types-mini/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/codsen/check-types-mini/compare/v2.6.0...v2.7.0
 [3.0.0]: https://github.com/codsen/check-types-mini/compare/v2.7.0...v3.0.0
+[3.1.0]: https://github.com/codsen/check-types-mini/compare/v3.0.0...v3.1.0

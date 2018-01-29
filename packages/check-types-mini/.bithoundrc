@@ -9,7 +9,6 @@
       "arrayiffy-if-string",
       "coveralls",
       "husky",
-      "lodash.includes",
       "lodash.intersection",
       "lodash.pullall",
       "nyc"

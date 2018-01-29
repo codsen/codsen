@@ -4,13 +4,13 @@ import checkTypes from '../dist/check-types-mini.cjs'
 test('01.01 - throws when all/first args are missing', (t) => {
   t.throws(() => {
     checkTypes()
-  }, 'check-types-mini/checkTypes(): Missing all arguments!')
+  }, 'check-types-mini: [THROW_ID_01] Missing all arguments!')
 })
 
 test('01.02 - throws when second arg is missing', (t) => {
   t.throws(() => {
     checkTypes('zzzz')
-  }, 'check-types-mini/checkTypes(): Missing second argument!')
+  }, 'check-types-mini: [THROW_ID_02] Missing second argument!')
 })
 
 test('01.03 - throws when one of the arguments is of a wrong type', (t) => {
@@ -27,7 +27,7 @@ test('01.03 - throws when one of the arguments is of a wrong type', (t) => {
         option3: false,
       },
     )
-  }, 'check-types-mini/checkTypes(): opts.option2 was customised to "false" which is not boolean but string')
+  }, 'check-types-mini: opts.option2 was customised to "false" which is not boolean but string')
 })
 
 test('01.04 - opts.msg or opts.optsVarName args are wrong-type', (t) => {
@@ -143,7 +143,7 @@ test('01.06 - throws when opts are set wrong', (t) => {
         },
       )
     },
-    'check-types-mini/checkTypes(): opts.ignoreKeys should be an array, currently it\'s: boolean',
+    'check-types-mini: [THROW_ID_05] opts.ignoreKeys should be an array, currently it\'s: boolean',
   )
   t.throws(
     () => {
@@ -157,7 +157,7 @@ test('01.06 - throws when opts are set wrong', (t) => {
         },
       )
     },
-    'check-types-mini/checkTypes(): opts.msg must be string! Currently it\'s: number, equal to 1',
+    'check-types-mini: [THROW_ID_03] opts.msg must be string! Currently it\'s: number, equal to 1',
   )
   t.notThrows(() => {
     checkTypes(
@@ -621,6 +621,267 @@ test('04.01 - opts.schema only', (t) => {
       {
         schema: { // <<< notice how option1 is missing AND also missing in reference obj
           option2: ['stRing', null],
+        },
+      },
+    )
+  })
+
+  // true not allowed, - only false or null or string
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: true,
+      },
+      {
+        option1: 'zz',
+        option2: null,
+      },
+      {
+        schema: {
+          option2: ['null', 'false', 'string'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: false,
+      },
+      {
+        option1: 'zz',
+        option2: null,
+      },
+      {
+        schema: {
+          option2: ['null', 'false', 'string'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null,
+      },
+      {
+        option1: 'zz',
+        option2: false,
+      },
+      {
+        schema: {
+          option2: ['null', 'false', 'string'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'zzz',
+      },
+      {
+        option1: 'zz',
+        option2: null,
+      },
+      {
+        schema: {
+          option2: ['null', 'false', 'string'],
+        },
+      },
+    )
+  })
+
+  // second bunch
+
+  // true or string
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: false,
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true', 'string'],
+        },
+      },
+    )
+  })
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: null,
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true', 'string'],
+        },
+      },
+    )
+  })
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 0,
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true', 'string'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'zzz',
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true', 'string'],
+        },
+      },
+    )
+  })
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'zzz',
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: true,
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['true'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: true,
+      },
+      {
+        option1: 'zz',
+        option2: true,
+      },
+      {
+        schema: {
+          option2: ['boolean'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: false,
+      },
+      {
+        option1: 'zz',
+        option2: false,
+      },
+      {
+        schema: {
+          option2: ['false'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: false,
+      },
+      {
+        option1: 'zz',
+        option2: false,
+      },
+      {
+        schema: {
+          option2: ['boolean'],
+        },
+      },
+    )
+  })
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: true,
+      },
+      {
+        option1: 'zz',
+        option2: false,
+      },
+      {
+        schema: {
+          option2: ['boolean'],
+        },
+      },
+    )
+  })
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: 'setting1',
+        option2: 'true', // <-- because it's string
+      },
+      {
+        option1: 'zz',
+        option2: false,
+      },
+      {
+        schema: {
+          option2: ['boolean'],
         },
       },
     )
