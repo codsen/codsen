@@ -130,10 +130,10 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.4",
+    "check-types-mini": "^3.1.0",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
-    "object-fill-missing-keys": "^6.0.1",
+    "object-fill-missing-keys": "^6.0.2",
     "object-flatten-all-arrays": "^4.0.5",
     "object-merge-advanced": "^8.3.4",
     "object-no-new-keys": "^2.0.5",
