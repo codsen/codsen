@@ -81,13 +81,14 @@ Input argument   | Type         | Obligatory? | Description
 `arrOfRanges`    | Plain object | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each)
 `opts`           | Plain object | no          | Optional options go here.
 
-This package does not mutate the input array.
 
 For example,
 
 ```js
 [ [5, 9], [5, 3] ] => [ [5, 3], [5, 9] ]
 ```
+
+This package does not mutate the input array.
 
 **[⬆ &nbsp;back to top](#)**
 
