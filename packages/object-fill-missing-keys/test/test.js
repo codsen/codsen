@@ -952,6 +952,87 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
     },
     '06.01.05',
   )
+
+  // will also truncate the already normalised branches if they're on the path:
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: {
+            y: false,
+          },
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['lalala', 'a.b', 'a.x'],
+      },
+    ),
+    {
+      a: {
+        b: false,
+        x: false,
+      },
+      z: 'z',
+    },
+    '06.01.06',
+  )
+
+  // will also truncate the already normalised branches if they're on the path:
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: {
+            c: 'r',
+            d: false,
+          },
+          x: {
+            y: false,
+          },
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ['lalala', 'a.b', 'a.x'],
+      },
+    ),
+    {
+      a: {
+        b: {
+          c: 'r',
+          d: false,
+        },
+        x: false,
+      },
+      z: 'z',
+    },
+    '06.01.07',
+  )
 })
 
 // TODO: test array notation, like a[0].b[0][0].c

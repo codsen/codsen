@@ -135,7 +135,7 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.0.6",
-    "check-types-mini": "^3.0.4",
+    "check-types-mini": "^3.1.0",
     "lodash.clonedeep": "*",
     "lodash.isplainobject": "*",
     "object-all-values-equal-to": "^1.0.6",
