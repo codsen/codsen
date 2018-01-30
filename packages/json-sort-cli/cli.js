@@ -29,16 +29,18 @@ const cli = meow(`
     -d, --dry           Dry run - only list the found JSON files, don't sort or write
     -h, --help          Shows this help
     -v, --version       Shows the version of your json-sort-cli
+    -s, --silent        Lists only one row when job has been done (or failed)
 
   Example
     Call anywhere using glob patterns. If you put them as string, this library
     will parse globs. If you put as system globs without quotes, your shell will expand them.
 `, {
-    alias: {
-      n: 'nodemodules',
-      t: 'tabs',
-    },
-  })
+  alias: {
+    n: 'nodemodules',
+    t: 'tabs',
+    a: 'silent',
+  },
+})
 updateNotifier({ pkg: cli.pkg }).notify()
 
 // FUNCTIONS
@@ -111,9 +113,25 @@ globby(input)
   .then(paths => paths.filter(singlePath => path.extname(singlePath) === '.json'))
   .then((received) => {
     if (cli.flags.d) {
-      log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.yellow('We\'d sort the following files:')}\n${received.join('\n')}`)
+      log(`${chalk.grey('✨ json-sort-cli: ')}${chalk.yellow('We\'d sort the following files:')}\n${received.join('\n')}`)
     } else {
       // console.log(`outcome #2: received = ${JSON.stringify(received, null, 4)}`)
+      if (cli.flags.s) {
+        // silent mode:
+        return pReduce(
+          received,
+          (previousValue, currentValue) => readSortAndWriteOverFile(currentValue)
+            .then(() => previousValue + 1)
+            .catch((err) => {
+              log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.red('Could not write out the sorted file:')} ${err}`)
+              return previousValue
+            }),
+          0,
+        ).then((count) => {
+          log(`${chalk.grey('✨ json-sort-cli: ')}${chalk.green(`${count} files sorted`)}`)
+        })
+      }
+      // non-silent mode - Listr
       const tasks = new Listr(uniq(received).map(onePath => ({
         title: onePath,
         task: () => readSortAndWriteOverFile(onePath),
@@ -122,6 +140,7 @@ globby(input)
         log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.red('Oops!')} ${err}`)
       })
     }
+    return Promise.resolve()
   })
   .catch((err) => {
     log(`${chalk.grey('✨  json-sort-cli: ')}${chalk.red('Oops!')} ${err}`)

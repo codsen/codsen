@@ -19,10 +19,11 @@ var writeJsonFile = require('write-json-file');
 var _console = console,
     log = _console.log;
 
-var cli = meow('\n  Usage\n    $ jsonsort YOURFILE.json\n    $ sortjson YOURFILE.json\n    $ sortjson templatesfolder1 templatesfolder2 package.json\n  or, just type "csvsort" and it will let you pick a file.\n\n  Options\n    -n, --nodemodules   Don\'t ignore any node_modules folders and package-lock.json\'s\n    -t, --tabs          Use tabs for JSON file indentation\n    -d, --dry           Dry run - only list the found JSON files, don\'t sort or write\n    -h, --help          Shows this help\n    -v, --version       Shows the version of your json-sort-cli\n\n  Example\n    Call anywhere using glob patterns. If you put them as string, this library\n    will parse globs. If you put as system globs without quotes, your shell will expand them.\n', {
+var cli = meow('\n  Usage\n    $ jsonsort YOURFILE.json\n    $ sortjson YOURFILE.json\n    $ sortjson templatesfolder1 templatesfolder2 package.json\n  or, just type "csvsort" and it will let you pick a file.\n\n  Options\n    -n, --nodemodules   Don\'t ignore any node_modules folders and package-lock.json\'s\n    -t, --tabs          Use tabs for JSON file indentation\n    -d, --dry           Dry run - only list the found JSON files, don\'t sort or write\n    -h, --help          Shows this help\n    -v, --version       Shows the version of your json-sort-cli\n    -s, --silent        Lists only one row when job has been done (or failed)\n\n  Example\n    Call anywhere using glob patterns. If you put them as string, this library\n    will parse globs. If you put as system globs without quotes, your shell will expand them.\n', {
   alias: {
     n: 'nodemodules',
-    t: 'tabs'
+    t: 'tabs',
+    a: 'silent'
   }
 });
 updateNotifier({ pkg: cli.pkg }).notify();
@@ -100,9 +101,23 @@ globby(input).then(function (resolvedPathsArray) {
   });
 }).then(function (received) {
   if (cli.flags.d) {
-    log('' + chalk.grey('✨  json-sort-cli: ') + chalk.yellow('We\'d sort the following files:') + '\n' + received.join('\n'));
+    log('' + chalk.grey('✨ json-sort-cli: ') + chalk.yellow('We\'d sort the following files:') + '\n' + received.join('\n'));
   } else {
     // console.log(`outcome #2: received = ${JSON.stringify(received, null, 4)}`)
+    if (cli.flags.s) {
+      // silent mode:
+      return pReduce(received, function (previousValue, currentValue) {
+        return readSortAndWriteOverFile(currentValue).then(function () {
+          return previousValue + 1;
+        }).catch(function (err) {
+          log('' + chalk.grey('✨  json-sort-cli: ') + chalk.red('Could not write out the sorted file:') + ' ' + err);
+          return previousValue;
+        });
+      }, 0).then(function (count) {
+        log('' + chalk.grey('✨ json-sort-cli: ') + chalk.green(count + ' files sorted'));
+      });
+    }
+    // non-silent mode - Listr
     var tasks = new Listr(uniq(received).map(function (onePath) {
       return {
         title: onePath,
@@ -115,6 +130,7 @@ globby(input).then(function (resolvedPathsArray) {
       log('' + chalk.grey('✨  json-sort-cli: ') + chalk.red('Oops!') + ' ' + err);
     });
   }
+  return Promise.resolve();
 }).catch(function (err) {
   log('' + chalk.grey('✨  json-sort-cli: ') + chalk.red('Oops!') + ' ' + err);
 });
