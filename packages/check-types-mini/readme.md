@@ -224,13 +224,40 @@ checkTypes(
 
 The types are case-insensitive and come from [type-detect](https://github.com/chaijs/type-detect), a Chai library:
 
-* `object` (meaning a plain object literal, nothing else)
-* `array`
-* `string`
-* `null`
+* `'object'` (meaning a plain object literal, nothing else)
+* `'array'`
+* `'string'`
+* `'null'`
 * and other usual types
 
-The type values you put into `opts.schema` are not validated, on purpose, so please don't make typos.
+Also, you can use more specific subtypes:
+* `'true'`
+* `'false'`
+
+The `'true'` and `'false'` are handy in cases when API's accept only one of them, for example, `'false'` and `'string'`, but doesn't accept `'true'`.
+
+For example,
+
+```js
+const res = checkTypes(
+  { // <--- this is object we're checking
+    option1: 'setting1',
+    option2: true, // <--- bad
+  },
+  { // <--- this is default reference object
+    option1: 'zz',
+    option2: null,
+  },
+  { // <--- opts
+    schema: {
+      option2: ['null', 'false', 'string'],
+    },
+  },
+)
+// => throws an error because `option2` should be either false or string, not true
+```
+
+All the type values you put into `opts.schema` _are not validated_, on purpose, so please don't make typos.
 
 **[⬆ &nbsp;back to top](#)**
 
