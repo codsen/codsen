@@ -39,7 +39,7 @@ npm i -g json-sort-cli
 - then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without globs:
 
 ```bash
-$ jsonsort file1.csv 'folder1/folder2/**/*.*' folder3
+$ jsonsort file1.csv 'folder1/folder2/**/*.*' folder3 -s
 $ jsonsort * -t -n
 $ jsonsort yourspecialfolder -d
 
@@ -60,8 +60,9 @@ short | long            | description
 `-n`  | `--nodemodules` | Don't ignore any **n**ode_modules folders and package-lock.json's
 `-t`  | `--tabs`        | Use **t**abs for JSON file indentation
 `-d`  | `--dry`         | **d**ry run - only list the found JSON files, don't sort or write
-`-h`  | `--help`        | shows (similar to this) **h**elp
-`-v`  | `--version`     | shows the installed **v**ersion of your `json-sort-cli`
+`-h`  | `--help`        | Shows (similar to this) **h**elp
+`-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`
+`-s`  | `--silent`      | Shows only one line of output in the terminal. Handy when processing many files.
 
 **[⬆ &nbsp;back to top](#)**
 
