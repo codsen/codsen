@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "license": "MIT",
   "engines": {
