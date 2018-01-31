@@ -235,6 +235,46 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 // }
 ```
 
+If any of the branches in given `doNotFillThesePathsIfTheyContainPlaceholders` paths contain only placeholders **and are normalised**, they will be **truncated** (set to a placeholder you provide in the opts, or if you don't supply one, set to a default `false`):
+
+```js
+const res = fillMissingKeys(
+  { // <--- input object
+    a: {
+      b: { // <--- this object in "b"'s value will be removed and set to placeholder "false"
+        c: false,
+        d: false,
+      },
+      x: { // <--- this too
+        y: false,
+      },
+    },
+    z: 'z',
+  },
+  { // <--- schema object
+    a: {
+      b: {
+        c: false,
+        d: false,
+      },
+      x: false,
+    },
+    z: false,
+  },
+  { // <--- settings
+    doNotFillThesePathsIfTheyContainPlaceholders: ['lalala', 'a.b', 'a.x'],
+  },
+)
+console.log(`res = ${JSON.stringify(res, null, 4)}`)
+// res = {
+//   a: {
+//     b: false,
+//     x: false,
+//   },
+//   z: 'z',
+// }
+```
+
 **[⬆ &nbsp;back to top](#)**
 
 ## Contributing
