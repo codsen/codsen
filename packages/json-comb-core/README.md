@@ -32,7 +32,7 @@
 - [`noNewKeys()`](#nonewkeys)
 - [`findUnused()`](#findunused)
 - [`sortAllObjects()`](#sortallobjects)
-- [Difference between Normalising JSON and JSON Schemas](#difference-between-normalising-json-and-json-schemas)
+- [Difference between Normalising JSON and real JSON Schemas](#difference-between-normalising-json-and-real-json-schemas)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -658,7 +658,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 **[⬆ &nbsp;back to top](#)**
 
-## Difference between Normalising JSON and JSON Schemas
+## Difference between Normalising JSON and real JSON Schemas
 
 In simple terms, a _JSON Schema_ is a description of all keys and their value types. We're concerned, do all the values have the same types as values in a schema. We're not particularly concerned about the **existence** of the keys; we're more concerned does what we've got match the schema.
 
