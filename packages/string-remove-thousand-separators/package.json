@@ -131,12 +131,12 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.0.3",
+    "check-types-mini": "^3.1.0",
     "is-numeric": "0.0.5",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
-    "string-replace-slices-array": "^2.0.11",
-    "string-slices-array-push": "^2.4.1"
+    "string-replace-slices-array": "^2.0.12",
+    "string-slices-array-push": "^2.4.2"
   },
   "devDependencies": {
     "ava": "*",
@@ -148,11 +148,11 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.0",
+    "rollup": "^0.55.1",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.8"
+    "uglify-es": "^3.3.9"
   }
 }
