@@ -97,7 +97,7 @@ This package does not mutate the input array.
 `options` object's key             | Type     | Obligatory? | Default     | Description
 -----------------------------------|----------|-------------|-------------|----------------------
 {                                  |          |             |             |
-`strictlyTwoElementsInRangeArrays` | Boolean  | no          | `false`     | If set to true, when there are more or less than 3 elements in any of the ranges, it will `throw`. For example, input being `[ [1, 2, 'zzz'] ]` would throw.
+`strictlyTwoElementsInRangeArrays` | Boolean  | no          | `false`     | If set to true, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element).
 }                                  |          |             |             |
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
