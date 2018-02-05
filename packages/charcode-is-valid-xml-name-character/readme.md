@@ -84,7 +84,7 @@ In the most simple scenario:
     1     2
 ```
 
-Characters space and equal in the example above mark the ending of the element names (`img` and `class`). But the [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) is way more complex than that, hence this library.
+Characters `space` and `=` in the example above mark the ending of the element names (`img` and `class`). But the [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) is way more complex than that, hence this library.
 
 **[⬆ &nbsp;back to top](#)**
 
