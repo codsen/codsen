@@ -64,7 +64,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## What is does
 
-It returns a boolean, is the given character the [Production \[4a]](https://www.w3.org/TR/REC-xml/#NT-NameStartChar) of XML spec, or in human terms, a possible ending character of an XML element.
+It returns a boolean, is the given character the [Production 4a](https://www.w3.org/TR/REC-xml/#NT-NameStartChar) of XML spec, or in human terms, a possible ending character of an XML element.
 
 This library is used to detect where (X)HTML element names end.
 
@@ -84,13 +84,13 @@ In the most simple scenario:
     1     2
 ```
 
-Characters `space` and `=` in the example above mark the ending of the element names (`img` and `class`). But the [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) is way more complex than that, hence this library.
+Characters `space` (1) and `=` (2) in the example above mark the ending of the element names (`img` and `class`). OK, so we know spaces and equals' are not allowed as element names and therefore mark their ending. Are there more of such characters? Oh yes. Actually quite a lot according to [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) what warrants a proper library dedicated only for that.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## API
 
-Two functions - one to check requirements for first character, another to check requirements for second character-onwards. Both return Boolean.
+Two functions - one to check requirements for **first character**, another to check requirements for **second character** and onwards. Both functions return a Boolean.
 
 ### `isProduction4()` - requirements for 1st char
 
