@@ -63,7 +63,7 @@ It sorts the array of index arrays, for example:
 [] => []
 
 [[1, 2], []] => // throws, because there's at least one empty range
-[['a']] => // throws, because range is given as string
+[['a']] => // throws, because range is not a range but a string
 [[1], [2]] => // throws, because one index is not a range
 
 // 3rd argument and onwards are ignored:
