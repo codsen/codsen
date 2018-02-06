@@ -65,7 +65,8 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   //      D E F A U L T S
   var defaults = {
     inclusiveRangeEnds: false,
-    returnMatchedRangeInsteadOfTrue: false
+    returnMatchedRangeInsteadOfTrue: false,
+    skipIncomingRangeSorting: false
   };
 
   var opts = Object.assign(Object.assign({}, defaults), originalOpts);
@@ -106,7 +107,7 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   // more than two
 
   // 0. Get the ranges array sorted because few upcoming approaches depend on it.
-  var rarr = rangesSort(rangesArr);
+  var rarr = opts.skipIncomingRangeSorting ? rangesArr : rangesSort(rangesArr);
 
   // 1. check for quick wins - maybe given index is outside of the edge values?
   if (index < rarr[0][0] || index > rarr[rarr.length - 1][1]) {

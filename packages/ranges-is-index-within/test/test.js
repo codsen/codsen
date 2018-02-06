@@ -4615,7 +4615,34 @@ test('Ad-hoc #1', (t) => {
       { inclusiveRangeEnds: true, returnMatchedRangeInsteadOfTrue: true },
     ),
     [125, 130],
-    '04.01',
+    '04.01.01',
+  )
+  t.deepEqual(
+    wthn(
+      130,
+      [
+        [5, 10],
+        [15, 20],
+        [25, 30],
+        [35, 40],
+        [45, 50],
+        [55, 60],
+        [65, 70],
+        [75, 80],
+        [85, 90],
+        [95, 100],
+        [105, 110],
+        [115, 120],
+        [125, 130],
+      ],
+      {
+        inclusiveRangeEnds: true,
+        returnMatchedRangeInsteadOfTrue: true,
+        skipIncomingRangeSorting: true,
+      },
+    ),
+    [125, 130],
+    '04.01.02',
   )
 })
 

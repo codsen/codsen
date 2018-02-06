@@ -36,7 +36,7 @@ Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-is-index-within.cjs.js` | 9&nbsp;KB
 **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-is-index-within.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-is-index-within.umd.js` | 22&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-is-index-within.umd.js` | 20&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -101,6 +101,7 @@ options object's key              | Type of its value | Default     | Descriptio
 {                                 |                   |             |
 `inclusiveRangeEnds`              | Boolean           | `false`     | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes.
 `returnMatchedRangeInsteadOfTrue` | Boolean           | `false`     | If set to `true`, instead of result `true` it will return the matched range. `false` is still used as a negative answer. It's handy when you want to know **which** range it matched.
+`skipIncomingRangeSorting`        | Boolean           | `false`     | If you know the input ranges are already sorted, turn off the sorting using this flag.
 }                                 |                   |             |
 
 Options object is "patrolled" using [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
@@ -111,6 +112,7 @@ Here is the options object in one place (in case you ever want to copy it):
 {
   inclusiveRangeEnds: false,
   returnMatchedRangeInsteadOfTrue: false,
+  skipIncomingRangeSorting: false,
 }
 ```
 
@@ -121,6 +123,18 @@ Here is the options object in one place (in case you ever want to copy it):
 Boolean `true`^ or `false`, answering the question, is the given `index` found within any of the ranges.
 
 ^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
+
+**[⬆ &nbsp;back to top](#)**
+
+### `opts.skipIncomingRangeSorting`
+
+If you use this library as an internal dependency and you know the ranges upfront, it makes sense to sort them upfront, before feeding into this library and turn off the sorting here.
+
+You can wire up temporary `console.log` and use [ranges-sort](https://github.com/codsen/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
+
+Now you can save users' resources and turn off range sorting in this library using `opts.skipIncomingRangeSorting`.
+
+For example, in my library [charcode-is-valid-xml-name-character](https://github.com/codsen/charcode-is-valid-xml-name-character) I'm checking is the character a valid to be XML element's name. I know Unicode ranges upfront, so I sorted them, console-logg'ed and pasted as constant. Then, when checking user input character's index, is it among my ranges, I use this library, `ranges-is-index-within`, with sorting turned off.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -264,15 +278,11 @@ In our example above, `for` loop with `break` or `Array.some` would have stopped
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ranges-is-index-within/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ranges-is-index-within/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ranges-is-index-within/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ranges-is-index-within/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/ranges-is-index-within/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -281,6 +291,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
+
 
 [node-img]: https://img.shields.io/node/v/ranges-is-index-within.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-is-index-within
