@@ -272,7 +272,7 @@ Pick the middle range of `[65,70]`-`[95,100]`, which is `[75,80]`. Bob's your un
 
 It took three iterations of a `while` loop to measure `13` ranges. Would could have checked it using `Array.some` but it would have been the less efficient, the more our index would be towards the end of the array. The most inefficient way would be `for` loop without `break`, checking all ranges even if one was detected.
 
-In our example above, `for` loop with `break` or `Array.some` would have stopped after checking 8th range. Our algorithm did it in 3 checks. That's the meaning of "efficient" I'm talking about.
+In our example above, the `for` loop with `break` or `Array.some` would have stopped after checking 8th range. Our algorithm did it in 3 checks. That's the meaning of "efficient" I'm talking about.
 
 **[⬆ &nbsp;back to top](#)**
 
