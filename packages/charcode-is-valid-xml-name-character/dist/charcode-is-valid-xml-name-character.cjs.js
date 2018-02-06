@@ -52,11 +52,17 @@ var nameChar = [[45, 45], // "-"
 [65536, 983039]];
 
 function isProduction4(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), nameStartChar, { inclusiveRangeEnds: true });
+  return rangesIsIndexWithin(char.codePointAt(0), nameStartChar, {
+    inclusiveRangeEnds: true,
+    skipIncomingRangeSorting: true
+  });
 }
 
 function isProduction4a(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), nameChar, { inclusiveRangeEnds: true });
+  return rangesIsIndexWithin(char.codePointAt(0), nameChar, {
+    inclusiveRangeEnds: true,
+    skipIncomingRangeSorting: true
+  });
 }
 
 exports.isProduction4 = isProduction4;

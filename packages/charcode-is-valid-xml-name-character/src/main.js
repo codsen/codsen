@@ -53,7 +53,10 @@ function isProduction4(char) {
   return rangesIsIndexWithin(
     char.codePointAt(0),
     nameStartChar,
-    { inclusiveRangeEnds: true },
+    {
+      inclusiveRangeEnds: true,
+      skipIncomingRangeSorting: true,
+    },
   )
 }
 
@@ -61,7 +64,10 @@ function isProduction4a(char) {
   return rangesIsIndexWithin(
     char.codePointAt(0),
     nameChar,
-    { inclusiveRangeEnds: true },
+    {
+      inclusiveRangeEnds: true,
+      skipIncomingRangeSorting: true,
+    },
   )
 }
 
