@@ -41,9 +41,11 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
     ignoreKeys: [],
     hardMergeKeys: [],
+    hardArrayConcatKeys: [],
     mergeArraysContainingStringsToBeEmpty: false,
     oneToManyArrayObjectMerge: false,
     hardMergeEverything: false,
+    hardArrayConcat: false,
     ignoreEverything: false,
     concatInsteadOfMerging: true,
     dedupeStringsInArrayValues: false,
@@ -82,6 +84,9 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         // two array merge
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
           return []
+        }
+        if (opts.hardArrayConcat) {
+          return i1.concat(i2)
         }
         let temp = []
         for (let index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
@@ -179,6 +184,11 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
               i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }))
+            } else if (includes(key, opts.hardArrayConcatKeys)) {
+              // set the hardArrayConcat option to true for all deeper values.
+              // It will force a concat of both values, as long as they are both arrays
+              // No merge will happen.
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardArrayConcat: true }))
             } else {
               // regular merge
               i1[key] = mergeAdvanced(i1[key], i2[key], opts)

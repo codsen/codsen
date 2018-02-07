@@ -147,6 +147,8 @@ Options object's key                    | Value   | Default | Description
 `dedupeStringsInArrayValues`            | Boolean | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings.
 `mergeBoolsUsingOrNotAnd`               | Boolean | `true`  | When two values are Booleans, by default, result will be calculated using logical `OR` on them. If you switch this to `false`, merging will use logical `AND`. Former setting is handy when dealing with JSON content driving email templates, latter is handy when merging [settings](https://github.com/codsen/csv-sort-cli/blob/master/cli.js) ("off", `false` overrides default "on", `true`).
 `useNullAsExplicitFalse`                | Boolean | `false` | When set to `true`, `null` vs. anything (argument order doesn't matter) will yield `false`. This is used in data structures as an explicit "false" to "turn off" incoming defaults for good without the need of extra values or wrapping with conditionals in templates.
+`hardArrayConcat`                | Boolean | `false` | When set to `true`, an array vs. array merge will always result from a concat operation from the `input1` parameter with `input2`, no matter which items are contained on those arrays.
+`hardArrayConcatKeys`                | String / Array of strings | n/a | These keys, if present on `input1` will force hardArrayConcat option on those values. You can use wildcards.
 `}`                                     |         |         |
 
 Here are all defaults in one place:

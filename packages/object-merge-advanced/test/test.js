@@ -4212,7 +4212,88 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
     '17.03.10 - #99 - null vs. null',
   )
 })
-
+test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [0, 1, 2],
+      },
+      {
+        a: [3, 4, 5],
+      },
+      {
+        hardArrayConcatKeys: ['a'],
+      },
+    ),
+    {
+      a: [0, 1, 2, 3, 4, 5],
+    },
+    '18.04.01',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [{ a: 0 }, { a: 1 }, { a: 2 }],
+      },
+      {
+        a: [{ a: 0 }, { a: 1 }, { a: 2 }],
+      },
+      {
+        hardArrayConcatKeys: ['a'],
+      },
+    ),
+    {
+      a: [{ a: 0 }, { a: 1 }, { a: 2 }, { a: 0 }, { a: 1 }, { a: 2 }],
+    },
+    '18.04.02',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [1, 2, 3],
+        b: [1, 2, 3],
+        c: [{ a: 1 }, { a: 2 }, { a: 3 }],
+      },
+      {
+        a: [4, 5, 6],
+        b: [4, 5, 6],
+        c: [{ a: 4 }, { a: 5 }, { a: 6 }],
+      },
+      {
+        hardArrayConcatKeys: ['a'],
+      },
+    ),
+    {
+      a: [1, 2, 3, 4, 5, 6],
+      b: [1, 4, 2, 5, 3, 6], // no objects, so an "orderer" concat happend
+      c: [{ a: 4 }, { a: 5 }, { a: 6 }], // objects so
+    },
+    '18.04.03',
+  )
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [1, 2, 3],
+        b: [1, 2, 3],
+        c: [{ a: 1 }, { a: 2 }, { a: 3 }],
+      },
+      {
+        a: [4, 5, 6],
+        b: [4, 5, 6],
+        c: [{ a: 4 }, { a: 5 }, { a: 6 }],
+      },
+      {
+        hardArrayConcat: true,
+      },
+    ),
+    {
+      a: [1, 2, 3, 4, 5, 6],
+      b: [1, 2, 3, 4, 5, 6],
+      c: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }], // objects so
+    },
+    '18.04.03',
+  )
+})
 // ============================================================
 //                   U T I L   T E S T S
 // ============================================================
