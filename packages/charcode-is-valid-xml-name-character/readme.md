@@ -64,7 +64,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## What is does
 
-It returns a boolean, is the given character the [Production 4a](https://www.w3.org/TR/REC-xml/#NT-NameStartChar) of XML spec, or in human terms, a possible ending character of an XML element.
+It returns a Boolean, is the given character the [Production 4a](https://www.w3.org/TR/REC-xml/#NT-NameStartChar) of XML spec, or in human terms, a possible ending character of an XML element.
 
 This library is used to detect where (X)HTML element names end.
 
