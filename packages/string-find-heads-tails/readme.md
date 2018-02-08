@@ -73,9 +73,9 @@ Take a string, search for a **pair** of strings in it. Let's call the first-one 
 
 There are few rules:
 
-* Each finding must be in sequence: heads - tails - heads - tails.
-* When one heads is found, no new heads findings will be accepted into the results until there's a new _tails_ finding. Same goes the opposite way for tails.
-* Both heads and tails can be supplied either as a single string or array of strings. Findings are prioritised by their order in the array.
+* Each finding must be in sequence: _heads_ - _tails_ - _heads_ - _tails_.
+* When one _heads_ is found, no new heads findings will be accepted into the results until there's a new _tails_ finding. Same goes the opposite way, for _tails_.
+* Both _heads_ and _tails_ can be supplied either as a single string or array of strings. Findings are prioritised by their order in the array.
 
 **[⬆ &nbsp;back to top](#)**
 
