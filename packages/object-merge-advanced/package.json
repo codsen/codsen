@@ -101,6 +101,20 @@
           "Tests"
         ],
         "username": "revelt"
+      },
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "jabiinfante"
+      },
+      {
+        "contribution": [
+          "Bug reports"
+        ],
+        "username": "project707"
       }
     ],
     "eslintrc": {
@@ -129,31 +143,31 @@
   },
   "dependencies": {
     "array-includes-all": "^1.0.0",
-    "array-includes-with-glob": "^2.0.6",
-    "arrayiffy-if-string": "^3.0.5",
-    "check-types-mini": "^3.0.3",
+    "array-includes-with-glob": "^2.0.7",
+    "arrayiffy-if-string": "^3.0.6",
+    "check-types-mini": "^3.1.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
     "type-detect": "*",
-    "util-nonempty": "^2.0.3"
+    "util-nonempty": "^2.0.4"
   },
   "devDependencies": {
     "ava": "*",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.16.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.0",
+    "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.8"
+    "uglify-es": "^3.3.9"
   }
 }

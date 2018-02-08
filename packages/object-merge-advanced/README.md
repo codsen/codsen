@@ -15,6 +15,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
@@ -30,6 +31,7 @@
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `object-assign`](#difference-from-object-assign)
 - [Contributing](#contributing)
+- [Contributors](#contributors)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -147,8 +149,8 @@ Options object's key                    | Value   | Default | Description
 `dedupeStringsInArrayValues`            | Boolean | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings.
 `mergeBoolsUsingOrNotAnd`               | Boolean | `true`  | When two values are Booleans, by default, result will be calculated using logical `OR` on them. If you switch this to `false`, merging will use logical `AND`. Former setting is handy when dealing with JSON content driving email templates, latter is handy when merging [settings](https://github.com/codsen/csv-sort-cli/blob/master/cli.js) ("off", `false` overrides default "on", `true`).
 `useNullAsExplicitFalse`                | Boolean | `false` | When set to `true`, `null` vs. anything (argument order doesn't matter) will yield `false`. This is used in data structures as an explicit "false" to "turn off" incoming defaults for good without the need of extra values or wrapping with conditionals in templates.
-`hardArrayConcat`                | Boolean | `false` | When set to `true`, an array vs. array merge will always result from a concat operation from the `input1` parameter with `input2`, no matter which items are contained on those arrays.
-`hardArrayConcatKeys`                | String / Array of strings | n/a | These keys, if present on `input1` will force hardArrayConcat option on those values. You can use wildcards.
+`hardArrayConcat`                       | Boolean | `false` | When set to `true`, an array vs. array merge will always result from a concat operation from the `input1` parameter with `input2`, no matter which items are contained on those arrays.
+`hardArrayConcatKeys`                   | String / Array of strings | n/a | These keys, if present on `input1` will force hardArrayConcat option on those values. You can use wildcards.
 `}`                                     |         |         |
 
 Here are all defaults in one place:
@@ -166,6 +168,8 @@ Here are all defaults in one place:
   dedupeStringsInArrayValues: false,
   mergeBoolsUsingOrNotAnd: true,
   useNullAsExplicitFalse: false,
+  hardArrayConcat: false,
+  hardArrayConcatKeys: undefined,
 }
 ```
 
@@ -279,6 +283,20 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 **[⬆ &nbsp;back to top](#)**
 
+## Contributors
+
+Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") |
+| :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind are welcome!
+
+**[⬆ &nbsp;back to top](#)**
+
 ## Licence
 
 MIT License (MIT)
@@ -319,5 +337,10 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
 
+[contributors-img]: https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square
+[contributors-url]: #contributors
+
 [license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
 [license-url]: https://github.com/codsen/object-merge-advanced/blob/master/license.md
+
+[all-contributors]: https://github.com/kentcdodds/all-contributors
