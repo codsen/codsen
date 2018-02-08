@@ -58,16 +58,42 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
 
   checkTypes(opts, defaults, { msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]' })
 
+  // hardMergeKeys: '*' <===> hardMergeEverything === true
+  // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  if (opts.hardMergeKeys.includes('*')) {
+    opts.hardMergeEverything = true
+  }
+
+  // ignoreKeys: '*' <===> ignoreEverything === true
+  // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
+  if (opts.ignoreKeys.includes('*')) {
+    opts.ignoreEverything = true
+  }
+
   // ACTION
   // ---------------------------------------------------------------------------
 
+  // when null is used as explicit false, it overrides everything and anything:
   if (opts.useNullAsExplicitFalse && ((input1orig === null) || (input2orig === null))) {
     return false
   }
 
+  // clone the values to prevent accidental mutations, but only if it makes sense -
+  // it applies to arrays and plain objects only (as far as we're concerned here)
   let i1 = (isArr(input1orig) || isObj(input1orig)) ? clone(input1orig) : input1orig
   const i2 = (isArr(input2orig) || isObj(input2orig)) ? clone(input2orig) : input2orig
 
+  // if the unidirectional merging is set, that's a quick ending because the values
+  // don't matter
+  if (opts.ignoreEverything) {
+    return i1
+  } else if (opts.hardMergeEverything) {
+    return i2
+  }
+
+  // Now the complex part. By this point we know there's a value clash and we need
+  // to judge case-by-case. Principle is to aim to retain as much data as possible
+  // after merging.
   if (isArr(i1)) {
     // first, exclusions.
     if (opts.ignoreEverything && !isArr(i2)) {
@@ -176,6 +202,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
             if (includes(key, opts.ignoreKeys)) {
               // set the ignoreEverything for all deeper recursive traversals,
               // otherwise, it will get lost, yet, ignores apply to all children
+              // console.log('1. - ignoreEverything')
               i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { ignoreEverything: true }))
             } else if (includes(key, opts.hardMergeKeys)) {
               // set the hardMergeEverything for all deeper recursive traversals.
@@ -183,14 +210,17 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
+              // console.log('2. - hardMergeEverything')
               i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }))
             } else if (includes(key, opts.hardArrayConcatKeys)) {
               // set the hardArrayConcat option to true for all deeper values.
               // It will force a concat of both values, as long as they are both arrays
               // No merge will happen.
+              // console.log('3. - hardArrayConcat')
               i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardArrayConcat: true }))
             } else {
               // regular merge
+              // console.log('4.')
               i1[key] = mergeAdvanced(i1[key], i2[key], opts)
             }
           } else {

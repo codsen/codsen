@@ -1252,6 +1252,46 @@ test('01.24 - no clash, just filling missing values', (t) => {
   )
 })
 
+test('01.25 - arrays and opts.ignoreKeys', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [1, 2, 3],
+      },
+      {
+        a: [4, 5, 6],
+      },
+      {
+        ignoreKeys: 'a',
+      },
+    ),
+    {
+      a: [1, 2, 3],
+    },
+    '01.25.01',
+  )
+})
+
+test('01.26 - arrays and opts.ignoreKeys', (t) => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [1, 2, 3],
+      },
+      {
+        a: [4, 5, 6],
+      },
+      {
+        hardMergeKeys: 'a',
+      },
+    ),
+    {
+      a: [4, 5, 6],
+    },
+    '01.26.01',
+  )
+})
+
 // ==============================
 // Edge cases
 // ==============================
@@ -3310,13 +3350,15 @@ test('14.01 - objects within arrays', (t) => {
     },
     '14.01.02.02 - customising opts.mergeObjectsOnlyWhenKeysetMatches - other way (swapped args of 14.01.02.01)',
   )
+
+  // setting the glob is the same as setting opts.hardMergeEverything to true
   t.deepEqual(
     mergeAdvanced(
       {
         a: [
           {
             b: 'zzz',
-            c: 'ccc', // <----- this key is unique.
+            c: 'ccc', // <----- this key is unique but it doesn't matter
           },
         ],
       },
@@ -3324,7 +3366,7 @@ test('14.01 - objects within arrays', (t) => {
         a: [
           {
             b: false,
-            d: 'ddd', // <----- and this key is unique.
+            d: 'ddd', // <----- and this key is unique but it doesn't matter
           },
         ],
       },
@@ -3333,22 +3375,48 @@ test('14.01 - objects within arrays', (t) => {
       },
     ),
     {
-      a: [
-        {
-          b: 'zzz',
-          c: 'ccc',
-        },
+      a: [ // <----- hard merge happens back at "a" key's level, no matter the contents
         {
           b: false,
           d: 'ddd',
         },
       ],
     },
-    '14.01.03 - hard merge * - does nothing different because keys are not clashing',
-    // the problem is, hard merges drive key-vs.-key choice and here without
-    // opts.mergeObjectsOnlyWhenKeysetMatches: false
-    // the objects are not merged since they have unique keys.
-    // Their parent arrays are contatenated instead.
+    '14.01.03.01 - hardMergeKeys: * in per-key settings is the same as global flag',
+  )
+
+  // setting the glob is the same as setting opts.ignoreEverything to true
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: [
+          {
+            b: 'zzz',
+            c: 'ccc', // <----- this key is unique but it doesn't matter
+          },
+        ],
+      },
+      {
+        a: [
+          {
+            b: false,
+            d: 'ddd', // <----- and this key is unique but it doesn't matter
+          },
+        ],
+      },
+      {
+        ignoreKeys: '*', // <----- notice it's glob
+      },
+    ),
+    {
+      a: [ // <----- hard merge happens back at "a" key's level, no matter the contents
+        {
+          b: 'zzz',
+          c: 'ccc',
+        },
+      ],
+    },
+    '14.01.03.02 - ignoreKeys: * in per-key settings is the same as global flag',
   )
   t.deepEqual(
     mergeAdvanced(
