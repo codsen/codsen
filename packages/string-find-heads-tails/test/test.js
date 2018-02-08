@@ -275,6 +275,21 @@ test('01.08 - heads of one type, tails of another', (t) => {
   })
   t.falsy(err2.message.includes('THROW_ID_20'))
   t.truthy(err2.message.includes('TEST 1.08'))
+
+  const err3 = t.throws(() => {
+    strFindHeadsTails(
+      'some text %%_var1-%% more text %%_var2_%%',
+      ['%%_', '%%-'],
+      ['_%%', '-%%'],
+      {
+        matchHeadsAndTailsStrictlyInPairsByTheirOrder: true,
+        source: '', // <------ EMPTY
+      },
+    )
+  })
+  // let's just prove that it error message is not about empty opts.source but
+  // still about the same index mismatch as the tests above
+  t.truthy(err3.message.includes('the tails the followed it were not of the same index'))
 })
 
 test('01.09 - sequences are treated correctly by opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder', (t) => {
