@@ -29,7 +29,7 @@
 - [In practice](#in-practice)
 - [API](#api)
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
-- [Difference from `object-assign`](#difference-from-object-assign)
+- [Difference from `Object.assign()`](#difference-from-objectassign)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 - [Licence](#licence)
@@ -54,7 +54,7 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 12&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 12&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 11&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
@@ -255,11 +255,11 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 
 Lodash [_.merge](https://lodash.com/docs/#merge) gets stuck when encounters a mismatching type values within plain objects. It's neither suitable for merging AST's, nor for deep recursive merging.
 
-## Difference from `object-assign`
+## Difference from `Object.assign()`
 
-[object-assign](https://github.com/sindresorhus/object-assign) is just a hard overwrite of all existing keys, from one object to another. It does not weigh the types of the input values and will happily overwrite the string value with a boolean placeholder.
+`Object.assign()` is just a hard overwrite of all existing keys, from one object to another. It does not weigh the types of the input values and will happily overwrite the string value with a boolean placeholder.
 
-`object-assign` is not for merging data objects, it's for _setting defaults_ in the options objects.
+`Object.assign()` is not for merging data objects, it's for _setting defaults_ in the options objects.
 
 For example, in my email template builds, I import SCSS variables file as an object. I also import variables for each template, and template variables object overwrites anything existing in SCSS variables object.
 
