@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [9.0.0] - 2018-02-08
+### Changed
+Previously, `opts.hardMergeKeys`, `opts.ignoreKeys` as well as `opts.hardMergeEverything` and `opts.ignoreEverything` were not 100% unidirectional. In some cases, for example, when object key's value was an array and it clashed with another array from same-named key, the merging was performed instead of hard write. It was done with intention to retain as much data as possible after merging. However, it was not what was promised in documentation. Now this is sorted.
+
+Also, single asterisk wildcard `*` among `opts.ignoreKeys` sets `opts.ignoreEverything` to `true`. Same with `*` among `opts.hardMergeKeys`.
+
 ## [8.4.0] - 2018-02-07
 ### Added
 Thanks to [@jabiinfante](https://github.com/jabiinfante) PR:
@@ -129,3 +135,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [8.2.0]: https://github.com/codsen/object-merge-advanced/compare/v8.1.0...v8.2.0
 [8.3.0]: https://github.com/codsen/object-merge-advanced/compare/v8.2.0...v8.3.0
 [8.4.0]: https://github.com/codsen/object-merge-advanced/compare/v8.3.4...v8.4.0
+[9.0.0]: https://github.com/codsen/object-merge-advanced/compare/v8.4.0...v9.0.0
