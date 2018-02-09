@@ -1162,3 +1162,51 @@ test('04.05 - opts.schema understands opts.acceptArrays', (t) => {
   }) // does not throw because blanked permission for array's is on.
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.
 })
+
+test('04.06 - ad-hoc #1', (t) => {
+  t.throws(() => {
+    checkTypes(
+      {
+        heads: '%%_',
+        tails: '_%%',
+        headsNoWrap: '%%-',
+        tailsNoWrap: '-%%',
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: '_data',
+        wrapHeadsWith: '',
+        wrapTailsWith: false, // <--------------------  !!!
+        dontWrapVars: [],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+        noSingleMarkers: false,
+        resolveToBoolIfAnyValuesContainBool: true,
+        resolveToFalseIfAnyValuesContainBool: true,
+        throwWhenNonStringInsertedInString: false,
+      },
+      {
+        heads: '%%_',
+        tails: '_%%',
+        headsNoWrap: '%%-',
+        tailsNoWrap: '-%%',
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: '_data',
+        wrapHeadsWith: '',
+        wrapTailsWith: '', // <--------------------  !!!
+        dontWrapVars: [],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+        noSingleMarkers: false,
+        resolveToBoolIfAnyValuesContainBool: true,
+        resolveToFalseIfAnyValuesContainBool: true,
+        throwWhenNonStringInsertedInString: false,
+      },
+      {
+        msg: 'json-variables/jsonVariables(): [THROW_ID_04*]',
+        schema: {
+          headsNoWrap: ['string', 'null', 'undefined'],
+          tailsNoWrap: ['string', 'null', 'undefined'],
+        },
+      },
+    )
+  }, 'json-variables/jsonVariables(): [THROW_ID_04*]: opts.wrapTailsWith was customised to false which is not string but boolean')
+})
