@@ -95,13 +95,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // to judge case-by-case. Principle is to aim to retain as much data as possible
   // after merging.
   if (isArr(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything && !isArr(i2)) {
-      return i1
-    } else if (opts.hardMergeEverything && !isArr(i2)) {
-      return i2
-    } else
-    // now the business as usual onwards...
     // cases 1-20
     if (nonEmpty(i1)) {
       // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
@@ -171,17 +164,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       return i1
     }
   } else if (isObj(i1)) {
-    // first, exclusions.
-    //
-    // if i1 contains "container" values (arrays or objects) missing stuff might
-    // be added to it. If, on other hand, it's string, Bool or number, there's
-    // nothing we could add to it, so we'll just Object.assign:
-    if (opts.ignoreEverything && isObj(i2) && !Object.keys(i1).some(el => isArr(el) || isObj(el))) {
-      return Object.assign({}, i2, i1)
-    } else if (opts.hardMergeEverything && isObj(i2) && !Object.keys(i1).some(el => isArr(el) || isObj(el))) {
-      return Object.assign({}, i1, i2)
-    } else
-    // now let's do it at the granular level...
     // cases 21-40
     if (nonEmpty(i1)) {
       // cases 21-30
@@ -242,13 +224,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       return i1
     }
   } else if (isStr(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1
-    } else if (opts.hardMergeEverything) {
-      return i2
-    } else
-    // now the business as usual onwards...
     if (nonEmpty(i1)) {
       // cases 41-50
       if ((isArr(i2) || isObj(i2) || isStr(i2)) && nonEmpty(i2)) {
@@ -268,13 +243,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     // 58, 59, 60
     return i1
   } else if (isNum(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1
-    } else if (opts.hardMergeEverything) {
-      return i2
-    } else
-    // now the business as usual onwards...
     // cases 61-70
     if (nonEmpty(i2)) {
       // cases 61, 63, 65, 67
@@ -283,13 +251,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     // cases 62, 64, 66, 68, 69, 70
     return i1
   } else if (isBool(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1
-    } else if (opts.hardMergeEverything) {
-      return i2
-    } else
-    // now the business as usual onwards...
     // cases 71-80
     if (isBool(i2)) {
       // case 78 - two Booleans
@@ -305,27 +266,14 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     // cases 79*, 80
     return i1
   } else if (i1 === null) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1
-    } else if (opts.hardMergeEverything) {
-      return i2
-    // now the business as usual onwards...
     // cases 81-90
-    } else if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
+    if (i2 != null) { // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88*
       return i2
     }
     // cases 89, 90
     return i1
   } else {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1
-    } else if (opts.hardMergeEverything) {
-      return i2
-    }
-    // now the business as usual onwards...
     // cases 91-100
     return i2
   }

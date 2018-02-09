@@ -155,165 +155,136 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // to judge case-by-case. Principle is to aim to retain as much data as possible
   // after merging.
   if (isArr$1(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything && !isArr$1(i2)) {
-      return i1;
-    } else if (opts.hardMergeEverything && !isArr$1(i2)) {
-      return i2;
-    } else
-      // now the business as usual onwards...
-      // cases 1-20
-      if (nonEmpty(i1)) {
-        // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
-        if (isArr$1(i2) && nonEmpty(i2)) {
-          // case 1
-          // two array merge
-          if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
-            return [];
-          }
-          if (opts.hardArrayConcat) {
-            return i1.concat(i2);
-          }
-          var temp = [];
-          for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-            if (isObj$1(i1[index]) && isObj$1(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
-              temp.push(mergeAdvanced(i1[index], i2[index], opts));
-            } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1 // either of arrays has one elem.
-            )) {
-              temp.push(i1.length === 1 ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts));
-            } else if (opts.concatInsteadOfMerging) {
-              // case1 - concatenation no matter what contents
-              if (index < i1.length) {
-                temp.push(i1[index]);
-              }
-              if (index < i2.length) {
-                temp.push(i2[index]);
-              }
-            } else {
-              // case2 - merging, evaluating contents
+    // cases 1-20
+    if (nonEmpty(i1)) {
+      // cases 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+      if (isArr$1(i2) && nonEmpty(i2)) {
+        // case 1
+        // two array merge
+        if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
+          return [];
+        }
+        if (opts.hardArrayConcat) {
+          return i1.concat(i2);
+        }
+        var temp = [];
+        for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
+          if (isObj$1(i1[index]) && isObj$1(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
+            temp.push(mergeAdvanced(i1[index], i2[index], opts));
+          } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1 // either of arrays has one elem.
+          )) {
+            temp.push(i1.length === 1 ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts));
+          } else if (opts.concatInsteadOfMerging) {
+            // case1 - concatenation no matter what contents
+            if (index < i1.length) {
+              temp.push(i1[index]);
+            }
+            if (index < i2.length) {
+              temp.push(i2[index]);
+            }
+          } else {
+            // case2 - merging, evaluating contents
 
-              // push each element of i1 into temp
-              if (index < i1.length) {
-                temp.push(i1[index]);
-              }
-              if (index < i2.length && !lodashIncludes(i1, i2[index])) {
-                temp.push(i2[index]);
-              }
+            // push each element of i1 into temp
+            if (index < i1.length) {
+              temp.push(i1[index]);
+            }
+            if (index < i2.length && !lodashIncludes(i1, i2[index])) {
+              temp.push(i2[index]);
             }
           }
-          // optionally dedupe:
-          if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
-            return isStr(el);
-          })) {
-            temp = uniq(temp).sort();
-          }
-          i1 = clone(temp);
-        } else {
-          // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
-          return i1;
         }
+        // optionally dedupe:
+        if (opts.dedupeStringsInArrayValues && temp.every(function (el) {
+          return isStr(el);
+        })) {
+          temp = uniq(temp).sort();
+        }
+        i1 = clone(temp);
       } else {
-        // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
-        if (nonEmpty(i2)) {
-          // cases 11, 13, 15, 17
-          return i2;
-        }
-        // cases 12, 14, 16, 18, 19, 20
+        // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         return i1;
       }
-  } else if (isObj$1(i1)) {
-    // first, exclusions.
-    //
-    // if i1 contains "container" values (arrays or objects) missing stuff might
-    // be added to it. If, on other hand, it's string, Bool or number, there's
-    // nothing we could add to it, so we'll just Object.assign:
-    if (opts.ignoreEverything && isObj$1(i2) && !Object.keys(i1).some(function (el) {
-      return isArr$1(el) || isObj$1(el);
-    })) {
-      return Object.assign({}, i2, i1);
-    } else if (opts.hardMergeEverything && isObj$1(i2) && !Object.keys(i1).some(function (el) {
-      return isArr$1(el) || isObj$1(el);
-    })) {
-      return Object.assign({}, i1, i2);
-    } else
-      // now let's do it at the granular level...
-      // cases 21-40
-      if (nonEmpty(i1)) {
-        // cases 21-30
-        if (isArr$1(i2)) {
-          // cases 21, 22
-          if (nonEmpty(i2)) {
-            // case 21
-            return i2;
-          }
-          // case 22
-          return i1;
-        } else if (isObj$1(i2)) {
-          // case 23
-          // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
-          Object.keys(i2).forEach(function (key) {
-            if (i1.hasOwnProperty(key)) {
-              // key clash
-              if (includes(key, opts.ignoreKeys)) {
-                // set the ignoreEverything for all deeper recursive traversals,
-                // otherwise, it will get lost, yet, ignores apply to all children
-                // console.log('1. - ignoreEverything')
-                i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { ignoreEverything: true }));
-              } else if (includes(key, opts.hardMergeKeys)) {
-                // set the hardMergeEverything for all deeper recursive traversals.
-                // The user requested this key to be hard-merged, but in deeper branches
-                // without this switch (opts.hardMergeEverything) we'd lose the visibility
-                // of the name of the key; we can't "bubble up" to check all parents' key names,
-                // are any of them positive for "hard merge"...
-                // console.log('2. - hardMergeEverything')
-                i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }));
-              } else if (includes(key, opts.hardArrayConcatKeys)) {
-                // set the hardArrayConcat option to true for all deeper values.
-                // It will force a concat of both values, as long as they are both arrays
-                // No merge will happen.
-                // console.log('3. - hardArrayConcat')
-                i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardArrayConcat: true }));
-              } else {
-                // regular merge
-                // console.log('4.')
-                i1[key] = mergeAdvanced(i1[key], i2[key], opts);
-              }
-            } else {
-              i1[key] = i2[key]; // key does not exist, so creates it
-            }
-          });
-        } else {
-          // cases 24, 25, 26, 27, 28, 29, 30
-          return opts.hardMergeEverything ? i2 : i1;
-        }
-      } else {
-        // i1 is empty obj
-        // cases 31-40
-        if (isArr$1(i2) || isObj$1(i2) || nonEmpty(i2)) {
-          // cases 31, 32, 33, 34, 35, 37
-          return i2;
-        }
-        // 36, 38, 39, 40
-        return i1;
+    } else {
+      // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+      if (nonEmpty(i2)) {
+        // cases 11, 13, 15, 17
+        return i2;
       }
-  } else if (isStr(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
+      // cases 12, 14, 16, 18, 19, 20
       return i1;
-    } else if (opts.hardMergeEverything) {
-      return i2;
-    } else
-      // now the business as usual onwards...
-      if (nonEmpty(i1)) {
-        // cases 41-50
-        if ((isArr$1(i2) || isObj$1(i2) || isStr(i2)) && nonEmpty(i2)) {
-          // cases 41, 43, 45
-          // take care of hard merge setting cases, opts.hardMergeKeys
+    }
+  } else if (isObj$1(i1)) {
+    // cases 21-40
+    if (nonEmpty(i1)) {
+      // cases 21-30
+      if (isArr$1(i2)) {
+        // cases 21, 22
+        if (nonEmpty(i2)) {
+          // case 21
           return i2;
         }
-        // cases 42, 44, 46, 47, 48, 49, 50
+        // case 22
         return i1;
+      } else if (isObj$1(i2)) {
+        // case 23
+        // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
+        Object.keys(i2).forEach(function (key) {
+          if (i1.hasOwnProperty(key)) {
+            // key clash
+            if (includes(key, opts.ignoreKeys)) {
+              // set the ignoreEverything for all deeper recursive traversals,
+              // otherwise, it will get lost, yet, ignores apply to all children
+              // console.log('1. - ignoreEverything')
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { ignoreEverything: true }));
+            } else if (includes(key, opts.hardMergeKeys)) {
+              // set the hardMergeEverything for all deeper recursive traversals.
+              // The user requested this key to be hard-merged, but in deeper branches
+              // without this switch (opts.hardMergeEverything) we'd lose the visibility
+              // of the name of the key; we can't "bubble up" to check all parents' key names,
+              // are any of them positive for "hard merge"...
+              // console.log('2. - hardMergeEverything')
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }));
+            } else if (includes(key, opts.hardArrayConcatKeys)) {
+              // set the hardArrayConcat option to true for all deeper values.
+              // It will force a concat of both values, as long as they are both arrays
+              // No merge will happen.
+              // console.log('3. - hardArrayConcat')
+              i1[key] = mergeAdvanced(i1[key], i2[key], Object.assign({}, opts, { hardArrayConcat: true }));
+            } else {
+              // regular merge
+              // console.log('4.')
+              i1[key] = mergeAdvanced(i1[key], i2[key], opts);
+            }
+          } else {
+            i1[key] = i2[key]; // key does not exist, so creates it
+          }
+        });
+      } else {
+        // cases 24, 25, 26, 27, 28, 29, 30
+        return opts.hardMergeEverything ? i2 : i1;
       }
+    } else {
+      // i1 is empty obj
+      // cases 31-40
+      if (isArr$1(i2) || isObj$1(i2) || nonEmpty(i2)) {
+        // cases 31, 32, 33, 34, 35, 37
+        return i2;
+      }
+      // 36, 38, 39, 40
+      return i1;
+    }
+  } else if (isStr(i1)) {
+    if (nonEmpty(i1)) {
+      // cases 41-50
+      if ((isArr$1(i2) || isObj$1(i2) || isStr(i2)) && nonEmpty(i2)) {
+        // cases 41, 43, 45
+        // take care of hard merge setting cases, opts.hardMergeKeys
+        return i2;
+      }
+      // cases 42, 44, 46, 47, 48, 49, 50
+      return i1;
+    }
     // i1 is empty string
     // cases 51-60
     if (i2 != null && !isBool(i2)) {
@@ -323,52 +294,32 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     // 58, 59, 60
     return i1;
   } else if (isNum(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1;
-    } else if (opts.hardMergeEverything) {
+    // cases 61-70
+    if (nonEmpty(i2)) {
+      // cases 61, 63, 65, 67
       return i2;
-    } else
-      // now the business as usual onwards...
-      // cases 61-70
-      if (nonEmpty(i2)) {
-        // cases 61, 63, 65, 67
-        return i2;
-      }
+    }
     // cases 62, 64, 66, 68, 69, 70
     return i1;
   } else if (isBool(i1)) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1;
-    } else if (opts.hardMergeEverything) {
-      return i2;
-    } else
-      // now the business as usual onwards...
-      // cases 71-80
-      if (isBool(i2)) {
-        // case 78 - two Booleans
-        if (opts.mergeBoolsUsingOrNotAnd) {
-          return i1 || i2; // default - OR
-        }
-        return i1 && i2; // alternative merge using AND
-      } else if (i2 != null) {
-        // DELIBERATE LOOSE EQUAL - existy()
-        // cases 71, 72, 73, 74, 75, 76, 77
-        return i2;
+    // cases 71-80
+    if (isBool(i2)) {
+      // case 78 - two Booleans
+      if (opts.mergeBoolsUsingOrNotAnd) {
+        return i1 || i2; // default - OR
       }
+      return i1 && i2; // alternative merge using AND
+    } else if (i2 != null) {
+      // DELIBERATE LOOSE EQUAL - existy()
+      // cases 71, 72, 73, 74, 75, 76, 77
+      return i2;
+    }
     // i2 is null or undefined
     // cases 79*, 80
     return i1;
   } else if (i1 === null) {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1;
-    } else if (opts.hardMergeEverything) {
-      return i2;
-      // now the business as usual onwards...
-      // cases 81-90
-    } else if (i2 != null) {
+    // cases 81-90
+    if (i2 != null) {
       // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88*
       return i2;
@@ -376,13 +327,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     // cases 89, 90
     return i1;
   } else {
-    // first, exclusions.
-    if (opts.ignoreEverything) {
-      return i1;
-    } else if (opts.hardMergeEverything) {
-      return i2;
-    }
-    // now the business as usual onwards...
     // cases 91-100
     return i2;
   }
