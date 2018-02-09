@@ -22,7 +22,7 @@ var Slices = function () {
   //
 
   // O P T I O N S
-  // ==================
+  // =============
   function Slices(originalOpts) {
     _classCallCheck(this, Slices);
 
@@ -39,7 +39,7 @@ var Slices = function () {
   }
 
   // A D D ()
-  // ==================
+  // ========
 
 
   _createClass(Slices, [{
@@ -94,7 +94,7 @@ var Slices = function () {
     }
 
     // P U S H  ()  -  A L I A S   F O R   A D D ()
-    // ==================
+    // ============================================
 
   }, {
     key: 'push',
@@ -107,7 +107,7 @@ var Slices = function () {
     }
 
     // C U R R E N T () - kindof a getter
-    // ==================
+    // ==================================
 
   }, {
     key: 'current',
@@ -129,7 +129,7 @@ var Slices = function () {
     }
 
     // W I P E ()
-    // ==================
+    // ==========
 
   }, {
     key: 'wipe',
@@ -138,7 +138,7 @@ var Slices = function () {
     }
 
     // L A S T ()
-    // ==================
+    // ==========
 
   }, {
     key: 'last',
