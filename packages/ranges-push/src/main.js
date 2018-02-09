@@ -16,7 +16,7 @@ class Slices {
   //
 
   // O P T I O N S
-  // ==================
+  // =============
   constructor(originalOpts) {
     // validation first:
     const defaults = {
@@ -34,7 +34,7 @@ class Slices {
   }
 
   // A D D ()
-  // ==================
+  // ========
   add(originalFrom = mandatory(1), originalTo = mandatory(2), addVal, ...etc) {
     // validation
     const from = isNumStr(originalFrom) ? parseInt(originalFrom, 10) : originalFrom
@@ -86,13 +86,13 @@ class Slices {
   }
 
   // P U S H  ()  -  A L I A S   F O R   A D D ()
-  // ==================
+  // ============================================
   push(originalFrom, originalTo, addVal, ...etc) {
     this.add(originalFrom, originalTo, addVal, ...etc)
   }
 
   // C U R R E N T () - kindof a getter
-  // ==================
+  // ==================================
   current() {
     if (this.slices != null) { // != is intentional
       this.slices = mergeRanges(this.slices)
@@ -112,13 +112,13 @@ class Slices {
   }
 
   // W I P E ()
-  // ==================
+  // ==========
   wipe() {
     this.slices = undefined
   }
 
   // L A S T ()
-  // ==================
+  // ==========
   last() {
     if ((this.slices !== undefined) && Array.isArray(this.slices)) {
       return this.slices[this.slices.length - 1]
