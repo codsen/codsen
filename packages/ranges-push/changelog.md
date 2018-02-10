@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2018-02-10
+### Added
+- ✨ Now accepts output of another slices class (its `.current()` output) as the first input argument. Now, it won't throw an error that second argument is missing, provided the validation of the array from the 1st argument passes.
+
+In practice, I'm going to use it in [string-remove-duplicate-heads-tails](https://github.com/codsen/string-remove-duplicate-heads-tails) for example, where I there will be two-step process. Range comes in as a plausible range, then we traverse further and if further ranges are found, that plausible-one is merged into the real ranges slices array class. This merging up until now was a problem - it could only be done iterating one array and `.push`ing each range one-by-one into another slices array.
+
+### Changed
+- 🔧 Because of the above I had to rewrite the whole validation and error throwing part. All unit tests are the same and more were added, so there shoud not be any breaking changes.
+
 ## [2.4.0] - 2018-01-18
 ### Added
 - ✨ `opts.limitToBeAddedWhitespace` now also collapses the leading and trailing whitespace. If any chunk of leading whitespace (anything that would get `trim()`'med) contain line break `\n`, it's turned into `\n`. Otherwise, it's turned into single space.
@@ -79,6 +88,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.5.0]: https://github.com/codsen/string-slices-array-push/compare/v2.4.5...v2.5.0
 [2.4.0]: https://github.com/codsen/string-slices-array-push/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0

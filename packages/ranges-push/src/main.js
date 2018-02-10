@@ -6,8 +6,13 @@ import checkTypes from 'check-types-mini'
 import collapseLeadingWhitespace from 'string-collapse-leading-whitespace'
 
 function existy(x) { return x != null }
+const isArr = Array.isArray
+function isStr(something) { return typeof something === 'string' }
 function mandatory(i) {
-  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${ordinal(i)} parameter!`)
+  throw new Error(`string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ${ordinal(i)} input parameter!`)
+}
+function prepNumStr(str) {
+  return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str
 }
 
 // -----------------------------------------------------------------------------
@@ -35,53 +40,95 @@ class Slices {
 
   // A D D ()
   // ========
-  add(originalFrom = mandatory(1), originalTo = mandatory(2), addVal, ...etc) {
-    // validation
-    const from = isNumStr(originalFrom) ? parseInt(originalFrom, 10) : originalFrom
-    const to = isNumStr(originalTo) ? parseInt(originalTo, 10) : originalTo
-    if (!isInt(from, { includeZero: true })) {
-      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_02] "from" value, first input argument, must be a natural number or zero! Currently it's equal to: ${JSON.stringify(from, null, 4)}`)
-    }
-    if (!isInt(to, { includeZero: true })) {
-      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_03] "to" value, second input argument, must be a natural number! Currently it's equal to: ${JSON.stringify(to, null, 4)}`)
-    }
-    if (existy(addVal) && (typeof addVal !== 'string') && (addVal !== null)) {
-      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_04] "addVal" value, third input argument, must be a string (or null)! Currently it's equal to: ${JSON.stringify(addVal, null, 4)}`)
-    }
+  add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
     if (etc.length > 0) {
-      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_05] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`)
+      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_01] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`)
     }
+    const from = isNumStr(
+      originalFrom,
+      { includeZero: true },
+    ) ? parseInt(originalFrom, 10) : originalFrom
+    const to = isNumStr(
+      originalTo,
+      { includeZero: true },
+    ) ? parseInt(originalTo, 10) : originalTo
 
-    // action
-
-    // does the incoming "from" value match the existing last element's "to" value?
-    if (
-      (this.slices !== undefined) &&
-      (from === this.last()[1])
-    ) {
-      // the incoming range is an exact extension of the last range, like
-      // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
-      this.last()[1] = to
-      // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
-      if ((this.last()[2] !== null) && existy(addVal)) {
-        let calculatedVal = (
-          existy(this.last()[2]) &&
-          this.last()[2].length > 0
-        ) ? this.last()[2] + addVal : addVal
-        if (this.opts.limitToBeAddedWhitespace) {
-          calculatedVal = collapseLeadingWhitespace(calculatedVal)
+    // validation
+    if (isArr(originalFrom) && !existy(originalTo)) {
+      // This means output of slices array might be given.
+      // But validate that first.
+      let culpritId
+      let culpritVal
+      if (originalFrom.length > 0) {
+        if (originalFrom.every((thing, index) => {
+          if (isArr(thing)) {
+            return true
+          }
+          culpritId = index
+          culpritVal = thing
+          return false
+        })) {
+          // So it's array full of arrays.
+          // Let's validate the contents of those arrays and process them right away.
+          originalFrom.forEach((arr, idx) => {
+            if (isInt(prepNumStr(arr[0]), { includeZero: true })) {
+              // good, continue
+              if (isInt(prepNumStr(arr[1]), { includeZero: true })) {
+                // good, continue
+                if (!existy(arr[2]) || isStr(arr[2])) {
+                  // push it into slices range
+                  this.add(...arr)
+                } else {
+                  throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_02] The ${ordinal(idx)} ranges array's "to add" value is not string but ${typeof arr[2]}! It's equal to: ${arr[2]}. Computer says to tell you it's very bad.`)
+                }
+              } else {
+                throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_03] The ${ordinal(idx)} ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: ${arr[1]}. Computer doesn't like it at all.`)
+              }
+            } else {
+              throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_04] The ${ordinal(idx)} ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: ${arr[0]}. Computer says that's not nice.`)
+            }
+          })
+        } else {
+          throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_05] first argument was given as array but it contains not only range arrays. For example, at index ${culpritId} we have ${typeof culpritVal}-type value:\n${JSON.stringify(culpritVal, null, 4)}. Computer says that's very suspicious digitally.`)
         }
-        this.last()[2] = calculatedVal
+      }
+    } else if (isInt(from, { includeZero: true }) && isInt(to, { includeZero: true })) {
+      // This means two indexes were given as arguments. Business as usual.
+      if (existy(addVal) && !isStr(addVal)) {
+        throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_06] The third argument, the value to add, was given not as string but ${typeof addval}. Computer got upset about that.`)
+      }
+      // Does the incoming "from" value match the existing last element's "to" value?
+      if (
+        (this.slices !== undefined) &&
+        (from === this.last()[1])
+      ) {
+        // The incoming range is an exact extension of the last range, like
+        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
+        this.last()[1] = to
+        // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
+        if ((this.last()[2] !== null) && existy(addVal)) {
+          let calculatedVal = (
+            existy(this.last()[2]) &&
+            this.last()[2].length > 0
+          ) ? this.last()[2] + addVal : addVal
+          if (this.opts.limitToBeAddedWhitespace) {
+            calculatedVal = collapseLeadingWhitespace(calculatedVal)
+          }
+          this.last()[2] = calculatedVal
+        }
+      } else {
+        if (!this.slices) {
+          this.slices = []
+        }
+        this.slices.push(addVal !== undefined ? [
+          from,
+          to,
+          this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal) : addVal,
+        ] : [from, to])
       }
     } else {
-      if (!this.slices) {
-        this.slices = []
-      }
-      this.slices.push(addVal !== undefined ? [
-        from,
-        to,
-        this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal) : addVal,
-      ] : [from, to])
+      // Throw error
+      throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_06] "from" value, first input argument, must be a natural number or zero! Currently it's equal to: ${JSON.stringify(from, null, 4)}`)
     }
   }
 

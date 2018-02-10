@@ -49,7 +49,7 @@ import Slices from 'string-slices-array-push'
 const Slices = require('string-slices-array-push')
 let slices = new Slices()
 slices.add(1, 2)
-slices.add(2, 4)
+slices.push(2, 4) // .push is same as .add
 console.log(slices.last())
 // => [ [1, 4] ]
 slices.add(10, 20)
@@ -61,9 +61,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-slices-array-push.cjs.js` | 6&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-slices-array-push.esm.js` | 6&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-slices-array-push.umd.js` | 19&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-slices-array-push.cjs.js` | 9&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-slices-array-push.esm.js` | 9&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-slices-array-push.umd.js` | 20&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 

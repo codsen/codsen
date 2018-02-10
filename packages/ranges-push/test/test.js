@@ -61,7 +61,7 @@ test('01.03  -  ADD() - overloading', (t) => {
   t.throws(() => {
     const slices = new Slices()
     slices.add(1, 2, 'aaa', 1)
-  }, 'string-slices-array-push/Slices/add(): [THROW_ID_05] Please don\'t overload the add() method. From the 4th input argument onwards we see these redundant arguments: [\n    1\n]')
+  })
 })
 
 test('01.04  -  PUSH() - wrong inputs', (t) => {
@@ -118,6 +118,29 @@ test('01.06  -  PUSH() - overloading', (t) => {
   t.throws(() => {
     const slices = new Slices()
     slices.push(1, 2, 'aaa', 1)
+  })
+})
+
+test('01.07  -  ADD() - first argument is .current() output of ranges', (t) => {
+  t.throws(() => {
+    const slices = new Slices()
+    slices.add([[1, 2, 3]])
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.add([[1, 2, 'z', 1]])
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.add([[1, 'z']])
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.add([['z', 1]])
+  })
+  t.throws(() => {
+    const slices = new Slices()
+    slices.add([['z', 1], 1])
   })
 })
 
@@ -443,6 +466,26 @@ test('03.10  -  ADD() - adds third argument with null', (t) => {
       [5, 6],
     ],
     '03.10',
+  )
+})
+
+test('03.11  -  ADD() - pushing whole .current() output of another slices class', (t) => {
+  const slices1 = new Slices()
+  slices1.add(5, 6, ' ')
+  slices1.push(1, 10)
+
+  const slices2 = new Slices()
+  slices2.push(2, 8)
+  slices2.add(5, 12)
+
+  slices1.push(slices2.current())
+
+  t.deepEqual(
+    slices1.current(),
+    [
+      [1, 12],
+    ],
+    '03.11',
   )
 })
 
