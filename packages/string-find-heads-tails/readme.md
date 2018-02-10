@@ -111,7 +111,6 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 //      tailsStartAt: 4,
 //      tailsEndAt: 5,
 //    }]
-]
 ```
 
 **[⬆ &nbsp;back to top](#)**
