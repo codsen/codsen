@@ -214,7 +214,7 @@ function outer(originalInput1, originalReference1, opts1) {
             wrap = true; // reset it for the new key.
             if (opts.dontWrapKeys.length > 0) {
               wrap = wrap && !opts.dontWrapKeys.some(function (elem) {
-                return matcher.isMatch(key, elem);
+                return matcher.isMatch(key, elem, { caseSensitive: true });
               });
             }
             if (opts.dontWrapPaths.length > 0) {

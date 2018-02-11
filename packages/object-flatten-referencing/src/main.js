@@ -95,7 +95,8 @@ function outer(originalInput1, originalReference1, opts1) {
           if (opts.wrapGlobalFlipSwitch) {
             wrap = true // reset it for the new key.
             if (opts.dontWrapKeys.length > 0) {
-              wrap = wrap && !opts.dontWrapKeys.some(elem => matcher.isMatch(key, elem))
+              wrap = wrap && !opts.dontWrapKeys
+                .some(elem => matcher.isMatch(key, elem, { caseSensitive: true }))
             }
             if (opts.dontWrapPaths.length > 0) {
               wrap = wrap && !opts.dontWrapPaths.some(elem => elem === currentPath)

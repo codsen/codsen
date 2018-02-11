@@ -274,6 +274,26 @@ test('02.01 - defaults - objects, one level', (t) => {
     },
     '02.01.09 - mix of various wildcards, sources are plain objects',
   )
+  t.deepEqual(
+    ofr(
+      {
+        KEY1: 'val11.val12',
+        KEY2: 'val21.val22',
+      },
+      {
+        key1: 'Contact us',
+        key2: 'Tel. 0123456789',
+      },
+      {
+        dontWrapKeys: 'key*',
+      },
+    ),
+    {
+      KEY1: 'val11.val12',
+      KEY2: 'val21.val22',
+    },
+    '02.01.10 - wildcards are case sensitive since v4.3.0',
+  )
 })
 
 test('02.02 - opts.preventDoubleWrapping', (t) => {

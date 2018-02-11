@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0] - 2018-02-11
+### Changed
+- ✨ `opts.dontWrapKeys` wildcard matching is now key-sensitive. Thanks to [matcher](https://github.com/sindresorhus/matcher) release today.
+
 ## [4.2.0] - 2017-10-05
 ### Added
 - ✨ `opts.enforceStrictKeyset`. Default is `true`, but if it is set to `false`, you are allowed to pass in unrecognised keys within an options object. It's handy when reusing options objects across multiple libraries, where API is similar but not exactly the same. As a drawback, you won't be alerted if you guess the API wrongly, pass in an option that doesn't exist in particular library (but you think it does) and [check-types-mini](https://github.com/codsen/check-types-mini) detects it and throws an error.
@@ -141,3 +145,4 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 [4.0.0]: https://github.com/codsen/object-flatten-referencing/compare/v3.6.0...v4.0.0
 [4.1.0]: https://github.com/codsen/object-flatten-referencing/compare/v4.0.0...v4.1.0
 [4.2.0]: https://github.com/codsen/object-flatten-referencing/compare/v4.1.0...v4.2.0
+[4.3.0]: https://github.com/codsen/object-flatten-referencing/compare/v4.2.6...v4.3.0
