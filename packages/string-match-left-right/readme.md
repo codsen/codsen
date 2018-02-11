@@ -233,27 +233,21 @@ You can also use the callback inline:
 const res = matchRightIncl('ab      cdef', 2, 'cd', {
   trimBeforeMatching: true,
   cb: (char, theRemainderOfTheString, index) => {
-    t.is(
-      char,
-      'e',
-      '04.01.07',
-    )
-    t.is(
-      theRemainderOfTheString,
-      'ef',
-      '04.01.08',
-    )
-    t.is(
-      index,
-      10,
-      '04.01.09',
-    )
+    console.log('char = ' + char)
+    // => char = e
+
+    console.log('theRemainderOfTheString = ' + theRemainderOfTheString)
+    // => theRemainderOfTheString = ef
+
+    console.log('index = ' + index)
+    // => index = 10
+
+    // return "true" if you don't want to affect the result, or do it conditionally,
+    // adding extra rules depending on these new variables you've got above.
+    return true
   },
 })
 console.log(`res = ${JSON.stringify(res, null, 4)}`)
-// res = false,
-// because callback didn't return anything (so returned undefined), even
-// though the "cd" was matched!
 ```
 
 **[⬆ &nbsp;back to top](#)**
