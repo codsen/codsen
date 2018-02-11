@@ -2730,6 +2730,33 @@ test('09.01 - wildcards against values within object', (t) => {
     true,
     '09.01.03 - wildcards enabled',
   )
+  t.deepEqual(
+    compare(
+      { a: '1', b: 'za', c: '3' },
+      { a: '1', b: 'z*' },
+      { useWildcards: true },
+    ),
+    true,
+    '09.01.04 - with letters and wildcards',
+  )
+  t.deepEqual(
+    compare(
+      { a: '1', b: 'Za', c: '3' },
+      { a: '1', b: 'z*' },
+      { useWildcards: true },
+    ),
+    false,
+    '09.01.05 - won\'t match because it\'s now case-sensitive in wildcards too',
+  )
+  t.deepEqual(
+    compare(
+      { a: '1', b: 'Za', c: '3' },
+      { a: '1', b: 'Z*' },
+      { useWildcards: true },
+    ),
+    true,
+    '09.01.06 - won\'t match because it\'s now case-sensitive in wildcards too',
+  )
 
   t.deepEqual(
     compare(
@@ -2738,7 +2765,7 @@ test('09.01 - wildcards against values within object', (t) => {
       { useWildcards: true },
     ),
     false,
-    '09.01.04 - weird',
+    '09.01.07 - weird',
   )
   t.deepEqual(
     compare(
@@ -2747,7 +2774,7 @@ test('09.01 - wildcards against values within object', (t) => {
       { useWildcards: false },
     ),
     false,
-    '09.01.05 - weird, false anyway',
+    '09.01.08 - weird, false anyway',
   )
 })
 

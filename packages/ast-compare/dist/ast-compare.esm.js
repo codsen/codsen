@@ -118,7 +118,7 @@ function compare(bo, so, originalOpts) {
     if (opts.verboseWhenMismatches) {
       return b === s ? true : 'Given string ' + s + ' is not matched! We have ' + b + ' on the other end.';
     }
-    return opts.useWildcards ? matcher.isMatch(b, s) : b === s;
+    return opts.useWildcards ? matcher.isMatch(b, s, { caseSensitive: true }) : b === s;
   } else if (isArr$1(b) && isArr$1(s)) {
     if (opts.hungryForWhitespace && empty(s) && (!opts.matchStrictly || opts.matchStrictly && b.length === s.length)) {
       return true;
@@ -184,7 +184,7 @@ function compare(bo, so, originalOpts) {
           };
         } else // so wildcards are on and sKeys[i] contains a wildcard
           if (Object.keys(b).some(function (bKey) {
-            return matcher.isMatch(bKey, sKeys[_i]);
+            return matcher.isMatch(bKey, sKeys[_i], { caseSensitive: true });
           })) {
             // so some keys do match. Return true
             return {

@@ -92,7 +92,7 @@ function compare(bo, so, originalOpts) {
     if (opts.verboseWhenMismatches) {
       return (b === s) ? true : `Given string ${s} is not matched! We have ${b} on the other end.`
     }
-    return opts.useWildcards ? matcher.isMatch(b, s) : (b === s)
+    return opts.useWildcards ? matcher.isMatch(b, s, { caseSensitive: true }) : (b === s)
   } else if (isArr(b) && isArr(s)) {
     if (
       opts.hungryForWhitespace &&
@@ -161,7 +161,7 @@ function compare(bo, so, originalOpts) {
           }
           return `The given object has key ${sKeys[i]} which the other-one does not have.`
         } else // so wildcards are on and sKeys[i] contains a wildcard
-        if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKeys[i]))) {
+        if (Object.keys(b).some(bKey => matcher.isMatch(bKey, sKeys[i], { caseSensitive: true }))) {
           // so some keys do match. Return true
           return true
         }
