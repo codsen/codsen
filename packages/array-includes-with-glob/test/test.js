@@ -96,7 +96,23 @@ test('1.3 - wildcard, succeeds', (t) => {
       '*thing',
     ),
     true,
-    '1.3',
+    '1.3.1',
+  )
+  t.is(
+    i(
+      ['someTHING', 'anyTHING', 'everyTHING'],
+      '*thing',
+    ),
+    false,
+    '1.3.2',
+  )
+  t.is(
+    i(
+      ['someThInG', 'anytHInG', 'everyThINg'],
+      '*thing',
+    ),
+    false,
+    '1.3.3',
   )
 })
 

@@ -51,15 +51,17 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   if (isStr(stringToFind)) {
-    return input.some(val => matcher.isMatch(val, stringToFind))
+    return input.some(val => matcher.isMatch(val, stringToFind, { caseSensitive: true }))
   }
   // array then.
   if (opts.arrayVsArrayAllMustBeFound === 'any') {
     return stringToFind
-      .some(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal)))
+      .some(stringToFindVal => input
+        .some(val => matcher.isMatch(val, stringToFindVal, { caseSensitive: true })))
   }
   return stringToFind
-    .every(stringToFindVal => input.some(val => matcher.isMatch(val, stringToFindVal)))
+    .every(stringToFindVal => input
+      .some(val => matcher.isMatch(val, stringToFindVal, { caseSensitive: true })))
 }
 
 export default arrayIncludesWithGlob

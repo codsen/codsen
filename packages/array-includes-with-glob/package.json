@@ -132,23 +132,23 @@
   },
   "runkitExampleFilename": "runkit_example.js",
   "dependencies": {
-    "matcher": "^1.0.0"
+    "matcher": "^1.1.0"
   },
   "devDependencies": {
     "ava": "^0.25.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.16.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.1",
+    "rollup": "^0.55.5",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.8"
+    "uglify-es": "^3.3.10"
   }
 }

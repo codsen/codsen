@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-02-11
+### Changed
+- ✨ Up until now the [matcher.js](https://github.com/sindresorhus/matcher) which was driving the wildcard matching was not-case sensitive. Today they released case-sensitive option and we are setting it on. This will ensure the consistency in matching results.
+
 ## [2.0.0] - 2017-12-08
 ### Changed
 - ✨ Removed JS Standard and switched to raw ESLint with `airbnb-base` config. That's because ESLint is always up-to-date (unlike JS Standard which might consume half-year-old ESLint like it does now) and also because `airbnb-*` configs have more rules active. I overrode the setting for semicolons, of course.
@@ -41,3 +45,4 @@ SOLUTION: switched to Sindre Sorhus' [matcher](https://www.npmjs.com/package/mat
 [1.4.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.4.0...v1.5.0
 [2.0.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.5.4...v2.0.0
+[2.1.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.0.7...v2.1.0
