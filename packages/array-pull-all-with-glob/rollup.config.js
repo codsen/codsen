@@ -31,6 +31,8 @@ export default [
     ],
     external: [
       'matcher',
+      'check-types-mini',
+      'lodash.isplainobject',
     ],
     plugins: [
       babel(),

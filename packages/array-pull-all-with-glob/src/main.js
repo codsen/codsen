@@ -1,4 +1,6 @@
 import matcher from 'matcher'
+import checkTypes from 'check-types-mini'
+import isObj from 'lodash.isplainobject'
 
 const isArr = Array.isArray
 
@@ -11,7 +13,7 @@ const isArr = Array.isArray
  * @param  {Array} toBeRemovedArr  array of strings (might contain asterisk)
  * @return {Array}                 pulled array
  */
-function pullAllWithGlob(originalInput, originalToBeRemoved) {
+function pullAllWithGlob(originalInput, originalToBeRemoved, originalOpts = {}) {
   function existy(x) { return x != null }
   function isStr(something) { return typeof something === 'string' }
   // insurance
@@ -36,10 +38,26 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   if (!originalToBeRemoved.every(el => isStr(el))) {
     throw new Error(`array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(originalToBeRemoved, null, 4)}`)
   }
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new Error(`array-pull-all-with-glob: [THROW_ID_07] third argument, options object is not a plain object but ${Array.isArray(originalOpts) ? 'array' : typeof originalOpts}`)
+  }
+
+  let opts
+  const defaults = {
+    caseSensitive: true,
+  }
+  if (originalOpts === null) {
+    opts = Object.assign({}, defaults)
+  } else {
+    opts = Object.assign({}, defaults, originalOpts)
+  }
+
+  // the check:
+  checkTypes(opts, defaults, { msg: 'newLibrary/yourFunction(): [THROW_ID_08]', optsVarName: 'opts' })
 
   return Array.from(originalInput)
     .filter(originalVal => !originalToBeRemoved
-      .some(remVal => matcher.isMatch(originalVal, remVal)))
+      .some(remVal => matcher.isMatch(originalVal, remVal, { caseSensitive: opts.caseSensitive })))
 }
 
 export default pullAllWithGlob

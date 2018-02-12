@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2018-02-11
+### Added
+- ✨ `opts.caseSensitive`, directly controlling today's new released [matcher's](https://www.npmjs.com/package/matcher) same feature. Case sensitive is on by default now, but you can turn it off if you're dealing with file system stuff for example. It's best to be case-insensitive in those cases.
+
+Also, I set up [check-types-mini](https://github.com/codsen/check-types-mini) to patrol the opts' types. Just in case consumers misbehave.
+
 ## [4.1.0] - 2018-01-21
 ### Added
 - ✨ Shortened the error source function paths in error messages. There's no point to report the name of the main function when there's only one function. The package name will suffice.
@@ -40,3 +46,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [3.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v3.1.0...v4.0.0
 [4.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.0.0...v4.1.0
+[4.2.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.1.0...v4.2.0

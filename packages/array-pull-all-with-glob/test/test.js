@@ -60,14 +60,23 @@ test('1.5 - no glob, deletes last remaining thing', (t) => {
   )
 })
 
-test('1.6 - no glob, case insensitive', (t) => {
+test('1.6 - no glob, case sensitive', (t) => {
   t.deepEqual(
     pull(
       ['One', 'two', 'Three'],
       ['one', 'three'],
     ),
-    ['two'],
+    ['One', 'two', 'Three'],
     '1.6.1 - default',
+  )
+  t.deepEqual(
+    pull(
+      ['One', 'two', 'Three'],
+      ['one', 'three'],
+      { caseSensitive: false },
+    ),
+    ['two'],
+    '1.6.2 - opts.caseSensitive',
   )
 })
 
@@ -82,7 +91,24 @@ test('2.1 - glob, normal use', (t) => {
       ['module-*', 'something else', 'element*'],
     ),
     ['only this left'],
-    '2.1',
+    '2.1.1',
+  )
+  t.deepEqual(
+    pull(
+      ['Module-1', 'only this left', 'module-2', 'module-3', 'elements', 'elemental'],
+      ['module-*', 'something else', 'element*'],
+    ),
+    ['Module-1', 'only this left'],
+    '2.1.2',
+  )
+  t.deepEqual(
+    pull(
+      ['Module-1', 'only this left', 'module-2', 'module-3', 'elements', 'elemental'],
+      ['module-*', 'something else', 'element*'],
+      { caseSensitive: false },
+    ),
+    ['only this left'],
+    '2.1.3',
   )
 })
 
@@ -198,6 +224,51 @@ test('3.5 - wrong inputs - throws', (t) => {
   })
   t.throws(() => {
     pull(['a', 'b'], ['b', 1, 'c'])
+  })
+})
+
+test('3.6 - missing one input - throws', (t) => {
+  t.throws(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      1, // not a plain obj
+    )
+  })
+  t.throws(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      true, // not a plain obj
+    )
+  })
+  t.throws(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      [], // array - sneaky!
+    )
+  })
+  t.notThrows(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      null, // null is fine
+    )
+  })
+  t.notThrows(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      {}, // empty opts
+    )
+  })
+  t.throws(() => {
+    pull(
+      ['one', 'two', 'three'],
+      ['one', 'three'],
+      { aaa: true }, // unrecognised key
+    )
   })
 })
 

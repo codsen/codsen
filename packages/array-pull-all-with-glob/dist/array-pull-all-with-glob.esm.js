@@ -1,4 +1,6 @@
 import matcher from 'matcher';
+import checkTypes from 'check-types-mini';
+import isObj from 'lodash.isplainobject';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -14,6 +16,8 @@ var isArr = Array.isArray;
  * @return {Array}                 pulled array
  */
 function pullAllWithGlob(originalInput, originalToBeRemoved) {
+  var originalOpts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
   function existy(x) {
     return x != null;
   }
@@ -46,10 +50,26 @@ function pullAllWithGlob(originalInput, originalToBeRemoved) {
   })) {
     throw new Error('array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ' + JSON.stringify(originalToBeRemoved, null, 4));
   }
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new Error('array-pull-all-with-glob: [THROW_ID_07] third argument, options object is not a plain object but ' + (Array.isArray(originalOpts) ? 'array' : typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)));
+  }
+
+  var opts = void 0;
+  var defaults = {
+    caseSensitive: true
+  };
+  if (originalOpts === null) {
+    opts = Object.assign({}, defaults);
+  } else {
+    opts = Object.assign({}, defaults, originalOpts);
+  }
+
+  // the check:
+  checkTypes(opts, defaults, { msg: 'newLibrary/yourFunction(): [THROW_ID_08]', optsVarName: 'opts' });
 
   return Array.from(originalInput).filter(function (originalVal) {
     return !originalToBeRemoved.some(function (remVal) {
-      return matcher.isMatch(originalVal, remVal);
+      return matcher.isMatch(originalVal, remVal, { caseSensitive: opts.caseSensitive });
     });
   });
 }

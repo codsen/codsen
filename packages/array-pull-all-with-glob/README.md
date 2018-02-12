@@ -85,14 +85,35 @@ pullAllWithGlob (
 
 ### API - Input
 
-Input argument   | Type     | Obligatory? | Description
------------------|----------|-------------|--------------------
-`sourceArray`    | Array    | yes         | Source array of strings
-`removeThese`    | Array    | yes         | Array of strings to remove from the source array
+Input argument   | Type         | Obligatory? | Description
+-----------------|--------------|-------------|--------------------
+`sourceArray`    | Array        | yes         | Source array of strings
+`removeThese`    | Array        | yes         | Array of strings to remove from the source array
+`otps`           | Plain object | no          | An Optional Options Object. See its API below.
 
-None of the input arguments are mutated. That's checked by unit tests from group 4.x
+By the way, none of the input arguments are mutated. That's checked by unit tests from group 4.x
 
 **[⬆ &nbsp;back to top](#)**
+
+### An Optional Options Object
+
+Type: `object` - an Optional Options Object.
+
+`options` object's key         | Type     | Default     | Description
+-------------------------------|----------|-------------|----------------------
+{                              |          |             |
+`caseSensitive`                | Boolean  | `true`      | Are comparisons case-sensitive? Default answer is `yes`, but you can override it to `no` using this.
+}                              |          |             |
+
+**Here are all defaults in one place for copying**:
+
+```js
+{
+  caseSensitive: true,
+}
+```
+
+When unused, Optional Options Object can be also passed as a `null` or `undefined` value.
 
 ### API - Output
 
