@@ -60,20 +60,20 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
 
   if (isStr(stringToFind)) {
     return input.some(function (val) {
-      return matcher.isMatch(val, stringToFind);
+      return matcher.isMatch(val, stringToFind, { caseSensitive: true });
     });
   }
   // array then.
   if (opts.arrayVsArrayAllMustBeFound === 'any') {
     return stringToFind.some(function (stringToFindVal) {
       return input.some(function (val) {
-        return matcher.isMatch(val, stringToFindVal);
+        return matcher.isMatch(val, stringToFindVal, { caseSensitive: true });
       });
     });
   }
   return stringToFind.every(function (stringToFindVal) {
     return input.some(function (val) {
-      return matcher.isMatch(val, stringToFindVal);
+      return matcher.isMatch(val, stringToFindVal, { caseSensitive: true });
     });
   });
 }
