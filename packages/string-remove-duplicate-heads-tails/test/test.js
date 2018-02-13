@@ -580,7 +580,18 @@ test('02.28 - removing empty head/tail chunks from around the text #3 (touches b
       },
     ),
     '(((some))) text',
-    '02.28',
+    '02.28.01',
+  )
+  t.deepEqual(
+    rem(
+      '\t((())) (((some))) text ((()))',
+      {
+        heads: ['??', '((('],
+        tails: ['!!', ')))'],
+      },
+    ),
+    '(((some))) text',
+    '02.28.02 - tab would not get trimmed, but since it was standing in the way of empty heads/tails, it was removed',
   )
 })
 
@@ -593,7 +604,32 @@ test('02.29 - leading letter ruins the removal from the front', (t) => {
         tails: ['!!', ')))'],
       },
     ),
-    'a ((())) (((some))) text',
+    '\ta ((())) (((some))) text',
     '02.29 - because of the "a" the removal is terminated until trailing chunks met',
+  )
+  t.deepEqual(
+    rem(
+      ' a ((())) (((some))) text ((()))',
+      {
+        heads: ['??', '((('],
+        tails: ['!!', ')))'],
+      },
+    ),
+    'a ((())) (((some))) text',
+    '02.29.02',
+  )
+})
+
+test('02.30 - leading line break', (t) => {
+  t.deepEqual(
+    rem(
+      'aaa\n',
+      {
+        heads: ['??', '((('],
+        tails: ['!!', ')))'],
+      },
+    ),
+    'aaa\n',
+    '02.30',
   )
 })
