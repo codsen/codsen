@@ -84,7 +84,7 @@ I also tested it with emoji, it copes fine.
 
 API is simple: `string` in, `string` out.
 
-You can pass non-strings too (including `undefined`), they will be returned and no action will be taken. You could also call it with no arguments at all - the API is deliberately friendly. After all, this function will be used within other code and it would be tedious to check are values always `string`s.
+You can pass non-strings too (including `undefined`), they will be returned and no action will be taken. You could also call it with no arguments at all — the API is deliberately friendly. After all, this function will be used within other code and it would be tedious to check are values always `string`s.
 
 **[⬆ &nbsp;back to top](#)**
 
