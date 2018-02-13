@@ -139,7 +139,8 @@
     "lodash.isplainobject": "^4.0.6",
     "string-match-left-right": "^3.0.3",
     "string-replace-slices-array": "^2.0.13",
-    "string-slices-array-push": "^2.5.0"
+    "string-slices-array-push": "^2.5.0",
+    "string-trim-spaces-only": "^1.0.1"
   },
   "devDependencies": {
     "ava": "*",

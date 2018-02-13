@@ -36,6 +36,7 @@ export default [
       'string-match-left-right',
       'string-replace-slices-array',
       'string-slices-array-push',
+      'string-trim-spaces-only',
     ],
     plugins: [
       babel(),

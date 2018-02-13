@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-02-14
+### Added
+- ✨ Trimming now touches only spaces. Line breaks, tabs and non-breaking spaces are not touched.
+
 ## [2.0.0] - 2018-02-13
 ### Changed
 - ✨ Rewrote the whole thing. Added more unit tests.
@@ -12,4 +16,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
+[2.1.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v1.0.0...v2.0.0

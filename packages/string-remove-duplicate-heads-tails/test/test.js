@@ -191,7 +191,7 @@ test('02.07 - ends with tails, doesn\'t start with heads', (t) => {
 test('02.08 - starts with heads, doesn\'t end with tails', (t) => {
   t.deepEqual(
     rem(
-      '{{ first_name }}!',
+      '  {{ first_name }}!  ',
       {
         heads: ['%%-', '{{'],
         tails: ['-%%', '}}'],
@@ -205,7 +205,7 @@ test('02.08 - starts with heads, doesn\'t end with tails', (t) => {
 test('02.09 - properly wrapped, heads/tails in array, matched', (t) => {
   t.deepEqual(
     rem(
-      '{{ first_name }}',
+      '  {{ first_name }}  ',
       {
         heads: ['%%-', '{{'],
         tails: ['-%%', '}}'],
@@ -219,7 +219,7 @@ test('02.09 - properly wrapped, heads/tails in array, matched', (t) => {
 test('02.10 - starts with heads, doesn\'t end with tails', (t) => {
   t.deepEqual(
     rem(
-      '{{ a }}{{ b }}',
+      '   {{ a }}{{ b }}   ',
       {
         heads: ['%%-', '{{'],
         tails: ['-%%', '}}'],
@@ -289,7 +289,7 @@ test('02.14 - empty variable with text both sides', (t) => {
 test('02.15 - heads/tails in opposite order', (t) => {
   t.deepEqual(
     rem(
-      'zzz }}{{ yyy',
+      ' zzz }}{{ yyy',
       {
         heads: ['%%-', '{{'],
         tails: ['-%%', '}}'],
@@ -534,7 +534,7 @@ test('02.26 - removing empty head/tail chunks from around the text #1', (t) => {
   )
   t.deepEqual(
     rem(
-      '\t\t ((( )))\t \t((( \n\n )))\n \t (((\n )))\t\ta((()))((()))b\t\t (((\n \n)))\n (((\n )))\t \t(((\t\t )))  \t',
+      ' ((( )))     (((    )))     (((  )))    a((()))((()))b     (((   )))  (((  )))     (((     )))  ',
       {
         heads: ['??', '((('],
         tails: ['!!', ')))'],

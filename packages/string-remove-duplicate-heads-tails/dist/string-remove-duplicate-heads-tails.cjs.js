@@ -8,6 +8,7 @@ var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringMatchLeftRight = require('string-match-left-right');
 var Slices = _interopDefault(require('string-slices-array-push'));
 var repl = _interopDefault(require('string-replace-slices-array'));
+var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -153,7 +154,7 @@ function removeDuplicateHeadsTails(str) {
   }
   // action
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = delLeadingEmptyHeadTailChunks(str, opts).trim();
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts));
   }
 
   // delete trailing empty head-tail clumps as in "a ((()))((()))"
@@ -188,14 +189,14 @@ function removeDuplicateHeadsTails(str) {
   }
   // action
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = delTrailingEmptyHeadTailChunks(str, opts).trim();
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts));
   }
 
   //                      E A R L Y    E N D I N G
 
   if (!stringMatchLeftRight.matchRightIncl(str, 0, opts.heads, { trimBeforeMatching: true }) || !stringMatchLeftRight.matchLeftIncl(str, str.length - 1, opts.tails, { trimBeforeMatching: true })) {
     // if (DEBUG) { console.log(`\u001b[${33}m${'193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye.'}\u001b[${39}m`) }
-    return str.trim();
+    return trimSpaces(str);
   }
 
   //                             P A R T   II

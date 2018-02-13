@@ -6,6 +6,7 @@ import arrayiffy from 'arrayiffy-if-string'
 import { matchLeftIncl, matchRightIncl } from 'string-match-left-right'
 import Slices from 'string-slices-array-push'
 import repl from 'string-replace-slices-array'
+import trimSpaces from 'string-trim-spaces-only'
 
 function removeDuplicateHeadsTails(str, originalOpts = {}) {
   //
@@ -142,7 +143,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
   // action
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = delLeadingEmptyHeadTailChunks(str, opts).trim()
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts))
   }
 
   // delete trailing empty head-tail clumps as in "a ((()))((()))"
@@ -177,7 +178,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
   // action
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = delTrailingEmptyHeadTailChunks(str, opts).trim()
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts))
   }
 
   //                      E A R L Y    E N D I N G
@@ -187,7 +188,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     !matchLeftIncl(str, str.length - 1, opts.tails, { trimBeforeMatching: true })
   ) {
     // if (DEBUG) { console.log(`\u001b[${33}m${'193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye.'}\u001b[${39}m`) }
-    return str.trim()
+    return trimSpaces(str)
   }
 
   //                             P A R T   II
