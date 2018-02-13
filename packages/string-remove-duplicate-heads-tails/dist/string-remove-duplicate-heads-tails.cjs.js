@@ -42,7 +42,7 @@ function removeDuplicateHeadsTails(str) {
     if (!arrayiffy(originalOpts.heads).every(function (val) {
       return isStr(val);
     })) {
-      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.heads contains elements which are not string-type!');
+      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!');
     } else if (isStr(originalOpts.heads)) {
       originalOpts.heads = arrayiffy(originalOpts.heads);
     }
@@ -51,7 +51,7 @@ function removeDuplicateHeadsTails(str) {
     if (!arrayiffy(originalOpts.tails).every(function (val) {
       return isStr(val);
     })) {
-      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_06] The opts.tails contains elements which are not string-type!');
+      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!');
     } else if (isStr(originalOpts.tails)) {
       originalOpts.tails = arrayiffy(originalOpts.tails);
     }
@@ -69,7 +69,7 @@ function removeDuplicateHeadsTails(str) {
     tails: ['}}']
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'string-remove-duplicate-heads-tails: [THROW_ID_04*]' });
+  checkTypes(opts, defaults, { msg: 'string-remove-duplicate-heads-tails: [THROW_ID_06*]' });
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map(function (el) {
