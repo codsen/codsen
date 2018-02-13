@@ -33,7 +33,9 @@ export default [
       'arrayiffy-if-string',
       'check-types-mini',
       'lodash.isplainobject',
-      'string-find-heads-tails',
+      'string-match-left-right',
+      'string-replace-slices-array',
+      'string-slices-array-push',
     ],
     plugins: [
       babel(),

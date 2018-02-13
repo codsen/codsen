@@ -1,7 +1,7 @@
 {
   "name": "string-remove-duplicate-heads-tails",
   "version": "1.0.11",
-  "description": "Detect and remove erroneous heads and tails that wrap strings",
+  "description": "Detect and (recusrively) remove head and tail wrappings around the input string",
   "license": "MIT",
   "engines": {
     "node": ">=6",
@@ -135,25 +135,27 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "^3.0.6",
-    "check-types-mini": "^3.1.0",
+    "check-types-mini": "^3.1.2",
     "lodash.isplainobject": "^4.0.6",
-    "string-find-heads-tails": "^3.5.3"
+    "string-match-left-right": "^3.0.3",
+    "string-replace-slices-array": "^2.0.13",
+    "string-slices-array-push": "^2.5.0"
   },
   "devDependencies": {
     "ava": "*",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.16.0",
+    "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-ava": "^4.5.0",
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.1",
+    "rollup": "^0.55.5",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.10"
   }
 }

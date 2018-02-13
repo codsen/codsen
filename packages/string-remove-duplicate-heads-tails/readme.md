@@ -2,7 +2,7 @@
 
 <a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
 
-> Detect and remove erroneous heads and tails that wrap strings
+> Detect and (recusrively) remove head and tail wrappings around the input string
 
 [![Minimum Node version required][node-img]][node-url]
 [![Link to npm page][npm-img]][npm-url]
@@ -48,8 +48,8 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 4&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 4&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 19&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 18&nbsp;KB
 **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-duplicate-heads-tails.umd.js` | 31&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
@@ -64,17 +64,28 @@ For example:
 'Hi {{ first_name }}!'
 ```
 
-This library detects and deletes redundant heads and tails wrapped around the input string:
+This library detects and deletes redundant heads and tails wrapped around the **whole** input string:
 
 ```js
 '{{ Hi {{ first_name }}! }}' => 'Hi {{ first_name }}!'
 ```
 
-But it's also smart and detects legit heads and tails at the edges of string:
+But it's also smart and detects **legit** heads and tails at the edges of string:
+
+`{{ first_name }} {{ last_name }}` is not turned into `first_name }} {{ last_name`.
+
+That's what this library is mainly about — being able to detect, are outer heads and tails currently wrapping **a single chunk** of text, or are those heads and tails from **separate chunks**.
+
+Also, this lib removes the leading/trailing empty clumps of empty heads/tails, with or without empty space:
 
 ```js
-'{{ first_name }} {{ last_name }}' is not turned into 'first_name }} {{ last_name'
+// without whitespace:
+`{{}}{{}} {{}}{{}} {{}}{{}} a {{}}{{}}` => `a`
+// with whitespace:
+`{{   \n   }}   \t   a   \n\n {{ \n\n \n\n   }}   \t\t` => `a`
 ```
+
+Obviously, you can configure `heads` and `tails` to be whatever you like, single string or array of them. Also, the length of the different heads in your given set can be different.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -91,6 +102,8 @@ Input argument           | Type           | Obligatory? | Description
 `str`                    | String         | yes         | Source string upon which to perform the operation
 `opts`                   | Plain object   | no          | Optional Options Object, see below for its API
 
+If input string is not given, it will `throw`.
+
 **[⬆ &nbsp;back to top](#)**
 
 ### An Optional Options Object
@@ -98,9 +111,11 @@ Input argument           | Type           | Obligatory? | Description
 Optional Options Object's key | Type of its value                                                  | Default    | Description
 ------------------------------|--------------------------------------------------------------------|------------|----------------------
 {                             |                                                                    |            |
-`heads`                       | Not empty **string** or **array** of one or more not empty strings | `[ '{{' ]` | Put here the way you mark the beginnings of your variables in a string.
-`tails`                       | Not empty **string** or **array** of one or more not empty strings | `[ '}}' ]` | Put here the way you mark the endings of your variables in a string.
+`heads`                       | Non-empty **string** or **array** of one or more non-empty strings | `['{{']` | Put here the way you mark the beginnings of your variables in a string.
+`tails`                       | Non-empty **string** or **array** of one or more non-empty strings | `['}}']` | Put here the way you mark the endings of your variables in a string.
 }                             |                                                                    |            |
+
+These double curlies are default for [Nunjucks](https://mozilla.github.io/nunjucks/)/Jinja and many other templating languages. Nunjucks is my favourite.
 
 **[⬆ &nbsp;back to top](#)**
 
