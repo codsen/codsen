@@ -47,7 +47,7 @@ var Slices = function () {
     };
     var opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
-      msg: 'string-slices-array-push: [THROW_ID_00*]'
+      msg: 'string-slices-array-push: [THROW_ID_02*]'
     });
     // so it's correct, let's get it in:
     this.opts = opts;
@@ -72,7 +72,7 @@ var Slices = function () {
       }
 
       if (etc.length > 0) {
-        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_01] Please don\'t overload the add() method. From the 4th input argument onwards we see these redundant arguments: ' + JSON.stringify(etc, null, 4));
+        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_03] Please don\'t overload the add() method. From the 4th input argument onwards we see these redundant arguments: ' + JSON.stringify(etc, null, 4));
       }
       var from = isNumStr(originalFrom, { includeZero: true }) ? parseInt(originalFrom, 10) : originalFrom;
       var to = isNumStr(originalTo, { includeZero: true }) ? parseInt(originalTo, 10) : originalTo;
@@ -103,23 +103,23 @@ var Slices = function () {
                     // push it into slices range
                     _this.add.apply(_this, _toConsumableArray(arr));
                   } else {
-                    throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_02] The ' + ordinal(idx) + ' ranges array\'s "to add" value is not string but ' + _typeof(arr[2]) + '! It\'s equal to: ' + arr[2] + '. Computer says to tell you it\'s very bad.');
+                    throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_04] The ' + ordinal(idx) + ' ranges array\'s "to add" value is not string but ' + _typeof(arr[2]) + '! It\'s equal to: ' + arr[2] + '.');
                   }
                 } else {
-                  throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_03] The ' + ordinal(idx) + ' ranges array\'s ending range index, an element at its first index, is not a natural number! It\'s equal to: ' + arr[1] + '. Computer doesn\'t like it at all.');
+                  throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_05] The ' + ordinal(idx) + ' ranges array\'s ending range index, an element at its first index, is not a natural number! It\'s equal to: ' + arr[1] + '.');
                 }
               } else {
-                throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_04] The ' + ordinal(idx) + ' ranges array\'s starting range index, an element at its zero\'th index, is not a natural number! It\'s equal to: ' + arr[0] + '. Computer says that\'s not nice.');
+                throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_06] The ' + ordinal(idx) + ' ranges array\'s starting range index, an element at its zero\'th index, is not a natural number! It\'s equal to: ' + arr[0] + '.');
               }
             });
           } else {
-            throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_05] first argument was given as array but it contains not only range arrays. For example, at index ' + culpritId + ' we have ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof(culpritVal)) + '-type value:\n' + JSON.stringify(culpritVal, null, 4) + '. Computer says that\'s very suspicious digitally.');
+            throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ' + culpritId + ' we have ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof(culpritVal)) + '-type value:\n' + JSON.stringify(culpritVal, null, 4) + '.');
           }
         }
       } else if (isInt(from, { includeZero: true }) && isInt(to, { includeZero: true })) {
         // This means two indexes were given as arguments. Business as usual.
         if (existy(addVal) && !isStr(addVal)) {
-          throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_06] The third argument, the value to add, was given not as string but ' + (typeof addval === 'undefined' ? 'undefined' : _typeof(addval)) + '. Computer got upset about that.');
+          throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ' + (typeof addVal === 'undefined' ? 'undefined' : _typeof(addVal)) + ', equal to:\n' + JSON.stringify(addVal, null, 4));
         }
         // Does the incoming "from" value match the existing last element's "to" value?
         if (this.slices !== undefined && from === this.last()[1]) {
@@ -142,7 +142,7 @@ var Slices = function () {
         }
       } else {
         // Throw error
-        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_06] "from" value, first input argument, must be a natural number or zero! Currently it\'s equal to: ' + JSON.stringify(from, null, 4));
+        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_09] "from" value, first input argument, must be a natural number or zero! Currently it\'s equal to: ' + JSON.stringify(from, null, 4));
       }
     }
 

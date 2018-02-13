@@ -164,7 +164,7 @@ test('02.01  -  ADD() - adds two non-overlapping ranges', (t) => {
 
 test('02.02  -  ADD() - adds two overlapping ranges', (t) => {
   const slices = new Slices()
-  slices.add(0, 5)
+  slices.add(0, 5, undefined)
   slices.add(3, 9)
   t.deepEqual(
     slices.current(),
