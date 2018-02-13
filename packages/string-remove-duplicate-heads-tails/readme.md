@@ -72,7 +72,7 @@ This library detects and deletes redundant heads and tails wrapped around the **
 
 But it's also smart and detects **legit** heads and tails at the edges of string:
 
-`{{ first_name }} {{ last_name }}` is not turned into `first_name }} {{ last_name`.
+:exclamation:  `{{ first_name }} {{ last_name }}` is not turned into `first_name }} {{ last_name`.
 
 That's what this library is mainly about — being able to detect, are outer heads and tails currently wrapping **a single chunk** of text, or are those heads and tails from **separate chunks**.
 
