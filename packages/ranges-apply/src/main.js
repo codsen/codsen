@@ -19,19 +19,26 @@ function replaceSlicesArr(str, rangesArr) {
   if (!isArr(rangesArr)) {
     throw new TypeError(`string-replace-slices-array/replaceSlicesArr(): [THROW_ID_03] second input argument must be an array! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`)
   }
+  if (
+    isArr(rangesArr) &&
+    (isInt(rangesArr[0], { includeZero: true }) || isNumStr(rangesArr[0], { includeZero: true })) &&
+    (isInt(rangesArr[1], { includeZero: true }) || isNumStr(rangesArr[1], { includeZero: true }))
+  ) {
+    rangesArr = [rangesArr]
+  }
   rangesArr.forEach((el, i) => {
     if (!isArr(el)) {
       throw new TypeError(`string-replace-slices-array/replaceSlicesArr(): [THROW_ID_05] ranges array, second input arg., has ${ordinal(i)} element not an array: ${JSON.stringify(el, null, 4)}, which is ${typeof el}`)
     }
     if (!isInt(el[0], { includeZero: true })) {
-      if (isNumStr(el[0])) {
+      if (isNumStr(el[0], { includeZero: true })) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10)
       } else {
         throw new TypeError(`string-replace-slices-array/replaceSlicesArr(): [THROW_ID_06] ranges array, second input arg. has ${ordinal(i)} element, array [${el[0]},${el[1]}]. That array has first element not an integer, but ${typeof el[0]}, equal to: ${JSON.stringify(el[0], null, 4)}. Computer doesn't like this.`)
       }
     }
     if (!isInt(el[1], { includeZero: true })) {
-      if (isNumStr(el[1])) {
+      if (isNumStr(el[1], { includeZero: true })) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10)
       } else {
         throw new TypeError(`string-replace-slices-array/replaceSlicesArr(): [THROW_ID_07] ranges array, second input arg. has ${ordinal(i)} element, array [${el[0]},${el[1]}]. That array has second element not an integer, but ${typeof el[1]}, equal to: ${JSON.stringify(el[1], null, 4)}. Computer doesn't like this.`)

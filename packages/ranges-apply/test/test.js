@@ -187,7 +187,15 @@ test('02.07 - replace with ending index zero', (t) => {
       ],
     ),
     'aaa bbb ccc',
-    '02.07 - both from and to indexes are zeros, because we\'re adding content in front',
+    '02.07.01 - both from and to indexes are zeros, because we\'re adding content in front',
+  )
+  t.deepEqual(
+    repl(
+      str,
+      [0, 0, 'aaa '],
+    ),
+    'aaa bbb ccc',
+    '02.07.02 - single range, put straight into argument',
   )
 })
 
@@ -262,7 +270,15 @@ test('03.01 - basic replacement', (t) => {
       ],
     ),
     'aaa bbb ccc',
-    '03.01',
+    '03.01.01',
+  )
+  t.deepEqual(
+    repl(
+      'aaa  ccc',
+      [4, 4, 'bbb'],
+    ),
+    'aaa bbb ccc',
+    '03.01.02',
   )
 })
 
@@ -292,6 +308,14 @@ test('03.03 - null in replacement op - does nothing', (t) => {
       ],
     ),
     'aaa  ccc',
-    '03.03',
+    '03.03.01',
+  )
+  t.deepEqual(
+    repl(
+      'aaa  ccc',
+      [4, 4, null],
+    ),
+    'aaa  ccc',
+    '03.03.02',
   )
 })

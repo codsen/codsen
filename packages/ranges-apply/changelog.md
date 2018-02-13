@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-02-13
+### Added
+- ✨ Now accepts a single range as well, not only array of ranges.
+
 ## [2.0.0] - 2017-11-02
 ### Added
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
@@ -33,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
+[2.1.0]: https://github.com/codsen/string-replace-slices-array/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.4.0...v2.0.0
 [1.4.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/codsen/string-replace-slices-array/compare/v1.2.0...v1.3.0
