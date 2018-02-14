@@ -121,7 +121,7 @@ These double curlies are default for [Nunjucks](https://mozilla.github.io/nunjuc
 
 ### API - Output
 
-Returns a string.
+Returns a string
 
 ## Contributing
 
