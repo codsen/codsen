@@ -1,189 +1,456 @@
-import typ from 'type-detect';
 import clone from 'lodash.clonedeep';
-import includes from 'lodash.includes';
 import traverse from 'ast-monkey-traverse';
-import search from 'str-indexes-of-plus';
-import strLen from 'string-length';
-import spliceStr from 'splice-string';
-import slice from 'string-slice';
 import matcher from 'matcher';
 import objectPath from 'object-path';
 import checkTypes from 'check-types-mini';
 import arrayiffyIfString from 'arrayiffy-if-string';
 import strFindHeadsTails from 'string-find-heads-tails';
-import { nativeToUnicode } from 'string-convert-indexes';
-import isEmpty from 'posthtml-ast-is-empty';
-import trim from 'lodash.trim';
+import get from 'posthtml-ast-get-values-by-key';
+import Slices from 'string-slices-array-push';
+import replaceSlicesArr from 'string-replace-slices-array';
+import isObj from 'lodash.isplainobject';
+import removeDuplicateHeadsTails from 'string-remove-duplicate-heads-tails';
 
-/* eslint padded-blocks: 0, no-param-reassign:0, no-loop-func:0 */
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-function existy$1(x) {
-  return x != null;
-}
+/* eslint max-len:0 */
 
-function isStr$1(something) {
-  return typ(something) === 'string';
-}
+// const DEBUG = 0
 
-function findLastInArray(array, val) {
-  var res = null;
-  if (!existy$1(val)) {
-    return res;
-  }
-  array.forEach(function (el, i) {
-    if (array[i] === val) {
-      res = i;
-    }
-  });
-  return res;
-}
-
-// This function consumes a string, a set of heads and tails, and returns an
-// array of substrings between each head and tail.
-// For example,
-// some text %%_var1_%% more text %%_var2_%%
-// would yield:
-// [ "var1", "var2" ]
-//
-// since v.1.1 str can be equal to heads or tails - there won't be any results
-// though (result will be empty array)
-function extractVarsFromString(str, heads, tails) {
-  // console.log(`--------------------\nstr = ${JSON.stringify(str, null, 4)}`)
-  // console.log(`heads = ${JSON.stringify(heads, null, 4)}`)
-  // console.log(`tails = ${JSON.stringify(tails, null, 4)}`)
-  if (arguments.length === 0) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_01] inputs missing!');
-  }
-  var res = [];
-  if (typ(str) !== 'string') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_02] first arg must be string-type. Currently it\'s: ' + typ(str));
-  }
-  if (heads === undefined) {
-    heads = ['%%_'];
-  }
-  if (tails === undefined) {
-    tails = ['_%%'];
-  }
-  if (typ(heads) !== 'string' && typ(heads) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_03] second arg must be a string or an array of strings. Currently it\'s: ' + typ(heads));
-  }
-  if (typ(tails) !== 'string' && typ(tails) !== 'Array') {
-    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_04] third arg must be a string or an array of strings. Currently it\'s: ' + typ(tails));
-  }
-  heads = arrayiffyIfString(clone(heads));
-  tails = arrayiffyIfString(clone(tails));
-  if (includes(heads, str) || includes(tails, str) || str.length === 0) {
-    return [];
-  }
-
-  // var foundHeads = search(str, heads)
-  // var foundTails = search(str, tails)
-  var foundHeads = heads.reduce(function (acc, val) {
-    return acc.concat(search(str, val));
-  }, []);
-
-  var foundTails = tails.reduce(function (acc, val) {
-    return acc.concat(search(str, val));
-  }, []);
-
-  if (foundHeads.length !== foundTails.length && !includes(heads, str) && !includes(tails, str)) {
-    throw new Error('json-variables/util.js/extractVarsFromString(): [THROW_ID_05] Mismatching heads and tails in the input:\n' + str);
-  }
-
-  var to = void 0;
-  var from = void 0;
-  var currentHeadLength = void 0;
-
-  var _loop = function _loop(i, len) {
-    heads.forEach(function (el) {
-      if (slice(str, foundHeads[i]).startsWith(el)) {
-        currentHeadLength = strLen(el);
-      }
-    });
-    from = foundHeads[i] + currentHeadLength;
-    to = foundTails[i];
-    res.push(trim(slice(str, from, to)));
-  };
-
-  for (var i = 0, len = foundHeads.length; i < len; i++) {
-    _loop(i, len);
-  }
-  return res;
-}
-
-// accepts array, where elements are arrays, containing integers or null.
-// for example:
-// [ [1, 3], [5, null], [null, 16] ]
-//
-// it's for internal use, so there is no input type validation
-function fixOffset(whatever, position, amount) {
-  whatever = traverse(whatever, function (key, val) {
-    var current = existy$1(val) ? val : key;
-    if (val === undefined && typeof key === 'number') {
-      if (existy$1(amount) && amount !== 0 && key > position) {
-        return key + amount;
-      }
-    }
-    return current;
-  });
-  return whatever;
-}
-
-// extracts all the characters from the front of a string until finds "." or "[".
-function front(str) {
-  if (!isStr$1(str)) {
-    return str;
-  }
-  return existy$1(str.match(/\b[^.[]+/)) ? str.match(/\b[^.[]+/)[0] : '';
-}
-
-// splits object-path notation into array: "aaa.bbb[ccc]" => ["aaa", "bbb", "ccc"]
-function splitObjectPath(str) {
-  // console.log('str = ' + JSON.stringify(str, null, 4))
-  var re = /\s*[[.*\]]\s*/;
-  if (!isStr$1(str)) {
-    return str;
-  }
-  var res = str.split(re).filter(function (n) {
-    return existy$1(n) && n.length > 0;
-  }).map(Function.prototype.call, String.prototype.trim);
-  // console.log('res = ' + JSON.stringify(res, null, 4))
-  return res;
-}
-
-/* eslint padded-blocks: 0, prefer-destructuring:0, no-loop-func:0 */
-
-// tap util f's directly
 var isArr = Array.isArray;
 var has = Object.prototype.hasOwnProperty;
 
+// -----------------------------------------------------------------------------
+//                       H E L P E R   F U N C T I O N S
+// -----------------------------------------------------------------------------
+
 function isStr(something) {
-  return typ(something) === 'string';
+  return typeof something === 'string';
 }
-function isObj(something) {
-  return typ(something) === 'Object';
+function isNum(something) {
+  return typeof something === 'number';
+}
+function isBool(something) {
+  return typeof something === 'boolean';
+}
+function isNull(something) {
+  return something === null;
 }
 function existy(x) {
   return x != null;
 }
-function notUndef(x) {
-  return x !== undefined;
+function trimIfString(something) {
+  return isStr(something) ? something.trim() : something;
 }
+function getTopmostKey(str) {
+  if (typeof str === 'string' && str.length > 0 && str.indexOf('.') !== -1) {
+    for (var i = 0, len = str.length; i < len; i++) {
+      if (str[i] === '.') {
+        return str.slice(0, i);
+      }
+    }
+  }
+  return str;
+}
+function withoutTopmostKey(str) {
+  if (typeof str === 'string' && str.length > 0 && str.indexOf('.') !== -1) {
+    for (var i = 0, len = str.length; i < len; i++) {
+      if (str[i] === '.') {
+        return str.slice(i + 1);
+      }
+    }
+  }
+  return str;
+}
+function goLevelUp(str) {
+  if (typeof str === 'string' && str.length > 0 && str.indexOf('.') !== -1) {
+    for (var i = str.length; i--;) {
+      if (str[i] === '.') {
+        return str.slice(0, i);
+      }
+    }
+  }
+  return str;
+}
+function getLastKey(str) {
+  if (typeof str === 'string' && str.length > 0 && str.indexOf('.') !== -1) {
+    for (var i = str.length; i--;) {
+      if (str[i] === '.') {
+        return str.slice(i + 1);
+      }
+    }
+  }
+  return str;
+}
+function containsHeadsOrTails(str, opts) {
+  if (typeof str !== 'string' || str.trim().length === 0) {
+    return false;
+  }
+  if (str.includes(opts.heads) || str.includes(opts.tails) || isStr(opts.headsNoWrap) && opts.headsNoWrap.length > 0 && str.includes(opts.headsNoWrap) || isStr(opts.tailsNoWrap) && opts.tailsNoWrap.length > 0 && str.includes(opts.tailsNoWrap)) {
+    return true;
+  }
+  return false;
+}
+function wrap(placementValue, opts) {
+  var dontWrapTheseVars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var oldVarName = arguments[5];
+
+  // if (DEBUG) { console.log(`\n>>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(placementValue, null, 4)}`) }
+  // if (DEBUG) { console.log(`>>>>>>>>>> WRAP(): breadCrumbPath = ${JSON.stringify(breadCrumbPath, null, 4)}`) }
+  // if (DEBUG) { console.log(`>>>>>>>>>> WRAP(): newPath = ${JSON.stringify(newPath, null, 4)}`) }
+  // if (DEBUG) { console.log(`>>>>>>>>>> WRAP(): oldVarName = ${JSON.stringify(oldVarName, null, 4)}\n`) }
+  if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
+    return matcher.isMatch(oldVarName, val);
+  }) && ( // considering double-wrapping prevention setting:
+  !opts.preventDoubleWrapping || opts.preventDoubleWrapping && isStr(placementValue) && !placementValue.includes(opts.wrapHeadsWith) && !placementValue.includes(opts.wrapTailsWith))) {
+    // if (DEBUG) { console.log('+++ WE GONNA WRAP THIS!') }
+    return opts.wrapHeadsWith + placementValue + opts.wrapTailsWith;
+  } else if (dontWrapTheseVars) {
+    // if (DEBUG) { console.log('\n\n\n💥💥💥💥💥💥 !!! dontWrapTheseVars is ON!!!\n\n\n') }
+    // if (DEBUG) { console.log(`placementValue = ${JSON.stringify(placementValue, null, 4)}`) }
+    // if (DEBUG) { console.log(`opts.wrapHeadsWith = ${JSON.stringify(opts.wrapHeadsWith, null, 4)}`) }
+    // if (DEBUG) { console.log(`opts.wrapTailsWith = ${JSON.stringify(opts.wrapTailsWith, null, 4)}`) }
+
+    // if (DEBUG) { console.log(`about to return:\n${JSON.stringify(removeDuplicateHeadsTails(placementValue, { heads: opts.wrapHeadsWith, tails: opts.wrapTailsWith }), null, 4)}`) }
+    // if (DEBUG) { console.log(`\u001b[${36}m placementValue = ${JSON.stringify(placementValue, null, 4)}\u001b[${39}m`) }
+    return removeDuplicateHeadsTails(placementValue, {
+      heads: opts.wrapHeadsWith,
+      tails: opts.wrapTailsWith
+    });
+  }
+  // if (DEBUG) { console.log('+++ NO WRAP') }
+  return placementValue;
+}
+function findValues(input, varName, path, opts) {
+  // if (DEBUG) { console.log(`136 findValues(): looking for varName = ${JSON.stringify(varName, null, 4)}`) }
+  // if (DEBUG) { console.log(`137 path = ${JSON.stringify(path, null, 4)}\n\n`) }
+  var resolveValue = void 0;
+  // 1.1. first, traverse up to root level, looking for key right at that level
+  // or within data store, respecting the config
+  if (path.indexOf('.') !== -1) {
+    var currentPath = path;
+    // traverse upwards:
+    var handBrakeOff = true;
+
+    // first, check the current level's datastore:
+    if (opts.lookForDataContainers && typeof opts.dataContainerIdentifierTails === 'string' && opts.dataContainerIdentifierTails.length > 0 && !currentPath.endsWith(opts.dataContainerIdentifierTails)) {
+      // 1.1.1. first check data store
+      // if (DEBUG) { console.log('1.1.0.') }
+      // if (DEBUG) { console.log(`\n159 * datastore = ${JSON.stringify(currentPath + opts.dataContainerIdentifierTails, null, 4)}`) }
+      var gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
+      // if (DEBUG) { console.log(`161 * gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+      if (isObj(gotPath) && objectPath.get(gotPath, varName)) {
+        // if (DEBUG) { console.log(`163 FOUND!\n${gotPath[varName]}`) }
+        resolveValue = objectPath.get(gotPath, varName);
+        handBrakeOff = false;
+      }
+    }
+
+    // then, start traversing up:
+    while (handBrakeOff && currentPath.indexOf('.') !== -1) {
+      currentPath = goLevelUp(currentPath);
+      if (getLastKey(currentPath) === varName) {
+        throw new Error('json-variables/findValues(): [THROW_ID_20] While trying to resolve: "' + varName + '" at path "' + path + '", we encountered a closed loop. The parent key "' + getLastKey(currentPath) + '" is called the same as the variable "' + varName + '" we\'re looking for.');
+      }
+      // if (DEBUG) { console.log(`175 traversing up. Currently at: ${currentPath}`) }
+
+      // first, check the current level's datastore:
+      if (opts.lookForDataContainers && typeof opts.dataContainerIdentifierTails === 'string' && opts.dataContainerIdentifierTails.length > 0 && !currentPath.endsWith(opts.dataContainerIdentifierTails)) {
+        // 1.1.1. first check data store
+        // if (DEBUG) { console.log('1.1.1.') }
+        // if (DEBUG) { console.log(`\n186 * datastore = ${JSON.stringify(currentPath + opts.dataContainerIdentifierTails, null, 4)}`) }
+        var _gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
+        // if (DEBUG) { console.log(`188 * gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+        if (isObj(_gotPath) && objectPath.get(_gotPath, varName)) {
+          // if (DEBUG) { console.log(`190 FOUND!\n${gotPath[varName]}`) }
+          resolveValue = objectPath.get(_gotPath, varName);
+          handBrakeOff = false;
+        }
+      }
+
+      if (resolveValue === undefined) {
+        // if (DEBUG) { console.log('1.1.2.') }
+        // 1.1.2. second check for key straight in parent level
+        var _gotPath2 = objectPath.get(input, currentPath);
+        // if (DEBUG) { console.log(`200 gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+        if (isObj(_gotPath2) && objectPath.get(_gotPath2, varName)) {
+          // if (DEBUG) { console.log(`202 SUCCESS! currentPath = ${JSON.stringify(currentPath, null, 4)} has key ${varName}`) }
+          resolveValue = objectPath.get(_gotPath2, varName);
+          handBrakeOff = false;
+        }
+      }
+    }
+  }
+  // 1.2. Reading this point means that maybe we were already at the root level,
+  // maybe we traversed up to root and couldn't resolve anything.
+  // Either way, let's check keys and data store at the root level:
+  if (resolveValue === undefined) {
+    // if (DEBUG) { console.log('192 check the root') }
+    var _gotPath3 = objectPath.get(input, varName);
+    // if (DEBUG) { console.log(`194 ROOT's gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+    if (_gotPath3 !== undefined) {
+      // if (DEBUG) { console.log(`196 setting resolveValue = ${JSON.stringify(gotPath, null, 4)}`) }
+      resolveValue = _gotPath3;
+    }
+  }
+  // 1.3. Last resort, just look for key ANYWHERE, as long as it's named as
+  // our variable name's topmost key (if it's a path with dots) or equal to key entirely (no dots)
+  if (resolveValue === undefined) {
+    // if (DEBUG) { console.log(`203 search for key: ${getTopmostKey(varName)}`) }
+    // 1.3.1. It depends, does the varName we're looking for have dot or not.
+    // - Because if it does, it's a path and we'll have to split the search into two
+    // parts: first find topmost key, then query it's children path part via
+    // object-path.
+    // - If it does not have a dot, it's straightforward, pick first string
+    // finding out of get().
+
+    // it's not a path (does not contain dots)
+    if (varName.indexOf('.') === -1) {
+      var _gotPath4 = get(input, varName);
+      // if (DEBUG) { console.log(`\n214*** gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+      if (_gotPath4.length > 0) {
+        for (var y = 0, len2 = _gotPath4.length; y < len2; y++) {
+          if (isStr(_gotPath4[y]) || isBool(_gotPath4[y]) || isNull(_gotPath4[y])) {
+            resolveValue = _gotPath4[y];
+            // if (DEBUG) { console.log(`219 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`) }
+            break;
+          } else if (isNum(_gotPath4[y])) {
+            resolveValue = String(_gotPath4[y]);
+            // if (DEBUG) { console.log(`223 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`) }
+            break;
+          } else if (isArr(_gotPath4[y])) {
+            resolveValue = _gotPath4[y].join('');
+            // if (DEBUG) { console.log(`227 resolveValue = ${JSON.stringify(resolveValue, null, 4)}`) }
+            break;
+          } else {
+            throw new Error('json-variables/findValues(): [THROW_ID_21] While trying to resolve: "' + varName + '" at path "' + path + '", we actually found the key named ' + varName + ', but it was not equal to a string but to:\n' + JSON.stringify(_gotPath4[y], null, 4) + '\nWe can\'t resolve a string with that! It should be a string.');
+          }
+        }
+      }
+    } else {
+      // it's a path (contains dots)
+      var _gotPath5 = get(input, getTopmostKey(varName));
+      // if (DEBUG) { console.log(`\n237*** gotPath = ${JSON.stringify(gotPath, null, 4)}`) }
+      if (_gotPath5.length > 0) {
+        for (var _y = 0, _len = _gotPath5.length; _y < _len; _y++) {
+          var temp = objectPath.get(_gotPath5[_y], withoutTopmostKey(varName));
+          if (temp && isStr(temp)) {
+            resolveValue = temp;
+          }
+        }
+      }
+    }
+  }
+  // if (DEBUG) { console.log(`248 findValues(): FINAL RETURN: ${resolveValue}\n`) }
+  return resolveValue;
+}
+
+// Explanation of the resolveString() function's inputs.
+
+// Heads or tails were detected in the "string", which is located in the "path"
+// within "input" (JSON object normally, an AST). All the settings are in "opts".
+// Since this function will be called recursively, we have to keep a breadCrumbPath -
+// all keys visited so far and always check, was the current key not been
+// traversed already (present in breadCrumbPath). Otherwise, we might get into a
+// closed loop.
+function resolveString(input, string, path, opts) {
+  var incomingBreadCrumbPath = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : [];
+
+  // if (DEBUG) { console.log(`\u001b[${33}m${`\n\n261 CALLED resolveString() on "${string}". Path = "${path}"`}\u001b[${39}m`) }
+
+  // if (DEBUG) { console.log(`263 incomingBreadCrumbPath = ${JSON.stringify(incomingBreadCrumbPath, null, 4)}`) }
+  // precautions from recursion
+  if (incomingBreadCrumbPath.includes(path)) {
+    var extra = '';
+    if (incomingBreadCrumbPath.length > 1) {
+      // extra = ` Here's the path we travelled up until we hit the recursion: ${incomingBreadCrumbPath.join(' - ')}.`
+
+      var separator = ' →\n';
+      extra = incomingBreadCrumbPath.reduce(function (accum, curr, idx) {
+        return accum + (idx === 0 ? '' : separator) + (curr === path ? '💥 ' : '  ') + curr;
+      }, ' Here\'s the path we travelled up until we hit the recursion:\n\n');
+      extra += separator + '\uD83D\uDCA5 ' + path;
+    }
+    throw new Error('json-variables/resolveString(): [THROW_ID_19] While trying to resolve: "' + string + '" at path "' + path + '", we encountered a closed loop, the key is referencing itself."' + extra);
+  }
+
+  // The Secret Data Stash, a way to cache previously resolved values and reuse the
+  // values, saving resources. It can't be on the root because it would get retained
+  // between different calls on the library, potentially giving wrong results (from
+  // the previous resolved variable, from the previous function call).
+  var secretResolvedVarsStash = {};
+
+  // if (DEBUG) { console.log(`=============================\n279 string = ${JSON.stringify(string, null, 4)}`) }
+
+  // 0. Add current path into breadCrumbPath
+  // =======================================
+
+  var breadCrumbPath = clone(incomingBreadCrumbPath);
+  breadCrumbPath.push(path);
+
+  // 1. First, extract all vars
+  // ==========================
+
+  var slices = new Slices();
+
+  function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
+    for (var i = 0, len = arr.length; i < len; i++) {
+      var obj = arr[i];
+      // if (DEBUG) { console.log(`\u001b[${33}m${`299 obj = ${JSON.stringify(obj, null, 4)}`}\u001b[${39}m`) }
+      var varName = string.slice(obj.headsEndAt, obj.tailsStartAt);
+      if (varName.length === 0) {
+        slices.push(obj.headsStartAt, // replace from index
+        obj.tailsEndAt // replace upto index - no third argument, just deletion of heads/tails
+        );
+      } else if (has.call(secretResolvedVarsStash, varName)) {
+        // check, maybe the value was already resolved before and present in secret stash:
+        // if (DEBUG) { console.log('308 Yay! Value taken from stash!') }
+        slices.push(obj.headsStartAt, // replace from index
+        obj.tailsEndAt, // replace upto index
+        secretResolvedVarsStash[varName] // replacement value
+        );
+      } else {
+        // it's not in the stash unfortunately, so let's search for it then:
+        var resolvedValue = findValues(input, // input
+        varName.trim(), // varName
+        path, // path
+        opts // opts
+        );
+        if (resolvedValue === undefined) {
+          throw new Error('json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn\'t find the value to resolve the variable ' + string.slice(obj.headsEndAt, obj.tailsStartAt) + '. We\'re at path: "' + path + '".');
+        }
+        if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr(resolvedValue)) {
+          throw new Error('json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ' + string.slice(obj.headsEndAt, obj.tailsStartAt) + ' at path ' + path + ', it resolved into a non-string value, ' + JSON.stringify(resolvedValue, null, 4));
+        }
+
+        if (isBool(resolvedValue)) {
+          if (opts.resolveToBoolIfAnyValuesContainBool) {
+            slices = undefined;
+            if (!opts.resolveToFalseIfAnyValuesContainBool) {
+              return resolvedValue;
+            }
+            return false;
+          }
+          resolvedValue = '';
+        } else if (isNull(resolvedValue) && wholeValueIsVariable) {
+          slices = undefined;
+          return resolvedValue;
+        } else if (isArr(resolvedValue)) {
+          resolvedValue = String(resolvedValue.join(''));
+        } else if (isNull(resolvedValue)) {
+          resolvedValue = '';
+        } else {
+          resolvedValue = String(resolvedValue);
+        }
+
+        // if (DEBUG) { console.log(`* 326 resolvedValue = ${JSON.stringify(resolvedValue, null, 4)}`) }
+        // if (DEBUG) { console.log(`* 327 path = ${JSON.stringify(path, null, 4)}`) }
+        // if (DEBUG) { console.log(`* 328 varName = ${JSON.stringify(varName, null, 4)}`) }
+
+        var newPath = path.includes('.') ? goLevelUp(path) + '.' + varName : varName;
+        // if (DEBUG) { console.log(`* 331 newPath = ${JSON.stringify(newPath, null, 4)}`) }
+        if (containsHeadsOrTails(resolvedValue, opts)) {
+          slices.push(obj.headsStartAt, // replace from index
+          obj.tailsEndAt, // replace upto index
+          wrap(resolveString( // replacement value    <--------- R E C U R S I O N
+          input, resolvedValue, newPath, opts, breadCrumbPath), opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim()));
+        } else {
+          // 1. store it in the stash for the future
+          secretResolvedVarsStash[varName] = resolvedValue;
+          // 2. add it for replacement later
+          slices.push(obj.headsStartAt, // replace from index
+          obj.tailsEndAt, // replace upto index
+          wrap(resolvedValue, opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim()) // replacement value
+          );
+        }
+      }
+    }
+    return undefined;
+  }
+
+  var foundHeadsAndTails = void 0; // reusing same var as container for both wrapping- and non-wrapping types
+
+  // 1. normal (possibly wrapping-type) heads and tails
+  try {
+    // strFindHeadsTails() can throw as well if there's mismatch in heads and tails,
+    // for example, so it needs to be contained:
+    foundHeadsAndTails = strFindHeadsTails(string, opts.heads, opts.tails, { source: '', throwWhenSomethingWrongIsDetected: false });
+  } catch (error) {
+    throw new Error('json-variables/resolveString(): [THROW_ID_17] While trying to resolve string: "' + string + '" at path ' + path + ', something wrong with heads and tails was detected! Here\'s the internal error message:\n' + error);
+  }
+  // if (DEBUG) { console.log(`${`\u001b[${36}m${'385 foundHeadsAndTails = '}\u001b[${39}m`} ${JSON.stringify(foundHeadsAndTails, null, 4)}`) }
+  // if (DEBUG) { console.log(`\u001b[${36}m${`string.length = ${string.length}`}\u001b[${39}m`) }
+
+  // if heads and tails array has only one range inside and it spans whole string's
+  // length, this means key is equal to a whole variable, like {a: '%%_b_%%'}.
+  // In those cases, there are extra considerations when value is null, because
+  // null among string characters is resolved to empty string, but null as a whole
+  // value is retained as null. This means, we need to pass this as a flag to
+  // processHeadsAndTails() so it can resolve properly...
+
+  var wholeValueIsVariable = false; // we'll reuse it for non-wrap heads/tails too
+
+  if (foundHeadsAndTails.length === 1 && replaceSlicesArr(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === '') {
+    wholeValueIsVariable = true;
+  }
+
+  var temp1 = processHeadsAndTails(foundHeadsAndTails, false, wholeValueIsVariable);
+  if (isBool(temp1)) {
+    return temp1;
+  } else if (isNull(temp1)) {
+    return temp1;
+  }
+
+  // 2. Process opts.headsNoWrap, opts.tailsNoWrap as well
+  try {
+    // strFindHeadsTails() can throw as well if there's mismatch in heads and tails,
+    // for example, so it needs to be contained:
+    foundHeadsAndTails = strFindHeadsTails(string, opts.headsNoWrap, opts.tailsNoWrap, { source: '', throwWhenSomethingWrongIsDetected: false });
+  } catch (error) {
+    throw new Error('json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: "' + string + '" at path ' + path + ', something wrong with no-wrap heads and no-wrap tails was detected! Here\'s the internal error message:\n' + error);
+  }
+
+  if (foundHeadsAndTails.length === 1 && replaceSlicesArr(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === '') {
+    wholeValueIsVariable = true;
+  }
+
+  var temp2 = processHeadsAndTails(foundHeadsAndTails, true, wholeValueIsVariable);
+  if (isBool(temp2)) {
+    return temp2;
+  } else if (isNull(temp2)) {
+    return temp2;
+  }
+
+  // if (DEBUG) { console.log(`temp2 = ${JSON.stringify(temp2, null, 4)}`) }
+
+  // 3. Then, work the slices list
+  // ================================
+  // if (DEBUG && slices) { console.log(`\u001b[${33}m${`\n389 END OF replaceSlicesArr: slices.current() = ${JSON.stringify(slices.current(), null, 4)}`}\u001b[${39}m`) }
+  // if (DEBUG) { console.log(`\u001b[${33}m${`\n390 string was = ${JSON.stringify(string, null, 4)}`}\u001b[${39}m`) }
+  //
+
+  if (slices && slices.current()) {
+    return replaceSlicesArr(string, slices.current());
+  }
+  return string;
+}
+
+// -----------------------------------------------------------------------------
+//                         M A I N   F U N C T I O N
+// -----------------------------------------------------------------------------
 
 function jsonVariables(inputOriginal) {
   var originalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  // const DEBUG = 0
   if (arguments.length === 0) {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!');
   }
   if (!isObj(inputOriginal)) {
-    throw new TypeError('json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it\'s: ' + typ(inputOriginal));
+    throw new TypeError('json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it\'s: ' + (Array.isArray(inputOriginal) ? 'array' : typeof inputOriginal === 'undefined' ? 'undefined' : _typeof(inputOriginal)));
   }
   if (!isObj(originalOpts)) {
-    throw new TypeError('json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it\'s: ' + typ(originalOpts));
+    throw new TypeError('json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it\'s: ' + (Array.isArray(originalOpts) ? 'array' : typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)));
   }
-  var replacement = void 0;
 
   var input = clone(inputOriginal);
   var defaults = {
@@ -215,7 +482,13 @@ function jsonVariables(inputOriginal) {
     opts.dontWrapVars = arrayiffyIfString(opts.dontWrapVars);
   }
 
-  checkTypes(opts, defaults, { msg: 'json-variables/jsonVariables(): [THROW_ID_04*]' });
+  checkTypes(opts, defaults, {
+    msg: 'json-variables/jsonVariables(): [THROW_ID_04*]',
+    schema: {
+      headsNoWrap: ['string', 'null', 'undefined'],
+      tailsNoWrap: ['string', 'null', 'undefined']
+    }
+  });
 
   var culpritVal = void 0;
   var culpritIndex = void 0;
@@ -227,7 +500,7 @@ function jsonVariables(inputOriginal) {
     }
     return true;
   })) {
-    throw new Error('json-variables/jsonVariables(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value "' + culpritVal + '" at index ' + culpritIndex + ', which is not string but ' + typ(culpritVal) + '!');
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value "' + culpritVal + '" at index ' + culpritIndex + ', which is not string but ' + (Array.isArray(culpritVal) ? 'array' : typeof culpritVal === 'undefined' ? 'undefined' : _typeof(culpritVal)) + '!');
   }
 
   if (opts.heads === '') {
@@ -249,313 +522,85 @@ function jsonVariables(inputOriginal) {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_11] Alas! opts.tails and opts.tailsNoWrap can\'t be equal!');
   }
   if (opts.headsNoWrap === '') {
-    throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Alas! opts.headsNoWrap is empty!');
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_12] Alas! opts.headsNoWrap is an empty string!');
   }
   if (opts.tailsNoWrap === '') {
-    throw new Error('json-variables/jsonVariables(): [THROW_ID_13] Alas! opts.tailsNoWrap is empty!');
+    throw new Error('json-variables/jsonVariables(): [THROW_ID_13] Alas! opts.tailsNoWrap is an empty string!');
   }
   if (opts.headsNoWrap === opts.tailsNoWrap) {
     throw new Error('json-variables/jsonVariables(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can\'t be equal!');
   }
 
   var current = void 0;
-  var currentObjKey = void 0;
-  var wrapLeft = void 0;
-  var wrapRight = void 0;
-  var offset = void 0;
-  var resolvedValue = void 0;
-  var wrap = opts.wrapGlobalFlipSwitch;
 
-  input = traverse(input, function (key, val, innerObj) {
+  // console.log('======== JSON VARIABLES START ========')
+  // console.log(`input = ${JSON.stringify(input, null, 4)}`)
+  // console.log(`opts = ${JSON.stringify(opts, null, 4)}`)
+  // console.log('======== JSON VARIABLES END ========')
+
+  //
+  // ===============================================
+  //                        1.
+  // Let's compile the list of all the vars to resolve
+  // ===============================================
+  //
+
+  // we return the result of the traversal:
+  return traverse(input, function (key, val, innerObj) {
     // if (DEBUG) { console.log('\n========================================') }
-    if (existy(val) && (key.includes(opts.heads) || key.includes(opts.tails) || key.includes(opts.headsNoWrap) || key.includes(opts.tailsNoWrap))) {
+    if (existy(val) && containsHeadsOrTails(key, opts)) {
       throw new Error('json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can\'t contain variables!\nPlease check the following key: ' + key);
     }
+    // * * *
+    // Get the current values which are being traversed by ast-monkey:
     // If it's an array, val will not exist, only key.
-    // On objects, we'll use val instead:
-    current = notUndef(val) ? val : key;
-    currentObjKey = notUndef(val) ? key : null;
-    // if (DEBUG) { console.log(`key = ${JSON.stringify(key, null, 4)}`) }
-    // if (DEBUG) { console.log(`val = ${JSON.stringify(val, null, 4)}`) }
+    if (val !== undefined) {
+      // if it's object currently being traversed, we'll get both key and value
+      current = val;
+    } else {
+      // if it's an array being traversed currently, we'll get only key
+      current = key;
+    }
+
+    // * * *
+    // In short, ast-monkey works in such way, that what we return will get written
+    // over the current element, which is at the moment "current". If we don't want
+    // to mutate it, we return "current". If we want to mutate it, we return a new
+    // value (which will get written onto that node, previously equal to "current").
+
+    // if (DEBUG) { console.log(`current = ${JSON.stringify(current, null, 4)}`) }
 
     // *
-    // End sooner, case #1. If the "current" that monkey brought us is
-    // equal to whole heads or tails.
-
+    // Instantly skip empty strings:
     if (current === '') {
       return current;
     }
 
-    if (opts.heads.length !== 0 && current === opts.heads || opts.tails.length !== 0 && current === opts.tails || opts.headsNoWrap.length !== 0 && current === opts.headsNoWrap || opts.tailsNoWrap.length !== 0 && current === opts.tailsNoWrap) {
+    // *
+    // If the "current" that monkey brought us is equal to whole heads or tails:
+    if (opts.heads.length !== 0 && trimIfString(current) === trimIfString(opts.heads) || opts.tails.length !== 0 && trimIfString(current) === trimIfString(opts.tails) || opts.headsNoWrap.length !== 0 && trimIfString(current) === trimIfString(opts.headsNoWrap) || opts.tailsNoWrap.length !== 0 && trimIfString(current) === trimIfString(opts.tailsNoWrap)) {
       if (!opts.noSingleMarkers) {
         return current;
       }
-      throw new Error('json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ' + current + ' which is equal to ' + (current === opts.heads ? 'heads' : '') + (current === opts.tails ? 'tails' : '') + (current === opts.headsNoWrap ? 'headsNoWrap' : '') + (current === opts.tailsNoWrap ? 'tailsNoWrap' : '') + '. Since you turned off the opts.noSingleMarkers to "true", you asked for this and computer delivered.');
+      throw new Error('json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ' + trimIfString(current) + ' which is equal to ' + (trimIfString(current) === trimIfString(opts.heads) ? 'heads' : '') + (trimIfString(current) === trimIfString(opts.tails) ? 'tails' : '') + (isStr(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? 'headsNoWrap' : '') + (isStr(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? 'tailsNoWrap' : '') + '. If you wouldn\'t have set opts.noSingleMarkers to "true" this error would not happen and computer would have left the current element (' + trimIfString(current) + ') alone');
     }
+
+    // if (DEBUG) { console.log(`\ncurrent = ${JSON.stringify(current, null, 4)}`) }
 
     // *
-    // End sooner, case #2. If current branch's piece which monkey has just
-    // brought ("current") contains no variable placeholders, instantly
-    // return it back, skipping all the action.
-
-    if (isStr(current)) {
-      var allHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], {
-        source: 'json-variables/jsonVariables(): [THROW_ID_17]',
-        relaxedAPI: true
-      }));
-      // if there are no heads found at all, return (doing nothing)
-      if (allHeadsAndTails === []) {
-        return current;
-      }
-    } else {
-      return current;
+    // Process the current node if it's a string and it contains heads / tails /
+    // headsNoWrap / tailsNoWrap:
+    if (isStr(current) && containsHeadsOrTails(current, opts)) {
+      // breadCrumbPath, the fifth argument is not passed as there're no previous paths
+      return resolveString(input, current, innerObj.path, opts);
     }
 
-    var innerVar = void 0; // first extracted variable's key, without heads and tails
-    var patience = false; // when it reaches zero recursion error is thrown. When off, it's falsey.
-    var recursionLoopSize = void 0; // how many indexes are between the element to-be-added to
-    // innerPath[] and the index of the last occurence of the same value in innerPath[].
-    // For example, on "abcda", the recursionLoopSize = 4 - 0 = 4.
-    var innerPath = []; // recording path to identify recursions
-    var loopKillSwitch = true;
-
-    if (!opts.noSingleMarkers && (current === opts.heads || current === opts.tails || current === opts.headsNoWrap || current === opts.tailsNoWrap)) {
-      loopKillSwitch = false;
-    }
-
-    var dontWrapTheseVarsStartingWithIndexes = [];
-    var found = void 0;
-
-    // loop will be skipped completely with the help of "loopKillSwitch" if
-    // opts.noSingleMarkers=false and "current" has the value of "opts.heads" or
-    // "opts.tails"
-    // its purpose is that when we allow heads or tails to be present in the
-    // content, among values, they can throw off the whole system because they will be unmatched!
-    // We are not talking about cases like: "some text %%_variableName_%% some text",
-    // but only where the whole object's value is equal to heads or tails: "%%_" or "_%%".
-    // The above is relevant in cases when all preferences are kept in the same JSON
-    // and heads/tails are set from the same file they will later process.
-
-    if (!opts.noSingleMarkers && loopKillSwitch || opts.noSingleMarkers) {
-      var _loop = function _loop() {
-        var extractedHeadsAndTails = nativeToUnicode(current, strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], { matchHeadsAndTailsStrictlyInPairsByTheirOrder: true, relaxedAPI: true }));
-
-        // "innerVar" contains the string value of the variable we're currently working on.
-        // In other words, the string between first pair of heads and tails.
-
-        // First, we extract all variable values from the current string.
-        // For example, if the "current" is:
-        // some text %%_var1_%% more text %%_var2_%%
-        // Then with the help of "extractVarsFromString" we get:
-        // ["var1", "var2"]. Then we take the first element (index zero).
-
-        innerVar = slice(current, extractedHeadsAndTails[0].headsEndAt, extractedHeadsAndTails[0].tailsStartAt).trim();
-        // if (DEBUG) { console.log(`* innerVar = ${JSON.stringify(innerVar, null, 4)}\n\n\n`) }
-        var currentHeads = extractedHeadsAndTails[0].headsStartAt;
-        var currentTails = extractedHeadsAndTails[0].tailsStartAt;
-
-        // if (DEBUG) { console.log(`currentHeads = ${JSON.stringify(currentHeads, null, 4)}`) }
-        // if (DEBUG) { console.log(`currentTails = ${JSON.stringify(currentTails, null, 4)}`) }
-
-        // catch recursion after one full cycle
-        // [!] cases when recursionLoopSize === 1 are not covered here because of
-        // false positives risk
-        if (includes(innerPath, innerVar)) {
-          if (!patience) {
-            // means recursion is about to start, patience is not active yet
-            recursionLoopSize = innerPath.length - findLastInArray(innerPath, innerVar);
-            patience = recursionLoopSize > 1 ? recursionLoopSize : false;
-          } else {
-            // means second recursion cycle is potentially going on, patience is active
-            if (innerPath[innerPath.length - recursionLoopSize] === innerVar) {
-              patience -= 1;
-            }
-            if (patience < 1) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_19] Recursion detected!\nPlease check following key: ' + current);
-            }
-          }
-        } else {
-          patience = false;
-        }
-        innerPath.push(innerVar);
-
-        if (innerVar === currentObjKey || innerVar === innerObj.topmostKey) {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_20] Recursion detected!\nPlease check the following key: ' + (currentObjKey || current));
-        }
-
-        // if (DEBUG) { console.log(`innerVar = ${JSON.stringify(innerVar, null, 4)}`) }
-        if (isObj(innerObj.parent) && has.call(innerObj.parent, front(innerVar)) && objectPath.get(innerObj.parent, innerVar) !== undefined) {
-          // if (DEBUG) { console.log('> case 001') }
-          found = true;
-          // replacement = innerObj.parent[innerVar]
-          resolvedValue = objectPath.get(innerObj.parent, innerVar);
-          // if (DEBUG) { console.log(`resolvedValue = ${JSON.stringify(resolvedValue, null, 4)}`) }
-          if (!isStr(resolvedValue) && opts.throwWhenNonStringInsertedInString) {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_21] We were going to replace the variable "' + innerVar + '" in ' + JSON.stringify(current, null, 4) + ' and it was not string but ' + typ(resolvedValue));
-          } else {
-            replacement = resolvedValue;
-          }
-        } else if (opts.lookForDataContainers && isObj(innerObj.parent) && has.call(innerObj.parent, '' + key + opts.dataContainerIdentifierTails) && existy(innerObj.parent['' + key + opts.dataContainerIdentifierTails][front(innerVar)]) && objectPath.get(innerObj.parent['' + key + opts.dataContainerIdentifierTails], innerVar) !== undefined) {
-          // if (DEBUG) { console.log('> case 002') }
-          // if (DEBUG) { console.log('\n*') }
-          // if (DEBUG) { console.log(`innerVar = ${JSON.stringify(innerVar, null, 4)}`) }
-          found = true;
-
-          replacement = objectPath.get(innerObj.parent['' + key + opts.dataContainerIdentifierTails], innerVar);
-          // if (DEBUG) { console.log(`replacement = ${JSON.stringify(replacement, null, 4)}`) }
-        } else if (has.call(input, front(innerVar)) && objectPath.get(input, innerVar) !== undefined) {
-          // if (DEBUG) { console.log('> case 003') }
-          found = true;
-
-          // if (DEBUG) { console.log(`\n\n+ input = ${JSON.stringify(input, null, 4)}`) }
-          // if (DEBUG) { console.log(`+ innerVar = ${JSON.stringify(innerVar, null, 4)}`) }
-          replacement = objectPath.get(input, innerVar);
-          // if (DEBUG) { console.log(`replacement = ${JSON.stringify(replacement, null, 4)}`) }
-        } else if (opts.lookForDataContainers) {
-          // if (DEBUG) { console.log('> cases 004-005-006') }
-          if (has.call(input, '' + key + opts.dataContainerIdentifierTails) && isObj(input[key + opts.dataContainerIdentifierTails])) {
-            // if (DEBUG) { console.log('> case 004') }
-            found = true;
-            // replacement = input['' + key + opts.dataContainerIdentifierTails][innerVar]
-            replacement = objectPath.get(input, ['' + key + opts.dataContainerIdentifierTails, innerVar]);
-          } else if (has.call(input, '' + innerObj.topmostKey + opts.dataContainerIdentifierTails) && isObj(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails])) {
-            found = true;
-            if (existy(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails][front(innerVar)])) {
-              // if (DEBUG) { console.log('> case 005') }
-              replacement = objectPath.get(input['' + innerObj.topmostKey + opts.dataContainerIdentifierTails], innerVar);
-              // if (DEBUG) { console.log(`replacement = ${JSON.stringify(replacement, null, 4)}`) }
-            } else {
-              // if (DEBUG) { console.log('> case 006') }
-              // When value is array and there are variable references among that
-              // array's elements, pointing to _data store key, this is the case.
-
-              // Also, it's a rare case when a variable from data store is
-              // referencing an another variable that also comes from a data store.
-              // Now essentially the original reference to the correct data store is
-              // lost, and now the new data store doesn't contain the variable we're looking for.
-
-              // The solution (not ideal) is to traverse all keys at root level that
-              // can be identified as data stores and look for the missing key we need there.
-
-              replacement = undefined;
-              Object.keys(input).forEach(function (key2) {
-                if (!replacement && opts.lookForDataContainers && // data key container lookup is left turned on
-                opts.dataContainerIdentifierTails !== '' && // data key name append is not set to blank
-                key2.endsWith(opts.dataContainerIdentifierTails) && // it's data container
-                isObj(input[key2]) && // key's value is object
-                has.call(input[key2], front(innerVar)) // has the key we want
-                ) {
-                    replacement = objectPath.get(input, [key2, innerVar]);
-                  }
-              });
-              if (!replacement) {
-                throw new Error('json-variables/jsonVariables(): [THROW_ID_22] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input');
-              }
-            }
-          } else {
-            throw new Error('json-variables/jsonVariables(): [THROW_ID_23] Neither key ' + innerVar + ' nor data key ' + innerVar + opts.dataContainerIdentifierTails + ' exist in your input. We wanted to resolve: ' + current + (existy(key) ? ' coming from key: ' + key : ''));
-          }
-        } else {
-          throw new Error('json-variables/jsonVariables(): [THROW_ID_24] Required key ' + innerVar + ' is missing and you turned off the feature to search for key containing data (opts.lookForDataContainers=false). Now the value is missing and we\'re in trouble.');
-        }
-
-        if (isStr(replacement) && found) {
-          if (opts.wrapGlobalFlipSwitch) {
-            wrap = true; // reset it for the new key.
-          }
-          // more resets:
-          wrapLeft = true;
-          wrapRight = true;
-
-          if (opts.wrapGlobalFlipSwitch && opts.dontWrapVars.length > 0) {
-            wrap = wrap && !splitObjectPath(innerVar).some(function (el1) {
-              return opts.dontWrapVars.some(function (el2) {
-                return matcher.isMatch(el1, el2);
-              });
-            });
-          }
-
-          // check if current variable's marker is opts.headsNoWrap (default is "%%-").
-          // If so, don't wrap it.
-          if (spliceStr(current, 0, currentHeads).startsWith(opts.headsNoWrap)) {
-            wrapLeft = false;
-          }
-
-          // check if current variable's marker is opts.headsNoWrap
-          // (default is "%%-"). If so, don't wrap it.
-          if (slice(current, currentTails).startsWith(opts.tailsNoWrap)) {
-            wrapRight = false;
-          }
-
-          if (!wrapLeft && !wrapRight) {
-            dontWrapTheseVarsStartingWithIndexes.push([currentHeads, currentTails]);
-          } else if (!wrapLeft && wrapRight) {
-            dontWrapTheseVarsStartingWithIndexes.push([currentHeads, null]);
-          } else if (wrapLeft && !wrapRight) {
-            dontWrapTheseVarsStartingWithIndexes.push([null, currentTails]);
-          }
-
-          if (dontWrapTheseVarsStartingWithIndexes.length > 0) {
-            dontWrapTheseVarsStartingWithIndexes.forEach(function (el) {
-              if (el[0] === currentHeads) {
-                wrapLeft = false;
-              }
-
-              if (el[1] === currentTails) {
-                wrapRight = false;
-              }
-            });
-          }
-
-          // calculating what to replace the variable with (is it wrapped or not)
-
-          if (opts.wrapGlobalFlipSwitch && wrap && (!opts.preventDoubleWrapping || (opts.wrapHeadsWith === '' || search(replacement, opts.wrapHeadsWith).length === 0) && (opts.wrapTailsWith === '' || search(replacement, opts.wrapTailsWith).length === 0) && search(replacement, opts.heads).length === 0 && search(replacement, opts.tails).length === 0 && search(replacement, opts.headsNoWrap).length === 0 && search(replacement, opts.tailsNoWrap).length === 0)) {
-            replacement = (wrapLeft ? opts.wrapHeadsWith : '') + replacement + (wrapRight ? opts.wrapTailsWith : '');
-          }
-
-          // offset fixes
-          var extr = extractVarsFromString(replacement, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap])[0] || replacement;
-          offset = extr.length - innerVar.length;
-          dontWrapTheseVarsStartingWithIndexes = fixOffset(dontWrapTheseVarsStartingWithIndexes, currentHeads, offset);
-        } else if (isArr(replacement) && found) {
-          replacement = replacement.join('');
-        }
-
-        // this covers both cases: when replacement is string or not
-        if (found) {
-          if (isStr(replacement)) {
-            if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), currentObjKey)) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_25] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + currentObjKey);
-            } else if (includes(extractVarsFromString(replacement, opts.heads, opts.tails), innerVar)) {
-              throw new Error('json-variables/jsonVariables(): [THROW_ID_26] Recursion detected! ' + JSON.stringify(replacement, null, 4) + ' contains ' + innerVar);
-            }
-          }
-
-          // replacing variable with the value
-          if (!isStr(replacement) && strLen(current) === currentTails - currentHeads + strLen(opts.tails)) {
-            current = replacement;
-          } else if (typeof replacement === 'boolean' && opts.resolveToBoolIfAnyValuesContainBool) {
-            if (opts.resolveToFalseIfAnyValuesContainBool) {
-              current = false;
-            } else {
-              current = replacement;
-            }
-          } else {
-            if (typeof replacement === 'boolean') {
-              replacement = '';
-            }
-            current = spliceStr(current, currentHeads, currentTails - currentHeads + strLen(opts.tails), replacement);
-          }
-        }
-      };
-
-      while (isStr(current) && !isEmpty(strFindHeadsTails(current, [opts.heads, opts.headsNoWrap], [opts.tails, opts.tailsNoWrap], { relaxedAPI: true }))) {
-        _loop();
-      }
-    }
+    // otherwise, just return as it is. We're not going to touch plain objects/arrays,numbers/bools etc.
     return current;
+
+    // END OF MONKEY'S TRAVERSE
+    // -------------------------------------------------------------------------
   });
-  return input;
 }
 
 export default jsonVariables;

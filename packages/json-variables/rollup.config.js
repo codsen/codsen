@@ -34,41 +34,14 @@ export default [
       'ast-monkey-traverse',
       'check-types-mini',
       'lodash.clonedeep',
-      'lodash.includes',
-      'lodash.trim',
+      'lodash.isplainobject',
       'matcher',
       'object-path',
-      'posthtml-ast-is-empty',
-      'splice-string',
-      'string-convert-indexes',
+      'posthtml-ast-get-values-by-key',
       'string-find-heads-tails',
-      'string-length',
-      'string-slice',
-      'str-indexes-of-plus',
-      'type-detect',
-    ],
-    plugins: [
-      babel(),
-    ],
-  },
-
-  // util.js needs transpiling as well, there's one unit test which
-  // compares, does Detergent export back util's default options:
-  {
-    input: 'src/utils.js',
-    output: [
-      { file: 'dist/utils.cjs.js', format: 'cjs' },
-    ],
-    external: [
-      'arrayiffy-if-string',
-      'ast-monkey-traverse',
-      'lodash.trim',
-      'lodash.includes',
-      'lodash.clonedeep',
-      'str-indexes-of-plus',
-      'string-slice',
-      'string-length',
-      'type-detect',
+      'string-remove-duplicate-heads-tails',
+      'string-replace-slices-array',
+      'string-slices-array-push',
     ],
     plugins: [
       babel(),

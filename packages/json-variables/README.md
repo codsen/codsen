@@ -24,7 +24,7 @@
 
 
 - [Install](#install)
-- [Idea](#idea)
+- [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
 - [API](#api)
 - [Use examples](#use-examples)
 - [Contributing](#contributing)
@@ -49,44 +49,35 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 26&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 26&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 88&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 30&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 29&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 65&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
-## Idea
+## Idea - updated for v.7 - full rewrite
 
-Let's make it possible for values within our JSON to reference other keys' values within the same file (object). This library is a simple preprocessor for JSON that does allow this. You can customise how you mark the variables, but the default is: `%%_keyname_%%`:
+This library allows JSON keys to reference other keys. It is aimed at JSON files which are used as means to store the _data_ part, separate from the template code.
 
-```js
-// IN:
-{
-  a: 'text %%_b_%% %%_c_%%',
-  b: 'something',
-  c: 'anything'
-}
-// OUT:
-{
-  a: 'text something anything',
-  b: 'something',
-  c: 'anything'
-}
-```
+* `<=v6.x` was resolving variables from the root to the branch tip. This was apparently a bad idea and `v7.x` fixes that. Now resolving is done from the tips down to the root.
+* `<=v6.x` had data stores but it referenced only the same level as the variable AND root level when checking for values when resolving. This was not good. The `v7.x` now looks every single level upward, from the current to the root, plus data stores on each level. This, combined with tips-to-root resolving means now, for the first time, you have true freedom to cross-reference the variables any way you like (as long as there are no loop in the resolved variable chain). Previously, on `<=v6.x`, the scope of second-level variable references was lost and since resolving started from the root, it instantly received a variable with a lost scope (for data store lookup, for example). Not any more.
+* Using `<=v6.x` in production I also found out how unhelpful the error messages were (not to mention in 90% of the error cases, errors were not real, only resolving algorithm shortcomings). I went extra mile in this rewrite to provide not only the path of the variables being resolved, but also the piece of the _whole source object_.
+* In `v7.x`, I also switched to strictly [`object-path`](https://www.npmjs.com/package/object-path) notation.
+* Additionally, `v7.x` uses the latest tools I created since coding the original core of `json-variables`. For example, variable extraction is now done using a separate library, [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails).
 
-The API is the following: a plain object in (it's not mutated), a new plain object out.
+I know, these architectural mistakes look no-brainers _now_ but trust me, they were not so apparent when the original `json-variables` idea was conceived. Also, I didn't anticipate this amount of variable-cross-referencing happening in real production, which was beyond anything that unit tests could imitate.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## API
 
-**jsonVariables (inputOriginal\[, options])**
+**jsonVariables (inputObj, \[options])**
 
 Returns a plain object with all variables resolved.
 
-#### inputOriginal
+#### inputObj
 
-Type: `object` - a plain object. Usually parsed JSON file.
+Type: `object` - a plain object. Usually, a parsed JSON file.
 
 #### options
 
@@ -528,15 +519,11 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-variables/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-variables/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/json-variables/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -545,6 +532,7 @@ Hi! 99% of people in the society are passive - consumers. They wait for others t
 MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
+
 
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables

@@ -2,13 +2,819 @@
 
 import test from 'ava'
 import jv from '../dist/json-variables.cjs'
-import { extractVarsFromString, findLastInArray, fixOffset, front, splitObjectPath } from '../dist/utils.cjs'
 
 // -----------------------------------------------------------------------------
-// 02. BAU
+// group 01. various throws
 // -----------------------------------------------------------------------------
 
-test('02.01 - fills in variables found among other keys', (t) => {
+test('01.01 - basic throws related to wrong input', (t) => {
+  const err1 = t.throws(() => {
+    jv()
+  })
+  t.truthy(err1.message.includes('[THROW_ID_01]'))
+
+  const err2 = t.throws(() => {
+    jv('zzzz')
+  })
+  t.truthy(err2.message.includes('[THROW_ID_02]'))
+
+  const err3 = t.throws(() => {
+    jv('{}') // string curlies...
+  })
+  t.truthy(err3.message.includes('[THROW_ID_02]'))
+
+  // empty plain object does not throw
+  t.deepEqual(
+    jv({}),
+    {},
+    'empty plain object',
+  )
+
+  const err5 = t.throws(() => {
+    jv([]) // empty array
+  })
+  t.truthy(err5.message.includes('[THROW_ID_02]'))
+})
+
+test('01.02 - throws when options heads and/or tails are empty', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { heads: '' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_06]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { tails: '' })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_07]'))
+
+  const err3 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { heads: '', tails: '' })
+  })
+  t.truthy(err3.message.includes('[THROW_ID_06]'))
+})
+
+test('01.03 - throws when data container key lookup is enabled and container tails are given blank', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_08]'))
+
+  t.deepEqual(
+    jv({
+      a: 'a',
+    }, { lookForDataContainers: false, dataContainerIdentifierTails: '' }),
+    {
+      a: 'a',
+    },
+    'data store is off, so empty opts.dataContainerIdentifierTails is fine',
+  )
+
+  const err3 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { dataContainerIdentifierTails: '' })
+  })
+  t.truthy(err3.message.includes('[THROW_ID_08]'))
+})
+
+test('01.04 - throws when heads and tails are equal', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'a',
+    }, { heads: '%%', tails: '%%' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_09]'))
+})
+
+test('01.05 - throws when input is not a plain object', (t) => {
+  const err1 = t.throws(() => {
+    jv(['zzz'], { heads: '%%', tails: '%%' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_02]'))
+})
+
+test('01.06 - throws when keys contain variables', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      '%%_var2_%%': 'something',
+      var1: 'value1',
+      var2: 'value2',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_15]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text zzvar1yy more text',
+      zzvar2yy: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }, { heads: 'zz', tails: 'yy' }) // custom heads and tails
+  })
+  t.truthy(err2.message.includes('[THROW_ID_15]'))
+})
+
+test('01.07 - throws when there are unequal number of marker heads and tails', (t) => {
+  t.deepEqual(
+    jv({
+      a: 'some text %%_var1_%% more %%_text',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'some text value1 more %%_text',
+      b: 'something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '01.07.01',
+  )
+
+  t.deepEqual(
+    jv({
+      a: 'some text %%_var1_%% more text_%%',
+      b: '%%_something',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'some text value1 more text_%%',
+      b: '%%_something',
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '01.07.02',
+  )
+})
+
+test('01.08 - throws when data is missing', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+      a_data: 'zzz',
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_18]'))
+})
+
+test('01.09 - throws when data container lookup is turned off and var is missing', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: false })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
+
+  // since v.7 the value will be found if such key exists anywhere
+  t.deepEqual(
+    jv({
+      a: 'some text %%_var1_%% more text',
+      a_data: {
+        var1: 'something',
+      },
+    }, { lookForDataContainers: false }),
+    {
+      a: 'some text something more text',
+      a_data: {
+        var1: 'something',
+      },
+    },
+    'data store is off, so empty opts.dataContainerIdentifierTails is fine',
+  )
+
+  // now, the data stores (keys with _data) are used only to give preference
+  // when the value is resolved - they will be checked first, before doing global
+  // key search, which would come last. Observe:
+
+  // "b" has a datastore, "b_data", but datastores are turned off.
+  // This means, when resolving and going upwards the AST, the values-as-keys,
+  // in our case, keys named "var1" will be searched for, all the way, from "c"
+  // level to the root level.
+
+  // Now, "b_data.var1" key "var1" is not at the same level as "b", it's deeper
+  // in other child's path, so it will not get checked during the first checking
+  // route, when algorithm will go from "c" up to root.
+
+  // At root level, it will find "var1" and therefore will resolve "c" to "222".
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: 'some text %%_var1_%% more text',
+        },
+        b_data: {
+          var1: '111',
+        },
+      },
+      var1: '222',
+    }, { lookForDataContainers: false }),
+    {
+      a: {
+        b: {
+          c: 'some text 222 more text',
+        },
+        b_data: {
+          var1: '111',
+        },
+      },
+      var1: '222',
+    },
+    'resolves to topmost root level key because data store is off',
+  )
+
+  // now if we enable data stores, "c" will resolve to "111" because data store
+  // path will be checked when bubbling up to root level, where var1: '222' is.
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: 'some text %%_var1_%% more text',
+        },
+        b_data: {
+          var1: '111',
+        },
+      },
+      var1: '222',
+    }, { lookForDataContainers: true }),
+    {
+      a: {
+        b: {
+          c: 'some text 111 more text',
+        },
+        b_data: {
+          var1: '111',
+        },
+      },
+      var1: '222',
+    },
+    'resolves to datastore, not using value at the root',
+  )
+})
+
+test('01.10 - throws when data container name append is not string', (t) => {
+  // in both tests, check-types-mini will throw:
+
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: true, dataContainerIdentifierTails: false })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: true, dataContainerIdentifierTails: 1 })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.11 - not throws when data container name append is given empty, but data container lookup is turned off', (t) => {
+  t.notThrows(() => {
+    jv({
+      a: 'some text, more text',
+      b: 'something',
+    }, { lookForDataContainers: false, dataContainerIdentifierTails: '' })
+  })
+})
+
+test('01.12 - throws when data container name append is given empty', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_08]'))
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text, more text',
+      b: 'something',
+    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_08]'))
+})
+
+test('01.13 - throws when opts.wrapHeadsWith is customised to anything other than string', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { wrapHeadsWith: false })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]')) // thx to check-types-mini
+})
+
+test('01.14 - opts.wrapHeadsWith does not affect failing resolving', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { wrapHeadsWith: '' })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
+})
+
+test('01.15 - throws when opts.wrapTailsWith is customised to anything other than string', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { wrapTailsWith: false })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.16 - not throws when opts.wrapTailsWith is customised to an empty string', (t) => {
+  t.notThrows(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      var1: 'something',
+    }, { wrapTailsWith: '' })
+  })
+})
+
+test('01.17 - throws when opts.heads is not string', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { heads: 1 })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.18 - throws when opts.tails is not string', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { tails: 1 })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.19 - throws when all args are missing', (t) => {
+  const err1 = t.throws(() => {
+    jv()
+  })
+  t.truthy(err1.message.includes('[THROW_ID_01]'))
+})
+
+test('01.20 - throws when key references itself', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: '%%_a_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'something %%_a_%% aaaa %%_a_%%',
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_19]'))
+})
+
+test('01.21 - throws when key references itself', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'a',
+      b: '%%_a_%%',
+      c: '%%_c_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+})
+
+test('01.22 - throws when key references key which references itself', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      b: '%%_a_%%',
+      a: '%%_a_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+})
+
+test('01.23 - throws when there\'s recursion (with distraction)', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      b: '%%_a_%%',
+      a: '%%_b_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      longerKeyName: '%%_shorterKeyN_%%',
+      shorterKeyN: '%%_longerKeyName_%%',
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_19]'))
+
+  const err3 = t.throws(() => {
+    jv({
+      k: {
+        l: {
+          m: {
+            n: {
+              a: '%%_c_%% %%_b_%%',
+              b: '%%_a_%%',
+              c: 'ccc',
+            },
+          },
+        },
+      },
+    })
+  })
+  t.truthy(err3.message.includes('[THROW_ID_19]'))
+
+  const err4 = t.throws(() => {
+    jv({
+      k: {
+        l: {
+          m: {
+            n: {
+              a: '%%_c_%% %%_b_%%',
+              a_data: { // with data-store
+                b: '%%_a_%%',
+              },
+              c: 'ccc',
+            },
+          },
+        },
+      },
+    })
+  })
+  t.truthy(err4.message.includes('[THROW_ID_19]'))
+})
+
+test('01.24 - throws when there\'s a longer recursion', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: '%%_d_%%',
+      d: '%%_e_%%',
+      e: '%%_b_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+})
+
+test('01.25 - throws when opts.lookForDataContainers is not boolean', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: 1 }) // as number, should be Bool
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { lookForDataContainers: 'false' }) // as string, should be Bool
+  })
+  t.truthy(err2.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.26 - throws when opts.preventDoubleWrapping is not boolean', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { preventDoubleWrapping: 1 })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_04*]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1_%% more text',
+      b: 'something',
+    }, { preventDoubleWrapping: 'false' })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_04*]'))
+})
+
+test('01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal', (t) => {
+  const err1 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        heads: '%%_',
+        headsNoWrap: '%%_',
+      },
+    )
+  })
+  t.truthy(err1.message.includes('[THROW_ID_10]'))
+
+  const err2 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        heads: 'zzzz',
+        headsNoWrap: 'zzzz',
+      },
+    )
+  })
+  t.truthy(err2.message.includes('[THROW_ID_10]'))
+
+  const err3 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        headsNoWrap: '%%_', // aiming at the default heads, "%%_"
+      },
+    )
+  })
+  t.truthy(err3.message.includes('[THROW_ID_10]'))
+})
+
+test('01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be equal', (t) => {
+  const err1 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tails: '_%%',
+        tailsNoWrap: '_%%',
+      },
+    )
+  })
+  t.truthy(err1.message.includes('[THROW_ID_11]'))
+
+  const err2 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tails: 'zzzz',
+        tailsNoWrap: 'zzzz',
+      },
+    )
+  })
+  t.truthy(err2.message.includes('[THROW_ID_11]'))
+
+  const err3 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tailsNoWrap: '_%%', // default tails is the same "_%%"
+      },
+    )
+  })
+  t.truthy(err3.message.includes('[THROW_ID_11]'))
+})
+
+test('01.29 - empty nowraps', (t) => {
+  const err1 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        heads: '%%_',
+        headsNoWrap: '',
+      },
+    )
+  })
+  t.truthy(err1.message.includes('[THROW_ID_12]'))
+
+  const err2 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tails: '_%%',
+        tailsNoWrap: '',
+      },
+    )
+  })
+  t.truthy(err2.message.includes('[THROW_ID_13]'))
+
+  const err3 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        headsNoWrap: '',
+      },
+    )
+  })
+  t.truthy(err3.message.includes('[THROW_ID_12]'))
+
+  const err4 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tailsNoWrap: '',
+      },
+    )
+  })
+  t.truthy(err4.message.includes('[THROW_ID_13]'))
+})
+
+test('01.30 - equal nowraps', (t) => {
+  const err1 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tailsNoWrap: 'aaa',
+        headsNoWrap: 'aaa',
+      },
+    )
+  })
+  t.truthy(err1.message.includes('[THROW_ID_14]'))
+
+  const err2 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        tailsNoWrap: '%%-',
+        headsNoWrap: '%%-',
+      },
+    )
+  })
+  t.truthy(err2.message.includes('[THROW_ID_14]'))
+
+  const err3 = t.throws(() => {
+    jv(
+      {
+        a: 'some text %%_var1_%% more text',
+        b: 'something',
+      },
+      {
+        headsNoWrap: '-%%', // same as default tailsNoWrap
+      },
+    )
+  })
+  t.truthy(err3.message.includes('[THROW_ID_14]'))
+})
+
+test('01.31 - throws there\'s simple recursion loop in array', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: '%%_a_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: { b: '%%_a_%%' },
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_20]'))
+
+  const err3 = t.throws(() => {
+    jv({
+      a: ['%%_a_%%'],
+    })
+  })
+  t.truthy(err3.message.includes('[THROW_ID_20]'))
+
+  const err4 = t.throws(() => {
+    jv({
+      a: ['%%_b_%%'],
+      b: ['%%_a_%%'],
+    })
+  })
+  t.truthy(err4.message.includes('[THROW_ID_20]'))
+
+  const err5 = t.throws(() => {
+    jv({
+      a: ['%%_b_%%', '%%_b_%%'],
+    })
+  })
+  t.truthy(err5.message.includes('[THROW_ID_18]'))
+
+  const err6 = t.throws(() => {
+    jv({ z: ['%%_a_%%'] })
+  })
+  t.truthy(err6.message.includes('[THROW_ID_18]'))
+})
+
+test('01.32 - throws referencing what does not exist', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: '%%_b_%%',
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
+  const err2 = t.throws(() => {
+    jv({
+      a: ['%%_b_%%'],
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_18]'))
+})
+
+test('01.33 - throws when referencing the multi-level object keys that don\'t exist', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
+      b: 'something',
+      var1: { key1: 'value1' },
+      var2: { key2: 'value2' },
+    })
+  })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
+
+  const err2 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
+      b: 'something',
+      var1: { key1: 'value1', key2: 'value2', key3: 'value3' },
+      var2: { key4: 'value4', key5: 'value5', key6: 'value6' },
+    })
+  })
+  t.truthy(err2.message.includes('[THROW_ID_18]'))
+
+  const err3 = t.throws(() => {
+    jv({
+      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
+      b: 'something',
+      var1: { key1: 'value1' },
+      var2: { key2: 'value2' },
+    }, {
+      wrapHeadsWith: '${',
+      wrapTailsWith: '}',
+    })
+  })
+  t.truthy(err3.message.includes('[THROW_ID_18]'))
+})
+
+test('01.34 - throws when opts are given truthy but not a plain object', (t) => {
+  const err1 = t.throws(() => {
+    jv({
+      a: 'aaa',
+      b: 'bbb',
+    }, 'zzz')
+  })
+  t.truthy(err1.message.includes('[THROW_ID_03]'))
+})
+
+// -----------------------------------------------------------------------------
+// 02. B.A.U.
+// -----------------------------------------------------------------------------
+
+test('02.01 - two variables in an object\'s key', (t) => {
   t.deepEqual(
     jv({
       a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -22,23 +828,29 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: 'value1',
       var2: 'value2',
     },
-    '02.01.01 - defaults',
+    '02.01',
   )
+})
+
+test('02.02 - two variables with paths in an object\'s key', (t) => {
   t.deepEqual(
     jv({
-      a: 'some text %%_var1.key1_%% more text %%_var2.key2_%%',
+      a: 'some text %%_var1.key1.0_%% more text %%_var2.key2.key3.1_%%',
       b: 'something',
-      var1: { key1: 'value1' },
-      var2: { key2: 'value2' },
+      var1: { key1: ['value1'] },
+      var2: { key2: { key3: ['', 'value2'] } },
     }),
     {
       a: 'some text value1 more text value2',
       b: 'something',
-      var1: { key1: 'value1' },
-      var2: { key2: 'value2' },
+      var1: { key1: ['value1'] },
+      var2: { key2: { key3: ['', 'value2'] } },
     },
-    '02.01.02 - defaults + querying object contents',
+    '02.02 - defaults + querying object contents',
   )
+})
+
+test('02.03 - two variables, with wrapping', (t) => {
   t.deepEqual(
     jv(
       {
@@ -58,8 +870,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: 'value1',
       var2: 'value2',
     },
-    '02.01.03 - custom wrappers',
+    '02.03 - custom wrappers',
   )
+})
+
+test('02.04 - variables with paths being wrapped', (t) => {
   t.deepEqual(
     jv(
       {
@@ -79,8 +894,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: { key1: 'value1' },
       var2: { key2: 'value2' },
     },
-    '02.01.04 - custom wrappers + multi-level',
+    '02.04 - custom wrappers + multi-level',
   )
+})
+
+test('02.05 - custom heads and tails', (t) => {
   t.deepEqual(
     jv(
       {
@@ -100,8 +918,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: 'value1',
       var2: 'value2',
     },
-    '02.01.05 - custom heads/tails',
+    '02.05 - custom heads/tails',
   )
+})
+
+test('02.06 - custom heads and tails being wrapped', (t) => {
   t.deepEqual(
     jv(
       {
@@ -121,8 +942,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: { key1: 'value1' },
       var2: { key2: 'value2' },
     },
-    '02.01.06 - custom heads/tails + multi-level',
+    '02.06 - custom heads/tails + multi-level',
   )
+})
+
+test('02.07 - whitespace within custom heads and tails', (t) => {
   t.deepEqual(
     jv(
       {
@@ -142,8 +966,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: 'value1',
       var2: 'value2',
     },
-    '02.01.07 - custom heads/tails, some whitespace inside of them',
+    '02.07 - custom heads/tails, some whitespace inside of them',
   )
+})
+
+test('02.08 - whitespace within variables containing paths and custom heads/tails', (t) => {
   t.deepEqual(
     jv(
       {
@@ -163,8 +990,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       var1: { key1: 'value1' },
       var2: { key2: 'value2' },
     },
-    '02.01.08 - custom heads/tails, some whitespace inside of them + multi-level',
+    '02.08 - custom heads/tails, some whitespace inside of them + multi-level',
   )
+})
+
+test('02.09 - some values are equal to heads or tails', (t) => {
   t.deepEqual(
     jv({
       a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -184,8 +1014,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       d: '_%%',
       e: '_%%',
     },
-    '02.01.09 - some keys have heads/tails exactly - defaults',
+    '02.09 - some keys have heads/tails exactly - defaults',
   )
+})
+
+test('02.10 - opts.noSingleMarkers - off', (t) => {
   t.deepEqual(
     jv(
       {
@@ -210,9 +1043,12 @@ test('02.01 - fills in variables found among other keys', (t) => {
       d: '_%%',
       e: '_%%',
     },
-    '02.01.10 - some keys have heads/tails exactly - hardcoded defaults',
+    '02.10 - some keys have heads/tails exactly - hardcoded defaults',
   )
-  t.throws(() => {
+})
+
+test('02.11 - opts.noSingleMarkers - on', (t) => {
+  const err1 = t.throws(() => {
     jv(
       {
         a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -228,7 +1064,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       },
     )
   })
-  t.throws(() => {
+  t.truthy(err1.message.includes('[THROW_ID_16]'))
+})
+
+test('02.12 - opts.noSingleMarkers - off - more throw tests', (t) => {
+  const err1 = t.throws(() => {
     jv(
       {
         a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -242,6 +1082,10 @@ test('02.01 - fills in variables found among other keys', (t) => {
       },
     )
   })
+  t.truthy(err1.message.includes('[THROW_ID_16]'))
+})
+
+test('02.13 - custom heads/tails, values equal to them are present in data', (t) => {
   t.deepEqual(
     jv(
       {
@@ -267,8 +1111,11 @@ test('02.01 - fills in variables found among other keys', (t) => {
       d: '}',
       e: '}',
     },
-    '02.01.13 - some keys have heads/tails only - custom heads/tails, defaults',
+    '02.13 - some keys have heads/tails only - custom heads/tails, defaults',
   )
+})
+
+test('02.14 - custom heads/tails - noSingleMarkers = false', (t) => {
   t.deepEqual(
     jv(
       {
@@ -295,11 +1142,33 @@ test('02.01 - fills in variables found among other keys', (t) => {
       d: '}',
       e: '}',
     },
-    '02.01.14 - some keys have heads/tails only - custom heads/tails, hardcoded defaults',
+    '02.14 - some keys have heads/tails only - custom heads/tails, hardcoded defaults',
   )
 })
 
-test('02.02 - fills in all the variables found in a default data stash', (t) => {
+test('02.15 - value in an array', (t) => {
+  t.deepEqual(
+    jv({
+      z: {
+        a: ['some text %%_var1_%% more text %%_var2_%%'],
+        b: 'something',
+        var1: 'value1',
+        var2: 'value2',
+      },
+    }),
+    {
+      z: {
+        a: ['some text value1 more text value2'],
+        b: 'something',
+        var1: 'value1',
+        var2: 'value2',
+      },
+    },
+    '02.15',
+  )
+})
+
+test('02.16 - data stores #1', (t) => {
   t.deepEqual(
     jv({
       a: 'some text %%_var1_%% more text %%_var3_%%.',
@@ -317,7 +1186,7 @@ test('02.02 - fills in all the variables found in a default data stash', (t) => 
         var3: '333333',
       },
     },
-    '02.02.01',
+    '02.16.01',
   )
   t.deepEqual(
     jv({
@@ -336,7 +1205,7 @@ test('02.02 - fills in all the variables found in a default data stash', (t) => 
         var3: '333333',
       },
     },
-    '02.02.02',
+    '02.16.02',
   )
   t.deepEqual(
     jv({
@@ -355,7 +1224,7 @@ test('02.02 - fills in all the variables found in a default data stash', (t) => 
         var3: { key3: '333333' },
       },
     },
-    '02.02.03 - data stash and multi-level, all default',
+    '02.16.03 - data stash and multi-level, all default',
   )
   t.deepEqual(
     jv({
@@ -374,11 +1243,11 @@ test('02.02 - fills in all the variables found in a default data stash', (t) => 
         var3: { key3: '333333' },
       },
     },
-    '02.02.04 - data stash and multi-level, default markers, custom wrap',
+    '02.16.04 - data stash and multi-level, default markers, custom wrap',
   )
 })
 
-test('02.03 - top-level key and data stash clash', (t) => {
+test('02.17 - top-level key and data stash clash', (t) => {
   t.deepEqual(
     jv({
       a: 'some text %%_var1_%% more text %%_var3_%%.',
@@ -398,7 +1267,7 @@ test('02.03 - top-level key and data stash clash', (t) => {
         var3: '333333',
       },
     },
-    '02.03.01 - default, no wrap',
+    '02.17.01 - default, no wrap',
   )
   t.deepEqual(
     jv({
@@ -419,7 +1288,7 @@ test('02.03 - top-level key and data stash clash', (t) => {
         var3: '333333',
       },
     },
-    '02.03.02 - wrap',
+    '02.17.02 - wrap',
   )
   t.deepEqual(
     jv({
@@ -440,7 +1309,7 @@ test('02.03 - top-level key and data stash clash', (t) => {
         var3: { key3: '333333' },
       },
     },
-    '02.03.03 - root key would take precedence, but it\'s of a wrong format and therefore algorithm chooses data storage instead (which is correct type)',
+    '02.17.03 - root key would take precedence, but it\'s of a wrong format and therefore algorithm chooses data storage instead (which is correct type)',
   )
   t.deepEqual(
     jv({
@@ -461,11 +1330,11 @@ test('02.03 - top-level key and data stash clash', (t) => {
         var3: { key3: '333333' },
       },
     },
-    '02.03.03 - mix, one var resolved from root, another from data store',
+    '02.17.03 - mix, one var resolved from root, another from data store',
   )
 })
 
-test('02.04 - emoji in values', (t) => {
+test('02.18 - emoji in values', (t) => {
   t.deepEqual(
     jv({
       a: 'some🦄 text %%_var1_%% more text %%_var2_%%.',
@@ -483,11 +1352,11 @@ test('02.04 - emoji in values', (t) => {
         var2: 'value2',
       },
     },
-    '02.04',
+    '02.18',
   )
 })
 
-test('02.05 - emoji in keys', (t) => {
+test('02.19 - emoji in keys', (t) => {
   t.deepEqual(
     jv({
       a: 'some🦄 text %%_var🐴_%% more text %%_var2_%%.',
@@ -505,11 +1374,11 @@ test('02.05 - emoji in keys', (t) => {
         var2: 'value2',
       },
     },
-    '02.05',
+    '02.19',
   )
 })
 
-test('02.06 - emoji in variable keys', (t) => {
+test('02.20 - emoji in variable keys', (t) => {
   t.deepEqual(
     jv({
       a: 'some🦄 text %%_var🐴_%% more text %%_var2_%%.',
@@ -527,11 +1396,11 @@ test('02.06 - emoji in variable keys', (t) => {
         var2: 'value2💛',
       },
     },
-    '02.05',
+    '02.20',
   )
 })
 
-test('02.06 - empty strings with the input AST', (t) => {
+test('02.21 - empty strings in the input AST', (t) => {
   t.deepEqual(
     jv({
       a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -547,7 +1416,259 @@ test('02.06 - empty strings with the input AST', (t) => {
       var1: 'value1',
       var2: 'value2',
     },
-    '02.06.01 - defaults',
+    '02.21 - defaults',
+  )
+})
+
+test('02.22 - fetching variables from parent node\'s level', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1_%% text %%-var2-%% text',
+          },
+          var1: 'zzz',
+          var2: 'yyy',
+        },
+      },
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+          var1: 'zzz',
+          var2: 'yyy',
+        },
+      },
+    },
+    '02.22 - defaults',
+  )
+})
+
+test('02.23 - fetching variables from two levels above', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1_%% text %%-var2-%% text',
+          },
+        },
+        var1: 'zzz',
+        var2: 'yyy',
+      },
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+        },
+        var1: 'zzz',
+        var2: 'yyy',
+      },
+    },
+    '02.23 - defaults',
+  )
+})
+
+test('02.24 - fetching variables from root, three levels above', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1.z_%% text %%-var2-%% text',
+          },
+        },
+      },
+      var1: { z: 'zzz' },
+      var2: 'yyy',
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+        },
+      },
+      var1: { z: 'zzz' },
+      var2: 'yyy',
+    },
+    '02.24 - defaults',
+  )
+})
+
+test('02.25 - fetching variables from parent node\'s level data store', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1.z_%% text %%-var2-%% text',
+          },
+          c_data: {
+            var1: { z: 'zzz' },
+            var2: 'yyy',
+          },
+        },
+      },
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+          c_data: {
+            var1: { z: 'zzz' },
+            var2: 'yyy',
+          },
+        },
+      },
+    },
+    '02.25 - defaults',
+  )
+})
+
+test('02.26 - fetching variables from data store two levels above', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1_%% text %%-var2-%% text',
+          },
+        },
+        b_data: {
+          var1: 'zzz',
+          var2: 'yyy',
+        },
+      },
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+        },
+        b_data: {
+          var1: 'zzz',
+          var2: 'yyy',
+        },
+      },
+    },
+    '02.26 - defaults',
+  )
+})
+
+test('02.27 - fetching variables from data store as high as the root', (t) => {
+  t.deepEqual(
+    jv({
+      a: {
+        b: {
+          c: {
+            d: 'text %%_var1_%% text %%-var2-%% text',
+          },
+        },
+      },
+      a_data: {
+        var1: 'zzz',
+        var2: 'yyy',
+      },
+    }),
+    {
+      a: {
+        b: {
+          c: {
+            d: 'text zzz text yyy text',
+          },
+        },
+      },
+      a_data: {
+        var1: 'zzz',
+        var2: 'yyy',
+      },
+    },
+    '02.27 - defaults',
+  )
+})
+
+// in the unit test below, there are two "eee"s to check can we really use
+// parent keys in the path to make keys unique
+test('02.28 - three level references', (t) => {
+  t.deepEqual(
+    jv({
+      aaa: {
+        bbb: {
+          ccc: 'some text %%_ddd_%%',
+          ggg: { zzz: '%%_hhh_%%' },
+          eee: 'jjj',
+          fff: 'kkk',
+        },
+        bbb_data: {
+          ddd: '%%_eee.fff_%%',
+          eee: {
+            fff: '%%_ggg.zzz_%%',
+          },
+        },
+      },
+      hhh: 'iii',
+    }),
+    {
+      aaa: {
+        bbb: {
+          ccc: 'some text iii',
+          ggg: { zzz: 'iii' },
+          eee: 'jjj',
+          fff: 'kkk',
+        },
+        bbb_data: {
+          ddd: 'iii',
+          eee: {
+            fff: 'iii',
+          },
+        },
+      },
+      hhh: 'iii',
+    },
+    '02.28',
+  )
+})
+
+test('02.29 - resolves to a string', (t) => {
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: 1,
+    }),
+    {
+      a: '1',
+      b: 1,
+    },
+    '02.29.01',
+  )
+
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      a_data: {
+        b: 1,
+      },
+    }),
+    {
+      a: '1',
+      a_data: {
+        b: 1,
+      },
+    },
+    '02.29.02',
   )
 })
 
@@ -717,7 +1838,7 @@ test('03.06 - multiple variables resolved', (t) => {
     },
     '03.06',
   )
-  t.throws(() => {
+  const err1 = t.throws(() => {
     jv({
       a: '%%_e_%% %%_d_%%',
       b: '%%_a_%%',
@@ -727,7 +1848,9 @@ test('03.06 - multiple variables resolved', (t) => {
       f: '%%_b_%%',
     })
   })
-  t.throws(() => {
+  t.truthy(err1.message.includes('[THROW_ID_19]'))
+
+  const err2 = t.throws(() => {
     jv({
       a: '%%_e_%% %%_d_%%',
       b: '%%_a_%%',
@@ -737,6 +1860,7 @@ test('03.06 - multiple variables resolved', (t) => {
       f: '%%_b_%%',
     })
   })
+  t.truthy(err2.message.includes('[THROW_ID_19]'))
 })
 
 test('03.07 - preventDoubleWrapping: on & off', (t) => {
@@ -766,6 +1890,63 @@ test('03.07 - preventDoubleWrapping: on & off', (t) => {
     },
     '03.07.02',
   )
+
+  // here values come already wrapped:
+
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: '{val}',
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', preventDoubleWrapping: false }),
+    {
+      a: '{{{val}}}',
+      b: '{{val}}',
+      c: '{val}',
+    },
+    '03.07.03',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: '{val}',
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', preventDoubleWrapping: true }),
+    {
+      a: '{val}',
+      b: '{val}',
+      c: '{val}',
+    },
+    '03.07.04',
+  )
+
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'Some text {val} and another {val}',
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', preventDoubleWrapping: false }),
+    {
+      a: '{{Some text {val} and another {val}}}',
+      b: '{Some text {val} and another {val}}',
+      c: 'Some text {val} and another {val}',
+    },
+    '03.07.05 - more real-life case',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'Some text {val} and another {val}',
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', preventDoubleWrapping: true }),
+    {
+      a: 'Some text {val} and another {val}',
+      b: 'Some text {val} and another {val}',
+      c: 'Some text {val} and another {val}',
+    },
+    '03.07.06 - more real-life case',
+  )
+
   t.deepEqual(
     jv({
       a: '%%_b_%%',
@@ -777,7 +1958,21 @@ test('03.07 - preventDoubleWrapping: on & off', (t) => {
       b: '{val}',
       c: { d: 'val' },
     },
-    '03.07.03 - object multi-level values',
+    '03.07.07 - object multi-level values',
+  )
+})
+
+test('03.08 - empty variable', (t) => {
+  t.deepEqual(
+    jv({
+      a: '%%__%%',
+      b: 'bbb',
+    }),
+    {
+      a: '',
+      b: 'bbb',
+    },
+    '03.08 - no value is needed if variable is empty - it\'s resolved to empty str',
   )
 })
 
@@ -824,7 +2019,7 @@ test('04.02 - global wrap flipswitch and dontWrapVars combo', (t) => {
       wrapHeadsWith: '{', wrapTailsWith: '}', wrapGlobalFlipSwitch: true, dontWrapVars: 'c*',
     }),
     {
-      a: 'val',
+      a: '{val}',
       b: 'val',
       c: 'val',
     },
@@ -836,31 +2031,48 @@ test('04.02 - global wrap flipswitch and dontWrapVars combo', (t) => {
       b: '%%_c_%%',
       c: 'val',
     }, {
-      wrapHeadsWith: '{', wrapTailsWith: '}', wrapGlobalFlipSwitch: false, dontWrapVars: 'c*',
+      wrapHeadsWith: '{', wrapTailsWith: '}', wrapGlobalFlipSwitch: true, dontWrapVars: 'b*',
+    }),
+    {
+      a: '{val}', // variable already came pre-wrapped (on "c") by the time it reached a: "%%_b_%%"
+      b: '{val}',
+      c: 'val',
+    },
+    '04.02.02',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val',
+    }, {
+      wrapHeadsWith: '{', wrapTailsWith: '}', wrapGlobalFlipSwitch: true, dontWrapVars: 'a*',
+    }),
+    {
+      a: '{val}', // there's no such variable "a"
+      b: '{val}',
+      c: 'val',
+    },
+    '04.02.03',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val',
+    }, {
+      wrapHeadsWith: '{', wrapTailsWith: '}', wrapGlobalFlipSwitch: true, dontWrapVars: ['b*', 'c*'],
     }),
     {
       a: 'val',
       b: 'val',
       c: 'val',
     },
-    '04.02.02',
+    '04.02.04',
   )
 })
 
 test('04.03 - opts.dontWrapVars', (t) => {
-  t.deepEqual(
-    jv({
-      a: '%%_b_%%',
-      b: '%%_c_%%',
-      c: 'val',
-    }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: ['b*', 'c*'] }),
-    {
-      a: 'val',
-      b: 'val',
-      c: 'val',
-    },
-    '04.03.01',
-  )
   t.deepEqual(
     jv({
       a: '%%_b_%%',
@@ -913,6 +2125,13 @@ test('04.03 - opts.dontWrapVars', (t) => {
     },
     '04.03.05',
   )
+  t.throws(() => {
+    jv({
+      a: '%%_b_%%',
+      b: '%%_c_%%',
+      c: 'val',
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: [1, 2, 3] })
+  })
 })
 
 test('04.04 - opts.dontWrapVars, real key names', (t) => {
@@ -923,7 +2142,7 @@ test('04.04 - opts.dontWrapVars, real key names', (t) => {
       subtitle: 'val',
     }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: ['sub*'] }),
     {
-      title_front: 'Some text val and more text.',
+      title_front: 'Some text {val} and more text.',
       title_sub: 'val',
       subtitle: 'val',
     },
@@ -936,7 +2155,7 @@ test('04.04 - opts.dontWrapVars, real key names', (t) => {
       subtitle: 'val',
     }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: 'sub*' }),
     {
-      title_front: 'Some text val and more text.',
+      title_front: 'Some text {val} and more text.',
       title_sub: 'val',
       subtitle: 'val',
     },
@@ -1022,7 +2241,7 @@ test('04.07 - opts.dontWrapVars, real key names', (t) => {
       subtitle: 'val',
     }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: ['*le'] }),
     {
-      title_front: 'Some text val and more text.',
+      title_front: 'Some text {val} and more text.',
       title_sub: 'val',
       subtitle: 'val',
     },
@@ -1033,7 +2252,7 @@ test('04.07 - opts.dontWrapVars, real key names', (t) => {
       title_front: 'Some text %%_title_sub_%% and more text.',
       title_sub: '%%_subtitle_%%',
       subtitle: 'val',
-    }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: '*le' }),
+    }, { wrapHeadsWith: '{', wrapTailsWith: '}', dontWrapVars: ['*le', 'title_s*'] }),
     {
       title_front: 'Some text val and more text.',
       title_sub: 'val',
@@ -1082,13 +2301,13 @@ test('05.02 - arrays referencing values which are arrays', (t) => {
   t.deepEqual(
     jv({
       a: ['Some text %%_b_%% some more text %%_c_%%', '%%_c_%%', '%%_d_%%'],
-      b: ['Some text %%_c_%%, some more text %%_d_%%', 'zzz'],
+      b: ['zzz', 'Some text %%_c_%%, some more text %%_d_%%'],
       c: ['c1', 'c2'],
       d: 'dval',
     }),
     {
-      a: ['Some text Some text c1c2, some more text dvalzzz some more text c1c2', 'c1c2', 'dval'],
-      b: ['Some text c1c2, some more text dval', 'zzz'],
+      a: ['Some text zzzSome text c1c2, some more text dval some more text c1c2', 'c1c2', 'dval'],
+      b: ['zzz', 'Some text c1c2, some more text dval'],
       c: ['c1', 'c2'],
       d: 'dval',
     },
@@ -1151,7 +2370,7 @@ test('05.03 - arrays, whitelisting as string', (t) => {
   )
 })
 
-test('05.04 - arrays, whitelisting as array', (t) => {
+test('05.04 - arrays, whitelisting as array #1', (t) => {
   t.deepEqual(
     jv(
       {
@@ -1258,7 +2477,7 @@ test('05.04 - arrays, whitelisting as array', (t) => {
   )
 })
 
-test('05.05 - arrays, whitelisting as array', (t) => {
+test('05.05 - arrays, whitelisting as array #2', (t) => {
   t.deepEqual(
     jv(
       {
@@ -1292,13 +2511,15 @@ test('05.05 - arrays, whitelisting as array', (t) => {
   t.deepEqual(
     jv(
       {
-        title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
-        title_data: {
-          subtitle: 'SUB',
-        },
-        whatnot: '%%_submarine_%%',
-        whatnot_data: {
-          submarine: 'ship',
+        a: {
+          title: '%%_whatnot_%%',
+          title_data: {
+            subtitle: 'SUB',
+          },
+          whatnot: '%%_submarine_%%',
+          whatnot_data: {
+            submarine: 'ship',
+          },
         },
       },
       {
@@ -1314,13 +2535,55 @@ test('05.05 - arrays, whitelisting as array', (t) => {
       },
     ),
     {
-      title: ['something', 'Some text SUB', '{ship}', 'anything'],
-      title_data: {
-        subtitle: 'SUB',
+      a: {
+        title: '{ship}',
+        title_data: {
+          subtitle: 'SUB',
+        },
+        whatnot: '{ship}',
+        whatnot_data: {
+          submarine: 'ship',
+        },
       },
-      whatnot: '{ship}',
-      whatnot_data: {
-        submarine: 'ship',
+    },
+    '05.05.02 - does not wrap SUB',
+  )
+  t.deepEqual(
+    jv(
+      {
+        a: {
+          title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
+          title_data: {
+            subtitle: 'SUB',
+          },
+          whatnot: '%%_submarine_%%',
+          whatnot_data: {
+            submarine: 'ship',
+          },
+        },
+      },
+      {
+        heads: '%%_',
+        tails: '_%%',
+        lookForDataContainers: true,
+        dataContainerIdentifierTails: '_data',
+        wrapHeadsWith: '{',
+        wrapTailsWith: '}',
+        dontWrapVars: ['*zzz', '*le', '*yyy'],
+        preventDoubleWrapping: true,
+        wrapGlobalFlipSwitch: true,
+      },
+    ),
+    {
+      a: {
+        title: ['something', 'Some text SUB', '{ship}', 'anything'],
+        title_data: {
+          subtitle: 'SUB',
+        },
+        whatnot: '{ship}',
+        whatnot_data: {
+          submarine: 'ship',
+        },
       },
     },
     '05.05.02 - does not wrap SUB',
@@ -1361,7 +2624,8 @@ test('05.05 - arrays, whitelisting as array', (t) => {
     },
     '05.05.03 - wraps SUB',
   )
-  t.throws(() => {
+
+  const err1 = t.throws(() => {
     jv(
       {
         title: ['something', 'Some text %%_subtitle_%%', '%%_whatnot_%%', 'anything'],
@@ -1386,6 +2650,7 @@ test('05.05 - arrays, whitelisting as array', (t) => {
       },
     )
   })
+  t.truthy(err1.message.includes('[THROW_ID_18]'))
 })
 
 // -----------------------------------------------------------------------------
@@ -1410,7 +2675,8 @@ test('06.01 - UTIL > single markers in the values', (t) => {
       },
     )
   })
-  t.throws(() => {
+
+  const err1 = t.throws(() => {
     jv(
       {
         a: 'z',
@@ -1421,6 +2687,8 @@ test('06.01 - UTIL > single markers in the values', (t) => {
       },
     )
   })
+  t.truthy(err1.message.includes('[THROW_ID_16]'))
+
   t.notThrows(() => {
     jv({
       a: 'z',
@@ -1438,7 +2706,8 @@ test('06.01 - UTIL > single markers in the values', (t) => {
       },
     )
   })
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     jv(
       {
         a: 'z',
@@ -1449,6 +2718,7 @@ test('06.01 - UTIL > single markers in the values', (t) => {
       },
     )
   })
+  t.truthy(err2.message.includes('[THROW_ID_16]'))
 })
 
 // -----------------------------------------------------------------------------
@@ -1498,7 +2768,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
       var1: 'value1',
       var2: 'value2',
     },
-    '07.01.04 - custom opts.headsNoWrap & opts.tailsNoWrap',
+    '07.01.02 - custom opts.headsNoWrap & opts.tailsNoWrap',
   )
   t.deepEqual(
     jv(
@@ -1521,7 +2791,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
       var1: 'value1',
       var2: 'value2',
     },
-    '07.01.05 - left side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap',
+    '07.01.03 - left side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap',
   )
   t.deepEqual(
     jv(
@@ -1544,7 +2814,7 @@ test('07.01 - opts.headsNoWrap & opts.tailsNoWrap work on single level vars', (t
       var1: 'value1',
       var2: 'value2',
     },
-    '07.01.05 - right side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap',
+    '07.01.04 - right side wrapped only, custom opts.headsNoWrap & opts.tailsNoWrap',
   )
 })
 
@@ -1552,7 +2822,7 @@ test('07.02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars', (t)
   t.deepEqual(
     jv(
       {
-        a: 'text %%-b-%% more text %%_c_%% and more %%-b-%% text',
+        a: 'text %%-b-%% more text %%_c_%% and more %%-b-%% text %%_b_%% more text %%-c-%%',
         b: '%%_c_%%',
         c: 'z',
       },
@@ -1562,7 +2832,7 @@ test('07.02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars', (t)
       },
     ),
     {
-      a: 'text z more text ??z!! and more z text',
+      a: 'text z more text ??z!! and more z text ??z!! more text z',
       b: '??z!!',
       c: 'z',
     },
@@ -1612,6 +2882,268 @@ test('07.02 - opts.headsNoWrap & opts.tailsNoWrap work on multi-level vars', (t)
   )
 })
 
+test('07.03 - triple linking with resolving arrays and trailing new lines', (t) => {
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%-bbb-%%',
+        bbb: 'ccc\n',
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: 'ccc\n',
+      bbb: 'ccc\n',
+    },
+    '07.03.01 - basic, checking are trailing line breaks retained',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%-bbb-%%',
+        bbb: [
+          '%%-kkk-%%',
+          '%%-lll-%%',
+        ],
+        bbb_data: {
+          kkk: 'zzz\n',
+          lll: 'yyy\n',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: 'zzz\nyyy\n',
+      bbb: [
+        'zzz\n',
+        'yyy\n',
+      ],
+      bbb_data: {
+        kkk: 'zzz\n',
+        lll: 'yyy\n',
+      },
+    },
+    '07.03.02 - line breaks on the values coming into array',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%-bbb-%%',
+        bbb: [
+          '%%-kkk-%%\n',
+          '%%-lll-%%\n',
+        ],
+        bbb_data: {
+          kkk: 'zzz',
+          lll: 'yyy',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: 'zzz\nyyy\n',
+      bbb: [
+        'zzz\n',
+        'yyy\n',
+      ],
+      bbb_data: {
+        kkk: 'zzz',
+        lll: 'yyy',
+      },
+    },
+    '07.03.03 - line breaks at array-level',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%_bbb_%%', // <----- regular heads/tails
+        bbb: [
+          '%%_kkk_%%',
+          '%%_lll_%%',
+        ],
+        bbb_data: {
+          kkk: 'zzz',
+          lll: 'yyy',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: '{{ zzz }}{{ yyy }}',
+      bbb: [
+        '{{ zzz }}',
+        '{{ yyy }}',
+      ],
+      bbb_data: {
+        kkk: 'zzz',
+        lll: 'yyy',
+      },
+    },
+    '07.03.04 - like #02 but with wrapping',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%-bbb-%%', // <-----  notice no-wrap heads/tails
+        bbb: [
+          '%%_kkk_%%',
+          '%%_lll_%%',
+        ],
+        bbb_data: {
+          kkk: 'zzz',
+          lll: 'yyy',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: '{{ zzz }}{{ yyy }}',
+      bbb: [
+        '{{ zzz }}',
+        '{{ yyy }}',
+      ],
+      bbb_data: {
+        kkk: 'zzz',
+        lll: 'yyy',
+      },
+    },
+    '07.03.05',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        aaa: '%%-bbb-%%',
+        bbb: [
+          '%%-kkk-%%',
+          '%%-lll-%%',
+        ],
+        bbb_data: {
+          kkk: '{%- if %%-zzz-%% -%}%%_zzz_%%<br />{%- endif -%}\n',
+          zzz: 'zzz_val',
+          lll: '{%- if %%-yyy-%% -%}%%_yyy_%%<br />{%- endif -%}\n',
+          yyy: 'yyy_val',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      aaa: '{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n',
+      bbb: [
+        '{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n',
+        '{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n',
+      ],
+      bbb_data: {
+        kkk: '{%- if zzz_val -%}{{ zzz_val }}<br />{%- endif -%}\n',
+        zzz: 'zzz_val',
+        lll: '{%- if yyy_val -%}{{ yyy_val }}<br />{%- endif -%}\n',
+        yyy: 'yyy_val',
+      },
+    },
+    '07.03.06 - simple version',
+  )
+
+  t.deepEqual(
+    jv(
+      {
+        shop_info_text: '%%-shop_info_global-%%',
+        shop_info_global: [
+          '%%-row0_line-%%',
+          '%%_row1_line_%%',
+          '%%_row2_line_%%',
+          '%%_row3_line_%%',
+          '%%_row4_line_%%',
+          '%%_row5_line_%%',
+          '%%_row6_line_%%',
+          '%%_row7_line_%%',
+          '%%_row8_line_%%',
+        ],
+        shop_info_global_data: {
+          row0_line: '{%- if %%-row0_var-%% -%}%%_row0_var_%%<br />{%- endif -%}\n',
+          row0_var: 'order.shopInfo.name',
+          row1_line: '{%- if %%-row1_var-%% -%}%%_row1_var_%%<br />{%- endif -%}\n',
+          row1_var: 'order.shopInfo.addressLine1',
+          row2_line: '{%- if %%-row2_var-%% -%}%%_row2_var_%%<br />{%- endif -%}\n',
+          row2_var: 'order.shopInfo.addressLine2',
+          row3_line: '{%- if %%-row3_var-%% -%}%%_row3_var_%%<br />{%- endif -%}\n',
+          row3_var: 'order.shopInfo.addressLine3',
+          row4_line: '{%- if %%-row4_var-%% -%}%%_row4_var_%%<br />{%- endif -%}\n',
+          row4_var: 'order.shopInfo.addressLine4',
+          row5_line: '{%- if %%-row5_var-%% -%}%%_row5_var_%%<br />{%- endif -%}\n',
+          row5_var: 'order.shopInfo.addressLine5',
+          row6_line: '{%- if %%-row6_var-%% -%}%%_row6_var_%%<br />{%- endif -%}\n',
+          row6_var: 'order.shopInfo.addressLine6',
+          row7_line: '{%- if %%-row7_var-%% -%}%%_row7_var_%%<br />{%- endif -%}\n',
+          row7_var: 'order.shopInfo.city',
+          row8_line: '{%- if %%-row8_var-%% -%}%%_row8_var_%%{%- endif -%}',
+          row8_var: 'order.shopInfo.zipCode',
+        },
+      },
+      {
+        wrapHeadsWith: '{{ ',
+        wrapTailsWith: ' }}',
+      },
+    ),
+    {
+      shop_info_text: '{%- if order.shopInfo.name -%}{{ order.shopInfo.name }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine1 -%}{{ order.shopInfo.addressLine1 }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine2 -%}{{ order.shopInfo.addressLine2 }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine3 -%}{{ order.shopInfo.addressLine3 }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine4 -%}{{ order.shopInfo.addressLine4 }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine5 -%}{{ order.shopInfo.addressLine5 }}<br />{%- endif -%}\n{%- if order.shopInfo.addressLine6 -%}{{ order.shopInfo.addressLine6 }}<br />{%- endif -%}\n{%- if order.shopInfo.city -%}{{ order.shopInfo.city }}<br />{%- endif -%}\n{%- if order.shopInfo.zipCode -%}{{ order.shopInfo.zipCode }}{%- endif -%}',
+      shop_info_global: [
+        '{%- if order.shopInfo.name -%}{{ order.shopInfo.name }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine1 -%}{{ order.shopInfo.addressLine1 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine2 -%}{{ order.shopInfo.addressLine2 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine3 -%}{{ order.shopInfo.addressLine3 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine4 -%}{{ order.shopInfo.addressLine4 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine5 -%}{{ order.shopInfo.addressLine5 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.addressLine6 -%}{{ order.shopInfo.addressLine6 }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.city -%}{{ order.shopInfo.city }}<br />{%- endif -%}\n',
+        '{%- if order.shopInfo.zipCode -%}{{ order.shopInfo.zipCode }}{%- endif -%}',
+      ],
+      shop_info_global_data: {
+        row0_line: '{%- if order.shopInfo.name -%}{{ order.shopInfo.name }}<br />{%- endif -%}\n',
+        row0_var: 'order.shopInfo.name',
+        row1_line: '{%- if order.shopInfo.addressLine1 -%}{{ order.shopInfo.addressLine1 }}<br />{%- endif -%}\n',
+        row1_var: 'order.shopInfo.addressLine1',
+        row2_line: '{%- if order.shopInfo.addressLine2 -%}{{ order.shopInfo.addressLine2 }}<br />{%- endif -%}\n',
+        row2_var: 'order.shopInfo.addressLine2',
+        row3_line: '{%- if order.shopInfo.addressLine3 -%}{{ order.shopInfo.addressLine3 }}<br />{%- endif -%}\n',
+        row3_var: 'order.shopInfo.addressLine3',
+        row4_line: '{%- if order.shopInfo.addressLine4 -%}{{ order.shopInfo.addressLine4 }}<br />{%- endif -%}\n',
+        row4_var: 'order.shopInfo.addressLine4',
+        row5_line: '{%- if order.shopInfo.addressLine5 -%}{{ order.shopInfo.addressLine5 }}<br />{%- endif -%}\n',
+        row5_var: 'order.shopInfo.addressLine5',
+        row6_line: '{%- if order.shopInfo.addressLine6 -%}{{ order.shopInfo.addressLine6 }}<br />{%- endif -%}\n',
+        row6_var: 'order.shopInfo.addressLine6',
+        row7_line: '{%- if order.shopInfo.city -%}{{ order.shopInfo.city }}<br />{%- endif -%}\n',
+        row7_var: 'order.shopInfo.city',
+        row8_line: '{%- if order.shopInfo.zipCode -%}{{ order.shopInfo.zipCode }}{%- endif -%}',
+        row8_var: 'order.shopInfo.zipCode',
+      },
+    },
+    '07.03.07 - real-life version',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 08. non-string values - still valid JSON
 // -----------------------------------------------------------------------------
@@ -1626,13 +3158,13 @@ test('08.01 - Boolean values inserted into a middle of a string', (t) => {
       e: false,
     }),
     {
-      a: false,
+      a: false, // <------ first Boolean value is put here. "b" was string, so "c = true" goes here.
       b: 'stringB',
       c: true,
       d: 'stringD',
       e: false,
     },
-    '08.01.01',
+    '08.01.01 - mix of Bools and strings resolve to the value of the first encountered Bool',
   )
   t.deepEqual(
     jv(
@@ -1656,6 +3188,46 @@ test('08.01 - Boolean values inserted into a middle of a string', (t) => {
     },
     '08.01.02',
   )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%% %%_c_%% %%_d_%% %%_e_%%',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false,
+    }, { resolveToFalseIfAnyValuesContainBool: false }),
+    {
+      a: true, // <------ first Boolean value is put here. "b" was string, so "c = true" goes here.
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false,
+    },
+    '08.01.03',
+  )
+  t.deepEqual(
+    jv(
+      {
+        a: '%%_b_%% %%_c_%% %%_d_%% %%_e_%%',
+        b: 'stringB',
+        c: true,
+        d: 'stringD',
+        e: false,
+      },
+      {
+        resolveToBoolIfAnyValuesContainBool: false,
+        resolveToFalseIfAnyValuesContainBool: false,
+      },
+    ),
+    {
+      a: 'stringB  stringD ',
+      b: 'stringB',
+      c: true,
+      d: 'stringD',
+      e: false,
+    },
+    '08.01.04',
+  )
 })
 
 test('08.02 - Boolean values inserted instead of other values, in whole', (t) => {
@@ -1665,10 +3237,32 @@ test('08.02 - Boolean values inserted instead of other values, in whole', (t) =>
       b: true,
     }),
     {
+      a: false,
+      b: true,
+    },
+    '08.02.01',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: true,
+    }, { resolveToFalseIfAnyValuesContainBool: true }),
+    {
+      a: false,
+      b: true,
+    },
+    '08.02.02',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%_b_%%',
+      b: true,
+    }, { resolveToFalseIfAnyValuesContainBool: false }),
+    {
       a: true,
       b: true,
     },
-    '08.02',
+    '08.02.03',
   )
 })
 
@@ -1702,7 +3296,74 @@ test('08.04 - null values inserted instead of other values, in whole', (t) => {
       a: null,
       b: null,
     },
-    '08.04',
+    '08.04.01',
+  )
+  t.deepEqual(
+    jv({
+      a: '  %%_b_%%  ', // <---- will "whole value is var" detection cope with whitespaces?
+      b: null,
+    }),
+    {
+      a: null,
+      b: null,
+    },
+    '08.04.02 - spaces around a value which would resolve to null',
+  )
+  t.deepEqual(
+    jv({
+      a: '%%-b-%%',
+      b: null,
+    }),
+    {
+      a: null,
+      b: null,
+    },
+    '08.04.03 - using non-wrapping heads/tails',
+  )
+  t.deepEqual(
+    jv({
+      a: '  %%-b-%%  ',
+      b: null,
+    }),
+    {
+      a: null,
+      b: null,
+    },
+    '08.04.04 - like #3 but with extra whitespace',
+  )
+  t.deepEqual(
+    jv(
+      {
+        a: '%%_b_%%',
+        b: null,
+      },
+      {
+        wrapHeadsWith: '{{',
+        wrapTailsWith: '}}',
+      },
+    ),
+    {
+      a: null,
+      b: null,
+    },
+    '08.04.05 - doesn\'t wrap null',
+  )
+  t.deepEqual(
+    jv(
+      {
+        a: '%%-b-%%', // <---- it was no-wrap markers anyway
+        b: null,
+      },
+      {
+        wrapHeadsWith: '{{',
+        wrapTailsWith: '}}',
+      },
+    ),
+    {
+      a: null,
+      b: null,
+    },
+    '08.04.06 - doesn\'t wrap null',
   )
 })
 
@@ -1711,22 +3372,24 @@ test('08.04 - null values inserted instead of other values, in whole', (t) => {
 // -----------------------------------------------------------------------------
 
 test('09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix', (t) => {
+  // False
+
   t.deepEqual(
     jv({
       a: 'zzz %%_b_%% zzz',
-      b: true,
+      b: false,
     }),
     {
       a: false,
-      b: true,
+      b: false,
     },
-    '09.01.01 - relying on default',
+    '09.01.01 - false - default (opts on)',
   )
   t.deepEqual(
     jv(
       {
         a: 'zzz %%_b_%% zzz',
-        b: true,
+        b: false,
       },
       {
         resolveToBoolIfAnyValuesContainBool: true,
@@ -1734,15 +3397,15 @@ test('09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix', 
     ),
     {
       a: false,
-      b: true,
+      b: false,
     },
-    '09.01.02 - Bools hardcoded default',
+    '09.01.02 - false - hardcoded (opts on)',
   )
   t.deepEqual(
     jv(
       {
         a: 'zzz %%_b_%% zzz',
-        b: true,
+        b: false,
       },
       {
         resolveToBoolIfAnyValuesContainBool: false,
@@ -1750,10 +3413,13 @@ test('09.01 - opts.resolveToBoolIfAnyValuesContainBool, Bools and Strings mix', 
     ),
     {
       a: 'zzz  zzz',
-      b: true,
+      b: false,
     },
-    '09.01.03 - Bools turned off',
+    '09.01.03 - false - opts off',
   )
+
+  // True
+
   t.deepEqual(
     jv(
       {
@@ -2151,7 +3817,7 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
       dataContainerIdentifierTails: '_data',
       wrapHeadsWith: '{',
       wrapTailsWith: '}',
-      dontWrapVars: ['*zzz', '*1', '*6'],
+      dontWrapVars: ['*zzz', 'var1.*', '*key6'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true,
     }),
@@ -2173,6 +3839,7 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
     },
     '11.02.01 - didn\'t wrap either, first level caught',
   )
+
   t.deepEqual(
     jv({
       a: 'some text %%_var1.key3_%% more text %%_var2.key6_%%',
@@ -2216,6 +3883,7 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
     },
     '11.02.02 - didn\'t wrap one, second level caught',
   )
+
   t.deepEqual(
     jv({
       a: 'some text %%_var1.key3_%% more text %%_var2.key6_%%',
@@ -2235,7 +3903,7 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
     }, {
       lookForDataContainers: true,
       dataContainerIdentifierTails: '_data',
-      dontWrapVars: ['*zzz', '*3', '*6'],
+      dontWrapVars: ['*zzz', 'key3', 'key6'],
       preventDoubleWrapping: true,
       wrapGlobalFlipSwitch: true,
     }),
@@ -2257,6 +3925,7 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
     },
     '11.02.03 - didn\'t wrap either, second levels caught',
   )
+
   t.deepEqual(
     jv({
       a: 'some text %%-var1.key3-%% more text %%-var2.key6-%%',
@@ -2300,10 +3969,54 @@ test('11.02 - two-level querying, normal keys in the root + wrapping & opts', (t
     },
     '11.02.04 - didn\'t wrap either because of %%- the non-wrapping notation.',
   )
+
+  t.deepEqual(
+    jv({
+      a: 'some text %%-var1.key3-%% more text %%-var2.key6-%%',
+      b: 'something',
+      var1: {
+        key1: 'value1',
+        key2: 'value2',
+        key3: 'value3',
+        key4: 'value4',
+      },
+      var2: {
+        key5: 'value5',
+        key6: 'value6',
+        key7: 'value7',
+        key8: 'value8',
+      },
+    }, {
+      lookForDataContainers: true,
+      dataContainerIdentifierTails: '_data',
+      wrapHeadsWith: 'whatever,',
+      wrapTailsWith: 'it won\'t be used anyway',
+      dontWrapVars: [],
+      preventDoubleWrapping: true,
+      wrapGlobalFlipSwitch: true,
+    }),
+    {
+      a: 'some text value3 more text value6',
+      b: 'something',
+      var1: {
+        key1: 'value1',
+        key2: 'value2',
+        key3: 'value3',
+        key4: 'value4',
+      },
+      var2: {
+        key5: 'value5',
+        key6: 'value6',
+        key7: 'value7',
+        key8: 'value8',
+      },
+    },
+    '11.02.05',
+  )
 })
 
-test('11.03 - two-level queried, string found => throws', (t) => {
-  t.throws(() => {
+test('11.03 - opts.throwWhenNonStringInsertedInString', (t) => {
+  const err1 = t.throws(() => {
     jv(
       {
         a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -2316,6 +4029,8 @@ test('11.03 - two-level queried, string found => throws', (t) => {
       },
     )
   })
+  t.truthy(err1.message.includes('[THROW_ID_23]'))
+
   t.notThrows(() => {
     jv({
       a: 'some text %%_var1_%% more text %%_var2_%%',
@@ -2324,6 +4039,56 @@ test('11.03 - two-level queried, string found => throws', (t) => {
       var2: { key3: 'value3', key4: 'value4' },
     })
   })
+
+  // then, also, pin the whole-value-variables
+
+  t.deepEqual(
+    jv({
+      a: '%%-var1-%%',
+      var1: null,
+      b: '%%-var2-%%',
+      var2: false,
+    }),
+    {
+      a: null,
+      var1: null,
+      b: false,
+      var2: false,
+    },
+    '11.03.03 - no path, values are variables in whole',
+  )
+
+  t.deepEqual(
+    jv({
+      a: '%%_var1.key1_%%',
+      var1: { key1: null },
+      b: '%%_var2.key2_%%',
+      var2: { key2: false },
+    }),
+    {
+      a: null,
+      var1: { key1: null },
+      b: false,
+      var2: { key2: false },
+    },
+    '11.03.04 - control',
+  )
+
+  t.deepEqual(
+    jv({
+      a: '%%_var1.key1_%%',
+      var1: { key1: null },
+      b: '%%_var2.key2_%%',
+      var2: { key2: false },
+    }, { throwWhenNonStringInsertedInString: true }),
+    {
+      a: null,
+      var1: { key1: null },
+      b: false,
+      var2: { key2: false },
+    },
+    '11.03.05 - opts',
+  )
 })
 
 test('11.04 - multi-level + from array + root data store + ignores', (t) => {
@@ -2343,7 +4108,7 @@ test('11.04 - multi-level + from array + root data store + ignores', (t) => {
         dataContainerIdentifierTails: '_data',
         wrapHeadsWith: '{',
         wrapTailsWith: '}',
-        dontWrapVars: ['*zzz', '*le', '*yyy'],
+        dontWrapVars: ['*zzz', '*.aaa', '*yyy'],
         preventDoubleWrapping: true,
         wrapGlobalFlipSwitch: true,
       },
@@ -2355,7 +4120,7 @@ test('11.04 - multi-level + from array + root data store + ignores', (t) => {
         submarine: { bbb: 'ship' },
       },
     },
-    '11.04.01 - two ignores in an array, data store, multi-level',
+    '11.04 - two ignores in an array, data store, multi-level',
   )
 })
 
@@ -2363,7 +4128,7 @@ test('11.04 - multi-level + from array + root data store + ignores', (t) => {
 // 12. Potentially clashing combos of characters
 // -----------------------------------------------------------------------------
 
-test('12.01 - surrounding underscores - sneaky similarity with wrong side brackets', (t) => {
+test('12.01 - surrounding underscores - sneaky similarity with wrong side brackets #1', (t) => {
   t.deepEqual(
     jv({
       a: 'joined with an underscores: %%_var1_%%_%%_var2_%%',
@@ -2377,8 +4142,11 @@ test('12.01 - surrounding underscores - sneaky similarity with wrong side bracke
       var1: 'value1',
       var2: 'value2',
     },
-    '12.01.01',
+    '12.01',
   )
+})
+
+test('12.02 - surrounding underscores - sneaky similarity with wrong side brackets #2', (t) => {
   t.deepEqual(
     jv({
       a: 'joined with an dashes: %%-var1-%%-%%-var2-%%',
@@ -2392,8 +4160,11 @@ test('12.01 - surrounding underscores - sneaky similarity with wrong side bracke
       var1: 'value1',
       var2: 'value2',
     },
-    '12.01.02',
+    '12.02',
   )
+})
+
+test('12.03 - surrounding underscores - sneaky similarity with wrong side brackets #3', (t) => {
   t.deepEqual(
     jv({
       a: 'zzz_%%-var1-%%_%%-var2-%%_yyy',
@@ -2407,8 +4178,11 @@ test('12.01 - surrounding underscores - sneaky similarity with wrong side bracke
       var1: 'value1',
       var2: 'value2',
     },
-    '12.01.03',
+    '12.03',
   )
+})
+
+test('12.04 - surrounding underscores - sneaky similarity with wrong side brackets #4', (t) => {
   t.deepEqual(
     jv({
       a: 'zzz_%%-var1-%%_%%-var2-%%',
@@ -2422,774 +4196,42 @@ test('12.01 - surrounding underscores - sneaky similarity with wrong side bracke
       var1: 'value1',
       var2: 'value2',
     },
-    '12.01.04',
+    '12.04',
   )
 })
 
-// -----------------------------------------------------------------------------
-// 93. UTIL - splitObjectPath()
-// -----------------------------------------------------------------------------
-
-test('93.01 - UTIL > splitObjectPath - dot notation', (t) => {
+test('12.05 - surrounding dashes - sneaky similarity with wrong side brackets #1', (t) => {
   t.deepEqual(
-    splitObjectPath('something.anything'),
-    ['something', 'anything'],
-    '93.01',
-  )
-})
-
-test('93.02 - UTIL > splitObjectPath - brackets', (t) => {
-  t.deepEqual(
-    splitObjectPath('something[anything.everything]'),
-    ['something', 'anything', 'everything'],
-    '93.02',
-  )
-})
-
-test('93.03 - UTIL > splitObjectPath - more brackets', (t) => {
-  t.deepEqual(
-    splitObjectPath('something[anything.everything[nothing]]'),
-    ['something', 'anything', 'everything', 'nothing'],
-    '93.03.01',
-  )
-  t.deepEqual(
-    splitObjectPath('    something[  anything.everything[ nothing ]  ]   '),
-    ['something', 'anything', 'everything', 'nothing'],
-    '93.03.02',
-  )
-  t.deepEqual(
-    splitObjectPath('  \n  something  \t\n  [   \n  \t  anything  \n \t. \t\t everything \n\n   [   \nnothing\t  ] \n  ]  \t\t \n'),
-    ['something', 'anything', 'everything', 'nothing'],
-    '93.03.03 - and as crazy as it might look, even this ^^^',
-  )
-  t.deepEqual(
-    splitObjectPath('shfgldhfgdg'),
-    ['shfgldhfgdg'],
-    '93.03.04 - should also work on normal strings',
-  )
-})
-
-test('93.04 - UTIL > splitObjectPath - returns intact non-string input', (t) => {
-  t.is(
-    splitObjectPath(1),
-    1,
-    '93.04',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 94. UTIL - front()
-// -----------------------------------------------------------------------------
-
-test('94.01 - UTIL > front', (t) => {
-  t.is(
-    front('something.anything'),
-    'something',
-    '94.01.01',
-  )
-  t.is(
-    front('something[anything]'),
-    'something',
-    '94.01.02',
-  )
-  t.is(
-    front('.'),
-    '',
-    '94.01.03',
-  )
-  t.is(
-    front(''),
-    '',
-    '94.01.04',
-  )
-  t.is(
-    front(),
-    undefined,
-    '94.01.05',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 95. UTIL - fixOffset()
-// -----------------------------------------------------------------------------
-
-test('95.01 - UTIL > fixOffset', (t) => {
-  t.deepEqual(
-    fixOffset(
-      [[0, 1], [5, 8], [10, 15]],
-      1,
-      2,
-    ),
-    [[0, 1], [7, 10], [12, 17]],
-    '95.01.01',
-  )
-  t.deepEqual(
-    fixOffset(
-      [[0, 1], [5, 8], [10, 15]],
-      20,
-      2,
-    ),
-    [[0, 1], [5, 8], [10, 15]],
-    '95.01.02',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 97. UTIL - findLastInArray()
-// -----------------------------------------------------------------------------
-
-test('97.01 - UTIL > findLastInArray - normal use', (t) => {
-  t.deepEqual(
-    findLastInArray(['something', 'anything']),
-    null,
-    '97.01',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// 99. UTIL - extractVarsFromString()
-// -----------------------------------------------------------------------------
-
-test('99.01 - UTIL > extractVarsFromString - normal use', (t) => {
-  t.deepEqual(
-    extractVarsFromString('text %%_var1_%% more text\n%%_var2_%% and more text'),
-    ['var1', 'var2'],
-    '99.01 - relying on default heads/tails',
-  )
-})
-
-test('99.02 - UTIL > extractVarsFromString - no results => empty array', (t) => {
-  t.deepEqual(
-    extractVarsFromString('text and more text', '%%_', '_%%'),
-    [],
-    '99.02',
-  )
-})
-
-test('99.03 - UTIL > extractVarsFromString - no results => empty array', (t) => {
-  t.deepEqual(
-    extractVarsFromString('variables in custom notation like {this} or {that} also get extracted', '{', '}'),
-    ['this', 'that'],
-    '99.03',
-  )
-})
-
-test('99.04 - UTIL > extractVarsFromString - throws when there\'s no input', (t) => {
-  t.throws(() => {
-    extractVarsFromString()
-  })
-})
-
-test('99.05 - UTIL > extractVarsFromString - throws when first argument is not string-type', (t) => {
-  t.throws(() => {
-    extractVarsFromString(111)
-  })
-})
-
-test('99.06 - UTIL > extractVarsFromString - throws when second argument (heads) is not string-type', (t) => {
-  t.throws(() => {
-    extractVarsFromString('a', 111)
-  })
-})
-
-test('99.07 - UTIL > extractVarsFromString - throws when third argument (tails) is not string-type', (t) => {
-  t.throws(() => {
-    extractVarsFromString('a', '%%_', 111)
-  })
-})
-
-test('99.08 - UTIL > extractVarsFromString - empty string gives result of empty array', (t) => {
-  t.deepEqual(
-    extractVarsFromString('', '{', '}'),
-    [],
-    '99.08',
-  )
-})
-
-test('99.09 - UTIL > extractVarsFromString - throws when heads and tails are not matches (count differs)', (t) => {
-  t.throws(() => {
-    extractVarsFromString('{a {b}', '{', '}')
-  })
-  t.throws(() => {
-    extractVarsFromString('🦄🦄🦄🦄🦄{a {🦄b}', '{', '}')
-  })
-  t.notThrows(() => {
-    extractVarsFromString('%%_', '%%_', '_%%')
-  })
-  t.notThrows(() => {
-    extractVarsFromString('_%%', '%%_', '_%%')
-  })
-})
-
-test('99.10 - UTIL > extractVarsFromString - copes when heads/tails are given as input', (t) => {
-  t.deepEqual(
-    extractVarsFromString('%%_', '%%_', '_%%'),
-    [],
-    '99.10.01',
-  )
-  t.deepEqual(
-    extractVarsFromString('_%%', '%%_', '_%%'),
-    [],
-    '99.10.02',
-  )
-})
-
-test('99.11 - UTIL > extractVarsFromString - multiple heads/tails', (t) => {
-  t.deepEqual(
-    extractVarsFromString(
-      'text %%-var1-%% more text\n%%_var2_%% and more text',
-      ['%%-', '%%_'],
-      ['-%%', '_%%'],
-    ),
-    ['var1', 'var2'],
-    '99.11',
-  )
-})
-
-// -----------------------------------------------------------------------------
-// group 01. various throws
-// -----------------------------------------------------------------------------
-
-test('01.01 - basic throws related to wrong input', (t) => {
-  t.throws(() => {
-    jv()
-  })
-  t.throws(() => {
-    jv('zzzz')
-  })
-  t.throws(() => {
-    jv('{}')
-  })
-  t.throws(() => {
-    jv('[]')
-  })
-})
-
-test('01.02 - throws when options heads and/or tails are empty', (t) => {
-  t.throws(() => {
     jv({
-      a: 'a',
-    }, { heads: '' })
-  })
-  t.throws(() => {
-    jv({
-      a: 'a',
-    }, { tails: '' })
-  })
-  t.throws(() => {
-    jv({
-      a: 'a',
-    }, { heads: '', tails: '' })
-  })
-})
-
-test('01.03 - throws when data container key lookup is enabled and container tails are given blank', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'a',
-    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
-  })
-  t.notThrows(() => {
-    jv({
-      a: 'a',
-    }, { lookForDataContainers: false, dataContainerIdentifierTails: '' })
-  })
-  t.throws(() => {
-    jv({
-      a: 'a',
-    }, { dataContainerIdentifierTails: '' })
-  })
-})
-
-test('01.04 - throws when heads and tails are equal', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'a',
-    }, { heads: '%%', tails: '%%' })
-  })
-})
-
-test('01.05 - throws when input is not a plain object', (t) => {
-  t.throws(() => {
-    jv(['zzz'], { heads: '%%', tails: '%%' })
-  })
-})
-
-test('01.06 - throws when keys contain variables', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      '%%_var2_%%': 'something',
-      var1: 'value1',
-      var2: 'value2',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text zzvar1zz more text',
-      zzvar2zz: 'something',
-      var1: 'value1',
-      var2: 'value2',
-    }, { heads: 'zz', tails: 'zz' })
-  })
-})
-
-test('01.07 - throws when there are unequal number of marker heads and tails', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more %%_text',
+      a: 'zzz-%%_var1_%%-%%_var2_%%-yyy',
       b: 'something',
       var1: 'value1',
       var2: 'value2',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text_%%',
-      b: '%%_something',
+    }),
+    {
+      a: 'zzz-value1-value2-yyy',
+      b: 'something',
       var1: 'value1',
       var2: 'value2',
-    })
-  })
+    },
+    '12.05',
+  )
 })
 
-test('01.08 - throws when data is missing', (t) => {
-  t.throws(() => {
+test('12.06 - surrounding dashes - sneaky similarity with wrong side brackets #2', (t) => {
+  t.deepEqual(
     jv({
-      a: 'some text %%_var1_%% more text',
+      a: 'zzz-%%_var1_%%-%%_var2_%%',
       b: 'something',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
+      var1: 'value1',
+      var2: 'value2',
+    }),
+    {
+      a: 'zzz-value1-value2',
       b: 'something',
-      a_data: 'zzz',
-    })
-  })
-})
-
-test('01.09 - throws when data container lookup is turned off and var is missing', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: false })
-  })
-})
-
-test('01.10 - throws when data container name append is not string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: true, dataContainerIdentifierTails: false })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: true, dataContainerIdentifierTails: 1 })
-  })
-})
-
-test('01.11 - not throws when data container name append is given empty, but data container lookup is turned off', (t) => {
-  t.notThrows(() => {
-    jv({
-      a: 'some text, more text',
-      b: 'something',
-    }, { lookForDataContainers: false, dataContainerIdentifierTails: '' })
-  })
-})
-
-test('01.12 - throws when data container name append is given empty', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text, more text',
-      b: 'something',
-    }, { lookForDataContainers: true, dataContainerIdentifierTails: '' })
-  })
-})
-
-test('01.13 - throws when opts.wrapHeadsWith is customised to anything other than string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { wrapHeadsWith: false })
-  })
-})
-
-test('01.14 - throws when opts.wrapHeadsWith is customised to empty string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { wrapHeadsWith: '' })
-  })
-})
-
-test('01.15 - throws when opts.wrapTailsWith is customised to anything other than string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { wrapTailsWith: false })
-  })
-})
-
-test('01.16 - throws when opts.wrapTailsWith is customised to empty string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { wrapTailsWith: '' })
-  })
-})
-
-test('01.17 - throws when opts.heads is not string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { heads: 1 })
-  })
-})
-
-test('01.18 - throws when opts.tails is not string', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { tails: 1 })
-  })
-})
-
-test('01.19 - throws when all args are missing', (t) => {
-  t.throws(() => {
-    jv()
-  })
-})
-
-test('01.20 - throws when key references itself', (t) => {
-  t.throws(() => {
-    jv({
-      a: '%%_a_%%',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'something %%_a_%% aaaa %%_a_%%',
-    })
-  })
-})
-
-test('01.21 - throws when key references itself', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'a',
-      b: '%%_a_%%',
-      c: '%%_c_%%',
-    })
-  })
-})
-
-test('01.22 - throws when key references key which references itself', (t) => {
-  t.throws(() => {
-    jv({
-      b: '%%_a_%%',
-      a: '%%_a_%%',
-    })
-  })
-})
-
-test('01.23 - throws when there\'s recursion (with distraction)', (t) => {
-  t.throws(() => {
-    jv({
-      a: '%%_c_%% %%_b_%%',
-      b: '%%_a_%%',
-      c: 'ccc',
-    })
-  })
-})
-
-test('01.24 - throws when there\'s a longer recursion', (t) => {
-  t.throws(() => {
-    jv({
-      a: '%%_b_%%',
-      b: '%%_c_%%',
-      c: '%%_d_%%',
-      d: '%%_e_%%',
-      e: '%%_b_%%',
-    })
-  })
-})
-
-test('01.25 - throws when opts.lookForDataContainers is not boolean', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: 1 })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { lookForDataContainers: 'false' })
-  })
-})
-
-test('01.26 - throws when opts.preventDoubleWrapping is not boolean', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { preventDoubleWrapping: 1 })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1_%% more text',
-      b: 'something',
-    }, { preventDoubleWrapping: 'false' })
-  })
-})
-
-test('01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal', (t) => {
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        heads: '%%_',
-        headsNoWrap: '%%_',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        heads: 'zzzz',
-        headsNoWrap: 'zzzz',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        headsNoWrap: '%%_',
-      },
-    )
-  })
-})
-
-test('01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be equal', (t) => {
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tails: '_%%',
-        tailsNoWrap: '_%%',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tails: 'zzzz',
-        tailsNoWrap: 'zzzz',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tailsNoWrap: '_%%',
-      },
-    )
-  })
-})
-
-test('01.29 - empty nowraps', (t) => {
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        heads: '%%_',
-        headsNoWrap: '',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tails: '_%%',
-        tailsNoWrap: '',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        headsNoWrap: '',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tailsNoWrap: '',
-      },
-    )
-  })
-})
-
-test('01.30 - equal nowraps', (t) => {
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tailsNoWrap: 'aaa',
-        headsNoWrap: 'aaa',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        tailsNoWrap: '%%-',
-        headsNoWrap: '%%-',
-      },
-    )
-  })
-  t.throws(() => {
-    jv(
-      {
-        a: 'some text %%_var1_%% more text',
-        b: 'something',
-      },
-      {
-        headsNoWrap: '%%-',
-      },
-    )
-  })
-})
-
-test('01.31 - throws there\'s simple recursion loop', (t) => {
-  t.throws(() => {
-    jv({
-      a: '%%_a_%%',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: ['%%_a_%%'],
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: ['%%_b_%%'],
-      b: ['%%_a_%%'],
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: ['%%_b_%%', '%%_b_%%'],
-    })
-  })
-  t.throws(() => {
-    jv(['%%_a_%%'])
-  })
-})
-
-test('01.32 - throws referencing what does not exist', (t) => {
-  t.throws(() => {
-    jv({
-      a: '%%_b_%%',
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: ['%%_b_%%'],
-    })
-  })
-})
-
-test('01.33 - throws when referencing the multi-level object keys that don\'t exist', (t) => {
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
-      b: 'something',
-      var1: { key1: 'value1' },
-      var2: { key2: 'value2' },
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
-      b: 'something',
-      var1: { key1: 'value1', key2: 'value2', key3: 'value3' },
-      var2: { key4: 'value4', key5: 'value5', key6: 'value6' },
-    })
-  })
-  t.throws(() => {
-    jv({
-      a: 'some text %%_var1.key99_%% more text %%_var2.key99_%%',
-      b: 'something',
-      var1: { key1: 'value1' },
-      var2: { key2: 'value2' },
-    }, {
-      wrapHeadsWith: '${',
-      wrapTailsWith: '}',
-    })
-  })
+      var1: 'value1',
+      var2: 'value2',
+    },
+    '12.06',
+  )
 })

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2018-02-14
+
+Full rewrite. Same and more unit tests.
+
+### Changed
+- ✨ Variables now can be fetched from the parent nodes, all the way up until root. Priority order: 1. key with variable's name at the same level; 2. data store at same level; 3. key with variable's name at parent node's level; 4. data store at parent's level ... and so on, until root is reached.
+- ✨ Now the program will pretty much never throw. If you feed incomplete heads or tails, it will leave them unouched rather than throw an error about them. I'll implement strict mode later.
+- ✨ Way leaner and efficient algorithm and dependencies' choice.
+- ✨ Added more unit tests too.
+
 ## [6.0.0] - 2018-01-02
 
 **Small but nonetheless breaking changes.**
@@ -128,3 +138,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [4.6.0]: https://github.com/codsen/json-variables/compare/v4.5.0...v4.6.0
 [5.0.0]: https://github.com/codsen/json-variables/compare/v4.6.0...v5.0.0
 [6.0.0]: https://github.com/codsen/json-variables/compare/v5.0.0...v6.0.0
+[7.0.0]: https://github.com/codsen/json-variables/compare/v6.0.0...v7.0.0
