@@ -28,6 +28,7 @@
 - [Purpose](#purpose)
 - [In practice](#in-practice)
 - [API](#api)
+- [`opts.cb`](#optscb)
 - [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
 - [Difference from `Object.assign()`](#difference-from-objectassign)
 - [Contributing](#contributing)
@@ -53,9 +54,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 13&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 12&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 18&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 18&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -75,12 +76,14 @@ Imagine, if we merged the identical keys of two objects judging their values by 
 - empty string
 - number
 - boolean
-- null
-- undefined doesn't trump anything
+- `null`
+- `undefined` doesn't trump anything
 
 The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
 The fun does not stop here. Sometimes life demands _unidirectional merges_ from either source or destination ("overwrite no matter what, from either side"). This can be done per object-key-basis, see `opts.ignoreKeys` where first input object's key overrides the second's and `opts.hardMergeKeys` for the opposite.
+
+If you are still not happy with the merging algorithm you can tap the callback and [override the result](#optscb) in any way you like.
 
 **That's what this library does**
 
@@ -138,6 +141,7 @@ Input argument           | Type           | Obligatory? | Description
 Options object's key                    | Value   | Default | Description
 ----------------------------------------|---------|---------|-------------
 `{`                                     |         |         |
+`cb`                                    | Function | `null`  | Allows you to intervene on each of merging actions, right before the values are returned. It gives you both values and suggested return result in a callback arguments. See [below](#optscb).
 `mergeObjectsOnlyWhenKeysetMatches`     | Boolean | `true`  | Controls the merging of the objects within arrays. See dedicated chapter below.
 `ignoreKeys`                            | String / Array of strings | n/a     | These keys, if present on `input1`, will be kept and not merged, that is, changed. You can use wildcards.
 `hardMergeKeys`                         | String / Array of strings | n/a     | These keys, if present on `input2`, will overwrite their counterparts on `input1` (if present) no matter what. You can use wildcards.
@@ -157,6 +161,7 @@ Here are all defaults in one place:
 
 ```js
 {
+  cb: null,
   mergeObjectsOnlyWhenKeysetMatches: true,
   ignoreKeys: undefined,
   hardMergeKeys: undefined,
@@ -172,6 +177,160 @@ Here are all defaults in one place:
   hardArrayConcatKeys: undefined,
 }
 ```
+
+**[⬆ &nbsp;back to top](#)**
+
+### API - Output
+
+A merged thing is returned. It's probably the same type of your inputs.
+
+Objects or arrays in the inputs are **not mutated**. This is very important.
+
+## `opts.cb`
+
+Callback allows you to intervene on each of merging actions, right before the values are returned. It gives you both values (first two arguments) and suggested return result (third argument) in a callback arguments. Whatever you return is then written as a merge value. If you don't want to do anything, just return that third argument back. But you can return something different.
+
+Callback is very powerful — you could pretty much use it instead of all the options listed higher.
+
+For example, `opts.ignoreEverything` would be the same as returning the first argument in the callback instead of third.
+
+```js
+mergeAdvanced(
+  {
+    ...
+  },
+  {
+    ...
+  },
+  {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+      return inputArg1
+    },
+  },
+)
+```
+
+Also, `opts.hardMergeEverything` would be returning callback's second argument.
+
+```js
+mergeAdvanced(
+  {
+    ...
+  },
+  {
+    ...
+  },
+  {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+      return inputArg2
+    },
+  },
+)
+```
+
+**[⬆ &nbsp;back to top](#)**
+
+### `opts.cb` bigger example, number one
+
+For example, we want to hard-merge (meaning, when values clash, second argument's value always prevails) only the Boolean values, keeping the normal merging algorithm the same for the rest of the types.
+
+We use the _callback_, passing it in the options. Inside, we check the types and instead of suggested result (third argument), we return the second argument - value from the second argument:
+
+```js
+const res = mergeAdvanced(
+  { // input #1
+    a: {
+      b: true,
+      c: false,
+      d: true,
+      e: false,
+    },
+    b: 'test',
+  },
+  { // input #2
+    a: {
+      b: false,
+      c: true,
+      d: true,
+      e: false,
+    },
+    b: '', // <---- checking to make sure this empty string will not be hard-merged over "b" from input #1
+  },
+  {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+      if (
+        (typeof inputArg1 === 'boolean') &&
+        (typeof inputArg2 === 'boolean')
+      ) {
+        return inputArg2
+      }
+      return resultAboutToBeReturned
+    },
+  },
+)
+console.log(`res = ${JSON.stringify(res, null, 4)}`)
+// result:
+// {
+//   a: {
+//     b: false,
+//     c: true,
+//     d: true,
+//     e: false,
+//   },
+//   b: 'test', // <---- notice how hard merging on Bools didn't affect string
+// }
+```
+
+**[⬆ &nbsp;back to top](#)**
+
+### `opts.cb` bigger example, number two
+
+Another example, we want to **wrap** the values of what was merged with double curly braces (`{{` and `}}`), but **only if they are strings**. Kindof logical, if you consider Booleans, null or plain objects will be clashing when the algorithm traverses each and every nested value.
+
+Easy:
+
+```js
+const res = mergeAdvanced(
+  {
+    a: {
+      b: 'old value for b',
+      c: 'old value for c',
+      d: 'old value for c',
+      e: 'old value for d',
+    },
+    b: false,
+  },
+  {
+    a: {
+      b: 'var1', // <--- in this case, it will be non-empty-string vs. non-empty-string
+      c: 'var2', //      clashes, where second input's string goes to the result.
+      d: 'var3',
+      e: 'var4',
+    },
+    b: null,
+  },
+  {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+      if (typeof resultAboutToBeReturned === 'string') {
+        return `{{ ${resultAboutToBeReturned} }}`
+      }
+      return resultAboutToBeReturned
+    },
+  },
+)
+console.log(`res = ${JSON.stringify(res, null, 4)}`)
+// => {
+//      a: {
+//        b: '{{ var1 }}',
+//        c: '{{ var2 }}',
+//        d: '{{ var3 }}',
+//        e: '{{ var4 }}',
+//      },
+//      b: false, // <-- notice Boolean was not touched
+//    }
+```
+
+Whatever you return from the _callback_ will be written as a result of a clash, so make sure you return either `resultAboutToBeReturned` (third argument in the callback), or something to substitute it. Otherwise, `undefined` will be written.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -244,12 +403,6 @@ console.log('res2 = ' + JSON.stringify(res2, null, 4))
 ```
 
 **[⬆ &nbsp;back to top](#)**
-
-### API - Output
-
-A merged thing is returned. It's probably the same type of your inputs.
-
-Objects or arrays in the inputs are **not mutated**. This is very important.
 
 ## Difference from Lodash `_.merge`
 

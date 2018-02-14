@@ -10,8 +10,7 @@
       "coveralls",
       "husky",
       "lodash.clonedeep",
-      "nyc",
-      "type-detect"
+      "nyc"
     ]
   },
   "ignore": [

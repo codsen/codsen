@@ -2,7 +2,6 @@
 
 import test from 'ava'
 import clone from 'lodash.clonedeep'
-import { equalOrSubsetKeys, arrayContainsStr, existy, isBool } from '../dist/util.cjs'
 import mergeAdvanced from '../dist/object-merge-advanced.cjs'
 
 //
@@ -4282,7 +4281,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
     '17.03.10 - #99 - null vs. null',
   )
 })
-test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
+test('17.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -4298,7 +4297,7 @@ test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
     {
       a: [0, 1, 2, 3, 4, 5],
     },
-    '18.04.01',
+    '17.04.01',
   )
   t.deepEqual(
     mergeAdvanced(
@@ -4315,7 +4314,7 @@ test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
     {
       a: [{ a: 0 }, { a: 1 }, { a: 2 }, { a: 0 }, { a: 1 }, { a: 2 }],
     },
-    '18.04.02',
+    '17.04.02',
   )
   t.deepEqual(
     mergeAdvanced(
@@ -4338,7 +4337,7 @@ test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
       b: [1, 4, 2, 5, 3, 6], // no objects, so an "orderer" concat happend
       c: [{ a: 4 }, { a: 5 }, { a: 6 }], // objects so
     },
-    '18.04.03',
+    '17.04.03',
   )
   t.deepEqual(
     mergeAdvanced(
@@ -4361,7 +4360,7 @@ test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
       b: [1, 2, 3, 4, 5, 6],
       c: [{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }, { a: 5 }, { a: 6 }], // objects so
     },
-    '18.04.03',
+    '17.04.03',
   )
 })
 
@@ -4694,214 +4693,79 @@ test('18.02 - opts.cb - setting ignoreAll on input Booleans', (t) => {
   )
 })
 
-// ============================================================
-//                   U T I L   T E S T S
-// ============================================================
-
-// ==============================
-// util/arrayContainsStr()
-// ==============================
-
-test('98.01 - UTIL > arrayContainsStr - throws when there\'s no input', (t) => {
-  t.is(
-    arrayContainsStr(),
-    false,
-    '98.01',
-  )
-  t.throws(() => {
-    arrayContainsStr(1)
-  })
-  t.throws(() => {
-    arrayContainsStr('a')
-  })
-})
-
-// ==============================
-// util/equalOrSubsetKeys()
-// ==============================
-
-test('99.01 - UTIL > equalOrSubsetKeys - two equal plain objects', (t) => {
-  t.truthy(
-    equalOrSubsetKeys(
+test('18.03 - opts.cb - using callback to wrap string with other strings', (t) => {
+  // control:
+  t.deepEqual(
+    mergeAdvanced(
       {
-        a: 'ccc',
-        b: 'zzz',
+        a: {
+          b: 'old value for b',
+          c: 'old value for c',
+          d: 'old value for c',
+          e: 'old value for d',
+        },
+        b: false,
       },
       {
-        a: 'ddd',
-        b: 'yyy',
+        a: {
+          b: 'var1',
+          c: 'var2',
+          d: 'var3',
+          e: 'var4',
+        },
+        b: null,
       },
     ),
-    '99.01',
+    {
+      a: {
+        b: 'var1',
+        c: 'var2',
+        d: 'var3',
+        e: 'var4',
+      },
+      b: false,
+    },
+    '18.03.01 - control, default behaviour (logical OR)',
   )
-})
-
-test('99.02 - UTIL > equalOrSubsetKeys - first is a subset of the second', (t) => {
-  t.truthy(
-    equalOrSubsetKeys(
+  // string wrapping:
+  t.deepEqual(
+    mergeAdvanced(
       {
-        a: 'ccc',
+        a: {
+          b: 'old value for b',
+          c: 'old value for c',
+          d: 'old value for c',
+          e: 'old value for d',
+        },
+        b: false,
       },
       {
-        a: 'ddd',
-        b: 'b',
-      },
-    ),
-    '99.02.01',
-  )
-  t.truthy(
-    equalOrSubsetKeys(
-      {
-        a: ['ccc'],
+        a: {
+          b: 'var1',
+          c: 'var2',
+          d: 'var3',
+          e: 'var4',
+        },
+        b: null,
       },
       {
-        a: ['ddd'],
-        b: ['b'],
-      },
-    ),
-    '99.02.02',
-  )
-})
-
-test('99.03 - UTIL > equalOrSubsetKeys - second is a subset of the first', (t) => {
-  t.truthy(
-    equalOrSubsetKeys(
-      {
-        a: 'a',
-        b: 'ccc',
-      },
-      {
-        b: 'ddd',
-      },
-    ),
-    '99.03',
-  )
-  t.truthy(
-    equalOrSubsetKeys(
-      {
-        a: ['a'],
-        b: ['ccc'],
-      },
-      {
-        b: ['ddd'],
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          if (typeof resultAboutToBeReturned === 'string') {
+            return `{{ ${resultAboutToBeReturned} }}`
+          }
+          return resultAboutToBeReturned
+        },
       },
     ),
-    '99.03',
-  )
-})
-
-test('99.04 - UTIL > equalOrSubsetKeys - empty object is a subset', (t) => {
-  t.truthy(
-    equalOrSubsetKeys(
-      {
-        a: 'a',
-        b: 'ccc',
+    {
+      a: {
+        b: '{{ var1 }}',
+        c: '{{ var2 }}',
+        d: '{{ var3 }}',
+        e: '{{ var4 }}',
       },
-      {},
-    ),
-    '99.04.01',
+      b: false,
+    },
+    '18.03.02 - wraps if string',
   )
-  t.truthy(
-    equalOrSubsetKeys(
-      {},
-      {
-        b: ['ddd'],
-      },
-    ),
-    '99.04.02',
-  )
-})
-
-test('99.05 - UTIL > first input is not an object - throws', (t) => {
-  t.throws(() => {
-    equalOrSubsetKeys('z')
-  })
-})
-
-test('99.06 - UTIL > first input is missing - throws', (t) => {
-  t.throws(() => {
-    equalOrSubsetKeys()
-  })
-})
-
-test('99.07 - UTIL > second input is not an object - throws', (t) => {
-  t.throws(() => {
-    equalOrSubsetKeys({ a: 'a' }, 'z')
-  })
-  t.throws(() => {
-    equalOrSubsetKeys({ a: 'a' }, () => undefined)
-  })
-})
-
-test('99.08 - UTIL > existy()', (t) => {
-  t.is(
-    existy(undefined),
-    false,
-    '99.08.01',
-  )
-  t.is(
-    existy(null),
-    false,
-    '99.08.02',
-  )
-  t.is(
-    existy(1),
-    true,
-    '99.08.03',
-  )
-  t.is(
-    existy('a'),
-    true,
-    '99.08.04',
-  )
-})
-
-test('99.09 - UTIL > isBool()', (t) => {
-  t.is(
-    isBool(true),
-    true,
-    '99.09.01',
-  )
-  t.is(
-    isBool(false),
-    true,
-    '99.09.02',
-  )
-  t.is(
-    isBool(1),
-    false,
-    '99.09.03',
-  )
-  t.is(
-    isBool('a'),
-    false,
-    '99.09.04',
-  )
-})
-
-test('99.10 - UTIL > arrayContainsStr()', (t) => {
-  t.is(
-    arrayContainsStr([]),
-    false,
-    '99.10.01',
-  )
-  t.is(
-    arrayContainsStr([1, 2, 3]),
-    false,
-    '99.10.02',
-  )
-  t.is(
-    arrayContainsStr([null, 'a']),
-    true,
-    '99.10.03',
-  )
-  t.throws(() => {
-    arrayContainsStr(1)
-  })
-  t.throws(() => {
-    arrayContainsStr('a')
-  })
-  t.throws(() => {
-    arrayContainsStr(null)
-  })
 })

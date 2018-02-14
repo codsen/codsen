@@ -35,26 +35,11 @@ export default [
       'array-includes-with-glob',
       'check-types-mini',
       'lodash.clonedeep',
-      'type-detect',
+      'lodash.isplainobject',
       'lodash.includes',
       'lodash.uniq',
       'object-path',
       'util-nonempty',
-    ],
-    plugins: [
-      babel(),
-    ],
-  },
-
-  // util build in order to unit-test utilities separately:
-  {
-    input: 'src/util.js',
-    output: [
-      { file: 'dist/util.cjs.js', format: 'cjs' },
-    ],
-    external: [
-      'array-includes-all',
-      'type-detect',
     ],
     plugins: [
       babel(),
