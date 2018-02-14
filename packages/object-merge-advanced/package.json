@@ -149,6 +149,7 @@
     "lodash.clonedeep": "*",
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
+    "object-path": "^0.11.4",
     "type-detect": "*",
     "util-nonempty": "^2.0.4"
   },

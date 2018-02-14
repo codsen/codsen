@@ -1,3 +1,5 @@
+/* eslint max-len:0 */
+
 import test from 'ava'
 import clone from 'lodash.clonedeep'
 import { equalOrSubsetKeys, arrayContainsStr, existy, isBool } from '../dist/util.cjs'
@@ -4399,7 +4401,7 @@ test('18.01 - opts.cb - setting hard merge if inputs are Booleans', (t) => {
       },
       b: 'test',
     },
-    '98.01.01 - control, default behaviour (logical OR)',
+    '18.01.01 - control, default behaviour (logical OR)',
   )
   // opts.mergeBoolsUsingOrNotAnd
   t.deepEqual(
@@ -4435,7 +4437,7 @@ test('18.01 - opts.cb - setting hard merge if inputs are Booleans', (t) => {
       },
       b: 'test',
     },
-    '98.01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)',
+    '18.01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)',
   )
   // cb override Bool merging to be hard merges
   t.deepEqual(
@@ -4479,7 +4481,7 @@ test('18.01 - opts.cb - setting hard merge if inputs are Booleans', (t) => {
       },
       b: 'test', // <---- notice how hard merging on Bools didn't affect this string
     },
-    '98.01.03 - cb overriding all Boolean merges',
+    '18.01.03 - cb overriding all Boolean merges',
   )
   // cb hard merge for Bools will override even opts.ignoreEverything!
   t.deepEqual(
@@ -4524,7 +4526,171 @@ test('18.01 - opts.cb - setting hard merge if inputs are Booleans', (t) => {
       },
       b: '', // <---- it was outside of cb's scope as cb dealt with Bools only.
     },
-    '98.01.04 - cb partially overriding opts.ignoreEverything',
+    '18.01.04 - cb partially overriding opts.ignoreEverything',
+  )
+  // cb hard merge for Bools will override even opts.ignoreEverything!
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: 'test', // <---- our callback won't apply to non-Bool, so it will get ignored
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false, // <------- sets AND as means to merge Bools
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          if (
+            (typeof inputArg1 === 'boolean') &&
+            (typeof inputArg2 === 'boolean')
+          ) {
+            return inputArg2
+          }
+          return resultAboutToBeReturned
+        },
+      },
+    ),
+    {
+      a: { // <--- second argument prevails in whole, opts.mergeBoolsUsingOrNotAnd don't matter
+        b: false,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: 'test', // <---- standard rule applies (non-empty string vs. empty string)
+    },
+    '18.01.05 - cb partially overriding opts.mergeBoolsUsingOrNotAnd: false',
+  )
+})
+
+test('18.02 - opts.cb - setting ignoreAll on input Booleans', (t) => {
+  // control:
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+    ),
+    {
+      a: {
+        b: true,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: 'test',
+    },
+    '18.02.01',
+  )
+  // opts.hardMergeEverything, NO CB:
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+      {
+        hardMergeEverything: true,
+      },
+    ),
+    {
+      a: { // hard merge mean second argument's values prevail upon clashing
+        b: false,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: '',
+    },
+    '18.02.02',
+  )
+  // opts.hardMergeEverything, NO CB:
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+      {
+        hardMergeEverything: true,
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          if (
+            (typeof inputArg1 === 'boolean') &&
+            (typeof inputArg2 === 'boolean')
+          ) {
+            // console.log(`\u001b[${35}m${`CB: returning inputArg1=${JSON.stringify(inputArg1, null, 4)}`}\u001b[${39}m`)
+            return inputArg1 // <---- opposite to the hardMerge -
+            // - same as opts.ignoreEverything=true (but here only on Booleans)
+          }
+          return resultAboutToBeReturned
+        },
+      },
+    ),
+    {
+      a: { // hard merge mean second argument's values prevail upon clashing
+        b: true, // still "true" even though 2nd arg's "false" was hardMerged!
+        c: false,
+        d: true,
+        e: false,
+      },
+      b: '', // being hard-merged as usual
+    },
+    '18.02.03',
   )
 })
 

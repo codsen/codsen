@@ -38,6 +38,7 @@ export default [
       'type-detect',
       'lodash.includes',
       'lodash.uniq',
+      'object-path',
       'util-nonempty',
     ],
     plugins: [
