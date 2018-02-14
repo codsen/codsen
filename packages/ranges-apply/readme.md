@@ -70,7 +70,7 @@ some example text
             12 15
 ```
 
-If you want to do something about word "example", that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
+If you want to do something to the word "example" above, that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
 
 ![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/string-replace-slices-array/cc202bd4/media/finding_range_indexes_in_atom.gif)
 
