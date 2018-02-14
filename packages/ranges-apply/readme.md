@@ -74,7 +74,7 @@ If you want to do something about word "example", that's indexes `5` and `12`. Y
 
 ![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/string-replace-slices-array/cc202bd4/media/finding_range_indexes_in_atom.gif)
 
-That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a replacement operation).
+That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a **replacement operation**).
 
 ```js
 [
