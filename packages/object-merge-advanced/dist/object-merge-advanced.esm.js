@@ -94,6 +94,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // ---------------------------------------------------------------------------
 
   var defaults = {
+    cb: null, // cb(input1, input2, result)
     mergeObjectsOnlyWhenKeysetMatches: true, // otherwise, concatenation will be preferred
     ignoreKeys: [],
     hardMergeKeys: [],
@@ -112,7 +113,12 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   opts.ignoreKeys = arrayiffyString(opts.ignoreKeys);
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
 
-  checkTypes(opts, defaults, { msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]' });
+  checkTypes(opts, defaults, {
+    msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]',
+    schema: {
+      cb: ['null', 'undefined', 'false', 'function']
+    }
+  });
 
   // hardMergeKeys: '*' <===> hardMergeEverything === true
   // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
@@ -131,7 +137,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
 
   // when null is used as explicit false, it overrides everything and anything:
   if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
-    return false;
+    return opts.cb ? opts.cb(input1orig, input2orig, false) : false;
   }
 
   // clone the values to prevent accidental mutations, but only if it makes sense -
@@ -142,9 +148,9 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // if the unidirectional merging is set, that's a quick ending because the values
   // don't matter
   if (opts.ignoreEverything) {
-    return i1;
+    return opts.cb ? opts.cb(i1, i2, i1) : i1;
   } else if (opts.hardMergeEverything) {
-    return i2;
+    return opts.cb ? opts.cb(i1, i2, i2) : i2;
   }
 
   // Now the complex part. By this point we know there's a value clash and we need
@@ -158,10 +164,10 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         // case 1
         // two array merge
         if (opts.mergeArraysContainingStringsToBeEmpty && (arrayContainsStr(i1) || arrayContainsStr(i2))) {
-          return [];
+          return opts.cb ? opts.cb(i1, i2, []) : [];
         }
         if (opts.hardArrayConcat) {
-          return i1.concat(i2);
+          return opts.cb ? opts.cb(i1, i2, i1.concat(i2)) : i1.concat(i2);
         }
         var temp = [];
         for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
@@ -199,16 +205,16 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         i1 = clone(temp);
       } else {
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
-        return i1;
+        return opts.cb ? opts.cb(i1, i2, i1) : i1;
       }
     } else {
       // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
       if (nonEmpty(i2)) {
         // cases 11, 13, 15, 17
-        return i2;
+        return opts.cb ? opts.cb(i1, i2, i2) : i2;
       }
       // cases 12, 14, 16, 18, 19, 20
-      return i1;
+      return opts.cb ? opts.cb(i1, i2, i1) : i1;
     }
   } else if (isObj$1(i1)) {
     // cases 21-40
@@ -218,10 +224,10 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         // cases 21, 22
         if (nonEmpty(i2)) {
           // case 21
-          return i2;
+          return opts.cb ? opts.cb(i1, i2, i2) : i2;
         }
         // case 22
-        return i1;
+        return opts.cb ? opts.cb(i1, i2, i1) : i1;
       } else if (isObj$1(i2)) {
         // case 23
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
@@ -258,17 +264,17 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         });
       } else {
         // cases 24, 25, 26, 27, 28, 29, 30
-        return opts.hardMergeEverything ? i2 : i1;
+        return opts.cb ? opts.cb(i1, i2, i1) : i1;
       }
     } else {
       // i1 is empty obj
       // cases 31-40
       if (isArr$1(i2) || isObj$1(i2) || nonEmpty(i2)) {
         // cases 31, 32, 33, 34, 35, 37
-        return i2;
+        return opts.cb ? opts.cb(i1, i2, i2) : i2;
       }
       // 36, 38, 39, 40
-      return i1;
+      return opts.cb ? opts.cb(i1, i2, i1) : i1;
     }
   } else if (isStr(i1)) {
     if (nonEmpty(i1)) {
@@ -276,57 +282,57 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       if ((isArr$1(i2) || isObj$1(i2) || isStr(i2)) && nonEmpty(i2)) {
         // cases 41, 43, 45
         // take care of hard merge setting cases, opts.hardMergeKeys
-        return i2;
+        return opts.cb ? opts.cb(i1, i2, i2) : i2;
       }
       // cases 42, 44, 46, 47, 48, 49, 50
-      return i1;
+      return opts.cb ? opts.cb(i1, i2, i1) : i1;
     }
     // i1 is empty string
     // cases 51-60
     if (i2 != null && !isBool(i2)) {
       // cases 51, 52, 53, 54, 55, 56, 57
-      return i2;
+      return opts.cb ? opts.cb(i1, i2, i2) : i2;
     }
     // 58, 59, 60
-    return i1;
+    return opts.cb ? opts.cb(i1, i2, i1) : i1;
   } else if (isNum(i1)) {
     // cases 61-70
     if (nonEmpty(i2)) {
       // cases 61, 63, 65, 67
-      return i2;
+      return opts.cb ? opts.cb(i1, i2, i2) : i2;
     }
     // cases 62, 64, 66, 68, 69, 70
-    return i1;
+    return opts.cb ? opts.cb(i1, i2, i1) : i1;
   } else if (isBool(i1)) {
     // cases 71-80
     if (isBool(i2)) {
       // case 78 - two Booleans
       if (opts.mergeBoolsUsingOrNotAnd) {
-        return i1 || i2; // default - OR
+        return opts.cb ? opts.cb(i1, i2, i1 || i2) : i1 || i2; // default - OR
       }
-      return i1 && i2; // alternative merge using AND
+      return opts.cb ? opts.cb(i1, i2, i1 && i2) : i1 && i2; // alternative merge using AND
     } else if (i2 != null) {
       // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
-      return i2;
+      return opts.cb ? opts.cb(i1, i2, i2) : i2;
     }
     // i2 is null or undefined
     // cases 79*, 80
-    return i1;
+    return opts.cb ? opts.cb(i1, i2, i1) : i1;
   } else if (i1 === null) {
     // cases 81-90
     if (i2 != null) {
       // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88*
-      return i2;
+      return opts.cb ? opts.cb(i1, i2, i2) : i2;
     }
     // cases 89, 90
-    return i1;
+    return opts.cb ? opts.cb(i1, i2, i1) : i1;
   } else {
     // cases 91-100
-    return i2;
+    return opts.cb ? opts.cb(i1, i2, i2) : i2;
   }
-  return i1;
+  return opts.cb ? opts.cb(i1, i2, i1) : i1;
 }
 
 export default mergeAdvanced;

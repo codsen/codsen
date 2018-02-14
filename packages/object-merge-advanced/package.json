@@ -143,9 +143,9 @@
   },
   "dependencies": {
     "array-includes-all": "^1.0.0",
-    "array-includes-with-glob": "^2.0.7",
+    "array-includes-with-glob": "^2.1.0",
     "arrayiffy-if-string": "^3.0.6",
-    "check-types-mini": "^3.1.1",
+    "check-types-mini": "^3.1.2",
     "lodash.clonedeep": "*",
     "lodash.includes": "^4.3.0",
     "lodash.uniq": "^4.5.0",
@@ -163,10 +163,10 @@
     "eslint-plugin-import": "^2.8.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.55.3",
+    "rollup": "^0.55.5",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-node-resolve": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
     "uglify-es": "^3.3.9"
   }

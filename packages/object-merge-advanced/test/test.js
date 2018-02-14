@@ -4362,6 +4362,172 @@ test('18.04 - OPTS > opts.hardConcatKeys - basic cases', (t) => {
     '18.04.03',
   )
 })
+
+// ===============================
+// 18. opts.cb
+// ===============================
+
+test('18.01 - opts.cb - setting hard merge if inputs are Booleans', (t) => {
+  // control:
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+    ),
+    {
+      a: {
+        b: true,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: 'test',
+    },
+    '98.01.01 - control, default behaviour (logical OR)',
+  )
+  // opts.mergeBoolsUsingOrNotAnd
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+      {
+        mergeBoolsUsingOrNotAnd: false,
+      },
+    ),
+    {
+      a: {
+        b: false,
+        c: false,
+        d: true,
+        e: false,
+      },
+      b: 'test',
+    },
+    '98.01.02 - opts.mergeBoolsUsingOrNotAnd (logical AND)',
+  )
+  // cb override Bool merging to be hard merges
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: 'test',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: '', // <---- make sure this string value will not be hard-merged over "b" in object from argument #1 above
+      },
+      {
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          if (
+            (typeof inputArg1 === 'boolean') &&
+            (typeof inputArg2 === 'boolean')
+          ) {
+            return inputArg2
+          }
+          return resultAboutToBeReturned
+        },
+      },
+    ),
+    {
+      a: {
+        b: false,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: 'test', // <---- notice how hard merging on Bools didn't affect this string
+    },
+    '98.01.03 - cb overriding all Boolean merges',
+  )
+  // cb hard merge for Bools will override even opts.ignoreEverything!
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: true,
+          c: false,
+          d: true,
+          e: false,
+        },
+        b: '',
+      },
+      {
+        a: {
+          b: false,
+          c: true,
+          d: true,
+          e: false,
+        },
+        b: 'test', // <---- our callback won't apply to non-Bool, so it will get ignored
+      },
+      {
+        ignoreEverything: true, // means, upon clash, values from 1st arg. prevail
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+          if (
+            (typeof inputArg1 === 'boolean') &&
+            (typeof inputArg2 === 'boolean')
+          ) {
+            return inputArg2
+          }
+          return resultAboutToBeReturned
+        },
+      },
+    ),
+    {
+      a: {
+        b: false,
+        c: true,
+        d: true,
+        e: false,
+      },
+      b: '', // <---- it was outside of cb's scope as cb dealt with Bools only.
+    },
+    '98.01.04 - cb partially overriding opts.ignoreEverything',
+  )
+})
+
 // ============================================================
 //                   U T I L   T E S T S
 // ============================================================
