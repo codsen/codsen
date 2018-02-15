@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [9.1.0] - 2018-02-15
 ### Added
 - ✨ `opts.cb`
-- ✨ Rebased a lot of code, merged `util.js` into main file
-- ✨ Code coverage is now 100% line/function-wise
+- ✨ Rebased a lot of code, merged `util.js` into the main file
+- ✨ Code coverage is now 100% line & function-wise
 
 ## [9.0.0] - 2018-02-08
 ### Changed
