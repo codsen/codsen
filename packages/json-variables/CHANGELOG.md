@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.0] - 2018-02-16
+### Added
+- ✨ Updated all dependencies
+- ✨ Fixed some edge-cases where variables could have been wrapped where they shouldn't have been wrapped and the opposite.
+
 ## [7.0.0] - 2018-02-14
 
 Full rewrite. Same and more unit tests.
@@ -139,3 +144,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [5.0.0]: https://github.com/codsen/json-variables/compare/v4.6.0...v5.0.0
 [6.0.0]: https://github.com/codsen/json-variables/compare/v5.0.0...v6.0.0
 [7.0.0]: https://github.com/codsen/json-variables/compare/v6.0.0...v7.0.0
+[7.1.0]: https://github.com/codsen/json-variables/compare/v7.0.0...v7.1.0
