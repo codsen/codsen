@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0] - 2018-02-16
+### Added
+- ✨ First checking lowercase letters, then the rest.
+
 ## [1.1.0] - 2018-02-06
 ### New
 - ✨ Tapped the dependency [ranges-is-index-within](https://github.com/codsen/ranges-is-index-within) with sorting turned off to save resources. (`opts.skipIncomingRangeSorting` setting)
@@ -12,4 +16,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - ✨ First public release
 
+[1.2.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.0.0...v1.1.0

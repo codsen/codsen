@@ -1,12 +1,11 @@
 import rangesIsIndexWithin from 'ranges-is-index-within'
 
 // https://www.w3.org/TR/REC-xml/#NT-NameStartChar
-// Production 4
+// Production 4 - except lowercase letters are missing
 const nameStartChar = [
   [58, 58], // ":"
   [65, 90], // [A-Z]
   [95, 95], // "_"
-  [97, 122], // [a-z]
   [192, 214], // [#xC0-#xD6]
   [216, 246], // [#xD8-#xF6]
   [248, 767], // [#xF8-#x2FF]
@@ -22,7 +21,7 @@ const nameStartChar = [
 ]
 
 // https://www.w3.org/TR/REC-xml/#NT-NameChar
-// Production 4a - addition to Production 4
+// Production 4a - addition to Production 4, except lowercase letters are missing
 
 const nameChar = [
   [45, 45], // "-"
@@ -31,7 +30,6 @@ const nameChar = [
   [58, 58], // ":"
   [65, 90], // [A-Z]
   [95, 95], // "_"
-  [97, 122], // [a-z]
   [183, 183], // #xB7
   [192, 214], // [#xC0-#xD6]
   [216, 246], // [#xD8-#xF6]
@@ -49,25 +47,37 @@ const nameChar = [
   [65536, 983039], // [#x10000-#xEFFFF]
 ]
 
+const priorityNameChar = [
+  [97, 122], // [a-z]
+]
+
+const opts = {
+  inclusiveRangeEnds: true,
+  skipIncomingRangeSorting: true,
+}
+
+// first checking the letters, then the rest
 function isProduction4(char) {
   return rangesIsIndexWithin(
     char.codePointAt(0),
+    priorityNameChar,
+    opts,
+  ) || rangesIsIndexWithin(
+    char.codePointAt(0),
     nameStartChar,
-    {
-      inclusiveRangeEnds: true,
-      skipIncomingRangeSorting: true,
-    },
+    opts,
   )
 }
 
 function isProduction4a(char) {
   return rangesIsIndexWithin(
     char.codePointAt(0),
+    priorityNameChar,
+    opts,
+  ) || rangesIsIndexWithin(
+    char.codePointAt(0),
     nameChar,
-    {
-      inclusiveRangeEnds: true,
-      skipIncomingRangeSorting: true,
-    },
+    opts,
   )
 }
 

@@ -1,11 +1,10 @@
 import rangesIsIndexWithin from 'ranges-is-index-within';
 
 // https://www.w3.org/TR/REC-xml/#NT-NameStartChar
-// Production 4
+// Production 4 - except lowercase letters are missing
 var nameStartChar = [[58, 58], // ":"
 [65, 90], // [A-Z]
 [95, 95], // "_"
-[97, 122], // [a-z]
 [192, 214], // [#xC0-#xD6]
 [216, 246], // [#xD8-#xF6]
 [248, 767], // [#xF8-#x2FF]
@@ -20,7 +19,7 @@ var nameStartChar = [[58, 58], // ":"
 [65536, 983039]];
 
 // https://www.w3.org/TR/REC-xml/#NT-NameChar
-// Production 4a - addition to Production 4
+// Production 4a - addition to Production 4, except lowercase letters are missing
 
 var nameChar = [[45, 45], // "-"
 [46, 46], // "."
@@ -28,7 +27,6 @@ var nameChar = [[45, 45], // "-"
 [58, 58], // ":"
 [65, 90], // [A-Z]
 [95, 95], // "_"
-[97, 122], // [a-z]
 [183, 183], // #xB7
 [192, 214], // [#xC0-#xD6]
 [216, 246], // [#xD8-#xF6]
@@ -45,18 +43,19 @@ var nameChar = [[45, 45], // "-"
 [65008, 65533], // [#xFDF0-#xFFFD]
 [65536, 983039]];
 
-function isProduction4(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), nameStartChar, {
-    inclusiveRangeEnds: true,
-    skipIncomingRangeSorting: true
-  });
+var priorityNameChar = [[97, 122]];
+
+var opts = {
+  inclusiveRangeEnds: true,
+  skipIncomingRangeSorting: true
+
+  // first checking the letters, then the rest
+};function isProduction4(char) {
+  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameStartChar, opts);
 }
 
 function isProduction4a(char) {
-  return rangesIsIndexWithin(char.codePointAt(0), nameChar, {
-    inclusiveRangeEnds: true,
-    skipIncomingRangeSorting: true
-  });
+  return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameChar, opts);
 }
 
 export { isProduction4, isProduction4a };
