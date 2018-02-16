@@ -211,7 +211,7 @@ test('02.09 - properly wrapped, heads/tails in array, matched', (t) => {
         tails: ['-%%', '}}'],
       },
     ),
-    'first_name',
+    '{{ first_name }}',
     '02.09',
   )
 })
@@ -351,8 +351,107 @@ test('02.19 - one set of custom heads and tails, single char string', (t) => {
         tails: '!!',
       },
     ),
-    'z',
-    '02.19',
+    '??z!!',
+    '02.19.01',
+  )
+  t.deepEqual(
+    rem(
+      '??!! ??z!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.02',
+  )
+  t.deepEqual(
+    rem(
+      '??z!! ??!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.03',
+  )
+  t.deepEqual(
+    rem(
+      '??!! ??z!! ??!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.04',
+  )
+  t.deepEqual(
+    rem(
+      '\t??z!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.05',
+  )
+  t.deepEqual(
+    rem(
+      '??!!\t??z!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.06',
+  )
+  t.deepEqual(
+    rem(
+      '??z!! ??!! ',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.07',
+  )
+  t.deepEqual(
+    rem(
+      '\t??!! ??z!! ??!!',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '??z!!',
+    '02.19.08',
+  )
+  t.deepEqual(
+    rem(
+      '{{ z }}',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '{{ z }}',
+    '02.19.09 - checking are defaults not leaking',
+  )
+  t.deepEqual(
+    rem(
+      '{{{{ z }}}}',
+      {
+        heads: '??',
+        tails: '!!',
+      },
+    ),
+    '{{{{ z }}}}',
+    '02.19.10 - checking are defaults not leaking',
   )
 })
 
@@ -366,7 +465,7 @@ test('02.20 - two sets of custom heads and tails, single char string', (t) => {
         tails: '!!',
       },
     ),
-    'z',
+    '??z!!',
     '02.20',
   )
 })
@@ -374,13 +473,13 @@ test('02.20 - two sets of custom heads and tails, single char string', (t) => {
 test('02.21 - words with space, single set of custom heads and tails', (t) => {
   t.deepEqual(
     rem(
-      '??tralalala lalala!!',
+      '??tralalala!lalala!!',
       {
         heads: '??',
         tails: '!!',
       },
     ),
-    'tralalala lalala',
+    '??tralalala!lalala!!',
     '02.21',
   )
 })
@@ -395,7 +494,7 @@ test('02.22 - double wrapped with custom heads and tails, with whitespace', (t) 
         tails: '!!',
       },
     ),
-    'x y',
+    '?? x y !!',
     '02.22',
   )
 })
@@ -631,5 +730,19 @@ test('02.30 - leading line break', (t) => {
     ),
     'aaa\n',
     '02.30',
+  )
+})
+
+test('02.31 - leading line break', (t) => {
+  t.deepEqual(
+    rem(
+      '{{ items[0].prepayPin }}',
+      {
+        heads: ['{{'],
+        tails: ['}}'],
+      },
+    ),
+    '{{ items[0].prepayPin }}',
+    '02.31',
   )
 })
