@@ -39,6 +39,7 @@ export default [
       'object-path',
       'posthtml-ast-get-values-by-key',
       'string-find-heads-tails',
+      'string-match-left-right',
       'string-remove-duplicate-heads-tails',
       'string-replace-slices-array',
       'string-slices-array-push',

@@ -12,6 +12,7 @@ import Slices from 'string-slices-array-push'
 import replaceSlicesArr from 'string-replace-slices-array'
 import isObj from 'lodash.isplainobject'
 import removeDuplicateHeadsTails from 'string-remove-duplicate-heads-tails'
+import { matchLeftIncl, matchRightIncl } from 'string-match-left-right'
 
 // const DEBUG = 0
 
@@ -98,6 +99,31 @@ function containsHeadsOrTails(str, opts) {
   }
   return false
 }
+function removeWrappingHeadsAndTails(str, heads, tails) {
+  let tempFrom
+  let tempTo
+  if (
+    typeof str === 'string' &&
+    str.length > 0 &&
+    matchRightIncl(str, 0, heads, {
+      trimBeforeMatching: true,
+      cb: (char, theRemainderOfTheString, index) => {
+        tempFrom = index
+        return true
+      },
+    }) &&
+    matchLeftIncl(str, str.length - 1, tails, {
+      trimBeforeMatching: true,
+      cb: (char, theRemainderOfTheString, index) => {
+        tempTo = index + 1
+        return true
+      },
+    })
+  ) {
+    return str.slice(tempFrom, tempTo)
+  }
+  return str
+}
 function wrap(placementValue, opts, dontWrapTheseVars = false, breadCrumbPath, newPath, oldVarName) {
   // if (DEBUG) { console.log(`\n>>>>>>>>>> WRAP(): placementValue = ${JSON.stringify(placementValue, null, 4)}`) }
   // if (DEBUG) { console.log(`>>>>>>>>>> WRAP(): breadCrumbPath = ${JSON.stringify(breadCrumbPath, null, 4)}`) }
@@ -128,10 +154,10 @@ function wrap(placementValue, opts, dontWrapTheseVars = false, breadCrumbPath, n
 
     // if (DEBUG) { console.log(`about to return:\n${JSON.stringify(removeDuplicateHeadsTails(placementValue, { heads: opts.wrapHeadsWith, tails: opts.wrapTailsWith }), null, 4)}`) }
     // if (DEBUG) { console.log(`\u001b[${36}m placementValue = ${JSON.stringify(placementValue, null, 4)}\u001b[${39}m`) }
-    return removeDuplicateHeadsTails(placementValue, {
+    return removeWrappingHeadsAndTails(removeDuplicateHeadsTails(placementValue, {
       heads: opts.wrapHeadsWith,
       tails: opts.wrapTailsWith,
-    })
+    }), opts.wrapHeadsWith, opts.wrapTailsWith)
   }
   // if (DEBUG) { console.log('+++ NO WRAP') }
   return placementValue
