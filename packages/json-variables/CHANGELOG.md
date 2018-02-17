@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [7.1.0] - 2018-02-16
 ### Added
-- ✨ Updated all dependencies
+- ✨ Updated all dependencies.
 - ✨ Fixed some edge-cases where variables could have been wrapped where they shouldn't have been wrapped and the opposite.
 
 ## [7.0.0] - 2018-02-14
