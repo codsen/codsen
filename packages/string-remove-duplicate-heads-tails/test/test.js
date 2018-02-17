@@ -440,7 +440,7 @@ test('02.19 - one set of custom heads and tails, single char string', (t) => {
       },
     ),
     '{{ z }}',
-    '02.19.09 - checking are defaults not leaking',
+    '02.19.09 - checking are defaults not leaking #1',
   )
   t.deepEqual(
     rem(
@@ -451,7 +451,7 @@ test('02.19 - one set of custom heads and tails, single char string', (t) => {
       },
     ),
     '{{{{ z }}}}',
-    '02.19.10 - checking are defaults not leaking',
+    '02.19.10 - checking are defaults not leaking #2',
   )
 })
 
