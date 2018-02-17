@@ -15,9 +15,6 @@ var includesAll = _interopDefault(require('array-includes-all'));
 /* eslint max-len:0, no-prototype-builtins:0 */
 
 // ===================================
-// V A R S
-
-// ===================================
 // F U N C T I O N S
 
 function isArr(something) {

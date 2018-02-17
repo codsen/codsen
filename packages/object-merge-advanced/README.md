@@ -62,7 +62,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Purpose
 
-It's like `_.merge`, but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
+It's like Lodash `_.merge`, but it correctly merges different-type things and behaves well when it encounters _nested things_ like parsed HTML (lots of nested arrays, objects and strings).
 
 ---
 
@@ -79,15 +79,13 @@ Imagine, if we merged the identical keys of two objects judging their values by 
 - `null`
 - `undefined` doesn't trump anything
 
-The idea is, we strive to retain as much info as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
+The idea is, we strive to retain **as much datum** as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
-The fun does not stop here. Sometimes life demands _unidirectional merges_ from either source or destination ("overwrite no matter what, from either side"). This can be done per object-key-basis, see `opts.ignoreKeys` where first input object's key overrides the second's and `opts.hardMergeKeys` for the opposite.
-
-If you are still not happy with the merging algorithm you can tap the callback and [override the result](#optscb) in any way you like.
+There are plenty of settings (mainly aimed at templating needs) but you can tap the callback and [override the result](#optscb) in any way you like.
 
 **That's what this library does**
 
-When `object-merge-advanced` merges two _objects_, it will check the types of their key values:
+When `object-merge-advanced` merges two _objects_, it will recursively traverse each key and compare:
 
 * If a key exists only in one of the objects, it goes straight into the result object.
 * If a key exists on both, we got a clash. Key's value will be chosen judging by its value's type:
@@ -111,16 +109,17 @@ In some cases, we perform a custom actions:
 1) passing value objects back into the main function _recursively_ (when both values are plain objects),
 2) when merging arrays, we pay extra attention to the options object (if present) and the contents of both arrays (taking special measures for objects within),
 3) Logical "OR" composition (when both values are Boolean).
+4) Not to mention, all the custom overrides you put in the [callback](#optscb) when overriding the result.
 
-I challenge you to check `test.js` unit tests to see this library in action.
+Check `test.js` unit tests to see this library in action.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## In practice
 
-In practice I needed this library to normalise JSON files - [generate](https://github.com/codsen/json-comb-core#getkeyset) a "schema" object (a superset of all used keys) and fill any missing keys within all JSON files. Also, JSON files get their keys sorted. That library is used to keep us sane when using JSON to store content for email templates - it's enough to add one unique key in one JSON, and all other templates' content files get it added as well.
+I use this library to merge humongous JSON files that house my templates' data. Booleans must be overwritten by strings/objects/arrays, but only non-empty-ones. This library can do such merging.
 
-I use unidirectional merging when dealing with content mapping JSON files which are by definition unidirectional-flow (always overwrite normal data JSON files).
+Also, I use it in small cases where `Object.assign` is not suitable, for example, when filling missing keys in a plain object or doing other operations on objects coming from JSON files.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -192,7 +191,7 @@ Callback allows you to intervene on each of merging actions, right before the va
 
 Callback is very powerful — you could pretty much use it instead of all the options listed higher.
 
-For example, `opts.ignoreEverything` would be the same as returning the first argument in the callback instead of third.
+For example, `opts.ignoreEverything` would be the same as returning the first argument in the callback instead of third. You can name arguments (`inputArg1` and others) any way you like, only _their order_ matters.
 
 ```js
 mergeAdvanced(
@@ -312,7 +311,7 @@ const res = mergeAdvanced(
   {
     cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
       if (typeof resultAboutToBeReturned === 'string') {
-        return `{{ ${resultAboutToBeReturned} }}`
+        return `{{ ${resultAboutToBeReturned} }}` // <--- use template literals
       }
       return resultAboutToBeReturned
     },
@@ -441,8 +440,8 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") |
-| :---: | :---: | :---: |
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://github.com/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") |
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -490,7 +489,7 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
 
-[contributors-img]: https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square
+[contributors-img]: https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square
 [contributors-url]: #contributors
 
 [license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
