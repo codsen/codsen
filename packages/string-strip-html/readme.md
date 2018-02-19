@@ -41,9 +41,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 18&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 17&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 33&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 19&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 19&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 35&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -64,13 +64,13 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Purpose
 
-This library deletes HTML tags from strings and doesn't assume anything about the output.
+This library deletes HTML tags from strings and doesn't assume anything. We will dilligently identify and delete **all and only all** HTML tags. It will do its best to distinguish `a < b and c > d` from `<b >` or `->` from `<!-- something -->`.
 
-You might take HTML and strip all tags and paste it back into HTML. But equally, you can take a photo of a christmas card from your grandmother and OCR it, remove all cheeky HTML tags she put around her greetings, then print out this cleaned text and stick it on the wall. OK, I'm exaggerating, but the idea is, we will not assume anything about the input source or destination of the output of this library. We will dilligently identify and delete all and only all HTML tags.
+Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ that the input will be strictly HTML and therefore, all unencoded brackets automatically mean it's a tag. For example, they would "clean" the string `a < b and c > d` into `a d`. Personally I think my competition, [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags) (and the likes) are **lazy**. They disguise their lack of algorithmical creativity under HTML-spec smart-pants excuses.
 
-Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ too much. For example, they will remove legit brackets, such as ` a < b and c > d` arguing that they don't belong in HTML at the first place and that's some sneaky attack vector. But again, if you stripped HTML tags, then by definition it's not HTML any more and HTML requirements don't apply, do they?
+The primary consumer for this library is [Detergent](https://github.com/codsen/detergent), where the input can be **both HTML and non-HTML**. Detergent might receive a wannabe arrow, `->`, and it will, depending on the setting, encode the bracket or leave it alone. But that bracket won't be interpreted as a **tag ending**. Why? Because algorithm is smart enough to "see" the dash there. Also, it is smart-enough to "see" that there were no opening tag either (not to mention, probably the algorithm detected _non-taggy_ characters like full stop and rang inner alarm-bells to ignore this bracket. And this library is driving Detergent's HTML tag-stripping feature.
 
-The scope of this library is to take the HTML and strip HTML tags and only HTML tags. If there's something else there besides tags such as greater than signs that doesn't belong in HTML, I don't care. Use different tool to process your string further.
+The scope of this library is to take the HTML and **strip HTML tags and only HTML tags**. If there's something else there besides tags such as greater than signs that doesn't belong in HTML, I don't care. Just use a different tool to process your string before or after.
 
 **[⬆ &nbsp;back to top](#)**
 

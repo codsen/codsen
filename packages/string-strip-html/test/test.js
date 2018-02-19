@@ -707,7 +707,7 @@ shown for everything except Outlook
   )
 })
 
-test('03.06 consecutive tags', (t) => {
+test('03.06 - consecutive tags', (t) => {
   t.deepEqual(
     stripHtml('Text <ul><li>First point</li><li>Second point</li><li>Third point</li></ul>Text straight after'),
     'Text First point Second point Third point Text straight after',
@@ -780,6 +780,140 @@ test('05.03 - multiple tag combo case #1', (t) => {
       y`),
     'z\nc\ny',
     '05.03.02',
+  )
+})
+
+// ==============================
+// 06. comments
+// ==============================
+
+test('06.01 - strips HTML comments', (t) => {
+  // group #1. spaces on both outsides
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr> --> bbb'),
+    'aaa bbb',
+    '06.01.01 - double space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr>--> bbb'),
+    'aaa bbb',
+    '06.01.02 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!--<tr> --> bbb'),
+    'aaa bbb',
+    '06.01.03 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!--<tr>--> bbb'),
+    'aaa bbb',
+    '06.01.04 - no space',
+  )
+
+  // group #2. spaces on right only
+  t.deepEqual(
+    stripHtml('aaa<!-- <tr> --> bbb'),
+    'aaa bbb',
+    '06.01.05 - double space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!-- <tr>--> bbb'),
+    'aaa bbb',
+    '06.01.06 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!--<tr> --> bbb'),
+    'aaa bbb',
+    '06.01.07 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!--<tr>--> bbb'),
+    'aaa bbb',
+    '06.01.08 - no space',
+  )
+
+  // group #3. spaces on left only
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr> -->bbb'),
+    'aaa bbb',
+    '06.01.09 - double space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr>-->bbb'),
+    'aaa bbb',
+    '06.01.10 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!--<tr> -->bbb'),
+    'aaa bbb',
+    '06.01.11 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!--<tr>-->bbb'),
+    'aaa bbb',
+    '06.01.12 - no space',
+  )
+
+  // group #4. no spaces outside
+  t.deepEqual(
+    stripHtml('aaa<!-- <tr> -->bbb'),
+    'aaa bbb',
+    '06.01.13 - double space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!-- <tr>-->bbb'),
+    'aaa bbb',
+    '06.01.14 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!--<tr> -->bbb'),
+    'aaa bbb',
+    '06.01.15 - single space',
+  )
+  t.deepEqual(
+    stripHtml('aaa<!--<tr>-->bbb'),
+    'aaa bbb',
+    '06.01.16 - no space',
+  )
+})
+
+test('06.02 - HTML comments around string edges', (t) => {
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr> --> '),
+    'aaa',
+    '06.02.01',
+  )
+  t.deepEqual(
+    stripHtml('aaa <!-- <tr> -->'),
+    'aaa',
+    '06.02.02',
+  )
+
+  t.deepEqual(
+    stripHtml(' <!-- <tr> --> aaa'),
+    'aaa',
+    '06.02.03',
+  )
+  t.deepEqual(
+    stripHtml('<!-- <tr> -->aaa'),
+    'aaa',
+    '06.02.04',
+  )
+
+  t.deepEqual(
+    stripHtml(' <!-- <tr> --> aaa <!-- <tr> -->'),
+    'aaa',
+    '06.02.05',
+  )
+  t.deepEqual(
+    stripHtml('<!-- <tr> -->aaa<!-- <tr> -->'),
+    'aaa',
+    '06.02.06',
+  )
+  t.deepEqual(
+    stripHtml('   <!-- <tr> -->aaa<!-- <tr> -->   '),
+    'aaa',
+    '06.02.07',
   )
 })
 
