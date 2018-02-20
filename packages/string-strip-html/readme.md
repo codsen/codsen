@@ -122,7 +122,7 @@ A string of zero or more characters-length.
 Two rules:
 
 1. Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
-2. Any whitespace between the tags will be deleted too. For example, `z<a>     <a>y` => `zy`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b>    \t\t\t    <b>y` => `zy`.
+2. Any whitespace between the tags will be deleted too. For example, `z<a>     <a>y` => `z y`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b>    \t\t\t    <b>y` => `zy`.
 
 **[⬆ &nbsp;back to top](#)**
 
