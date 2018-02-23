@@ -282,6 +282,7 @@ function arrayFirstOnly(input) {
   return monkey(input, { mode: 'arrayFirstOnly' });
 }
 
+exports.traverse = traverse;
 exports.find = find;
 exports.get = get;
 exports.set = set;
@@ -289,4 +290,3 @@ exports.drop = drop;
 exports.info = info;
 exports.del = del;
 exports.arrayFirstOnly = arrayFirstOnly;
-exports.traverse = traverse;

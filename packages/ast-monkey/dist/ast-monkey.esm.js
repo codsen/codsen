@@ -5,6 +5,7 @@ import types from 'type-detect';
 import isNaturalNumber from 'is-natural-number';
 import astCompare from 'ast-compare';
 import traverse from 'ast-monkey-traverse';
+export { default as traverse } from 'ast-monkey-traverse';
 
 /* eslint no-param-reassign:0, no-console:0, max-len:0 */
 
@@ -276,4 +277,4 @@ function arrayFirstOnly(input) {
   return monkey(input, { mode: 'arrayFirstOnly' });
 }
 
-export { find, get, set, drop, info, del, arrayFirstOnly, traverse };
+export { find, get, set, drop, info, del, arrayFirstOnly };
