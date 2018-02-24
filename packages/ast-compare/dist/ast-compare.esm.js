@@ -53,11 +53,11 @@ var util = {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var existy$1 = util.existy;
-var isObj$1 = util.isObj;
-var isStr$1 = util.isStr;
-var isBlank$1 = util.isBlank;
-var isTheTypeLegit$1 = util.isTheTypeLegit;
+var existy$1 = util.existy,
+    isObj$1 = util.isObj,
+    isStr$1 = util.isStr,
+    isBlank$1 = util.isBlank,
+    isTheTypeLegit$1 = util.isTheTypeLegit;
 
 
 var isArr$1 = Array.isArray;
