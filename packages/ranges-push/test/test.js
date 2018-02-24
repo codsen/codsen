@@ -144,6 +144,22 @@ test('01.07  -  ADD() - first argument is .current() output of ranges', (t) => {
   })
 })
 
+test('01.08  -  ADD() - null being pushed', (t) => {
+  const slices1 = new Slices()
+  const slices2 = new Slices()
+  t.deepEqual(
+    slices1.current(),
+    null,
+    '01.08 - part1 - result about-to-be-pushed is really null',
+  )
+  slices2.push(slices1.current())
+  t.deepEqual(
+    slices2.current(),
+    null,
+    '01.08 - part2 - does not throw when null is pushed',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 02. BAU - no adding string, only ranges for deletion
 // -----------------------------------------------------------------------------

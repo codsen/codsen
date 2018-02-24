@@ -44,6 +44,13 @@ class Slices {
     if (etc.length > 0) {
       throw new TypeError(`string-slices-array-push/Slices/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: ${JSON.stringify(etc, null, 4)}`)
     }
+    if (
+      (originalFrom === null) &&
+      (originalTo === undefined) &&
+      (addVal === undefined)
+    ) {
+      return // do nothing about it
+    }
     const from = isNumStr(
       originalFrom,
       { includeZero: true },

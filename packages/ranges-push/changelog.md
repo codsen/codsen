@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.6.0] - 2018-02-24
+### Added
+- ✨ Chillax™ feature. If `null` is being `.push`ed, nothing happens. It won't `throw` from now on.
+
 ## [2.5.0] - 2018-02-10
 ### Added
 - ✨ Now accepts output of another slices class (its `.current()` output) as the first input argument. Now, it won't throw an error that second argument is missing, provided the validation of the array from the 1st argument passes.
@@ -88,6 +92,7 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ### New
 - First public release
 
+[2.6.0]: https://github.com/codsen/string-slices-array-push/compare/v2.5.0...v2.6.0
 [2.5.0]: https://github.com/codsen/string-slices-array-push/compare/v2.4.5...v2.5.0
 [2.4.0]: https://github.com/codsen/string-slices-array-push/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
