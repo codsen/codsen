@@ -9,8 +9,6 @@ import includes from 'lodash.includes';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint no-param-reassign:0, no-continue:0, max-len:0 */
-
 function existy(x) {
   return x != null;
 }
