@@ -343,7 +343,7 @@ function resolveString(input, string, path, opts) {
           throw new Error('json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn\'t find the value to resolve the variable ' + string.slice(obj.headsEndAt, obj.tailsStartAt) + '. We\'re at path: "' + path + '".');
         }
         if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr(resolvedValue)) {
-          throw new Error('json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ' + string.slice(obj.headsEndAt, obj.tailsStartAt) + ' at path ' + path + ', it resolved into a non-string value, ' + JSON.stringify(resolvedValue, null, 4));
+          throw new Error('json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ' + string.slice(obj.headsEndAt, obj.tailsStartAt) + ' at path ' + path + ', it resolved into a non-string value, ' + JSON.stringify(resolvedValue, null, 4) + '. Here are current opts:\n' + JSON.stringify(opts, null, 4));
         }
 
         if (isBool(resolvedValue)) {

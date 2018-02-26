@@ -374,7 +374,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
           opts.throwWhenNonStringInsertedInString &&
           !isStr(resolvedValue)
         ) {
-          throw new Error(`json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ${string.slice(obj.headsEndAt, obj.tailsStartAt)} at path ${path}, it resolved into a non-string value, ${JSON.stringify(resolvedValue, null, 4)}`)
+          throw new Error(`json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ${string.slice(obj.headsEndAt, obj.tailsStartAt)} at path ${path}, it resolved into a non-string value, ${JSON.stringify(resolvedValue, null, 4)}. This is happening because options setting "throwWhenNonStringInsertedInString" is active (set to "true").`)
         }
 
         if (isBool(resolvedValue)) {
