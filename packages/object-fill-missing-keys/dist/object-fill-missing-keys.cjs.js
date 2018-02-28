@@ -11,11 +11,6 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint no-prototype-builtins:0, max-len:0, no-param-reassign:0 */
-
-// ===================================
-// V A R S
-
 // ===================================
 // I N T E R N A L   F U N C T I O N S
 
