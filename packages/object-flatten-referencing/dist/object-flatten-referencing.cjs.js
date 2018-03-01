@@ -123,8 +123,6 @@ var util = {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint padded-blocks: 0, no-param-reassign:0 */
-
 var isArr$1 = Array.isArray;
 
 function existy(x) {
