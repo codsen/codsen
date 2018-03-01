@@ -182,6 +182,36 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   // action
 
+  if (whatToMatch[0].length === 0) {
+    if (opts.cb) {
+      if (mode === 'matchLeft') {
+        return opts.cb(
+          str[position - 1],
+          str.slice(0, position - 1),
+          position - 1,
+        )
+      } else if (mode === 'matchLeftIncl') {
+        return opts.cb(
+          str[position],
+          str.slice(0, position),
+          position,
+        )
+      } else if (mode === 'matchRight') {
+        return opts.cb(
+          str[position + 1],
+          str.slice(position + 1),
+          position + 1,
+        )
+      } else if (mode === 'matchRightIncl') {
+        return opts.cb(
+          str[position],
+          str.slice(position),
+          position,
+        )
+      }
+    }
+    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_08] the third argument, "whatToMatch", was given as an empty string. This means, you intend to match purely by a callback. The callback was not set though, the opts key "cb" is not set!`)
+  }
   if (mode.startsWith('matchLeft')) {
     for (let i = 0, len = whatToMatch.length; i < len; i++) {
       const found = marchBackward(str, position - (mode === 'matchLeft' ? 1 : 0), whatToMatch[i], opts)

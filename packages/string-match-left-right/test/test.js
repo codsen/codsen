@@ -90,7 +90,7 @@ test('01.01 - throws', (t) => {
 // 2. matchLeftIncl()
 // -----------------------------------------------------------------------------
 
-test('02.01 - matchLeftIncl()      on a simple string', (t) => {
+test(`02.01 - ${`\u001b[${33}m${'matchLeftIncl()'}\u001b[${39}m`}      on a simple string`, (t) => {
   t.is(
     matchLeftIncl('abc', 2, 'c'),
     'c',
@@ -158,7 +158,7 @@ test('02.01 - matchLeftIncl()      on a simple string', (t) => {
   })
 })
 
-test('02.02 - matchLeftIncl()      case insensitive', (t) => {
+test(`02.02 - ${`\u001b[${33}m${'matchLeftIncl()'}\u001b[${39}m`}      case insensitive`, (t) => {
   t.is(
     matchLeftIncl('abc', 2, 'C'),
     false,
@@ -181,7 +181,7 @@ test('02.02 - matchLeftIncl()      case insensitive', (t) => {
   )
 })
 
-test('02.03 - matchLeftIncl()      left substring to check is longer than what\'s on the left', (t) => {
+test(`02.03 - ${`\u001b[${33}m${'matchLeftIncl()'}\u001b[${39}m`}      left substring to check is longer than what's on the left`, (t) => {
   t.is(
     matchLeftIncl('abc', 2, ['cjsldfdjshfjkdfhgkdkgfhkd']),
     false,
@@ -197,7 +197,7 @@ test('02.03 - matchLeftIncl()      left substring to check is longer than what\'
 // 3. matchLeft()
 // -----------------------------------------------------------------------------
 
-test('03.01 - matchLeft()          on a simple string', (t) => {
+test(`03.01 - ${`\u001b[${31}m${'matchLeft()'}\u001b[${39}m`}          on a simple string`, (t) => {
   t.is(
     matchLeft('abc', 2, 'b'),
     'b',
@@ -238,7 +238,7 @@ test('03.01 - matchLeft()          on a simple string', (t) => {
   )
 })
 
-test('03.02 - matchLeft()          case insensitive', (t) => {
+test(`03.02 - ${`\u001b[${31}m${'matchLeft()'}\u001b[${39}m`}          case insensitive`, (t) => {
   t.is(
     matchLeft('abc', 2, 'B'),
     false,
@@ -254,7 +254,7 @@ test('03.02 - matchLeft()          case insensitive', (t) => {
 // 4. matchRightIncl()
 // -----------------------------------------------------------------------------
 
-test('04.01 - matchRightIncl()     on a simple string, non zero arg', (t) => {
+test(`04.01 - ${`\u001b[${35}m${'matchRightIncl()'}\u001b[${39}m`}     on a simple string, non zero arg`, (t) => {
   t.is(
     matchRightIncl('abcdef', 2, 'c'),
     'c',
@@ -313,7 +313,7 @@ test('04.01 - matchRightIncl()     on a simple string, non zero arg', (t) => {
   })
 })
 
-test('04.02 - matchRightIncl()     on a simple string, index zero', (t) => {
+test(`04.02 - ${`\u001b[${35}m${'matchRightIncl()'}\u001b[${39}m`}     on a simple string, index zero`, (t) => {
   t.is(
     matchRightIncl('abcdef', 0, 'a'),
     'a',
@@ -337,7 +337,7 @@ test('04.02 - matchRightIncl()     on a simple string, index zero', (t) => {
 })
 
 
-test('04.03 - matchRightIncl()     on a simple string, case insensitive', (t) => {
+test(`04.03 - ${`\u001b[${35}m${'matchRightIncl()'}\u001b[${39}m`}     on a simple string, case insensitive`, (t) => {
   t.is(
     matchRightIncl('abcdef', 2, 'C'),
     false,
@@ -363,7 +363,7 @@ test('04.03 - matchRightIncl()     on a simple string, case insensitive', (t) =>
 // 5. matchRight()
 // -----------------------------------------------------------------------------
 
-test('05.01 - matchRight()         on a simple string, non zero arg', (t) => {
+test(`05.01 - ${`\u001b[${32}m${'matchRight()'}\u001b[${39}m`}         on a simple string, non zero arg`, (t) => {
   t.is(
     matchRight('abcdef', 2, 'd'),
     'd',
@@ -427,7 +427,7 @@ test('05.01 - matchRight()         on a simple string, non zero arg', (t) => {
   })
 })
 
-test('05.02 - matchRight()         on a simple string, non zero arg', (t) => {
+test(`05.02 - ${`\u001b[${32}m${'matchRight()'}\u001b[${39}m`}         on a simple string, non zero arg`, (t) => {
   t.is(
     matchRight('abcdef', 0, 'b'),
     'b',
@@ -450,7 +450,7 @@ test('05.02 - matchRight()         on a simple string, non zero arg', (t) => {
   )
 })
 
-test('05.03 - matchRight()         on a simple string, case insensitive', (t) => {
+test(`05.03 - ${`\u001b[${32}m${'matchRight()'}\u001b[${39}m`}         on a simple string, case insensitive`, (t) => {
   t.is(
     matchRight('abcdef', 2, 'D'),
     false,
@@ -473,7 +473,7 @@ test('05.03 - matchRight()         on a simple string, case insensitive', (t) =>
   )
 })
 
-test('05.04 - matchRight()         adhoc test #1', (t) => {
+test(`05.04 - ${`\u001b[${32}m${'matchRight()'}\u001b[${39}m`}         adhoc test #1`, (t) => {
   t.is(
     matchRight('aaaa<<<<<<div>>>>something</div>bbbbb', 13, '>'),
     '>',
@@ -489,7 +489,7 @@ test('05.04 - matchRight()         adhoc test #1', (t) => {
 // 6. opts.cb callbacks
 // -----------------------------------------------------------------------------
 
-test('06.01 - opts.cb()            callback is called back. haha!', (t) => {
+test(`06.01 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            callback is called back. haha!`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -573,7 +573,7 @@ test('06.01 - opts.cb()            callback is called back. haha!', (t) => {
   )
 })
 
-test('06.02 - opts.matchLeft()     various combos', (t) => {
+test(`06.02 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            opts.matchLeft() - various combos`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -609,7 +609,7 @@ test('06.02 - opts.matchLeft()     various combos', (t) => {
   )
 })
 
-test('06.02 - opts.matchLeftIncl() callback and trimming', (t) => {
+test(`06.03 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            opts.matchLeftIncl() - callback and trimming`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -675,7 +675,7 @@ test('06.02 - opts.matchLeftIncl() callback and trimming', (t) => {
   )
 })
 
-test('06.03 - opts.cb()            callback is called back, pt.1', (t) => {
+test(`06.03 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            callback is called back, pt.1`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -718,7 +718,7 @@ test('06.03 - opts.cb()            callback is called back, pt.1', (t) => {
   )
 })
 
-test('06.04 - opts.cb()            callback is called, pt.2', (t) => {
+test(`06.04 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            callback is called, pt.2`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -810,7 +810,7 @@ test('06.04 - opts.cb()            callback is called, pt.2', (t) => {
 })
 
 // new in v2.1.0
-test('06.05 - opts.cb()            matchRight - third callback argument (index)', (t) => {
+test(`06.05 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            matchRight - third callback argument (index)`, (t) => {
   const inputStr = 'some text and some more text'
   function testMe(char, theRemainderOfTheString, index) {
     t.is(
@@ -838,7 +838,7 @@ test('06.05 - opts.cb()            matchRight - third callback argument (index)'
   matchRight(inputStr, 18, ['z', 'mo'], { i: true, cb: testMe })
 })
 
-test('06.06 - opts.cb()            matchLeft -  third callback argument (index)', (t) => {
+test(`06.06 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            matchLeft -  third callback argument (index)`, (t) => {
   const inputStr = 'some text and some more text'
   function testMe1(char) {
     t.is(
@@ -873,7 +873,7 @@ test('06.06 - opts.cb()            matchLeft -  third callback argument (index)'
 // 7. opts.trimCharsBeforeMatching
 // -----------------------------------------------------------------------------
 
-test('07.01 - opts.trimCharsBeforeMatching       pt.1', (t) => {
+test(`07.01 - ${`\u001b[${34}m${'opts.trimCharsBeforeMatching'}\u001b[${39}m`}       pt.1`, (t) => {
   function isSpace(char) {
     return (typeof char === 'string') && (char.trim() === '')
   }
@@ -936,7 +936,7 @@ test('07.01 - opts.trimCharsBeforeMatching       pt.1', (t) => {
   )
 })
 
-test('07.02 - opts.trimCharsBeforeMatching       pt.2', (t) => {
+test(`07.02 - ${`\u001b[${34}m${'opts.trimCharsBeforeMatching'}\u001b[${39}m`}       pt.2`, (t) => {
   // matchRight
   t.is(
     matchRight('</div>', 0, ['div']),
@@ -1096,7 +1096,7 @@ test('07.02 - opts.trimCharsBeforeMatching       pt.2', (t) => {
 // 8. opts.cb and opts.cb callbacks
 // -----------------------------------------------------------------------------
 
-test('08.01 - new in v1.5.0 - second arg in callback - matchRight()', (t) => {
+test(`08.01 - new in v1.5.0 - ${`\u001b[${33}m${'second arg in callback'}\u001b[${39}m`} - matchRight()`, (t) => {
   function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
     // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
     // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
@@ -1145,7 +1145,7 @@ test('08.01 - new in v1.5.0 - second arg in callback - matchRight()', (t) => {
   matchRight(input, 0, ['ghjs', 'div'], { i: true, cb: hasEmptyClassRightAfterTheTagName2, trimCharsBeforeMatching: ['/', ' '] })
 })
 
-test('08.02 - new in v1.5.0 - second arg in callback - matchRightIncl()', (t) => {
+test(`08.02 - new in v1.5.0 - ${`\u001b[${33}m${'second arg in callback'}\u001b[${39}m`} - matchRightIncl()`, (t) => {
   function hasEmptyClassRightAfterTheTagName(firstCharacter, wholeSubstring) {
     // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
     // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
@@ -1189,7 +1189,7 @@ test('08.02 - new in v1.5.0 - second arg in callback - matchRightIncl()', (t) =>
   )
 })
 
-test('08.03 - new in v1.5.0 - second arg in callback - matchLeft()', (t) => {
+test(`08.03 - new in v1.5.0 - ${`\u001b[${33}m${'second arg in callback'}\u001b[${39}m`} - matchLeft()`, (t) => {
   function startsWithZ(firstCharacter, wholeSubstring) {
     // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
     // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
@@ -1223,7 +1223,7 @@ test('08.03 - new in v1.5.0 - second arg in callback - matchLeft()', (t) => {
   )
 })
 
-test('08.04 - new in v1.5.0 - second arg in callback - matchLeftIncl()', (t) => {
+test(`08.04 - new in v1.5.0 - ${`\u001b[${33}m${'second arg in callback'}\u001b[${39}m`} - matchLeftIncl()`, (t) => {
   function startsWithZ(firstCharacter, wholeSubstring) {
     // console.log(`firstCharacter = ${JSON.stringify(firstCharacter, null, 4)}`)
     // console.log(`wholeSubstring = ${JSON.stringify(wholeSubstring, null, 4)}`)
@@ -1264,14 +1264,175 @@ test('08.04 - new in v1.5.0 - second arg in callback - matchLeftIncl()', (t) => 
   )
 })
 
+// 9. Relying only on callback to calculate result - empty input is passed
+// -----------------------------------------------------------------------------
+
+test(`09.01 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b[${32}m${'callback only'}\u001b[${39}m`} - matchLeft()`, (t) => {
+  t.true(matchLeft(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'a',
+    },
+  ))
+  t.false(matchLeft(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'c',
+    },
+  ))
+  const err = t.throws(() => {
+    matchLeft(
+      'abc',
+      1,
+      '',
+      {
+        i: true,
+      },
+    )
+  })
+  t.truthy(err.message.includes('THROW_ID_08'))
+})
+
+test(`09.02 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b[${32}m${'callback only'}\u001b[${39}m`} - matchLeftIncl()`, (t) => {
+  t.false(matchLeftIncl(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'a',
+    },
+  ))
+  t.true(matchLeftIncl(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'b',
+    },
+  ))
+  const err = t.throws(() => {
+    matchLeftIncl(
+      'abc',
+      1,
+      '',
+      {
+        i: true,
+      },
+    )
+  })
+  t.truthy(err.message.includes('THROW_ID_08'))
+})
+
+test(`09.03 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b[${32}m${'callback only'}\u001b[${39}m`} - matchRight()`, (t) => {
+  t.true(matchRight(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'c',
+    },
+  ))
+  t.false(matchRight(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'a',
+    },
+  ))
+  const err = t.throws(() => {
+    matchRight(
+      'abc',
+      1,
+      '',
+      {
+        i: true,
+      },
+    )
+  })
+  t.truthy(err.message.includes('THROW_ID_08'))
+})
+
+test(`09.04 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b[${32}m${'callback only'}\u001b[${39}m`} - matchRightIncl()`, (t) => {
+  t.false(matchRightIncl(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'c',
+    },
+  ))
+  t.true(matchRightIncl(
+    'abc',
+    1,
+    '',
+    {
+      i: true,
+      cb: char => char === 'b',
+    },
+  ))
+  const err = t.throws(() => {
+    matchRightIncl(
+      'abc',
+      1,
+      '',
+      {
+        i: true,
+      },
+    )
+  })
+  t.truthy(err.message.includes('THROW_ID_08'))
+})
+
+test(`09.05 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b[${32}m${'callback only'}\u001b[${39}m`} - matchRight() other cb args`, (t) => {
+  t.true(matchRight(
+    'abcdef',
+    2,
+    '',
+    {
+      i: true,
+      cb: char => char === 'd',
+    },
+  ))
+  t.true(matchRight(
+    'abcdef',
+    2,
+    '',
+    {
+      i: true,
+      cb: (char, rest) => rest === 'def',
+    },
+  ))
+  t.true(matchRight(
+    'abcdef',
+    2,
+    '',
+    {
+      i: true,
+      cb: (char, rest, index) => index === 3,
+    },
+  ))
+})
+
 // 9. Ad-hoc
 // -----------------------------------------------------------------------------
 
-test('09.01 - ADHOC, tests set #01', (t) => {
+test(`10.01 - ${`\u001b[${35}m${'ADHOC'}\u001b[${39}m`}, tests set #01`, (t) => {
   t.is(
     matchRight('<a class="something"> text', 19, '>'),
     '>',
-    '09.01.01',
+    '10.01.01',
   )
   t.is(
     matchRight('<a class="something"> text', 19, '>', {
@@ -1280,24 +1441,24 @@ test('09.01 - ADHOC, tests set #01', (t) => {
       (char.trim() === ''),
     }),
     '>',
-    '09.01.02',
+    '10.01.02',
   )
 
 
   t.is(
     matchRightIncl('<a class="something"> text', 20, '> t'),
     '> t',
-    '09.01.03',
+    '10.01.03',
   )
   t.is(
     matchRight('<a class="something"> text', 19, '> t'),
     '> t',
-    '09.01.04',
+    '10.01.04',
   )
   t.is(
     matchRight('ab      cdef', 1, 'cde', { trimBeforeMatching: true }),
     'cde',
-    '09.01.05',
+    '10.01.05',
   )
 
   t.is(
@@ -1305,7 +1466,7 @@ test('09.01 - ADHOC, tests set #01', (t) => {
       cb: char => char === ' ',
     }),
     '>',
-    '09.01.06',
+    '10.01.06',
   )
   t.is(
     matchRight('ab      cdef', 1, 'cde', {
@@ -1313,7 +1474,7 @@ test('09.01 - ADHOC, tests set #01', (t) => {
       trimBeforeMatching: true,
     }),
     'cde',
-    '09.01.07',
+    '10.01.07',
   )
 
   matchRight('ab      cdef', 1, 'cd', {
@@ -1322,17 +1483,17 @@ test('09.01 - ADHOC, tests set #01', (t) => {
       t.is(
         char,
         'e',
-        '09.01.08',
+        '10.01.08',
       )
       t.is(
         theRemainderOfTheString,
         'ef',
-        '09.01.09',
+        '10.01.09',
       )
       t.is(
         index,
         10,
-        '09.01.10',
+        '10.01.10',
       )
     },
   })

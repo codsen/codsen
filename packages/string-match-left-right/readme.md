@@ -26,6 +26,7 @@
 - [Install](#install)
 - [The API](#the-api)
 - [`opts.cb`](#optscb)
+- [Matching relying only on a callback](#matching-relying-only-on-a-callback)
 - [`opts.trimBeforeMatching`](#optstrimbeforematching)
 - [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
 - [Contributing](#contributing)
@@ -225,7 +226,7 @@ Callback's returned value will be used to calculate the final result.
 
 Final result = Boolean value of **matching** AND Boolean value of **callback**
 
-This means, if you set a callback and forget to return a truthy value from it, even if there was a match, return would be `false`, because both match comparison AND the callback have to be _truthy_ to yield _truthy_ output (which is output not as `true` but as matched string value).
+This means, if you set a callback and forget to return a truthy value from it, even if there was a match, return would be `false`, because both match comparison AND the callback have to be _truthy_ to yield _truthy_ output.
 
 You can also use the callback inline:
 
@@ -251,6 +252,65 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`)
 ```
 
 **[⬆ &nbsp;back to top](#)**
+
+## Matching relying only on a callback
+
+Sometimes, you want to match beyond "character is equal to" level. For example, you might want to run the regex against what's on the side and let that equation to judge the result. Sine `v3.1.0` you can do it. Pass the empty string as third argument, `whatToMatch` and a callback. If you don't pass the callback error will be thrown.
+
+Normally, callback receives the first matched element you gave in `whatToMatch`, but here we don't have anything!
+
+Instead, callback receives (in the order of arguments):
+
+1. callback's 1st argument - only next character on the left/right side if it's `matchLeft`/`matchRight`, or the character ar `position` (second argument) if it's `matchLeftIncl`/`matchRightIncl`
+2. callback's 2nd argument - slice on the particular side, including (`matchLeftIncl`/`matchRightIncl` methods) or not including (`matchLeft`/`matchRight`) character ar `position`
+3. callback's 3rd argument - index of the character right outside of the character ar `position` (`matchLeft`/`matchRight`) or index of character ar `position` (`matchLeftIncl`/`matchRightIncl` methods)
+
+```js
+const res1 = matchRight(
+  'abc',
+  1, // <--- it's letter "b" at index 1
+  '', // <-- notice it's empty, meaning we rely on just callback, "cb" now
+  {
+    cb: (characterOutside, wholeStringOnThatSide, indexOfCharacterOutside) => { return characterOutside === 'a' },
+  },
+)
+console.log(res1)
+// => false
+// because matchRight matches everything what's on the right, in this case it's "c".
+
+const res2 = matchRight(
+  'abcdef',
+  2, // <--- it's letter "c" at index 2
+  '', // <-- notice 3rd argument is empty string. This means we rely on cb only.
+  {
+    cb: char => char === 'd',
+  },
+)
+console.log(res2)
+// => true
+
+const res3 = matchRight(
+  'abcdef',
+  2, // <--- it's letter "c" at index 2
+  '', // <-- notice 3rd argument is empty string. This means we rely on cb only.
+  {
+    cb: (char, rest) => rest === 'def',
+  },
+)
+console.log(res3)
+// => true
+
+const res4 = matchRight(
+  'abcdef',
+  2, // <--- it's letter "c" at index 2
+  '', // <-- notice 3rd argument is empty string. This means we rely on cb only.
+  {
+    cb: (char, rest, index) => index === 3,
+  },
+)
+console.log(res4)
+// => true
+```
 
 ## `opts.trimBeforeMatching`
 
