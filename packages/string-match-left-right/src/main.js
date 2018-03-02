@@ -257,6 +257,4 @@ function matchRight(str, position, whatToMatch, opts) {
   return main('matchRight', str, position, whatToMatch, opts)
 }
 
-export {
-  matchLeftIncl, matchRightIncl, matchLeft, matchRight,
-}
+export { matchLeftIncl, matchRightIncl, matchLeft, matchRight }

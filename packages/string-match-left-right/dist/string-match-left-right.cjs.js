@@ -11,8 +11,6 @@ var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint default-case:0, consistent-return:0, max-len:0, no-mixed-operators:0, no-continue:0 */
-
 // const DEBUG = 0
 
 function isStr(something) {
