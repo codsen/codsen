@@ -49,50 +49,63 @@ test('02.01 - undefined yields false', (t) => {
   )
 })
 
-test('02.02 - isHighSurrogate', (t) => {
+test('02.02 - empty string yields false', (t) => {
   t.deepEqual(
-    isHighSurrogate('zzz'),
+    isHighSurrogate(''),
     false,
     '02.02.01',
   )
-  // 🧢 = \uD83E\uDDE2
   t.deepEqual(
-    isHighSurrogate('\uD83E'),
-    true,
-    '02.02.02',
-  )
-  t.deepEqual(
-    isHighSurrogate('\uDDE2'),
+    isLowSurrogate(''),
     false,
-    '02.02.03',
-  )
-  t.deepEqual(
-    isHighSurrogate('\uD83E\uDDE2'),
-    true,
-    '02.02.04', // second Unicode code point (and onwards) doesn't matter
+    '02.02.02',
   )
 })
 
-test('02.03 - isLowSurrogate', (t) => {
+test('02.03 - isHighSurrogate()', (t) => {
   t.deepEqual(
-    isLowSurrogate('zzz'),
+    isHighSurrogate('zzz'),
     false,
     '02.03.01',
   )
   // 🧢 = \uD83E\uDDE2
   t.deepEqual(
+    isHighSurrogate('\uD83E'),
+    true,
+    '02.03.02',
+  )
+  t.deepEqual(
+    isHighSurrogate('\uDDE2'),
+    false,
+    '02.03.03',
+  )
+  t.deepEqual(
+    isHighSurrogate('\uD83E\uDDE2'),
+    true,
+    '02.03.04', // second Unicode code point (and onwards) doesn't matter
+  )
+})
+
+test('02.04 - isLowSurrogate()', (t) => {
+  t.deepEqual(
+    isLowSurrogate('zzz'),
+    false,
+    '02.04.01',
+  )
+  // 🧢 = \uD83E\uDDE2
+  t.deepEqual(
     isLowSurrogate('\uD83E'),
     false,
-    '02.03.02',
+    '02.04.02',
   )
   t.deepEqual(
     isLowSurrogate('\uDDE2'),
     true,
-    '02.03.03',
+    '02.04.03',
   )
   t.deepEqual(
     isLowSurrogate('\uD83E\uDDE2'),
     false,
-    '02.03.04', // second Unicode code point (and onwards) doesn't matter
+    '02.04.04', // second Unicode code point (and onwards) doesn't matter
   )
 })
