@@ -4,8 +4,6 @@ import isObj from 'lodash.isplainobject';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-/* eslint security/detect-object-injection:0, no-param-reassign:0 */
-
 function splitEasy(str, originalOpts) {
   // traverse the string and push each column into array
   // when line break is detected, push what's gathered into main array

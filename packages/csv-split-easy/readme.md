@@ -15,6 +15,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
@@ -28,6 +29,7 @@
 - [API](#api)
 - [The algorithm](#the-algorithm)
 - [Contributing](#contributing)
+- [Contributors](#contributors)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -50,8 +52,8 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/csv-split-easy.cjs.js` | 8&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 31&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/csv-split-easy.esm.js` | 8&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/csv-split-easy.umd.js` | 30&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -173,6 +175,20 @@ So, the best algorithm is a single `for`-loop traversal on the input string, det
 
 **[⬆ &nbsp;back to top](#)**
 
+## Contributors
+
+Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/csv-split-easy/commits?author=revelt "Code") [📖](https://github.com/codsen/csv-split-easy/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/csv-split-easy/commits?author=revelt "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1530281?v=4" width="100px;"/><br /><sub><b>Mac Angell</b></sub>](https://github.com/mac-)<br /> [💻](https://github.com/codsen/csv-split-easy/commits?author=mac- "Code") [⚠️](https://github.com/codsen/csv-split-easy/commits?author=mac- "Tests") |
+| :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors][all-contributors] specification.
+Contributions of any kind are welcome!
+
+**[⬆ &nbsp;back to top](#)**
+
 ## Licence
 
 MIT License (MIT)
@@ -213,5 +229,10 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/csv-split-easy
 
+[contributors-img]: https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square
+[contributors-url]: #contributors
+
 [license-img]: https://img.shields.io/npm/l/csv-split-easy.svg?style=flat-square
 [license-url]: https://github.com/codsen/csv-split-easy/blob/master/license.md
+
+[all-contributors]: https://github.com/kentcdodds/all-contributors
