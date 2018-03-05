@@ -57,22 +57,18 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 ## Idea
 
-When you traverse the string the most efficient way, index-by-index, using a `for` loop, you might stumble upon astral character low and high surrogates. Basically, first and second part of the astral character (like emoji).
+When you traverse a string the most efficient way, index-by-index, using a `for` loop, you might stumble upon an astral character's low and high surrogates. This library helps to identify them.
 
-This library helps to identify low and high surrogates.
+No other library seems to be able to do that. For example, [astral-regex](https://www.npmjs.com/package/astral-regex) can tell you, does a string contain astral characters or does the given character comprise of two surrogates. But it won't help you identify them _separately_.
 
-No other library seems to be able to do that.
-
-For example, [astral-regex](https://www.npmjs.com/package/astral-regex) can tell you, does a string contain astral characters or does the given character comprise of two surrogates. But it won't help you identify them _separately_.
-
-I need to be able to identify **surrogates separately** to be able to cover cases such as surrogates without second counterpart. Basically, this library will give tool to cater for all cases of messed up astral characters.
+I need to be able to identify **surrogates separately** to be able to cover cases such as surrogates without second counterpart.
 
 In itself, this library is very simple, two functions:
 
 **isHighSurrogate (char)**
 **isLowSurrogate (char)**
 
-It reads the character at first index (the first Unicode code point) and evaluates its `charcode`. That's it.
+It reads the character at first index (the first Unicode code point) and evaluates its `charcode`. That's it. If there are more characters they are ignored.
 
 In theory, high surrogate goes first, low surrogate goes second [source](https://unicodebook.readthedocs.io/unicode_encodings.html#surrogates).
 
