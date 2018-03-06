@@ -46,7 +46,11 @@ function splitEasy(str, originalOpts) {
     // detect a double quote
     // ======================
     if (str[i] === '"') {
-      if (ignoreCommasThatFollow) {
+      // if this is a double quote escape character
+      if (ignoreCommasThatFollow && str[i + 1] === '"') {
+        // skip it and the next
+        i += 1;
+      } else if (ignoreCommasThatFollow) {
         // 1. turn off the flag:
         ignoreCommasThatFollow = false;
         // 2. dump the value that ends here:
@@ -55,12 +59,14 @@ function splitEasy(str, originalOpts) {
         if (newElem.trim() !== '') {
           thisRowContainsOnlyEmptySpace = false;
         }
-        rowArray.push(remSep(newElem, // push it anyway, if it's empty or not.
-        {
+        // if the element contains the double quote escape character,
+        // chances are it doesn't need to have seperators removed
+        var processedElem = /""/.test(newElem) ? newElem.replace(/""/g, '"') : remSep(newElem, {
           removeThousandSeparatorsFromNumbers: opts.removeThousandSeparatorsFromNumbers,
           padSingleDecimalPlaceNumbers: opts.padSingleDecimalPlaceNumbers,
           forceUKStyle: opts.forceUKStyle
-        }));
+        });
+        rowArray.push(processedElem); // push it anyway, if it's empty or not.
         // later if whole row comprises of empty columns (thisRowContainsOnlyEmptySpace still
         // equals `true`), we won't push that `rowArray` into `resArray`.
       } else {

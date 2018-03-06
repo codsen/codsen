@@ -229,6 +229,17 @@ test('02.04 - all values are wrapped with double quotes, some trailing white spa
   )
 })
 
+test('02.05 - values wrapped in double quotes that contain double quotes', (t) => {
+  t.deepEqual(
+    splitEasy('"a,""b""",c,d\ne,f,"g ""G"""'),
+    [
+      ['a,"b"', 'c', 'd'],
+      ['e', 'f', 'g "G"'],
+    ],
+    '02.05.01 - double quotes that contain double quotes',
+  )
+})
+
 // =============================================================
 // group 03 - input type validation
 // =============================================================
