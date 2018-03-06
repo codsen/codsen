@@ -1271,7 +1271,7 @@ test(`09.01 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b
   t.true(matchLeft(
     'abc',
     1,
-    '',
+    null,
     {
       i: true,
       cb: char => char === 'a',
@@ -1280,7 +1280,7 @@ test(`09.01 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b
   t.false(matchLeft(
     'abc',
     1,
-    '',
+    null,
     {
       i: true,
       cb: char => char === 'c',
@@ -1290,7 +1290,7 @@ test(`09.01 - ${`\u001b[${36}m${'opts.cb()'}\u001b[${39}m`}            ${`\u001b
     matchLeft(
       'abc',
       1,
-      '',
+      null,
       {
         i: true,
       },

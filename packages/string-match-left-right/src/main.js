@@ -121,7 +121,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
 }
 
 // Real deal
-function main(mode, str, position, originalWhatToMatch, originalOpts) {
+function main(mode, str, position, originalWhatToMatch = '', originalOpts) {
   function existy(x) { return x != null }
   const isArr = Array.isArray
   if (!isStr(str)) {
@@ -135,13 +135,12 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   let whatToMatch
 
-  if (!existy(originalWhatToMatch)) {
-    throw new Error(`string-match-left-right/${mode}(): [THROW_ID_04] Third argument, whatToMatch, is missing!`)
-  }
   if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch]
   } else if (isArr(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch
+  } else if (originalWhatToMatch === null) {
+    whatToMatch = ['']
   } else {
     throw new Error(`string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(originalWhatToMatch, null, 4)}`)
   }
@@ -182,7 +181,11 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
   // action
 
-  if (whatToMatch[0].length === 0) {
+  if (
+    isArr(whatToMatch) &&
+    isStr(whatToMatch[0]) &&
+    (whatToMatch[0].length === 0)
+  ) {
     if (opts.cb) {
       if (mode === 'matchLeft') {
         return opts.cb(
