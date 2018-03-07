@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.1] - 2018-03-06
+### Fixed
+- 🔧 Looks like the new callback feature was causing throws on certain cases. Not any more. Sorry about that. Very big release in coming soon with great new features. 👍
+
 ## [3.1.0] - 2018-03-01
 ### Added
 - ✨ Third argument, `whatToMatch`, can now be empty string. In such case, you have to provide callback and result will be calculated purely using the callback. It's handy when you want to perform complex matching, beyond "character is equal to" level. Personally, I reached this level and it's necessary for the feature I'm producing on the other package. It must be handy for everybody else too.
@@ -63,6 +67,7 @@ They have to be callbacks because I can't predict what checks you will want to c
 ### New
 - ✨ First public release
 
+[3.1.1]: https://github.com/codsen/string-match-left-right/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/codsen/string-match-left-right/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/codsen/string-match-left-right/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/codsen/string-match-left-right/compare/v1.4.0...v2.0.0
