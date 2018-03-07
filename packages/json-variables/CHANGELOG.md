@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.1.2] - 2018-03-06
+### Added
+- 🔧 Updated all dependencies again. I was/am tinkering with [string-match-left-right](https://github.com/codsen/string-match-left-right) and its previous version could have caused `throw`s on certain cases. Sorry about that. Big features are coming soon for compensation 😋.
+
 ## [7.1.0] - 2018-02-16
 ### Added
 - ✨ Updated all dependencies.
@@ -145,3 +149,4 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 [6.0.0]: https://github.com/codsen/json-variables/compare/v5.0.0...v6.0.0
 [7.0.0]: https://github.com/codsen/json-variables/compare/v6.0.0...v7.0.0
 [7.1.0]: https://github.com/codsen/json-variables/compare/v7.0.0...v7.1.0
+[7.1.2]: https://github.com/codsen/json-variables/compare/v7.1.0...v7.1.2
