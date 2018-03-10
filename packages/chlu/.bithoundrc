@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "mute": [
+      "ast-contains-only-empty-space",
       "ava",
       "coveralls",
       "husky",

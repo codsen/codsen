@@ -7,15 +7,13 @@ import emojiRegexLib from 'emoji-regex';
 import reverse from 'lodash.reverse';
 import splitLines from 'split-lines';
 import getPkgRepo from 'get-pkg-repo';
-import empty from 'posthtml-ast-contains-only-empty-space';
+import empty from 'ast-contains-only-empty-space';
 import insert from 'just-insert';
 import includes from 'lodash.includes';
 import min from 'lodash.min';
 import dd from 'dehumanize-date';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/* eslint prefer-destructuring:0, no-param-reassign:0 */
 
 var emojiRegex = emojiRegexLib();
 

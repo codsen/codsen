@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## [2.9.0] - 2018-03-10
+### Updated
+- ✨ Switched from deprecated [posthtml-ast-contains-only-empty-space](https://github.com/codsen/posthtml-ast-contains-only-empty-space) to fresh [ast-contains-only-empty-space](https://github.com/codsen/ast-contains-only-empty-space)
+- ✨ Updated all dependencies
+- 💥 Removing UMD build - nobody's gonna use this library in a browser
+
 ## [2.8.0] - 2018-01-23
 ### Added
 - ✨ Test-fodder libraries' licences at the bottom of readme
@@ -88,3 +94,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 [2.6.0]: https://github.com/codsen/chlu/compare/v2.5.0...v2.6.0
 [2.7.0]: https://github.com/codsen/chlu/compare/v2.6.0...v2.7.0
 [2.8.0]: https://github.com/codsen/chlu/compare/v2.7.0...v2.8.0
+[2.9.0]: https://github.com/codsen/chlu/compare/v2.8.0...v2.9.0
