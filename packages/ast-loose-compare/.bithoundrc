@@ -1,0 +1,24 @@
+{
+  "critics": {
+    "lint": {
+      "engine": "eslint"
+    }
+  },
+  "dependencies": {
+    "mute": [
+      "ast-contains-only-empty-space",
+      "ava",
+      "coveralls",
+      "husky",
+      "lodash.isplainobject",
+      "lodash.isstring",
+      "nyc"
+    ]
+  },
+  "ignore": [
+    "dist/**"
+  ],
+  "test": [
+    "test/test.js"
+  ]
+}
