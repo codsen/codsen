@@ -1,7 +1,7 @@
 import typeDetect from 'type-detect';
 import clone from 'lodash.clonedeep';
 import pullAll from 'lodash.pullall';
-import empty from 'posthtml-ast-contains-only-empty-space';
+import empty from 'ast-contains-only-empty-space';
 import matcher from 'matcher';
 import checkTypes from 'check-types-mini';
 

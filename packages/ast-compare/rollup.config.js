@@ -34,7 +34,7 @@ export default [
       'matcher',
       'lodash.clonedeep',
       'lodash.pullall',
-      'posthtml-ast-contains-only-empty-space',
+      'ast-contains-only-empty-space',
       'type-detect',
     ],
     plugins: [
