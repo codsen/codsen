@@ -17,8 +17,6 @@
 [![Test in browser][runkit-img]][runkit-url]
 [![MIT License][license-img]][license-url]
 
-> This is not a PostHTML plugin but a regular JS library. It is meant to work with anything, including nested array/object trees, like parsed HTML, that is, AST (abstract syntax trees) that come out of the PostHTML-parser. Hence the name, `posthtml-ast-`.
-
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
