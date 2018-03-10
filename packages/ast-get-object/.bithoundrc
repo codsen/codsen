@@ -9,6 +9,7 @@
       "ava",
       "coveralls",
       "husky",
+      "lodash.clonedeep",
       "lodash.isplainobject",
       "nyc"
     ]

@@ -3,7 +3,7 @@
 // ===================================
 // R E Q U I R E' S
 
-import compare from 'posthtml-ast-compare'
+import compare from 'ast-compare'
 import isObj from 'lodash.isplainobject'
 import clone from 'lodash.clonedeep'
 

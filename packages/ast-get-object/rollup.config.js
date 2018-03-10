@@ -32,7 +32,7 @@ export default [
     external: [
       'lodash.clonedeep',
       'lodash.isplainobject',
-      'posthtml-ast-compare',
+      'ast-compare',
     ],
     plugins: [
       babel(),

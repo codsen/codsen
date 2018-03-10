@@ -136,9 +136,9 @@
     }
   },
   "dependencies": {
-    "lodash.clonedeep": "^4.5.0",
-    "lodash.isplainobject": "*",
-    "posthtml-ast-compare": "^5.2.1"
+    "ast-compare": "^1.2.2",
+    "lodash.clonedeep": "*",
+    "lodash.isplainobject": "*"
   },
   "devDependencies": {
     "ava": "*",
