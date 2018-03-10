@@ -1,0 +1,157 @@
+{
+  "name": "ast-contains-only-empty-space",
+  "version": "1.0.0",
+  "description": "Returns Boolean depending if passed AST contain only empty space",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codsen/ast-contains-only-empty-space.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codsen/ast-contains-only-empty-space/issues"
+  },
+  "homepage": "https://github.com/codsen/ast-contains-only-empty-space#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/ast-contains-only-empty-space.cjs.js",
+  "module": "dist/ast-contains-only-empty-space.esm.js",
+  "browser": "dist/ast-contains-only-empty-space.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c -w",
+    "precommit": "npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "keywords": [
+    "ast",
+    "posthtml",
+    "object",
+    "tree",
+    "posthtml-tree",
+    "posthtmltree",
+    "html",
+    "xml",
+    "parser",
+    "array",
+    "empty",
+    "space",
+    "trim"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": ""
+    },
+    "licence": {
+      "extras": []
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      }
+    }
+  },
+  "dependencies": {
+    "ast-monkey-traverse": "^1.1.3",
+    "lodash.isplainobject": "*",
+    "lodash.trim": "*"
+  },
+  "devDependencies": {
+    "ava": "*",
+    "babel-preset-env": "^1.6.1",
+    "coveralls": "*",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-ava": "^4.5.1",
+    "eslint-plugin-import": "^2.9.0",
+    "husky": "*",
+    "nyc": "*",
+    "rollup": "^0.56.5",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-node-resolve": "^3.2.0",
+    "rollup-plugin-uglify": "^3.0.0",
+    "uglify-es": "^3.3.9"
+  }
+}
