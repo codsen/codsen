@@ -106,11 +106,11 @@ console.log(empty(
 
 ## Rationale
 
-Working with parsed HTML is always a battle against white space. Often you need to know, does certain AST piece (object/array/whatever) contain anything real, or just an empty space. That's what this library is for.
+Working with parsed HTML is always a battle against the white space. Often you need to know, does certain AST piece (object/array/whatever) contain anything real, or just an empty space. That's what this library is for.
 
-In real life, parsed HTML trees will have many levels of nested arrays, objects and strings. While it's easy to check does a plain object contain only empty space (`\n`, ` `, `\t`, line break or a mix of thereof), it's not so easy when your object has arrays of empty objects. I want a solid, tested library which can identify emptiness (or lack of) in anything, nested or not nested.
+In real life, parsed HTML trees will have many levels of nested arrays, objects and strings. While it's easy to check does a plain object contain only empty space (`'\n'`, `' '`, `'\t'`, line break or a mix of thereof), it's not so easy when your object has arrays of empty objects. I want a solid, tested library which can identify emptiness (or lack of) in anything, nested or not nested.
 
-By the way, weird things (like functions, which don't belong to parsed HTML structures) will yield cause result `false`.
+By the way, weird things (like functions, which don't belong to parsed HTML structures) will yield a result `false`.
 
 **[⬆ &nbsp;back to top](#)**
 
