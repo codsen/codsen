@@ -1,6 +1,6 @@
 {
   "name": "ast-compare",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Compare anything: AST, objects, arrays, strings and nested thereof",
   "license": "MIT",
   "engines": {
