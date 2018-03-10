@@ -98,7 +98,7 @@ Let's GET all plain objects that contain key `tag` and value `meta`. In a true p
 
 ```js
 const result = getObj(
-  [ // <- search in this, first argument, in this case, a nested array
+  [ // <- search in this, the first argument, in this case, a nested array
     {
       tag: 'meta',
       content: 'UTF-8',
@@ -109,7 +109,7 @@ const result = getObj(
       attrs: 'Text of the title'
     }
   ],
-  { // <- search for this object, second argument
+  { // <- search for this object, the second argument
     tag: 'meta'
   }
 )
