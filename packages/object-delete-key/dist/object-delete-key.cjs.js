@@ -3,7 +3,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var astMonkey = require('ast-monkey');
-var isEmpty = _interopDefault(require('posthtml-ast-is-empty'));
+var isEmpty = _interopDefault(require('ast-is-empty'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var validateTheOnly = _interopDefault(require('util-array-object-or-both'));

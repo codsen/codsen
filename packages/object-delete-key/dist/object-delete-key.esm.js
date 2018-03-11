@@ -1,5 +1,5 @@
 import { find, get, drop, del } from 'ast-monkey';
-import isEmpty from 'posthtml-ast-is-empty';
+import isEmpty from 'ast-is-empty';
 import clone from 'lodash.clonedeep';
 import checkTypes from 'check-types-mini';
 import validateTheOnly from 'util-array-object-or-both';

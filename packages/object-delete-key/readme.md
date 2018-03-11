@@ -27,6 +27,7 @@
 - [Deleting](#deleting)
 - [API](#api)
 - [Example](#example)
+- [Wildcards](#wildcards)
 - [Rationale](#rationale)
 - [This library vs. _.omit](#this-library-vs-_omit)
 - [Contributing](#contributing)
@@ -228,6 +229,28 @@ deleteKey(
 ```
 
 **[⬆ &nbsp;back to top](#)**
+
+## Wildcards
+
+Wildcards can be used in keys and/or values. This library feeds inputs to [ast-monkey](https://github.com/codsen/ast-monkey) which is doing all the heavy lifting, which, in turn, is using [matcher](https://github.com/sindresorhus/matcher).
+
+```js
+const res = deleteKey(
+  {
+    a: ['beep', '', 'c', 'boop'],
+    bap: 'bap',
+  },
+  {
+    key: 'b*p',
+    only: 'array',
+  },
+)
+console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(res, null, 4)}`)
+// => {
+//      a: ['', 'c'],
+//      bap: 'bap',
+//    }
+```
 
 ## Rationale
 

@@ -30,10 +30,10 @@ export default [
       { file: pkg.module, format: 'es' },
     ],
     external: [
+      'ast-is-empty',
       'ast-monkey',
       'check-types-mini',
       'lodash.clonedeep',
-      'posthtml-ast-is-empty',
       'util-array-object-or-both',
     ],
     plugins: [
