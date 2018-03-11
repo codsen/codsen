@@ -137,13 +137,13 @@
   },
   "dependencies": {
     "arrayiffy-if-string": "*",
+    "ast-get-values-by-key": "^1.0.1",
     "ast-monkey-traverse": "^1.1.3",
     "check-types-mini": "^3.1.2",
     "lodash.clonedeep": "*",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^1.1.0",
     "object-path": "^0.11.4",
-    "posthtml-ast-get-values-by-key": "^3.2.0",
     "string-find-heads-tails": "^3.5.7",
     "string-match-left-right": "^3.1.1",
     "string-remove-duplicate-heads-tails": "^2.1.2",
@@ -160,10 +160,10 @@
     "eslint-plugin-import": "^2.9.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.56.4",
+    "rollup": "^0.56.5",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.0.0",
-    "rollup-plugin-node-resolve": "^3.0.3",
+    "rollup-plugin-node-resolve": "^3.2.0",
     "rollup-plugin-uglify": "^3.0.0",
     "uglify-es": "^3.3.10"
   }
