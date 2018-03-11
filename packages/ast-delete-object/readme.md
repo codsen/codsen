@@ -92,7 +92,7 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 ## Match Keys Strictly setting
 
-We have a dilemma: what to do regarding third key, `somethingelse: 'qqq'`?
+We have a dilemma: what to do regarding the **third key**, `somethingelse: 'qqq'`?
 
 If you want the search to be strict, that is to require the key set to match exactly, use options object, `matchKeysStrictly: true`:
 
