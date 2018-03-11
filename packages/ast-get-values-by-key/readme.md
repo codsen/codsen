@@ -104,7 +104,7 @@ getAllValuesByKey(
 ```
 
 - If two arguments are given, an **array zero or more of values** from matched key-value pairs within objects will be returned.
-- If three arguments are given, an amended clone of your input will be returned.
+- If three arguments are given, **an amended clone of your input** will be returned.
 
 This library does not mutate any input arguments.
 
