@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [10.0.0] - 2018-03-13
+### Changed
+- ✨ When `opts.useNullAsExplicitFalse` is on and one of the clashing values is `null`, result will be `null`, not `false`. That's a breaking change of the API and this warrants _a major semver bump_.
+
+This feature is needed to maintain the data integrity. When merging in multiple rounds, if `null` under `opts.useNullAsExplicitFalse` yielded `false`, after the first round, the `null` would be lost. Now, `null` is kept and all subsequent merges will yield `null`. Practically, this means that it's enough to place `null` anywhere on any any level of template data and the result is guaranteed to be null. It's super-easy way to remove default values _arrays_ or _objects_ — the merged result `null` will not cause defaults to show up now.
+
 ## [9.1.0] - 2018-02-15
 ### Added
 - ✨ `opts.cb`
@@ -143,3 +149,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [8.4.0]: https://github.com/codsen/object-merge-advanced/compare/v8.3.4...v8.4.0
 [9.0.0]: https://github.com/codsen/object-merge-advanced/compare/v8.4.0...v9.0.0
 [9.1.0]: https://github.com/codsen/object-merge-advanced/compare/v9.0.0...v9.1.0
+[10.0.0]: https://github.com/codsen/object-merge-advanced/compare/v9.1.0...v10.0.0

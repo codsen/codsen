@@ -3775,7 +3775,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
     {
       a: false,
     },
-    '17.01.01.01 - control, case #79 - false',
+    '17.01.01.01 - control, case #79 - false. Null is lower in rank than any Boolean.',
   )
   t.deepEqual(
     mergeAdvanced(
@@ -3789,7 +3789,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
     {
       a: true,
     },
-    '17.01.01.02 - control, case #79 - true',
+    '17.01.01.02 - control, case #79 - true. Null is lower in rank than any Boolean.',
   )
 
   // ===
@@ -3842,7 +3842,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.01.03.01 - null-as-explicit-false, case #79 - false',
   )
@@ -3859,7 +3859,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.01.03.02 - null-as-explicit-false, case #79 - true',
   )
@@ -3879,7 +3879,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.01.04.01 - null-as-explicit-false, case #88 - false',
   )
@@ -3896,7 +3896,7 @@ test('17.01 - opts.useNullAsExplicitFalse, simple merges', (t) => {
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.01.04.02 - null-as-explicit-false, case #88 - true',
   )
@@ -3916,7 +3916,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.01 - #81 - null vs non-empty array',
   )
@@ -3933,7 +3933,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.02 - #82 - null vs. empty array',
   )
@@ -3950,7 +3950,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.03 - #83 - null vs. non-empty plain object',
   )
@@ -3967,7 +3967,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.04 - #84 - null vs. empty plain object',
   )
@@ -3984,7 +3984,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.05 - #85 - null vs. non-empty string',
   )
@@ -4001,7 +4001,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.06 - #86 - null vs. non-empty string',
   )
@@ -4018,7 +4018,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.07 - #87 - null vs. num',
   )
@@ -4035,7 +4035,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.08.01 - #88 - null vs. bool, true',
   )
@@ -4052,7 +4052,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.08.02 - #88 - null vs. bool, false',
   )
@@ -4069,7 +4069,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.09 - #89 - null vs. null',
   )
@@ -4086,7 +4086,7 @@ test('17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90',
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.02.10 - #90 - null vs. null',
   )
@@ -4106,7 +4106,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.01 - #9 - null vs non-empty array',
   )
@@ -4123,7 +4123,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.02 - #19 - null vs. empty array',
   )
@@ -4140,7 +4140,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.03 - #29 - null vs. non-empty plain object',
   )
@@ -4157,7 +4157,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.04 - #39 - null vs. empty plain object',
   )
@@ -4174,7 +4174,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.05 - #49 - null vs. non-empty string',
   )
@@ -4191,7 +4191,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.06 - #59 - null vs. non-empty string',
   )
@@ -4208,7 +4208,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.07 - #69 - null vs. num',
   )
@@ -4225,7 +4225,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.08.01 - #79 - null vs. bool, true',
   )
@@ -4242,7 +4242,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.08.02 - #79 - null vs. bool, false',
   )
@@ -4259,7 +4259,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.09 - #89 - null vs. null',
   )
@@ -4276,7 +4276,7 @@ test('17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
       },
     ),
     {
-      a: false,
+      a: null,
     },
     '17.03.10 - #99 - null vs. null',
   )

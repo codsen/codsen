@@ -90,7 +90,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // when null is used as explicit false, it overrides everything and anything:
   if (opts.useNullAsExplicitFalse && ((input1orig === null) || (input2orig === null))) {
     // if (DEBUG) { console.log(`\u001b[${33}m${`85 RET: ${opts.cb ? opts.cb(input1orig, input2orig, false) : false}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(input1orig, input2orig, false) : false
+    return opts.cb ? opts.cb(input1orig, input2orig, null) : null
   }
 
   // clone the values to prevent accidental mutations, but only if it makes sense -
