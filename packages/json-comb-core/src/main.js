@@ -78,7 +78,9 @@ function getKeyset(arrOfPromises, originalOpts) {
           (previousValue, currentValue) => mergeAdvanced(
             flattenAllArrays(previousValue, { flattenArraysContainingStringsToBeEmpty: true }),
             flattenAllArrays(currentValue, { flattenArraysContainingStringsToBeEmpty: true }),
-            { mergeArraysContainingStringsToBeEmpty: true },
+            {
+              mergeArraysContainingStringsToBeEmpty: true,
+            },
           ), // reducer
           {}, // initialValue
         ).then((res2) => {
@@ -128,7 +130,9 @@ function getKeysetSync(arrOriginal, originalOpts) {
     schemaObj = mergeAdvanced(
       flattenAllArrays(schemaObj, fOpts),
       flattenAllArrays(obj, fOpts),
-      { mergeArraysContainingStringsToBeEmpty: true },
+      {
+        mergeArraysContainingStringsToBeEmpty: true,
+      },
     )
   })
   schemaObj = sortAllObjectsSync(setAllValuesTo(schemaObj, opts.placeholder))
@@ -147,6 +151,7 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
   const defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
+    useNullAsExplicitFalse: true,
   }
   const opts = Object.assign({}, defaults, originalOpts)
   checkTypes(opts, defaults, {
@@ -199,6 +204,7 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   const defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     placeholder: false,
+    useNullAsExplicitFalse: true,
   }
   const opts = Object.assign({}, defaults, originalOpts)
   checkTypes(opts, defaults, {

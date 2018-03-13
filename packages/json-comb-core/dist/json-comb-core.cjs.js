@@ -91,7 +91,9 @@ function getKeyset(arrOfPromises, originalOpts) {
       }
       return pReduce(arrOfPromises, // input
       function (previousValue, currentValue) {
-        return mergeAdvanced(flattenAllArrays(previousValue, { flattenArraysContainingStringsToBeEmpty: true }), flattenAllArrays(currentValue, { flattenArraysContainingStringsToBeEmpty: true }), { mergeArraysContainingStringsToBeEmpty: true });
+        return mergeAdvanced(flattenAllArrays(previousValue, { flattenArraysContainingStringsToBeEmpty: true }), flattenAllArrays(currentValue, { flattenArraysContainingStringsToBeEmpty: true }), {
+          mergeArraysContainingStringsToBeEmpty: true
+        });
       }, // reducer
       {} // initialValue
       ).then(function (res2) {
@@ -138,7 +140,9 @@ function getKeysetSync(arrOriginal, originalOpts) {
     if (!isObj(obj)) {
       throw new TypeError('json-comb-core/getKeysetSync(): [THROW_ID_25] Non-object (' + typ(obj) + ') detected within an array! It\'s the ' + i + 'th element: ' + JSON.stringify(obj, null, 4));
     }
-    schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), { mergeArraysContainingStringsToBeEmpty: true });
+    schemaObj = mergeAdvanced(flattenAllArrays(schemaObj, fOpts), flattenAllArrays(obj, fOpts), {
+      mergeArraysContainingStringsToBeEmpty: true
+    });
   });
   schemaObj = sortAllObjectsSync(setAllValuesTo(schemaObj, opts.placeholder));
   return schemaObj;
@@ -155,7 +159,8 @@ function enforceKeyset(obj, schemaKeyset, originalOpts) {
   }
   var defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
-    placeholder: false
+    placeholder: false,
+    useNullAsExplicitFalse: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
@@ -203,7 +208,8 @@ function enforceKeysetSync(obj, schemaKeyset, originalOpts) {
   }
   var defaults = {
     doNotFillThesePathsIfTheyContainPlaceholders: [],
-    placeholder: false
+    placeholder: false,
+    useNullAsExplicitFalse: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {

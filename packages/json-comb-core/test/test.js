@@ -1241,6 +1241,49 @@ test('02.16 - enforceKeysetSync() - opts.doNotFillThesePathsIfTheyContainPlaceho
   })
 })
 
+test('02.17 - enforceKeysetSync() - opts.useNullAsExplicitFalse', (t) => {
+  const schema = getKeysetSync([
+    {
+      a: 'aaa',
+      b: 'bbb',
+    },
+    {
+      a: {
+        c: 'ccc',
+      },
+    },
+  ])
+  t.deepEqual(
+    enforceKeysetSync(
+      {
+        a: null,
+      },
+      schema,
+    ),
+    {
+      a: null,
+      b: false,
+    },
+    '02.17.01 - default behaviour',
+  )
+  t.deepEqual(
+    enforceKeysetSync(
+      {
+        a: null,
+      },
+      schema,
+      { useNullAsExplicitFalse: false },
+    ),
+    {
+      a: {
+        c: false,
+      },
+      b: false,
+    },
+    '02.17.02 - off via opts',
+  )
+})
+
 // -----------------------------------------------------------------------------
 // 03. guards against input arg mutation
 // -----------------------------------------------------------------------------
@@ -3752,4 +3795,47 @@ test('09.15.02 - enforceKeyset() - wrong opts - resolves to rejected promise #2'
         t.pass('ok')
       })
   })
+})
+
+test('09.16 - enforceKeyset() - opts.useNullAsExplicitFalse', async (t) => {
+  const schema = await getKeyset(makePromise([
+    {
+      a: 'aaa',
+      b: 'bbb',
+    },
+    {
+      a: {
+        c: 'ccc',
+      },
+    },
+  ]))
+  t.deepEqual(
+    await enforceKeyset(
+      {
+        a: null,
+      },
+      schema,
+    ),
+    {
+      a: null,
+      b: false,
+    },
+    '09.16.01 - defaults - null is explicit false',
+  )
+  t.deepEqual(
+    await enforceKeyset(
+      {
+        a: null,
+      },
+      schema,
+      { useNullAsExplicitFalse: false },
+    ),
+    {
+      a: {
+        c: false,
+      },
+      b: false,
+    },
+    '09.16.02 - off via the opts',
+  )
 })

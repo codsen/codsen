@@ -133,7 +133,7 @@
     "check-types-mini": "^3.1.2",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
-    "object-fill-missing-keys": "^6.0.3",
+    "object-fill-missing-keys": "^7.0.0",
     "object-flatten-all-arrays": "^4.0.6",
     "object-merge-advanced": "^10.0.0",
     "object-no-new-keys": "^2.0.5",
