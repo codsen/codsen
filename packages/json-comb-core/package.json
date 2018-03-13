@@ -135,7 +135,7 @@
     "lodash.includes": "*",
     "object-fill-missing-keys": "^6.0.3",
     "object-flatten-all-arrays": "^4.0.6",
-    "object-merge-advanced": "^9.1.1",
+    "object-merge-advanced": "^10.0.0",
     "object-no-new-keys": "^2.0.5",
     "object-set-all-values-to": "^3.0.5",
     "p-map": "^1.2.0",
@@ -154,10 +154,10 @@
     "eslint-plugin-import": "^2.9.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.56.3",
+    "rollup": "^0.56.5",
     "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-node-resolve": "^3.0.3",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.2.0",
     "rollup-plugin-uglify": "^3.0.0",
     "uglify-es": "^3.3.9"
   }
