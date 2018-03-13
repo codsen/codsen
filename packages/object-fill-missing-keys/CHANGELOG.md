@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2018-03-13
+### Added
+- ✨ `opts.useNullAsExplicitFalse`
+
+Since it's on by default, and it behaves differently to if it were off, it's a breaking change and thus warrants a major semver bump.
+
 ## [6.0.0] - 2018-01-27
 ### Changed
 - ✨ Complete recode from scratch in order to control key creation more precisely (necessary for new features). Previously `object-merge-advanced` did all the job.
@@ -60,3 +66,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [3.1.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.0.0...v3.1.0
 [4.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v3.1.0...v4.0.0
 [6.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v4.0.0...v6.0.0
+[7.0.0]: https://github.com/codsen/object-fill-missing-keys/compare/v6.0.0...v7.0.0

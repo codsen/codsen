@@ -78,7 +78,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts, path = '') {
         }
       }
     } else {
-      return merge(schema, incomplete)
+      return merge(schema, incomplete, { useNullAsExplicitFalse: opts.useNullAsExplicitFalse })
     }
   }
   return incomplete
@@ -114,6 +114,7 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
   const defaults = {
     placeholder: false, // value which is being used as a placeholder
     doNotFillThesePathsIfTheyContainPlaceholders: [],
+    useNullAsExplicitFalse: true,
   }
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptsWrapper)

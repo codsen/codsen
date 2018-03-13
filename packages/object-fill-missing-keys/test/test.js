@@ -1035,4 +1035,151 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
   )
 })
 
-// TODO: test array notation, like a[0].b[0][0].c
+// ========================================================
+// 7. opts.useNullAsExplicitFalse
+// ========================================================
+
+test('06.01 - opts.useNullAsExplicitFalse - case #1', (t) => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: null,
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        useNullAsExplicitFalse: false,
+      },
+    ),
+    {
+      a: {
+        b: {
+          c: false,
+          d: false,
+        },
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.01',
+  )
+
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: {
+          b: null,
+          x: 'x',
+        },
+        z: 'z',
+      },
+      {
+        a: {
+          b: {
+            c: false,
+            d: false,
+          },
+          x: false,
+        },
+        z: false,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: {
+        b: null,
+        x: 'x',
+      },
+      z: 'z',
+    },
+    '06.01.02',
+  )
+})
+
+test('06.02 - opts.useNullAsExplicitFalse - case #2', (t) => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: null,
+      },
+      {
+        a: true,
+      },
+      {
+        useNullAsExplicitFalse: false,
+      },
+    ),
+    {
+      a: true,
+    },
+    '06.02.01',
+  )
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: null,
+      },
+      {
+        a: true,
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: null,
+    },
+    '06.02.02',
+  )
+})
+
+test('06.03 - opts.useNullAsExplicitFalse - case #3', (t) => {
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: null,
+      },
+      {
+        a: ['z'],
+      },
+      {
+        useNullAsExplicitFalse: false,
+      },
+    ),
+    {
+      a: ['z'],
+    },
+    '06.03.01',
+  )
+  t.deepEqual(
+    fillMissingKeys(
+      {
+        a: null,
+      },
+      {
+        a: ['z'],
+      },
+      {
+        useNullAsExplicitFalse: true,
+      },
+    ),
+    {
+      a: null,
+    },
+    '06.03.02',
+  )
+})
