@@ -126,12 +126,11 @@ Input argument   | Type                                                 | Obliga
 
 PS. The input is normal, a synchronous array full of promises. Not a promise of an array which contains promises.
 
-`options` object's key   | Type    | Default   | Description
--------------------------|---------|-----------|----------------------
-{                        |         |           |
-`placeholder`            | Any     | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
-`useNullAsExplicitFalse` | Boolean | `true`    | When `null` is encountered in merged data, the outcome is instantly `null`.
-}                        |         |           |
+Optional Options Object's key | Type    | Default   | Description
+------------------------------|---------|-----------|----------------------
+{                             |         |           |
+`placeholder`                 | Any     | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
+}                             |         |           |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -207,11 +206,11 @@ Input argument   | Type                   | Obligatory? | Description
 `input`          | Array of plain objects | yes         | Each plain object would usually be one JSON file's contents.
 `options`        | Object                 | no          | An Optional Options Object. See below for its API.
 
-`options` object's key | Type  | Obligatory? | Default   | Description
------------------------|-------|-------------|-----------|----------------------
-{                      |       |             |           |
-`placeholder`          | Any   | no          | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
-}                      |       |             |           |
+Optional Options Object's key | Type  | Default   | Description
+------------------------------|-------|-----------|----------------------
+{                             |       |           |
+`placeholder`                 | Any   | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
+}                             |       |           |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -299,12 +298,21 @@ Reads an input plain object and a keyset schema object and normalises the input 
 
 ### input
 
-Input argument | Type     | Obligatory? | Description
----------------|----------|-------------|--------------
-`input`        | Object   | yes         | What should we normalise?
-`schema`       | Object   | yes         | According to what schema should we normalise?
+Input argument            | Type     | Obligatory? | Description
+--------------------------|----------|-------------|--------------
+`input`                   | Object   | yes         | What should we normalise?
+`schema`                  | Object   | yes         | According to what schema should we normalise?
+`Optional Options Object` | Object   | no          | An Optional Options Object. See its API below.
 
-**[⬆ &nbsp;back to top](#)**
+Optional Options Object's API is the same as asyc version's of this method, [`enforceKeysetSync()`](#enforcekeysetsync).
+
+Optional Options Object's key                  | Type                          | Default   | Description
+-----------------------------------------------|-------------------------------|-----------|----------------------
+{                                              |                               |           |
+`doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`      | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).
+`placeholder`                                  | Boolean                       | `false`   | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.
+`useNullAsExplicitFalse`                       | Boolean                       | `true`    | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null.
+}                                              |                               |           |
 
 ### output
 
@@ -399,10 +407,21 @@ Reads an input plain object and a keyset schema object and normalises the input 
 
 ### input
 
-Input argument | Type     | Obligatory? | Description
----------------|----------|-------------|--------------
-`input`        | Object   | yes         | What should we normalise?
-`schema`       | Object   | yes         | According to what schema should we normalise?
+Input argument            | Type     | Obligatory? | Description
+--------------------------|----------|-------------|--------------
+`input`                   | Object   | yes         | What should we normalise?
+`schema`                  | Object   | yes         | According to what schema should we normalise?
+`Optional Options Object` | Object   | no          | An Optional Options Object. See its API below.
+
+Optional Options Object's API is the same as asyc version's of this method, [`enforceKeyset()`](#enforcekeyset).
+
+Optional Options Object's key                  | Type                          | Default   | Description
+-----------------------------------------------|-------------------------------|-----------|----------------------
+{                                              |                               |           |
+`doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`      | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).
+`placeholder`                                  | Boolean                       | `false`   | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.
+`useNullAsExplicitFalse`                       | Boolean                       | `true`    | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null.
+}                                              |                               |           |
 
 **[⬆ &nbsp;back to top](#)**
 
