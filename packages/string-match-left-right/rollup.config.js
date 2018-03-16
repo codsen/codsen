@@ -34,6 +34,7 @@ export default [
       'check-types-mini',
       'is-natural-number',
       'lodash.isplainobject',
+      'string-character-is-astral-surrogate',
     ],
     plugins: [
       babel(),

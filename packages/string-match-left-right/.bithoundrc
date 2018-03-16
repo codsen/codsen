@@ -10,7 +10,8 @@
       "coveralls",
       "husky",
       "lodash.isplainobject",
-      "nyc"
+      "nyc",
+      "string-character-is-astral-surrogate"
     ]
   },
   "ignore": [
