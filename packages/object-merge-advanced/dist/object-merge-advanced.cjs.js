@@ -21,17 +21,17 @@ function isArr(something) {
   return Array.isArray(something);
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 function isNum(something) {
-  return typeof something === 'number';
+  return typeof something === "number";
 }
 function isBool(something) {
-  return typeof something === 'boolean';
+  return typeof something === "boolean";
 }
 function arrayContainsStr(arr) {
   return !!arr && arr.some(function (val) {
-    return typeof val === 'string';
+    return typeof val === "string";
   });
 }
 function equalOrSubsetKeys(obj1, obj2) {
@@ -44,11 +44,11 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // ---------------------------------------------------------------------------
 
   if (arguments.length === 0) {
-    throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing');
+    throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");
   }
   // deliberate loose equal - existy():
   if (originalOpts != null && !isObj(originalOpts)) {
-    throw new TypeError('object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object');
+    throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object");
   }
   // const DEBUG = 0
 
@@ -76,21 +76,21 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   opts.hardMergeKeys = arrayiffyString(opts.hardMergeKeys);
 
   checkTypes(opts, defaults, {
-    msg: 'object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]',
+    msg: "object-merge-advanced/mergeAdvanced(): [THROW_ID_06*]",
     schema: {
-      cb: ['null', 'undefined', 'false', 'function']
+      cb: ["null", "undefined", "false", "function"]
     }
   });
 
   // hardMergeKeys: '*' <===> hardMergeEverything === true
   // also hardMergeKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-  if (opts.hardMergeKeys.includes('*')) {
+  if (opts.hardMergeKeys.includes("*")) {
     opts.hardMergeEverything = true;
   }
 
   // ignoreKeys: '*' <===> ignoreEverything === true
   // also ignoreKeys: ['whatnotKeyName', ... '*' ... ] - just one occurence is enough
-  if (opts.ignoreKeys.includes('*')) {
+  if (opts.ignoreKeys.includes("*")) {
     opts.ignoreEverything = true;
   }
 
@@ -155,10 +155,10 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
           if (isObj(i1[index]) && isObj(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
             temp.push(mergeAdvanced(i1[index], i2[index], opts));
-          } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1 // either of arrays has one elem.
-          )) {
-            temp.push(i1.length === 1 ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts));
-          } else if (opts.concatInsteadOfMerging) {
+          } else if (opts.oneToManyArrayObjectMerge && (i1.length === 1 || i2.length === 1) // either of arrays has one elem.
+          ) {
+              temp.push(i1.length === 1 ? mergeAdvanced(i1[0], i2[index], opts) : mergeAdvanced(i1[index], i2[0], opts));
+            } else if (opts.concatInsteadOfMerging) {
             // case1 - concatenation no matter what contents
             if (index < i1.length) {
               temp.push(i1[index]);
@@ -366,7 +366,6 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // if (DEBUG) { console.log(`FINAL ROW 357 - i2=${JSON.stringify(i2, null, 4)}`) }
 
   // return i1
-
 
   var currentResult = uni ? uniRes : i1;
   // if (DEBUG) { console.log(`FINAL ROW - currentResult = ${JSON.stringify(currentResult, null, 4)}`) }

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [10.1.0] - 2018-03-13
+### Changed
+- ✨ Dropped `airbnb-base` as ESLint preset and set up Prettier. Now contributors don't have to worry about the code style any more.
+
 ## [10.0.0] - 2018-03-13
 ### Changed
 - ✨ When `opts.useNullAsExplicitFalse` is on and one of the clashing values is `null`, result will be `null`, not `false`. That's a breaking change of the API and this warrants _a major semver bump_.
@@ -150,3 +154,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [9.0.0]: https://github.com/codsen/object-merge-advanced/compare/v8.4.0...v9.0.0
 [9.1.0]: https://github.com/codsen/object-merge-advanced/compare/v9.0.0...v9.1.0
 [10.0.0]: https://github.com/codsen/object-merge-advanced/compare/v9.1.0...v10.0.0
+[10.1.0]: https://github.com/codsen/object-merge-advanced/compare/v10.0.0...v10.1.0

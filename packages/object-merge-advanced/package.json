@@ -127,9 +127,24 @@
       "add": [],
       "remove": []
     },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
     "header": {
       "dontQuoteDescription": false,
-      "rightFloatedBadge": ""
+      "rightFloatedBadge": []
     },
     "licence": {
       "extras": []
@@ -163,16 +178,18 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "coveralls": "*",
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint": "^4.19.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
     "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "husky": "*",
     "nyc": "*",
-    "rollup": "^0.56.5",
+    "prettier": "1.11.1",
+    "rollup": "^0.57.1",
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-commonjs": "^9.1.0",
-    "rollup-plugin-node-resolve": "^3.2.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^3.0.0",
     "uglify-es": "^3.3.9"
   }

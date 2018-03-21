@@ -1,11 +1,8 @@
 # object-merge-advanced
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,6 +12,7 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![All Contributors][contributors-img]][contributors-url]
 [![MIT License][license-img]][license-url]
 
@@ -429,9 +427,9 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -459,9 +457,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-merge-advanced
 
-[npm-img]: https://img.shields.io/npm/v/object-merge-advanced.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/object-merge-advanced
-
 [travis-img]: https://img.shields.io/travis/codsen/object-merge-advanced.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-merge-advanced
 
@@ -488,6 +483,9 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
+
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 
 [contributors-img]: https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square
 [contributors-url]: #contributors
