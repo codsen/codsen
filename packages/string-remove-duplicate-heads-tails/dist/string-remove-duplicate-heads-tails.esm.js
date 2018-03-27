@@ -19,34 +19,34 @@ function removeDuplicateHeadsTails(str) {
   }
   var has = Object.prototype.hasOwnProperty;
   function isStr(something) {
-    return typeof something === 'string';
+    return typeof something === "string";
   }
 
   // ===================== insurance =====================
 
   if (str === undefined) {
-    throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!');
+    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_01] The input is missing!");
   }
-  if (typeof str !== 'string') {
-    throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_02] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)));
+  if (typeof str !== "string") {
+    return str;
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + '!');
+    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + "!");
   }
-  if (existy(originalOpts) && has.call(originalOpts, 'heads')) {
+  if (existy(originalOpts) && has.call(originalOpts, "heads")) {
     if (!arrayiffy(originalOpts.heads).every(function (val) {
       return isStr(val);
     })) {
-      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!');
+      throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_04] The opts.heads contains elements which are not string-type!");
     } else if (isStr(originalOpts.heads)) {
       originalOpts.heads = arrayiffy(originalOpts.heads);
     }
   }
-  if (existy(originalOpts) && has.call(originalOpts, 'tails')) {
+  if (existy(originalOpts) && has.call(originalOpts, "tails")) {
     if (!arrayiffy(originalOpts.tails).every(function (val) {
       return isStr(val);
     })) {
-      throw new Error('string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!');
+      throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_05] The opts.tails contains elements which are not string-type!");
     } else if (isStr(originalOpts.tails)) {
       originalOpts.tails = arrayiffy(originalOpts.tails);
     }
@@ -60,11 +60,13 @@ function removeDuplicateHeadsTails(str) {
   str = temp;
 
   var defaults = {
-    heads: ['{{'],
-    tails: ['}}']
+    heads: ["{{"],
+    tails: ["}}"]
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'string-remove-duplicate-heads-tails: [THROW_ID_06*]' });
+  checkTypes(opts, defaults, {
+    msg: "string-remove-duplicate-heads-tails: [THROW_ID_06*]"
+  });
 
   // first, let's trim heads and tails' array elements:
   opts.heads = opts.heads.map(function (el) {
@@ -75,7 +77,6 @@ function removeDuplicateHeadsTails(str) {
   });
 
   //                        P R E P A R A T I O N S
-
 
   // this flag is on after the first non-heads/tails chunk
   var firstNonMarkerChunkFound = false;
@@ -112,7 +113,7 @@ function removeDuplicateHeadsTails(str) {
   var itsFirstLetter = true;
 
   // = heads or tails:
-  var lastMatched = '';
+  var lastMatched = "";
 
   //                              P A R T   I
 
@@ -188,13 +189,14 @@ function removeDuplicateHeadsTails(str) {
 
   //                      E A R L Y    E N D I N G
 
-  if (!matchRightIncl(str, 0, opts.heads, { trimBeforeMatching: true }) || !matchLeftIncl(str, str.length - 1, opts.tails, { trimBeforeMatching: true })) {
+  if (!matchRightIncl(str, 0, opts.heads, { trimBeforeMatching: true }) || !matchLeftIncl(str, str.length - 1, opts.tails, {
+    trimBeforeMatching: true
+  })) {
     // if (DEBUG) { console.log(`\u001b[${33}m${'193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye.'}\u001b[${39}m`) }
     return trimSpaces(str);
   }
 
   //                             P A R T   II
-
 
   // iterate the input string
   for (var i = 0, len = str.length; i < len; i++) {
@@ -209,7 +211,7 @@ function removeDuplicateHeadsTails(str) {
     // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}\n`}\u001b[${39}m`) }
 
     // catch whitespace
-    if (str[i].trim() === '') {
+    if (str[i].trim() === "") {
       // if (DEBUG) { console.log('! skip') }
     } else {
       // so it's not a whitespace character.
@@ -257,7 +259,7 @@ function removeDuplicateHeadsTails(str) {
         // when we reach the second "{{", first "{{" are still in conditional
         // holding array. We'll evaluate the situation by "lastMatched" variable.
 
-        if (conditionalRanges.current() && firstNonMarkerChunkFound && lastMatched !== 'tails') {
+        if (conditionalRanges.current() && firstNonMarkerChunkFound && lastMatched !== "tails") {
           // if (DEBUG) { console.log(`\u001b[${33}m${'183 wiping conditional'}\u001b[${39}m`) }
           realRanges.push(conditionalRanges.current());
         }
@@ -289,7 +291,7 @@ function removeDuplicateHeadsTails(str) {
         }
 
         // 3. set the new lastMatched
-        lastMatched = 'heads';
+        lastMatched = "heads";
 
         // 4. offset the index
         // if (DEBUG) { console.log(`\u001b[${33}m${`213 offsetting i to ${noteDownTheIndex - 1}`}\u001b[${39}m`) }
@@ -327,7 +329,7 @@ function removeDuplicateHeadsTails(str) {
         } else {
           // 1.
           // if (DEBUG) { console.log(`${`\u001b[${33}m${'340 lastMatched'}\u001b[${39}m`} = ${JSON.stringify(lastMatched, null, 4)}`) }
-          if (lastMatched === 'heads') {
+          if (lastMatched === "heads") {
             // if (DEBUG) { console.log(`\u001b[${33}m${'341 WIPING CONDITIONALS'}\u001b[${39}m`) }
             conditionalRanges.wipe();
           }
@@ -338,7 +340,7 @@ function removeDuplicateHeadsTails(str) {
         }
 
         // set lastMatched
-        lastMatched = 'tails';
+        lastMatched = "tails";
 
         // 2. offset the index
         // if (DEBUG) { console.log(`\u001b[${33}m${`253 offsetting i to ${noteDownTheIndex - 1}`}\u001b[${39}m`) }
@@ -376,7 +378,7 @@ function removeDuplicateHeadsTails(str) {
 
         // wipe the conditionals.
         // That's for example where we reached "n" in "{{ hi {{ name }}! }}"
-        if (lastMatched === 'heads') {
+        if (lastMatched === "heads") {
           conditionalRanges.wipe();
         }
       } else if (itsFirstLetter && secondNonMarkerChunkFound) {
@@ -401,7 +403,6 @@ function removeDuplicateHeadsTails(str) {
   // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
   // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}`}\u001b[${39}m`) }
   // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
-
 
   if (conditionalRanges.current()) {
     realRanges.push(conditionalRanges.current());

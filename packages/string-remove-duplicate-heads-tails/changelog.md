@@ -1,20 +1,35 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.1.0] - 2018-02-14
+## [2.2.0] - 2018-03-27
+
 ### Added
-- ✨ Trimming now touches only spaces. Line breaks, tabs and non-breaking spaces are not touched.
+
+* ✨ Relaxed the API - if the input is non-string, it's just returned back and functions ends.
+* ✨ Switched from raw ESLint on `airbnb-base` preset to raw ESLint and Prettier.
+
+## [2.1.0] - 2018-02-14
+
+### Added
+
+* ✨ Trimming now touches only spaces. Line breaks, tabs and non-breaking spaces are not touched.
 
 ## [2.0.0] - 2018-02-13
+
 ### Changed
-- ✨ Rewrote the whole thing. Added more unit tests.
+
+* ✨ Rewrote the whole thing. Added more unit tests.
 
 ## 1.0.0 - 2018-01-11
-### New
-- ✨ First public release
 
+### New
+
+* ✨ First public release
+
+[2.2.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v1.0.0...v2.0.0

@@ -1,22 +1,18 @@
 {
+  "root": true,
   "env": {
-    "es6": true
+    "es6": true,
+    "node": true
   },
-  "extends": [
-    "airbnb-base"
-  ],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module"
   },
-  "plugins": [
-    "ava"
-  ],
+  "plugins": ["ava", "import"],
   "rules": {
     "ava/assertion-arguments": "error",
-    "ava/max-asserts": [
-      "off",
-      5
-    ],
+    "ava/max-asserts": ["off", 5],
     "ava/no-async-fn-without-await": "error",
     "ava/no-cb-test": "off",
     "ava/no-duplicate-modifiers": "error",
@@ -34,23 +30,36 @@
     "ava/prefer-async-await": "error",
     "ava/prefer-power-assert": "off",
     "ava/test-ended": "error",
-    "ava/test-title": [
-      "error",
-      "if-multiple"
-    ],
+    "ava/test-title": ["error", "if-multiple"],
     "ava/use-t": "error",
     "ava/use-t-well": "error",
     "ava/use-test": "error",
     "ava/use-true-false": "error",
-    "no-plusplus": [
+    "curly": "error",
+    "import/no-extraneous-dependencies": [
       "error",
       {
-        "allowForLoopAfterthoughts": true
+        "devDependencies": ["test/**"],
+        "optionalDependencies": false,
+        "peerDependencies": false
       }
     ],
-    "semi": [
-      2,
-      "never"
+    "no-else-return": "error",
+    "no-inner-declarations": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "one-var": ["error", "never"],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "strict": "error",
+    "symbol-description": "error",
+    "yoda": [
+      "error",
+      "never",
+      {
+        "exceptRange": true
+      }
     ]
   }
 }
