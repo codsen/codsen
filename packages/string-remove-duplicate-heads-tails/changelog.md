@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* ✨ Relaxed the API - if the input is non-string, it's just returned back and functions ends.
+* ✨ Relaxed the API - if the input is non-string, it's just returned back.
 * ✨ Switched from raw ESLint on `airbnb-base` preset to raw ESLint and Prettier.
 
 ## [2.1.0] - 2018-02-14
