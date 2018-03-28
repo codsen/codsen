@@ -21,7 +21,6 @@ test
 
 .babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
 .gitignore
 .npmignore
