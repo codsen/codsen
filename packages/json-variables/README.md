@@ -1,11 +1,8 @@
 # json-variables
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Preprocessor for JSON to allow keys referencing keys
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,20 +12,23 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Install](#install)
-- [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
-- [API](#api)
-- [Use examples](#use-examples)
-- [Contributing](#contributing)
-- [Licence](#licence)
+* [Install](#install)
+* [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
+* [API](#api)
+* [Use examples](#use-examples)
+* [Contributing](#contributing)
+* [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -40,18 +40,18 @@ npm i json-variables
 
 ```js
 // consume via a CommonJS require():
-const jsonVariables = require('json-variables')
+const jsonVariables = require("json-variables");
 // or as an ES Module:
-import jsonVariables from 'json-variables'
+import jsonVariables from "json-variables";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 30&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 30&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 66&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 34&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 33&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 66&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -83,25 +83,25 @@ Type: `object` - a plain object. Usually, a parsed JSON file.
 
 Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 
-`options` object's key         | Type     | Obligatory? | Default     | Description
--------------------------------|----------|-------------|-------------|----------------------
-{                              |          |             |             |
-`heads`                        | String   | no          | `%%_`       | How do you want to mark the beginning of a variable?
-`tails`                        | String   | no          | `_%%`       | How do you want to mark the ending of a variable?
-`headsNoWrap`                  | String   | no          | `%%-`       | How do you want to mark the beginning of a variable, which you definitely don't want to be wrapped?
-`tailsNoWrap`                  | String   | no          | `-%%`       | How do you want to mark the ending of a variable, which you definitely don't want to be wrapped?
-`lookForDataContainers`        | Boolean  | no          | `true`      | You can put a separate dedicated key, named similarly, where the values for variables are placed.
-`dataContainerIdentifierTails` | String   | no          | `_data`     | If you do put your variables in dedicated keys besides, those keys will have to be different somehow. We suggest appending a string to the key's name — tell here what string.
-`wrapHeadsWith`                | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the left is called "heads", please tell what string to use.
-`wrapTailsWith`                | String   | no          | n/a         | We can optionally wrap each resolved string with a string. One to the right is called "tails", please tell what string to use.
-`dontWrapVars`                | Array of strings OR String | no | n/a | If any of the variables (surrounded by `heads` and `tails`) can be matched by string(s) given here, it won't be wrapped with `wrapHeadsWith` and `wrapTailsWith`. You can put **wildcards** (*) to note zero or more characters.
-`preventDoubleWrapping`        | Boolean  | no          | `true`      | If you use `wrapHeadsWith` and `wrapTailsWith`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.
-`wrapGlobalFlipSwitch`         | Boolean  | no          | `true`      | Global flip switch to turn off the variable wrapping function completely, everywhere.
-`noSingleMarkers`              | Boolean  | no          | `false`     | If any value in the source object has only and exactly heads or tails: a) do throw mismatched marker error (`true`) or b) don't (`false`)
-`resolveToBoolIfAnyValuesContainBool` | Boolean  | no        | `true` | The very first moment Boolean is merged into a string value, it turns the whole value to its value. Permanently. Nothing else matters. When `false` and there's a mix of Strings and Booleans, Boolean is resolved into empty string. When the value is just a reference marker, upon resolving it will be intact Boolean. This setting is relevant when there's mixing of strings and Booleans - what to do in those cases.
-`resolveToFalseIfAnyValuesContainBool` | Boolean  | no       | `true` | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.
-`throwWhenNonStringInsertedInString`   | Boolean  | no       | `false`| By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.
-}                              |          |             |             |
+| `options` object's key                 | Type                       | Obligatory? | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| -------------------------------------- | -------------------------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                      |                            |             |         |
+| `heads`                                | String                     | no          | `%%_`   | How do you want to mark the beginning of a variable?                                                                                                                                                                                                                                                                                                                                                                         |
+| `tails`                                | String                     | no          | `_%%`   | How do you want to mark the ending of a variable?                                                                                                                                                                                                                                                                                                                                                                            |
+| `headsNoWrap`                          | String                     | no          | `%%-`   | How do you want to mark the beginning of a variable, which you definitely don't want to be wrapped?                                                                                                                                                                                                                                                                                                                          |
+| `tailsNoWrap`                          | String                     | no          | `-%%`   | How do you want to mark the ending of a variable, which you definitely don't want to be wrapped?                                                                                                                                                                                                                                                                                                                             |
+| `lookForDataContainers`                | Boolean                    | no          | `true`  | You can put a separate dedicated key, named similarly, where the values for variables are placed.                                                                                                                                                                                                                                                                                                                            |
+| `dataContainerIdentifierTails`         | String                     | no          | `_data` | If you do put your variables in dedicated keys besides, those keys will have to be different somehow. We suggest appending a string to the key's name — tell here what string.                                                                                                                                                                                                                                               |
+| `wrapHeadsWith`                        | String                     | no          | n/a     | We can optionally wrap each resolved string with a string. One to the left is called "heads", please tell what string to use.                                                                                                                                                                                                                                                                                                |
+| `wrapTailsWith`                        | String                     | no          | n/a     | We can optionally wrap each resolved string with a string. One to the right is called "tails", please tell what string to use.                                                                                                                                                                                                                                                                                               |
+| `dontWrapVars`                         | Array of strings OR String | no          | n/a     | If any of the variables (surrounded by `heads` and `tails`) can be matched by string(s) given here, it won't be wrapped with `wrapHeadsWith` and `wrapTailsWith`. You can put **wildcards** (\*) to note zero or more characters.                                                                                                                                                                                            |
+| `preventDoubleWrapping`                | Boolean                    | no          | `true`  | If you use `wrapHeadsWith` and `wrapTailsWith`, we can make sure the existing string does not contain these already. It's to prevent double/triple/multiple wrapping.                                                                                                                                                                                                                                                        |
+| `wrapGlobalFlipSwitch`                 | Boolean                    | no          | `true`  | Global flip switch to turn off the variable wrapping function completely, everywhere.                                                                                                                                                                                                                                                                                                                                        |
+| `noSingleMarkers`                      | Boolean                    | no          | `false` | If any value in the source object has only and exactly heads or tails: a) do throw mismatched marker error (`true`) or b) don't (`false`)                                                                                                                                                                                                                                                                                    |
+| `resolveToBoolIfAnyValuesContainBool`  | Boolean                    | no          | `true`  | The very first moment Boolean is merged into a string value, it turns the whole value to its value. Permanently. Nothing else matters. When `false` and there's a mix of Strings and Booleans, Boolean is resolved into empty string. When the value is just a reference marker, upon resolving it will be intact Boolean. This setting is relevant when there's mixing of strings and Booleans - what to do in those cases. |
+| `resolveToFalseIfAnyValuesContainBool` | Boolean                    | no          | `true`  | When there's a mix of string and Boolean, resolve to `false`, no matter if the first encountered value is `true`. When there's no mix with strings, the value is retained as it was.                                                                                                                                                                                                                                         |
+| `throwWhenNonStringInsertedInString`   | Boolean                    | no          | `false` | By default, if you want you can put objects as values into a string, you'll get `text text ... [object Object] text text ...`. If you want the renderer to `throw` an error instead when this happens, set this setting's key to `true`.                                                                                                                                                                                     |
+| }                                      |                            |             |         |
 
 **Defaults**:
 
@@ -134,16 +134,14 @@ If you don't care how to mark the variables, use my notation, `%%_`, to mark a b
 Check this:
 
 ```js
-const jv = require('json-variables')
-var res = jv(
-  {
-    a: 'some text %%_var1_%% more text %%_var2_%%',
-    b: 'something',
-    var1: 'value1',
-    var2: 'value2'
-  }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const jv = require("json-variables");
+var res = jv({
+  a: "some text %%_var1_%% more text %%_var2_%%",
+  b: "something",
+  var1: "value1",
+  var2: "value2"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // ==> {
 //       a: 'some text value1 more text value2',
 //       b: 'something',
@@ -155,19 +153,20 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 You can declare your way to mark variables, your own _heads_ and _tails_. For example, `{` and `}`:
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv(
   {
-    a: 'some text {var1} more text {var2}',
-    b: 'something',
-    var1: 'value1',
-    var2: 'value2'
+    a: "some text {var1} more text {var2}",
+    b: "something",
+    var1: "value1",
+    var2: "value2"
   },
   {
-    heads: '{', tails: '}'
+    heads: "{",
+    tails: "}"
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'some text value1 more text value2',
 //      b: 'something',
@@ -179,21 +178,21 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 You can also wrap all resolved variables with strings, a new pair of _heads_ and _tails_, using `opts.wrapHeadsWith` and `opts.wrapTailsWith`. For example, bake some Java, wrap your variables with `${` and `}`:
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv(
   {
-    a: 'some text %%_var1_%% more text %%_var2_%%',
-    b: 'something',
-    var1: 'value1',
-    var2: 'value2'
+    a: "some text %%_var1_%% more text %%_var2_%%",
+    b: "something",
+    var1: "value1",
+    var2: "value2"
   },
   {
-    wrapHeadsWith: '${',
-    wrapTailsWith: '}',
-    dontWrapVars: ['*zzz', '*3', '*6']
+    wrapHeadsWith: "${",
+    wrapTailsWith: "}",
+    dontWrapVars: ["*zzz", "*3", "*6"]
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'some text ${value1} more text ${value2}',
 //      b: 'something',
@@ -205,29 +204,30 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 If variables reference keys which have values that reference other keys, that's fine. Just ensure there's _no closed loop_. Otherwise, renderer will `throw` and error.
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv({
-  a: '%%_b_%%',
-  b: '%%_c_%%',
-  c: '%%_d_%%',
-  d: '%%_e_%%',
-  e: '%%_b_%%'
-})
-console.log('res = ' + JSON.stringify(res, null, 4))
+  a: "%%_b_%%",
+  b: "%%_c_%%",
+  c: "%%_d_%%",
+  d: "%%_e_%%",
+  e: "%%_b_%%"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // THROWS because "e" loops to "b" forming an infinite loop.
 ```
+
 This one's OK:
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv({
-  a: '%%_b_%%',
-  b: '%%_c_%%',
-  c: '%%_d_%%',
-  d: '%%_e_%%',
-  e: 'zzz'
-})
-console.log('res = ' + JSON.stringify(res, null, 4))
+  a: "%%_b_%%",
+  b: "%%_c_%%",
+  c: "%%_d_%%",
+  d: "%%_e_%%",
+  e: "zzz"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'zzz',
 //      b: 'zzz',
@@ -240,21 +240,21 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 Variables can also reference deeper levels within objects and arrays — just put dot like `variable.key.subkey`:
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv(
   {
-    a: 'some text %%_var1.key1_%% more text %%_var2.key2_%%',
-    b: 'something',
-    var1: {key1: 'value1'},
-    var2: {key2: 'value2'}
+    a: "some text %%_var1.key1_%% more text %%_var2.key2_%%",
+    b: "something",
+    var1: { key1: "value1" },
+    var2: { key2: "value2" }
   },
   {
-    wrapHeadsWith: '%%=',
-    wrapTailsWith: '=%%',
-    dontWrapVars: ['*zzz', '*3', '*6']
+    wrapHeadsWith: "%%=",
+    wrapTailsWith: "=%%",
+    dontWrapVars: ["*zzz", "*3", "*6"]
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'some text %%=value1=%% more text %%=value2=%%',
 //      b: 'something',
@@ -298,18 +298,16 @@ That's better, isn't it? I think so too.
 To set this up, you can rely on my default way of naming data keys (appending `_data`) or you can customise how to call data keys using `opts.dataContainerIdentifierTails`. On the other hand, you can also turn off this function completely via `opts.lookForDataContainers` and force all values to be the keys at the same level as the current variable's key.
 
 ```js
-const jv = require('json-variables')
-var res = jv(
-  {
-    a: 'some text %%_var1_%% more text %%_var3_%%.',
-    a_data: {
-      var1: 'value1',
-      var3: '333333'
-    },
-    b: 'something'
-  }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const jv = require("json-variables");
+var res = jv({
+  a: "some text %%_var1_%% more text %%_var3_%%.",
+  a_data: {
+    var1: "value1",
+    var3: "333333"
+  },
+  b: "something"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'some text value1 more text 333333.',
 //      b: 'something',
@@ -323,18 +321,16 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 Data container keys can also contain objects or arrays. Just query the whole path:
 
 ```js
-const jv = require('json-variables')
-var res = jv(
-  {
-    a: 'some text %%_var1.key1.key2.key3_%% more text %%_var3_%%.',
-    a_data: {
-      var1: {key1: {key2: {key3: 'value1'}}},
-      var3: '333333'
-    },
-    b: 'something'
-  }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const jv = require("json-variables");
+var res = jv({
+  a: "some text %%_var1.key1.key2.key3_%% more text %%_var3_%%.",
+  a_data: {
+    var1: { key1: { key2: { key3: "value1" } } },
+    var3: "333333"
+  },
+  b: "something"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'some text value1 more text 333333.',
 //      b: 'something',
@@ -352,20 +348,20 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 You can ignore the wrapping on any keys by supplying their name patterns in the options array, `dontWrapVars` value. It can be array or string and also it can contain wildcards:
 
 ```js
-const jv = require('json-variables')
+const jv = require("json-variables");
 var res = jv(
   {
-    a: '%%_b_%%',
-    b: '%%_c_%%',
-    c: 'val'
+    a: "%%_b_%%",
+    b: "%%_c_%%",
+    c: "val"
   },
   {
-    wrapHeadsWith: '{',
-    wrapTailsWith: '}',
-    dontWrapVars: ['b*', 'c*']
+    wrapHeadsWith: "{",
+    wrapTailsWith: "}",
+    dontWrapVars: ["b*", "c*"]
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'val', <<< didn't get wrapped
 //      b: 'val', <<< also didn't get wrapped
@@ -387,7 +383,8 @@ For example:
 
 ```json
 {
-  "key": "%%-firstName-%% will not get wrapped but this one will: %%_firstName_%%",
+  "key":
+    "%%-firstName-%% will not get wrapped but this one will: %%_firstName_%%",
   "firstName": "John"
 }
 ```
@@ -410,11 +407,13 @@ Wrapping of the variables is an essential feature when working with data structu
 The following example shows how to "bake" HTML sprinkled with [Nunjucks](https://mozilla.github.io/nunjucks/templating.html) notation (or any members of Jinja-like templating languages that use double curly braces):
 
 HTML template:
+
 ```html
 <div>{{ hero_title_wrapper }}</div>
 ```
 
 JSON for DEV build (a preview build to check how everything looks):
+
 ```json
 {
   "hero_title_wrapper": "%%_hero_title_%%",
@@ -434,9 +433,10 @@ JSON for PROD version is minimal, only overwriting what's different/new (to keep
 }
 ```
 
-We'll process the [merged](https://www.npmjs.com/package/object-merge-advanced) object of DEV and PROD JSON contents using `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, which instructs to wrap any resolved variables with `{{ ` and ` }}`.
+We'll process the [merged](https://www.npmjs.com/package/object-merge-advanced) object of DEV and PROD JSON contents using `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, which instructs to wrap any resolved variables with `{{` and `}}`.
 
 In the end, our baked HTML template, ready to be put on the back-end will look like:
+
 ```html
 <div>{{ user.firstName }}, check out our seasonal offers!</div>
 ```
@@ -444,9 +444,11 @@ In the end, our baked HTML template, ready to be put on the back-end will look l
 So far so good, but what happens if we want to add a check, does `first_name` exist? Again in a Nunjucks templating language, it would be something like:
 
 content JSON for PROD build:
+
 ```json
 {
-  "hero_title_wrapper": "{% if %%_first_name_%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
+  "hero_title_wrapper":
+    "{% if %%_first_name_%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
   "first_name": "user.firstName"
 }
 ```
@@ -454,6 +456,7 @@ content JSON for PROD build:
 with intention to bake the following HTML:
 
 HTML template:
+
 ```html
 <div>{% if user.firstName %}Hi {{ user.firstName }}, check out our seasonal offers!{% else %}Hi, check out our seasonal offers!{% endif %}</div>
 ```
@@ -463,9 +466,11 @@ Now notice that in the example above, the first `first_name` does not need to be
 You solve this by using non-wrapping `heads` and `tails`. Keeping default values `opts.wrapHeadsWith` and `opts.wrapTailsWith` it would look like:
 
 content JSON for PROD build:
+
 ```json
 {
-  "hero_title_wrapper": "{% if %%-first_name-%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
+  "hero_title_wrapper":
+    "{% if %%-first_name-%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
   "first_name": "user.firstName"
 }
 ```
@@ -485,13 +490,11 @@ When `opts.resolveToFalseIfAnyValuesContainBool` and `opts.resolveToBoolIfAnyVal
 Observe:
 
 ```js
-var res = jv(
-  {
-    a: 'zzz %%_b_%% zzz',
-    b: true
-  }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+var res = jv({
+  a: "zzz %%_b_%% zzz",
+  b: true
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: false, // <<< It's because opts.resolveToFalseIfAnyValuesContainBool is default, true
 //      b: true
@@ -501,14 +504,14 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 ```js
 var res = jv(
   {
-    a: 'zzz %%_b_%% zzz',
+    a: "zzz %%_b_%% zzz",
     b: true
   },
   {
     resolveToFalseIfAnyValuesContainBool: false
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: true, <<< It's because we have a mix of string and Boolean, and first encountered Boolean value is `true`
 //      b: true
@@ -521,9 +524,9 @@ console.log('res = ' + JSON.stringify(res, null, 4))
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -533,39 +536,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables
-
-[npm-img]: https://img.shields.io/npm/v/json-variables.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/json-variables
-
 [travis-img]: https://img.shields.io/travis/codsen/json-variables.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/json-variables
-
 [cov-img]: https://coveralls.io/repos/github/codsen/json-variables/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/json-variables?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/json-variables.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/json-variables
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/json-variables.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/json-variables/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-variables
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-variables.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/json-variables/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/json-variables/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/json-variables
-
 [downloads-img]: https://img.shields.io/npm/dm/json-variables.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/json-variables
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-variables
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/json-variables.svg?style=flat-square
 [license-url]: https://github.com/codsen/json-variables/blob/master/license.md
