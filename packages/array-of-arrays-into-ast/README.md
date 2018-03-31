@@ -1,6 +1,6 @@
 # array-of-arrays-into-ast
 
-> turns array of arrays of numbers into a nested tree of plain objects
+> turns an array of arrays of data into a nested tree of plain objects
 
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
@@ -40,21 +40,23 @@ Here's what you'll get:
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [What it does](#what-it-does)
-* [API](#api)
-* [`opts.dedupe`](#optsdedupe)
-* [Principles](#principles)
-* [Compared vs. `datastructures-js`](#compared-vs-datastructures-js)
-* [Contributing](#contributing)
-* [Licence](#licence)
+- [What it does](#what-it-does)
+- [API](#api)
+- [`opts.dedupe`](#optsdedupe)
+- [Principles](#principles)
+- [Compared vs. `datastructures-js`](#compared-vs-datastructures-js)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## What it does
 
@@ -119,7 +121,7 @@ Type: `object` - an Optional Options Object.
 }
 ```
 
-When unused, Optional Options Object can be also passed as a `null` or `undefined` value.
+When unused, Optional Options Object can also be passed as a `null` or `undefined` value.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -160,7 +162,7 @@ console.log(
 
 Notice how entries for each branch were created.
 
-Generally, I don't see the reason why you'd want duplicates but the setting is there if you ever need it. 👍🏻
+Generally, I don't see the reason why you'd want duplicates, but the setting is there if you ever need it. 👍🏻
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -180,7 +182,7 @@ There are libraries that produce and manage _trie_ data structures, for example,
 
 [datastructures-js](https://www.npmjs.com/package/datastructures-js#trie) _trie_ would limit to `search()`, `traverse()` and `count()` methods. However, we need to recursively traverse every node and look up and down, what's around it.
 
-Here's where this library comes in. It doesn't abstract the data it's producing - you get a nested plain object which you can traverse and further process any way you like, using vast ocean of `object-` processing libraries.
+Here's where this library comes in. It doesn't abstract the data it's producing - you get a nested plain object which you can traverse and further process any way you like, using a vast ocean of `object-` processing libraries.
 
 **[⬆ &nbsp;back to top](#)**
 
