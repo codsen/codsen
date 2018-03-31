@@ -90,3 +90,14 @@ test("1.2 - opts.dedupe", t => {
     "1.2.2"
   );
 });
+
+test("1.3 - throws", t => {
+  t.throws(() => {
+    a(true);
+  });
+});
+
+test("1.4 - empty input ends the operation quick", t => {
+  t.deepEqual(a([]), {}, "1.4.1");
+  t.deepEqual(a([], { dedupe: false }), {}, "1.4.2");
+});
