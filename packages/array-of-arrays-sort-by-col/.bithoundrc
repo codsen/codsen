@@ -4,6 +4,15 @@
       "engine": "eslint"
     }
   },
+  "dependencies": {
+    "mute": [
+      "array-shuffle",
+      "ava",
+      "coveralls",
+      "husky",
+      "nyc"
+    ]
+  },
   "ignore": [
     "dist/**"
   ],
