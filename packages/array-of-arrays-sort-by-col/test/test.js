@@ -214,7 +214,7 @@ test("1.5 - first column indexes contain opposite order values", t => {
 });
 
 // -----------------------------------------------------------------------------
-// 2. edge cases
+// 2. edge-cases
 
 test("2.1 - various empty arrays", t => {
   mixer(t, [], []);
@@ -223,11 +223,11 @@ test("2.1 - various empty arrays", t => {
   mixer(t, [[], [], []], [[], [], []]);
   mixer(t, [[], [1], []], [[1], [], []]);
   // hardcoded default column
-  mixer(t, [], []);
-  mixer(t, [[]], [[]]);
-  mixer(t, [[], []], [[], []]);
-  mixer(t, [[], [], []], [[], [], []]);
-  mixer(t, [[], [1], []], [[1], [], []]);
+  mixer(t, [], [], 0);
+  mixer(t, [[]], [[]], 0);
+  mixer(t, [[], []], [[], []], 0);
+  mixer(t, [[], [], []], [[], [], []], 0);
+  mixer(t, [[], [1], []], [[1], [], []], 0);
 });
 
 test("2.2 - throws", t => {
