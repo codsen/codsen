@@ -142,7 +142,9 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": ["array-shuffle"]
+      "devDependencies": [
+        "array-shuffle"
+      ]
     }
   },
   "dependencies": {
