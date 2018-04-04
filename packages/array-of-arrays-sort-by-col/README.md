@@ -63,9 +63,23 @@ Sorts by any column (default is first element, zero'th column index).
 Input:
 
 ```js
-[[1, 9, 0], [1], [1, 8, 2], [1, 7, 5]];
+[
+  [1, 9, 0],
+  [1],
+  [1, 8, 2],
+  [1, 7, 5]
+];
+```
 
-Output: [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]];
+Output:
+
+```js
+[
+  [1, 7, 5],
+  [1, 8, 2],
+  [1, 9, 0],
+  [1]
+];
 ```
 
 Rules:
