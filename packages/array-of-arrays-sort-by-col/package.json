@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-sort-by-col",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "takes an array of arrays full of zero or more integers, sorts by any column",
   "license": "MIT",
   "engines": {
