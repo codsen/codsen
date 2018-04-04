@@ -30,11 +30,11 @@ import sortByCol from "array-of-arrays-sort-by-col";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                      | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-of-arrays-sort-by-col.cjs.js` | 2&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-of-arrays-sort-by-col.esm.js` | 2&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-sort-by-col.umd.js` | 11&nbsp;KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/array-of-arrays-sort-by-col.cjs.js` | 2&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/array-of-arrays-sort-by-col.esm.js` | 2&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/array-of-arrays-sort-by-col.umd.js` | 11&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -147,27 +147,39 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
 [node-img]: https://img.shields.io/node/v/array-of-arrays-sort-by-col.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-of-arrays-sort-by-col
+
 [travis-img]: https://img.shields.io/travis/codsen/array-of-arrays-sort-by-col.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/array-of-arrays-sort-by-col
+
 [cov-img]: https://coveralls.io/repos/github/codsen/array-of-arrays-sort-by-col/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/array-of-arrays-sort-by-col?branch=master
+
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/array-of-arrays-sort-by-col.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/array-of-arrays-sort-by-col
+
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/array-of-arrays-sort-by-col.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/array-of-arrays-sort-by-col/master/dependencies/npm
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-of-arrays-sort-by-col
+
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-of-arrays-sort-by-col.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/array-of-arrays-sort-by-col/master/dependencies/npm
+
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/array-of-arrays-sort-by-col/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/array-of-arrays-sort-by-col
+
 [downloads-img]: https://img.shields.io/npm/dm/array-of-arrays-sort-by-col.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/array-of-arrays-sort-by-col
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/array-of-arrays-sort-by-col
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
+
 [license-img]: https://img.shields.io/npm/l/array-of-arrays-sort-by-col.svg?style=flat-square
 [license-url]: https://github.com/codsen/array-of-arrays-sort-by-col/blob/master/license.md

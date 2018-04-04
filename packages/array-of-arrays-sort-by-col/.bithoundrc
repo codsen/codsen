@@ -4,14 +4,6 @@
       "engine": "eslint"
     }
   },
-  "dependencies": {
-    "mute": [
-      "ava",
-      "coveralls",
-      "husky",
-      "nyc"
-    ]
-  },
   "ignore": [
     "dist/**"
   ],
