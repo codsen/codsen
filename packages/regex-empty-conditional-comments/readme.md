@@ -15,6 +15,23 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+## Table of Contents
+
+<!-- prettier-ignore-start -->
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Licence](#licence)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```
@@ -69,9 +86,9 @@ emptyCondCommentRegex().test(`<!--[if gte mso 9]><xml>
 emptyCondCommentRegex().exec("<html><!--[if !mso]><![endif]--><title>")[0];
 //=> '<!--[if !mso]><![endif]-->'
 
-"<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
+`<html> <!--[if !mso]><![endif]--> <title>text</title> <!--[if gte mso 9]>
 <xml>
-<![endif]-->".match(emptyCondCommentRegex());
+<![endif]-->`.match(emptyCondCommentRegex());
 //=> ['<!--[if !mso]><![endif]-->']
 ```
 
