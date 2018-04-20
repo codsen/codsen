@@ -4,7 +4,7 @@
   "description": "Regular expression for matching HTML empty conditional comments",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
+    "node": "*",
     "npm": ">=5",
     "yarn": ">=1"
   },
