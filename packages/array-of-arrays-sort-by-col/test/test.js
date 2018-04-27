@@ -213,6 +213,14 @@ test("1.5 - first column indexes contain opposite order values", t => {
   );
 });
 
+test("1.6 - null over number", t => {
+  mixer(t, [[1, null], [1, 1]], [[1, 1], [1, null]]);
+});
+
+test("1.7 - just nulls over numbers", t => {
+  mixer(t, [[null, null, null], [1, 1, 1]], [[1, 1, 1], [null, null, null]]);
+});
+
 // -----------------------------------------------------------------------------
 // 2. edge-cases
 

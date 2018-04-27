@@ -33,10 +33,10 @@ function sortBySubarray(arr, idx = 0) {
   return clone(arr).sort((a, b) => {
     if (idx < Math.max(a.length) || idx < Math.max(b.length)) {
       // first do idx index
-      if (a[idx] === undefined) {
+      if (a[idx] === undefined || a[idx] === null) {
         return 1;
       }
-      if (b[idx] === undefined) {
+      if (b[idx] === undefined || b[idx] === null) {
         return -1;
       }
       if (a[idx] < b[idx]) {
@@ -51,10 +51,10 @@ function sortBySubarray(arr, idx = 0) {
       if (i === idx) {
         continue; // skip idx
       }
-      if (a[i] === undefined) {
+      if (a[i] === undefined || a[i] === null) {
         return 1;
       }
-      if (b[i] === undefined) {
+      if (b[i] === undefined || b[i] === null) {
         return -1;
       }
       if (a[i] < b[i]) {
