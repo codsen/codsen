@@ -1,11 +1,8 @@
 # string-find-heads-tails
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Search for string pairs. A special case of string search algorithm.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,22 +12,25 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Install](#install)
-- [Idea](#idea)
-- [Purpose](#purpose)
-- [Context](#context)
-- [Usage](#usage)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
+* [Install](#install)
+* [Idea](#idea)
+* [Purpose](#purpose)
+* [Context](#context)
+* [Usage](#usage)
+* [API](#api)
+* [Contributing](#contributing)
+* [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -42,18 +42,18 @@ npm i string-find-heads-tails
 
 ```js
 // consume via a require():
-const strFindHeadsTails = require('string-find-heads-tails')
+const strFindHeadsTails = require("string-find-heads-tails");
 // or as an ES Module:
-import strFindHeadsTails from 'string-find-heads-tails'
+import strFindHeadsTails from "string-find-heads-tails";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-find-heads-tails.cjs.js` | 16&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-find-heads-tails.esm.js` | 16&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-find-heads-tails.umd.js` | 29&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-find-heads-tails.cjs.js` | 16&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-find-heads-tails.esm.js` | 16&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-find-heads-tails.umd.js` | 29&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -101,7 +101,6 @@ This library enables to build tools which process such code. All processing star
 ## Usage
 
 ```js
-
 const strFindHeadsTails = require('string-find-heads-tails')
 const res1 = strFindHeadsTails('abcdef', 'b', 'e'),
 console.log('res1 = ' + JSON.stringify(res1, null, 4))
@@ -126,12 +125,12 @@ The index is based on native JavaScript string indexing where each astral charac
 
 ### API - Input
 
-Input argument   | Type                       | Obligatory? | Description
------------------|----------------------------|-------------|-----------
-`str`            | String                     | yes         | The string in which you want to perform a search
-`heads`          | String or Array of strings | yes         | One or more string, the first half of the set. For example, `['%%-', '%%_']`.
-`tails`          | String or Array of strings | yes         | One or more string, the second half of the set. For example, `['-%%', '_%%']`.
-`opts`           | Plain object               | no          | An Optional Options Object. See its API below.
+| Input argument | Type                       | Obligatory? | Description                                                                    |
+| -------------- | -------------------------- | ----------- | ------------------------------------------------------------------------------ |
+| `str`          | String                     | yes         | The string in which you want to perform a search                               |
+| `heads`        | String or Array of strings | yes         | One or more string, the first half of the set. For example, `['%%-', '%%_']`.  |
+| `tails`        | String or Array of strings | yes         | One or more string, the second half of the set. For example, `['-%%', '_%%']`. |
+| `opts`         | Plain object               | no          | An Optional Options Object. See its API below.                                 |
 
 PS. Input arguments are not mutated.
 
@@ -139,15 +138,16 @@ PS. Input arguments are not mutated.
 
 ### Optional Options Object
 
-options object's key                               | Type of its value                          | Default                   | Description
----------------------------------------------------|--------------------------------------------|---------------------------|----------------------
-{                                                  |                                            |                           |
-`fromIndex`                                        | Natural number or zero as number or string | `0`                       | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.
-`throwWhenSomethingWrongIsDetected`                | Boolean                                    | `true`                    | By default, if anything wrong is detected, error will be thrown. For example, tails precede heads. Or two conescutive heads or tails are detected. If you want to turn this functionality off, set to `false`. Turning this off automatically sets the `allowWholeValueToBeOnlyHeadsOrTails` (see below) to `true`, that is, error won't be thrown when whole input is equal to one of heads or tails. This setting does not concern wrong input types. To allow input in wrong types, set `relaxedAPI`, see below.
-`allowWholeValueToBeOnlyHeadsOrTails`              | Boolean                                    | `true`                    | If whole input `str` is equal to one of `heads` or `tails` AND `opts.throwWhenSomethingWrongIsDetected` is `true`, THEN error won't be thrown and that input will not be processed. But if you set this to `false` AND error throwing is on (`opts.throwWhenSomethingWrongIsDetected` is `true`), error will be thrown. This feature is activated only when `opts.throwWhenSomethingWrongIsDetected` is `true`.
-`source`                                           | String                                     | `string-find-heads-tails` | Packages that consume this package as a dependency might rely on some of our error `throw`ing functionality. Since `throw`n message mentions the name of the `throw`ee, you can override it, setting to parent package's name.
-`matchHeadsAndTailsStrictlyInPairsByTheirOrder`    | Boolean                                    | `false`                   | If it's set to `true`, the index numbers of heads and tails in their input arrays must match. Different pairs can have different indexes, as long as they match between the pair. For example, `%%_test-%%` or `%%-test_%%`.
-`relaxedAPI`                                       | Boolean                                    | `false`                   | If it's set to `true`, wrong inputs will instantly yield `[]`. If it's default setting, `false`, it would `throw` an error. This only concerns the checks **before** any real work is done on the input, where error-throwing is controlled by `throwWhenSomethingWrongIsDetected` (see above).
+| options object's key                            | Type of its value                          | Default                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------ | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                               |                                            |                           |
+| `fromIndex`                                     | Natural number or zero as number or string | `0`                       | If you want to start the search later, only from a certain index, set it here. Same as 2nd argument `position` in `String.includes`.                                                                                                                                                                                                                                                                                                                                                                                |
+| `throwWhenSomethingWrongIsDetected`             | Boolean                                    | `true`                    | By default, if anything wrong is detected, error will be thrown. For example, tails precede heads. Or two conescutive heads or tails are detected. If you want to turn this functionality off, set to `false`. Turning this off automatically sets the `allowWholeValueToBeOnlyHeadsOrTails` (see below) to `true`, that is, error won't be thrown when whole input is equal to one of heads or tails. This setting does not concern wrong input types. To allow input in wrong types, set `relaxedAPI`, see below. |
+| `allowWholeValueToBeOnlyHeadsOrTails`           | Boolean                                    | `true`                    | If whole input `str` is equal to one of `heads` or `tails` AND `opts.throwWhenSomethingWrongIsDetected` is `true`, THEN error won't be thrown and that input will not be processed. But if you set this to `false` AND error throwing is on (`opts.throwWhenSomethingWrongIsDetected` is `true`), error will be thrown. This feature is activated only when `opts.throwWhenSomethingWrongIsDetected` is `true`.                                                                                                     |
+| `source`                                        | String                                     | `string-find-heads-tails` | Packages that consume this package as a dependency might rely on some of our error `throw`ing functionality. Since `throw`n message mentions the name of the `throw`ee, you can override it, setting to parent package's name.                                                                                                                                                                                                                                                                                      |
+| `matchHeadsAndTailsStrictlyInPairsByTheirOrder` | Boolean                                    | `false`                   | If it's set to `true`, the index numbers of heads and tails in their input arrays must match. Different pairs can have different indexes, as long as they match between the pair. For example, `%%_test-%%` or `%%-test_%%`.                                                                                                                                                                                                                                                                                        |
+| `relaxedAPI`                                    | Boolean                                    | `false`                   | If it's set to `true`, wrong inputs will instantly yield `[]`. If it's default setting, `false`, it would `throw` an error. This only concerns the checks **before** any real work is done on the input, where error-throwing is controlled by `throwWhenSomethingWrongIsDetected` (see above).                                                                                                                                                                                                                     |
+
 }
 
 Here is the Optional Options Object in one place with all default settings:
@@ -188,9 +188,9 @@ If you want to use Unicode-character-count-based indexing, first convert the out
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-find-heads-tails/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-find-heads-tails/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-find-heads-tails/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -200,39 +200,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/string-find-heads-tails.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-find-heads-tails
-
-[npm-img]: https://img.shields.io/npm/v/string-find-heads-tails.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/string-find-heads-tails
-
 [travis-img]: https://img.shields.io/travis/codsen/string-find-heads-tails.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-find-heads-tails
-
 [cov-img]: https://coveralls.io/repos/github/codsen/string-find-heads-tails/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-find-heads-tails?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-find-heads-tails.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-find-heads-tails
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-find-heads-tails.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-find-heads-tails/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-find-heads-tails
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-find-heads-tails.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-find-heads-tails/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-find-heads-tails/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-find-heads-tails
-
 [downloads-img]: https://img.shields.io/npm/dm/string-find-heads-tails.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-find-heads-tails
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-find-heads-tails
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/string-find-heads-tails.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-find-heads-tails/blob/master/license.md

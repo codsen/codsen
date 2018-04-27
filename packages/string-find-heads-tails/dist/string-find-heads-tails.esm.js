@@ -13,12 +13,12 @@ function existy(x) {
   return x != null;
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 var isArr = Array.isArray;
 
 function mandatory(i) {
-  throw new Error('string-find-heads-tails: [THROW_ID_01*] Missing ' + ordinal(i) + ' parameter!');
+  throw new Error("string-find-heads-tails: [THROW_ID_01*] Missing " + ordinal(i) + " parameter!");
 }
 
 function strFindHeadsTails(str, heads, tails, opts) {
@@ -26,7 +26,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
   // prep opts
   if (existy(opts)) {
     if (!isObj(opts)) {
-      throw new TypeError('string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it\'s: ' + (typeof opts === 'undefined' ? 'undefined' : _typeof(opts)) + ', equal to: ' + opts);
+      throw new TypeError("string-find-heads-tails: [THROW_ID_13] the fourth input argument, Optional Options Object, must be a plain object! Currently it's: " + (typeof opts === "undefined" ? "undefined" : _typeof(opts)) + ", equal to: " + opts);
     } else if (isNumStr(opts.fromIndex, { includeZero: true })) {
       opts.fromIndex = Number(opts.fromIndex);
     }
@@ -35,12 +35,14 @@ function strFindHeadsTails(str, heads, tails, opts) {
     fromIndex: 0,
     throwWhenSomethingWrongIsDetected: true,
     allowWholeValueToBeOnlyHeadsOrTails: true,
-    source: 'string-find-heads-tails',
+    source: "string-find-heads-tails",
     matchHeadsAndTailsStrictlyInPairsByTheirOrder: false,
     relaxedAPI: false
   };
   opts = Object.assign({}, defaults, opts);
-  checkTypes(opts, defaults, { msg: 'string-find-heads-tails: [THROW_ID_14*]' });
+  checkTypes(opts, defaults, {
+    msg: "string-find-heads-tails: [THROW_ID_14*]"
+  });
 
   //
   // insurance
@@ -61,7 +63,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
     if (opts.relaxedAPI) {
       return [];
     }
-    throw new TypeError('string-find-heads-tails: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + str);
+    throw new TypeError("string-find-heads-tails: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to: " + str);
   }
 
   var culpritsVal = void 0;
@@ -72,13 +74,13 @@ function strFindHeadsTails(str, heads, tails, opts) {
     if (opts.relaxedAPI) {
       return [];
     }
-    throw new TypeError('string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it\'s: ' + (typeof heads === 'undefined' ? 'undefined' : _typeof(heads)) + ', equal to:\n' + JSON.stringify(heads, null, 4));
+    throw new TypeError("string-find-heads-tails: [THROW_ID_03] the second input argument, heads, must be either a string or an array of strings! Currently it's: " + (typeof heads === "undefined" ? "undefined" : _typeof(heads)) + ", equal to:\n" + JSON.stringify(heads, null, 4));
   } else if (isStr(heads)) {
     if (heads.length === 0) {
       if (opts.relaxedAPI) {
         return [];
       }
-      throw new TypeError('string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it\'s empty.');
+      throw new TypeError("string-find-heads-tails: [THROW_ID_04] the second input argument, heads, must be a non-empty string! Currently it's empty.");
     } else {
       heads = arrayiffy(heads);
     }
@@ -87,7 +89,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       if (opts.relaxedAPI) {
         return [];
       }
-      throw new TypeError('string-find-heads-tails: [THROW_ID_05] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it\'s empty.');
+      throw new TypeError("string-find-heads-tails: [THROW_ID_05] the second input argument, heads, must be a non-empty array and contain at least one string! Currently it's empty.");
     } else if (!heads.every(function (val, index) {
       culpritsVal = val;
       culpritsIndex = index;
@@ -101,11 +103,11 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError('string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4) + '. Whole heads array looks like:\n' + JSON.stringify(heads, null, 4));
+        throw new TypeError("string-find-heads-tails: [THROW_ID_06] the second input argument, heads, contains non-string elements! For example, element at " + ordinal(culpritsIndex) + " index is " + (typeof culpritsVal === "undefined" ? "undefined" : _typeof(culpritsVal)) + ", equal to:\n" + JSON.stringify(culpritsVal, null, 4) + ". Whole heads array looks like:\n" + JSON.stringify(heads, null, 4));
       }
     } else if (!heads.every(function (val, index) {
       culpritsIndex = index;
-      return isStr(val) && val.length > 0 && val.trim() !== '';
+      return isStr(val) && val.length > 0 && val.trim() !== "";
     })) {
       if (opts.relaxedAPI) {
         heads = heads.filter(function (el) {
@@ -115,7 +117,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError('string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + ' of heads array:\n' + JSON.stringify(heads, null, 4) + '.');
+        throw new TypeError("string-find-heads-tails: [THROW_ID_07] the second input argument, heads, should not contain empty strings! For example, there's one detected at index " + culpritsIndex + " of heads array:\n" + JSON.stringify(heads, null, 4) + ".");
       }
     }
   }
@@ -125,13 +127,13 @@ function strFindHeadsTails(str, heads, tails, opts) {
     if (opts.relaxedAPI) {
       return [];
     }
-    throw new TypeError('string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it\'s: ' + (typeof tails === 'undefined' ? 'undefined' : _typeof(tails)) + ', equal to:\n' + JSON.stringify(tails, null, 4));
+    throw new TypeError("string-find-heads-tails: [THROW_ID_08] the third input argument, tails, must be either a string or an array of strings! Currently it's: " + (typeof tails === "undefined" ? "undefined" : _typeof(tails)) + ", equal to:\n" + JSON.stringify(tails, null, 4));
   } else if (isStr(tails)) {
     if (tails.length === 0) {
       if (opts.relaxedAPI) {
         return [];
       }
-      throw new TypeError('string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it\'s empty.');
+      throw new TypeError("string-find-heads-tails: [THROW_ID_09] the third input argument, tails, must be a non-empty string! Currently it's empty.");
     } else {
       tails = arrayiffy(tails);
     }
@@ -140,7 +142,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       if (opts.relaxedAPI) {
         return [];
       }
-      throw new TypeError('string-find-heads-tails: [THROW_ID_10] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it\'s empty.');
+      throw new TypeError("string-find-heads-tails: [THROW_ID_10] the third input argument, tails, must be a non-empty array and contain at least one string! Currently it's empty.");
     } else if (!tails.every(function (val, index) {
       culpritsVal = val;
       culpritsIndex = index;
@@ -154,11 +156,11 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError('string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at ' + ordinal(culpritsIndex) + ' index is ' + (typeof culpritsVal === 'undefined' ? 'undefined' : _typeof(culpritsVal)) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4) + '. Whole tails array is equal to:\n' + JSON.stringify(tails, null, 4));
+        throw new TypeError("string-find-heads-tails: [THROW_ID_11] the third input argument, tails, contains non-string elements! For example, element at " + ordinal(culpritsIndex) + " index is " + (typeof culpritsVal === "undefined" ? "undefined" : _typeof(culpritsVal)) + ", equal to:\n" + JSON.stringify(culpritsVal, null, 4) + ". Whole tails array is equal to:\n" + JSON.stringify(tails, null, 4));
       }
     } else if (!tails.every(function (val, index) {
       culpritsIndex = index;
-      return isStr(val) && val.length > 0 && val.trim() !== '';
+      return isStr(val) && val.length > 0 && val.trim() !== "";
     })) {
       if (opts.relaxedAPI) {
         tails = tails.filter(function (el) {
@@ -168,7 +170,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           return [];
         }
       } else {
-        throw new TypeError('string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there\'s one detected at index ' + culpritsIndex + '. Whole tails array is equal to:\n' + JSON.stringify(tails, null, 4));
+        throw new TypeError("string-find-heads-tails: [THROW_ID_12] the third input argument, tails, should not contain empty strings! For example, there's one detected at index " + culpritsIndex + ". Whole tails array is equal to:\n" + JSON.stringify(tails, null, 4));
       }
     }
   }
@@ -178,14 +180,14 @@ function strFindHeadsTails(str, heads, tails, opts) {
 
   if (opts.throwWhenSomethingWrongIsDetected && !opts.allowWholeValueToBeOnlyHeadsOrTails) {
     if (includes(arrayiffy(heads), str)) {
-      throw new Error('' + opts.source + (s ? ': [THROW_ID_16]' : '') + ' the whole input string can\'t be equal to ' + (isStr(heads) ? '' : 'one of ') + 'heads (' + str + ')!');
+      throw new Error("" + opts.source + (s ? ": [THROW_ID_16]" : "") + " the whole input string can't be equal to " + (isStr(heads) ? "" : "one of ") + "heads (" + str + ")!");
     } else if (includes(arrayiffy(tails), str)) {
-      throw new Error('' + opts.source + (s ? ': [THROW_ID_17]' : '') + ' the whole input string can\'t be equal to ' + (isStr(tails) ? '' : 'one of ') + 'tails (' + str + ')!');
+      throw new Error("" + opts.source + (s ? ": [THROW_ID_17]" : "") + " the whole input string can't be equal to " + (isStr(tails) ? "" : "one of ") + "tails (" + str + ")!");
     }
   }
 
   if (!isInt(opts.fromIndex, { includeZero: true }) && !isNumStr(opts.fromIndex, { includeZero: true })) {
-    throw new TypeError('' + opts.source + (s ? ': [THROW_ID_18]' : '') + ' the fourth input argument must be a natural number! Currently it\'s: ' + opts.fromIndex);
+    throw new TypeError("" + opts.source + (s ? ": [THROW_ID_18]" : "") + " the fourth input argument must be a natural number! Currently it's: " + opts.fromIndex);
   }
 
   //
@@ -281,7 +283,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           }
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
-          throw new TypeError('' + opts.source + (s ? ': [THROW_ID_19]' : '') + ' When processing "' + str + '", we found heads (' + str.slice(i, i + matchedHeads.length) + ') starting at character with index number "' + i + '" and there was another set of heads before it! Generally speaking, there should be "heads-tails-heads-tails", not "heads-heads-tails"!\nWe\'re talking about the area of the code:\n\n\n--------------------------------------starts\n' + str.slice(Math.max(i - 200, 0), i) + '\n      -------> ' + str.slice(i, i + matchedHeads.length) + ' <-------\n' + str.slice(i + matchedHeads.length, Math.min(len, i + 200)) + '\n--------------------------------------ends\n\n\nTo turn off this error being thrown, set opts.throwWhenSomethingWrongIsDetected to Boolean false.');
+          throw new TypeError("" + opts.source + (s ? ": [THROW_ID_19]" : "") + " When processing \"" + str + "\", we found heads (" + str.slice(i, i + matchedHeads.length) + ") starting at character with index number \"" + i + "\" and there was another set of heads before it! Generally speaking, there should be \"heads-tails-heads-tails\", not \"heads-heads-tails\"!\nWe're talking about the area of the code:\n\n\n--------------------------------------starts\n" + str.slice(Math.max(i - 200, 0), i) + "\n      " + ("\x1B[" + 33 + "m------->\x1B[" + 39 + "m") + " " + ("\x1B[" + 31 + "m" + str.slice(i, i + matchedHeads.length) + "\x1B[" + 39 + "m") + " \x1B[" + 33 + "m" + "<-------" + "\x1B[" + 39 + "m\n" + str.slice(i + matchedHeads.length, Math.min(len, i + 200)) + "\n--------------------------------------ends\n\n\nTo turn off this error being thrown, set opts.throwWhenSomethingWrongIsDetected to Boolean false.");
         }
       }
       var matchedTails = matchRightIncl(str, i, tails);
@@ -296,7 +298,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
             break;
           }
         }
-        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_20]' : '') + ' When processing "' + str + '", we had "opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder" on. We found heads (' + heads[strictMatchingIndex] + ') but the tails the followed it were not of the same index, ' + strictMatchingIndex + ' (' + tails[strictMatchingIndex] + ') but ' + temp + ' (' + matchedTails + ').');
+        throw new TypeError("" + opts.source + (s ? ": [THROW_ID_20]" : "") + " When processing \"" + str + "\", we had \"opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder\" on. We found heads (" + heads[strictMatchingIndex] + ") but the tails the followed it were not of the same index, " + strictMatchingIndex + " (" + tails[strictMatchingIndex] + ") but " + temp + " (" + matchedTails + ").");
       }
 
       if (matchedTails) {
@@ -312,7 +314,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
           continue;
         } else if (opts.throwWhenSomethingWrongIsDetected) {
           // this means it's tails found, without preceding heads
-          tailSuspicionRaised = '' + opts.source + (s ? ': [THROW_ID_21]' : '') + ' When processing "' + str + '", we found tails (' + str.slice(i, i + matchedTails.length) + ') starting at character with index number "' + i + '" but there were no heads preceding it. That\'s very naughty!';
+          tailSuspicionRaised = "" + opts.source + (s ? ": [THROW_ID_21]" : "") + " When processing \"" + str + "\", we found tails (" + str.slice(i, i + matchedTails.length) + ") starting at character with index number \"" + i + "\" but there were no heads preceding it. That's very naughty!";
           // if (DEBUG) { console.log(`!!! tailSuspicionRaised = ${!!tailSuspicionRaised}`) }
         }
       }
@@ -326,7 +328,7 @@ function strFindHeadsTails(str, heads, tails, opts) {
       // if (DEBUG) { console.log('1.') }
       if (Object.keys(tempResObj).length !== 0) {
         // if (DEBUG) { console.log('2.') }
-        throw new TypeError('' + opts.source + (s ? ': [THROW_ID_22]' : '') + ' When processing "' + str + '", we reached the end of the string and yet didn\'t find any tails (' + JSON.stringify(tails, null, 4) + ') to match the last detected heads (' + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ')!');
+        throw new TypeError("" + opts.source + (s ? ": [THROW_ID_22]" : "") + " When processing \"" + str + "\", we reached the end of the string and yet didn't find any tails (" + JSON.stringify(tails, null, 4) + ") to match the last detected heads (" + str.slice(tempResObj.headsStartAt, tempResObj.headsEndAt) + ")!");
       } else if (tailSuspicionRaised) {
         // if (DEBUG) { console.log('3.') }
         throw new Error(tailSuspicionRaised);

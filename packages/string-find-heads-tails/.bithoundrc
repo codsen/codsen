@@ -7,11 +7,13 @@
   "dependencies": {
     "mute": [
       "ava",
+      "babel-preset-env",
       "coveralls",
       "husky",
       "is-natural-number",
       "is-natural-number-string",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

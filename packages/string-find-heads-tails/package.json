@@ -27,8 +27,9 @@
   "scripts": {
     "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "rollup -c -w",
-    "precommit": "npm test",
+    "dev": "rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
     "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
@@ -109,9 +110,24 @@
       "add": [],
       "remove": []
     },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
     "header": {
       "dontQuoteDescription": false,
-      "rightFloatedBadge": ""
+      "rightFloatedBadge": []
     },
     "licence": {
       "extras": []
@@ -126,7 +142,8 @@
       "back_to_top": {
         "enabled": true,
         "label": ""
-      }
+      },
+      "devDependencies": []
     }
   },
   "dependencies": {
@@ -137,24 +154,26 @@
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.1",
-    "string-match-left-right": "^3.0.3"
+    "string-match-left-right": "^3.1.1"
   },
   "devDependencies": {
-    "ava": "*",
-    "babel-preset-env": "^1.6.1",
-    "coveralls": "*",
-    "eslint": "^4.18.1",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "ava": "latest",
+    "babel-preset-env": "latest",
+    "coveralls": "latest",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-security": "^1.4.0",
-    "husky": "*",
-    "nyc": "*",
-    "rollup": "^0.56.3",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-node-resolve": "^3.0.3",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-strip": "^1.1.1",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.10"
+    "uglify-es": "^3.3.9"
   }
 }
