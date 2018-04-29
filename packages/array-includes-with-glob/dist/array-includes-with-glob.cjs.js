@@ -4,45 +4,44 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /* eslint no-param-reassign:0 */
 
-var matcher = require('matcher');
+var matcher = require("matcher");
 
 var isArr = Array.isArray;
 
 function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
-  //
   // internal f()'s
   function existy(x) {
     return x != null;
   }
   function isStr(something) {
-    return typeof something === 'string';
+    return typeof something === "string";
   }
 
   var defaults = {
-    arrayVsArrayAllMustBeFound: 'any' // two options: 'any' or 'all'
+    arrayVsArrayAllMustBeFound: "any" // two options: 'any' or 'all'
   };
 
   var opts = Object.assign({}, defaults, originalOpts);
 
   // insurance
   if (arguments.length === 0) {
-    throw new Error('array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!');
+    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
   }
   if (arguments.length === 1) {
-    throw new Error('array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_02] second argument missing!');
+    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_02] second argument missing!");
   }
   if (!isArr(originalInput)) {
     if (isStr(originalInput)) {
       originalInput = [originalInput];
     } else {
-      throw new Error('array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ' + (typeof originalInput === 'undefined' ? 'undefined' : _typeof(originalInput)));
+      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as " + (typeof originalInput === "undefined" ? "undefined" : _typeof(originalInput)));
     }
   }
   if (!isStr(stringToFind) && !isArr(stringToFind)) {
-    throw new Error('array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ' + (typeof stringToFind === 'undefined' ? 'undefined' : _typeof(stringToFind)));
+    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as " + (typeof stringToFind === "undefined" ? "undefined" : _typeof(stringToFind)));
   }
-  if (opts.arrayVsArrayAllMustBeFound !== 'any' && opts.arrayVsArrayAllMustBeFound !== 'all') {
-    throw new Error('array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ' + opts.arrayVsArrayAllMustBeFound + '. It must be equal to either "any" or "all".');
+  if (opts.arrayVsArrayAllMustBeFound !== "any" && opts.arrayVsArrayAllMustBeFound !== "all") {
+    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, " + opts.arrayVsArrayAllMustBeFound + ". It must be equal to either \"any\" or \"all\".");
   }
 
   // maybe we can end prematurely:
@@ -66,7 +65,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     });
   }
   // array then.
-  if (opts.arrayVsArrayAllMustBeFound === 'any') {
+  if (opts.arrayVsArrayAllMustBeFound === "any") {
     return stringToFind.some(function (stringToFindVal) {
       return input.some(function (val) {
         return matcher.isMatch(val, stringToFindVal, { caseSensitive: true });
