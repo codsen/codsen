@@ -14,7 +14,7 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "generateAst"
+        name: "arrayOfArraysIntoAst"
       },
       plugins: [
         strip({
@@ -45,8 +45,9 @@ export default commandLineArgs => {
   ];
   if (commandLineArgs.dev) {
     // if rollup was called with a --dev flag, remove comment removal, strip():
-    finalConfig[0].plugins.shift();
-    finalConfig[1].plugins.shift();
+    finalConfig.forEach((singleConfigVal, i) => {
+      finalConfig[i].plugins.shift();
+    });
   }
   return finalConfig;
 };

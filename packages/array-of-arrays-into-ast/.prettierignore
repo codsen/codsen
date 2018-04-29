@@ -1,4 +1,3 @@
 dist/
 *.json
-readme.md
-README.md
+*-es5.js

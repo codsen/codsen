@@ -145,7 +145,8 @@
       "back_to_top": {
         "enabled": true,
         "label": ""
-      }
+      },
+      "devDependencies": []
     }
   },
   "dependencies": {
@@ -153,20 +154,20 @@
     "object-merge-advanced": "^10.1.0"
   },
   "devDependencies": {
-    "ava": "*",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "coveralls": "*",
+    "ava": "latest",
+    "babel-cli": "latest",
+    "babel-preset-env": "latest",
+    "coveralls": "latest",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "husky": "*",
-    "nyc": "*",
-    "prettier": "1.11.1",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
