@@ -40,19 +40,21 @@ Here's what you'll get:
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [Pulling](#pulling)
-* [API](#api)
-* [Test](#test)
-* [Contributing](#contributing)
-* [Licence](#licence)
+- [Pulling](#pulling)
+- [API](#api)
+- [Test](#test)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## Pulling
 
