@@ -15,4 +15,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ Public release
 
-[1.1.0]: https://github.com/codsen/array-of-arrays-into-ast/compare/v1.0.0...v1.1.0
+[1.1.0]: https://github.com/codsen/array-of-arrays-into-ast/compare/v1.0.2...v1.1.0
