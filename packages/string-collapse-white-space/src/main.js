@@ -1,5 +1,3 @@
-/* eslint no-lonely-if:0, no-loop-func:0, max-len:0, security/detect-object-injection:0 */
-
 import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import replaceSlicesArr from "string-replace-slices-array";
@@ -7,6 +5,7 @@ import Slices from "string-slices-array-push";
 import { matchLeftIncl } from "string-match-left-right";
 
 function collapse(str, originalOpts) {
+  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   // f's
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
@@ -48,7 +47,8 @@ function collapse(str, originalOpts) {
     trimEnd: true, // otherwise, trailing whitespace will be collapsed to a single space
     trimLines: false, // activates trim per-line basis
     trimnbsp: false, // non-breaking spaces are trimmed too
-    recogniseHTML: true // collapses whitespace around HTML brackets
+    recogniseHTML: true, // collapses whitespace around HTML brackets
+    removeEmptyLines: false // if line trim()'s to an empty string, it's removed
   };
 
   // fill any settings with defaults if missing:
@@ -66,7 +66,6 @@ function collapse(str, originalOpts) {
 
   // -----------------------------------------------------------------------------
 
-  // const DEBUG = 0
   let res = str;
   let spacesEndAt = null;
   let whiteSpaceEndsAt = null;
@@ -92,9 +91,15 @@ function collapse(str, originalOpts) {
     count = resetCounts(); // initiates the count object, assigning all keys to zero
   }
 
+  let lastLineBreaksLastCharIndex;
+
   // looping backwards for better efficiency
   for (let i = str.length; i--; ) {
-    // if (DEBUG) { console.log(`------------------------ ${str[i].trim() !== '' ? str[i] : 'space'}`) }
+    console.log(
+      `99 ${`\u001b[${36}m${`------------------------`}\u001b[${39}m`} ${
+        str[i].trim() !== "" ? str[i] : "space"
+      } ------ ${`\u001b[${35}m idx: ${i}\u001b[${39}m`}`
+    );
     //
     // space clauses
     if (str[i] === " ") {
@@ -123,6 +128,8 @@ function collapse(str, originalOpts) {
       if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
         lineWhiteSpaceEndsAt = i + 1;
       }
+
+      // per-line trimming:
       if (str[i] === "\n" || str[i] === "\r") {
         if (lineWhiteSpaceEndsAt !== null) {
           if (opts.trimLines) {
@@ -134,6 +141,33 @@ function collapse(str, originalOpts) {
           lineWhiteSpaceEndsAt = i;
           endingOfTheLine = true;
         }
+      }
+
+      // empty line deletion:
+      if (str[i] === "\n") {
+        const sliceFrom = i + 1;
+        const sliceTo = lastLineBreaksLastCharIndex + 1;
+        console.log(
+          `151 \u001b[${33}m [${sliceFrom}, ${sliceTo}] >>>${str.slice(
+            sliceFrom,
+            sliceTo
+          )}<<<\u001b[${39}m`
+        );
+        if (
+          opts.removeEmptyLines &&
+          lastLineBreaksLastCharIndex !== undefined &&
+          str.slice(sliceFrom, sliceTo).trim() === ""
+        ) {
+          console.log(
+            `162 \n\u001b[${33}m${`RANGE CAUGHT: [i=${i}, lastLineBreaksLastCharIndex-1=${lastLineBreaksLastCharIndex -
+              1}]`}\u001b[${39}m\n`
+          );
+          finalIndexesToDelete.add(i + 1, lastLineBreaksLastCharIndex + 1);
+        }
+        lastLineBreaksLastCharIndex = i;
+        console.log(
+          `169 ${`\u001b[${32}m${`FINALLY, SET lastLineBreaksLastCharIndex = ${lastLineBreaksLastCharIndex}`}\u001b[${39}m`}`
+        );
       }
     } else {
       // it's not white space character
@@ -191,7 +225,7 @@ function collapse(str, originalOpts) {
           tagMatched = false;
           stateWithinTag = false;
           preliminaryIndexesToDelete.wipe();
-          // if (DEBUG) { console.log('wipe at row 176') }
+          console.log("228 wipe preliminaryIndexesToDelete");
         }
         if (
           !bail &&
@@ -207,9 +241,17 @@ function collapse(str, originalOpts) {
               str[i - 1] !== "<" &&
               str[i - 1] !== "/")
           ) {
-            // if (DEBUG) { console.log(`190: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
+            console.log(
+              `245: count.spacesBetweenLetterChunks was ${
+                count.spacesBetweenLetterChunks
+              }`
+            );
             count.spacesBetweenLetterChunks += 1;
-            // if (DEBUG) { console.log(`192: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
+            console.log(
+              `251: count.spacesBetweenLetterChunks became ${
+                count.spacesBetweenLetterChunks
+              }`
+            );
           } else {
             // loop backwards and check, is the first non-space char being "<".
             for (let y = i - 1; y--; ) {
@@ -217,9 +259,17 @@ function collapse(str, originalOpts) {
                 if (str[y] === "<") {
                   bail = true;
                 } else if (str[y] !== "/") {
-                  // if (DEBUG) { console.log(`199: count.spacesBetweenLetterChunks was ${count.spacesBetweenLetterChunks}`) }
+                  console.log(
+                    `263: count.spacesBetweenLetterChunks was ${
+                      count.spacesBetweenLetterChunks
+                    }`
+                  );
                   count.spacesBetweenLetterChunks += i - y;
-                  // if (DEBUG) { console.log(`201: count.spacesBetweenLetterChunks became ${count.spacesBetweenLetterChunks}`) }
+                  console.log(
+                    `269: count.spacesBetweenLetterChunks became ${
+                      count.spacesBetweenLetterChunks
+                    }`
+                  );
                 }
                 break;
               }
@@ -266,7 +316,7 @@ function collapse(str, originalOpts) {
           if (stateWithinTag) {
             // this is bad, another closing bracket
             preliminaryIndexesToDelete.wipe();
-            // if (DEBUG) { console.log('wipe at row 244') }
+            console.log("319 wipe preliminaryIndexesToDelete");
           } else {
             stateWithinTag = true;
             if (
@@ -282,7 +332,13 @@ function collapse(str, originalOpts) {
             // tag name might be ending with bracket: <br>
           }
         } else if (str[i] === "<") {
-          // if (DEBUG) { console.log(`preliminaryIndexesToDelete.current() = ${JSON.stringify(preliminaryIndexesToDelete.current(), null, 4)}`) }
+          console.log(
+            `336 preliminaryIndexesToDelete.current() = ${JSON.stringify(
+              preliminaryIndexesToDelete.current(),
+              null,
+              4
+            )}`
+          );
           // the rest of calculations:
           stateWithinTag = false;
           // reset bail flag
@@ -298,7 +354,7 @@ function collapse(str, originalOpts) {
           ) {
             tagMatched = false;
             preliminaryIndexesToDelete.wipe();
-            // if (DEBUG) { console.log('wipe at row 270') }
+            console.log("357 wipe preliminaryIndexesToDelete");
           }
           // if somehow we're within a tag and there are already provisional ranges
           if (tagMatched && preliminaryIndexesToDelete.current()) {

@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0] - 2018-04-30
+
+### Added
+
+* ✨ `opts.removeEmptyLines`
+* ✨ Set up Prettier to run automatically on all relevant files. Dropping `airbnb-base` ESLint preset.
+* ✨ Stopping to commit (and generate at all) `package-lock` files
+* ✨ Beefed up unit tests, filled all missing rows. Obviously, unit tests will be ran against the transpiled code (as well as nyc/coveralls reporting) and I can't unit-test some of the functions that Babel adds. Hence not perfect coverage score.
+
 ## [3.2.0] - 2017-10-29
 
 ### Added
@@ -51,9 +60,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ First public release
 
-[3.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.1.0...v3.2.0
-[3.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.0.0...v3.1.0
-[3.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v3.0.0
-[2.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v1.0.0...v2.0.0
+[2.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.0.0...v2.1.0
+[2.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.1.0...v2.2.0
+[3.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v3.0.0
+[3.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.0.0...v3.1.0
+[3.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.1.0...v3.2.0
+[3.3.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.2.8...v3.3.0

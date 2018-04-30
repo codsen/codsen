@@ -373,6 +373,173 @@ test("04.04 - line and outer trims and \\r", t => {
   );
 });
 
+test("04.05 - line and outer trims and \\r", t => {
+  t.is(
+    collapse(
+      "\n\n     a    b    \r\n    c    d      \r     e     f     \n\n\n     g    h    \r",
+      { trimLines: true, trimnbsp: false }
+    ),
+    "a b\r\nc d\re f\n\n\ng h",
+    "04.05.01 - mix of \\r and \\n"
+  );
+});
+
+test("04.06 - opts.removeEmptyLines - easy #1", t => {
+  // on
+  t.is(
+    collapse("a\n\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "04.06.01 - \\n - on"
+  );
+  t.is(
+    collapse("a\r\n\r\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "04.06.02 - \\r\\n - on"
+  );
+
+  // off
+  t.is(
+    collapse("a\n\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\n\nb",
+    "04.06.03 - \\n - off"
+  );
+  t.is(
+    collapse("a\r\n\r\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\r\n\r\nb",
+    "04.06.04 - \\r\\n - off"
+  );
+});
+
+test("04.07 - opts.removeEmptyLines - easy #2", t => {
+  // on
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "04.07.01 - \\n - on"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "04.07.02 - \\r\\n - on"
+  );
+
+  // off
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\n\nb",
+    "04.07.03 - \\n - off"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\r\n\r\nb",
+    "04.07.04 - \\r\\n - off"
+  );
+
+  // off
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \n \n b",
+    "04.07.05 - \\n - empty lines removal off + per-line trimming off"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \r\n \r\n b",
+    "04.07.06 - \\r\\n - empty lines removal off + per-line trimming off"
+  );
+
+  // off
+  t.is(
+    collapse("  a  \n  \n  b  ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \n \n b",
+    "04.07.06 - \\n - empty lines removal off + per-line trimming off - multiple spaces"
+  );
+  t.is(
+    collapse("  a  \r\n  \r\n  b    ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \r\n \r\n b",
+    "04.07.07 - \\r\\n - empty lines removal off + per-line trimming off - multiple spaces"
+  );
+});
+
+test("04.08 - opts.removeEmptyLines - advanced", t => {
+  t.is(
+    collapse(
+      "\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0",
+      { trimLines: true, trimnbsp: true, removeEmptyLines: true }
+    ),
+    "a b\r\nc d\re f\ng h",
+    "04.08"
+  );
+});
+
+test("04.09 - opts.removeEmptyLines - leading/trailing empty lines", t => {
+  t.is(
+    collapse("\na\n\nb\n", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "04.09.01 - \\n"
+  );
+  t.is(
+    collapse("\r\na\r\n\r\nb\r\n", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "04.09.02 - \\r\\n"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // group 05. `opts.recogniseHTML`
 // -----------------------------------------------------------------------------
@@ -416,29 +583,118 @@ test("05.01 - action around the HTML brackets", t => {
     "05.01.06 - defaults: like 04 but with sprinkled spaces"
   );
 
+  // recognition is off now:
+  t.is(
+    collapse('   <   html    abc="cde"    >  ', { recogniseHTML: false }),
+    '< html abc="cde" >',
+    "05.01.07 - defaults: whitespace everywhere"
+  );
+  t.is(
+    collapse('    <    html      blablabla="zzz"    >  ', {
+      recogniseHTML: false
+    }),
+    '< html blablabla="zzz" >',
+    "05.01.08 - html"
+  );
+  t.is(
+    collapse("<   html   >", { recogniseHTML: false }),
+    "< html >",
+    "05.01.09 - defaults: as 01, but no trim"
+  );
+  t.is(
+    collapse("<\thtml\r>", { recogniseHTML: false }),
+    "<\thtml\r>",
+    "05.01.10 - defaults: tab and carriage return within html tag. Pretty messed up, isn't it?"
+  );
+  t.is(
+    collapse("\n\n\r\r\t\t<\thtml\r\t\t>\n\r\t\n", { recogniseHTML: false }),
+    "<\thtml\r\t\t>",
+    "05.01.11 - defaults: like 03, but with more non-space white space for trimming"
+  );
+  t.is(
+    collapse(
+      "\n \n    \r\r   \t\t  <  \t   html   \r   \t \t   >\n  \r \t    \n  ",
+      { recogniseHTML: false }
+    ),
+    "< \t html \r \t \t >",
+    "05.01.12 - defaults: like 04 but with sprinkled spaces"
+  );
+
   //
   // .oO00000Oo.
   //    XHTML
   // .oO00000Oo.
   //
-  t.is(collapse("   <   html  /  >  "), "<html/>", "05.01.07");
+  t.is(collapse("   <   html  /  >  "), "<html/>", "05.01.13");
   t.is(
     collapse('    <    html      blablabla="zzz"  /  >  '),
     '<html blablabla="zzz"/>',
-    "05.01.08"
+    "05.01.14"
   );
-  t.is(collapse("<   html  / >"), "<html/>", "05.01.09");
-  t.is(collapse("<\thtml\r/>"), "<html/>", "05.01.10");
-  t.is(collapse("<\thtml/\r>"), "<html/>", "05.01.11");
-  t.is(collapse("\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n"), "<html/>", "05.01.12");
-  t.is(collapse("\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n"), "<html/>", "05.01.13");
-  t.is(collapse("\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n"), "<html/>", "05.01.14");
+  t.is(collapse("<   html  / >"), "<html/>", "05.01.15");
+  t.is(collapse("<\thtml\r/>"), "<html/>", "05.01.16");
+  t.is(collapse("<\thtml/\r>"), "<html/>", "05.01.17");
+  t.is(collapse("\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n"), "<html/>", "05.01.18");
+  t.is(collapse("\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n"), "<html/>", "05.01.19");
+  t.is(collapse("\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n"), "<html/>", "05.01.20");
   t.is(
     collapse(
       "\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  "
     ),
     "<html/>",
-    "05.01.15"
+    "05.01.21"
+  );
+
+  // (X)HTML recognition is off:
+  t.is(
+    collapse("   <   html  /  >  ", { recogniseHTML: false }),
+    "< html / >",
+    "05.01.22"
+  );
+  t.is(
+    collapse('    <    html      blablabla="zzz"  /  >  ', {
+      recogniseHTML: false
+    }),
+    '< html blablabla="zzz" / >',
+    "05.01.23"
+  );
+  t.is(
+    collapse("<   html  / >", { recogniseHTML: false }),
+    "< html / >",
+    "05.01.24"
+  );
+  t.is(
+    collapse("<\thtml\r/>", { recogniseHTML: false }),
+    "<\thtml\r/>",
+    "05.01.25"
+  );
+  t.is(
+    collapse("<\thtml/\r>", { recogniseHTML: false }),
+    "<\thtml/\r>",
+    "05.01.26"
+  );
+  t.is(
+    collapse("\n\n\r\r\t\t<\thtml\r\t\t/>\n\r\t\n", { recogniseHTML: false }),
+    "<\thtml\r\t\t/>",
+    "05.01.27"
+  );
+  t.is(
+    collapse("\n\n\r\r\t\t<\thtml\r/\t\t>\n\r\t\n", { recogniseHTML: false }),
+    "<\thtml\r/\t\t>",
+    "05.01.28"
+  );
+  t.is(
+    collapse("\n\n\r\r\t\t<\thtml/\r\t\t>\n\r\t\n", { recogniseHTML: false }),
+    "<\thtml/\r\t\t>",
+    "05.01.29"
+  );
+  t.is(
+    collapse(
+      "\n \n    \r\r   \t\t  <  \t   html   \t   \t \t  / >\n  \r \t    \n  ",
+      { recogniseHTML: false }
+    ),
+    "< \t html \t \t \t / >",
+    "05.01.30"
   );
 });
 
@@ -574,5 +830,26 @@ test("05.08 - adhoc case #2", t => {
     collapse("aaa<bbb", { trimLines: true }),
     "aaa<bbb",
     "05.08.03 - trimLines = true"
+  );
+});
+
+test("05.09 - detected erroneous code (space after equal sign in HTML attribute) will skip HTML recognition", t => {
+  // what will happen is, error space after equal in HTML attribute will cause
+  // the algorithm to freak out and that tag will be skipped, even though the
+  // opts.recogniseHTML would otherwise have trimmed tightly within that tag.
+  t.is(
+    collapse(
+      '   <   html    abc= "cde"    ><   html    fgh="hij"    ><   html    abc= "cde"    ><   html    fgh="hij"    >  '
+    ),
+    '< html abc= "cde" ><html fgh="hij">< html abc= "cde" ><html fgh="hij">',
+    "05.09.01"
+  );
+  t.is(
+    collapse(
+      '   <   html    abc= "cde"    ><   html    fgh="hij"    ><   html    abc= "cde"    ><   html    fgh="hij"    >  ',
+      { recogniseHTML: false }
+    ),
+    '< html abc= "cde" >< html fgh="hij" >< html abc= "cde" >< html fgh="hij" >',
+    "05.09.02"
   );
 });

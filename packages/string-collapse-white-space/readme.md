@@ -17,23 +17,25 @@
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [TLDR;](#tldr)
-* [Install](#install)
-* [The API](#the-api)
-* [Algorithm](#algorithm)
-* [Usage](#usage)
-* [Smart bits](#smart-bits)
-* [Practical use](#practical-use)
-* [Contributing](#contributing)
-* [Licence](#licence)
+- [TLDR;](#tldr)
+- [Install](#install)
+- [The API](#the-api)
+- [Algorithm](#algorithm)
+- [Usage](#usage)
+- [Smart bits](#smart-bits)
+- [Practical use](#practical-use)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## TLDR;
 
@@ -54,6 +56,10 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 
 `' aaa \n bbb '` → `'aaa\nbbb'`
 
+(Optional, off by default) Delete empty or whitespace-only rows:
+
+`'a\n\n\nb'` → `'a\nb'`
+
 **[⬆ &nbsp;back to top](#)**
 
 ## Install
@@ -66,9 +72,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                      | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-white-space.cjs.js` | 18&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-white-space.esm.js` | 17&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 32&nbsp;KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-white-space.cjs.js` | 19&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-white-space.esm.js` | 18&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 35&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -95,6 +101,7 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 | `trimLines`            | Boolean | no          | `false` | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)                           |
 | `trimnbsp`             | Boolean | no          | `false` | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.                                    |
 | `recogniseHTML`        | Boolean | no          | `true`  | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`. |
+| `removeEmptyLines`     | Boolean | no          | `false` | if any line can be trimmed to empty string, it will be removed.                                                                                                                    |
 | }                      |         |             |         |
 
 **Defaults**:
@@ -105,7 +112,8 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
   trimEnd: true,
   trimLines: false,
   trimnbsp: false,
-  recogniseHTML: true
+  recogniseHTML: true,
+  removeEmptyLines: false
 }
 ```
 
