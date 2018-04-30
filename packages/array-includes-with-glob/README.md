@@ -42,19 +42,21 @@ Here's what you'll get:
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [How it works](#how-it-works)
-* [API](#api)
-* [Conditions when this library will throw](#conditions-when-this-library-will-throw)
-* [Contributing](#contributing)
-* [Licence](#licence)
+- [How it works](#how-it-works)
+- [API](#api)
+- [Conditions when this library will throw](#conditions-when-this-library-will-throw)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## How it works
 
