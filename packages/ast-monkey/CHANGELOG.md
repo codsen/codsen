@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.4.0] - 2018-05-02
+
+### Added
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+
 ## [7.3.0] - 2018-01-03
 
 ### Added
@@ -287,8 +295,9 @@ BREAKING API CHANGES.
 [6.2.0]: https://github.com/codsen/ast-monkey/compare/v6.1.0...v6.2.0
 [6.3.0]: https://github.com/codsen/ast-monkey/compare/v6.2.0...v6.3.0
 [6.4.0]: https://github.com/codsen/ast-monkey/compare/v6.3.0...v6.4.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [7.0.0]: https://github.com/codsen/ast-monkey/compare/v6.4.0...v7.0.0
+[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [7.1.0]: https://github.com/codsen/ast-monkey/compare/v7.0.0...v7.1.0
 [7.2.0]: https://github.com/codsen/ast-monkey/compare/v7.1.0...v7.2.0
 [7.3.0]: https://github.com/codsen/ast-monkey/compare/v7.2.0...v7.3.0
+[7.4.0]: https://github.com/codsen/ast-monkey/compare/v7.3.0...v7.4.0
