@@ -1,41 +1,41 @@
-import isObj from 'lodash.isplainobject'
+import isObj from "lodash.isplainobject";
 
 function isEmpty(input) {
-  let i
-  let len
-  let res = true
+  let i;
+  let len;
+  let res = true;
   if (Array.isArray(input)) {
     if (input.length === 0) {
-      return true
+      return true;
     }
     for (i = 0, len = input.length; i < len; i++) {
-      res = isEmpty(input[i])
+      res = isEmpty(input[i]);
       if (res === null) {
-        return null
+        return null;
       } else if (!res) {
-        return false
+        return false;
       }
     }
   } else if (isObj(input)) {
     if (Object.keys(input).length === 0) {
-      return true
+      return true;
     }
     for (i = 0, len = Object.keys(input).length; i < len; i++) {
-      res = isEmpty(input[Object.keys(input)[i]])
+      res = isEmpty(input[Object.keys(input)[i]]);
       if (res === null) {
-        return null
+        return null;
       } else if (!res) {
-        return false
+        return false;
       }
     }
-  } else if (typeof input === 'string') {
+  } else if (typeof input === "string") {
     if (input.length !== 0) {
-      return false
+      return false;
     }
   } else {
-    return null
+    return null;
   }
-  return res
+  return res;
 }
 
-export default isEmpty
+export default isEmpty;

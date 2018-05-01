@@ -28,7 +28,7 @@ function isEmpty(input) {
         return false;
       }
     }
-  } else if (typeof input === 'string') {
+  } else if (typeof input === "string") {
     if (input.length !== 0) {
       return false;
     }
