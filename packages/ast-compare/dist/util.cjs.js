@@ -12,16 +12,16 @@ function existy(x) {
   return x != null;
 }
 function isObj(something) {
-  return type(something) === 'Object';
+  return type(something) === "Object";
 }
 function isStr(something) {
-  return type(something) === 'string';
+  return type(something) === "string";
 }
 function isNum(something) {
-  return type(something) === 'number';
+  return type(something) === "number";
 }
 function isBool(something) {
-  return type(something) === 'boolean';
+  return type(something) === "boolean";
 }
 function isNull(something) {
   return something === null;

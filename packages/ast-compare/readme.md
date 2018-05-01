@@ -1,11 +1,8 @@
 # ast-compare
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Compare anything: AST, objects, arrays, strings and nested thereof
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -30,11 +30,13 @@
 - [Examples](#examples)
 - [opts.verboseWhenMismatches](#optsverbosewhenmismatches)
 - [Rationale](#rationale)
-- [Differences from _.isMatch](#differences-from-_ismatch)
+- [Differences from \_.isMatch](#differences-from-%5C_ismatch)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## Install
 
@@ -44,11 +46,11 @@ npm i ast-compare
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ast-compare.cjs.js` | 10&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ast-compare.umd.js` | 28&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                      | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-compare.cjs.js` | 10&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 31&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -57,24 +59,26 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 Find out, does an object/array/string/nested-mix is a subset or equal to another input:
 
 ```js
-var compare = require('ast-compare')
+var compare = require("ast-compare");
 var result = compare(
-  { // <- does this nested plain object...
+  {
+    // <- does this nested plain object...
     a: {
-      b: 'd',
+      b: "d",
       c: [],
-      e: 'f',
-      g: 'h'
+      e: "f",
+      g: "h"
     }
   },
-  { // <- ...contain this nested plain object?
+  {
+    // <- ...contain this nested plain object?
     a: {
-      b: 'd',
+      b: "d",
       c: []
     }
   }
-)
-console.log(result)
+);
+console.log(result);
 // => true
 ```
 
@@ -85,7 +89,7 @@ The main purpose is to compare two parsed HTML/CSS trees or their branches, but 
 ## Use
 
 ```js
-var compare = require('ast-compare')
+var compare = require("ast-compare");
 ```
 
 ## API
@@ -97,11 +101,11 @@ This library will not mutate the input arguments.
 
 **Input**
 
-Input argument   | Type                            | Obligatory? | Description
------------------|---------------------------------|-------------|--------------
-`bigObj`         | Array or Plain object or String | yes         | Super set, larger thing.
-`smallObj`       | Array or Plain object or String | yes         | A set of the above, smaller thing.
-`opts`           | Plain object                    | no          | A plain object containing settings.
+| Input argument | Type                            | Obligatory? | Description                         |
+| -------------- | ------------------------------- | ----------- | ----------------------------------- |
+| `bigObj`       | Array or Plain object or String | yes         | Super set, larger thing.            |
+| `smallObj`     | Array or Plain object or String | yes         | A set of the above, smaller thing.  |
+| `opts`         | Plain object                    | no          | A plain object containing settings. |
 
 * If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
 * Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
@@ -110,13 +114,13 @@ Input argument   | Type                            | Obligatory? | Description
 
 ### Options object
 
-`options` object's key  | Type    | Obligatory? | Default | Description
-------------------------|---------|-------------|---------|----------------------
-{                       |         |             |         |
-`hungryForWhitespace`   | Boolean | no          | `false` | The any whitespace (tabs, spaces, line breaks and so on) will match any other white space.
-`matchStrictly`         | Boolean | no          | `false` | When you want to match like `===`.
-`verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match.
-}                       |         |             |         |
+| `options` object's key  | Type    | Obligatory? | Default | Description                                                                                                                                                                     |
+| ----------------------- | ------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                       |         |             |         |
+| `hungryForWhitespace`   | Boolean | no          | `false` | The any whitespace (tabs, spaces, line breaks and so on) will match any other white space.                                                                                      |
+| `matchStrictly`         | Boolean | no          | `false` | When you want to match like `===`.                                                                                                                                              |
+| `verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match. |
+| }                       |         |             |         |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -126,62 +130,50 @@ If `smallObj` **is** equal or a superset of `bigObj`, the returned value is alwa
 
 If it's **not** a superset or equal, the value depends on `opts.verboseWhenMismatches`:
 
- - Default, `opts.verboseWhenMismatches===false` will yield `false`
- - Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
+* Default, `opts.verboseWhenMismatches===false` will yield `false`
+* Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## Examples
 
 ```js
-compare(
-  {a: '1', b: '2', c: '3'}, {a: '1', b: '2'}
-)
+compare({ a: "1", b: "2", c: "3" }, { a: "1", b: "2" });
 // => true, because second (smallObj) is subset of (or equal) first (bigObj).
 ```
 
 ```js
-compare(
-  {a: '1', b: '2'}, {a: '1', b: '2', c: '3'}
-)
+compare({ a: "1", b: "2" }, { a: "1", b: "2", c: "3" });
 // => false, because second (smallObj) is not a subset (or equal) to first (bigObj).
 ```
 
 ```js
-compare(
-  ['a', 'b', 'c'], ['a', 'b']
-)
+compare(["a", "b", "c"], ["a", "b"]);
 // => true, because second is a subset of first
 ```
 
 ```js
-compare(
-  ['a', 'b', 'c'], ['b', 'a']
-)
+compare(["a", "b", "c"], ["b", "a"]);
 // => false, because order is wrong
 ```
 
 ```js
-compare(
-  ['a', 'b'], ['a', 'b', 'c']
-)
+compare(["a", "b"], ["a", "b", "c"]);
 // => false, because second is not a subset of first
 ```
 
 ```js
-compare(
-  'a\nb', 'a\nb'
-)
+compare("a\nb", "a\nb");
 // => true, because strings are equal
 ```
 
 ```js
-compare({a: 'a'})
+compare({ a: "a" });
 // => false. Second input value is missing which means it's a nonsense, thus, false
 ```
 
 ```js
-compare(null)
+compare(null);
 // => false.
 ```
 
@@ -201,18 +193,15 @@ I want to check, does a deeply-nested array of objects/strings/arrays (for examp
 
 **[⬆ &nbsp;back to top](#)**
 
-## Differences from _.isMatch
+## Differences from \_.isMatch
 
 > "Partial comparisons will match empty array and empty object source values against any array or object value, respectively." — [Lodash documentation](https://lodash.com/docs/4.16.4#isMatch)
 
-[_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. An empty array will not be reported as equal to a non-empty array.
+[\_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. An empty array will not be reported as equal to a non-empty array.
 
 ```js
 // in this library:
-var res = compare(
-  ['a', 'b', 'c'],
-  []
-)
+var res = compare(["a", "b", "c"], []);
 // now, res === false
 ```
 
@@ -222,9 +211,9 @@ var res = compare(
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -234,39 +223,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/ast-compare.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-compare
-
-[npm-img]: https://img.shields.io/npm/v/ast-compare.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/ast-compare
-
 [travis-img]: https://img.shields.io/travis/codsen/ast-compare.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/ast-compare
-
 [cov-img]: https://coveralls.io/repos/github/codsen/ast-compare/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/ast-compare?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/ast-compare.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/ast-compare
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ast-compare.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-compare
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-compare.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-compare/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-compare
-
 [downloads-img]: https://img.shields.io/npm/dm/ast-compare.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ast-compare
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ast-compare
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/ast-compare.svg?style=flat-square
 [license-url]: https://github.com/codsen/ast-compare/blob/master/license.md
