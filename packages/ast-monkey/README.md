@@ -46,8 +46,18 @@ Then, consume either in CommonJS format (`require`) or as an ES Module (`import`
 
 ```js
 // as CommonJS require:
-const monkey = require("ast-monkey");
-// or as ES Module:
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
+
+// or as an ES Module:
 import {
   find,
   get,
@@ -92,7 +102,7 @@ Alternatively, you can tap into the core of the monkey, the [.traverse()](#trave
 
 ### .find()
 
-Method `monkey.find()` can search objects by key or by value or by both and return the indexes path to an each finding.
+Method `find()` can search objects by key or by value or by both and return the indexes path to an each finding.
 
 ---
 
@@ -148,10 +158,19 @@ If a finding is an element of an array, the `val` will be set to `null`.
 Find out, what is the path to the key that equals 'b'.
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = ["a", [["b"], "c"]];
 const key = "b";
-const result = monkey.find(input, { key: key });
+const result = find(input, { key: key });
 console.log("result = " + JSON.stringify(result, null, 4));
 // => [
 //      {
@@ -171,9 +190,9 @@ This method is the most versatile of the `ast-monkey` because you can go "up the
 
 ### .get()
 
-Use method `monkey.get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `monkey.find()` or you can pick a number manually, possibly choosing one of the indexes from `monkey.info()` output.
+Use method `get()` to query AST trees by branch's index (a numeric id). You would get that index from a previously performed `find()` or you can pick a number manually, possibly choosing one of the indexes from `info()` output.
 
-Practically, `monkey.get()` is typically used on each element of the findings array (which you would get after performing `find()`). Then, depending on your needs, you would write the particular index over using `monkey.set()` or delete it using `monkey.drop()`.
+Practically, `get()` is typically used on each element of the findings array (which you would get after performing `find()`). Then, depending on your needs, you would write the particular index over using `set()` or delete it using `drop()`.
 
 ---
 
@@ -192,21 +211,30 @@ Practically, `monkey.get()` is typically used on each element of the findings ar
 
 **Output**
 
-The `monkey.get()` returns object, array or `null`, depending what index was matched (or not).
+The `get()` returns object, array or `null`, depending what index was matched (or not).
 
 **Use example**
 
-If you know that you want an index number two, you can query it using `monkey.get()`:
+If you know that you want an index number two, you can query it using `get()`:
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = {
   a: {
     b: "c"
   }
 };
 const index = 2;
-const result = monkey.get(input, { index: index });
+const result = get(input, { index: index });
 console.log("result = " + JSON.stringify(result, null, 4));
 // => {
 //      b: 'c'
@@ -219,7 +247,7 @@ In practice, you would query a list of indexes programmatically using a `for` lo
 
 ### .set()
 
-Use method `monkey.set()` to overwrite a piece of an AST when you know its index.
+Use method `set()` to overwrite a piece of an AST when you know its index.
 
 ---
 
@@ -248,14 +276,23 @@ Use method `monkey.set()` to overwrite a piece of an AST when you know its index
 Let's say you identified the `index` of a piece of AST you want to write over:
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
   f: { g: ["h"] }
 };
 const index = "7";
 const val = "zzz";
-const result = monkey.set(input, { index: index, val: val });
+const result = set(input, { index: index, val: val });
 console.log("result = " + JSON.stringify(result, null, 4));
 // => {
 //      a: {b: [{c: {d: 'e'}}]},
@@ -267,7 +304,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 ### .drop()
 
-Use method `monkey.drop()` to delete a piece of an AST with a known index.
+Use method `drop()` to delete a piece of an AST with a known index.
 
 ---
 
@@ -295,13 +332,22 @@ Use method `monkey.drop()` to delete a piece of an AST with a known index.
 Let's say you want to delete the piece of AST with an index number 8. That's `'h'`:
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
   f: { g: ["h"] }
 };
 const index = "8"; // can be integer as well
-const result = monkey.drop(input, { index: index });
+const result = drop(input, { index: index });
 console.log("result = " + JSON.stringify(result, null, 4));
 // => {
 //      a: {b: [{c: {d: 'e'}}]},
@@ -313,31 +359,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 ### .info()
 
-Use method `monkey.info()` to list each index and its contents on the command line. It's mainly for testing purposes.
-
-Let's create a file `testing.js` in the root of this library, at the same level where `index.js` is:
-
-```js
-"use strict";
-const monkey = require("./index");
-(function() {
-  const input = {
-    a: { b: [{ c: { d: "e" } }] },
-    f: { g: ["h"] }
-  };
-  monkey.info(input);
-})();
-```
-
-That's basically an [IIFE](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/ch3.md) to consume `monkey.info()` function sitting at the same level (signed by `./`).
-
-Then, in the command line, navigate to the same root folder where `testing.js` and `index.js` is and call it via node:
-
-```bash
-node testing
-```
-
-You'll get the listing of each index of the input:
+This method lists all the nodes of a given input (AST):
 
 ```bash
 -----------
@@ -448,7 +470,7 @@ data.gatherPath = [
 
 ### .del()
 
-Use method `monkey.del()` to delete all chosen key/value pairs from all objects found within an AST, or all chosen elements from all arrays.
+Use method `del()` to delete all chosen key/value pairs from all objects found within an AST, or all chosen elements from all arrays.
 
 ---
 
@@ -495,13 +517,22 @@ If `opts.only` is set to any string longer than zero characters and is not case-
 Let's say you want to delete all key/value pairs from objects that have a key equal to 'c'. Value does not matter.
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = {
   a: { b: [{ c: { d: "e" } }] },
   c: { d: ["h"] }
 };
 const key = "c";
-const result = monkey.del(input, { key: key });
+const result = del(input, { key: key });
 console.log("result = " + JSON.stringify(result, null, 4));
 // => {
 //      a: {b: [{}]}
@@ -514,10 +545,19 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 (ex-`flatten()` on versions `v.<3`)
 
-`monkey.arrayFirstOnly()` will take an input (whatever), if it's traversable, it will traverse it, leaving only the first element within each array it encounters.
+`arrayFirstOnly()` will take an input (whatever), if it's traversable, it will traverse it, leaving only the first element within each array it encounters.
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 const input = [
   {
     a: "a"
@@ -526,7 +566,7 @@ const input = [
     b: "b"
   }
 ];
-const result = monkey.arrayFirstOnly(input);
+const result = arrayFirstOnly(input);
 console.log("result = " + JSON.stringify(result, null, 4));
 // => [
 //      {
@@ -560,9 +600,18 @@ In practice, it's handy when you want to simplify the data objects. For example,
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 let ast = [{ a: "a", b: "b" }];
-ast = monkey.traverse(ast, function(key, val, innerObj) {
+ast = traverse(ast, function(key, val, innerObj) {
   // use key, val, innerObj
   return val !== undefined ? val : key; // (point #1)
 });
@@ -571,9 +620,18 @@ ast = monkey.traverse(ast, function(key, val, innerObj) {
 Also, I like to use it this way:
 
 ```js
-const monkey = require("ast-monkey");
+const {
+  find,
+  get,
+  set,
+  drop,
+  info,
+  del,
+  arrayFirstOnly,
+  traverse
+} = require("ast-monkey");
 let ast = [{ a: "a", b: "b" }];
-ast = monkey.traverse(ast, function(key, val, innerObj) {
+ast = traverse(ast, function(key, val, innerObj) {
   let current = val !== undefined ? val : key;
   // All action with variable `current` goes here.
   // It's the same name for any array element or any object key's value.
@@ -593,7 +651,7 @@ If you definitely want to delete, return `NaN`.
 When you call `traverse()` like this:
 
 ```js
-input = monkey.traverse(input, function (key, val, innerObj) {
+input = traverse(input, function (key, val, innerObj) {
   ...
 })
 ```
