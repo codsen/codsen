@@ -7,11 +7,14 @@
   "dependencies": {
     "mute": [
       "arrayiffy-if-string",
+      "ava",
+      "babel-preset-env",
       "coveralls",
       "husky",
       "lodash.intersection",
       "lodash.pullall",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

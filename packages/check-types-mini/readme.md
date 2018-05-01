@@ -1,11 +1,8 @@
 # check-types-mini
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Check the types of your options object's values after user has customised them
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -31,6 +31,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -41,18 +43,18 @@ Consume:
 
 ```js
 // as CommonJS require:
-const checkTypes = require('check-types-mini')
+const checkTypes = require("check-types-mini");
 // or native source directly, as an ES Module:
-import checkTypes from 'check-types-mini'
+import checkTypes from "check-types-mini";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/check-types-mini.cjs.js` | 7&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/check-types-mini.esm.js` | 7&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/check-types-mini.umd.js` | 13&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                           | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/check-types-mini.cjs.js` | 7&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 7&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 13&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -84,11 +86,11 @@ Use it by calling its function. You don't need to assign it to anything - good o
 
 Technically speaking, the main and only job of `check-types-mini` is to _throw_ errors when your library's consumers are using it wrongly. Error messages can be customised:
 
-Input argument   | Type         | Obligatory? | Description
------------------|--------------|-------------|--------------
-`obj`            | Plain object | yes         | Options object after user's customisation
-`ref`            | Plain object | no^         | Default options - used to compare the types
-`opts`           | Plain object | no          | Optional options go here.
+| Input argument | Type         | Obligatory? | Description                                 |
+| -------------- | ------------ | ----------- | ------------------------------------------- |
+| `obj`          | Plain object | yes         | Options object after user's customisation   |
+| `ref`          | Plain object | no^         | Default options - used to compare the types |
+| `opts`         | Plain object | no          | Optional options go here.                   |
 
 ^`ref` can be `null` or `undefined` if all keys are set via `opts.schema` (see below).
 
@@ -96,17 +98,17 @@ Input argument   | Type         | Obligatory? | Description
 
 ### Options object
 
-`options` object's key | Type                       | Obligatory? | Default     | Description
------------------------|----------------------------|-------------|-------------|----------------------
-{                      |                            |             |             |
-`ignoreKeys`           | Array or String            | no          | `[]` (empty array)   | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.
-`acceptArrays`         | Boolean                    | no          | `false`     | If it's set to `true`, value can be array of elements, same type as reference.
-`acceptArraysIgnore`   | Array of strings or String | no          | `[]` (empty array) | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.
-`enforceStrictKeyset`  | Boolean                    | no          | `true`      | If it's set to `true`, your object must not have any unique keys that reference object (and/or `schema`) does not have.
-`schema`               | Plain object               | no          | `{}`        | You can set arrays of types for each key, overriding the reference object. This allows you more precision and enforcing multiple types.
-`msg`                  | String                     | no          | ` `         | A message to show. I like to include the name of the calling library, parent function and numeric throw ID.
-`optsVarName`          | String                     | no          | `opts`      | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.
-}                      |                            |             |             |
+| `options` object's key | Type                       | Obligatory? | Default                                                                                                          | Description                                                                                                                             |
+| ---------------------- | -------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| {                      |                            |             |                                                                                                                  |
+| `ignoreKeys`           | Array or String            | no          | `[]` (empty array)                                                                                               | Instructs to skip all and any checks on keys, specified in this array. Put them as strings.                                             |
+| `acceptArrays`         | Boolean                    | no          | `false`                                                                                                          | If it's set to `true`, value can be array of elements, same type as reference.                                                          |
+| `acceptArraysIgnore`   | Array of strings or String | no          | `[]` (empty array)                                                                                               | If you want to ignore `acceptArrays` on certain keys, pass them in an array here.                                                       |
+| `enforceStrictKeyset`  | Boolean                    | no          | `true`                                                                                                           | If it's set to `true`, your object must not have any unique keys that reference object (and/or `schema`) does not have.                 |
+| `schema`               | Plain object               | no          | `{}`                                                                                                             | You can set arrays of types for each key, overriding the reference object. This allows you more precision and enforcing multiple types. |
+| `msg`                  | String                     | no          | `` | A message to show. I like to include the name of the calling library, parent function and numeric throw ID. |
+| `optsVarName`          | String                     | no          | `opts`                                                                                                           | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation. |
+| }                      |                            |             |                                                                                                                  |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -114,29 +116,32 @@ Input argument   | Type         | Obligatory? | Description
 
 The common pattern is,
 
-1. a) Define defaults object. Later it will be used to validate user's options, PLUS, if that's not enough, you can allow users to provide **arrays** of the matching type (set `opts.acceptArrays` to `true`)
-1. b) Alternatively, you can skip defaults object and provide schema for each key via `opts.schema`. Just stick an object there, as a value, with all keys. Put allowed types in an array.
-2. `Object.assign` cloned defaults onto the options object that comes from the input.
-3. call `check-types-mini` with the above.
-4. If input types mismatch, error will be `throw`n.
+1.  a) Define defaults object. Later it will be used to validate user's options, PLUS, if that's not enough, you can allow users to provide **arrays** of the matching type (set `opts.acceptArrays` to `true`)
+1.  b) Alternatively, you can skip defaults object and provide schema for each key via `opts.schema`. Just stick an object there, as a value, with all keys. Put allowed types in an array.
+1.  `Object.assign` cloned defaults onto the options object that comes from the input.
+1.  call `check-types-mini` with the above.
+1.  If input types mismatch, error will be `throw`n.
 
 ```js
-const checkTypes = require('check-types-mini')
+const checkTypes = require("check-types-mini");
 
-function yourFunction (input, opts) {
+function yourFunction(input, opts) {
   // declare defaults, so we can enforce types later:
   const defaults = {
     placeholder: false
-  }
+  };
   // fill any settings with defaults if missing:
-  opts = Object.assign({}, defaults, opts)
+  opts = Object.assign({}, defaults, opts);
 
   // the check:
-  checkTypes(opts, defaults, {msg: 'newLibrary/yourFunction(): [THROW_ID_01]', optsVarName: 'opts'})
+  checkTypes(opts, defaults, {
+    msg: "newLibrary/yourFunction(): [THROW_ID_01]",
+    optsVarName: "opts"
+  });
   // ...
 }
 
-let res = yourFunction(1, {placeholder: 'zzz'})
+let res = yourFunction(1, { placeholder: "zzz" });
 
 // =>> [TypeError: 'newLibrary/yourFunction(): [THROW_ID_01] opts.placeholder was customised to "zzz" which is not boolean but string']
 ```
@@ -146,41 +151,43 @@ Sometimes you want to accept either a string (or type "X") or an arrays of strin
 This will throw:
 
 ```js
-const checkTypes = require('check-types-mini')
+const checkTypes = require("check-types-mini");
 checkTypes(
-  { // < input
-    option1: 'setting1',
+  {
+    // < input
+    option1: "setting1",
     option2: [true, true],
     option3: false
   },
-  { // < reference
-    option1: 'setting1',
+  {
+    // < reference
+    option1: "setting1",
     option2: false,
     option3: false
   }
-)
+);
 // => Throws, because reference's `option2` is Boolean ("false") but input `option2` is array ("[true, true]").
 ```
 
 But when we allow arrays of the matching type, it won't throw anymore:
 
 ```js
-const checkTypes = require('check-types-mini')
+const checkTypes = require("check-types-mini");
 checkTypes(
   {
-    option1: 'setting1',
-    option2: ['setting3', 'setting4'],
+    option1: "setting1",
+    option2: ["setting3", "setting4"],
     option3: false
   },
   {
-    option1: 'setting1',
-    option2: 'setting2',
+    option1: "setting1",
+    option2: "setting2",
     option3: false
   },
   {
     acceptArrays: true
   }
-)
+);
 // => Does not throw, because we allow arrays full of a matching type
 ```
 
@@ -190,7 +197,7 @@ If you want, you can blacklist certain keys of your objects so that `opts.accept
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [posthtml-ast-delete-object](https://github.com/codsen/posthtml-ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
+When I was coding a new major version of [ast-delete-object](https://github.com/codsen/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
@@ -203,22 +210,22 @@ Sometimes your API is more complex than a single type or array of them. Sometime
 Enter `opts.schema`. You can define all the types for particular key, as an array:
 
 ```js
-const checkTypes = require('check-types-mini')
+const checkTypes = require("check-types-mini");
 checkTypes(
   {
-    option1: 'setting1',
+    option1: "setting1",
     option2: null
   },
   {
-    option1: 'zz',
-    option2: 'yy' // << notice, it's given as string in defaults object
+    option1: "zz",
+    option2: "yy" // << notice, it's given as string in defaults object
   },
   {
     schema: {
-      option2: ['stRing', null]
+      option2: ["stRing", null]
     }
   }
-)
+);
 // => does not throw
 ```
 
@@ -231,6 +238,7 @@ The types are case-insensitive and come from [type-detect](https://github.com/ch
 * and other usual types
 
 Also, you can use more specific subtypes:
+
 * `'true'`
 * `'false'`
 
@@ -240,20 +248,23 @@ For example,
 
 ```js
 const res = checkTypes(
-  { // <--- this is object we're checking
-    option1: 'setting1',
-    option2: true, // <--- bad
+  {
+    // <--- this is object we're checking
+    option1: "setting1",
+    option2: true // <--- bad
   },
-  { // <--- this is default reference object
-    option1: 'zz',
-    option2: null,
+  {
+    // <--- this is default reference object
+    option1: "zz",
+    option2: null
   },
-  { // <--- opts
+  {
+    // <--- opts
     schema: {
-      option2: ['null', 'false', 'string'],
-    },
-  },
-)
+      option2: ["null", "false", "string"]
+    }
+  }
+);
 // => throws an error because `option2` should be either false or string, not true
 ```
 
@@ -265,9 +276,9 @@ All the type values you put into `opts.schema` _are not validated_, on purpose, 
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/check-types-mini/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/check-types-mini/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/check-types-mini/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -277,39 +288,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/check-types-mini.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/check-types-mini
-
-[npm-img]: https://img.shields.io/npm/v/check-types-mini.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/check-types-mini
-
 [travis-img]: https://img.shields.io/travis/codsen/check-types-mini.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/check-types-mini
-
 [cov-img]: https://coveralls.io/repos/github/codsen/check-types-mini/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/check-types-mini?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/check-types-mini.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/check-types-mini
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/check-types-mini.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/check-types-mini/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/check-types-mini
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/check-types-mini.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/check-types-mini/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/check-types-mini/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/check-types-mini
-
 [downloads-img]: https://img.shields.io/npm/dm/check-types-mini.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/check-types-mini
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/check-types-mini
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/check-types-mini.svg?style=flat-square
 [license-url]: https://github.com/codsen/check-types-mini/blob/master/license.md
