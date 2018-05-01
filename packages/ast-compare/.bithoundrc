@@ -8,7 +8,6 @@
     "mute": [
       "ava",
       "babel-preset-env",
-      "coveralls",
       "husky",
       "lodash.clonedeep",
       "lodash.pullall",
