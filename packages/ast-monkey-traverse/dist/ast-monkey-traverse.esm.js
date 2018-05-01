@@ -6,7 +6,7 @@ import isObj from 'lodash.isplainobject';
 var isArr = Array.isArray;
 
 function trimFirstDot(str) {
-  if (typeof str === 'string' && str.length > 0 && str[0] === '.') {
+  if (typeof str === "string" && str.length > 0 && str[0] === ".") {
     return str.slice(1);
   }
   return str;
@@ -26,11 +26,11 @@ function astMonkeyTraverse(tree1, cb1) {
     var res = void 0;
     var allKeys = void 0;
     var key = void 0;
-    innerObj = Object.assign({ depth: -1, path: '' }, innerObj);
+    innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
     innerObj.depth += 1;
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
-        var path = innerObj.path + '.' + i;
+        var path = innerObj.path + "." + i;
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
           // innerObj.path = `${innerObj.path}[${i}]`
@@ -49,7 +49,7 @@ function astMonkeyTraverse(tree1, cb1) {
       allKeys = Object.keys(tree);
       for (i = 0, len = allKeys.length; i < len; i++) {
         key = allKeys[i];
-        var _path = innerObj.path + '.' + key;
+        var _path = innerObj.path + "." + key;
         if (innerObj.depth === 0 && existy(key)) {
           innerObj.topmostKey = key;
         }
