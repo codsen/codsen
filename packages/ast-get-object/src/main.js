@@ -3,15 +3,19 @@
 // ===================================
 // R E Q U I R E' S
 
-import compare from 'ast-compare'
-import isObj from 'lodash.isplainobject'
-import clone from 'lodash.clonedeep'
+import compare from "ast-compare";
+import isObj from "lodash.isplainobject";
+import clone from "lodash.clonedeep";
 
 // ===================================
 // F U N C T I O N S
 
-function existy(x) { return x != null }
-function truthy(x) { return (x !== false) && existy(x) }
+function existy(x) {
+  return x != null;
+}
+function truthy(x) {
+  return x !== false && existy(x);
+}
 
 /**
  * getObj - This is a walker-function for querying/writing PostHTML-parsed AST.
@@ -35,17 +39,19 @@ function truthy(x) { return (x !== false) && existy(x) }
  */
 function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   if (!existy(originalAst)) {
-    throw new Error('ast-get-object: [THROW_ID_01] First argument is missing!')
+    throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
   if (!existy(keyValPair)) {
-    throw new Error('ast-get-object: [THROW_ID_02] Second argument is missing!')
+    throw new Error(
+      "ast-get-object: [THROW_ID_02] Second argument is missing!"
+    );
   }
   // is it set mode or not:
-  let set = false
+  let set = false;
   if (existy(replacementContentsArr) && Array.isArray(replacementContentsArr)) {
-    set = true
+    set = true;
   }
-  let ast = clone(originalAst)
+  let ast = clone(originalAst);
   // if object is passed, crawl it, checking for keyValPair:
   if (isObj(ast)) {
     // console.log('\nwill compare:')
@@ -54,23 +60,28 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
     if (compare(ast, keyValPair)) {
       if (set) {
         if (replacementContentsArr.length > 0) {
-          ast = replacementContentsArr[0]
-          replacementContentsArr.shift()
+          ast = replacementContentsArr[0];
+          replacementContentsArr.shift();
         }
       } else {
-        result.push(ast)
+        result.push(ast);
       }
     } else {
-      Object.keys(ast).forEach((key) => {
+      Object.keys(ast).forEach(key => {
         if (Array.isArray(ast[key]) || isObj(ast[key])) {
           // console.log('ast[key] = ' + JSON.stringify(ast[key], null, 4))
           if (set) {
-            ast[key] = getObj(ast[key], keyValPair, replacementContentsArr, result)
+            ast[key] = getObj(
+              ast[key],
+              keyValPair,
+              replacementContentsArr,
+              result
+            );
           } else {
-            getObj(ast[key], keyValPair, replacementContentsArr, result)
+            getObj(ast[key], keyValPair, replacementContentsArr, result);
           }
         }
-      })
+      });
     }
   } else if (Array.isArray(ast)) {
     // else, it's an array. Iterate each key, if it's an obj, call findTag()
@@ -78,20 +89,20 @@ function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
       // console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
       if (isObj(ast[i]) || Array.isArray(ast[i])) {
         if (set) {
-          ast[i] = getObj(ast[i], keyValPair, replacementContentsArr, result)
+          ast[i] = getObj(ast[i], keyValPair, replacementContentsArr, result);
         } else {
-          getObj(ast[i], keyValPair, replacementContentsArr, result)
+          getObj(ast[i], keyValPair, replacementContentsArr, result);
         }
       }
-    })
+    });
   }
 
   if (truthy(replacementContentsArr)) {
     // console.log('ast = ' + JSON.stringify(ast, null, 4))
-    return ast
+    return ast;
   }
   // console.log('result = ' + JSON.stringify(result, null, 4))
-  return result
+  return result;
 }
 
-export default getObj
+export default getObj;

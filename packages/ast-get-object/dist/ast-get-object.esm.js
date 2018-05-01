@@ -38,10 +38,10 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
   var result = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
 
   if (!existy(originalAst)) {
-    throw new Error('ast-get-object: [THROW_ID_01] First argument is missing!');
+    throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
   if (!existy(keyValPair)) {
-    throw new Error('ast-get-object: [THROW_ID_02] Second argument is missing!');
+    throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");
   }
   // is it set mode or not:
   var set = false;
