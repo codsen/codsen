@@ -163,4 +163,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [2.7.0]: https://github.com/codsen/check-types-mini/compare/v2.6.0...v2.7.0
 [3.0.0]: https://github.com/codsen/check-types-mini/compare/v2.7.0...v3.0.0
 [3.1.0]: https://github.com/codsen/check-types-mini/compare/v3.0.4...v3.1.0
-[3.2.0]: https://github.com/codsen/check-types-mini/compare/v3.1.0...v3.2.0
+[3.2.0]: https://github.com/codsen/check-types-mini/compare/v3.1.2...v3.2.0
