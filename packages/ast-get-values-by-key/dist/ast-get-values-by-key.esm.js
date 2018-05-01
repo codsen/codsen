@@ -8,16 +8,16 @@ function existy(x) {
 
 function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
   if (!existy(originalInput)) {
-    throw new Error('ast-get-values-by-key: [THROW_ID_01] the first argument is missing!');
+    throw new Error("ast-get-values-by-key: [THROW_ID_01] the first argument is missing!");
   }
   if (!existy(whatToFind)) {
-    throw new Error('ast-get-values-by-key: [THROW_ID_02] the second argument is missing!');
+    throw new Error("ast-get-values-by-key: [THROW_ID_02] the second argument is missing!");
   }
 
   var replacement = void 0;
 
   if (existy(originalReplacement)) {
-    if (typeof originalReplacement === 'string') {
+    if (typeof originalReplacement === "string") {
       replacement = [originalReplacement];
     } else {
       replacement = clone(originalReplacement);

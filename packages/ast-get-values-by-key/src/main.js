@@ -1,40 +1,49 @@
-import traverse from 'ast-monkey-traverse'
-import matcher from 'matcher'
-import clone from 'lodash.clonedeep'
+import traverse from "ast-monkey-traverse";
+import matcher from "matcher";
+import clone from "lodash.clonedeep";
 
-function existy(x) { return x != null }
+function existy(x) {
+  return x != null;
+}
 
 function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
   if (!existy(originalInput)) {
-    throw new Error('ast-get-values-by-key: [THROW_ID_01] the first argument is missing!')
+    throw new Error(
+      "ast-get-values-by-key: [THROW_ID_01] the first argument is missing!"
+    );
   }
   if (!existy(whatToFind)) {
-    throw new Error('ast-get-values-by-key: [THROW_ID_02] the second argument is missing!')
+    throw new Error(
+      "ast-get-values-by-key: [THROW_ID_02] the second argument is missing!"
+    );
   }
 
-  let replacement
+  let replacement;
 
   if (existy(originalReplacement)) {
-    if (typeof originalReplacement === 'string') {
-      replacement = [originalReplacement]
+    if (typeof originalReplacement === "string") {
+      replacement = [originalReplacement];
     } else {
-      replacement = clone(originalReplacement)
+      replacement = clone(originalReplacement);
     }
   }
 
-  const res = []
+  const res = [];
   const input = traverse(originalInput, (key, val) => {
-    const current = (val !== undefined) ? val : key
-    if ((val !== undefined) && matcher.isMatch(key, whatToFind, { caseSensitive: true })) {
+    const current = val !== undefined ? val : key;
+    if (
+      val !== undefined &&
+      matcher.isMatch(key, whatToFind, { caseSensitive: true })
+    ) {
       if (replacement === undefined) {
-        res.push(val)
+        res.push(val);
       } else if (replacement.length > 0) {
-        return replacement.shift()
+        return replacement.shift();
       }
     }
-    return current
-  })
-  return replacement === undefined ? res : input
+    return current;
+  });
+  return replacement === undefined ? res : input;
 }
 
-export default getAllValuesByKey
+export default getAllValuesByKey;
