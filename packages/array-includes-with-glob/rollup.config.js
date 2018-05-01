@@ -44,7 +44,8 @@ export default commandLineArgs => {
     }
   ];
   if (commandLineArgs.dev) {
-    // if rollup was called with a --dev flag, remove comment removal, strip():
+    // if rollup was called without a --dev flag,
+    // dispose of a comment removal, strip():
     finalConfig.forEach((singleConfigVal, i) => {
       finalConfig[i].plugins.shift();
     });
