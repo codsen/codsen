@@ -8,11 +8,13 @@
     "mute": [
       "ast-contains-only-empty-space",
       "ava",
+      "babel-preset-env",
       "coveralls",
       "husky",
       "lodash.isplainobject",
       "lodash.isstring",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

@@ -26,7 +26,7 @@ function looseCompare(bigObj, smallObj, res) {
     return false;
   }
   res = res || true;
-  if ((typeof bigObj === 'undefined' ? 'undefined' : _typeof(bigObj)) !== (typeof smallObj === 'undefined' ? 'undefined' : _typeof(smallObj))) {
+  if ((typeof bigObj === "undefined" ? "undefined" : _typeof(bigObj)) !== (typeof smallObj === "undefined" ? "undefined" : _typeof(smallObj))) {
     if (empty(bigObj) && empty(smallObj)) {
       return true;
     }
