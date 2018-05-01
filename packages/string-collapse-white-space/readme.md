@@ -39,26 +39,28 @@
 
 ## TLDR;
 
+<!-- prettier-ignore-start -->
 Take string. First **trim** the outsides, then **collapse** two and more spaces into one.
 
-`' aaa bbbb '` → `'aaa bbbb'`
+`'    aaa    bbbb    '` → `'aaa bbbb'`
 
 When trimming, any whitespace will be collapsed, including tabs, line breaks and so on.
 When collapsing, _only spaces_ are collapsed. Non-space whitespace within text won't be collapsed.
 
-`' \t\t\t aaa \t bbbb \t\t\t\t '` → `'aaa \t bbbb'`
+`'   \t\t\t   aaa     \t     bbbb  \t\t\t\t  '` → `'aaa \t bbbb'`
 
 (Optional, on by default) **Collapse** more aggressively within recognised **HTML tags**:
 
-`'text < span > contents < / span > more text'` → `'text <span> contents </span> more text'`
+`'text <   span   >    contents   <  /  span   > more text'` → `'text <span> contents </span> more text'`
 
 (Optional, off by default) **Trim** each line:
 
-`' aaa \n bbb '` → `'aaa\nbbb'`
+`'   aaa   \n   bbb   '` → `'aaa\nbbb'`
 
 (Optional, off by default) Delete empty or whitespace-only rows:
 
 `'a\n\n\nb'` → `'a\nb'`
+<!-- prettier-ignore-end -->
 
 **[⬆ &nbsp;back to top](#)**
 
