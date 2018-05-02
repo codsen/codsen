@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-05-03
+
+### Added
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+
 ## [2.0.0] - 2017-12-06
 
 ### Changed
@@ -61,3 +69,4 @@ Initial release. 100% test coverage.
 [1.4.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.4.0...v1.5.0
 [2.0.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.5.1...v2.0.0
+[2.1.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v2.0.9...v2.1.0
