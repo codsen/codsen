@@ -1,6 +1,6 @@
 {
   "name": "check-types-mini",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "description": "Check the types of your options object's values after user has customised them",
   "license": "MIT",
   "engines": {
