@@ -15,16 +15,12 @@ test
 
 # files:
 
-.babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
-.gitattributes
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
 chlu_adds_missing_diff_links.gif
-cli.js
 feature1.gif
-ideas.md
 test_bak.js

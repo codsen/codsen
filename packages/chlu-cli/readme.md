@@ -1,11 +1,8 @@
 # chlu-cli
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
@@ -13,9 +10,12 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -31,6 +31,8 @@
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## Install
 
@@ -52,8 +54,8 @@ There's no config, if just silently does the job, checks and fixes your Changelo
 
 `chlu` stands for CHangeLog Update. To start, your changelogs should follow the rules given by http://keepachangelog.com. In practice, often two things happen:
 
-1. I copy a changelog from one library to another to use as a template and forget to amend everything that needed to be amended. CHLU would fix that.
-2. I am too lazy and deliberately leave some work for CHLU, for example, linking titles with magic GitHub diff URL's. I know CHLU will fix those.
+1.  I copy a changelog from one library to another to use as a template and forget to amend everything that needed to be amended. CHLU would fix that.
+2.  I am too lazy and deliberately leave some work for CHLU, for example, linking titles with magic GitHub diff URL's. I know CHLU will fix those.
 
 **Here are all the fixes that CHLU can apply:**
 
@@ -119,25 +121,45 @@ For example, all titles below would get converted to the same thing: `## [3.1.2]
 
 ```md
 ## 3.1.2 (2017-3-17)
+
 ## 3.1.2 (2017-03-17)
+
 ## 3.1.2 (March 17th, 2017)
-## 3.1.2  (March 17th, 2017)
+
+## 3.1.2 (March 17th, 2017)
+
 ## 3.1.2 (March 17, 2017)
+
 ## 3.1.2 2017-3-17
+
 ## 3.1.2 2017-03-17
+
 ## 3.1.2 March 17th, 2017
+
 ## 3.1.2 March 17, 2017
-## 3.1.2  March 17, 2017
+
+## 3.1.2 March 17, 2017
+
 ## 3.1.2 - (2017-3-17)
+
 ## 3.1.2 - (2017-03-17)
+
 ## 3.1.2 - (March 17th, 2017)
-## 3.1.2 -  (March 17th, 2017)
+
+## 3.1.2 - (March 17th, 2017)
+
 ## 3.1.2 - (March 17, 2017)
+
 ## 3.1.2 - 2017-3-17
+
 ## 3.1.2 - 2017-03-17
+
 ## 3.1.2 - March 17th, 2017
+
 ## 3.1.2 - March 17, 2017
-## 3.1.2 -  March 17, 2017
+
+## 3.1.2 - March 17, 2017
+
 ...and many other date combinations
 ```
 
@@ -175,13 +197,13 @@ alias gaa=my-git-add
 
 The example above runs:
 
-- [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
-- then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
-- then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
-- then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
-- it runs the `git add .`.
+* [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
+* then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
+* then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
+* then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
+* it runs the `git add .`.
 
-It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with  `-g` flag.
+It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with `-g` flag.
 
 The example above is growing; I want to automate _everything_. Literally.
 
@@ -207,15 +229,11 @@ That would be awesome!
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/chlu-cli/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -227,30 +245,21 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/chlu-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/chlu-cli
-
-[npm-img]: https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/chlu-cli
-
 [travis-img]: https://img.shields.io/travis/codsen/chlu-cli.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/chlu-cli
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/chlu-cli.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/chlu-cli
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/chlu-cli.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu-cli
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/chlu-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu-cli
-
 [downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/chlu-cli
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/chlu-cli.svg?style=flat-square
 [license-url]: https://github.com/codsen/chlu-cli/blob/master/license.md
