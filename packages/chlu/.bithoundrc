@@ -8,6 +8,7 @@
     "mute": [
       "ast-contains-only-empty-space",
       "ava",
+      "babel-preset-env",
       "coveralls",
       "husky",
       "lodash.clonedeep",
@@ -15,7 +16,8 @@
       "lodash.min",
       "lodash.reverse",
       "lodash.trim",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

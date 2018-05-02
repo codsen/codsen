@@ -20,10 +20,10 @@ test
 
 .babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
 ideas.md
 rollup.config.js
