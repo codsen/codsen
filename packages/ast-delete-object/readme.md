@@ -37,7 +37,7 @@
 
 <!-- prettier-ignore-end -->
 
-If you want to delete only key/value pairs and **leave their parent objects alone**, see [object-delete-key](https://github.com/codsen/object-delete-key). It can delete key and or values from plain objects. Of course, those objects can be nested within anything. That's standard thing for `ast`-class libraries.
+If you want to delete only key/value pairs and **leave their parent objects intact**, see [object-delete-key](https://github.com/codsen/object-delete-key). It can delete key and or values from plain objects. Of course, those objects can be nested within anything. That's standard thing for `ast`-class libraries.
 
 ## Install
 
