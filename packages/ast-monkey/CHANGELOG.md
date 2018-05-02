@@ -300,4 +300,4 @@ BREAKING API CHANGES.
 [7.1.0]: https://github.com/codsen/ast-monkey/compare/v7.0.0...v7.1.0
 [7.2.0]: https://github.com/codsen/ast-monkey/compare/v7.1.0...v7.2.0
 [7.3.0]: https://github.com/codsen/ast-monkey/compare/v7.2.0...v7.3.0
-[7.4.0]: https://github.com/codsen/ast-monkey/compare/v7.3.0...v7.4.0
+[7.4.0]: https://github.com/codsen/ast-monkey/compare/v7.3.4...v7.4.0
