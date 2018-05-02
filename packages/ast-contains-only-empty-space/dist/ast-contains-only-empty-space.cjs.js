@@ -10,7 +10,7 @@ var traverse = _interopDefault(require('ast-monkey-traverse'));
 
 function containsOnlyEmptySpace(input) {
   function isStr(something) {
-    return typeof something === 'string';
+    return typeof something === "string";
   }
   var isArr = Array.isArray;
   var found = true;
@@ -22,7 +22,7 @@ function containsOnlyEmptySpace(input) {
   }
   input = traverse(input, function (key, val) {
     var current = val !== undefined ? val : key;
-    if (isStr(current) && trim(current) !== '') {
+    if (isStr(current) && trim(current) !== "") {
       found = false;
     }
     return current;
