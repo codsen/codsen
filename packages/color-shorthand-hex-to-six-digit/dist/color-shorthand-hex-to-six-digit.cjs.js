@@ -17,8 +17,8 @@ function conv(originalInput) {
   // f's
   function toFullHex(hex) {
     // console.log('received: ' + JSON.stringify(hex, null, 4))
-    if (hex.length === 4 && hex.charAt(0) === '#') {
-      hex = '#' + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2) + hex.charAt(3) + hex.charAt(3);
+    if (hex.length === 4 && hex.charAt(0) === "#") {
+      hex = "#" + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2) + hex.charAt(3) + hex.charAt(3);
     }
     return hex;
   }
