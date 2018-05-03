@@ -20,7 +20,7 @@ function splitEasy(str, originalOpts) {
   // flip it to `false` on each line
 
   if (originalOpts !== undefined && !isObj(originalOpts)) {
-    throw new Error('csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it\'s of a type ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ' equal to:\n' + JSON.stringify(originalOpts, null, 4));
+    throw new Error("csv-split-easy/split(): [THROW_ID_02] Options object must be a plain object! Currently it's of a type " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + " equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
   // prep opts
@@ -30,18 +30,18 @@ function splitEasy(str, originalOpts) {
     forceUKStyle: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'csv-split-easy/split(): [THROW_ID_03*]' });
+  checkTypes(opts, defaults, { msg: "csv-split-easy/split(): [THROW_ID_03*]" });
 
-  if (typeof str !== 'string') {
-    throw new TypeError('csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
+  if (typeof str !== "string") {
+    throw new TypeError("csv-split-easy/split(): [THROW_ID_04] input must be string! Currently it's: " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to: " + JSON.stringify(str, null, 4));
   } else {
-    if (str === '') {
-      return [['']];
+    if (str === "") {
+      return [[""]];
     }
     str = str.trim();
   }
   for (var i = 0, len = str.length; i < len; i++) {
-    if (thisRowContainsOnlyEmptySpace && str[i] !== '"' && str[i] !== ',' && str[i].trim() !== '') {
+    if (thisRowContainsOnlyEmptySpace && str[i] !== '"' && str[i] !== "," && str[i].trim() !== "") {
       thisRowContainsOnlyEmptySpace = false;
     }
     //
@@ -58,7 +58,7 @@ function splitEasy(str, originalOpts) {
         // 2. dump the value that ends here:
         var newElem = str.slice(colStarts, i);
         // if the element contains only empty space,
-        if (newElem.trim() !== '') {
+        if (newElem.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
         }
         // if the element contains the double quote escape character,
@@ -75,17 +75,17 @@ function splitEasy(str, originalOpts) {
         ignoreCommasThatFollow = true;
         colStarts = i + 1;
       }
-    } else
-      //
-      // detect a comma
-      // ======================
-      if (!ignoreCommasThatFollow && str[i] === ',') {
+    }
+    //
+    // detect a comma
+    // ======================
+    else if (!ignoreCommasThatFollow && str[i] === ",") {
         if (str[i - 1] !== '"' && !ignoreCommasThatFollow) {
           // dump the previous value into array if the character before it, the double
           // quote, hasn't dumped the value already:
           var _newElem = str.slice(colStarts, i);
           // if the element contains only empty space,
-          if (_newElem.trim() !== '') {
+          if (_newElem.trim() !== "") {
             thisRowContainsOnlyEmptySpace = false;
           }
           rowArray.push(remSep(_newElem, // same, push anyway. We'll check `resArray` in the end
@@ -102,11 +102,11 @@ function splitEasy(str, originalOpts) {
         if (lineBreakStarts) {
           lineBreakStarts = 0;
         }
-      } else
-        //
-        // detect a line break
-        // ======================
-        if (str[i] === '\n' || str[i] === '\r') {
+      }
+      //
+      // detect a line break
+      // ======================
+      else if (str[i] === "\n" || str[i] === "\r") {
           // question: is it the first line break of its cluster, or not?
           if (!lineBreakStarts) {
             // 1. mark where line break starts:
@@ -115,7 +115,7 @@ function splitEasy(str, originalOpts) {
             if (!ignoreCommasThatFollow && str[i - 1] !== '"') {
               var _newElem2 = str.slice(colStarts, i);
               // if the element contains only empty space,
-              if (_newElem2.trim() !== '') {
+              if (_newElem2.trim() !== "") {
                 thisRowContainsOnlyEmptySpace = false;
               }
               rowArray.push(remSep(_newElem2, {
@@ -137,12 +137,12 @@ function splitEasy(str, originalOpts) {
             rowArray = [];
           }
           colStarts = i + 1;
-        } else
-          // if ((str[i] !== '\n') && (str[i] !== '\r'))
-          //
-          // but then, take care if line break state is actice
-          //
-          if (lineBreakStarts) {
+        }
+        // if ((str[i] !== '\n') && (str[i] !== '\r'))
+        //
+        // but then, take care if line break state is actice
+        //
+        else if (lineBreakStarts) {
             // 1. first, turn off the line break state flag:
             lineBreakStarts = 0;
             // 2. second, new column's value starts here, so mark that:
@@ -157,7 +157,7 @@ function splitEasy(str, originalOpts) {
       if (str[i] !== '"') {
         var _newElem3 = str.slice(colStarts, i + 1);
         // if the element contains only empty space,
-        if (_newElem3.trim() !== '') {
+        if (_newElem3.trim() !== "") {
           thisRowContainsOnlyEmptySpace = false;
         }
         rowArray.push(remSep(_newElem3, {
@@ -184,7 +184,7 @@ function splitEasy(str, originalOpts) {
     // ======================
   }
   if (resArray.length === 0) {
-    return [['']]; // because in some cases only [] reaches here
+    return [[""]]; // because in some cases only [] reaches here
   }
   return resArray;
 }
