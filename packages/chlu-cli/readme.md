@@ -46,7 +46,7 @@ Yes, install globally. This is a CLI app. Once installed, call it in the root wh
 chlu
 ```
 
-There's no config, if just silently does the job, checks and fixes your Changelog. Source is in ES6 but a transpiled version is served. We support Node `v.4` and above.
+There's no config, if just silently does the job, checks and fixes your Changelog.
 
 **[⬆ &nbsp;back to top](#)**
 
