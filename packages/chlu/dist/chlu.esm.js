@@ -37,7 +37,7 @@ function isArr(something) {
   return Array.isArray(something);
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 function aContainsB(a, b) {
   if (!truthy(a) || !truthy(b)) {
@@ -50,9 +50,9 @@ function isFooterLink(str) {
   if (str === undefined) {
     return false;
   } else if (!isStr(str)) {
-    throw new TypeError('chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string');
+    throw new TypeError("chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string");
   }
-  return str.length > 0 && existy(str.match(versionWithBracketsRegex)) && aContainsB(str, ']:');
+  return str.length > 0 && existy(str.match(versionWithBracketsRegex)) && aContainsB(str, "]:");
 }
 
 // Is current string (line as input one-by-one) a title?
@@ -62,18 +62,18 @@ function isTitle(str) {
   if (str === undefined) {
     return false;
   } else if (!isStr(str)) {
-    throw new TypeError('chlu/util.js/isTitle(): [THROW_ID_01] The input must be string');
+    throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string");
   }
   var stringInFrontOfVersion = void 0;
   if (existy(str.match(versionWithoutBracketsRegex))) {
     stringInFrontOfVersion = str.split(str.match(versionWithoutBracketsRegex)[0]);
     if (stringInFrontOfVersion === null) {
-      stringInFrontOfVersion = '';
+      stringInFrontOfVersion = "";
     } else {
       stringInFrontOfVersion = stringInFrontOfVersion[0];
     }
   }
-  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes('http') && !str.includes(']:') && trim(stringInFrontOfVersion, '[# \t') === '' && str.includes('#');
+  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes("http") && !str.includes("]:") && trim(stringInFrontOfVersion, "[# \t") === "" && str.includes("#");
 }
 
 function getTitlesAndFooterLinks(linesArr) {
@@ -111,13 +111,13 @@ function getTitlesAndFooterLinks(linesArr) {
 
 function getPreviousVersion(currVers, originalVersionsArr) {
   if (arguments.length < 2) {
-    throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array.');
+    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array.");
   }
   if (!isStr(currVers)) {
-    throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it\'s ' + (typeof currVers === 'undefined' ? 'undefined' : _typeof(currVers)));
+    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it's " + (typeof currVers === "undefined" ? "undefined" : _typeof(currVers)));
   }
   if (!isArr(originalVersionsArr)) {
-    throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it\'s ' + (typeof originalVersionsArr === 'undefined' ? 'undefined' : _typeof(originalVersionsArr)) + ' equal to:\nJSON.stringify(originalVersionsArr, null, 4)');
+    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's " + (typeof originalVersionsArr === "undefined" ? "undefined" : _typeof(originalVersionsArr)) + " equal to:\nJSON.stringify(originalVersionsArr, null, 4)");
   }
   var versionsArr = clone(originalVersionsArr).sort(serverCompare);
   // first, check if it's the first version from the versions array.
@@ -132,7 +132,7 @@ function getPreviousVersion(currVers, originalVersionsArr) {
     }
   }
   // if nothing was found yet, throw:
-  throw new Error('chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (' + currVers + ') is not in the versions array (' + JSON.stringify(versionsArr, null, 4) + ')');
+  throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (" + currVers + ") is not in the versions array (" + JSON.stringify(versionsArr, null, 4) + ")");
 }
 
 function setRow(rowsArray, index, content) {
@@ -147,10 +147,10 @@ function setRow(rowsArray, index, content) {
 
 function getRow(rowsArray, index) {
   if (!existy(index) || !isNum(index)) {
-    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it\'s given as: ' + (typeof index === 'undefined' ? 'undefined' : _typeof(index)) + ' and equal: ' + JSON.stringify(index, null, 4));
+    throw new TypeError("chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it's given as: " + (typeof index === "undefined" ? "undefined" : _typeof(index)) + " and equal: " + JSON.stringify(index, null, 4));
   }
   if (!existy(rowsArray) || !isArr(rowsArray)) {
-    throw new TypeError('chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it\'s given as: ' + (typeof rowsArray === 'undefined' ? 'undefined' : _typeof(rowsArray)) + ' and equal: ' + JSON.stringify(rowsArray, null, 4));
+    throw new TypeError("chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it's given as: " + (typeof rowsArray === "undefined" ? "undefined" : _typeof(rowsArray)) + " and equal: " + JSON.stringify(rowsArray, null, 4));
   }
   for (var i = 0, len = rowsArray.length; i < len; i++) {
     if (i === index) {
@@ -165,25 +165,26 @@ function getRow(rowsArray, index) {
 function getSetFooterLink(str, o) {
   var mode = void 0;
   if (existy(o)) {
-    mode = 'set';
+    mode = "set";
   } else {
-    mode = 'get';o = {};
+    mode = "get";
+    o = {};
   }
-  if (typeof str !== 'string' || !str.includes('/')) {
+  if (typeof str !== "string" || !str.includes("/")) {
     return null;
   }
-  var split = str.split('/');
+  var split = str.split("/");
   var res = {};
 
   for (var i = 0, len = split.length; i < len; i++) {
-    if (split[i] === 'github.com') {
+    if (split[i] === "github.com") {
       res.user = existy(o.user) ? o.user : split[i + 1];
       res.project = existy(o.project) ? o.project : split[i + 2];
-    } else if (split[i] === 'compare') {
-      if (split[i + 1].includes('...')) {
-        var splitVersions = split[i + 1].split('...');
-        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], 'v');
-        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], 'v');
+    } else if (split[i] === "compare") {
+      if (split[i + 1].includes("...")) {
+        var splitVersions = split[i + 1].split("...");
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], "v");
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], "v");
       } else {
         // incurance against broken compare links:
         return null;
@@ -192,10 +193,10 @@ function getSetFooterLink(str, o) {
       res.version = existy(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
-  if (mode === 'get') {
+  if (mode === "get") {
     return res;
   }
-  return '[' + res.version + ']: https://github.com/' + res.user + '/' + res.project + '/compare/v' + res.versBefore + '...v' + res.versAfter;
+  return "[" + res.version + "]: https://github.com/" + res.user + "/" + res.project + "/compare/v" + res.versBefore + "...v" + res.versAfter;
 }
 
 function versionSort(a, b) {
@@ -205,23 +206,23 @@ function versionSort(a, b) {
 function filterDate(someString) {
   var res = someString.trim();
   res = easyReplace(res, {
-    leftOutsideNot: '',
-    leftOutside: '',
-    leftMaybe: '[',
-    searchFor: 'YANKED',
-    rightMaybe: ']',
-    rightOutside: '',
-    rightOutsideNot: '',
+    leftOutsideNot: "",
+    leftOutside: "",
+    leftMaybe: "[",
+    searchFor: "YANKED",
+    rightMaybe: "]",
+    rightOutside: "",
+    rightOutsideNot: "",
     i: {
       searchFor: true
     }
   });
-  res = res.replace('.', ' ');
-  res = res.replace(',', ' ');
-  res = res.replace(';', ' ');
-  res = res.replace(emojiRegex, '');
-  res = res.replace(/[ ]+/g, ' ');
-  res = trim(res, '[](),.-/\\ \u2013\u2014\t\xA0');
+  res = res.replace(".", " ");
+  res = res.replace(",", " ");
+  res = res.replace(";", " ");
+  res = res.replace(emojiRegex, "");
+  res = res.replace(/[ ]+/g, " ");
+  res = trim(res, "[](),.-/\\ \u2013\u2014\t\xA0");
   return res;
 }
 
@@ -247,8 +248,8 @@ function chlu(changelogContents, packageJsonContents) {
   // TODO - add measures against wrong/missing json
   var packageJson = getPkgRepo(packageJsonContents);
 
-  if (packageJson.type !== 'github') {
-    throw new Error('chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on ' + packageJson.type);
+  if (packageJson.type !== "github") {
+    throw new Error("chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on " + packageJson.type);
   }
 
   var temp = void 0;
@@ -377,7 +378,7 @@ function chlu(changelogContents, packageJsonContents) {
 
   temp = [];
   missingFooterLinks.forEach(function (key) {
-    temp.push('[' + key.version + ']: https://github.com/' + packageJson.user + '/' + packageJson.project + '/compare/v' + getPreviousVersion(key.version, sortedTitlesArray) + '...v' + key.version);
+    temp.push("[" + key.version + "]: https://github.com/" + packageJson.user + "/" + packageJson.project + "/compare/v" + getPreviousVersion(key.version, sortedTitlesArray) + "...v" + key.version);
   });
   if (ascending) {
     temp = reverse(temp);
@@ -442,7 +443,7 @@ function chlu(changelogContents, packageJsonContents) {
     return link.rowNum;
   }));
   for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
-    if (newLinesArr[_i5] === '' || newLinesArr[_i5] !== undefined && newLinesArr[_i5].trim() === '') {
+    if (newLinesArr[_i5] === "" || newLinesArr[_i5] !== undefined && newLinesArr[_i5].trim() === "") {
       newLinesArr.splice(_i5, 1);
       _i5--;
     }
@@ -451,8 +452,8 @@ function chlu(changelogContents, packageJsonContents) {
   // ========
   // stage 13: add trailing empty line if it's missing:
 
-  if (newLinesArr[newLinesArr.length - 1] !== '') {
-    newLinesArr.push('');
+  if (newLinesArr[newLinesArr.length - 1] !== "") {
+    newLinesArr.push("");
   }
 
   // ========
@@ -463,7 +464,7 @@ function chlu(changelogContents, packageJsonContents) {
   footerLinks = titlesAndFooterLinks.footerLinks;
 
   if (existy$1(footerLinks) && footerLinks.length > 0 && !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
-    newLinesArr.splice(footerLinks[0].rowNum, 0, '');
+    newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
 
   // ========
@@ -471,22 +472,20 @@ function chlu(changelogContents, packageJsonContents) {
 
   var gitStuffReadyYet = false;
 
-  if (gitStuffReadyYet) {
-    // TODO: implement lookup against .git logs
-  } else {
+  if (gitStuffReadyYet) ; else {
     titles.forEach(function (title) {
       var fixedDate = dd(filterDate(title.afterVersion));
 
       if (fixedDate !== null) {
-        newLinesArr = setRow(newLinesArr, title.rowNum, '## ' + (title.version !== sortedTitlesArray[0] ? '[' : '') + title.version + (title.version !== sortedTitlesArray[0] ? ']' : '') + ' - ' + fixedDate);
+        newLinesArr = setRow(newLinesArr, title.rowNum, "## " + (title.version !== sortedTitlesArray[0] ? "[" : "") + title.version + (title.version !== sortedTitlesArray[0] ? "]" : "") + " - " + fixedDate);
       } else {
         // if date is unrecogniseable leave it alone, fix the rest of the title
-        newLinesArr = setRow(newLinesArr, title.rowNum, '## ' + (title.version !== sortedTitlesArray[0] ? '[' : '') + title.version + (title.version !== sortedTitlesArray[0] ? ']' : '') + ' - ' + filterDate(title.afterVersion));
+        newLinesArr = setRow(newLinesArr, title.rowNum, "## " + (title.version !== sortedTitlesArray[0] ? "[" : "") + title.version + (title.version !== sortedTitlesArray[0] ? "]" : "") + " - " + filterDate(title.afterVersion));
       }
     });
   }
 
-  return newLinesArr.join('\n');
+  return newLinesArr.join("\n");
 }
 
 export default chlu;
