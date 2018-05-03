@@ -12,8 +12,8 @@ function detectIsItHTMLOrXhtml(input) {
     return null;
   }
 
-  if (typeof input !== 'string') {
-    throw new TypeError('detect-is-it-html-or-xhtml: Input must be string');
+  if (typeof input !== "string") {
+    throw new TypeError("detect-is-it-html-or-xhtml: Input must be string");
   }
 
   var i = void 0;
@@ -24,9 +24,9 @@ function detectIsItHTMLOrXhtml(input) {
   var allConcernedTagsArr = void 0;
   var slashCount = 0;
   var metaTag = /<\s*!\s*doctype[^>]*>/im;
-  var imgTag = /<\s*img[^>]*>/ig;
-  var brTag = /<\s*br[^>]*>/ig;
-  var hrTag = /<\s*hr[^>]*>/ig;
+  var imgTag = /<\s*img[^>]*>/gi;
+  var brTag = /<\s*br[^>]*>/gi;
+  var hrTag = /<\s*hr[^>]*>/gi;
   var closingSlash = /\/\s*>/g;
   var extractedMetaTag = null;
   var res = null;
@@ -38,9 +38,9 @@ function detectIsItHTMLOrXhtml(input) {
     var xhtmlRegex = /xhtml/gi;
     var svgRegex = /svg/gi;
     if (extractedMetaTag[0].match(xhtmlRegex) || extractedMetaTag[0].match(svgRegex)) {
-      res = 'xhtml';
+      res = "xhtml";
     } else {
-      res = 'html';
+      res = "html";
     }
   } else {
     // detect by scanning single tags
@@ -63,9 +63,9 @@ function detectIsItHTMLOrXhtml(input) {
     }
 
     if (slashCount > allConcernedTagsArr.length / 2) {
-      res = 'xhtml';
+      res = "xhtml";
     } else {
-      res = 'html';
+      res = "html";
     }
   }
 
