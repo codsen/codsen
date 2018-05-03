@@ -15,11 +15,9 @@ media
 
 # files:
 
-.babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
-.gitattributes
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
