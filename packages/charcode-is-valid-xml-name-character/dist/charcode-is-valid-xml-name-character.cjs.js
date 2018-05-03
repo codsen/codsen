@@ -22,7 +22,8 @@ var nameStartChar = [[58, 58], // ":"
 [12289, 55295], // [#x3001-#xD7FF]
 [63744, 64975], // [#xF900-#xFDCF]
 [65008, 65533], // [#xFDF0-#xFFFD]
-[65536, 983039]];
+[65536, 983039] // [#x10000-#xEFFFF]
+];
 
 // https://www.w3.org/TR/REC-xml/#NT-NameChar
 // Production 4a - addition to Production 4, except lowercase letters are missing
@@ -47,16 +48,19 @@ var nameChar = [[45, 45], // "-"
 [12289, 55295], // [#x3001-#xD7FF]
 [63744, 64975], // [#xF900-#xFDCF]
 [65008, 65533], // [#xFDF0-#xFFFD]
-[65536, 983039]];
+[65536, 983039] // [#x10000-#xEFFFF]
+];
 
-var priorityNameChar = [[97, 122]];
+var priorityNameChar = [[97, 122] // [a-z]
+];
 
 var opts = {
   inclusiveRangeEnds: true,
   skipIncomingRangeSorting: true
+};
 
-  // first checking the letters, then the rest
-};function isProduction4(char) {
+// first checking the letters, then the rest
+function isProduction4(char) {
   return rangesIsIndexWithin(char.codePointAt(0), priorityNameChar, opts) || rangesIsIndexWithin(char.codePointAt(0), nameStartChar, opts);
 }
 
