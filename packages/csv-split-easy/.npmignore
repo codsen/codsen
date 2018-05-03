@@ -11,8 +11,6 @@
 
 # folders:
 
-.nyc_output
-coverage
 src
 test
 
@@ -20,9 +18,9 @@ test
 
 .babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
 rollup.config.js
