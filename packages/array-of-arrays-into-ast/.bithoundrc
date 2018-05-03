@@ -9,6 +9,7 @@
       "ava",
       "babel-cli",
       "babel-preset-env",
+      "check-types-mini",
       "coveralls",
       "husky",
       "nyc",
