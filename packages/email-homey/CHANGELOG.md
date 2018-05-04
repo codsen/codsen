@@ -1,36 +1,100 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.8.0] - 2017-05-20
-### Updated
-- Updated deps, Codsen name change, installed `standard` as dev-dependency (was missing previously).
+## [2.0.0] - 2018-05-04
 
-## [1.7.0] - 2017-03-03
-### Updated
-- Updated dependencies, consuming normal version ranges.
+### Changed
 
-## [1.6.0] - 2017-02-17
+* ✨ Complete rewrite. Now, the only thing `homey` does is it compiles the list of folder names from the input path, then replaces the given placeholder in a given file with the array of the paths to those folder names.
+
+  In practice, Vue.js could drive the homepage and contain all the parts within a single HTML file. All it needs is a list of template folder paths. Vue.js can't "look around" in your file system. You have to give it the list of hardcoded folder names to "bake" into the HTML homepage.
+
+  This means, setup will be simpler now. There's no more two files ("loop-me.html" and "template.html") and everything is more straightforward.
+
+* ✨ Added unit tests!
+
+## [1.8.0] - 2017-09-24
+
+### Changed
+
+* Removed JS Standard and swiched to raw ESLint on `airbnb-base` preset with config override to ban semicolons.
+* Made all linting checks to pass
+* Tweaked readme
+* Added gif files to `npmignore` so they don't get `npm i`nstalled
+* Updated bithound config to reflect the new setup
+
+## [1.7.0] - 2017-08-22
+
 ### Added
-- Table of Contents to README
 
-### Tweaked
-- Updated company's name
-- Updated dep version ranges to consume latest in package.json
-- Updated BitHound config accordingly too
-- Added extension to LICENSE
+* More badges to `readme`
 
-## 1.5.0 - 2017-01-25
+### Updated
+
+* Deps and `package.json`
+
+## [1.6.0] - 2017-07-23
+
+### Updated
+
+* Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
+
+## [1.5.0] - 2017-07-22
+
+### Updated
+
+* Updated to the latest API, adding improved recognition of the titles
+* Documentation with up-to-date author's name
+
 ### Added
-- Calling Lodash functions each separately, to cut the total file size
-- Calling Lodash functions using `*` version flag, the latest, to save time later when Lodash is updated
-- Adding more input folder's path pre-processing. Now it can have slashes or not have them. Also, if somebody uses Node notation, `./folder`, it will work as well
-- Improved Readme
-- Set up JS Standard check on Husky calling on all commits (and failing commit if any files don't pass JS Standard)
 
+* `npmignore`
+
+## [1.4.0] - 2017-06-29
+
+### Updated
+
+Updated all dependencies
+
+## [1.3.0] - 2017-06-29
+
+### Added
+
+Updated to the new version of the API package, CHLU, enabling new features:
+
+* Improved algorithm, reducing the change of false positives when versions are mentioned within the text.
+
+## [1.2.0] - 2017-06-23
+
+### Added
+
+Updated to the new version of the API package, CHLU, enabling new features:
+
+* Automatic title linking
+* Unused footer link removal
+
+## [1.1.0] - 2017-05-19
+
+### Added
+
+* Set up the `update-notifier`
+
+## 1.0.0 - 2017-05-17
+
+### New
+
+* First public release
+
+[1.1.0]: https://github.com/codsen/email-homey/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/codsen/email-homey/compare/v1.1.0...v1.2.0
+[1.3.0]: https://github.com/codsen/email-homey/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/codsen/email-homey/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/email-homey/compare/v1.4.0...v1.5.0
 [1.6.0]: https://github.com/codsen/email-homey/compare/v1.5.0...v1.6.0
 [1.7.0]: https://github.com/codsen/email-homey/compare/v1.6.0...v1.7.0
 [1.8.0]: https://github.com/codsen/email-homey/compare/v1.7.0...v1.8.0
+[2.0.0]: https://github.com/codsen/email-homey/compare/v1.8.1...v2.0.0

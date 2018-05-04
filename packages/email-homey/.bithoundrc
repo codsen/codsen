@@ -6,11 +6,11 @@
   },
   "dependencies": {
     "mute": [
-      "glob-fs",
+      "ava",
+      "coveralls",
       "husky",
-      "lodash.split",
-      "lodash.trimend",
-      "lodash.trimstart"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [],

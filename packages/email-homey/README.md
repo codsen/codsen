@@ -1,11 +1,8 @@
 # email-homey
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding-bottom: 30px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="110" align="right"></a>
-
-> Generate homepage in the root containing all your templates, by folder
+> Generate homepage in the Browsersync root with links/screenshots to all your email templates
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
@@ -13,191 +10,87 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
-[![Test in browser][runkit-img]][runkit-url]
-[![MIT License][license-badge]][license]
+[![Code style: prettier][prettier-img]][prettier-url]
+[![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Install](#install)
-- [Purpose](#purpose)
-- [Getting the screenshots of the templates](#getting-the-screenshots-of-the-templates)
-- [API](#api)
-- [Use](#use)
-- [Contributing & testing](#contributing--testing)
+- [What it does](#what-it-does)
+- [Contributing](#contributing)
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
-```sh
-$ npm i -D email-homey
+Install globally because this is a CLI app:
+
+```bash
+npm i -g email-homey
 ```
 
-## Purpose
+Once installed, call it in the root of your templates projects:
 
-`email-homey` generates a homepage containing the screenshots of all your templates, each linked to a template. Here's how it works.
-
-When you use a Build System for generate email marketing templates, in the root directory, you have something like:
-
-```
-root
-│
-├─ (folder: "modules", "node_modules", "images" and so on)
-│
-├─ dist
-│  │
-│  └─ template_1_folder
-│  │  └─ screenshot.png
-│  │  └─ index.html
-│  │
-│  └─ template_2_folder
-│     └─ screenshot.png
-│     └─ index.html
-│
-└─ templates
-   │
-   └─ template_1_folder
-   │  └─ index.json
-   │  └─ index.njk
-   │
-   └─ template_2_folder
-      └─ index.html
-      └─ index.njk
+```bash
+homey "dist"
 ```
 
-When you use [BrowerSync](https://www.npmjs.com/package/browser-sync) in Gulp and set BrowserSync root as `/dist/` folder, you can access each email template (`index.html` above) by calling folder's name (`template_1_folder` in the URL, for example:
+**[⬆ &nbsp;back to top](#)**
 
-```
-http://localhost:3000/template_1_folder
-or
-http://192.168.0.1:3000/template_1_folder
-```
+## What it does
 
-Now the problem is you have to type the folder name manually and also, without homepage you can't choose your templates visually. On desktop you can copy-paste (_slightly_ tedious), but on mobile you have to type manually (_very_ tedious), unless, of course, it's iPhone and _global clipboard_ is on, but it's still _tedious_.
+`email-homey` helps to generate a homepage with a list of all your email templates.
 
-How nice would it be if a script could generate a homepage containing the list of all the folders (`template_1_folder`, `template_2_folder` etc) from the chosen root's subfolder (`dist`), link them and even accept screenshot images?
+It will expect that all your email templates will be located within a certain folder.
 
-`email-homey` does that.
+Specifically, `email-homey` will scan a all subfolder names of the path you give it (like `dist` in the example above) and will go inside that folder, look for `seed.html`, copy it into `index.html` (overwriting if such file already exists) and inside that file, replace word `'magicFoldersList'` with a list of folder names (maintaining correct indentation).
 
-## Getting the screenshots of the templates
+This is all you need to be able to pull off a homepage driven by a [Vue.js](https://vuejs.org/). An HTML file with Vue.js script can't query your hard drive and find the subfolder names. For that we need Node. Once Vue.js _has_ the list of folder names (in an array), it can generate a table of templates.
 
-I recommend using [pageres](https://www.npmjs.com/package/pageres) in Gulp to generate screenshots. I tried [gulp-webshot](https://www.npmjs.com/package/gulp-webshot) but it failed on certain HTML's, timing out. `pageres` captured screenshots fine, so it's my current favourite.
+**[⬆ &nbsp;back to top](#)**
 
-## API
+## Contributing
 
-Input argument   | Type                  | Obligatory? | Default val      | Description
------------------|-----------------------|-------------|------------------|-------------
-`folderName`     | String                | yes         |                  | Folder name within root. Can be `folder/subfolder/`.
-`imgName`        | String                | no          | 'screenshot.png' | Name of a thumbnail image within each location `folderName`
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/email-homey/issues).
 
-## Use
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/email-homey/issues).
 
-Call `email-homey` from Gulp, as a step in your email template build system.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**Step 1.** Install:
-
-```sh
-$ npm install --save-dev email-homey
-```
-
-**Step 2.** Require `email-homey` in your `gulpfile.js`:
-
-```js
-const homey = require('email-homey')
-```
-
-**Step 3.** Create a Gulp task that calls it:
-
-```js
-gulp.task('homey', () => {
-  homey('dist', 'screenshot.png')
-})
-```
-
-**Step 4**. Gulp <=4 runs asynchronously, so if you're not on v4 yet, you'll need to enforce the sequence of the tasks.
-First, install `run-sequence`:
-
-```sh
-$ npm install --save-dev run-sequence
-```
-Then, require it in your `gulpfile.js`:
-
-```js
-const runSequence = require('run-sequence')
-```
-
-Then, you'll be able to enforce the order of tasks:
-
-```js
-gulp.task('default', (callback) => {
-  runSequence('build', 'homey', 'browser-sync', 'watch', callback)
-})
-```
-
-The homepage will be assembled from two parts: 1) main template (`template.html` in the root folder of this package) and 2) template for a single thumbnail (`loop-me.html` in the root folder of this package) which will be loop'ed many times and contain each of your thumbnails/templates.
-
-Both files must be placed in the root of your template folder. Feel free to customise them, just keep the classes on the tags because that's how the JS selects the tags to place the content inside of them.
-
-## Contributing & testing
-
-```sh
-$ npm test
-```
-
-If you see anything incorrect whatsoever, [raise an issue](https://github.com/codsen/email-homey/issues). Pull requests are welcome — fork, hack and pull-request. I'll do my best to merge as soon as possible.
+**[⬆ &nbsp;back to top](#)**
 
 ## Licence
 
 MIT License (MIT)
 
-Copyright (c) 2017 Codsen Ltd, Roy Revelt
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/email-homey.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/email-homey
-
-[npm-img]: https://img.shields.io/npm/v/email-homey.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/email-homey
-
+[travis-img]: https://img.shields.io/travis/codsen/email-homey.svg?style=flat-square
+[travis-url]: https://travis-ci.org/codsen/email-homey
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/email-homey.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/email-homey
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/email-homey.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-homey
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/email-homey.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/email-homey/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/email-homey.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/email-homey
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/email-homey/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/email-homey
-
-[license-badge]: https://img.shields.io/npm/l/email-homey.svg?style=flat-square
-[license]: https://github.com/codsen/email-homey/blob/master/license.md
+[downloads-img]: https://img.shields.io/npm/dm/email-homey.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/email-homey
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
+[license-img]: https://img.shields.io/npm/l/email-homey.svg?style=flat-square
+[license-url]: https://github.com/codsen/email-homey/blob/master/license.md
