@@ -10,31 +10,29 @@ var BigNumber = _interopDefault(require('bignumber.js'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var currencySigns = ['د.إ', '؋', 'L', '֏', 'ƒ', 'Kz', '$', 'ƒ', '₼', 'KM', '৳', 'лв', '.د.ب', 'FBu', '$b', 'R$', '฿', 'Nu.', 'P', 'p.', 'BZ$', 'FC', 'CHF', '¥', '₡', '₱', 'Kč', 'Fdj', 'kr', 'RD$', 'دج', 'kr', 'Nfk', 'Br', 'Ξ', '€', '₾', '₵', 'GH₵', 'D', 'FG', 'Q', 'L', 'kn', 'G', 'Ft', 'Rp', '₪', '₹', 'ع.د', '﷼', 'kr', 'J$', 'JD', '¥', 'KSh', 'лв', '៛', 'CF', '₩', '₩', 'KD', 'лв', '₭', '₨', 'M', 'Ł', 'Lt', 'Ls', 'LD', 'MAD', 'lei', 'Ar', 'ден', 'K', '₮', 'MOP$', 'UM', '₨', 'Rf', 'MK', 'RM', 'MT', '₦', 'C$', 'kr', '₨', '﷼', 'B/.', 'S/.', 'K', '₱', '₨', 'zł', 'Gs', '﷼', '￥', 'lei', 'Дин.', '₽', 'R₣', '﷼', '₨', 'ج.س.', 'kr', '£', 'Le', 'S', 'Db', 'E', '฿', 'SM', 'T', 'د.ت', 'T$', '₤', '₺', 'TT$', 'NT$', 'TSh', '₴', 'USh', '$U', 'лв', 'Bs', '₫', 'VT', 'WS$', 'FCFA', 'Ƀ', 'CFA', '₣', '﷼', 'R', 'Z$'];
+var currencySigns = ["د.إ", "؋", "L", "֏", "ƒ", "Kz", "$", "ƒ", "₼", "KM", "৳", "лв", ".د.ب", "FBu", "$b", "R$", "฿", "Nu.", "P", "p.", "BZ$", "FC", "CHF", "¥", "₡", "₱", "Kč", "Fdj", "kr", "RD$", "دج", "kr", "Nfk", "Br", "Ξ", "€", "₾", "₵", "GH₵", "D", "FG", "Q", "L", "kn", "G", "Ft", "Rp", "₪", "₹", "ع.د", "﷼", "kr", "J$", "JD", "¥", "KSh", "лв", "៛", "CF", "₩", "₩", "KD", "лв", "₭", "₨", "M", "Ł", "Lt", "Ls", "LD", "MAD", "lei", "Ar", "ден", "K", "₮", "MOP$", "UM", "₨", "Rf", "MK", "RM", "MT", "₦", "C$", "kr", "₨", "﷼", "B/.", "S/.", "K", "₱", "₨", "zł", "Gs", "﷼", "￥", "lei", "Дин.", "₽", "R₣", "﷼", "₨", "ج.س.", "kr", "£", "Le", "S", "Db", "E", "฿", "SM", "T", "د.ت", "T$", "₤", "₺", "TT$", "NT$", "TSh", "₴", "USh", "$U", "лв", "Bs", "₫", "VT", "WS$", "FCFA", "Ƀ", "CFA", "₣", "﷼", "R", "Z$"];
 
 function findtype(something) {
-  if (typeof something !== 'string') {
-    throw new Error('csv-sort/util/findtype(): input must be string! Currently it\'s: ' + (typeof something === 'undefined' ? 'undefined' : _typeof(something)));
+  if (typeof something !== "string") {
+    throw new Error("csv-sort/util/findtype(): input must be string! Currently it's: " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
   }
   if (isNumeric(something)) {
-    return 'numeric';
+    return "numeric";
   } else if (currencySigns.some(function (singleSign) {
     return (
       // We remove all known currency symbols one by one from this input string.
       // If at least one passes as numeric after the currency symbol-removing, it's numeric.
-      isNumeric(something.replace(singleSign, '').replace(/[,.]/g, ''))
+      isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
     );
   })) {
-    return 'numeric';
+    return "numeric";
   } else if (something.trim().length === 0) {
-    return 'empty';
+    return "empty";
   }
-  return 'text';
+  return "text";
 }
 
 var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/* eslint prefer-destructuring:0, max-len:0 */
 
 var isArr = Array.isArray;
 
@@ -46,9 +44,9 @@ function csvSort(input) {
   // step 1.
   // ===========================
   // depends what was passed in,
-  if (typeof input === 'string') {
+  if (typeof input === "string") {
     if (input.length === 0) {
-      return [['']];
+      return [[""]];
     }
     content = split(input);
   } else if (isArr(input)) {
@@ -61,10 +59,10 @@ function csvSort(input) {
       }
       return isArr(val);
     })) {
-      throw new TypeError('csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ' + ordinal(culpritIndex) + ' element is not array but: ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof$1(culpritVal)) + ', equal to:\n' + JSON.stringify(culpritVal, null, 4));
+      throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the " + ordinal(culpritIndex) + " element is not array but: " + (typeof culpritVal === "undefined" ? "undefined" : _typeof$1(culpritVal)) + ", equal to:\n" + JSON.stringify(culpritVal, null, 4));
     }
   } else {
-    throw new TypeError('csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ' + (typeof input === 'undefined' ? 'undefined' : _typeof$1(input)) + ', equal to:\n' + JSON.stringify(input, null, 4));
+    throw new TypeError("csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: " + (typeof input === "undefined" ? "undefined" : _typeof$1(input)) + ", equal to:\n" + JSON.stringify(input, null, 4));
   }
 
   // step 2.
@@ -85,14 +83,14 @@ function csvSort(input) {
   for (var i = content.length - 1; i >= 0; i--) {
     if (!schema) {
       // prevention against last blank row:
-      if (content[i].length !== 1 || content[i][0] !== '') {
+      if (content[i].length !== 1 || content[i][0] !== "") {
         schema = [];
         for (var y = 0, len = content[i].length; y < len; y++) {
           schema.push(findtype(content[i][y].trim()));
-          if (indexAtWhichEmptyCellsStart === null && findtype(content[i][y].trim()) === 'empty') {
+          if (indexAtWhichEmptyCellsStart === null && findtype(content[i][y].trim()) === "empty") {
             indexAtWhichEmptyCellsStart = y;
           }
-          if (indexAtWhichEmptyCellsStart !== null && findtype(content[i][y].trim()) !== 'empty') {
+          if (indexAtWhichEmptyCellsStart !== null && findtype(content[i][y].trim()) !== "empty") {
             indexAtWhichEmptyCellsStart = null;
           }
         }
@@ -103,7 +101,7 @@ function csvSort(input) {
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
         stateHeaderRowPresent = content[i].every(function (el) {
-          return findtype(el) === 'text' || findtype(el) === 'empty';
+          return findtype(el) === "text" || findtype(el) === "empty";
         });
 
         // if schema was calculated (this means there's header row and at least one content row),
@@ -119,10 +117,10 @@ function csvSort(input) {
       var perRowIndexAtWhichEmptyCellsStart = null;
       for (var _y = 0, _len = content[i].length; _y < _len; _y++) {
         // trim
-        if (perRowIndexAtWhichEmptyCellsStart === null && findtype(content[i][_y].trim()) === 'empty') {
+        if (perRowIndexAtWhichEmptyCellsStart === null && findtype(content[i][_y].trim()) === "empty") {
           perRowIndexAtWhichEmptyCellsStart = _y;
         }
-        if (perRowIndexAtWhichEmptyCellsStart !== null && findtype(content[i][_y].trim()) !== 'empty') {
+        if (perRowIndexAtWhichEmptyCellsStart !== null && findtype(content[i][_y].trim()) !== "empty") {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
         // checking schema
@@ -170,7 +168,7 @@ function csvSort(input) {
   // find out at which index non-empty columns start. This is effectively left-side trimming.
   var nonEmptyColsStartAt = 0;
   for (var _i = 0, _len2 = schema.length; _i < _len2; _i++) {
-    if (schema[_i] === 'empty') {
+    if (schema[_i] === "empty") {
       nonEmptyColsStartAt = _i;
     } else {
       break;
@@ -201,7 +199,7 @@ function csvSort(input) {
   var numericSchemaColumns = [];
   var balanceColumnIndex = void 0;
   schema.forEach(function (colType, i) {
-    if (colType === 'numeric') {
+    if (colType === "numeric") {
       numericSchemaColumns.push(i);
     }
   });
@@ -287,13 +285,11 @@ function csvSort(input) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
       throw new Error('csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!');
-    } else {}
+    }
     // TODO - continue processing interpolating horizontally and vertically.
     //
     //
-
     // COMPLEX ATTEMPT TO RULE-OUT NOT-BALANCE COLUMNS
-
     //
     //
     // zzz
@@ -307,7 +303,7 @@ function csvSort(input) {
   }
 
   if (!balanceColumnIndex) {
-    throw new Error('csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn\'t find its way in this CSV and had to stop working on it.');
+    throw new Error("csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it.");
   }
 
   // step 4.
@@ -317,7 +313,7 @@ function csvSort(input) {
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
   var potentialCreditDebitColumns = pull.apply(undefined, [Array.from(schema.reduce(function (result, el, index) {
-    if (typeof el === 'string' && el === 'numeric' || isArr(el) && el.includes('numeric')) {
+    if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
       result.push(index);
     }
     return result;
@@ -353,27 +349,27 @@ function csvSort(input) {
 
         for (var suspectedColIndex = 0, _len4 = potentialCreditDebitColumns.length; suspectedColIndex < _len4; suspectedColIndex++) {
           var diffVal = null;
-          if (content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]] !== '') {
+          if (content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
             diffVal = new BigNumber(content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
           }
 
           var totalVal = null;
-          if (content[suspectedRowsIndex][balanceColumnIndex] !== '') {
+          if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
             totalVal = new BigNumber(content[suspectedRowsIndex][balanceColumnIndex]);
           }
 
           var topmostResContentBalance = null;
-          if (resContent[0][balanceColumnIndex] !== '') {
+          if (resContent[0][balanceColumnIndex] !== "") {
             topmostResContentBalance = new BigNumber(resContent[0][balanceColumnIndex]);
           }
 
           var currentRowsDiffVal = null;
-          if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== '') {
+          if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
             currentRowsDiffVal = new BigNumber(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]);
           }
 
           var lastResContentRowsBalance = null;
-          if (resContent[resContent.length - 1][balanceColumnIndex] !== '') {
+          if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
             lastResContentRowsBalance = new BigNumber(resContent[resContent.length - 1][balanceColumnIndex]);
           }
 
@@ -424,8 +420,8 @@ function csvSort(input) {
   }
 
   if (content.length - (stateHeaderRowPresent ? 2 : 1) !== usedUpRows.length) {
-    msgContent = 'Not all rows were recognised!';
-    msgType = 'alert';
+    msgContent = "Not all rows were recognised!";
+    msgType = "alert";
   }
 
   return {
