@@ -1,7 +1,7 @@
 {
   "name": "array-of-arrays-sort-by-col",
   "version": "1.0.4",
-  "description": "takes an array of arrays full of zero or more integers, sorts by any column",
+  "description": "sort array of arrays by column, rippling the sorting outwards from that column",
   "license": "MIT",
   "engines": {
     "node": ">=6",
@@ -32,10 +32,14 @@
     "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
   },
   "ava": {
-    "verbose": true
+    "compileEnhancements": false,
+    "verbose": true,
+    "require": [
+      "esm"
+    ]
   },
   "clinton": {
     "rules": {
@@ -150,28 +154,28 @@
   "dependencies": {
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "latest"
   },
   "devDependencies": {
+    "esm": "latest",
     "array-shuffle": "latest",
     "ava": "latest",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "latest",
     "coveralls": "latest",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
     "husky": "latest",
     "nyc": "latest",
-    "prettier": "1.11.1",
-    "rollup": "^0.57.1",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^9.1.0",
+    "prettier": "latest",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.10"
   }
 }

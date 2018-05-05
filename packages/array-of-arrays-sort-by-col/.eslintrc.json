@@ -59,6 +59,7 @@
         "peerDependencies": false
       }
     ],
+    "no-console": "off",
     "no-else-return": "error",
     "no-inner-declarations": "error",
     "no-unneeded-ternary": "error",
@@ -70,6 +71,7 @@
     ],
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
+    "prefer-template": "error",
     "strict": "error",
     "symbol-description": "error",
     "yoda": [

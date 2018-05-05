@@ -1,4 +1,4 @@
 dist/
+test/fixtures
+fixtures/
 *.json
-*.md
-*-es5.js

@@ -8,9 +8,13 @@
     "mute": [
       "array-shuffle",
       "ava",
+      "babel-preset-env",
       "coveralls",
+      "esm",
       "husky",
-      "nyc"
+      "lodash.clonedeep",
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [
