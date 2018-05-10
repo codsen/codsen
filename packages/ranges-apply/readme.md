@@ -1,11 +1,8 @@
 # string-replace-slices-array
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Take an array of string slice ranges, delete/replace the string according to them
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -33,6 +33,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -41,18 +43,18 @@ npm i string-replace-slices-array
 
 ```js
 // consume as CommonJS require:
-const replaceSlicesArr = require('string-replace-slices-array')
+const replaceSlicesArr = require("string-replace-slices-array");
 // or as ES Module:
-import replaceSlicesArr from 'string-replace-slices-array'
+import replaceSlicesArr from "string-replace-slices-array";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-replace-slices-array.cjs.js` | 3&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-replace-slices-array.esm.js` | 3&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                                      | Size      |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | --------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-replace-slices-array.cjs.js` | 4&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-replace-slices-array.esm.js` | 3&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -79,8 +81,8 @@ That's two numbers to put into an array. They mark a _slice_ of string. Let's ad
 ```js
 [
   [10, 15], // <-- delete this string slice range
-  [18, 20, 'replace with this'] // <-- delete from 18th to 20th, then insert string there
-]
+  [18, 20, "replace with this"] // <-- delete from 18th to 20th, then insert string there
+];
 ```
 
 Now what happens when you have a few slices? You put them into a _parent array_.
@@ -90,22 +92,16 @@ This library consumes such parent array and does the actual job crunching your s
 Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check is the slice you want correspond to the indexes you've got.
 
 ```js
-const repl = require('string-replace-slices-array')
-let str = 'aaa delete me bbb and me too ccc'
+const repl = require("string-replace-slices-array");
+let str = "aaa delete me bbb and me too ccc";
 // we preview the slice #1, "delete me", is it actually indexes from 4 to 13:
-console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
+console.log("slice 1: >>>" + str.slice(4, 13) + "<<<");
 // preview slice #2, "and me too", is it actually indexes from 18 to 28:
-console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
+console.log("slice 2: >>>" + str.slice(18, 28) + "<<<\n");
 //
 // then instruct this library to replace each with `zzz` and `yyy`:
-str = repl(
-  str,
-  [
-    [4, 13, 'zzz'],
-    [18, 28, 'yyy']
-  ]
-)
-console.log('str = ' + str)
+str = repl(str, [[4, 13, "zzz"], [18, 28, "yyy"]]);
+console.log("str = " + str);
 // => 'aaa zzz bbb yyy ccc',
 ```
 
@@ -118,7 +114,7 @@ Slice ranges can be the **same index**. In that case, if there is third argument
 ## API
 
 ```js
-stringReplaceSlicesArray(inputString, rangesArray)
+stringReplaceSlicesArray(inputString, rangesArray);
 ```
 
 Returns a string with requested slices deleted/replaced.
@@ -136,8 +132,8 @@ For example,
 ```js
 [
   [10, 15], // <-- deletion
-  [18, 20, 'replace with this'] // <-- replacement
-]
+  [18, 20, "replace with this"] // <-- replacement
+];
 ```
 
 **PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
@@ -164,9 +160,9 @@ I'm going to use this library in all my HTML processing libraries who work on HT
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-replace-slices-array/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-replace-slices-array/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-replace-slices-array/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -176,39 +172,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/string-replace-slices-array.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-replace-slices-array
-
-[npm-img]: https://img.shields.io/npm/v/string-replace-slices-array.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/string-replace-slices-array
-
 [travis-img]: https://img.shields.io/travis/codsen/string-replace-slices-array.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-replace-slices-array
-
 [cov-img]: https://coveralls.io/repos/github/codsen/string-replace-slices-array/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-replace-slices-array?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-replace-slices-array.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-replace-slices-array
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-replace-slices-array.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-replace-slices-array/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-replace-slices-array
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-replace-slices-array.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-replace-slices-array/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-replace-slices-array/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-replace-slices-array
-
 [downloads-img]: https://img.shields.io/npm/dm/string-replace-slices-array.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-replace-slices-array
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-replace-slices-array
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/string-replace-slices-array.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-replace-slices-array/blob/master/license.md
