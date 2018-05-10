@@ -1,10 +1,8 @@
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /* eslint no-param-reassign:0 */
 
-var matcher = require("matcher");
+const matcher = require("matcher");
 
-var isArr = Array.isArray;
+const isArr = Array.isArray;
 
 function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   // internal f()'s
@@ -15,31 +13,46 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
     return typeof something === "string";
   }
 
-  var defaults = {
+  const defaults = {
     arrayVsArrayAllMustBeFound: "any" // two options: 'any' or 'all'
   };
 
-  var opts = Object.assign({}, defaults, originalOpts);
+  const opts = Object.assign({}, defaults, originalOpts);
 
   // insurance
   if (arguments.length === 0) {
-    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!");
+    throw new Error(
+      "array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_01] all inputs missing!"
+    );
   }
   if (arguments.length === 1) {
-    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_02] second argument missing!");
+    throw new Error(
+      "array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_02] second argument missing!"
+    );
   }
   if (!isArr(originalInput)) {
     if (isStr(originalInput)) {
       originalInput = [originalInput];
     } else {
-      throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as " + (typeof originalInput === "undefined" ? "undefined" : _typeof(originalInput)));
+      throw new Error(
+        `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_03] first argument must be an array! It was given as ${typeof originalInput}`
+      );
     }
   }
   if (!isStr(stringToFind) && !isArr(stringToFind)) {
-    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as " + (typeof stringToFind === "undefined" ? "undefined" : _typeof(stringToFind)));
+    throw new Error(
+      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_04] second argument must be a string or array of strings! It was given as ${typeof stringToFind}`
+    );
   }
-  if (opts.arrayVsArrayAllMustBeFound !== "any" && opts.arrayVsArrayAllMustBeFound !== "all") {
-    throw new Error("array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, " + opts.arrayVsArrayAllMustBeFound + ". It must be equal to either \"any\" or \"all\".");
+  if (
+    opts.arrayVsArrayAllMustBeFound !== "any" &&
+    opts.arrayVsArrayAllMustBeFound !== "all"
+  ) {
+    throw new Error(
+      `array-includes-with-glob/arrayIncludesWithGlob(): [THROW_ID_05] opts.arrayVsArrayAllMustBeFound was customised to an unrecognised value, ${
+        opts.arrayVsArrayAllMustBeFound
+      }. It must be equal to either "any" or "all".`
+    );
   }
 
   // maybe we can end prematurely:
@@ -48,9 +61,7 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   // prevent any mutation + filter out undefined and null elements:
-  var input = originalInput.filter(function (elem) {
-    return existy(elem);
-  });
+  const input = originalInput.filter(elem => existy(elem));
 
   // if array contained only null/undefined values, do a Dutch leave:
   if (input.length === 0) {
@@ -58,23 +69,23 @@ function arrayIncludesWithGlob(originalInput, stringToFind, originalOpts) {
   }
 
   if (isStr(stringToFind)) {
-    return input.some(function (val) {
-      return matcher.isMatch(val, stringToFind, { caseSensitive: true });
-    });
+    return input.some(val =>
+      matcher.isMatch(val, stringToFind, { caseSensitive: true })
+    );
   }
   // array then.
   if (opts.arrayVsArrayAllMustBeFound === "any") {
-    return stringToFind.some(function (stringToFindVal) {
-      return input.some(function (val) {
-        return matcher.isMatch(val, stringToFindVal, { caseSensitive: true });
-      });
-    });
+    return stringToFind.some(stringToFindVal =>
+      input.some(val =>
+        matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
+      )
+    );
   }
-  return stringToFind.every(function (stringToFindVal) {
-    return input.some(function (val) {
-      return matcher.isMatch(val, stringToFindVal, { caseSensitive: true });
-    });
-  });
+  return stringToFind.every(stringToFindVal =>
+    input.some(val =>
+      matcher.isMatch(val, stringToFindVal, { caseSensitive: true })
+    )
+  );
 }
 
 export default arrayIncludesWithGlob;

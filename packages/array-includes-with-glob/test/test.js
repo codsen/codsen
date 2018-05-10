@@ -1,6 +1,5 @@
 import test from "ava";
-
-const i = require("../dist/array-includes-with-glob.cjs");
+import i from "../dist/array-includes-with-glob.esm";
 
 // ==============
 // various throws

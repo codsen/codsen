@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-05-11
+
+### Changed
+
+* ✨ Pointed AVA unit tests to ES Modules build, as opposed to previously transpiled CommonJS-one. This means, now unit test code coverage is correct.
+
 ## [2.2.0] - 2018-04-29
 
 ### Changed
@@ -71,3 +77,4 @@ Bumping major just in case it breaks somebody's API. But I don't think it will.
 [2.0.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.5.4...v2.0.0
 [2.1.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.0.7...v2.1.0
 [2.2.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.2.2...v2.3.0
