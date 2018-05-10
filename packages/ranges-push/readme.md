@@ -1,11 +1,8 @@
 # string-slices-array-push
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Manage the array of slices referencing the index ranges within the string
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -32,6 +32,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -40,30 +42,30 @@ npm i string-slices-array-push
 
 ```js
 // consume via a CommonJS require:
-const Slices = require('string-slices-array-push')
+const Slices = require("string-slices-array-push");
 // or as an ES Module:
-import Slices from 'string-slices-array-push'
+import Slices from "string-slices-array-push";
 ```
 
 ```js
-const Slices = require('string-slices-array-push')
-let slices = new Slices()
-slices.add(1, 2)
-slices.push(2, 4) // .push is same as .add
-console.log(slices.last())
+const Slices = require("string-slices-array-push");
+let slices = new Slices();
+slices.add(1, 2);
+slices.push(2, 4); // .push is same as .add
+console.log(slices.last());
 // => [ [1, 4] ]
-slices.add(10, 20)
-console.log(slices.current())
+slices.add(10, 20);
+console.log(slices.current());
 // => [ [1, 4], [10, 20] ]
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-slices-array-push.cjs.js` | 9&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-slices-array-push.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-slices-array-push.umd.js` | 20&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                                   | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-slices-array-push.cjs.js` | 9&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-slices-array-push.esm.js` | 7&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-slices-array-push.umd.js` | 20&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -75,11 +77,11 @@ Imagine, you want to delete bunch of characters from a string. Like making a bun
 
 `[deleteFromIndex1, deleteToIndex1]`, `[deleteFromIndex2, deteleToIndex2]` and so on.
 
-- What happens when ranges overlap? We need to merge them.
-- What happens if new range is located before the last one? We need to sort them.
-- How do you prevent damage when the same range is added multiple times?
-- What happens if you want not only to delete but also, **to add** something? We need to accept the third argument, the value to add.
-- What happens if you want to only add something, without deletion? We need to accept the first and second argument as the same index.
+* What happens when ranges overlap? We need to merge them.
+* What happens if new range is located before the last one? We need to sort them.
+* How do you prevent damage when the same range is added multiple times?
+* What happens if you want not only to delete but also, **to add** something? We need to accept the third argument, the value to add.
+* What happens if you want to only add something, without deletion? We need to accept the first and second argument as the same index.
 
 ---
 
@@ -96,10 +98,10 @@ Imagine, you want to delete bunch of characters from a string. Like making a bun
 This package exports a constructor, Slices, which you first `require()`, then call using `new`:
 
 ```js
-const Slices = require('string-slices-array-push')
-let slices = new Slices()
+const Slices = require("string-slices-array-push");
+let slices = new Slices();
 // or, with Optional Options Object:
-let slices = new Slices({ limitToBeAddedWhitespace: true })
+let slices = new Slices({ limitToBeAddedWhitespace: true });
 ```
 
 The `slices` (with lowercase) is your [class](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md#classes) which contains your slice ranges and gives you methods to get/set the values.
@@ -110,11 +112,11 @@ You can also provide an Optional Options Object when creating the class:
 
 ### Optional Options Object
 
-options object's key             | Type of its value | Default | Description
----------------------------------|-------------------|---------|----------------------
-{                                |                   |         |
-`limitToBeAddedWhitespace`       | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases). Same for leading/trailing whitespace.
-}                                |                   |         |
+| options object's key       | Type of its value | Default | Description                                                                                                                                                                                                                                                                                               |
+| -------------------------- | ----------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                          |                   |         |
+| `limitToBeAddedWhitespace` | Boolean           | `false` | If set to `true`, if to-be-added string (3rd element in the range array) contains only whitespace (`trim()`s to empty string), replace it with: either line break `\n` (if there's at least one line break or `\r` in it) or with a single space (all other cases). Same for leading/trailing whitespace. |
+| }                          |                   |         |
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
@@ -134,11 +136,11 @@ You then interact with your newly-created slices class by calling its _methods_:
 
 alias - **.push**
 
-Input argument | Type                    | Obligatory? | Description
----------------|-------------------------|-------------|--------------------
-`deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice
-`deleteTo`     | Integer, natural number | yes         | Ending index of the slice
-`str`          | String                  | no          | If you want not only to delete but [insert](https://github.com/codsen/string-replace-slices-array) something, put that new string here
+| Input argument | Type                    | Obligatory? | Description                                                                                                                            |
+| -------------- | ----------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice                                                                                                           |
+| `deleteTo`     | Integer, natural number | yes         | Ending index of the slice                                                                                                              |
+| `str`          | String                  | no          | If you want not only to delete but [insert](https://github.com/codsen/string-replace-slices-array) something, put that new string here |
 
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
 
@@ -147,8 +149,8 @@ If you want only to insert and you don't want to delete anything, put both `dele
 
 In essence, `.add()` behaves two ways:
 
-1) `.add(1, 2)`, later `.add(2, 3)` will not create a new `[2, 3]` but extend `[1, 2]` into `[1, 3]`. This is to save time because we prevent bunch of connecting ranges from being recorded as separate ones.
-2) all other cases, if it's not an exact extension of a previous range, new range is added into the array. `.add(2, 3)`, later `.add(1, 2)` will result in `[ [2, 3], [1, 2] ]`. The `.current()` method will clean it later. Read on...
+1.  `.add(1, 2)`, later `.add(2, 3)` will not create a new `[2, 3]` but extend `[1, 2]` into `[1, 3]`. This is to save time because we prevent bunch of connecting ranges from being recorded as separate ones.
+2.  all other cases, if it's not an exact extension of a previous range, new range is added into the array. `.add(2, 3)`, later `.add(1, 2)` will result in `[ [2, 3], [1, 2] ]`. The `.current()` method will clean it later. Read on...
 
 Additionally, when `.add` merges two ranges and one completely overlaps another, the superset (larger) range will wipe out any "to-add" (third-argument) values of the subset (smaller) range(s).
 
@@ -162,17 +164,19 @@ This method fetches the **current** state of your slices array, sorts and **merg
 
 Result is either
 
-1) array of slice range arrays like:
+1.  array of slice range arrays like:
 
 ```js
-[ // notice it's an array of arrays
-  [10, 20, ' insert this string after deleting range between indexes 10 & 20']
-  [30, 50],
+[
+  // notice it's an array of arrays
+  [10, 20, " insert this string after deleting range between indexes 10 & 20"][
+    (30, 50)
+  ],
   [51, 55]
-]
+];
 ```
 
-2) or `null` if it's still empty and nothing has been added since.
+2.  or `null` if it's still empty and nothing has been added since.
 
 `.current()` will do the sorting first by `deleteFrom` (first element), then, sorting by `deleteTo` (second element), **then**, it will merge any ranges that overlap.
 
@@ -200,16 +204,15 @@ Sets your slices array to `null`. Right after that `slices.current()` will yield
 
 Outputs:
 
-1) the last ranges' array from the slices array, for example:
+1.  the last ranges' array from the slices array, for example:
 
 ```js
-[51, 55]
+[51, 55];
 ```
 
-2) Or, if there's nothing in the slices array yet, `null`.
+2.  Or, if there's nothing in the slices array yet, `null`.
 
 ---
-
 
 PSST. Later, feed your ranges array into [string-replace-slices-array](https://github.com/codsen/string-replace-slices-array) to delete/replace all those ranges in your string.
 
@@ -227,9 +230,9 @@ This library is part one of two library combo, second one being [string-replace-
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-slices-array-push/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-slices-array-push/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-slices-array-push/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -239,39 +242,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/string-slices-array-push.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-slices-array-push
-
-[npm-img]: https://img.shields.io/npm/v/string-slices-array-push.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/string-slices-array-push
-
 [travis-img]: https://img.shields.io/travis/codsen/string-slices-array-push.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-slices-array-push
-
 [cov-img]: https://coveralls.io/repos/github/codsen/string-slices-array-push/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-slices-array-push?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-slices-array-push.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-slices-array-push
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-slices-array-push.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-slices-array-push/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-slices-array-push
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-slices-array-push.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-slices-array-push/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-slices-array-push/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-slices-array-push
-
 [downloads-img]: https://img.shields.io/npm/dm/string-slices-array-push.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-slices-array-push
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-slices-array-push
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/string-slices-array-push.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-slices-array-push/blob/master/license.md

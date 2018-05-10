@@ -22,10 +22,10 @@ function existy(x) {
 }
 var isArr = Array.isArray;
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 function mandatory(i) {
-  throw new Error('string-slices-array-push/Slices/add(): [THROW_ID_01] Missing ' + ordinal(i) + ' input parameter!');
+  throw new Error("string-slices-array-push/Slices/add(): [THROW_ID_01] Missing " + ordinal(i) + " input parameter!");
 }
 function prepNumStr(str) {
   return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
@@ -47,7 +47,7 @@ var Slices = function () {
     };
     var opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
-      msg: 'string-slices-array-push: [THROW_ID_02*]'
+      msg: "string-slices-array-push: [THROW_ID_02*]"
     });
     // so it's correct, let's get it in:
     this.opts = opts;
@@ -58,7 +58,7 @@ var Slices = function () {
 
 
   _createClass(Slices, [{
-    key: 'add',
+    key: "add",
     value: function add() {
       var originalFrom = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
 
@@ -72,7 +72,7 @@ var Slices = function () {
       }
 
       if (etc.length > 0) {
-        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_03] Please don\'t overload the add() method. From the 4th input argument onwards we see these redundant arguments: ' + JSON.stringify(etc, null, 4));
+        throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_03] Please don't overload the add() method. From the 4th input argument onwards we see these redundant arguments: " + JSON.stringify(etc, null, 4));
       }
       if (originalFrom === null && originalTo === undefined && addVal === undefined) {
         return; // do nothing about it
@@ -106,23 +106,23 @@ var Slices = function () {
                     // push it into slices range
                     _this.add.apply(_this, _toConsumableArray(arr));
                   } else {
-                    throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_04] The ' + ordinal(idx) + ' ranges array\'s "to add" value is not string but ' + _typeof(arr[2]) + '! It\'s equal to: ' + arr[2] + '.');
+                    throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_04] The " + ordinal(idx) + " ranges array's \"to add\" value is not string but " + _typeof(arr[2]) + "! It's equal to: " + arr[2] + ".");
                   }
                 } else {
-                  throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_05] The ' + ordinal(idx) + ' ranges array\'s ending range index, an element at its first index, is not a natural number! It\'s equal to: ' + arr[1] + '.');
+                  throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_05] The " + ordinal(idx) + " ranges array's ending range index, an element at its first index, is not a natural number! It's equal to: " + arr[1] + ".");
                 }
               } else {
-                throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_06] The ' + ordinal(idx) + ' ranges array\'s starting range index, an element at its zero\'th index, is not a natural number! It\'s equal to: ' + arr[0] + '.');
+                throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_06] The " + ordinal(idx) + " ranges array's starting range index, an element at its zero'th index, is not a natural number! It's equal to: " + arr[0] + ".");
               }
             });
           } else {
-            throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index ' + culpritId + ' we have ' + (typeof culpritVal === 'undefined' ? 'undefined' : _typeof(culpritVal)) + '-type value:\n' + JSON.stringify(culpritVal, null, 4) + '.');
+            throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_07] first argument was given as array but it contains not only range arrays. For example, at index " + culpritId + " we have " + (typeof culpritVal === "undefined" ? "undefined" : _typeof(culpritVal)) + "-type value:\n" + JSON.stringify(culpritVal, null, 4) + ".");
           }
         }
       } else if (isInt(from, { includeZero: true }) && isInt(to, { includeZero: true })) {
         // This means two indexes were given as arguments. Business as usual.
         if (existy(addVal) && !isStr(addVal)) {
-          throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ' + (typeof addVal === 'undefined' ? 'undefined' : _typeof(addVal)) + ', equal to:\n' + JSON.stringify(addVal, null, 4));
+          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but " + (typeof addVal === "undefined" ? "undefined" : _typeof(addVal)) + ", equal to:\n" + JSON.stringify(addVal, null, 4));
         }
         // Does the incoming "from" value match the existing last element's "to" value?
         if (this.slices !== undefined && from === this.last()[1]) {
@@ -145,7 +145,7 @@ var Slices = function () {
         }
       } else {
         // Throw error
-        throw new TypeError('string-slices-array-push/Slices/add(): [THROW_ID_09] "from" value, first input argument, must be a natural number or zero! Currently it\'s equal to: ' + JSON.stringify(from, null, 4));
+        throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_09] \"from\" value, first input argument, must be a natural number or zero! Currently it's equal to: " + JSON.stringify(from, null, 4));
       }
     }
 
@@ -153,7 +153,7 @@ var Slices = function () {
     // ============================================
 
   }, {
-    key: 'push',
+    key: "push",
     value: function push(originalFrom, originalTo, addVal) {
       for (var _len2 = arguments.length, etc = Array(_len2 > 3 ? _len2 - 3 : 0), _key2 = 3; _key2 < _len2; _key2++) {
         etc[_key2 - 3] = arguments[_key2];
@@ -166,7 +166,7 @@ var Slices = function () {
     // ==================================
 
   }, {
-    key: 'current',
+    key: "current",
     value: function current() {
       if (this.slices != null) {
         // != is intentional
@@ -188,7 +188,7 @@ var Slices = function () {
     // ==========
 
   }, {
-    key: 'wipe',
+    key: "wipe",
     value: function wipe() {
       this.slices = undefined;
     }
@@ -197,7 +197,7 @@ var Slices = function () {
     // ==========
 
   }, {
-    key: 'last',
+    key: "last",
     value: function last() {
       if (this.slices !== undefined && Array.isArray(this.slices)) {
         return this.slices[this.slices.length - 1];
