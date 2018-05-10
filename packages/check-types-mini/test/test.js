@@ -1,5 +1,5 @@
 import test from "ava";
-import checkTypes from "../dist/check-types-mini.cjs";
+import checkTypes from "../dist/check-types-mini.esm";
 
 test("01.01 - throws when all/first args are missing", t => {
   t.throws(() => {

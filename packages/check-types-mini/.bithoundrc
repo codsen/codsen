@@ -10,6 +10,7 @@
       "ava",
       "babel-preset-env",
       "coveralls",
+      "esm",
       "husky",
       "lodash.intersection",
       "lodash.pullall",
