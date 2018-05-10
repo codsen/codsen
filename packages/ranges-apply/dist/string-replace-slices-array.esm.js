@@ -2,8 +2,6 @@ import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import ordinal from 'ordinal-number-suffix';
 
-/* eslint no-param-reassign:0, security/detect-object-injection:0 */
-
 const isArr = Array.isArray;
 
 function existy(x) {
