@@ -1,7 +1,7 @@
 /* eslint ava/no-only-test:0 */
 
 import test from "ava";
-import a from "../dist/array-of-arrays-into-ast.cjs";
+import a from "../dist/array-of-arrays-into-ast.esm";
 
 test("1.1 - three elements", t => {
   t.deepEqual(
