@@ -39,8 +39,8 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 19&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 20&nbsp;KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 16&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 16&nbsp;KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 35&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
