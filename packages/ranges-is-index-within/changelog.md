@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2018-05-11
+
+Setup refresh.
+
+### Added
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+
 ## [1.4.0] - 2018-02-06
 
 ### Added
@@ -37,7 +48,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ Initial release
 
-[1.4.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.3.0...v1.4.0
-[1.3.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.1.0...v1.2.0
+[1.3.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.3.0...v1.4.0
+[1.5.0]: https://github.com/codsen/ranges-is-index-within/compare/v1.4.1...v1.5.0
