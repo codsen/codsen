@@ -17,8 +17,14 @@ function stripHtml(str, originalOpts) {
     return typeof something === "number";
   }
   function tagName(char) {
-    return char === ">" || char.trim() === "";
+    return (
+      char === undefined ||
+      (isStr(char) && (char === ">" || char.trim() === ""))
+    );
   }
+  // function tagName(char) {
+  //   return char === ">" || char.trim() === "";
+  // }
 
   // vars
   const definitelyTagNames = [

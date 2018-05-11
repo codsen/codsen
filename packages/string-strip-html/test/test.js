@@ -693,6 +693,39 @@ test("06.02 - HTML comments around string edges", t => {
   );
 });
 
+// test("06.03 - tag presence checks fall outside of the range", t => {
+//   t.deepEqual(
+//     stripHtml('<script>alert("123")</script'),
+//     'alert("123")',
+//     "06.03.01"
+//   );
+//   t.deepEqual(
+//     stripHtml("<script>alert('123')</script"),
+//     "alert('123')",
+//     "06.03.02"
+//   );
+//   t.deepEqual(
+//     stripHtml('<script>alert("123")<script'),
+//     'alert("123")',
+//     "06.03.03"
+//   );
+//   t.deepEqual(
+//     stripHtml("<script>alert('123')<script"),
+//     "alert('123')",
+//     "06.03.04"
+//   );
+//   t.deepEqual(
+//     stripHtml('<script>alert("123")</ script'),
+//     'alert("123")',
+//     "06.03.05"
+//   );
+//   t.deepEqual(
+//     stripHtml("<script>alert('123')</ script"),
+//     "alert('123')",
+//     "06.03.06"
+//   );
+// });
+
 // ==============================
 // throws
 // ==============================
