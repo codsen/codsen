@@ -8,16 +8,16 @@ function containsOnlyEmptySpace(input) {
   function isStr(something) {
     return typeof something === "string";
   }
-  var isArr = Array.isArray;
-  var found = true;
+  const isArr = Array.isArray;
+  let found = true;
 
   if (!isArr(input) && !isObj(input) && !isStr(input)) {
     return false;
   } else if (isStr(input)) {
     return trim(input).length === 0;
   }
-  input = traverse(input, function (key, val) {
-    var current = val !== undefined ? val : key;
+  input = traverse(input, (key, val) => {
+    const current = val !== undefined ? val : key;
     if (isStr(current) && trim(current) !== "") {
       found = false;
     }

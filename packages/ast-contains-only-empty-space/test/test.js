@@ -1,5 +1,5 @@
 import test from "ava";
-import empty from "../dist/ast-contains-only-empty-space.cjs";
+import empty from "../dist/ast-contains-only-empty-space.esm";
 
 function dudFunction() {
   return "dud";
