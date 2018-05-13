@@ -60,6 +60,7 @@ export default commandLineArgs => {
       ]
     }
   ];
+
   if (commandLineArgs.dev) {
     // if rollup was called without a --dev flag,
     // dispose of a comment removal, strip():
