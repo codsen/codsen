@@ -1,5 +1,5 @@
 import test from "ava";
-import pull from "../dist/array-pull-all-with-glob.cjs";
+import pull from "../dist/array-pull-all-with-glob.esm";
 
 // =======
 // no glob
