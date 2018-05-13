@@ -1,5 +1,5 @@
 import test from "ava";
-import a from "../dist/arrayiffy-if-string.cjs";
+import a from "../dist/arrayiffy-if-string.esm";
 
 // -----------------------------------------------------------------------------
 // 02. BAU
