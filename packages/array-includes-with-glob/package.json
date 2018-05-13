@@ -46,6 +46,10 @@
       "xo": 0
     }
   },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
   "keywords": [
     "array",
     "inclues",
