@@ -1,12 +1,8 @@
-'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var type = _interopDefault(require('type-detect'));
+import type from 'type-detect';
 
 /* eslint max-len:0 */
 
-var isArr = Array.isArray;
+const isArr = Array.isArray;
 
 function existy(x) {
   return x != null;
@@ -36,18 +32,14 @@ function isBlank(something) {
 }
 function isTheTypeLegit(something) {
   // same as JSON spec:
-  return isObj(something) || isStr(something) || isNum(something) || isBool(something) || isArr(something) || isNull(something);
+  return (
+    isObj(something) ||
+    isStr(something) ||
+    isNum(something) ||
+    isBool(something) ||
+    isArr(something) ||
+    isNull(something)
+  );
 }
 
-var util = {
-  existy: existy,
-  isObj: isObj,
-  isStr: isStr,
-  isNum: isNum,
-  isBool: isBool,
-  isNull: isNull,
-  isBlank: isBlank,
-  isTheTypeLegit: isTheTypeLegit
-};
-
-module.exports = util;
+export { existy, isObj, isStr, isNum, isBool, isNull, isBlank, isTheTypeLegit };

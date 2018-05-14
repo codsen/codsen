@@ -1,5 +1,5 @@
 import test from "ava";
-import compare from "../dist/ast-compare.cjs";
+import compare from "../dist/ast-compare.esm";
 import {
   existy,
   isObj,
@@ -9,7 +9,7 @@ import {
   isNull,
   isBlank,
   isTheTypeLegit
-} from "../dist/util.cjs";
+} from "../dist/util.esm";
 
 const f = () => "zzz";
 const f2 = () => "yyy";

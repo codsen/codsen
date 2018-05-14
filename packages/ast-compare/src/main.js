@@ -4,9 +4,7 @@ import typeDetect from "type-detect";
 import empty from "ast-contains-only-empty-space";
 import matcher from "matcher";
 import checkTypes from "check-types-mini";
-import util from "./util";
-
-const { existy, isObj, isStr, isBlank, isTheTypeLegit } = util;
+import { existy, isObj, isStr, isBlank, isTheTypeLegit } from "./util";
 
 const isArr = Array.isArray;
 

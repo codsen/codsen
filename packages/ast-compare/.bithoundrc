@@ -8,6 +8,9 @@
     "mute": [
       "ava",
       "babel-preset-env",
+      "check-types-mini",
+      "coveralls",
+      "esm",
       "husky",
       "lodash.clonedeep",
       "lodash.pullall",

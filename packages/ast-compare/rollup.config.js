@@ -27,13 +27,10 @@ export default commandLineArgs => {
       ]
     },
 
-    // Builds: CommonJS (for Node) and ES module (for bundlers)
+    // CommonJS build (for Node)
     {
       input: "src/main.js",
-      output: [
-        { file: pkg.main, format: "cjs" },
-        { file: pkg.module, format: "es" }
-      ],
+      output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-contains-only-empty-space",
         "check-types-mini",
@@ -50,19 +47,38 @@ export default commandLineArgs => {
       ]
     },
 
-    // util.js needs transpiling as well:
+    // ES module build (for bundlers)
+    {
+      input: "src/main.js",
+      output: [{ file: pkg.module, format: "es" }],
+      external: [
+        "ast-contains-only-empty-space",
+        "check-types-mini",
+        "lodash.clonedeep",
+        "lodash.pullall",
+        "matcher",
+        "type-detect"
+      ],
+      plugins: [
+        strip({
+          sourceMap: false
+        })
+      ]
+    },
+
+    // util.js ES module build:
     {
       input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
+      output: [{ file: "dist/util.esm.js", format: "es" }],
       external: ["type-detect"],
       plugins: [
         strip({
           sourceMap: false
-        }),
-        babel()
+        })
       ]
     }
   ];
+
   if (commandLineArgs.dev) {
     // if rollup was called without a --dev flag,
     // dispose of a comment removal, strip():

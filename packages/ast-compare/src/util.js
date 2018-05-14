@@ -42,13 +42,4 @@ function isTheTypeLegit(something) {
   );
 }
 
-export default {
-  existy,
-  isObj,
-  isStr,
-  isNum,
-  isBool,
-  isNull,
-  isBlank,
-  isTheTypeLegit
-};
+export { existy, isObj, isStr, isNum, isBool, isNull, isBlank, isTheTypeLegit };

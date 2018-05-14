@@ -44,25 +44,7 @@ function isTheTypeLegit(something) {
   return isObj(something) || isStr(something) || isNum(something) || isBool(something) || isArr(something) || isNull(something);
 }
 
-var util = {
-  existy: existy,
-  isObj: isObj,
-  isStr: isStr,
-  isNum: isNum,
-  isBool: isBool,
-  isNull: isNull,
-  isBlank: isBlank,
-  isTheTypeLegit: isTheTypeLegit
-};
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var existy$1 = util.existy,
-    isObj$1 = util.isObj,
-    isStr$1 = util.isStr,
-    isBlank$1 = util.isBlank,
-    isTheTypeLegit$1 = util.isTheTypeLegit;
-
 
 var isArr$1 = Array.isArray;
 
@@ -75,13 +57,13 @@ function compare(bo, so, originalOpts) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_02] second argument is missing!");
   }
 
-  if (existy$1(bo) && !isTheTypeLegit$1(bo)) {
+  if (existy(bo) && !isTheTypeLegit(bo)) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, " + typeDetect(bo) + ", equal to: " + JSON.stringify(bo, null, 4));
   }
-  if (existy$1(so) && !isTheTypeLegit$1(so)) {
+  if (existy(so) && !isTheTypeLegit(so)) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_04] second input argument is of a wrong type, " + typeDetect(so) + ", equal to: " + JSON.stringify(so, null, 4));
   }
-  if (existy$1(originalOpts) && !isObj$1(originalOpts)) {
+  if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError("ast-compare/compare(): [THROW_ID_05] third argument, options object, must, well, be an object! Currently it's: " + typeDetect(originalOpts) + " and equal to: " + JSON.stringify(originalOpts, null, 4));
   }
 
@@ -104,18 +86,18 @@ function compare(bo, so, originalOpts) {
   checkTypes(opts, defaults, { msg: "ast-compare/compare(): [THROW_ID_06*]" });
 
   // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
-  if (opts.hungryForWhitespace && opts.matchStrictly && isObj$1(bo) && empty(bo) && isObj$1(so) && Object.keys(so).length === 0) {
+  if (opts.hungryForWhitespace && opts.matchStrictly && isObj(bo) && empty(bo) && isObj(so) && Object.keys(so).length === 0) {
     return true;
   }
 
   // instant (falsey) result
-  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo) && empty(so)) && isObj$1(bo) && Object.keys(bo).length !== 0 && isObj$1(so) && Object.keys(so).length === 0 || typeDetect(bo) !== typeDetect(so) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo))) {
+  if ((!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo) && empty(so)) && isObj(bo) && Object.keys(bo).length !== 0 && isObj(so) && Object.keys(so).length === 0 || typeDetect(bo) !== typeDetect(so) && (!opts.hungryForWhitespace || opts.hungryForWhitespace && !empty(bo))) {
     return false;
   }
 
   // A C T I O N
 
-  if (isStr$1(b) && isStr$1(s)) {
+  if (isStr(b) && isStr(s)) {
     if (opts.hungryForWhitespace && empty(b) && empty(s)) {
       return true;
     }
@@ -159,7 +141,7 @@ function compare(bo, so, originalOpts) {
         return "The given array " + JSON.stringify(s, null, 4) + " is not a subset of an array on the other end, " + JSON.stringify(b, null, 4);
       }
     }
-  } else if (isObj$1(b) && isObj$1(s)) {
+  } else if (isObj(b) && isObj(s)) {
     sKeys = Object.keys(s);
     bKeys = Object.keys(b);
     if (opts.matchStrictly && sKeys.length !== bKeys.length) {
@@ -176,7 +158,7 @@ function compare(bo, so, originalOpts) {
     }
 
     var _loop = function _loop(len, _i) {
-      if (!existy$1(b[sKeys[_i]])) {
+      if (!existy(b[sKeys[_i]])) {
         if (!opts.useWildcards || opts.useWildcards && !sKeys[_i].includes("*")) {
           if (!opts.verboseWhenMismatches) {
             return {
@@ -204,11 +186,11 @@ function compare(bo, so, originalOpts) {
           v: "The given object has key " + sKeys[_i] + " which the other-one does not have."
         };
       }
-      if (b[sKeys[_i]] !== undefined && !isTheTypeLegit$1(b[sKeys[_i]])) {
+      if (b[sKeys[_i]] !== undefined && !isTheTypeLegit(b[sKeys[_i]])) {
         throw new TypeError("ast-compare/compare(): [THROW_ID_07] The input " + JSON.stringify(b, null, 4) + " contains a value of a wrong type, " + typeDetect(b[sKeys[_i]]) + " at index " + _i + ", equal to: " + JSON.stringify(b[sKeys[_i]], null, 4));
-      } else if (!isTheTypeLegit$1(s[sKeys[_i]])) {
+      } else if (!isTheTypeLegit(s[sKeys[_i]])) {
         throw new TypeError("ast-compare/compare(): [THROW_ID_08] The input " + JSON.stringify(s, null, 4) + " contains a value of a wrong type, " + typeDetect(s[sKeys[_i]]) + " at index " + _i + ", equal to: " + JSON.stringify(s[sKeys[_i]], null, 4));
-      } else if (existy$1(b[sKeys[_i]]) && typeDetect(b[sKeys[_i]]) !== typeDetect(s[sKeys[_i]])) {
+      } else if (existy(b[sKeys[_i]]) && typeDetect(b[sKeys[_i]]) !== typeDetect(s[sKeys[_i]])) {
         // Types mismatch. Probably falsey result, unless comparing with
         // empty/blank things. Let's check.
         // it might be blank array vs blank object:
@@ -242,7 +224,7 @@ function compare(bo, so, originalOpts) {
       if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
     }
   } else {
-    if (opts.hungryForWhitespace && empty(b) && empty(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank$1(s))) {
+    if (opts.hungryForWhitespace && empty(b) && empty(s) && (!opts.matchStrictly || opts.matchStrictly && isBlank(s))) {
       return true;
     }
     return b === s;
