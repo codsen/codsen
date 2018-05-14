@@ -1,5 +1,3 @@
-/* eslint ava/no-only-test:0, max-len:0, no-unused-vars:0 */
-
 import test from "ava";
 import {
   matchLeftIncl,
@@ -2793,7 +2791,7 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
       3,
       null,
       {
-        cb: (char, theRemainderOfTheString, index) => char === "a"
+        cb: char => char === "a"
       }
     )
   );
@@ -2803,7 +2801,7 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
       3,
       null,
       {
-        cb: (char, theRemainderOfTheString, index) => char === "\uD83D\uDC4C"
+        cb: char => char === "\uD83D\uDC4C"
       }
     )
   );
@@ -2813,7 +2811,7 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
       3,
       null,
       {
-        cb: (char, theRemainderOfTheString, index) => char === "\uD83E\uDDE2"
+        cb: char => char === "\uD83E\uDDE2"
       }
     )
   );
