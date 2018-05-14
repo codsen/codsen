@@ -1,5 +1,5 @@
 import test from "ava";
-import get from "../dist/ast-get-values-by-key.cjs";
+import get from "../dist/ast-get-values-by-key.esm";
 
 // ==============================
 // GET

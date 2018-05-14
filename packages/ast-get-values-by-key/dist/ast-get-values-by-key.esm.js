@@ -8,13 +8,17 @@ function existy(x) {
 
 function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
   if (!existy(originalInput)) {
-    throw new Error("ast-get-values-by-key: [THROW_ID_01] the first argument is missing!");
+    throw new Error(
+      "ast-get-values-by-key: [THROW_ID_01] the first argument is missing!"
+    );
   }
   if (!existy(whatToFind)) {
-    throw new Error("ast-get-values-by-key: [THROW_ID_02] the second argument is missing!");
+    throw new Error(
+      "ast-get-values-by-key: [THROW_ID_02] the second argument is missing!"
+    );
   }
 
-  var replacement = void 0;
+  let replacement;
 
   if (existy(originalReplacement)) {
     if (typeof originalReplacement === "string") {
@@ -24,10 +28,13 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
     }
   }
 
-  var res = [];
-  var input = traverse(originalInput, function (key, val) {
-    var current = val !== undefined ? val : key;
-    if (val !== undefined && matcher.isMatch(key, whatToFind, { caseSensitive: true })) {
+  const res = [];
+  const input = traverse(originalInput, (key, val) => {
+    const current = val !== undefined ? val : key;
+    if (
+      val !== undefined &&
+      matcher.isMatch(key, whatToFind, { caseSensitive: true })
+    ) {
       if (replacement === undefined) {
         res.push(val);
       } else if (replacement.length > 0) {
