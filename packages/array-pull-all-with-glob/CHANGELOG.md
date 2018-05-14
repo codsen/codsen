@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.4.0] - 2018-05-14
+
+### Improved
+
+* ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
+* ✨ Tweaks to ava [config](https://github.com/avajs/ava/blob/master/docs/recipes/es-modules.md) in `package.json`, properly enabling the `dev` Rollup builds.
+
 ## [4.3.0] - 2018-04-29
 
 ### Changed
@@ -74,3 +81,4 @@ Also, I set up [check-types-mini](https://github.com/codsen/check-types-mini) to
 [4.1.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.0.0...v4.1.0
 [4.2.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.1.0...v4.2.0
 [4.3.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.2.0...v4.3.0
+[4.4.0]: https://github.com/codsen/array-pull-all-with-glob/compare/v4.3.0...v4.4.0
