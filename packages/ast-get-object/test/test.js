@@ -1,5 +1,5 @@
 import test from "ava";
-import getObj from "../dist/ast-get-object.cjs";
+import getObj from "../dist/ast-get-object.esm";
 
 // ==============================
 // GET

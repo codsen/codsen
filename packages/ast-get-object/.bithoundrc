@@ -8,6 +8,8 @@
     "mute": [
       "ava",
       "babel-preset-env",
+      "coveralls",
+      "esm",
       "husky",
       "lodash.clonedeep",
       "lodash.isplainobject",

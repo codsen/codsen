@@ -34,21 +34,21 @@ function truthy(x) {
  *                                      * in WRITE mode (4 args given),
  * mutated ast (first parameter)
  */
-function getObj(originalAst, keyValPair, replacementContentsArr) {
-  var result = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-
+function getObj(originalAst, keyValPair, replacementContentsArr, result = []) {
   if (!existy(originalAst)) {
     throw new Error("ast-get-object: [THROW_ID_01] First argument is missing!");
   }
   if (!existy(keyValPair)) {
-    throw new Error("ast-get-object: [THROW_ID_02] Second argument is missing!");
+    throw new Error(
+      "ast-get-object: [THROW_ID_02] Second argument is missing!"
+    );
   }
   // is it set mode or not:
-  var set = false;
+  let set = false;
   if (existy(replacementContentsArr) && Array.isArray(replacementContentsArr)) {
     set = true;
   }
-  var ast = clone(originalAst);
+  let ast = clone(originalAst);
   // if object is passed, crawl it, checking for keyValPair:
   if (isObj(ast)) {
     // console.log('\nwill compare:')
@@ -64,11 +64,16 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
         result.push(ast);
       }
     } else {
-      Object.keys(ast).forEach(function (key) {
+      Object.keys(ast).forEach(key => {
         if (Array.isArray(ast[key]) || isObj(ast[key])) {
           // console.log('ast[key] = ' + JSON.stringify(ast[key], null, 4))
           if (set) {
-            ast[key] = getObj(ast[key], keyValPair, replacementContentsArr, result);
+            ast[key] = getObj(
+              ast[key],
+              keyValPair,
+              replacementContentsArr,
+              result
+            );
           } else {
             getObj(ast[key], keyValPair, replacementContentsArr, result);
           }
@@ -77,7 +82,7 @@ function getObj(originalAst, keyValPair, replacementContentsArr) {
     }
   } else if (Array.isArray(ast)) {
     // else, it's an array. Iterate each key, if it's an obj, call findTag()
-    ast.forEach(function (el, i) {
+    ast.forEach((el, i) => {
       // console.log('array el[' + i + ']=' + JSON.stringify(el, null, 4))
       if (isObj(ast[i]) || Array.isArray(ast[i])) {
         if (set) {
