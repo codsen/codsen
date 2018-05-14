@@ -26,5 +26,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ First public release
 
-[1.2.0]: https://github.com/codsen/ast-delete-object/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/ast-delete-object/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/codsen/ast-delete-object/compare/v1.1.3...v1.2.0
