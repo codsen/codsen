@@ -1,6 +1,6 @@
 import test from "ava";
 import clone from "lodash.clonedeep";
-import deleteObj from "../dist/ast-delete-object.cjs";
+import deleteObj from "../dist/ast-delete-object.esm";
 
 // (input, objToDelete, strictOrNot)
 

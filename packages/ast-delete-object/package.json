@@ -32,15 +32,23 @@
     "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "delete",
@@ -164,6 +172,7 @@
     "eslint-plugin-ava": "^4.5.1",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "esm": "latest",
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",
@@ -173,6 +182,6 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
     "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.10"
   }
 }

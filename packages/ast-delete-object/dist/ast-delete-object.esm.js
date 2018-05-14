@@ -13,41 +13,54 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
     throw new Error("ast-delete-object/deleteObj(): Missing input!");
   }
   if (!existy(originalObjToDelete)) {
-    throw new Error("ast-delete-object/deleteObj(): Missing second argument, object to search for and delete!");
+    throw new Error(
+      "ast-delete-object/deleteObj(): Missing second argument, object to search for and delete!"
+    );
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new Error("ast-delete-object/deleteObj(): Third argument, options object, must be an object!");
+    throw new Error(
+      "ast-delete-object/deleteObj(): Third argument, options object, must be an object!"
+    );
   }
 
-  var defaults = {
+  const defaults = {
     matchKeysStrictly: false,
     hungryForWhitespace: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, { msg: "ast-delete-object/deleteObj():" });
 
-  var input = clone(originalInput);
-  var objToDelete = clone(originalObjToDelete);
-  var current = void 0;
+  let input = clone(originalInput);
+  const objToDelete = clone(originalObjToDelete);
+  let current;
 
   // compare input itself
-  if (compare(input, objToDelete, {
-    hungryForWhitespace: opts.hungryForWhitespace,
-    matchStrictly: opts.matchKeysStrictly
-  })) {
+  if (
+    compare(input, objToDelete, {
+      hungryForWhitespace: opts.hungryForWhitespace,
+      matchStrictly: opts.matchKeysStrictly
+    })
+  ) {
     return {};
   }
 
   // traversal
-  input = traverse(input, function (key, val) {
+  input = traverse(input, (key, val) => {
     current = val !== undefined ? val : key;
     if (isObj(current)) {
-      if (isObj(objToDelete) && Object.keys(objToDelete).length === 0 && isObj(current) && Object.keys(current).length === 0) {
+      if (
+        isObj(objToDelete) &&
+        Object.keys(objToDelete).length === 0 &&
+        isObj(current) &&
+        Object.keys(current).length === 0
+      ) {
         return NaN;
-      } else if (compare(current, objToDelete, {
-        hungryForWhitespace: opts.hungryForWhitespace,
-        matchStrictly: opts.matchKeysStrictly
-      })) {
+      } else if (
+        compare(current, objToDelete, {
+          hungryForWhitespace: opts.hungryForWhitespace,
+          matchStrictly: opts.matchKeysStrictly
+        })
+      ) {
         return NaN;
       }
     }
