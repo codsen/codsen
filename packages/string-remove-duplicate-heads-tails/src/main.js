@@ -208,7 +208,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     })
   ) {
     console.log(
-      `\u001b[${33}m${"193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
+      `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
     );
     return trimSpaces(str);
   }
@@ -296,7 +296,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           itsFirstTail = true;
         }
 
-        console.log(`167 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        console.log(`299 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
@@ -326,7 +326,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           firstNonMarkerChunkFound &&
           lastMatched !== "tails"
         ) {
-          console.log(`\u001b[${33}m${"183 wiping conditional"}\u001b[${39}m`);
+          console.log(`\u001b[${33}m${"329 wiping conditional"}\u001b[${39}m`);
           realRanges.push(conditionalRanges.current());
         }
 
@@ -340,18 +340,18 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           if (conditionalRanges.current()) {
             // first, if there are any conditional ranges, they become real-ones:
             console.log(
-              `\u001b[${33}m${"188 pushing conditionals into real"}\u001b[${39}m`
+              `\u001b[${33}m${"343 pushing conditionals into real"}\u001b[${39}m`
             );
             realRanges.push(conditionalRanges.current());
             // then, wipe conditionals:
             console.log(
-              `\u001b[${33}m${"191 wiping conditionals"}\u001b[${39}m`
+              `\u001b[${33}m${"348 wiping conditionals"}\u001b[${39}m`
             );
             conditionalRanges.wipe();
           }
 
           console.log(
-            `\u001b[${33}m${`202 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`354 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
@@ -359,7 +359,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
           console.log(
-            `\u001b[${33}m${`208 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`362 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         }
@@ -369,7 +369,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 4. offset the index
         console.log(
-          `\u001b[${33}m${`213 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`372 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
@@ -444,7 +444,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         } else {
           // 1.
           console.log(
-            `${`\u001b[${33}m${"340 lastMatched"}\u001b[${39}m`} = ${JSON.stringify(
+            `${`\u001b[${33}m${"447 lastMatched"}\u001b[${39}m`} = ${JSON.stringify(
               lastMatched,
               null,
               4
@@ -452,14 +452,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           );
           if (lastMatched === "heads") {
             console.log(
-              `\u001b[${33}m${"341 WIPING CONDITIONALS"}\u001b[${39}m`
+              `\u001b[${33}m${"455 WIPING CONDITIONALS"}\u001b[${39}m`
             );
             conditionalRanges.wipe();
           }
 
           // 2. if it's just the first tail, do nothing, but turn off the flag
           console.log(
-            `\u001b[${33}m${"249 itsFirstTail = false"}\u001b[${39}m`
+            `\u001b[${33}m${"462 itsFirstTail = false"}\u001b[${39}m`
           );
           itsFirstTail = false;
         }
@@ -469,7 +469,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 2. offset the index
         console.log(
-          `\u001b[${33}m${`253 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`472 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
@@ -527,7 +527,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
       if (itsFirstLetter && !firstNonMarkerChunkFound) {
         console.log(
-          `\u001b[${33}m${"268 firstNonMarkerChunkFound = true"}\u001b[${39}m`
+          `\u001b[${33}m${"530 firstNonMarkerChunkFound = true"}\u001b[${39}m`
         );
         // wipe the conditionals:
         // conditionalRanges.wipe()
@@ -537,9 +537,9 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         itsFirstLetter = false;
       } else if (itsFirstLetter && !secondNonMarkerChunkFound) {
         console.log(
-          `\u001b[${33}m${"278 secondNonMarkerChunkFound = true"}\u001b[${39}m`
+          `\u001b[${33}m${"540 secondNonMarkerChunkFound = true"}\u001b[${39}m`
         );
-        console.log(`\u001b[${33}m${"279 itsFirstTail = true"}\u001b[${39}m`);
+        console.log(`\u001b[${33}m${"542 itsFirstTail = true"}\u001b[${39}m`);
         secondNonMarkerChunkFound = true;
         itsFirstTail = true;
         itsFirstLetter = false;
