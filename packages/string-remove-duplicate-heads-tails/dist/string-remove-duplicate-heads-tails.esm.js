@@ -123,7 +123,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       cb: (char, theRemainderOfTheString, index) => {
         noteDownTheIndex = index;
         return true;
-      }
+      },
+      relaxedApi: true
     });
     if (!resultOfAttemptToMatchHeads) {
       // if heads were not matched, bail - there's no point matching trailing tails
@@ -141,7 +142,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // the width of matched tails
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (resultOfAttemptToMatchTails) {
@@ -167,7 +169,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (!resultOfAttemptToMatchTails) {
@@ -186,7 +189,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // the width of matched heads
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (resultOfAttemptToMatchHeads) {
@@ -200,11 +204,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
 
   //                      E A R L Y    E N D I N G
-
   if (
-    !matchRightIncl(str, 0, opts.heads, { trimBeforeMatching: true }) ||
+    !matchRightIncl(str, 0, opts.heads, {
+      trimBeforeMatching: true,
+      relaxedApi: true
+    }) ||
     !matchLeftIncl(str, str.length - 1, opts.tails, {
-      trimBeforeMatching: true
+      trimBeforeMatching: true,
+      relaxedApi: true
     })
   ) {
     return trimSpaces(str);
@@ -234,7 +241,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       });
       if (resultOfAttemptToMatchHeads) {
         // reset marker
@@ -256,7 +264,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
             cb: (char, theRemainderOfTheString, index) => {
               tempIndexUpTo = index;
               return true;
-            }
+            },
+            relaxedApi: true
           }
         );
         if (resultOfAttemptToMatchTails) {
@@ -310,7 +319,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = existy(index) ? index : str.length;
           return true;
-        }
+        },
+        relaxedApi: true
       });
       if (resultOfAttemptToMatchTails) {
         // reset marker

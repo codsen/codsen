@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-05-16
+
+### Added
+
+* ✨ Tapped dependency `string-match-left-right` with its new `{relaxedApi: true}` option. This prevents `throw` errors in some edge case scenarios.
+
 ## [2.3.0] - 2018-05-15
 
 ### Added
@@ -39,7 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ First public release
 
-[2.3.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v1.0.0...v2.0.0
+[2.1.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.0.0...v2.1.0
+[2.2.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.2.0...v2.3.0
+[2.4.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.3.0...v2.4.0

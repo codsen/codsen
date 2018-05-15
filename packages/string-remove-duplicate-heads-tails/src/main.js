@@ -118,18 +118,21 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   function delLeadingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
     // do heads, from beginning of the input string:
+    console.log("121 calling matchRightIncl()");
     const resultOfAttemptToMatchHeads = matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
       cb: (char, theRemainderOfTheString, index) => {
         noteDownTheIndex = index;
         return true;
-      }
+      },
+      relaxedApi: true
     });
     if (!resultOfAttemptToMatchHeads) {
       // if heads were not matched, bail - there's no point matching trailing tails
       return str1;
     }
     // do tails now:
+    console.log("134 calling matchRightIncl()");
     const resultOfAttemptToMatchTails = matchRightIncl(
       str1,
       noteDownTheIndex,
@@ -141,7 +144,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // the width of matched tails
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (resultOfAttemptToMatchTails) {
@@ -158,6 +162,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
     // do tails now - match from the end of a string, trimming along:
+    console.log("162 calling matchLeftIncl()");
     const resultOfAttemptToMatchTails = matchLeftIncl(
       str1,
       str1.length - 1,
@@ -167,7 +172,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (!resultOfAttemptToMatchTails) {
@@ -175,6 +181,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       return str1;
     }
     // do heads that precede those tails:
+    console.log("181 calling matchLeftIncl()");
     const resultOfAttemptToMatchHeads = matchLeftIncl(
       str1,
       noteDownTheIndex,
@@ -186,7 +193,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // the width of matched heads
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       }
     );
     if (resultOfAttemptToMatchHeads) {
@@ -201,10 +209,15 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
   //                      E A R L Y    E N D I N G
 
+  console.log("208 calling both matchRightIncl() and matchLeftIncl()");
   if (
-    !matchRightIncl(str, 0, opts.heads, { trimBeforeMatching: true }) ||
+    !matchRightIncl(str, 0, opts.heads, {
+      trimBeforeMatching: true,
+      relaxedApi: true
+    }) ||
     !matchLeftIncl(str, str.length - 1, opts.tails, {
-      trimBeforeMatching: true
+      trimBeforeMatching: true,
+      relaxedApi: true
     })
   ) {
     console.log(
@@ -281,12 +294,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
       // match heads
       let noteDownTheIndex;
+      console.log("289 calling matchRightIncl()");
       const resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = index;
           return true;
-        }
+        },
+        relaxedApi: true
       });
       if (resultOfAttemptToMatchHeads) {
         // reset marker
@@ -301,6 +316,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
+        console.log("310 calling matchRightIncl()");
         const resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
@@ -310,7 +326,8 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
             cb: (char, theRemainderOfTheString, index) => {
               tempIndexUpTo = index;
               return true;
-            }
+            },
+            relaxedApi: true
           }
         );
         if (resultOfAttemptToMatchTails) {
@@ -420,12 +437,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
 
       // match tails
+      console.log("430 calling matchRightIncl()");
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
           noteDownTheIndex = existy(index) ? index : str.length;
           return true;
-        }
+        },
+        relaxedApi: true
       });
       if (resultOfAttemptToMatchTails) {
         // reset marker
