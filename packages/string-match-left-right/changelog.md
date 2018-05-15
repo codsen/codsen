@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0] - 2018-05-16
+
+### Added
+
+* ✨ `opts.relaxedApi`
+
 ## [3.2.0] - 2018-05-15
 
 Setup refresh.
@@ -109,3 +115,4 @@ They have to be callbacks because I can't predict what checks you will want to c
 [3.1.0]: https://github.com/codsen/string-match-left-right/compare/v3.0.0...v3.1.0
 [3.1.1]: https://github.com/codsen/string-match-left-right/compare/v3.1.0...v3.1.1
 [3.2.0]: https://github.com/codsen/string-match-left-right/compare/v3.1.1...v3.2.0
+[3.3.0]: https://github.com/codsen/string-match-left-right/compare/v3.2.0...v3.3.0
