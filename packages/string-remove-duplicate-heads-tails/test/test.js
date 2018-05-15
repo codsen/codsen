@@ -1,5 +1,5 @@
 import test from "ava";
-import rem from "../dist/string-remove-duplicate-heads-tails.cjs";
+import rem from "../dist/string-remove-duplicate-heads-tails.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

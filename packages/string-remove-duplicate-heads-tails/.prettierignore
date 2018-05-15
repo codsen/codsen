@@ -1,2 +1,4 @@
 dist/
-package-lock.json
+test/fixtures
+fixtures/
+*.json

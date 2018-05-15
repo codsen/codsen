@@ -10,7 +10,6 @@ import trimSpaces from "string-trim-spaces-only";
 
 function removeDuplicateHeadsTails(str, originalOpts = {}) {
   //
-  // const DEBUG = 0
 
   function existy(x) {
     return x != null;
@@ -208,7 +207,9 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       trimBeforeMatching: true
     })
   ) {
-    // if (DEBUG) { console.log(`\u001b[${33}m${'193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye.'}\u001b[${39}m`) }
+    console.log(
+      `\u001b[${33}m${"193 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
+    );
     return trimSpaces(str);
   }
 
@@ -218,17 +219,57 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   for (let i = 0, len = str.length; i < len; i++) {
     //
     // console log bits for development
-    // if (DEBUG) { console.log(`\u001b[${33}m${`--------------------------------------- ${str[i].trim() === '' ? 'space' : `  ${str[i]}  `} ---[${i < 10 ? `0${i}` : i}]---`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* conditional ranges: ${JSON.stringify(conditionalRanges.current(), null, 0)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* real ranges: ${JSON.stringify(realRanges.current(), null, 0)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(firstNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}\n`}\u001b[${39}m`) }
+    console.log(
+      `\u001b[${33}m${`--------------------------------------- ${
+        str[i].trim() === "" ? "space" : `  ${str[i]}  `
+      } ---[${i < 10 ? `0${i}` : i}]---`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* conditional ranges: ${JSON.stringify(
+        conditionalRanges.current(),
+        null,
+        0
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+        realRanges.current(),
+        null,
+        0
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+        firstNonMarkerChunkFound,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+        secondNonMarkerChunkFound,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+        itsFirstTail,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+        lastMatched,
+        null,
+        4
+      )}\n`}\u001b[${39}m`
+    );
 
     // catch whitespace
     if (str[i].trim() === "") {
-      // if (DEBUG) { console.log('! skip') }
+      console.log("! skip");
     } else {
       // so it's not a whitespace character.
 
@@ -255,7 +296,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           itsFirstTail = true;
         }
 
-        // if (DEBUG) { console.log(`167 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`) }
+        console.log(`167 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
@@ -285,7 +326,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           firstNonMarkerChunkFound &&
           lastMatched !== "tails"
         ) {
-          // if (DEBUG) { console.log(`\u001b[${33}m${'183 wiping conditional'}\u001b[${39}m`) }
+          console.log(`\u001b[${33}m${"183 wiping conditional"}\u001b[${39}m`);
           realRanges.push(conditionalRanges.current());
         }
 
@@ -298,20 +339,28 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // deal with any existing content in the conditionals:
           if (conditionalRanges.current()) {
             // first, if there are any conditional ranges, they become real-ones:
-            // if (DEBUG) { console.log(`\u001b[${33}m${'188 pushing conditionals into real'}\u001b[${39}m`) }
+            console.log(
+              `\u001b[${33}m${"188 pushing conditionals into real"}\u001b[${39}m`
+            );
             realRanges.push(conditionalRanges.current());
             // then, wipe conditionals:
-            // if (DEBUG) { console.log(`\u001b[${33}m${'191 wiping conditionals'}\u001b[${39}m`) }
+            console.log(
+              `\u001b[${33}m${"191 wiping conditionals"}\u001b[${39}m`
+            );
             conditionalRanges.wipe();
           }
 
-          // if (DEBUG) { console.log(`\u001b[${33}m${`202 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`) }
+          console.log(
+            `\u001b[${33}m${`202 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+          );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
-          // if (DEBUG) { console.log(`\u001b[${33}m${`208 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`) }
+          console.log(
+            `\u001b[${33}m${`208 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+          );
           conditionalRanges.push(i, noteDownTheIndex);
         }
 
@@ -319,15 +368,54 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         lastMatched = "heads";
 
         // 4. offset the index
-        // if (DEBUG) { console.log(`\u001b[${33}m${`213 offsetting i to ${noteDownTheIndex - 1}`}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${33}m${`213 offsetting i to ${noteDownTheIndex -
+            1}`}\u001b[${39}m`
+        );
         i = noteDownTheIndex - 1;
 
-        // if (DEBUG) { console.log(`\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(conditionalRanges.current(), null, 0)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* real ranges: ${JSON.stringify(realRanges.current(), null, 0)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(firstNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+            conditionalRanges.current(),
+            null,
+            0
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+            realRanges.current(),
+            null,
+            0
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+            firstNonMarkerChunkFound,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+            secondNonMarkerChunkFound,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+            lastMatched,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+            itsFirstTail,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
         continue;
       }
 
@@ -335,7 +423,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
-          noteDownTheIndex = index;
+          noteDownTheIndex = existy(index) ? index : str.length;
           return true;
         }
       });
@@ -343,24 +431,36 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         // reset marker
         itsFirstLetter = true;
 
-        // if (DEBUG) { console.log(`TAILS MATCHED: ${resultOfAttemptToMatchTails}`) }
+        console.log(`TAILS MATCHED: ${resultOfAttemptToMatchTails}`);
 
         if (!itsFirstTail) {
           // if that's a second chunk, this means each chunk will be wrapped
           // and we can't peel of those wrappings, hence only the second tail
           // can be added to conditionals' array.
-          // if (DEBUG) { console.log(`\u001b[${33}m${'245 pushing into conditionals'}\u001b[${39}m`) }
+          console.log(
+            `\u001b[${33}m${`441 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
+          );
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
           // 1.
-          // if (DEBUG) { console.log(`${`\u001b[${33}m${'340 lastMatched'}\u001b[${39}m`} = ${JSON.stringify(lastMatched, null, 4)}`) }
+          console.log(
+            `${`\u001b[${33}m${"340 lastMatched"}\u001b[${39}m`} = ${JSON.stringify(
+              lastMatched,
+              null,
+              4
+            )}`
+          );
           if (lastMatched === "heads") {
-            // if (DEBUG) { console.log(`\u001b[${33}m${'341 WIPING CONDITIONALS'}\u001b[${39}m`) }
+            console.log(
+              `\u001b[${33}m${"341 WIPING CONDITIONALS"}\u001b[${39}m`
+            );
             conditionalRanges.wipe();
           }
 
           // 2. if it's just the first tail, do nothing, but turn off the flag
-          // if (DEBUG) { console.log(`\u001b[${33}m${'249 itsFirstTail = false'}\u001b[${39}m`) }
+          console.log(
+            `\u001b[${33}m${"249 itsFirstTail = false"}\u001b[${39}m`
+          );
           itsFirstTail = false;
         }
 
@@ -368,15 +468,54 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         lastMatched = "tails";
 
         // 2. offset the index
-        // if (DEBUG) { console.log(`\u001b[${33}m${`253 offsetting i to ${noteDownTheIndex - 1}`}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${33}m${`253 offsetting i to ${noteDownTheIndex -
+            1}`}\u001b[${39}m`
+        );
         i = noteDownTheIndex - 1;
 
-        // if (DEBUG) { console.log(`\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(conditionalRanges.current(), null, 0)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* real ranges: ${JSON.stringify(realRanges.current(), null, 0)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(firstNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}`}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+            conditionalRanges.current(),
+            null,
+            0
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+            realRanges.current(),
+            null,
+            0
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+            firstNonMarkerChunkFound,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+            secondNonMarkerChunkFound,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+            lastMatched,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
+        console.log(
+          `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+            itsFirstTail,
+            null,
+            4
+          )}`}\u001b[${39}m`
+        );
         continue;
       }
 
@@ -387,7 +526,9 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         itsFirstTail = true;
       }
       if (itsFirstLetter && !firstNonMarkerChunkFound) {
-        // if (DEBUG) { console.log(`\u001b[${33}m${'268 firstNonMarkerChunkFound = true'}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${33}m${"268 firstNonMarkerChunkFound = true"}\u001b[${39}m`
+        );
         // wipe the conditionals:
         // conditionalRanges.wipe()
 
@@ -395,8 +536,10 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
         firstNonMarkerChunkFound = true;
         itsFirstLetter = false;
       } else if (itsFirstLetter && !secondNonMarkerChunkFound) {
-        // if (DEBUG) { console.log(`\u001b[${33}m${'278 secondNonMarkerChunkFound = true'}\u001b[${39}m`) }
-        // if (DEBUG) { console.log(`\u001b[${33}m${'279 itsFirstTail = true'}\u001b[${39}m`) }
+        console.log(
+          `\u001b[${33}m${"278 secondNonMarkerChunkFound = true"}\u001b[${39}m`
+        );
+        console.log(`\u001b[${33}m${"279 itsFirstTail = true"}\u001b[${39}m`);
         secondNonMarkerChunkFound = true;
         itsFirstTail = true;
         itsFirstLetter = false;
@@ -413,21 +556,93 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
     }
 
-    // if (DEBUG) { console.log(`\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(conditionalRanges.current(), null, 0)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* real ranges: ${JSON.stringify(realRanges.current(), null, 0)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(firstNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}`}\u001b[${39}m`) }
-    // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
+    console.log(
+      `\u001b[${36}m${`\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+        conditionalRanges.current(),
+        null,
+        0
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+        realRanges.current(),
+        null,
+        0
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+        firstNonMarkerChunkFound,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+        secondNonMarkerChunkFound,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+        lastMatched,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
+    console.log(
+      `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+        itsFirstTail,
+        null,
+        4
+      )}`}\u001b[${39}m`
+    );
     //
   }
 
-  // if (DEBUG) { console.log(`\u001b[${36}m${`\n================\n\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(conditionalRanges.current(), null, 0)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`* real ranges: ${JSON.stringify(realRanges.current(), null, 0)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(firstNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(secondNonMarkerChunkFound, null, 4)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`* lastMatched = ${JSON.stringify(lastMatched, null, 4)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(itsFirstTail, null, 4)}`}\u001b[${39}m`) }
+  console.log(
+    `\u001b[${36}m${`\n================\n\n* * *\nENDED WITH\n* conditional ranges:\n${JSON.stringify(
+      conditionalRanges.current(),
+      null,
+      0
+    )}`}\u001b[${39}m`
+  );
+  console.log(
+    `\u001b[${36}m${`* real ranges: ${JSON.stringify(
+      realRanges.current(),
+      null,
+      0
+    )}`}\u001b[${39}m`
+  );
+  console.log(
+    `\u001b[${36}m${`* firstNonMarkerChunkFound = ${JSON.stringify(
+      firstNonMarkerChunkFound,
+      null,
+      4
+    )}`}\u001b[${39}m`
+  );
+  console.log(
+    `\u001b[${36}m${`* secondNonMarkerChunkFound = ${JSON.stringify(
+      secondNonMarkerChunkFound,
+      null,
+      4
+    )}`}\u001b[${39}m`
+  );
+  console.log(
+    `\u001b[${36}m${`* lastMatched = ${JSON.stringify(
+      lastMatched,
+      null,
+      4
+    )}`}\u001b[${39}m`
+  );
+  console.log(
+    `\u001b[${36}m${`* itsFirstTail = ${JSON.stringify(
+      itsFirstTail,
+      null,
+      4
+    )}`}\u001b[${39}m`
+  );
 
   if (conditionalRanges.current()) {
     realRanges.push(conditionalRanges.current());

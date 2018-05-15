@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-05-15
+
+### Added
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+
 ## [2.2.0] - 2018-03-27
 
 ### Added
@@ -30,6 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ First public release
 
+[2.3.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/codsen/string-remove-duplicate-heads-tails/compare/v1.0.0...v2.0.0
