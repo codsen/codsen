@@ -12,6 +12,8 @@ var stringCharacterIsAstralSurrogate = require('string-character-is-astral-surro
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var isArr = Array.isArray;
+
 function existy(x) {
   return x != null;
 }
@@ -158,36 +160,12 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
 
 // Real deal
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  var isArr = Array.isArray;
-  if (!isStr(str)) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_01] the first argument should be a string. Currently it's of a type: " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to:\n" + JSON.stringify(str, null, 4));
-  } else if (str.length === 0) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!");
-  }
-
-  if (!isNaturalNumber(position, { includeZero: true })) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: " + (typeof position === "undefined" ? "undefined" : _typeof(position)) + ", equal to:\n" + JSON.stringify(position, null, 4));
-  }
-  var whatToMatch = void 0;
-
-  if (isStr(originalWhatToMatch)) {
-    whatToMatch = [originalWhatToMatch];
-  } else if (isArr(originalWhatToMatch)) {
-    whatToMatch = originalWhatToMatch;
-  } else if (!existy(originalWhatToMatch)) {
-    whatToMatch = [""];
-  } else {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + (typeof originalWhatToMatch === "undefined" ? "undefined" : _typeof(originalWhatToMatch)) + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
-  }
-
-  if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
-  }
   var defaults = {
     i: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
-    strictApi: true
+    strictApi: true,
+    relaxedApi: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
@@ -212,6 +190,40 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     return false;
   })) {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index " + culpritsIndex + " is longer than 1 character, " + culpritsVal.length + " (equals to " + culpritsVal + "). Please split it into separate characters and put into array as separate elements.");
+  }
+
+  if (!isStr(str)) {
+    if (opts.relaxedApi) {
+      return false;
+    }
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_01] the first argument should be a string. Currently it's of a type: " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to:\n" + JSON.stringify(str, null, 4));
+  } else if (str.length === 0) {
+    if (opts.relaxedApi) {
+      return false;
+    }
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!");
+  }
+
+  if (!isNaturalNumber(position, { includeZero: true })) {
+    if (opts.relaxedApi) {
+      return false;
+    }
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: " + (typeof position === "undefined" ? "undefined" : _typeof(position)) + ", equal to:\n" + JSON.stringify(position, null, 4));
+  }
+  var whatToMatch = void 0;
+
+  if (isStr(originalWhatToMatch)) {
+    whatToMatch = [originalWhatToMatch];
+  } else if (isArr(originalWhatToMatch)) {
+    whatToMatch = originalWhatToMatch;
+  } else if (!existy(originalWhatToMatch)) {
+    whatToMatch = [""];
+  } else {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + (typeof originalWhatToMatch === "undefined" ? "undefined" : _typeof(originalWhatToMatch)) + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
+  }
+
+  if (existy(originalOpts) && !isObj(originalOpts)) {
+    throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_06] the fourth argument, options object, should be a plain object. Currently it's of a type \"" + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + "\", and equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
   // action

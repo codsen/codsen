@@ -4,6 +4,8 @@ import isObj from 'lodash.isplainobject';
 import arrayiffy from 'arrayiffy-if-string';
 import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
+const isArr = Array.isArray;
+
 function existy(x) {
   return x != null;
 }
@@ -190,8 +192,48 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
 
 // Real deal
 function main(mode, str, position, originalWhatToMatch, originalOpts) {
-  const isArr = Array.isArray;
+  const defaults = {
+    i: false,
+    trimBeforeMatching: false,
+    trimCharsBeforeMatching: [],
+    strictApi: true,
+    relaxedApi: false
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
+  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
+  checkTypes(opts, defaults, {
+    msg: "string-match-left-right: [THROW_ID_07*]",
+    schema: {
+      cb: ["null", "undefined", "function"]
+    }
+  });
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(
+    el => (isStr(el) ? el : String(el))
+  );
+
+  let culpritsIndex;
+  let culpritsVal;
+  if (
+    opts.trimCharsBeforeMatching.some((el, i) => {
+      if (el.length > 1 && !isAstral(el)) {
+        culpritsIndex = i;
+        culpritsVal = el;
+        return true;
+      }
+      return false;
+    })
+  ) {
+    throw new Error(
+      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${
+        culpritsVal.length
+      } (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
+    );
+  }
+
   if (!isStr(str)) {
+    if (opts.relaxedApi) {
+      return false;
+    }
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_01] the first argument should be a string. Currently it's of a type: ${typeof str}, equal to:\n${JSON.stringify(
         str,
@@ -200,12 +242,18 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}`
     );
   } else if (str.length === 0) {
+    if (opts.relaxedApi) {
+      return false;
+    }
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_02] the first argument should be a non-empty string. Currently it's empty!`
     );
   }
 
   if (!isNaturalNumber(position, { includeZero: true })) {
+    if (opts.relaxedApi) {
+      return false;
+    }
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_03] the second argument should be a natural number. Currently it's of a type: ${typeof position}, equal to:\n${JSON.stringify(
         position,
@@ -239,42 +287,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         null,
         4
       )}`
-    );
-  }
-  const defaults = {
-    i: false,
-    trimBeforeMatching: false,
-    trimCharsBeforeMatching: [],
-    strictApi: true
-  };
-  const opts = Object.assign({}, defaults, originalOpts);
-  opts.trimCharsBeforeMatching = arrayiffy(opts.trimCharsBeforeMatching);
-  checkTypes(opts, defaults, {
-    msg: "string-match-left-right: [THROW_ID_07*]",
-    schema: {
-      cb: ["null", "undefined", "function"]
-    }
-  });
-  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(
-    el => (isStr(el) ? el : String(el))
-  );
-
-  let culpritsIndex;
-  let culpritsVal;
-  if (
-    opts.trimCharsBeforeMatching.some((el, i) => {
-      if (el.length > 1 && !isAstral(el)) {
-        culpritsIndex = i;
-        culpritsVal = el;
-        return true;
-      }
-      return false;
-    })
-  ) {
-    throw new Error(
-      `string-match-left-right/${mode}(): [THROW_ID_07] the fourth argument, options object contains trimCharsBeforeMatching. It was meant to list the single characters but one of the entries at index ${culpritsIndex} is longer than 1 character, ${
-        culpritsVal.length
-      } (equals to ${culpritsVal}). Please split it into separate characters and put into array as separate elements.`
     );
   }
 

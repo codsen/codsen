@@ -26,6 +26,12 @@ test("01.01 - throws", t => {
   });
   t.truthy(err03.message.includes("THROW_ID_02"));
 
+  t.deepEqual(
+    matchLeftIncl("", 1, undefined, { relaxedApi: true }),
+    false,
+    "bypassing THROW_ID_02"
+  );
+
   // third arg being wrong
 
   const err04 = t.throws(() => {
@@ -52,6 +58,12 @@ test("01.01 - throws", t => {
     matchRightIncl("zzz", "aaa", ["", ""]);
   });
   t.truthy(err08.message.includes("THROW_ID_03"));
+
+  t.deepEqual(
+    matchRightIncl("zzz", "aaa", ["", ""], { relaxedApi: true }),
+    false,
+    "bypassing THROW_ID_03"
+  );
 
   // no second arg
 
@@ -93,6 +105,12 @@ test("01.01 - throws", t => {
     matchLeftIncl(1);
   });
   t.truthy(err15.message.includes("THROW_ID_01"));
+
+  t.deepEqual(
+    matchLeftIncl(1, undefined, undefined, { relaxedApi: true }),
+    false,
+    "bypassing THROW_ID_01"
+  );
 
   const err16 = t.throws(() => {
     matchRightIncl(1);
