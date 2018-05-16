@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* ✨ Tapped dependency `string-match-left-right` with its new `{relaxedApi: true}` option. This prevents `throw` errors in some edge case scenarios.
+* ✨ Tapped dependency [string-match-left-right](https://github.com/codsen/string-match-left-right) with its new `{relaxedApi: true}` option. This prevents `throw` errors in some edge case scenarios.
 
 ## [2.3.0] - 2018-05-15
 
