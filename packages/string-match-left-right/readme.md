@@ -292,7 +292,7 @@ Instead, callback receives (in the order of arguments):
 ```js
 const res1 = matchRight(
   "abc",
-  1, // <--- it's letter "b" at index 1
+  1, // <--- it's the letter "b" at index 1
   "", // <-- notice it's empty, meaning we rely on just callback, "cb" now
   {
     cb: (characterOutside, wholeStringOnThatSide, indexOfCharacterOutside) => {
