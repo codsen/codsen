@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Do substrings match what's on the left or right of a given index?",
   "license": "MIT",
   "engines": {
