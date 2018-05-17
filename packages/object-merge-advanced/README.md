@@ -57,8 +57,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                                | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ---------- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 18&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 18&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 19&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 37&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -551,8 +551,8 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 
 <!-- prettier-ignore-start -->
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://github.com/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") |
-| :---: | :---: | :---: | :---: |
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://github.com/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://github.com/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
+| :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-end -->
 
@@ -589,7 +589,7 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
-[contributors-img]: https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square
+[contributors-img]: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
 [license-url]: https://github.com/codsen/object-merge-advanced/blob/master/license.md

@@ -130,6 +130,12 @@
           "Ideas, Planning, & Feedback"
         ],
         "username": "Kaishiyoku"
+      },
+      {
+        "contribution": [
+          "Ideas, Planning, & Feedback"
+        ],
+        "username": "SnooHD"
       }
     ],
     "eslintrc": {
@@ -169,7 +175,9 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [
+        "deep-equal"
+      ]
     }
   },
   "dependencies": {
@@ -187,7 +195,7 @@
     "ava": "latest",
     "babel-preset-env": "latest",
     "coveralls": "latest",
-    "deep-equal": "^1.0.1",
+    "deep-equal": "latest",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
