@@ -5,16 +5,13 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var toArray = _interopDefault(require('lodash.toarray'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
-/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: true, array: false}}] */
-/* eslint no-continue: 0 */
-
 // ===========================
 
 function existy(something) {
   return something != null;
 }
 function isBool(something) {
-  return typeof something === 'boolean';
+  return typeof something === "boolean";
 }
 
 /**
@@ -25,7 +22,7 @@ function isBool(something) {
  * @return {Array}                 findings array, indexes of each first "letter" found
  */
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
-  if (typeof whereToLook !== 'string' || whereToLook.length === 0 || typeof whatToLookFor !== 'string' || whatToLookFor.length === 0) {
+  if (typeof whereToLook !== "string" || whereToLook.length === 0 || typeof whatToLookFor !== "string" || whatToLookFor.length === 0) {
     return [];
   }
   var foundIndexArray = [];
@@ -80,7 +77,7 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
  */
 function stringise(incoming) {
   if (!existy(incoming) || isBool(incoming)) {
-    return [''];
+    return [""];
   } else if (Array.isArray(incoming)) {
     return incoming.filter(function (el) {
       return existy(el) && !isBool(el);
@@ -157,18 +154,18 @@ function er(originalSource, options, originalReplacement) {
   var opts = Object.assign({}, defaults, options);
   checkTypes(opts, defaults, {
     schema: {
-      leftOutsideNot: ['string', 'number', 'null', 'undefined'],
-      leftOutside: ['string', 'number', 'null', 'undefined'],
-      leftMaybe: ['string', 'number', 'null', 'undefined'],
-      searchFor: ['string', 'number'],
-      rightMaybe: ['string', 'number', 'null', 'undefined'],
-      rightOutside: ['string', 'number', 'null', 'undefined'],
-      rightOutsideNot: ['string', 'number', 'null', 'undefined']
+      leftOutsideNot: ["string", "number", "null", "undefined"],
+      leftOutside: ["string", "number", "null", "undefined"],
+      leftMaybe: ["string", "number", "null", "undefined"],
+      searchFor: ["string", "number"],
+      rightMaybe: ["string", "number", "null", "undefined"],
+      rightOutside: ["string", "number", "null", "undefined"],
+      rightOutsideNot: ["string", "number", "null", "undefined"]
     },
-    msg: 'easy-replace/module.exports():',
-    optsVarName: 'options',
+    msg: "easy-replace/module.exports():",
+    optsVarName: "options",
     acceptArrays: true,
-    acceptArraysIgnore: ['i']
+    acceptArraysIgnore: ["i"]
   });
 
   // enforce the peace and order:
@@ -188,11 +185,13 @@ function er(originalSource, options, originalReplacement) {
   var matched = void 0;
   var found = void 0;
   var replacementRecipe = [];
-  var result = '';
+  var result = "";
 
   //  T H E   L O O P
 
-  var allResults = astralAwareSearch(source[0], opts.searchFor, { i: opts.i.searchFor });
+  var allResults = astralAwareSearch(source[0], opts.searchFor, {
+    i: opts.i.searchFor
+  });
 
   for (var resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
     var oneOfFoundIndexes = allResults[resIndex];
@@ -257,7 +256,7 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== leftOutside =====================
-    if (opts.leftOutside[0] !== '') {
+    if (opts.leftOutside[0] !== "") {
       found = false;
       for (var _i4 = 0, _len3 = opts.leftOutside.length; _i4 < _len3; _i4++) {
         // iterate each of the outsides in the array:
@@ -271,7 +270,7 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== rightOutside =====================
-    if (opts.rightOutside[0] !== '') {
+    if (opts.rightOutside[0] !== "") {
       found = false;
       for (var _i5 = 0, _len4 = opts.rightOutside.length; _i5 < _len4; _i5++) {
         // iterate each of the outsides in the array:
@@ -285,7 +284,7 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== leftOutsideNot =====================
-    if (opts.leftOutsideNot[0] !== '') {
+    if (opts.leftOutsideNot[0] !== "") {
       for (var _i6 = 0, _len5 = opts.leftOutsideNot.length; _i6 < _len5; _i6++) {
         // iterate each of the outsides in the array:
         matched = iterateLeft(opts.leftOutsideNot[_i6], arrSource, foundBeginningIndex, opts.i.leftOutsideNot);
@@ -300,7 +299,7 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== rightOutsideNot =====================
-    if (opts.rightOutsideNot[0] !== '') {
+    if (opts.rightOutsideNot[0] !== "") {
       for (var _i7 = 0, _len6 = opts.rightOutsideNot.length; _i7 < _len6; _i7++) {
         // iterate each of the outsides in the array:
         matched = iterateRight(opts.rightOutsideNot[_i7], arrSource, foundEndingIndex, opts.i.rightOutsideNot);
@@ -335,24 +334,24 @@ function er(originalSource, options, originalReplacement) {
     });
   } else {
     // there were no findings, so return source
-    return source.join('');
+    return source.join("");
   }
   //
   // iterate the recipe array and perform the replacement:
   // first, if replacements don't start with 0, attach this part onto result let:
   if (replacementRecipe.length > 0 && replacementRecipe[0][0] !== 0) {
-    result += arrSource.slice(0, replacementRecipe[0][0]).join('');
+    result += arrSource.slice(0, replacementRecipe[0][0]).join("");
   }
   replacementRecipe.forEach(function (elem, i) {
     // first position is replacement string:
-    result += replacement.join('');
+    result += replacement.join("");
     if (replacementRecipe[i + 1] !== undefined) {
       // if next element exists, add content between current and next finding
-      result += arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join('');
+      result += arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join("");
     } else {
       // if this is the last element in the replacement recipe array, add
       // remainder of the string after last replacement and the end:
-      result += arrSource.slice(replacementRecipe[i][1]).join('');
+      result += arrSource.slice(replacementRecipe[i][1]).join("");
     }
   });
   return result;

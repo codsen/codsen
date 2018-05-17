@@ -1,16 +1,13 @@
 import toArray from 'lodash.toarray';
 import checkTypes from 'check-types-mini';
 
-/* eslint prefer-destructuring: ["error", {VariableDeclarator: {object: true, array: false}}] */
-/* eslint no-continue: 0 */
-
 // ===========================
 
 function existy(something) {
   return something != null;
 }
 function isBool(something) {
-  return typeof something === 'boolean';
+  return typeof something === "boolean";
 }
 
 /**
@@ -21,23 +18,35 @@ function isBool(something) {
  * @return {Array}                 findings array, indexes of each first "letter" found
  */
 function astralAwareSearch(whereToLook, whatToLookFor, opts) {
-  if (typeof whereToLook !== 'string' || whereToLook.length === 0 || typeof whatToLookFor !== 'string' || whatToLookFor.length === 0) {
+  if (
+    typeof whereToLook !== "string" ||
+    whereToLook.length === 0 ||
+    typeof whatToLookFor !== "string" ||
+    whatToLookFor.length === 0
+  ) {
     return [];
   }
-  var foundIndexArray = [];
-  var arrWhereToLook = toArray(whereToLook);
-  var arrWhatToLookFor = toArray(whatToLookFor);
-  var found = void 0;
+  const foundIndexArray = [];
+  const arrWhereToLook = toArray(whereToLook);
+  const arrWhatToLookFor = toArray(whatToLookFor);
+  let found;
 
-  for (var i = 0; i < arrWhereToLook.length; i++) {
+  for (let i = 0; i < arrWhereToLook.length; i++) {
     // check if current source character matches the first char of what we're looking for
     if (opts.i) {
-      if (arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()) {
+      if (
+        arrWhereToLook[i].toLowerCase() === arrWhatToLookFor[0].toLowerCase()
+      ) {
         found = true;
         // this means first character matches
         // match the rest:
-        for (var i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
-          if (!existy(arrWhereToLook[i + i2]) || !existy(arrWhatToLookFor[i2]) || arrWhereToLook[i + i2].toLowerCase() !== arrWhatToLookFor[i2].toLowerCase()) {
+        for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+          if (
+            !existy(arrWhereToLook[i + i2]) ||
+            !existy(arrWhatToLookFor[i2]) ||
+            arrWhereToLook[i + i2].toLowerCase() !==
+              arrWhatToLookFor[i2].toLowerCase()
+          ) {
             found = false;
             break;
           }
@@ -50,8 +59,8 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
       found = true;
       // this means first character matches
       // match the rest:
-      for (var _i = 0; _i < arrWhatToLookFor.length; _i++) {
-        if (arrWhereToLook[i + _i] !== arrWhatToLookFor[_i]) {
+      for (let i2 = 0; i2 < arrWhatToLookFor.length; i2++) {
+        if (arrWhereToLook[i + i2] !== arrWhatToLookFor[i2]) {
           found = false;
           break;
         }
@@ -76,15 +85,12 @@ function astralAwareSearch(whereToLook, whatToLookFor, opts) {
  */
 function stringise(incoming) {
   if (!existy(incoming) || isBool(incoming)) {
-    return [''];
+    return [""];
   } else if (Array.isArray(incoming)) {
-    return incoming.filter(function (el) {
-      return existy(el) && !isBool(el);
-    }).map(function (el) {
-      return String(el);
-    }).filter(function (el) {
-      return el.length > 0;
-    });
+    return incoming
+      .filter(el => existy(el) && !isBool(el))
+      .map(el => String(el))
+      .filter(el => el.length > 0);
   }
   return [String(incoming)];
 }
@@ -92,16 +98,22 @@ function stringise(incoming) {
 // ===========================
 
 function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
-  var matched = true;
-  var charsArray = toArray(elem);
-  for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
+  let matched = true;
+  const charsArray = toArray(elem);
+  for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
-      if (charsArray[i2].toLowerCase() !== arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()) {
+      if (
+        charsArray[i2].toLowerCase() !==
+        arrSource[foundBeginningIndex - toArray(elem).length + i2].toLowerCase()
+      ) {
         matched = false;
         break;
       }
-    } else if (charsArray[i2] !== arrSource[foundBeginningIndex - toArray(elem).length + i2]) {
+    } else if (
+      charsArray[i2] !==
+      arrSource[foundBeginningIndex - toArray(elem).length + i2]
+    ) {
       matched = false;
       break;
     }
@@ -110,12 +122,15 @@ function iterateLeft(elem, arrSource, foundBeginningIndex, i) {
 }
 
 function iterateRight(elem, arrSource, foundEndingIndex, i) {
-  var matched = true;
-  var charsArray = toArray(elem);
-  for (var i2 = 0, len = charsArray.length; i2 < len; i2++) {
+  let matched = true;
+  const charsArray = toArray(elem);
+  for (let i2 = 0, len = charsArray.length; i2 < len; i2++) {
     // iterate each character of particular Outside:
     if (i) {
-      if (charsArray[i2].toLowerCase() !== arrSource[foundEndingIndex + i2].toLowerCase()) {
+      if (
+        charsArray[i2].toLowerCase() !==
+        arrSource[foundEndingIndex + i2].toLowerCase()
+      ) {
         matched = false;
         break;
       }
@@ -139,7 +154,7 @@ function iterateRight(elem, arrSource, foundEndingIndex, i) {
 // =========================
 
 function er(originalSource, options, originalReplacement) {
-  var defaults = {
+  const defaults = {
     i: {
       leftOutsideNot: false,
       leftOutside: false,
@@ -150,25 +165,25 @@ function er(originalSource, options, originalReplacement) {
       rightOutsideNot: false
     }
   };
-  var opts = Object.assign({}, defaults, options);
+  const opts = Object.assign({}, defaults, options);
   checkTypes(opts, defaults, {
     schema: {
-      leftOutsideNot: ['string', 'number', 'null', 'undefined'],
-      leftOutside: ['string', 'number', 'null', 'undefined'],
-      leftMaybe: ['string', 'number', 'null', 'undefined'],
-      searchFor: ['string', 'number'],
-      rightMaybe: ['string', 'number', 'null', 'undefined'],
-      rightOutside: ['string', 'number', 'null', 'undefined'],
-      rightOutsideNot: ['string', 'number', 'null', 'undefined']
+      leftOutsideNot: ["string", "number", "null", "undefined"],
+      leftOutside: ["string", "number", "null", "undefined"],
+      leftMaybe: ["string", "number", "null", "undefined"],
+      searchFor: ["string", "number"],
+      rightMaybe: ["string", "number", "null", "undefined"],
+      rightOutside: ["string", "number", "null", "undefined"],
+      rightOutsideNot: ["string", "number", "null", "undefined"]
     },
-    msg: 'easy-replace/module.exports():',
-    optsVarName: 'options',
+    msg: "easy-replace/module.exports():",
+    optsVarName: "options",
     acceptArrays: true,
-    acceptArraysIgnore: ['i']
+    acceptArraysIgnore: ["i"]
   });
 
   // enforce the peace and order:
-  var source = stringise(originalSource);
+  const source = stringise(originalSource);
   opts.leftOutsideNot = stringise(opts.leftOutsideNot);
   opts.leftOutside = stringise(opts.leftOutside);
   opts.leftMaybe = stringise(opts.leftMaybe);
@@ -176,22 +191,28 @@ function er(originalSource, options, originalReplacement) {
   opts.rightMaybe = stringise(opts.rightMaybe);
   opts.rightOutside = stringise(opts.rightOutside);
   opts.rightOutsideNot = stringise(opts.rightOutsideNot);
-  var replacement = stringise(originalReplacement);
+  const replacement = stringise(originalReplacement);
 
-  var arrSource = toArray(source[0]);
-  var foundBeginningIndex = void 0;
-  var foundEndingIndex = void 0;
-  var matched = void 0;
-  var found = void 0;
-  var replacementRecipe = [];
-  var result = '';
+  const arrSource = toArray(source[0]);
+  let foundBeginningIndex;
+  let foundEndingIndex;
+  let matched;
+  let found;
+  const replacementRecipe = [];
+  let result = "";
 
   //  T H E   L O O P
 
-  var allResults = astralAwareSearch(source[0], opts.searchFor, { i: opts.i.searchFor });
+  const allResults = astralAwareSearch(source[0], opts.searchFor, {
+    i: opts.i.searchFor
+  });
 
-  for (var resIndex = 0, resLen = allResults.length; resIndex < resLen; resIndex++) {
-    var oneOfFoundIndexes = allResults[resIndex];
+  for (
+    let resIndex = 0, resLen = allResults.length;
+    resIndex < resLen;
+    resIndex++
+  ) {
+    const oneOfFoundIndexes = allResults[resIndex];
 
     // oneOfFoundIndexes is the index of starting index of found
     // the principle of replacement is after finding the searchFor string,
@@ -208,56 +229,89 @@ function er(originalSource, options, originalReplacement) {
     // they're not hungry, i.e. the whole Maybe must be of the left of searchFor exactly
     //
     if (opts.leftMaybe.length > 0) {
-      for (var i = 0, len = opts.leftMaybe.length; i < len; i++) {
+      for (let i = 0, len = opts.leftMaybe.length; i < len; i++) {
         // iterate each of the maybe's in the array:
         matched = true;
-        var splitLeftMaybe = toArray(opts.leftMaybe[i]);
-        for (var i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
+        const splitLeftMaybe = toArray(opts.leftMaybe[i]);
+        for (let i2 = 0, len2 = splitLeftMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
           if (opts.i.leftMaybe) {
-            if (splitLeftMaybe[i2].toLowerCase() !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2].toLowerCase()) {
+            if (
+              splitLeftMaybe[i2].toLowerCase() !==
+              arrSource[
+                oneOfFoundIndexes - splitLeftMaybe.length + i2
+              ].toLowerCase()
+            ) {
               matched = false;
               break;
             }
-          } else if (splitLeftMaybe[i2] !== arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2]) {
+          } else if (
+            splitLeftMaybe[i2] !==
+            arrSource[oneOfFoundIndexes - splitLeftMaybe.length + i2]
+          ) {
             matched = false;
             break;
           }
         }
-        if (matched && oneOfFoundIndexes - splitLeftMaybe.length < foundBeginningIndex) {
+        if (
+          matched &&
+          oneOfFoundIndexes - splitLeftMaybe.length < foundBeginningIndex
+        ) {
           foundBeginningIndex = oneOfFoundIndexes - splitLeftMaybe.length;
         }
       }
     }
     // ===================== rightMaybe =====================
     if (opts.rightMaybe.length > 0) {
-      for (var _i2 = 0, _len = opts.rightMaybe.length; _i2 < _len; _i2++) {
+      for (let i = 0, len = opts.rightMaybe.length; i < len; i++) {
         // iterate each of the Maybe's in the array:
         matched = true;
-        var splitRightMaybe = toArray(opts.rightMaybe[_i2]);
-        for (var _i3 = 0, _len2 = splitRightMaybe.length; _i3 < _len2; _i3++) {
+        const splitRightMaybe = toArray(opts.rightMaybe[i]);
+        for (let i2 = 0, len2 = splitRightMaybe.length; i2 < len2; i2++) {
           // iterate each character of particular Maybe:
           if (opts.i.rightMaybe) {
-            if (splitRightMaybe[_i3].toLowerCase() !== arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + _i3].toLowerCase()) {
+            if (
+              splitRightMaybe[i2].toLowerCase() !==
+              arrSource[
+                oneOfFoundIndexes + toArray(opts.searchFor).length + i2
+              ].toLowerCase()
+            ) {
               matched = false;
               break;
             }
-          } else if (splitRightMaybe[_i3] !== arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + _i3]) {
+          } else if (
+            splitRightMaybe[i2] !==
+            arrSource[oneOfFoundIndexes + toArray(opts.searchFor).length + i2]
+          ) {
             matched = false;
             break;
           }
         }
-        if (matched && foundEndingIndex < oneOfFoundIndexes + toArray(opts.searchFor).length + splitRightMaybe.length) {
-          foundEndingIndex = oneOfFoundIndexes + toArray(opts.searchFor).length + splitRightMaybe.length;
+        if (
+          matched &&
+          foundEndingIndex <
+            oneOfFoundIndexes +
+              toArray(opts.searchFor).length +
+              splitRightMaybe.length
+        ) {
+          foundEndingIndex =
+            oneOfFoundIndexes +
+            toArray(opts.searchFor).length +
+            splitRightMaybe.length;
         }
       }
     }
     // ===================== leftOutside =====================
-    if (opts.leftOutside[0] !== '') {
+    if (opts.leftOutside[0] !== "") {
       found = false;
-      for (var _i4 = 0, _len3 = opts.leftOutside.length; _i4 < _len3; _i4++) {
+      for (let i = 0, len = opts.leftOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(opts.leftOutside[_i4], arrSource, foundBeginningIndex, opts.i.leftOutside);
+        matched = iterateLeft(
+          opts.leftOutside[i],
+          arrSource,
+          foundBeginningIndex,
+          opts.i.leftOutside
+        );
         if (matched) {
           found = true;
         }
@@ -267,11 +321,16 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== rightOutside =====================
-    if (opts.rightOutside[0] !== '') {
+    if (opts.rightOutside[0] !== "") {
       found = false;
-      for (var _i5 = 0, _len4 = opts.rightOutside.length; _i5 < _len4; _i5++) {
+      for (let i = 0, len = opts.rightOutside.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(opts.rightOutside[_i5], arrSource, foundEndingIndex, opts.i.rightOutside);
+        matched = iterateRight(
+          opts.rightOutside[i],
+          arrSource,
+          foundEndingIndex,
+          opts.i.rightOutside
+        );
         if (matched) {
           found = true;
         }
@@ -281,10 +340,15 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== leftOutsideNot =====================
-    if (opts.leftOutsideNot[0] !== '') {
-      for (var _i6 = 0, _len5 = opts.leftOutsideNot.length; _i6 < _len5; _i6++) {
+    if (opts.leftOutsideNot[0] !== "") {
+      for (let i = 0, len = opts.leftOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateLeft(opts.leftOutsideNot[_i6], arrSource, foundBeginningIndex, opts.i.leftOutsideNot);
+        matched = iterateLeft(
+          opts.leftOutsideNot[i],
+          arrSource,
+          foundBeginningIndex,
+          opts.i.leftOutsideNot
+        );
         if (matched) {
           foundBeginningIndex = -1;
           foundEndingIndex = -1;
@@ -296,10 +360,15 @@ function er(originalSource, options, originalReplacement) {
       }
     }
     // ===================== rightOutsideNot =====================
-    if (opts.rightOutsideNot[0] !== '') {
-      for (var _i7 = 0, _len6 = opts.rightOutsideNot.length; _i7 < _len6; _i7++) {
+    if (opts.rightOutsideNot[0] !== "") {
+      for (let i = 0, len = opts.rightOutsideNot.length; i < len; i++) {
         // iterate each of the outsides in the array:
-        matched = iterateRight(opts.rightOutsideNot[_i7], arrSource, foundEndingIndex, opts.i.rightOutsideNot);
+        matched = iterateRight(
+          opts.rightOutsideNot[i],
+          arrSource,
+          foundEndingIndex,
+          opts.i.rightOutsideNot
+        );
         if (matched) {
           foundBeginningIndex = -1;
           foundEndingIndex = -1;
@@ -317,38 +386,43 @@ function er(originalSource, options, originalReplacement) {
   // first we need to remove any overlaps in the recipe, cases like:
   // [ [0,10], [2,12] ] => [ [0,10], [10,12] ]
   if (replacementRecipe.length > 0) {
-    replacementRecipe.forEach(function (elem, i) {
+    replacementRecipe.forEach((elem, i) => {
       // iterate through all replacement-recipe-array's elements:
-      if (replacementRecipe[i + 1] !== undefined && replacementRecipe[i][1] > replacementRecipe[i + 1][0]) {
+      if (
+        replacementRecipe[i + 1] !== undefined &&
+        replacementRecipe[i][1] > replacementRecipe[i + 1][0]
+      ) {
         replacementRecipe[i + 1][0] = replacementRecipe[i][1];
       }
     });
     // iterate the recipe array again, cleaning up elements like [12,12]
-    replacementRecipe.forEach(function (elem, i) {
+    replacementRecipe.forEach((elem, i) => {
       if (elem[0] === elem[1]) {
         replacementRecipe.splice(i, 1);
       }
     });
   } else {
     // there were no findings, so return source
-    return source.join('');
+    return source.join("");
   }
   //
   // iterate the recipe array and perform the replacement:
   // first, if replacements don't start with 0, attach this part onto result let:
   if (replacementRecipe.length > 0 && replacementRecipe[0][0] !== 0) {
-    result += arrSource.slice(0, replacementRecipe[0][0]).join('');
+    result += arrSource.slice(0, replacementRecipe[0][0]).join("");
   }
-  replacementRecipe.forEach(function (elem, i) {
+  replacementRecipe.forEach((elem, i) => {
     // first position is replacement string:
-    result += replacement.join('');
+    result += replacement.join("");
     if (replacementRecipe[i + 1] !== undefined) {
       // if next element exists, add content between current and next finding
-      result += arrSource.slice(replacementRecipe[i][1], replacementRecipe[i + 1][0]).join('');
+      result += arrSource
+        .slice(replacementRecipe[i][1], replacementRecipe[i + 1][0])
+        .join("");
     } else {
       // if this is the last element in the replacement recipe array, add
       // remainder of the string after last replacement and the end:
-      result += arrSource.slice(replacementRecipe[i][1]).join('');
+      result += arrSource.slice(replacementRecipe[i][1]).join("");
     }
   });
   return result;
