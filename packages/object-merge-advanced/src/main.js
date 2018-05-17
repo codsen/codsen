@@ -40,23 +40,25 @@ function equalOrSubsetKeys(obj1, obj2) {
   );
 }
 
-function mergeAdvanced(input1orig, input2orig, originalOpts) {
+function getType(something) {
+  if (isObj(something)) {
+    return "object";
+  } else if (isArr(something)) {
+    return "array";
+  }
+  return typeof something;
+}
+
+function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
   //
   // VARS AND PRECAUTIONS
   // ---------------------------------------------------------------------------
 
-  if (arguments.length === 0) {
-    throw new TypeError(
-      "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"
-    );
-  }
-  // deliberate loose equal - existy():
-  if (originalOpts != null && !isObj(originalOpts)) {
+  if (!isObj(originalOpts)) {
     throw new TypeError(
       "object-merge-advanced/mergeAdvanced(): [THROW_ID_02] Options object, the third argument, must be a plain object"
     );
   }
-  // const DEBUG = 0
 
   // DEFAULTS
   // ---------------------------------------------------------------------------
@@ -100,6 +102,19 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     opts.ignoreEverything = true;
   }
 
+  // this variable takes "path" coming from input and appends the key
+  // name following object-path notation.
+  // https://github.com/mariocasciaro/object-path
+  // Basically, arrays are marked with dot, same like object keys, only the
+  // key is the index number of the element.
+  //
+  // For example: key1.key2.0.key3.
+  // That zero means first element of the array. It also means that key "key1"
+  // had value of a plain object-type, which had a key "key2" which value was
+  // an array. That's array's first element (at zero'th index) was a plain object.
+  // That object had key "key3", which we reference here by "key1.key2.0.key3".
+  let currPath;
+
   // ACTION
   // ---------------------------------------------------------------------------
 
@@ -108,8 +123,24 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
     opts.useNullAsExplicitFalse &&
     (input1orig === null || input2orig === null)
   ) {
-    // if (DEBUG) { console.log(`\u001b[${33}m${`85 RET: ${opts.cb ? opts.cb(input1orig, input2orig, false) : false}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(input1orig, input2orig, null) : null;
+    console.log(
+      `\u001b[${33}m${`124 RET: ${
+        opts.cb
+          ? opts.cb(input1orig, input2orig, null, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : null
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(input1orig, input2orig, null, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : null;
   }
 
   // clone the values to prevent accidental mutations, but only if it makes sense -
@@ -121,11 +152,7 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
 
   // // if the unidirectional merging is set, that's a quick ending because the values
   // // don't matter
-  // if (opts.ignoreEverything) {
-  //   return opts.cb ? opts.cb(i1, i2, i1) : i1
-  // } else if (opts.hardMergeEverything) {
-  //   return opts.cb ? opts.cb(i1, i2, i2) : i2
-  // }
+
   let uniRes;
   if (opts.ignoreEverything) {
     uniRes = i1;
@@ -136,11 +163,25 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
   // short name to mark unidirectional state
   const uni = opts.hardMergeEverything || opts.ignoreEverything;
 
-  // if (DEBUG) { console.log(`\u001b[${32}m${'========================================================'}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`\u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`) }
-  // if (DEBUG) { console.log(`uniRes = ${JSON.stringify(uniRes, null, 4)}`) }
-  // if (DEBUG) { console.log(`uni = ${JSON.stringify(uni, null, 4)}`) }
+  console.log(
+    `\u001b[${32}m${"========================================================"}\u001b[${39}m`
+  );
+  console.log(
+    `159 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
+  );
+  console.log(
+    `162 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
+  );
+  // console.log(`164 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
+  // console.log(`165 uni = ${JSON.stringify(uni, null, 4)}`);
+
+  console.log(
+    `176 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+      infoObj,
+      null,
+      4
+    )}`
+  );
 
   // Now the complex part. By this point we know there's a value clash and we need
   // to judge case-by-case. Principle is to aim to retain as much data as possible
@@ -157,13 +198,45 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
           (arrayContainsStr(i1) || arrayContainsStr(i2))
         ) {
           const currentResult = uni ? uniRes : [];
-          // if (DEBUG) { console.log(`\u001b[${33}m${`129 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-          return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+          console.log(
+            `\u001b[${33}m${`191 RET: ${
+              opts.cb
+                ? opts.cb(i1, i2, currentResult, {
+                    path: currPath,
+                    key: infoObj.key,
+                    type: infoObj.type
+                  })
+                : currentResult
+            }`}\u001b[${39}m`
+          );
+          return opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: currPath,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult;
         }
         if (opts.hardArrayConcat) {
           const currentResult = uni ? uniRes : i1.concat(i2);
-          // if (DEBUG) { console.log(`\u001b[${33}m${`134 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-          return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+          console.log(
+            `\u001b[${33}m${`222 RET: ${
+              opts.cb
+                ? opts.cb(i1, i2, currentResult, {
+                    path: currPath,
+                    key: infoObj.key,
+                    type: infoObj.type
+                  })
+                : currentResult
+            }`}\u001b[${39}m`
+          );
+          return opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: currPath,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult;
         }
         let temp = [];
         for (
@@ -171,6 +244,15 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
           index < len;
           index++
         ) {
+          // calculate current path
+          currPath = infoObj.path.length
+            ? `${infoObj.path}.${index}`
+            : `${index}`;
+          console.log(
+            `209 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+          );
+
+          // calculate the merge outcome:
           if (
             isObj(i1[index]) &&
             isObj(i2[index]) &&
@@ -178,15 +260,44 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
               equalOrSubsetKeys(i1[index], i2[index])) ||
               !opts.mergeObjectsOnlyWhenKeysetMatches)
           ) {
-            temp.push(mergeAdvanced(i1[index], i2[index], opts));
+            temp.push(
+              mergeAdvanced(
+                {
+                  path: currPath,
+                  key: infoObj.key,
+                  type: [getType(i1), getType(i2)]
+                },
+                i1[index],
+                i2[index],
+                opts
+              )
+            );
           } else if (
             opts.oneToManyArrayObjectMerge &&
             (i1.length === 1 || i2.length === 1) // either of arrays has one elem.
           ) {
             temp.push(
               i1.length === 1
-                ? mergeAdvanced(i1[0], i2[index], opts)
-                : mergeAdvanced(i1[index], i2[0], opts)
+                ? mergeAdvanced(
+                    {
+                      path: currPath,
+                      key: infoObj.key,
+                      type: [getType(i1), getType(i2)]
+                    },
+                    i1[0],
+                    i2[index],
+                    opts
+                  )
+                : mergeAdvanced(
+                    {
+                      path: currPath,
+                      key: infoObj.key,
+                      type: [getType(i1), getType(i2)]
+                    },
+                    i1[index],
+                    i2[0],
+                    opts
+                  )
             );
           } else if (opts.concatInsteadOfMerging) {
             // case1 - concatenation no matter what contents
@@ -216,21 +327,69 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       } else {
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         const currentResult = uni ? uniRes : i1;
-        // if (DEBUG) { console.log(`\u001b[${33}m${`183 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-        return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+        console.log(
+          `\u001b[${33}m${`237 RET: ${
+            opts.cb
+              ? opts.cb(i1, i2, currentResult, {
+                  path: currPath,
+                  key: infoObj.key,
+                  type: infoObj.type
+                })
+              : currentResult
+          }`}\u001b[${39}m`
+        );
+        return opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult;
       }
     } else {
       // cases 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
       if (nonEmpty(i2)) {
         // cases 11, 13, 15, 17
         const currentResult = uni ? uniRes : i2;
-        // if (DEBUG) { console.log(`\u001b[${33}m${`191 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-        return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+        console.log(
+          `\u001b[${33}m${`249 RET: ${
+            opts.cb
+              ? opts.cb(i1, i2, currentResult, {
+                  path: currPath,
+                  key: infoObj.key,
+                  type: infoObj.type
+                })
+              : currentResult
+          }`}\u001b[${39}m`
+        );
+        return opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult;
       }
       // cases 12, 14, 16, 18, 19, 20
       const currentResult = uni ? uniRes : i1;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`196 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`258 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: currPath,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: currPath,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
   } else if (isObj(i1)) {
     // cases 21-40
@@ -241,26 +400,73 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         if (nonEmpty(i2)) {
           // case 21
           const currentResult = uni ? uniRes : i2;
-          // if (DEBUG) { console.log(`\u001b[${33}m${`208 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-          return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+          console.log(
+            `\u001b[${33}m${`274 RET: ${
+              opts.cb
+                ? opts.cb(i1, i2, currentResult, {
+                    path: currPath,
+                    key: infoObj.key,
+                    type: infoObj.type
+                  })
+                : currentResult
+            }`}\u001b[${39}m`
+          );
+          return opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: currPath,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult;
         }
         // case 22
         const currentResult = uni ? uniRes : i1;
-        // if (DEBUG) { console.log(`\u001b[${33}m${`213 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-        return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+        console.log(
+          `\u001b[${33}m${`283 RET: ${
+            opts.cb
+              ? opts.cb(i1, i2, currentResult, {
+                  path: currPath,
+                  key: infoObj.key,
+                  type: infoObj.type
+                })
+              : currentResult
+          }`}\u001b[${39}m`
+        );
+        return opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: currPath,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult;
       } else if (isObj(i2)) {
         // case 23
         // two object merge - we'll consider opts.ignoreEverything & opts.hardMergeEverything too.
         Object.keys(i2).forEach(key => {
+          // calculate current path:
+          currPath =
+            infoObj.path && infoObj.path.length
+              ? `${infoObj.path}.${key}`
+              : `${key}`;
+          console.log(
+            `204 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+          );
+
+          // calculate the merge outcome:
           if (i1.hasOwnProperty(key)) {
-            // if (DEBUG) { console.log(`219 working on i1 and i2 objects' keys "${key}"`) }
+            console.log(`293 working on i1 and i2 objects' keys "${key}"`);
             // key clash
             if (includes(key, opts.ignoreKeys)) {
               // set the ignoreEverything for all deeper recursive traversals,
               // otherwise, it will get lost, yet, ignores apply to all children
               // console.log('1. - ignoreEverything')
-              // if (DEBUG) { console.log(`1st Recursion @225, key=${key}`) }
+              console.log(`1st Recursion @299, key=${key}`);
               i1[key] = mergeAdvanced(
+                {
+                  path: currPath,
+                  key: key,
+                  type: [getType(i1), getType(i2)]
+                },
                 i1[key],
                 i2[key],
                 Object.assign({}, opts, { ignoreEverything: true })
@@ -272,8 +478,13 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
               // console.log('2. - hardMergeEverything')
-              // if (DEBUG) { console.log(`2nd Recursion @234, key=${key}`) }
+              console.log(`2nd Recursion @312, key=${key}`);
               i1[key] = mergeAdvanced(
+                {
+                  path: currPath,
+                  key: key,
+                  type: [getType(i1), getType(i2)]
+                },
                 i1[key],
                 i2[key],
                 Object.assign({}, opts, { hardMergeEverything: true })
@@ -283,8 +494,13 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
               // It will force a concat of both values, as long as they are both arrays
               // No merge will happen.
               // console.log('3. - hardArrayConcat')
-              // if (DEBUG) { console.log(`3rd Recursion @241, key=${key}`) }
+              console.log(`3rd Recursion @323, key=${key}`);
               i1[key] = mergeAdvanced(
+                {
+                  path: currPath,
+                  key: key,
+                  type: [getType(i1), getType(i2)]
+                },
                 i1[key],
                 i2[key],
                 Object.assign({}, opts, { hardArrayConcat: true })
@@ -292,10 +508,43 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
             } else {
               // regular merge
               // console.log('4.')
-              // if (DEBUG) { console.log('246 4th Recursion') }
-              // if (DEBUG) { console.log(`247 i1[${key}] = ${JSON.stringify(i1[key], null, 4)}`) }
-              i1[key] = mergeAdvanced(i1[key], i2[key], opts);
-              // if (DEBUG) { console.log(`249 AFTER RECURSION i1[${key}] = ${JSON.stringify(i1[key], null, 4)}`) }
+              console.log("332 4th Recursion");
+              console.log(
+                `\n334 ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  {
+                    path: currPath,
+                    key: key,
+                    type: [getType(i1), getType(i2)]
+                  },
+                  null,
+                  4
+                )};\n${`\u001b[${33}m${`i1[${key}]`}\u001b[${39}m`} = ${JSON.stringify(
+                  i1[key],
+                  null,
+                  4
+                )};\n${`\u001b[${33}m${`i2[${key}]`}\u001b[${39}m`} = ${JSON.stringify(
+                  i2[key],
+                  null,
+                  4
+                )}`
+              );
+              i1[key] = mergeAdvanced(
+                {
+                  path: currPath,
+                  key: key,
+                  type: [getType(i1), getType(i2)]
+                },
+                i1[key],
+                i2[key],
+                opts
+              );
+              console.log(
+                `338 AFTER RECURSION i1[${key}] = ${JSON.stringify(
+                  i1[key],
+                  null,
+                  4
+                )}`
+              );
             }
           } else {
             i1[key] = i2[key]; // key does not exist, so creates it
@@ -305,21 +554,69 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
       }
       // cases 24, 25, 26, 27, 28, 29, 30
       const currentResult = uni ? uniRes : i1;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`252 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`354 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // i1 is empty obj
     // cases 31-40
     if (isArr(i2) || isObj(i2) || nonEmpty(i2)) {
       // cases 31, 32, 33, 34, 35, 37
       const currentResult = uni ? uniRes : i2;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`261 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`366 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // 36, 38, 39, 40
     const currentResult = uni ? uniRes : i1;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`266 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`375 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   } else if (isStr(i1)) {
     if (nonEmpty(i1)) {
       // cases 41-50
@@ -327,95 +624,343 @@ function mergeAdvanced(input1orig, input2orig, originalOpts) {
         // cases 41, 43, 45
         // take care of hard merge setting cases, opts.hardMergeKeys
         const currentResult = uni ? uniRes : i2;
-        // if (DEBUG) { console.log(`\u001b[${33}m${`276 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-        return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+        console.log(
+          `\u001b[${33}m${`388 RET: ${
+            opts.cb
+              ? opts.cb(i1, i2, currentResult, {
+                  path: infoObj.path,
+                  key: infoObj.key,
+                  type: infoObj.type
+                })
+              : currentResult
+          }`}\u001b[${39}m`
+        );
+        return opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult;
       }
       // cases 42, 44, 46, 47, 48, 49, 50
       const currentResult = uni ? uniRes : i1;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`281 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`397 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // i1 is empty string
     // cases 51-60
     if (i2 != null && !isBool(i2)) {
       // cases 51, 52, 53, 54, 55, 56, 57
       const currentResult = uni ? uniRes : i2;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`289 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`409 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // 58, 59, 60
     const currentResult = uni ? uniRes : i1;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`294 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`418 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   } else if (isNum(i1)) {
     // cases 61-70
     if (nonEmpty(i2)) {
       // cases 61, 63, 65, 67
       const currentResult = uni ? uniRes : i2;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`301 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`429 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // cases 62, 64, 66, 68, 69, 70
     const currentResult = uni ? uniRes : i1;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`306 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`438 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   } else if (isBool(i1)) {
     // cases 71-80
     if (isBool(i2)) {
       // case 78 - two Booleans
       if (opts.mergeBoolsUsingOrNotAnd) {
         const currentResult = uni ? uniRes : i1 || i2; // default - OR
-        // if (DEBUG) { console.log(`\u001b[${33}m${`314 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-        return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+        console.log(
+          `\u001b[${33}m${`450 RET: ${
+            opts.cb
+              ? opts.cb(i1, i2, currentResult, {
+                  path: infoObj.path,
+                  key: infoObj.key,
+                  type: infoObj.type
+                })
+              : currentResult
+          }`}\u001b[${39}m`
+        );
+        return opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult;
       }
       const currentResult = uni ? uniRes : i1 && i2; // alternative merge using AND
-      // if (DEBUG) { console.log(`\u001b[${33}m${`318 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`458 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     } else if (i2 != null) {
       // DELIBERATE LOOSE EQUAL - existy()
       // cases 71, 72, 73, 74, 75, 76, 77
       const currentResult = uni ? uniRes : i2;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`323 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `\u001b[${33}m${`468 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // i2 is null or undefined
     // cases 79*, 80
     const currentResult = uni ? uniRes : i1;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`329 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`478 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   } else if (i1 === null) {
     // cases 81-90
     if (i2 != null) {
       // DELIBERATE LOOSE EQUAL - existy()
       // case 81, 82, 83, 84, 85, 86, 87, 88*
       const currentResult = uni ? uniRes : i2;
-      // if (DEBUG) { console.log(`\u001b[${33}m${`336 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-      return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+      console.log(
+        `850 \u001b[${32}m${`currentResult`}\u001b[${39}m = ${currentResult}`
+      );
+      console.log(`\u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`);
+      console.log(
+        `\u001b[${33}m${`490 RET: ${
+          opts.cb
+            ? opts.cb(i1, i2, currentResult, {
+                path: infoObj.path,
+                key: infoObj.key,
+                type: infoObj.type
+              })
+            : currentResult
+        }`}\u001b[${39}m`
+      );
+      return opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult;
     }
     // cases 89, 90
     const currentResult = uni ? uniRes : i1;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`341 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`499 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   } else {
     // cases 91-100
     const currentResult = uni ? uniRes : i2;
-    // if (DEBUG) { console.log(`\u001b[${33}m${`346 RET: ${opts.cb ? opts.cb(i1, i2, currentResult) : currentResult}`}\u001b[${39}m`) }
-    return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+    console.log(
+      `\u001b[${33}m${`508 RET: ${
+        opts.cb
+          ? opts.cb(i1, i2, currentResult, {
+              path: infoObj.path,
+              key: infoObj.key,
+              type: infoObj.type
+            })
+          : currentResult
+      }`}\u001b[${39}m`
+    );
+    return opts.cb
+      ? opts.cb(i1, i2, currentResult, {
+          path: infoObj.path,
+          key: infoObj.key,
+          type: infoObj.type
+        })
+      : currentResult;
   }
-  // if (DEBUG) { console.log(`\n\n\nFINAL ROW 356 - i1=${JSON.stringify(i1, null, 4)}`) }
-  // if (DEBUG) { console.log(`FINAL ROW 357 - i2=${JSON.stringify(i2, null, 4)}`) }
+  console.log(`\n\n\nFINAL ROW 514 - i1=${JSON.stringify(i1, null, 4)}`);
+  console.log(`FINAL ROW 515 - i2=${JSON.stringify(i2, null, 4)}`);
 
   // return i1
 
   const currentResult = uni ? uniRes : i1;
-  // if (DEBUG) { console.log(`FINAL ROW - currentResult = ${JSON.stringify(currentResult, null, 4)}`) }
-  // if (DEBUG) { console.log(`FINAL ROW - uni = ${JSON.stringify(uni, null, 4)}`) }
-  // if (DEBUG) { console.log(`FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`) }
+  console.log(
+    `FINAL ROW - currentResult = ${JSON.stringify(currentResult, null, 4)}`
+  );
+  console.log(`FINAL ROW - uni = ${JSON.stringify(uni, null, 4)}`);
+  console.log(`FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`);
 
-  // if (DEBUG) { console.log(`\u001b[${33}m${`358 RET: ${JSON.stringify(opts.cb ? opts.cb(i1, i2, currentResult) : currentResult, null, 4)}`}\u001b[${39}m`) }
-  return opts.cb ? opts.cb(i1, i2, currentResult) : currentResult;
+  console.log(
+    `\u001b[${33}m${`527 RET: ${JSON.stringify(
+      opts.cb
+        ? opts.cb(i1, i2, currentResult, {
+            path: infoObj.path,
+            key: infoObj.key,
+            type: infoObj.type
+          })
+        : currentResult,
+      null,
+      4
+    )}`}\u001b[${39}m`
+  );
+  return opts.cb
+    ? opts.cb(i1, i2, currentResult, {
+        path: infoObj.path,
+        key: infoObj.key,
+        type: infoObj.type
+      })
+    : currentResult;
 }
 
-// JSON.stringify(aaaaa, null, 4)
+function externalApi(input1orig, input2orig, originalOpts) {
+  if (arguments.length === 0) {
+    throw new TypeError(
+      "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"
+    );
+  }
 
-export default mergeAdvanced;
+  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+  // notice we have first argument tracking the current path, which is not
+  // exposed to the external API.
+  return mergeAdvanced(
+    { key: null, path: "", type: [getType(input1orig), getType(input2orig)] },
+    input1orig,
+    input2orig,
+    originalOpts
+  );
+}
+
+export default externalApi;

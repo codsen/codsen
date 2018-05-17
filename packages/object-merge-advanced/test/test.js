@@ -2,7 +2,8 @@
 
 import test from "ava";
 import clone from "lodash.clonedeep";
-import mergeAdvanced from "../dist/object-merge-advanced.cjs";
+import mergeAdvanced from "../dist/object-merge-advanced.esm";
+import equal from "deep-equal";
 
 //
 //                           ____
@@ -2208,7 +2209,7 @@ test("09.05 - empty string vs undefined #60", t => {
 // 10. opts.ignoreKeys
 // ==============================
 
-test("10.01 - OPTS > opts.ignoreKeys - basic cases", t => {
+test("10.01 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - basic cases", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2313,7 +2314,7 @@ test("10.01 - OPTS > opts.ignoreKeys - basic cases", t => {
   );
 });
 
-test("10.02 - OPTS > opts.ignoreKeys - multiple keys ignored, multiple merged", t => {
+test("10.02 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - multiple keys ignored, multiple merged", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2349,7 +2350,7 @@ test("10.02 - OPTS > opts.ignoreKeys - multiple keys ignored, multiple merged", 
   );
 });
 
-test("10.03 - OPTS > opts.ignoreKeys - wildcards", t => {
+test("10.03 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcards", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2375,7 +2376,7 @@ test("10.03 - OPTS > opts.ignoreKeys - wildcards", t => {
   );
 });
 
-test("10.04 - OPTS > opts.ignoreKeys - wildcard, but not found", t => {
+test("10.04 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys - wildcard, but not found", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2405,7 +2406,7 @@ test("10.04 - OPTS > opts.ignoreKeys - wildcard, but not found", t => {
 // 11. opts.hardMergeKeys
 // ==============================
 
-test("11.01 - OPTS > opts.hardMergeKeys", t => {
+test("11.01 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2539,7 +2540,7 @@ test("11.01 - OPTS > opts.hardMergeKeys", t => {
   );
 });
 
-test("11.02 - OPTS > opts.hardMergeKeys and opts.ignoreKeys together", t => {
+test("11.02 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys and opts.ignoreKeys together", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2694,7 +2695,7 @@ test("11.10 - #23 two full objects", t => {
 // 12. opts.oneToManyArrayObjectMerge
 // ==================================
 
-test("12.01 - OPTS > opts.oneToManyArrayObjectMerge", t => {
+test("12.01 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2871,7 +2872,7 @@ test("12.01 - OPTS > opts.oneToManyArrayObjectMerge", t => {
   );
 });
 
-test("12.02 - OPTS > opts.oneToManyArrayObjectMerge - two-to-many does not work", t => {
+test("12.02 - \u001b[33mOPTS\u001b[39m - opts.oneToManyArrayObjectMerge - two-to-many does not work", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -2938,7 +2939,7 @@ test("12.02 - OPTS > opts.oneToManyArrayObjectMerge - two-to-many does not work"
 // 13. throws of all kinds
 // ==============================
 
-test("13.01 - OPTS > third argument is not a plain object", t => {
+test("13.01 - \u001b[33mOPTS\u001b[39m - third argument is not a plain object", t => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, 1);
   });
@@ -2947,7 +2948,7 @@ test("13.01 - OPTS > third argument is not a plain object", t => {
   });
 });
 
-test("13.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work", t => {
+test("13.02 - \u001b[33mOPTS\u001b[39m - opts.mergeObjectsOnlyWhenKeysetMatches type checks work", t => {
   t.throws(() => {
     mergeAdvanced(
       { a: "a" },
@@ -2964,7 +2965,7 @@ test("13.02 - OPTS > opts.mergeObjectsOnlyWhenKeysetMatches type checks work", t
   });
 });
 
-test("13.03 - OPTS > opts.ignoreKeys type checks work", t => {
+test("13.03 - \u001b[33mOPTS\u001b[39m - opts.ignoreKeys type checks work", t => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, { ignoreKeys: 1 });
   });
@@ -2982,7 +2983,7 @@ test("13.03 - OPTS > opts.ignoreKeys type checks work", t => {
   });
 });
 
-test("13.04 - OPTS > opts.hardMergeKeys type checks work", t => {
+test("13.04 - \u001b[33mOPTS\u001b[39m - opts.hardMergeKeys type checks work", t => {
   t.throws(() => {
     mergeAdvanced({ a: "a" }, { b: "b" }, { hardMergeKeys: 1 });
   });
@@ -3510,7 +3511,7 @@ test("16.01 - values as arrays that contain strings", t => {
 // 17. opts.useNullAsExplicitFalse
 // ===============================
 
-test("17.01 - opts.useNullAsExplicitFalse, simple merges", t => {
+test("17.01 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, simple merges", t => {
   //
   // ===
   // ===  PART 1. Baseline.
@@ -3656,7 +3657,7 @@ test("17.01 - opts.useNullAsExplicitFalse, simple merges", t => {
   );
 });
 
-test("17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90", t => {
+test("17.02 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -3846,7 +3847,7 @@ test("17.02 - opts.useNullAsExplicitFalse, null vs. non-Booleans, cases #81-90",
   );
 });
 
-test("17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99", t => {
+test("17.03 - \u001b[33mOPTS\u001b[39m - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 29, 39, 49...99", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -4035,7 +4036,7 @@ test("17.03 - opts.useNullAsExplicitFalse, non-Booleans vs. null, cases #9, 19, 
     "17.03.10 - #99 - null vs. null"
   );
 });
-test("17.04 - OPTS > opts.hardConcatKeys - basic cases", t => {
+test("17.04 - \u001b[33mOPTS\u001b[39m - opts.hardConcatKeys - basic cases", t => {
   t.deepEqual(
     mergeAdvanced(
       {
@@ -4122,7 +4123,7 @@ test("17.04 - OPTS > opts.hardConcatKeys - basic cases", t => {
 // 18. opts.cb
 // ===============================
 
-test("18.01 - opts.cb - setting hard merge if inputs are Booleans", t => {
+test("18.01 - \u001b[33mOPTS\u001b[39m - opts.cb - setting hard merge if inputs are Booleans", t => {
   // control:
   t.deepEqual(
     mergeAdvanced(
@@ -4329,7 +4330,7 @@ test("18.01 - opts.cb - setting hard merge if inputs are Booleans", t => {
   );
 });
 
-test("18.02 - opts.cb - setting ignoreAll on input Booleans", t => {
+test("18.02 - \u001b[33mOPTS\u001b[39m - opts.cb - setting ignoreAll on input Booleans", t => {
   // control:
   t.deepEqual(
     mergeAdvanced(
@@ -4450,7 +4451,7 @@ test("18.02 - opts.cb - setting ignoreAll on input Booleans", t => {
   );
 });
 
-test("18.03 - opts.cb - using callback to wrap string with other strings", t => {
+test("18.03 - \u001b[33mOPTS\u001b[39m - opts.cb - using callback to wrap string with other strings", t => {
   // control:
   t.deepEqual(
     mergeAdvanced(
@@ -4524,5 +4525,177 @@ test("18.03 - opts.cb - using callback to wrap string with other strings", t => 
       b: false
     },
     "18.03.02 - wraps if string"
+  );
+});
+
+test("18.04 - \u001b[33mOPTS\u001b[39m - opts.cb - pin the 4th arg values", t => {
+  const tester = mergeAdvanced(
+    {
+      a: {
+        b: "c1",
+        d: null,
+        m: ["x", "y"],
+        n: [
+          {
+            p: "p val 1",
+            r: "r val 1"
+          }
+        ]
+      }
+    },
+    {
+      a: {
+        b: "c2",
+        d: ["i", "j", "k"],
+        m: ["z"],
+        n: [
+          {
+            p: "p val 2",
+            r: "r val 2"
+          }
+        ]
+      }
+    },
+    {
+      cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
+        if (inputArg1 === "c1") {
+          t.deepEqual(
+            infoObj,
+            {
+              key: "b",
+              path: "a.b",
+              type: ["object", "object"]
+            },
+            "18.04.01 - cb values pinned an object"
+          );
+        }
+
+        if (equal(inputArg1, null)) {
+          t.deepEqual(
+            infoObj,
+            {
+              key: "d",
+              path: "a.d",
+              type: ["object", "object"]
+            },
+            "18.04.02 - cb values pinned a key which has a value of array"
+          );
+        }
+
+        if (equal(inputArg1, ["x"])) {
+          t.deepEqual(
+            infoObj,
+            {
+              key: "x",
+              path: "a.m.0",
+              type: ["array", "array"]
+            },
+            "18.04.03 - cb values pinned an element within an array"
+          );
+        }
+        return resultAboutToBeReturned;
+      }
+    }
+  );
+
+  // dummy test to prevent unused variable alerts
+  t.pass(tester);
+});
+
+test("18.05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concatenate certain key values during merge", t => {
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        x: {
+          key: "a",
+          c: "c val 1",
+          d: "d val 1",
+          e: "e val 1"
+        },
+        z: {
+          key: "z.key val 1"
+        }
+      },
+      {
+        x: {
+          key: "b",
+          c: "c val 2",
+          d: "d val 2",
+          e: "e val 2"
+        },
+        z: {
+          key: "z.key val 2"
+        }
+      }
+    ),
+    {
+      x: {
+        key: "b",
+        c: "c val 2",
+        d: "d val 2",
+        e: "e val 2"
+      },
+      z: {
+        key: "z.key val 2"
+      }
+    },
+    "18.05.01 - default behaviour, control"
+  );
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        x: {
+          key: "a", // <------- merge this
+          c: "c val 1",
+          d: "d val 1",
+          e: "e val 1"
+        },
+        z: {
+          key: "z.key val 1"
+        }
+      },
+      {
+        x: {
+          key: "b", // <------- with this, but only this path
+          c: "c val 2",
+          d: "d val 2",
+          e: "e val 2"
+        },
+        z: {
+          key: "z.key val 2" // <---- even though this key is also same-named
+        }
+      },
+      {
+        cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
+          if (infoObj.path === "x.key") {
+            return (
+              `${
+                typeof inputArg1 === "string" && inputArg1.length > 0
+                  ? inputArg1
+                  : ""
+              }` +
+              `${
+                typeof inputArg2 === "string" && inputArg2.length > 0
+                  ? inputArg2
+                  : ""
+              }`
+            );
+          }
+          return resultAboutToBeReturned;
+        }
+      }
+    ),
+    {
+      x: {
+        key: "ab",
+        c: "c val 2",
+        d: "d val 2",
+        e: "e val 2"
+      },
+      z: {
+        key: "z.key val 2"
+      }
+    },
+    "18.05.02 - cb fourth arg's path info used to override to merge strings"
   );
 });

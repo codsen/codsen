@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [10.2.0] - 2018-05-16
+
+### Added
+
+* ✨ Fourth argument in the callback. It will allow to make decisions evaluating key names, paths and their type (is it a key of an array or an object?).
+
+### Changed
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+
 ## [10.1.0] - 2018-03-28
 
 ### Changed
@@ -208,3 +221,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [9.1.0]: https://github.com/codsen/object-merge-advanced/compare/v9.0.0...v9.1.0
 [10.0.0]: https://github.com/codsen/object-merge-advanced/compare/v9.1.0...v10.0.0
 [10.1.0]: https://github.com/codsen/object-merge-advanced/compare/v10.0.0...v10.1.0
+[10.2.0]: https://github.com/codsen/object-merge-advanced/compare/v10.1.0...v10.2.0

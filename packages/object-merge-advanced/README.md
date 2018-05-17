@@ -18,24 +18,26 @@
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [Install](#install)
-* [Purpose](#purpose)
-* [In practice](#in-practice)
-* [API](#api)
-* [`opts.cb`](#optscb)
-* [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
-* [Difference from `Object.assign()`](#difference-from-objectassign)
-* [Contributing](#contributing)
-* [Contributors](#contributors)
-* [Licence](#licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [In practice](#in-practice)
+- [API](#api)
+- [`opts.cb`](#optscb)
+- [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
+- [Difference from `Object.assign()`](#difference-from-objectassign)
+- [Contributing](#contributing)
+- [Contributors](#contributors)
+- [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## Install
 
@@ -56,7 +58,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ---------- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 18&nbsp;KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 18&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 35&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -181,13 +183,32 @@ Here are all defaults in one place:
 
 ### API - Output
 
-A merged thing is returned. It's probably the same type of your inputs.
+A merged thing is returned. It's probably the same type as your inputs.
 
 Objects or arrays in the inputs are **not mutated**. This is very important.
 
 ## `opts.cb`
 
-Callback allows you to intervene on each of merging actions, right before the values are returned. It gives you both values (first two arguments) and suggested return result (third argument) in a callback arguments. Whatever you return is then written as a merge value. If you don't want to do anything, just return that third argument back. But you can return something different.
+You can name the arguments of your callback function any way you like, only _the order_ matters.
+
+| Argument | Name                                                                                                           | Purpose                                                                                                                                                                    |
+| -------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1st`    | `inputArg1` (call it anyway you like; for example, same as in `Array.forEach`, name the variables as you wish) | It's the _value_ of the key that's clashing; comes from **first** main input argument (named `input1` above)                                                               |
+| `2nd`    | `inputArg2` (call it anyway you like — only its position in a row matters)                                     | It's the _value_ of the key that's clashing; comes from **second** main input argument (named `input2` above)                                                              |
+| `3rd`    | `resultAboutToBeReturned` (call it anyway you like)                                                            | Algorithm already decided what the result would normally be, if you were not using the callback. It's that result here.                                                    |
+| `4th`    | `infoObj` (same — variable's name is arbitrary)                                                                | This plain object contains the location info about the keys: key names and full paths, plus, the type of the parent (array or object). See the details in the table below. |
+
+**Remember always to return either 3rd arg. `resultAboutToBeReturned` or something else because otherwise `undefined` will be written as a result of the particular merge.**
+
+Fourth argument, `infoObj` is a plain object and will contain keys:
+
+| `infoObj` key | Type                                                                | Purpose                                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `path`        | String                                                              | By definition keys clash when two objects have them both at the same path. Therefore, callback will contain only one path value, which applies to both clashing sides. |
+| `key`         | String                                                              | If it's an object, that's the name of the keys whose values are clashing and being merged                                                                              |
+| `type`        | Array of two strings, usually each being either "object" or "array" | Sometimes you might want to be able to distinguish values of arrays from values that belong to plain objects that are being merged.                                    |
+
+Callback allows you to intervene on each of merging actions, right before the values are returned. It gives you both values (first two arguments), suggested return result (3rd argument) and info object (4th argument) in a callback arguments. Whatever you return from your callback function is then written as a final value. If you don't want to do anything, just return that third argument. But you can return something different.
 
 Callback is very powerful — you could pretty much use it instead of all the options listed higher.
 
@@ -202,14 +223,15 @@ mergeAdvanced(
     ...
   },
   {
-    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
+      // whatever you return here gets written as the value of clashing keys:
       return inputArg1
     },
   },
 )
 ```
 
-Also, `opts.hardMergeEverything` would be returning callback's second argument.
+Also, `opts.hardMergeEverything` setting would be the same as returning callback's second argument in every case:
 
 ```js
 mergeAdvanced(
@@ -220,7 +242,8 @@ mergeAdvanced(
     ...
   },
   {
-    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
+      // whatever you return here gets written as the value of clashing keys:
       return inputArg2
     },
   },
@@ -258,7 +281,7 @@ const res = mergeAdvanced(
     b: "" // <---- checking to make sure this empty string will not be hard-merged over "b" from input #1
   },
   {
-    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
       if (typeof inputArg1 === "boolean" && typeof inputArg2 === "boolean") {
         return inputArg2;
       }
@@ -308,7 +331,7 @@ const res = mergeAdvanced(
     b: null
   },
   {
-    cb: (inputArg1, inputArg2, resultAboutToBeReturned) => {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
       if (typeof resultAboutToBeReturned === "string") {
         return `{{ ${resultAboutToBeReturned} }}`; // <--- use template literals
       }
@@ -329,6 +352,93 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 ```
 
 Whatever you return from the _callback_ will be written as a result of a clash, so make sure you return either `resultAboutToBeReturned` (third argument in the callback), or something to substitute it. Otherwise, `undefined` will be written.
+
+**[⬆ &nbsp;back to top](#)**
+
+### `opts.cb` another example, using paths of the keys to override the merge
+
+Let's say you want to perform a regular merge on two objects, except a certain key merges need to be concatenated.
+
+```js
+let obj1 = {
+  key: "a",
+  x: "z"
+};
+
+let obj2 = {
+  key: "b",
+  x: "y"
+};
+```
+
+You are fine with `y` from `obj2` overwriting `x` BUT you want values `a` and `b` concatenated (into `ab`).
+
+To illustrate the case, I'll put the key deeper to show you how the paths work:
+
+```js
+const res = mergeAdvanced(
+  {
+    x: {
+      key: "a", // <------- concatenate this
+      c: "c val 1",
+      d: "d val 1",
+      e: "e val 1"
+    },
+    z: {
+      key: "z.key val 1"
+    }
+  },
+  {
+    x: {
+      key: "b", // <------- with this, but only this path
+      c: "c val 2",
+      d: "d val 2",
+      e: "e val 2"
+    },
+    z: {
+      key: "z.key val 2" // <---- even though this key is also same-named
+    }
+  },
+  {
+    cb: (inputArg1, inputArg2, resultAboutToBeReturned, infoObj) => {
+      if (infoObj.path === "x.key") {
+        // here are all the contents of the "infoObj":
+        console.log(
+          `${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+            infoObj,
+            null,
+            4
+          )}`
+        );
+        return (
+          `${
+            typeof inputArg1 === "string" && inputArg1.length > 0
+              ? inputArg1
+              : ""
+          }` +
+          `${
+            typeof inputArg2 === "string" && inputArg2.length > 0
+              ? inputArg2
+              : ""
+          }`
+        );
+      }
+      return resultAboutToBeReturned;
+    }
+  }
+);
+// ==> {
+//       x: {
+//         key: "ab",   // <---------------- concatenated
+//         c: "c val 2",
+//         d: "d val 2",
+//         e: "e val 2"
+//       },
+//       z: {
+//         key: "z.key val 2"
+//       }
+//     }
+```
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -439,13 +549,12 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
 
+<!-- prettier-ignore-start -->
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
 | [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://github.com/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") |
-| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-
-
+| :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-end -->
 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
