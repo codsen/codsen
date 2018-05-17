@@ -182,8 +182,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     }
     return false;
   }
-  // 2. if not, then do some work and find out
-  const dontStop = true;
 
   // the plan is the following.
   // We got bunch of ranges. Find the middle-one of them and check, is our
@@ -200,7 +198,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
   let upperIndex = rarr.length - 1; // at first, it's the total number of indexes.
   let theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
   while (
-    dontStop &&
     Math.floor(upperIndex - lowerIndex) > 1 &&
     theIndexOfTheRangeInTheMiddle !== 0
   ) {
