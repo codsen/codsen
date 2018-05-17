@@ -1,9 +1,7 @@
-/* eslint no-bitwise:0, no-param-reassign:0 */
-
-import intersection from 'lodash.intersection'
-import pull from 'lodash.pull'
-import isObject from 'lodash.isplainobject'
-import clone from 'lodash.clonedeep'
+import intersection from "lodash.intersection";
+import pull from "lodash.pull";
+import isObject from "lodash.isplainobject";
+import clone from "lodash.clonedeep";
 
 /**
  * Checks if input is a true Object (checking against null and Array)
@@ -15,7 +13,10 @@ import clone from 'lodash.clonedeep'
  * override. In our examle, an array of 2^(3-1) objects, each containing a:true.
  * Without override we would have got 2^3 objects array
  */
-function objectBooleanCombinations(originalIncomingObject, originalOverrideObject) {
+function objectBooleanCombinations(
+  originalIncomingObject,
+  originalOverrideObject
+) {
   //
   // FUNCTIONS
   // =========
@@ -26,17 +27,19 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
    * @returns {Array} Array of arrays each containing one possible combination of true/false
    */
   function combinations(n) {
-    const r = []
-    for (let i = 0; i < (1 << n); i++) {
-      const c = []
+    const r = [];
+    for (let i = 0; i < 1 << n; i++) {
+      const c = [];
       for (let j = 0; j < n; j++) {
-        c.push(i & (1 << j) ? 1 : 0)
+        c.push(i & (1 << j) ? 1 : 0);
       }
-      r.push(c)
+      r.push(c);
     }
-    return r
+    return r;
   }
-  function existy(x) { return x != null }
+  function existy(x) {
+    return x != null;
+  }
 
   // VARIABLES
   // =========
@@ -45,45 +48,51 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   // ======
 
   if (!existy(originalIncomingObject)) {
-    throw new Error('[THROW_ID_01] missing input object')
+    throw new Error("[THROW_ID_01] missing input object");
   }
   if (!isObject(originalIncomingObject)) {
-    throw new Error('[THROW_ID_02] the first input object must be a true object')
+    throw new Error(
+      "[THROW_ID_02] the first input object must be a true object"
+    );
   }
   if (existy(originalOverrideObject) && !isObject(originalOverrideObject)) {
-    throw new Error('[THROW_ID_03] the second override object must be a true object')
+    throw new Error(
+      "[THROW_ID_03] the second override object must be a true object"
+    );
   }
 
-  const incomingObject = clone(originalIncomingObject)
-  const overrideObject = clone(originalOverrideObject)
+  const incomingObject = clone(originalIncomingObject);
+  const overrideObject = clone(originalOverrideObject);
 
   // START
   // =====
 
-  const propertiesToMix = Object.keys(incomingObject)
-  const outcomingObjectsArray = []
-  let propertiesToBeOverridden
+  const propertiesToMix = Object.keys(incomingObject);
+  const outcomingObjectsArray = [];
+  let propertiesToBeOverridden;
 
   // if there's override, prepare an alternative (a subset) array propertiesToMix
   // ----------------------------------------------------------------------------
 
   if (existy(overrideObject) && isObject(overrideObject)) {
     // check overrideObject's contents - must be Boolean:
-    Object.keys(overrideObject).forEach((val) => {
+    Object.keys(overrideObject).forEach(val => {
       if (
-        (overrideObject[val] !== 0) &&
-        (overrideObject[val] !== 1) &&
-        (overrideObject[val] !== true) &&
-        (overrideObject[val] !== false)
+        overrideObject[val] !== 0 &&
+        overrideObject[val] !== 1 &&
+        overrideObject[val] !== true &&
+        overrideObject[val] !== false
       ) {
-        throw new Error('[THROW_ID_04] override object\'s values must contain only true/valse or 0/1')
+        throw new Error(
+          "[THROW_ID_04] override object's values must contain only true/valse or 0/1"
+        );
       }
-    })
+    });
   }
 
-  let override = false
-  if (existy(overrideObject) && (Object.keys(overrideObject).length !== 0)) {
-    override = true
+  let override = false;
+  if (existy(overrideObject) && Object.keys(overrideObject).length !== 0) {
+    override = true;
   }
 
   if (override) {
@@ -91,39 +100,40 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
     // enforce that override object had just a subset of incomingObject properties, nothing else
     propertiesToBeOverridden = intersection(
       Object.keys(overrideObject),
-      Object.keys(incomingObject),
-    )
+      Object.keys(incomingObject)
+    );
     // propertiesToMix = all incoming object's properties MINUS properties to override
-    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem))
+    propertiesToBeOverridden.forEach(elem => pull(propertiesToMix, elem));
   }
 
   // mix up whatever propertiesToMix has came to this point
   // ------------------------------------------------------
 
-  const boolCombinations = combinations(Object.keys(propertiesToMix).length)
-  let tempObject = {}
+  const boolCombinations = combinations(Object.keys(propertiesToMix).length);
+  let tempObject = {};
   boolCombinations.forEach((elem1, index1) => {
-    tempObject = {}
+    tempObject = {};
     propertiesToMix.forEach((elem2, index2) => {
-      tempObject[elem2] = (boolCombinations[index1][index2] === 1 ? 1 : 0)
-    })
-    outcomingObjectsArray.push(tempObject)
-  })
+      tempObject[elem2] = boolCombinations[index1][index2] === 1 ? 1 : 0;
+    });
+    outcomingObjectsArray.push(tempObject);
+  });
 
   // if there's override, append the static override values on each property of the
   // propertiesToMix array:
   // ------------------------------------------------------------------------------
   if (override) {
     outcomingObjectsArray.forEach(elem3 =>
-      propertiesToBeOverridden.forEach((elem4) => {
-        elem3[elem4] = overrideObject[elem4]
-      }))
+      propertiesToBeOverridden.forEach(elem4 => {
+        elem3[elem4] = overrideObject[elem4];
+      })
+    );
   }
 
   // RETURN
   // ======
 
-  return outcomingObjectsArray
+  return outcomingObjectsArray;
 }
 
-export default objectBooleanCombinations
+export default objectBooleanCombinations;

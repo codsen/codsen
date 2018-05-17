@@ -7,8 +7,6 @@ var pull = _interopDefault(require('lodash.pull'));
 var isObject = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
-/* eslint no-bitwise:0, no-param-reassign:0 */
-
 /**
  * Checks if input is a true Object (checking against null and Array)
  * @param {Object} a reference object to use the properties from. Values don't
@@ -51,13 +49,13 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
   // ======
 
   if (!existy(originalIncomingObject)) {
-    throw new Error('[THROW_ID_01] missing input object');
+    throw new Error("[THROW_ID_01] missing input object");
   }
   if (!isObject(originalIncomingObject)) {
-    throw new Error('[THROW_ID_02] the first input object must be a true object');
+    throw new Error("[THROW_ID_02] the first input object must be a true object");
   }
   if (existy(originalOverrideObject) && !isObject(originalOverrideObject)) {
-    throw new Error('[THROW_ID_03] the second override object must be a true object');
+    throw new Error("[THROW_ID_03] the second override object must be a true object");
   }
 
   var incomingObject = clone(originalIncomingObject);
@@ -77,7 +75,7 @@ function objectBooleanCombinations(originalIncomingObject, originalOverrideObjec
     // check overrideObject's contents - must be Boolean:
     Object.keys(overrideObject).forEach(function (val) {
       if (overrideObject[val] !== 0 && overrideObject[val] !== 1 && overrideObject[val] !== true && overrideObject[val] !== false) {
-        throw new Error('[THROW_ID_04] override object\'s values must contain only true/valse or 0/1');
+        throw new Error("[THROW_ID_04] override object's values must contain only true/valse or 0/1");
       }
     });
   }

@@ -1,11 +1,8 @@
 # object-boolean-combinations
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -33,6 +33,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```sh
@@ -41,18 +43,18 @@ npm i object-boolean-combinations
 
 ```js
 // consume as a CommonJS require:
-const objectBooleanCombinations = require('object-boolean-combinations')
+const objectBooleanCombinations = require("object-boolean-combinations");
 // or as an ES Module:
-import objectBooleanCombinations from 'object-boolean-combinations'
+import objectBooleanCombinations from "object-boolean-combinations";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-boolean-combinations.cjs.js` | 4&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-boolean-combinations.esm.js` | 4&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-boolean-combinations.umd.js` | 17&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                                      | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-boolean-combinations.cjs.js` | 4&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-boolean-combinations.esm.js` | 4&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-boolean-combinations.umd.js` | 17&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -61,9 +63,9 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 It consumes a plain object, takes its keys (values don't matter) and produces an array with every possible combination of each key's Boolean^ value. If you have _n_ keys, you'll get `2^n` objects in the resulting array.
 
 ```js
-const objectBooleanCombinations = require('object-boolean-combinations')
-const test = objectBooleanCombinations({ a: 'whatever' })
-console.log(`test = ${JSON.stringify(test, null, 4)}`)
+const objectBooleanCombinations = require("object-boolean-combinations");
+const test = objectBooleanCombinations({ a: "whatever" });
+console.log(`test = ${JSON.stringify(test, null, 4)}`);
 // => [
 //      {a: 0},
 //      {a: 1}
@@ -86,10 +88,10 @@ objectBooleanCombinations(inputObject, [overrideObject]);
 
 ### API - Input
 
-Input argument           | Type           | Obligatory? | Description
--------------------------|----------------|-------------|-------------
-`inputObject`            | Plain object   | yes         | Plain object from which we should reference the keys.
-`overrideObject`         | Plain object   | no          | Keys in this object will be used as-is and will not be used for generating combinations. See [overriding](#overriding) section below.
+| Input argument   | Type         | Obligatory? | Description                                                                                                                           |
+| ---------------- | ------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `inputObject`    | Plain object | yes         | Plain object from which we should reference the keys.                                                                                 |
+| `overrideObject` | Plain object | no          | Keys in this object will be used as-is and will not be used for generating combinations. See [overriding](#overriding) section below. |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -98,12 +100,12 @@ Input argument           | Type           | Obligatory? | Description
 Sometimes you want to override the object keys, for example, in the a settings object, I want to override all `a` and `b` keys to be only `true` (`1`). This reduces the object combinations from `2^3 = 8` to: `2^(3-2) = 2^1 = 2`:
 
 ```js
-const objectBooleanCombinations = require('object-boolean-combinations')
+const objectBooleanCombinations = require("object-boolean-combinations");
 const test = objectBooleanCombinations(
-  {a: 0, b: 0, c: 0},
-  {a: 1, b: 1} // <----- Override. These values will be on all combinations.
-)
-console.log(`test = ${JSON.stringify(test, null, 4)}`)
+  { a: 0, b: 0, c: 0 },
+  { a: 1, b: 1 } // <----- Override. These values will be on all combinations.
+);
+console.log(`test = ${JSON.stringify(test, null, 4)}`);
 // => [
 //      {a: 1, b: 1, c: 0},
 //      {a: 1, b: 1, c: 1}
@@ -117,24 +119,24 @@ In example above, `a` and `b` are "pinned" to `1`, thus reducing the amount of c
 ## Overriding the combinations — in practice
 
 In practice, I use this overriding to perform the specific tests on [Detergent.js](https://github.com/codsen/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
+
 * first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
 * second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
 
 Here's an AVA test, which uses `objectBooleanCombinations()` to create a combinations array of settings objects, then uses `forEach()` to iterate through them all, testing each:
 
 ```js
-test('encode entities - pound sign', t => {
+test("encode entities - pound sign", t => {
   objectBooleanCombinations(sampleObj, {
     convertEntities: true
-    })
-  .forEach(function (elem){
-    t.is(detergent(
-      '\u00A3', elem),
-      '&pound;',
-      'pound char converted into entity'
-    )
-  })
-})
+  }).forEach(function(elem) {
+    t.is(
+      detergent("\u00A3", elem),
+      "&pound;",
+      "pound char converted into entity"
+    );
+  });
+});
 ```
 
 **[⬆ &nbsp;back to top](#)**
@@ -143,9 +145,9 @@ test('encode entities - pound sign', t => {
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-boolean-combinations/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-boolean-combinations/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-boolean-combinations/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -155,39 +157,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/object-boolean-combinations.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-boolean-combinations
-
-[npm-img]: https://img.shields.io/npm/v/object-boolean-combinations.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/object-boolean-combinations
-
 [travis-img]: https://img.shields.io/travis/codsen/object-boolean-combinations.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/object-boolean-combinations
-
 [cov-img]: https://coveralls.io/repos/github/codsen/object-boolean-combinations/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/object-boolean-combinations?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/object-boolean-combinations.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/object-boolean-combinations
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-boolean-combinations.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-boolean-combinations
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-boolean-combinations.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/object-boolean-combinations/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/object-boolean-combinations
-
 [downloads-img]: https://img.shields.io/npm/dm/object-boolean-combinations.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-boolean-combinations
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-boolean-combinations
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/object-boolean-combinations.svg?style=flat-square
 [license-url]: https://github.com/codsen/object-boolean-combinations/blob/master/license.md
