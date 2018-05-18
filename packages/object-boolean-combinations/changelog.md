@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-05-17
+
+### Changed
+
+* ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rules, dropped `airbnb-base`
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Now unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+
 ## 2.0.0 - 2017-12-12
 
 ### Changed
@@ -14,3 +23,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * ✨ Small tweaks to the code, no changes to the API.
 
 Bumping the major version just in case it breaks something. But it should not.
+
+[2.1.0]: https://github.com/codsen/object-boolean-combinations/compare/v2.0.0...v2.1.0
