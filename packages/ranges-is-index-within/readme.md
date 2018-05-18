@@ -30,11 +30,15 @@ import rangesIsIndexWithin from "ranges-is-index-within";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                 | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 9&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 9&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 20&nbsp;KB |
+<!-- prettier-ignore-start -->
+
+| Type | Key in `package.json` | Path | Size |
+| ---- | --------------------- | ---- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`    | `dist/ranges-is-index-within.cjs.js` | 9&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`  | `dist/ranges-is-index-within.esm.js` | 9&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser` | `dist/ranges-is-index-within.umd.js` | 20&nbsp;KB |
+
+<!-- prettier-ignore-end -->
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -98,13 +102,17 @@ A wrong type will cause `throw`s.
 
 ### Options object
 
-| options object's key              | Type of its value | Default | Description                                                                                                                                                                           |
-| --------------------------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+<!-- prettier-ignore-start -->
+
+| options object's key              | Type of its value | Default | Description |
+| --------------------------------- | ----------------- | ------- | ----------- |
 | {                                 |                   |         |
-| `inclusiveRangeEnds`              | Boolean           | `false` | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes.                                              |
+| `inclusiveRangeEnds`              | Boolean           | `false` | That is, do we consider `1` or `5` to be within range `[1, 5]`? The default answer is no, but if set to `true`, the answer would be yes. |
 | `returnMatchedRangeInsteadOfTrue` | Boolean           | `false` | If set to `true`, instead of result `true` it will return the matched range. `false` is still used as a negative answer. It's handy when you want to know **which** range it matched. |
-| `skipIncomingRangeSorting`        | Boolean           | `false` | If you know the input ranges are already sorted, turn off the sorting using this flag.                                                                                                |
+| `skipIncomingRangeSorting`        | Boolean           | `false` | If you know the input ranges are already sorted, turn off the sorting using this flag. |
 | }                                 |                   |         |
+
+<!-- prettier-ignore-end -->
 
 Options object is "patrolled" using [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
 
