@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2018-05-17
+
+* ✨ Set up [Prettier](https://prettier.io) on custom ESLint rules
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+
 ## [3.0.0] - 2017-12-09
 
 ### Added
@@ -97,3 +104,4 @@ Fresh morning and fresh head yields new improvements.
 [2.11.0]: https://github.com/codsen/easy-replace/compare/v2.10.0...v2.11.0
 [2.12.0]: https://github.com/codsen/easy-replace/compare/v2.11.0...v2.12.0
 [3.0.0]: https://github.com/codsen/easy-replace/compare/v2.12.0...v3.0.0
+[3.1.0]: https://github.com/codsen/easy-replace/compare/v3.0.0...v3.1.0
