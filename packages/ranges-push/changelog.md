@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.0] - 2018-05-19
+
+### Fixed
+
+* ✨ Fixed second input argument throw error message reporting. Previously, when second argument was of a wrong type, the first argument's details were reported which caused confusion. Fixed now.
+
+### Added
+
+* ✨ Throw error pinning in unit tests. Otherwise we would not be able to prove this feature above is correctly implemented. Both before and after were throwing an error. The correctness is distinguished by _which_ error exactly, (first arg's wrong type) `THROW_ID_09` or (newly added second arg's wrong type) `THROW_ID_10`. I'd go as far as to say, if _throw pinning_ was implemented at the beginning, this bug would not have happened.
+
 ## [2.7.0] - 2018-05-11
 
 Setup refresh.
@@ -13,7 +23,7 @@ Setup refresh.
 
 * ✨ Set up [Prettier](https://prettier.io)
 * ✨ Removed `package.lock` and `.editorconfig`
-* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove them from production code.
 * ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
 ## [2.6.0] - 2018-02-24
@@ -131,17 +141,18 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 
 * First public release
 
-[2.7.0]: https://github.com/codsen/string-slices-array-push/compare/v2.6.0...v2.7.0
-[2.6.0]: https://github.com/codsen/string-slices-array-push/compare/v2.5.0...v2.6.0
-[2.5.0]: https://github.com/codsen/string-slices-array-push/compare/v2.4.5...v2.5.0
-[2.4.0]: https://github.com/codsen/string-slices-array-push/compare/v2.3.0...v2.4.0
-[2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
-[2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0
-[2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0
-[1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0
-[1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0
-[1.4.0]: https://github.com/codsen/string-slices-array-push/compare/v1.3.0...v1.4.0
-[1.3.0]: https://github.com/codsen/string-slices-array-push/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/codsen/string-slices-array-push/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/string-slices-array-push/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/codsen/string-slices-array-push/compare/v1.1.0...v1.2.0
+[1.3.0]: https://github.com/codsen/string-slices-array-push/compare/v1.2.0...v1.3.0
+[1.4.0]: https://github.com/codsen/string-slices-array-push/compare/v1.3.0...v1.4.0
+[1.5.0]: https://github.com/codsen/string-slices-array-push/compare/v1.4.0...v1.5.0
+[1.6.0]: https://github.com/codsen/string-slices-array-push/compare/v1.5.0...v1.6.0
+[2.0.0]: https://github.com/codsen/string-slices-array-push/compare/v1.6.0...v2.0.0
+[2.1.0]: https://github.com/codsen/string-slices-array-push/compare/v2.0.0...v2.1.0
+[2.2.0]: https://github.com/codsen/string-slices-array-push/compare/v2.1.0...v2.2.0
+[2.3.0]: https://github.com/codsen/string-slices-array-push/compare/v2.2.0...v2.3.0
+[2.4.0]: https://github.com/codsen/string-slices-array-push/compare/v2.3.0...v2.4.0
+[2.5.0]: https://github.com/codsen/string-slices-array-push/compare/v2.4.5...v2.5.0
+[2.6.0]: https://github.com/codsen/string-slices-array-push/compare/v2.5.0...v2.6.0
+[2.7.0]: https://github.com/codsen/string-slices-array-push/compare/v2.6.0...v2.7.0
+[2.8.0]: https://github.com/codsen/string-slices-array-push/compare/v2.7.0...v2.8.0

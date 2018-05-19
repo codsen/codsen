@@ -144,8 +144,16 @@ var Slices = function () {
           this.slices.push(addVal !== undefined ? [from, to, this.opts.limitToBeAddedWhitespace ? collapseLeadingWhitespace(addVal) : addVal] : [from, to]);
         }
       } else {
-        // Throw error
-        throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_09] \"from\" value, first input argument, must be a natural number or zero! Currently it's equal to: " + JSON.stringify(from, null, 4));
+        // Error somewhere!
+        // Let's find out where.
+
+        // is it first arg?
+        if (!isInt(from, { includeZero: true })) {
+          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_09] \"from\" value, the first input argument, must be a natural number or zero! Currently it's of a type \"" + (typeof from === "undefined" ? "undefined" : _typeof(from)) + "\" equal to: " + JSON.stringify(from, null, 4));
+        } else {
+          // then it's second...
+          throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_10] \"to\" value, the second input argument, must be a natural number or zero! Currently it's of a type \"" + (typeof to === "undefined" ? "undefined" : _typeof(to)) + "\" equal to: " + JSON.stringify(to, null, 4));
+        }
       }
     }
 

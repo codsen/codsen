@@ -9,139 +9,184 @@ import Slices from "../dist/string-slices-array-push.esm";
 
 test("01.01  -  ADD() - wrong inputs", t => {
   // missing
-  t.throws(() => {
+  const err01 = t.throws(() => {
     const slices = new Slices();
     slices.add();
   });
-  t.throws(() => {
+  t.truthy(err01.message.includes("THROW_ID_01"));
+
+  const err02 = t.throws(() => {
     const slices = new Slices();
     slices.add("a");
   });
+  t.truthy(err02.message.includes("THROW_ID_09"));
+
   // wrong types
-  t.throws(() => {
+  const err03 = t.throws(() => {
     const slices = new Slices();
     slices.add("a", "a");
   });
-  t.throws(() => {
+  t.truthy(err03.message.includes("THROW_ID_09"));
+
+  const err04 = t.throws(() => {
     const slices = new Slices();
     slices.add(1, "a");
   });
-  t.throws(() => {
+  t.truthy(err04.message.includes("THROW_ID_10"));
+
+  const err05 = t.throws(() => {
     const slices = new Slices();
     slices.add("a", 1);
   });
+  t.truthy(err05.message.includes("THROW_ID_09"));
+
   t.notThrows(() => {
     const slices = new Slices();
     slices.add(1, 1);
   });
+
   // hardcoded undefined
-  t.throws(() => {
+  const err06 = t.throws(() => {
     const slices = new Slices();
     slices.add(undefined, 1);
   });
+  t.truthy(err06.message.includes("THROW_ID_01"));
+
   // numbers but not natural integers
-  t.throws(() => {
+  const err07 = t.throws(() => {
     const slices = new Slices();
     slices.add(1.2, 1);
   });
-  t.throws(() => {
+  t.truthy(err07.message.includes("THROW_ID_09"));
+
+  const err08 = t.throws(() => {
     const slices = new Slices();
     slices.add(1, 1.3);
   });
+  t.truthy(err08.message.includes("THROW_ID_10"));
 });
 
 test("01.02  -  ADD() - third input arg is not string", t => {
-  t.throws(() => {
+  const err = t.throws(() => {
     const slices = new Slices();
     slices.add(1, 2, 3);
   });
+  t.truthy(err.message.includes("THROW_ID_08"));
 });
 
 test("01.03  -  ADD() - overloading", t => {
-  t.throws(() => {
+  const err = t.throws(() => {
     const slices = new Slices();
     slices.add(1, 2, "aaa", 1);
   });
+  t.truthy(err.message.includes("THROW_ID_03"));
 });
 
 test("01.04  -  PUSH() - wrong inputs", t => {
   // missing
-  t.throws(() => {
+  const err01 = t.throws(() => {
     const slices = new Slices();
     slices.push();
   });
-  t.throws(() => {
+  t.truthy(err01.message.includes("THROW_ID_01"));
+
+  const err02 = t.throws(() => {
     const slices = new Slices();
     slices.push("a");
   });
+  t.truthy(err02.message.includes("THROW_ID_09"));
+
   // wrong types
-  t.throws(() => {
+  const err03 = t.throws(() => {
     const slices = new Slices();
     slices.push("a", "a");
   });
-  t.throws(() => {
+  t.truthy(err03.message.includes("THROW_ID_09"));
+
+  const err04 = t.throws(() => {
     const slices = new Slices();
     slices.push(1, "a");
   });
-  t.throws(() => {
+  t.truthy(err04.message.includes("THROW_ID_10"));
+
+  const err05 = t.throws(() => {
     const slices = new Slices();
     slices.push("a", 1);
   });
+  t.truthy(err05.message.includes("THROW_ID_09"));
+
   t.notThrows(() => {
     const slices = new Slices();
     slices.push(1, 1);
   });
+
   // hardcoded undefined
-  t.throws(() => {
+  const err06 = t.throws(() => {
     const slices = new Slices();
     slices.push(undefined, 1);
   });
+  t.truthy(err06.message.includes("THROW_ID_01"));
+
   // numbers but not natural integers
-  t.throws(() => {
+  const err07 = t.throws(() => {
     const slices = new Slices();
     slices.push(1.2, 1);
   });
-  t.throws(() => {
+  t.truthy(err07.message.includes("THROW_ID_09"));
+
+  const err08 = t.throws(() => {
     const slices = new Slices();
     slices.push(1, 1.3);
   });
+  t.truthy(err08.message.includes("THROW_ID_10"));
 });
 
 test("01.05  -  PUSH() - third input arg is not string", t => {
-  t.throws(() => {
+  const err = t.throws(() => {
     const slices = new Slices();
     slices.push(1, 2, 3);
   });
+  t.truthy(err.message.includes("THROW_ID_08"));
 });
 
 test("01.06  -  PUSH() - overloading", t => {
-  t.throws(() => {
+  const err = t.throws(() => {
     const slices = new Slices();
     slices.push(1, 2, "aaa", 1);
   });
+  t.truthy(err.message.includes("THROW_ID_03"));
 });
 
 test("01.07  -  ADD() - first argument is .current() output of ranges", t => {
-  t.throws(() => {
+  const err01 = t.throws(() => {
     const slices = new Slices();
     slices.add([[1, 2, 3]]);
   });
-  t.throws(() => {
+  t.truthy(err01.message.includes("THROW_ID_04"));
+
+  const err02 = t.throws(() => {
     const slices = new Slices();
     slices.add([[1, 2, "z", 1]]);
   });
-  t.throws(() => {
+  t.truthy(err02.message.includes("THROW_ID_03"));
+
+  const err03 = t.throws(() => {
     const slices = new Slices();
     slices.add([[1, "z"]]);
   });
-  t.throws(() => {
+  t.truthy(err03.message.includes("THROW_ID_05"));
+
+  const err04 = t.throws(() => {
     const slices = new Slices();
     slices.add([["z", 1]]);
   });
-  t.throws(() => {
+  t.truthy(err04.message.includes("THROW_ID_06"));
+
+  const err05 = t.throws(() => {
     const slices = new Slices();
     slices.add([["z", 1], 1]);
   });
+  t.truthy(err05.message.includes("THROW_ID_07"));
 });
 
 test("01.08  -  ADD() - null being pushed", t => {
