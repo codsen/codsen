@@ -1,8 +1,10 @@
+import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
+import json from "rollup-plugin-json";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
@@ -19,7 +21,9 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        builtins(),
         resolve(), // so Rollup can find deps
+        json(),
         commonjs(), // so Rollup can convert deps to ES modules
         babel(),
         uglify()
@@ -32,6 +36,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "check-types-mini",
+        "ent",
         "lodash.isplainobject",
         "string-replace-slices-array",
         "string-slices-array-push"
@@ -40,6 +45,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        json(),
         babel()
       ]
     },
@@ -50,6 +56,7 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "check-types-mini",
+        "ent",
         "lodash.isplainobject",
         "string-replace-slices-array",
         "string-slices-array-push"
@@ -57,7 +64,8 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
-        })
+        }),
+        json()
       ]
     }
   ];

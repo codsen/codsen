@@ -152,11 +152,15 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [
+        "rollup-plugin-json",
+        "rollup-plugin-node-builtins"
+      ]
     }
   },
   "dependencies": {
     "check-types-mini": "latest",
+    "ent": "^2.2.0",
     "lodash.isplainobject": "latest",
     "string-replace-slices-array": "^2.2.1",
     "string-slices-array-push": "^2.8.0"
@@ -177,6 +181,8 @@
     "rollup": "^0.59.1",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^3.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
     "rollup-plugin-uglify": "^4.0.0"

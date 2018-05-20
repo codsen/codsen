@@ -7,11 +7,9 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test("delete me", t => {
   t.deepEqual(
-    stripHtml("a<    b    >c<     b   /    >d", {
-      stripTogetherWithTheirContents: ["e", "b"]
-    }),
-    "a d",
-    "01.11.03 - closing slash wrong side"
+    stripHtml("<article> text <<<<<<<<<<< text </article>"),
+    "text <<<<<<<<<<< text",
+    "01.13.03"
   );
 });
 
@@ -257,6 +255,20 @@ test("01.09 - checking can script slip through in any way", t => {
     "some text more text",
     "01.09.02"
   );
+  t.deepEqual(
+    stripHtml(
+      'some text &lt;script>console.log("<sup>>>>>>"); alert("you\'re done!");</script> more text'
+    ),
+    "some text more text",
+    "01.09.03"
+  );
+  t.deepEqual(
+    stripHtml(
+      'some text &lt;script&gt;console.log("<sup>>>>>>"); alert("you\'re done!");&lt;/script&gt; more text'
+    ),
+    "some text more text",
+    "01.09.04 - sneaky HTML character-encoded brackets"
+  );
 });
 
 test("01.10 - strips style tags", t => {
@@ -272,6 +284,37 @@ test("01.10 - strips style tags", t => {
 </html>`),
     "aaa",
     "01.10.01"
+  );
+
+  // Ranged tags are sensitive to slash detection.
+  // Slash detection works checking is slash not within quoted attribute values.
+  // Messed up, unmatching attribute quotes can happen too.
+  // Let's see what happens!
+  t.deepEqual(
+    stripHtml(`<html><head>
+<style type="text/css'>#outlook a{ padding:0;}
+.ExternalClass, .ReadMsgBody{ background-color:#ffffff; width:100%;}
+@media only screen and (max-width: 660px){
+.wbr-h{ display:none !important;}
+}
+</style></head>
+<body>aaa</body>
+</html>`),
+    "aaa",
+    "01.10.02 - \"text/css'"
+  );
+  t.deepEqual(
+    stripHtml(`<html><head>
+<style type='text/css">#outlook a{ padding:0;}
+.ExternalClass, .ReadMsgBody{ background-color:#ffffff; width:100%;}
+@media only screen and (max-width: 660px){
+.wbr-h{ display:none !important;}
+}
+</style></head>
+<body>aaa</body>
+</html>`),
+    "aaa",
+    "01.10.03 - 'text/css\""
   );
 });
 
@@ -454,7 +497,7 @@ test("01.13 - brackets used for expressive purposes (very very suspicious but po
   );
   t.deepEqual(
     stripHtml("<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>"),
-    "text1 <<<<<<<<<<< text3",
+    "text1 text3",
     "01.13.05"
   );
 });
@@ -745,7 +788,7 @@ test("03.03 - incomplete tag", t => {
   t.deepEqual(stripHtml(">"), ">", "03.03.02");
   t.deepEqual(stripHtml(">>>"), ">>>", "03.03.03");
   t.deepEqual(stripHtml("<<<"), "<<<", "03.03.04");
-  t.deepEqual(stripHtml(" <<< "), " <<< ", "03.03.05");
+  t.deepEqual(stripHtml(" <<< "), "<<<", "03.03.05");
   t.deepEqual(stripHtml("<a"), "<a", "03.03.06");
   t.deepEqual(stripHtml("<yo"), "<yo", "03.03.07");
   t.deepEqual(stripHtml("a>"), "", "03.03.08");
