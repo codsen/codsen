@@ -1,9 +1,8 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
-import { minify } from "uglify-es";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
@@ -23,7 +22,7 @@ export default commandLineArgs => {
         resolve(), // so Rollup can find deps
         commonjs(), // so Rollup can convert deps to ES modules
         babel(),
-        uglify({}, minify)
+        uglify()
       ]
     },
 
@@ -34,8 +33,6 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.isplainobject",
-        "lodash.trim",
-        "string-match-left-right",
         "string-replace-slices-array",
         "string-slices-array-push"
       ],
@@ -54,8 +51,6 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.isplainobject",
-        "lodash.trim",
-        "string-match-left-right",
         "string-replace-slices-array",
         "string-slices-array-push"
       ],

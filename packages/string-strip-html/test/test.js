@@ -5,6 +5,16 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
+test("delete me", t => {
+  t.deepEqual(
+    stripHtml("a<    b    >c<     b   /    >d", {
+      stripTogetherWithTheirContents: ["e", "b"]
+    }),
+    "a d",
+    "01.11.03 - closing slash wrong side"
+  );
+});
+
 test("01.01 - string is whole (opening) tag", t => {
   t.deepEqual(stripHtml("<a>"), "", "01.01.01");
   t.deepEqual(stripHtml("< a>"), "", "01.01.02");
@@ -36,12 +46,12 @@ test("01.01 - string is whole (opening) tag", t => {
   t.deepEqual(
     stripHtml("<a>         z"),
     "z",
-    "01.01.12 - whitespace between tag and text is not touched"
+    "01.01.12 - whitespace between tag and text is removed"
   );
   t.deepEqual(
     stripHtml("   <b>text</b>   "),
     "text",
-    "01.01.13 - leading/trailing spaces are not touched"
+    "01.01.13 - leading/trailing spaces"
   );
   t.deepEqual(
     stripHtml("\n\n\n<b>text</b>\r\r\r"),
@@ -54,6 +64,54 @@ test("01.01 - string is whole (opening) tag", t => {
     ),
     "z z z",
     "01.01.15 - HTML tag with attributes"
+  );
+
+  // custom tag names:
+  t.deepEqual(stripHtml("<custom>"), "", "01.01.16.1");
+  t.deepEqual(stripHtml("<custom"), "", "01.01.16.2");
+  t.deepEqual(stripHtml("<custom-tag>"), "", "01.01.17");
+  t.deepEqual(stripHtml("<-tag>"), "", "01.01.18");
+
+  // multiple
+  t.deepEqual(stripHtml("<custom><custom><custom>"), "", "01.01.19");
+  t.deepEqual(
+    stripHtml("<custom-tag><custom-tag><custom-tag>"),
+    "",
+    "01.01.20"
+  );
+  t.deepEqual(stripHtml("<-tag><-tag><-tag>"), "", "01.01.21");
+
+  // multiple with surroundings
+  t.deepEqual(stripHtml("a<custom><custom><custom>b"), "a b", "01.01.22");
+  t.deepEqual(
+    stripHtml("a<custom-tag><custom-tag><custom-tag>b"),
+    "a b",
+    "01.01.23"
+  );
+  t.deepEqual(stripHtml("a<-tag><-tag><-tag>b"), "a b", "01.01.24");
+
+  // multiple with surroundings
+  t.deepEqual(stripHtml("a</custom>< /custom><custom/>b"), "a b", "01.01.25");
+  t.deepEqual(
+    stripHtml("a<custom-tag /></ custom-tag>< /custom-tag>b"),
+    "a b",
+    "01.01.26"
+  );
+  t.deepEqual(stripHtml("a</ -tag>< /-tag><-tag / >   b"), "a b", "01.01.27");
+  t.deepEqual(
+    stripHtml("a  </custom>< /custom><custom/>   b"),
+    "a b",
+    "01.01.28"
+  );
+  t.deepEqual(
+    stripHtml("a\n<custom-tag /></ custom-tag>\n< /custom-tag>\n\nb"),
+    "a\nb",
+    "01.01.29"
+  );
+  t.deepEqual(
+    stripHtml("a\t\t</ -tag>< /-tag><-tag / >   \t b"),
+    "a b",
+    "01.01.30"
   );
 });
 
@@ -176,6 +234,11 @@ test("01.08 - multiple brackets repeated", t => {
     stripHtml("aaaa something<<<<  //// div /// >>>>>>>bbbbb"),
     "aaaa something bbbbb",
     "01.08.07"
+  );
+  t.deepEqual(
+    stripHtml("aaaa< <  <   <    <     <     div>>>>something<<<</div>bbbbb"),
+    "aaaa something bbbbb",
+    "01.08.08"
   );
 });
 
@@ -341,6 +404,13 @@ test("01.11 - opts.stripTogetherWithTheirContents", t => {
     "a d",
     "01.11.17"
   );
+  t.deepEqual(
+    stripHtml("a<    b    >c", {
+      stripTogetherWithTheirContents: ["e", "b"]
+    }),
+    "a c",
+    "01.11.18 - single custom range tag"
+  );
   t.throws(() => {
     stripHtml(
       'a<    b style="display:block; color: #333">>c<   //  <  b   // >   >d',
@@ -349,6 +419,203 @@ test("01.11 - opts.stripTogetherWithTheirContents", t => {
       }
     );
   });
+});
+
+test("01.12 - sequence of empty <>", t => {
+  t.deepEqual(stripHtml("<>"), "<>", "01.12.01");
+  t.deepEqual(stripHtml("<><>"), "<><>", "01.12.02");
+  t.deepEqual(stripHtml("a<><>b"), "a<><>b", "01.12.03");
+  t.deepEqual(stripHtml("\na<><>b\n"), "a<><>b", "01.12.04 - just trimmed");
+});
+
+test("01.13 - brackets used for expressive purposes (very very suspicious but possible)", t => {
+  // won't remove
+  t.deepEqual(
+    stripHtml("text <<<<<<<<<<< text"),
+    "text <<<<<<<<<<< text",
+    "01.13.01"
+  );
+  t.deepEqual(
+    stripHtml("text <<<<<<<<<<< text <<<<<<<<<<< text"),
+    "text <<<<<<<<<<< text <<<<<<<<<<< text",
+    "01.13.02"
+  );
+  t.deepEqual(
+    stripHtml("<article> text <<<<<<<<<<< text </article>"),
+    "text <<<<<<<<<<< text",
+    "01.13.03"
+  );
+
+  // will remove
+  t.deepEqual(
+    stripHtml("text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3"),
+    "text1 text3",
+    "01.13.04"
+  );
+  t.deepEqual(
+    stripHtml("<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>"),
+    "text1 <<<<<<<<<<< text3",
+    "01.13.05"
+  );
+});
+
+test("01.14 - multiple ranged tags are removed correctly", t => {
+  t.deepEqual(
+    stripHtml(
+      "code here and here <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more <style>zzz</style> and also some here <script>yyy\nyyyyy</script> and finally here some more"
+    ),
+    "code here and here and also some here and finally here some more and also some here and finally here some more and also some here and finally here some more",
+    "01.14.01 - with text in between"
+  );
+  t.deepEqual(
+    stripHtml(
+      "code here and here <style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script><style>zzz</style><script>yyy\nyyyyy</script> and finally here some more"
+    ),
+    "code here and here and finally here some more",
+    "01.14.02 - tags touching each other"
+  );
+});
+
+test("01.15 - slashes around tags that include slashes", t => {
+  t.deepEqual(
+    stripHtml(
+      "///</a>///<a/>///</ a>///< /a></ a>///< /a>///</ a />///</a/>///< / a / >///"
+    ),
+    "/// /// /// /// /// /// /// /// ///",
+    "01.15.01 - lots of dodgy slashes around and within tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      "///<///a>///<a/////>///<//// a>///< ///a><// a>///< ///a>///<// a //>///<///a///>///< //// a //// >///"
+    ),
+    "/// /// /// /// /// /// /// /// ///",
+    "01.15.02 - this time repeated slashes inside"
+  );
+  t.deepEqual(
+    stripHtml(
+      "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
+    ),
+    "/// /// /// /// /// /// /// /// ///",
+    "01.15.03 - and the same but with bunch of line breaks and tabs"
+  );
+});
+
+test("01.16 - exclamation marks around tags that include slashes", t => {
+  t.deepEqual(
+    stripHtml(
+      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
+    ),
+    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "01.16.01 - lots of dodgy exclamation marks around and within tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      "!!!<!!!a>!!!<a!!!!!>!!!<!!!! a>!!!< !!!a><!! a>!!!< !!!a>!!!<!! a !!>!!!<!!!a!!!>!!!< !!!! a !!!! >!!!"
+    ),
+    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "01.16.02 - this time repeated exclamation marks inside"
+  );
+  t.deepEqual(
+    stripHtml(
+      "!!!<!\n!\n!\ta>!!!<a\n!!!\n!!\t>!!!<\n!!!!\t a>!!!< !\n!!\na><!! \ta>!!!<\n\n\n\n !!!a>!!!<\t\t\t\t!! \n\n\na !!>!!!<\n\n\n!!!a\n!!!\n>!!!<\n !!!! \na\n !!!! \n>!!!"
+    ),
+    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "01.16.03 - and the same but with bunch of line breaks and tabs"
+  );
+});
+
+test("01.17 - only line breaks around tags cause line break to be used as a separator - not line breaks within tag", t => {
+  t.deepEqual(
+    stripHtml("something <a> \n\n to <a> put here to test"),
+    "something\nput here to test",
+    "01.17.01"
+  );
+  t.deepEqual(
+    stripHtml("something <a\n\n>  to <a> put here to test"),
+    "something put here to test",
+    "01.17.02"
+  );
+  t.deepEqual(
+    stripHtml("something <\n\na>  to <a> put here to test"),
+    "something put here to test",
+    "01.17.03"
+  );
+  t.deepEqual(
+    stripHtml("something <a>  to <a\n\n> put here to test"),
+    "something put here to test",
+    "01.17.04"
+  );
+  t.deepEqual(
+    stripHtml("something <a>  to <\n\na> put here to test"),
+    "something put here to test",
+    "01.17.05"
+  );
+  t.deepEqual(
+    stripHtml("something <\t\na\n>  to <a\n\n> put here to test"),
+    "something put here to test",
+    "01.17.06"
+  );
+  t.deepEqual(
+    stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test"),
+    "something put here to test",
+    "01.17.07 - even this"
+  );
+});
+
+test("01.18 - dirty code - missing closing brackets", t => {
+  t.deepEqual(
+    stripHtml("<body>text<script>zzz</script</body>"),
+    "text",
+    "01.18.01 - missing closing bracket"
+  );
+  t.deepEqual(
+    stripHtml(" < body > text < script > zzz <    /    script < / body >"),
+    "text",
+    "01.18.02 - with more whitespace"
+  );
+  t.deepEqual(
+    stripHtml("<body>text<script"),
+    "text",
+    "01.18.03 - missing closing bracket"
+  );
+  t.deepEqual(stripHtml("<script>text<script"), "", "01.18.04");
+  t.deepEqual(stripHtml("<a>text<a"), "text", "01.18.05");
+  t.deepEqual(stripHtml("<a>text<a<a"), "text", "01.18.05");
+});
+
+test("01.19 - dirty code - missing closing brackets + line breaks", t => {
+  t.deepEqual(
+    stripHtml("<body>text<script>\nzzz\n<script</body>"),
+    "text",
+    "01.19.01 - closing slash and bracket of a range tag"
+  );
+  t.deepEqual(
+    stripHtml("< body > text < script >\nzzz\n< script < / body >"),
+    "text",
+    "01.19.02 - with lots whitespace everywhere"
+  );
+});
+
+test("01.20 - dirty code - spaces within recognised tags", t => {
+  t.deepEqual(
+    stripHtml(" < b o d y > text<scr ipt>\nzzz\n<sc ript</b ody>"),
+    "text",
+    "01.20.01 - spaces within recognised tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      ' < B o d y style="display: block;" > text<a r t i c l e>\nzzz\n< D I V </b ody>'
+    ),
+    "text",
+    "01.20.02 - spaces within recognised tags"
+  );
+});
+
+test("01.21 - dirty code - missing opening bracket, but recognised tag name", t => {
+  t.deepEqual(stripHtml("body>zzz</body>"), "zzz", "01.21.01");
+  t.deepEqual(stripHtml("tralala>zzz</body>"), "tralala>zzz", "01.21.02");
+  t.deepEqual(stripHtml("BODY>zzz</BODY>"), "zzz", "01.21.01");
+  t.deepEqual(stripHtml("tralala>zzz</BODY>"), "tralala>zzz", "01.21.02");
 });
 
 // ==============================
@@ -458,22 +725,31 @@ test("03.01 - very sneaky considering b is a legit tag name", t => {
   );
 });
 
-test("03.02 - tag never ends", t => {
+test("03.02 - arrows", t => {
   t.deepEqual(
     stripHtml("Look here: ---> a <---"),
     "Look here: ---> a <---",
-    "03.02"
+    "03.02.01"
+  );
+  t.deepEqual(
+    stripHtml(
+      "Look here: ---> a <--- and here: ---> b <--- oh, and few tags: <div><article>\nzz</article></div>"
+    ),
+    "Look here: ---> a <--- and here: ---> b <--- oh, and few tags:\nzz",
+    "03.02.02"
   );
 });
 
-test("03.03 - not complete tag", t => {
+test("03.03 - incomplete tag", t => {
   t.deepEqual(stripHtml("<"), "<", "03.03.01");
   t.deepEqual(stripHtml(">"), ">", "03.03.02");
   t.deepEqual(stripHtml(">>>"), ">>>", "03.03.03");
   t.deepEqual(stripHtml("<<<"), "<<<", "03.03.04");
   t.deepEqual(stripHtml(" <<< "), " <<< ", "03.03.05");
   t.deepEqual(stripHtml("<a"), "<a", "03.03.06");
-  t.deepEqual(stripHtml("a>"), "a>", "03.03.07");
+  t.deepEqual(stripHtml("<yo"), "<yo", "03.03.07");
+  t.deepEqual(stripHtml("a>"), "", "03.03.08");
+  t.deepEqual(stripHtml("yo>"), "yo>", "03.03.09");
 });
 
 test("03.04 - conditionals that appear on Outlook only", t => {
@@ -693,38 +969,180 @@ test("06.02 - HTML comments around string edges", t => {
   );
 });
 
-// test("06.03 - tag presence checks fall outside of the range", t => {
-//   t.deepEqual(
-//     stripHtml('<script>alert("123")</script'),
-//     'alert("123")',
-//     "06.03.01"
-//   );
-//   t.deepEqual(
-//     stripHtml("<script>alert('123')</script"),
-//     "alert('123')",
-//     "06.03.02"
-//   );
-//   t.deepEqual(
-//     stripHtml('<script>alert("123")<script'),
-//     'alert("123")',
-//     "06.03.03"
-//   );
-//   t.deepEqual(
-//     stripHtml("<script>alert('123')<script"),
-//     "alert('123')",
-//     "06.03.04"
-//   );
-//   t.deepEqual(
-//     stripHtml('<script>alert("123")</ script'),
-//     'alert("123")',
-//     "06.03.05"
-//   );
-//   t.deepEqual(
-//     stripHtml("<script>alert('123')</ script"),
-//     "alert('123')",
-//     "06.03.06"
-//   );
-// });
+test("06.03 - range tag is unclosed", t => {
+  // no content besides ranged tag:
+  t.deepEqual(stripHtml('<script>alert("123")</script'), "", "06.03.01");
+  t.deepEqual(stripHtml("<script>alert('123')</script"), "", "06.03.02");
+  t.deepEqual(stripHtml('<script>alert("123")<script'), "", "06.03.03");
+  t.deepEqual(stripHtml("<script>alert('123')<script"), "", "06.03.04");
+  t.deepEqual(stripHtml('<script>alert("123")</ script'), "", "06.03.05");
+  t.deepEqual(stripHtml("<script>alert('123')</ script"), "", "06.03.06");
+
+  // single letter left:
+  t.deepEqual(stripHtml('a<script>alert("123")</script'), "a", "06.03.07");
+  t.deepEqual(stripHtml("a<script>alert('123')</script"), "a", "06.03.08");
+  t.deepEqual(stripHtml('a<script>alert("123")<script'), "a", "06.03.09");
+  t.deepEqual(stripHtml("a<script>alert('123')<script"), "a", "06.03.10");
+  t.deepEqual(stripHtml('a<script>alert("123")</ script'), "a", "06.03.11");
+  t.deepEqual(stripHtml("a<script>alert('123')</ script"), "a", "06.03.12");
+
+  // script excluded from ranged tags, so now only tags are removed, no contents between:
+  t.deepEqual(
+    stripHtml('a<script>alert("123")</script', {
+      stripTogetherWithTheirContents: []
+    }),
+    'a alert("123")',
+    "06.03.13"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')</script", {
+      stripTogetherWithTheirContents: []
+    }),
+    "a alert('123')",
+    "06.03.14"
+  );
+  t.deepEqual(
+    stripHtml('a<script>alert("123")<script', {
+      stripTogetherWithTheirContents: []
+    }),
+    'a alert("123")',
+    "06.03.15"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')<script", {
+      stripTogetherWithTheirContents: []
+    }),
+    "a alert('123')",
+    "06.03.16"
+  );
+  t.deepEqual(
+    stripHtml('a<script>alert("123")</ script', {
+      stripTogetherWithTheirContents: []
+    }),
+    'a alert("123")',
+    "06.03.17"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')</ script", {
+      stripTogetherWithTheirContents: []
+    }),
+    "a alert('123')",
+    "06.03.18"
+  );
+
+  // script tag ignored and left intact (opts.ignoreTags):
+  t.deepEqual(
+    stripHtml('a<script>alert("123")</script', { ignoreTags: ["script"] }),
+    'a<script>alert("123")</script',
+    "06.03.19"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')</script", { ignoreTags: ["script"] }),
+    "a<script>alert('123')</script",
+    "06.03.20"
+  );
+  t.deepEqual(
+    stripHtml('a<script>alert("123")<script', { ignoreTags: ["script"] }),
+    'a<script>alert("123")<script',
+    "06.03.21"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')<script", { ignoreTags: ["script"] }),
+    "a<script>alert('123')<script",
+    "06.03.22"
+  );
+  t.deepEqual(
+    stripHtml('a<script>alert("123")</ script', { ignoreTags: ["script"] }),
+    'a<script>alert("123")</ script',
+    "06.03.23"
+  );
+  t.deepEqual(
+    stripHtml("a<script>alert('123')</ script", { ignoreTags: ["script"] }),
+    "a<script>alert('123')</ script",
+    "06.03.24"
+  );
+});
+
+test("06.04 - false positives #1 - Nunjucks code", t => {
+  t.deepEqual(stripHtml("a< 2zzz==>b"), "a< 2zzz==>b", "06.04.01");
+});
+
+test("06.05 - unclosed tag followed by another tag", t => {
+  // range tag:
+  t.deepEqual(stripHtml('<script>alert("123")</script<body>'), "", "06.03.01");
+  t.deepEqual(stripHtml('<script>alert("123")</script</body>'), "", "06.03.02");
+  t.deepEqual(
+    stripHtml('<script>alert("123")</script</ body>'),
+    "",
+    "06.03.03"
+  );
+  t.deepEqual(stripHtml('<script>alert("123")</script<body/>'), "", "06.03.04");
+  t.deepEqual(stripHtml('<script>alert("123")</script<body'), "", "06.03.05");
+
+  // non-range tag:
+  t.deepEqual(
+    stripHtml("<article>text here</article<body>"),
+    "text here",
+    "06.03.06"
+  );
+  t.deepEqual(
+    stripHtml("<article>text here</article</body>"),
+    "text here",
+    "06.03.07"
+  );
+  t.deepEqual(
+    stripHtml("<article>text here</article</ body>"),
+    "text here",
+    "06.03.08"
+  );
+  t.deepEqual(
+    stripHtml("<article>text here</article<body/>"),
+    "text here",
+    "06.03.09"
+  );
+  t.deepEqual(
+    stripHtml("<article>text here</article<body"),
+    "text here",
+    "06.03.10"
+  );
+
+  // many tags:
+  t.deepEqual(
+    stripHtml("a<something<anything<whatever<body<html"),
+    "a",
+    "06.03.11 - strips the tags"
+  );
+  t.deepEqual(
+    stripHtml("a < something < anything < whatever < body < html"),
+    "a < something < anything < whatever < body < html",
+    "06.03.12 - bails because of spaces"
+  );
+});
+
+test("06.04 - range tags are overlapping", t => {
+  // both default known range tags
+  t.deepEqual(
+    stripHtml("<script>tra la <style>la</script>la la</style> la"),
+    "",
+    "06.04.01"
+  );
+
+  // both were just custom-set
+  t.deepEqual(
+    stripHtml("<zzz>tra la <yyy>la</zzz>la la</yyy> la", {
+      stripTogetherWithTheirContents: ["zzz", "yyy"]
+    }),
+    "",
+    "06.04.02"
+  );
+  t.deepEqual(
+    stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> la", {
+      stripTogetherWithTheirContents: ["zzz", "yyy"]
+    }),
+    "",
+    "06.04.03"
+  );
+});
 
 // ==============================
 // throws

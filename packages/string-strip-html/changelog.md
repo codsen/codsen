@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2018-05-18
+
+Complete rewrite.
+
+### Added
+
+* ✨ `opts.stripOnlyTags` - you can request only certain tags to be removed. Respects `opts.stripTogetherWithTheirContents` setting.
+* ✨ Works with custom tags, as long as there is no space after the opening bracket.
+
+## [1.5.0] - 2018-05-14
+
+### Improved
+
+* ✨ Improved HTML tag detection algorithm: now, if digit (with or without whitespace in front) follows the opening bracket, it's interpretes as definitely not an opening bracket of a tag.
+* ✨ Various setup tweaks
+
 ## [1.4.0] - 2018-05-11
 
 ### Improved
@@ -42,3 +58,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/string-strip-html/compare/v1.1.0...v1.2.0
 [1.3.0]: https://github.com/codsen/string-strip-html/compare/v1.2.6...v1.3.0
 [1.4.0]: https://github.com/codsen/string-strip-html/compare/v1.3.2...v1.4.0
+[1.5.0]: https://github.com/codsen/string-strip-html/compare/v1.4.0...v1.5.0
+[2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.5.0...v2.0.0

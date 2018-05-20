@@ -13,7 +13,6 @@
       "esm",
       "husky",
       "lodash.isplainobject",
-      "lodash.trim",
       "nyc",
       "prettier"
     ]

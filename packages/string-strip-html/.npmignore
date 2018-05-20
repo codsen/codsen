@@ -25,4 +25,5 @@ test
 .npmignore
 .prettierignore
 .travis.yml
+ideas.md
 rollup.config.js

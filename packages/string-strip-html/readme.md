@@ -39,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 16&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 16&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 35&nbsp;KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 10&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 10&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 27&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -56,6 +56,7 @@ Here's what you'll get:
 - [Purpose](#purpose)
 - [API](#api)
 - [Devil is in the details...](#devil-is-in-the-details)
+- [Interesting](#interesting)
 - [Bigger picture](#bigger-picture)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -125,6 +126,24 @@ Two rules:
 
 1.  Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
 2.  Any whitespace between the tags will be deleted too. For example, `z<a> <a>y` => `z y`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b> \t\t\t <b>y` => `z y`.
+
+**[⬆ &nbsp;back to top](#)**
+
+## Interesting
+
+`script` tags can be missing a closing tag's closing bracket — `alert` will still work! At least in latest Chrome:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+<script>alert("123")</script
+</body>
+</html>
+```
 
 **[⬆ &nbsp;back to top](#)**
 
