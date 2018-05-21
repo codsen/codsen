@@ -7,9 +7,9 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test("delete me", t => {
   t.deepEqual(
-    stripHtml("<article> text <<<<<<<<<<< text </article>"),
-    "text <<<<<<<<<<< text",
-    "01.13.03"
+    stripHtml('aaaaaaa< br class="zzzz">bbbbbbbb'),
+    "aaaaaaa bbbbbbbb",
+    "01.07.02"
   );
 });
 

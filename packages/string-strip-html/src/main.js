@@ -145,6 +145,77 @@ function stripHtml(str, originalOpts) {
   // functions
   // ===========================================================================
 
+  function isValidAttributeCharacter(char) {
+    // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+
+    if (char.charCodeAt(0) >= 0 && char.charCodeAt(0) <= 31) {
+      // C0 CONTROLS
+      return false;
+    } else if (char.charCodeAt(0) >= 127 && char.charCodeAt(0) <= 159) {
+      // U+007F DELETE to U+009F APPLICATION PROGRAM COMMAND
+      return false;
+    } else if (char.charCodeAt(0) === 32) {
+      // U+0020 SPACE
+      return false;
+    } else if (char.charCodeAt(0) === 34) {
+      // U+0022 (")
+      return false;
+    } else if (char.charCodeAt(0) === 39) {
+      // U+0027 (')
+      return false;
+    } else if (char.charCodeAt(0) === 62) {
+      // U+003E (>)
+      return false;
+    } else if (char.charCodeAt(0) === 47) {
+      // U+002F (/)
+      return false;
+    } else if (char.charCodeAt(0) === 61) {
+      // U+003D (=)
+      return false;
+    } else if (
+      // noncharacter:
+      // https://infra.spec.whatwg.org/#noncharacter
+      (char.charCodeAt(0) >= 64976 && char.charCodeAt(0) <= 65007) || // U+FDD0 to U+FDEF, inclusive,
+      char.charCodeAt(0) === 65534 || // or U+FFFE,
+      char.charCodeAt(0) === 65535 || // U+FFFF,
+      (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57342) || // U+1FFFE, or \uD83F\uDFFE
+      (char.charCodeAt(0) === 55359 && char.charCodeAt(1) === 57343) || // U+1FFFF, or \uD83F\uDFFF
+      (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57342) || // U+2FFFE, or \uD87F\uDFFE
+      (char.charCodeAt(0) === 55423 && char.charCodeAt(1) === 57343) || // U+2FFFF, or \uD87F\uDFFF
+      (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57342) || // U+3FFFE, or \uD8BF\uDFFE
+      (char.charCodeAt(0) === 55487 && char.charCodeAt(1) === 57343) || // U+3FFFF, or \uD8BF\uDFFF
+      (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57342) || // U+4FFFE, or \uD8FF\uDFFE
+      (char.charCodeAt(0) === 55551 && char.charCodeAt(1) === 57343) || // U+4FFFF, or \uD8FF\uDFFF
+      (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57342) || // U+5FFFE, or \uD93F\uDFFE
+      (char.charCodeAt(0) === 55615 && char.charCodeAt(1) === 57343) || // U+5FFFF, or \uD93F\uDFFF
+      (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57342) || // U+6FFFE, or \uD97F\uDFFE
+      (char.charCodeAt(0) === 55679 && char.charCodeAt(1) === 57343) || // U+6FFFF, or \uD97F\uDFFF
+      (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57342) || // U+7FFFE, or \uD9BF\uDFFE
+      (char.charCodeAt(0) === 55743 && char.charCodeAt(1) === 57343) || // U+7FFFF, or \uD9BF\uDFFF
+      (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57342) || // U+8FFFE, or \uD9FF\uDFFE
+      (char.charCodeAt(0) === 55807 && char.charCodeAt(1) === 57343) || // U+8FFFF, or \uD9FF\uDFFF
+      (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57342) || // U+9FFFE, or \uDA3F\uDFFE
+      (char.charCodeAt(0) === 55871 && char.charCodeAt(1) === 57343) || // U+9FFFF, or \uDA3F\uDFFF
+      (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57342) || // U+AFFFE, or \uDA7F\uDFFE
+      (char.charCodeAt(0) === 55935 && char.charCodeAt(1) === 57343) || // U+AFFFF, or \uDA7F\uDFFF
+      (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57342) || // U+BFFFE, or \uDABF\uDFFE
+      (char.charCodeAt(0) === 55999 && char.charCodeAt(1) === 57343) || // U+BFFFF, or \uDABF\uDFFF
+      (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57342) || // U+CFFFE, or \uDAFF\uDFFE
+      (char.charCodeAt(0) === 56063 && char.charCodeAt(1) === 57343) || // U+CFFFF, or \uDAFF\uDFFF
+      (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57342) || // U+DFFFE, or \uDB3F\uDFFE
+      (char.charCodeAt(0) === 56127 && char.charCodeAt(1) === 57343) || // U+DFFFF, or \uDB3F\uDFFF
+      (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57342) || // U+EFFFE, or \uDB7F\uDFFE
+      (char.charCodeAt(0) === 56191 && char.charCodeAt(1) === 57343) || // U+EFFFF, or \uDB7F\uDFFF
+      (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57342) || // U+FFFFE, or \uDBBF\uDFFE
+      (char.charCodeAt(0) === 56255 && char.charCodeAt(1) === 57343) || // U+FFFFF, or \uDBBF\uDFFF
+      (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57342) || // U+10FFFE, or \uDBFF\uDFFE
+      (char.charCodeAt(0) === 56319 && char.charCodeAt(1) === 57343) // U+10FFFF, or \uDBFF\uDFFF
+    ) {
+      return false;
+    }
+    return true;
+  }
+
   function treatRangedTags(i) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       // it depends, is it opening or closing range tag:
@@ -344,6 +415,184 @@ function stripHtml(str, originalOpts) {
       }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`
     );
 
+    // catch slash
+    // -------------------------------------------------------------------------
+    if (
+      str[i] === "/" &&
+      !(tag.quotes && tag.quotes.value) &&
+      tag.lastOpeningBracketAt !== undefined &&
+      tag.lastClosingBracketAt === undefined
+    ) {
+      console.log(`426 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
+      tag.slashPresent = true;
+    }
+
+    // catch double or single quotes
+    // -------------------------------------------------------------------------
+    if (str[i] === '"' || str[i] === "'") {
+      if (tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+        tag.quotes = undefined;
+      } else if (!tag.quotes) {
+        tag.quotes = {};
+        tag.quotes.value = str[i];
+        tag.quotes.start = i;
+      }
+    }
+
+    // catch ending of the tag name:
+    // -------------------------------------------------------------------------
+    if (
+      tag.nameStarts !== undefined &&
+      tag.nameEnds === undefined &&
+      (str[i].trim().length === 0 ||
+        str[i] === "/" ||
+        str[i] === "<" ||
+        str[i] === ">" ||
+        (str[i].trim().length !== 0 && str[i + 1] === undefined))
+    ) {
+      // 1. mark the name ending
+      tag.nameEnds = i;
+      console.log(
+        `492 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
+      );
+      // 2. extract the full name string
+      tag.name = str.slice(
+        tag.nameStarts,
+        tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0)
+      );
+      console.log(
+        `497 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
+      );
+      // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
+      if (
+        !tag.onlyPlausible &&
+        str[i + 1] === undefined &&
+        tag.nameContainsLetters
+      ) {
+        console.log(
+          `553 \u001b[${33}m${`SUBMIT RANGE #3: [${
+            tag.leftOuterWhitespace
+          }, ${i + 1}, ${calculateWhitespaceToInsert(
+            str,
+            i,
+            tag.leftOuterWhitespace,
+            i + 1
+          )}]`}\u001b[${39}m`
+        );
+        rangesToDelete.push(
+          tag.leftOuterWhitespace,
+          i + 1,
+          calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1)
+        );
+        // also,
+        treatRangedTags(i);
+      }
+    }
+
+    // catch the ending of an attribute
+    // -------------------------------------------------------------------------
+
+    if (tag.attributeNameStarts < i && !tag.quotes) {
+      if (str[i].trim().length === 0 || str[i] === ">") {
+        // it's an attribute without a value
+        tag.attributes = [];
+        tag.attributes.push({
+          name: str.slice(tag.attributeNameStarts, i),
+          nameStarts: tag.attributeNameStarts,
+          nameEnds: i,
+          equalsAt: null
+        });
+        // we caught whole attribute, so let's erase the markers, they're not needed any more:
+        tag.attributeNameStarts = undefined;
+        tag.attributeNameEnds = undefined;
+      } else if (str[i] === "=") {
+        // there might be a value following
+        tag.equalsSpottedAt = i;
+        tag.attributeNameEnds = i;
+      }
+    }
+
+    // catch beginning of an attribute
+    // -------------------------------------------------------------------------
+    if (
+      tag.nameEnds < i &&
+      str[i] !== ">" &&
+      str[i - 1].trim().length === 0 &&
+      str[i].trim().length !== 0 &&
+      !tag.quotes
+    ) {
+      if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`)) {
+        tag.attributeNameStarts = i;
+      } else if (tag.onlyPlausible) {
+        // If we have already suspicious tag where there's a space after "<", now it's fine to skip this
+        // tag because it's not a tag - attribute starts with a non-legit symbol...
+        // Wipe the whole tag record object:
+        tag = {};
+      }
+    }
+
+    // catch "< /" - turn off "onlyPlausible"
+    // -------------------------------------------------------------------------
+    if (
+      tag.lastOpeningBracketAt !== null &&
+      tag.lastOpeningBracketAt < i &&
+      str[i] === "/" &&
+      tag.onlyPlausible
+    ) {
+      tag.onlyPlausible = false;
+    }
+
+    // catch character that follows opening bracket:
+    // -------------------------------------------------------------------------
+    if (
+      tag.lastOpeningBracketAt !== null &&
+      tag.lastOpeningBracketAt < i &&
+      str[i] !== "/" // there can be closing slashes in various places, legit and not
+    ) {
+      // 1. identify, is it definite or just plausible tag
+      if (tag.onlyPlausible === undefined) {
+        if (
+          (str[i].trim().length === 0 || str[i] === "<") &&
+          !tag.slashPresent
+        ) {
+          tag.onlyPlausible = true;
+        } else {
+          tag.onlyPlausible = false;
+        }
+        console.log(
+          `516 SET \u001b[${33}m${`tag.onlyPlausible`}\u001b[${39}m = ${
+            tag.onlyPlausible
+          }`
+        );
+      }
+      // 2. catch the beginning of the tag name. Consider custom HTML tag names
+      // and also known (X)HTML tags:
+      if (
+        str[i].trim().length !== 0 &&
+        tag.nameStarts === undefined &&
+        str[i] !== "<" &&
+        str[i] !== "/" &&
+        str[i] !== ">"
+      ) {
+        tag.nameStarts = i;
+        tag.nameContainsLetters = false;
+        console.log(
+          `532 \u001b[${33}m${`tag.nameStarts`}\u001b[${39}m = ${
+            tag.nameStarts
+          }`
+        );
+      }
+    }
+
+    // Catch letters in the tag name. Necessary to filter out false positives like "<------"
+    if (
+      tag.nameStarts &&
+      !tag.quotes &&
+      str[i].toLowerCase() !== str[i].toUpperCase()
+    ) {
+      tag.nameContainsLetters = true;
+    }
+
     // catch closing bracket
     // -------------------------------------------------------------------------
     if (str[i] === ">") {
@@ -415,6 +664,8 @@ function stripHtml(str, originalOpts) {
         (i > tag.lastClosingBracketAt && str[i].trim().length !== 0) ||
         str[i + 1] === undefined
       ) {
+        console.log(`row \u001b[${33}m${`489`}\u001b[${39}m`);
+
         // tag.lastClosingBracketAt !== undefined
 
         // case 2. closing bracket HAS BEEN met
@@ -425,37 +676,62 @@ function stripHtml(str, originalOpts) {
         // part 1.
 
         const endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+
+        // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
+        // for this tag to be considered a tag - there has to be at least one attribute with equals if
+        // the tag name is not recognised.
+
         console.log(
-          `399 \u001b[${33}m${`SUBMIT RANGE #2: [${
-            tag.leftOuterWhitespace
-          }, ${endingRangeIndex}, "${JSON.stringify(
+          `${`\u001b[${33}m${`tag.name`}\u001b[${39}m`} = ${JSON.stringify(
+            tag.name,
+            null,
+            4
+          )}`
+        );
+        if (
+          !tag.onlyPlausible ||
+          // tag name is recognised and there are no attributes:
+          ((!tag.attributes &&
+            definitelyTagNames.concat(singleLetterTags).includes(tag.name)) ||
+            // OR there is at least one equals that follow the attribute's name:
+            (tag.attributes &&
+              tag.attributes.some(attrObj => attrObj.equalsAt)))
+        ) {
+          console.log(
+            `399 \u001b[${33}m${`SUBMIT RANGE #2: [${
+              tag.leftOuterWhitespace
+            }, ${endingRangeIndex}, ${JSON.stringify(
+              calculateWhitespaceToInsert(
+                str,
+                i,
+                tag.leftOuterWhitespace,
+                endingRangeIndex
+              ),
+              null,
+              0
+            )}]`}\u001b[${39}m`
+          );
+
+          rangesToDelete.push(
+            tag.leftOuterWhitespace,
+            endingRangeIndex,
             calculateWhitespaceToInsert(
               str,
               i,
               tag.leftOuterWhitespace,
               endingRangeIndex
-            ),
-            null,
-            0
-          )}"]`}\u001b[${39}m`
-        );
-
-        rangesToDelete.push(
-          tag.leftOuterWhitespace,
-          endingRangeIndex,
-          calculateWhitespaceToInsert(
-            str,
-            i,
-            tag.leftOuterWhitespace,
-            endingRangeIndex
-          )
-        );
-        // also,
-        treatRangedTags(i);
+            )
+          );
+          // also,
+          treatRangedTags(i);
+        } else {
+          console.log(`536 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          tag = {};
+        }
 
         // part 2.
         if (str[i] !== ">") {
-          console.log(`428 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          console.log(`542 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
       }
@@ -463,46 +739,40 @@ function stripHtml(str, originalOpts) {
 
     // catch opening bracket
     // -------------------------------------------------------------------------
-    if (str[i] === "<") {
+    if (str[i] === "<" && str[i - 1] !== "<") {
+      // cater sequences of opening brackets "<<<<div>>>"
       if (str[i + 1] === ">") {
         // cater cases like: "<><><>"
         continue;
-      } else if (tag.lastOpeningBracketAt === undefined && !tag.quotes) {
-        tag.lastOpeningBracketAt = i;
-        tag.slashPresent = false;
-        tag.leftOuterWhitespace =
-          chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
-        console.log(
-          `442 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
-            tag.leftOuterWhitespace
-          }; \u001b[${33}m${`tag.lastOpeningBracketAt`}\u001b[${39}m = ${
-            tag.lastOpeningBracketAt
-          }; \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = false`
-        );
-      }
-    }
+      } else {
+        // if new tag starts, reset:
+        if (
+          tag.lastOpeningBracketAt !== undefined &&
+          tag.onlyPlausible &&
+          tag.name &&
+          !tag.quotes
+        ) {
+          // reset:
+          tag.lastOpeningBracketAt = undefined;
+          tag.onlyPlausible = false;
+        }
 
-    // catch slash
-    // -------------------------------------------------------------------------
-    if (
-      str[i] === "/" &&
-      !(tag.quotes && tag.quotes.value) &&
-      tag.lastOpeningBracketAt !== undefined &&
-      tag.lastClosingBracketAt === undefined
-    ) {
-      console.log(`457 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
-      tag.slashPresent = true;
-    }
-
-    // catch double or single quotes
-    // -------------------------------------------------------------------------
-    if (str[i] === '"' || str[i] === "'") {
-      if (tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
-        tag.quotes = undefined;
-      } else if (!tag.quotes) {
-        tag.quotes = {};
-        tag.quotes.value = str[i];
-        tag.quotes.start = i;
+        if (
+          (tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) &&
+          !tag.quotes
+        ) {
+          tag.lastOpeningBracketAt = i;
+          tag.slashPresent = false;
+          tag.leftOuterWhitespace =
+            chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
+          console.log(
+            `786 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
+              tag.leftOuterWhitespace
+            }; \u001b[${33}m${`tag.lastOpeningBracketAt`}\u001b[${39}m = ${
+              tag.lastOpeningBracketAt
+            }; \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = false`
+          );
+        }
       }
     }
 
@@ -513,98 +783,14 @@ function stripHtml(str, originalOpts) {
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
         console.log(
-          `468 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
+          `449 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
         );
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
       chunkOfWhitespaceStartsAt = null;
       console.log(
-        `474 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
+        `455 SET \u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m = ${chunkOfWhitespaceStartsAt}`
       );
-    }
-
-    // catch ending of the tag name:
-    // -------------------------------------------------------------------------
-    if (
-      tag.nameStarts !== undefined &&
-      tag.nameEnds === undefined &&
-      (str[i].trim().length === 0 ||
-        str[i] === "/" ||
-        str[i] === "<" ||
-        str[i] === ">" ||
-        (str[i].trim().length !== 0 && str[i + 1] === undefined))
-    ) {
-      // 1. mark the name ending
-      tag.nameEnds = i;
-      console.log(
-        `492 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
-      );
-      // 2. extract the full name string
-      tag.name = str.slice(
-        tag.nameStarts,
-        tag.nameEnds + (str[i + 1] === undefined ? 1 : 0)
-      );
-      console.log(
-        `497 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
-      );
-      // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
-      if (!tag.onlyPlausible && str[i + 1] === undefined) {
-        console.log(
-          `553 \u001b[${33}m${`SUBMIT RANGE #3: [${
-            tag.leftOuterWhitespace
-          }, ${i + 1}, ${calculateWhitespaceToInsert(
-            str,
-            i,
-            tag.leftOuterWhitespace,
-            i + 1
-          )}]`}\u001b[${39}m`
-        );
-        rangesToDelete.push(
-          tag.leftOuterWhitespace,
-          i + 1,
-          calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1)
-        );
-        // also,
-        treatRangedTags(i);
-      }
-    }
-
-    // catch character that follows opening bracket:
-    // -------------------------------------------------------------------------
-    if (
-      tag.lastOpeningBracketAt !== null &&
-      tag.lastOpeningBracketAt < i &&
-      str[i] !== "/" // there can be closing slashes in various places, legit and not
-    ) {
-      // 1. identify, is it definite or just plausible tag
-      if (tag.onlyPlausible === undefined) {
-        if (str[i].trim().length === 0 || str[i] === "<") {
-          tag.onlyPlausible = true;
-        } else {
-          tag.onlyPlausible = false;
-        }
-        console.log(
-          `516 SET \u001b[${33}m${`tag.onlyPlausible`}\u001b[${39}m = ${
-            tag.onlyPlausible
-          }`
-        );
-      }
-      // 2. catch the beginning of the tag name. Consider custom HTML tag names
-      // and also known (X)HTML tags:
-      if (
-        str[i].trim().length !== 0 &&
-        tag.nameStarts === undefined &&
-        str[i] !== "<" &&
-        str[i] !== "/" &&
-        str[i] !== ">"
-      ) {
-        tag.nameStarts = i;
-        console.log(
-          `532 \u001b[${33}m${`tag.nameStarts`}\u001b[${39}m = ${
-            tag.nameStarts
-          }`
-        );
-      }
     }
 
     // log all
@@ -619,10 +805,12 @@ function stripHtml(str, originalOpts) {
           ? `${`\u001b[${35}m${`tag`}\u001b[${39}m`} = ${Object.keys(tag)
               .map(key => {
                 return `${`\u001b[${90}m${`\u001b[${7}m${key}\u001b[${27}m`}\u001b[${39}m`} ${`\u001b[${90}m: ${
-                  isObj(tag[key]) ? JSON.stringify(tag[key], null, 0) : tag[key]
+                  isObj(tag[key]) || isArr(tag[key])
+                    ? JSON.stringify(tag[key], null, 4)
+                    : tag[key]
                 }\u001b[${39}m`}`;
               })
-              .join(", ")}\n`
+              .join(",\n")}\n`
           : ""
       }${
         rangesToDelete.current()
