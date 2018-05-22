@@ -53,13 +53,13 @@ function allValuesEqualTo(input, value, opts) {
 function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   // precautions:
   if (inputOriginal === undefined) {
-    throw new Error('object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.');
+    throw new Error("object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument.");
   }
   if (valueOriginal === undefined) {
-    throw new Error('object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.');
+    throw new Error("object-all-values-equal-to: [THROW_ID_02] The second input is undefined! Please provide the second argument.");
   }
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
-    throw new Error('object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to:\n' + JSON.stringify(originalOpts, null, 4));
+    throw new Error("object-all-values-equal-to: [THROW_ID_03] The third argument, options object, was given not as a plain object but as a " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
   // prep opts
@@ -67,7 +67,9 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
     arraysMustNotContainPlaceholders: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'object-all-values-equal-to: [THROW_ID_04*]' });
+  checkTypes(opts, defaults, {
+    msg: "object-all-values-equal-to: [THROW_ID_04*]"
+  });
 
   // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
