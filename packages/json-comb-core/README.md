@@ -1,11 +1,8 @@
 # json-comb-core
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > The inner core of json-comb
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -38,6 +38,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -53,8 +55,8 @@ const {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync,
-} = require('json-comb-core')
+  findUnusedSync
+} = require("json-comb-core");
 
 // or as a ES Module:
 import {
@@ -64,17 +66,17 @@ import {
   enforceKeysetSync,
   sortAllObjectsSync,
   noNewKeysSync,
-  findUnusedSync,
-} from 'json-comb-core'
+  findUnusedSync
+} from "json-comb-core";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-comb-core.cjs.js` | 16&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-comb-core.esm.js` | 16&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-comb-core.umd.js` | 72&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-comb-core.cjs.js` | 16&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-comb-core.esm.js` | 16&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-comb-core.umd.js` | 72&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -110,8 +112,8 @@ It consumes an array of promises, where each promise should resolve into a plain
 
 Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
-1. Each object of the same level between different JSON files should have same keys.
-2. If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
+1.  Each object of the same level between different JSON files should have same keys.
+2.  If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
@@ -119,18 +121,18 @@ The merging is done on a premise to retain [as much information](https://github.
 
 ### input
 
-Input argument   | Type                                                 | Obligatory? | Description
------------------|------------------------------------------------------|-------------|--------------
-`input`          | Array of promises, each resolving into plain objects | yes         | Each plain object would usually be a promise of one JSON file's contents.
-`options`        | Object                                               | no          | An Optional Options Object, being synchronous (not a promise). See below for its API.
+| Input argument | Type                                                 | Obligatory? | Description                                                                           |
+| -------------- | ---------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| `input`        | Array of promises, each resolving into plain objects | yes         | Each plain object would usually be a promise of one JSON file's contents.             |
+| `options`      | Object                                               | no          | An Optional Options Object, being synchronous (not a promise). See below for its API. |
 
 PS. The input is normal, a synchronous array full of promises. Not a promise of an array which contains promises.
 
-Optional Options Object's key | Type    | Default   | Description
-------------------------------|---------|-----------|----------------------
-{                             |         |           |
-`placeholder`                 | Any     | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
-}                             |         |           |
+| Optional Options Object's key | Type | Default | Description                                                                  |
+| ----------------------------- | ---- | ------- | ---------------------------------------------------------------------------- |
+| {                             |      |         |
+| `placeholder`                 | Any  | `false` | When adding a missing key, this value will be assigned to a newly-added key. |
+| }                             |      |         |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -192,8 +194,8 @@ It consumes an array of plain objects (parsed JSON files) and extracts a "schema
 
 Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
-1. Each object of the same level between different JSON files should have same keys.
-2. If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
+1.  Each object of the same level between different JSON files should have same keys.
+2.  If an array has objects, those objects should have the same keys. If the array is a value and it is missing in a certain JSON, it gets filled with only one object.
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
@@ -201,16 +203,16 @@ The merging is done on a premise to retain [as much information](https://github.
 
 ### input
 
-Input argument   | Type                   | Obligatory? | Description
------------------|------------------------|-------------|--------------
-`input`          | Array of plain objects | yes         | Each plain object would usually be one JSON file's contents.
-`options`        | Object                 | no          | An Optional Options Object. See below for its API.
+| Input argument | Type                   | Obligatory? | Description                                                  |
+| -------------- | ---------------------- | ----------- | ------------------------------------------------------------ |
+| `input`        | Array of plain objects | yes         | Each plain object would usually be one JSON file's contents. |
+| `options`      | Object                 | no          | An Optional Options Object. See below for its API.           |
 
-Optional Options Object's key | Type  | Default   | Description
-------------------------------|-------|-----------|----------------------
-{                             |       |           |
-`placeholder`                 | Any   | `false`   | When adding a missing key, this value will be assigned to a newly-added key.
-}                             |       |           |
+| Optional Options Object's key | Type | Default | Description                                                                  |
+| ----------------------------- | ---- | ------- | ---------------------------------------------------------------------------- |
+| {                             |      |         |
+| `placeholder`                 | Any  | `false` | When adding a missing key, this value will be assigned to a newly-added key. |
+| }                             |      |         |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -223,26 +225,29 @@ A plain object, which can be used in `enforceKeyset()`. See below.
 For example, keeping placeholder the default:
 
 ```js
-const { getKeyset } = require('json-comb-core')
+const { getKeyset } = require("json-comb-core");
 let schema = getKeyset([
-  { // <- object #1
-    a: 'a',
-    b: 'c',
+  {
+    // <- object #1
+    a: "a",
+    b: "c",
     c: {
-      d: 'd',
-      e: 'e'
+      d: "d",
+      e: "e"
     }
   },
-  { // <- object #2
-    a: 'a'
+  {
+    // <- object #2
+    a: "a"
   },
-  { // <- object #3
+  {
+    // <- object #3
     c: {
-      f: 'f'
+      f: "f"
     }
   }
-])
-console.log('schema = ' + JSON.stringify(schema, null, 4))
+]);
+console.log("schema = " + JSON.stringify(schema, null, 4));
 // => {
 //      a: false,
 //      b: false,
@@ -257,28 +262,32 @@ console.log('schema = ' + JSON.stringify(schema, null, 4))
 Customising the placeholder:
 
 ```js
-const { getKeyset } = require('json-comb-core')
-let schema = getKeyset([
-    { // <- object #1
-      a: 'a',
-      b: 'c',
+const { getKeyset } = require("json-comb-core");
+let schema = getKeyset(
+  [
+    {
+      // <- object #1
+      a: "a",
+      b: "c",
       c: {
-        d: 'd',
-        e: 'e'
+        d: "d",
+        e: "e"
       }
     },
-    { // <- object #2
-      a: 'a'
+    {
+      // <- object #2
+      a: "a"
     },
-    { // <- object #3
+    {
+      // <- object #3
       c: {
-        f: 'f'
+        f: "f"
       }
     }
   ],
-  { placeholder: '' }
-)
-console.log('schema = ' + JSON.stringify(schema, null, 4))
+  { placeholder: "" }
+);
+console.log("schema = " + JSON.stringify(schema, null, 4));
 // => {
 //      a: '',
 //      b: '',
@@ -298,21 +307,23 @@ Reads an input plain object and a keyset schema object and normalises the input 
 
 ### input
 
-Input argument            | Type     | Obligatory? | Description
---------------------------|----------|-------------|--------------
-`input`                   | Object   | yes         | What should we normalise?
-`schema`                  | Object   | yes         | According to what schema should we normalise?
-`Optional Options Object` | Object   | no          | An Optional Options Object. See its API below.
+| Input argument            | Type   | Obligatory? | Description                                    |
+| ------------------------- | ------ | ----------- | ---------------------------------------------- |
+| `input`                   | Object | yes         | What should we normalise?                      |
+| `schema`                  | Object | yes         | According to what schema should we normalise?  |
+| `Optional Options Object` | Object | no          | An Optional Options Object. See its API below. |
 
 Optional Options Object's API is the same as asyc version's of this method, [`enforceKeysetSync()`](#enforcekeysetsync).
 
-Optional Options Object's key                  | Type                          | Default   | Description
------------------------------------------------|-------------------------------|-----------|----------------------
-{                                              |                               |           |
-`doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`      | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).
-`placeholder`                                  | Boolean                       | `false`   | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.
-`useNullAsExplicitFalse`                       | Boolean                       | `true`    | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null.
-}                                              |                               |           |
+| Optional Options Object's key                  | Type                          | Default | Description                                                                                                                                                                                                                                              |
+| ---------------------------------------------- | ----------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                              |                               |         |
+| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`    | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).   |
+| `placeholder`                                  | Boolean                       | `false` | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.                                                                                                                                                    |
+| `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
+| }                                              |                               |         |
+
+**[⬆ &nbsp;back to top](#)**
 
 ### output
 
@@ -407,21 +418,21 @@ Reads an input plain object and a keyset schema object and normalises the input 
 
 ### input
 
-Input argument            | Type     | Obligatory? | Description
---------------------------|----------|-------------|--------------
-`input`                   | Object   | yes         | What should we normalise?
-`schema`                  | Object   | yes         | According to what schema should we normalise?
-`Optional Options Object` | Object   | no          | An Optional Options Object. See its API below.
+| Input argument            | Type   | Obligatory? | Description                                    |
+| ------------------------- | ------ | ----------- | ---------------------------------------------- |
+| `input`                   | Object | yes         | What should we normalise?                      |
+| `schema`                  | Object | yes         | According to what schema should we normalise?  |
+| `Optional Options Object` | Object | no          | An Optional Options Object. See its API below. |
 
 Optional Options Object's API is the same as asyc version's of this method, [`enforceKeyset()`](#enforcekeyset).
 
-Optional Options Object's key                  | Type                          | Default   | Description
------------------------------------------------|-------------------------------|-----------|----------------------
-{                                              |                               |           |
-`doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`      | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).
-`placeholder`                                  | Boolean                       | `false`   | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.
-`useNullAsExplicitFalse`                       | Boolean                       | `true`    | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null.
-}                                              |                               |           |
+| Optional Options Object's key                  | Type                          | Default | Description                                                                                                                                                                                                                                              |
+| ---------------------------------------------- | ----------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                              |                               |         |
+| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`    | Some paths don't necessarily have to be normalised. Sometimes you want certain top-level keys to be falsey when they are unused. In such cases, put all such paths here. Notation is same as [object-path](https://www.npmjs.com/package/object-path).   |
+| `placeholder`                                  | Boolean                       | `false` | What value are you using as a placeholder for missing values? Default is `false` because it's falsey.                                                                                                                                                    |
+| `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
+| }                                              |                               |         |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -432,19 +443,19 @@ A clone of an input object, with the same key set as the `schema` object.
 ### example
 
 ```js
-const { getKeyset } = require('json-comb-core')
-const { enforceKeyset } = require('json-comb-core')
+const { getKeyset } = require("json-comb-core");
+const { enforceKeyset } = require("json-comb-core");
 let inputObj = {
-  a: 'ccc'
-}
+  a: "ccc"
+};
 let anotherObj = {
-  a: 'aaa',
-  b: 'bbb'
-}
-let schema = getKeyset([ inputObj, anotherObj ]) // <= notice both are fed via an array
+  a: "aaa",
+  b: "bbb"
+};
+let schema = getKeyset([inputObj, anotherObj]); // <= notice both are fed via an array
 
-inputObj = enforceKeyset( inputObj, schema )
-console.log('inputObj = ' + JSON.stringify(inputObj, null, 4))
+inputObj = enforceKeyset(inputObj, schema);
+console.log("inputObj = " + JSON.stringify(inputObj, null, 4));
 // => {
 //      a: 'ccc',
 //      b: false
@@ -463,10 +474,10 @@ Practically this is handy to tame the JSON's that we don't/can't normalise. At l
 
 ### input
 
-Input argument | Type     | Obligatory? | Description
----------------|----------|-------------|--------------
-`input`        | Object   | yes         | What should we check?
-`schema`       | Object   | yes         | According to what schema should we normalise?
+| Input argument | Type   | Obligatory? | Description                                   |
+| -------------- | ------ | ----------- | --------------------------------------------- |
+| `input`        | Object | yes         | What should we check?                         |
+| `schema`       | Object | yes         | According to what schema should we normalise? |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -479,46 +490,50 @@ An array of zero or more paths.
 We are going to catch the rogue key `b`:
 
 ```js
-const { noNewKeys } = require('json-comb-core')
+const { noNewKeys } = require("json-comb-core");
 let res = noNewKeys(
-  { // <- input we're checking
-    a: 'a',
-    b: 'b',
-    c: 'c'
+  {
+    // <- input we're checking
+    a: "a",
+    b: "b",
+    c: "c"
   },
-  { // <- reference keyset
-    a: 'aaa',
-    c: 'ccc'
+  {
+    // <- reference keyset
+    a: "aaa",
+    c: "ccc"
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => ['b']
 ```
 
 More advanced example:
 
 ```js
-const { noNewKeys } = require('json-comb-core')
+const { noNewKeys } = require("json-comb-core");
 let res = noNewKeys(
-  { // <- input we're checking
+  {
+    // <- input we're checking
     z: [
       {
-        a: 'a',
-        b: 'b',
-        c: 'c'
+        a: "a",
+        b: "b",
+        c: "c"
       },
       {
         a: false,
         b: false,
-        c: 'c'
+        c: "c"
       }
     ]
   },
-  { // <- reference keyset
+  {
+    // <- reference keyset
     z: [
       {
-        a: 'a',
-        b: 'b'
+        a: "a",
+        b: "b"
       },
       {
         a: false,
@@ -526,8 +541,8 @@ let res = noNewKeys(
       }
     ]
   }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => ['z[0].c', 'z[1].c']
 ```
 
@@ -543,17 +558,17 @@ Practically it is useful to identify unused keys to reduce the JSON data file si
 
 ### input
 
-Input argument | Type                                | Obligatory? | Description
----------------|-------------------------------------|-------------|--------------
-`input`        | Array of zero or more plain objects | yes         | Array of parsed JSON files.
-`options`      | Object                              | no          | Options object. See below.
+| Input argument | Type                                | Obligatory? | Description                 |
+| -------------- | ----------------------------------- | ----------- | --------------------------- |
+| `input`        | Array of zero or more plain objects | yes         | Array of parsed JSON files. |
+| `options`      | Object                              | no          | Options object. See below.  |
 
-`options` object's key         | Type     | Obligatory? | Default       | Description
--------------------------------|----------|-------------|---------------|----------------------
-{                              |          |             |               |
-`placeholder`                  | any      | no          | `false`       | What value is being used to mark unused key?
-`comments`                     | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it was unused). Set it to any falsey value to turn it off.
-}                              |          |             |               |
+| `options` object's key | Type                                                                   | Obligatory? | Default       | Description                                                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------- | ----------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| {                      |                                                                        |             |               |
+| `placeholder`          | any                                                                    | no          | `false`       | What value is being used to mark unused key?                                                                                                                 |
+| `comments`             | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it was unused). Set it to any falsey value to turn it off. |
+| }                      |                                                                        |             |               |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -564,23 +579,23 @@ An array of zero or more paths leading to keys which are either missing or have 
 ### example
 
 ```js
-const { findUnused } = require('json-comb-core')
-let res = findUnused(
-  [
-    { // <- object #1
-      a: false,
-      b: 'bbb1',
-      c: false
-    },
-    { // <- object #2
-      a: 'aaa',
-      b: 'bbb2',
-      c: false
-    },
-    {} // <- object #3
-  ]
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const { findUnused } = require("json-comb-core");
+let res = findUnused([
+  {
+    // <- object #1
+    a: false,
+    b: "bbb1",
+    c: false
+  },
+  {
+    // <- object #2
+    a: "aaa",
+    b: "bbb2",
+    c: false
+  },
+  {} // <- object #3
+]);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c']
 ```
 
@@ -589,46 +604,44 @@ This function will work on arrays of both normalised and not normalised object s
 More complex example:
 
 ```js
-const { findUnused } = require('json-comb-core')
-let res = findUnused(
-  [
-    {
-      a: [
-        {
-          k: false,
-          l: false,
-          m: false
-        },
-        {
-          k: 'k',
-          l: false,
-          m: 'm'
-        }
-      ],
-      b: 'bbb1',
-      c: false
-    },
-    {
-      a: [
-        {
-          k: 'k',
-          l: false,
-          m: 'm'
-        },
-        {
-          k: 'k',
-          l: false,
-          m: 'm'
-        }
-      ],
-      b: 'bbb2',
-      c: false
-    },
-    {b: false},
-    {c: false}
-  ]
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const { findUnused } = require("json-comb-core");
+let res = findUnused([
+  {
+    a: [
+      {
+        k: false,
+        l: false,
+        m: false
+      },
+      {
+        k: "k",
+        l: false,
+        m: "m"
+      }
+    ],
+    b: "bbb1",
+    c: false
+  },
+  {
+    a: [
+      {
+        k: "k",
+        l: false,
+        m: "m"
+      },
+      {
+        k: "k",
+        l: false,
+        m: "m"
+      }
+    ],
+    b: "bbb2",
+    c: false
+  },
+  { b: false },
+  { c: false }
+]);
+console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c', 'a[0].l']
 ```
 
@@ -644,9 +657,9 @@ This method does not mutate the input and is fine if you pass _any_ JS type (`ar
 
 ### input
 
-Input argument | Type     | Obligatory? | Description
----------------|----------|-------------|--------------
-`input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, the untouched input will be returned.
+| Input argument | Type     | Obligatory? | Description                                                                                                                                                                |
+| -------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, the untouched input will be returned. |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -660,15 +673,13 @@ If the input is **something else**, an output is the same thing as input.
 ### example
 
 ```js
-const { sortAllObjects } = require('json-comb-core')
-let res = sortAllObjects(
-  {
-    a: 'a',
-    c: 'c',
-    b: 'b'
-  }
-)
-console.log('res = ' + JSON.stringify(res, null, 4))
+const { sortAllObjects } = require("json-comb-core");
+let res = sortAllObjects({
+  a: "a",
+  c: "c",
+  b: "b"
+});
+console.log("res = " + JSON.stringify(res, null, 4));
 // => {
 //      a: 'a',
 //      b: 'b',
@@ -694,9 +705,9 @@ When performing a normalisation, all JSON files are read, and internally a schem
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -706,39 +717,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-comb-core
-
-[npm-img]: https://img.shields.io/npm/v/json-comb-core.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/json-comb-core
-
 [travis-img]: https://img.shields.io/travis/codsen/json-comb-core.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/json-comb-core
-
 [cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/json-comb-core.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/json-comb-core
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/json-comb-core.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-comb-core
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-comb-core.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
-
 [downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/json-comb-core
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-comb-core
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/json-comb-core.svg?style=flat-square
 [license-url]: https://github.com/codsen/json-comb-core/blob/master/license.md
