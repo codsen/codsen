@@ -42,7 +42,7 @@ npm i -g json-sort-cli
 * then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
 
 ```bash
-$ jsonsort file1.csv 'folder1/folder2/**/*.*' folder3 -s
+$ jsonsort file1.csv "folder1/folder2/**/*.*" folder3 -t
 $ jsonsort * -t -n
 $ jsonsort yourspecialfolder -d
 
@@ -52,7 +52,7 @@ $ jsonsort -h
 $ jsonsort --help
 ```
 
-or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`). Transpiled code is served, so requirements for your Node install are `v.4` and above.
+or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`).
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -72,7 +72,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 
 It **sorts JSON files deeply**. That is, the algorithm will traverse the input if it's an array or a plain object and will sort _every encountered plain object_.
 
-As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used. If you want a different indentation, raise an [issue](https://github.com/codsen/json-sort-cli/issues), we can discuss that.
+As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
 Under the bonnet, this application uses [globby](https://github.com/sindresorhus/globby), so refer to its glob patterns.
 
