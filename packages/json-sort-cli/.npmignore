@@ -16,13 +16,10 @@ coverage
 
 # files:
 
-.babelrc
 .bithoundrc
-.editorconfig
 .eslintrc.json
-.gitattributes
 .gitignore
 .npmignore
+.prettierignore
 .travis.yml
-cli.js
-test.zip
+test.js

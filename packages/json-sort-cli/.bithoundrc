@@ -6,11 +6,24 @@
   },
   "dependencies": {
     "mute": [
+      "chalk",
+      "coveralls",
+      "eslint",
+      "eslint-config-prettier",
+      "eslint-plugin-ava",
+      "eslint-plugin-import",
+      "eslint-plugin-prettier",
+      "globby",
       "husky",
-      "lodash.uniq"
+      "nyc",
+      "prettier",
+      "sorted-object",
+      "tempy",
+      "update-notifier"
     ]
   },
-  "ignore": [
-    "cli-es5.js"
+  "ignore": [],
+  "test": [
+    "test.js"
   ]
 }
