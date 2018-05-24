@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] - 2018-05-23
+
+### Improvements
+
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
+
 ## [6.0.0] - 2018-03-13
 
 ### Added
@@ -134,3 +143,4 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 [5.0.0]: https://github.com/codsen/json-comb-core/compare/v4.2.0...v5.0.0
 [5.1.0]: https://github.com/codsen/json-comb-core/compare/v5.0.0...v5.1.0
 [6.0.0]: https://github.com/codsen/json-comb-core/compare/v5.1.3...v6.0.0
+[6.1.0]: https://github.com/codsen/json-comb-core/compare/v6.0.0...v6.1.0
