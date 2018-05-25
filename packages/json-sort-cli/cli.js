@@ -58,20 +58,20 @@ function readSortAndWriteOverFile(oneOfPaths) {
             traverse(jsonContent, (key, val) => {
               const current = val !== undefined ? val : key;
               if (isObj(current)) {
-                console.log(
-                  `=======\n${`\u001b[${33}m${`current BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
-                    current,
-                    null,
-                    4
-                  )}`
-                );
-                console.log(
-                  `${`\u001b[${33}m${`current AFTER`}\u001b[${39}m`} = ${JSON.stringify(
-                    sortObject(current),
-                    null,
-                    4
-                  )}`
-                );
+                // console.log(
+                //   `=======\n${`\u001b[${33}m${`current BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+                //     current,
+                //     null,
+                //     4
+                //   )}`
+                // );
+                // console.log(
+                //   `${`\u001b[${33}m${`current AFTER`}\u001b[${39}m`} = ${JSON.stringify(
+                //     sortObject(current),
+                //     null,
+                //     4
+                //   )}`
+                // );
                 return sortObject(current);
               }
               return current;
@@ -134,13 +134,13 @@ globby(input)
       );
       process.exit(0);
     }
-    console.log(
-      `105 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
-        resolvedPathsArray,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `105 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //     resolvedPathsArray,
+    //     null,
+    //     4
+    //   )}`
+    // );
     return resolvedPathsArray;
   })
   // glob each directory, reduce'ing all results (in promise shape) until all are resolved
@@ -179,13 +179,13 @@ globby(input)
     const tempRez = paths.filter(
       singlePath => path.extname(singlePath) === ".json"
     );
-    console.log(
-      `150 ${`\u001b[${33}m${`tempRez`}\u001b[${39}m`} = ${JSON.stringify(
-        tempRez,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `150 ${`\u001b[${33}m${`tempRez`}\u001b[${39}m`} = ${JSON.stringify(
+    //     tempRez,
+    //     null,
+    //     4
+    //   )}`
+    // );
     return tempRez;
   })
   .then(received => {
