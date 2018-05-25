@@ -19,14 +19,14 @@ function isArr(something) {
 }
 function typ(something) {
   if (isObj(something)) {
-    return 'plain object';
+    return "plain object";
   } else if (isArr(something)) {
-    return 'array';
+    return "array";
   }
-  return typeof something === 'undefined' ? 'undefined' : _typeof(something);
+  return typeof something === "undefined" ? "undefined" : _typeof(something);
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 function existy(x) {
   return x != null;
@@ -36,7 +36,7 @@ function existy(x) {
 // requirements are loose - it can be anything since it will be calling itself recursively
 // with potentially AST contents (objects containing arrays containing objects etc.)
 function fillMissingKeys(incompleteOriginal, schema, opts) {
-  var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+  var path = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
 
   var incomplete = clone(incompleteOriginal);
   if (existy(incomplete) || !(path.length && opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(path) && allValuesEqualTo(incomplete, opts.placeholder))) {
@@ -44,7 +44,7 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
       // traverse the keys on schema and add them onto incomplete
       Object.keys(schema).forEach(function (key) {
         // calculate the path for current key
-        var currentPath = '' + (path ? path + '.' : '') + key;
+        var currentPath = "" + (path ? path + "." : "") + key;
 
         if (opts.doNotFillThesePathsIfTheyContainPlaceholders.includes(currentPath)) {
           if (existy(incomplete[key])) {
@@ -67,14 +67,16 @@ function fillMissingKeys(incompleteOriginal, schema, opts) {
       }
       if (schema.length > 0) {
         for (var i = incomplete.length; i--;) {
-          var currentPath = (path ? path + '.' : '') + '0';
+          var currentPath = (path ? path + "." : "") + "0";
           if (isObj(schema[0]) || isArr(schema[0])) {
             incomplete[i] = fillMissingKeys(incomplete[i], schema[0], opts, currentPath);
           }
         }
       }
     } else {
-      return merge(schema, incomplete, { useNullAsExplicitFalse: opts.useNullAsExplicitFalse });
+      return merge(schema, incomplete, {
+        useNullAsExplicitFalse: opts.useNullAsExplicitFalse
+      });
     }
   }
   return incomplete;
@@ -92,16 +94,16 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
   // Also, wrapper function will shield the fourth argument from the outside API
   //
   if (arguments.length === 0) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_01] All arguments are missing!');
+    throw new Error("object-fill-missing-keys: [THROW_ID_01] All arguments are missing!");
   }
   if (!isObj(originalIncompleteWrapper)) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it\'s type is "' + typ(originalIncompleteWrapper) + '" and it\'s equal to: ' + JSON.stringify(originalIncompleteWrapper, null, 4));
+    throw new Error("object-fill-missing-keys: [THROW_ID_02] First argument, input object must be a plain object. Currently it's type is \"" + typ(originalIncompleteWrapper) + "\" and it's equal to: " + JSON.stringify(originalIncompleteWrapper, null, 4));
   }
   if (!isObj(originalSchemaWrapper)) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it\'s type is "' + typ(originalSchemaWrapper) + '" and it\'s equal to: ' + JSON.stringify(originalSchemaWrapper, null, 4));
+    throw new Error("object-fill-missing-keys: [THROW_ID_03] Second argument, schema object, must be a plain object. Currently it's type is \"" + typ(originalSchemaWrapper) + "\" and it's equal to: " + JSON.stringify(originalSchemaWrapper, null, 4));
   }
   if (originalOptsWrapper !== undefined && originalOptsWrapper !== null && !isObj(originalOptsWrapper)) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it\'s type is "' + typ(originalOptsWrapper) + '" and it\'s equal to: ' + JSON.stringify(originalOptsWrapper, null, 4));
+    throw new Error("object-fill-missing-keys: [THROW_ID_04] Third argument, schema object, must be a plain object. Currently it's type is \"" + typ(originalOptsWrapper) + "\" and it's equal to: " + JSON.stringify(originalOptsWrapper, null, 4));
   }
   if (originalOptsWrapper === null) {
     originalOptsWrapper = {};
@@ -111,16 +113,17 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
     placeholder: false, // value which is being used as a placeholder
     doNotFillThesePathsIfTheyContainPlaceholders: [],
     useNullAsExplicitFalse: true
-    // fill any settings with defaults if missing:
-  };var opts = Object.assign({}, defaults, originalOptsWrapper);
+  };
+  // fill any settings with defaults if missing:
+  var opts = Object.assign({}, defaults, originalOptsWrapper);
 
   opts.doNotFillThesePathsIfTheyContainPlaceholders = arrayiffyIfString(opts.doNotFillThesePathsIfTheyContainPlaceholders);
 
   // the check:
   checkTypes(opts, defaults, {
-    msg: 'object-fill-missing-keys: [THROW_ID_05*]',
+    msg: "object-fill-missing-keys: [THROW_ID_05*]",
     schema: {
-      placeholder: ['object', 'array', 'string', 'null', 'boolean', 'number']
+      placeholder: ["object", "array", "string", "null", "boolean", "number"]
     }
   });
   var culpritsVal = null;
@@ -133,7 +136,7 @@ function fillMissingKeysWrapper(originalIncompleteWrapper, originalSchemaWrapper
     }
     return true;
   })) {
-    throw new Error('object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number "' + culpritsIndex + '" is not a string! It\'s ' + typ(culpritsVal) + ', equal to:\n' + JSON.stringify(culpritsVal, null, 4));
+    throw new Error("object-fill-missing-keys: [THROW_ID_06] opts.doNotFillThesePathsIfTheyContainPlaceholders element with an index number \"" + culpritsIndex + "\" is not a string! It's " + typ(culpritsVal) + ", equal to:\n" + JSON.stringify(culpritsVal, null, 4));
   }
 
   return fillMissingKeys(clone(originalIncompleteWrapper), clone(originalSchemaWrapper), opts);

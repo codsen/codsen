@@ -1,179 +1,179 @@
 /* eslint ava/no-only-test:0 */
 
-import test from 'ava'
-import fillMissingKeys from '../dist/object-fill-missing-keys.cjs'
+import test from "ava";
+import fillMissingKeys from "../dist/object-fill-missing-keys.esm";
 
 // ==============================
 // 1. Adds missing keys
 // ==============================
 
-test('01.01 - filling in missing keys, simple plain object', (t) => {
+test("01.01 - filling in missing keys, simple plain object", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
+        a: "a"
       },
       {
         a: false,
         b: false,
-        c: false,
-      },
+        c: false
+      }
     ),
     {
-      a: 'a',
+      a: "a",
       b: false,
-      c: false,
+      c: false
     },
-    '01.01',
-  )
-})
+    "01.01"
+  );
+});
 
-test('01.02 - filling in missing keys, nested, with arrays', (t) => {
+test("01.02 - filling in missing keys, nested, with arrays", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
+        a: "a"
       },
       {
         a: false,
         b: [
           {
-            x: 'x',
-          },
+            x: "x"
+          }
         ],
         c: {
-          y: 'y',
-        },
-      },
+          y: "y"
+        }
+      }
     ),
     {
-      a: 'a',
+      a: "a",
       b: [
         {
-          x: 'x',
-        },
+          x: "x"
+        }
       ],
       c: {
-        y: 'y',
-      },
+        y: "y"
+      }
     },
-    '01.02.01',
-  )
+    "01.02.01"
+  );
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
+        a: "a"
       },
       {
-        a: 'z',
+        a: "z",
         b: [
           {
-            x: 'x',
-          },
+            x: "x"
+          }
         ],
         c: {
-          y: 'y',
-        },
-      },
+          y: "y"
+        }
+      }
     ),
     {
-      a: 'a',
+      a: "a",
       b: [
         {
-          x: 'x',
-        },
+          x: "x"
+        }
       ],
       c: {
-        y: 'y',
-      },
+        y: "y"
+      }
     },
-    '01.02.02',
-  )
-})
+    "01.02.02"
+  );
+});
 
-test('01.03 - multiple values, sorting as well', (t) => {
+test("01.03 - multiple values, sorting as well", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        b: 'b',
-        a: 'a',
+        b: "b",
+        a: "a"
       },
       {
         a: false,
         b: false,
-        c: false,
-      },
+        c: false
+      }
     ),
     {
-      a: 'a',
-      b: 'b',
-      c: false,
+      a: "a",
+      b: "b",
+      c: false
     },
-    '01.03',
-  )
-})
+    "01.03"
+  );
+});
 
-test('01.04 - nested arrays as values (array in schema overwrites Boolean)', (t) => {
+test("01.04 - nested arrays as values (array in schema overwrites Boolean)", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: false,
+        a: false
       },
       {
         a: [
           {
-            b: false,
-          },
-        ],
-      },
+            b: false
+          }
+        ]
+      }
     ),
     {
       a: [
         {
-          b: false,
-        },
-      ],
+          b: false
+        }
+      ]
     },
-    '01.04',
-  )
-})
+    "01.04"
+  );
+});
 
-test('01.05 - more complex nested arrays', (t) => {
+test("01.05 - more complex nested arrays", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        c: 'c',
+        c: "c"
       },
       {
         a: false,
         b: [
           {
             x: false,
-            y: false,
-          },
+            y: false
+          }
         ],
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: false,
       b: [
         {
           x: false,
-          y: false,
-        },
+          y: false
+        }
       ],
-      c: 'c',
+      c: "c"
     },
-    '01.05',
-  )
-})
+    "01.05"
+  );
+});
 
-test('01.06 - ridiculously deep nesting', (t) => {
+test("01.06 - ridiculously deep nesting", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: false,
+        a: false
       },
       {
         a: [
@@ -196,28 +196,28 @@ test('01.06 - ridiculously deep nesting', (t) => {
                                           {
                                             j: [
                                               {
-                                                k: false,
-                                              },
-                                            ],
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
+                                                k: false
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ),
     {
       a: [
@@ -240,76 +240,76 @@ test('01.06 - ridiculously deep nesting', (t) => {
                                         {
                                           j: [
                                             {
-                                              k: false,
-                                            },
-                                          ],
-                                        },
-                                      ],
-                                    },
-                                  ],
-                                },
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
+                                              k: false
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
-    '01.06',
-  )
-})
+    "01.06"
+  );
+});
 
-test('01.07 - cheeky case, custom placeholder on schema has value null', (t) => {
+test("01.07 - cheeky case, custom placeholder on schema has value null", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        d: null,
+        d: null
       },
       {
         a: null,
         b: null,
-        c: null,
-      },
+        c: null
+      }
     ),
     {
       a: null,
       b: null,
       c: null,
-      d: null,
+      d: null
     },
-    '01.07',
-  )
-})
+    "01.07"
+  );
+});
 
 // ==============================
 // 2. Normalises array contents
 // ==============================
 
-test('02.01 - array one level-deep', (t) => {
+test("02.01 - array one level-deep", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: [
           {
-            b: 'b',
+            b: "b"
           },
           {
-            c: 'c',
+            c: "c"
           },
           {
-            d: 'd',
+            d: "d"
           },
           {
-            e: 'e',
-          },
-        ],
+            e: "e"
+          }
+        ]
       },
       {
         a: [
@@ -317,48 +317,48 @@ test('02.01 - array one level-deep', (t) => {
             b: false,
             c: false,
             d: false,
-            e: false,
-          },
-        ],
-      },
+            e: false
+          }
+        ]
+      }
     ),
     {
       a: [
         {
-          b: 'b',
+          b: "b",
           c: false,
           d: false,
-          e: false,
+          e: false
         },
         {
           b: false,
-          c: 'c',
+          c: "c",
           d: false,
-          e: false,
-        },
-        {
-          b: false,
-          c: false,
-          d: 'd',
-          e: false,
+          e: false
         },
         {
           b: false,
           c: false,
-          d: false,
-          e: 'e',
+          d: "d",
+          e: false
         },
-      ],
+        {
+          b: false,
+          c: false,
+          d: false,
+          e: "e"
+        }
+      ]
     },
-    '02.01',
-  )
-})
+    "02.01"
+  );
+});
 
-test('02.02 - multiple levels of nested arrays', (t) => {
+test("02.02 - multiple levels of nested arrays", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        c: 'c',
+        c: "c"
       },
       {
         a: false,
@@ -369,13 +369,13 @@ test('02.02 - multiple levels of nested arrays', (t) => {
             key6: [
               {
                 key7: false,
-                key8: false,
-              },
-            ],
-          },
+                key8: false
+              }
+            ]
+          }
         ],
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: false,
@@ -386,196 +386,196 @@ test('02.02 - multiple levels of nested arrays', (t) => {
           key6: [
             {
               key7: false,
-              key8: false,
-            },
-          ],
-        },
+              key8: false
+            }
+          ]
+        }
       ],
-      c: 'c',
+      c: "c"
     },
-    '02.02',
-  )
-})
+    "02.02"
+  );
+});
 
 // ==============================
 // 3. String vs array clashes
 // ==============================
 
-test('03.01 - string vs array clash', (t) => {
+test("03.01 - string vs array clash", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
+        a: "a"
       },
       {
         a: [
           {
-            b: false,
-          },
-        ],
-      },
+            b: false
+          }
+        ]
+      }
     ),
     {
       a: [
         {
-          b: false,
-        },
-      ],
+          b: false
+        }
+      ]
     },
-    '03.01',
-  )
-})
+    "03.01"
+  );
+});
 
-test('03.02 - string vs object clash', (t) => {
+test("03.02 - string vs object clash", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
+        a: "a"
       },
       {
         a: {
-          b: false,
-        },
-      },
+          b: false
+        }
+      }
     ),
     {
       a: {
-        b: false,
-      },
+        b: false
+      }
     },
-    '03.02',
-  )
-})
+    "03.02"
+  );
+});
 
-test('03.03 - object vs array clash', (t) => {
+test("03.03 - object vs array clash", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
-          c: 'ccc',
-        },
+          c: "ccc"
+        }
       },
       {
         a: [
           {
-            b: false,
-          },
-        ],
-      },
+            b: false
+          }
+        ]
+      }
     ),
     {
       a: [
         {
-          b: false,
-        },
-      ],
+          b: false
+        }
+      ]
     },
-    '03.03',
-  )
-})
+    "03.03"
+  );
+});
 
-test('03.04 - array vs empty array', (t) => {
+test("03.04 - array vs empty array", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: [],
-        b: 'b',
+        b: "b"
       },
       {
         a: [
           {
             d: false,
-            e: false,
-          },
+            e: false
+          }
         ],
         b: false,
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: [
         {
           d: false,
-          e: false,
-        },
+          e: false
+        }
       ],
-      b: 'b',
-      c: false,
+      b: "b",
+      c: false
     },
-    '03.04',
-  )
-})
+    "03.04"
+  );
+});
 
-test('03.05 - array vs string', (t) => {
+test("03.05 - array vs string", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'a',
-        b: 'b',
+        a: "a",
+        b: "b"
       },
       {
         a: [
           {
             d: false,
-            e: false,
-          },
+            e: false
+          }
         ],
         b: false,
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: [
         {
           d: false,
-          e: false,
-        },
+          e: false
+        }
       ],
-      b: 'b',
-      c: false,
+      b: "b",
+      c: false
     },
-    '03.05',
-  )
-})
+    "03.05"
+  );
+});
 
-test('03.06 - array vs bool', (t) => {
+test("03.06 - array vs bool", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: true,
-        b: 'b',
+        b: "b"
       },
       {
         a: [
           {
             d: false,
-            e: false,
-          },
+            e: false
+          }
         ],
         b: false,
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: [
         {
           d: false,
-          e: false,
-        },
+          e: false
+        }
       ],
-      b: 'b',
-      c: false,
+      b: "b",
+      c: false
     },
-    '03.06',
-  )
-})
+    "03.06"
+  );
+});
 
-test('03.06 - multiple levels of nested arrays #1', (t) => {
+test("03.06 - multiple levels of nested arrays #1", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: false,
-        c: 'c',
+        c: "c"
       },
       {
         a: false,
@@ -586,13 +586,13 @@ test('03.06 - multiple levels of nested arrays #1', (t) => {
             b3: [
               {
                 b4: false,
-                b5: false,
-              },
-            ],
-          },
+                b5: false
+              }
+            ]
+          }
         ],
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: false,
@@ -603,35 +603,35 @@ test('03.06 - multiple levels of nested arrays #1', (t) => {
           b3: [
             {
               b4: false,
-              b5: false,
-            },
-          ],
-        },
+              b5: false
+            }
+          ]
+        }
       ],
-      c: 'c',
+      c: "c"
     },
-    '03.06',
-  )
-})
+    "03.06"
+  );
+});
 
-test('03.07 - multiple levels of nested arrays #2', (t) => {
+test("03.07 - multiple levels of nested arrays #2", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         b: [
           {
-            b1: 'val1',
-            b2: 'val2',
+            b1: "val1",
+            b2: "val2",
             b3: [
               {
-                b4: 'val4',
+                b4: "val4"
               },
               {
-                b5: 'val5',
-              },
-            ],
-          },
-        ],
+                b5: "val5"
+              }
+            ]
+          }
+        ]
       },
       {
         a: false,
@@ -642,160 +642,153 @@ test('03.07 - multiple levels of nested arrays #2', (t) => {
             b3: [
               {
                 b4: false,
-                b5: false,
-              },
-            ],
-          },
+                b5: false
+              }
+            ]
+          }
         ],
-        c: false,
-      },
+        c: false
+      }
     ),
     {
       a: false,
       b: [
         {
-          b1: 'val1',
-          b2: 'val2',
+          b1: "val1",
+          b2: "val2",
           b3: [
             {
-              b4: 'val4',
-              b5: false,
+              b4: "val4",
+              b5: false
             },
             {
               b4: false,
-              b5: 'val5',
-            },
-          ],
-        },
+              b5: "val5"
+            }
+          ]
+        }
       ],
-      c: false,
+      c: false
     },
-    '03.07',
-  )
-})
+    "03.07"
+  );
+});
 
 // ==============================
 // 4. Contingencies
 // ==============================
 
-test('04.01 - number as input', (t) => {
+test("04.01 - number as input", t => {
   t.throws(() => {
-    fillMissingKeys(
-      1,
-      {
-        a: {
-          b: false,
-        },
-      },
-    )
-  })
-})
+    fillMissingKeys(1, {
+      a: {
+        b: false
+      }
+    });
+  });
+});
 
-test('04.02 - boolean as input', (t) => {
+test("04.02 - boolean as input", t => {
   t.throws(() => {
-    fillMissingKeys(
-      true,
-      {
-        a: {
-          b: false,
-        },
-      },
-    )
-  })
-})
+    fillMissingKeys(true, {
+      a: {
+        b: false
+      }
+    });
+  });
+});
 
-test('04.03 - null as input', (t) => {
+test("04.03 - null as input", t => {
   t.throws(() => {
-    fillMissingKeys(
-      null,
-      {
-        a: {
-          b: false,
-        },
-      },
-    )
-  })
-})
+    fillMissingKeys(null, {
+      a: {
+        b: false
+      }
+    });
+  });
+});
 
-test('04.04 - both args missing (as in hardcoded undefined)', (t) => {
+test("04.04 - both args missing (as in hardcoded undefined)", t => {
   t.throws(() => {
-    fillMissingKeys(
-      undefined,
-      undefined,
-    )
-  })
-})
+    fillMissingKeys(undefined, undefined);
+  });
+});
 
-test('04.05 - both args completely missing', (t) => {
+test("04.05 - both args completely missing", t => {
   t.throws(() => {
-    fillMissingKeys()
-  })
-})
+    fillMissingKeys();
+  });
+});
 
-test('04.06 - second arg is not a plain object', (t) => {
+test("04.06 - second arg is not a plain object", t => {
   t.throws(() => {
-    fillMissingKeys({ a: 'b' }, 1)
-  })
-})
+    fillMissingKeys({ a: "b" }, 1);
+  });
+});
 
-test('04.07 - opts is not a plain object', (t) => {
+test("04.07 - opts is not a plain object", t => {
   t.throws(() => {
-    fillMissingKeys({ a: 'c' }, { a: 'b' }, 1)
-  })
+    fillMissingKeys({ a: "c" }, { a: "b" }, 1);
+  });
   t.notThrows(() => {
-    fillMissingKeys({ a: 'c' }, { a: 'b' }, null)
-  })
-})
+    fillMissingKeys({ a: "c" }, { a: "b" }, null);
+  });
+});
 
-test('04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders', (t) => {
+test("04.08 - opts.doNotFillThesePathsIfTheyContainPlaceholders", t => {
   t.throws(() => {
-    fillMissingKeys({ a: 'c' }, { a: 'b' }, {
-      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', 1],
-    })
-  })
+    fillMissingKeys(
+      { a: "c" },
+      { a: "b" },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", 1]
+      }
+    );
+  });
   t.throws(() => {
-    fillMissingKeys({ a: 'c' }, [{ a: 'b' }], {
-      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', { a: 1 }],
-    })
-  })
+    fillMissingKeys({ a: "c" }, [{ a: "b" }], {
+      doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }]
+    });
+  });
   t.throws(() => {
-    fillMissingKeys({ a: 'c' }, { a: 'b' }, {
-      doNotFillThesePathsIfTheyContainPlaceholders: ['aa.aaa', { a: 1 }],
-    })
-  })
-})
+    fillMissingKeys(
+      { a: "c" },
+      { a: "b" },
+      {
+        doNotFillThesePathsIfTheyContainPlaceholders: ["aa.aaa", { a: 1 }]
+      }
+    );
+  });
+});
 
 // ================================
 // 5. Input arg mutation prevention
 // ================================
 
-test('05.01 - does not mutate the input args', (t) => {
+test("05.01 - does not mutate the input args", t => {
   const testObj = {
-    a: 'a',
-  }
-  const tempRes = fillMissingKeys(
-    testObj,
-    {
-      a: false,
-      b: false,
-      c: false,
-    },
-  )
-  t.pass(tempRes) // dummy
+    a: "a"
+  };
+  const tempRes = fillMissingKeys(testObj, {
+    a: false,
+    b: false,
+    c: false
+  });
+  t.pass(tempRes); // dummy
   t.deepEqual(
     testObj,
     {
-      a: 'a',
+      a: "a"
     },
-    '05.01',
-  ) // real deal
-})
+    "05.01"
+  ); // real deal
+});
 
 // ========================================================
 // 6. opts.doNotFillThesePathsIfTheyContainPlaceholders
 // ========================================================
 
-test('06.01 - some keys filled, some ignored because they have placeholders-only', (t) => {
+test("06.01 - some keys filled, some ignored because they have placeholders-only", t => {
   // baseline behaviour
 
   t.deepEqual(
@@ -803,155 +796,156 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
       {
         a: {
           b: false,
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
-      },
+        z: false
+      }
     ),
     {
       a: {
         b: {
           c: false,
-          d: false,
+          d: false
         },
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.01 - default behaviour - keys are added',
-  )
+    "06.01.01 - default behaviour - keys are added"
+  );
 
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
           b: false,
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+      }
     ),
     {
       a: {
         b: false, // <---------------- observe, the keys were not added because it had a placeholder
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders',
-  )
+    "06.01.02 - opts.doNotFillThesePathsIfTheyContainPlaceholders"
+  );
 
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
           b: true, // <-- not placeholder but lower in data hierarchy (boolean)
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
-          b: { // <-- value of path "a.b" is this object
+          b: {
+            // <-- value of path "a.b" is this object
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+      }
     ),
     {
       a: {
         b: {
           c: false,
-          d: false,
+          d: false
         }, // <---------------- observe, the keys were not added because it had a placeholder
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.03 - triggering the normalisation when it\'s off from opts',
-  )
+    "06.01.03 - triggering the normalisation when it's off from opts"
+  );
 
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['a.b'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["a.b"]
+      }
     ),
     {
       a: {
         b: false, // <---------------- observe, the keys were not added because it had a placeholder
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.04 - key in given path is missing completely',
-  )
+    "06.01.04 - key in given path is missing completely"
+  );
 
   t.deepEqual(
     fillMissingKeys(
       {
-        a: 'zzz',
-        b: false,
+        a: "zzz",
+        b: false
       },
       {
         a: false,
-        b: { c: false },
+        b: { c: false }
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['b'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["b"]
+      }
     ),
     {
-      a: 'zzz',
-      b: false,
+      a: "zzz",
+      b: false
     },
-    '06.01.05',
-  )
+    "06.01.05"
+  );
 
   // will also truncate the already normalised branches if they're on the path:
   t.deepEqual(
@@ -960,37 +954,37 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
           x: {
-            y: false,
-          },
+            y: false
+          }
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['lalala', 'a.b', 'a.x'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"]
+      }
     ),
     {
       a: {
         b: false,
-        x: false,
+        x: false
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.06',
-  )
+    "06.01.06"
+  );
 
   // will also truncate the already normalised branches if they're on the path:
   t.deepEqual(
@@ -998,188 +992,188 @@ test('06.01 - some keys filled, some ignored because they have placeholders-only
       {
         a: {
           b: {
-            c: 'r',
-            d: false,
+            c: "r",
+            d: false
           },
           x: {
-            y: false,
-          },
+            y: false
+          }
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        doNotFillThesePathsIfTheyContainPlaceholders: ['lalala', 'a.b', 'a.x'],
-      },
+        doNotFillThesePathsIfTheyContainPlaceholders: ["lalala", "a.b", "a.x"]
+      }
     ),
     {
       a: {
         b: {
-          c: 'r',
-          d: false,
+          c: "r",
+          d: false
         },
-        x: false,
+        x: false
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.07',
-  )
-})
+    "06.01.07"
+  );
+});
 
 // ========================================================
 // 7. opts.useNullAsExplicitFalse
 // ========================================================
 
-test('06.01 - opts.useNullAsExplicitFalse - case #1', (t) => {
+test("06.01 - opts.useNullAsExplicitFalse - case #1", t => {
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
           b: null,
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        useNullAsExplicitFalse: false,
-      },
+        useNullAsExplicitFalse: false
+      }
     ),
     {
       a: {
         b: {
           c: false,
-          d: false,
+          d: false
         },
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.01',
-  )
+    "06.01.01"
+  );
 
   t.deepEqual(
     fillMissingKeys(
       {
         a: {
           b: null,
-          x: 'x',
+          x: "x"
         },
-        z: 'z',
+        z: "z"
       },
       {
         a: {
           b: {
             c: false,
-            d: false,
+            d: false
           },
-          x: false,
+          x: false
         },
-        z: false,
+        z: false
       },
       {
-        useNullAsExplicitFalse: true,
-      },
+        useNullAsExplicitFalse: true
+      }
     ),
     {
       a: {
         b: null,
-        x: 'x',
+        x: "x"
       },
-      z: 'z',
+      z: "z"
     },
-    '06.01.02',
-  )
-})
+    "06.01.02"
+  );
+});
 
-test('06.02 - opts.useNullAsExplicitFalse - case #2', (t) => {
+test("06.02 - opts.useNullAsExplicitFalse - case #2", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: null,
+        a: null
       },
       {
-        a: true,
+        a: true
       },
       {
-        useNullAsExplicitFalse: false,
-      },
+        useNullAsExplicitFalse: false
+      }
     ),
     {
-      a: true,
+      a: true
     },
-    '06.02.01',
-  )
+    "06.02.01"
+  );
   t.deepEqual(
     fillMissingKeys(
       {
-        a: null,
+        a: null
       },
       {
-        a: true,
+        a: true
       },
       {
-        useNullAsExplicitFalse: true,
-      },
+        useNullAsExplicitFalse: true
+      }
     ),
     {
-      a: null,
+      a: null
     },
-    '06.02.02',
-  )
-})
+    "06.02.02"
+  );
+});
 
-test('06.03 - opts.useNullAsExplicitFalse - case #3', (t) => {
+test("06.03 - opts.useNullAsExplicitFalse - case #3", t => {
   t.deepEqual(
     fillMissingKeys(
       {
-        a: null,
+        a: null
       },
       {
-        a: ['z'],
+        a: ["z"]
       },
       {
-        useNullAsExplicitFalse: false,
-      },
+        useNullAsExplicitFalse: false
+      }
     ),
     {
-      a: ['z'],
+      a: ["z"]
     },
-    '06.03.01',
-  )
+    "06.03.01"
+  );
   t.deepEqual(
     fillMissingKeys(
       {
-        a: null,
+        a: null
       },
       {
-        a: ['z'],
+        a: ["z"]
       },
       {
-        useNullAsExplicitFalse: true,
-      },
+        useNullAsExplicitFalse: true
+      }
     ),
     {
-      a: null,
+      a: null
     },
-    '06.03.02',
-  )
-})
+    "06.03.02"
+  );
+});
