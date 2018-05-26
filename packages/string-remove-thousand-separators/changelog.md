@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 * ✨ First public release
 
-[2.1.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v1.2.0...v2.0.0
-[1.2.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v1.1.0...v1.2.0
+[2.0.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v1.2.0...v2.0.0
+[2.1.0]: https://github.com/codsen/string-remove-thousand-separators/compare/v2.0.8...v2.1.0
