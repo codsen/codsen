@@ -5,12 +5,9 @@
 
 # string-unfancy
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Replace all fancy dashes, quotes etc with their simpler equivalents
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -20,9 +17,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -38,6 +38,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -48,18 +50,18 @@ npm i string-unfancy
 
 ```js
 // consume via a CommonJS require:
-const unfancy = require('string-unfancy')
+const unfancy = require("string-unfancy");
 // or as an ES Module:
-import unfancy from 'string-unfancy'
+import unfancy from "string-unfancy";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-unfancy.cjs.js` | 2&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-unfancy.esm.js` | 1&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-unfancy.umd.js` | 59&nbsp;KB
+| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-unfancy.cjs.js` | 2&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-unfancy.esm.js` | 1&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-unfancy.umd.js` | 59&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -80,14 +82,14 @@ PS. If you want a higher-level tool, [html-img-alt](https://github.com/codsen/ht
 ## Usage
 
 ```js
-const unfancy = require('string-unfancy')
-const res = unfancy('someone’s')
-console.log('res = ' + JSON.stringify(res1, null, 4))
+const unfancy = require("string-unfancy");
+const res = unfancy("someone’s");
+console.log("res = " + JSON.stringify(res1, null, 4));
 // => "someone's"
 
 // works with encoded HTML:
-const res2 = unfancy('someone&rsquo;s')
-console.log('res2 = ' + JSON.stringify(res2, null, 4))
+const res2 = unfancy("someone&rsquo;s");
+console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => "someone's"
 ```
 
@@ -106,8 +108,8 @@ If you are using Gulp to build email templates, you can `tap` the stream, apply 
 First, you need to `require` [gulp-tap](https://www.npmjs.com/package/gulp-tap) and [string-unfancy](https://www.npmjs.com/package/string-unfancy):
 
 ```js
-const tap = require('gulp-tap')
-const unfancy = require('string-unfancy')
+const tap = require("gulp-tap");
+const unfancy = require("string-unfancy");
 ```
 
 Then, tap your main build task's stream, probably towards the end of the pipeline:
@@ -124,11 +126,11 @@ Then, tap your main build task's stream, probably towards the end of the pipelin
 Then, declare a function somewhere within your `gulpfile.js`:
 
 ```js
-function unfancy (input) {
+function unfancy(input) {
   input = input.replace(/alt="[^"]*"/g, el => {
-    return unfancy(el)
-  })
-  return input
+    return unfancy(el);
+  });
+  return input;
 }
 ```
 
@@ -142,9 +144,9 @@ And that's it! All image `alt` attributes will lose their HTML encoding and will
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-unfancy/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-unfancy/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-unfancy/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -154,39 +156,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/string-unfancy.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-unfancy
-
-[npm-img]: https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/string-unfancy
-
 [travis-img]: https://img.shields.io/travis/codsen/string-unfancy.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-unfancy
-
 [cov-img]: https://coveralls.io/repos/github/codsen/string-unfancy/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-unfancy?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-unfancy.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-unfancy
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-unfancy.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-unfancy/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-unfancy
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-unfancy.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-unfancy/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-unfancy/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-unfancy
-
 [downloads-img]: https://img.shields.io/npm/dm/string-unfancy.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-unfancy
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-unfancy
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/string-unfancy.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-unfancy/blob/master/license.md
