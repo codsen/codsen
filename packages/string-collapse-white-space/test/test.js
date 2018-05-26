@@ -1,5 +1,5 @@
 import test from "ava";
-import collapse from "../dist/string-collapse-white-space.cjs";
+import collapse from "../dist/string-collapse-white-space.esm";
 
 const htmlTags = [
   "h1",
