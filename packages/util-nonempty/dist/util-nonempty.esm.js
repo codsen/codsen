@@ -4,10 +4,10 @@ function isArr(something) {
   return Array.isArray(something);
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 function isNum(something) {
-  return typeof something === 'number';
+  return typeof something === "number";
 }
 
 function nonEmpty(input) {
