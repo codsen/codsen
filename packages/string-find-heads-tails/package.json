@@ -1,6 +1,6 @@
 {
   "name": "string-find-heads-tails",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "description": "Search for string pairs. A special case of string search algorithm.",
   "license": "MIT",
   "engines": {
