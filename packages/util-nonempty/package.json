@@ -4,8 +4,8 @@
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "license": "MIT",
   "engines": {
-    "node": ">=4",
-    "npm": ">=6",
+    "node": ">=6",
+    "npm": ">=5",
     "yarn": ">=1"
   },
   "repository": {
