@@ -14,28 +14,31 @@ function detectIsItHTMLOrXhtml(input) {
     throw new TypeError("detect-is-it-html-or-xhtml: Input must be string");
   }
 
-  var i = void 0;
-  var len = void 0;
-  var allImageTagsArr = void 0;
-  var allBRTagsArr = void 0;
-  var allHRTagsArr = void 0;
-  var allConcernedTagsArr = void 0;
-  var slashCount = 0;
-  var metaTag = /<\s*!\s*doctype[^>]*>/im;
-  var imgTag = /<\s*img[^>]*>/gi;
-  var brTag = /<\s*br[^>]*>/gi;
-  var hrTag = /<\s*hr[^>]*>/gi;
-  var closingSlash = /\/\s*>/g;
-  var extractedMetaTag = null;
-  var res = null;
+  let i;
+  let len;
+  let allImageTagsArr;
+  let allBRTagsArr;
+  let allHRTagsArr;
+  let allConcernedTagsArr;
+  let slashCount = 0;
+  const metaTag = /<\s*!\s*doctype[^>]*>/im;
+  const imgTag = /<\s*img[^>]*>/gi;
+  const brTag = /<\s*br[^>]*>/gi;
+  const hrTag = /<\s*hr[^>]*>/gi;
+  const closingSlash = /\/\s*>/g;
+  let extractedMetaTag = null;
+  let res = null;
 
   extractedMetaTag = metaTag.exec(input);
 
   if (existy(extractedMetaTag)) {
     // detect by doctype meta tag
-    var xhtmlRegex = /xhtml/gi;
-    var svgRegex = /svg/gi;
-    if (extractedMetaTag[0].match(xhtmlRegex) || extractedMetaTag[0].match(svgRegex)) {
+    const xhtmlRegex = /xhtml/gi;
+    const svgRegex = /svg/gi;
+    if (
+      extractedMetaTag[0].match(xhtmlRegex) ||
+      extractedMetaTag[0].match(svgRegex)
+    ) {
       res = "xhtml";
     } else {
       res = "html";
@@ -47,7 +50,9 @@ function detectIsItHTMLOrXhtml(input) {
     allHRTagsArr = input.match(hrTag) || [];
 
     // join all found tags
-    allConcernedTagsArr = allImageTagsArr.concat(allBRTagsArr).concat(allHRTagsArr);
+    allConcernedTagsArr = allImageTagsArr
+      .concat(allBRTagsArr)
+      .concat(allHRTagsArr);
 
     if (allConcernedTagsArr.length === 0) {
       return null;
