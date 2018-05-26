@@ -4,7 +4,7 @@
   "description": "Command line app to scans email templates, are all their characters within ASCII range",
   "license": "MIT",
   "engines": {
-    "node": ">=4",
+    "node": ">=8",
     "npm": ">=5",
     "yarn": ">=1"
   },
@@ -22,14 +22,12 @@
     "url": "codsen.com"
   },
   "bin": {
-    "tinaturner": "cli-es5.js",
-    "withinascii": "cli-es5.js"
+    "tinaturner": "cli.js",
+    "withinascii": "cli.js"
   },
   "scripts": {
-    "build": "babel cli.js --presets babel-preset-env --out-file cli-es5.js",
-    "precommit": "npm test",
-    "prepare": "npm run build",
-    "pretest": "npm run build",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test.js --fix",
+    "precommit": "npm run format && npm test",
     "test": "./node_modules/.bin/eslint cli.js"
   },
   "ava": {
@@ -72,22 +70,22 @@
       "vulnerabilities": true
     },
     "contribution_types": [
-      "Answering Questions",
       "Blogposts",
-      "Bug reports*",
-      "Code*",
+      "Bug reports",
+      "Code",
       "Design",
-      "Documentation*",
-      "Event Organizers",
+      "Documentation",
+      "Event Organizing",
       "Examples",
-      "Financial Support",
-      "Funding/Grant Finders",
-      "Ideas & Planning",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
       "Infrastructure (Hosting, Build-Tools, etc)",
       "Plugin/utility libraries",
+      "Answering Questions",
       "Reviewed Pull Requests",
       "Talks",
-      "Tests*",
+      "Tests",
       "Tools",
       "Translation",
       "Tutorials",
@@ -107,9 +105,24 @@
       "add": [],
       "remove": []
     },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
     "header": {
       "dontQuoteDescription": false,
-      "rightFloatedBadge": ""
+      "rightFloatedBadge": []
     },
     "licence": {
       "extras": []
@@ -124,26 +137,27 @@
       "back_to_top": {
         "enabled": true,
         "label": ""
-      }
+      },
+      "devDependencies": []
     }
   },
   "dependencies": {
-    "chalk": "^2.3.0",
-    "email-all-chars-within-ascii": "^2.0.4",
-    "globby": "^7.1.1",
-    "inquirer": "^5.0.0",
+    "chalk": "^2.4.1",
+    "email-all-chars-within-ascii": "^2.1.0",
+    "globby": "^8.0.1",
+    "inquirer": "^5.2.0",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
-    "meow": "^4.0.0",
-    "update-notifier": "^2.3.0"
+    "meow": "^5.0.0",
+    "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "eslint": "^4.15.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.4.0",
-    "eslint-plugin-import": "^2.8.0",
-    "husky": "*"
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-ava": "^4.5.1",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "husky": "*",
+    "prettier": "latest"
   }
 }

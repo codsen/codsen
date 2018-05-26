@@ -1,11 +1,8 @@
 # email-all-chars-within-ascii-cli
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Command line app to scans email templates, are all their characters within ASCII range
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![bitHound Overall Score][overall-img]][overall-url]
 [![bitHound Dependencies][deps-img]][deps-url]
@@ -13,9 +10,11 @@
 [![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 Other siblings of this package:
+
 * API for it: [email-all-chars-within-ascii](https://github.com/codsen/email-all-chars-within-ascii)
 
 ## TLDR; Usage
@@ -36,6 +35,8 @@ Call on multiple files all at once:
 
 ## Table of Contents
 
+<!-- prettier-ignore-start -->
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -47,6 +48,8 @@ Call on multiple files all at once:
 - [Licence](#licence)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- prettier-ignore-end -->
 
 ## Install
 
@@ -88,15 +91,11 @@ Check out [the API](https://github.com/codsen/email-all-chars-within-ascii) vers
 
 ## Contributing
 
-Hi! 99% of people in the society are passive - consumers. They wait for others to take action, they prefer to blend in. The remaining 1% are proactive citizens who will _do_ something rather than _wait_. If you are one of that 1%, you're in luck because I am the same and _together_ we can make something happen.
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/email-all-chars-within-ascii-cli/issues).
 
-* If you **want a new feature** in this package or you would like to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/email-all-chars-within-ascii-cli/issues). Also, you can [email me](mailto:roy@codsen.com). Just let it out.
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/email-all-chars-within-ascii-cli/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/email-all-chars-within-ascii-cli/issues). Alternatively, you can [email me](mailto:roy@codsen.com).
-
-* If you don't like the code in here and would like to **give advice** about how something could be done better, please do. Same drill - [GitHub issues](https://github.com/codsen/email-all-chars-within-ascii-cli/issues) or [email](mailto:roy@codsen.com), your choice.
-
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. I'll do my best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -108,30 +107,21 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/email-all-chars-within-ascii-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/email-all-chars-within-ascii-cli
-
-[npm-img]: https://img.shields.io/npm/v/email-all-chars-within-ascii-cli.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/email-all-chars-within-ascii-cli
-
 [travis-img]: https://img.shields.io/travis/codsen/email-all-chars-within-ascii-cli.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/email-all-chars-within-ascii-cli
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/email-all-chars-within-ascii-cli.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/email-all-chars-within-ascii-cli.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-all-chars-within-ascii-cli
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/email-all-chars-within-ascii-cli.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/email-all-chars-within-ascii-cli/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/email-all-chars-within-ascii-cli/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/email-all-chars-within-ascii-cli
-
 [downloads-img]: https://img.shields.io/npm/dm/email-all-chars-within-ascii-cli.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/email-all-chars-within-ascii-cli
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/email-all-chars-within-ascii-cli.svg?style=flat-square
 [license-url]: https://github.com/codsen/email-all-chars-within-ascii-cli/blob/master/license.md

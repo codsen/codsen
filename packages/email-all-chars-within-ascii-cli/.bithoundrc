@@ -8,10 +8,9 @@
     "mute": [
       "husky",
       "lodash.pullall",
-      "lodash.uniq"
+      "lodash.uniq",
+      "prettier"
     ]
   },
-  "ignore": [
-    "cli-es5.js"
-  ]
+  "ignore": []
 }
