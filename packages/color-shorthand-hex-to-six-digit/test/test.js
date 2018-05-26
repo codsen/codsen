@@ -1,7 +1,7 @@
 /* eslint func-names:0 */
 
 import test from "ava";
-import c from "../dist/color-shorthand-hex-to-six-digit.cjs";
+import c from "../dist/color-shorthand-hex-to-six-digit.esm";
 
 // ==============================
 // 01. String inputs
