@@ -53,7 +53,7 @@
       {
         "devDependencies": [
           "test.js",
-          "test/**",
+          "test/**/*.*",
           "rollup.config.js"
         ],
         "optionalDependencies": false,
