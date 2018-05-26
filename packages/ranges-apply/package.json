@@ -1,6 +1,6 @@
 {
   "name": "string-replace-slices-array",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "engines": {
