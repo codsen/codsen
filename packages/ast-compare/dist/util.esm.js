@@ -2,7 +2,7 @@ import type from 'type-detect';
 
 /* eslint max-len:0 */
 
-const isArr = Array.isArray;
+var isArr = Array.isArray;
 
 function existy(x) {
   return x != null;
@@ -32,14 +32,7 @@ function isBlank(something) {
 }
 function isTheTypeLegit(something) {
   // same as JSON spec:
-  return (
-    isObj(something) ||
-    isStr(something) ||
-    isNum(something) ||
-    isBool(something) ||
-    isArr(something) ||
-    isNull(something)
-  );
+  return isObj(something) || isStr(something) || isNum(something) || isBool(something) || isArr(something) || isNull(something);
 }
 
 export { existy, isObj, isStr, isNum, isBool, isNull, isBlank, isTheTypeLegit };

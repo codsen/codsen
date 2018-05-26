@@ -1,9 +1,8 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
-import { minify } from "uglify-es";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
@@ -23,7 +22,7 @@ export default commandLineArgs => {
         resolve(), // so Rollup can find deps
         commonjs(), // so Rollup can convert deps to ES modules
         babel(),
-        uglify({}, minify)
+        uglify()
       ]
     },
 
@@ -66,7 +65,7 @@ export default commandLineArgs => {
       ]
     },
 
-    // util.js ES module build:
+    // util.js build:
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
@@ -74,7 +73,8 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
-        })
+        }),
+        babel()
       ]
     }
   ];
