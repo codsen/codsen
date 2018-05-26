@@ -9,6 +9,7 @@
       "ava",
       "babel-preset-env",
       "coveralls",
+      "esm",
       "husky",
       "lodash.isplainobject",
       "nyc",

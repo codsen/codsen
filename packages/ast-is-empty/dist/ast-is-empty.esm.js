@@ -1,9 +1,9 @@
 import isObj from 'lodash.isplainobject';
 
 function isEmpty(input) {
-  var i = void 0;
-  var len = void 0;
-  var res = true;
+  let i;
+  let len;
+  let res = true;
   if (Array.isArray(input)) {
     if (input.length === 0) {
       return true;

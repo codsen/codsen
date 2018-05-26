@@ -1,5 +1,5 @@
 import test from "ava";
-import isEmpty from "../dist/ast-is-empty.cjs";
+import isEmpty from "../dist/ast-is-empty.esm";
 
 function dummyFunction() {
   return true;

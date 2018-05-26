@@ -53,7 +53,7 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                       | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---------- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-is-empty.cjs.js` | 1&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-is-empty.esm.js` | 893&nbsp;B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-is-empty.esm.js` | 875&nbsp;B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-is-empty.umd.js` | 1&nbsp;KB  |
 
 **[⬆ &nbsp;back to top](#)**
