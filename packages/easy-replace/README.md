@@ -53,10 +53,16 @@ Here's what you'll get:
 <!-- prettier-ignore-start -->
 
 | Type | Key in `package.json` | Path | Size |
-| ---- | --------------------- | ---- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`     | `dist/easy-replace.cjs.js` | 13&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`   | `dist/easy-replace.esm.js` | 13&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`  | `dist/easy-replace.umd.js` | 21&nbsp;KB |
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/easy-replace.cjs.js` | 13&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/easy-replace.esm.js` | 13&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/easy-replace.umd.js` | 20&nbsp;KB
+
+
 
 <!-- prettier-ignore-end -->
 
