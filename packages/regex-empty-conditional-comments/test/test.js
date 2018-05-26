@@ -1,5 +1,5 @@
 import test from "ava";
-import r from "../dist/regex-empty-conditional-comments.cjs";
+import r from "../dist/regex-empty-conditional-comments.esm";
 
 const fixture = [
   // outlook-only:

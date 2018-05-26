@@ -50,8 +50,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ---------- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/regex-empty-conditional-comments.cjs.js` | 131&nbsp;B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 114&nbsp;B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 268&nbsp;B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 87&nbsp;B  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 276&nbsp;B |
 
 **[⬆ &nbsp;back to top](#)**
 

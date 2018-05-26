@@ -52,6 +52,7 @@
       "error",
       {
         "devDependencies": [
+          "test.js",
           "test/**",
           "rollup.config.js"
         ],
@@ -59,6 +60,7 @@
         "peerDependencies": false
       }
     ],
+    "no-console": "off",
     "no-else-return": "error",
     "no-inner-declarations": "error",
     "no-unneeded-ternary": "error",
