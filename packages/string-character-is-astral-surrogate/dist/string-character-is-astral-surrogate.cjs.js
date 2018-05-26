@@ -8,7 +8,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 function isHighSurrogate(something) {
   // [\uD800-\uDBFF]
-  if (typeof something === 'string') {
+  if (typeof something === "string") {
     if (something.length === 0) {
       return false;
     }
@@ -18,11 +18,11 @@ function isHighSurrogate(something) {
   } else if (something === undefined) {
     return false;
   }
-  throw new TypeError('string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ' + (typeof something === 'undefined' ? 'undefined' : _typeof(something)));
+  throw new TypeError("string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
 }
 function isLowSurrogate(something) {
   // [\uDC00-\uDFFF]
-  if (typeof something === 'string') {
+  if (typeof something === "string") {
     if (something.length === 0) {
       return false;
     }
@@ -32,7 +32,7 @@ function isLowSurrogate(something) {
   } else if (something === undefined) {
     return false;
   }
-  throw new TypeError('string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but ' + (typeof something === 'undefined' ? 'undefined' : _typeof(something)));
+  throw new TypeError("string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
 }
 
 exports.isHighSurrogate = isHighSurrogate;

@@ -1,11 +1,8 @@
 # string-character-is-astral-surrogate
 
-<a href="https://github.com/revelt/eslint-on-airbnb-base-badge" style="float: right; padding: 0 0 20px 20px;"><img src="https://cdn.rawgit.com/revelt/eslint-on-airbnb-base-badge/0c3e46c9/lint-badge.svg" alt="ESLint on airbnb-base with caveats" width="100" align="right"></a>
-
 > Tells, is given character a part of astral character, specifically, a high and low surrogate
 
 [![Minimum Node version required][node-img]][node-url]
-[![Link to npm page][npm-img]][npm-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![bitHound Overall Score][overall-img]][overall-url]
@@ -15,9 +12,12 @@
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
+
+<!-- prettier-ignore-start -->
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -32,6 +32,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+<!-- prettier-ignore-end -->
+
 ## Install
 
 ```bash
@@ -40,18 +42,24 @@ npm i string-character-is-astral-surrogate
 
 ```js
 // consume via a CommonJS require:
-const { isHighSurrogate, isLowSurrogate } = require('string-character-is-astral-surrogate')
+const {
+  isHighSurrogate,
+  isLowSurrogate
+} = require("string-character-is-astral-surrogate");
 // or as an ES Module:
-import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate'
+import {
+  isHighSurrogate,
+  isLowSurrogate
+} from "string-character-is-astral-surrogate";
 ```
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-character-is-astral-surrogate.umd.js` | 1018&nbsp;B
+| Type                                                                                                    | Key in `package.json` | Path                                               | Size      |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | --------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-character-is-astral-surrogate.umd.js` | 1&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -77,31 +85,34 @@ In theory, high surrogate goes first, low surrogate goes second [source](https:/
 ## Usage
 
 ```js
-const { isHighSurrogate, isLowSurrogate } = require('string-character-is-astral-surrogate')
+const {
+  isHighSurrogate,
+  isLowSurrogate
+} = require("string-character-is-astral-surrogate");
 // 🧢 = \uD83E\uDDE2
-console.log(isHighSurrogate('\uD83E'))
+console.log(isHighSurrogate("\uD83E"));
 // => true
 // the first character, high surrogate of the cap is indeed a high surrogate
 
-console.log(isHighSurrogate('\uDDE2'))
+console.log(isHighSurrogate("\uDDE2"));
 // => false
 // the second character, low surrogate of the cap is NOT a high surrogate
 
-console.log(isLowSurrogate('\uD83E'))
+console.log(isLowSurrogate("\uD83E"));
 // => false
 // the first character, high surrogate of the cap is NOT a low surrogate
 // it's high surrogate
 
-console.log(isLowSurrogate('\uDDE2'))
+console.log(isLowSurrogate("\uDDE2"));
 // => true
 // the second character, low surrogate of the cap is indeed a low surrogate
 
 // PS.
 // undefined yields false, doesn't throw
-console.log(isHighSurrogate(undefined))
+console.log(isHighSurrogate(undefined));
 // => false
 
-console.log(isLowSurrogate(undefined))
+console.log(isLowSurrogate(undefined));
 // => false
 ```
 
@@ -128,9 +139,9 @@ We return false to make life easier when traversing the string. When you check "
 
 * If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-character-is-astral-surrogate/issues).
 
-* If you tried to use this library but it misbehaves, or **you need an advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-character-is-astral-surrogate/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-character-is-astral-surrogate/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. Code style is `airbnb-base`, only without semicolons. If you use a good code editor, it will pick up the established ESLint setup.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -140,39 +151,27 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-
 [node-img]: https://img.shields.io/node/v/string-character-is-astral-surrogate.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-character-is-astral-surrogate
-
-[npm-img]: https://img.shields.io/npm/v/string-character-is-astral-surrogate.svg?style=flat-square&label=release
-[npm-url]: https://www.npmjs.com/package/string-character-is-astral-surrogate
-
 [travis-img]: https://img.shields.io/travis/codsen/string-character-is-astral-surrogate.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-character-is-astral-surrogate
-
 [cov-img]: https://coveralls.io/repos/github/codsen/string-character-is-astral-surrogate/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-character-is-astral-surrogate?branch=master
-
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate
-
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate/master/dependencies/npm
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-character-is-astral-surrogate
-
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate/master/dependencies/npm
-
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-character-is-astral-surrogate/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-character-is-astral-surrogate
-
 [downloads-img]: https://img.shields.io/npm/dm/string-character-is-astral-surrogate.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-character-is-astral-surrogate
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-character-is-astral-surrogate
-
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://github.com/prettier/prettier
 [license-img]: https://img.shields.io/npm/l/string-character-is-astral-surrogate.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-character-is-astral-surrogate/blob/master/license.md
