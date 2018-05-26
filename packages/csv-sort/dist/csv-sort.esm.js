@@ -4,23 +4,159 @@ import pull from 'lodash.pull';
 import ordinal from 'ordinal';
 import BigNumber from 'bignumber.js';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var currencySigns = ["د.إ", "؋", "L", "֏", "ƒ", "Kz", "$", "ƒ", "₼", "KM", "৳", "лв", ".د.ب", "FBu", "$b", "R$", "฿", "Nu.", "P", "p.", "BZ$", "FC", "CHF", "¥", "₡", "₱", "Kč", "Fdj", "kr", "RD$", "دج", "kr", "Nfk", "Br", "Ξ", "€", "₾", "₵", "GH₵", "D", "FG", "Q", "L", "kn", "G", "Ft", "Rp", "₪", "₹", "ع.د", "﷼", "kr", "J$", "JD", "¥", "KSh", "лв", "៛", "CF", "₩", "₩", "KD", "лв", "₭", "₨", "M", "Ł", "Lt", "Ls", "LD", "MAD", "lei", "Ar", "ден", "K", "₮", "MOP$", "UM", "₨", "Rf", "MK", "RM", "MT", "₦", "C$", "kr", "₨", "﷼", "B/.", "S/.", "K", "₱", "₨", "zł", "Gs", "﷼", "￥", "lei", "Дин.", "₽", "R₣", "﷼", "₨", "ج.س.", "kr", "£", "Le", "S", "Db", "E", "฿", "SM", "T", "د.ت", "T$", "₤", "₺", "TT$", "NT$", "TSh", "₴", "USh", "$U", "лв", "Bs", "₫", "VT", "WS$", "FCFA", "Ƀ", "CFA", "₣", "﷼", "R", "Z$"];
+const currencySigns = [
+  "د.إ",
+  "؋",
+  "L",
+  "֏",
+  "ƒ",
+  "Kz",
+  "$",
+  "ƒ",
+  "₼",
+  "KM",
+  "৳",
+  "лв",
+  ".د.ب",
+  "FBu",
+  "$b",
+  "R$",
+  "฿",
+  "Nu.",
+  "P",
+  "p.",
+  "BZ$",
+  "FC",
+  "CHF",
+  "¥",
+  "₡",
+  "₱",
+  "Kč",
+  "Fdj",
+  "kr",
+  "RD$",
+  "دج",
+  "kr",
+  "Nfk",
+  "Br",
+  "Ξ",
+  "€",
+  "₾",
+  "₵",
+  "GH₵",
+  "D",
+  "FG",
+  "Q",
+  "L",
+  "kn",
+  "G",
+  "Ft",
+  "Rp",
+  "₪",
+  "₹",
+  "ع.د",
+  "﷼",
+  "kr",
+  "J$",
+  "JD",
+  "¥",
+  "KSh",
+  "лв",
+  "៛",
+  "CF",
+  "₩",
+  "₩",
+  "KD",
+  "лв",
+  "₭",
+  "₨",
+  "M",
+  "Ł",
+  "Lt",
+  "Ls",
+  "LD",
+  "MAD",
+  "lei",
+  "Ar",
+  "ден",
+  "K",
+  "₮",
+  "MOP$",
+  "UM",
+  "₨",
+  "Rf",
+  "MK",
+  "RM",
+  "MT",
+  "₦",
+  "C$",
+  "kr",
+  "₨",
+  "﷼",
+  "B/.",
+  "S/.",
+  "K",
+  "₱",
+  "₨",
+  "zł",
+  "Gs",
+  "﷼",
+  "￥",
+  "lei",
+  "Дин.",
+  "₽",
+  "R₣",
+  "﷼",
+  "₨",
+  "ج.س.",
+  "kr",
+  "£",
+  "Le",
+  "S",
+  "Db",
+  "E",
+  "฿",
+  "SM",
+  "T",
+  "د.ت",
+  "T$",
+  "₤",
+  "₺",
+  "TT$",
+  "NT$",
+  "TSh",
+  "₴",
+  "USh",
+  "$U",
+  "лв",
+  "Bs",
+  "₫",
+  "VT",
+  "WS$",
+  "FCFA",
+  "Ƀ",
+  "CFA",
+  "₣",
+  "﷼",
+  "R",
+  "Z$"
+];
 
 function findtype(something) {
   if (typeof something !== "string") {
-    throw new Error("csv-sort/util/findtype(): input must be string! Currently it's: " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
+    throw new Error(
+      `csv-sort/util/findtype(): input must be string! Currently it's: ${typeof something}`
+    );
   }
   if (isNumeric(something)) {
     return "numeric";
-  } else if (currencySigns.some(function (singleSign) {
-    return (
+  } else if (
+    currencySigns.some(singleSign =>
       // We remove all known currency symbols one by one from this input string.
       // If at least one passes as numeric after the currency symbol-removing, it's numeric.
       isNumeric(something.replace(singleSign, "").replace(/[,.]/g, ""))
-    );
-  })) {
+    )
+  ) {
     return "numeric";
   } else if (something.trim().length === 0) {
     return "empty";
@@ -28,14 +164,14 @@ function findtype(something) {
   return "text";
 }
 
-var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+/* eslint prefer-destructuring:0, max-len:0 */
 
-var isArr = Array.isArray;
+const isArr = Array.isArray;
 
 function csvSort(input) {
-  var content = void 0;
-  var msgContent = null;
-  var msgType = null;
+  let content;
+  let msgContent = null;
+  let msgType = null;
 
   // step 1.
   // ===========================
@@ -46,19 +182,35 @@ function csvSort(input) {
     }
     content = split(input);
   } else if (isArr(input)) {
-    var culpritVal = void 0;
-    var culpritIndex = void 0;
-    if (!input.every(function (val, index) {
-      if (!isArr(val)) {
-        culpritVal = val;
-        culpritIndex = index;
-      }
-      return isArr(val);
-    })) {
-      throw new TypeError("csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the " + ordinal(culpritIndex) + " element is not array but: " + (typeof culpritVal === "undefined" ? "undefined" : _typeof$1(culpritVal)) + ", equal to:\n" + JSON.stringify(culpritVal, null, 4));
+    let culpritVal;
+    let culpritIndex;
+    if (
+      !input.every((val, index) => {
+        if (!isArr(val)) {
+          culpritVal = val;
+          culpritIndex = index;
+        }
+        return isArr(val);
+      })
+    ) {
+      throw new TypeError(
+        `csv-sort/csvSort(): [THROW_ID_01] the input is array as expected, but not all of its children are arrays! For example, the ${ordinal(
+          culpritIndex
+        )} element is not array but: ${typeof culpritVal}, equal to:\n${JSON.stringify(
+          culpritVal,
+          null,
+          4
+        )}`
+      );
     }
   } else {
-    throw new TypeError("csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: " + (typeof input === "undefined" ? "undefined" : _typeof$1(input)) + ", equal to:\n" + JSON.stringify(input, null, 4));
+    throw new TypeError(
+      `csv-sort/csvSort(): [THROW_ID_02] The input is of a wrong type! We accept either string of array of arrays. We got instead: ${typeof input}, equal to:\n${JSON.stringify(
+        input,
+        null,
+        4
+      )}`
+    );
   }
 
   // step 2.
@@ -68,25 +220,31 @@ function csvSort(input) {
   // - first row can have different amount of columns
   // - think about 2D trim feature
 
-  var schema = null;
-  var stateHeaderRowPresent = false;
-  var stateDataColumnRowLengthIsConsistent = true;
-  var stateColumnsContainingSameValueEverywhere = [];
+  let schema = null;
+  let stateHeaderRowPresent = false;
+  let stateDataColumnRowLengthIsConsistent = true;
+  const stateColumnsContainingSameValueEverywhere = [];
 
   // used for 2D trimming:
-  var indexAtWhichEmptyCellsStart = null;
+  let indexAtWhichEmptyCellsStart = null;
 
-  for (var i = content.length - 1; i >= 0; i--) {
+  for (let i = content.length - 1; i >= 0; i--) {
     if (!schema) {
       // prevention against last blank row:
       if (content[i].length !== 1 || content[i][0] !== "") {
         schema = [];
-        for (var y = 0, len = content[i].length; y < len; y++) {
+        for (let y = 0, len = content[i].length; y < len; y++) {
           schema.push(findtype(content[i][y].trim()));
-          if (indexAtWhichEmptyCellsStart === null && findtype(content[i][y].trim()) === "empty") {
+          if (
+            indexAtWhichEmptyCellsStart === null &&
+            findtype(content[i][y].trim()) === "empty"
+          ) {
             indexAtWhichEmptyCellsStart = y;
           }
-          if (indexAtWhichEmptyCellsStart !== null && findtype(content[i][y].trim()) !== "empty") {
+          if (
+            indexAtWhichEmptyCellsStart !== null &&
+            findtype(content[i][y].trim()) !== "empty"
+          ) {
             indexAtWhichEmptyCellsStart = null;
           }
         }
@@ -96,9 +254,9 @@ function csvSort(input) {
         // Check is this header row.
         // Header rows should consist of only text content.
         // Let's iterate through all elements and find out.
-        stateHeaderRowPresent = content[i].every(function (el) {
-          return findtype(el) === "text" || findtype(el) === "empty";
-        });
+        stateHeaderRowPresent = content[i].every(
+          el => findtype(el) === "text" || findtype(el) === "empty"
+        );
 
         // if schema was calculated (this means there's header row and at least one content row),
         // find out if the column length in the header differs from schema's
@@ -110,27 +268,36 @@ function csvSort(input) {
         stateDataColumnRowLengthIsConsistent = false;
       }
 
-      var perRowIndexAtWhichEmptyCellsStart = null;
-      for (var _y = 0, _len = content[i].length; _y < _len; _y++) {
+      let perRowIndexAtWhichEmptyCellsStart = null;
+      for (let y = 0, len = content[i].length; y < len; y++) {
         // trim
-        if (perRowIndexAtWhichEmptyCellsStart === null && findtype(content[i][_y].trim()) === "empty") {
-          perRowIndexAtWhichEmptyCellsStart = _y;
+        if (
+          perRowIndexAtWhichEmptyCellsStart === null &&
+          findtype(content[i][y].trim()) === "empty"
+        ) {
+          perRowIndexAtWhichEmptyCellsStart = y;
         }
-        if (perRowIndexAtWhichEmptyCellsStart !== null && findtype(content[i][_y].trim()) !== "empty") {
+        if (
+          perRowIndexAtWhichEmptyCellsStart !== null &&
+          findtype(content[i][y].trim()) !== "empty"
+        ) {
           perRowIndexAtWhichEmptyCellsStart = null;
         }
         // checking schema
-        if (findtype(content[i][_y].trim()) !== schema[_y] && !stateHeaderRowPresent) {
-          var toAdd = findtype(content[i][_y].trim());
-          if (isArr(schema[_y])) {
-            if (!schema[_y].includes(toAdd)) {
-              schema[_y].push(findtype(content[i][_y].trim()));
+        if (
+          findtype(content[i][y].trim()) !== schema[y] &&
+          !stateHeaderRowPresent
+        ) {
+          const toAdd = findtype(content[i][y].trim());
+          if (isArr(schema[y])) {
+            if (!schema[y].includes(toAdd)) {
+              schema[y].push(findtype(content[i][y].trim()));
             }
-          } else if (schema[_y] !== toAdd) {
-            var temp = schema[_y];
-            schema[_y] = [];
-            schema[_y].push(temp);
-            schema[_y].push(toAdd);
+          } else if (schema[y] !== toAdd) {
+            const temp = schema[y];
+            schema[y] = [];
+            schema[y].push(temp);
+            schema[y].push(toAdd);
           }
         } // else {
         // }
@@ -151,7 +318,12 @@ function csvSort(input) {
       // so algorithm skips those empty columns.
       //
 
-      if (indexAtWhichEmptyCellsStart !== null && perRowIndexAtWhichEmptyCellsStart !== null && perRowIndexAtWhichEmptyCellsStart > indexAtWhichEmptyCellsStart && (!stateHeaderRowPresent || stateHeaderRowPresent && i !== 0)) {
+      if (
+        indexAtWhichEmptyCellsStart !== null &&
+        perRowIndexAtWhichEmptyCellsStart !== null &&
+        perRowIndexAtWhichEmptyCellsStart > indexAtWhichEmptyCellsStart &&
+        (!stateHeaderRowPresent || (stateHeaderRowPresent && i !== 0))
+      ) {
         indexAtWhichEmptyCellsStart = perRowIndexAtWhichEmptyCellsStart;
       }
     }
@@ -162,10 +334,10 @@ function csvSort(input) {
   }
 
   // find out at which index non-empty columns start. This is effectively left-side trimming.
-  var nonEmptyColsStartAt = 0;
-  for (var _i = 0, _len2 = schema.length; _i < _len2; _i++) {
-    if (schema[_i] === "empty") {
-      nonEmptyColsStartAt = _i;
+  let nonEmptyColsStartAt = 0;
+  for (let i = 0, len = schema.length; i < len; i++) {
+    if (schema[i] === "empty") {
+      nonEmptyColsStartAt = i;
     } else {
       break;
     }
@@ -173,9 +345,9 @@ function csvSort(input) {
 
   // if there are empty column in front, trim (via slice) both content and schema
   if (nonEmptyColsStartAt !== 0) {
-    content = content.map(function (arr) {
-      return arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
-    });
+    content = content.map(arr =>
+      arr.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart)
+    );
     schema = schema.slice(nonEmptyColsStartAt + 1, indexAtWhichEmptyCellsStart);
   }
 
@@ -192,21 +364,23 @@ function csvSort(input) {
 
   // swoop in traversing the schema array to get "numeric" columns:
   // ----------------
-  var numericSchemaColumns = [];
-  var balanceColumnIndex = void 0;
-  schema.forEach(function (colType, i) {
+  const numericSchemaColumns = [];
+  let balanceColumnIndex;
+  schema.forEach((colType, i) => {
     if (colType === "numeric") {
       numericSchemaColumns.push(i);
     }
   });
 
-  var traverseUpToThisIndexAtTheTop = stateHeaderRowPresent ? 1 : 0;
+  const traverseUpToThisIndexAtTheTop = stateHeaderRowPresent ? 1 : 0;
 
   if (numericSchemaColumns.length === 1) {
     // Bob's your uncle, the only numeric column is your Balance column
     balanceColumnIndex = numericSchemaColumns[0];
   } else if (numericSchemaColumns.length === 0) {
-    throw new Error('csv-sort/csvSort(): [THROW_ID_03] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!');
+    throw new Error(
+      'csv-sort/csvSort(): [THROW_ID_03] Your CSV file does not contain numeric-only columns and computer was not able to detect the "Balance" column!'
+    );
   } else {
     // So (numericSchemaColumns > 0) and we'll have to do some work.
     // Fine.
@@ -220,13 +394,18 @@ function csvSort(input) {
     // find out `balanceColumnIndex`:
     // ----------------
 
-    var potentialBalanceColumnIndexesList = Array.from(numericSchemaColumns);
+    let potentialBalanceColumnIndexesList = Array.from(numericSchemaColumns);
     // iterate through `potentialBalanceColumnIndexesList`
-    var deleteFromPotentialBalanceColumnIndexesList = [];
+    const deleteFromPotentialBalanceColumnIndexesList = [];
 
-    for (var _i2 = 0, _len3 = potentialBalanceColumnIndexesList.length; _i2 < _len3; _i2++) {
+    for (
+      let i = 0, len = potentialBalanceColumnIndexesList.length;
+      i < len;
+      i++
+    ) {
       // if any two rows are in sequence currently and they are equal, this column is out
-      var suspectedBalanceColumnsIndexNumber = potentialBalanceColumnIndexesList[_i2];
+      const suspectedBalanceColumnsIndexNumber =
+        potentialBalanceColumnIndexesList[i];
       // we traverse column suspected to be "Balance" with index `index` vertically,
       // from the top to bottom. Depending if there's heading row, we start at 0 or 1,
       // which is set by `traverseUpToThisIndexAtTheTop`.
@@ -235,21 +414,30 @@ function csvSort(input) {
 
       // EASY ATTEMPT TO RULE-OUT NOT-BALANCE COLUMNS
 
-      var previousValue = void 0; // to check if two consecutive are the same
-      var lookForTwoEqualAndConsecutive = true;
-      var firstValue = void 0; // to check if all are the same
-      var lookForAllTheSame = true;
+      let previousValue; // to check if two consecutive are the same
+      let lookForTwoEqualAndConsecutive = true;
+      let firstValue; // to check if all are the same
+      let lookForAllTheSame = true;
 
-      for (var rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length; rowNum < len2; rowNum++) {
+      for (
+        let rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length;
+        rowNum < len2;
+        rowNum++
+      ) {
         // 1. check for two consecutive equal values
         if (lookForTwoEqualAndConsecutive) {
           if (previousValue === undefined) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
-          } else if (previousValue === content[rowNum][suspectedBalanceColumnsIndexNumber]) {
+          } else if (
+            previousValue ===
+            content[rowNum][suspectedBalanceColumnsIndexNumber]
+          ) {
             // potentialBalanceColumnIndexesList.splice(suspectedBalanceColumnsIndexNumber, 1)
             // don't mutate the `potentialBalanceColumnIndexesList`, do it later.
             // Let's compile TO-DELETE list instead:
-            deleteFromPotentialBalanceColumnIndexesList.push(suspectedBalanceColumnsIndexNumber);
+            deleteFromPotentialBalanceColumnIndexesList.push(
+              suspectedBalanceColumnsIndexNumber
+            );
             lookForTwoEqualAndConsecutive = false;
           } else {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
@@ -259,7 +447,9 @@ function csvSort(input) {
         if (lookForAllTheSame) {
           if (firstValue === undefined) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
-          } else if (content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue) {
+          } else if (
+            content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue
+          ) {
             lookForAllTheSame = false;
           }
         }
@@ -269,27 +459,26 @@ function csvSort(input) {
       }
 
       if (lookForAllTheSame) {
-        stateColumnsContainingSameValueEverywhere.push(suspectedBalanceColumnsIndexNumber);
+        stateColumnsContainingSameValueEverywhere.push(
+          suspectedBalanceColumnsIndexNumber
+        );
       }
     }
 
     // now mutate the `potentialBalanceColumnIndexesList` using
     // `deleteFromPotentialBalanceColumnIndexesList`:
-    potentialBalanceColumnIndexesList = pull.apply(undefined, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
+    potentialBalanceColumnIndexesList = pull(
+      potentialBalanceColumnIndexesList,
+      ...deleteFromPotentialBalanceColumnIndexesList
+    );
 
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
     } else if (potentialBalanceColumnIndexesList.length === 0) {
-      throw new Error('csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!');
+      throw new Error(
+        'csv-sort/csvSort(): [THROW_ID_04] The computer can\'t find the "Balance" column! It saw some numeric-only columns, but they all seem to have certain rows with the same values as rows right below/above them!'
+      );
     }
-    // TODO - continue processing interpolating horizontally and vertically.
-    //
-    //
-    // COMPLEX ATTEMPT TO RULE-OUT NOT-BALANCE COLUMNS
-    //
-    //
-    // zzz
-
 
     // at this point 99% of normal-size, real-life bank account CSV's should have
     // "Balance" column identified because there will be both "Credit" and "Debit"
@@ -299,7 +488,9 @@ function csvSort(input) {
   }
 
   if (!balanceColumnIndex) {
-    throw new Error("csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it.");
+    throw new Error(
+      "csv-sort/csvSort(): [THROW_ID_05] Sadly computer couldn't find its way in this CSV and had to stop working on it."
+    );
   }
 
   // step 4.
@@ -308,17 +499,26 @@ function csvSort(input) {
 
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
-  var potentialCreditDebitColumns = pull.apply(undefined, [Array.from(schema.reduce(function (result, el, index) {
-    if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
-      result.push(index);
-    }
-    return result;
-  }, [])), balanceColumnIndex].concat(stateColumnsContainingSameValueEverywhere));
+  const potentialCreditDebitColumns = pull(
+    Array.from(
+      schema.reduce((result, el, index) => {
+        if (
+          (typeof el === "string" && el === "numeric") ||
+          (isArr(el) && el.includes("numeric"))
+        ) {
+          result.push(index);
+        }
+        return result;
+      }, [])
+    ),
+    balanceColumnIndex,
+    ...stateColumnsContainingSameValueEverywhere
+  );
 
   // step 5.
   // ===========================
 
-  var resContent = [];
+  const resContent = [];
 
   // Now that we know the `balanceColumnIndex`, traverse the CSV rows again,
   // assembling a new array
@@ -328,69 +528,118 @@ function csvSort(input) {
   // Worst case scenario, if it doesn't match with anything, we'll throw in the end.
   // For now, let's assume CSV is correct, only rows are mixed.
 
-  resContent.push(content[content.length - 1].slice(0, indexAtWhichEmptyCellsStart));
+  resContent.push(
+    content[content.length - 1].slice(0, indexAtWhichEmptyCellsStart)
+  );
 
-  var usedUpRows = [];
+  const usedUpRows = [];
 
-  var bottom = stateHeaderRowPresent ? 1 : 0;
-  for (var _y2 = content.length - 2; _y2 >= bottom; _y2--) {
+  const bottom = stateHeaderRowPresent ? 1 : 0;
+  for (let y = content.length - 2; y >= bottom; y--) {
     // for each row above the last-one (which is already in place), we'll traverse
     // all the rows above to find the match.
     // go through all the rows and pick the right row which matches to the above:
-    for (var suspectedRowsIndex = content.length - 2; suspectedRowsIndex >= bottom; suspectedRowsIndex--) {
+    for (
+      let suspectedRowsIndex = content.length - 2;
+      suspectedRowsIndex >= bottom;
+      suspectedRowsIndex--
+    ) {
       if (!usedUpRows.includes(suspectedRowsIndex)) {
         // go through each of the suspected Credit/Debit columns:
 
-        var thisRowIsDone = false;
+        let thisRowIsDone = false;
 
-        for (var suspectedColIndex = 0, _len4 = potentialCreditDebitColumns.length; suspectedColIndex < _len4; suspectedColIndex++) {
-          var diffVal = null;
-          if (content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            diffVal = new BigNumber(content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
+        for (
+          let suspectedColIndex = 0, len = potentialCreditDebitColumns.length;
+          suspectedColIndex < len;
+          suspectedColIndex++
+        ) {
+          let diffVal = null;
+          if (
+            content[suspectedRowsIndex][
+              potentialCreditDebitColumns[suspectedColIndex]
+            ] !== ""
+          ) {
+            diffVal = new BigNumber(
+              content[suspectedRowsIndex][
+                potentialCreditDebitColumns[suspectedColIndex]
+              ]
+            );
           }
 
-          var totalVal = null;
+          let totalVal = null;
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
-            totalVal = new BigNumber(content[suspectedRowsIndex][balanceColumnIndex]);
+            totalVal = new BigNumber(
+              content[suspectedRowsIndex][balanceColumnIndex]
+            );
           }
 
-          var topmostResContentBalance = null;
+          let topmostResContentBalance = null;
           if (resContent[0][balanceColumnIndex] !== "") {
-            topmostResContentBalance = new BigNumber(resContent[0][balanceColumnIndex]);
+            topmostResContentBalance = new BigNumber(
+              resContent[0][balanceColumnIndex]
+            );
           }
 
-          var currentRowsDiffVal = null;
-          if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            currentRowsDiffVal = new BigNumber(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]);
+          let currentRowsDiffVal = null;
+          if (
+            resContent[resContent.length - 1][
+              potentialCreditDebitColumns[suspectedColIndex]
+            ] !== ""
+          ) {
+            currentRowsDiffVal = new BigNumber(
+              resContent[resContent.length - 1][
+                potentialCreditDebitColumns[suspectedColIndex]
+              ]
+            );
           }
 
-          var lastResContentRowsBalance = null;
+          let lastResContentRowsBalance = null;
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
-            lastResContentRowsBalance = new BigNumber(resContent[resContent.length - 1][balanceColumnIndex]);
+            lastResContentRowsBalance = new BigNumber(
+              resContent[resContent.length - 1][balanceColumnIndex]
+            );
           }
 
           if (diffVal && totalVal.plus(diffVal).eq(topmostResContentBalance)) {
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
-            resContent.unshift(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
+            resContent.unshift(
+              content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
+            );
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (diffVal && totalVal.minus(diffVal).eq(topmostResContentBalance)) {
+          } else if (
+            diffVal &&
+            totalVal.minus(diffVal).eq(topmostResContentBalance)
+          ) {
             // ADD THIS ROW ABOVE EVERYTHING
-            resContent.unshift(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
+            resContent.unshift(
+              content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
+            );
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (currentRowsDiffVal && lastResContentRowsBalance.plus(currentRowsDiffVal).eq(totalVal)) {
+          } else if (
+            currentRowsDiffVal &&
+            lastResContentRowsBalance.plus(currentRowsDiffVal).eq(totalVal)
+          ) {
             // ADD THIS ROW BELOW EVERYTHING
-            resContent.push(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
+            resContent.push(
+              content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
+            );
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (currentRowsDiffVal && lastResContentRowsBalance.minus(currentRowsDiffVal).eq(totalVal)) {
+          } else if (
+            currentRowsDiffVal &&
+            lastResContentRowsBalance.minus(currentRowsDiffVal).eq(totalVal)
+          ) {
             // ADD THIS ROW BELOW EVERYTHING
-            resContent.push(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
+            resContent.push(
+              content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
+            );
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
@@ -408,7 +657,10 @@ function csvSort(input) {
   // restore title row if present
   if (stateHeaderRowPresent) {
     // trim header row of trailing empty columns if they protrude outside of the (consistent row length) schema
-    if (stateDataColumnRowLengthIsConsistent && content[0].length > schema.length) {
+    if (
+      stateDataColumnRowLengthIsConsistent &&
+      content[0].length > schema.length
+    ) {
       content[0].length = schema.length;
     }
     // push header row on top of the results array:
@@ -422,8 +674,8 @@ function csvSort(input) {
 
   return {
     res: resContent,
-    msgContent: msgContent,
-    msgType: msgType
+    msgContent,
+    msgType
   };
 }
 

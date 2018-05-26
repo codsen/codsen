@@ -2,7 +2,7 @@ import { readFileSync as read } from "fs";
 import test from "ava";
 import path from "path";
 import split from "csv-split-easy";
-import csvSort from "../dist/csv-sort.cjs";
+import csvSort from "../dist/csv-sort.esm";
 
 const fixtures = path.join(__dirname, "fixtures");
 

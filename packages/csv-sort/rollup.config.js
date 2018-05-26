@@ -1,9 +1,8 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
-import { minify } from "uglify-es";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
@@ -23,17 +22,14 @@ export default commandLineArgs => {
         resolve(), // so Rollup can find deps
         commonjs(), // so Rollup can convert deps to ES modules
         babel(),
-        uglify({}, minify)
+        uglify()
       ]
     },
 
-    // Builds: CommonJS (for Node) and ES module (for bundlers)
+    // CommonJS build (for Node)
     {
       input: "src/main.js",
-      output: [
-        { file: pkg.main, format: "cjs" },
-        { file: pkg.module, format: "es" }
-      ],
+      output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "bignumber.js",
         "csv-split-easy",
@@ -49,10 +45,28 @@ export default commandLineArgs => {
       ]
     },
 
-    // util.js needs transpiling as well:
+    // ES module build (for bundlers)
+    {
+      input: "src/main.js",
+      output: [{ file: pkg.module, format: "es" }],
+      external: [
+        "bignumber.js",
+        "csv-split-easy",
+        "is-numeric",
+        "lodash.pull",
+        "ordinal"
+      ],
+      plugins: [
+        strip({
+          sourceMap: false
+        })
+      ]
+    },
+
+    // util.js build:
     {
       input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
+      output: [{ file: "dist/util.esm.js", format: "es" }],
       external: ["is-numeric"],
       plugins: [
         strip({
@@ -62,6 +76,7 @@ export default commandLineArgs => {
       ]
     }
   ];
+
   if (commandLineArgs.dev) {
     // if rollup was called without a --dev flag,
     // dispose of a comment removal, strip():
