@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "engines": {
