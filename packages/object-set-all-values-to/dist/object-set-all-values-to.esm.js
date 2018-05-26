@@ -2,13 +2,12 @@ import clone from 'lodash.clonedeep';
 import typ from 'type-detect';
 
 // ===================================
-// R E Q U I R E' S
 
 // ===================================
 // F U N C T I O N S
 
 function isObj(something) {
-  return typ(something) === 'Object';
+  return typ(something) === "Object";
 }
 function isArr(something) {
   return Array.isArray(something);
@@ -22,12 +21,14 @@ function isArr(something) {
  * @return {Object}       returned object
  */
 function setAllValuesTo(inputOriginal, valueOriginal) {
-  var value = void 0;
+  let value;
 
   if (arguments.length === 0) {
-    throw new Error('object-set-all-values-to: [THROW_ID_01] All the inputs are missing!');
+    throw new Error(
+      "object-set-all-values-to: [THROW_ID_01] All the inputs are missing!"
+    );
   }
-  var input = clone(inputOriginal);
+  const input = clone(inputOriginal);
 
   if (arguments.length < 2) {
     value = false;
@@ -38,13 +39,13 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   }
 
   if (isArr(input)) {
-    input.forEach(function (el, i) {
+    input.forEach((el, i) => {
       if (isObj(input[i]) || isArr(input[i])) {
         input[i] = setAllValuesTo(input[i], value);
       }
     });
   } else if (isObj(input)) {
-    Object.keys(input).forEach(function (key) {
+    Object.keys(input).forEach(key => {
       if (isArr(input[key]) || isObj(input[key])) {
         input[key] = setAllValuesTo(input[key], value);
       } else {

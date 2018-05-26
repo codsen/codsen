@@ -7,10 +7,13 @@
   "dependencies": {
     "mute": [
       "ava",
+      "babel-preset-env",
       "coveralls",
+      "esm",
       "husky",
       "lodash.clonedeep",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

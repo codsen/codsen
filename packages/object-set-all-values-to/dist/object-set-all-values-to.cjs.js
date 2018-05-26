@@ -6,13 +6,12 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var typ = _interopDefault(require('type-detect'));
 
 // ===================================
-// R E Q U I R E' S
 
 // ===================================
 // F U N C T I O N S
 
 function isObj(something) {
-  return typ(something) === 'Object';
+  return typ(something) === "Object";
 }
 function isArr(something) {
   return Array.isArray(something);
@@ -29,7 +28,7 @@ function setAllValuesTo(inputOriginal, valueOriginal) {
   var value = void 0;
 
   if (arguments.length === 0) {
-    throw new Error('object-set-all-values-to: [THROW_ID_01] All the inputs are missing!');
+    throw new Error("object-set-all-values-to: [THROW_ID_01] All the inputs are missing!");
   }
   var input = clone(inputOriginal);
 

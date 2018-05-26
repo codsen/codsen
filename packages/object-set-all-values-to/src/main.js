@@ -1,14 +1,18 @@
 // ===================================
 // R E Q U I R E' S
 
-import clone from 'lodash.clonedeep'
-import typ from 'type-detect'
+import clone from "lodash.clonedeep";
+import typ from "type-detect";
 
 // ===================================
 // F U N C T I O N S
 
-function isObj(something) { return typ(something) === 'Object' }
-function isArr(something) { return Array.isArray(something) }
+function isObj(something) {
+  return typ(something) === "Object";
+}
+function isArr(something) {
+  return Array.isArray(something);
+}
 
 /**
  * setAllValuesTo - sets all keys of all plain objects (no matter how deep-nested) to
@@ -18,38 +22,39 @@ function isArr(something) { return Array.isArray(something) }
  * @return {Object}       returned object
  */
 function setAllValuesTo(inputOriginal, valueOriginal) {
-  let value
+  let value;
 
   if (arguments.length === 0) {
-    throw new Error('object-set-all-values-to: [THROW_ID_01] All the inputs are missing!')
+    throw new Error(
+      "object-set-all-values-to: [THROW_ID_01] All the inputs are missing!"
+    );
   }
-  const input = clone(inputOriginal)
-
+  const input = clone(inputOriginal);
 
   if (arguments.length < 2) {
-    value = false
+    value = false;
   } else if (isObj(valueOriginal) || isArr(valueOriginal)) {
-    value = clone(valueOriginal)
+    value = clone(valueOriginal);
   } else {
-    value = valueOriginal
+    value = valueOriginal;
   }
 
   if (isArr(input)) {
     input.forEach((el, i) => {
       if (isObj(input[i]) || isArr(input[i])) {
-        input[i] = setAllValuesTo(input[i], value)
+        input[i] = setAllValuesTo(input[i], value);
       }
-    })
+    });
   } else if (isObj(input)) {
-    Object.keys(input).forEach((key) => {
+    Object.keys(input).forEach(key => {
       if (isArr(input[key]) || isObj(input[key])) {
-        input[key] = setAllValuesTo(input[key], value)
+        input[key] = setAllValuesTo(input[key], value);
       } else {
-        input[key] = value
+        input[key] = value;
       }
-    })
+    });
   }
-  return input
+  return input;
 }
 
-export default setAllValuesTo
+export default setAllValuesTo;
