@@ -1,5 +1,5 @@
 import test from "ava";
-import splitEasy from "../dist/csv-split-easy.cjs";
+import splitEasy from "../dist/csv-split-easy.esm";
 
 // some art first
 //

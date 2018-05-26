@@ -27,13 +27,10 @@ export default commandLineArgs => {
       ]
     },
 
-    // Builds: CommonJS (for Node) and ES module (for bundlers)
+    // CommonJS build (for Node)
     {
       input: "src/main.js",
-      output: [
-        { file: pkg.main, format: "cjs" },
-        { file: pkg.module, format: "es" }
-      ],
+      output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "check-types-mini",
         "lodash.isplainobject",
@@ -45,8 +42,25 @@ export default commandLineArgs => {
         }),
         babel()
       ]
+    },
+
+    // ES module build (for bundlers)
+    {
+      input: "src/main.js",
+      output: [{ file: pkg.module, format: "es" }],
+      external: [
+        "check-types-mini",
+        "lodash.isplainobject",
+        "string-remove-thousand-separators"
+      ],
+      plugins: [
+        strip({
+          sourceMap: false
+        })
+      ]
     }
   ];
+
   if (commandLineArgs.dev) {
     // if rollup was called without a --dev flag,
     // dispose of a comment removal, strip():
