@@ -7,11 +7,15 @@
   "dependencies": {
     "mute": [
       "ava",
+      "babel-preset-env",
+      "check-types-mini",
       "coveralls",
+      "esm",
       "husky",
       "lodash.includes",
       "lodash.isplainobject",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

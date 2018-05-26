@@ -27,19 +27,28 @@
   "scripts": {
     "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "rollup -c -w",
-    "precommit": "npm test",
+    "dev": "rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "validate",
@@ -73,22 +82,22 @@
       "vulnerabilities": true
     },
     "contribution_types": [
-      "Answering Questions",
       "Blogposts",
-      "Bug reports*",
-      "Code*",
+      "Bug reports",
+      "Code",
       "Design",
-      "Documentation*",
-      "Event Organizers",
+      "Documentation",
+      "Event Organizing",
       "Examples",
-      "Financial Support",
-      "Funding/Grant Finders",
-      "Ideas & Planning",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
       "Infrastructure (Hosting, Build-Tools, etc)",
       "Plugin/utility libraries",
+      "Answering Questions",
       "Reviewed Pull Requests",
       "Talks",
-      "Tests*",
+      "Tests",
       "Tools",
       "Translation",
       "Tutorials",
@@ -108,9 +117,24 @@
       "add": [],
       "remove": []
     },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
     "header": {
       "dontQuoteDescription": false,
-      "rightFloatedBadge": ""
+      "rightFloatedBadge": []
     },
     "licence": {
       "extras": []
@@ -125,29 +149,33 @@
       "back_to_top": {
         "enabled": true,
         "label": ""
-      }
+      },
+      "devDependencies": []
     }
   },
   "dependencies": {
-    "check-types-mini": "^3.1.0",
+    "check-types-mini": "latest",
     "lodash.includes": "*",
     "lodash.isplainobject": "*"
   },
   "devDependencies": {
-    "ava": "*",
-    "babel-preset-env": "^1.6.1",
-    "coveralls": "*",
-    "eslint": "^4.16.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-ava": "^4.5.0",
-    "eslint-plugin-import": "^2.8.0",
-    "husky": "*",
-    "nyc": "*",
-    "rollup": "^0.55.3",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-uglify": "^3.0.0",
-    "uglify-es": "^3.3.9"
+    "ava": "latest",
+    "babel-preset-env": "latest",
+    "coveralls": "latest",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-ava": "^4.5.1",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "esm": "latest",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "^0.59.1",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-strip": "^1.1.1",
+    "rollup-plugin-uglify": "^4.0.0"
   }
 }
