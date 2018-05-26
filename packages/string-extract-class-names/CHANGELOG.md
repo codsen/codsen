@@ -5,56 +5,75 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2018-05-26
+
+### Improvements
+
+* ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
+
 ## [4.0.0] - 2017-12-13
+
 ### Changed
-- ✨ Rebased in ES Modules
-- ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules
+
+* ✨ Rebased in ES Modules
+* ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules
 
 No API changes, but bumping major just in case.
 
 ## [3.4.0] - 2017-08-28
+
 ### Added
-- Relaxed the requirements and made single character selector names to pass.
+
+* Relaxed the requirements and made single character selector names to pass.
 
 ## [3.3.0] - 2017-01-01
+
 ### Added
 
-- Recognises `\n`, `\t` and other escaped JS characters
-- Doesn't extract empty classes and id's (`.` and `#`)
-- Doesn't extract any classes or id's that are one character long
+* Recognises `\n`, `\t` and other escaped JS characters
+* Doesn't extract empty classes and id's (`.` and `#`)
+* Doesn't extract any classes or id's that are one character long
 
 ## [3.2.0] - 2016-12-27
+
 ### Updated
 
-- Readme updates
+* Readme updates
 
 ## [3.1.0] - 2016-12-23
+
 ### Added
 
-- Standard JS precommit hooks to enforce code style
+* Standard JS precommit hooks to enforce code style
 
 ## 3.0.0 - 2016-11-19
+
 ### Changed
 
 Algorithm change.
 
 ## v.2.0.0 - 2016-11-09
+
 ### Change 1.
 
 Breaking changes — instead of giving the first class or id as string, now we're outputting the array of them:
 
 Previously:
+
 ```js
-extract('div.class-one.class-two a[target=_blank]', '#')
+extract("div.class-one.class-two a[target=_blank]", "#");
 // => '.class-one'
-extract('div#id.class a[target=_blank]', '#')
+extract("div#id.class a[target=_blank]", "#");
 // => '#id'
 ```
 
 Now:
 
 ```js
-extract('div#id.class a[target=_blank]', '#')
+extract("div#id.class a[target=_blank]", "#");
 // => ['#id', '.class']
 ```
 
@@ -72,3 +91,4 @@ This library will detect the first clump of class(es)/array(s), will put each in
 [3.3.0]: https://github.com/codsen/string-extract-class-names/compare/v3.2.0...v3.3.0
 [3.4.0]: https://github.com/codsen/string-extract-class-names/compare/v3.3.0...v3.4.0
 [4.0.0]: https://github.com/codsen/string-extract-class-names/compare/v3.4.0...v4.0.0
+[4.1.0]: https://github.com/codsen/string-extract-class-names/compare/v4.0.6...v4.1.0
