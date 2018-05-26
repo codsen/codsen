@@ -471,12 +471,7 @@ function chlu(changelogContents, packageJsonContents) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
 
-  // ========
-  // stage 15: normalise titles
-
-  var gitStuffReadyYet = false;
-
-  if (gitStuffReadyYet) ; else {
+  {
     titles.forEach(function (title) {
       var fixedDate = dd(filterDate(title.afterVersion));
 

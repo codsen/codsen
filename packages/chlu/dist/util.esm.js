@@ -1,15 +1,9 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var cmp = _interopDefault(require('semver-compare'));
-var clone = _interopDefault(require('lodash.clonedeep'));
-var isNum = _interopDefault(require('is-natural-number'));
-var trim = _interopDefault(require('lodash.trim'));
-var easyReplace = _interopDefault(require('easy-replace'));
-var emojiRegexLib = _interopDefault(require('emoji-regex'));
+import cmp from 'semver-compare';
+import clone from 'lodash.clonedeep';
+import isNum from 'is-natural-number';
+import trim from 'lodash.trim';
+import easyReplace from 'easy-replace';
+import emojiRegexLib from 'emoji-regex';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -224,15 +218,4 @@ function filterDate(someString) {
   return res;
 }
 
-exports.isTitle = isTitle;
-exports.isFooterLink = isFooterLink;
-exports.versionWithBracketsRegex = versionWithBracketsRegex;
-exports.versionWithoutBracketsRegex = versionWithoutBracketsRegex;
-exports.getPreviousVersion = getPreviousVersion;
-exports.getRow = getRow;
-exports.setRow = setRow;
-exports.getTitlesAndFooterLinks = getTitlesAndFooterLinks;
-exports.getSetFooterLink = getSetFooterLink;
-exports.aContainsB = aContainsB;
-exports.versionSort = versionSort;
-exports.filterDate = filterDate;
+export { isTitle, isFooterLink, versionWithBracketsRegex, versionWithoutBracketsRegex, getPreviousVersion, getRow, setRow, getTitlesAndFooterLinks, getSetFooterLink, aContainsB, versionSort, filterDate };

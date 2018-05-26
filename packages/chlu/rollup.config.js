@@ -1,20 +1,18 @@
+import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
-import { minify } from "uglify-es";
+import json from "rollup-plugin-json";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
   const finalConfig = [
-    // Builds: CommonJS (for Node) and ES module (for bundlers)
+    // CommonJS build (for Node)
     {
       input: "src/main.js",
-      output: [
-        { file: pkg.main, format: "cjs" },
-        { file: pkg.module, format: "es" }
-      ],
+      output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "ast-contains-only-empty-space",
         "dehumanize-date",
@@ -35,30 +33,64 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        builtins(),
+        json(),
         babel()
       ]
     },
 
-    // util.js needs transpiling as well:
+    // ES module build (for bundlers)
     {
-      input: "src/util.js",
-      output: [{ file: "dist/util.cjs.js", format: "cjs" }],
+      input: "src/main.js",
+      output: [{ file: pkg.module, format: "es" }],
       external: [
-        "semver-compare",
-        "lodash.clonedeep",
-        "is-natural-number",
-        "lodash.trim",
+        "ast-contains-only-empty-space",
+        "dehumanize-date",
         "easy-replace",
-        "emoji-regex"
+        "emoji-regex",
+        "get-pkg-repo",
+        "is-natural-number",
+        "just-insert",
+        "lodash.clonedeep",
+        "lodash.includes",
+        "lodash.min",
+        "lodash.reverse",
+        "lodash.trim",
+        "semver-compare",
+        "split-lines"
       ],
       plugins: [
         strip({
           sourceMap: false
         }),
+        builtins(),
+        json()
+      ]
+    },
+
+    // util.js build:
+    {
+      input: "src/util.js",
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: [
+        "easy-replace",
+        "emoji-regex",
+        "is-natural-number",
+        "lodash.clonedeep",
+        "lodash.trim",
+        "semver-compare"
+      ],
+      plugins: [
+        strip({
+          sourceMap: false
+        }),
+        builtins(),
+        json(),
         babel()
       ]
     }
   ];
+
   if (commandLineArgs.dev) {
     // if rollup was called without a --dev flag,
     // dispose of a comment removal, strip():

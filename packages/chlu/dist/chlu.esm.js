@@ -13,16 +13,16 @@ import includes from 'lodash.includes';
 import min from 'lodash.min';
 import dd from 'dehumanize-date';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+/* eslint prefer-destructuring:0, no-param-reassign:0 */
 
-var emojiRegex = emojiRegexLib();
+const emojiRegex = emojiRegexLib();
 
 // REGEXES
 // -----------------------------------------------------------------------------
 
-var versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g;
-var versionWithoutBracketsRegex = /v?\d+\.\d+(\.\d+)*/g;
-var versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g;
+const versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g;
+const versionWithoutBracketsRegex = /v?\d+\.\d+(\.\d+)*/g;
+const versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g;
 
 // FUNCTIONS
 // -----------------------------------------------------------------------------
@@ -50,9 +50,15 @@ function isFooterLink(str) {
   if (str === undefined) {
     return false;
   } else if (!isStr(str)) {
-    throw new TypeError("chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string");
+    throw new TypeError(
+      "chlu/util.js/isFooterLink(): [THROW_ID_02] The input must be string"
+    );
   }
-  return str.length > 0 && existy(str.match(versionWithBracketsRegex)) && aContainsB(str, "]:");
+  return (
+    str.length > 0 &&
+    existy(str.match(versionWithBracketsRegex)) &&
+    aContainsB(str, "]:")
+  );
 }
 
 // Is current string (line as input one-by-one) a title?
@@ -62,30 +68,43 @@ function isTitle(str) {
   if (str === undefined) {
     return false;
   } else if (!isStr(str)) {
-    throw new TypeError("chlu/util.js/isTitle(): [THROW_ID_01] The input must be string");
+    throw new TypeError(
+      "chlu/util.js/isTitle(): [THROW_ID_01] The input must be string"
+    );
   }
-  var stringInFrontOfVersion = void 0;
+  let stringInFrontOfVersion;
   if (existy(str.match(versionWithoutBracketsRegex))) {
-    stringInFrontOfVersion = str.split(str.match(versionWithoutBracketsRegex)[0]);
+    stringInFrontOfVersion = str.split(
+      str.match(versionWithoutBracketsRegex)[0]
+    );
     if (stringInFrontOfVersion === null) {
       stringInFrontOfVersion = "";
     } else {
       stringInFrontOfVersion = stringInFrontOfVersion[0];
     }
   }
-  return str.length > 0 && existy(str.match(versionWithoutBracketsRegex)) && !str.includes("http") && !str.includes("]:") && trim(stringInFrontOfVersion, "[# \t") === "" && str.includes("#");
+  return (
+    str.length > 0 &&
+    existy(str.match(versionWithoutBracketsRegex)) &&
+    !str.includes("http") &&
+    !str.includes("]:") &&
+    trim(stringInFrontOfVersion, "[# \t") === "" &&
+    str.includes("#")
+  );
 }
 
 function getTitlesAndFooterLinks(linesArr) {
-  var titles = [];
-  var footerLinks = [];
-  var i = void 0;
-  var len = void 0;
-  var temp = void 0;
+  const titles = [];
+  const footerLinks = [];
+  let i;
+  let len;
+  let temp;
 
   for (i = 0, len = linesArr.length; i < len; i++) {
     if (isTitle(linesArr[i])) {
-      var firstEncounteredVersion = linesArr[i].match(versionWithoutBracketsRegexNoVersion)[0];
+      const firstEncounteredVersion = linesArr[i].match(
+        versionWithoutBracketsRegexNoVersion
+      )[0];
       titles.push({
         version: firstEncounteredVersion,
         rowNum: i,
@@ -104,40 +123,52 @@ function getTitlesAndFooterLinks(linesArr) {
     }
   }
   return {
-    titles: titles,
-    footerLinks: footerLinks
+    titles,
+    footerLinks
   };
 }
 
 function getPreviousVersion(currVers, originalVersionsArr) {
   if (arguments.length < 2) {
-    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array.");
+    throw new Error(
+      "chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array."
+    );
   }
   if (!isStr(currVers)) {
-    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it's " + (typeof currVers === "undefined" ? "undefined" : _typeof(currVers)));
+    throw new Error(
+      `chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it's ${typeof currVers}`
+    );
   }
   if (!isArr(originalVersionsArr)) {
-    throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's " + (typeof originalVersionsArr === "undefined" ? "undefined" : _typeof(originalVersionsArr)) + " equal to:\nJSON.stringify(originalVersionsArr, null, 4)");
+    throw new Error(
+      `chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's ${typeof originalVersionsArr} equal to:\nJSON.stringify(originalVersionsArr, null, 4)`
+    );
   }
-  var versionsArr = clone(originalVersionsArr).sort(serverCompare);
+  const versionsArr = clone(originalVersionsArr).sort(serverCompare);
   // first, check if it's the first version from the versions array.
   // in that case, there's no previous version, so we return null:
   if (currVers === versionsArr[0]) {
     return null;
   }
   // next, iterate versions array and try to get the previous version:
-  for (var i = 0, len = versionsArr.length; i < len; i++) {
+  for (let i = 0, len = versionsArr.length; i < len; i++) {
     if (versionsArr[i] === currVers && existy(versionsArr[i - 1])) {
       return versionsArr[i - 1];
     }
   }
   // if nothing was found yet, throw:
-  throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (" + currVers + ") is not in the versions array (" + JSON.stringify(versionsArr, null, 4) + ")");
+  throw new Error(
+    `chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (${currVers}) is not in the versions array (${JSON.stringify(
+      versionsArr,
+      null,
+      4
+    )})`
+  );
 }
 
 function setRow(rowsArray, index, content) {
-  var res = clone(rowsArray);
-  for (var i = 0, len = res.length; i < len; i++) {
+  const res = clone(rowsArray);
+  for (let i = 0, len = res.length; i < len; i++) {
     if (i === index) {
       res[i] = content;
     }
@@ -147,12 +178,24 @@ function setRow(rowsArray, index, content) {
 
 function getRow(rowsArray, index) {
   if (!existy(index) || !isNum(index)) {
-    throw new TypeError("chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it's given as: " + (typeof index === "undefined" ? "undefined" : _typeof(index)) + " and equal: " + JSON.stringify(index, null, 4));
+    throw new TypeError(
+      `chlu/util.js/getRow(): [THROW_ID_07]: first input arg must be a natural number. Currently it's given as: ${typeof index} and equal: ${JSON.stringify(
+        index,
+        null,
+        4
+      )}`
+    );
   }
   if (!existy(rowsArray) || !isArr(rowsArray)) {
-    throw new TypeError("chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it's given as: " + (typeof rowsArray === "undefined" ? "undefined" : _typeof(rowsArray)) + " and equal: " + JSON.stringify(rowsArray, null, 4));
+    throw new TypeError(
+      `chlu/util.js/getRow(): [THROW_ID_08]: second input arg must be an rowsArrayay. Currently it's given as: ${typeof rowsArray} and equal: ${JSON.stringify(
+        rowsArray,
+        null,
+        4
+      )}`
+    );
   }
-  for (var i = 0, len = rowsArray.length; i < len; i++) {
+  for (let i = 0, len = rowsArray.length; i < len; i++) {
     if (i === index) {
       return rowsArray[i];
     }
@@ -163,7 +206,7 @@ function getRow(rowsArray, index) {
 // gets and sets various pieces in strings of the format:
 // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
 function getSetFooterLink(str, o) {
-  var mode = void 0;
+  let mode;
   if (existy(o)) {
     mode = "set";
   } else {
@@ -173,30 +216,38 @@ function getSetFooterLink(str, o) {
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
   }
-  var split = str.split("/");
-  var res = {};
+  const split = str.split("/");
+  const res = {};
 
-  for (var i = 0, len = split.length; i < len; i++) {
+  for (let i = 0, len = split.length; i < len; i++) {
     if (split[i] === "github.com") {
       res.user = existy(o.user) ? o.user : split[i + 1];
       res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === "compare") {
       if (split[i + 1].includes("...")) {
-        var splitVersions = split[i + 1].split("...");
-        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], "v");
-        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], "v");
+        const splitVersions = split[i + 1].split("...");
+        res.versBefore = existy(o.versBefore)
+          ? o.versBefore
+          : trim(splitVersions[0], "v");
+        res.versAfter = existy(o.versAfter)
+          ? o.versAfter
+          : trim(splitVersions[1], "v");
       } else {
         // incurance against broken compare links:
         return null;
       }
     } else if (i === 0) {
-      res.version = existy(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0];
+      res.version = existy(o.version)
+        ? o.version
+        : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
   if (mode === "get") {
     return res;
   }
-  return "[" + res.version + "]: https://github.com/" + res.user + "/" + res.project + "/compare/v" + res.versBefore + "...v" + res.versAfter;
+  return `[${res.version}]: https://github.com/${res.user}/${
+    res.project
+  }/compare/v${res.versBefore}...v${res.versAfter}`;
 }
 
 function versionSort(a, b) {
@@ -204,7 +255,7 @@ function versionSort(a, b) {
 }
 
 function filterDate(someString) {
-  var res = someString.trim();
+  let res = someString.trim();
   res = easyReplace(res, {
     leftOutsideNot: "",
     leftOutside: "",
@@ -222,7 +273,7 @@ function filterDate(someString) {
   res = res.replace(";", " ");
   res = res.replace(emojiRegex, "");
   res = res.replace(/[ ]+/g, " ");
-  res = trim(res, "[](),.-/\\ \u2013\u2014\t\xA0");
+  res = trim(res, "[](),.-/\\ \u2013\u2014\t\u00A0");
   return res;
 }
 
@@ -243,19 +294,23 @@ function chlu(changelogContents, packageJsonContents) {
     return;
   }
 
-  var changelogMd = changelogContents;
+  const changelogMd = changelogContents;
 
   // TODO - add measures against wrong/missing json
-  var packageJson = getPkgRepo(packageJsonContents);
+  const packageJson = getPkgRepo(packageJsonContents);
 
   if (packageJson.type !== "github") {
-    throw new Error("chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on " + packageJson.type);
+    throw new Error(
+      `chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on ${
+        packageJson.type
+      }`
+    );
   }
 
-  var temp = void 0;
-  var titles = [];
-  var footerLinks = [];
-  var newLinesArr = [];
+  let temp;
+  let titles = [];
+  let footerLinks = [];
+  let newLinesArr = [];
 
   // ACTION
   // -----------------------------------------------------------------------------
@@ -266,9 +321,9 @@ function chlu(changelogContents, packageJsonContents) {
   //   "## [1.2.0] - 2017-04-24"
   // - record all url links at the bottom, like:
   //   "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0"
-  var linesArr = splitLines(changelogMd);
+  const linesArr = splitLines(changelogMd);
 
-  var titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
+  let titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
   // console.log('titlesAndFooterLinks = ' + JSON.stringify(titlesAndFooterLinks, null, 4))
@@ -276,7 +331,7 @@ function chlu(changelogContents, packageJsonContents) {
   // =======
   // stage 2: remove any invalid footer links
 
-  for (var i = 0, len = footerLinks.length; i < len; i++) {
+  for (let i = 0, len = footerLinks.length; i < len; i++) {
     if (!existy$1(getSetFooterLink(footerLinks[i].content))) {
       linesArr.splice(footerLinks[i].rowNum, 1);
     }
@@ -290,58 +345,49 @@ function chlu(changelogContents, packageJsonContents) {
   // =======
   // stage 3: get the ordered array of all title versions
 
-  var sortedTitlesArray = titles.map(function (el) {
-    return el.version;
-  }).sort(serverCompare);
+  const sortedTitlesArray = titles.map(el => el.version).sort(serverCompare);
 
   // =======
   // stage 4: find unused footer links
 
-  var unusedFooterLinks = footerLinks.filter(function (link) {
-    return !includes(titles.map(function (title) {
-      return title.version;
-    }), link.version);
-  });
+  let unusedFooterLinks = footerLinks.filter(
+    link => !includes(titles.map(title => title.version), link.version)
+  );
 
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
-    unusedFooterLinks = footerLinks.filter(function (link) {
-      return !includes(titles.map(function (title) {
-        return title.version;
-      }), link.version);
-    });
+    unusedFooterLinks = footerLinks.filter(
+      link => !includes(titles.map(title => title.version), link.version)
+    );
   }
 
   // =======
   // stage 5: create footer links for all titles except the smallest version-one
 
-  var missingFooterLinks = [];
-
-  var _loop = function _loop(_i, _len) {
-    if (_len > 1 && titles[_i].version !== sortedTitlesArray[0]) {
-      var linkFound = footerLinks.some(function (el) {
-        return titles[_i].version === el.version;
-      });
+  const missingFooterLinks = [];
+  for (let i = 0, len = titles.length; i < len; i++) {
+    if (len > 1 && titles[i].version !== sortedTitlesArray[0]) {
+      const linkFound = footerLinks.some(
+        el => titles[i].version === el.version
+      );
       if (!linkFound) {
-        missingFooterLinks.push(titles[_i]);
+        missingFooterLinks.push(titles[i]);
       }
     }
-  };
-
-  for (var _i = 0, _len = titles.length; _i < _len; _i++) {
-    _loop(_i, _len);
   }
 
   // =======
   // stage 6: find out what is the order of footer links
 
-  var ascendingFooterLinkCount = 0;
-  var descendingFooterLinkCount = 0;
+  let ascendingFooterLinkCount = 0;
+  let descendingFooterLinkCount = 0;
 
   if (footerLinks.length > 1) {
-    for (var _i2 = 0, _len2 = footerLinks.length; _i2 < _len2 - 1; _i2++) {
-      if (serverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
+    for (let i = 0, len = footerLinks.length; i < len - 1; i++) {
+      if (
+        serverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1
+      ) {
         descendingFooterLinkCount++;
       } else {
         ascendingFooterLinkCount++;
@@ -349,7 +395,7 @@ function chlu(changelogContents, packageJsonContents) {
     }
   }
 
-  var ascending = true;
+  let ascending = true;
   if (ascendingFooterLinkCount <= descendingFooterLinkCount) {
     ascending = false;
   }
@@ -357,15 +403,15 @@ function chlu(changelogContents, packageJsonContents) {
   // =======
   // stage 7: calculate what goes where
 
-  var whereToPlaceIt = void 0;
+  let whereToPlaceIt;
   // calculate the Where
   if (footerLinks.length === 0) {
     // count from the end of the file.
     // if last non-empty line has "]:" in it, place right after it.
     // otherwise, insert an empty line. This means there's content only and no links yet.
-    for (var _i3 = linesArr.length - 1, start = 0; _i3 >= start; _i3--) {
-      if (existy$1(linesArr[_i3]) && !empty(linesArr[_i3])) {
-        whereToPlaceIt = _i3 + 2;
+    for (let i = linesArr.length - 1, start = 0; i >= start; i--) {
+      if (existy$1(linesArr[i]) && !empty(linesArr[i])) {
+        whereToPlaceIt = i + 2;
         break;
       }
     }
@@ -377,8 +423,14 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 8: assemble the new chunk - array of new lines
 
   temp = [];
-  missingFooterLinks.forEach(function (key) {
-    temp.push("[" + key.version + "]: https://github.com/" + packageJson.user + "/" + packageJson.project + "/compare/v" + getPreviousVersion(key.version, sortedTitlesArray) + "...v" + key.version);
+  missingFooterLinks.forEach(key => {
+    temp.push(
+      `[${key.version}]: https://github.com/${packageJson.user}/${
+        packageJson.project
+      }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
+        key.version
+      }`
+    );
   });
   if (ascending) {
     temp = reverse(temp);
@@ -397,31 +449,44 @@ function chlu(changelogContents, packageJsonContents) {
   titles = temp.titles;
   footerLinks = temp.footerLinks;
 
-  for (var _i4 = 0, _len3 = footerLinks.length; _i4 < _len3; _i4++) {
-    var extracted = getSetFooterLink(footerLinks[_i4].content);
-    if (extracted.versAfter !== extracted.version || extracted.versAfter !== footerLinks[_i4].version) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
+  for (let i = 0, len = footerLinks.length; i < len; i++) {
+    const extracted = getSetFooterLink(footerLinks[i].content);
+    if (
+      extracted.versAfter !== extracted.version ||
+      extracted.versAfter !== footerLinks[i].version
+    ) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
         versAfter: extracted.version
       });
     }
     // versBefore can't be lesser than the version of the previous title
-    if (existy$1(getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) && serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) < 0) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
+    if (
+      existy$1(getPreviousVersion(footerLinks[i].version, sortedTitlesArray)) &&
+      serverCompare(
+        extracted.versBefore,
+        getPreviousVersion(footerLinks[i].version, sortedTitlesArray)
+      ) < 0
+    ) {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
         versBefore: getPreviousVersion(extracted.version, sortedTitlesArray)
       });
     }
     if (extracted.user !== packageJson.user) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
         user: packageJson.user
       });
     }
     if (extracted.project !== packageJson.project) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
+      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
         project: packageJson.project
       });
     }
     // write over:
-    newLinesArr = setRow(newLinesArr, footerLinks[_i4].rowNum, footerLinks[_i4].content);
+    newLinesArr = setRow(
+      newLinesArr,
+      footerLinks[i].rowNum,
+      footerLinks[i].content
+    );
   }
 
   // ========
@@ -432,20 +497,25 @@ function chlu(changelogContents, packageJsonContents) {
     temp = temp.reverse();
   }
 
-  footerLinks.forEach(function (footerLink, index) {
+  footerLinks.forEach((footerLink, index) => {
     newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content);
   });
 
   // ========
   // stage 12: delete empty rows between footer links:
 
-  var firstRowWithFooterLink = min(footerLinks.map(function (link) {
-    return link.rowNum;
-  }));
-  for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
-    if (newLinesArr[_i5] === "" || newLinesArr[_i5] !== undefined && newLinesArr[_i5].trim() === "") {
-      newLinesArr.splice(_i5, 1);
-      _i5--;
+  const firstRowWithFooterLink = min(footerLinks.map(link => link.rowNum));
+  for (
+    let i = firstRowWithFooterLink + 1, len = newLinesArr.length;
+    i < len;
+    i++
+  ) {
+    if (
+      newLinesArr[i] === "" ||
+      (newLinesArr[i] !== undefined && newLinesArr[i].trim() === "")
+    ) {
+      newLinesArr.splice(i, 1);
+      i--;
     }
   }
 
@@ -463,24 +533,37 @@ function chlu(changelogContents, packageJsonContents) {
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
 
-  if (existy$1(footerLinks) && footerLinks.length > 0 && !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))) {
+  if (
+    existy$1(footerLinks) &&
+    footerLinks.length > 0 &&
+    !empty(getRow(newLinesArr, footerLinks[0].rowNum - 1))
+  ) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
 
-  // ========
-  // stage 15: normalise titles
-
-  var gitStuffReadyYet = false;
-
-  if (gitStuffReadyYet) ; else {
-    titles.forEach(function (title) {
-      var fixedDate = dd(filterDate(title.afterVersion));
+  {
+    titles.forEach(title => {
+      const fixedDate = dd(filterDate(title.afterVersion));
 
       if (fixedDate !== null) {
-        newLinesArr = setRow(newLinesArr, title.rowNum, "## " + (title.version !== sortedTitlesArray[0] ? "[" : "") + title.version + (title.version !== sortedTitlesArray[0] ? "]" : "") + " - " + fixedDate);
+        newLinesArr = setRow(
+          newLinesArr,
+          title.rowNum,
+          `## ${title.version !== sortedTitlesArray[0] ? "[" : ""}${
+            title.version
+          }${title.version !== sortedTitlesArray[0] ? "]" : ""} - ${fixedDate}`
+        );
       } else {
         // if date is unrecogniseable leave it alone, fix the rest of the title
-        newLinesArr = setRow(newLinesArr, title.rowNum, "## " + (title.version !== sortedTitlesArray[0] ? "[" : "") + title.version + (title.version !== sortedTitlesArray[0] ? "]" : "") + " - " + filterDate(title.afterVersion));
+        newLinesArr = setRow(
+          newLinesArr,
+          title.rowNum,
+          `## ${title.version !== sortedTitlesArray[0] ? "[" : ""}${
+            title.version
+          }${title.version !== sortedTitlesArray[0] ? "]" : ""} - ${filterDate(
+            title.afterVersion
+          )}`
+        );
       }
     });
   }

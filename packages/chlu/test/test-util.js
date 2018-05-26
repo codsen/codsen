@@ -9,7 +9,7 @@ const {
   getSetFooterLink,
   getRow,
   filterDate
-} = require("../dist/util.cjs");
+} = require("../dist/util.esm");
 
 // isTitle
 // -------
