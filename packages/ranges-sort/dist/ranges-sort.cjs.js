@@ -25,7 +25,7 @@ var isArr = Array.isArray;
 function rangesSort(arrOfRanges, originalOptions) {
   // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
-    throw new TypeError('ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ' + (typeof arrOfRanges === 'undefined' ? 'undefined' : _typeof(arrOfRanges)) + ', equal to: ' + JSON.stringify(arrOfRanges, null, 4));
+    throw new TypeError("ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: " + (typeof arrOfRanges === "undefined" ? "undefined" : _typeof(arrOfRanges)) + ", equal to: " + JSON.stringify(arrOfRanges, null, 4));
   }
   if (arrOfRanges.length === 0) {
     return arrOfRanges;
@@ -36,10 +36,11 @@ function rangesSort(arrOfRanges, originalOptions) {
   // declare defaults, so we can enforce types later:
   var defaults = {
     strictlyTwoElementsInRangeArrays: false
-    // fill any settings with defaults if missing:
-  };var opts = Object.assign({}, defaults, originalOptions);
+  };
+  // fill any settings with defaults if missing:
+  var opts = Object.assign({}, defaults, originalOptions);
   // the check:
-  checkTypes(opts, defaults, { msg: 'ranges-sort: [THROW_ID_02*]' });
+  checkTypes(opts, defaults, { msg: "ranges-sort: [THROW_ID_02*]" });
 
   // arrOfRanges validation
 
@@ -56,7 +57,7 @@ function rangesSort(arrOfRanges, originalOptions) {
       }
       return true;
     })) {
-      throw new TypeError('ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ') has not two but ' + culpritsLen + ' elements!');
+      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, " + ordinalSuffix(culpritsIndex) + " range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") has not two but " + culpritsLen + " elements!");
     }
   }
   // validate are range indexes natural numbers:
@@ -67,7 +68,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     }
     return true;
   })) {
-    throw new TypeError('ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ' + ordinalSuffix(culpritsIndex) + ' range (' + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ') does not consist of only natural numbers!');
+    throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + ordinalSuffix(culpritsIndex) + " range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
   }
   return Array.from(arrOfRanges).sort(function (range1, range2) {
     if (range1[0] === range2[0]) {
