@@ -12,21 +12,21 @@ function existy(x) {
   return x != null;
 }
 function isStr(something) {
-  return typeof something === 'string';
+  return typeof something === "string";
 }
 
 function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (arguments.length === 0) {
-    throw new Error('str-indexes-of-plus/strIndexesOfPlus(): inputs missing!');
+    throw new Error("str-indexes-of-plus/strIndexesOfPlus(): inputs missing!");
   }
   if (!isStr(str)) {
-    throw new TypeError('str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)));
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): first input argument must be a string! Currently it's: " + (typeof str === "undefined" ? "undefined" : _typeof(str)));
   }
   if (!isStr(searchValue)) {
-    throw new TypeError('str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it\'s: ' + (typeof searchValue === 'undefined' ? 'undefined' : _typeof(searchValue)));
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): second input argument must be a string! Currently it's: " + (typeof searchValue === "undefined" ? "undefined" : _typeof(searchValue)));
   }
   if (arguments.length >= 3 && !isInt(fromIndex, { includeZero: true }) && !isNumStr(fromIndex, { includeZero: true })) {
-    throw new TypeError('str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it\'s: ' + fromIndex);
+    throw new TypeError("str-indexes-of-plus/strIndexesOfPlus(): third input argument must be a natural number! Currently it's: " + fromIndex);
   }
   if (isNumStr(fromIndex, { includeZero: true })) {
     fromIndex = Number(fromIndex);

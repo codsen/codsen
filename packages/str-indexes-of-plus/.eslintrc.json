@@ -1,15 +1,20 @@
 {
+  "root": true,
   "env": {
-    "es6": true
+    "es6": true,
+    "node": true
   },
   "extends": [
-    "airbnb-base"
+    "eslint:recommended",
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "sourceType": "module"
   },
   "plugins": [
-    "ava"
+    "ava",
+    "import"
   ],
   "rules": {
     "ava/assertion-arguments": "error",
@@ -42,15 +47,40 @@
     "ava/use-t-well": "error",
     "ava/use-test": "error",
     "ava/use-true-false": "error",
-    "no-plusplus": [
+    "curly": "error",
+    "import/no-extraneous-dependencies": [
       "error",
       {
-        "allowForLoopAfterthoughts": true
+        "devDependencies": [
+          "test.js",
+          "test/**",
+          "rollup.config.js"
+        ],
+        "optionalDependencies": false,
+        "peerDependencies": false
       }
     ],
-    "semi": [
-      2,
+    "no-console": "off",
+    "no-else-return": "error",
+    "no-inner-declarations": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "one-var": [
+      "error",
       "never"
+    ],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "strict": "error",
+    "symbol-description": "error",
+    "yoda": [
+      "error",
+      "never",
+      {
+        "exceptRange": true
+      }
     ]
   }
 }
