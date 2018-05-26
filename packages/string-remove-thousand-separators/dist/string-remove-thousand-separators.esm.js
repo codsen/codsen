@@ -5,58 +5,74 @@ import checkTypes from 'check-types-mini';
 import isNum from 'is-numeric';
 import trimChars from 'lodash.trim';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 /* eslint security/detect-object-injection:0 */
 
 function remSep(str, originalOpts) {
   // vars
-  var allOK = true; // used to bail somewhere down the line. It's a killswitch.
-  var knownSeparatorsArray = ['.', ',', '\'', ' '];
-  var firstSeparator = void 0;
+  let allOK = true; // used to bail somewhere down the line. It's a killswitch.
+  const knownSeparatorsArray = [".", ",", "'", " "];
+  let firstSeparator;
 
   // validation
-  if (typeof str !== 'string') {
-    throw new TypeError('string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it\'s: ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to:\n' + JSON.stringify(str, null, 4));
+  if (typeof str !== "string") {
+    throw new TypeError(
+      `string-remove-thousand-separators/remSep(): [THROW_ID_01] Input must be string! Currently it's: ${typeof str}, equal to:\n${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
+    );
   }
-  if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
-    throw new TypeError('string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it\'s: ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to:\n' + JSON.stringify(originalOpts, null, 4));
+  if (
+    originalOpts !== undefined &&
+    originalOpts !== null &&
+    !isObj(originalOpts)
+  ) {
+    throw new TypeError(
+      `string-remove-thousand-separators/remSep(): [THROW_ID_02] Options object must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )}`
+    );
   }
 
   // prep opts
-  var defaults = {
+  const defaults = {
     removeThousandSeparatorsFromNumbers: true,
     padSingleDecimalPlaceNumbers: true,
     forceUKStyle: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: 'string-remove-thousand-separators/remSep(): [THROW_ID_03*]' });
+  const opts = Object.assign({}, defaults, originalOpts);
+  checkTypes(opts, defaults, {
+    msg: "string-remove-thousand-separators/remSep(): [THROW_ID_03*]"
+  });
 
   // trim whitespace and wrapping double quotes:
-  var res = trimChars(str.trim(), '"');
+  const res = trimChars(str.trim(), '"');
 
   // end sooner if it's an empty string:
-  if (res === '') {
+  if (res === "") {
     return res;
   }
 
   // we'll manage the TO-DELETE string slice ranges using this:
-  var rangesToDelete = new Slices();
+  const rangesToDelete = new Slices();
 
   // traverse the string indexes
-  for (var i = 0, len = res.length; i < len; i++) {
+  for (let i = 0, len = res.length; i < len; i++) {
     // -------------------------------------------------------------------------
     // catch empty space for Russian-style thousand separators (spaces):
-    if (opts.removeThousandSeparatorsFromNumbers && res[i].trim() === '') {
+    if (opts.removeThousandSeparatorsFromNumbers && res[i].trim() === "") {
       rangesToDelete.add(i, i + 1);
     }
     // -------------------------------------------------------------------------
     // catch single quotes for Swiss-style thousand separators:
     // (safe to delete instantly because they're not commas or dots)
-    if (opts.removeThousandSeparatorsFromNumbers && res[i] === '\'') {
+    if (opts.removeThousandSeparatorsFromNumbers && res[i] === "'") {
       rangesToDelete.add(i, i + 1);
       // but if single quote follows this, that's dodgy and let's bail
-      if (res[i + 1] === '\'') {
+      if (res[i + 1] === "'") {
         // bail!
         allOK = false;
         break;
@@ -106,13 +122,17 @@ function remSep(str, originalOpts) {
                 allOK = false;
                 break;
               }
-            } else if (opts.removeThousandSeparatorsFromNumbers && opts.forceUKStyle && res[i] === ',') {
+            } else if (
+              opts.removeThousandSeparatorsFromNumbers &&
+              opts.forceUKStyle &&
+              res[i] === ","
+            ) {
               //
               // Stuff like "100,01" (Russian notation) or "100.01" (UK notation).
               // A Separator followed by two digits and string ends.
               //
               // If Russian notation:
-              rangesToDelete.add(i, i + 1, '.');
+              rangesToDelete.add(i, i + 1, ".");
             }
           } else {
             // stuff like "1,0a" - bail
@@ -126,12 +146,12 @@ function remSep(str, originalOpts) {
           // Thousands separator followed by only one digit and then string ends.
           // =============
           // Convert Russian notation if requested:
-          if (opts.forceUKStyle && res[i] === ',') {
-            rangesToDelete.add(i, i + 1, '.');
+          if (opts.forceUKStyle && res[i] === ",") {
+            rangesToDelete.add(i, i + 1, ".");
           }
           // Pad it with zero if requested:
           if (opts.padSingleDecimalPlaceNumbers) {
-            rangesToDelete.add(i + 2, i + 2, '0');
+            rangesToDelete.add(i + 2, i + 2, "0");
           }
         }
       }
