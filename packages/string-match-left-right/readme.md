@@ -66,7 +66,7 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                                  | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---------- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-match-left-right.cjs.js` | 20&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 31&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 19&nbsp;KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 21&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
@@ -82,12 +82,12 @@ There are four methods; all have the same API's:
 * **`matchLeft`** — at least one of given substrings has to match what's on the **left** of the given index
 * **`matchRight`** — at least one of given substrings has to match what's on the **right** of the given index
 
-| Input argument | Type                       | Obligatory? | Description                                                                                                                          |
-| -------------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `str`          | String                     | yes         | Source string to work on                                                                                                             |
-| `position`     | Natural number incl. zero  | yes         | Starting index. Can be zero. Otherwise, a natural number.                                                                            |
-| `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches will yield in result `true` |
-| `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                              |
+| Input argument | Type                       | Obligatory? | Description                                                                                                                                      |
+| -------------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `str`          | String                     | yes         | Source string to work on                                                                                                                         |
+| `position`     | Natural number incl. zero  | yes         | Starting index. Can be zero. Otherwise, a natural number.                                                                                        |
+| `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches, the first match value will be returned |
+| `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                                          |
 
 **[⬆ &nbsp;back to top](#)**
 
