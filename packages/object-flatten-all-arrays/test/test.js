@@ -1,554 +1,566 @@
-import test from 'ava'
-import flattenAllArrays from '../dist/object-flatten-all-arrays.cjs'
+import test from "ava";
+import flattenAllArrays from "../dist/object-flatten-all-arrays.esm";
 
 // ==========
 // Normal use
 // ==========
 
-test('01.01 - simple plain object, one array', (t) => {
+test("01.01 - simple plain object, one array", t => {
   t.deepEqual(
     flattenAllArrays({
-      d: 'd',
-      b: 'b',
-      a: 'a',
+      d: "d",
+      b: "b",
+      a: "a",
       c: [
         {
-          b: 'b',
-          a: 'a',
+          b: "b",
+          a: "a"
         },
         {
-          d: 'd',
-          c: 'c',
-        },
-      ],
+          d: "d",
+          c: "c"
+        }
+      ]
     }),
     {
-      a: 'a',
-      b: 'b',
+      a: "a",
+      b: "b",
       c: [
         {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
-        },
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d"
+        }
       ],
-      d: 'd',
+      d: "d"
     },
-    '01.01',
-  )
-})
+    "01.01"
+  );
+});
 
-test('01.02 - simple plain object, two arrays', (t) => {
+test("01.02 - simple plain object, two arrays", t => {
   t.deepEqual(
     flattenAllArrays({
-      d: 'd',
+      d: "d",
       b: [
         {
-          b: 'b',
+          b: "b"
         },
         {
-          a: 'a',
+          a: "a"
         },
         {
-          c: 'c',
-        },
+          c: "c"
+        }
       ],
-      a: 'a',
+      a: "a",
       c: [
         {
-          d: 'd',
-          c: 'c',
+          d: "d",
+          c: "c"
         },
         {
-          b: 'b',
-          a: 'a',
-        },
-      ],
+          b: "b",
+          a: "a"
+        }
+      ]
     }),
     {
-      d: 'd',
+      d: "d",
       b: [
         {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-        },
+          a: "a",
+          b: "b",
+          c: "c"
+        }
       ],
-      a: 'a',
+      a: "a",
       c: [
         {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
-        },
-      ],
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d"
+        }
+      ]
     },
-    '01.02',
-  )
-})
+    "01.02"
+  );
+});
 
-test('01.03 - nested simple plain object, one array', (t) => {
-  t.deepEqual(
-    flattenAllArrays([{
-      d: 'd',
-      b: 'b',
-      a: 'a',
-      c: [
-        {
-          b: 'b',
-          a: 'a',
-        },
-        {
-          d: 'd',
-          c: 'c',
-        },
-      ],
-    }]),
-    [{
-      a: 'a',
-      b: 'b',
-      c: [
-        {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
-        },
-      ],
-      d: 'd',
-    }],
-    '01.03',
-  )
-})
-
-test('01.04 - nested objects', (t) => {
+test("01.03 - nested simple plain object, one array", t => {
   t.deepEqual(
     flattenAllArrays([
-      'z1',
       {
-        b: 'b',
-        a: 'a',
-      },
-      {
-        d: 'd',
-        c: 'c',
-      },
-      'z2',
+        d: "d",
+        b: "b",
+        a: "a",
+        c: [
+          {
+            b: "b",
+            a: "a"
+          },
+          {
+            d: "d",
+            c: "c"
+          }
+        ]
+      }
     ]),
     [
-      'z1',
       {
-        a: 'a',
-        b: 'b',
-        c: 'c',
-        d: 'd',
-      },
-      'z2',
+        a: "a",
+        b: "b",
+        c: [
+          {
+            a: "a",
+            b: "b",
+            c: "c",
+            d: "d"
+          }
+        ],
+        d: "d"
+      }
     ],
-    '01.04',
-  )
-})
+    "01.03"
+  );
+});
 
-test('01.05 - multiple nested arrays', (t) => {
+test("01.04 - nested objects", t => {
   t.deepEqual(
-    flattenAllArrays([[[[[[[[{
-      d: 'd',
-      b: 'b',
-      a: 'a',
-      c: [
-        {
-          b: 'b',
-          a: 'a',
-        },
-        {
-          d: 'd',
-          c: 'c',
-        },
-      ],
-    }]]]]]]]]),
-    [[[[[[[[{
-      a: 'a',
-      b: 'b',
-      c: [
-        {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
-        },
-      ],
-      d: 'd',
-    }]]]]]]]],
-    '01.05',
-  )
-})
+    flattenAllArrays([
+      "z1",
+      {
+        b: "b",
+        a: "a"
+      },
+      {
+        d: "d",
+        c: "c"
+      },
+      "z2"
+    ]),
+    [
+      "z1",
+      {
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d"
+      },
+      "z2"
+    ],
+    "01.04"
+  );
+});
 
-test('01.06 - array contents are not of the same type', (t) => {
+test("01.05 - multiple nested arrays", t => {
+  t.deepEqual(
+    flattenAllArrays([
+      [
+        [
+          [
+            [
+              [
+                [
+                  [
+                    {
+                      d: "d",
+                      b: "b",
+                      a: "a",
+                      c: [
+                        {
+                          b: "b",
+                          a: "a"
+                        },
+                        {
+                          d: "d",
+                          c: "c"
+                        }
+                      ]
+                    }
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]),
+    [
+      [
+        [
+          [
+            [
+              [
+                [
+                  [
+                    {
+                      a: "a",
+                      b: "b",
+                      c: [
+                        {
+                          a: "a",
+                          b: "b",
+                          c: "c",
+                          d: "d"
+                        }
+                      ],
+                      d: "d"
+                    }
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "01.05"
+  );
+});
+
+test("01.06 - array contents are not of the same type", t => {
   t.deepEqual(
     flattenAllArrays({
-      d: 'd',
-      b: 'b',
-      a: 'a',
+      d: "d",
+      b: "b",
+      a: "a",
       c: [
         {
-          b: 'b',
-          a: 'a',
+          b: "b",
+          a: "a"
         },
         {
-          d: 'd',
-          c: 'c',
+          d: "d",
+          c: "c"
         },
-        'z',
-      ],
+        "z"
+      ]
     }),
     {
-      d: 'd',
-      b: 'b',
-      a: 'a',
+      d: "d",
+      b: "b",
+      a: "a",
       c: [
         {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d"
         },
-        'z',
-      ],
+        "z"
+      ]
     },
-    '01.06.01 - default',
-  )
+    "01.06.01 - default"
+  );
   t.deepEqual(
     flattenAllArrays(
       {
-        d: 'd',
-        b: 'b',
-        a: 'a',
+        d: "d",
+        b: "b",
+        a: "a",
         c: [
           {
-            b: 'b',
-            a: 'a',
+            b: "b",
+            a: "a"
           },
           {
-            d: 'd',
-            c: 'c',
+            d: "d",
+            c: "c"
           },
-          'z',
-        ],
+          "z"
+        ]
       },
       {
-        flattenArraysContainingStringsToBeEmpty: true,
-      },
+        flattenArraysContainingStringsToBeEmpty: true
+      }
     ),
     {
-      d: 'd',
-      b: 'b',
-      a: 'a',
-      c: [],
+      d: "d",
+      b: "b",
+      a: "a",
+      c: []
     },
-    '01.06.02 - opts.flattenArraysContainingStringsToBeEmpty',
-  )
-})
+    "01.06.02 - opts.flattenArraysContainingStringsToBeEmpty"
+  );
+});
 
-test('01.07 - multiple types in an array #1', (t) => {
+test("01.07 - multiple types in an array #1", t => {
   t.deepEqual(
     flattenAllArrays({
-      d: 'd',
-      b: 'b',
-      a: 'a',
+      d: "d",
+      b: "b",
+      a: "a",
       c: [
         [
-          'y',
+          "y",
           {
-            z: 'z',
+            z: "z"
           },
           {
-            x: 'x',
-          },
+            x: "x"
+          }
         ],
         {
-          b: 'b',
-          a: 'a',
+          b: "b",
+          a: "a"
         },
         {
-          d: 'd',
-          c: 'c',
+          d: "d",
+          c: "c"
         },
-        'z',
-      ],
+        "z"
+      ]
     }),
     {
-      a: 'a',
-      b: 'b',
+      a: "a",
+      b: "b",
       c: [
         [
-          'y',
+          "y",
           {
-            x: 'x',
-            z: 'z',
-          },
+            x: "x",
+            z: "z"
+          }
         ],
         {
-          a: 'a',
-          b: 'b',
-          c: 'c',
-          d: 'd',
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d"
         },
-        'z',
+        "z"
       ],
-      d: 'd',
+      d: "d"
     },
-    '01.07',
-  )
-})
+    "01.07"
+  );
+});
 
-test('01.08 - multiple types in an array #2', (t) => {
+test("01.08 - multiple types in an array #2", t => {
   t.deepEqual(
     flattenAllArrays({
       b: [
         {
           e: [
             {
-              f: 'fff',
+              f: "fff"
             },
             {
-              g: 'ggg',
-            },
+              g: "ggg"
+            }
           ],
-          d: 'ddd',
-          c: 'ccc',
-        },
+          d: "ddd",
+          c: "ccc"
+        }
       ],
-      a: 'aaa',
+      a: "aaa"
     }),
     {
       b: [
         {
           e: [
             {
-              f: 'fff',
-              g: 'ggg',
-            },
+              f: "fff",
+              g: "ggg"
+            }
           ],
-          d: 'ddd',
-          c: 'ccc',
-        },
+          d: "ddd",
+          c: "ccc"
+        }
       ],
-      a: 'aaa',
+      a: "aaa"
     },
-    '01.08',
-  )
-})
+    "01.08"
+  );
+});
 
-test('01.09 - simple array, two ojects', (t) => {
+test("01.09 - simple array, two ojects", t => {
   t.deepEqual(
     flattenAllArrays([
       {
-        a: 'a',
+        a: "a"
       },
       {
-        b: 'b',
-      },
+        b: "b"
+      }
     ]),
     [
       {
-        a: 'a',
-        b: 'b',
-      },
+        a: "a",
+        b: "b"
+      }
     ],
-    '01.09',
-  )
-})
+    "01.09"
+  );
+});
 
-test('01.10 - simple array, two nested ojects', (t) => {
+test("01.10 - simple array, two nested ojects", t => {
   t.deepEqual(
     flattenAllArrays([
       {
-        a: ['a'],
+        a: ["a"]
       },
       {
-        b: { b: 'b' },
-      },
+        b: { b: "b" }
+      }
     ]),
     [
       {
-        a: ['a'],
-        b: { b: 'b' },
-      },
+        a: ["a"],
+        b: { b: "b" }
+      }
     ],
-    '01.10',
-  )
-})
+    "01.10"
+  );
+});
 
-test('01.11 - array, mix of ojects, arrays and strings', (t) => {
+test("01.11 - array, mix of ojects, arrays and strings", t => {
   t.deepEqual(
     flattenAllArrays([
-      'zzz',
+      "zzz",
       {
-        a: ['a'],
+        a: ["a"]
       },
       {
-        b: { b: 'b' },
+        b: { b: "b" }
       },
-      ['yyy'],
+      ["yyy"]
     ]),
     [
-      'zzz',
+      "zzz",
       {
-        a: ['a'],
-        b: { b: 'b' },
+        a: ["a"],
+        b: { b: "b" }
       },
-      ['yyy'],
+      ["yyy"]
     ],
-    '01.11.01 - default',
-  )
+    "01.11.01 - default"
+  );
   t.deepEqual(
     flattenAllArrays(
       [
-        'zzz',
+        "zzz",
         {
-          a: ['a'],
+          a: ["a"]
         },
         {
-          b: { b: 'b' },
+          b: { b: "b" }
         },
-        ['yyy'],
+        ["yyy"]
       ],
       {
-        flattenArraysContainingStringsToBeEmpty: true,
-      },
+        flattenArraysContainingStringsToBeEmpty: true
+      }
     ),
     [],
-    '01.11.02 - opts',
-  )
-})
+    "01.11.02 - opts"
+  );
+});
 
-test('01.12 - arrays within objects, strings as elements', (t) => {
+test("01.12 - arrays within objects, strings as elements", t => {
   t.deepEqual(
     flattenAllArrays({
       a: {
-        b: ['c', 'd'],
-      },
+        b: ["c", "d"]
+      }
     }),
     {
       a: {
-        b: ['c', 'd'],
-      },
+        b: ["c", "d"]
+      }
     },
-    '01.12.01 - default',
-  )
+    "01.12.01 - default"
+  );
   t.deepEqual(
     flattenAllArrays(
       {
         a: {
-          b: ['c', 'd'],
-        },
+          b: ["c", "d"]
+        }
       },
       {
-        flattenArraysContainingStringsToBeEmpty: true,
-      },
+        flattenArraysContainingStringsToBeEmpty: true
+      }
     ),
     {
       a: {
-        b: [],
-      },
+        b: []
+      }
     },
-    '01.12.02 - opts',
-  )
-})
+    "01.12.02 - opts"
+  );
+});
 
 // ==========
 // Edge cases
 // ==========
 
-test('02.01 - empty object as input', (t) => {
-  t.deepEqual(
-    flattenAllArrays({}),
-    {},
-    '02.01',
-  )
-})
+test("02.01 - empty object as input", t => {
+  t.deepEqual(flattenAllArrays({}), {}, "02.01");
+});
 
-test('02.02 - empty array as input', (t) => {
-  t.deepEqual(
-    flattenAllArrays([]),
-    [],
-    '02.02',
-  )
-})
+test("02.02 - empty array as input", t => {
+  t.deepEqual(flattenAllArrays([]), [], "02.02");
+});
 
-test('02.03 - empty string as input', (t) => {
-  t.deepEqual(
-    flattenAllArrays(''),
-    '',
-    '02.03',
-  )
-})
+test("02.03 - empty string as input", t => {
+  t.deepEqual(flattenAllArrays(""), "", "02.03");
+});
 
-test('02.04 - null as input', (t) => {
-  t.deepEqual(
-    flattenAllArrays(null),
-    null,
-    '02.04',
-  )
-})
+test("02.04 - null as input", t => {
+  t.deepEqual(flattenAllArrays(null), null, "02.04");
+});
 
-test('02.05 - undefined as input', (t) => {
-  t.deepEqual(
-    flattenAllArrays(undefined),
-    undefined,
-    '02.05',
-  )
-})
+test("02.05 - undefined as input", t => {
+  t.deepEqual(flattenAllArrays(undefined), undefined, "02.05");
+});
 
-test('02.06 - nothing in the input', (t) => {
-  t.deepEqual(
-    flattenAllArrays(),
-    undefined,
-    '02.06',
-  )
-})
+test("02.06 - nothing in the input", t => {
+  t.deepEqual(flattenAllArrays(), undefined, "02.06");
+});
 
 // ==========================
 // Does not mutate input args
 // ==========================
 
-test('03.01 - does not mutate input args', (t) => {
+test("03.01 - does not mutate input args", t => {
   const obj = {
-    d: 'd',
-    b: 'b',
-    a: 'a',
+    d: "d",
+    b: "b",
+    a: "a",
     c: [
       {
-        b: 'b',
-        a: 'a',
+        b: "b",
+        a: "a"
       },
       {
-        d: 'd',
-        c: 'c',
-      },
-    ],
-  }
-  const unneededResult = flattenAllArrays(obj)
-  t.pass(unneededResult)
+        d: "d",
+        c: "c"
+      }
+    ]
+  };
+  const unneededResult = flattenAllArrays(obj);
+  t.pass(unneededResult);
   t.deepEqual(
     obj,
     {
-      d: 'd',
-      b: 'b',
-      a: 'a',
+      d: "d",
+      b: "b",
+      a: "a",
       c: [
         {
-          b: 'b',
-          a: 'a',
+          b: "b",
+          a: "a"
         },
         {
-          d: 'd',
-          c: 'c',
-        },
-      ],
+          d: "d",
+          c: "c"
+        }
+      ]
     },
-    '03.01',
-  )
-})
+    "03.01"
+  );
+});

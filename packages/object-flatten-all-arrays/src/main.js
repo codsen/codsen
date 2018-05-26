@@ -1,9 +1,9 @@
-import merge from 'lodash.merge'
-import clone from 'lodash.clonedeep'
-import typ from 'type-detect'
-import checkTypes from 'check-types-mini'
+import merge from "lodash.merge";
+import clone from "lodash.clonedeep";
+import typ from "type-detect";
+import checkTypes from "check-types-mini";
 
-const isArr = Array.isArray
+const isArr = Array.isArray;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
@@ -11,71 +11,74 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   // ==================
 
   function arrayContainsStr(arr) {
-    return arr.some(val => typeof val === 'string')
+    return arr.some(val => typeof val === "string");
   }
 
   function isObj(something) {
-    return typ(something) === 'Object'
+    return typ(something) === "Object";
   }
 
   // setup
   // =====
 
   const defaults = {
-    flattenArraysContainingStringsToBeEmpty: false,
-  }
-  const opts = Object.assign({}, defaults, originalOpts)
+    flattenArraysContainingStringsToBeEmpty: false
+  };
+  const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: 'object-flatten-all-arrays: [THROW_ID_02*]',
-  })
+    msg: "object-flatten-all-arrays: [THROW_ID_02*]"
+  });
 
-  const incommingObj = clone(originalIncommingObj)
-  let isFirstObj
-  let combinedObj
-  let firstObjIndex
+  const incommingObj = clone(originalIncommingObj);
+  let isFirstObj;
+  let combinedObj;
+  let firstObjIndex;
 
   // action
   // ======
 
   // 1. check current
   if (isArr(incommingObj)) {
-    if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
-      return []
+    if (
+      opts.flattenArraysContainingStringsToBeEmpty &&
+      arrayContainsStr(incommingObj)
+    ) {
+      return [];
     }
-    isFirstObj = null
-    combinedObj = {}
-    firstObjIndex = 0
+    isFirstObj = null;
+    combinedObj = {};
+    firstObjIndex = 0;
     for (let i = 0, len = incommingObj.length; i < len; i++) {
       if (isObj(incommingObj[i])) {
-        combinedObj = merge(combinedObj, incommingObj[i])
+        combinedObj = merge(combinedObj, incommingObj[i]);
         if (isFirstObj === null) {
-          isFirstObj = true
-          firstObjIndex = i
+          isFirstObj = true;
+          firstObjIndex = i;
         } else {
-          incommingObj.splice(i, 1)
-          i -= 1
+          incommingObj.splice(i, 1);
+          i -= 1;
         }
       }
     }
     if (isFirstObj !== null) {
-      incommingObj[firstObjIndex] = clone(combinedObj)
+      incommingObj[firstObjIndex] = clone(combinedObj);
     }
   }
   // 2. traverse deeper
   if (isObj(incommingObj)) {
-    Object.keys(incommingObj).forEach((key) => {
+    Object.keys(incommingObj).forEach(key => {
       if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
-        incommingObj[key] = flattenAllArrays(incommingObj[key], opts)
+        incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
       }
-    })
+    });
   } else if (isArr(incommingObj)) {
     incommingObj.forEach((el, i) => {
       if (isObj(incommingObj[i]) || isArr(incommingObj[i])) {
-        incommingObj[i] = flattenAllArrays(incommingObj[i], opts)
+        incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
       }
-    })
+    });
   }
-  return incommingObj
+  return incommingObj;
 }
 
-export default flattenAllArrays
+export default flattenAllArrays;

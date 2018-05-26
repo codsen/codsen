@@ -16,12 +16,12 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
 
   function arrayContainsStr(arr) {
     return arr.some(function (val) {
-      return typeof val === 'string';
+      return typeof val === "string";
     });
   }
 
   function isObj(something) {
-    return typ(something) === 'Object';
+    return typ(something) === "Object";
   }
 
   // setup
@@ -32,7 +32,7 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: 'object-flatten-all-arrays: [THROW_ID_02*]'
+    msg: "object-flatten-all-arrays: [THROW_ID_02*]"
   });
 
   var incommingObj = clone(originalIncommingObj);

@@ -3,7 +3,7 @@ import clone from 'lodash.clonedeep';
 import typ from 'type-detect';
 import checkTypes from 'check-types-mini';
 
-var isArr = Array.isArray;
+const isArr = Array.isArray;
 
 function flattenAllArrays(originalIncommingObj, originalOpts) {
   //
@@ -11,43 +11,44 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   // ==================
 
   function arrayContainsStr(arr) {
-    return arr.some(function (val) {
-      return typeof val === 'string';
-    });
+    return arr.some(val => typeof val === "string");
   }
 
   function isObj(something) {
-    return typ(something) === 'Object';
+    return typ(something) === "Object";
   }
 
   // setup
   // =====
 
-  var defaults = {
+  const defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   };
-  var opts = Object.assign({}, defaults, originalOpts);
+  const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: 'object-flatten-all-arrays: [THROW_ID_02*]'
+    msg: "object-flatten-all-arrays: [THROW_ID_02*]"
   });
 
-  var incommingObj = clone(originalIncommingObj);
-  var isFirstObj = void 0;
-  var combinedObj = void 0;
-  var firstObjIndex = void 0;
+  const incommingObj = clone(originalIncommingObj);
+  let isFirstObj;
+  let combinedObj;
+  let firstObjIndex;
 
   // action
   // ======
 
   // 1. check current
   if (isArr(incommingObj)) {
-    if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
+    if (
+      opts.flattenArraysContainingStringsToBeEmpty &&
+      arrayContainsStr(incommingObj)
+    ) {
       return [];
     }
     isFirstObj = null;
     combinedObj = {};
     firstObjIndex = 0;
-    for (var i = 0, len = incommingObj.length; i < len; i++) {
+    for (let i = 0, len = incommingObj.length; i < len; i++) {
       if (isObj(incommingObj[i])) {
         combinedObj = merge(combinedObj, incommingObj[i]);
         if (isFirstObj === null) {
@@ -65,13 +66,13 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   }
   // 2. traverse deeper
   if (isObj(incommingObj)) {
-    Object.keys(incommingObj).forEach(function (key) {
+    Object.keys(incommingObj).forEach(key => {
       if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
         incommingObj[key] = flattenAllArrays(incommingObj[key], opts);
       }
     });
   } else if (isArr(incommingObj)) {
-    incommingObj.forEach(function (el, i) {
+    incommingObj.forEach((el, i) => {
       if (isObj(incommingObj[i]) || isArr(incommingObj[i])) {
         incommingObj[i] = flattenAllArrays(incommingObj[i], opts);
       }
