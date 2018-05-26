@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.7.0] - 2018-05-26
+
+### Improvements
+
+* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
+
 ## [3.6.0] - 2018-04-27
 
 ### Added
@@ -102,3 +109,4 @@ now the same example in `v.2` API:
 [3.4.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.3.0...v3.4.0
 [3.5.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.4.0...v3.5.0
 [3.6.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.5.7...v3.6.0
+[3.7.0]: https://github.com/codsen/string-find-heads-tails/compare/v3.6.0...v3.7.0

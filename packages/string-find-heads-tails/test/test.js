@@ -1,5 +1,5 @@
 import test from "ava";
-import strFindHeadsTails from "../dist/string-find-heads-tails.cjs";
+import strFindHeadsTails from "../dist/string-find-heads-tails.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

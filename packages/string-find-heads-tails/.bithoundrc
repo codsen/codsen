@@ -8,7 +8,9 @@
     "mute": [
       "ava",
       "babel-preset-env",
+      "check-types-mini",
       "coveralls",
+      "esm",
       "husky",
       "is-natural-number",
       "is-natural-number-string",

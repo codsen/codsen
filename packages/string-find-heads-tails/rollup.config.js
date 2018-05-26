@@ -1,9 +1,8 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import uglify from "rollup-plugin-uglify";
+import { uglify } from "rollup-plugin-uglify";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
-import { minify } from "uglify-es";
 import pkg from "./package.json";
 
 export default commandLineArgs => {
@@ -14,7 +13,7 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "strFindHeadsTails"
+        name: "stringFindHeadsTails"
       },
       plugins: [
         strip({
@@ -23,17 +22,14 @@ export default commandLineArgs => {
         resolve(), // so Rollup can find deps
         commonjs(), // so Rollup can convert deps to ES modules
         babel(),
-        uglify({}, minify)
+        uglify()
       ]
     },
 
-    // Builds: CommonJS (for Node) and ES module (for bundlers)
+    // CommonJS build (for Node)
     {
       input: "src/main.js",
-      output: [
-        { file: pkg.main, format: "cjs" },
-        { file: pkg.module, format: "es" }
-      ],
+      output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "arrayiffy-if-string",
         "check-types-mini",
@@ -50,12 +46,36 @@ export default commandLineArgs => {
         }),
         babel()
       ]
+    },
+
+    // ES module build (for bundlers)
+    {
+      input: "src/main.js",
+      output: [{ file: pkg.module, format: "es" }],
+      external: [
+        "arrayiffy-if-string",
+        "check-types-mini",
+        "is-natural-number",
+        "is-natural-number-string",
+        "lodash.includes",
+        "lodash.isplainobject",
+        "ordinal-number-suffix",
+        "string-match-left-right"
+      ],
+      plugins: [
+        strip({
+          sourceMap: false
+        })
+      ]
     }
   ];
+
   if (commandLineArgs.dev) {
-    // if rollup was called with a --dev flag, remove comment removal, strip():
-    finalConfig[0].plugins.shift();
-    finalConfig[1].plugins.shift();
+    // if rollup was called without a --dev flag,
+    // dispose of a comment removal, strip():
+    finalConfig.forEach((singleConfigVal, i) => {
+      finalConfig[i].plugins.shift();
+    });
   }
   return finalConfig;
 };
