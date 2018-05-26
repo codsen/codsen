@@ -1,7 +1,7 @@
 import test from "ava";
 import isEqual from "lodash.isequal";
 import objectPath from "object-path";
-import traverse from "../dist/ast-monkey-traverse.cjs";
+import traverse from "../dist/ast-monkey-traverse.esm";
 
 let input = {
   a: { b: [{ c: { d: "e" } }] },
