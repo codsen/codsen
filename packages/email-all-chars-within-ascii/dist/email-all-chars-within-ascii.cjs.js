@@ -8,23 +8,26 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function within(str, originalOpts) {
-  if (typeof str !== 'string') {
-    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ' + (typeof str === 'undefined' ? 'undefined' : _typeof(str)) + ', equal to: ' + JSON.stringify(str, null, 4));
+  if (typeof str !== "string") {
+    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to: " + JSON.stringify(str, null, 4));
   }
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
-    throw new Error('email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ' + (typeof originalOpts === 'undefined' ? 'undefined' : _typeof(originalOpts)) + ', equal to:\n' + JSON.stringify(originalOpts, null, 4));
+    throw new Error("email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
   }
 
   // declare defaults, so we can enforce types later:
   var defaults = {
     messageOnly: false,
     checkLineLength: true
+  };
 
-    // fill any settings with defaults if missing:
-  };var opts = Object.assign({}, defaults, originalOpts);
+  // fill any settings with defaults if missing:
+  var opts = Object.assign({}, defaults, originalOpts);
 
   // the check:
-  checkTypes(opts, defaults, { msg: 'email-all-chars-within-ascii/within(): [THROW_ID_03*]' });
+  checkTypes(opts, defaults, {
+    msg: "email-all-chars-within-ascii/within(): [THROW_ID_03*]"
+  });
 
   // -----------------------------------------------------------------------------
 
@@ -43,13 +46,13 @@ function within(str, originalOpts) {
     counter += 1;
     // throw if non-ASCII
     if (str[i].codePointAt(0) > 126 || str[i].codePointAt(0) < 9 || str[i].codePointAt(0) === 11 || str[i].codePointAt(0) === 12 || str[i].codePointAt(0) > 13 && str[i].codePointAt(0) < 32) {
-      throw new Error((opts.messageOnly ? '' : 'email-all-chars-within-ascii: ') + 'Non ascii character found at index ' + i + ', equal to: ' + str[i] + ', its decimal code point is ' + str[i].codePointAt(0) + '.');
+      throw new Error((opts.messageOnly ? "" : "email-all-chars-within-ascii: ") + "Non ascii character found at index " + i + ", equal to: " + str[i] + ", its decimal code point is " + str[i].codePointAt(0) + ".");
     }
     // check line lengths
     if (counter > 997 && opts.checkLineLength) {
-      throw new Error((opts.messageOnly ? '' : 'email-all-chars-within-ascii: ') + 'Line length is beyond 999 characters!');
+      throw new Error((opts.messageOnly ? "" : "email-all-chars-within-ascii: ") + "Line length is beyond 999 characters!");
     }
-    if (str[i] === '\r' || str[i] === '\n') {
+    if (str[i] === "\r" || str[i] === "\n") {
       counter = 0;
     }
   }
