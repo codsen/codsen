@@ -326,7 +326,9 @@ globby(input, { dot: true })
           )}${
             counter.bad
               ? `\n${chalk.grey("✨ json-sort-cli: ")}${chalk.red(
-                  `${counter.bad.length} files could not be sorted`
+                  `${counter.bad.length} file${
+                    counter.bad.length === 1 ? "" : "s"
+                  } could not be sorted`
                 )} ${`\u001b[${90}m - ${counter.bad.join(" - ")}\u001b[${39}m`}`
               : ""
           }`
