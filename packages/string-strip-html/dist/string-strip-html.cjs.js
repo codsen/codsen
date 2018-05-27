@@ -14,7 +14,7 @@ function stripHtml(str, originalOpts) {
   // constants
   // ===========================================================================
   var isArr = Array.isArray;
-  var definitelyTagNames = ["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
+  var definitelyTagNames = ["!doctype", "abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
   var singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
   var punctuation = [".", ",", "!", "?", ";", ")", "\u2026", '"']; // \u2026 is &hellip; - ellipsis
   var stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
@@ -351,7 +351,7 @@ function stripHtml(str, originalOpts) {
 
     // catch the beginning of an attribute's name
     // -------------------------------------------------------------------------
-    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts) {
+    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts) {
       if (isValidAttributeCharacter("" + str[i] + str[i + 1])) {
         attrObj.nameStarts = i;
       } else if (tag.onlyPlausible) {
@@ -382,7 +382,7 @@ function stripHtml(str, originalOpts) {
         }
         // 2. catch the beginning of the tag name. Consider custom HTML tag names
         // and also known (X)HTML tags:
-        if (str[i].trim().length !== 0 && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">") {
+        if (str[i].trim().length !== 0 && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">" && str[i] !== "!") {
           tag.nameStarts = i;
           tag.nameContainsLetters = false;
         }
@@ -420,7 +420,7 @@ function stripHtml(str, originalOpts) {
         str[i + 1] === undefined || str[i + 1] === "<") && tag.onlyPlausible) {
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
-            var tagName = str.slice(tag.nameStarts, i + 1);
+            var tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
             // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
             if (!definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
@@ -475,7 +475,7 @@ function stripHtml(str, originalOpts) {
         // the tag name is not recognised.
         if (!tag.onlyPlausible ||
         // tag name is recognised and there are no attributes:
-        tag.attributes.length === 0 && definitelyTagNames.concat(singleLetterTags).includes(tag.name) ||
+        tag.attributes.length === 0 && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) ||
         // OR there is at least one equals that follow the attribute's name:
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;

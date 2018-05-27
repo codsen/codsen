@@ -38,6 +38,7 @@ function stripHtml(str, originalOpts) {
     "dialog",
     "div",
     "dl",
+    "doctype",
     "dt",
     "em",
     "embed",
@@ -688,6 +689,7 @@ function stripHtml(str, originalOpts) {
       tag.nameEnds < i &&
       str[i] !== ">" &&
       str[i] !== "/" &&
+      str[i] !== "!" &&
       str[i - 1].trim().length === 0 &&
       str[i].trim().length !== 0 &&
       !attrObj.nameStarts
@@ -749,7 +751,8 @@ function stripHtml(str, originalOpts) {
         tag.nameStarts === undefined &&
         str[i] !== "<" &&
         str[i] !== "/" &&
-        str[i] !== ">"
+        str[i] !== ">" &&
+        str[i] !== "!"
       ) {
         tag.nameStarts = i;
         tag.nameContainsLetters = false;
@@ -807,7 +810,7 @@ function stripHtml(str, originalOpts) {
         ) {
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
-            const tagName = str.slice(tag.nameStarts, i + 1);
+            const tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
             console.log(
               `776 ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${JSON.stringify(
                 tagName,
@@ -885,7 +888,9 @@ function stripHtml(str, originalOpts) {
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:
           ((tag.attributes.length === 0 &&
-            definitelyTagNames.concat(singleLetterTags).includes(tag.name)) ||
+            definitelyTagNames
+              .concat(singleLetterTags)
+              .includes(tag.name.toLowerCase())) ||
             // OR there is at least one equals that follow the attribute's name:
             (tag.attributes &&
               tag.attributes.some(attrObj => attrObj.equalsAt)))

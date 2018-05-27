@@ -7,16 +7,16 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test("delete me", t => {
   // t.deepEqual(
-  //   stripHtml("/   </\na>   /"),
-  //   "/ /",
-  //   "01.15.03 - and the same but with bunch of line breaks and tabs"
+  //   stripHtml("x< ! a ! >y"),
+  //   "x y",
+  //   "01.16.01 - lots of dodgy exclamation marks around and within tags"
   // );
   t.deepEqual(
     stripHtml(
-      "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
+      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
     ),
-    "/// /// /// /// /// /// /// /// ///",
-    "01.15.03 - and the same but with bunch of line breaks and tabs"
+    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "01.16.01 - lots of dodgy exclamation marks around and within tags"
   );
 });
 

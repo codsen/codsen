@@ -38,6 +38,7 @@ function stripHtml(str, originalOpts) {
     "dialog",
     "div",
     "dl",
+    "doctype",
     "dt",
     "em",
     "embed",
@@ -551,6 +552,7 @@ function stripHtml(str, originalOpts) {
       tag.nameEnds < i &&
       str[i] !== ">" &&
       str[i] !== "/" &&
+      str[i] !== "!" &&
       str[i - 1].trim().length === 0 &&
       str[i].trim().length !== 0 &&
       !attrObj.nameStarts
@@ -601,7 +603,8 @@ function stripHtml(str, originalOpts) {
         tag.nameStarts === undefined &&
         str[i] !== "<" &&
         str[i] !== "/" &&
-        str[i] !== ">"
+        str[i] !== ">" &&
+        str[i] !== "!"
       ) {
         tag.nameStarts = i;
         tag.nameContainsLetters = false;
@@ -648,7 +651,7 @@ function stripHtml(str, originalOpts) {
         ) {
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
-            const tagName = str.slice(tag.nameStarts, i + 1);
+            const tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
             // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
             if (
@@ -710,7 +713,9 @@ function stripHtml(str, originalOpts) {
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:
           ((tag.attributes.length === 0 &&
-            definitelyTagNames.concat(singleLetterTags).includes(tag.name)) ||
+            definitelyTagNames
+              .concat(singleLetterTags)
+              .includes(tag.name.toLowerCase())) ||
             // OR there is at least one equals that follow the attribute's name:
             (tag.attributes &&
               tag.attributes.some(attrObj => attrObj.equalsAt)))
