@@ -7,9 +7,12 @@
   "dependencies": {
     "mute": [
       "ava",
+      "babel-preset-env",
       "coveralls",
+      "esm",
       "husky",
-      "nyc"
+      "nyc",
+      "prettier"
     ]
   },
   "ignore": [

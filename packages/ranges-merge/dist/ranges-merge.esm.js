@@ -11,13 +11,26 @@ function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  var sortedRanges = sortRanges(arrOfRanges);
-  for (var i = sortedRanges.length - 1; i > 0; i--) {
-    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
-      sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
-      sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
+  const sortedRanges = sortRanges(arrOfRanges);
+  for (let i = sortedRanges.length - 1; i > 0; i--) {
+    if (
+      sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
+      sortedRanges[i][0] <= sortedRanges[i - 1][1]
+    ) {
+      sortedRanges[i - 1][0] = Math.min(
+        sortedRanges[i][0],
+        sortedRanges[i - 1][0]
+      );
+      sortedRanges[i - 1][1] = Math.max(
+        sortedRanges[i][1],
+        sortedRanges[i - 1][1]
+      );
 
-      if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {
+      if (
+        sortedRanges[i][2] !== undefined &&
+        (sortedRanges[i - 1][0] >= sortedRanges[i][0] ||
+          sortedRanges[i - 1][1] <= sortedRanges[i][1])
+      ) {
         if (sortedRanges[i - 1][2] !== null) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
