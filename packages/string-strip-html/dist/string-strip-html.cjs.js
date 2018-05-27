@@ -33,6 +33,9 @@ function stripHtml(str, originalOpts) {
   // we'll gather opening tags from ranged-pairs here:
   var rangedOpeningTags = [];
 
+  // temporary variable to assemble the attribute pieces:
+  var attrObj = {};
+
   // functions
   // ===========================================================================
 
@@ -111,7 +114,6 @@ function stripHtml(str, originalOpts) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       // it depends, is it opening or closing range tag:
       if (tag.slashPresent) {
-        console.log("152 \x1B[" + 31 + "m" + "treatRangedTags():" + "\x1B[" + 39 + "m closing ranged tag");
         // closing tag.
         // filter and remove the found tag
         for (var y = rangedOpeningTags.length; y--;) {
@@ -128,8 +130,6 @@ function stripHtml(str, originalOpts) {
 
             // 1. add range without caring about surrounding whitespace around
             // the range
-            console.log("rangesToDelete.current(): " + JSON.stringify(rangesToDelete.current(), null, 0));
-            console.log("391 ABOUT TO PUSH RANGE: [" + rangedOpeningTags[y].lastOpeningBracketAt + ", " + i + "]");
             if (punctuation.includes(str[i])) {
               rangesToDelete.push(rangedOpeningTags[y].lastOpeningBracketAt, i, null // null will remove any spaces added so far. Opening and closing range tags might
               // have received spaces as separate entities, but those might not be necessary for range:
@@ -143,16 +143,13 @@ function stripHtml(str, originalOpts) {
             // different, overlapping or encompassing ranged tags with same
             // or different name.
             rangedOpeningTags.splice(y, 1);
-            console.log("401 new \x1B[" + 33 + "m" + "rangedOpeningTags" + "\x1B[" + 39 + "m = " + JSON.stringify(rangedOpeningTags, null, 4));
             // 3. stop the loop
             break;
           }
         }
       } else {
         // opening tag.
-        console.log("209 \x1B[" + 31 + "m" + "treatRangedTags():" + "\x1B[" + 39 + "m opening ranged tag");
         rangedOpeningTags.push(tag);
-        console.log("212 pushed tag{} to \x1B[" + 33 + "m" + "rangedOpeningTags" + "\x1B[" + 39 + "m\nwhich is now equal to:\n" + JSON.stringify(rangedOpeningTags, null, 4));
       }
     }
   }
@@ -212,14 +209,11 @@ function stripHtml(str, originalOpts) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index " + somethingCaught.i + " has a value " + somethingCaught.el + " which is not string but " + _typeof(somethingCaught.el) + ".");
   }
 
-  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
   // step 0.
   // ===========================================================================
   // End sooner if it's an empty or empty-ish string:
 
   if (str === "" || str.trim() === "") {
-    console.log("ENDING EARLY, empty input");
     return str;
   }
 
@@ -233,12 +227,10 @@ function stripHtml(str, originalOpts) {
   // ===========================================================================
 
   for (var i = 0, len = str.length; i < len; i++) {
-    console.log("\x1B[" + 36 + "m" + "===============================" + "\x1B[" + 39 + "m \x1B[" + 35 + "m" + ("str[ " + i + " ] = " + ("\x1B[" + 31 + "m" + (str[i].trim() === "" ? str[i] === null ? "null" : str[i] === "\n" ? "line break" : str[i] === "\t" ? "tab" : "space" : str[i]) + "\x1B[" + 39 + "m")) + "\x1B[" + 39 + "m \x1B[" + 36 + "m" + "===============================" + "\x1B[" + 39 + "m");
 
     // catch slash
     // -------------------------------------------------------------------------
     if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && tag.lastOpeningBracketAt !== undefined && tag.lastClosingBracketAt === undefined) {
-      console.log("426 \x1B[" + 33 + "m" + "tag.slashPresent" + "\x1B[" + 39 + "m = true");
       tag.slashPresent = true;
     }
 
@@ -246,11 +238,26 @@ function stripHtml(str, originalOpts) {
     // -------------------------------------------------------------------------
     if (str[i] === '"' || str[i] === "'") {
       if (tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+        // 1. finish assembling the "attrObj{}"
+        attrObj.valueEnds = i;
+        attrObj.value = str.slice(attrObj.valueStarts, i);
+        if (!tag.attributes) {
+          tag.attributes = [];
+        }
+        tag.attributes.push(attrObj);
+        // reset:
+        attrObj = {};
+        // 2. finally, delete the quotes marker, we don't need it any more
         tag.quotes = undefined;
       } else if (!tag.quotes) {
+        // 1. if it's opening marker, record the type and location of quotes
         tag.quotes = {};
         tag.quotes.value = str[i];
         tag.quotes.start = i;
+        // 2. start assembling the attribute object which we'll dump into tag.attributes[] array:
+        if (attrObj.nameStarts && attrObj.nameEnds && attrObj.nameEnds < i && attrObj.nameStarts < i && !attrObj.valueStarts) {
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
+        }
       }
     }
 
@@ -259,47 +266,77 @@ function stripHtml(str, originalOpts) {
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || str[i] === "/" || str[i] === "<" || str[i] === ">" || str[i].trim().length !== 0 && str[i + 1] === undefined)) {
       // 1. mark the name ending
       tag.nameEnds = i;
-      console.log("492 SET \x1B[" + 33 + "m" + "tag.nameEnds" + "\x1B[" + 39 + "m = " + tag.nameEnds);
       // 2. extract the full name string
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0));
-      console.log("497 SET \x1B[" + 33 + "m" + "tag.name" + "\x1B[" + 39 + "m = " + tag.name);
       // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
-      if (!tag.onlyPlausible && str[i + 1] === undefined && tag.nameContainsLetters) {
-        console.log("553 \x1B[" + 33 + "m" + ("SUBMIT RANGE #3: [" + tag.leftOuterWhitespace + ", " + (i + 1) + ", " + calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1) + "]") + "\x1B[" + 39 + "m");
+      if (!tag.onlyPlausible && str[i + 1] === undefined) {
         rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1));
         // also,
         treatRangedTags(i);
       }
     }
 
-    // catch the ending of an attribute
+    // catch beginning of an attribute value
     // -------------------------------------------------------------------------
-
-    if (tag.attributeNameStarts < i && !tag.quotes) {
-      if (str[i].trim().length === 0 || str[i] === ">") {
-        // it's an attribute without a value
-        tag.attributes = [];
-        tag.attributes.push({
-          name: str.slice(tag.attributeNameStarts, i),
-          nameStarts: tag.attributeNameStarts,
-          nameEnds: i,
-          equalsAt: null
-        });
-        // we caught whole attribute, so let's erase the markers, they're not needed any more:
-        tag.attributeNameStarts = undefined;
-        tag.attributeNameEnds = undefined;
-      } else if (str[i] === "=") {
-        // there might be a value following
-        tag.equalsSpottedAt = i;
-        tag.attributeNameEnds = i;
+    if (tag.quotes && tag.quotes.start && tag.quotes.start < i && !tag.quotes.end && attrObj.nameEnds && attrObj.equalsAt && !attrObj.valueStarts) {
+      if (attrObj.valueEnds) ; else {
+        attrObj.valueStarts = i;
       }
     }
 
-    // catch beginning of an attribute
+    // catch rare cases when attributes name has some space after it, before equals
     // -------------------------------------------------------------------------
-    if (tag.nameEnds < i && str[i] !== ">" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !tag.quotes) {
+    if (!tag.quotes && attrObj.nameEnds && str[i] === "=" && !attrObj.valueStarts) {
+      if (!attrObj.equalsAt) {
+        attrObj.equalsAt = i;
+      }
+    }
+
+    // catch the ending of the whole attribute
+    // -------------------------------------------------------------------------
+    // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
+    if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim().length !== 0 && str[i] !== "=") {
+      if (!tag.attributes) {
+        tag.attributes = [];
+      }
+      tag.attributes.push(attrObj);
+      attrObj = {};
+    }
+
+    // catch the ending of an attribute's name
+    // -------------------------------------------------------------------------
+    if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
+      if (str[i].trim().length === 0) {
+        attrObj.nameEnds = i;
+      } else if (str[i] === "=") {
+        // 1. BAU cases, equal hasn't been met
+        if (!attrObj.equalsAt) {
+          attrObj.nameEnds = i;
+          attrObj.equalsAt = i;
+        }
+      } else if (str[i] === "/" || str[i] === ">") {
+        attrObj.nameEnds = i;
+        if (!tag.attributes) {
+          tag.attributes = [];
+        }
+        tag.attributes.push(attrObj);
+        attrObj = {};
+      } else if (str[i] === "<" || isValidAttributeCharacter(str[i])) {
+        // TODO - address both cases of onlyPlausible
+        attrObj.nameEnds = i;
+        if (!tag.attributes) {
+          tag.attributes = [];
+        }
+        tag.attributes.push(attrObj);
+        attrObj = {};
+      }
+    }
+
+    // catch the beginning of an attribute's name
+    // -------------------------------------------------------------------------
+    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts) {
       if (isValidAttributeCharacter("" + str[i] + str[i + 1])) {
-        tag.attributeNameStarts = i;
+        attrObj.nameStarts = i;
       } else if (tag.onlyPlausible) {
         // If we have already suspicious tag where there's a space after "<", now it's fine to skip this
         // tag because it's not a tag - attribute starts with a non-legit symbol...
@@ -314,7 +351,7 @@ function stripHtml(str, originalOpts) {
       tag.onlyPlausible = false;
     }
 
-    // catch character that follows opening bracket:
+    // catch character that follows an opening bracket:
     // -------------------------------------------------------------------------
     if (tag.lastOpeningBracketAt !== null && tag.lastOpeningBracketAt < i && str[i] !== "/" // there can be closing slashes in various places, legit and not
     ) {
@@ -325,14 +362,12 @@ function stripHtml(str, originalOpts) {
           } else {
             tag.onlyPlausible = false;
           }
-          console.log("516 SET \x1B[" + 33 + "m" + "tag.onlyPlausible" + "\x1B[" + 39 + "m = " + tag.onlyPlausible);
         }
         // 2. catch the beginning of the tag name. Consider custom HTML tag names
         // and also known (X)HTML tags:
         if (str[i].trim().length !== 0 && tag.nameStarts === undefined && str[i] !== "<" && str[i] !== "/" && str[i] !== ">") {
           tag.nameStarts = i;
           tag.nameContainsLetters = false;
-          console.log("532 \x1B[" + 33 + "m" + "tag.nameStarts" + "\x1B[" + 39 + "m = " + tag.nameStarts);
         }
       }
 
@@ -345,8 +380,16 @@ function stripHtml(str, originalOpts) {
     // -------------------------------------------------------------------------
     if (str[i] === ">") {
       if (tag.lastOpeningBracketAt !== undefined) {
+        // 1. mark the index
         tag.lastClosingBracketAt = i;
-        console.log("352 SET tag.lastClosingBracketAt = " + tag.lastClosingBracketAt);
+        // 2. push attrObj into tag.attributes[]
+        if (Object.keys(attrObj).length) {
+          if (!tag.attributes) {
+            tag.attributes = [];
+          }
+          tag.attributes.push(attrObj);
+          attrObj = {};
+        }
       }
     }
 
@@ -361,7 +404,6 @@ function stripHtml(str, originalOpts) {
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
             var tagName = str.slice(tag.nameStarts, i + 1);
-            console.log("373 " + ("\x1B[" + 33 + "m" + "tagName" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(tagName, null, 4));
             // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
             if (!definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
@@ -395,7 +437,6 @@ function stripHtml(str, originalOpts) {
           // }
         }
       } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
-        console.log("row \x1B[" + 33 + "m" + "489" + "\x1B[" + 39 + "m");
 
         // tag.lastClosingBracketAt !== undefined
 
@@ -411,28 +452,23 @@ function stripHtml(str, originalOpts) {
         // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
         // for this tag to be considered a tag - there has to be at least one attribute with equals if
         // the tag name is not recognised.
-
-        console.log("\x1B[" + 33 + "m" + "tag.name" + "\x1B[" + 39 + "m" + " = " + JSON.stringify(tag.name, null, 4));
         if (!tag.onlyPlausible ||
         // tag name is recognised and there are no attributes:
-        !tag.attributes && definitelyTagNames.concat(singleLetterTags).includes(tag.name) ||
+        tag.attributes.length === 0 && definitelyTagNames.concat(singleLetterTags).includes(tag.name) ||
         // OR there is at least one equals that follow the attribute's name:
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
         })) {
-          console.log("399 \x1B[" + 33 + "m" + ("SUBMIT RANGE #2: [" + tag.leftOuterWhitespace + ", " + endingRangeIndex + ", " + JSON.stringify(calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex), null, 0) + "]") + "\x1B[" + 39 + "m");
 
           rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex));
           // also,
           treatRangedTags(i);
         } else {
-          console.log("536 \x1B[" + 33 + "m" + "RESET tag{}" + "\x1B[" + 39 + "m");
           tag = {};
         }
 
         // part 2.
         if (str[i] !== ">") {
-          console.log("542 \x1B[" + 33 + "m" + "RESET tag{}" + "\x1B[" + 39 + "m");
           tag = {};
         }
       }
@@ -456,8 +492,8 @@ function stripHtml(str, originalOpts) {
         if ((tag.lastOpeningBracketAt === undefined || !tag.onlyPlausible) && !tag.quotes) {
           tag.lastOpeningBracketAt = i;
           tag.slashPresent = false;
+          tag.attributes = [];
           tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
-          console.log("786 SET \x1B[" + 33 + "m" + "tag.leftOuterWhitespace" + "\x1B[" + 39 + "m = " + tag.leftOuterWhitespace + "; \x1B[" + 33 + "m" + "tag.lastOpeningBracketAt" + "\x1B[" + 39 + "m = " + tag.lastOpeningBracketAt + "; \x1B[" + 33 + "m" + "tag.slashPresent" + "\x1B[" + 39 + "m = false");
         }
       }
     }
@@ -468,11 +504,25 @@ function stripHtml(str, originalOpts) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
-        console.log("449 SET \x1B[" + 33 + "m" + "chunkOfWhitespaceStartsAt" + "\x1B[" + 39 + "m = " + chunkOfWhitespaceStartsAt);
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
+      // 1. piggyback the catching of the attributes with equal and no value
+      if (!tag.quotes && tag.equalsSpottedAt === chunkOfWhitespaceStartsAt - 1 && tag.attributeNameEnds && tag.equalsSpottedAt > tag.attributeNameEnds && str[i] !== '"' && str[i] !== "'") {
+        if (isObj(attrObj)) {
+          // cases where there's just equal after tag name <article = >
+          attrObj = {};
+        }
+        attrObj.equalsAt = tag.equalsSpottedAt;
+        if (!tag.attributes) {
+          tag.attributes = [];
+        }
+        tag.attributes.push(attrObj);
+        // reset:
+        attrObj = {};
+        tag.equalsSpottedAt = undefined;
+      }
+      // 2. reset whitespace marker
       chunkOfWhitespaceStartsAt = null;
-      console.log("455 SET \x1B[" + 33 + "m" + "chunkOfWhitespaceStartsAt" + "\x1B[" + 39 + "m = " + chunkOfWhitespaceStartsAt);
     }
 
     // log all
@@ -480,10 +530,7 @@ function stripHtml(str, originalOpts) {
     // console.log(
     //   `\u001b[${32}m${` - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -`}\u001b[${39}m`
     // );
-
-    console.log("" + (Object.keys(tag).length ? "\x1B[" + 35 + "m" + "tag" + "\x1B[" + 39 + "m" + " = " + Object.keys(tag).map(function (key) {
-      return "\x1B[" + 90 + "m" + ("\x1B[" + 7 + "m" + key + "\x1B[" + 27 + "m") + "\x1B[" + 39 + "m" + " " + ("\x1B[" + 90 + "m: " + (isObj(tag[key]) || isArr(tag[key]) ? JSON.stringify(tag[key], null, 4) : tag[key]) + "\x1B[" + 39 + "m");
-    }).join(",\n") + "\n" : "") + (rangesToDelete.current() ? "RANGES: " + JSON.stringify(rangesToDelete.current(), null, 0) : ""));
+    if (Object.keys(attrObj).length) ;
 
     // console.log(
     //   `${`\u001b[${35}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m`} = ${chunkOfWhitespaceStartsAt}`
