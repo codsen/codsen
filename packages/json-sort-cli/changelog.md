@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2018-05-27
+
+### Added
+
+* ✨ Sorts dot files too, as long as they pass the JSON parser and don't contain evil extensions like `yml`, `yaml` or `toml`.
+* ✨ Restored `-s`/`--silent` mode. When it's on, only report of two lines is shown: successful and failed counts. When it's off (default), one row per sorted file output after each attempt to sort (successful or not), then the same report of two line in the end is shown.
+* ✨ Unit tests for all modes: `--version`, `--help`, `-tabs`.
+* ✨ Support for broken JSON files. If the file is broken and parser throws an error, that error will be reported in the report but other files won't be affected by this.
+
+### Removed
+
+* ✨ `-d`/`--dry` mode. It's too much hassle to maintain it, after all, the operation performed on files is not deleting anything. Dry mode is normally used for risky operations, to test first. In our case there's no risk. Files come out the same, just with sorted keys.
+
 ## [1.4.0] - 2018-05-23
 
 ### Added
@@ -20,7 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-* ✨ `-s` or `--silent` flag. When enabled, shows only one row out output. Handy when there are many files.
+* ✨ `-s` or `--silent` flag. When enabled, shows only one row's output. Handy when there are many files.
 
 ## [1.2.0] - 2017-12-14
 
@@ -44,3 +57,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.2.0]: https://github.com/codsen/json-sort-cli/compare/v1.1.0...v1.2.0
 [1.3.0]: https://github.com/codsen/json-sort-cli/compare/v1.2.0...v1.3.0
 [1.4.0]: https://github.com/codsen/json-sort-cli/compare/v1.3.0...v1.4.0
+[1.5.0]: https://github.com/codsen/json-sort-cli/compare/v1.4.0...v1.5.0

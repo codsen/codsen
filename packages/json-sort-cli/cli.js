@@ -15,7 +15,7 @@ const sortObject = require("sorted-object");
 const traverse = require("ast-monkey-traverse");
 const isObj = require("lodash.isplainobject");
 
-const { log, error } = console;
+const { log } = console;
 const cli = meow(
   `
   Usage
@@ -27,7 +27,7 @@ const cli = meow(
   Options
     -n, --nodemodules   Don't ignore any node_modules folders and package-lock.json's
     -t, --tabs          Use tabs for JSON file indentation
-    -d, --dry           Dry run - only list the found JSON files, don't sort or write
+    -s, --silent        Does not show the result per-file, only totals in the end
     -h, --help          Shows this help
     -v, --version       Shows the version of your json-sort-cli
 
@@ -38,40 +38,73 @@ const cli = meow(
   {
     alias: {
       n: "nodemodules",
-      t: "tabs"
+      t: "tabs",
+      s: "silent"
     }
   }
 );
 updateNotifier({ pkg: cli.pkg }).notify();
 
+const nonJsonFormats = ["yml", "toml", "yaml"]; // to save time
+
+// The following regex - Copyright (c) 2015. Athan Reines.
+// https://github.com/validate-io/json/blob/master/lib/index.js
+const re = /^\{[\s\S]*\}$|^\[[\s\S]*\]$/;
+
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
 function readSortAndWriteOverFile(oneOfPaths) {
+  // console.log(
+  //   `\n=====\n058 PROCESSING: ${`\u001b[${33}m${`oneOfPaths`}\u001b[${39}m`} = ${JSON.stringify(
+  //     oneOfPaths,
+  //     null,
+  //     4
+  //   )}`
+  // );
   return fs
-    .readJson(oneOfPaths)
-    .then(jsonContent =>
-      fs
+    .readFile(oneOfPaths, "utf8")
+    .then(filesContent => {
+      let parsedJson;
+      // console.log(
+      //   `069 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
+      //     filesContent,
+      //     null,
+      //     4
+      //   )}`
+      // );
+      if (re.test(String(filesContent))) {
+        // console.log(
+        //   `077 didn't pass the regex, return null. Content was:\n${JSON.stringify(
+        //     filesContent,
+        //     null,
+        //     4
+        //   )}`
+        // );
+        return Promise.resolve(null);
+      }
+      try {
+        // try to parse JSON
+        parsedJson = JSON.parse(filesContent);
+      } catch (err) {
+        // if it is not parseable, stop
+        if (!cli.flags.s) {
+          log(
+            `${chalk.grey("✨ json-sort-cli: ")}${oneOfPaths} - ${chalk.red(
+              err
+            )}`
+          );
+        }
+        return Promise.resolve(null);
+      }
+      // console.log("097 all OK, proceeding to sort & write JSON");
+      return fs
         .writeJson(
           oneOfPaths,
           sortObject(
-            traverse(jsonContent, (key, val) => {
+            traverse(parsedJson, (key, val) => {
               const current = val !== undefined ? val : key;
               if (isObj(current)) {
-                // console.log(
-                //   `=======\n${`\u001b[${33}m${`current BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
-                //     current,
-                //     null,
-                //     4
-                //   )}`
-                // );
-                // console.log(
-                //   `${`\u001b[${33}m${`current AFTER`}\u001b[${39}m`} = ${JSON.stringify(
-                //     sortObject(current),
-                //     null,
-                //     4
-                //   )}`
-                // );
                 return sortObject(current);
               }
               return current;
@@ -82,14 +115,18 @@ function readSortAndWriteOverFile(oneOfPaths) {
           }
         )
         .then(() => {
-          log("success!");
-        })
-        .catch(err => {
-          error(err);
-        })
-    )
+          if (!cli.flags.s) {
+            log(
+              `${chalk.grey(
+                "✨ json-sort-cli: "
+              )}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+            );
+          }
+          return true;
+        });
+    })
     .catch(err => {
-      log(err);
+      `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
     });
 }
 
@@ -123,19 +160,19 @@ if (cli.flags) {
 // Step #2. query the glob and follow the pipeline
 // -----------------------------------------------------------------------------
 
-globby(input)
+globby(input, { dot: true })
   .then(resolvedPathsArray => {
     // flip out of the pipeline if there are no paths resolved
     if (resolvedPathsArray.length === 0) {
       log(
-        `${chalk.grey("✨  json-sort-cli: ")}${chalk.red(
+        `${chalk.grey("✨ json-sort-cli: ")}${chalk.red(
           "The inputs don't lead to any json files! Exiting."
         )}`
       );
       process.exit(0);
     }
     // console.log(
-    //   `105 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `176 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
     //     resolvedPathsArray,
     //     null,
     //     4
@@ -153,17 +190,30 @@ globby(input)
             bool =>
               bool
                 ? globby(
-                    path.join(singleDirOrFilePath, "**/*.json"),
-                    "!node_modules"
+                    cli.flags.n
+                      ? [singleDirOrFilePath, "!node_modules"]
+                      : singleDirOrFilePath,
+                    {
+                      expandDirectories: {
+                        files: [".*", "*.json"]
+                      }
+                    }
                   )
                 : [singleDirOrFilePath]
           )
         ),
       []
       // then reduce again, now actually concatenating them all together
-    ).then(received =>
-      pReduce(received, (total, single) => total.concat(single), [])
-    )
+    ).then(received => {
+      // console.log(
+      //   `210 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+      //     received,
+      //     null,
+      //     4
+      //   )}`
+      // );
+      return pReduce(received, (total, single) => total.concat(single), []);
+    })
   )
   .then(
     res =>
@@ -176,11 +226,40 @@ globby(input)
         : res
   )
   .then(paths => {
-    const tempRez = paths.filter(
-      singlePath => path.extname(singlePath) === ".json"
-    );
     // console.log(
-    //   `150 ${`\u001b[${33}m${`tempRez`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `231 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+    //     paths,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    const tempRez = paths.filter(singlePath => {
+      // console.log(`---------\n238 processing: ${singlePath}`);
+      // console.log(
+      //   `${`\u001b[${33}m${`path.extname(singlePath)`}\u001b[${39}m`} = ${JSON.stringify(
+      //     path.extname(singlePath),
+      //     null,
+      //     4
+      //   )}`
+      // );
+      // console.log(
+      //   `${`\u001b[${33}m${`path.basename(singlePath)`}\u001b[${39}m`} = ${JSON.stringify(
+      //     path.basename(singlePath),
+      //     null,
+      //     4
+      //   )}`
+      // );
+      return (
+        path.extname(singlePath) === ".json" ||
+        (typeof path.basename(singlePath) === "string" &&
+          path.basename(singlePath).startsWith(".") &&
+          !nonJsonFormats.some(badExtension =>
+            path.extname(singlePath).includes(badExtension)
+          ))
+      );
+    });
+    // console.log(
+    //   `263 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
     //     tempRez,
     //     null,
     //     4
@@ -200,23 +279,57 @@ globby(input)
       // silent mode is now default:
       return pReduce(
         received,
-        (previousValue, currentValue) =>
-          readSortAndWriteOverFile(currentValue)
-            .then(() => previousValue + 1)
+        (counter, currentPath) =>
+          readSortAndWriteOverFile(currentPath)
+            .then(received => {
+              // console.log(
+              //   `294 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+              //     received,
+              //     null,
+              //     4
+              //   )}`
+              // );
+              return received;
+            })
+            .then(
+              res =>
+                res
+                  ? {
+                      good: counter.good.concat([currentPath]),
+                      bad: counter.bad
+                    }
+                  : {
+                      good: counter.good,
+                      bad: counter.bad.concat([currentPath])
+                    }
+            )
             .catch(err => {
               log(
-                `${chalk.grey("✨  json-sort-cli: ")}${chalk.red(
+                `${chalk.grey("✨ json-sort-cli: ")}${chalk.red(
                   "Could not write out the sorted file:"
                 )} ${err}`
               );
-              return previousValue;
+              return counter;
             }),
-        0
-      ).then(count => {
+        { good: [], bad: [] }
+      ).then(counter => {
+        // console.log(
+        //   `319 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+        //     counter,
+        //     null,
+        //     4
+        //   )}`
+        // );
         log(
-          `${chalk.grey("✨ json-sort-cli: ")}${chalk.green(
-            `${count} files sorted`
-          )}`
+          `\n${chalk.grey("✨ json-sort-cli: ")}${chalk.green(
+            `${counter.good.length} files sorted`
+          )}${
+            counter.bad
+              ? `\n${chalk.grey("✨ json-sort-cli: ")}${chalk.red(
+                  `${counter.bad.length} files could not be sorted`
+                )} ${`\u001b[${90}m - ${counter.bad.join(" - ")}\u001b[${39}m`}`
+              : ""
+          }`
         );
       });
       // }
@@ -231,11 +344,10 @@ globby(input)
       //   { exitOnError: false }
       // );
       // tasks.run().catch(err => {
-      //   log(`${chalk.grey("✨  json-sort-cli: ")}${chalk.red("Oops!")} ${err}`);
+      //   log(`${chalk.grey("✨ json-sort-cli: ")}${chalk.red("Oops!")} ${err}`);
       // });
     }
-    return Promise.resolve();
   })
   .catch(err => {
-    log(`${chalk.grey("✨  json-sort-cli: ")}${chalk.red("Oops!")} ${err}`);
+    log(`${chalk.grey("✨ json-sort-cli: ")}${chalk.red("Oops!")} ${err}`);
   });

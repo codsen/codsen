@@ -1,7 +1,7 @@
 {
   "name": "json-sort-cli",
   "version": "1.4.2",
-  "description": "Command line app to deep sort JSON files. Accepts globs, both async and sync methods available.",
+  "description": "Command line app to deep sort JSON files, also dot-files as long as they are valid JSON",
   "license": "MIT",
   "engines": {
     "node": ">=8",
@@ -27,6 +27,7 @@
   },
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "ava",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
     "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
@@ -39,10 +40,6 @@
     "rules": {
       "xo": 0
     }
-  },
-  "esm": {
-    "await": true,
-    "cjs": true
   },
   "keywords": [
     "json",
@@ -132,7 +129,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        "JSON regex used from https://github.com/validate-io/json - Copyright © 2015. Athan Reines."
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -149,7 +148,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.2.0",
+    "ast-monkey-traverse": "^1.2.1",
     "chalk": "latest",
     "fs-extra": "^6.0.1",
     "globby": "latest",

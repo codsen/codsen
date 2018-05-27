@@ -1,6 +1,6 @@
 # json-sort-cli
 
-> Command line app to deep sort JSON files. Accepts globs, both async and sync methods available.
+> Command line app to deep sort JSON files, also dot-files as long as they are valid JSON
 
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
@@ -70,7 +70,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is, the algorithm will traverse the input if it's an array or a plain object and will sort _every encountered plain object_.
+It **sorts JSON files deeply**. That is, if object \#1 has array which has object \#2, both objects' keys \#1 and \#2 will be sorted.
 
 As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
@@ -107,6 +107,8 @@ When you install it globally, it will check occasionally, are there newer versio
 MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
+
+JSON regex used from https://github.com/validate-io/json - Copyright © 2015. Athan Reines.
 
 [node-img]: https://img.shields.io/node/v/json-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-sort-cli
