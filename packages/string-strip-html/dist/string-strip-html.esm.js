@@ -495,22 +495,26 @@ function stripHtml(str, originalOpts) {
     if (!tag.quotes && attrObj.nameStarts && !attrObj.nameEnds) {
       if (str[i].trim().length === 0) {
         attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
         // 1. BAU cases, equal hasn't been met
         if (!attrObj.equalsAt) {
           attrObj.nameEnds = i;
           attrObj.equalsAt = i;
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         }
       } else if (str[i] === "/" || str[i] === ">") {
         attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         if (!tag.attributes) {
           tag.attributes = [];
         }
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<" || isValidAttributeCharacter(str[i])) {
+      } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
         // TODO - address both cases of onlyPlausible
         attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         if (!tag.attributes) {
           tag.attributes = [];
         }

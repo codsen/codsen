@@ -5,13 +5,12 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-test("delete me", t => {
-  t.deepEqual(stripHtml('aa< br a b =  "" >cc'), "aa cc", "01.07.02");
-  // t.deepEqual(
-  //   stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
-  //   "aa cc",
-  //   "01.07.02"
-  // );
+test.skip("delete me", t => {
+  t.deepEqual(
+    stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
+    "aa cc",
+    "01.07.02"
+  );
 });
 
 test("01.01 - string is whole (opening) tag", t => {

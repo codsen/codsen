@@ -599,6 +599,7 @@ function stripHtml(str, originalOpts) {
             4
           )}`
         );
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
       } else if (str[i] === "=") {
         // 1. BAU cases, equal hasn't been met
         if (!attrObj.equalsAt) {
@@ -618,6 +619,7 @@ function stripHtml(str, originalOpts) {
               4
             )}`
           );
+          attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         } else {
           // 2. there are multiple equals detected
           console.log(
@@ -634,18 +636,20 @@ function stripHtml(str, originalOpts) {
           )}`
         );
         attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         console.log(`621 \u001b[${33}m${`PUSH attrObj and wipe`}\u001b[${39}m`);
         if (!tag.attributes) {
           tag.attributes = [];
         }
         tag.attributes.push(attrObj);
         attrObj = {};
-      } else if (str[i] === "<" || isValidAttributeCharacter(str[i])) {
+      } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
         console.log(
           `626 \u001b[${33}m${`ATTR NAME ENDS WITH NEW TAG`}\u001b[${39}m - ${`\u001b[${31}m${`TODO`}\u001b[${39}m`}`
         );
         // TODO - address both cases of onlyPlausible
         attrObj.nameEnds = i;
+        attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
         if (!tag.attributes) {
           tag.attributes = [];
         }
