@@ -68,15 +68,22 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
 
+Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these below are the same:
+
+* <code>jsonsort templates/springsale03 <b>-s</b></code>
+* <code>jsonsort <b>-s</b> templates/springsale03</code>
+* <code>jsonsort templates/springsale03 <b>--silent</b></code>
+* <code>jsonsort <b>--silent</b> templates/springsale03</code>
+
 **[⬆ &nbsp;back to top](#)**
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is if object \#1 has an array which has object \#2, both objects' keys \#1 and \#2 will be sorted.
+It **sorts JSON files deeply**. That is, if the object \#1 has an array which has an object \#2, both object \#1 and \#2 keys will be sorted. No matter how deeply nested is a plain object, even within arrays — it will be sorted.
 
-As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
+This is a parsing-type application, so written files are also **prettified** — tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
-Under the bonnet, this application uses [globby](https://github.com/sindresorhus/globby), so refer to its glob patterns.
+Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) and [sorted-object](https://www.npmjs.com/package/sorted-object).
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -84,7 +91,7 @@ Under the bonnet, this application uses [globby](https://github.com/sindresorhus
 
 If you pass a folder name, for example, `jsonsort templates`, it will catch all JSON files in folder `templates`. Sometimes, config [dot files](https://en.wikipedia.org/wiki/Dot-file) can be in JSON format, for example, `.eslintrc` or `.bithoundrc`. When such files are encountered, CLI app will first attempt to JSON-parse them, and, if successful, will sort them. If parsing fails, they'll be listed among failed files.
 
-If a file is a broken JSON file with errors in the markup, it won't cause an error on the whole pipeline - other, healthy files from the batch will still be sorted OK. A broken file will be listed among failed files.
+If a file is a broken JSON file with errors in the markup, it won't cause an error on the whole pipeline — other, healthy files from the batch will still be sorted OK. A broken file will be listed among failed files.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -110,7 +117,7 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-JSON regex used from https://github.com/validate-io/json - Copyright © 2015. Athan Reines.
+JSON regex used from https://github.com/validate-io/json — Copyright © 2015. Athan Reines.
 
 [node-img]: https://img.shields.io/node/v/json-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-sort-cli
