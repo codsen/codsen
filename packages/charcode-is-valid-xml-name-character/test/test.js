@@ -2,7 +2,7 @@ import test from "ava";
 import {
   isProduction4,
   isProduction4a
-} from "../dist/charcode-is-valid-xml-name-character.cjs";
+} from "../dist/charcode-is-valid-xml-name-character.esm";
 
 // -----------------------------------------------------------------------------
 // 01. isProduction4
