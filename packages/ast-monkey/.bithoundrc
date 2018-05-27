@@ -10,6 +10,7 @@
       "babel-preset-env",
       "check-types-mini",
       "coveralls",
+      "esm",
       "husky",
       "lodash.clonedeep",
       "nyc",

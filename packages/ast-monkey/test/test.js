@@ -7,7 +7,7 @@ import {
   info,
   del,
   arrayFirstOnly
-} from "../dist/ast-monkey.cjs";
+} from "../dist/ast-monkey.esm";
 
 let actual;
 let intended;

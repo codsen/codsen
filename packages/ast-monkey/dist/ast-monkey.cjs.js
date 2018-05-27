@@ -14,8 +14,6 @@ var traverse = _interopDefault(require('ast-monkey-traverse'));
 
 /* eslint no-param-reassign:0, no-console:0, max-len:0 */
 
-var DEBUG = false;
-
 // import isEqual from 'lodash.isequal'
 // import matcher from 'matcher'
 
@@ -51,7 +49,7 @@ function monkey(inputOriginal, opts) {
   // ---------------------------------------------------------------------------
   // action
 
-  if (DEBUG || opts.mode === "info") ;
+  if (opts.mode === "info") ;
   var data = { count: 0, gatherPath: [], finding: null };
   var findings = [];
 
@@ -64,8 +62,8 @@ function monkey(inputOriginal, opts) {
     vo = true;
   }
 
-  if (DEBUG || opts.mode === "info") ;
-  if (DEBUG || opts.mode === "info") ;
+  if (opts.mode === "info") ;
+  if (opts.mode === "info") ;
 
   if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length > 0) {
     input = [input[0]];
@@ -78,12 +76,12 @@ function monkey(inputOriginal, opts) {
   input = traverse(input, function (key, val, innerObj) {
     var temp = void 0;
     data.count += 1;
-    if (DEBUG || opts.mode === "info") ;
-    if (DEBUG || opts.mode === "info") ;
-    if (DEBUG || opts.mode === "info") ;
+    if (opts.mode === "info") ;
+    if (opts.mode === "info") ;
+    if (opts.mode === "info") ;
     data.gatherPath.length = innerObj.depth;
     data.gatherPath.push(data.count);
-    if (DEBUG || opts.mode === "info") ;
+    if (opts.mode === "info") ;
     if (opts.mode === "get") {
       if (data.count === opts.index) {
         if (notUndef(val)) {
@@ -114,7 +112,7 @@ function monkey(inputOriginal, opts) {
       }
     }
 
-    if (DEBUG || opts.mode === "info") ;
+    if (opts.mode === "info") ;
     if (opts.mode === "set" && data.count === opts.index) {
       return opts.val;
     } else if (opts.mode === "drop" && data.count === opts.index) {
