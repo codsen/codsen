@@ -14,6 +14,8 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+![example](https://cdn.rawgit.com/codsen/json-sort-cli/2d97ecaa/media/quicktest.gif)
+
 ## Table of Contents
 
 <!-- prettier-ignore-start -->
@@ -32,6 +34,7 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 <!-- prettier-ignore-end -->
+
 
 ## Install globally, call anywhere
 
