@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "license": "MIT",
   "engines": {
