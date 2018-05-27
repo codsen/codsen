@@ -5,18 +5,11 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-test("delete me", t => {
-  // t.deepEqual(
-  //   stripHtml("x< ! a ! >y"),
-  //   "x y",
-  //   "01.16.01 - lots of dodgy exclamation marks around and within tags"
-  // );
+test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml(
-      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
-    ),
-    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
-    "01.16.01 - lots of dodgy exclamation marks around and within tags"
+    stripHtml("something <a> \n\n to <a> put here to test"),
+    "something\nto put here to test",
+    "01.17.01"
   );
 });
 
@@ -579,37 +572,37 @@ test("01.16 - exclamation marks around tags that include slashes", t => {
 test("01.17 - only line breaks around tags cause line break to be used as a separator - not line breaks within tag", t => {
   t.deepEqual(
     stripHtml("something <a> \n\n to <a> put here to test"),
-    "something\nput here to test",
+    "something\nto put here to test",
     "01.17.01"
   );
   t.deepEqual(
     stripHtml("something <a\n\n>  to <a> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.02"
   );
   t.deepEqual(
     stripHtml("something <\n\na>  to <a> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.03"
   );
   t.deepEqual(
     stripHtml("something <a>  to <a\n\n> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.04"
   );
   t.deepEqual(
     stripHtml("something <a>  to <\n\na> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.05"
   );
   t.deepEqual(
     stripHtml("something <\t\na\n>  to <a\n\n> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.06"
   );
   t.deepEqual(
     stripHtml("something <\n\na\t>\t\t\t\t\t  to \t<\n\na\t> put here to test"),
-    "something put here to test",
+    "something to put here to test",
     "01.17.07 - even this"
   );
 });
