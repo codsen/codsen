@@ -35,7 +35,6 @@
 
 <!-- prettier-ignore-end -->
 
-
 ## Install globally, call anywhere
 
 ```bash
@@ -45,9 +44,9 @@ npm i -g json-sort-cli
 * then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
 
 ```bash
-$ jsonsort file1.csv "folder1/folder2/**/*.*" folder3 -t
-$ jsonsort * -t -n
-$ jsonsort yourspecialfolder -d
+$ jsonsort file1.csv "folder1/folder2/**/*.*" folder3 -s
+$ jsonsort * -t -n -s
+$ jsonsort yourspecialfolder -s
 
 $ jsonsort -v
 $ jsonsort --version
@@ -65,7 +64,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | ----- | --------------- | ----------------------------------------------------------------- |
 | `-n`  | `--nodemodules` | Don't ignore any **n**ode_modules folders and package-lock.json's |
 | `-t`  | `--tabs`        | Use **t**abs for JSON file indentation                            |
-| `-d`  | `--dry`         | **d**ry run - only list the found JSON files, don't sort or write |
+| `-s`  | `--silent`      | Don't show line per each processed file, only total recap         |
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
 
@@ -73,7 +72,7 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is, if object \#1 has array which has object \#2, both objects' keys \#1 and \#2 will be sorted.
+It **sorts JSON files deeply**. That is if object \#1 has an array which has object \#2, both objects' keys \#1 and \#2 will be sorted.
 
 As a by-product, since this is a parsing-type application, the written files are also **prettified** - tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
@@ -81,11 +80,11 @@ Under the bonnet, this application uses [globby](https://github.com/sindresorhus
 
 **[⬆ &nbsp;back to top](#)**
 
-### Some behaviour peculiarities
+### Extra features
 
-If you pass a folder name, for example, `jsonsort templates/`, it will catch all JSON files in there. Sometimes, config files can be in JSON format but have a different extension, yet you want to sort them. For example, ESLint config can be in JSON but be [dot files](https://en.wikipedia.org/wiki/Dot-file) `.eslintrc`.
+If you pass a folder name, for example, `jsonsort templates`, it will catch all JSON files in folder `templates`. Sometimes, config [dot files](https://en.wikipedia.org/wiki/Dot-file) can be in JSON format, for example, `.eslintrc` or `.bithoundrc`. When such files are encountered, CLI app will first attempt to JSON-parse them, and, if successful, will sort them. If parsing fails, they'll be listed among failed files.
 
-If you want to sort JSON files that don't have `.json` extensions, you'll need to target each file separately. For example, you should query: `jsonsort .eslintrc` as opposed to lazy glob `jsonsort *`.
+If a file is a broken JSON file with errors in the markup, it won't cause an error on the whole pipeline - other, healthy files from the batch will still be sorted OK. A broken file will be listed among failed files.
 
 **[⬆ &nbsp;back to top](#)**
 
