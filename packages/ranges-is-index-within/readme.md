@@ -30,21 +30,11 @@ import rangesIsIndexWithin from "ranges-is-index-within";
 
 Here's what you'll get:
 
-<!-- prettier-ignore-start -->
-
-| Type | Key in `package.json` | Path | Size |
-
-Here's what you'll get:
-
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-is-index-within.cjs.js` | 9&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-is-index-within.esm.js` | 9&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-is-index-within.umd.js` | 20&nbsp;KB
-
-
-
-<!-- prettier-ignore-end -->
+| Type                                                                                                    | Key in `package.json` | Path                                 | Size       |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ---------- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 9&nbsp;KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 9&nbsp;KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 20&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
