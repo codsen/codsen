@@ -5,11 +5,18 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-test.skip("delete me", t => {
+test("delete me", t => {
+  // t.deepEqual(
+  //   stripHtml("/   </\na>   /"),
+  //   "/ /",
+  //   "01.15.03 - and the same but with bunch of line breaks and tabs"
+  // );
   t.deepEqual(
-    stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
-    "aa cc",
-    "01.07.02"
+    stripHtml(
+      "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"
+    ),
+    "/// /// /// /// /// /// /// /// ///",
+    "01.15.03 - and the same but with bunch of line breaks and tabs"
   );
 });
 
@@ -489,15 +496,15 @@ test("01.13 - brackets used for expressive purposes (very very suspicious but po
     "01.13.03"
   );
 
-  // will remove
+  // will not remove
   t.deepEqual(
     stripHtml("text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3"),
-    "text1 text3",
+    "text1 <<<<<<<<<<< text2 >>>>>>>>>>> text3",
     "01.13.04"
   );
   t.deepEqual(
     stripHtml("<article> text1 <<<<<<<<<<< text2 >>>>>>>>> text3 </article>"),
-    "text1 text3",
+    "text1 <<<<<<<<<<< text2 >>>>>>>>> text3",
     "01.13.05"
   );
 });
@@ -534,6 +541,8 @@ test("01.15 - slashes around tags that include slashes", t => {
     "/// /// /// /// /// /// /// /// ///",
     "01.15.02 - this time repeated slashes inside"
   );
+
+  // line breaks within tag doesn't count - the new line breaks should not be introduced!
   t.deepEqual(
     stripHtml(
       "///</\n/\n/\ta>///<a\n///\n//\t>///<\n////\t a>///< /\n//\na><// \ta>///<\n\n\n\n ///a>///<\t\t\t\t// \n\n\na //>///<\n\n\n///a\n///\n>///<\n //// \na\n //// \n>///"

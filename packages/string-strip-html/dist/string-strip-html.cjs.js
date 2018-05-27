@@ -154,9 +154,22 @@ function stripHtml(str, originalOpts) {
     }
   }
 
-  function calculateWhitespaceToInsert(str, currCharIdx, fromIdx, toIdx) {
+  function calculateWhitespaceToInsert(str, // whole string
+  currCharIdx, // current index
+  fromIdx, // leftmost whitespace edge around tag
+  toIdx, // rightmost whitespace edge around tag
+  lastOpeningBracketAt, // tag actually starts here (<)
+  lastClosingBracketAt // tag actually ends here (>)
+  ) {
+    var strToEvaluateForLineBreaks = "";
+    if (fromIdx < lastOpeningBracketAt) {
+      strToEvaluateForLineBreaks += str.slice(fromIdx, lastOpeningBracketAt);
+    }
+    if (toIdx > lastClosingBracketAt) {
+      strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
+    }
     if (!punctuation.includes(str[currCharIdx - 1])) {
-      return str.slice(fromIdx, toIdx).includes("\n") ? "\n" : " ";
+      return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
     }
     return "";
   }
@@ -270,7 +283,7 @@ function stripHtml(str, originalOpts) {
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0));
       // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
       if (!tag.onlyPlausible && str[i + 1] === undefined) {
-        rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1));
+        rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
         // also,
         treatRangedTags(i);
       }
@@ -423,7 +436,9 @@ function stripHtml(str, originalOpts) {
           //       str,
           //       i,
           //       tag.leftOuterWhitespace,
-          //       i + 1
+          //       i + 1,
+          //       tag.lastOpeningBracketAt,
+          //       tag.lastClosingBracketAt
           //     )}"]`}\u001b[${39}m`
           //   );
           //   rangesToDelete.push(
@@ -433,7 +448,9 @@ function stripHtml(str, originalOpts) {
           //       str,
           //       i,
           //       tag.leftOuterWhitespace,
-          //       i + 1
+          //       i + 1,
+          //       tag.lastOpeningBracketAt,
+          //       tag.lastClosingBracketAt
           //     )
           //   );
           //   // also,
@@ -464,7 +481,7 @@ function stripHtml(str, originalOpts) {
           return attrObj.equalsAt;
         })) {
 
-          rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex));
+          rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
           // also,
           treatRangedTags(i);
         } else {
