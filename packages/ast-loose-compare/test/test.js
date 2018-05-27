@@ -1,5 +1,5 @@
 import test from "ava";
-import looseCompare from "../dist/ast-loose-compare.cjs";
+import looseCompare from "../dist/ast-loose-compare.esm";
 
 // ==============================
 // Precautions

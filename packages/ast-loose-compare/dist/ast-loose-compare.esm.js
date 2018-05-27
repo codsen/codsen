@@ -2,14 +2,14 @@ import empty from 'ast-contains-only-empty-space';
 import isString from 'lodash.isstring';
 import isPlainObject from 'lodash.isplainobject';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+/* eslint no-param-reassign:0 */
 
 function looseCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
   }
-  var i = void 0;
-  var len = void 0;
+  let i;
+  let len;
   // precautions
   if (res === undefined) {
     // means original cycle, function is called first time from outside
@@ -22,7 +22,7 @@ function looseCompare(bigObj, smallObj, res) {
     return false;
   }
   res = res || true;
-  if ((typeof bigObj === "undefined" ? "undefined" : _typeof(bigObj)) !== (typeof smallObj === "undefined" ? "undefined" : _typeof(smallObj))) {
+  if (typeof bigObj !== typeof smallObj) {
     if (empty(bigObj) && empty(smallObj)) {
       return true;
     }
@@ -46,7 +46,10 @@ function looseCompare(bigObj, smallObj, res) {
         }
       }
     } else {
-      if (smallObj.length === 0 && bigObj.length === 0 || empty(smallObj) && empty(bigObj)) {
+      if (
+        (smallObj.length === 0 && bigObj.length === 0) ||
+        (empty(smallObj) && empty(bigObj))
+      ) {
         return true;
       }
       res = false;
@@ -55,9 +58,13 @@ function looseCompare(bigObj, smallObj, res) {
   } else if (isPlainObject(bigObj) && isPlainObject(smallObj)) {
     // if both are plain objects
     if (Object.keys(smallObj).length > 0) {
-      var keysArr = Object.keys(smallObj);
+      const keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
-        if (Array.isArray(smallObj[keysArr[i]]) || isPlainObject(smallObj[keysArr[i]]) || isString(smallObj[keysArr[i]])) {
+        if (
+          Array.isArray(smallObj[keysArr[i]]) ||
+          isPlainObject(smallObj[keysArr[i]]) ||
+          isString(smallObj[keysArr[i]])
+        ) {
           res = looseCompare(bigObj[keysArr[i]], smallObj[keysArr[i]], res);
           if (!res) {
             return false;
@@ -70,7 +77,11 @@ function looseCompare(bigObj, smallObj, res) {
         }
       }
     } else {
-      if (Object.keys(smallObj).length === 0 && Object.keys(bigObj).length === 0 || empty(smallObj) && empty(bigObj)) {
+      if (
+        (Object.keys(smallObj).length === 0 &&
+          Object.keys(bigObj).length === 0) ||
+        (empty(smallObj) && empty(bigObj))
+      ) {
         return true;
       }
       res = false;
