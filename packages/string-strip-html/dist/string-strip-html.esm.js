@@ -395,6 +395,22 @@ function stripHtml(str, originalOpts) {
       tag.slashPresent = true;
     }
 
+    // catch punctuation, present after alleged tag start:
+    // -------------------------------------------------------------------------
+    if (
+      tag.nameStarts &&
+      tag.nameStarts < i &&
+      !tag.quotes &&
+      punctuation.includes(str[i]) &&
+      !attrObj.equalsAt &&
+      tag.attributes &&
+      tag.attributes.length === 0 &&
+      !tag.lastClosingBracketAt // still within a tag
+    ) {
+      tag = {};
+      attrObj = {};
+    }
+
     // catch double or single quotes
     // -------------------------------------------------------------------------
     if (str[i] === '"' || str[i] === "'") {
@@ -446,6 +462,11 @@ function stripHtml(str, originalOpts) {
         tag.nameStarts,
         tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0)
       );
+      // if we caught "----" from "<----" or "---->", bail:
+      if (tag.name.replace(/-/g, "").length === 0) {
+        tag = {};
+        continue;
+      }
       // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
       if (!tag.onlyPlausible && str[i + 1] === undefined) {
         rangesToDelete.push(

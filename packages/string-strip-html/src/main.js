@@ -441,8 +441,25 @@ function stripHtml(str, originalOpts) {
       tag.lastOpeningBracketAt !== undefined &&
       tag.lastClosingBracketAt === undefined
     ) {
-      console.log(`429 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
+      console.log(`444 \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = true`);
       tag.slashPresent = true;
+    }
+
+    // catch punctuation, present after alleged tag start:
+    // -------------------------------------------------------------------------
+    if (
+      tag.nameStarts &&
+      tag.nameStarts < i &&
+      !tag.quotes &&
+      punctuation.includes(str[i]) &&
+      !attrObj.equalsAt &&
+      tag.attributes &&
+      tag.attributes.length === 0 &&
+      !tag.lastClosingBracketAt // still within a tag
+    ) {
+      console.log("460 PUNCTUATION! reset tag & attrObj = {}");
+      tag = {};
+      attrObj = {};
     }
 
     // catch double or single quotes
@@ -453,7 +470,7 @@ function stripHtml(str, originalOpts) {
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
         console.log(
-          `441 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+          `473 PUSHING ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
             attrObj,
             null,
             4
@@ -482,7 +499,7 @@ function stripHtml(str, originalOpts) {
         ) {
           attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
           console.log(
-            `471 SET ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
+            `485 SET ${`\u001b[${33}m${`attrObj`}\u001b[${39}m`} = ${JSON.stringify(
               attrObj,
               null,
               4
@@ -506,7 +523,7 @@ function stripHtml(str, originalOpts) {
       // 1. mark the name ending
       tag.nameEnds = i;
       console.log(
-        `504 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
+        `522 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
       );
       // 2. extract the full name string
       tag.name = str.slice(
@@ -514,12 +531,20 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0)
       );
       console.log(
-        `512 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
+        `530 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
       );
+      // if we caught "----" from "<----" or "---->", bail:
+      if (tag.name.replace(/-/g, "").length === 0) {
+        console.log(
+          `535 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
+        );
+        tag = {};
+        continue;
+      }
       // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
       if (!tag.onlyPlausible && str[i + 1] === undefined) {
         console.log(
-          `517 \u001b[${33}m${`SUBMIT RANGE #3: [${
+          `543 \u001b[${33}m${`SUBMIT RANGE #3: [${
             tag.leftOuterWhitespace
           }, ${i + 1}, ${calculateWhitespaceToInsert(
             str,
@@ -927,13 +952,13 @@ function stripHtml(str, originalOpts) {
           // also,
           treatRangedTags(i);
         } else {
-          console.log(`799 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          console.log(`951 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
 
         // part 2.
         if (str[i] !== ">") {
-          console.log(`805 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
+          console.log(`957 \u001b[${33}m${`RESET tag{}`}\u001b[${39}m`);
           tag = {};
         }
       }
