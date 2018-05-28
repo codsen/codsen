@@ -838,7 +838,7 @@ function stripHtml(str, originalOpts) {
                     tag.leftOuterWhitespace,
                     rangeEnd,
                     tag.lastOpeningBracketAt,
-                    tag.lastClosingBracketAt
+                    closingFoundAt
                   )
                 );
                 // offset:

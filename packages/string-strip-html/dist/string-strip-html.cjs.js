@@ -546,7 +546,7 @@ function stripHtml(str, originalOpts) {
               }
               if (closingFoundAt && closingFoundAt < y && (str[y].trim().length !== 0 || str[y + 1] === undefined)) {
                 var rangeEnd = y;
-                rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
+                rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
                 // offset:
                 i = y;
                 // resets:

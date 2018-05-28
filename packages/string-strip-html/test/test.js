@@ -6,7 +6,16 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test.skip("delete me", t => {
-  // z
+  t.deepEqual(
+    stripHtml(`abc<!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml><![endif]--> def`),
+    "abc def",
+    "02.01.01"
+  );
 });
 
 test("01.01 - string is whole (opening) tag", t => {
@@ -1085,7 +1094,7 @@ test("02.01 - strips XML", t => {
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`),
-    "abc\ndef",
+    "abc def",
     "02.01.01"
   );
   t.deepEqual(
@@ -1095,7 +1104,7 @@ test("02.01 - strips XML", t => {
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]-->def`),
-    "abc\ndef",
+    "abc def",
     "02.01.02"
   );
   t.deepEqual(
@@ -1105,7 +1114,7 @@ test("02.01 - strips XML", t => {
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`),
-    "abc\ndef",
+    "abc def",
     "02.01.03"
   );
   t.deepEqual(
@@ -1115,7 +1124,7 @@ test("02.01 - strips XML", t => {
 <o:PixelsPerInch>96</o:PixelsPerInch>
 </o:OfficeDocumentSettings>
 </xml><![endif]--> def`),
-    "abc\ndef",
+    "abc def",
     "02.01.04"
   );
   t.deepEqual(
