@@ -534,7 +534,10 @@ function stripHtml(str, originalOpts) {
         `530 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
       );
       // if we caught "----" from "<----" or "---->", bail:
-      if (tag.name.replace(/-/g, "").length === 0) {
+      if (
+        str[tag.nameStarts - 1] !== "!" && // protection against <!--
+        tag.name.replace(/-/g, "").length === 0
+      ) {
         console.log(
           `535 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
         );
@@ -1000,6 +1003,79 @@ function stripHtml(str, originalOpts) {
               tag.lastOpeningBracketAt
             }; \u001b[${33}m${`tag.slashPresent`}\u001b[${39}m = false`
           );
+
+          // tend the HTML comments: <!-- --> or CDATA: <![CDATA[ ... ]]>
+          // if opening comment tag is detected, traverse forward aggressively
+          // until EOL or "-->" is reached and offset outer index "i".
+          if (
+            `${str[i + 1]}${str[i + 2]}${str[i + 3]}` === "!--" ||
+            `${str[i + 1]}${str[i + 2]}${str[i + 3]}${str[i + 4]}${str[i + 5]}${
+              str[i + 6]
+            }${str[i + 7]}${str[i + 8]}` === "![CDATA["
+          ) {
+            console.log(
+              `1017 \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
+            );
+            // make a note which one it is:
+            let cdata = true;
+            if (str[i + 2] === "-") {
+              cdata = false;
+            }
+            console.log("1024 traversing forward");
+            let closingFoundAt = undefined;
+            for (let y = i; y < len; y++) {
+              console.log(
+                `${`\u001b[${33}m${`str[${y}]`}\u001b[${39}m`} = ${str[y]}`
+              );
+              if (
+                (!closingFoundAt &&
+                  (cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "]]>")) ||
+                (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
+              ) {
+                closingFoundAt = y;
+                console.log(`1036 closingFoundAt = ${closingFoundAt}`);
+              }
+              if (
+                closingFoundAt &&
+                closingFoundAt < y &&
+                (str[y].trim().length !== 0 || str[y + 1] === undefined)
+              ) {
+                console.log("1046 END detected");
+                const rangeEnd = y;
+                console.log(
+                  `1048 PUSH range [${
+                    tag.leftOuterWhitespace
+                  }, ${rangeEnd}, "${calculateWhitespaceToInsert(
+                    str,
+                    y,
+                    tag.leftOuterWhitespace,
+                    rangeEnd,
+                    tag.lastOpeningBracketAt,
+                    tag.lastClosingBracketAt
+                  )}"]`
+                );
+                rangesToDelete.push(
+                  tag.leftOuterWhitespace,
+                  rangeEnd,
+                  calculateWhitespaceToInsert(
+                    str,
+                    y,
+                    tag.leftOuterWhitespace,
+                    rangeEnd,
+                    tag.lastOpeningBracketAt,
+                    tag.lastClosingBracketAt
+                  )
+                );
+                // offset:
+                i = y;
+                // resets:
+                tag = {};
+                attrObj = {};
+                // finally,
+                break;
+              }
+            }
+          }
         }
       }
     }

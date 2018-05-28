@@ -6,11 +6,7 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test.skip("delete me", t => {
-  t.deepEqual(
-    stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
-    "aaaaaaa x bbbbbbbb",
-    "01.26.01"
-  );
+  // z
 });
 
 test("01.01 - string is whole (opening) tag", t => {
@@ -1023,6 +1019,60 @@ test("01.30 - dirty code - various, #1", t => {
   t.deepEqual(stripHtml('aa< br a b = " // >cc'), "aa cc", "01.30.16");
 });
 
+test("01.31 - CDATA", t => {
+  // surroundings are not a linebreaks
+  t.deepEqual(
+    stripHtml(`a<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>b`),
+    "a b",
+    "01.31.01 - tight"
+  );
+  t.deepEqual(
+    stripHtml(`a <![CDATA[
+  The <, &, ', and " can be used,
+  *and* %MyParamEntity; can be expanded.
+]]> b`),
+    "a b",
+    "01.31.02 - normal"
+  );
+  t.deepEqual(
+    stripHtml(`a \t\t<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>       b`),
+    "a b",
+    "01.31.03 - loose"
+  );
+
+  // surroundings are linebreaks
+  t.deepEqual(
+    stripHtml(`a\n<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>\nb`),
+    "a\nb",
+    "01.31.04 - single linebreaks"
+  );
+  t.deepEqual(
+    stripHtml(`a\n\n\n<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>\n\n\nb`),
+    "a\nb",
+    "01.31.05 - excessive linebreaks"
+  );
+  t.deepEqual(
+    stripHtml(`a\n \t\n\n<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>\n\n\n\t b`),
+    "a\nb",
+    "01.31.06 - mixed linebreaks"
+  );
+});
+
 // ==============================
 // XML (sprinkled within HTML)
 // ==============================
@@ -1474,62 +1524,62 @@ test("06.04 - false positives #1 - Nunjucks code", t => {
 
 test("06.05 - unclosed tag followed by another tag", t => {
   // range tag:
-  t.deepEqual(stripHtml('<script>alert("123")</script<body>'), "", "06.03.01");
-  t.deepEqual(stripHtml('<script>alert("123")</script</body>'), "", "06.03.02");
+  t.deepEqual(stripHtml('<script>alert("123")</script<body>'), "", "06.05.01");
+  t.deepEqual(stripHtml('<script>alert("123")</script</body>'), "", "06.05.02");
   t.deepEqual(
     stripHtml('<script>alert("123")</script</ body>'),
     "",
-    "06.03.03"
+    "06.05.03"
   );
-  t.deepEqual(stripHtml('<script>alert("123")</script<body/>'), "", "06.03.04");
-  t.deepEqual(stripHtml('<script>alert("123")</script<body'), "", "06.03.05");
+  t.deepEqual(stripHtml('<script>alert("123")</script<body/>'), "", "06.05.04");
+  t.deepEqual(stripHtml('<script>alert("123")</script<body'), "", "06.05.05");
 
   // non-range tag:
   t.deepEqual(
     stripHtml("<article>text here</article<body>"),
     "text here",
-    "06.03.06"
+    "06.05.06"
   );
   t.deepEqual(
     stripHtml("<article>text here</article</body>"),
     "text here",
-    "06.03.07"
+    "06.05.07"
   );
   t.deepEqual(
     stripHtml("<article>text here</article</ body>"),
     "text here",
-    "06.03.08"
+    "06.05.08"
   );
   t.deepEqual(
     stripHtml("<article>text here</article<body/>"),
     "text here",
-    "06.03.09"
+    "06.05.09"
   );
   t.deepEqual(
     stripHtml("<article>text here</article<body"),
     "text here",
-    "06.03.10"
+    "06.05.10"
   );
 
   // many tags:
   t.deepEqual(
     stripHtml("a<something<anything<whatever<body<html"),
     "a",
-    "06.03.11 - strips the tags"
+    "06.05.11 - strips the tags"
   );
   t.deepEqual(
     stripHtml("a < something < anything < whatever < body < html"),
     "a < something < anything < whatever < body < html",
-    "06.03.12 - bails because of spaces"
+    "06.05.12 - bails because of spaces"
   );
 });
 
-test("06.04 - range tags are overlapping", t => {
+test("06.06 - range tags are overlapping", t => {
   // both default known range tags
   t.deepEqual(
     stripHtml("<script>tra la <style>la</script>la la</style> la"),
     "",
-    "06.04.01"
+    "06.06.01"
   );
 
   // both were just custom-set
@@ -1538,14 +1588,14 @@ test("06.04 - range tags are overlapping", t => {
       stripTogetherWithTheirContents: ["zzz", "yyy"]
     }),
     "",
-    "06.04.02"
+    "06.06.02"
   );
   t.deepEqual(
     stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> la", {
       stripTogetherWithTheirContents: ["zzz", "yyy"]
     }),
     "",
-    "06.04.03"
+    "06.06.03"
   );
 });
 
