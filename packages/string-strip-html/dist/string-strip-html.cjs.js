@@ -113,7 +113,16 @@ function stripHtml(str, originalOpts) {
   function treatRangedTags(i) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       // it depends, is it opening or closing range tag:
-      if (tag.slashPresent) {
+
+      // We could try to distinguish opening from closing tags by presence of
+      // slash, but that would be a liability for dirty code cases where clash
+      // is missing. Better, instead, just see if an entry for that tag name
+      // already exists in the rangesToDelete[].
+
+      if (isArr(rangedOpeningTags) && rangedOpeningTags.some(function (obj) {
+        return obj.name === tag.name && obj.lastClosingBracketAt < i;
+      })) {
+        // if (tag.slashPresent) {
         // closing tag.
         // filter and remove the found tag
         for (var y = rangedOpeningTags.length; y--;) {
@@ -282,7 +291,7 @@ function stripHtml(str, originalOpts) {
       }
     }
 
-    // catch ending of the tag name:
+    // catch the ending of the tag name:
     // -------------------------------------------------------------------------
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || str[i] === "/" || str[i] === "<" || str[i] === ">" || str[i].trim().length !== 0 && str[i + 1] === undefined)) {
       // 1. mark the name ending
@@ -295,11 +304,19 @@ function stripHtml(str, originalOpts) {
         tag = {};
         continue;
       }
-      // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
-      if (!tag.onlyPlausible && str[i + 1] === undefined) {
-        rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
+      // 3. submit it for deletion:
+      if (!tag.onlyPlausible && (str[i + 1] === undefined || str[i] === "<")) {
+        var endingRangeIndex = i + 1;
+        if (str[i] === "<") {
+          endingRangeIndex = i;
+        }
+        rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt || endingRangeIndex));
         // also,
         treatRangedTags(i);
+
+        // then, for continuity, mark everything up accordingly if it's a new bracket:
+        tag = {};
+        attrObj = {};
       }
     }
 
@@ -431,46 +448,26 @@ function stripHtml(str, originalOpts) {
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
         if (tag.lastOpeningBracketAt < i && str[i] !== "<" && ( // to prevent cases like "text <<<<<< text"
-        str[i + 1] === undefined || str[i + 1] === "<") && tag.onlyPlausible) {
-          // find out the tag name earlier than dedicated tag name ending catching section:
-          if (str[i + 1] === undefined) {
-            var tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
-            // if the tag is only plausible (there's space after opening bracket) and it's not among
-            // recognised tags, leave it as it is:
-            if (!definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
-              continue;
-            }
-          } // else {
-          //   // case 1. closing bracket hasn't been encountered yet but EOL is reached
-          //   // for example "<script" or "<script  "
-          //   console.log(
-          //     `384 \u001b[${33}m${`SUBMIT RANGE #1: [${
-          //       tag.leftOuterWhitespace
-          //     }, ${i + 1}, "${calculateWhitespaceToInsert(
-          //       str,
-          //       i,
-          //       tag.leftOuterWhitespace,
-          //       i + 1,
-          //       tag.lastOpeningBracketAt,
-          //       tag.lastClosingBracketAt
-          //     )}"]`}\u001b[${39}m`
-          //   );
-          //   rangesToDelete.push(
-          //     tag.leftOuterWhitespace,
-          //     i + 1,
-          //     calculateWhitespaceToInsert(
-          //       str,
-          //       i,
-          //       tag.leftOuterWhitespace,
-          //       i + 1,
-          //       tag.lastOpeningBracketAt,
-          //       tag.lastClosingBracketAt
-          //     )
-          //   );
-          //   // also,
-          //   treatRangedTags(i);
-          // }
-        }
+        str[i + 1] === undefined || str[i + 1] === "<") // &&
+        // tag.onlyPlausible
+        ) {
+            // find out the tag name earlier than dedicated tag name ending catching section:
+            if (str[i + 1] === undefined) {
+              var tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
+              // if the tag is only plausible (there's space after opening bracket) and it's not among
+              // recognised tags, leave it as it is:
+              if (definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
+                rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
+                // also,
+                treatRangedTags(i);
+              } else {
+                continue;
+              }
+            } // else {
+            //   // case 1. closing bracket hasn't been encountered yet but EOL is reached
+            //   // for example "<script" or "<script  "
+            // }
+          }
       } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
 
         // tag.lastClosingBracketAt !== undefined
@@ -482,7 +479,7 @@ function stripHtml(str, originalOpts) {
 
         // part 1.
 
-        var endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+        var _endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
 
         // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
         // for this tag to be considered a tag - there has to be at least one attribute with equals if
@@ -495,7 +492,7 @@ function stripHtml(str, originalOpts) {
           return attrObj.equalsAt;
         })) {
 
-          rangesToDelete.push(tag.leftOuterWhitespace, endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
+          rangesToDelete.push(tag.leftOuterWhitespace, _endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, _endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
           // also,
           treatRangedTags(i);
         } else {

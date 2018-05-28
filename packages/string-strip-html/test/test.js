@@ -6,13 +6,7 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test.skip("delete me", t => {
-  t.deepEqual(
-    stripHtml(
-      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
-    ),
-    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
-    "01.16.01 - lots of dodgy exclamation marks around and within tags"
-  );
+  t.deepEqual(stripHtml("<a>"), "", "01.01.01");
 });
 
 test("01.01 - string is whole (opening) tag", t => {
@@ -627,7 +621,7 @@ test("01.18 - dirty code - missing closing brackets", t => {
   );
   t.deepEqual(stripHtml("<script>text<script"), "", "01.18.04");
   t.deepEqual(stripHtml("<a>text<a"), "text", "01.18.05");
-  t.deepEqual(stripHtml("<a>text<a<a"), "text", "01.18.05");
+  t.deepEqual(stripHtml("<a>text<a<a"), "text", "01.18.06");
 });
 
 test("01.19 - dirty code - missing closing brackets + line breaks", t => {

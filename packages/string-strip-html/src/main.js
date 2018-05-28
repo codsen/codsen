@@ -222,9 +222,21 @@ function stripHtml(str, originalOpts) {
   function treatRangedTags(i) {
     if (opts.stripTogetherWithTheirContents.includes(tag.name)) {
       // it depends, is it opening or closing range tag:
-      if (tag.slashPresent) {
+
+      // We could try to distinguish opening from closing tags by presence of
+      // slash, but that would be a liability for dirty code cases where clash
+      // is missing. Better, instead, just see if an entry for that tag name
+      // already exists in the rangesToDelete[].
+
+      if (
+        isArr(rangedOpeningTags) &&
+        rangedOpeningTags.some(
+          obj => obj.name === tag.name && obj.lastClosingBracketAt < i
+        )
+      ) {
+        // if (tag.slashPresent) {
         console.log(
-          `152 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m closing ranged tag`
+          `239 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m closing ranged tag`
         );
         // closing tag.
         // filter and remove the found tag
@@ -250,7 +262,7 @@ function stripHtml(str, originalOpts) {
               )}`
             );
             console.log(
-              `391 ABOUT TO PUSH RANGE: [${
+              `265 ABOUT TO PUSH RANGE: [${
                 rangedOpeningTags[y].lastOpeningBracketAt
               }, ${i}]`
             );
@@ -271,7 +283,7 @@ function stripHtml(str, originalOpts) {
             // or different name.
             rangedOpeningTags.splice(y, 1);
             console.log(
-              `401 new \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m = ${JSON.stringify(
+              `286 new \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m = ${JSON.stringify(
                 rangedOpeningTags,
                 null,
                 4
@@ -284,11 +296,11 @@ function stripHtml(str, originalOpts) {
       } else {
         // opening tag.
         console.log(
-          `209 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m opening ranged tag`
+          `299 \u001b[${31}m${`treatRangedTags():`}\u001b[${39}m opening ranged tag`
         );
         rangedOpeningTags.push(tag);
         console.log(
-          `212 pushed tag{} to \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m\nwhich is now equal to:\n${JSON.stringify(
+          `303 pushed tag{} to \u001b[${33}m${`rangedOpeningTags`}\u001b[${39}m\nwhich is now equal to:\n${JSON.stringify(
             rangedOpeningTags,
             null,
             4
@@ -508,7 +520,7 @@ function stripHtml(str, originalOpts) {
       }
     }
 
-    // catch ending of the tag name:
+    // catch the ending of the tag name:
     // -------------------------------------------------------------------------
     if (
       tag.nameStarts !== undefined &&
@@ -530,7 +542,7 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0)
       );
       console.log(
-        `530 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
+        `545 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
       );
       // if we caught "----" from "<----" or "---->", bail:
       if (
@@ -538,39 +550,54 @@ function stripHtml(str, originalOpts) {
         tag.name.replace(/-/g, "").length === 0
       ) {
         console.log(
-          `535 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
+          `553 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
         );
         tag = {};
         continue;
       }
-      // 3. if the input string ends here and it's not a dodgy tag, submit it for deletion:
-      if (!tag.onlyPlausible && str[i + 1] === undefined) {
+      // 3. submit it for deletion:
+      if (!tag.onlyPlausible && (str[i + 1] === undefined || str[i] === "<")) {
+        let endingRangeIndex = i + 1;
+        if (str[i] === "<") {
+          endingRangeIndex = i;
+        }
         console.log(
-          `543 \u001b[${33}m${`SUBMIT RANGE #3: [${
+          `${`\u001b[${33}m${`tag.lastClosingBracketAt`}\u001b[${39}m`} = ${JSON.stringify(
+            tag.lastClosingBracketAt,
+            null,
+            4
+          )}`
+        );
+        console.log(
+          `564 \u001b[${33}m${`SUBMIT RANGE #3: [${
             tag.leftOuterWhitespace
-          }, ${i + 1}, ${calculateWhitespaceToInsert(
+          }, ${endingRangeIndex}, "${calculateWhitespaceToInsert(
             str,
             i,
             tag.leftOuterWhitespace,
-            i + 1,
+            endingRangeIndex,
             tag.lastOpeningBracketAt,
-            tag.lastClosingBracketAt
-          )}]`}\u001b[${39}m`
+            tag.lastClosingBracketAt || endingRangeIndex
+          )}"]`}\u001b[${39}m`
         );
         rangesToDelete.push(
           tag.leftOuterWhitespace,
-          i + 1,
+          endingRangeIndex,
           calculateWhitespaceToInsert(
             str,
             i,
             tag.leftOuterWhitespace,
-            i + 1,
+            endingRangeIndex,
             tag.lastOpeningBracketAt,
-            tag.lastClosingBracketAt
+            tag.lastClosingBracketAt || endingRangeIndex
           )
         );
         // also,
         treatRangedTags(i);
+
+        // then, for continuity, mark everything up accordingly if it's a new bracket:
+        tag = {};
+        attrObj = {};
       }
     }
 
@@ -812,7 +839,7 @@ function stripHtml(str, originalOpts) {
         // 2. push attrObj into tag.attributes[]
         if (Object.keys(attrObj).length) {
           console.log(
-            `752 PUSH \u001b[${33}m${`attrObj`}\u001b[${39}m & reset`
+            `827 PUSH \u001b[${33}m${`attrObj`}\u001b[${39}m & reset`
           );
           if (!tag.attributes) {
             tag.attributes = [];
@@ -832,14 +859,15 @@ function stripHtml(str, originalOpts) {
         if (
           tag.lastOpeningBracketAt < i &&
           str[i] !== "<" && // to prevent cases like "text <<<<<< text"
-          (str[i + 1] === undefined || str[i + 1] === "<") &&
-          tag.onlyPlausible
+          (str[i + 1] === undefined || str[i + 1] === "<") // &&
+          // tag.onlyPlausible
         ) {
+          console.log(`850 str[i + 1] = ${str[i + 1]}`);
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
             const tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
             console.log(
-              `776 ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${JSON.stringify(
+              `855 ${`\u001b[${33}m${`tagName`}\u001b[${39}m`} = ${JSON.stringify(
                 tagName,
                 null,
                 4
@@ -847,47 +875,46 @@ function stripHtml(str, originalOpts) {
             );
             // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
-            if (
-              !definitelyTagNames.concat(singleLetterTags).includes(tagName)
-            ) {
+            if (definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
+              console.log(
+                `865 \u001b[${33}m${`SUBMIT RANGE: [${
+                  tag.leftOuterWhitespace
+                }, ${i + 1}, "${calculateWhitespaceToInsert(
+                  str,
+                  i,
+                  tag.leftOuterWhitespace,
+                  i + 1,
+                  tag.lastOpeningBracketAt,
+                  tag.lastClosingBracketAt
+                )}"]`}\u001b[${39}m`
+              );
+              rangesToDelete.push(
+                tag.leftOuterWhitespace,
+                i + 1,
+                calculateWhitespaceToInsert(
+                  str,
+                  i,
+                  tag.leftOuterWhitespace,
+                  i + 1,
+                  tag.lastOpeningBracketAt,
+                  tag.lastClosingBracketAt
+                )
+              );
+              // also,
+              treatRangedTags(i);
+            } else {
               continue;
             }
           } // else {
           //   // case 1. closing bracket hasn't been encountered yet but EOL is reached
           //   // for example "<script" or "<script  "
-          //   console.log(
-          //     `384 \u001b[${33}m${`SUBMIT RANGE #1: [${
-          //       tag.leftOuterWhitespace
-          //     }, ${i + 1}, "${calculateWhitespaceToInsert(
-          //       str,
-          //       i,
-          //       tag.leftOuterWhitespace,
-          //       i + 1,
-          //       tag.lastOpeningBracketAt,
-          //       tag.lastClosingBracketAt
-          //     )}"]`}\u001b[${39}m`
-          //   );
-          //   rangesToDelete.push(
-          //     tag.leftOuterWhitespace,
-          //     i + 1,
-          //     calculateWhitespaceToInsert(
-          //       str,
-          //       i,
-          //       tag.leftOuterWhitespace,
-          //       i + 1,
-          //       tag.lastOpeningBracketAt,
-          //       tag.lastClosingBracketAt
-          //     )
-          //   );
-          //   // also,
-          //   treatRangedTags(i);
           // }
         }
       } else if (
         (i > tag.lastClosingBracketAt && str[i].trim().length !== 0) ||
         str[i + 1] === undefined
       ) {
-        console.log(`row \u001b[${33}m${`738`}\u001b[${39}m`);
+        console.log(`row \u001b[${33}m${`903`}\u001b[${39}m`);
 
         // tag.lastClosingBracketAt !== undefined
 
