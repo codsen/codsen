@@ -7,14 +7,11 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml(`abc<!--[if gte mso 9]><xml>
-<o:OfficeDocumentSettings>
-<o:AllowPNG/>
-<o:PixelsPerInch>96</o:PixelsPerInch>
-</o:OfficeDocumentSettings>
-</xml><![endif]--> def`),
-    "abc def",
-    "02.01.01"
+    stripHtml(
+      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
+    ),
+    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "01.16.01 - lots of dodgy exclamation marks around and within tags"
   );
 });
 

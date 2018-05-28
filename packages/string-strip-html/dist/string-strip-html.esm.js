@@ -125,7 +125,7 @@ function stripHtml(str, originalOpts) {
     "xml"
   ];
   const singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
-  const punctuation = [".", ",", "!", "?", ";", ")", "\u2026", '"']; // \u2026 is &hellip; - ellipsis
+  const punctuation = [".", ",", "?", ";", ")", "\u2026", '"']; // \u2026 is &hellip; - ellipsis
   const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
 
   const rangesToDelete = new Slices({ limitToBeAddedWhitespace: true });
