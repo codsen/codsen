@@ -7,11 +7,10 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml("aaa <!-- <tr> --> bbb"),
-    "aaa bbb",
-    "06.01.01 - double space"
+    stripHtml("<script>tra la <style>la</script>la la</style> la"),
+    "la",
+    "06.06.01"
   );
-  t.deepEqual(stripHtml("aaa <!-- <tr> -->"), "aaa", "06.02.02");
 });
 
 test("01.01 - string is whole (opening) tag", t => {
@@ -1576,24 +1575,24 @@ test("06.05 - unclosed tag followed by another tag", t => {
 test("06.06 - range tags are overlapping", t => {
   // both default known range tags
   t.deepEqual(
-    stripHtml("<script>tra la <style>la</script>la la</style> la"),
-    "",
+    stripHtml("<script>tra la <style>la</script>la la</style> rr"),
+    "rr",
     "06.06.01"
   );
 
   // both were just custom-set
   t.deepEqual(
-    stripHtml("<zzz>tra la <yyy>la</zzz>la la</yyy> la", {
+    stripHtml("<zzz>tra la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["zzz", "yyy"]
     }),
-    "",
+    "rr",
     "06.06.02"
   );
   t.deepEqual(
-    stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> la", {
+    stripHtml("<zzz>tra <script>la</script> la <yyy>la</zzz>la la</yyy> rr", {
       stripTogetherWithTheirContents: ["zzz", "yyy"]
     }),
-    "",
+    "rr",
     "06.06.03"
   );
 });
