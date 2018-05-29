@@ -1201,9 +1201,9 @@ test("03.03 - incomplete tag", t => {
   t.deepEqual(stripHtml(">>>"), ">>>", "03.03.03");
   t.deepEqual(stripHtml("<<<"), "<<<", "03.03.04");
   t.deepEqual(stripHtml(" <<< "), "<<<", "03.03.05");
-  t.deepEqual(stripHtml("<a"), "<a", "03.03.06");
-  t.deepEqual(stripHtml("<yo"), "<yo", "03.03.07");
-  t.deepEqual(stripHtml("a>"), "", "03.03.08");
+  t.deepEqual(stripHtml("<a"), "", "03.03.06");
+  t.deepEqual(stripHtml("<yo"), "", "03.03.07");
+  t.deepEqual(stripHtml("a>"), "a>", "03.03.08");
   t.deepEqual(stripHtml("yo>"), "yo>", "03.03.09");
 });
 
