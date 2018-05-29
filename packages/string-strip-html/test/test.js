@@ -6,7 +6,11 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test.skip("delete me", t => {
-  t.deepEqual(stripHtml("<a>"), "", "01.01.01");
+  t.deepEqual(
+    stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
+    "zzz",
+    "01.20.06"
+  );
 });
 
 test("01.01 - string is whole (opening) tag", t => {
@@ -637,120 +641,114 @@ test("01.19 - dirty code - missing closing brackets + line breaks", t => {
   );
 });
 
-test("01.20 - dirty code - spaces within recognised tags", t => {
+test("01.20 - dirty code - missing opening bracket, but recognised tag name", t => {
+  t.deepEqual(stripHtml("body>zzz</body>"), "zzz", "01.20.01");
+  t.deepEqual(stripHtml("body >zzz</body>"), "zzz", "01.20.02");
+  t.deepEqual(stripHtml("body/>zzz</body>"), "zzz", "01.20.03");
+  t.deepEqual(stripHtml("body />zzz</body>"), "zzz", "01.20.04");
+  t.deepEqual(stripHtml("body / >zzz</body>"), "zzz", "01.20.05");
   t.deepEqual(
-    stripHtml(" < b o d y > text<scr ipt>\nzzz\n<sc ript</b ody>"),
-    "text",
-    "01.20.01 - spaces within recognised tags"
+    stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
+    "zzz",
+    "01.20.06"
   );
-  t.deepEqual(
-    stripHtml(
-      ' < B o d y style="display: block;" > text<a r t i c l e>\nzzz\n< D I V </b ody>'
-    ),
-    "text",
-    "01.20.02 - spaces within recognised tags"
-  );
+  t.deepEqual(stripHtml("tralala>zzz</body>"), "tralala>zzz", "01.20.07");
+  t.deepEqual(stripHtml("BODY>zzz</BODY>"), "zzz", "01.20.08");
+  t.deepEqual(stripHtml("tralala>zzz</BODY>"), "tralala>zzz", "01.20.09");
 });
 
-test("01.21 - dirty code - missing opening bracket, but recognised tag name", t => {
-  t.deepEqual(stripHtml("body>zzz</body>"), "zzz", "01.21.01");
-  t.deepEqual(stripHtml("tralala>zzz</body>"), "tralala>zzz", "01.21.02");
-  t.deepEqual(stripHtml("BODY>zzz</BODY>"), "zzz", "01.21.01");
-  t.deepEqual(stripHtml("tralala>zzz</BODY>"), "tralala>zzz", "01.21.02");
+test("01.21 - dirty code - incomplete attribute", t => {
+  t.deepEqual(stripHtml("a<article anything=>b"), "a b", "01.21.01");
+  t.deepEqual(stripHtml("a<article anything= >b"), "a b", "01.21.02");
+  t.deepEqual(stripHtml("a<article anything=/>b"), "a b", "01.21.03");
+  t.deepEqual(stripHtml("a<article anything= />b"), "a b", "01.21.04");
+  t.deepEqual(stripHtml("a<article anything=/ >b"), "a b", "01.21.05");
+  t.deepEqual(stripHtml("a<article anything= / >b"), "a b", "01.21.06");
+  t.deepEqual(stripHtml("a<article anything= / >b"), "a b", "01.21.07");
+  t.deepEqual(stripHtml("a<article anything=  / >b"), "a b", "01.21.08");
 });
 
-test("01.22 - dirty code - incomplete attribute", t => {
-  t.deepEqual(stripHtml("a<article anything=>b"), "a b", "01.22.01");
-  t.deepEqual(stripHtml("a<article anything= >b"), "a b", "01.22.02");
-  t.deepEqual(stripHtml("a<article anything=/>b"), "a b", "01.22.03");
-  t.deepEqual(stripHtml("a<article anything= />b"), "a b", "01.22.04");
-  t.deepEqual(stripHtml("a<article anything=/ >b"), "a b", "01.22.05");
-  t.deepEqual(stripHtml("a<article anything= / >b"), "a b", "01.22.06");
-  t.deepEqual(stripHtml("a<article anything= / >b"), "a b", "01.22.07");
-  t.deepEqual(stripHtml("a<article anything=  / >b"), "a b", "01.22.08");
-});
-
-test("01.23 - dirty code - multiple incomplete attributes", t => {
-  t.deepEqual(stripHtml("a<article anything= whatever=>b"), "a b", "01.23.01");
-  t.deepEqual(stripHtml("a<article anything= whatever=/>b"), "a b", "01.23.02");
-  t.deepEqual(stripHtml("a<article anything= whatever= >b"), "a b", "01.23.03");
+test("01.22 - dirty code - multiple incomplete attributes", t => {
+  t.deepEqual(stripHtml("a<article anything= whatever=>b"), "a b", "01.22.01");
+  t.deepEqual(stripHtml("a<article anything= whatever=/>b"), "a b", "01.22.02");
+  t.deepEqual(stripHtml("a<article anything= whatever= >b"), "a b", "01.22.03");
   t.deepEqual(
     stripHtml("a<article anything= whatever= />b"),
     "a b",
-    "01.23.04"
+    "01.22.04"
   );
   t.deepEqual(
     stripHtml('a<article anything= class="zz" whatever= id="lalala">b'),
     "a b",
-    "01.23.05 - a mix thereof"
+    "01.22.05 - a mix thereof"
   );
   t.deepEqual(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"/>b'),
     "a b",
-    "01.23.06 - a mix thereof"
+    "01.22.06 - a mix thereof"
   );
   t.deepEqual(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" />b'),
     "a b",
-    "01.23.07 - a mix thereof"
+    "01.22.07 - a mix thereof"
   );
   t.deepEqual(
     stripHtml('a<article anything= class="zz" whatever= id="lalala" / >b'),
     "a b",
-    "01.23.08 - a mix thereof"
+    "01.22.08 - a mix thereof"
   );
   t.deepEqual(
     stripHtml('a<article anything= class="zz" whatever= id="lalala"  /  >b'),
     "a b",
-    "01.23.09 - a mix thereof"
+    "01.22.09 - a mix thereof"
   );
   t.deepEqual(
     stripHtml('a <article anything= class="zz" whatever= id="lalala"  /  > b'),
     "a b",
-    "01.23.10 - a mix thereof"
+    "01.22.10 - a mix thereof"
   );
   t.deepEqual(
     stripHtml(
       'a <article anything = class="zz" whatever = id="lalala"  /  > b'
     ),
     "a b",
-    "01.23.11 - a mix thereof"
+    "01.22.11 - a mix thereof"
   );
 });
 
-test("01.24 - dirty code - tag name, equals and end of a tag", t => {
+test("01.23 - dirty code - tag name, equals and end of a tag", t => {
   // html
-  t.deepEqual(stripHtml("a<article=>b"), "a b", "01.24.01");
-  t.deepEqual(stripHtml("a<article =>b"), "a b", "01.24.02");
-  t.deepEqual(stripHtml("a<article= >b"), "a b", "01.24.03");
-  t.deepEqual(stripHtml("a<article = >b"), "a b", "01.24.04");
+  t.deepEqual(stripHtml("a<article=>b"), "a b", "01.23.01");
+  t.deepEqual(stripHtml("a<article =>b"), "a b", "01.23.02");
+  t.deepEqual(stripHtml("a<article= >b"), "a b", "01.23.03");
+  t.deepEqual(stripHtml("a<article = >b"), "a b", "01.23.04");
 
   // xhtml without space between the slash and closing tag
-  t.deepEqual(stripHtml("a<article=/>b"), "a b", "01.24.05");
-  t.deepEqual(stripHtml("a<article =/>b"), "a b", "01.24.06");
-  t.deepEqual(stripHtml("a<article= />b"), "a b", "01.24.07");
-  t.deepEqual(stripHtml("a<article = />b"), "a b", "01.24.08");
+  t.deepEqual(stripHtml("a<article=/>b"), "a b", "01.23.05");
+  t.deepEqual(stripHtml("a<article =/>b"), "a b", "01.23.06");
+  t.deepEqual(stripHtml("a<article= />b"), "a b", "01.23.07");
+  t.deepEqual(stripHtml("a<article = />b"), "a b", "01.23.08");
 
   // xhtml with space after the closing slash
-  t.deepEqual(stripHtml("a<article=/ >b"), "a b", "01.24.09");
-  t.deepEqual(stripHtml("a<article =/ >b"), "a b", "01.24.10");
-  t.deepEqual(stripHtml("a<article= / >b"), "a b", "01.24.11");
-  t.deepEqual(stripHtml("a<article = / >b"), "a b", "01.24.12");
+  t.deepEqual(stripHtml("a<article=/ >b"), "a b", "01.23.09");
+  t.deepEqual(stripHtml("a<article =/ >b"), "a b", "01.23.10");
+  t.deepEqual(stripHtml("a<article= / >b"), "a b", "01.23.11");
+  t.deepEqual(stripHtml("a<article = / >b"), "a b", "01.23.12");
 });
 
-test("01.25 - dirty code - multiple equals after attribute's name", t => {
+test("01.24 - dirty code - multiple equals after attribute's name", t => {
   // 1. consecutive equals
   // normal tag:
   t.deepEqual(
     stripHtml('aaaaaaa<div class =="zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.25.01"
+    "01.24.01"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class =="zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.25.02"
+    "01.24.02"
   );
 
   // 2. consecutive equals with space
@@ -758,13 +756,13 @@ test("01.25 - dirty code - multiple equals after attribute's name", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class = ="zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.25.03"
+    "01.24.03"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class = ="zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.25.04"
+    "01.24.04"
   );
 
   // 3. consecutive equals with more spaces in between
@@ -772,13 +770,13 @@ test("01.25 - dirty code - multiple equals after attribute's name", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class = = "zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.25.05"
+    "01.24.05"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class = = "zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.25.06"
+    "01.24.06"
   );
 
   // 4. consecutive equals, following attribute's name tightly
@@ -786,13 +784,13 @@ test("01.25 - dirty code - multiple equals after attribute's name", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class= = "zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.25.07"
+    "01.24.07"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class= = "zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.25.08"
+    "01.24.08"
   );
 
   // 5. consecutive equals, tight
@@ -800,30 +798,30 @@ test("01.25 - dirty code - multiple equals after attribute's name", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class=="zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.25.09"
+    "01.24.09"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class=="zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.25.10"
+    "01.24.10"
   );
 });
 
-test("01.26 - dirty code - multiple quotes in the attributes", t => {
+test("01.25 - dirty code - multiple quotes in the attributes", t => {
   //
   // 1. double, opening only
   // normal tag:
   t.deepEqual(
     stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.01"
+    "01.25.01"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.26.02"
+    "01.25.02"
   );
 
   // 2. double, closing
@@ -831,13 +829,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class=""zzzz">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.03"
+    "01.25.03"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class=""zzzz">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.26.04"
+    "01.25.04"
   );
 
   // 3. double, both closing and opening
@@ -845,13 +843,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class=""zzzz"">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.05"
+    "01.25.05"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class=""zzzz"">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.26.06"
+    "01.25.06"
   );
 
   // 4. single, opening only
@@ -859,13 +857,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
     "aaaaaaa x bbbbbbbb",
-    "01.26.07"
+    "01.25.07"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
     "aaaaaaa bbbbbbbb",
-    "01.26.08"
+    "01.25.08"
   );
 
   // 5. single, closing
@@ -873,13 +871,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml("aaaaaaa<div class=''zzzz'>x</div>bbbbbbbb"),
     "aaaaaaa x bbbbbbbb",
-    "01.26.09"
+    "01.25.09"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml("aaaaaaa<script class=''zzzz'>x</script>bbbbbbbb"),
     "aaaaaaa bbbbbbbb",
-    "01.26.10"
+    "01.25.10"
   );
 
   // 6. single, both closing and opening
@@ -887,13 +885,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml("aaaaaaa<div class=''zzzz''>x</div>bbbbbbbb"),
     "aaaaaaa x bbbbbbbb",
-    "01.26.11"
+    "01.25.11"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml("aaaaaaa<script class=''zzzz''>x</script>bbbbbbbb"),
     "aaaaaaa bbbbbbbb",
-    "01.26.12"
+    "01.25.12"
   );
 
   // 7. mix of messed up equals and repeated quotes
@@ -901,13 +899,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml("aaaaaaa<div class= ==''zzzz''>x</div>bbbbbbbb"),
     "aaaaaaa x bbbbbbbb",
-    "01.26.13"
+    "01.25.13"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml("aaaaaaa<script class = ==''zzzz''>x</script>bbbbbbbb"),
     "aaaaaaa bbbbbbbb",
-    "01.26.14"
+    "01.25.14"
   );
 
   // 8. mismatching quotes only
@@ -915,13 +913,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml("aaaaaaa<div class=''zzzz\"\">x</div>bbbbbbbb"),
     "aaaaaaa x bbbbbbbb",
-    "01.26.15"
+    "01.25.15"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml("aaaaaaa<script class=''zzzz\"\">x</script>bbbbbbbb"),
     "aaaaaaa bbbbbbbb",
-    "01.26.16"
+    "01.25.16"
   );
 
   // 9. crazy messed up
@@ -929,13 +927,13 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " ">x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.17"
+    "01.25.17"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class= ==\'  \'zzzz" " ">x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.26.18"
+    "01.25.18"
   );
 
   // 10. even more crazy messed up
@@ -943,7 +941,7 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<div class= ==\'  \'zzzz" " " /// >x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.19"
+    "01.25.19"
   );
   // ranged tag:
   t.deepEqual(
@@ -951,48 +949,48 @@ test("01.26 - dirty code - multiple quotes in the attributes", t => {
       'aaaaaaa<script class= ==\'  \'zzzz" " " /// >x</script>bbbbbbbb'
     ),
     "aaaaaaa bbbbbbbb",
-    "01.26.20"
+    "01.25.20"
   );
 });
 
-test("01.27 - dirty code - unclosed attributes", t => {
+test("01.26 - dirty code - unclosed attributes", t => {
   // normal tag:
   t.deepEqual(
     stripHtml('aaaaaaa<div class="zzzz>x</div>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.27.01"
+    "01.26.01"
   );
   // ranged tag:
   t.deepEqual(
     stripHtml('aaaaaaa<script class="zzzz>x</script>bbbbbbbb'),
     "aaaaaaa bbbbbbbb",
-    "01.27.02"
+    "01.26.02"
   );
   // single tag:
   t.deepEqual(
     stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.27.02"
+    "01.26.02"
   );
 });
 
-test("01.28 - dirty code - duplicated consecutive attribute values", t => {
+test("01.27 - dirty code - duplicated consecutive attribute values", t => {
   t.deepEqual(
     stripHtml('aa< br class1="b1" yo1   =   class2 = "b2" yo2 yo3>cc'),
     "aa cc",
-    "01.28"
+    "01.27"
   );
 });
 
-test("01.29 - dirty code - space after bracket, multiple attrs, no equals", t => {
-  t.deepEqual(stripHtml("aa< br a b >cc"), "aa< br a b >cc", "01.29.01");
-  t.deepEqual(stripHtml("aa < br a b >cc"), "aa < br a b >cc", "01.29.02");
-  t.deepEqual(stripHtml("aa< br a b > cc"), "aa< br a b > cc", "01.29.03");
-  t.deepEqual(stripHtml("aa < br a b > cc"), "aa < br a b > cc", "01.29.04");
+test("01.28 - dirty code - space after bracket, multiple attrs, no equals", t => {
+  t.deepEqual(stripHtml("aa< br a b >cc"), "aa< br a b >cc", "01.28.01");
+  t.deepEqual(stripHtml("aa < br a b >cc"), "aa < br a b >cc", "01.28.02");
+  t.deepEqual(stripHtml("aa< br a b > cc"), "aa< br a b > cc", "01.28.03");
+  t.deepEqual(stripHtml("aa < br a b > cc"), "aa < br a b > cc", "01.28.04");
   t.deepEqual(
     stripHtml("aa  < br a b >  cc"),
     "aa  < br a b >  cc",
-    "01.29.05"
+    "01.28.05"
   );
 });
 

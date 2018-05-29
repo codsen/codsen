@@ -250,6 +250,26 @@ function stripHtml(str, originalOpts) {
 
   for (var i = 0, len = str.length; i < len; i++) {
 
+    // catch the closing bracket of dirty tags with missing opening brackets
+    // -------------------------------------------------------------------------
+    if (str[i] === ">") {
+      // tend cases where opening bracket of a tag is missing:
+      if ((!tag || !Object.keys(tag).length) && i > 1) {
+
+        // traverse backwards either until start of string or ">" is found
+        for (var y = i; y--;) {
+          if (str[y - 1] === undefined || str[y] === ">") {
+            var culprit = str.slice(y + 1, i + 1);
+            if (str !== "<" + culprit && // recursion prevention
+            stripHtml("<" + culprit, opts) === "") {
+              rangesToDelete.push(y + 1, i + 1, calculateWhitespaceToInsert(str, i, y + 1, i + 1, y + 1, i + 1));
+            }
+            break;
+          }
+        }
+      }
+    }
+
     // catch slash
     // -------------------------------------------------------------------------
     if (str[i] === "/" && !(tag.quotes && tag.quotes.value) && tag.lastOpeningBracketAt !== undefined && tag.lastClosingBracketAt === undefined) {
@@ -267,7 +287,7 @@ function stripHtml(str, originalOpts) {
     // catch double or single quotes
     // -------------------------------------------------------------------------
     if (str[i] === '"' || str[i] === "'") {
-      if (tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+      if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
         // 1. finish assembling the "attrObj{}"
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
@@ -279,7 +299,7 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
         // 2. finally, delete the quotes marker, we don't need it any more
         tag.quotes = undefined;
-      } else if (!tag.quotes) {
+      } else if (!tag.quotes && tag.nameStarts) {
         // 1. if it's opening marker, record the type and location of quotes
         tag.quotes = {};
         tag.quotes.value = str[i];
@@ -382,7 +402,7 @@ function stripHtml(str, originalOpts) {
 
     // catch the beginning of an attribute's name
     // -------------------------------------------------------------------------
-    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts) {
+    if (!tag.quotes && tag.nameEnds < i && str[i] !== ">" && str[i] !== "/" && str[i] !== "!" && str[i - 1].trim().length === 0 && str[i].trim().length !== 0 && !attrObj.nameStarts && !tag.lastClosingBracketAt) {
       if (isValidAttributeCharacter("" + str[i] + str[i + 1])) {
         attrObj.nameStarts = i;
       } else if (tag.onlyPlausible) {
@@ -486,7 +506,7 @@ function stripHtml(str, originalOpts) {
         // the tag name is not recognised.
         if (!tag.onlyPlausible ||
         // tag name is recognised and there are no attributes:
-        tag.attributes.length === 0 && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) ||
+        tag.attributes.length === 0 && tag.name && definitelyTagNames.concat(singleLetterTags).includes(tag.name.toLowerCase()) ||
         // OR there is at least one equals that follow the attribute's name:
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
@@ -537,15 +557,15 @@ function stripHtml(str, originalOpts) {
               cdata = false;
             }
             var closingFoundAt = undefined;
-            for (var y = i; y < len; y++) {
-              if (!closingFoundAt && cdata && "" + str[y - 2] + str[y - 1] + str[y] === "]]>" || !cdata && "" + str[y - 2] + str[y - 1] + str[y] === "-->") {
-                closingFoundAt = y;
+            for (var _y = i; _y < len; _y++) {
+              if (!closingFoundAt && cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "]]>" || !cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "-->") {
+                closingFoundAt = _y;
               }
-              if (closingFoundAt && closingFoundAt < y && (str[y].trim().length !== 0 || str[y + 1] === undefined)) {
-                var rangeEnd = y;
-                rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
+              if (closingFoundAt && closingFoundAt < _y && (str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
+                var rangeEnd = _y;
+                rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
                 // offset:
-                i = y;
+                i = _y;
                 // resets:
                 tag = {};
                 attrObj = {};

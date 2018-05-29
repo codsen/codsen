@@ -396,6 +396,32 @@ function stripHtml(str, originalOpts) {
 
   for (let i = 0, len = str.length; i < len; i++) {
 
+    // catch the closing bracket of dirty tags with missing opening brackets
+    // -------------------------------------------------------------------------
+    if (str[i] === ">") {
+      // tend cases where opening bracket of a tag is missing:
+      if ((!tag || !Object.keys(tag).length) && i > 1) {
+
+        // traverse backwards either until start of string or ">" is found
+        for (let y = i; y--; ) {
+          if (str[y - 1] === undefined || str[y] === ">") {
+            const culprit = str.slice(y + 1, i + 1);
+            if (
+              str !== `<${culprit}` && // recursion prevention
+              stripHtml(`<${culprit}`, opts) === ""
+            ) {
+              rangesToDelete.push(
+                y + 1,
+                i + 1,
+                calculateWhitespaceToInsert(str, i, y + 1, i + 1, y + 1, i + 1)
+              );
+            }
+            break;
+          }
+        }
+      }
+    }
+
     // catch slash
     // -------------------------------------------------------------------------
     if (
@@ -426,7 +452,12 @@ function stripHtml(str, originalOpts) {
     // catch double or single quotes
     // -------------------------------------------------------------------------
     if (str[i] === '"' || str[i] === "'") {
-      if (tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
+      if (
+        tag.nameStarts &&
+        tag.quotes &&
+        tag.quotes.value &&
+        tag.quotes.value === str[i]
+      ) {
         // 1. finish assembling the "attrObj{}"
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
@@ -438,7 +469,7 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
         // 2. finally, delete the quotes marker, we don't need it any more
         tag.quotes = undefined;
-      } else if (!tag.quotes) {
+      } else if (!tag.quotes && tag.nameStarts) {
         // 1. if it's opening marker, record the type and location of quotes
         tag.quotes = {};
         tag.quotes.value = str[i];
@@ -599,7 +630,8 @@ function stripHtml(str, originalOpts) {
       str[i] !== "!" &&
       str[i - 1].trim().length === 0 &&
       str[i].trim().length !== 0 &&
-      !attrObj.nameStarts
+      !attrObj.nameStarts &&
+      !tag.lastClosingBracketAt
     ) {
       if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`)) {
         attrObj.nameStarts = i;
@@ -744,6 +776,7 @@ function stripHtml(str, originalOpts) {
           !tag.onlyPlausible ||
           // tag name is recognised and there are no attributes:
           ((tag.attributes.length === 0 &&
+            tag.name &&
             definitelyTagNames
               .concat(singleLetterTags)
               .includes(tag.name.toLowerCase())) ||
