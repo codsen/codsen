@@ -178,7 +178,8 @@ function stripHtml(str, originalOpts) {
     if (toIdx > lastClosingBracketAt) {
       strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
     }
-    if (!punctuation.includes(str[currCharIdx - 1])) {
+    // if (!punctuation.includes(str[currCharIdx - 1])) {
+    if (!punctuation.includes(str[currCharIdx])) {
       return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
     }
     return "";
@@ -531,6 +532,12 @@ function stripHtml(str, originalOpts) {
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
         })) {
+          // if it's an ignored tag, bail:
+          if (opts.ignoreTags.includes(tag.name)) {
+            tag = {};
+            attrObj = {};
+            continue;
+          }
 
           rangesToDelete.push(tag.leftOuterWhitespace, _endingRangeIndex, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, _endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
           // also,
@@ -589,7 +596,10 @@ function stripHtml(str, originalOpts) {
                 }
                 rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
                 // offset:
-                i = _y;
+                i = _y - 1;
+                if (str[_y] === ">") {
+                  i = _y;
+                }
                 // resets:
                 tag = {};
                 attrObj = {};

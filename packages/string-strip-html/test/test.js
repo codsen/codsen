@@ -7,12 +7,11 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml(`a<![CDATA[
-    The <, &, ', and " can be used,
-    *and* %MyParamEntity; can be expanded.
-  ]]>b`),
-    "a b",
-    "01.31.01 - tight"
+    stripHtml("Some <b>text</b> and some more <i>text</i>.", {
+      ignoreTags: ["b"]
+    }),
+    "Some <b>text</b> and some more text.",
+    "04.01.01 - ignores single letter tag"
   );
 });
 
@@ -1229,21 +1228,28 @@ zzz
 test("03.05 - conditionals that are visible for Outlook only", t => {
   t.deepEqual(
     stripHtml(`<!--[if !mso]><!-->
-shown for everything except Outlook
-<!--<![endif]-->`),
+  shown for everything except Outlook
+  <!--<![endif]-->`),
     "shown for everything except Outlook",
     "03.05.01 - checking also for whitespace control"
   );
   t.deepEqual(
+    stripHtml(`a<!--[if !mso]><!-->
+  shown for everything except Outlook
+  <!--<![endif]-->b`),
+    "a\nshown for everything except Outlook\nb",
+    "03.05.02 - checking also for whitespace control"
+  );
+  t.deepEqual(
     stripHtml(`<!--[if !mso]><!--><table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td>
-      shown for everything except Outlook
-    </td>
-  </tr>
-</table><!--<![endif]-->`),
+    <tr>
+      <td>
+        shown for everything except Outlook
+      </td>
+    </tr>
+  </table><!--<![endif]-->`),
     "shown for everything except Outlook",
-    "03.05.02 - all those line breaks in-between the tags need to be taken care of too"
+    "03.05.03 - all those line breaks in-between the tags need to be taken care of too"
   );
 });
 
@@ -1267,7 +1273,102 @@ test("04.01 - opts.ignoreTags", t => {
       ignoreTags: ["b"]
     }),
     "Some <b>text</b> and some more text.",
-    "04.01"
+    "04.01.01 - ignores single letter tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr> some more <i>text</i>.", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr> some more text.",
+    "04.01.02 - ignores singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr/> some more <i>text</i>.", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr/> some more text.",
+    "04.01.03 - ignores singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr / > some more <i>text</i>.", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr / > some more text.",
+    "04.01.04 - ignores singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some <zzz>text</zzz> and some more <i>text</i>.", {
+      ignoreTags: ["zzz"]
+    }),
+    "Some <zzz>text</zzz> and some more text.",
+    "04.01.05 - ignores single zzz tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <zzz> some more <i>text</i>.", {
+      ignoreTags: ["zzz"]
+    }),
+    "Some text <zzz> some more text.",
+    "04.01.06 - ignores zzz singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some <script>text</script> and some more <i>text</i>.", {
+      ignoreTags: ["script"]
+    }),
+    "Some <script>text</script> and some more text.",
+    "04.01.07 - ignores default ranged tag"
+  );
+});
+
+test("04.02 - opts.ignoreTags", t => {
+  // just for kicks: ignored tag unclosed, ending with EOF
+  t.deepEqual(
+    stripHtml("Some <b>text</b", {
+      ignoreTags: ["b"]
+    }),
+    "Some <b>text</b",
+    "04.02.01 - if user insists, that missing bracket must be intentional"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr",
+    "04.02.02 - recognised unclosed singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr/", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr/",
+    "04.02.03"
+  );
+  t.deepEqual(
+    stripHtml("Some text <hr / ", {
+      ignoreTags: ["hr"]
+    }),
+    "Some text <hr /",
+    "04.02.04 - kept the tag and the slash, just trimmed"
+  );
+  t.deepEqual(
+    stripHtml("Some <zzz>text</zzz", {
+      ignoreTags: ["zzz"]
+    }),
+    "Some <zzz>text</zzz",
+    "04.02.05 - ignores unclosed single zzz tag"
+  );
+  t.deepEqual(
+    stripHtml("Some text <zzz", {
+      ignoreTags: ["zzz"]
+    }),
+    "Some text <zzz",
+    "04.02.06 - ignores unclosed zzz singleton tag"
+  );
+  t.deepEqual(
+    stripHtml("Some <script>text</script", {
+      ignoreTags: ["script"]
+    }),
+    "Some <script>text</script",
+    "04.02.07 - ignores default unclosed ranged tag"
   );
 });
 

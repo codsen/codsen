@@ -326,7 +326,8 @@ function stripHtml(str, originalOpts) {
     if (toIdx > lastClosingBracketAt) {
       strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
     }
-    if (!punctuation.includes(str[currCharIdx - 1])) {
+    // if (!punctuation.includes(str[currCharIdx - 1])) {
+    if (!punctuation.includes(str[currCharIdx])) {
       return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
     }
     return "";
@@ -626,7 +627,7 @@ function stripHtml(str, originalOpts) {
       // 1. mark the name ending
       tag.nameEnds = i;
       console.log(
-        `585 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
+        `629 SET \u001b[${33}m${`tag.nameEnds`}\u001b[${39}m = ${tag.nameEnds}`
       );
       // 2. extract the full name string
       tag.name = str.slice(
@@ -634,7 +635,7 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0)
       );
       console.log(
-        `593 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
+        `637 SET \u001b[${33}m${`tag.name`}\u001b[${39}m = ${tag.name}`
       );
       // if we caught "----" from "<----" or "---->", bail:
       if (
@@ -642,7 +643,7 @@ function stripHtml(str, originalOpts) {
         tag.name.replace(/-/g, "").length === 0
       ) {
         console.log(
-          `601 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
+          `645 \u001b[${33}m${`ONLY DOTS PRESENT IN TAG NAME`}\u001b[${39}m - reset`
         );
         tag = {};
         continue;
@@ -654,14 +655,14 @@ function stripHtml(str, originalOpts) {
           endingRangeIndex = i;
         }
         console.log(
-          `613 ${`\u001b[${33}m${`tag.lastClosingBracketAt`}\u001b[${39}m`} = ${JSON.stringify(
+          `657 ${`\u001b[${33}m${`tag.lastClosingBracketAt`}\u001b[${39}m`} = ${JSON.stringify(
             tag.lastClosingBracketAt,
             null,
             4
           )}`
         );
         console.log(
-          `620 \u001b[${33}m${`SUBMIT RANGE #3: [${
+          `664 \u001b[${33}m${`SUBMIT RANGE #3: [${
             tag.leftOuterWhitespace
           }, ${endingRangeIndex}, "${calculateWhitespaceToInsert(
             str,
@@ -1043,8 +1044,31 @@ function stripHtml(str, originalOpts) {
             (tag.attributes &&
               tag.attributes.some(attrObj => attrObj.equalsAt)))
         ) {
+          // if it's an ignored tag, bail:
+          if (opts.ignoreTags.includes(tag.name)) {
+            console.log(
+              `1048 Ignored tag - \u001b[${31}m${`WIPE AND RESET`}\u001b[${39}m`
+            );
+            tag = {};
+            attrObj = {};
+            continue;
+          }
+
           console.log(
-            `1002 \u001b[${33}m${`SUBMIT RANGE #2: [${
+            `1056\n███████████████████████████████████████\ntag.leftOuterWhitespace = ${
+              tag.leftOuterWhitespace
+            }`
+          );
+          console.log(`endingRangeIndex = ${endingRangeIndex}`);
+          console.log(`tag.lastOpeningBracketAt = ${tag.lastOpeningBracketAt}`);
+          console.log(
+            `tag.lastClosingBracketAt = ${
+              tag.lastClosingBracketAt
+            }\n███████████████████████████████████████`
+          );
+
+          console.log(
+            `1057 \u001b[${33}m${`SUBMIT RANGE #2: [${
               tag.leftOuterWhitespace
             }, ${endingRangeIndex}, ${JSON.stringify(
               calculateWhitespaceToInsert(
@@ -1117,7 +1141,7 @@ function stripHtml(str, originalOpts) {
           tag.leftOuterWhitespace =
             chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
           console.log(
-            `1075 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
+            `1144 SET \u001b[${33}m${`tag.leftOuterWhitespace`}\u001b[${39}m = ${
               tag.leftOuterWhitespace
             }; \u001b[${33}m${`tag.lastOpeningBracketAt`}\u001b[${39}m = ${
               tag.lastOpeningBracketAt
@@ -1134,14 +1158,14 @@ function stripHtml(str, originalOpts) {
             }${str[i + 7]}${str[i + 8]}` === "![CDATA["
           ) {
             console.log(
-              `1092 \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
+              `1161 \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
             );
             // make a note which one it is:
             let cdata = true;
             if (str[i + 2] === "-") {
               cdata = false;
             }
-            console.log("1099 traversing forward");
+            console.log("1168 traversing forward");
             let closingFoundAt = undefined;
             for (let y = i; y < len; y++) {
               console.log(
@@ -1153,7 +1177,7 @@ function stripHtml(str, originalOpts) {
                 (!cdata && `${str[y - 2]}${str[y - 1]}${str[y]}` === "-->")
               ) {
                 closingFoundAt = y;
-                console.log(`1111 closingFoundAt = ${closingFoundAt}`);
+                console.log(`1180 closingFoundAt = ${closingFoundAt}`);
               }
 
               if (
@@ -1161,7 +1185,7 @@ function stripHtml(str, originalOpts) {
                 ((closingFoundAt < y && str[y].trim().length !== 0) ||
                   str[y + 1] === undefined)
               ) {
-                console.log("1118 END detected");
+                console.log("1188 END detected");
                 let rangeEnd = y;
                 if (
                   (str[y + 1] === undefined && str[y].trim().length === 0) ||
@@ -1170,7 +1194,7 @@ function stripHtml(str, originalOpts) {
                   rangeEnd += 1;
                 }
                 console.log(
-                  `1121 PUSH range [${
+                  `1197 PUSH range [${
                     tag.leftOuterWhitespace
                   }, ${rangeEnd}, "${calculateWhitespaceToInsert(
                     str,
@@ -1194,7 +1218,10 @@ function stripHtml(str, originalOpts) {
                   )
                 );
                 // offset:
-                i = y;
+                i = y - 1;
+                if (str[y] === ">") {
+                  i = y;
+                }
                 // resets:
                 tag = {};
                 attrObj = {};
