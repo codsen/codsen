@@ -1163,7 +1163,10 @@ function stripHtml(str, originalOpts) {
               ) {
                 console.log("1118 END detected");
                 let rangeEnd = y;
-                if (str[y + 1] === undefined) {
+                if (
+                  (str[y + 1] === undefined && str[y].trim().length === 0) ||
+                  str[y] === ">"
+                ) {
                   rangeEnd += 1;
                 }
                 console.log(

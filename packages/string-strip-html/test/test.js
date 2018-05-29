@@ -7,9 +7,12 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml("<script>tra la <style>la</script>la la</style> la"),
-    "la",
-    "06.06.01"
+    stripHtml(`a<![CDATA[
+    The <, &, ', and " can be used,
+    *and* %MyParamEntity; can be expanded.
+  ]]>b`),
+    "a b",
+    "01.31.01 - tight"
   );
 });
 

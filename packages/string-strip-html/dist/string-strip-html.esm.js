@@ -898,7 +898,10 @@ function stripHtml(str, originalOpts) {
                   str[y + 1] === undefined)
               ) {
                 let rangeEnd = y;
-                if (str[y + 1] === undefined) {
+                if (
+                  (str[y + 1] === undefined && str[y].trim().length === 0) ||
+                  str[y] === ">"
+                ) {
                   rangeEnd += 1;
                 }
                 rangesToDelete.push(

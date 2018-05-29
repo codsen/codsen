@@ -584,7 +584,7 @@ function stripHtml(str, originalOpts) {
 
               if (closingFoundAt && (closingFoundAt < _y && str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
                 var rangeEnd = _y;
-                if (str[_y + 1] === undefined) {
+                if (str[_y + 1] === undefined && str[_y].trim().length === 0 || str[_y] === ">") {
                   rangeEnd += 1;
                 }
                 rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
