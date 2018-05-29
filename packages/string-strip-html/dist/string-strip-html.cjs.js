@@ -581,8 +581,12 @@ function stripHtml(str, originalOpts) {
               if (!closingFoundAt && cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "]]>" || !cdata && "" + str[_y - 2] + str[_y - 1] + str[_y] === "-->") {
                 closingFoundAt = _y;
               }
-              if (closingFoundAt && closingFoundAt < _y && (str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
-                var rangeEnd = _y;
+
+              if (closingFoundAt && closingFoundAt <= _y && (str[_y].trim().length !== 0 || str[_y + 1] === undefined)) {
+                var rangeEnd = _y + 1;
+                // if (str[y + 1] === undefined) {
+                //   rangeEnd += 1;
+                // }
                 rangesToDelete.push(tag.leftOuterWhitespace, rangeEnd, calculateWhitespaceToInsert(str, _y, tag.leftOuterWhitespace, rangeEnd, tag.lastOpeningBracketAt, closingFoundAt));
                 // offset:
                 i = _y;
