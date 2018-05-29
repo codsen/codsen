@@ -37,11 +37,11 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 10&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 10&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 27&nbsp;KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-strip-html.cjs.js` | 30&nbsp;KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-strip-html.esm.js` | 32&nbsp;KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-strip-html.umd.js` | 95&nbsp;KB
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -163,11 +163,11 @@ This library is the last missing piece of a puzzle to get rid of `string.js`.
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
+* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
+* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -177,27 +177,40 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
+
 [node-img]: https://img.shields.io/node/v/string-strip-html.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-strip-html
+
 [travis-img]: https://img.shields.io/travis/codsen/string-strip-html.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/string-strip-html
+
 [cov-img]: https://coveralls.io/repos/github/codsen/string-strip-html/badge.svg?style=flat-square?branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-strip-html?branch=master
+
 [overall-img]: https://img.shields.io/bithound/code/github/codsen/string-strip-html.svg?style=flat-square
 [overall-url]: https://www.bithound.io/github/codsen/string-strip-html
+
 [deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-strip-html.svg?style=flat-square
 [deps-url]: https://www.bithound.io/github/codsen/string-strip-html/master/dependencies/npm
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-strip-html
+
 [dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-strip-html.svg?style=flat-square
 [dev-url]: https://www.bithound.io/github/codsen/string-strip-html/master/dependencies/npm
+
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-strip-html/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-strip-html
+
 [downloads-img]: https://img.shields.io/npm/dm/string-strip-html.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-strip-html
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-strip-html
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://github.com/prettier/prettier
+
 [license-img]: https://img.shields.io/npm/l/string-strip-html.svg?style=flat-square
 [license-url]: https://github.com/codsen/string-strip-html/blob/master/license.md

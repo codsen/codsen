@@ -7,7 +7,7 @@ import stripHtml from "../dist/string-strip-html.esm";
 
 test.skip("delete me", t => {
   t.deepEqual(
-    stripHtml('<body>\narticle class="main" / >zzz</article>\n</body>'),
+    stripHtml('<body>\n\n\n\n article class="main" / >zzz</article>\n</body>'),
     "zzz",
     "01.20.06"
   );

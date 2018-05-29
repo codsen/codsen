@@ -1,6 +1,7 @@
 import replaceSlicesArr from 'string-replace-slices-array';
 import Slices from 'string-slices-array-push';
 import isObj from 'lodash.isplainobject';
+import trim from 'lodash.trim';
 import checkTypes from 'check-types-mini';
 import ent from 'ent';
 
@@ -405,15 +406,42 @@ function stripHtml(str, originalOpts) {
         // traverse backwards either until start of string or ">" is found
         for (let y = i; y--; ) {
           if (str[y - 1] === undefined || str[y] === ">") {
-            const culprit = str.slice(y + 1, i + 1);
+
+            const startingPoint = str[y - 1] === undefined ? y : y + 1;
+            const culprit = str.slice(startingPoint, i + 1);
+
+            // Check if the culprit starts with a tag that's more likely a tag
+            // name (like "body" or "article"). Single-letter tag names are excluded
+            // because they can be plausible, ie. in math texts and so on.
+            // Nobody uses puts comparison signs between words like: "article > ",
+            // but single letter names can be plausible: "a > b" in math.
+
             if (
-              str !== `<${culprit}` && // recursion prevention
-              stripHtml(`<${culprit}`, opts) === ""
+              str !== `<${trim(culprit.trim(), "/>")}>` && // recursion prevention
+              definitelyTagNames.some(
+                val =>
+                  trim(
+                    culprit
+                      .trim()
+                      .split(" ")
+                      .filter(val => val.trim().length !== 0)
+                      .filter((val, i) => i === 0),
+                    "/>"
+                  ).toLowerCase() === val
+              ) &&
+              stripHtml(`<${culprit.trim()}>`, opts) === ""
             ) {
               rangesToDelete.push(
-                y + 1,
+                startingPoint,
                 i + 1,
-                calculateWhitespaceToInsert(str, i, y + 1, i + 1, y + 1, i + 1)
+                calculateWhitespaceToInsert(
+                  str,
+                  i,
+                  startingPoint,
+                  i + 1,
+                  startingPoint,
+                  i + 1
+                )
               );
             }
             break;

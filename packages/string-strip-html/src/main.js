@@ -1,6 +1,7 @@
 import replaceSlicesArr from "string-replace-slices-array";
 import Slices from "string-slices-array-push";
 import isObj from "lodash.isplainobject";
+import trim from "lodash.trim";
 import checkTypes from "check-types-mini";
 import ent from "ent";
 
@@ -456,29 +457,67 @@ function stripHtml(str, originalOpts) {
           console.log(`\u001b[${35}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`);
           if (str[y - 1] === undefined || str[y] === ">") {
             console.log("458 BREAK");
-            const culprit = str.slice(y + 1, i + 1);
+
+            const startingPoint = str[y - 1] === undefined ? y : y + 1;
+            const culprit = str.slice(startingPoint, i + 1);
             console.log(
-              `460 CULPRIT: "${`\u001b[${31}m${culprit}\u001b[${39}m`}"`
+              `461 CULPRIT: "${`\u001b[${31}m${culprit}\u001b[${39}m`}"`
             );
+
+            // Check if the culprit starts with a tag that's more likely a tag
+            // name (like "body" or "article"). Single-letter tag names are excluded
+            // because they can be plausible, ie. in math texts and so on.
+            // Nobody uses puts comparison signs between words like: "article > ",
+            // but single letter names can be plausible: "a > b" in math.
+
+            console.log(
+              `473 "${trim(
+                culprit
+                  .trim()
+                  .split(" ")
+                  .filter(val => val.trim().length !== 0)
+                  .filter((val, i) => i === 0),
+                "/>"
+              )}"`
+            );
+
             if (
-              str !== `<${culprit}` && // recursion prevention
-              stripHtml(`<${culprit}`, opts) === ""
+              str !== `<${trim(culprit.trim(), "/>")}>` && // recursion prevention
+              definitelyTagNames.some(
+                val =>
+                  trim(
+                    culprit
+                      .trim()
+                      .split(" ")
+                      .filter(val => val.trim().length !== 0)
+                      .filter((val, i) => i === 0),
+                    "/>"
+                  ).toLowerCase() === val
+              ) &&
+              stripHtml(`<${culprit.trim()}>`, opts) === ""
             ) {
               console.log(
-                `465 \u001b[${33}m${`SUBMIT RANGE #3: [${y + 1}, ${i +
+                `465 \u001b[${33}m${`SUBMIT RANGE #3: [${startingPoint}, ${i +
                   1}, "${calculateWhitespaceToInsert(
                   str,
                   i,
-                  y + 1,
+                  startingPoint,
                   i + 1,
-                  y + 1,
+                  startingPoint,
                   i + 1
                 )}"]`}\u001b[${39}m`
               );
               rangesToDelete.push(
-                y + 1,
+                startingPoint,
                 i + 1,
-                calculateWhitespaceToInsert(str, i, y + 1, i + 1, y + 1, i + 1)
+                calculateWhitespaceToInsert(
+                  str,
+                  i,
+                  startingPoint,
+                  i + 1,
+                  startingPoint,
+                  i + 1
+                )
               );
             }
             break;
@@ -1248,9 +1287,18 @@ function stripHtml(str, originalOpts) {
     // );
   }
 
+  console.log("\n\n\n\n\n\n END \n\n\n\n\n\n");
+
   if (rangesToDelete.current()) {
+    console.log(
+      `1253 RETURNING: "${replaceSlicesArr(
+        str,
+        rangesToDelete.current()
+      ).trim()}"\n\n\n\n\n\n`
+    );
     return replaceSlicesArr(str, rangesToDelete.current()).trim();
   }
+  console.log(`1260 RETURNING "${str.trim()}"\n\n\n\n\n\n`);
   return str.trim();
 }
 

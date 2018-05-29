@@ -38,6 +38,7 @@ export default commandLineArgs => {
         "check-types-mini",
         "ent",
         "lodash.isplainobject",
+        "lodash.trim",
         "string-replace-slices-array",
         "string-slices-array-push"
       ],
@@ -58,6 +59,7 @@ export default commandLineArgs => {
         "check-types-mini",
         "ent",
         "lodash.isplainobject",
+        "lodash.trim",
         "string-replace-slices-array",
         "string-slices-array-push"
       ],
