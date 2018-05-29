@@ -894,13 +894,13 @@ function stripHtml(str, originalOpts) {
 
               if (
                 closingFoundAt &&
-                closingFoundAt <= y &&
-                (str[y].trim().length !== 0 || str[y + 1] === undefined)
+                ((closingFoundAt < y && str[y].trim().length !== 0) ||
+                  str[y + 1] === undefined)
               ) {
-                const rangeEnd = y + 1;
-                // if (str[y + 1] === undefined) {
-                //   rangeEnd += 1;
-                // }
+                let rangeEnd = y;
+                if (str[y + 1] === undefined) {
+                  rangeEnd += 1;
+                }
                 rangesToDelete.push(
                   tag.leftOuterWhitespace,
                   rangeEnd,

@@ -6,11 +6,12 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test.skip("delete me", t => {
-  t.deepEqual(stripHtml("aaa <!-- <tr> --> "), "aaa", "06.02.01");
+  t.deepEqual(
+    stripHtml("aaa <!-- <tr> --> bbb"),
+    "aaa bbb",
+    "06.01.01 - double space"
+  );
   t.deepEqual(stripHtml("aaa <!-- <tr> -->"), "aaa", "06.02.02");
-
-  t.deepEqual(stripHtml(" <!-- <tr> --> aaa"), "aaa", "06.02.03");
-  t.deepEqual(stripHtml("<!-- <tr> -->aaa"), "aaa", "06.02.04");
 });
 
 test("01.01 - string is whole (opening) tag", t => {

@@ -1158,14 +1158,14 @@ function stripHtml(str, originalOpts) {
 
               if (
                 closingFoundAt &&
-                closingFoundAt <= y &&
-                (str[y].trim().length !== 0 || str[y + 1] === undefined)
+                ((closingFoundAt < y && str[y].trim().length !== 0) ||
+                  str[y + 1] === undefined)
               ) {
                 console.log("1118 END detected");
-                const rangeEnd = y + 1;
-                // if (str[y + 1] === undefined) {
-                //   rangeEnd += 1;
-                // }
+                let rangeEnd = y;
+                if (str[y + 1] === undefined) {
+                  rangeEnd += 1;
+                }
                 console.log(
                   `1121 PUSH range [${
                     tag.leftOuterWhitespace
