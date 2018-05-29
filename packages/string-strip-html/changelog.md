@@ -5,20 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.0.0] - 2018-05-18
+## [2.0.0] - 2018-05-30
 
-Complete rewrite.
+One day I noticed that my Nunjucks code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
 
 ### Added
 
-- ✨ `opts.stripOnlyTags` - you can request only certain tags to be removed. Respects `opts.stripTogetherWithTheirContents` setting.
-- ✨ Works with custom tags, as long as there is no space after the opening bracket.
+- ✨ An even smarter algorithm, now being able to detect missing opening bracket on a tag, for example. Even latest Chrome `v.66` can't do that.
+- ✨ Increased unit test assertion count from 148 to 362. Covering even more legit and stinky code cases.
+- ✨ `opts.returnRangesOnly`
 
 ## [1.5.0] - 2018-05-14
 
 ### Improved
 
-- ✨ Improved HTML tag detection algorithm: now, if digit (with or without whitespace in front) follows the opening bracket, it's interpretes as definitely not an opening bracket of a tag.
+- ✨ Improved HTML tag detection algorithm: now, if digit (with or without whitespace in front) follows the opening bracket, it's interpreted as definitely not an opening bracket of a tag.
 - ✨ Various setup tweaks
 
 ## [1.4.0] - 2018-05-11
@@ -27,7 +28,7 @@ Complete rewrite.
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- ✨ Wired Rollup to remove comments from non-dev builds. It means, we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
 ## [1.3.0] - 2018-02-19

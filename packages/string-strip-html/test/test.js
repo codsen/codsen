@@ -5,18 +5,23 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-test.skip("delete me", t => {
+test("01.01 - string is whole (opening) tag", t => {
+  t.deepEqual(stripHtml("<a>"), "", "01.01.01.01");
   t.deepEqual(
-    stripHtml("Some <b>text</b> and some more <i>text</i>.", {
+    stripHtml("<a>", {
       ignoreTags: ["b"]
     }),
-    "Some <b>text</b> and some more text.",
-    "04.01.01 - ignores single letter tag"
+    "",
+    "01.01.01.02"
   );
-});
+  t.deepEqual(
+    stripHtml("<a>", {
+      ignoreTags: ["a"]
+    }),
+    "<a>",
+    "01.01.01.03"
+  );
 
-test("01.01 - string is whole (opening) tag", t => {
-  t.deepEqual(stripHtml("<a>"), "", "01.01.01");
   t.deepEqual(stripHtml("< a>"), "", "01.01.02");
   t.deepEqual(stripHtml("<a >"), "", "01.01.03");
   t.deepEqual(stripHtml("< a >"), "", "01.01.04");
@@ -1019,7 +1024,17 @@ test("01.30 - dirty code - various, #1", t => {
   t.deepEqual(stripHtml('aa< br a b = " // >cc'), "aa cc", "01.30.16");
 });
 
-test("01.31 - CDATA", t => {
+test("01.31 - dirty code - various, #2", t => {
+  t.deepEqual(
+    stripHtml(
+      '<div><article class="main" id=="something">text</article></div>'
+    ),
+    "text",
+    "01.31.01"
+  );
+});
+
+test("01.32 - CDATA", t => {
   // surroundings are not a linebreaks
   t.deepEqual(
     stripHtml(`a<![CDATA[
@@ -1027,7 +1042,7 @@ test("01.31 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>b`),
     "a b",
-    "01.31.01 - tight"
+    "01.32.01 - tight"
   );
   t.deepEqual(
     stripHtml(`a <![CDATA[
@@ -1035,7 +1050,7 @@ test("01.31 - CDATA", t => {
   *and* %MyParamEntity; can be expanded.
 ]]> b`),
     "a b",
-    "01.31.02 - normal"
+    "01.32.02 - normal"
   );
   t.deepEqual(
     stripHtml(`a \t\t<![CDATA[
@@ -1043,7 +1058,7 @@ test("01.31 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>       b`),
     "a b",
-    "01.31.03 - loose"
+    "01.32.03 - loose"
   );
 
   // surroundings are linebreaks
@@ -1053,7 +1068,7 @@ test("01.31 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\nb`),
     "a\nb",
-    "01.31.04 - single linebreaks"
+    "01.32.04 - single linebreaks"
   );
   t.deepEqual(
     stripHtml(`a\n\n\n<![CDATA[
@@ -1061,7 +1076,7 @@ test("01.31 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\nb`),
     "a\nb",
-    "01.31.05 - excessive linebreaks"
+    "01.32.05 - excessive linebreaks"
   );
   t.deepEqual(
     stripHtml(`a\n \t\n\n<![CDATA[
@@ -1069,7 +1084,7 @@ test("01.31 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\n\t b`),
     "a\nb",
-    "01.31.06 - mixed linebreaks"
+    "01.32.06 - mixed linebreaks"
   );
 });
 
@@ -1698,6 +1713,36 @@ test("06.06 - range tags are overlapping", t => {
     }),
     "rr",
     "06.06.03"
+  );
+});
+
+// ==============================
+// opts.returnRangesOnly
+// ==============================
+
+test("07.01 - opts.returnRangesOnly", t => {
+  // both default known range tags
+  t.deepEqual(
+    stripHtml(
+      'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
+    ),
+    "Some text click me and more text.",
+    "07.01.01 - default"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Some text <a class="btn btn__large" id="z">click me</a> and more text.'
+    ),
+    "Some text click me and more text.",
+    "07.01.02 - hardcoded defaults"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Some text <a class="btn btn__large" id="z">click me</a> and more text.',
+      { returnRangesOnly: true }
+    ),
+    [[9, 43, " "], [51, 56, " "]],
+    "07.01.03 - opts"
   );
 });
 

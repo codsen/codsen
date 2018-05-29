@@ -198,11 +198,9 @@ function stripHtml(str, originalOpts) {
   // ===========================================================================
   var defaults = {
     ignoreTags: [],
-    stripOnlyTags: [],
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
-    keepHtmlCommentContents: false,
-    deleteWhitespaceAroundTags: true,
-    skipHtmlDecoding: false
+    skipHtmlDecoding: false,
+    returnRangesOnly: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   if (!opts.stripTogetherWithTheirContents) {
@@ -338,7 +336,15 @@ function stripHtml(str, originalOpts) {
       // 1. mark the name ending
       tag.nameEnds = i;
       // 2. extract the full name string
-      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i + 1] === undefined ? 1 : 0));
+      tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
+
+      // if it's an ignored tag, bail:
+      if (opts.ignoreTags.includes(tag.name)) {
+        tag = {};
+        attrObj = {};
+        continue;
+      }
+
       // if we caught "----" from "<----" or "---->", bail:
       if (str[tag.nameStarts - 1] !== "!" && // protection against <!--
       tag.name.replace(/-/g, "").length === 0) {
@@ -489,29 +495,30 @@ function stripHtml(str, originalOpts) {
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
         if (tag.lastOpeningBracketAt < i && str[i] !== "<" && ( // to prevent cases like "text <<<<<< text"
-        str[i + 1] === undefined || str[i + 1] === "<") // &&
-        // tag.onlyPlausible
-        ) {
-            // find out the tag name earlier than dedicated tag name ending catching section:
-            if (str[i + 1] === undefined) {
-              var tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
-              // if the tag is only plausible (there's space after opening bracket) and it's not among
-              // recognised tags, leave it as it is:
-              if (definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
-                rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
-                // also,
-                treatRangedTags(i);
-              } else {
-                continue;
-              }
-            } // else {
-            //   // case 1. closing bracket hasn't been encountered yet but EOL is reached
-            //   // for example "<script" or "<script  "
-            // }
-          }
-      } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
+        str[i + 1] === undefined || str[i + 1] === "<")) {
+          // find out the tag name earlier than dedicated tag name ending catching section:
+          if (str[i + 1] === undefined) {
+            var tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
 
-        // tag.lastClosingBracketAt !== undefined
+            // if it's an ignored tag, bail:
+            if (opts.ignoreTags.includes(tagName)) {
+              tag = {};
+              attrObj = {};
+              continue;
+            }
+
+            // if the tag is only plausible (there's space after opening bracket) and it's not among
+            // recognised tags, leave it as it is:
+            if (definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
+              rangesToDelete.push(tag.leftOuterWhitespace, i + 1, calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, i + 1, tag.lastOpeningBracketAt, tag.lastClosingBracketAt));
+              // also,
+              treatRangedTags(i);
+            } else {
+              continue;
+            }
+          }
+        }
+      } else if (i > tag.lastClosingBracketAt && str[i].trim().length !== 0 || str[i + 1] === undefined) {
 
         // case 2. closing bracket HAS BEEN met
         // we'll look for a non-whitespace character and delete up to it
@@ -641,17 +648,12 @@ function stripHtml(str, originalOpts) {
 
     // log all
     // -------------------------------------------------------------------------
-    // console.log(
-    //   `\u001b[${32}m${` - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -`}\u001b[${39}m`
-    // );
-    if (Object.keys(attrObj).length) ;
-
-    // console.log(
-    //   `${`\u001b[${35}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m`} = ${chunkOfWhitespaceStartsAt}`
-    // );
   }
 
   if (rangesToDelete.current()) {
+    if (opts.returnRangesOnly) {
+      return rangesToDelete.current();
+    }
     return replaceSlicesArr(str, rangesToDelete.current()).trim();
   }
   return str.trim();

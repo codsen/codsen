@@ -14,7 +14,9 @@
       "husky",
       "lodash.isplainobject",
       "nyc",
-      "prettier"
+      "prettier",
+      "rollup-plugin-json",
+      "rollup-plugin-node-builtins"
     ]
   },
   "ignore": [
