@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-05-31
+
+- ✨ `opts.trimOnlySpaces` - up until now, by default, the outsides of the string was trimmed using `String.trim()` which erased:
+
+  - non-breaking spaces (in combination with recursive entity decoding this means `&nbsp;` will also be erased)
+  - tabs
+  - line breaks (`\n`), carriage returns (`\r`) and combination thereof (`\r\n`)
+  - some other less common but space-like characters.
+
+  This becomes a challenge in automated environments where data is considered to be clean and multiple datum can be parts of another. For example, we might be cleaning JSON fields where value is "sandwitched" out of three fields: "Hi&nbsp;", "%%-firstname-%%", ", welcome to special club!". To improve formatting, some outer spaces like after "Hi" can be replaced with a non-breaking space. This way, words would never wrap there. However, if all fields were cleaned by a tool which used this HTML stripping function, outer non-breaking spaces would get deleted and result would end up: "HiJohn, welcome to special club!". This option makes trimming more strict - only spaces deleted during string trimming.
+
 ## [2.0.0] - 2018-05-30
 
 One day I noticed that my Nunjucks code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
@@ -53,3 +64,4 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 [1.3.0]: https://github.com/codsen/string-strip-html/compare/v1.2.6...v1.3.0
 [1.4.0]: https://github.com/codsen/string-strip-html/compare/v1.3.2...v1.4.0
 [2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.4.2...v2.0.0
+[2.1.0]: https://github.com/codsen/string-strip-html/compare/v2.0.0...v2.1.0

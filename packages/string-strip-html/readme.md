@@ -39,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size       |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 30&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 32&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 95&nbsp;KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 33&nbsp;KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 36&nbsp;KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 96&nbsp;KB |
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -139,7 +139,7 @@ Two rules:
 <!DOCTYPE html>
 <html>
 <head>
-	<title>test</title>
+  <title>test</title>
 </head>
 <body>
 <script>alert("123")</script

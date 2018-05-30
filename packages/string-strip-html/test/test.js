@@ -1747,6 +1747,97 @@ test("07.01 - opts.returnRangesOnly", t => {
 });
 
 // ==============================
+// opts.trimOnlySpaces
+// ==============================
+
+test("08.01 - opts.trimOnlySpaces", t => {
+  // unencoded non-breaking spaces - no HTML at all
+  t.deepEqual(stripHtml("\xa0 a \xa0"), "a", "08.01.01");
+  t.deepEqual(stripHtml(" \xa0 a \xa0 "), "a", "08.01.02");
+  t.deepEqual(
+    stripHtml("\xa0 a \xa0", { trimOnlySpaces: true }),
+    "\xa0 a \xa0",
+    "08.01.03"
+  );
+  t.deepEqual(
+    stripHtml(" \xa0 a \xa0 ", { trimOnlySpaces: true }),
+    "\xa0 a \xa0",
+    "08.01.04"
+  );
+
+  // unencoded non-breaking spaces - no HTML at all
+  t.deepEqual(stripHtml("\xa0 <article> \xa0"), "", "08.01.05");
+  t.deepEqual(
+    stripHtml("\xa0 <article> \xa0", { trimOnlySpaces: true }),
+    "\xa0 \xa0",
+    "08.01.06"
+  );
+  t.deepEqual(
+    stripHtml(" \xa0 <article> \xa0 <div> \xa0 ", { trimOnlySpaces: true }),
+    "\xa0 \xa0",
+    "08.01.07"
+  );
+  t.deepEqual(stripHtml(" \xa0 <article> \xa0 "), "", "08.01.08");
+  t.deepEqual(
+    stripHtml(" \xa0 <article> \xa0 ", { trimOnlySpaces: true }),
+    "\xa0 \xa0",
+    "08.01.09"
+  );
+
+  //                      various
+
+  // unencoded non-breaking spaces - no HTML at all
+  t.deepEqual(stripHtml(" \t a \n "), "a", "08.01.10.01");
+  t.deepEqual(
+    stripHtml(" \t a \n ", { trimOnlySpaces: true }),
+    "\t a \n",
+    "08.01.10.02"
+  );
+  t.deepEqual(
+    stripHtml(" \t\n a \r\n ", { trimOnlySpaces: true }),
+    "\t\n a \r\n",
+    "08.01.11"
+  );
+
+  // unencoded non-breaking spaces - no HTML at all
+  t.deepEqual(stripHtml("\t\r\n <article> \t\r\n"), "", "08.01.12");
+  t.deepEqual(
+    stripHtml("\t\r\n <article> \t\r\n", { trimOnlySpaces: true }),
+    "\t\r\n \t\r\n",
+    "08.01.13"
+  );
+  t.deepEqual(
+    stripHtml(" \t \r \n <article> \t \r \n ", { trimOnlySpaces: true }),
+    "\t \r \n \t \r \n",
+    "08.01.14"
+  );
+
+  //                 combos of tags and whitespace
+
+  t.deepEqual(
+    stripHtml(" \n <article> \xa0 <div> \xa0 </article> \t ", {
+      trimOnlySpaces: true
+    }),
+    "\n \t",
+    "08.01.15"
+  );
+  t.deepEqual(
+    stripHtml(" \na<article> \xa0 <div> \xa0 </article>b\t ", {
+      trimOnlySpaces: true
+    }),
+    "\na b\t",
+    "08.01.16"
+  );
+  t.deepEqual(
+    stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
+      trimOnlySpaces: true
+    }),
+    "\n a b \t",
+    "08.01.17"
+  );
+});
+
+// ==============================
 // throws
 // ==============================
 

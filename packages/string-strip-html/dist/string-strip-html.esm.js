@@ -140,11 +140,22 @@ function stripHtml(str, originalOpts) {
   // records the beginning of the current whitespace chunk:
   let chunkOfWhitespaceStartsAt = null;
 
+  // records the beginning of the current chunk of spaces (strictly spaces-only):
+  let chunkOfSpacesStartsAt = null;
+
   // we'll gather opening tags from ranged-pairs here:
   const rangedOpeningTags = [];
 
   // temporary variable to assemble the attribute pieces:
   let attrObj = {};
+
+  // marker to keep a note where does the whitespace chunk that follows closing bracket end.
+  // It's necessary for opts.trimOnlySpaces when there's closing bracket, whitespace, non-space
+  // whitespace character ("\n", "\t" etc), whitspace, end-of-file. Trim will kick in and will
+  // try to trim up until the EOF, be we'll have to pull the end of trim back, back to the first
+  // character of aforementioned non-space whitespace character sequence.
+  // This variable will tell exactly where it is located.
+  let spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
 
   // functions
   // ===========================================================================
@@ -332,7 +343,8 @@ function stripHtml(str, originalOpts) {
     ignoreTags: [],
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
     skipHtmlDecoding: false,
-    returnRangesOnly: false
+    returnRangesOnly: false,
+    trimOnlySpaces: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (!opts.stripTogetherWithTheirContents) {
@@ -395,6 +407,22 @@ function stripHtml(str, originalOpts) {
   // ===========================================================================
 
   for (let i = 0, len = str.length; i < len; i++) {
+
+    // catch the first ending of the spaces chunk that follows the closing bracket.
+    // -------------------------------------------------------------------------
+    // There can be no space after bracket, in that case, the result will be that character that
+    // follows the closing bracket.
+    // There can be bunch of spaces that end with EOF. In that case it's fine, this variable will
+    // be null.
+    if (
+      Object.keys(tag).length &&
+      tag.lastClosingBracketAt &&
+      tag.lastClosingBracketAt < i &&
+      str[i] !== " " &&
+      spacesChunkWhichFollowsTheClosingBracketEndsAt === null
+    ) {
+      spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
+    }
 
     // catch the closing bracket of dirty tags with missing opening brackets
     // -------------------------------------------------------------------------
@@ -738,7 +766,9 @@ function stripHtml(str, originalOpts) {
       if (tag.lastOpeningBracketAt !== undefined) {
         // 1. mark the index
         tag.lastClosingBracketAt = i;
-        // 2. push attrObj into tag.attributes[]
+        // 2. reset the spacesChunkWhichFollowsTheClosingBracketEndsAt
+        spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
+        // 3. push attrObj into tag.attributes[]
         if (Object.keys(attrObj).length) {
           if (!tag.attributes) {
             tag.attributes = [];
@@ -797,7 +827,6 @@ function stripHtml(str, originalOpts) {
         (i > tag.lastClosingBracketAt && str[i].trim().length !== 0) ||
         str[i + 1] === undefined
       ) {
-
         // case 2. closing bracket HAS BEEN met
         // we'll look for a non-whitespace character and delete up to it
         // BUT, we'll wipe the tag object only if that non-whitespace character
@@ -805,7 +834,16 @@ function stripHtml(str, originalOpts) {
 
         // part 1.
 
-        const endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+        let endingRangeIndex = tag.lastClosingBracketAt === i ? i + 1 : i;
+
+        if (
+          opts.trimOnlySpaces &&
+          endingRangeIndex === len - 1 &&
+          spacesChunkWhichFollowsTheClosingBracketEndsAt !== null &&
+          spacesChunkWhichFollowsTheClosingBracketEndsAt < i
+        ) {
+          endingRangeIndex = spacesChunkWhichFollowsTheClosingBracketEndsAt;
+        }
 
         // if it's a dodgy suspicious tag where space follows opening bracket, there's an extra requirement
         // for this tag to be considered a tag - there has to be at least one attribute with equals if
@@ -881,8 +919,23 @@ function stripHtml(str, originalOpts) {
           tag.lastOpeningBracketAt = i;
           tag.slashPresent = false;
           tag.attributes = [];
-          tag.leftOuterWhitespace =
-            chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
+
+          // since 2.1.0 we started to care about not trimming outer whitespace which is not spaces.
+          // For example, " \t <a> \n ". Tag's whitespace boundaries should not extend to string
+          // edges but until "\t" on the left and "\n" on the right IF opts.trimOnlySpaces is on.
+
+          if (chunkOfWhitespaceStartsAt === null) {
+            tag.leftOuterWhitespace = i;
+          } else if (opts.trimOnlySpaces && chunkOfWhitespaceStartsAt === 0) {
+            // if whitespace extends to the beginning of a string, there's a risk it might include
+            // not only spaces. To fix that, switch to space-only range marker:
+            tag.leftOuterWhitespace = chunkOfSpacesStartsAt || i;
+          } else {
+            tag.leftOuterWhitespace = chunkOfWhitespaceStartsAt;
+          }
+
+          // tag.leftOuterWhitespace =
+          //   chunkOfWhitespaceStartsAt === null ? i : chunkOfWhitespaceStartsAt;
 
           // tend the HTML comments: <!-- --> or CDATA: <![CDATA[ ... ]]>
           // if opening comment tag is detected, traverse forward aggressively
@@ -983,15 +1036,42 @@ function stripHtml(str, originalOpts) {
       chunkOfWhitespaceStartsAt = null;
     }
 
+    // catch spaces-only chunks (needed for outer trim option opts.trimOnlySpaces)
+    // -------------------------------------------------------------------------
+
+    if (str[i] === " ") {
+      // 1. catch spaces boundaries:
+      if (chunkOfSpacesStartsAt === null) {
+        chunkOfSpacesStartsAt = i;
+      }
+    } else if (chunkOfSpacesStartsAt !== null) {
+      // 2. reset the marker
+      chunkOfSpacesStartsAt = null;
+    }
+
     // log all
     // -------------------------------------------------------------------------
+    // console.log(
+    //   `${`\u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+    //     chunkOfSpacesStartsAt,
+    //     null,
+    //     4
+    //   )}`
+    // );
   }
 
   if (rangesToDelete.current()) {
     if (opts.returnRangesOnly) {
       return rangesToDelete.current();
     }
-    return replaceSlicesArr(str, rangesToDelete.current()).trim();
+    const untrimmedRes = replaceSlicesArr(str, rangesToDelete.current());
+    if (opts.trimOnlySpaces) {
+      return trim(untrimmedRes, " ");
+    }
+    return untrimmedRes.trim();
+  }
+  if (opts.trimOnlySpaces) {
+    return trim(str, " ");
   }
   return str.trim();
 }
