@@ -93,6 +93,8 @@ If you pass a folder name, for example, `jsonsort templates`, it will catch all 
 
 If a file is a broken JSON file with errors in the markup, it won't cause an error on the whole pipeline — other, healthy files from the batch will still be sorted OK. A broken file will be listed among failed files.
 
+System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
+
 **[⬆ &nbsp;back to top](#)**
 
 ## Updating it
