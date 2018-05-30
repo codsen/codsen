@@ -71,4 +71,4 @@ function isProduction4a(char) {
   );
 }
 
-export { isProduction4, isProduction4a };
+export { isProduction4, isProduction4a, isProduction4 as validFirstChar, isProduction4a as validSecondCharOnwards };

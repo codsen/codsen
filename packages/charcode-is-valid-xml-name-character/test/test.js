@@ -1,7 +1,9 @@
 import test from "ava";
 import {
   isProduction4,
-  isProduction4a
+  isProduction4a,
+  validFirstChar,
+  validSecondCharOnwards
 } from "../dist/charcode-is-valid-xml-name-character.esm";
 
 // -----------------------------------------------------------------------------
@@ -28,6 +30,26 @@ test("01.01 - isProduction4()", t => {
   );
 });
 
+test("01.02 - validFirstChar() same as isProduction4()", t => {
+  t.is(validFirstChar("a"), true, "01.02.01");
+  t.is(validFirstChar("Z"), true, "01.02.02");
+  t.is(validFirstChar("?"), false, "01.02.03");
+  t.is(validFirstChar("-"), false, "01.02.04");
+  t.is(validFirstChar("1"), false, "01.02.05");
+  t.is(validFirstChar(":"), true, "01.02.06");
+  t.is(validFirstChar("_"), true, "01.02.06");
+  t.is(
+    validFirstChar("\uD800\uDC00"), // #x10000
+    true,
+    "01.02.07"
+  );
+  t.is(
+    validFirstChar("\uDB7F\uDFFF"), // #xEFFFF
+    true,
+    "01.02.08"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 02. isProduction4a
 // -----------------------------------------------------------------------------
@@ -48,5 +70,24 @@ test("02.01 - isProduction4a()", t => {
     isProduction4a("\uDB7F\uDFFF"), // #xEFFFF
     true,
     "02.01.08"
+  );
+});
+
+test("02.01 - validSecondCharOnwards() same as isProduction4a()", t => {
+  t.is(validSecondCharOnwards("a"), true, "02.02.01");
+  t.is(validSecondCharOnwards("?"), false, "02.02.02");
+  t.is(validSecondCharOnwards("-"), true, "02.02.03");
+  t.is(validSecondCharOnwards("1"), true, "02.02.04");
+  t.is(validSecondCharOnwards(":"), true, "02.02.05");
+  t.is(validSecondCharOnwards("_"), true, "02.02.06");
+  t.is(
+    validSecondCharOnwards("\uD800\uDC00"), // #x10000
+    true,
+    "02.02.07"
+  );
+  t.is(
+    validSecondCharOnwards("\uDB7F\uDFFF"), // #xEFFFF
+    true,
+    "02.02.08"
   );
 });

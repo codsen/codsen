@@ -70,7 +70,7 @@ It returns a Boolean, is the given character the [Production 4a](https://www.w3.
 
 This library is used to detect where (X)HTML element names end.
 
-This article contains a very thorough explanation of the spec terminology: https://www.xml.com/pub/a/2001/07/25/namingparts.html — it helped me to get up to speed on this subject.
+This article contains an in-depth explanation of the spec terminology: https://www.xml.com/pub/a/2001/07/25/namingparts.html — it helped me to get up to speed on this subject.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -86,7 +86,7 @@ In the most simple scenario:
     1     2
 ```
 
-Characters `space` (1) and `=` (2) in the example above mark the ending of the element names (`img` and `class`). OK, so we know spaces and equals' are not allowed as element names and therefore mark their ending. Are there more of such characters? Oh yes. Actually quite a lot according to [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) what warrants a proper library dedicated only for that.
+Characters `space` (1) and `=` (2) in the example above mark the ending of the element names (`img` and `class`). OK, so we know spaces and equals' are not allowed as element names and therefore mark their ending. Are there more of such characters? Oh yes. Quite a lot according to [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) what warrants a proper library dedicated only for that purpose.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -94,37 +94,59 @@ Characters `space` (1) and `=` (2) in the example above mark the ending of the e
 
 Two functions - one to check requirements for **first character**, another to check requirements for **second character** and onwards. Both functions return a Boolean.
 
-### `isProduction4()` - requirements for 1st char
+<table>
+  <tr>
+    <th>Function's name</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td><code>isProduction4</code></td>
+    <td colspan="2">To tell, is this character suitable to be the first character</td>
+  </tr>
+  <tr>
+    <td><code>validFirstChar</code></td>
+  </tr>
+  <tr>
+    <td><code>isProduction4a</code></td>
+    <td colspan="2">To tell, is this character suitable to be the second character and onwards</td>
+  </tr>
+  <tr>
+    <td><code>validSecondCharOnwards</code></td>
+  </tr>
+</table>
+
+### `isProduction4()` / `validFirstChar()` - requirements for 1st char
 
 XML spec [production 4](https://www.w3.org/TR/REC-xml/#NT-NameStartChar) - the requirements for the first character of the XML element. It's more strict than requirements for the subsequent characters, see [production 4a]() below.
 
-Pass any character (including astral-one) into function `isProduction4()` and it will respond with a Boolean, is it acceptable as first XML character (or not).
+Pass any character (including astral-one) into function `isProduction4()`, and it will respond with a Boolean, is it acceptable as first XML character (or not).
 
 ```js
 const {
-  isProduction4
+  isProduction4,
+  validFirstChar
   // isProduction4a,
 } = require("charcode-is-valid-xml-name-character");
 
-const res1 = isProduction4("-");
+const res1 = isProduction4("-"); // or use validFirstChar(), the same
 console.log("res1 = " + res1);
 // => 'res1 = false <---- minus is not allowed for first character
 
-const res2 = isProduction4("z");
+const res2 = isProduction4("z"); // or use validFirstChar(), the same
 console.log("res2 = " + res2);
 // => 'res2 = true
 ```
 
-It **consumes** a single character (can be any Unicode character, including astral-one, comprising of two surrogates).
+It **consumes** a single character (can be any Unicode character, including astral-one, comprising two surrogates).
 **Returns** Boolean - is it acceptable as the first character in XML element's name.
 
 **[⬆ &nbsp;back to top](#)**
 
-### `isProduction4a()` - requirements for 2st char onwards
+### `isProduction4a()` / `validSecondCharOnwards()` - requirements for 2nd char onwards
 
 XML spec [production 4a](https://www.w3.org/TR/REC-xml/#NT-NameChar) - the requirements for the second character onwards in XML element's name.
 
-Pass any character (including astral-one) into function `isProduction4a()` and it will respond with a Boolean, is it acceptable as second XML character and onwards (or not). Requirements are same as for the first character but a bit more lax.
+Pass any character (including astral-one) into function `isProduction4a()`, and it will respond with a Boolean, is it acceptable as second XML character and onwards (or not). Requirements are same as for the first character but a bit more permissive.
 
 ```js
 const {
@@ -132,27 +154,27 @@ const {
   isProduction4a
 } = require("charcode-is-valid-xml-name-character");
 
-const res1 = isProduction4a("-");
+const res1 = isProduction4a("-"); // or use validSecondCharOnwards(), the same
 console.log("res1 = " + res1);
 // => 'res1 = true <---- minus is allowed for second character-onwards
 
-const res2 = isProduction4a("z");
+const res2 = isProduction4a("z"); // or use validSecondCharOnwards(), the same
 console.log("res2 = " + res2);
 // => 'res2 = true
 ```
 
-It **consumes** a single character (can be any Unicode character, including astral-one, comprising of two surrogates).
+It **consumes** a single character (can be any Unicode character, including astral-one, comprising two surrogates).
 **Returns** Boolean - is it acceptable as the second or subsequent character in XML element's name.
 
 **[⬆ &nbsp;back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/charcode-is-valid-xml-name-character/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/charcode-is-valid-xml-name-character/issues).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/charcode-is-valid-xml-name-character/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/charcode-is-valid-xml-name-character/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 

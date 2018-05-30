@@ -70,3 +70,5 @@ function isProduction4a(char) {
 
 exports.isProduction4 = isProduction4;
 exports.isProduction4a = isProduction4a;
+exports.validFirstChar = isProduction4;
+exports.validSecondCharOnwards = isProduction4a;
