@@ -73,7 +73,7 @@ test("02.01 - isProduction4a()", t => {
   );
 });
 
-test("02.01 - validSecondCharOnwards() same as isProduction4a()", t => {
+test("02.02 - validSecondCharOnwards() same as isProduction4a()", t => {
   t.is(validSecondCharOnwards("a"), true, "02.02.01");
   t.is(validSecondCharOnwards("?"), false, "02.02.02");
   t.is(validSecondCharOnwards("-"), true, "02.02.03");
