@@ -12,7 +12,7 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 ### Added
 
 - ✨ An even smarter algorithm, now being able to detect missing opening bracket on a tag, for example. Even latest Chrome `v.66` can't do that.
-- ✨ Increased unit test assertion count from 148 to 362. Covering even more legit and stinky code cases.
+- ✨ Increased unit test assertion count from 148 to 370. Covering even more legit and stinky code cases.
 - ✨ `opts.returnRangesOnly`
 
 ## [1.5.0] - 2018-05-14
