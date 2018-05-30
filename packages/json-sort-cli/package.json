@@ -1,6 +1,6 @@
 {
   "name": "json-sort-cli",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "description": "Command line app to deep sort JSON files, also dot-files as long as they are valid JSON",
   "license": "MIT",
   "engines": {
