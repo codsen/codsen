@@ -46,6 +46,16 @@ const cli = meow(
 updateNotifier({ pkg: cli.pkg }).notify();
 
 const nonJsonFormats = ["yml", "toml", "yaml"]; // to save time
+const badFiles = [
+  ".DS_Store",
+  "npm-debug.log",
+  ".svn",
+  "CVS",
+  "config.gypi",
+  ".lock-wscript",
+  "package-lock.json",
+  "npm-shrinkwrap.json"
+];
 
 // The following regex - Copyright (c) 2015. Athan Reines.
 // https://github.com/validate-io/json/blob/master/lib/index.js
@@ -255,6 +265,9 @@ globby(input, { dot: true })
           path.basename(singlePath).startsWith(".") &&
           !nonJsonFormats.some(badExtension =>
             path.extname(singlePath).includes(badExtension)
+          ) &&
+          !badFiles.some(badFile =>
+            path.basename(singlePath).includes(badFile)
           ))
       );
     });

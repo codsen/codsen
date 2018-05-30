@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2018-05-29
+
+### Added
+
+* ✨ Excluded `.DS_Store` and other system files by default.
+
 ## [1.5.0] - 2018-05-27
 
 ### Added
@@ -58,3 +64,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [1.3.0]: https://github.com/codsen/json-sort-cli/compare/v1.2.0...v1.3.0
 [1.4.0]: https://github.com/codsen/json-sort-cli/compare/v1.3.0...v1.4.0
 [1.5.0]: https://github.com/codsen/json-sort-cli/compare/v1.4.0...v1.5.0
+[1.6.0]: https://github.com/codsen/json-sort-cli/compare/v1.5.0...v1.6.0
