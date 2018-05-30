@@ -15,13 +15,6 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 - ✨ Increased unit test assertion count from 148 to 370. Covering even more legit and stinky code cases.
 - ✨ `opts.returnRangesOnly`
 
-## [1.5.0] - 2018-05-14
-
-### Improved
-
-- ✨ Improved HTML tag detection algorithm: now, if digit (with or without whitespace in front) follows the opening bracket, it's interpreted as definitely not an opening bracket of a tag.
-- ✨ Various setup tweaks
-
 ## [1.4.0] - 2018-05-11
 
 ### Improved
@@ -59,5 +52,4 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 [1.2.0]: https://github.com/codsen/string-strip-html/compare/v1.1.0...v1.2.0
 [1.3.0]: https://github.com/codsen/string-strip-html/compare/v1.2.6...v1.3.0
 [1.4.0]: https://github.com/codsen/string-strip-html/compare/v1.3.2...v1.4.0
-[1.5.0]: https://github.com/codsen/string-strip-html/compare/v1.4.0...v1.5.0
-[2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.5.0...v2.0.0
+[2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.4.2...v2.0.0
