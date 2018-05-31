@@ -155,7 +155,8 @@
       "devDependencies": [
         "rollup-plugin-json",
         "rollup-plugin-node-builtins"
-      ]
+      ],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
