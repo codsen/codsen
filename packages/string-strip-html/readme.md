@@ -5,10 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -185,14 +182,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [travis-url]: https://travis-ci.org/codsen/string-strip-html
 [cov-img]: https://coveralls.io/repos/github/codsen/string-strip-html/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/github/codsen/string-strip-html?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-strip-html.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-strip-html
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-strip-html.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-strip-html/master/dependencies/npm
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-strip-html
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-strip-html.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-strip-html/master/dependencies/npm
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/string-strip-html/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/string-strip-html
 [downloads-img]: https://img.shields.io/npm/dm/string-strip-html.svg?style=flat-square
