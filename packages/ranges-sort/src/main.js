@@ -7,10 +7,10 @@ const isArr = Array.isArray;
 //
 //                              /\___/\
 //                             ( o   o )
-//                             (  =^=  )
+//                             ====Y====
 //                             (        )
 //                             (         )
-//                             (          )))))))))))
+//                             (        )))))))))))
 //
 
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
@@ -84,7 +84,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     })
   ) {
     throw new TypeError(
-      `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${ordinalSuffix(
+      `ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ${ordinalSuffix(
         culpritsIndex
       )} range (${JSON.stringify(
         arrOfRanges[culpritsIndex],
