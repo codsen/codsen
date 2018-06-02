@@ -149,6 +149,15 @@ function stripHtml(str, originalOpts) {
   // temporary variable to assemble the attribute pieces:
   let attrObj = {};
 
+  // marker to store captured href, used in opts.dumpLinkHrefsNearby
+  let hrefDump = {}; // 2 keys: "tagName" - where href was spotted, "hrefValue" - URL
+
+  // used to insert extra things when pushing into ranges array
+  let stringToInsertAfter = "";
+
+  // state flag
+  let hrefInsertionActive;
+
   // marker to keep a note where does the whitespace chunk that follows closing bracket end.
   // It's necessary for opts.trimOnlySpaces when there's closing bracket, whitespace, non-space
   // whitespace character ("\n", "\t" etc), whitspace, end-of-file. Trim will kick in and will
@@ -312,6 +321,24 @@ function stripHtml(str, originalOpts) {
     return "";
   }
 
+  function calculateHrefToBeInserted() {
+    if (
+      opts.dumpLinkHrefsNearby &&
+      Object.keys(hrefDump).length &&
+      hrefDump.tagName === tag.name &&
+      tag.lastOpeningBracketAt &&
+      ((hrefDump.openingTagEnds &&
+        tag.lastOpeningBracketAt > hrefDump.openingTagEnds) ||
+        !hrefDump.openingTagEnds)
+    ) {
+      hrefInsertionActive = true;
+    }
+
+    if (hrefInsertionActive) {
+      stringToInsertAfter = hrefDump.hrefValue;
+    }
+  }
+
   // validation
   // ===========================================================================
   if (typeof str !== "string") {
@@ -337,6 +364,14 @@ function stripHtml(str, originalOpts) {
     );
   }
 
+  function resetHrefMarkers() {
+    // reset the hrefDump
+    if (hrefInsertionActive) {
+      hrefDump = {};
+      hrefInsertionActive = false;
+    }
+  }
+
   // prep opts
   // ===========================================================================
   const defaults = {
@@ -344,7 +379,8 @@ function stripHtml(str, originalOpts) {
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
     skipHtmlDecoding: false,
     returnRangesOnly: false,
-    trimOnlySpaces: false
+    trimOnlySpaces: false,
+    dumpLinkHrefsNearby: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   if (!opts.stripTogetherWithTheirContents) {
@@ -458,18 +494,15 @@ function stripHtml(str, originalOpts) {
               ) &&
               stripHtml(`<${culprit.trim()}>`, opts) === ""
             ) {
-              rangesToDelete.push(
+              const whiteSpaceCompensation = calculateWhitespaceToInsert(
+                str,
+                i,
                 startingPoint,
                 i + 1,
-                calculateWhitespaceToInsert(
-                  str,
-                  i,
-                  startingPoint,
-                  i + 1,
-                  startingPoint,
-                  i + 1
-                )
+                startingPoint,
+                i + 1
               );
+              rangesToDelete.push(startingPoint, i + 1, whiteSpaceCompensation);
             }
             break;
           }
@@ -524,6 +557,22 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
         // 2. finally, delete the quotes marker, we don't need it any more
         tag.quotes = undefined;
+        // 3. if opts.dumpLinkHrefsNearby is on, catch href
+        let hrefVal;
+        if (
+          opts.dumpLinkHrefsNearby &&
+          tag.attributes.some(obj => {
+            if (obj.name.toLowerCase() === "href") {
+              hrefVal = obj.value;
+              return true;
+            }
+          })
+        ) {
+          hrefDump = {
+            tagName: tag.name,
+            hrefValue: hrefVal
+          };
+        }
       } else if (!tag.quotes && tag.nameStarts) {
         // 1. if it's opening marker, record the type and location of quotes
         tag.quotes = {};
@@ -583,17 +632,18 @@ function stripHtml(str, originalOpts) {
         if (str[i] === "<") {
           endingRangeIndex = i;
         }
+        const whiteSpaceCompensation = calculateWhitespaceToInsert(
+          str,
+          i,
+          tag.leftOuterWhitespace,
+          endingRangeIndex,
+          tag.lastOpeningBracketAt,
+          tag.lastClosingBracketAt || endingRangeIndex
+        );
         rangesToDelete.push(
           tag.leftOuterWhitespace,
           endingRangeIndex,
-          calculateWhitespaceToInsert(
-            str,
-            i,
-            tag.leftOuterWhitespace,
-            endingRangeIndex,
-            tag.lastOpeningBracketAt,
-            tag.lastClosingBracketAt || endingRangeIndex
-          )
+          whiteSpaceCompensation
         );
         // also,
         treatRangedTags(i);
@@ -636,6 +686,8 @@ function stripHtml(str, originalOpts) {
     // catch the ending of the whole attribute
     // -------------------------------------------------------------------------
     // for example, <a b c> this "c" ends "b" because it's not "equals" sign.
+    // We even anticipate for cases where whitespace anywhere between attribute parts:
+    // < article class = " something " / >
     if (
       !tag.quotes &&
       attrObj.nameStarts &&
@@ -697,9 +749,12 @@ function stripHtml(str, originalOpts) {
       !attrObj.nameStarts &&
       !tag.lastClosingBracketAt
     ) {
-      if (isValidAttributeCharacter(`${str[i]}${str[i + 1]}`)) {
+      if (
+        isValidAttributeCharacter(`${str[i]}${str[i + 1]}`) &&
+        str[i] !== "<"
+      ) {
         attrObj.nameStarts = i;
-      } else if (tag.onlyPlausible) {
+      } else if (tag.onlyPlausible && str[i] !== "<") {
         // If we have already suspicious tag where there's a space after "<", now it's fine to skip this
         // tag because it's not a tag - attribute starts with a non-legit symbol...
         // Wipe the whole tag record object:
@@ -776,6 +831,15 @@ function stripHtml(str, originalOpts) {
           tag.attributes.push(attrObj);
           attrObj = {};
         }
+        // 4. if opts.dumpLinkHrefsNearby is on and we just recorded an href,
+        if (
+          opts.dumpLinkHrefsNearby &&
+          hrefDump.tagName &&
+          !hrefDump.openingTagEnds
+        ) {
+          // finish assembling the hrefDump{}
+          hrefDump.openingTagEnds = i; // or tag.lastClosingBracketAt, same
+        }
       }
     }
 
@@ -792,7 +856,9 @@ function stripHtml(str, originalOpts) {
         ) {
           // find out the tag name earlier than dedicated tag name ending catching section:
           if (str[i + 1] === undefined) {
-            const tagName = str.slice(tag.nameStarts, i + 1).toLowerCase();
+            const tagName = str
+              .slice(tag.nameStarts, tag.nameEnds ? tag.nameEnds : i + 1)
+              .toLowerCase();
 
             // if it's an ignored tag, bail:
             if (opts.ignoreTags.includes(tagName)) {
@@ -803,19 +869,30 @@ function stripHtml(str, originalOpts) {
 
             // if the tag is only plausible (there's space after opening bracket) and it's not among
             // recognised tags, leave it as it is:
-            if (definitelyTagNames.concat(singleLetterTags).includes(tagName)) {
+            if (
+              definitelyTagNames.concat(singleLetterTags).includes(tagName) &&
+              (tag.onlyPlausible === false ||
+                (tag.onlyPlausible === true && tag.attributes.length))
+            ) {
+              calculateHrefToBeInserted();
+
+              const whiteSpaceCompensation = calculateWhitespaceToInsert(
+                str,
+                i,
+                tag.leftOuterWhitespace,
+                i + 1,
+                tag.lastOpeningBracketAt,
+                tag.lastClosingBracketAt
+              );
+
               rangesToDelete.push(
                 tag.leftOuterWhitespace,
                 i + 1,
-                calculateWhitespaceToInsert(
-                  str,
-                  i,
-                  tag.leftOuterWhitespace,
-                  i + 1,
-                  tag.lastOpeningBracketAt,
-                  tag.lastClosingBracketAt
-                )
+                `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
               );
+
+              resetHrefMarkers();
+
               // also,
               treatRangedTags(i);
             } else {
@@ -867,18 +944,29 @@ function stripHtml(str, originalOpts) {
             continue;
           }
 
+          const whiteSpaceCompensation = calculateWhitespaceToInsert(
+            str,
+            i,
+            tag.leftOuterWhitespace,
+            endingRangeIndex,
+            tag.lastOpeningBracketAt,
+            tag.lastClosingBracketAt
+          );
+
+          // calculate optional opts.dumpLinkHrefsNearby HREF to insert
+          stringToInsertAfter = "";
+          hrefInsertionActive = false;
+
+          calculateHrefToBeInserted();
+
           rangesToDelete.push(
             tag.leftOuterWhitespace,
             endingRangeIndex,
-            calculateWhitespaceToInsert(
-              str,
-              i,
-              tag.leftOuterWhitespace,
-              endingRangeIndex,
-              tag.lastOpeningBracketAt,
-              tag.lastClosingBracketAt
-            )
+            `${whiteSpaceCompensation}${stringToInsertAfter}${whiteSpaceCompensation}`
           );
+
+          resetHrefMarkers();
+
           // also,
           treatRangedTags(i);
         } else {
@@ -900,7 +988,47 @@ function stripHtml(str, originalOpts) {
         // cater cases like: "<><><>"
         continue;
       } else {
-        // if new tag starts, reset:
+        // 1. Before (re)setting flags, check, do we have a case of a tag with a
+        // missing closing bracket, and this is a new tag following it.
+        if (tag.nameEnds && tag.nameEnds < i && !tag.lastClosingBracketAt) {
+          if (
+            (tag.onlyPlausible === true &&
+              tag.attributes &&
+              tag.attributes.length) ||
+            tag.onlyPlausible === false
+          ) {
+            // tag.onlyPlausible can be undefined too
+            const whiteSpaceCompensation = calculateWhitespaceToInsert(
+              str,
+              i,
+              tag.leftOuterWhitespace,
+              i,
+              tag.lastOpeningBracketAt,
+              i
+            );
+            rangesToDelete.push(
+              tag.leftOuterWhitespace,
+              i,
+              whiteSpaceCompensation
+            );
+
+            // also,
+            treatRangedTags(i);
+
+            // then, for continuity, mark everything up accordingly if it's a new bracket:
+            tag = {};
+            attrObj = {};
+          } else if (
+            tag.onlyPlausible &&
+            !definitelyTagNames.concat(singleLetterTags).includes(tag.name) &&
+            !(tag.attributes && tag.attributes.length)
+          ) {
+            tag = {};
+            attrObj = {};
+          }
+        }
+
+        // 2. if new tag starts, reset:
         if (
           tag.lastOpeningBracketAt !== undefined &&
           tag.onlyPlausible &&
@@ -973,17 +1101,18 @@ function stripHtml(str, originalOpts) {
                 ) {
                   rangeEnd += 1;
                 }
+                const whiteSpaceCompensation = calculateWhitespaceToInsert(
+                  str,
+                  y,
+                  tag.leftOuterWhitespace,
+                  rangeEnd,
+                  tag.lastOpeningBracketAt,
+                  closingFoundAt
+                );
                 rangesToDelete.push(
                   tag.leftOuterWhitespace,
                   rangeEnd,
-                  calculateWhitespaceToInsert(
-                    str,
-                    y,
-                    tag.leftOuterWhitespace,
-                    rangeEnd,
-                    tag.lastOpeningBracketAt,
-                    closingFoundAt
-                  )
+                  whiteSpaceCompensation
                 );
                 // offset:
                 i = y - 1;
@@ -1008,6 +1137,20 @@ function stripHtml(str, originalOpts) {
       // 1. catch chunk boundaries:
       if (chunkOfWhitespaceStartsAt === null) {
         chunkOfWhitespaceStartsAt = i;
+
+        // TODO
+        // some housekeeping
+        if (
+          tag.lastOpeningBracketAt !== undefined &&
+          tag.lastOpeningBracketAt < i &&
+          tag.nameStarts &&
+          tag.nameStarts < tag.lastOpeningBracketAt &&
+          i === tag.lastOpeningBracketAt + 1
+        ) {
+          tag.onlyPlausible = true;
+          tag.name = undefined;
+          tag.nameStarts = undefined;
+        }
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
       // 1. piggyback the catching of the attributes with equal and no value
@@ -1054,6 +1197,13 @@ function stripHtml(str, originalOpts) {
     // console.log(
     //   `${`\u001b[${33}m${`chunkOfSpacesStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
     //     chunkOfSpacesStartsAt,
+    //     null,
+    //     4
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`chunkOfWhitespaceStartsAt`}\u001b[${39}m`} = ${JSON.stringify(
+    //     chunkOfWhitespaceStartsAt,
     //     null,
     //     4
     //   )}`

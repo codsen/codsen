@@ -5,6 +5,19 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
+test.only("delete me", t => {
+  t.deepEqual(
+    stripHtml("< body > text < script >\nzzz\n< script < / body >"),
+    "text",
+    "01.19.02 - with lots whitespace everywhere"
+  );
+  t.deepEqual(
+    stripHtml("a < something < anything < whatever < body < html"),
+    "a < something < anything < whatever < body < html",
+    "06.05.12 - bails because of spaces"
+  );
+});
+
 test("01.01 - string is whole (opening) tag", t => {
   t.deepEqual(stripHtml("<a>"), "", "01.01.01.01");
   t.deepEqual(
@@ -1034,7 +1047,18 @@ test("01.31 - dirty code - various, #2", t => {
   );
 });
 
-test("01.32 - CDATA", t => {
+test("01.32 - dirty code - various, #3 - suddenly cut off healthy HTML", t => {
+  t.deepEqual(
+    stripHtml(
+      `la <b>la</b> la<table><tr>
+<td><a href="http://codsen.com" target="_blank"><img src="http://cdn.codsen.com/nonexistent.gif" width="11" height="22" border="0" style="display:block; -ms-interpolation-mode:bicubic; color: #ffffff; font-style: it`
+    ),
+    "la la la",
+    "01.32.01 - HTML cut off in the middle of an inline CSS style"
+  );
+});
+
+test("01.33 - CDATA", t => {
   // surroundings are not a linebreaks
   t.deepEqual(
     stripHtml(`a<![CDATA[
@@ -1042,7 +1066,7 @@ test("01.32 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>b`),
     "a b",
-    "01.32.01 - tight"
+    "01.33.01 - tight"
   );
   t.deepEqual(
     stripHtml(`a <![CDATA[
@@ -1050,7 +1074,7 @@ test("01.32 - CDATA", t => {
   *and* %MyParamEntity; can be expanded.
 ]]> b`),
     "a b",
-    "01.32.02 - normal"
+    "01.33.02 - normal"
   );
   t.deepEqual(
     stripHtml(`a \t\t<![CDATA[
@@ -1058,7 +1082,7 @@ test("01.32 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>       b`),
     "a b",
-    "01.32.03 - loose"
+    "01.33.03 - loose"
   );
 
   // surroundings are linebreaks
@@ -1068,7 +1092,7 @@ test("01.32 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\nb`),
     "a\nb",
-    "01.32.04 - single linebreaks"
+    "01.33.04 - single linebreaks"
   );
   t.deepEqual(
     stripHtml(`a\n\n\n<![CDATA[
@@ -1076,7 +1100,7 @@ test("01.32 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\nb`),
     "a\nb",
-    "01.32.05 - excessive linebreaks"
+    "01.33.05 - excessive linebreaks"
   );
   t.deepEqual(
     stripHtml(`a\n \t\n\n<![CDATA[
@@ -1084,8 +1108,72 @@ test("01.32 - CDATA", t => {
     *and* %MyParamEntity; can be expanded.
   ]]>\n\n\n\t b`),
     "a\nb",
-    "01.32.06 - mixed linebreaks"
+    "01.33.06 - mixed linebreaks"
   );
+});
+
+test("01.34 - dirty code - unclosed tag followed by a tag", t => {
+  // tight
+  t.deepEqual(
+    stripHtml('111 <br class="zz"<img> 222'),
+    "111 222",
+    "01.34.01 - HTML"
+  );
+  t.deepEqual(
+    stripHtml('111 <br class="zz"/<img> 222'),
+    "111 222",
+    "01.34.02 - XHTML"
+  );
+
+  // space
+  t.deepEqual(
+    stripHtml('111 <br class="zz" <img> 222'),
+    "111 222",
+    "01.34.03 - HTML"
+  );
+  t.deepEqual(
+    stripHtml('111 <br class="zz"/ <img> 222'),
+    "111 222",
+    "01.34.04 - XHTML"
+  );
+
+  // line break
+  t.deepEqual(
+    stripHtml('111 <br class="zz"\n<img> 222'),
+    "111\n222",
+    "01.34.05 - HTML"
+  );
+  t.deepEqual(
+    stripHtml('111 <br class="zz"/\n<img> 222'),
+    "111\n222",
+    "01.34.06 - XHTML"
+  );
+
+  // space and line break
+  t.deepEqual(
+    stripHtml('111 <br class="zz" \n<img> 222'),
+    "111\n222",
+    "01.34.07 - HTML"
+  );
+  t.deepEqual(
+    stripHtml('111 <br class="zz"/ \n<img> 222'),
+    "111\n222",
+    "01.34.08 - XHTML"
+  );
+
+  // messy
+  t.deepEqual(
+    stripHtml('111 <br class="zz"\t/ \n<img> 222'),
+    "111\n222",
+    "01.34.09"
+  );
+  t.deepEqual(
+    stripHtml('111 <br class="zz"\t/\r\n\t \n<img> 222'),
+    "111\n222",
+    "01.34.10"
+  );
+  t.deepEqual(stripHtml("111 <a\t/\r\n\t \n<img> 222"), "111\n222", "01.34.11");
+  t.deepEqual(stripHtml("111 <a\t/\r\n\t \n<img> 222"), "111\n222", "01.34.12");
 });
 
 // ==============================
@@ -1834,6 +1922,135 @@ test("08.01 - opts.trimOnlySpaces", t => {
     }),
     "\n a b \t",
     "08.01.17"
+  );
+});
+
+// ==============================
+// opts.dumpLinkHrefsNearby
+// ==============================
+
+test("09.01 - opts.dumpLinkHrefsNearby - clean code, double quotes", t => {
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening'
+    ),
+    "Let's watch RT news this evening",
+    "09.01.01 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: false }
+    ),
+    "Let's watch RT news this evening",
+    "09.01.02 - control, hardcoded default"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Let's watch RT news https://www.rt.com/ this evening",
+    "09.01.03 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "09.01.04 - mailto links without customisation"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "09.01.05 - mailto links with customisation"
+  );
+});
+
+test("09.02 - opts.dumpLinkHrefsNearby - clean code, single quotes", t => {
+  t.deepEqual(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening"
+    ),
+    "Let's watch RT news this evening",
+    "09.02.01 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: false }
+    ),
+    "Let's watch RT news this evening",
+    "09.02.02 - control, hardcoded default"
+  );
+  t.deepEqual(
+    stripHtml(
+      "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Let's watch RT news https://www.rt.com/ this evening",
+    "09.02.03 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
+    "09.02.04 - mailto links without customisation"
+  );
+  t.deepEqual(
+    stripHtml(
+      "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
+      { dumpLinkHrefsNearby: true }
+    ),
+    "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
+    "09.02.05 - mailto links with customisation"
+  );
+});
+
+test("09.03 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href captured", t => {
+  t.deepEqual(
+    stripHtml('Let\'s watch <a href="https://www.rt.com/" targ'),
+    "Let's watch",
+    "09.03.01 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml('Let\'s watch <a href="https://www.rt.com/" targ', {
+      dumpLinkHrefsNearby: true
+    }),
+    "Let's watch https://www.rt.com/",
+    "09.03.02 - only href contents are left after stripping"
+  );
+});
+
+test("09.04 - opts.dumpLinkHrefsNearby - linked image", t => {
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
+    ),
+    "a b",
+    "09.04.01 - control, default"
+  );
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
+      { dumpLinkHrefsNearby: false }
+    ),
+    "a b",
+    "09.04.02 - control, hardcoded default"
+  );
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
+      { dumpLinkHrefsNearby: true }
+    ),
+    "a https://codsen.com b",
+    "09.04.03 - dumps href of a linked image"
   );
 });
 
