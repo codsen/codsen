@@ -133,13 +133,15 @@ A string of zero or more characters.
 
 ### `opts.returnRangesOnly`
 
-If you construct development tools, you might want this library to "hold horses" on processing the string. It's too early. You want it only to extract _string index ranges_. Then, during next step, you can prepare the string further, until you [crunch](https://github.com/codsen/string-replace-slices-array) the ranges into a final string.
+If you construct development tools, different libraries perform separate steps, and it's inefficient to transform the input string during each step. It's better to keep a _note_ what needs to be done, supplementing or editing notes along the pipeline. Finally, when the end is reached, _notes_ are used to process the result string.
 
-This feature enables that. Instead of string, result will be a _ranges array_ — array of arrays — something like `[[1, 3], [6, 8]]` where you could put each ranges arguments correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first and second arguments (`beginIndex` and `endIndex`).
+Notes can be stored as _ranges_ - it's a fancy name for arrays of three arguments: `beginIndex`, `endIndex` and `whatToInsert`. First two correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first two arguments. The third argument signifies what will be put in place of this string slice: if it's `undefined` (missing argument) or empty string — that slice will be deleted. If it's a string, its value will be placed instead of deleted slice.
 
-Ranges array is basically an array of `[beginIndex, endIndex]` arrays from `String.slice`.
+All [_range_- class libraries](https://github.com/search?q=topic%3Aranges+org%3Acodsen&type=Repositories) adhere to this spec.
 
-**PS.** Emoji and variable-length Unicode [graphemes](https://emojipedia.org/female-sleuth-type-5/) don't have anything to do with this; String indexing is universal to all characters in JavaScript. The challenge is just to feed the _correct index ranges_ to this library — ranges that mean intended characters. However, that is outside of the scope of this or other range- class libraries.
+Now, `string-strip-html` can also return ranges instead of a final string.
+
+**PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge is to put _correct_ ranges that mean intended string pieces.
 
 ### `opts.trimOnlySpaces`
 
