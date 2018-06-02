@@ -126,7 +126,11 @@ function stripHtml(str, originalOpts) {
     "xml"
   ];
   const singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
-  const punctuation = [".", ",", "?", ";", ")", "\u2026", '"']; // \u2026 is &hellip; - ellipsis
+
+  const punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"];
+  // \u00BB is &raquo; - guillemet - right angled quote
+  // \u2026 is &hellip; - ellipsis
+
   const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
 
   const rangesToDelete = new Slices({ limitToBeAddedWhitespace: true });
@@ -315,7 +319,7 @@ function stripHtml(str, originalOpts) {
       strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
     }
     // if (!punctuation.includes(str[currCharIdx - 1])) {
-    if (!punctuation.includes(str[currCharIdx])) {
+    if (!punctuation.includes(str[currCharIdx]) && str[currCharIdx] !== "!") {
       return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
     }
     return "";

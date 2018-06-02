@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.2.0] - 2018-06-01
+## [2.2.0] - 2018-06-02
 
 - ✨ `opts.dumpLinkHrefsNearby` - handy when producing Email Text versions
 - ✨ Improved algorithm to understand HTML code that has been abruptly chopped off. If you select bunch of HTML where beginning is valid, but ending is somewhere in the middle of the tags, styles or whatnot, now that tag will be removed.
 - ✨ Improved algorithm to detect and clean tags without closing bracket, if a new tag follows, with or without whitespace in between.
 
-60 unit tests, 428 assertions, 2099 lines of unit tests at 90% line coverage.
+64 unit tests, 451 assertions, 2226 lines of unit tests at 90% line coverage.
 
 ## [2.1.0] - 2018-05-31
 

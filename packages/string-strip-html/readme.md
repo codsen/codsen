@@ -51,9 +51,10 @@ Here's what you'll get:
 
 
 - [Purpose](#purpose)
+- [Features](#features)
 - [API](#api)
-- [Devil is in the details...](#devil-is-in-the-details)
-- [Interesting](#interesting)
+- [OPTS](#opts)
+- [Not assuming anything](#not-assuming-anything)
 - [Bigger picture](#bigger-picture)
 - [Contributing](#contributing)
 - [Licence](#licence)
@@ -64,19 +65,24 @@ Here's what you'll get:
 
 ## Purpose
 
-This library deletes HTML tags from strings and doesn't assume anything. We will dilligently identify and delete **all and only all** HTML tags. It will do its best to distinguish `a < b and c > d` from `<b >` or `->` from `<!-- something -->`.
+This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. Bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This is a development tool.
 
-Other HTML stripping libraries (like [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags)) _assume_ that the input will be strictly HTML and therefore, all unencoded brackets automatically mean it's a tag. For example, they would "clean" the string `a < b and c > d` into `a d`. Personally I think my competition, [strip](https://www.npmjs.com/package/strip) and [striptags](https://www.npmjs.com/package/striptags) (and the likes) are **lazy**. They disguise their lack of algorithmical creativity under HTML-spec smart-pants excuses.
+## Features
 
-The primary consumer for this library is [Detergent](https://github.com/codsen/detergent), where the input can be **both HTML and non-HTML**. Detergent might receive a wannabe arrow, `->`, and it will, depending on the setting, encode the bracket or leave it alone. But that bracket won't be interpreted as a **tag ending**. Why? Because algorithm is smart enough to "see" the dash there. Also, it is smart-enough to "see" that there were no opening tag either (not to mention, probably the algorithm detected _non-taggy_ characters like full stop and rang inner alarm-bells to ignore this bracket.
-
-The scope of this library is to take the HTML and **strip HTML tags and only HTML tags**. If there's something else there besides tags such as greater than signs that doesn't belong in HTML, I don't care. Just use a different tool to process your string before or after.
+- Can be used to generate Email Text versions. Any URL links can be extracted and put after previously linked element.
+- Works when opening or closing tag bracket is missing on some tags.
+- It can detect and skip false positives, for example, `a < b and c > d`
+- Works on dirty code - duplicate brackets, whitespace after opening bracket, messed up closing slashes — you name it, we will aim to tackle them.
+- Adds spaces or line breaks to prevent concatenation. Except where punctuation characters follow.
+- Can remove tags with all the content between opening and closing tag, for example `<style>...</style>` or `<script>...</script>`
+- Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn decoding off via `opts.skipHtmlDecoding`)
+- It doesn't assume anything about the input source or purpose of the output string
 
 **[⬆ &nbsp;back to top](#)**
 
 ## API
 
-Basically, string-in string-out, with optional second input argument - an Optional Options Object.
+String-in string-out, with optional second input argument - an Optional Options Object.
 
 ### API - Input
 
@@ -91,23 +97,29 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 
 ### Optional Options Object
 
-| An Optional Options Object's key | Type of its value                                 | Default                      | Description                                                                                                                                                                                                               |
-| -------------------------------- | ------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                                |                                                   |                              |
-| `ignoreTags`                     | Array of zero or more strings                     | `[]`                         | Any tags provided here will not be stripped from the input                                                                                                                                                                |
-| `stripTogetherWithTheirContents` | Array of zero or more strings, `something falsey` | `['script', 'style', 'xml']` | My idea is you should be able to paste HTML and see only the text that would be visible in a browser window. Not CSS, not stuff from `script` tags. To turn this off, just set it to an empty array. Or something falsey. |
-| `skipHtmlDecoding`               | Boolean                                           | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. This costs resources so you can turn it off if you know you don't need it.                           |
-| }                                |                                                   |                              |
+| An Optional Options Object's key | Type of its value                                    | Default                      | Description                                                                                                                                                                             |
+| -------------------------------- | ---------------------------------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                |                                                      |                              |
+| `ignoreTags`                     | Array of zero or more strings                        | `[]`                         | These tags will not be removed                                                                                                                                                          |
+| `stripTogetherWithTheirContents` | Array of zero or more strings, or _something falsey_ | `['script', 'style', 'xml']` | These tags will be removed from opening tag up to closing tag, including content in-between opening and closing tags. Set it to something _falsey_ to turn it off.                      |
+| `skipHtmlDecoding`               | Boolean                                              | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. You can turn it off here if you don't need it.                     |
+| `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://github.com/search?q=topic%3Aranges+org%3Acodsen&type=Repositories) |
+| `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                                                |
+| `dumpLinkHrefsNearby`            | Boolean                                              | `false`                      | Used to retain HREF link URL's - handy when producing email Text versions.                                                                                                              |
+| }                                |                                                      |                              |
 
 The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
-Here is the Optional Options Object in one place (in case you ever want to copy it):
+Here is the Optional Options Object in one place (in case you ever want to copy it whole):
 
 ```js
 {
   ignoreTags: [],
-  stripTogetherWithTheirContents: ['script', 'style', 'xml'],
-  skipHtmlDecoding: false
+  stripTogetherWithTheirContents: ["script", "style", "xml"],
+  skipHtmlDecoding: false,
+  returnRangesOnly: false,
+  trimOnlySpaces: false,
+  dumpLinkHrefsNearby: false
 }
 ```
 
@@ -115,36 +127,93 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 
 ### API - Output
 
-A string of zero or more characters-length.
+A string of zero or more characters.
 
-## Devil is in the details...
+## OPTS
 
-### Whitespace management
+### `opts.returnRangesOnly`
 
-Two rules:
+If you construct development tools, you might want this library to "hold horses" on processing the string. It's too early. You want it to only extract _string index ranges_. Then, during next step you can process the string further, until you [crunch](https://github.com/codsen/string-replace-slices-array) the ranges into a final string.
 
-1.  Output will be trimmed. Any leading (in front) whitespaces characters as well as trailing (in the end of the result) will be deleted.
-2.  Any whitespace between the tags will be deleted too. For example, `z<a> <a>y` => `z y`. Also, anything `string.trim()`m-able to zero-length string will be removed, like aforementioned `\n` and `\r` and also tabs: `z<b> \t\t\t <b>y` => `z y`.
+This feature enables that. Instead of string, result will be ranges array — array of arrays — something like `[[1, 3], [6, 8]]` where you could put each ranges arguments correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first and second arguments (`beginIndex` and `endIndex`).
 
-**[⬆ &nbsp;back to top](#)**
+Ranges array is basically an array of `[beginIndex, endIndex]` arrays from `String.slice`.
 
-## Interesting
+**PS.** Emoji and variable-length Unicode [graphemes](https://emojipedia.org/female-sleuth-type-5/) don't have anything to do with this; String indexing is universal to all characters in JavaScript. The challenge is just to feed the _correct index ranges_ to this library — ranges that actually mean correct characters. However, that is outside of the scope of this or other range- class libraries.
 
-`script` tags can be missing a closing tag's closing bracket — `alert` will still work! At least in latest Chrome:
+### `opts.trimOnlySpaces`
 
-```xml
-<!DOCTYPE html>
-<html>
-<head>
-  <title>test</title>
-</head>
-<body>
-<script>alert("123")</script
-</body>
-</html>
+> `Hi&nbsp;` &rarr; `Hi&nbsp;` instead of `Hi&nbsp;` &rarr; `Hi`
+
+When using this tool in automated fashion, for example, to process JSON, few JSON fields might comprise a single string. Often there are considerations how that string is assembled. For example, imagine we "stitch" the sentence: `Hi John! Welcome to our club.` out of three pieces: `Hi` + `John` + `! + Welcome to our club.`. In this case, spaces between the chunks would be added by the your templating engine. Now, imagine, the text is of a quite large `font-size` and there's a risk of words wrapping at wrong places. Client asks you to ensure that `Hi` and `John` are **never split between the lines**.
+
+What do you do?
+
+You remove the space between `Hi` and `John` from the template and move it to data-level. You hard-code the non-breaking space after `Hi` — `Hi&nbsp;`.
+
+As you know, this library trims the input before returning it and recursive HTML decoding is always on. On default settings, this library would remove your non-breaking space from `Hi&nbsp;`. That's where you need to set `opts.trimOnlySpaces` to `true`.
+
+In this particular case, you can either turn off HTML encoding OR, even better, use this `opts.trimOnlySpaces` setting.
+
+In either case, whitespace between the detected tags will still be aggressively trimmed - `text <div>\n \t \r\n <br>\t \t \t</div> here` &rarr; `text here`.
+
+When this setting is on, only spaces will be trimmed from outside, algorithm will stop at first non-space character, in this case, non-breaking space:
+
+```
+"      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
 ```
 
-**[⬆ &nbsp;back to top](#)**
+is turned into:
+
+```
+"&nbsp;     Hi! Please shop now!      &nbsp;"
+```
+
+Notice how space chunks between `nbsp`'s and text are retained when `opts.trimOnlySpaces` is set to `true`. But the default is `false`, this feature if off by default.
+
+### `opts.dumpLinkHrefsNearby`
+
+This feature is aimed at producing Text versions for promotional or transactional email campaigns.
+
+If input string is has a linked text, URL will be put after it:
+
+```html
+I watch both <a href="https://www.rt.com" target="_blank">RT</a> and <a href="https://www.bbc.co.uk" target="_blank">BBC</a>.
+```
+
+it's turned into:
+
+```html
+I watch both RT https://www.rt.com and BBC https://www.bbc.co.uk.
+```
+
+But equally, any link on any tag, even one without text, will be retained:
+
+```html
+Codsen <div><a href="https://codsen.com" target="_blank"><img src="logo.png" width="100" height="100" border="0" style="display:block;" alt="Codsen logo"/></a></div>
+```
+
+it's turned into:
+
+```
+Codsen https://codsen.com
+```
+
+This feature is off by default, you need to turn it on, passing options object with a key `opts.dumpLinkHrefsNearby` set to `true`.
+
+## Not assuming anything
+
+Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is a sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
+
+But those libraries assume too much - what if neither input nor output is not a HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://github.com/codsen/detergent) for example?
+
+For the record, somebody might input `a < b and c > d` (clearly not HTML) into Detergent with intention clean invisible characters before **to paste the result into Photoshop**. User just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection and cross-site scripting. Notice there's even spaces around brackets! It's just that the cleaning tool is very _universal_ and just happens _to snuff out and remove HTML_.
+
+This library does not assume anything and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on other hand, will strip `a < b and c > d` into `a d`.
+
+But, if you think, a child can code up bracket-to-bracket removal library in 5 minutes... There's more to HTML stripping than just bracket-to-bracket.
+
+Choose your HTML stripping tool wisely.
 
 ## Bigger picture
 

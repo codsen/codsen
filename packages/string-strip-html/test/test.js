@@ -555,23 +555,23 @@ test("01.15 - slashes around tags that include slashes", t => {
 test("01.16 - exclamation marks around tags that include slashes", t => {
   t.deepEqual(
     stripHtml(
-      "!!!<!a>!!!<a!>!!!<! a>!!!< !a><! a>!!!< !a>!!!<! a !>!!!<!a!>!!!< ! a ! >!!!"
+      "zzz<!a>zzz<a!>zzz<! a>zzz< !a><! a>zzz< !a>zzz<! a !>zzz<!a!>zzz< ! a ! >zzz"
     ),
-    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
     "01.16.01 - lots of dodgy exclamation marks around and within tags"
   );
   t.deepEqual(
     stripHtml(
-      "!!!<!!!a>!!!<a!!!!!>!!!<!!!! a>!!!< !!!a><!! a>!!!< !!!a>!!!<!! a !!>!!!<!!!a!!!>!!!< !!!! a !!!! >!!!"
+      "zzz<!!!a>zzz<a!!!!!>zzz<!!!! a>zzz< !!!a><!! a>zzz< !!!a>zzz<!! a !!>zzz<!!!a!!!>zzz< !!!! a !!!! >zzz"
     ),
-    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
     "01.16.02 - this time repeated exclamation marks inside"
   );
   t.deepEqual(
     stripHtml(
-      "!!!<!\n!\n!\ta>!!!<a\n!!!\n!!\t>!!!<\n!!!!\t a>!!!< !\n!!\na><!! \ta>!!!<\n\n\n\n !!!a>!!!<\t\t\t\t!! \n\n\na !!>!!!<\n\n\n!!!a\n!!!\n>!!!<\n !!!! \na\n !!!! \n>!!!"
+      "zzz<!\n!\n!\ta>zzz<a\n!!!\n!!\t>zzz<\n!!!!\t a>zzz< !\n!!\na><!! \ta>zzz<\n\n\n\n !!!a>zzz<\t\t\t\t!! \n\n\na !!>zzz<\n\n\n!!!a\n!!!\n>zzz<\n !!!! \na\n !!!! \n>zzz"
     ),
-    "!!! !!! !!! !!! !!! !!! !!! !!! !!!",
+    "zzz zzz zzz zzz zzz zzz zzz zzz zzz",
     "01.16.03 - and the same but with bunch of line breaks and tabs"
   );
 });
@@ -1161,6 +1161,133 @@ test("01.34 - dirty code - unclosed tag followed by a tag", t => {
   );
   t.deepEqual(stripHtml("111 <a\t/\r\n\t \n<img> 222"), "111\n222", "01.34.11");
   t.deepEqual(stripHtml("111 <a\t/\r\n\t \n<img> 222"), "111\n222", "01.34.12");
+});
+
+test("01.35 - punctuation after tag - simplified, question mark", t => {
+  t.deepEqual(stripHtml("a<b>?</b> c"), "a? c", "01.35.01");
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { trimOnlySpaces: true }),
+    "a? c",
+    "01.35.02"
+  );
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: true }),
+    "a? c",
+    "01.35.03"
+  );
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { stripTogetherWithTheirContents: false }),
+    "a? c",
+    "01.35.04"
+  );
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { ignoreTags: ["zzz"] }),
+    "a? c",
+    "01.35.05"
+  );
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { returnRangesOnly: true }),
+    [[1, 4, ""], [5, 10, " "]],
+    "01.35.06"
+  );
+});
+
+test("01.36 - punctuation after tag - simplified, exclamation mark", t => {
+  t.deepEqual(stripHtml("a<b>!</b> c"), "a! c", "01.36.01");
+  t.deepEqual(
+    stripHtml("a<b>!</b> c", { trimOnlySpaces: true }),
+    "a! c",
+    "01.36.02"
+  );
+  t.deepEqual(
+    stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: true }),
+    "a! c",
+    "01.36.03"
+  );
+  t.deepEqual(
+    stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
+    "a! c",
+    "01.36.04"
+  );
+  t.deepEqual(
+    stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }),
+    "a! c",
+    "01.36.05"
+  );
+  t.deepEqual(
+    stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
+    [[1, 4, ""], [5, 10, " "]],
+    "01.36.06"
+  );
+
+  // also,
+
+  t.deepEqual(stripHtml("a<b>!</b>c"), "a! c", "01.36.07");
+});
+
+test("01.37 - punctuation after tag - simplified, ellipsis", t => {
+  t.deepEqual(stripHtml("a<b>...</b> c"), "a... c", "01.37.01");
+  t.deepEqual(
+    stripHtml("a<b>...</b> c", { trimOnlySpaces: true }),
+    "a... c",
+    "01.37.02"
+  );
+  t.deepEqual(
+    stripHtml("a<b>...</b> c", { dumpLinkHrefsNearby: true }),
+    "a... c",
+    "01.37.03"
+  );
+  t.deepEqual(
+    stripHtml("a<b>...</b> c", { stripTogetherWithTheirContents: false }),
+    "a... c",
+    "01.37.04"
+  );
+  t.deepEqual(
+    stripHtml("a<b>...</b> c", { ignoreTags: ["zzz"] }),
+    "a... c",
+    "01.37.05"
+  );
+  t.deepEqual(
+    stripHtml("a<b>...</b> c", { returnRangesOnly: true }),
+    [[1, 4, ""], [7, 12, " "]],
+    "01.37.06"
+  );
+});
+
+test("01.38 - punctuation after tag - real-life", t => {
+  // control
+  t.deepEqual(
+    stripHtml(
+      '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      '
+    ),
+    "Hi! Would you like to shop now?",
+    "01.38.01"
+  );
+  t.deepEqual(
+    stripHtml(
+      "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
+    ),
+    "Hi! Please shop now!",
+    "01.38.02"
+  );
+
+  // opts.trimOnlySpaces
+  t.deepEqual(
+    stripHtml(
+      '      &nbsp;     Hi! Would you like to <a href="/">shop now</a>?      &nbsp;      ',
+      { trimOnlySpaces: true }
+    ),
+    "\u00A0     Hi! Would you like to shop now?      \u00A0",
+    "01.38.03"
+  );
+  t.deepEqual(
+    stripHtml(
+      "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      ",
+      { trimOnlySpaces: true }
+    ),
+    "\u00A0     Hi! Please shop now!      \u00A0",
+    "01.38.04"
+  );
 });
 
 // ==============================
