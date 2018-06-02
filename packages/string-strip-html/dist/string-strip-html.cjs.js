@@ -760,7 +760,11 @@ function stripHtml(str, originalOpts) {
 
         // TODO
         // some housekeeping
-        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1) {
+        if (tag.lastOpeningBracketAt !== undefined && tag.lastOpeningBracketAt < i && tag.nameStarts && tag.nameStarts < tag.lastOpeningBracketAt && i === tag.lastOpeningBracketAt + 1 &&
+        // insurance against tail part of ranged tag being deleted:
+        !rangedOpeningTags.some(function (rangedTagObj) {
+          return rangedTagObj.name === tag.name;
+        })) {
           tag.onlyPlausible = true;
           tag.name = undefined;
           tag.nameStarts = undefined;

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Improved algorithm to understand HTML code that has been abruptly chopped off. If you select bunch of HTML where beginning is valid, but ending is somewhere in the middle of the tags, styles or whatnot, now that tag will be removed.
 - ✨ Improved algorithm to detect and clean tags without closing bracket, if a new tag follows, with or without whitespace in between.
 
+60 unit tests, 428 assertions, 2099 lines of unit tests at 90% line coverage.
+
 ## [2.1.0] - 2018-05-31
 
 - ✨ `opts.trimOnlySpaces` - up until now, by default, the outsides of the string was trimmed using `String.trim()` which erased:
@@ -71,4 +73,4 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 [1.4.0]: https://github.com/codsen/string-strip-html/compare/v1.3.2...v1.4.0
 [2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.4.2...v2.0.0
 [2.1.0]: https://github.com/codsen/string-strip-html/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/string-strip-html/compare/v2.1.0...v2.2.0
+[2.2.0]: https://github.com/codsen/string-strip-html/compare/v2.1.2...v2.2.0

@@ -5,19 +5,6 @@ import stripHtml from "../dist/string-strip-html.esm";
 // normal use cases
 // ==============================
 
-test.only("delete me", t => {
-  t.deepEqual(
-    stripHtml("< body > text < script >\nzzz\n< script < / body >"),
-    "text",
-    "01.19.02 - with lots whitespace everywhere"
-  );
-  t.deepEqual(
-    stripHtml("a < something < anything < whatever < body < html"),
-    "a < something < anything < whatever < body < html",
-    "06.05.12 - bails because of spaces"
-  );
-});
-
 test("01.01 - string is whole (opening) tag", t => {
   t.deepEqual(stripHtml("<a>"), "", "01.01.01.01");
   t.deepEqual(

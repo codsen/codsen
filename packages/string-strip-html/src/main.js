@@ -1452,7 +1452,11 @@ function stripHtml(str, originalOpts) {
           tag.lastOpeningBracketAt < i &&
           tag.nameStarts &&
           tag.nameStarts < tag.lastOpeningBracketAt &&
-          i === tag.lastOpeningBracketAt + 1
+          i === tag.lastOpeningBracketAt + 1 &&
+          // insurance against tail part of ranged tag being deleted:
+          !rangedOpeningTags.some(
+            rangedTagObj => rangedTagObj.name === tag.name
+          )
         ) {
           console.log(
             `1457 RESET ALL \u001b[${31}m${`███████████████████████████████████████`}\u001b[${39}m`
