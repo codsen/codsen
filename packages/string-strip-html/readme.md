@@ -65,7 +65,7 @@ Here's what you'll get:
 
 ## Purpose
 
-This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. Bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This is a development tool.
+This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. The bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This library is a development tool.
 
 ## Features
 
@@ -108,7 +108,7 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `dumpLinkHrefsNearby`            | Boolean                                              | `false`                      | Used to retain HREF link URL's - handy when producing email Text versions.                                                                                                              |
 | }                                |                                                      |                              |
 
-The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini) so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
 Here is the Optional Options Object in one place (in case you ever want to copy it whole):
 
@@ -133,31 +133,31 @@ A string of zero or more characters.
 
 ### `opts.returnRangesOnly`
 
-If you construct development tools, you might want this library to "hold horses" on processing the string. It's too early. You want it to only extract _string index ranges_. Then, during next step you can process the string further, until you [crunch](https://github.com/codsen/string-replace-slices-array) the ranges into a final string.
+If you construct development tools, you might want this library to "hold horses" on processing the string. It's too early. You want it only to extract _string index ranges_. Then, during next step, you can prepare the string further, until you [crunch](https://github.com/codsen/string-replace-slices-array) the ranges into a final string.
 
-This feature enables that. Instead of string, result will be ranges array — array of arrays — something like `[[1, 3], [6, 8]]` where you could put each ranges arguments correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first and second arguments (`beginIndex` and `endIndex`).
+This feature enables that. Instead of string, result will be a _ranges array_ — array of arrays — something like `[[1, 3], [6, 8]]` where you could put each ranges arguments correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first and second arguments (`beginIndex` and `endIndex`).
 
 Ranges array is basically an array of `[beginIndex, endIndex]` arrays from `String.slice`.
 
-**PS.** Emoji and variable-length Unicode [graphemes](https://emojipedia.org/female-sleuth-type-5/) don't have anything to do with this; String indexing is universal to all characters in JavaScript. The challenge is just to feed the _correct index ranges_ to this library — ranges that actually mean correct characters. However, that is outside of the scope of this or other range- class libraries.
+**PS.** Emoji and variable-length Unicode [graphemes](https://emojipedia.org/female-sleuth-type-5/) don't have anything to do with this; String indexing is universal to all characters in JavaScript. The challenge is just to feed the _correct index ranges_ to this library — ranges that mean intended characters. However, that is outside of the scope of this or other range- class libraries.
 
 ### `opts.trimOnlySpaces`
 
 > `Hi&nbsp;` &rarr; `Hi&nbsp;` instead of `Hi&nbsp;` &rarr; `Hi`
 
-When using this tool in automated fashion, for example, to process JSON, few JSON fields might comprise a single string. Often there are considerations how that string is assembled. For example, imagine we "stitch" the sentence: `Hi John! Welcome to our club.` out of three pieces: `Hi` + `John` + `! + Welcome to our club.`. In this case, spaces between the chunks would be added by the your templating engine. Now, imagine, the text is of a quite large `font-size` and there's a risk of words wrapping at wrong places. Client asks you to ensure that `Hi` and `John` are **never split between the lines**.
+When using this tool in an automated fashion, for example, to process JSON, few JSON fields might comprise a single string. Often there are considerations on how that string is assembled. For example, imagine we "stitch" the sentence: `Hi John! Welcome to our club.` out of three pieces: `Hi` + `John` + `! + Welcome to our club.`. In this case, spaces between the chunks would be added by your templating engine. Now, imagine, the text is of a quite large `font-size`, and there's a risk of words wrapping at wrong places. A client asks you to ensure that `Hi` and `John` are **never split between the lines**.
 
 What do you do?
 
 You remove the space between `Hi` and `John` from the template and move it to data-level. You hard-code the non-breaking space after `Hi` — `Hi&nbsp;`.
 
-As you know, this library trims the input before returning it and recursive HTML decoding is always on. On default settings, this library would remove your non-breaking space from `Hi&nbsp;`. That's where you need to set `opts.trimOnlySpaces` to `true`.
+As you know, this library trims the input before returning it, and recursive HTML decoding is always on. On default settings, this library would remove your non-breaking space from `Hi&nbsp;`. That's where you need to set `opts.trimOnlySpaces` to `true`.
 
 In this particular case, you can either turn off HTML encoding OR, even better, use this `opts.trimOnlySpaces` setting.
 
 In either case, whitespace between the detected tags will still be aggressively trimmed - `text <div>\n \t \r\n <br>\t \t \t</div> here` &rarr; `text here`.
 
-When this setting is on, only spaces will be trimmed from outside, algorithm will stop at first non-space character, in this case, non-breaking space:
+When this setting is on, only spaces will be trimmed from outside; an algorithm will stop at first non-space character, in this case, non-breaking space:
 
 ```
 "      &nbsp;     Hi! Please <div>shop now</div>!      &nbsp;      "
@@ -169,7 +169,7 @@ is turned into:
 "&nbsp;     Hi! Please shop now!      &nbsp;"
 ```
 
-Notice how space chunks between `nbsp`'s and text are retained when `opts.trimOnlySpaces` is set to `true`. But the default is `false`, this feature if off by default.
+Notice how space chunks between `nbsp`'s and text are retained when `opts.trimOnlySpaces` is set to `true`. But the default is `false`; this feature is off by default.
 
 ### `opts.dumpLinkHrefsNearby`
 
@@ -199,19 +199,19 @@ it's turned into:
 Codsen https://codsen.com
 ```
 
-This feature is off by default, you need to turn it on, passing options object with a key `opts.dumpLinkHrefsNearby` set to `true`.
+This feature is off by default; you need to turn it on, passing options object with a key `opts.dumpLinkHrefsNearby` set to `true`.
 
 ## Not assuming anything
 
-Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is a sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
+Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
 
-But those libraries assume too much - what if neither input nor output is not a HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://github.com/codsen/detergent) for example?
+But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://github.com/codsen/detergent) for example?
 
-For the record, somebody might input `a < b and c > d` (clearly not HTML) into Detergent with intention clean invisible characters before **to paste the result into Photoshop**. User just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection and cross-site scripting. Notice there's even spaces around brackets! It's just that the cleaning tool is very _universal_ and just happens _to snuff out and remove HTML_.
+For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **to paste the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection and cross-site scripting. Notice there's even spaces around brackets! It's just that the cleaning tool is very _universal_ and just happens _to snuff out and remove HTML_.
 
-This library does not assume anything and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on other hand, will strip `a < b and c > d` into `a d`.
+This library does not assume anything, and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on the other hand, will strip `a < b and c > d` into `a d`.
 
-But, if you think, a child can code up bracket-to-bracket removal library in 5 minutes... There's more to HTML stripping than just bracket-to-bracket.
+But, if you think, a child can code up bracket-to-bracket removal library in 5 minutes. There's more to HTML stripping than just bracket-to-bracket.
 
 Choose your HTML stripping tool wisely.
 
