@@ -155,7 +155,7 @@ You remove the space between `Hi` and `John` from the template and move it to da
 
 As you know, this library trims the input before returning it, and recursive HTML decoding is always on. On default settings, this library would remove your non-breaking space from `Hi&nbsp;`. That's where you need to set `opts.trimOnlySpaces` to `true`.
 
-In this particular case, you can either turn off HTML encoding OR, even better, use this `opts.trimOnlySpaces` setting.
+In this particular case, you can either turn off HTML decoding OR, even better, use this `opts.trimOnlySpaces` setting.
 
 In either case, whitespace between the detected tags will still be aggressively trimmed - `text <div>\n \t \r\n <br>\t \t \t</div> here` &rarr; `text here`.
 
