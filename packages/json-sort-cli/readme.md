@@ -41,7 +41,7 @@
 npm i -g json-sort-cli
 ```
 
-* then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
+- then, either call `jsonsort` or `sortjson` with file name, folder name or a list thereof, with or without flags:
 
 ```bash
 $ jsonsort file1.csv "folder1/folder2/**/*.*" folder3 -s
@@ -70,10 +70,10 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 
 Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these below are the same:
 
-* <code>jsonsort templates/springsale03 <b>-s</b></code>
-* <code>jsonsort <b>-s</b> templates/springsale03</code>
-* <code>jsonsort templates/springsale03 <b>--silent</b></code>
-* <code>jsonsort <b>--silent</b> templates/springsale03</code>
+- <code>jsonsort templates/springsale03 <b>-s</b></code>
+- <code>jsonsort <b>-s</b> templates/springsale03</code>
+- <code>jsonsort templates/springsale03 <b>--silent</b></code>
+- <code>jsonsort <b>--silent</b> templates/springsale03</code>
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -105,11 +105,11 @@ When you install it globally, it will check occasionally, are there newer versio
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-sort-cli/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
