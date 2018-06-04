@@ -151,7 +151,8 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
@@ -182,7 +183,7 @@
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",
-    "rollup": "^0.59.1",
+    "rollup": "^0.59.4",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",

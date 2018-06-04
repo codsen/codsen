@@ -3247,17 +3247,15 @@ test("08.13 - getKeyset() - two deeper level arrays with plain objects", async t
 // -----------------------------------------------------------------------------
 
 test("09.01 - enforceKeyset() - enforces a simple schema", async t => {
-  const schema = await getKeyset(
-    makePromise([
-      {
-        a: "aaa",
-        b: "bbb"
-      },
-      {
-        a: "ccc"
-      }
-    ])
-  );
+  const schema = await getKeyset([
+    {
+      a: "aaa",
+      b: "bbb"
+    },
+    {
+      a: "ccc"
+    }
+  ]);
   t.deepEqual(
     await enforceKeyset(
       {

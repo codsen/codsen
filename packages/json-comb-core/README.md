@@ -5,10 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -86,9 +83,9 @@ Imagine, you have a set of JSON files. `json-comb-core` helps to maintain and ma
 
 **Normalise those JSON files:**
 
-* Each object should have the same key set - missing keys should be added to each object.
-* If an object has nested array, and there are plain objects within, each of those objects should have the same key set as its siblings within the same array.
-* For the sake of completeness, let's sort each resulting object's keys too.
+- Each object should have the same key set - missing keys should be added to each object.
+- If an object has nested array, and there are plain objects within, each of those objects should have the same key set as its siblings within the same array.
+- For the sake of completeness, let's sort each resulting object's keys too.
 
 For that, we'll need tools to [extract](#getkeyset) a keyset and [enforce](#enforcekeyset) it.
 
@@ -703,11 +700,11 @@ When performing a normalisation, all JSON files are read, and internally a schem
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
 **[⬆ &nbsp;back to top](#)**
 
@@ -721,16 +718,10 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/json-comb-core
 [travis-img]: https://img.shields.io/travis/codsen/json-comb-core.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/json-comb-core
-[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?style=flat-square?branch=master
+[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/json-comb-core.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/json-comb-core
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/json-comb-core.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-comb-core
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-comb-core.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/json-comb-core/master/dependencies/npm
 [vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg?style=flat-square
 [vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
 [downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
