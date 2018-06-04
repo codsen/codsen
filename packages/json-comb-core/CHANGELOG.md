@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- ✨ `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods.
+- ✨ `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods
 
 Since it's on by default (which is sensible), that's technically a breaking change, which warrants a major semver bump.
 
