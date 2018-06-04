@@ -335,9 +335,11 @@ globby(input, { dot: true })
         // );
         log(
           `\n${chalk.grey("✨ json-sort-cli: ")}${chalk.green(
-            `${counter.good.length} files sorted`
+            `${counter.bad && counter.bad.length === 0 ? "All " : ""}${
+              counter.good.length
+            } files sorted`
           )}${
-            counter.bad
+            counter.bad && counter.bad.length
               ? `\n${chalk.grey("✨ json-sort-cli: ")}${chalk.red(
                   `${counter.bad.length} file${
                     counter.bad.length === 1 ? "" : "s"
