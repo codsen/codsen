@@ -52,12 +52,10 @@
       "error",
       {
         "devDependencies": [
-          "test.js",
-          "test/**",
+          "**/*test.js",
+          "test/**/*.*",
           "rollup.config.js"
-        ],
-        "optionalDependencies": false,
-        "peerDependencies": false
+        ]
       }
     ],
     "no-console": "off",

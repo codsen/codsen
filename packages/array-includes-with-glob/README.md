@@ -5,10 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
 [![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -32,31 +29,23 @@ import arrayIncludesWithGlob from "array-includes-with-glob";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size      |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | --------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-includes-with-glob.cjs.js` | 3&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-includes-with-glob.esm.js` | 3&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-includes-with-glob.umd.js` | 2&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                   | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-includes-with-glob.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-includes-with-glob.esm.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-includes-with-glob.umd.js` | 2 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [How it works](#how-it-works)
-- [API](#api)
-- [Conditions when this library will throw](#conditions-when-this-library-will-throw)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Table of Contents](#markdown-header-table-of-contents)
+- [How it works](#markdown-header-how-it-works)
+- [API](#markdown-header-api)
+- [Conditions when this library will throw](#markdown-header-conditions-when-this-library-will-throw)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## How it works
 
@@ -98,7 +87,7 @@ This library is astral-character friendly, supports all Unicode characters (incl
 
 You can also query multiple values and request that ANY (default behaviour) or ALL (optional setting) should be found in the source, to yield a result "`true`". See examples [below](#options-object-examples).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -110,7 +99,7 @@ includesWithGlob(
 );
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Input
 
@@ -128,7 +117,7 @@ None of the input arguments is mutated.
 | `arrayVsArrayAllMustBeFound` | `any` or `all` | `any`   | When a source (the first argument) is array, and what to look for (the second argument) is also array, you can have the match performed two ways: `any` setting will return true if _any_ of the second argument array's elements are found in the source array. `all` setting will return `true` only if _all_ elements within the second argument are found within the source array. |
 | `}`                          |                |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 #### Options object examples
 
@@ -148,7 +137,7 @@ console.log("res2 = " + res2);
 // => res2 = false, because not all elements were found in source: 'd*' was not present in source!
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Practical usage
 
@@ -176,7 +165,7 @@ mergeAdvanced(
 
 In the example above, we need to run a check through all keys of the first object and check, are any covered by the `ignoreKeys` array. If so, those keys would not get merged and keep their values.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -184,28 +173,28 @@ In the example above, we need to run a check through all keys of the first objec
 | ------- | --------------------------------------------------------------------- |
 | Boolean | Returns `true` if at least one `stringToFind` is found, else `false`. |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Conditions when this library will throw
 
 This library will throw an error if:
 
-* any of inputs are missing
-* any of inputs are of the wrong type
+- any of inputs are missing
+- any of inputs are of the wrong type
 
 Also, if first input argument, a source array, is an empty array or empty string, the result will always be `false`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/array-includes-with-glob/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/array-includes-with-glob/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/array-includes-with-glob/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/array-includes-with-glob/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -217,23 +206,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/array-includes-with-glob
 [travis-img]: https://img.shields.io/travis/codsen/array-includes-with-glob.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/array-includes-with-glob
-[cov-img]: https://coveralls.io/repos/github/codsen/array-includes-with-glob/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/array-includes-with-glob?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/array-includes-with-glob.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/array-includes-with-glob
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/array-includes-with-glob.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/array-includes-with-glob/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/array-includes-with-glob/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/array-includes-with-glob?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-includes-with-glob
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-includes-with-glob.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/array-includes-with-glob/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/array-includes-with-glob/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/array-includes-with-glob
+[vulnerabilities-img]: https://snyk.io/test/bitbucket/codsen/array-includes-with-glob/badge.svg?style=flat-square
+[vulnerabilities-url]: https://snyk.io/test/bitbucket/codsen/array-includes-with-glob
 [downloads-img]: https://img.shields.io/npm/dm/array-includes-with-glob.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/array-includes-with-glob
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/array-includes-with-glob
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/array-includes-with-glob.svg?style=flat-square
-[license-url]: https://github.com/codsen/array-includes-with-glob/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/array-includes-with-glob

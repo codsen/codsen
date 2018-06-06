@@ -1,6 +1,4 @@
-/* eslint no-param-reassign:0 */
-
-const matcher = require("matcher");
+import matcher from "matcher";
 
 const isArr = Array.isArray;
 
