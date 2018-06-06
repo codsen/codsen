@@ -6,7 +6,6 @@
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -33,7 +32,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-includes-with-glob.cjs.js` | 3 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-includes-with-glob.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-includes-with-glob.umd.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-includes-with-glob.umd.js` | 3 KB |
 
 **[⬆ back to top](#)**
 
@@ -210,8 +209,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [cov-url]: https://coveralls.io/bitbucket/codsen/array-includes-with-glob?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-includes-with-glob
-[vulnerabilities-img]: https://snyk.io/test/bitbucket/codsen/array-includes-with-glob/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/bitbucket/codsen/array-includes-with-glob
 [downloads-img]: https://img.shields.io/npm/dm/array-includes-with-glob.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/array-includes-with-glob
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
