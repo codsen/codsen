@@ -1637,6 +1637,19 @@ test("05.03 - multiple tag combo case #1", t => {
   );
 });
 
+test("05.04 - dirty html, trailing whitespace", t => {
+  t.deepEqual(
+    stripHtml("something <article>article>  here"),
+    "something here",
+    "05.04.01"
+  );
+  t.deepEqual(
+    stripHtml("something <article>article>   here"),
+    "something here",
+    "05.04.02"
+  );
+});
+
 // ==============================
 // 06. comments
 // ==============================

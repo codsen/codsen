@@ -506,7 +506,27 @@ function stripHtml(str, originalOpts) {
                 startingPoint,
                 i + 1
               );
-              rangesToDelete.push(startingPoint, i + 1, whiteSpaceCompensation);
+              let deleteUpTo = i + 1;
+              if (
+                str[deleteUpTo] !== undefined &&
+                str[deleteUpTo].trim().length === 0
+              ) {
+                for (let z = deleteUpTo; z < len; z++) {
+                  if (str[z].trim().length !== 0) {
+                    deleteUpTo = z;
+                    break;
+                  }
+                  if (str[z + 1] === undefined) {
+                    deleteUpTo = z + 1;
+                    break;
+                  }
+                }
+              }
+              rangesToDelete.push(
+                startingPoint,
+                deleteUpTo,
+                whiteSpaceCompensation
+              );
             }
             break;
           }

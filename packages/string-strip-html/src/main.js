@@ -581,7 +581,30 @@ function stripHtml(str, originalOpts) {
                 `577 \u001b[${33}m${`SUBMIT RANGE #3: [${startingPoint}, ${i +
                   1}, "${whiteSpaceCompensation}"]`}\u001b[${39}m`
               );
-              rangesToDelete.push(startingPoint, i + 1, whiteSpaceCompensation);
+              let deleteUpTo = i + 1;
+              if (
+                str[deleteUpTo] !== undefined &&
+                str[deleteUpTo].trim().length === 0
+              ) {
+                for (let z = deleteUpTo; z < len; z++) {
+                  if (str[z].trim().length !== 0) {
+                    deleteUpTo = z;
+                    break;
+                  }
+                  if (str[z + 1] === undefined) {
+                    deleteUpTo = z + 1;
+                    break;
+                  }
+                }
+              }
+              console.log(
+                `601 PUSHING [${startingPoint}, ${deleteUpTo}, "${whiteSpaceCompensation}"]`
+              );
+              rangesToDelete.push(
+                startingPoint,
+                deleteUpTo,
+                whiteSpaceCompensation
+              );
             }
             break;
           }

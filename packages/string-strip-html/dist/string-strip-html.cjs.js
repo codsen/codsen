@@ -333,7 +333,20 @@ function stripHtml(str, originalOpts) {
                 }), "/>").toLowerCase() === val;
               }) && stripHtml("<" + culprit.trim() + ">", opts) === "") {
                 var whiteSpaceCompensation = calculateWhitespaceToInsert(str, i, startingPoint, i + 1, startingPoint, i + 1);
-                rangesToDelete.push(startingPoint, i + 1, whiteSpaceCompensation);
+                var deleteUpTo = i + 1;
+                if (str[deleteUpTo] !== undefined && str[deleteUpTo].trim().length === 0) {
+                  for (var z = deleteUpTo; z < len; z++) {
+                    if (str[z].trim().length !== 0) {
+                      deleteUpTo = z;
+                      break;
+                    }
+                    if (str[z + 1] === undefined) {
+                      deleteUpTo = z + 1;
+                      break;
+                    }
+                  }
+                }
+                rangesToDelete.push(startingPoint, deleteUpTo, whiteSpaceCompensation);
               }
               return "break";
             }();
