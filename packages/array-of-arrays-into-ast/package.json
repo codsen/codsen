@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/array-of-arrays-into-ast.git"
+    "url": "https://bitbucket.org/codsen/array-of-arrays-into-ast.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/array-of-arrays-into-ast/issues"
-  },
-  "homepage": "https://github.com/codsen/array-of-arrays-into-ast#readme",
+  "homepage": "https://bitbucket.org/codsen/array-of-arrays-into-ast/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -26,7 +23,7 @@
   "browser": "dist/array-of-arrays-into-ast.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov | codacy-coverage",
     "dev": "rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
     "precommit": "npm run format && npm test",
@@ -154,7 +151,8 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
@@ -164,17 +162,21 @@
   "devDependencies": {
     "ava": "latest",
     "babel-preset-env": "latest",
+    "codacy-coverage": "latest",
     "coveralls": "latest",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
     "esm": "latest",
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",
-    "rollup": "^0.59.1",
+    "rollup": "latest",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
