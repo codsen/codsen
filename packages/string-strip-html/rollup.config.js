@@ -24,7 +24,7 @@ export default commandLineArgs => {
         builtins(),
         resolve(),
         json(),
-        commonjs(), // so Rollup can convert deps to ES modules
+        commonjs(),
         babel(),
         uglify()
       ]

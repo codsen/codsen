@@ -3,10 +3,8 @@
 > Strips HTML tags from strings. Detects legit unencoded brackets.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -34,38 +32,32 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 36&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 38&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 96&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 38 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 40 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 97 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Purpose](#purpose)
-- [Features](#features)
-- [API](#api)
-- [OPTS](#opts)
-- [Not assuming anything](#not-assuming-anything)
-- [Bigger picture](#bigger-picture)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Purpose](#markdown-header-purpose)
+- [Features](#markdown-header-features)
+- [API](#markdown-header-api)
+- [OPTS](#markdown-header-opts)
+- [Not assuming anything](#markdown-header-not-assuming-anything)
+- [Bigger picture](#markdown-header-bigger-picture)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Purpose
 
 This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. The bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This library is a development tool.
+
+**[⬆ back to top](#)**
 
 ## Features
 
@@ -78,7 +70,7 @@ This library only detects and removes HTML tags from strings (text, in other wor
 - Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn decoding off via `opts.skipHtmlDecoding`)
 - It doesn't assume anything about the input source or purpose of the output string
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -93,7 +85,7 @@ String-in string-out, with optional second input argument - an Optional Options 
 
 If input arguments are supplied have any other types, an error will be `throw`n.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -123,7 +115,7 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -142,6 +134,8 @@ All [_range_- class libraries](https://github.com/search?q=topic%3Aranges+org%3A
 Now, `string-strip-html` can also return ranges instead of a final string.
 
 **PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge is to put _correct_ ranges that mean intended string pieces.
+
+**[⬆ back to top](#)**
 
 ### `opts.trimOnlySpaces`
 
@@ -173,6 +167,8 @@ is turned into:
 
 Notice how space chunks between `nbsp`'s and text are retained when `opts.trimOnlySpaces` is set to `true`. But the default is `false`; this feature is off by default.
 
+**[⬆ back to top](#)**
+
 ### `opts.dumpLinkHrefsNearby`
 
 This feature is aimed at producing Text versions for promotional or transactional email campaigns.
@@ -203,6 +199,8 @@ Codsen https://codsen.com
 
 This feature is off by default; you need to turn it on, passing options object with a key `opts.dumpLinkHrefsNearby` set to `true`.
 
+**[⬆ back to top](#)**
+
 ## Not assuming anything
 
 Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
@@ -217,6 +215,8 @@ But, if you think, a child can code up bracket-to-bracket removal library in 5 m
 
 Choose your HTML stripping tool wisely.
 
+**[⬆ back to top](#)**
+
 ## Bigger picture
 
 I scratched my itch, producing [Detergent](https://github.com/codsen/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
@@ -229,17 +229,17 @@ I was able to quickly replace all functions that Detergent was consuming from `s
 
 This library is the last missing piece of a puzzle to get rid of `string.js`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-strip-html/issues/new).
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-strip-html/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-strip-html/issues/new).
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -249,19 +249,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-strip-html.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-strip-html
-[travis-img]: https://img.shields.io/travis/codsen/string-strip-html.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-strip-html
-[cov-img]: https://coveralls.io/repos/github/codsen/string-strip-html/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-strip-html?branch=master
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-strip-html/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-strip-html?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-strip-html
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-strip-html/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-strip-html
 [downloads-img]: https://img.shields.io/npm/dm/string-strip-html.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-strip-html
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-strip-html
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-strip-html.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-strip-html/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-strip-html
