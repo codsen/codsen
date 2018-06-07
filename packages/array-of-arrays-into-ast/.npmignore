@@ -23,4 +23,5 @@ test
 .gitignore
 .npmignore
 .prettierignore
+bitbucket-pipelines.yml
 rollup.config.js
