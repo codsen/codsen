@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
 - ✨ Rebased a little
 - ✨ Migrated to BitBucket...
-- ✨ Which means we dropped Travis. But we kept Coveralls.
+- ✨ ...which means we dropped Travis. But we kept [Coveralls]().
 - ✨ RIP BitHound, hi [Codacy]()!
 
 ## [2.1.0] - 2018-05-03
