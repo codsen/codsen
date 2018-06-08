@@ -8,6 +8,7 @@ import clone from 'lodash.clonedeep';
 const { isArray } = Array;
 
 function conv(originalInput) {
+  // prevent any input argument mutation:
   let input = clone(originalInput);
 
   // f's

@@ -13,6 +13,7 @@ var isArray = Array.isArray;
 
 
 function conv(originalInput) {
+  // prevent any input argument mutation:
   var input = clone(originalInput);
 
   // f's
