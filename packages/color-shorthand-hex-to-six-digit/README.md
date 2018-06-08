@@ -3,13 +3,8 @@
 > Convert shorthand hex color codes into full
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,24 +12,15 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [Examples](#examples)
-- [Usage in Gulp environment](#usage-in-gulp-environment)
-- [API](#api)
-- [Reliability](#reliability)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [Examples](#markdown-header-examples)
+- [Usage in Gulp environment](#markdown-header-usage-in-gulp-environment)
+- [API](#markdown-header-api)
+- [Reliability](#markdown-header-reliability)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -51,13 +37,13 @@ import conv from "color-shorthand-hex-to-six-digit";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                           | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/color-shorthand-hex-to-six-digit.cjs.js` | 1&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 1&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/color-shorthand-hex-to-six-digit.umd.js` | 11&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/color-shorthand-hex-to-six-digit.cjs.js` | 1 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 1 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/color-shorthand-hex-to-six-digit.umd.js` | 10 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
@@ -69,7 +55,7 @@ This library takes any input: **array** (of strings, plain objects, other arrays
 
 Additionally, all letters in all hex codes are converted to lowercase.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Examples
 
@@ -109,7 +95,7 @@ conv(null);
 // => null
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Usage in Gulp environment
 
@@ -147,7 +133,7 @@ I coded the `color-shorthand-hex-to-six-digit` to be recursive, that is, you can
 
 If there is nothing to fix, `color-shorthand-hex-to-six-digit` behaves well, returning whatever was given, so feel free to assign your sources to the output of `color-shorthand-hex-to-six-digit`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -157,23 +143,23 @@ This way, this library acts like a safety valve that acts when wrong hex codes p
 
 PS. Input argument (in case of plain objects and arrays) is not mutated in any way. This package will clone the input and work on its copy. This is important. No ~~teenage turtle~~ mutations here.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Reliability
 
 I'm using only the best ingredients, namely [hex-color-regex](https://www.npmjs.com/package/hex-color-regex) by [@tunnckocore](https://www.npmjs.com/~tunnckocore) and standalone Lodash functions (`_.clonedeep`, `_.isplainobject` and `_.isstring`). This library is being currently used in commercial projects.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/color-shorthand-hex-to-six-digit/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -183,25 +169,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/color-shorthand-hex-to-six-digit.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/color-shorthand-hex-to-six-digit
-[travis-img]: https://img.shields.io/travis/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/color-shorthand-hex-to-six-digit
-[cov-img]: https://coveralls.io/repos/github/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/color-shorthand-hex-to-six-digit?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/color-shorthand-hex-to-six-digit?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/color-shorthand-hex-to-six-digit
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/color-shorthand-hex-to-six-digit.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/color-shorthand-hex-to-six-digit/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/color-shorthand-hex-to-six-digit
 [downloads-img]: https://img.shields.io/npm/dm/color-shorthand-hex-to-six-digit.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/color-shorthand-hex-to-six-digit
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/color-shorthand-hex-to-six-digit
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/color-shorthand-hex-to-six-digit.svg?style=flat-square
-[license-url]: https://github.com/codsen/color-shorthand-hex-to-six-digit/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit

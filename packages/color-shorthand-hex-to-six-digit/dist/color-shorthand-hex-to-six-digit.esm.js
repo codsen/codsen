@@ -9,23 +9,28 @@ const { isArray } = Array;
 
 function conv(originalInput) {
   let input = clone(originalInput);
+
   // f's
-  function toFullHex(hex) {
-    // console.log('received: ' + JSON.stringify(hex, null, 4))
-    if (hex.length === 4 && hex.charAt(0) === "#") {
+  // ====================
+
+  function toFullHex(hex, findings, offset, string) {
+    if (
+      string[offset - 1] !== "&" && // consider false positives like &#124;
+      hex.length === 4 &&
+      hex.charAt(0) === "#"
+    ) {
       hex = `#${hex.charAt(1)}${hex.charAt(1)}${hex.charAt(2)}${hex.charAt(
         2
       )}${hex.charAt(3)}${hex.charAt(3)}`;
     }
-    return hex;
+    return hex.toLowerCase();
   }
-  function toLowerCase(match) {
-    return match.toLowerCase();
-  }
+
   // action
+  // ====================
+
   if (isString(originalInput)) {
     input = input.replace(r(), toFullHex);
-    input = input.replace(r(), toLowerCase);
   } else if (isArray(input)) {
     for (let i = 0, len = input.length; i < len; i++) {
       input[i] = conv(input[i]);

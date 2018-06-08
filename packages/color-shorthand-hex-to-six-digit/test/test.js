@@ -206,3 +206,11 @@ test("07.02 - does not remove closing slashes from XHTML, #2", t => {
     "07.02"
   );
 });
+
+test("07.03 - does not mangle encoded HTML entities that look like hex codes", t => {
+  t.deepEqual(
+    c("aaa &#124; bbb #125 ccc &#126; ddd"),
+    "aaa &#124; bbb #112255 ccc &#126; ddd",
+    "07.03"
+  );
+});

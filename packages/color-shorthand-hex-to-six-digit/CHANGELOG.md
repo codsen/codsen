@@ -5,20 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2018-07-08
+
+### Added
+
+- ✨ Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
+- ✨ Rebased a little
+- ✨ Migrated to BitBucket...
+- ✨ Which means we dropped Travis. But we kept Coveralls.
+- ✨ RIP BitHound, hi [Codacy]()!
+
 ## [2.1.0] - 2018-05-03
 
 ### Added
 
-* ✨ Set up [Prettier](https://prettier.io)
-* ✨ Removed `package.lock` and `.editorconfig`
-* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+- ✨ Set up [Prettier](https://prettier.io)
+- ✨ Removed `package.lock` and `.editorconfig`
+- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
 ## [2.0.0] - 2017-12-06
 
 ### Changed
 
-* ✨ Rebased in ES Modules
-* ✨ Set up Rollup (nice rhyming), now generating transpiled CommonJS, UMD and native ES Module builds.
+- ✨ Rebased in ES Modules
+- ✨ Set up Rollup (nice rhyming), now generating transpiled CommonJS, UMD and native ES Module builds.
 
 Bumping major just in case it breaks somebody's API. It shouldn't though.
 
@@ -26,47 +36,48 @@ Bumping major just in case it breaks somebody's API. It shouldn't though.
 
 ### Updated
 
-* Dependencies to request the latest `_.clonedeep`
-* Readme, added more examples
+- Dependencies to request the latest `_.clonedeep`
+- Readme, added more examples
 
 ## [1.4.0] - 2017-03-06
 
 ### Added
 
-* More unit tests to cover XHTML code.
+- More unit tests to cover XHTML code.
 
 ## [1.3.0] - 2017-03-02
 
 ### Tweaked
 
-* Now any input args are not mutated. Ever.
+- Now any input args are not mutated. Ever.
 
 ## [1.2.0] - 2017-02-17
 
 ### Added
 
-* Table of Contents in README
+- Table of Contents in README
 
 ### Tweaked
 
-* Set up blanket deps ranges because it's tedious to update them and these deps never breaking-change
-* Updated company name in README and LICENSE
+- Set up blanket deps ranges because it's tedious to update them and these deps never breaking-change
+- Updated company name in README and LICENSE
 
 ## [1.1.0] - 2017-01-09
 
 ### Added
 
-* All hex codes, three and six digits long, are converted to lowercase. This is to prevent case mismatches.
-* Test 05.01 to prove this works as intended.
+- All hex codes, three and six digits long, are converted to lowercase. This is to prevent case mismatches.
+- Test 05.01 to prove this works as intended.
 
 ## 1.0.0 - 2017-01-06
 
 Initial release. 100% test coverage.
 
-[1.1.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.3.0...v1.4.0
-[1.5.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.4.0...v1.5.0
-[2.0.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v1.5.1...v2.0.0
-[2.1.0]: https://github.com/codsen/color-shorthand-hex-to-six-digit/compare/v2.0.9...v2.1.0
+[1.1.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.1.0%0Dv1.0.0#diff
+[1.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.4.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.5.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.5.0%0Dv1.4.0#diff
+[2.0.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.0.0%0Dv1.5.1#diff
+[2.1.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.1.0%0Dv2.0.9#diff
+[2.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.2.0%0Dv2.1.0#diff
