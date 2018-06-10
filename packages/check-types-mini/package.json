@@ -163,6 +163,7 @@
   "devDependencies": {
     "ava": "latest",
     "babel-preset-env": "latest",
+    "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",

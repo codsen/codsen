@@ -3,7 +3,6 @@
 > Check the types of your options object's values after user has customised them
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -277,8 +276,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/check-types-mini.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/check-types-mini
-[travis-img]: https://img.shields.io/travis/codsen/check-types-mini.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/check-types-mini
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/check-types-mini/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/check-types-mini?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
