@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [6.1.0] - 2018-05-23
+## [6.2.0] - 2018-06-11
 
-### Improvements
+GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
+
+- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- ✨ Dropped BitHound (RIP) and Travis
+- ✨ Remove `package-lock`
+
+## [6.1.0] - 2018-05-23
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
@@ -16,9 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [6.0.0] - 2018-03-13
 
-### Added
-
-- ✨ `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods
+- ✨ Added `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods
 
 Since it's on by default (which is sensible), that's technically a breaking change, which warrants a major semver bump.
 

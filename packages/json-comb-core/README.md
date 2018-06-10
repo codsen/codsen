@@ -3,10 +3,8 @@
 > The inner core of json-comb
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -14,28 +12,19 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [`getKeyset()`](#getkeyset)
-- [`getKeysetSync()`](#getkeysetsync)
-- [`enforceKeyset()`](#enforcekeyset)
-- [`enforceKeysetSync()`](#enforcekeysetsync)
-- [`noNewKeys()`](#nonewkeys)
-- [`findUnused()`](#findunused)
-- [`sortAllObjects()`](#sortallobjects)
-- [Difference between Normalising JSON and real JSON Schemas](#difference-between-normalising-json-and-real-json-schemas)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [`getKeyset()`](<#markdown-header-`getkeyset()`>)
+- [`getKeysetSync()`](<#markdown-header-`getkeysetsync()`>)
+- [`enforceKeyset()`](<#markdown-header-`enforcekeyset()`>)
+- [`enforceKeysetSync()`](<#markdown-header-`enforcekeysetsync()`>)
+- [`noNewKeys()`](<#markdown-header-`nonewkeys()`>)
+- [`findUnused()`](<#markdown-header-`findunused()`>)
+- [`sortAllObjects()`](<#markdown-header-`sortallobjects()`>)
+- [Difference between Normalising JSON and real JSON Schemas](#markdown-header-difference-between-normalising-json-and-real-json-schemas)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -69,13 +58,13 @@ import {
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-comb-core.cjs.js` | 16&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-comb-core.esm.js` | 15&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-comb-core.umd.js` | 72&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                         | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-comb-core.cjs.js` | 16 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-comb-core.esm.js` | 15 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-comb-core.umd.js` | 74 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -97,7 +86,7 @@ It's when we can't/won't normalise files, yet we need some insurance. It would b
 
 A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is [unused](#findunused) and probably can be deleted.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `getKeyset()`
 
@@ -114,7 +103,7 @@ Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -125,13 +114,13 @@ The merging is done on a premise to retain [as much information](https://github.
 
 PS. The input is normal, a synchronous array full of promises. Not a promise of an array which contains promises.
 
-| Optional Options Object's key | Type | Default | Description                                                                  |
-| ----------------------------- | ---- | ------- | ---------------------------------------------------------------------------- |
+| Optional Options Object's key | Type | Default | Description                                                                                                                                                                                                                                                    |
+| ----------------------------- | ---- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                             |      |         |
-| `placeholder`                 | Any  | `false` | When adding a missing key, this value will be assigned to a newly-added key. |
+| `placeholder`                 | Any  | `false` | All Reference Object's key values are set to be placeholders. This way we a) minimise the footprint; and b) make it easy later to fill the missing values — value from Reference can be written straight as it is because it's already equal to a placeholder. |
 | }                             |      |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -179,7 +168,7 @@ test1()
 // }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `getKeysetSync()`
 
@@ -196,7 +185,7 @@ Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -205,13 +194,13 @@ The merging is done on a premise to retain [as much information](https://github.
 | `input`        | Array of plain objects | yes         | Each plain object would usually be one JSON file's contents. |
 | `options`      | Object                 | no          | An Optional Options Object. See below for its API.           |
 
-| Optional Options Object's key | Type | Default | Description                                                                  |
-| ----------------------------- | ---- | ------- | ---------------------------------------------------------------------------- |
+| Optional Options Object's key | Type | Default | Description                                                                                                                                                                                                                                                    |
+| ----------------------------- | ---- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                             |      |         |
-| `placeholder`                 | Any  | `false` | When adding a missing key, this value will be assigned to a newly-added key. |
+| `placeholder`                 | Any  | `false` | All Reference Object's key values are set to be placeholders. This way we a) minimise the footprint; and b) make it easy later to fill the missing values — value from Reference can be written straight as it is because it's already equal to a placeholder. |
 | }                             |      |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -296,7 +285,7 @@ console.log("schema = " + JSON.stringify(schema, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `enforceKeyset()`
 
@@ -320,7 +309,7 @@ Optional Options Object's API is the same as asyc version's of this method, [`en
 | `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
 | }                                              |                               |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -407,7 +396,7 @@ console.log(`obj3Normalised = ${JSON.stringify(obj3Normalised, null, 4)}`)
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `enforceKeysetSync()`
 
@@ -431,7 +420,7 @@ Optional Options Object's API is the same as asyc version's of this method, [`en
 | `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
 | }                                              |                               |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -459,7 +448,7 @@ console.log("inputObj = " + JSON.stringify(inputObj, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `noNewKeys()`
 
@@ -467,7 +456,7 @@ Reads an array and a reference keyset object, returns an array of zero or more k
 
 Practically this is handy to tame the JSON's that we don't/can't normalise. At least we can ensure there are no new keys. For example, all data mapping files could be validated through `noNewKeys()`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -476,7 +465,7 @@ Practically this is handy to tame the JSON's that we don't/can't normalise. At l
 | `input`        | Object | yes         | What should we check?                         |
 | `schema`       | Object | yes         | According to what schema should we normalise? |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -543,7 +532,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => ['z[0].c', 'z[1].c']
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `findUnused()`
 
@@ -551,7 +540,7 @@ Reads a set of objects (array of plain objects, probably parsed JSON files) and 
 
 Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -567,7 +556,7 @@ Practically it is useful to identify unused keys to reduce the JSON data file si
 | `comments`             | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it was unused). Set it to any falsey value to turn it off. |
 | }                      |                                                                        |             |               |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -642,7 +631,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c', 'a[0].l']
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## `sortAllObjects()`
 
@@ -650,7 +639,7 @@ This method sorts objects (no matter how deeply-nested), and it will sort object
 
 This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc.).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -658,14 +647,14 @@ This method does not mutate the input and is fine if you pass _any_ JS type (`ar
 | -------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, the untouched input will be returned. |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### output
 
 If the input is **a plain object or array** containing some plain objects within, an output is a copy of the input with all plain objects sorted.
 If the input is **something else**, an output is the same thing as input.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### example
 
@@ -684,7 +673,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Difference between Normalising JSON and real JSON Schemas
 
@@ -696,17 +685,17 @@ So, normalisation is a process of making a bunch of JSON files to have the same 
 
 When performing a normalisation, all JSON files are read, and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to a placeholder.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/json-comb-core/issues/new).
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-comb-core/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/json-comb-core/issues/new).
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -716,19 +705,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-comb-core
-[travis-img]: https://img.shields.io/travis/codsen/json-comb-core.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/json-comb-core
-[cov-img]: https://coveralls.io/repos/github/codsen/json-comb-core/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/github/codsen/json-comb-core?branch=master
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/json-comb-core/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/json-comb-core?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-comb-core
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/json-comb-core/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/json-comb-core
 [downloads-img]: https://img.shields.io/npm/dm/json-comb-core.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/json-comb-core
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-comb-core
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/json-comb-core.svg?style=flat-square
-[license-url]: https://github.com/codsen/json-comb-core/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/json-comb-core
