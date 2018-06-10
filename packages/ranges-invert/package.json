@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Invert natural number string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]",
   "license": "MIT",
   "engines": {
