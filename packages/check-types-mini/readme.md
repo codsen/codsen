@@ -5,11 +5,7 @@
 [![Minimum Node version required][node-img]][node-url]
 [![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,21 +13,12 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,13 +37,13 @@ import checkTypes from "check-types-mini";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                           | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/check-types-mini.cjs.js` | 7&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 8&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 13&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                           | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/check-types-mini.cjs.js` | 7 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 13 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -76,7 +63,7 @@ Originally this library started as a function within one of my libraries. When I
 
 The point of `check-types-mini` is to save your time: time spent coding up all these checks, time spent debugging, and even consumers' time spent debugging your API when they try to use it wrongly. Every library that has options object will need some **type checks** if you let user tinker with it.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -94,7 +81,7 @@ Technically speaking, the main and only job of `check-types-mini` is to _throw_ 
 
 ^`ref` can be `null` or `undefined` if all keys are set via `opts.schema` (see below).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -110,7 +97,7 @@ Technically speaking, the main and only job of `check-types-mini` is to _throw_ 
 | `optsVarName`          | String                     | no          | `opts`                                                                                                           | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation. |
 | }                      |                            |             |                                                                                                                  |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### For example
 
@@ -193,7 +180,7 @@ checkTypes(
 
 If you want, you can blacklist certain keys of your objects so that `opts.acceptArrays` will not apply to them. Just add keys into `opts.acceptArraysIgnore` array.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.enforceStrictKeyset`
 
@@ -201,7 +188,7 @@ When I was coding a new major version of [ast-delete-object](https://github.com/
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.schema`
 
@@ -231,16 +218,16 @@ checkTypes(
 
 The types are case-insensitive and come from [type-detect](https://github.com/chaijs/type-detect), a Chai library:
 
-* `'object'` (meaning a plain object literal, nothing else)
-* `'array'`
-* `'string'`
-* `'null'`
-* and other usual types
+- `'object'` (meaning a plain object literal, nothing else)
+- `'array'`
+- `'string'`
+- `'null'`
+- and other usual types
 
 Also, you can use more specific subtypes:
 
-* `'true'`
-* `'false'`
+- `'true'`
+- `'false'`
 
 The `'true'` and `'false'` are handy in cases when API's accept only one of them, for example, `'false'` and `'string'`, but doesn't accept `'true'`.
 
@@ -270,17 +257,17 @@ const res = checkTypes(
 
 All the type values you put into `opts.schema` _are not validated_, on purpose, so please don't make typos.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/check-types-mini/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/check-types-mini/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/check-types-mini/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/check-types-mini/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -292,23 +279,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/check-types-mini
 [travis-img]: https://img.shields.io/travis/codsen/check-types-mini.svg?style=flat-square
 [travis-url]: https://travis-ci.org/codsen/check-types-mini
-[cov-img]: https://coveralls.io/repos/github/codsen/check-types-mini/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/check-types-mini?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/check-types-mini.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/check-types-mini
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/check-types-mini.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/check-types-mini/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/check-types-mini/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/check-types-mini?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/check-types-mini
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/check-types-mini.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/check-types-mini/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/check-types-mini/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/check-types-mini
 [downloads-img]: https://img.shields.io/npm/dm/check-types-mini.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/check-types-mini
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/check-types-mini
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/check-types-mini.svg?style=flat-square
-[license-url]: https://github.com/codsen/check-types-mini/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/check-types-mini
