@@ -168,7 +168,7 @@ test(`01.01 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - reference string c
 
 test(`01.02 - ${`\u001b[${33}m${`one range`}\u001b[${39}m`} - is one too short`, t => {
   // good:
-  t.deepEqual(i([[1, 3]], 3), [[0, 1]], "01.02.01");
+  t.deepEqual(i([[1, 3]], 3), [[0, 1]], "01.02");
   // bad - length is 1 digit short:
   const error = t.throws(() => {
     i([[1, 3]], 2);
