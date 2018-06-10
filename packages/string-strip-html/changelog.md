@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-06-08
+
+- ✨ Improvements to dirty code recognition algorithm
+
 ## [2.2.0] - 2018-06-02
 
 - ✨ `opts.dumpLinkHrefsNearby` - handy when producing Email Text versions
