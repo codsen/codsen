@@ -23,5 +23,6 @@ test
 .gitignore
 .npmignore
 .prettierignore
+bitbucket-pipelines.yml
 ideas.md
 rollup.config.js

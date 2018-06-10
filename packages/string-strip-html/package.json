@@ -23,7 +23,7 @@
   "browser": "dist/string-strip-html.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "coverage": "nyc report --reporter=text-lcov | codacy-coverage",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
     "precommit": "npm run format && npm test",
