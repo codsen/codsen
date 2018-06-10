@@ -11,6 +11,7 @@
 
 # folders:
 
+.idea
 .nyc_output
 coverage
 src
