@@ -34,7 +34,7 @@ function monkey(inputOriginal, opts) {
   // -----------------------------------
   // precautions
   if (!existy(inputOriginal)) {
-    throw new Error("ast-monkey/index.js/monkey(): Please provide an input");
+    throw new Error("ast-monkey/main.js/monkey(): Please provide an input");
   }
   let input = clone(inputOriginal);
   opts = Object.assign(
@@ -153,7 +153,7 @@ function monkey(inputOriginal, opts) {
 function find(input, opts) {
   if (!notUndef(opts.key) && !notUndef(opts.val)) {
     throw new Error(
-      "ast-monkey/index.js/find(): Please provide opts.key or opts.val"
+      "ast-monkey/main.js/find(): Please provide opts.key or opts.val"
     );
   }
   checkTypes(opts, null, {
@@ -176,14 +176,14 @@ function find(input, opts) {
 
 function get(input, opts) {
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/index.js/get(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/get(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ${
+        `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
           opts.index
         }`
       );
@@ -196,7 +196,7 @@ function get(input, opts) {
   });
   if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ${
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
         opts.index
       }`
     );
@@ -206,24 +206,24 @@ function get(input, opts) {
 
 function set(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
-    throw new Error("ast-monkey/index.js/set(): Please provide opts.val");
+    throw new Error("ast-monkey/main.js/set(): Please provide opts.val");
   }
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/index.js/set(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/set(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/index.js/set(): opts.index must be a natural number. It was given as: ${
+        `ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: ${
           opts.index
         }`
       );
     }
   } else if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ${
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
         opts.index
       }`
     );
@@ -243,14 +243,14 @@ function set(input, opts) {
 
 function drop(input, opts) {
   if (!existy(opts.index)) {
-    throw new Error("ast-monkey/index.js/drop(): Please provide opts.index");
+    throw new Error("ast-monkey/main.js/drop(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
     if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
       opts.index = parseInt(opts.index, 10);
     } else {
       throw new Error(
-        `ast-monkey/index.js/drop(): opts.index must be a natural number. It was given as: ${
+        `ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: ${
           opts.index
         }`
       );
@@ -258,7 +258,7 @@ function drop(input, opts) {
   }
   if (!isNaturalNumber(opts.index, { includeZero: true })) {
     throw new Error(
-      `ast-monkey/index.js/get(): opts.index must be a natural number. It was given as: ${
+      `ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ${
         opts.index
       }`
     );
@@ -278,7 +278,7 @@ function info(input) {
 function del(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
     throw new Error(
-      "ast-monkey/index.js/del(): Please provide opts.key or opts.val"
+      "ast-monkey/main.js/del(): Please provide opts.key or opts.val"
     );
   }
   checkTypes(opts, null, {
