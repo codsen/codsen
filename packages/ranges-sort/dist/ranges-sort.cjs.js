@@ -13,10 +13,10 @@ var isArr = Array.isArray;
 //
 //                              /\___/\
 //                             ( o   o )
-//                             (  =^=  )
+//                             ====Y====
 //                             (        )
 //                             (         )
-//                             (          )))))))))))
+//                             (        )))))))))))
 //
 
 // does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
@@ -68,7 +68,7 @@ function rangesSort(arrOfRanges, originalOptions) {
     }
     return true;
   })) {
-    throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + ordinalSuffix(culpritsIndex) + " range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
+    throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, " + ordinalSuffix(culpritsIndex) + " range (" + JSON.stringify(arrOfRanges[culpritsIndex], null, 4) + ") does not consist of only natural numbers!");
   }
   return Array.from(arrOfRanges).sort(function (range1, range2) {
     if (range1[0] === range2[0]) {

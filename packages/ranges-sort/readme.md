@@ -3,13 +3,9 @@
 > Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -30,30 +26,22 @@ import rangesSort from "ranges-sort";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                      | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-sort.cjs.js` | 3&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-sort.esm.js` | 3&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-sort.umd.js` | 15&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-sort.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-sort.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-sort.umd.js` | 15 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Rationale](#rationale)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Rationale](#markdown-header-rationale)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Rationale
 
@@ -72,7 +60,7 @@ It sorts the array of index arrays, for example:
 [[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']] => [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -91,7 +79,7 @@ For example,
 
 This package does not mutate the input array.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -103,17 +91,17 @@ This package does not mutate the input array.
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ranges-sort/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ranges-sort/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ranges-sort/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ranges-sort/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -123,25 +111,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ranges-sort.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-sort
-[travis-img]: https://img.shields.io/travis/codsen/ranges-sort.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/ranges-sort
-[cov-img]: https://coveralls.io/repos/github/codsen/ranges-sort/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/ranges-sort?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/ranges-sort.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/ranges-sort
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ranges-sort.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/ranges-sort/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ranges-sort
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-sort/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ranges-sort?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-sort
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ranges-sort.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/ranges-sort/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ranges-sort/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ranges-sort
 [downloads-img]: https://img.shields.io/npm/dm/ranges-sort.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-sort
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-sort
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/ranges-sort.svg?style=flat-square
-[license-url]: https://github.com/codsen/ranges-sort/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/ranges-sort
