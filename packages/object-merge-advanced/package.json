@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/object-merge-advanced.git"
+    "url": "https://bitbucket.org/codsen/object-merge-advanced.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/object-merge-advanced/issues"
-  },
-  "homepage": "https://github.com/codsen/object-merge-advanced#readme",
+  "homepage": "https://bitbucket.org/codsen/object-merge-advanced/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -177,35 +174,40 @@
       },
       "devDependencies": [
         "deep-equal"
-      ]
+      ],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
     "array-includes-all": "^2.0.0",
-    "array-includes-with-glob": "^2.3.1",
-    "arrayiffy-if-string": "^3.2.0",
+    "array-includes-with-glob": "^2.3.10",
+    "arrayiffy-if-string": "^3.2.1",
     "check-types-mini": "latest",
     "lodash.clonedeep": "*",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
-    "util-nonempty": "^2.0.4"
+    "util-nonempty": "^2.1.2"
   },
   "devDependencies": {
     "ava": "latest",
     "babel-preset-env": "latest",
+    "codacy-coverage": "latest",
     "coveralls": "latest",
     "deep-equal": "latest",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
     "esm": "latest",
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",
-    "rollup": "^0.59.1",
+    "rollup": "latest",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",

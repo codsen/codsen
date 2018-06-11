@@ -3,13 +3,9 @@
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -18,26 +14,17 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [In practice](#in-practice)
-- [API](#api)
-- [`opts.cb`](#optscb)
-- [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
-- [Difference from `Object.assign()`](#difference-from-objectassign)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [In practice](#markdown-header-in-practice)
+- [API](#markdown-header-api)
+- [`opts.cb`](#markdown-header-`opts.cb`)
+- [Difference from Lodash `_.merge`](#markdown-header-difference-from-lodash-`_.merge`)
+- [Difference from `Object.assign()`](<#markdown-header-difference-from-`object.assign()`>)
+- [Contributing](#markdown-header-contributing)
+- [Contributors](#markdown-header-contributors)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -62,15 +49,17 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 18&nbsp;KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 19&nbsp;KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 36&nbsp;KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 18 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 19 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 38 KB
+
+
 
 
 
 <!-- prettier-ignore-end -->
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
@@ -80,16 +69,16 @@ It's like Lodash `_.merge`, but it correctly merges different-type things and be
 
 Imagine, if we merged the identical keys of two objects judging their values by the hierarchy instead:
 
-* non-empty array trumps all below
-* non-empty plain object trumps all below
-* non-empty string ...
-* empty plain object ...
-* empty array
-* empty string
-* number
-* boolean
-* `null`
-* `undefined` doesn't trump anything
+- non-empty array trumps all below
+- non-empty plain object trumps all below
+- non-empty string ...
+- empty plain object ...
+- empty array
+- empty string
+- number
+- boolean
+- `null`
+- `undefined` doesn't trump anything
 
 The idea is, we strive to retain **as much datum** as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
@@ -99,14 +88,14 @@ There are plenty of settings (mainly aimed at templating needs) but you can tap 
 
 When `object-merge-advanced` merges two _objects_, it will recursively traverse each key and compare:
 
-* If a key exists only in one of the objects, it goes straight into the result object.
-* If a key exists on both, we got a clash. Key's value will be chosen judging by its value's type:
-  * Arrays trump objects which trump strings which trump numbers which trump Booleans
-  * Non-empty array as value trumps any object or string as value
-  * Anything empty won't trump anything not empty
-  * If both keys have plain object values, they'll get recursively fed back into the library again
-  * Booleans will be merged using logical "OR"
-  * Arrays will be merged, and if there are objects within, those objects will be merged smartly, depending if their keysets are similar. If not, objects will be merged as separate array elements.
+- If a key exists only in one of the objects, it goes straight into the result object.
+- If a key exists on both, we got a clash. Key's value will be chosen judging by its value's type:
+  - Arrays trump objects which trump strings which trump numbers which trump Booleans
+  - Non-empty array as value trumps any object or string as value
+  - Anything empty won't trump anything not empty
+  - If both keys have plain object values, they'll get recursively fed back into the library again
+  - Booleans will be merged using logical "OR"
+  - Arrays will be merged, and if there are objects within, those objects will be merged smartly, depending if their keysets are similar. If not, objects will be merged as separate array elements.
 
 There are ten possible combinations: 10 types of first input (object #1) and ten types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
@@ -125,7 +114,7 @@ In some cases, we perform a custom actions:
 
 Check `test.js` unit tests to see this library in action.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## In practice
 
@@ -133,7 +122,7 @@ I use this library to merge humongous JSON files that house my templates' data. 
 
 Also, I use it in small cases where `Object.assign` is not suitable, for example, when filling missing keys in a plain object or doing other operations on objects coming from JSON files.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -193,7 +182,7 @@ Here are all defaults in one place:
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -268,7 +257,7 @@ mergeAdvanced(
 )
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` bigger example, number one
 
@@ -320,7 +309,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 // }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` bigger example, number two
 
@@ -371,7 +360,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 
 Whatever you return from the _callback_ will be written as a result of a clash, so make sure you return either `resultAboutToBeReturned` (third argument in the callback), or something to substitute it. Otherwise, `undefined` will be written.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` another example, using paths of the keys to override the merge
 
@@ -458,7 +447,7 @@ const res = mergeAdvanced(
 //     }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### `opts.mergeObjectsOnlyWhenKeysetMatches` use cases
 
@@ -529,7 +518,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Difference from Lodash `_.merge`
 
@@ -551,17 +540,17 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-merge-advanced/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-merge-advanced/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-merge-advanced/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributors
 
@@ -569,7 +558,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 
 <!-- prettier-ignore-start -->
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://github.com/jabiinfante)<br /> [💻](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://github.com/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://github.com/project707)<br /> [🐛](https://github.com/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://github.com/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://github.com/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://bitbucket.org/revelt)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://bitbucket.org/jabiinfante)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://bitbucket.org/project707)<br /> [🐛](https://bitbucket.org/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://bitbucket.org/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://bitbucket.org/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
 | :---: | :---: | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-end -->
@@ -577,7 +566,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -587,28 +576,20 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-merge-advanced
-[travis-img]: https://img.shields.io/travis/codsen/object-merge-advanced.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-merge-advanced
-[cov-img]: https://coveralls.io/repos/github/codsen/object-merge-advanced/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-merge-advanced?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-merge-advanced.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-merge-advanced
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-merge-advanced.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-merge-advanced
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-merge-advanced/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-merge-advanced?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-merge-advanced
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-merge-advanced.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-merge-advanced/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-merge-advanced/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-merge-advanced
 [downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-merge-advanced
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-merge-advanced
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
+[prettier-url]: https://prettier.io
 [contributors-img]: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
 [contributors-url]: #contributors
-[license-img]: https://img.shields.io/npm/l/object-merge-advanced.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-merge-advanced/blob/master/license.md
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-merge-advanced
 [all-contributors-url]: https://github.com/kentcdodds/all-contributors
