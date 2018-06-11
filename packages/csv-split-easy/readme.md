@@ -3,13 +3,8 @@
 > Splits the CSV string into array of arrays, each representing a row of columns
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -18,23 +13,14 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [The algorithm](#the-algorithm)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [The algorithm](#markdown-header-the-algorithm)
+- [Contributing](#markdown-header-contributing)
+- [Contributors](#markdown-header-contributors)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -51,13 +37,13 @@ import splitEasy from "csv-split-easy";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-split-easy.cjs.js` | 8&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 8&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 42&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                         | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-split-easy.cjs.js` | 8 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 42 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -65,24 +51,24 @@ Split a string representing a CSV file into an array of arrays, so that we can t
 
 Acceptance Criteria:
 
-* It should accept CSV's with or without a header row
-* Header row might have different amount of columns than the rest of the rows
-* Content (not header) rows might be offset and have different amount of columns from the rest
-* There can be various line break types (`\n`, `\r`, `\n\r` or `\n\n\n\n\n\n\r\r\r\r\r\n\n\n\n` or whatever)
-* It should ignore any values wrapped with double quotes
-* It should interpret commas as part of the value if it is wrapped in double quotes
-* It should accept empty fields and output them as empty strings
-* It should automatically detect (dot/comma) and remove thousand separators from digit-only cells
-* Minimal dependencies and 100% unit test code coverage in all ways: per-branch, per-statement, per-function and per-line.
+- It should accept CSV's with or without a header row
+- Header row might have different amount of columns than the rest of the rows
+- Content (not header) rows might be offset and have different amount of columns from the rest
+- There can be various line break types (`\n`, `\r`, `\n\r` or `\n\n\n\n\n\n\r\r\r\r\r\n\n\n\n` or whatever)
+- It should ignore any values wrapped with double quotes
+- It should interpret commas as part of the value if it is wrapped in double quotes
+- It should accept empty fields and output them as empty strings
+- It should automatically detect (dot/comma) and remove thousand separators from digit-only cells
+- Minimal dependencies and 100% unit test code coverage in all ways: per-branch, per-statement, per-function and per-line.
 
 Outside of the scope:
 
-* Trimming the values of leading and trailing empty space. Just use `String.prototype.trim()`
-* Parsing numeric values. Parse them yourself. It's outside of the scope of this lib.
-* Smart detection of the offset columns. See [csv-fix-offset](https://github.com/codsen/csv-fix-offset)
-* Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://github.com/codsen/csv-sort)
+- Trimming the values of leading and trailing empty space. Just use `String.prototype.trim()`
+- Parsing numeric values. Parse them yourself. It's outside of the scope of this lib.
+- Smart detection of the offset columns. See [csv-fix-offset](https://github.com/codsen/csv-fix-offset)
+- Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://github.com/codsen/csv-sort)
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -111,7 +97,7 @@ Empty values, same as numbers too, are set as empty strings.
 | `forceUKStyle`                        | Boolean | no          | `false` | Should we convert the decimal separator commas into dots? `1,5` → `1.5`?                                                                        |
 | }                                     |         |             |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Returns
 
@@ -154,7 +140,7 @@ console.log("source = " + JSON.stringify(source, null, 4));
 //    ]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## The algorithm
 
@@ -168,17 +154,17 @@ The requirements mentioned above pretty much rule out the conventional regex-bas
 
 So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://github.com/codsen/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/csv-split-easy/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/csv-split-easy/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/csv-split-easy/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/csv-split-easy/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributors
 
@@ -186,7 +172,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 
 <!-- prettier-ignore-start -->
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://github.com/revelt)<br /> [💻](https://github.com/codsen/csv-split-easy/commits?author=revelt "Code") [📖](https://github.com/codsen/csv-split-easy/commits?author=revelt "Documentation") [⚠️](https://github.com/codsen/csv-split-easy/commits?author=revelt "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1530281?v=4" width="100px;"/><br /><sub><b>Mac Angell</b></sub>](https://github.com/mac-)<br /> [💻](https://github.com/codsen/csv-split-easy/commits?author=mac- "Code") [⚠️](https://github.com/codsen/csv-split-easy/commits?author=mac- "Tests") |
+| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://bitbucket.org/revelt)<br /> [💻](https://bitbucket.org/codsen/csv-split-easy/commits?author=revelt "Code") [📖](https://bitbucket.org/codsen/csv-split-easy/commits?author=revelt "Documentation") [⚠️](https://bitbucket.org/codsen/csv-split-easy/commits?author=revelt "Tests") | [<img src="https://avatars2.githubusercontent.com/u/1530281?v=4" width="100px;"/><br /><sub><b>Mac Angell</b></sub>](https://bitbucket.org/mac-)<br /> [💻](https://bitbucket.org/codsen/csv-split-easy/commits?author=mac- "Code") [⚠️](https://bitbucket.org/codsen/csv-split-easy/commits?author=mac- "Tests") |
 | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 <!-- prettier-ignore-end -->
@@ -194,7 +180,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -204,28 +190,18 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/csv-split-easy.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/csv-split-easy
-[travis-img]: https://img.shields.io/travis/codsen/csv-split-easy.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/csv-split-easy
-[cov-img]: https://coveralls.io/repos/github/codsen/csv-split-easy/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/csv-split-easy?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/csv-split-easy.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/csv-split-easy
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/csv-split-easy.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/csv-split-easy/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/csv-split-easy/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/csv-split-easy?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-split-easy
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/csv-split-easy.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/csv-split-easy/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/csv-split-easy/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/csv-split-easy
 [downloads-img]: https://img.shields.io/npm/dm/csv-split-easy.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/csv-split-easy
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/csv-split-easy
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
+[prettier-url]: https://prettier.io
 [contributors-img]: https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square
 [contributors-url]: #contributors
-[license-img]: https://img.shields.io/npm/l/csv-split-easy.svg?style=flat-square
-[license-url]: https://github.com/codsen/csv-split-easy/blob/master/license.md
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/csv-split-easy
 [all-contributors-url]: https://github.com/kentcdodds/all-contributors
