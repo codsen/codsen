@@ -5,15 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.4.0] - 2018-05-31
+## [1.5.0] - 2018-06-11
 
-### Improvements
+GitHub sold us out. In the meantime, we:
+
+- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- ✨ Dropped BitHound (RIP) and Travis
+- ✨ Removed `package-lock`
+
+## [1.4.0] - 2018-05-31
 
 - ✨ I found myself looking again and again at the spec, double-checking which function name `isProduction4` or `isProduction4a` is for the first character, which is for second character onwards. To make life easier, I decided to supplement exported function with aliase keys `validFirstChar` and `validSecondCharOnwards` which are the same functions but named more sensibly.
 
 ## [1.3.0] - 2018-05-03
-
-### Improvements
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
