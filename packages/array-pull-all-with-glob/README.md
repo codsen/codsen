@@ -3,13 +3,9 @@
 > pullAllWithGlob - like \_.pullAll but pulling stronger, with globs
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -30,31 +26,23 @@ import pullAllWithGlob from "array-pull-all-with-glob";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 4&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-pull-all-with-glob.umd.js` | 16&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-pull-all-with-glob.umd.js` | 16 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Pulling](#pulling)
-- [API](#api)
-- [Test](#test)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Pulling](#markdown-header-pulling)
+- [API](#markdown-header-api)
+- [Test](#markdown-header-test)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Pulling
 
@@ -74,7 +62,7 @@ console.dir(pullAllWithGlob(sourceArray, removeThese));
 
 Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -95,7 +83,7 @@ pullAllWithGlob(
 
 By the way, none of the input arguments are mutated. That's checked by unit tests from group 4.x
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### An Optional Options Object
 
@@ -117,7 +105,7 @@ Type: `object` - an Optional Options Object.
 
 When unused, Optional Options Object can be also passed as a `null` or `undefined` value.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -135,13 +123,13 @@ For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https:
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/array-pull-all-with-glob/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/array-pull-all-with-glob/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/array-pull-all-with-glob/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/array-pull-all-with-glob/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -151,25 +139,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/array-pull-all-with-glob.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-pull-all-with-glob
-[travis-img]: https://img.shields.io/travis/codsen/array-pull-all-with-glob.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/array-pull-all-with-glob
-[cov-img]: https://coveralls.io/repos/github/codsen/array-pull-all-with-glob/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/array-pull-all-with-glob?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/array-pull-all-with-glob.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/array-pull-all-with-glob.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/array-pull-all-with-glob
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/array-pull-all-with-glob/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/array-pull-all-with-glob?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-pull-all-with-glob
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/array-pull-all-with-glob.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/array-pull-all-with-glob/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/array-pull-all-with-glob/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/array-pull-all-with-glob
 [downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/array-pull-all-with-glob
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/array-pull-all-with-glob
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/array-pull-all-with-glob.svg?style=flat-square
-[license-url]: https://github.com/codsen/array-pull-all-with-glob/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/array-pull-all-with-glob
