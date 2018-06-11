@@ -131,3 +131,18 @@ test("01.11 - only one range, nothing to merge", t => {
   t.deepEqual(mergeRanges([[1, 4, null]]), [[1, 4, null]], "01.11.01");
   t.deepEqual(mergeRanges([[1, 4]]), [[1, 4]], "01.11.02");
 });
+
+test("01.12 - input arg mutation prevention", t => {
+  /* eslint prefer-const:0 */
+  let originalInput = [
+    [5, 7, " "],
+    [1, 3, " "],
+    [6, 8, " "],
+    [7, 9, " "],
+    [3, 10]
+  ];
+  const originalRef = Array.from(originalInput); // clone it
+
+  t.deepEqual(mergeRanges(originalInput), [[1, 10, " "]], "useless test");
+  t.deepEqual(originalInput, originalRef, "01.12.01 - mutation didn't happen");
+});
