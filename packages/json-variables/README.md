@@ -3,13 +3,8 @@
 > Preprocessor for JSON to allow keys referencing keys
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,20 +12,13 @@
 
 ## Table of Contents
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-* [Install](#install)
-* [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
-* [API](#api)
-* [Use examples](#use-examples)
-* [Contributing](#contributing)
-* [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Idea - updated for v.7 - full rewrite](#markdown-header-idea---updated-for-v.7---full-rewrite)
+- [API](#markdown-header-api)
+- [Use examples](#markdown-header-use-examples)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -47,27 +35,27 @@ import jsonVariables from "json-variables";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                         | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 34&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 33&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 66&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                         | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 34 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 34 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 89 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Idea - updated for v.7 - full rewrite
 
 This library allows JSON keys to reference other keys. It is aimed at JSON files which are used as means to store the _data_ part, separate from the template code.
 
-* `<=v6.x` was resolving variables from the root to the branch tip. This was apparently a bad idea and `v7.x` fixes that. Now resolving is done from the tips down to the root.
-* `<=v6.x` had data stores but it referenced only the same level as the variable AND root level when checking for values when resolving. This was not good. The `v7.x` now looks every single level upward, from the current to the root, plus data stores on each level. This, combined with tips-to-root resolving means now, for the first time, you have true freedom to cross-reference the variables any way you like (as long as there are no loop in the resolved variable chain). Previously, on `<=v6.x`, the scope of second-level variable references was lost and since resolving started from the root, it instantly received a variable with a lost scope (for data store lookup, for example). Not any more.
-* Using `<=v6.x` in production I also found out how unhelpful the error messages were (not to mention in 90% of the error cases, errors were not real, only resolving algorithm shortcomings). I went extra mile in this rewrite to provide not only the path of the variables being resolved, but also the piece of the _whole source object_.
-* In `v7.x`, I also switched to strictly [`object-path`](https://www.npmjs.com/package/object-path) notation.
-* Additionally, `v7.x` uses the latest tools I created since coding the original core of `json-variables`. For example, variable extraction is now done using a separate library, [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails).
+- `<=v6.x` was resolving variables from the root to the branch tip. This was apparently a bad idea and `v7.x` fixes that. Now resolving is done from the tips down to the root.
+- `<=v6.x` had data stores but it referenced only the same level as the variable AND root level when checking for values when resolving. This was not good. The `v7.x` now looks every single level upward, from the current to the root, plus data stores on each level. This, combined with tips-to-root resolving means now, for the first time, you have true freedom to cross-reference the variables any way you like (as long as there are no loop in the resolved variable chain). Previously, on `<=v6.x`, the scope of second-level variable references was lost and since resolving started from the root, it instantly received a variable with a lost scope (for data store lookup, for example). Not any more.
+- Using `<=v6.x` in production I also found out how unhelpful the error messages were (not to mention in 90% of the error cases, errors were not real, only resolving algorithm shortcomings). I went extra mile in this rewrite to provide not only the path of the variables being resolved, but also the piece of the _whole source object_.
+- In `v7.x`, I also switched to strictly [`object-path`](https://www.npmjs.com/package/object-path) notation.
+- Additionally, `v7.x` uses the latest tools I created since coding the original core of `json-variables`. For example, variable extraction is now done using a separate library, [string-find-heads-tails](https://github.com/codsen/string-find-heads-tails).
 
 I know, these architectural mistakes look no-brainers _now_ but trust me, they were not so apparent when the original `json-variables` idea was conceived. Also, I didn't anticipate this amount of variable-cross-referencing happening in real production, which was beyond anything that unit tests could imitate.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -125,7 +113,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Use examples
 
@@ -263,7 +251,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Data containers
 
@@ -341,7 +329,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Ignores with wildcards
 
@@ -369,7 +357,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Wrapping
 
@@ -398,7 +386,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 #### In practice:
 
@@ -477,7 +465,7 @@ content JSON for PROD build:
 
 Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the program to **skip wrapping, no matter what**.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Mixing Booleans and strings
 
@@ -518,17 +506,17 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/json-variables/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/json-variables/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/json-variables/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -538,25 +526,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables
-[travis-img]: https://img.shields.io/travis/codsen/json-variables.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/json-variables
-[cov-img]: https://coveralls.io/repos/github/codsen/json-variables/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/json-variables?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/json-variables.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/json-variables
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/json-variables.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/json-variables/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/json-variables/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/json-variables?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-variables
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/json-variables.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/json-variables/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/json-variables/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/json-variables
 [downloads-img]: https://img.shields.io/npm/dm/json-variables.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/json-variables
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-variables
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/json-variables.svg?style=flat-square
-[license-url]: https://github.com/codsen/json-variables/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/json-variables
