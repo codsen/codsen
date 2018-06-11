@@ -11,7 +11,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- Check out the parent library which does even more: [ast-monkey](https://github.com/codsen/ast-monkey/)
+- Check out the parent library which does even more: [ast-monkey](https://bitbucket.org/codsen/ast-monkey/)
 
 ## Table of Contents
 
