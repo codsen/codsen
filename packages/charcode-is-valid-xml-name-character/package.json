@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "license": "MIT",
   "engines": {
