@@ -5,15 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.6.0] - 2018-05-29
+## [1.7.0] - 2018-06-11
 
-### Added
+GitHub sold us out. In the meantime, we:
+
+- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- ✨ Dropped BitHound (RIP) and Travis
+- ✨ Removed `package-lock`
+
+## [1.6.0] - 2018-05-29
 
 - ✨ Excluded `.DS_Store` and other system files by default
 
 ## [1.5.0] - 2018-05-27
-
-### Added
 
 - ✨ Sorts dot files too, as long as they pass the JSON parser and don't contain evil extensions like `yml`, `yaml` or `toml`.
 - ✨ Restored `-s`/`--silent` mode. When it's on, only report of two lines is shown: successful and failed counts. When it's off (default), one row per sorted file output after each attempt to sort (successful or not), then the same report of two line in the end is shown.

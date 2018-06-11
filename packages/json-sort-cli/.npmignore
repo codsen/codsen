@@ -13,13 +13,13 @@
 
 .nyc_output
 coverage
+media
 
 # files:
 
-.bithoundrc
 .eslintrc.json
 .gitignore
 .npmignore
 .prettierignore
-.travis.yml
+bitbucket-pipelines.yml
 test.js

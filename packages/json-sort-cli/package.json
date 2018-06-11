@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/json-sort-cli.git"
+    "url": "https://bitbucket.org/codsen/json-sort-cli.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/json-sort-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/json-sort-cli#readme",
+  "homepage": "https://bitbucket.org/codsen/json-sort-cli/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -27,19 +24,25 @@
   },
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "ava",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
     "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "json",
@@ -144,7 +147,8 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
@@ -161,12 +165,17 @@
   },
   "devDependencies": {
     "ava": "^0.25.0",
+    "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-plugin-ava": "latest",
     "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
     "execa": "^0.10.0",
     "husky": "latest",
     "nyc": "latest",
