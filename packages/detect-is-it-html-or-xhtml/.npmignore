@@ -19,10 +19,9 @@ test
 # files:
 
 .babelrc
-.bithoundrc
 .eslintrc.json
 .gitignore
 .npmignore
 .prettierignore
-.travis.yml
+bitbucket-pipelines.yml
 rollup.config.js
