@@ -1,6 +1,6 @@
 # bitbucket-slug
 
-> Generate BitBucket readme header anchor slug URLs. Unofficial, backwards-engineered, covers all ASCII and some characters beyond.
+> Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
