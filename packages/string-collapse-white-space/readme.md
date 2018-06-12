@@ -3,13 +3,8 @@
 > Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,25 +12,16 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [TLDR;](#tldr)
-- [Install](#install)
-- [The API](#the-api)
-- [Algorithm](#algorithm)
-- [Usage](#usage)
-- [Smart bits](#smart-bits)
-- [Practical use](#practical-use)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-table-of-contents)
+- [TLDR;](#markdown-header-tldr;)
+- [Install](#markdown-header-install)
+- [The API](#markdown-header-the-api)
+- [Algorithm](#markdown-header-algorithm)
+- [Usage](#markdown-header-usage)
+- [Smart bits](#markdown-header-smart-bits)
+- [Practical use](#markdown-header-practical-use)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## TLDR;
 
@@ -43,36 +29,36 @@
 Take string. First **trim** the outsides, then **collapse** two and more spaces into one.
 
 ```js
-'    aaa    bbbb    ' → 'aaa bbbb'
+'    aaa    bbbb    ' -> 'aaa bbbb'
 ```
 
 When trimming, any whitespace will be collapsed, including tabs, line breaks and so on.
 When collapsing, _only spaces_ are collapsed. Non-space whitespace within text won't be collapsed.
 
 ```js
-'   \t\t\t   aaa     \t     bbbb  \t\t\t\t  ' → 'aaa \t bbbb'
+'   \t\t\t   aaa     \t     bbbb  \t\t\t\t  ' -> 'aaa \t bbbb'
 ```
 
 (Optional, on by default) **Collapse** more aggressively within recognised **HTML tags**:
 
 ```js
-'text <   span   >    contents   <  /  span   > more text' → 'text <span> contents </span> more text'
+'text <   span   >    contents   <  /  span   > more text' -> 'text <span> contents </span> more text'
 ```
 
 (Optional, off by default) **Trim** each line:
 
 ```js
-'   aaa   \n   bbb   ' → 'aaa\nbbb'
+'   aaa   \n   bbb   ' -> 'aaa\nbbb'
 ```
 
 (Optional, off by default) Delete empty or whitespace-only rows:
 
 ```js
-'a\n\n\nb' → 'a\nb'
+'a\n\n\nb' -> 'a\nb'
 ```
 <!-- prettier-ignore-end -->
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Install
 
@@ -82,13 +68,13 @@ npm i string-collapse-white-space
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                      | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-white-space.cjs.js` | 19&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-white-space.esm.js` | 20&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 36&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-white-space.cjs.js` | 19 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-white-space.esm.js` | 20 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 36 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## The API
 
@@ -96,40 +82,42 @@ Here's what you'll get:
 
 Input:
 
-* the first argument - string only or will `throw`.
-* the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
+- the first argument - string only or will `throw`.
+- the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
 
 Options object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object's API:
 
-| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                        |
-| ---------------------- | ------- | ----------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                         |
+| ---------------------- | ------- | ----------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                      |         |             |         |
-| `trimStart`            | Boolean | no          | `true`  | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.                                               |
-| `trimEnd`              | Boolean | no          | `true`  | if `false`, trailing whitespace will be just collapsed.                                                                                                                            |
-| `trimLines`            | Boolean | no          | `false` | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)                           |
-| `trimnbsp`             | Boolean | no          | `false` | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.                                    |
-| `recogniseHTML`        | Boolean | no          | `true`  | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` → `<div>`. It will not touch any other brackets such as string `a > b`. |
-| `removeEmptyLines`     | Boolean | no          | `false` | if any line can be trimmed to empty string, it will be removed.                                                                                                                    |
+| `trimStart`            | Boolean | no          | `true`  | if `false`, leading whitespace will be just collapsed. That might a single space, for example, if there are bunch of leading spaces.                                                |
+| `trimEnd`              | Boolean | no          | `true`  | if `false`, trailing whitespace will be just collapsed.                                                                                                                             |
+| `trimLines`            | Boolean | no          | `false` | if `true`, every line will be trimmed (spaces, tabs, line breaks of all kinds will be deleted, also non-breaking spaces, if `trimnbsp` is set to `true`)                            |
+| `trimnbsp`             | Boolean | no          | `false` | when trimming, do we delete non-breaking spaces (if set to `true`, answer would be "yes"). This setting also affects `trimLines` setting above.                                     |
+| `recogniseHTML`        | Boolean | no          | `true`  | if `true`, the space directly within recognised 118 HTML tag brackets will be collapsed tightly: `< div >` -> `<div>`. It will not touch any other brackets such as string `a > b`. |
+| `removeEmptyLines`     | Boolean | no          | `false` | if any line can be trimmed to empty string, it will be removed.                                                                                                                     |
+| `returnRangesOnly`     | Boolean | no          | `false` | if enabled, ranges array (array of arrays) or `null` (if there was nothing to collapse) will be returned instead                                                                    |
 | }                      |         |             |         |
 
 **Defaults**:
 
 ```js
 {
-  trimStart: true,
-  trimEnd: true,
-  trimLines: false,
-  trimnbsp: false,
-  recogniseHTML: true,
-  removeEmptyLines: false
+  trimStart: true, // otherwise, leading whitespace will be collapsed to a single space
+  trimEnd: true, // otherwise, trailing whitespace will be collapsed to a single space
+  trimLines: false, // activates trim per-line basis
+  trimnbsp: false, // non-breaking spaces are trimmed too
+  recogniseHTML: true, // collapses whitespace around HTML brackets
+  removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
+  returnRangesOnly: false // if on, only ranges array is returned
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Algorithm
 
@@ -141,7 +129,7 @@ Optionally (on by default), it can recognise (X)HTML tags (any out of 118) and f
 
 This algorithm **does not use regexes**.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -169,7 +157,7 @@ console.log("res4 = " + res4);
 // => 'aaa bbb\nccc ddd'
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Smart bits
 
@@ -181,7 +169,7 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's wra
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Practical use
 
@@ -189,17 +177,17 @@ I want a reliable string white space collapsing library which would traverse the
 
 I'm going to use it first in [Detergent](https://github.com/codsen/detergent), but you never know, it might prove handy in email template building in general.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-collapse-white-space/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-collapse-white-space/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-collapse-white-space/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -209,25 +197,15 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-collapse-white-space.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-collapse-white-space
-[travis-img]: https://img.shields.io/travis/codsen/string-collapse-white-space.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-collapse-white-space
-[cov-img]: https://coveralls.io/repos/github/codsen/string-collapse-white-space/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-collapse-white-space?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-collapse-white-space.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-collapse-white-space
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-collapse-white-space.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-collapse-white-space/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-collapse-white-space?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-collapse-white-space
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-collapse-white-space.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-collapse-white-space/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-collapse-white-space/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-collapse-white-space
 [downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-collapse-white-space
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-collapse-white-space
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-collapse-white-space.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-collapse-white-space/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-collapse-white-space

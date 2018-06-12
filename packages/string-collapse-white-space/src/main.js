@@ -39,7 +39,7 @@ function collapse(str, originalOpts) {
     return "";
   }
 
-  let finalIndexesToDelete = new Slices();
+  const finalIndexesToDelete = new Slices();
 
   // declare defaults, so we can enforce types later:
   const defaults = {
@@ -48,7 +48,8 @@ function collapse(str, originalOpts) {
     trimLines: false, // activates trim per-line basis
     trimnbsp: false, // non-breaking spaces are trimmed too
     recogniseHTML: true, // collapses whitespace around HTML brackets
-    removeEmptyLines: false // if line trim()'s to an empty string, it's removed
+    removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
+    returnRangesOnly: false // if on, only ranges array is returned
   };
 
   // fill any settings with defaults if missing:
@@ -66,7 +67,6 @@ function collapse(str, originalOpts) {
 
   // -----------------------------------------------------------------------------
 
-  let res = str;
   let spacesEndAt = null;
   let whiteSpaceEndsAt = null;
   let lineWhiteSpaceEndsAt = null;
@@ -613,14 +613,19 @@ function collapse(str, originalOpts) {
     }
   }
 
-  // apply the ranges, creating the result string
-  if (finalIndexesToDelete.current()) {
-    res = replaceSlicesArr(str, finalIndexesToDelete.current());
-    finalIndexesToDelete.wipe();
-    finalIndexesToDelete = undefined; // putting up our class for garbage collector
+  if (opts.returnRangesOnly) {
+    console.log(
+      `618 RETURNING: ${JSON.stringify(
+        finalIndexesToDelete.current(),
+        null,
+        4
+      )}`
+    );
+    return finalIndexesToDelete.current();
   }
-
-  return res;
+  return finalIndexesToDelete.current()
+    ? replaceSlicesArr(str, finalIndexesToDelete.current())
+    : str;
 }
 
 export default collapse;

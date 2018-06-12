@@ -384,162 +384,6 @@ test("04.05 - line and outer trims and \\r", t => {
   );
 });
 
-test("04.06 - opts.removeEmptyLines - easy #1", t => {
-  // on
-  t.is(
-    collapse("a\n\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb",
-    "04.06.01 - \\n - on"
-  );
-  t.is(
-    collapse("a\r\n\r\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb",
-    "04.06.02 - \\r\\n - on"
-  );
-
-  // off
-  t.is(
-    collapse("a\n\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\n\nb",
-    "04.06.03 - \\n - off"
-  );
-  t.is(
-    collapse("a\r\n\r\nb", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\r\n\r\nb",
-    "04.06.04 - \\r\\n - off"
-  );
-});
-
-test("04.07 - opts.removeEmptyLines - easy #2", t => {
-  // on
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb",
-    "04.07.01 - \\n - on"
-  );
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb",
-    "04.07.02 - \\r\\n - on"
-  );
-
-  // off
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\n\nb",
-    "04.07.03 - \\n - off"
-  );
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a\r\n\r\nb",
-    "04.07.04 - \\r\\n - off"
-  );
-
-  // off
-  t.is(
-    collapse(" a \n \n b ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \n \n b",
-    "04.07.05 - \\n - empty lines removal off + per-line trimming off"
-  );
-  t.is(
-    collapse(" a \r\n \r\n b", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \r\n \r\n b",
-    "04.07.06 - \\r\\n - empty lines removal off + per-line trimming off"
-  );
-
-  // off
-  t.is(
-    collapse("  a  \n  \n  b  ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \n \n b",
-    "04.07.06 - \\n - empty lines removal off + per-line trimming off - multiple spaces"
-  );
-  t.is(
-    collapse("  a  \r\n  \r\n  b    ", {
-      trimLines: false,
-      trimnbsp: true,
-      removeEmptyLines: false
-    }),
-    "a \r\n \r\n b",
-    "04.07.07 - \\r\\n - empty lines removal off + per-line trimming off - multiple spaces"
-  );
-});
-
-test("04.08 - opts.removeEmptyLines - advanced", t => {
-  t.is(
-    collapse(
-      "\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0",
-      { trimLines: true, trimnbsp: true, removeEmptyLines: true }
-    ),
-    "a b\r\nc d\re f\ng h",
-    "04.08"
-  );
-});
-
-test("04.09 - opts.removeEmptyLines - leading/trailing empty lines", t => {
-  t.is(
-    collapse("\na\n\nb\n", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\nb",
-    "04.09.01 - \\n"
-  );
-  t.is(
-    collapse("\r\na\r\n\r\nb\r\n", {
-      trimLines: true,
-      trimnbsp: true,
-      removeEmptyLines: true
-    }),
-    "a\r\nb",
-    "04.09.02 - \\r\\n"
-  );
-});
-
 // -----------------------------------------------------------------------------
 // group 05. `opts.recogniseHTML`
 // -----------------------------------------------------------------------------
@@ -852,4 +696,196 @@ test("05.09 - detected erroneous code (space after equal sign in HTML attribute)
     '< html abc= "cde" >< html fgh="hij" >< html abc= "cde" >< html fgh="hij" >',
     "05.09.02"
   );
+});
+
+// -----------------------------------------------------------------------------
+// 06. opts.removeEmptyLines
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - easy #1`, t => {
+  // on
+  t.is(
+    collapse("a\n\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "06.01.01 - \\n - on"
+  );
+  t.is(
+    collapse("a\r\n\r\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "06.01.02 - \\r\\n - on"
+  );
+
+  // off
+  t.is(
+    collapse("a\n\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\n\nb",
+    "06.01.03 - \\n - off"
+  );
+  t.is(
+    collapse("a\r\n\r\nb", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\r\n\r\nb",
+    "06.01.04 - \\r\\n - off"
+  );
+});
+
+test(`06.02 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - easy #2`, t => {
+  // on
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "06.02.01 - \\n - on"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "06.02.02 - \\r\\n - on"
+  );
+
+  // off
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\n\nb",
+    "06.02.03 - \\n - off"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a\r\n\r\nb",
+    "06.02.04 - \\r\\n - off"
+  );
+
+  // off
+  t.is(
+    collapse(" a \n \n b ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \n \n b",
+    "06.02.05 - \\n - empty lines removal off + per-line trimming off"
+  );
+  t.is(
+    collapse(" a \r\n \r\n b", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \r\n \r\n b",
+    "06.02.06 - \\r\\n - empty lines removal off + per-line trimming off"
+  );
+
+  // off
+  t.is(
+    collapse("  a  \n  \n  b  ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \n \n b",
+    "06.02.06 - \\n - empty lines removal off + per-line trimming off - multiple spaces"
+  );
+  t.is(
+    collapse("  a  \r\n  \r\n  b    ", {
+      trimLines: false,
+      trimnbsp: true,
+      removeEmptyLines: false
+    }),
+    "a \r\n \r\n b",
+    "06.02.07 - \\r\\n - empty lines removal off + per-line trimming off - multiple spaces"
+  );
+});
+
+test(`06.03 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - advanced`, t => {
+  t.is(
+    collapse(
+      "\xa0\n\n  \xa0   a    b   \xa0 \r\n  \xa0  c    d   \xa0\xa0   \r  \xa0\xa0   e     f  \xa0\xa0   \n\n\n \xa0\xa0    g    h    \r\xa0\xa0",
+      { trimLines: true, trimnbsp: true, removeEmptyLines: true }
+    ),
+    "a b\r\nc d\re f\ng h",
+    "06.03"
+  );
+});
+
+test(`06.04 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - leading/trailing empty lines`, t => {
+  t.is(
+    collapse("\na\n\nb\n", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\nb",
+    "06.04.01 - \\n"
+  );
+  t.is(
+    collapse("\r\na\r\n\r\nb\r\n", {
+      trimLines: true,
+      trimnbsp: true,
+      removeEmptyLines: true
+    }),
+    "a\r\nb",
+    "06.04.02 - \\r\\n"
+  );
+});
+
+// -----------------------------------------------------------------------------
+// 07. opts.returnRangesOnly
+// -----------------------------------------------------------------------------
+
+test(`07.01 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was something to remove`, t => {
+  t.is(
+    collapse("   a   bbb  \n   c   d   "),
+    "a bbb \n c d",
+    "07.01.01 - defaults"
+  );
+  t.is(
+    collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: false }),
+    "a bbb \n c d",
+    "07.01.02 - hardcoded default"
+  );
+  t.deepEqual(
+    collapse("   a   bbb  \n   c   d   ", { returnRangesOnly: true }),
+    [[0, 3], [4, 6], [10, 11], [13, 15], [17, 19], [21, 24]],
+    "07.01.03"
+  );
+});
+
+test(`07.02 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove`, t => {
+  t.is(collapse("a b"), "a b", "07.02.01 - defaults");
+  t.is(
+    collapse("a b", { returnRangesOnly: false }),
+    "a b",
+    "07.02.02 - hardcoded default"
+  );
+  t.is(collapse("a b", { returnRangesOnly: true }), null, "07.02.03");
 });
