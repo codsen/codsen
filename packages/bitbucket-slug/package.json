@@ -1,6 +1,6 @@
 {
   "name": "bitbucket-slug",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Generate BitBucket readme header anchor slug URLs. Unofficial, covers whole ASCII and a bit beyond.",
   "license": "MIT",
   "engines": {
