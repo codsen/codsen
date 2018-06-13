@@ -2,12 +2,13 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var serverCompare = _interopDefault(require('semver-compare'));
+var semverCompare = _interopDefault(require('semver-compare'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isNum = _interopDefault(require('is-natural-number'));
 var trim = _interopDefault(require('lodash.trim'));
 var easyReplace = _interopDefault(require('easy-replace'));
 var emojiRegexLib = _interopDefault(require('emoji-regex'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 var reverse = _interopDefault(require('lodash.reverse'));
 var splitLines = _interopDefault(require('split-lines'));
 var getPkgRepo = _interopDefault(require('get-pkg-repo'));
@@ -114,16 +115,34 @@ function getTitlesAndFooterLinks(linesArr) {
 }
 
 function getPreviousVersion(currVers, originalVersionsArr) {
+  // removes leading "v" and "v."
+  function prep() {
+    var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+    if (str.startsWith("v")) {
+      if (str[1] === ".") {
+        return str.slice(2);
+      }
+      return str.slice(1);
+    }
+    return str;
+  }
+
   if (arguments.length < 2) {
     throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array.");
   }
   if (!isStr(currVers)) {
     throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it's " + (typeof currVers === "undefined" ? "undefined" : _typeof(currVers)));
+  } else {
+    currVers = prep(currVers);
   }
   if (!isArr(originalVersionsArr)) {
     throw new Error("chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's " + (typeof originalVersionsArr === "undefined" ? "undefined" : _typeof(originalVersionsArr)) + " equal to:\nJSON.stringify(originalVersionsArr, null, 4)");
   }
-  var versionsArr = clone(originalVersionsArr).sort(serverCompare);
+
+  var versionsArr = clone(originalVersionsArr).map(function (val) {
+    return prep(val);
+  }).sort(semverCompare);
   // first, check if it's the first version from the versions array.
   // in that case, there's no previous version, so we return null:
   if (currVers === versionsArr[0]) {
@@ -166,31 +185,51 @@ function getRow(rowsArray, index) {
 
 // gets and sets various pieces in strings of the format:
 // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
-function getSetFooterLink(str, o) {
+// or
+// "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
+function getSetFooterLink(str) {
+  var o = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+
   var mode = void 0;
-  if (existy(o)) {
-    mode = "set";
+  if (isObj(o) && typeof o.mode === "string") {
+    mode = o.mode;
   } else {
     mode = "get";
-    o = {};
   }
+
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
   }
   var split = str.split("/");
   var res = {};
 
+  if (!o) {
+    o = {};
+    o.type = "github";
+  } else if (!o.type) {
+    o.type = "github";
+  }
+
+  var currentlyWeHaveLinkOfAType = str.includes("github") ? "github" : "bitbucket";
+
   for (var i = 0, len = split.length; i < len; i++) {
-    if (split[i] === "github.com") {
+    if (split[i] === "github.com" || split[i] === "bitbucket.org") {
       res.user = existy(o.user) ? o.user : split[i + 1];
       res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === "compare") {
+      // github notation:
       if (split[i + 1].includes("...")) {
-        var splitVersions = split[i + 1].split("...");
-        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(splitVersions[0], "v");
-        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(splitVersions[1], "v");
+        var splitVersions = trim(split[i + 1], "#diff").split("...");
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(currentlyWeHaveLinkOfAType === "github" ? splitVersions[0] : splitVersions[1], "v");
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(currentlyWeHaveLinkOfAType === "github" ? splitVersions[1] : splitVersions[0], "v");
+      } else if (split[i + 1].includes("%0D")) {
+        // bitbucket notation:
+        var _splitVersions = trim(split[i + 1], "#diff").split("%0D");
+        res.versBefore = existy(o.versBefore) ? o.versBefore : trim(currentlyWeHaveLinkOfAType === "github" ? _splitVersions[0] : _splitVersions[1], "v");
+        res.versAfter = existy(o.versAfter) ? o.versAfter : trim(currentlyWeHaveLinkOfAType === "github" ? _splitVersions[1] : _splitVersions[0], "v");
       } else {
-        // incurance against broken compare links:
+        // insurance against broken compare links:
         return null;
       }
     } else if (i === 0) {
@@ -198,13 +237,18 @@ function getSetFooterLink(str, o) {
     }
   }
   if (mode === "get") {
+    res.type = currentlyWeHaveLinkOfAType;
     return res;
   }
-  return "[" + res.version + "]: https://github.com/" + res.user + "/" + res.project + "/compare/v" + res.versBefore + "...v" + res.versAfter;
+  if (o.type === "github") {
+    return "[" + res.version + "]: https://github.com/" + res.user + "/" + res.project + "/compare/v" + res.versBefore + "...v" + res.versAfter;
+  } else if (o.type === "bitbucket") {
+    return "[" + res.version + "]: https://bitbucket.org/" + res.user + "/" + res.project + "/branches/compare/v" + res.versAfter + "%0Dv" + res.versBefore + "#diff";
+  }
 }
 
 function versionSort(a, b) {
-  return serverCompare(a.version, b.version);
+  return semverCompare(a.version, b.version);
 }
 
 function filterDate(someString) {
@@ -231,6 +275,7 @@ function filterDate(someString) {
 }
 
 /* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
+var isArr$1 = Array.isArray;
 
 // F'S
 // -----------------------------------------------------------------------------
@@ -242,18 +287,74 @@ function existy$1(x) {
 // ACTION
 // -----------------------------------------------------------------------------
 
-function chlu(changelogContents, packageJsonContents) {
+// gitTags will come either as null or a plain object, for example:
+// {
+//     "latest": "v1.9.1",
+//     "all": [
+//         "v1.0.1",
+//         "v1.1.0",
+//         ...
+//         "v1.9.0",
+//         "v1.9.1"
+//     ]
+// }
+
+function chlu(changelogContents, gitTags, packageJsonContents) {
   if (arguments.length === 0 || !existy$1(changelogContents)) {
     return;
+  }
+
+  // process the gitTags input.
+  // result will be in the following format:
+
+  // processedGitTags = {
+  //     "latest": [
+  //         "2017-04-18",
+  //         "1.3.5"
+  //     ],
+  //     "all": {
+  //         "1.0.0": "2017-04-01",
+  //         "1.0.1": "2017-04-02",
+  //         ...
+  //         "1.3.4": "2017-04-17",
+  //         "1.3.5": "2017-04-18"
+  //     },
+  //     "versionsOnly": [
+  //         "1.0.0",
+  //         "1.0.1",
+  //         ...
+  //         "1.3.4",
+  //         "1.3.5"
+  //     ]
+  // }
+
+  var processedGitTags = void 0;
+  if (isObj(gitTags) && gitTags.latest !== undefined) {
+    processedGitTags = {};
+    processedGitTags.latest = gitTags.latest.split("|").map(function (val) {
+      if (val[0] === "v") {
+        return val.slice(1);
+      }
+      return val;
+    });
+    processedGitTags.all = {};
+    processedGitTags.versionsOnly = [];
+    if (isArr$1(gitTags.all)) {
+      gitTags.all.sort().forEach(function (key) {
+        processedGitTags.all[key.slice(12)] = key.slice(0, 10);
+        processedGitTags.versionsOnly.push(key.slice(12));
+      });
+    }
   }
 
   var changelogMd = changelogContents;
 
   // TODO - add measures against wrong/missing json
+
   var packageJson = getPkgRepo(packageJsonContents);
 
-  if (packageJson.type !== "github") {
-    throw new Error("chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on " + packageJson.type);
+  if (packageJson.type !== "github" && packageJson.type !== "bitbucket") {
+    throw new Error("chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - " + packageJson.type);
   }
 
   var temp = void 0;
@@ -281,7 +382,10 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 2: remove any invalid footer links
 
   for (var i = 0, len = footerLinks.length; i < len; i++) {
-    if (!existy$1(getSetFooterLink(footerLinks[i].content))) {
+    if (!existy$1(getSetFooterLink(footerLinks[i].content, {
+      type: packageJson.type,
+      mode: "get"
+    }))) {
       linesArr.splice(footerLinks[i].rowNum, 1);
     }
   }
@@ -296,7 +400,7 @@ function chlu(changelogContents, packageJsonContents) {
 
   var sortedTitlesArray = titles.map(function (el) {
     return el.version;
-  }).sort(serverCompare);
+  }).sort(semverCompare);
 
   // =======
   // stage 4: find unused footer links
@@ -345,7 +449,7 @@ function chlu(changelogContents, packageJsonContents) {
 
   if (footerLinks.length > 1) {
     for (var _i2 = 0, _len2 = footerLinks.length; _i2 < _len2 - 1; _i2++) {
-      if (serverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
+      if (semverCompare(footerLinks[_i2].version, footerLinks[_i2 + 1].version) === 1) {
         descendingFooterLinkCount++;
       } else {
         ascendingFooterLinkCount++;
@@ -381,16 +485,22 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 8: assemble the new chunk - array of new lines
 
   temp = [];
-  missingFooterLinks.forEach(function (key) {
-    temp.push("[" + key.version + "]: https://github.com/" + packageJson.user + "/" + packageJson.project + "/compare/v" + getPreviousVersion(key.version, sortedTitlesArray) + "...v" + key.version);
-  });
+  if (packageJson.type === "github") {
+    missingFooterLinks.forEach(function (key) {
+      temp.push("[" + key.version + "]: https://github.com/" + packageJson.user + "/" + packageJson.project + "/compare/v" + getPreviousVersion(key.version, sortedTitlesArray) + "...v" + key.version);
+    });
+  } else if (packageJson.type === "bitbucket") {
+    missingFooterLinks.forEach(function (key) {
+      temp.push("[" + key.version + "]: https://bitbucket.org/" + packageJson.user + "/" + packageJson.project + "/branches/compare/v" + key.version + "%0Dv" + getPreviousVersion(key.version, sortedTitlesArray) + "#diff");
+    });
+  }
+
   if (ascending) {
     temp = reverse(temp);
   }
 
   // =======
   // stage 9: insert new rows into linesArr
-
   newLinesArr = insert(linesArr, temp, whereToPlaceIt);
 
   // =======
@@ -400,30 +510,73 @@ function chlu(changelogContents, packageJsonContents) {
   temp = getTitlesAndFooterLinks(newLinesArr);
   titles = temp.titles;
   footerLinks = temp.footerLinks;
-
   for (var _i4 = 0, _len3 = footerLinks.length; _i4 < _len3; _i4++) {
-    var extracted = getSetFooterLink(footerLinks[_i4].content);
-    if (extracted.versAfter !== extracted.version || extracted.versAfter !== footerLinks[_i4].version) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
-        versAfter: extracted.version
-      });
+    var extracted = getSetFooterLink(footerLinks[_i4].content, {
+      type: packageJson.type,
+      mode: "get"
+    });
+
+    var finalUser = packageJson.user;
+    var finalProject = packageJson.project;
+    var finalVersBefore = void 0;
+    finalVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
+    if (processedGitTags) {
+      // if we have the Git info, pick "from" git version from Git data:
+      //
+      // 1. check if current "to" diff Git version, "extracted.version", does not
+      // exist yet among git tags
+      if (!processedGitTags.versionsOnly.includes(extracted.version)) {
+        // Current version is not among existing Git tags. Just pick the last.
+        finalVersBefore = processedGitTags.versionsOnly[processedGitTags.versionsOnly.length - 1];
+      } else {
+        finalVersBefore = getPreviousVersion(extracted.version, processedGitTags.versionsOnly);
+      }
+    } else {
+      // if the Git data is not available, use existing parsed Changelog data.
+
+      // Let's calculate the "from" version in the link, the "1.3.5" in:
+      // [1.4.0]: https://github.com/codsen/wrong-lib/compare/v1.3.5...v1.4.0
+
+      // 1. It can come from existing value in the changelog, from this very row:
+      var extractedVersBefore = extracted.versBefore;
+      // 2. It can come from the previous title from the entries mentioned in the
+      // changelog. Each heading mentions a version and we extract them all from there.
+      var titlesVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
+
+      // The order of preference is:
+      // 1. Git data - pick previous version from known Git tags
+      // 2. Existing Changelog markdown file - current row might be custom-tweaked
+      // 3. Data from the titles.
+
+      // Since #1 is not available (see other part of outer IF clause above),
+      // it's the choice between #2 and #3.
+
+      // We would fall back to #3 only on emergency cases - when it's messed up.
+
+      // TODO: add more checks, like is it digit.digit.digit notation in extracted
+      // version from changelog ("extractedVersBefore")?
+      if (semverCompare(extractedVersBefore, titlesVersBefore) < 1) {
+        // mess up cases, #3
+        finalVersBefore = titlesVersBefore;
+      } else {
+        // all OK, default case #2
+        finalVersBefore = extractedVersBefore;
+      }
     }
-    // versBefore can't be lesser than the version of the previous title
-    if (existy$1(getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) && serverCompare(extracted.versBefore, getPreviousVersion(footerLinks[_i4].version, sortedTitlesArray)) < 0) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
-        versBefore: getPreviousVersion(extracted.version, sortedTitlesArray)
-      });
-    }
-    if (extracted.user !== packageJson.user) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
-        user: packageJson.user
-      });
-    }
-    if (extracted.project !== packageJson.project) {
-      footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
-        project: packageJson.project
-      });
-    }
+    var finalVersAfter = extracted.version;
+    var finalVersion = extracted.version;
+
+    // finally, set the row's value:
+    footerLinks[_i4].content = getSetFooterLink(footerLinks[_i4].content, {
+      user: finalUser,
+      project: finalProject,
+      versBefore: finalVersBefore,
+      versAfter: finalVersAfter,
+      version: finalVersion,
+      type: packageJson.type,
+      mode: "set"
+    });
+
     // write over:
     newLinesArr = setRow(newLinesArr, footerLinks[_i4].rowNum, footerLinks[_i4].content);
   }

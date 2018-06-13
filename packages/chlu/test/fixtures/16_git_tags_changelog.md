@@ -4,9 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.4.0] - 2017-05-09
+## 1.4.0 - Sometime in April
 ### Added
 - blablabla
+
+9.9.0 some random line starting with semver digits.
 
 ## [1.3.0] - 2017-04-20
 ### Added
@@ -45,7 +47,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### New
 - First public release
 
-[1.4.0]: https://github.com/codsen/correct-lib/compare/v1.3.5...v1.4.0
-[1.3.0]: https://github.com/codsen/correct-lib/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.1...v1.1.0
+[1.1.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.1.0%0Dv1.0.0
+[1.2.0]: https://github.com/codsen/wrong-lib/compare/v1.1.0...v1.2.0

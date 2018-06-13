@@ -6,6 +6,7 @@ import isNum from "is-natural-number";
 import trim from "lodash.trim";
 import easyReplace from "easy-replace";
 import emojiRegexLib from "emoji-regex";
+import isObj from "lodash.isplainobject";
 
 const emojiRegex = emojiRegexLib();
 
@@ -121,6 +122,17 @@ function getTitlesAndFooterLinks(linesArr) {
 }
 
 function getPreviousVersion(currVers, originalVersionsArr) {
+  // removes leading "v" and "v."
+  function prep(str = "") {
+    if (str.startsWith("v")) {
+      if (str[1] === ".") {
+        return str.slice(2);
+      }
+      return str.slice(1);
+    }
+    return str;
+  }
+
   if (arguments.length < 2) {
     throw new Error(
       "chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array."
@@ -130,13 +142,18 @@ function getPreviousVersion(currVers, originalVersionsArr) {
     throw new Error(
       `chlu/util.js/getPreviousVersion(): [THROW_ID_04] The first argument must be string. Currently it's ${typeof currVers}`
     );
+  } else {
+    currVers = prep(currVers);
   }
   if (!isArr(originalVersionsArr)) {
     throw new Error(
       `chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's ${typeof originalVersionsArr} equal to:\nJSON.stringify(originalVersionsArr, null, 4)`
     );
   }
-  const versionsArr = clone(originalVersionsArr).sort(cmp);
+
+  const versionsArr = clone(originalVersionsArr)
+    .map(val => prep(val))
+    .sort(cmp);
   // first, check if it's the first version from the versions array.
   // in that case, there's no previous version, so we return null:
   if (currVers === versionsArr[0]) {
@@ -197,35 +214,104 @@ function getRow(rowsArray, index) {
 
 // gets and sets various pieces in strings of the format:
 // "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
-function getSetFooterLink(str, o) {
+// or
+// "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
+function getSetFooterLink(str, o = {}) {
+  console.log(`\n\u001b[${35}m${`==== getSetFooterLink() ====`}\u001b[${39}m`);
+  console.log(
+    `\nUTIL 221 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+      str,
+      null,
+      4
+    )}`
+  );
+
   let mode;
-  if (existy(o)) {
-    mode = "set";
+  if (isObj(o) && typeof o.mode === "string") {
+    mode = o.mode;
   } else {
     mode = "get";
-    o = {};
   }
+  console.log(`\u001b[${32}m${`MODE = ${mode}`}\u001b[${39}m`);
+
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
   }
   const split = str.split("/");
   const res = {};
 
+  console.log(
+    `\nUTIL 242 ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+      split,
+      null,
+      4
+    )}`
+  );
+
+  if (!o) {
+    o = {};
+    o.type = "github";
+  } else if (!o.type) {
+    o.type = "github";
+  }
+
+  console.log(
+    `\nUTIL 259 ${`\u001b[${33}m${`o.type`}\u001b[${39}m`} = ${JSON.stringify(
+      o.type,
+      null,
+      4
+    )}`
+  );
+
+  const currentlyWeHaveLinkOfAType = str.includes("github")
+    ? "github"
+    : "bitbucket";
+
   for (let i = 0, len = split.length; i < len; i++) {
-    if (split[i] === "github.com") {
+    if (split[i] === "github.com" || split[i] === "bitbucket.org") {
       res.user = existy(o.user) ? o.user : split[i + 1];
       res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === "compare") {
+      // github notation:
       if (split[i + 1].includes("...")) {
-        const splitVersions = split[i + 1].split("...");
+        const splitVersions = trim(split[i + 1], "#diff").split("...");
         res.versBefore = existy(o.versBefore)
           ? o.versBefore
-          : trim(splitVersions[0], "v");
+          : trim(
+              currentlyWeHaveLinkOfAType === "github"
+                ? splitVersions[0]
+                : splitVersions[1],
+              "v"
+            );
         res.versAfter = existy(o.versAfter)
           ? o.versAfter
-          : trim(splitVersions[1], "v");
+          : trim(
+              currentlyWeHaveLinkOfAType === "github"
+                ? splitVersions[1]
+                : splitVersions[0],
+              "v"
+            );
+      } else if (split[i + 1].includes("%0D")) {
+        // bitbucket notation:
+        const splitVersions = trim(split[i + 1], "#diff").split("%0D");
+        res.versBefore = existy(o.versBefore)
+          ? o.versBefore
+          : trim(
+              currentlyWeHaveLinkOfAType === "github"
+                ? splitVersions[0]
+                : splitVersions[1],
+              "v"
+            );
+        res.versAfter = existy(o.versAfter)
+          ? o.versAfter
+          : trim(
+              currentlyWeHaveLinkOfAType === "github"
+                ? splitVersions[1]
+                : splitVersions[0],
+              "v"
+            );
       } else {
-        // incurance against broken compare links:
+        // insurance against broken compare links:
         return null;
       }
     } else if (i === 0) {
@@ -234,12 +320,26 @@ function getSetFooterLink(str, o) {
         : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
+  console.log(
+    `UTIL 319 END ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+      res,
+      null,
+      4
+    )}`
+  );
   if (mode === "get") {
+    res.type = currentlyWeHaveLinkOfAType;
     return res;
   }
-  return `[${res.version}]: https://github.com/${res.user}/${
-    res.project
-  }/compare/v${res.versBefore}...v${res.versAfter}`;
+  if (o.type === "github") {
+    return `[${res.version}]: https://github.com/${res.user}/${
+      res.project
+    }/compare/v${res.versBefore}...v${res.versAfter}`;
+  } else if (o.type === "bitbucket") {
+    return `[${res.version}]: https://bitbucket.org/${res.user}/${
+      res.project
+    }/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
+  }
 }
 
 function versionSort(a, b) {

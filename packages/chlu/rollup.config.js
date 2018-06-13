@@ -23,6 +23,7 @@ export default commandLineArgs => {
         "just-insert",
         "lodash.clonedeep",
         "lodash.includes",
+        "lodash.isplainobject",
         "lodash.min",
         "lodash.reverse",
         "lodash.trim",
@@ -53,6 +54,7 @@ export default commandLineArgs => {
         "just-insert",
         "lodash.clonedeep",
         "lodash.includes",
+        "lodash.isplainobject",
         "lodash.min",
         "lodash.reverse",
         "lodash.trim",
@@ -77,6 +79,7 @@ export default commandLineArgs => {
         "emoji-regex",
         "is-natural-number",
         "lodash.clonedeep",
+        "lodash.isplainobject",
         "lodash.trim",
         "semver-compare"
       ],
@@ -85,8 +88,8 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
-        json(),
-        babel()
+        resolve(),
+        json()
       ]
     }
   ];

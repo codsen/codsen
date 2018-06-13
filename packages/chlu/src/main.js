@@ -3,13 +3,15 @@
 import reverse from "lodash.reverse";
 import splitLines from "split-lines";
 import getPkgRepo from "get-pkg-repo";
-import serverCompare from "semver-compare";
+import semverCompare from "semver-compare";
 import empty from "ast-contains-only-empty-space";
 import insert from "just-insert";
 import clone from "lodash.clonedeep";
 import includes from "lodash.includes";
 import min from "lodash.min";
 import dd from "dehumanize-date";
+import isObj from "lodash.isplainobject";
+const isArr = Array.isArray;
 
 import {
   getPreviousVersion,
@@ -31,19 +33,99 @@ function existy(x) {
 // ACTION
 // -----------------------------------------------------------------------------
 
-function chlu(changelogContents, packageJsonContents) {
+// gitTags will come either as null or a plain object, for example:
+// {
+//     "latest": "v1.9.1",
+//     "all": [
+//         "v1.0.1",
+//         "v1.1.0",
+//         ...
+//         "v1.9.0",
+//         "v1.9.1"
+//     ]
+// }
+
+function chlu(changelogContents, gitTags, packageJsonContents) {
   if (arguments.length === 0 || !existy(changelogContents)) {
     return;
   }
 
+  console.log(
+    `${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+      gitTags,
+      null,
+      4
+    )}`
+  );
+
+  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+
+  // process the gitTags input.
+  // result will be in the following format:
+
+  // processedGitTags = {
+  //     "latest": [
+  //         "2017-04-18",
+  //         "1.3.5"
+  //     ],
+  //     "all": {
+  //         "1.0.0": "2017-04-01",
+  //         "1.0.1": "2017-04-02",
+  //         ...
+  //         "1.3.4": "2017-04-17",
+  //         "1.3.5": "2017-04-18"
+  //     },
+  //     "versionsOnly": [
+  //         "1.0.0",
+  //         "1.0.1",
+  //         ...
+  //         "1.3.4",
+  //         "1.3.5"
+  //     ]
+  // }
+
+  let processedGitTags;
+  if (isObj(gitTags) && gitTags.latest !== undefined) {
+    processedGitTags = {};
+    processedGitTags.latest = gitTags.latest.split("|").map(val => {
+      if (val[0] === "v") {
+        return val.slice(1);
+      }
+      return val;
+    });
+    processedGitTags.all = {};
+    processedGitTags.versionsOnly = [];
+    if (isArr(gitTags.all)) {
+      gitTags.all.sort().forEach(key => {
+        processedGitTags.all[key.slice(12)] = key.slice(0, 10);
+        processedGitTags.versionsOnly.push(key.slice(12));
+      });
+    }
+  }
+  console.log(
+    `${`\u001b[${33}m${`processedGitTags`}\u001b[${39}m`} = ${JSON.stringify(
+      processedGitTags,
+      null,
+      4
+    )}`
+  );
+
   const changelogMd = changelogContents;
 
   // TODO - add measures against wrong/missing json
-  const packageJson = getPkgRepo(packageJsonContents);
 
-  if (packageJson.type !== "github") {
+  const packageJson = getPkgRepo(packageJsonContents);
+  console.log(
+    `57 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
+      packageJson,
+      null,
+      4
+    )}`
+  );
+
+  if (packageJson.type !== "github" && packageJson.type !== "bitbucket") {
     throw new Error(
-      `chlu/chlu(): [THROW_ID_01] Package JSON shows the library is not GitHub-based, but based on ${
+      `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${
         packageJson.type
       }`
     );
@@ -66,6 +148,13 @@ function chlu(changelogContents, packageJsonContents) {
   const linesArr = splitLines(changelogMd);
 
   let titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
+  console.log(
+    `MAIN 91 ${`\u001b[${33}m${`titlesAndFooterLinks`}\u001b[${39}m`} = ${JSON.stringify(
+      titlesAndFooterLinks,
+      null,
+      4
+    )}`
+  );
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
   // console.log('titlesAndFooterLinks = ' + JSON.stringify(titlesAndFooterLinks, null, 4))
@@ -74,7 +163,21 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 2: remove any invalid footer links
 
   for (let i = 0, len = footerLinks.length; i < len; i++) {
-    if (!existy(getSetFooterLink(footerLinks[i].content))) {
+    if (
+      !existy(
+        getSetFooterLink(footerLinks[i].content, {
+          type: packageJson.type,
+          mode: "get"
+        })
+      )
+    ) {
+      console.log(
+        `MAIN 116 SPLICE ROW:\n${JSON.stringify(
+          linesArr[footerLinks[i].rowNum],
+          null,
+          4
+        )}`
+      );
       linesArr.splice(footerLinks[i].rowNum, 1);
     }
   }
@@ -87,7 +190,7 @@ function chlu(changelogContents, packageJsonContents) {
   // =======
   // stage 3: get the ordered array of all title versions
 
-  const sortedTitlesArray = titles.map(el => el.version).sort(serverCompare);
+  const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
 
   // =======
   // stage 4: find unused footer links
@@ -118,6 +221,13 @@ function chlu(changelogContents, packageJsonContents) {
       }
     }
   }
+  console.log(
+    `MAIN 166 ${`\u001b[${33}m${`missingFooterLinks`}\u001b[${39}m`} = ${JSON.stringify(
+      missingFooterLinks,
+      null,
+      4
+    )}`
+  );
 
   // =======
   // stage 6: find out what is the order of footer links
@@ -128,7 +238,7 @@ function chlu(changelogContents, packageJsonContents) {
   if (footerLinks.length > 1) {
     for (let i = 0, len = footerLinks.length; i < len - 1; i++) {
       if (
-        serverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1
+        semverCompare(footerLinks[i].version, footerLinks[i + 1].version) === 1
       ) {
         descendingFooterLinkCount++;
       } else {
@@ -165,15 +275,36 @@ function chlu(changelogContents, packageJsonContents) {
   // stage 8: assemble the new chunk - array of new lines
 
   temp = [];
-  missingFooterLinks.forEach(key => {
-    temp.push(
-      `[${key.version}]: https://github.com/${packageJson.user}/${
-        packageJson.project
-      }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
-        key.version
-      }`
-    );
-  });
+  if (packageJson.type === "github") {
+    missingFooterLinks.forEach(key => {
+      temp.push(
+        `[${key.version}]: https://github.com/${packageJson.user}/${
+          packageJson.project
+        }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
+          key.version
+        }`
+      );
+    });
+  } else if (packageJson.type === "bitbucket") {
+    missingFooterLinks.forEach(key => {
+      temp.push(
+        `[${key.version}]: https://bitbucket.org/${packageJson.user}/${
+          packageJson.project
+        }/branches/compare/v${key.version}%0Dv${getPreviousVersion(
+          key.version,
+          sortedTitlesArray
+        )}#diff`
+      );
+    });
+  }
+  console.log(
+    `MAIN 242 ${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+      temp,
+      null,
+      4
+    )}`
+  );
+
   if (ascending) {
     temp = reverse(temp);
   }
@@ -181,7 +312,21 @@ function chlu(changelogContents, packageJsonContents) {
   // =======
   // stage 9: insert new rows into linesArr
 
+  console.log(
+    `MAIN 257 BEFORE INSERTING temp into linesArr: ${`\u001b[${33}m${`newLinesArr`}\u001b[${39}m`} = ${JSON.stringify(
+      newLinesArr,
+      null,
+      4
+    )}`
+  );
   newLinesArr = insert(linesArr, temp, whereToPlaceIt);
+  console.log(
+    `MAIN 265 AFTER INSERTING temp into linesArr: ${`\u001b[${33}m${`newLinesArr`}\u001b[${39}m`} = ${JSON.stringify(
+      newLinesArr,
+      null,
+      4
+    )}`
+  );
 
   // =======
   // stage 10: prepare for checking are footerLinks correct.
@@ -191,38 +336,112 @@ function chlu(changelogContents, packageJsonContents) {
   titles = temp.titles;
   footerLinks = temp.footerLinks;
 
+  console.log("\n");
   for (let i = 0, len = footerLinks.length; i < len; i++) {
-    const extracted = getSetFooterLink(footerLinks[i].content);
-    if (
-      extracted.versAfter !== extracted.version ||
-      extracted.versAfter !== footerLinks[i].version
-    ) {
-      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
-        versAfter: extracted.version
-      });
+    console.log(
+      `${`\u001b[${33}m${`██`}\u001b[${39}m\u001b[${35}m${`██`}\u001b[${39}m`.repeat(
+        20
+      )} i = ${i}`
+    );
+    const extracted = getSetFooterLink(footerLinks[i].content, {
+      type: packageJson.type,
+      mode: "get"
+    });
+    console.log(
+      `\nMAIN 252 ${`\u001b[${33}m${`extracted`}\u001b[${39}m`} = ${JSON.stringify(
+        extracted,
+        null,
+        4
+      )}\n`
+    );
+
+    const finalUser = packageJson.user;
+    const finalProject = packageJson.project;
+    let finalVersBefore;
+    finalVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
+    if (processedGitTags) {
+      // if we have the Git info, pick "from" git version from Git data:
+      //
+      // 1. check if current "to" diff Git version, "extracted.version", does not
+      // exist yet among git tags
+      if (!processedGitTags.versionsOnly.includes(extracted.version)) {
+        // Current version is not among existing Git tags. Just pick the last.
+        finalVersBefore =
+          processedGitTags.versionsOnly[
+            processedGitTags.versionsOnly.length - 1
+          ];
+      } else {
+        finalVersBefore = getPreviousVersion(
+          extracted.version,
+          processedGitTags.versionsOnly
+        );
+      }
+    } else {
+      // if the Git data is not available, use existing parsed Changelog data.
+
+      // Let's calculate the "from" version in the link, the "1.3.5" in:
+      // [1.4.0]: https://github.com/codsen/wrong-lib/compare/v1.3.5...v1.4.0
+
+      // 1. It can come from existing value in the changelog, from this very row:
+      const extractedVersBefore = extracted.versBefore;
+      // 2. It can come from the previous title from the entries mentioned in the
+      // changelog. Each heading mentions a version and we extract them all from there.
+      const titlesVersBefore = getPreviousVersion(
+        extracted.version,
+        sortedTitlesArray
+      );
+
+      // The order of preference is:
+      // 1. Git data - pick previous version from known Git tags
+      // 2. Existing Changelog markdown file - current row might be custom-tweaked
+      // 3. Data from the titles.
+
+      // Since #1 is not available (see other part of outer IF clause above),
+      // it's the choice between #2 and #3.
+
+      // We would fall back to #3 only on emergency cases - when it's messed up.
+
+      // TODO: add more checks, like is it digit.digit.digit notation in extracted
+      // version from changelog ("extractedVersBefore")?
+      if (semverCompare(extractedVersBefore, titlesVersBefore) < 1) {
+        // mess up cases, #3
+        finalVersBefore = titlesVersBefore;
+      } else {
+        // all OK, default case #2
+        finalVersBefore = extractedVersBefore;
+      }
     }
-    // versBefore can't be lesser than the version of the previous title
-    if (
-      existy(getPreviousVersion(footerLinks[i].version, sortedTitlesArray)) &&
-      serverCompare(
-        extracted.versBefore,
-        getPreviousVersion(footerLinks[i].version, sortedTitlesArray)
-      ) < 0
-    ) {
-      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
-        versBefore: getPreviousVersion(extracted.version, sortedTitlesArray)
-      });
+    const finalVersAfter = extracted.version;
+    const finalVersion = extracted.version;
+
+    if (existy(gitTags)) {
+      console.log(
+        `███████████████████████████████████████\n${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+          gitTags,
+          null,
+          4
+        )}`
+      );
     }
-    if (extracted.user !== packageJson.user) {
-      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
-        user: packageJson.user
-      });
-    }
-    if (extracted.project !== packageJson.project) {
-      footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
-        project: packageJson.project
-      });
-    }
+
+    // finally, set the row's value:
+    footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
+      user: finalUser,
+      project: finalProject,
+      versBefore: finalVersBefore,
+      versAfter: finalVersAfter,
+      version: finalVersion,
+      type: packageJson.type,
+      mode: "set"
+    });
+    console.log(
+      `309 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+        footerLinks[i].content,
+        null,
+        4
+      )}`
+    );
+
     // write over:
     newLinesArr = setRow(
       newLinesArr,

@@ -7,7 +7,7 @@ import c from "../dist/chlu.esm";
 
 const fixtures = path.join(__dirname, "fixtures");
 
-function compare(t, name) {
+function compare(t, name, gitTags = null) {
   const changelog = readFileSync(
     path.join(fixtures, `${name}_changelog.md`),
     "utf8"
@@ -20,10 +20,10 @@ function compare(t, name) {
     path.join(fixtures, `${name}_package.json`),
     "utf8"
   );
-  return t.deepEqual(c(changelog, packageJson), expected);
+  return t.deepEqual(c(changelog, gitTags, packageJson), expected);
 }
 
-function throws(t, name) {
+function throws(t, name, gitTags = null) {
   const changelog = readFileSync(
     path.join(fixtures, `${name}_changelog.md`),
     "utf8"
@@ -33,7 +33,7 @@ function throws(t, name) {
     "utf8"
   );
   return t.throws(() => {
-    c(changelog, packageJson);
+    c(changelog, gitTags, packageJson);
   });
 }
 
@@ -86,3 +86,31 @@ test("14. Real world case with slashes and letter v - https://github.com/keyston
 
 test("15. Unrecogniseable date - version gets still linked!", t =>
   compare(t, "15_bad_date"));
+
+test("16. Git Tags supplemented", t => {
+  const tags = {
+    latest: "2017-04-18|v1.3.5",
+    all: [
+      // list is deliberately not sorted
+      "2017-04-10|v1.2.0",
+      "2017-04-11|v1.2.1",
+      "2017-04-12|v1.2.2", // <------ will be used to diff against v1.3.0
+      "2017-04-13|v1.3.0",
+      "2017-04-14|v1.3.1",
+      "2017-04-15|v1.3.2",
+      "2017-04-16|v1.3.3",
+      "2017-04-17|v1.3.4",
+      "2017-04-18|v1.3.5", // <------ will be used to diff against v1.4.0
+      "2017-04-01|v1.0.0",
+      "2017-04-02|v1.0.1",
+      "2017-04-03|v1.0.2",
+      "2017-04-04|v1.0.3", // <------ will be used to diff against v1.1.0
+      "2017-04-05|v1.1.0",
+      "2017-04-06|v1.1.1",
+      "2017-04-07|v1.1.2",
+      "2017-04-08|v1.1.3",
+      "2017-04-09|v1.1.4" // <------- will be used to diff against v.1.2.0
+    ]
+  };
+  compare(t, "16_git_tags", tags);
+});
