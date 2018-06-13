@@ -665,3 +665,16 @@ test("35.01 - Emoji in the headings", t => {
 test("35.02 - Emoji in the headings", t => {
   t.is(s("## ♥ Heart title"), "markdown-header-heart-title", "35.02");
 });
+
+test("35.03 - Multiple consecutive dashes surrounded by spaces", t => {
+  t.is(
+    s("## Title -- is the best"),
+    "markdown-header-title-is-the-best",
+    "35.03.01"
+  );
+  t.is(
+    s("## Title --- is the best"),
+    "markdown-header-title-is-the-best",
+    "35.03.02"
+  );
+});
