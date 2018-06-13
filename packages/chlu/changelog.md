@@ -31,7 +31,7 @@ It's necessary so that we could accomodate the Git tag customisations.
 
 ### Updated
 
-- ✨ Switched from deprecated [posthtml-ast-contains-only-empty-space](https://github.com/codsen/posthtml-ast-contains-only-empty-space) to fresh [ast-contains-only-empty-space](https://github.com/codsen/ast-contains-only-empty-space)
+- ✨ Switched from deprecated [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space) to fresh [ast-contains-only-empty-space](https://www.npmjs.com/package/ast-contains-only-empty-space)
 - ✨ Updated all dependencies
 - 💥 Removing UMD build - nobody's gonna use this library in a browser
 
