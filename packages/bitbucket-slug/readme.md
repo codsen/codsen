@@ -28,13 +28,16 @@
 npm i bitbucket-slug
 ```
 
-> or, if you work with image `alt` attributes, check out [html-img-alt](https://github.com/codsen/html-img-alt) which uses `bitbucket-slug`.
+then,
 
 ```js
-// consume via a CommonJS require:
-const unfancy = require("bitbucket-slug");
-// or as an ES Module:
-import unfancy from "bitbucket-slug";
+const bSlug = require("bitbucket-slug");
+```
+
+or
+
+```js
+import bSlug from "bitbucket-slug";
 ```
 
 Here's what you'll get:
