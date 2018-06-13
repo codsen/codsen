@@ -3,13 +3,9 @@
 > Find out, is nested array/object/string/AST tree is empty
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,21 +13,12 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Rationale](#rationale)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [Rationale](#markdown-header-markdown-header-rationale)
+- [API](#markdown-header-markdown-header-api)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -50,23 +37,23 @@ console.log(isEmpty(htmlAstObj));
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                       | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-is-empty.cjs.js` | 1&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-is-empty.esm.js` | 875&nbsp;B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-is-empty.umd.js` | 1&nbsp;KB  |
+| Type                                                                                                    | Key in `package.json` | Path                       | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-is-empty.cjs.js` | 1 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-is-empty.esm.js` | 875 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-is-empty.umd.js` | 1 KB  |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Rationale
 
 Imagine, that you have a nested array which contains plain objects, arrays and strings. Huge tree. This library can tell if it consists of only empty things, by which I mean:
 
-* Arrays or objects with no keys, or
-* Arrays or objects that have all keys equal to zero-length strings
-* Arrays or objects that have all keys equal to strings that `.trim()` to zero-length
-* Zero-length strings
-* Or strings that would `.trim()` to zero-length (this includes tabs, line breaks, spaces or mix thereof)
+- Arrays or objects with no keys, or
+- Arrays or objects that have all keys equal to zero-length strings
+- Arrays or objects that have all keys equal to strings that `.trim()` to zero-length
+- Zero-length strings
+- Or strings that would `.trim()` to zero-length (this includes tabs, line breaks, spaces or mix thereof)
 
 These are empty things, for example:
 
@@ -106,7 +93,7 @@ Practically speaking, when you work with AST's, all the mentioned empty things a
 
 Functions are not considered to be empty and this library will return `null` if it encounters one anywhere within the `input`. Same with as `undefined` or `null` inputs — both will yield `null`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -120,17 +107,17 @@ isEmpty(
 // => true||false
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-is-empty/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ast-is-empty/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-is-empty/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ast-is-empty/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -140,25 +127,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-is-empty.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-is-empty
-[travis-img]: https://img.shields.io/travis/codsen/ast-is-empty.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/ast-is-empty
-[cov-img]: https://coveralls.io/repos/github/codsen/ast-is-empty/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/ast-is-empty?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/ast-is-empty.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/ast-is-empty
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ast-is-empty.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/ast-is-empty/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ast-is-empty
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ast-is-empty/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ast-is-empty?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-is-empty
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-is-empty.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/ast-is-empty/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-is-empty/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-is-empty
 [downloads-img]: https://img.shields.io/npm/dm/ast-is-empty.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ast-is-empty
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ast-is-empty
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/ast-is-empty.svg?style=flat-square
-[license-url]: https://github.com/codsen/ast-is-empty/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/ast-is-empty
