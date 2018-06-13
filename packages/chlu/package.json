@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "2.10.1",
+  "version": "3.0.0",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
