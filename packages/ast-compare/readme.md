@@ -3,13 +3,9 @@
 > Compare anything: AST, objects, arrays, strings and nested thereof
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,26 +13,17 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [Use](#use)
-- [API](#api)
-- [Examples](#examples)
-- [opts.verboseWhenMismatches](#optsverbosewhenmismatches)
-- [Rationale](#rationale)
-- [Differences from \_.isMatch](#differences-from-%5C_ismatch)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [Purpose](#markdown-header-markdown-header-purpose)
+- [Use](#markdown-header-markdown-header-use)
+- [API](#markdown-header-markdown-header-api)
+- [Examples](#markdown-header-markdown-header-examples)
+- [opts.verboseWhenMismatches](#markdown-header-markdown-header-optsverbosewhenmismatches)
+- [Rationale](#markdown-header-markdown-header-rationale)
+- [Differences from \_.isMatch](#markdown-header-markdown-header-differences-from-_ismatch)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -46,13 +33,13 @@ npm i ast-compare
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                      | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-compare.cjs.js` | 9&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 31&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-compare.cjs.js` | 9 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 31 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
@@ -84,7 +71,7 @@ console.log(result);
 
 The main purpose is to compare two parsed HTML/CSS trees or their branches, but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [ast-delete-object](https://github.com/codsen/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Use
 
@@ -107,10 +94,10 @@ This library will not mutate the input arguments.
 | `smallObj`     | Array or Plain object or String | yes         | A set of the above, smaller thing.  |
 | `opts`         | Plain object                    | no          | A plain object containing settings. |
 
-* If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
-* Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
+- If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
+- Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -122,7 +109,7 @@ This library will not mutate the input arguments.
 | `verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match. |
 | }                       |         |             |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Output
 
@@ -130,10 +117,10 @@ If `smallObj` **is** equal or a superset of `bigObj`, the returned value is alwa
 
 If it's **not** a superset or equal, the value depends on `opts.verboseWhenMismatches`:
 
-* Default, `opts.verboseWhenMismatches===false` will yield `false`
-* Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
+- Default, `opts.verboseWhenMismatches===false` will yield `false`
+- Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Examples
 
@@ -177,7 +164,7 @@ compare(null);
 // => false.
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## opts.verboseWhenMismatches
 
@@ -185,13 +172,13 @@ Sometimes you just want a yes/no answer is something a subset or equal to someth
 
 If you use this setting, you have to anticipate Boolean `true` OR something else (Boolean `false` or string) coming out from this library.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Rationale
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arrays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Differences from \_.isMatch
 
@@ -205,17 +192,17 @@ var res = compare(["a", "b", "c"], []);
 // now, res === false
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ast-compare/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-compare/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ast-compare/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -225,25 +212,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-compare.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-compare
-[travis-img]: https://img.shields.io/travis/codsen/ast-compare.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/ast-compare
-[cov-img]: https://coveralls.io/repos/github/codsen/ast-compare/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/ast-compare?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/ast-compare.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/ast-compare
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ast-compare.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ast-compare
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ast-compare/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ast-compare?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-compare
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-compare.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/ast-compare/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-compare/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-compare
 [downloads-img]: https://img.shields.io/npm/dm/ast-compare.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ast-compare
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ast-compare
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/ast-compare.svg?style=flat-square
-[license-url]: https://github.com/codsen/ast-compare/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/ast-compare
