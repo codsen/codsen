@@ -3,13 +3,9 @@
 > Delete all plain objects that contain a certain key/value pair
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,27 +13,16 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Deleting](#deleting)
-- [Match Keys Strictly setting](#match-keys-strictly-setting)
-- [Hungry For White Space setting](#hungry-for-white-space-setting)
-- [API](#api)
-- [Example](#example)
-- [The story](#the-story)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
-
-If you want to delete only key/value pairs and **leave their parent objects intact**, see [object-delete-key](https://github.com/codsen/object-delete-key). It can delete key and or values from plain objects. Of course, those objects can be nested within anything. That's standard thing for `ast`-class libraries.
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [Deleting](#markdown-header-markdown-header-deleting)
+- [Match Keys Strictly setting](#markdown-header-markdown-header-match-keys-strictly-setting)
+- [Hungry For White Space setting](#markdown-header-markdown-header-hungry-for-white-space-setting)
+- [API](#markdown-header-markdown-header-api)
+- [Example](#markdown-header-markdown-header-example)
+- [The story](#markdown-header-markdown-header-the-story)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -54,13 +39,13 @@ import deleteObj from "ast-delete-object";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-delete-object.cjs.js` | 2&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-delete-object.esm.js` | 2&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-delete-object.umd.js` | 32&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-delete-object.cjs.js` | 2 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-delete-object.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-delete-object.umd.js` | 31 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Deleting
 
@@ -92,7 +77,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    ]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Match Keys Strictly setting
 
@@ -133,7 +118,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // ]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Hungry For White Space setting
 
@@ -163,7 +148,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -181,7 +166,7 @@ deleteObj(input, objToDelete, strictOrNot);
 
 By the way, the input arguments are not mutated in any way.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Options object
 
@@ -192,7 +177,7 @@ By the way, the input arguments are not mutated in any way.
 | `hungryForWhitespace`  | Boolean | no          | `false` | When active, empty value (one which would get `trim`-med to empty string, `""`) will match any other empty value (which might be different matching strictly, yet `trim` to the same empty string, `""`).                                                          |
 | }                      |         |             |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -265,7 +250,7 @@ const delObj = require('ast-delete-object')
 parsedHTMLObject = delObj(parsedHTMLObject, { 'tag': 'style', 'content': {} })
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## The story
 
@@ -273,17 +258,17 @@ I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse s
 
 Later I stopped parsing the HTML [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes miliseconds.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/ast-delete-object/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ast-delete-object/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/ast-delete-object/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ast-delete-object/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -293,25 +278,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-delete-object.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-delete-object
-[travis-img]: https://img.shields.io/travis/codsen/ast-delete-object.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/ast-delete-object
-[cov-img]: https://coveralls.io/repos/github/codsen/ast-delete-object/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/ast-delete-object?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/ast-delete-object.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/ast-delete-object
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/ast-delete-object.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/ast-delete-object/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ast-delete-object
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ast-delete-object/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ast-delete-object?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-delete-object
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/ast-delete-object.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/ast-delete-object/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/ast-delete-object/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/ast-delete-object
 [downloads-img]: https://img.shields.io/npm/dm/ast-delete-object.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ast-delete-object
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ast-delete-object
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/ast-delete-object.svg?style=flat-square
-[license-url]: https://github.com/codsen/ast-delete-object/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/ast-delete-object
