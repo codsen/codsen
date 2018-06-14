@@ -138,3 +138,219 @@ test("17. Unit test from chlu-cli", t => {
   };
   compare(t, "17_chlu_cli", tags);
 });
+
+test(`18. Both package.json and Git data are missing - ${`\u001b[${32}m${`github`}\u001b[${39}m`}`, t => {
+  const original = `# Seed Change Log
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.4.0] - 2017-05-09
+### Added
+- blablabla
+
+## 1.3.0 - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.2.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.1.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## 1.0.0 - 2017-04-03
+### New
+- First public release
+
+[1.4.0]: https://github.com/codsen/correct-lib/compare/v1.3.0...v1.4.0
+`;
+
+  const expected = `# Seed Change Log
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.4.0] - 2017-05-09
+### Added
+- blablabla
+
+## [1.3.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.2.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.1.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## 1.0.0 - 2017-04-03
+### New
+- First public release
+
+[1.4.0]: https://github.com/codsen/correct-lib/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/codsen/correct-lib/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/codsen/correct-lib/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/codsen/correct-lib/compare/v1.0.0...v1.1.0
+`;
+  t.deepEqual(c(original), expected, "18");
+});
+
+test(`19. Both package.json and Git data are missing - ${`\u001b[${32}m${`bitbucket`}\u001b[${39}m`}`, t => {
+  const original = `# Seed Change Log
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.4.0] - 2017-05-09
+### Added
+- blablabla
+
+## 1.3.0 - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.2.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.1.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## 1.0.0 - 2017-04-03
+### New
+- First public release
+
+[1.4.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.4.0%0Dv1.3.0#diff
+`;
+
+  const expected = `# Seed Change Log
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [1.4.0] - 2017-05-09
+### Added
+- blablabla
+
+## [1.3.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.2.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## [1.1.0] - 2017-04-20
+### Added
+- blablabla
+- blablabla
+### Improved
+- blablabla
+### Updated
+- Readme
+### Unchanged
+- Code coverage is still 100%
+
+## 1.0.0 - 2017-04-03
+### New
+- First public release
+
+[1.4.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.3.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.2.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.1.0]: https://bitbucket.org/codsen/correct-lib/branches/compare/v1.1.0%0Dv1.0.0#diff
+`;
+  t.deepEqual(
+    c(original),
+    expected,
+    "18 - result has descending order links because source had one row only"
+  );
+});

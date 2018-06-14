@@ -457,16 +457,23 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   const changelogMd = changelogContents;
 
-  // TODO - add measures against wrong/missing json
-
-  const packageJson = getPkgRepo(packageJsonContents);
-
-  if (packageJson.type !== "github" && packageJson.type !== "bitbucket") {
-    throw new Error(
-      `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${
-        packageJson.type
-      }`
-    );
+  let packageJson;
+  // package.json might come in falsey in case it's unavailable
+  if (packageJsonContents) {
+    packageJson = getPkgRepo(packageJsonContents);
+    // throw only if the package.json was parsed and type is not recognised
+    if (
+      packageJson &&
+      packageJson.type &&
+      packageJson.type !== "github" &&
+      packageJson.type !== "bitbucket"
+    ) {
+      throw new Error(
+        `chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ${
+          packageJson.type
+        }`
+      );
+    }
   }
 
   let temp;
@@ -496,7 +503,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     if (
       !existy$1(
         getSetFooterLink(footerLinks[i].content, {
-          type: packageJson.type,
           mode: "get"
         })
       )
@@ -509,6 +515,53 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
+
+  let assumedPackageJsonType;
+  let assumedPackageUser;
+  let assumedPackageProject;
+  if (!packageJson) {
+    // if the package.json was not given, infer the type of diff links from the
+    // first footer link's URL:
+    if (
+      footerLinks[0] &&
+      footerLinks[0].content &&
+      footerLinks[0].content.includes("bitbucket.org")
+    ) {
+      assumedPackageJsonType = "bitbucket";
+    } else if (
+      footerLinks[0] &&
+      footerLinks[0].content &&
+      footerLinks[0].content.includes("github.com")
+    ) {
+      assumedPackageJsonType = "github";
+    } else {
+      throw new Error(
+        `chlu/main.js: [THROW_ID_02] Both package.json and Git data were missing and we had to rely on the first footer link to detect the type of repository: Github or Bitbucket. But we couldn't extract the first link from your changelog's footer!`
+      );
+    }
+
+    if (assumedPackageJsonType) {
+      footerLinks[0].content.split("/").forEach((chunkOfLine, i, arr) => {
+        // if the chunk contains "bitbucket.org", next chunk is user, further next
+        // chunk is project. Grab those.
+        if (
+          chunkOfLine.includes("bitbucket.org") ||
+          chunkOfLine.includes("github.com")
+        ) {
+          if (arr.length > i + 2) {
+            assumedPackageUser = arr[i + 1];
+            assumedPackageProject = arr[i + 2];
+          } else {
+            throw new Error(
+              `chlu/main.js: [THROW_ID_03] We could not extract user and package from the footer link: "${
+                footerLinks[0].content
+              }"`
+            );
+          }
+        }
+      });
+    }
+  }
 
   // =======
   // stage 3: get the ordered array of all title versions
@@ -591,25 +644,31 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // stage 8: assemble the new chunk - array of new lines
 
   temp = [];
-  if (packageJson.type === "github") {
+  if (
+    (packageJson && packageJson.type && packageJson.type === "github") ||
+    assumedPackageJsonType === "github"
+  ) {
     missingFooterLinks.forEach(key => {
       temp.push(
-        `[${key.version}]: https://github.com/${packageJson.user}/${
-          packageJson.project
-        }/compare/v${getPreviousVersion(key.version, sortedTitlesArray)}...v${
-          key.version
-        }`
-      );
-    });
-  } else if (packageJson.type === "bitbucket") {
-    missingFooterLinks.forEach(key => {
-      temp.push(
-        `[${key.version}]: https://bitbucket.org/${packageJson.user}/${
-          packageJson.project
-        }/branches/compare/v${key.version}%0Dv${getPreviousVersion(
+        `[${key.version}]: https://github.com/${assumedPackageUser ||
+          packageJson.user}/${assumedPackageProject ||
+          packageJson.project}/compare/v${getPreviousVersion(
           key.version,
           sortedTitlesArray
-        )}#diff`
+        )}...v${key.version}`
+      );
+    });
+  } else if (
+    (packageJson && packageJson.type && packageJson.type === "bitbucket") ||
+    assumedPackageJsonType === "bitbucket"
+  ) {
+    missingFooterLinks.forEach(key => {
+      temp.push(
+        `[${key.version}]: https://bitbucket.org/${assumedPackageUser ||
+          packageJson.user}/${assumedPackageProject ||
+          packageJson.project}/branches/compare/v${
+          key.version
+        }%0Dv${getPreviousVersion(key.version, sortedTitlesArray)}#diff`
       );
     });
   }
@@ -631,12 +690,11 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   footerLinks = temp.footerLinks;
   for (let i = 0, len = footerLinks.length; i < len; i++) {
     const extracted = getSetFooterLink(footerLinks[i].content, {
-      type: packageJson.type,
       mode: "get"
     });
 
-    const finalUser = packageJson.user;
-    const finalProject = packageJson.project;
+    const finalUser = assumedPackageUser || packageJson.user;
+    const finalProject = assumedPackageProject || packageJson.project;
     let finalVersBefore = getPreviousVersion(
       extracted.version,
       sortedTitlesArray
@@ -703,7 +761,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       versBefore: finalVersBefore,
       versAfter: finalVersAfter,
       version: finalVersion,
-      type: packageJson.type,
+      type: assumedPackageJsonType || packageJson.type,
       mode: "set"
     });
 

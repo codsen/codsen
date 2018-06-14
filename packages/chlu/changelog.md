@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
+## 3.1.0 - 2018-06-14
+
+- ✨ Now we really support input with only `changelog.md` data (no package.json, no git tags data)
+
 ## 3.0.0 - 2018-06-13
 
 API changes - new input argument - `gitTags` comes as 2nd, and existing arguments from 2nd (inclusive) onwards shift by one place further.
 It's necessary so that we could accomodate the Git tag customisations.
-
-### Added
 
 - ✨ Provider: GitHub or BitBucket is extracted automatically from `package.json`. You probably noticed, BitBucket's versions in diff URL are backwards (later version goes first) and separator between versions is `%0D`. Not to mention different root. For example: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.3.6%0Dv2.3.5
 - ✨ If the repo already has diff links in changelog but in a wrong provider's format (GitHub vs BitBucket, either way), `chlu` will reference the `package.json` and will correct the diff links automatically.
