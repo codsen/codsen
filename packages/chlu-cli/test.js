@@ -4,7 +4,7 @@ import path from "path";
 import execa from "execa";
 import tempy from "tempy";
 
-test("01.01. there are no usable files at all", async t => {
+test("01.01 - there are no usable files at all", async t => {
   const tempFolder = tempy.directory();
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "file.md"), "zzz")
