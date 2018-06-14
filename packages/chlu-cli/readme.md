@@ -3,36 +3,24 @@
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [What it does](#what-it-does)
-- [Extras](#extras)
-- [A nifty setup idea](#a-nifty-setup-idea)
-- [Updating it](#updating-it)
-- [Wishlist](#wishlist)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [What it does](#markdown-header-markdown-header-what-it-does)
+- [Extras](#markdown-header-markdown-header-extras)
+- [A nifty setup idea](#markdown-header-markdown-header-a-nifty-setup-idea)
+- [Updating it](#markdown-header-markdown-header-updating-it)
+- [Wishlist](#markdown-header-markdown-header-wishlist)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -48,7 +36,7 @@ chlu
 
 There's no config, if just silently does the job, checks and fixes your Changelog.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## What it does
 
@@ -59,7 +47,7 @@ There's no config, if just silently does the job, checks and fixes your Changelo
 
 **Here are all the fixes that CHLU can apply:**
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### 1. Missing diff URLs in the footer for newly-added titles
 
@@ -73,7 +61,7 @@ In practice, this means your titles become actually linked (before/after example
 
 ![](feature1.gif)
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### 2. Wrong package/user in the diff URL
 
@@ -85,7 +73,7 @@ This has happened to me before, actually on Detergent's repo even. I copied and 
 
 Same with wrong user names in the URL.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### 3. Automatic title linking (where it's missing)
 
@@ -111,7 +99,7 @@ blablabla
 
 If would add links on `3.1.2` (comparing it against `3.1.1`) and `3.1.1` (comparing it against `3.1.0`).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### 4. Automatic date conversion
 
@@ -165,13 +153,13 @@ For example, all titles below would get converted to the same thing: `## [3.1.2]
 
 That's thanks to amazing [dehumanize-date](https://www.npmjs.com/package/dehumanize-date).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Extras
 
 Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## A nifty setup idea
 
@@ -197,23 +185,23 @@ alias gaa=my-git-add
 
 The example above runs:
 
-* [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
-* then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
-* then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
-* then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
-* it runs the `git add .`.
+- [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
+- then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
+- then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
+- then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
+- it runs the `git add .`.
 
 It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with `-g` flag.
 
 The example above is growing; I want to automate _everything_. Literally.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Wishlist
 
@@ -225,17 +213,17 @@ Also, with Git data, even if you cloned the last entry, I would be able to detec
 
 That would be awesome!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/chlu-cli/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/chlu-cli/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/chlu-cli/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -245,21 +233,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/chlu-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/chlu-cli
-[travis-img]: https://img.shields.io/travis/codsen/chlu-cli.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/chlu-cli
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/chlu-cli.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/chlu-cli
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/chlu-cli.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/chlu-cli
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/chlu-cli/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/chlu-cli?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu-cli
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/chlu-cli.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/chlu-cli/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/chlu-cli/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/chlu-cli
 [downloads-img]: https://img.shields.io/npm/dm/chlu-cli.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/chlu-cli
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/chlu-cli
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/chlu-cli.svg?style=flat-square
-[license-url]: https://github.com/codsen/chlu-cli/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/chlu-cli

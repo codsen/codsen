@@ -15,12 +15,11 @@ test
 
 # files:
 
-.bithoundrc
 .eslintrc.json
 .gitignore
 .npmignore
 .prettierignore
-.travis.yml
+bitbucket-pipelines.yml
 chlu_adds_missing_diff_links.gif
 feature1.gif
 test_bak.js

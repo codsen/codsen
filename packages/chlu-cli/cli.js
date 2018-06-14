@@ -4,11 +4,15 @@
 
 const meow = require("meow");
 const chlu = require("chlu");
-const fs = require("fs");
+const fs = require("fs-extra");
+const git = require("simple-git/promise");
 
 const pack = "./package.json";
 const change = "./changelog.md";
 const updateNotifier = require("update-notifier");
+
+const { log } = console;
+const messagePrefix = `\u001b[${90}m${"✨ chlu: "}\u001b[${39}m`;
 
 const cli = meow(
   `
@@ -16,7 +20,7 @@ const cli = meow(
     $ chlu
 
   Options
-    --loud, -l  Will not perform all operations silently
+    --loud, -l  Enables logs in the console
 
   Example
     Just call it in the root, where your package.json is located
@@ -29,46 +33,96 @@ const cli = meow(
 );
 updateNotifier({ pkg: cli.pkg }).notify();
 
-fs.readFile(change, "utf8", (changelogErr, changelogData) => {
-  let res;
-  if (changelogData) {
-    fs.readFile(pack, "utf8", (packageErr, packageData) => {
-      if (packageErr) {
-        if (cli.flags.loud) {
-          console.log(
-            "couldn't get the package.json contents, continuing with changelog.md only"
-          );
-        }
-        res = chlu(changelogData);
-        fs.writeFile(change, res, "utf8", err => {
-          if (err) {
-            throw err;
-          }
-          if (cli.flags.loud) {
-            console.log("the changelog has been overwritten");
-          }
-        });
-      }
-      if (packageData) {
-        if (cli.flags.loud) {
-          console.log("fetched both package.json and changelog.md");
-        }
-        res = chlu(changelogData, packageData);
-        fs.writeFile(change, res, "utf8", err => {
-          if (err) {
-            throw err;
-          }
-          if (cli.flags.loud) {
-            console.log("the changelog has been overwritten");
-          }
-        });
-      }
-    });
-  }
-  if (changelogErr) {
-    if (cli.flags.loud) {
-      console.log("couldn't fetch the changelog.md, bailing!");
-    }
+// getTags(dir)
+// produces either null of a plain object, for example:
+// {
+//     "latest": "2018-05-03|v1.9.1",
+//     "all": [
+//         "2017-05-19|v1.1.0",
+//         "2017-05-19|v1.1.1",
+//         "2017-06-19|v1.1.2",
+//     ]
+// }
+
+(async () => {
+  //
+  //                                1.
+
+  let changelogData;
+  try {
+    changelogData = await fs.readFile(change, "utf8");
+    // console.log(
+    //   `${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
+    //     changelogData,
+    //     null,
+    //     4
+    //   )}`
+    // );
+  } catch (e) {
+    log(
+      `${messagePrefix}[ID_1] Alas! We couldn't fetch the changelog.md:\n${e}`
+    );
     process.exit(0);
   }
-});
+
+  //                                2.
+
+  let packageData = null;
+  try {
+    packageData = await fs.readJson(pack);
+  } catch (e) {
+    if (cli.flags.loud) {
+      log(
+        `${messagePrefix}[ID_2] couldn't fetch the package.json. Will continue without.`
+      );
+    }
+  }
+  // console.log(
+  //   `${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
+  //     packageData,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
+  //                                3.
+
+  let gitData = null;
+  try {
+    gitData = await git().tags({
+      "--format": "%(creatordate:short)|%(refname:short)"
+    });
+  } catch (e) {
+    if (cli.flags.loud) {
+      log(
+        `${messagePrefix}[ID_3] Couldn't fetch the Git data! Will continue without.`
+      );
+    }
+  }
+  console.log(
+    `${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
+      gitData,
+      null,
+      4
+    )}`
+  );
+
+  //                                4.
+
+  try {
+    // const temp = chlu(changelogData, gitData, packageData);
+    // console.log(`${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${temp}`);
+    await fs
+      .writeFile(change, chlu(changelogData, gitData, packageData), "utf8")
+      .then(() => {
+        if (cli.flags.loud) {
+          log(`${messagePrefix} ${`\u001b[${32}m${`OK.`}\u001b[${39}m`}`);
+        }
+      });
+  } catch (e) {
+    log(
+      `${messagePrefix}[ID_4] Alas! We couldn't write the changelog.md!\n${e}`
+    );
+    process.exit(0);
+  }
+})();

@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/chlu-cli.git"
+    "url": "https://bitbucket.org/codsen/chlu-cli.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/chlu-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/chlu-cli#readme",
+  "homepage": "https://bitbucket.org/codsen/chlu-cli/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -25,17 +22,27 @@
     "chlu": "cli.js"
   },
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "dev": "npm test",
+    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "update",
@@ -143,21 +150,34 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
-    "chlu": "^2.10.0",
+    "chlu": "^3.0.0",
+    "fs-extra": "^6.0.1",
     "meow": "^5.0.0",
+    "simple-git": "^1.96.0",
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "husky": "*",
-    "prettier": "latest"
+    "ava": "^0.25.0",
+    "codacy-coverage": "latest",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
+    "execa": "^0.10.0",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "tempy": "latest"
   }
 }
