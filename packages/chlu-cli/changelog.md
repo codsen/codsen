@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Improvements
 
-- ✨ Migrated this repo to BitBucket and made it automatically detect and generate correct BitBucket links
-- ✨ Tapped `fs-extra` and rewrote everything in promises
-- ✨ Tapped Git folder to extract upper ranges of version numbers between minor releases. For example, there were releases `v1.0.0`, mentioned in changelog, then `v1.0.1`, not mentioned in changelog, then minor bump `v1.1.0`, mentioned in changelog. Before, we're run a diff between what was mentioned in changelog. However, there often were many patch releases in-between which were not a part of the intention to show. Now we extract highest patch release for each minor/major release, in this example, `v.1.0.1` and feed that into `chlu` for diff link correction.
+- ✨ Migrated this repo to Bitbucket and made it to automatically detect and generate the correct Bitbucket links
+- ✨ Tapped `fs-extra` and rewrote everything in Promises
+- ✨ It taps the Git data (if available) to make the diff links more precise: the "from" tag's version is picked not from existing titles in changelog (where only minor releases are often mentioned) but from real, previous patch release (which can be done way later than the last release, mentioned in changelog). This means, diff link contents will have less info about meaningless maintenance (patch) updates.
 - ✨ Alongside, developed and tapped the API's, `chlu` diff link correction.
 
 ## [1.9.0] - 2018-05-03
