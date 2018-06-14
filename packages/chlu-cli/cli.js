@@ -52,7 +52,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
   try {
     changelogData = await fs.readFile(change, "utf8");
     // console.log(
-    //   `${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `55 CHLU CLI: ${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
     //     changelogData,
     //     null,
     //     4
@@ -78,7 +78,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
     }
   }
   // console.log(
-  //   `${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `81 CHLU CLI: ${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
   //     packageData,
   //     null,
   //     4
@@ -99,19 +99,17 @@ updateNotifier({ pkg: cli.pkg }).notify();
       );
     }
   }
-  console.log(
-    `${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
-      gitData,
-      null,
-      4
-    )}`
-  );
+  // console.log(
+  //   `103 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
+  //     gitData,
+  //     null,
+  //     4
+  //   )}`
+  // );
 
   //                                4.
 
   try {
-    // const temp = chlu(changelogData, gitData, packageData);
-    // console.log(`${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${temp}`);
     await fs
       .writeFile(change, chlu(changelogData, gitData, packageData), "utf8")
       .then(() => {

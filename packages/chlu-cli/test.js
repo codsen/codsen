@@ -169,7 +169,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   t.deepEqual(await processedFileContents, intendedChangelog);
 });
 
-test.only("01.03 - full set: changelog.md, package.json AND git data", async t => {
+test("01.03 - full set: changelog.md, package.json AND git data", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
