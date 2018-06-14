@@ -361,11 +361,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   var processedGitTags = void 0;
 
-  if (typeof gitTags === "string") {
-    gitTags = JSON.parse(gitTags);
-  }
-
-  if ((typeof gitTags === "undefined" ? "undefined" : _typeof$1(gitTags)) === "object" && gitTags.latest !== undefined) {
+  if ((typeof gitTags === "undefined" ? "undefined" : _typeof$1(gitTags)) === "object" && gitTags !== null && !Array.isArray(gitTags) && gitTags.latest !== undefined) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(function (val) {
       if (val[0] === "v") {

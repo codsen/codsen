@@ -1,5 +1,3 @@
-/* eslint no-template-curly-in-string: 0 */
-
 const test = require("ava");
 const {
   isTitle,

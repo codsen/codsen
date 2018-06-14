@@ -1,5 +1,3 @@
-/* eslint no-template-curly-in-string: 0, padded-blocks: 0, ava/no-only-test:0 */
-
 import { readFileSync } from "fs";
 import path from "path";
 import test from "ava";
@@ -125,7 +123,7 @@ test("16. Git Tags supplemented", t => {
   compare(t, "16_git_tags", tags);
 });
 
-test.only("17. Unit test from chlu-cli", t => {
+test("17. Unit test from chlu-cli", t => {
   const tags = {
     latest: "2018-06-14|v1.3.1",
     all: [

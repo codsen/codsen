@@ -84,11 +84,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   let processedGitTags;
 
-  if (typeof gitTags === "string") {
-    gitTags = JSON.parse(gitTags);
-  }
-
-  if (typeof gitTags === "object" && gitTags.latest !== undefined) {
+  if (
+    typeof gitTags === "object" &&
+    gitTags !== null &&
+    !Array.isArray(gitTags) &&
+    gitTags.latest !== undefined
+  ) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(val => {
       if (val[0] === "v") {
