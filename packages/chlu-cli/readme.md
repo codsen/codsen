@@ -1,6 +1,6 @@
 # chlu-cli
 
-> CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
+> CH-ange-L-og U-pdate - Automatically fix your changelog file
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
@@ -22,142 +22,32 @@
 - [Contributing](#markdown-header-markdown-header-contributing)
 - [Licence](#markdown-header-markdown-header-licence)
 
-## Install
+## Install globally
 
 ```bash
 npm i -g chlu-cli
 ```
 
-Yes, install globally. This is a CLI app. Once installed, call it in the root where your Changelog sits:
+This is a CLI app. Once installed, call it in the root folder where your `changelog.md` sits:
 
 ```bash
 chlu
 ```
 
-There's no config, if just silently does the job, checks and fixes your Changelog.
+On default setting, `chlu` just silently does the job — checks and fixes your changelog. If you want some output, call it with `--loud` flag. It will say "OK" each time it writes successfully.
+
+Chlu works on both **Bitbucket** and **Github** repositories.
+
+`chlu` stands for **CH**ange**L**og **U**pdate. We should note that all changelogs should follow the rules given by http://keepachangelog.com. Now, the tedious part is **diff links**. Chlu takes care of them.
 
 **[⬆ back to top](#)**
 
 ## What it does
 
-`chlu` stands for CHangeLog Update. To start, your changelogs should follow the rules given by http://keepachangelog.com. In practice, often two things happen:
+Chlu does two things:
 
-1.  I copy a changelog from one library to another to use as a template and forget to amend everything that needed to be amended. CHLU would fix that.
-2.  I am too lazy and deliberately leave some work for CHLU, for example, linking titles with magic GitHub diff URL's. I know CHLU will fix those.
-
-**Here are all the fixes that CHLU can apply:**
-
-**[⬆ back to top](#)**
-
-### 1. Missing diff URLs in the footer for newly-added titles
-
-This is the primary reason I created `chlu`. Often I clone the previous title and feature description but forget to clone and edit the **title's link in the footer**. `chlu` will scan all titles and add the missing links in the footer. Working on the changelog of this very repo:
-
-![](chlu_adds_missing_diff_links.gif)
-
-Observe how I can delete footer links and they are restored by `chlu`! Magic!
-
-In practice, this means your titles become actually linked (before/after example below):
-
-![](feature1.gif)
-
-**[⬆ back to top](#)**
-
-### 2. Wrong package/user in the diff URL
-
-This has happened to me before, actually on Detergent's repo even. I copied and edited the changelog from my other library and forgot to edit the package name in the footer diff links. For example, `PUT_A_WRONG_NAME_OF_THE_PACKAGE_HERE` below would get replaced by the correct name fresh from your `package.json`:
-
-```md
-[1.4.0]: https://github.com/codsen/PUT_A_WRONG_PACKAGE_HERE/compare/v1.3.0...v1.4.0
-```
-
-Same with wrong user names in the URL.
-
-**[⬆ back to top](#)**
-
-### 3. Automatic title linking (where it's missing)
-
-I believe that every title in the changelog should be linked to a GitHub's magic diff view, showing what was added between those two versions.
-
-Chlu will scan the titles and add GitHub magic diff links between each title. The smallest version's title won't get a link.
-
-For example, if you have:
-
-```md
-## 3.1.2 (2017-03-17)
-
-blablabla
-
-## 3.1.1 (2017-03-01)
-
-blablabla
-
-## 3.1.0 (2017-02-27)
-
-blablabla
-```
-
-If would add links on `3.1.2` (comparing it against `3.1.1`) and `3.1.1` (comparing it against `3.1.0`).
-
-**[⬆ back to top](#)**
-
-### 4. Automatic date conversion
-
-As long as your titles follow reasonable patterns, `chlu` will recognise and convert the dates into a correct format. Also, it will add missing dash between the version and the date.
-
-For example, all titles below would get converted to the same thing: `## [3.1.2] - 2017-03-17`:
-
-```md
-## 3.1.2 (2017-3-17)
-
-## 3.1.2 (2017-03-17)
-
-## 3.1.2 (March 17th, 2017)
-
-## 3.1.2 (March 17th, 2017)
-
-## 3.1.2 (March 17, 2017)
-
-## 3.1.2 2017-3-17
-
-## 3.1.2 2017-03-17
-
-## 3.1.2 March 17th, 2017
-
-## 3.1.2 March 17, 2017
-
-## 3.1.2 March 17, 2017
-
-## 3.1.2 - (2017-3-17)
-
-## 3.1.2 - (2017-03-17)
-
-## 3.1.2 - (March 17th, 2017)
-
-## 3.1.2 - (March 17th, 2017)
-
-## 3.1.2 - (March 17, 2017)
-
-## 3.1.2 - 2017-3-17
-
-## 3.1.2 - 2017-03-17
-
-## 3.1.2 - March 17th, 2017
-
-## 3.1.2 - March 17, 2017
-
-## 3.1.2 - March 17, 2017
-
-...and many other date combinations
-```
-
-That's thanks to amazing [dehumanize-date](https://www.npmjs.com/package/dehumanize-date).
-
-**[⬆ back to top](#)**
-
-## Extras
-
-Since the order of the features is descending, the default order of title Markdown links in the footer should also be descending. That's also how example in http://keepachangelog.com is set. I dislike that. Personally, I find it difficult to visually `grep` the links if they are in descending order. That's why `chlu` will respect the **existing** order of your footer links and add the missing link **in order you've already got**. If all your title links are missing, the default order is sensible _descending_. In the meantime, I'll keep my footer links in an _ascending_ order.
+1.  Creates, updates and fixes the diff links. For example, `## [1.10.0] - 2018-07-07`. It will add missing or fix existing user or project names in the diff link, also set correct format: Bitbucket or Github.
+2.  It tries to normalise the time stamps in the titles. For example, `## [1.10.0] - 2018-07-14`, in [ISO format](https://en.wikipedia.org/wiki/ISO_8601) (year-month-date). It's universal and not ambiguous (unlike US/UK date formats with slashes).
 
 **[⬆ back to top](#)**
 
@@ -173,7 +63,6 @@ For example, edit your `.zshrc` (or Bash config, or whatever-you-are-using-shell
 # create a function which runs commands if certain files exist, and skips if they don't:
 my-git-add() {
   [ -e readme.md ] && doctoc readme.md
-  [ -e readme.md ] && bitsausage
   [ -e changelog.md ] && chlu
   npm-check
   git add .
@@ -187,31 +76,16 @@ The example above runs:
 
 - [doctoc](https://www.npmjs.com/package/doctoc) on `readme.md` if it exists,
 - then it runs [chlu](https://www.npmjs.com/package/chlu-cli) on `changelog.md` if it exists,
-- then it runs [bitsausage](https://github.com/codsen/bitsausage) if it detects you use BitHound,
 - then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
 - it runs the `git add .`.
 
 It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with `-g` flag.
-
-The example above is growing; I want to automate _everything_. Literally.
 
 **[⬆ back to top](#)**
 
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
-
-**[⬆ back to top](#)**
-
-## Wishlist
-
-My biggest next challenge for CHLU is to tap the Git data. If we did that, we could automatically fill/fix the versions! Also, diff links currently calculate the GitHub diff URL from the latest entry in the changelog. This can be imprecise, because often between the minor releases, I create bunch of minor edits on readme etc. bumping the patch digit. Those patch releases never reach into changelog, so they get included in the diff.
-
-For example, I released `1.1.0` and put entry in changelog. Then I edited readme and patched to `1.1.1`. Then new feature is released with `1.2.0` and its diff link is (currently) generated between `1.1.0` and `1.2.0`, including my readme patch `1.1.1`. That would be fixed if I tapped the Git data.
-
-Also, with Git data, even if you cloned the last entry, I would be able to detect that and delete its contents, set today's date, bump minor version and link diff correctly to the latest commit in Git.
-
-That would be awesome!
 
 **[⬆ back to top](#)**
 

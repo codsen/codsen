@@ -11,7 +11,9 @@
 
 # folders:
 
-test
+.nyc_output
+coverage
+fixtures
 
 # files:
 
@@ -22,4 +24,4 @@ test
 bitbucket-pipelines.yml
 chlu_adds_missing_diff_links.gif
 feature1.gif
-test_bak.js
+test.js

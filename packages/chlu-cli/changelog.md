@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.10.0] - 2018-07-07
+## [1.10.0] - 2018-07-14
 
 ### Improvements
 
@@ -95,13 +95,13 @@ Updated to the new version of the API package, CHLU, enabling new features:
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/chlu-cli/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/chlu-cli/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/chlu-cli/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/chlu-cli/compare/v1.3.0...v1.4.0
-[1.5.0]: https://github.com/codsen/chlu-cli/compare/v1.4.0...v1.5.0
-[1.6.0]: https://github.com/codsen/chlu-cli/compare/v1.5.0...v1.6.0
-[1.7.0]: https://github.com/codsen/chlu-cli/compare/v1.6.0...v1.7.0
-[1.8.0]: https://github.com/codsen/chlu-cli/compare/v1.7.0...v1.8.0
-[1.9.0]: https://github.com/codsen/chlu-cli/compare/v1.8.9...v1.9.0
-[1.10.0]: https://github.com/codsen/chlu-cli/compare/v1.9.0...v1.10.0
+[1.1.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.2.0%0Dv1.1.2#diff
+[1.3.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.4.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.4.0%0Dv1.3.1#diff
+[1.5.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.5.0%0Dv1.4.2#diff
+[1.6.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.6.0%0Dv1.5.0#diff
+[1.7.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.7.0%0Dv1.6.0#diff
+[1.8.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.8.0%0Dv1.7.1#diff
+[1.9.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.9.0%0Dv1.8.9#diff
+[1.10.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.10.0%0Dv1.9.1#diff
