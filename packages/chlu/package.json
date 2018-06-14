@@ -170,7 +170,6 @@
     "just-insert": "^2.0.0",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
-    "lodash.isplainobject": "^4.0.6",
     "lodash.min": "*",
     "lodash.reverse": "*",
     "lodash.trim": "*",

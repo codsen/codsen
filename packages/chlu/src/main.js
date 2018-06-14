@@ -10,7 +10,6 @@ import clone from "lodash.clonedeep";
 import includes from "lodash.includes";
 import min from "lodash.min";
 import dd from "dehumanize-date";
-import isObj from "lodash.isplainobject";
 const isArr = Array.isArray;
 
 import {
@@ -50,15 +49,14 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     return;
   }
 
+  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   console.log(
-    `${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+    `55 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
       gitTags,
       null,
       4
     )}`
   );
-
-  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
   // process the gitTags input.
   // result will be in the following format:
@@ -85,7 +83,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // }
 
   let processedGitTags;
-  if (isObj(gitTags) && gitTags.latest !== undefined) {
+
+  if (typeof gitTags === "string") {
+    gitTags = JSON.parse(gitTags);
+  }
+
+  if (typeof gitTags === "object" && gitTags.latest !== undefined) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(val => {
       if (val[0] === "v") {
@@ -102,13 +105,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       });
     }
   }
-  console.log(
-    `${`\u001b[${33}m${`processedGitTags`}\u001b[${39}m`} = ${JSON.stringify(
-      processedGitTags,
-      null,
-      4
-    )}`
-  );
 
   const changelogMd = changelogContents;
 
@@ -157,7 +153,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   );
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-  // console.log('titlesAndFooterLinks = ' + JSON.stringify(titlesAndFooterLinks, null, 4))
+  console.log(
+    `titlesAndFooterLinks = ${JSON.stringify(titlesAndFooterLinks, null, 4)}`
+  );
 
   // =======
   // stage 2: remove any invalid footer links
@@ -357,9 +355,28 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
     const finalUser = packageJson.user;
     const finalProject = packageJson.project;
-    let finalVersBefore;
-    finalVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
+    let finalVersBefore = getPreviousVersion(
+      extracted.version,
+      sortedTitlesArray
+    );
+    console.log(
+      `367 CHLU/main(): ${`\u001b[${33}m${`finalVersBefore`}\u001b[${39}m`} = ${JSON.stringify(
+        finalVersBefore,
+        null,
+        4
+      )}`
+    );
+    console.log(
+      `373 CHLU/main(): ${`\u001b[${33}m${`processedGitTags`}\u001b[${39}m`} = ${JSON.stringify(
+        processedGitTags,
+        null,
+        4
+      )}`
+    );
     if (processedGitTags) {
+      console.log(
+        `381 CHLU/main(): ${`\u001b[${32}m${`GIT DATA AVAILABLE`}\u001b[${39}m`} detected "processedGitTags"`
+      );
       // if we have the Git info, pick "from" git version from Git data:
       //
       // 1. check if current "to" diff Git version, "extracted.version", does not
@@ -370,13 +387,26 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly[
             processedGitTags.versionsOnly.length - 1
           ];
+        console.log(
+          `394 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+            processedGitTags.versionsOnly,
+            null,
+            4
+          )}\n:\n${finalVersBefore}`
+        );
       } else {
         finalVersBefore = getPreviousVersion(
           extracted.version,
           processedGitTags.versionsOnly
         );
+        console.log(
+          `406 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+        );
       }
     } else {
+      console.log(
+        `411 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+      );
       // if the Git data is not available, use existing parsed Changelog data.
 
       // Let's calculate the "from" version in the link, the "1.3.5" in:

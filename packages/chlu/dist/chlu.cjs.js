@@ -8,7 +8,6 @@ var isNum = _interopDefault(require('is-natural-number'));
 var trim = _interopDefault(require('lodash.trim'));
 var easyReplace = _interopDefault(require('easy-replace'));
 var emojiRegexLib = _interopDefault(require('emoji-regex'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 var reverse = _interopDefault(require('lodash.reverse'));
 var splitLines = _interopDefault(require('split-lines'));
 var getPkgRepo = _interopDefault(require('get-pkg-repo'));
@@ -190,13 +189,22 @@ function getRow(rowsArray, index) {
 function getSetFooterLink(str) {
   var o = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+  // console.log(`\n\u001b[${35}m${`==== getSetFooterLink() ====`}\u001b[${39}m`);
+  // console.log(
+  //   `\nUTIL 221 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+  //     str,
+  //     null,
+  //     4
+  //   )}`
+  // );
 
   var mode = void 0;
-  if (isObj(o) && typeof o.mode === "string") {
+  if ((typeof o === "undefined" ? "undefined" : _typeof(o)) === "object" && o !== null && typeof o.mode === "string") {
     mode = o.mode;
   } else {
     mode = "get";
   }
+  // console.log(`\u001b[${32}m${`MODE = ${mode}`}\u001b[${39}m`);
 
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
@@ -204,12 +212,28 @@ function getSetFooterLink(str) {
   var split = str.split("/");
   var res = {};
 
+  // console.log(
+  //   `\nUTIL 242 ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+  //     split,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
   if (!o) {
     o = {};
     o.type = "github";
   } else if (!o.type) {
     o.type = "github";
   }
+
+  // console.log(
+  //   `\nUTIL 259 ${`\u001b[${33}m${`o.type`}\u001b[${39}m`} = ${JSON.stringify(
+  //     o.type,
+  //     null,
+  //     4
+  //   )}`
+  // );
 
   var currentlyWeHaveLinkOfAType = str.includes("github") ? "github" : "bitbucket";
 
@@ -236,6 +260,13 @@ function getSetFooterLink(str) {
       res.version = existy(o.version) ? o.version : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
+  // console.log(
+  //   `UTIL 319 END ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+  //     res,
+  //     null,
+  //     4
+  //   )}`
+  // );
   if (mode === "get") {
     res.type = currentlyWeHaveLinkOfAType;
     return res;
@@ -274,7 +305,7 @@ function filterDate(someString) {
   return res;
 }
 
-/* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
+var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 var isArr$1 = Array.isArray;
 
 // F'S
@@ -329,7 +360,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // }
 
   var processedGitTags = void 0;
-  if (isObj(gitTags) && gitTags.latest !== undefined) {
+
+  if (typeof gitTags === "string") {
+    gitTags = JSON.parse(gitTags);
+  }
+
+  if ((typeof gitTags === "undefined" ? "undefined" : _typeof$1(gitTags)) === "object" && gitTags.latest !== undefined) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(function (val) {
       if (val[0] === "v") {
@@ -376,7 +412,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-  // console.log('titlesAndFooterLinks = ' + JSON.stringify(titlesAndFooterLinks, null, 4))
 
   // =======
   // stage 2: remove any invalid footer links
@@ -518,8 +553,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
     var finalUser = packageJson.user;
     var finalProject = packageJson.project;
-    var finalVersBefore = void 0;
-    finalVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
+    var finalVersBefore = getPreviousVersion(extracted.version, sortedTitlesArray);
     if (processedGitTags) {
       // if we have the Git info, pick "from" git version from Git data:
       //

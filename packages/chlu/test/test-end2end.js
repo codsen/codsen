@@ -20,6 +20,16 @@ function compare(t, name, gitTags = null) {
     path.join(fixtures, `${name}_package.json`),
     "utf8"
   );
+
+  // const temp = c(changelog, gitTags, packageJson);
+  // console.log(
+  //   `${`\u001b[${33}m${`temp`}\u001b[${39}m`} = ${JSON.stringify(
+  //     temp,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
   return t.deepEqual(c(changelog, gitTags, packageJson), expected);
 }
 
@@ -113,4 +123,20 @@ test("16. Git Tags supplemented", t => {
     ]
   };
   compare(t, "16_git_tags", tags);
+});
+
+test.only("17. Unit test from chlu-cli", t => {
+  const tags = {
+    latest: "2018-06-14|v1.3.1",
+    all: [
+      "2018-06-14|v1.0.1",
+      "2018-06-14|v1.0.2",
+      "2018-06-14|v1.1.0",
+      "2018-06-14|v1.1.1",
+      "2018-06-14|v1.2.0",
+      "2018-06-14|v1.3.0",
+      "2018-06-14|v1.3.1"
+    ]
+  };
+  compare(t, "17_chlu_cli", tags);
 });

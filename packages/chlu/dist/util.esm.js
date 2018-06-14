@@ -4,7 +4,6 @@ import isNum from 'is-natural-number';
 import trim from 'lodash.trim';
 import easyReplace from 'easy-replace';
 import emojiRegexLib from 'emoji-regex';
-import isObj from 'lodash.isplainobject';
 
 /* eslint prefer-destructuring:0, no-param-reassign:0 */
 
@@ -217,13 +216,22 @@ function getRow(rowsArray, index) {
 // or
 // "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
 function getSetFooterLink(str, o = {}) {
+  // console.log(`\n\u001b[${35}m${`==== getSetFooterLink() ====`}\u001b[${39}m`);
+  // console.log(
+  //   `\nUTIL 221 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
+  //     str,
+  //     null,
+  //     4
+  //   )}`
+  // );
 
   let mode;
-  if (isObj(o) && typeof o.mode === "string") {
+  if (typeof o === "object" && o !== null && typeof o.mode === "string") {
     mode = o.mode;
   } else {
     mode = "get";
   }
+  // console.log(`\u001b[${32}m${`MODE = ${mode}`}\u001b[${39}m`);
 
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
@@ -231,12 +239,28 @@ function getSetFooterLink(str, o = {}) {
   const split = str.split("/");
   const res = {};
 
+  // console.log(
+  //   `\nUTIL 242 ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
+  //     split,
+  //     null,
+  //     4
+  //   )}`
+  // );
+
   if (!o) {
     o = {};
     o.type = "github";
   } else if (!o.type) {
     o.type = "github";
   }
+
+  // console.log(
+  //   `\nUTIL 259 ${`\u001b[${33}m${`o.type`}\u001b[${39}m`} = ${JSON.stringify(
+  //     o.type,
+  //     null,
+  //     4
+  //   )}`
+  // );
 
   const currentlyWeHaveLinkOfAType = str.includes("github")
     ? "github"
@@ -295,6 +319,13 @@ function getSetFooterLink(str, o = {}) {
         : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
+  // console.log(
+  //   `UTIL 319 END ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
+  //     res,
+  //     null,
+  //     4
+  //   )}`
+  // );
   if (mode === "get") {
     res.type = currentlyWeHaveLinkOfAType;
     return res;
