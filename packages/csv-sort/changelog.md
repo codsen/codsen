@@ -11,7 +11,6 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
-- ✨ Removed `package-lock`
 
 ## [2.1.0] - 2018-05-03
 
