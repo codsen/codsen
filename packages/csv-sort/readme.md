@@ -61,7 +61,7 @@ Currently (late 2017) Lloyds Bank website exports CSV files with some rows from 
 
 In later releases I would like to be able to recognise and fix any offset columns caused by misinterpreted commas as values.
 
-<small>^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.</small>
+^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.
 
 **[⬆ back to top](#)**
 
@@ -69,7 +69,21 @@ In later releases I would like to be able to recognise and fix any offset column
 
 ```js
 const csvSort = require("csv-sort");
-// ...
+const input = `123456,Client #1 payment,,1000,1940
+123456,Bought carpet,30,,950
+123456,Bought table,10,,940
+123456,Bought pens,10,,1000
+123456,Bought chairs,20,,980
+`;
+const { res } = csvSort(input);
+console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
+// =>
+// 123456,Client #1 payment,,1000,1940
+// 123456,Bought table,10,,940
+// 123456,Bought carpet,30,,950
+// 123456,Bought chairs,20,,980
+// 123456,Bought pens,10,,1000
+//
 ```
 
 ## API
