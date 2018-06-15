@@ -19,8 +19,8 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        resolve(), // so Rollup can find deps
-        commonjs(), // so Rollup can convert deps to ES modules
+        resolve(),
+        commonjs(),
         babel(),
         uglify()
       ]
@@ -72,7 +72,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        babel()
+        resolve()
       ]
     }
   ];
