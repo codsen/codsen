@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "license": "MIT",
   "engines": {
