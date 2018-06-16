@@ -3,13 +3,9 @@
 > Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,13 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [Usage](#usage)
-- [API](#api)
-- [Practical use](#practical-use)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Practical use](#markdown-header-practical-use)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,13 +36,13 @@ import { nativeToUnicode, unicodeToNative } from "string-convert-indexes";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                 | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-convert-indexes.cjs.js` | 10&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-convert-indexes.esm.js` | 10&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-convert-indexes.umd.js` | 37&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-convert-indexes.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-convert-indexes.esm.js` | 10 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-convert-indexes.umd.js` | 37 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## Idea
 
@@ -69,13 +55,13 @@ This is a converter that converts between the two systems.
 
 Highlights:
 
-* Efficient algorithm - input string is traversed only once.
-* No regexes - no potential security issues.
-* Input can be a number or a numeric string or it can be **nested tree of them**. This library will convert _any_ natural numbers (set as numbers or strings). For example, `1` is fine, just like `[["1", "5"], ["5", "7"]]`.
-* Untranspiled ES Modules build is wired up to `module` key in `package.json` - WebPack and Rollup will recognise and consume it.
-* The main export is transpiled to ES5 (wired up to `main` key in `package.json`). You'll have no issues with `create-react-app`.
+- Efficient algorithm - input string is traversed only once.
+- No regexes - no potential security issues.
+- Input can be a number or a numeric string or it can be **nested tree of them**. This library will convert _any_ natural numbers (set as numbers or strings). For example, `1` is fine, just like `[["1", "5"], ["5", "7"]]`.
+- Untranspiled ES Modules build is wired up to `module` key in `package.json` - WebPack and Rollup will recognise and consume it.
+- The main export is transpiled to ES5 (wired up to `main` key in `package.json`). You'll have no issues with `create-react-app`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## Usage
 
@@ -134,7 +120,7 @@ const res9 = unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3]);
 // we have only three Unicode characters, so indexes go only up until 2, not reaching 3 we need
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## API
 
@@ -150,7 +136,7 @@ Converts JS native indexes to indexes (used in let's say `String.slice()`), base
 
 Converts Unicode character count-based indexes to JS native indexes.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ### API - Input
 
@@ -162,7 +148,7 @@ API for both methods is the same:
 | `indexes`      | Whatever     | yes         | It can be anything: from numbers to nested arrays or arrays of numeric strings. Only natural numbers (incl. zero) in number or string shape will be compiled and replaced with converted value. |
 | `opts`         | Plain object | no          | Options object. See its API below in a separate table.                                                                                                                                          |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ### Optional Options Object
 
@@ -180,23 +166,23 @@ Here are all the defaults in one place:
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## Practical use
 
 I have created quite a few string processing libraries, and some are using native JS indexes, while some are using Unicode character count-based indexing. This library will make them all more universal.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-convert-indexes/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-convert-indexes/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-convert-indexes/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-convert-indexes/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-convert-indexes)**
 
 ## Licence
 
@@ -206,25 +192,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-convert-indexes.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-convert-indexes
-[travis-img]: https://img.shields.io/travis/codsen/string-convert-indexes.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-convert-indexes
-[cov-img]: https://coveralls.io/repos/github/codsen/string-convert-indexes/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-convert-indexes?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-convert-indexes.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-convert-indexes
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-convert-indexes.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-convert-indexes/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/string-convert-indexes
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-convert-indexes/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-convert-indexes?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-convert-indexes
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-convert-indexes.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-convert-indexes/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-convert-indexes/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-convert-indexes
 [downloads-img]: https://img.shields.io/npm/dm/string-convert-indexes.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-convert-indexes
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-convert-indexes
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-convert-indexes.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-convert-indexes/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-convert-indexes
