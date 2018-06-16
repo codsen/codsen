@@ -3,13 +3,9 @@
 > Flatten complex nested objects according to a reference objects
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,13 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [The algorithm](#the-algorithm)
-- [In practice](#in-practice)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [The algorithm](#markdown-header-the-algorithm)
+- [In practice](#markdown-header-in-practice)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,13 +36,13 @@ import ofr from "object-flatten-referencing";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-flatten-referencing.cjs.js` | 14&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-flatten-referencing.esm.js` | 15&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 36&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-flatten-referencing.cjs.js` | 13 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-flatten-referencing.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-flatten-referencing.umd.js` | 36 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## Idea
 
@@ -85,7 +71,7 @@ but, you need the key to have its value as string:
 
 This library does such object "flattening".
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## API
 
@@ -99,7 +85,7 @@ const res = ofr(plainObject, referenceObject, options);
 console.log("res = " + JSON.stringify(res, null, 4));
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 #### 1st argument - `plainObject`
 
@@ -127,7 +113,7 @@ Third argument - an Optional Options Object.
 | {                                        |                              |             |             |
 | `wrapHeadsWith`                          | String                       | no          | `%%_`       | Prepend this to each value, each result of flattening or simply other encountered value.                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `wrapTailsWith`                          | String                       | no          | `_%%`       | Append this to each value, each result of flattening or simply other encountered value.                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `dontWrapKeys`                           | Array of strings or String   | no          | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://github.com/codsen/json-variables#data-containers), for example. You can put wildcards (\*) to match zero or more characters.                                                                                                                            |
+| `dontWrapKeys`                           | Array of strings or String   | no          | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://bitbucket.org/codsen/json-variables#data-containers), for example. You can put wildcards (\*) to match zero or more characters.                                                                                                                         |
 | `dontWrapPaths`                          | Array of strings or String   | no          | empty array | This is a more-precise cousin of `dontWrapKeys`. Put the exact path(s) to the key you want to ignore. Remember to append `[number]` after keys that have values as arrays. For example, here's a path to ignore: `modules[0].part2[1].ccc[0].kkk` - key `modules` in root, equal to array. Take zero'th element from that array, it's an object. Take that object's key `part2`, it's equal to an array. Take that array's second element (index `1`)... and so on. This path would be ignored, for example. |
 | `xhtml`                                  | Boolean                      | no          | `true`      | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)                                                                                                                                                                                                                                                                                                                         |
 | `preventDoubleWrapping`                  | Boolean                      | no          | `true`      | If the current value already contains a string from `wrapHeadsWith` or `wrapTailsWith`, don't wrap to prevent double wrapping.                                                                                                                                                                                                                                                                                                                                                                               |
@@ -161,14 +147,14 @@ Here are all the defaults, compiled in one place just in case you want to copy a
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## The algorithm
 
 In its core, this library uses two functions:
 
-* one which flattens objects
-* another which flattens arrays
+- one which flattens objects
+- another which flattens arrays
 
 **Objects** are flattened into arrays (yes, not strings) in the following fashion:
 
@@ -193,7 +179,7 @@ Arrays are flattened into strings:
 
 This library recursively traverses both inputs, compares their types and if one type is lesser in the food chain (object vs. string), it uses the above functions to flatten all mismatching elements into strings.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## In practice
 
@@ -230,7 +216,7 @@ To achieve that, you use another JSON _mapping file_,
 }
 ```
 
-It's easy to [merge](https://github.com/codsen/object-merge-advanced) the _mapping file_ onto the _data file_, but you get:
+It's easy to [merge](https://bitbucket.org/codsen/object-merge-advanced) the _mapping file_ onto the _data file_, but you get:
 
 ```js
 // intermediate data file after merging the mapping file over data file
@@ -268,17 +254,17 @@ console.log(JSON.stringify(mergedDataFile, null, 4));
 
 Voilà!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-flatten-referencing/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-flatten-referencing/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-flatten-referencing/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-flatten-referencing/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-flatten-referencing)**
 
 ## Licence
 
@@ -288,25 +274,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-flatten-referencing.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-flatten-referencing
-[travis-img]: https://img.shields.io/travis/codsen/object-flatten-referencing.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-flatten-referencing
-[cov-img]: https://coveralls.io/repos/github/codsen/object-flatten-referencing/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-flatten-referencing?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-flatten-referencing.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-flatten-referencing
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-flatten-referencing.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-flatten-referencing
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-flatten-referencing/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-flatten-referencing?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-referencing
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-flatten-referencing.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-flatten-referencing/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-flatten-referencing/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-flatten-referencing
 [downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-flatten-referencing
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-flatten-referencing
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/object-flatten-referencing.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-flatten-referencing/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-flatten-referencing
