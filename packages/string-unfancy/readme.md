@@ -1,7 +1,4 @@
-<h1 align="center">
-  <img width="400" src="https://cdn.rawgit.com/codsen/string-unfancy/59e8cfc1/media/logo.png" alt="string-unfancy">
-  <br>
-</h1>
+![](https://bitbucket.org/codsen/string-unfancy/raw/c5b08378559f504b36f8a2e6974a0ee73824b2f1/media/logo.png)
 
 # string-unfancy
 
