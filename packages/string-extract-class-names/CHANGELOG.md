@@ -5,53 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2018-06-16
+
+GitHub sold us out. In the meantime, we:
+
+- ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
+- ✨ Dropped BitHound (RIP) and Travis
+
 ## [4.1.0] - 2018-05-26
 
-### Improvements
-
-* ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
-* ✨ Removed `package.lock` and `.editorconfig`
-* ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
-* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
+- ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
+- ✨ Removed `package.lock` and `.editorconfig`
+- ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
+- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
 ## [4.0.0] - 2017-12-13
 
-### Changed
-
-* ✨ Rebased in ES Modules
-* ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules
+- ✨ Rebased in ES Modules
+- ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules
 
 No API changes, but bumping major just in case.
 
 ## [3.4.0] - 2017-08-28
 
-### Added
-
-* Relaxed the requirements and made single character selector names to pass.
+- Relaxed the requirements and made single character selector names to pass.
 
 ## [3.3.0] - 2017-01-01
 
-### Added
-
-* Recognises `\n`, `\t` and other escaped JS characters
-* Doesn't extract empty classes and id's (`.` and `#`)
-* Doesn't extract any classes or id's that are one character long
+- Recognises `\n`, `\t` and other escaped JS characters
+- Doesn't extract empty classes and id's (`.` and `#`)
+- Doesn't extract any classes or id's that are one character long
 
 ## [3.2.0] - 2016-12-27
 
-### Updated
-
-* Readme updates
+- Readme updates
 
 ## [3.1.0] - 2016-12-23
 
-### Added
-
-* Standard JS precommit hooks to enforce code style
+- Standard JS precommit hooks to enforce code style
 
 ## 3.0.0 - 2016-11-19
-
-### Changed
 
 Algorithm change.
 
@@ -85,10 +78,11 @@ There is no second argument any more, to choose between id's or classes. Since a
 
 This library will detect the first clump of class(es)/array(s), will put each into an array, discarding everything else around.
 
-[3.0.0]: https://github.com/codsen/string-extract-class-names/compare/v2.2.0...v3.0.0
-[3.1.0]: https://github.com/codsen/string-extract-class-names/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/codsen/string-extract-class-names/compare/v3.1.0...v3.2.0
-[3.3.0]: https://github.com/codsen/string-extract-class-names/compare/v3.2.0...v3.3.0
-[3.4.0]: https://github.com/codsen/string-extract-class-names/compare/v3.3.0...v3.4.0
-[4.0.0]: https://github.com/codsen/string-extract-class-names/compare/v3.4.0...v4.0.0
-[4.1.0]: https://github.com/codsen/string-extract-class-names/compare/v4.0.6...v4.1.0
+[3.0.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v3.0.0%0Dv2.2.0#diff
+[3.1.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v3.1.0%0Dv3.0.1#diff
+[3.2.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v3.2.0%0Dv3.1.0#diff
+[3.3.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v3.3.0%0Dv3.2.0#diff
+[3.4.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v3.4.0%0Dv3.3.3#diff
+[4.0.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.0.0%0Dv3.4.0#diff
+[4.1.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.1.0%0Dv4.0.6#diff
+[4.2.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.2.0%0Dv4.1.0#diff
