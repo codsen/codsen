@@ -65,7 +65,7 @@ console.log("res4 = " + JSON.stringify(res4, null, 4));
 // => {a: 'zzz'}
 ```
 
-I also tested it with emoji, it copes fine.
+We also tested it with emoji, it copes fine.
 
 **[⬆ back to top](#)**
 
