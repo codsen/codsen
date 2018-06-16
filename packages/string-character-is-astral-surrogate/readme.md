@@ -3,13 +3,9 @@
 > Tells, is given character a part of astral character, specifically, a high and low surrogate
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,22 +13,12 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [Usage](#usage)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -55,13 +41,13 @@ import {
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                               | Size      |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | --------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-character-is-astral-surrogate.umd.js` | 1&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                               | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-character-is-astral-surrogate.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-character-is-astral-surrogate.esm.js` | 1 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-character-is-astral-surrogate.umd.js` | 1 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-character-is-astral-surrogate)**
 
 ## Idea
 
@@ -80,7 +66,7 @@ It reads the character at first index (the first Unicode code point) and evaluat
 
 In theory, high surrogate goes first, low surrogate goes second [source](https://unicodebook.readthedocs.io/unicode_encodings.html#surrogates).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-character-is-astral-surrogate)**
 
 ## Usage
 
@@ -116,7 +102,7 @@ console.log(isLowSurrogate(undefined));
 // => false
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-character-is-astral-surrogate)**
 
 ## API
 
@@ -127,23 +113,23 @@ Two functions, same API:
 **Input**: zero or more characters, where `charCodeAt(0)` will be evaluated.
 **Output**: Boolean
 
-* If input is empty string or undefined, `false` is returned.
-* If input is anything other than the string or undefined, type error is thrown.
-* If input consists of more characters, everything beyond `.charCodeAt(0)` is ignored.
+- If input is empty string or undefined, `false` is returned.
+- If input is anything other than the string or undefined, type error is thrown.
+- If input consists of more characters, everything beyond `.charCodeAt(0)` is ignored.
 
 We return false to make life easier when traversing the string. When you check "next" character, if it doesn't exist, as far as astral-ness is concerned, we're fine, so it yields `false`. Otherwise, you'd have to check the input before feeding into this library and that's is tedious. This is a low-level library and it doesn't have to be picky.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-character-is-astral-surrogate)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-character-is-astral-surrogate/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-character-is-astral-surrogate/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-character-is-astral-surrogate/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-character-is-astral-surrogate/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-character-is-astral-surrogate)**
 
 ## Licence
 
@@ -153,25 +139,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-character-is-astral-surrogate.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-character-is-astral-surrogate
-[travis-img]: https://img.shields.io/travis/codsen/string-character-is-astral-surrogate.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-character-is-astral-surrogate
-[cov-img]: https://coveralls.io/repos/github/codsen/string-character-is-astral-surrogate/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-character-is-astral-surrogate?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/string-character-is-astral-surrogate
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-character-is-astral-surrogate/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-character-is-astral-surrogate?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-character-is-astral-surrogate
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-character-is-astral-surrogate.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-character-is-astral-surrogate/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-character-is-astral-surrogate/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-character-is-astral-surrogate
 [downloads-img]: https://img.shields.io/npm/dm/string-character-is-astral-surrogate.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-character-is-astral-surrogate
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-character-is-astral-surrogate
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-character-is-astral-surrogate.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-character-is-astral-surrogate/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-character-is-astral-surrogate
