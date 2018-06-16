@@ -149,7 +149,7 @@ function myPrecious (input, opts) {
 
 ## Critique
 
-You may ask, why on Earth you would need a package for such thing? It's not very universal to be useful for society, is it?
+You may ask, why on Earth you would need a package for a such thing? It's not very universal to be useful for society, is it?
 
 Actually, it is.
 
