@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Idea](#markdown-header-markdown-header-idea)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [Context](#markdown-header-markdown-header-context)
-- [Usage](#markdown-header-markdown-header-usage)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Table of Contents](#markdown-header-table-of-contents)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [Purpose](#markdown-header-purpose)
+- [Context](#markdown-header-context)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
