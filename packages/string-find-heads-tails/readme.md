@@ -44,7 +44,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-find-heads-tails.esm.js` | 16 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-find-heads-tails.umd.js` | 32 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## Idea
 
@@ -66,7 +66,7 @@ There are few rules:
 - When one _heads_ is found, no new heads findings will be accepted into the results until there's a new _tails_ finding. Same goes the opposite way, for _tails_.
 - Both _heads_ and _tails_ can be supplied either as a single string or array of strings. Findings are prioritised by their order in the array.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## Purpose
 
@@ -85,7 +85,7 @@ For example,
 
 This library enables to build tools which process such code. All processing starts with searching for variables in a string and `string-find-heads-tails` will help you here.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## Usage
 
@@ -101,7 +101,7 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 //    }]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## API
 
@@ -110,7 +110,7 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 **IMPORTANT**
 The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://bitbucket.org/codsen/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ### API - Input
 
@@ -123,7 +123,7 @@ The index is based on native JavaScript string indexing where each astral charac
 
 PS. Input arguments are not mutated.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ### Optional Options Object
 
@@ -152,7 +152,7 @@ Here is the Optional Options Object in one place with all default settings:
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ### API - Output
 
@@ -171,7 +171,7 @@ The whole idea is that you should be able to get the `heads` if you put `str.sli
 
 If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://bitbucket.org/codsen/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## Contributing
 
@@ -181,7 +181,7 @@ If you want to use Unicode-character-count-based indexing, first convert the out
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#root)**
 
 ## Licence
 
