@@ -3,13 +3,9 @@
 > Validate and normalise user choice: array, object or both?
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,14 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [API](#api)
-- [Use](#use)
-- [Critique](#critique)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [Purpose](#markdown-header-markdown-header-purpose)
+- [API](#markdown-header-markdown-header-api)
+- [Use](#markdown-header-markdown-header-use)
+- [Critique](#markdown-header-markdown-header-critique)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -50,22 +37,22 @@ import arrObjOrBoth from "util-array-object-or-both";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                    | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-array-object-or-both.cjs.js` | 3&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-array-object-or-both.esm.js` | 2&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-array-object-or-both.umd.js` | 17&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                    | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-array-object-or-both.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-array-object-or-both.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-array-object-or-both.umd.js` | 17 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
 When I give the user ability to choose their preference out of: `array`, `object` or `any`, I want to:
 
-* Allow users to input the preference in many ways: for example, for `array`, I also want to accept: `Arrays`, `add`, `ARR`, `a`. Similar thing goes for options `object` and `any`.
-* Normalise the choice - recognise it and set it to one of the three following strings: `array`, `object` or `any`. This is necessary because we want set values to use in our programs. You can't have five values for `array` in an IF statement, for example.
-* When a user sets the preference to unrecognised string, I want to `throw` a meaningful error message. Technically this will be achieved using an options object.
-* Enforce lowercase and trim and input, to maximise the input possibilities
+- Allow users to input the preference in many ways: for example, for `array`, I also want to accept: `Arrays`, `add`, `ARR`, `a`. Similar thing goes for options `object` and `any`.
+- Normalise the choice - recognise it and set it to one of the three following strings: `array`, `object` or `any`. This is necessary because we want set values to use in our programs. You can't have five values for `array` in an IF statement, for example.
+- When a user sets the preference to unrecognised string, I want to `throw` a meaningful error message. Technically this will be achieved using an options object.
+- Enforce lowercase and trim and input, to maximise the input possibilities
 
 | <br>               | Assumed to be an array-type | object-type | either type  |
 | ------------------ | --------------------------- | ----------- | ------------ |
@@ -80,7 +67,7 @@ When I give the user ability to choose their preference out of: `array`, `object
 | <br>               | `----`                      | `----`      | `----`       |
 | **Output string:** | `array`                     | `object`    | `any`        |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -106,7 +93,7 @@ For example, set `optsVarName` to `opts.only` and set `msg` to `ast-delete-key/d
 
     ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: sweetcarrots. Please check it against the API documentation.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Use
 
@@ -158,7 +145,7 @@ function myPrecious (input, opts) {
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Critique
 
@@ -172,23 +159,23 @@ I think the API should accept a very wide spectrum of values, so users would not
 
 I'm going to use it in:
 
-* [ast-monkey](https://github.com/codsen/ast-monkey)
-* [json-variables](https://github.com/codsen/json-variables)
-* [ast-delete-key](https://github.com/codsen/ast-delete-key)
+- [ast-monkey](https://bitbucket.org/codsen/ast-monkey)
+- [json-variables](https://bitbucket.org/codsen/json-variables)
+- [ast-delete-key](https://bitbucket.org/codsen/ast-delete-key)
 
 and others. So, it's not that niche as it might seem!
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/util-array-object-or-both/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/util-array-object-or-both/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/util-array-object-or-both/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/util-array-object-or-both/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -198,25 +185,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/util-array-object-or-both.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/util-array-object-or-both
-[travis-img]: https://img.shields.io/travis/codsen/util-array-object-or-both.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/util-array-object-or-both
-[cov-img]: https://coveralls.io/repos/github/codsen/util-array-object-or-both/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/util-array-object-or-both?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/util-array-object-or-both.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/util-array-object-or-both
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/util-array-object-or-both.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/util-array-object-or-both/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/util-array-object-or-both
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/util-array-object-or-both/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/util-array-object-or-both?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/util-array-object-or-both
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/util-array-object-or-both.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/util-array-object-or-both/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/util-array-object-or-both/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/util-array-object-or-both
 [downloads-img]: https://img.shields.io/npm/dm/util-array-object-or-both.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/util-array-object-or-both
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/util-array-object-or-both
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/util-array-object-or-both.svg?style=flat-square
-[license-url]: https://github.com/codsen/util-array-object-or-both/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/util-array-object-or-both
