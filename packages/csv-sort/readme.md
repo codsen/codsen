@@ -75,7 +75,9 @@ const input = `123456,Client #1 payment,,1000,1940
 123456,Bought pens,10,,1000
 123456,Bought chairs,20,,980
 `;
-const { res } = csvSort(input);
+const { res } = csvSort(input)
+  .join(",")
+  .join("\n");
 console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
 // =>
 // 123456,Client #1 payment,,1000,1940
@@ -83,7 +85,6 @@ console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
 // 123456,Bought carpet,30,,950
 // 123456,Bought chairs,20,,980
 // 123456,Bought pens,10,,1000
-//
 ```
 
 ## API
