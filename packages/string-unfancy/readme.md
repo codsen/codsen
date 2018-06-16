@@ -124,6 +124,10 @@ And that's it! All image `alt` attributes will lose their HTML encoding and will
 
 **[⬆ back to top](#)**
 
+## Can we use `lodash.deburr` instead?
+
+No. It [won't even convert](https://runkit.com/embed/2oy0v80zzfsw) a single m-dash! It's a different tool for a different purpose.
+
 ## Contributing
 
 - If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-unfancy/issues/new).
