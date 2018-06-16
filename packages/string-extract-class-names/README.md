@@ -30,7 +30,6 @@ Here's what you'll get:
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Purpose](#markdown-header-purpose)
 - [Examples](#markdown-header-examples)
 - [API](#markdown-header-api)
