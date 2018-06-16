@@ -3,13 +3,9 @@
 > Generate an array full of object copies, each containing a unique Boolean value combination. Includes overrides.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,13 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [What it does](#what-it-does)
-- [API](#api)
-- [Overriding](#overriding)
-- [Overriding the combinations — in practice](#overriding-the-combinations--in-practice)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [What it does](#markdown-header-what-it-does)
+- [API](#markdown-header-api)
+- [Overriding](#markdown-header-overriding)
+- [Overriding the combinations — in practice](#markdown-header-overriding-the-combinations-in-practice)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,13 +36,13 @@ import objectBooleanCombinations from "object-boolean-combinations";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                      | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-boolean-combinations.cjs.js` | 4&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-boolean-combinations.esm.js` | 4&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-boolean-combinations.umd.js` | 17&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-boolean-combinations.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-boolean-combinations.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-boolean-combinations.umd.js` | 16 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## What it does
 
@@ -78,7 +64,7 @@ PS. Observe how input values don't matter, we had: `{ a: 'whatever' }`.
 
 Sometimes, you don't want all the combinations, you might want to "pin" certain values to be constant across all combinations. In those cases, use [overrides](#overriding), see below.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## API
 
@@ -93,7 +79,7 @@ objectBooleanCombinations(inputObject, [overrideObject]);
 | `inputObject`    | Plain object | yes         | Plain object from which we should reference the keys.                                                                                 |
 | `overrideObject` | Plain object | no          | Keys in this object will be used as-is and will not be used for generating combinations. See [overriding](#overriding) section below. |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## Overriding
 
@@ -114,14 +100,14 @@ console.log(`test = ${JSON.stringify(test, null, 4)}`);
 
 In example above, `a` and `b` are "pinned" to `1`, thus reducing the amount of combinations by power of two, essentially halving resulting objects count twice. Notice how only `c` is having variations.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## Overriding the combinations — in practice
 
-In practice, I use this overriding to perform the specific tests on [Detergent.js](https://github.com/codsen/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
+In practice, I use this overriding to perform the specific tests on [Detergent.js](https://bitbucket.org/codsen/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
 
-* first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
-* second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
+- first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
+- second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
 
 Here's an AVA test, which uses `objectBooleanCombinations()` to create a combinations array of settings objects, then uses `forEach()` to iterate through them all, testing each:
 
@@ -139,17 +125,17 @@ test("encode entities - pound sign", t => {
 });
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-boolean-combinations/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-boolean-combinations/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-boolean-combinations/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-boolean-combinations/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-boolean-combinations)**
 
 ## Licence
 
@@ -159,25 +145,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-boolean-combinations.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-boolean-combinations
-[travis-img]: https://img.shields.io/travis/codsen/object-boolean-combinations.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-boolean-combinations
-[cov-img]: https://coveralls.io/repos/github/codsen/object-boolean-combinations/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-boolean-combinations?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-boolean-combinations.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-boolean-combinations
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-boolean-combinations.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-boolean-combinations
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-boolean-combinations/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-boolean-combinations?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-boolean-combinations
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-boolean-combinations.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-boolean-combinations/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-boolean-combinations/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-boolean-combinations
 [downloads-img]: https://img.shields.io/npm/dm/object-boolean-combinations.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-boolean-combinations
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-boolean-combinations
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/object-boolean-combinations.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-boolean-combinations/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-boolean-combinations
