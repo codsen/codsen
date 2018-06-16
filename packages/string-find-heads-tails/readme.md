@@ -3,13 +3,9 @@
 > Search for string pairs. A special case of string search algorithm.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,24 +13,15 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [Purpose](#purpose)
-- [Context](#context)
-- [Usage](#usage)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
+- [Install](#markdown-header-markdown-header-install)
+- [Idea](#markdown-header-markdown-header-idea)
+- [Purpose](#markdown-header-markdown-header-purpose)
+- [Context](#markdown-header-markdown-header-context)
+- [Usage](#markdown-header-markdown-header-usage)
+- [API](#markdown-header-markdown-header-api)
+- [Contributing](#markdown-header-markdown-header-contributing)
+- [Licence](#markdown-header-markdown-header-licence)
 
 ## Install
 
@@ -51,13 +38,13 @@ import strFindHeadsTails from "string-find-heads-tails";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                  | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-find-heads-tails.cjs.js` | 16&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-find-heads-tails.esm.js` | 16&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-find-heads-tails.umd.js` | 32&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-find-heads-tails.cjs.js` | 16 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-find-heads-tails.esm.js` | 16 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-find-heads-tails.umd.js` | 32 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -75,15 +62,15 @@ Take a string, search for a **pair** of strings in it. Let's call the first-one 
 
 There are few rules:
 
-* Each finding must be in sequence: _heads_ - _tails_ - _heads_ - _tails_.
-* When one _heads_ is found, no new heads findings will be accepted into the results until there's a new _tails_ finding. Same goes the opposite way, for _tails_.
-* Both _heads_ and _tails_ can be supplied either as a single string or array of strings. Findings are prioritised by their order in the array.
+- Each finding must be in sequence: _heads_ - _tails_ - _heads_ - _tails_.
+- When one _heads_ is found, no new heads findings will be accepted into the results until there's a new _tails_ finding. Same goes the opposite way, for _tails_.
+- Both _heads_ and _tails_ can be supplied either as a single string or array of strings. Findings are prioritised by their order in the array.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
-It will be used in JSON [pre-processing](https://github.com/codsen/json-variables), replacing the dumb string search being used currently.
+It will be used in JSON [pre-processing](https://bitbucket.org/codsen/json-variables), replacing the dumb string search being used currently.
 
 ## Context
 
@@ -91,14 +78,14 @@ Different programming languages, templating languages and even proprietary notat
 
 For example,
 
-* Nunjucks templating language would use `{%` and `%}`, then `{{` and `}}` (among others).
-* Java JSP's would use `${` and `}` (among others).
-* Oracle Responsys, ESP, would use `$(` and `)`.
-* ex-eDialog/ex-eBay Enterprise/Zeta Interactive ESP use `_` and `__`.
+- Nunjucks templating language would use `{%` and `%}`, then `{{` and `}}` (among others).
+- Java JSP's would use `${` and `}` (among others).
+- Oracle Responsys, ESP, would use `$(` and `)`.
+- ex-eDialog/ex-eBay Enterprise/Zeta Interactive ESP use `_` and `__`.
 
 This library enables to build tools which process such code. All processing starts with searching for variables in a string and `string-find-heads-tails` will help you here.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -114,16 +101,16 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 //    }]
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## API
 
 **strFindHeadsTails(str, heads, tails, \[fromIndex])**
 
 **IMPORTANT**
-The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://github.com/codsen/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
+The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://bitbucket.org/codsen/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Input
 
@@ -136,7 +123,7 @@ The index is based on native JavaScript string indexing where each astral charac
 
 PS. Input arguments are not mutated.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -165,7 +152,7 @@ Here is the Optional Options Object in one place with all default settings:
 }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -182,19 +169,19 @@ Returns an array of zero or more plain objects, each having format:
 
 The whole idea is that you should be able to get the `heads` if you put `str.slice(headsStartAt, headsEndAt)`.
 
-If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://github.com/codsen/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
+If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://bitbucket.org/codsen/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-find-heads-tails/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-find-heads-tails/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-find-heads-tails/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-find-heads-tails/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -204,25 +191,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-find-heads-tails.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-find-heads-tails
-[travis-img]: https://img.shields.io/travis/codsen/string-find-heads-tails.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-find-heads-tails
-[cov-img]: https://coveralls.io/repos/github/codsen/string-find-heads-tails/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-find-heads-tails?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-find-heads-tails.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-find-heads-tails
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-find-heads-tails.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-find-heads-tails/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/string-find-heads-tails
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-find-heads-tails/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-find-heads-tails?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-find-heads-tails
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-find-heads-tails.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-find-heads-tails/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-find-heads-tails/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-find-heads-tails
 [downloads-img]: https://img.shields.io/npm/dm/string-find-heads-tails.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-find-heads-tails
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-find-heads-tails
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-find-heads-tails.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-find-heads-tails/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-find-heads-tails
