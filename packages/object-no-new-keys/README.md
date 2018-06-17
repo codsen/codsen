@@ -3,13 +3,9 @@
 > Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,24 +13,14 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [Two modes](#two-modes)
-- [For example](#for-example)
-- [Competition](#competition)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [Two modes](#markdown-header-two-modes)
+- [For example](#markdown-header-for-example)
+- [Competition](#markdown-header-competition)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -51,13 +37,13 @@ import objectNoNewKeys from "object-no-new-keys";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                             | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-no-new-keys.cjs.js` | 4&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-no-new-keys.esm.js` | 4&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-no-new-keys.umd.js` | 15&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                             | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-no-new-keys.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-no-new-keys.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-no-new-keys.umd.js` | 15 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## Idea
 
@@ -69,7 +55,7 @@ It is meant for work with AST's, parsed HTML or JSON, the cases where there are 
 
 Personally, I use this library to look for any rogue keys in email template content files, in JSON format.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## API
 
@@ -93,7 +79,7 @@ Returns zero or more long array of the paths to each key/element in the `input` 
 | `mode`                        | Integer number | no          | `2`     | Choose mode: `1` or `2`. See below. |
 | {                             |                |             |         |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## Two modes
 
@@ -140,7 +126,7 @@ The second mode will anticipate that `reference` will be normalised, that is, we
 
 I need the second mode, but I give people chance to use the first mode as well. Maybe somebody will find it useful.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## For example
 
@@ -198,7 +184,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => ['a[0].d', 'a[0].f', 'a[1].k', 'x']
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## Competition
 
@@ -206,17 +192,17 @@ You could try to use a [missing-deep-keys](https://github.com/vladgolubev/missin
 
 In short, `missing-deep-keys` is for cases when you have only objects-within-objects. `object-no-new-keys` is for work with parsed HTML (AST's) or JSON. Higher-end.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-no-new-keys/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-no-new-keys/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-no-new-keys/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-no-new-keys/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-no-new-keys)**
 
 ## Licence
 
@@ -226,25 +212,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-no-new-keys.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-no-new-keys
-[travis-img]: https://img.shields.io/travis/codsen/object-no-new-keys.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-no-new-keys
-[cov-img]: https://coveralls.io/repos/github/codsen/object-no-new-keys/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-no-new-keys?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-no-new-keys.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-no-new-keys
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-no-new-keys.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-no-new-keys/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-no-new-keys
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-no-new-keys/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-no-new-keys?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-no-new-keys
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-no-new-keys.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-no-new-keys/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-no-new-keys/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-no-new-keys
 [downloads-img]: https://img.shields.io/npm/dm/object-no-new-keys.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-no-new-keys
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-no-new-keys
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/object-no-new-keys.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-no-new-keys/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-no-new-keys
