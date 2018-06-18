@@ -1,5 +1,5 @@
 import test from "ava";
-import repl from "../dist/string-replace-slices-array.esm";
+import repl from "../dist/ranges-apply.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
