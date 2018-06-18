@@ -13,17 +13,16 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [Use](#markdown-header-markdown-header-use)
-- [API](#markdown-header-markdown-header-api)
-- [Examples](#markdown-header-markdown-header-examples)
-- [opts.verboseWhenMismatches](#markdown-header-markdown-header-optsverbosewhenmismatches)
-- [Rationale](#markdown-header-markdown-header-rationale)
-- [Differences from \_.isMatch](#markdown-header-markdown-header-differences-from-_ismatch)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [Use](#markdown-header-use)
+- [API](#markdown-header-api)
+- [Examples](#markdown-header-examples)
+- [opts.verboseWhenMismatches](#markdown-header-optsverbosewhenmismatches)
+- [Rationale](#markdown-header-rationale)
+- [Differences from \_.isMatch](#markdown-header-differences-from-_ismatch)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -39,7 +38,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 31 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Purpose
 
@@ -69,9 +68,9 @@ console.log(result);
 // => true
 ```
 
-The main purpose is to compare two parsed HTML/CSS trees or their branches, but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [ast-delete-object](https://github.com/codsen/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
+The main purpose is to compare two parsed HTML/CSS trees or their branches, but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [ast-delete-object](https://bitbucket.org/codsen/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Use
 
@@ -97,7 +96,7 @@ This library will not mutate the input arguments.
 - If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
 - Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ### Options object
 
@@ -109,7 +108,7 @@ This library will not mutate the input arguments.
 | `verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match. |
 | }                       |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ### Output
 
@@ -120,7 +119,7 @@ If it's **not** a superset or equal, the value depends on `opts.verboseWhenMisma
 - Default, `opts.verboseWhenMismatches===false` will yield `false`
 - Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Examples
 
@@ -164,7 +163,7 @@ compare(null);
 // => false.
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## opts.verboseWhenMismatches
 
@@ -172,13 +171,13 @@ Sometimes you just want a yes/no answer is something a subset or equal to someth
 
 If you use this setting, you have to anticipate Boolean `true` OR something else (Boolean `false` or string) coming out from this library.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Rationale
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arrays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Differences from \_.isMatch
 
@@ -192,7 +191,7 @@ var res = compare(["a", "b", "c"], []);
 // now, res === false
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Contributing
 
@@ -202,7 +201,7 @@ var res = compare(["a", "b", "c"], []);
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-compare)**
 
 ## Licence
 

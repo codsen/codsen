@@ -46,7 +46,8 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Public release
 
-[1.1.0]: https://github.com/codsen/ast-compare/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/ast-compare/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/ast-compare/compare/v1.2.2...v1.3.0
-[1.4.0]: https://github.com/codsen/ast-compare/compare/v1.3.0...v1.4.0
+[1.1.0]: https://bitbucket.org/codsen/ast-compare/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/ast-compare/branches/compare/v1.2.0%0Dv1.1.7#diff
+[1.3.0]: https://bitbucket.org/codsen/ast-compare/branches/compare/v1.3.0%0Dv1.2.2#diff
+[1.4.0]: https://bitbucket.org/codsen/ast-compare/branches/compare/v1.4.0%0Dv1.3.1#diff
+[1.5.0]: https://bitbucket.org/codsen/ast-compare/branches/compare/v1.5.0%0Dv1.4.1#diff
