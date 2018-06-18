@@ -13,11 +13,10 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Idea](#markdown-header-markdown-header-idea)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -40,7 +39,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/arrayiffy-if-string.esm.js` | 286 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/arrayiffy-if-string.umd.js` | 257 B |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-arrayiffy-if-string)**
 
 ## Idea
 
@@ -71,7 +70,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 
 It's main purpose is to prepare the input argument options' objects. Check out [check-types-mini](https://bitbucket.org/codsen/check-types-mini).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-arrayiffy-if-string)**
 
 ## Contributing
 
@@ -81,7 +80,7 @@ It's main purpose is to prepare the input argument options' objects. Check out [
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-arrayiffy-if-string)**
 
 ## Licence
 
