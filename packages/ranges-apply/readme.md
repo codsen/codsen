@@ -3,13 +3,9 @@
 > Take an array of string slice ranges, delete/replace the string according to them
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,13 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Idea](#idea)
-- [API](#api)
-- [The algorithm](#the-algorithm)
-- [In my case](#in-my-case)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [The algorithm](#markdown-header-the-algorithm)
+- [In my case](#markdown-header-in-my-case)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,13 +36,13 @@ import replaceSlicesArr from "string-replace-slices-array";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                      | Size      |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | --------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-replace-slices-array.cjs.js` | 3&nbsp;KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-replace-slices-array.esm.js` | 3&nbsp;KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-replace-slices-array.umd.js` | 3&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                      | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-replace-slices-array.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-replace-slices-array.esm.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-replace-slices-array.umd.js` | 3 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## Idea
 
@@ -109,7 +95,7 @@ If you omit the third argument, that slice will be deleted.
 
 Slice ranges can be the **same index**. In that case, if there is third argument, its value will be inserted **before** the string at given index. If there's no third argument, nothing will happen.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## API
 
@@ -136,9 +122,9 @@ For example,
 ];
 ```
 
-**PSST.** Check out [string-slices-array-push](https://github.com/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+**PSST.** Check out [string-slices-array-push](https://bitbucket.org/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## The algorithm
 
@@ -146,25 +132,25 @@ The plan is simple - we `array.reduce` your given ranges array, slicing the inpu
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
+Originally this library was part of [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/string-replace-slices-array/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-replace-slices-array/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/string-replace-slices-array/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-replace-slices-array/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-string-replace-slices-array)**
 
 ## Licence
 
@@ -174,25 +160,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-replace-slices-array.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-replace-slices-array
-[travis-img]: https://img.shields.io/travis/codsen/string-replace-slices-array.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/string-replace-slices-array
-[cov-img]: https://coveralls.io/repos/github/codsen/string-replace-slices-array/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/string-replace-slices-array?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/string-replace-slices-array.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/string-replace-slices-array
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/string-replace-slices-array.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/string-replace-slices-array/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/string-replace-slices-array
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-replace-slices-array/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-replace-slices-array?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-replace-slices-array
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/string-replace-slices-array.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/string-replace-slices-array/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/string-replace-slices-array/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/string-replace-slices-array
 [downloads-img]: https://img.shields.io/npm/dm/string-replace-slices-array.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-replace-slices-array
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-replace-slices-array
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/string-replace-slices-array.svg?style=flat-square
-[license-url]: https://github.com/codsen/string-replace-slices-array/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/string-replace-slices-array
