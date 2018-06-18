@@ -1,7 +1,7 @@
 /* eslint ava/no-only-test:0 */
 
 import test from "ava";
-import Slices from "../dist/string-slices-array-push.esm";
+import Slices from "../dist/ranges-push.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
