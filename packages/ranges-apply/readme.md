@@ -1,4 +1,4 @@
-# string-replace-slices-array
+# ranges-apply
 
 > Take an array of string slice ranges, delete/replace the string according to them
 
@@ -24,25 +24,25 @@
 ## Install
 
 ```bash
-npm i string-replace-slices-array
+npm i ranges-apply
 ```
 
 ```js
 // consume as CommonJS require:
-const replaceSlicesArr = require("string-replace-slices-array");
+const replaceSlicesArr = require("ranges-apply");
 // or as ES Module:
-import replaceSlicesArr from "string-replace-slices-array";
+import replaceSlicesArr from "ranges-apply";
 ```
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                      | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-replace-slices-array.cjs.js` | 3 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-replace-slices-array.esm.js` | 3 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-replace-slices-array.umd.js` | 3 KB |
+| Type                                                                                                    | Key in `package.json` | Path                       | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-apply.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-apply.esm.js` | 3 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-apply.umd.js` | 3 KB |
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## Idea
 
@@ -60,7 +60,7 @@ some example text
 
 If you want to do something to the word "example" above, that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
 
-![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/string-replace-slices-array/cc202bd4/media/finding_range_indexes_in_atom.gif)
+![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/ranges-apply/cc202bd4/media/finding_range_indexes_in_atom.gif)
 
 That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a **replacement operation**).
 
@@ -78,7 +78,7 @@ This library consumes such parent array and does the actual job crunching your s
 Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check is the slice you want correspond to the indexes you've got.
 
 ```js
-const repl = require("string-replace-slices-array");
+const repl = require("ranges-apply");
 let str = "aaa delete me bbb and me too ccc";
 // we preview the slice #1, "delete me", is it actually indexes from 4 to 13:
 console.log("slice 1: >>>" + str.slice(4, 13) + "<<<");
@@ -95,7 +95,7 @@ If you omit the third argument, that slice will be deleted.
 
 Slice ranges can be the **same index**. In that case, if there is third argument, its value will be inserted **before** the string at given index. If there's no third argument, nothing will happen.
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## API
 
@@ -124,7 +124,7 @@ For example,
 
 **PSST.** Check out [string-slices-array-push](https://bitbucket.org/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## The algorithm
 
@@ -132,7 +132,7 @@ The plan is simple - we `array.reduce` your given ranges array, slicing the inpu
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## In my case
 
@@ -140,17 +140,17 @@ Originally this library was part of [email-remove-unused-css](https://bitbucket.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-replace-slices-array/issues/new).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ranges-apply/issues/new).
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/string-replace-slices-array/issues/new).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ranges-apply/issues/new).
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#markdown-header-string-replace-slices-array)**
+**[⬆ back to top](#markdown-header-ranges-apply)**
 
 ## Licence
 
@@ -158,19 +158,19 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
-[node-img]: https://img.shields.io/node/v/string-replace-slices-array.svg?style=flat-square&label=works%20on%20node
-[node-url]: https://www.npmjs.com/package/string-replace-slices-array
+[node-img]: https://img.shields.io/node/v/ranges-apply.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/ranges-apply
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/string-replace-slices-array
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-replace-slices-array/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/string-replace-slices-array?branch=master
+[bitbucket-url]: https://bitbucket.org/codsen/ranges-apply
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-apply/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ranges-apply?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
-[deps2d-url]: http://npm.anvaka.com/#/view/2d/string-replace-slices-array
-[downloads-img]: https://img.shields.io/npm/dm/string-replace-slices-array.svg?style=flat-square
-[downloads-url]: https://npmcharts.com/compare/string-replace-slices-array
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-apply
+[downloads-img]: https://img.shields.io/npm/dm/ranges-apply.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/ranges-apply
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
-[runkit-url]: https://npm.runkit.com/string-replace-slices-array
+[runkit-url]: https://npm.runkit.com/ranges-apply
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/string-replace-slices-array
+[license-url]: https://bitbucket.org/codsen/ranges-apply

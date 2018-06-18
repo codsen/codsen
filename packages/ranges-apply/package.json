@@ -1,5 +1,5 @@
 {
-  "name": "string-replace-slices-array",
+  "name": "ranges-apply",
   "version": "2.3.0",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
@@ -10,17 +10,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/codsen/string-replace-slices-array.git"
+    "url": "https://bitbucket.org/codsen/ranges-apply.git"
   },
-  "homepage": "https://bitbucket.org/codsen/string-replace-slices-array/",
+  "homepage": "https://bitbucket.org/codsen/ranges-apply/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "dist/string-replace-slices-array.cjs.js",
-  "module": "dist/string-replace-slices-array.esm.js",
-  "browser": "dist/string-replace-slices-array.umd.js",
+  "main": "dist/ranges-apply.cjs.js",
+  "module": "dist/ranges-apply.esm.js",
+  "browser": "dist/ranges-apply.umd.js",
   "scripts": {
     "build": "rollup -c",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

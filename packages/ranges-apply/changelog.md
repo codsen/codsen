@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.3.0] - 2018-06-18
 
-- ✨ Renamed to `ranges-apply` and migrated to Bitbucket
+- ✨ Renamed to `ranges-apply` and migrated to Bitbucket.
 
 ## [2.2.0] - 2018-05-11
 
@@ -67,11 +67,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
-[2.3.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v2.3.0%0Dv2.2.2#diff
-[2.2.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v2.2.0%0Dv2.1.0#diff
-[2.1.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v2.1.0%0Dv2.0.14#diff
-[2.0.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v2.0.0%0Dv1.4.0#diff
-[1.4.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v1.4.0%0Dv1.3.1#diff
-[1.3.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v1.3.0%0Dv1.2.0#diff
-[1.2.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v1.2.0%0Dv1.1.0#diff
-[1.1.0]: https://bitbucket.org/codsen/string-replace-slices-array/branches/compare/v1.1.0%0Dv1.0.5#diff
+[2.3.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.3.0%0Dv2.2.2#diff
+[2.2.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.1.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.1.0%0Dv2.0.14#diff
+[2.0.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.0.0%0Dv1.4.0#diff
+[1.4.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.4.0%0Dv1.3.1#diff
+[1.3.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.2.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.1.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.1.0%0Dv1.0.5#diff
