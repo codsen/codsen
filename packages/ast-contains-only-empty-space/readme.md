@@ -13,13 +13,12 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Use](#markdown-header-markdown-header-use)
-- [Rationale](#markdown-header-markdown-header-rationale)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Use](#markdown-header-use)
+- [Rationale](#markdown-header-rationale)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -42,7 +41,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-contains-only-empty-space.esm.js` | 722 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-contains-only-empty-space.umd.js` | 12 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-contains-only-empty-space)**
 
 ## Use
 
@@ -91,7 +90,7 @@ console.log(empty(
 // => true
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-contains-only-empty-space)**
 
 ## Rationale
 
@@ -101,7 +100,7 @@ In real life, parsed HTML trees will have many levels of nested arrays, objects 
 
 By the way, weird things (like functions, which don't belong to parsed HTML structures) will yield a result `false`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-contains-only-empty-space)**
 
 ## API
 
@@ -114,7 +113,7 @@ empty(input); // array, object or string — normally AST (which is array of nes
 
 This library does not mutate the input arguments.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-contains-only-empty-space)**
 
 ## Contributing
 
@@ -124,7 +123,7 @@ This library does not mutate the input arguments.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-contains-only-empty-space)**
 
 ## Licence
 

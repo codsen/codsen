@@ -34,5 +34,6 @@ GitHub sold us out. In the meantime, we:
 
 - First public release
 
-[1.2.0]: https://github.com/codsen/ast-contains-only-empty-space/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/codsen/ast-contains-only-empty-space/compare/v1.0.0...v1.1.0
+[1.3.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.3.0%0Dv1.2.2#diff
+[1.2.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.2.0%0Dv1.1.1#diff
+[1.1.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.1.0%0Dv1.0.2#diff
