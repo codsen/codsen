@@ -13,14 +13,14 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "stringSlicesArrayPush"
+        name: "rangesPush"
       },
       plugins: [
         strip({
           sourceMap: false
         }),
-        resolve(), // so Rollup can find deps
-        commonjs(), // so Rollup can convert deps to ES modules
+        resolve(),
+        commonjs(),
         babel(),
         uglify()
       ]
