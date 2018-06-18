@@ -23,7 +23,7 @@
   "browser": "dist/array-of-arrays-into-ast.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "coverage": "nyc report --reporter=text-lcov | codacy-coverage",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
     "precommit": "npm run format && npm test",
@@ -157,7 +157,7 @@
   },
   "dependencies": {
     "check-types-mini": "latest",
-    "object-merge-advanced": "^10.2.2"
+    "object-merge-advanced": "^10.3.0"
   },
   "devDependencies": {
     "ava": "latest",

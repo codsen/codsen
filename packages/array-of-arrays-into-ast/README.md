@@ -3,6 +3,7 @@
 > turns an array of arrays of data into a nested tree of plain objects
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -28,20 +29,19 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-of-arrays-into-ast.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-of-arrays-into-ast.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-into-ast.umd.js` | 39 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-of-arrays-into-ast.esm.js` | 1 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-into-ast.umd.js` | 38 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [What it does](#markdown-header-what-it-does)
 - [API](#markdown-header-api)
-- [`opts.dedupe`](#markdown-header-`opts.dedupe`)
+- [`opts.dedupe`](#markdown-header-optsdedupe)
 - [Principles](#markdown-header-principles)
-- [Compared vs. `datastructures-js`](#markdown-header-compared-vs.-`datastructures-js`)
+- [Compared vs. `datastructures-js`](#markdown-header-compared-vs-datastructures-js)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -75,7 +75,7 @@ Output:
 
 This library is a piece of a breakthrough code generator I'm producing.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ## API
 
@@ -88,7 +88,7 @@ This library is a piece of a breakthrough code generator I'm producing.
 | `input`        | Array of zero or more arrays | yes         | Source of data to put into an AST              |
 | `otps`         | Plain object                 | no          | An Optional Options Object. See its API below. |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ### An Optional Options Object
 
@@ -110,7 +110,7 @@ Type: `object` - an Optional Options Object.
 
 When unused, Optional Options Object can also be passed as a `null` or `undefined` value.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ### API - Output
 
@@ -151,7 +151,7 @@ Notice how entries for each branch were created.
 
 Generally, I don't see the reason why you'd want duplicates, but the setting is there if you ever need it. 👍🏻
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ## Principles
 
@@ -171,7 +171,7 @@ There are libraries that produce and manage _trie_ data structures, for example,
 
 Here's where this library comes in. It doesn't abstract the data it's producing - you get a nested plain object which you can traverse and further process any way you like, using a vast ocean of `object-` processing libraries.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ## Contributing
 
@@ -181,7 +181,7 @@ Here's where this library comes in. It doesn't abstract the data it's producing 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-into-ast)**
 
 ## Licence
 
@@ -191,6 +191,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/array-of-arrays-into-ast.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-of-arrays-into-ast
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/array-of-arrays-into-ast
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/array-of-arrays-into-ast/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/array-of-arrays-into-ast?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

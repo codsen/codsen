@@ -19,5 +19,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ Public release
 
-[1.1.0]: https://github.com/codsen/array-of-arrays-into-ast/compare/v1.0.2...v1.1.0
-[1.2.0]: https://github.com/codsen/array-of-arrays-into-ast/compare/v1.1.2...v1.2.0
+[1.1.0]: https://bitbucket.org/codsen/array-of-arrays-into-ast/branches/compare/v1.1.0%0Dv1.0.2#diff
+[1.2.0]: https://bitbucket.org/codsen/array-of-arrays-into-ast/branches/compare/v1.2.0%0Dv1.1.2#diff
