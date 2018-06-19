@@ -32,12 +32,11 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-pull-all-with-glob.umd.js` | 16 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Pulling](#markdown-header-pulling)
 - [API](#markdown-header-api)
 - [Test](#markdown-header-test)
@@ -60,9 +59,9 @@ console.dir(pullAllWithGlob(sourceArray, removeThese));
 // => ['keep_me']
 ```
 
-Personally, I needed this library for another library, [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
+Personally, I needed this library for another library, [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
 ## API
 
@@ -83,7 +82,7 @@ pullAllWithGlob(
 
 By the way, none of the input arguments are mutated. That's checked by unit tests from group 4.x
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
 ### An Optional Options Object
 
@@ -105,7 +104,7 @@ Type: `object` - an Optional Options Object.
 
 When unused, Optional Options Object can be also passed as a `null` or `undefined` value.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
 ### API - Output
 
@@ -129,7 +128,7 @@ For unit tests we use [AVA](https://github.com/avajs/ava), [Istanbul CLI](https:
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
 ## Licence
 
