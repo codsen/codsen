@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [Difference from existing slug-generation libraries](#markdown-header-difference-from-existing-slug-generation-libraries)
@@ -44,11 +43,11 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/bitbucket-slug.cjs.js` | 773 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/bitbucket-slug.esm.js` | 626 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/bitbucket-slug.cjs.js` | 776 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/bitbucket-slug.esm.js` | 629 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/bitbucket-slug.umd.js` | 63 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-bitbucket-slug)**
 
 ## Idea
 
@@ -69,7 +68,7 @@ In BitBucket README's, there's a rule that no two slugs can be the same. If BitB
 
 There are only two dependencies: [ent](https://www.npmjs.com/package/ent) to decode entities and [lodash.deburr](https://www.npmjs.com/package/lodash.deburr) to convert letters to basic Latin.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-bitbucket-slug)**
 
 ## Difference from existing slug-generation libraries
 
@@ -77,7 +76,7 @@ Whoever wonders, no, [slugify](https://github.com/sindresorhus/slugify) won't ma
 
 This library, on another hand, is aiming to match BitBucket spec as close as possible. Our unit tests are pinning the output of this library against the BitBucket-rendered HTML.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-bitbucket-slug)**
 
 ## Usage
 
@@ -94,7 +93,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => "markdown-header-some-lithuanian-azuolynas"
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-bitbucket-slug)**
 
 ## API
 
@@ -110,7 +109,7 @@ If the input is `undefined` or `null` or not a string - empty string will be ret
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-bitbucket-slug)**
 
 ## Licence
 

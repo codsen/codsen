@@ -678,3 +678,13 @@ test("35.03 - Multiple consecutive dashes surrounded by spaces", t => {
     "35.03.02"
   );
 });
+
+test("35.04 - A bug from real life, #1", t => {
+  t.is(
+    s(
+      "## Example - treating the image alt attributes - Gulp and stream-tapping"
+    ),
+    "markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping",
+    "35.04"
+  );
+});
