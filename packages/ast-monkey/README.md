@@ -3,6 +3,7 @@
 > Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -10,11 +11,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- If you only need traversal function, install just it: [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse)
+- If you only need traversal function, install just it: [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse)
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
@@ -64,7 +64,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey.umd.js` | 39 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ## Idea
 
@@ -82,7 +82,7 @@ Using this library, you can delete the particular piece of AST (method [.drop()]
 
 Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ## API
 
@@ -109,7 +109,7 @@ Method `find()` can search objects by key or by value or by both and return the 
 
 Either `opts.key` or `opts.val` or both must be present. If both are missing, `ast-monkey` will throw an error.
 
-`opts.only` is validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+`opts.only` is validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
 | Either type  | Interpreted as array-type | Interpreted as object-type |
 | ------------ | ------------------------- | -------------------------- |
@@ -172,7 +172,7 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .get()
 
@@ -229,7 +229,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .set()
 
@@ -286,7 +286,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .drop()
 
@@ -341,7 +341,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .info()
 
@@ -452,7 +452,7 @@ data.gatherPath = [
 -----------
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .del()
 
@@ -477,7 +477,7 @@ Use method `del()` to delete all chosen key/value pairs from all objects found w
 
 If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match; otherwise, key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
 
-`opts.only` values are validated via dedicated package, [util-array-object-or-both](https://github.com/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+`opts.only` values are validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
 | Either type  | Interpreted as array-type | Interpreted as object-type |
 | ------------ | ------------------------- | -------------------------- |
@@ -525,7 +525,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .arrayFirstOnly()
 
@@ -577,11 +577,11 @@ In practice, it's handy when you want to simplify the data objects. For example,
 | ------- | --------------- | ------------------- |
 | `input` | Same as `input` | The amended `input` |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ### .traverse()
 
-`traverse()` comes from a standalone library, [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse) and you can install and use it as a standalone. Since all methods depend on it, we are exporting it along all other methods. However, it "comes from outside", it's not part of this package's code and the true source of its API is on its own readme. Here, we're just reiterating how to use it.
+`traverse()` comes from a standalone library, [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse) and you can install and use it as a standalone. Since all methods depend on it, we are exporting it along all other methods. However, it "comes from outside", it's not part of this package's code and the true source of its API is on its own readme. Here, we're just reiterating how to use it.
 
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 
@@ -630,7 +630,7 @@ It's very important to **return the value on the callback function** (point mark
 
 If you definitely want to delete, return `NaN`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 #### innerObj in the callback
 
@@ -660,13 +660,13 @@ If monkey is currently traversing an array, going through all elements, a `key` 
 | `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                      |
 | `}`                     |                                                       |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ## The name of this library
 
 HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**. Anything-nested is can also be considered a tree – tree of plain objects, arrays and strings, for example. Monkey can [traverse](#traverse) anything really.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ## Contributing
 
@@ -676,7 +676,7 @@ HTML is parsed into nested objects and arrays which are called Abstract Syntax T
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey)**
 
 ## Licence
 
@@ -686,6 +686,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ast-monkey.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-monkey
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ast-monkey
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/ast-monkey/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/ast-monkey?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

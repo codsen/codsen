@@ -23,19 +23,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- ✨ Updated to the latest release of [ast-monkey-traverse](https://github.com/codsen/ast-monkey-traverse) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
+- ✨ Updated to the latest release of [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
 
 ## [7.2.0] - 2017-12-23
 
 ### Changed
 
-- ✨ Separated `traverse()` into a [standalone library](https://github.com/codsen/ast-monkey-traverse) and then tapped it
+- ✨ Separated `traverse()` into a [standalone library](https://bitbucket.org/codsen/ast-monkey-traverse) and then tapped it
 
 ## [7.1.0] - 2017-10-29
 
 ### Added
 
-- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://github.com/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
+- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://bitbucket.org/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
 - ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
 
 ## [7.0.0] - 2017-10-23
@@ -138,7 +138,7 @@ Hardened the API, namely, all added more validations to options object key value
 
 ### Added
 
-- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://github.com/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
+- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://bitbucket.org/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
 
 ## [5.0.0] - 2017-04-30
 
@@ -175,7 +175,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 ### Added
 
-- ✨ Imagine, you're using [`🐒.traverse()`](https://github.com/codsen/ast-monkey#traverse) on the following piece of AST:
+- ✨ Imagine, you're using [`🐒.traverse()`](https://bitbucket.org/codsen/ast-monkey#traverse) on the following piece of AST:
 
 ```js
 {
@@ -189,7 +189,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 When you'll be traversing the array, `['something', 'anything']`, you'll have access to the **key name**, `title`, via `innerObj.topmostKey` on the callback. ✨
 
-I needed this feature for [json-variables](https://github.com/codsen/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
+I needed this feature for [json-variables](https://bitbucket.org/codsen/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
 
 ## [3.1.0] - 2017-04-01 International Fools day No tricks here though
 
@@ -276,34 +276,35 @@ BREAKING API CHANGES.
 
 - 🔧 Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
 
-[2.0.0]: https://github.com/codsen/ast-monkey/compare/v1.0.1...v2.0.0
-[2.2.0]: https://github.com/codsen/ast-monkey/compare/v2.1.0...v2.2.0
-[2.3.0]: https://github.com/codsen/ast-monkey/compare/v2.2.0...v2.3.0
-[2.4.0]: https://github.com/codsen/ast-monkey/compare/v2.3.0...v2.4.0
-[2.5.0]: https://github.com/codsen/ast-monkey/compare/v2.4.0...v2.5.0
-[2.6.0]: https://github.com/codsen/ast-monkey/compare/v2.5.0...v2.6.0
-[2.7.0]: https://github.com/codsen/ast-monkey/compare/v2.6.0...v2.7.0
-[2.8.0]: https://github.com/codsen/ast-monkey/compare/v2.7.0...v2.8.0
-[2.9.0]: https://github.com/codsen/ast-monkey/compare/v2.8.0...v2.9.0
-[3.0.0]: https://github.com/codsen/ast-monkey/compare/v2.9.0...v3.0.0
-[3.1.0]: https://github.com/codsen/ast-monkey/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/codsen/ast-monkey/compare/v3.1.0...v3.2.0
-[3.3.0]: https://github.com/codsen/ast-monkey/compare/v3.2.2...v3.3.0
-[4.0.0]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
-[5.0.0]: https://github.com/codsen/ast-monkey/compare/v4.0.0...v5.0.0
-[5.1.0]: https://github.com/codsen/ast-monkey/compare/v5.0.0...v5.1.0
-[5.2.0]: https://github.com/codsen/ast-monkey/compare/v5.1.0...v5.2.0
-[5.3.0]: https://github.com/codsen/ast-monkey/compare/v5.2.0...v5.3.0
-[5.4.0]: https://github.com/codsen/ast-monkey/compare/v5.3.0...v5.4.0
-[5.5.0]: https://github.com/codsen/ast-monkey/compare/v5.4.0...v5.5.0
-[6.0.0]: https://github.com/codsen/ast-monkey/compare/v5.5.0...v6.0.0
-[6.1.0]: https://github.com/codsen/ast-monkey/compare/v6.0.0...v6.1.0
-[6.2.0]: https://github.com/codsen/ast-monkey/compare/v6.1.0...v6.2.0
-[6.3.0]: https://github.com/codsen/ast-monkey/compare/v6.2.0...v6.3.0
-[6.4.0]: https://github.com/codsen/ast-monkey/compare/v6.3.0...v6.4.0
-[7.0.0]: https://github.com/codsen/ast-monkey/compare/v6.4.0...v7.0.0
-[v4]: https://github.com/codsen/ast-monkey/compare/v3.3.0...v4.0.0
-[7.1.0]: https://github.com/codsen/ast-monkey/compare/v7.0.0...v7.1.0
-[7.2.0]: https://github.com/codsen/ast-monkey/compare/v7.1.0...v7.2.0
-[7.3.0]: https://github.com/codsen/ast-monkey/compare/v7.2.0...v7.3.0
-[7.4.0]: https://github.com/codsen/ast-monkey/compare/v7.3.4...v7.4.0
+[2.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.0.0%0Dv1.0.1#diff
+[2.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.3.0%0Dv2.2.1#diff
+[2.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.4.0%0Dv2.3.0#diff
+[2.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.5.0%0Dv2.4.0#diff
+[2.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.6.0%0Dv2.5.0#diff
+[2.7.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.7.0%0Dv2.6.0#diff
+[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.5.0#diff
+[2.9.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.9.0%0Dv2.7.0#diff
+[3.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.0.0%0Dv2.9.0#diff
+[3.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.1.0%0Dv3.0.1#diff
+[3.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.2.0%0Dv3.1.3#diff
+[3.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.3.0%0Dv3.2.2#diff
+[4.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v4.0.0%0Dv3.3.0#diff
+[5.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.0.0%0Dv4.0.2#diff
+[5.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.1.0%0Dv5.0.0#diff
+[5.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.2.0%0Dv5.1.0#diff
+[5.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.3.0%0Dv5.2.1#diff
+[5.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.4.0%0Dv5.3.1#diff
+[5.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.5.0%0Dv5.4.1#diff
+[6.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.0.0%0Dv5.5.0#diff
+[6.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.1.0%0Dv6.0.0#diff
+[6.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.2.0%0Dv6.1.1#diff
+[6.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.3.0%0Dv6.2.1#diff
+[6.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.4.0%0Dv6.3.2#diff
+[7.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.0.0%0Dv6.4.4#diff
+[7.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.1.0%0Dv7.0.1#diff
+[v4]: https://bitbucket.org/codsen/ast-monkey/compare/v3.3.0...v4.0.0
+[7.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.2.0%0Dv7.1.6#diff
+[7.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.3.0%0Dv7.2.5#diff
+[7.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.4.0%0Dv7.3.4#diff
+[7.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.5.0%0Dv7.4.3#diff
