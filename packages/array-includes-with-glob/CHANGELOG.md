@@ -70,11 +70,11 @@ Bumping major just in case it breaks somebody's API. But I don't think it will.
 
 - ✨ First public release
 
-[1.2.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.0.0...v1.2.0
-[1.3.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.3.0...v1.4.0
-[1.5.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.4.0...v1.5.0
-[2.0.0]: https://github.com/codsen/array-includes-with-glob/compare/v1.5.4...v2.0.0
-[2.1.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.0.7...v2.1.0
-[2.2.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.1.0...v2.2.0
-[2.3.0]: https://github.com/codsen/array-includes-with-glob/compare/v2.2.2...v2.3.0
+[1.2.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v1.3.0%0Dv1.2.1#diff
+[1.4.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v1.4.0%0Dv1.3.2#diff
+[1.5.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v1.5.0%0Dv1.4.4#diff
+[2.0.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.0.0%0Dv1.5.4#diff
+[2.1.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.1.0%0Dv2.0.7#diff
+[2.2.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.3.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.3.0%0Dv2.2.2#diff
