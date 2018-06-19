@@ -1,7 +1,7 @@
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
-import replaceSlicesArr from 'string-replace-slices-array';
-import Slices from 'string-slices-array-push';
+import replaceSlicesArr from 'ranges-apply';
+import Slices from 'ranges-push';
 import { matchLeftIncl } from 'string-match-left-right';
 
 function collapse(str, originalOpts) {

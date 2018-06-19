@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [TLDR;](#markdown-header-tldr)
 - [Install](#markdown-header-install)
 - [The API](#markdown-header-the-api)
@@ -59,7 +58,7 @@ When collapsing, _only spaces_ are collapsed. Non-space whitespace within text w
 ```
 <!-- prettier-ignore-end -->
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Install
 
@@ -75,7 +74,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-white-space.esm.js` | 20 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-white-space.umd.js` | 36 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## The API
 
@@ -86,9 +85,9 @@ Input:
 - the first argument - string only or will `throw`.
 - the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
 
-Options object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
+Options object is sanitized by [check-types-mini](https://bitbucket.org/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ### Optional Options Object's API:
 
@@ -118,7 +117,7 @@ Options object is sanitized by [check-types-mini](https://github.com/codsen/chec
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Algorithm
 
@@ -130,7 +129,7 @@ Optionally (on by default), it can recognise (X)HTML tags (any out of 118) and f
 
 This algorithm **does not use regexes**.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Usage
 
@@ -158,7 +157,7 @@ console.log("res4 = " + res4);
 // => 'aaa bbb\nccc ddd'
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Smart bits
 
@@ -170,15 +169,15 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's wra
 
 **The plan is**: if there are spaces, this means this suspect tag has got attributes. In that case, there has to be at least one equal sign or equal count of unescaped double quotes. Otherwise, nothing will be collapsed/deleted from that particular tag.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Practical use
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
 
-I'm going to use it first in [Detergent](https://github.com/codsen/detergent), but you never know, it might prove handy in email template building in general.
+I'm going to use it first in [Detergent](https://bitbucket.org/codsen/detergent), but you never know, it might prove handy in email template building in general.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Contributing
 
@@ -188,7 +187,7 @@ I'm going to use it first in [Detergent](https://github.com/codsen/detergent), b
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
 ## Licence
 

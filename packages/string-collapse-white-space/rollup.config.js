@@ -33,9 +33,9 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.isplainobject",
-        "string-match-left-right",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "ranges-apply",
+        "ranges-push",
+        "string-match-left-right"
       ],
       plugins: [
         strip({
@@ -52,9 +52,9 @@ export default commandLineArgs => {
       external: [
         "check-types-mini",
         "lodash.isplainobject",
-        "string-match-left-right",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "ranges-apply",
+        "ranges-push",
+        "string-match-left-right"
       ],
       plugins: [
         strip({

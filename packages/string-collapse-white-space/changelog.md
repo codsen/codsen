@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.6.0] - 2018-06-20
+
+- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+
 ## [3.5.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -78,11 +82,13 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ First public release
 
-[2.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v1.0.0...v2.0.0
-[2.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.1.0...v2.2.0
-[3.0.0]: https://github.com/codsen/string-collapse-white-space/compare/v2.2.0...v3.0.0
-[3.1.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.1.0...v3.2.0
-[3.3.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.2.8...v3.3.0
-[3.4.0]: https://github.com/codsen/string-collapse-white-space/compare/v3.3.0...v3.4.0
+[2.0.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v2.0.0%0Dv1.0.2#diff
+[2.1.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v2.1.0%0Dv2.0.0#diff
+[2.2.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v2.2.0%0Dv2.1.0#diff
+[3.0.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.0.0%0Dv2.2.4#diff
+[3.1.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.1.0%0Dv3.0.10#diff
+[3.2.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.2.0%0Dv3.1.1#diff
+[3.3.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.3.0%0Dv3.2.8#diff
+[3.4.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.4.0%0Dv3.3.2#diff
+[3.5.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.5.0%0Dv3.4.0#diff
+[3.6.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.6.0%0Dv3.5.0#diff
