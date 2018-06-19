@@ -13,14 +13,13 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [API](#markdown-header-markdown-header-api)
-- [For example, reading or querying parsed trees (GET)](#markdown-header-markdown-header-for-example-reading-or-querying-parsed-trees-get)
-- [Writing-over example (SET)](#markdown-header-markdown-header-writing-over-example-set)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [API](#markdown-header-api)
+- [For example, reading or querying parsed trees (GET)](#markdown-header-for-example-reading-or-querying-parsed-trees-get)
+- [Writing-over example (SET)](#markdown-header-writing-over-example-set)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -43,7 +42,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-get-object.esm.js` | 4 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-get-object.umd.js` | 31 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## Purpose
 
@@ -53,7 +52,7 @@ In short, two arguments is GET the results, three arguments is SET (or write ove
 
 Normally you would use this library to get tags from parsed HTML trees, edit the result and later write it over.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## API
 
@@ -69,7 +68,7 @@ getObj(input, keyValPair, replacementContentsArr);
 | `keyValPair`             | Plain object | yes         | Key/value pairs to look for.                                                                                                                       |
 | `replacementContentsArr` | Arrray       | no          | The array of new values to set the findings objects. Those values can even be massive nested trees of plain objects and arrays. It doesn't matter. |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ### API - Output
 
@@ -79,7 +78,7 @@ Output depends on is it GET mode — 2 arguments, or SET mode — 3 arguments.
 
 - If it's **SET mode**, result will be of the same type as your input, but with all plain objects that had your key/value pairs replaced with contents of third, replacement array. Mind you, if you will supply too few elements in the replacements array, this library won't do anything to those findings.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## For example, reading or querying parsed trees (GET)
 
@@ -120,7 +119,7 @@ const result = getObj(
 
 All findings are always wrapped in an array, even if there's just one finding as above.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## Writing-over example (SET)
 
@@ -200,7 +199,7 @@ Result of the above will be:
 ];
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## Contributing
 
@@ -210,7 +209,7 @@ Result of the above will be:
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-object)**
 
 ## Licence
 
