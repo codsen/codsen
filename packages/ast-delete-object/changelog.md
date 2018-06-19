@@ -34,5 +34,6 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/ast-delete-object/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/ast-delete-object/compare/v1.1.3...v1.2.0
+[1.1.0]: https://bitbucket.org/codsen/ast-delete-object/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/ast-delete-object/branches/compare/v1.2.0%0Dv1.1.3#diff
+[1.3.0]: https://bitbucket.org/codsen/ast-delete-object/branches/compare/v1.3.0%0Dv1.2.1#diff

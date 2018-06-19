@@ -13,16 +13,15 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Deleting](#markdown-header-markdown-header-deleting)
-- [Match Keys Strictly setting](#markdown-header-markdown-header-match-keys-strictly-setting)
-- [Hungry For White Space setting](#markdown-header-markdown-header-hungry-for-white-space-setting)
-- [API](#markdown-header-markdown-header-api)
-- [Example](#markdown-header-markdown-header-example)
-- [The story](#markdown-header-markdown-header-the-story)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Deleting](#markdown-header-deleting)
+- [Match Keys Strictly setting](#markdown-header-match-keys-strictly-setting)
+- [Hungry For White Space setting](#markdown-header-hungry-for-white-space-setting)
+- [API](#markdown-header-api)
+- [Example](#markdown-header-example)
+- [The story](#markdown-header-the-story)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -45,7 +44,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-delete-object.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-delete-object.umd.js` | 31 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## Deleting
 
@@ -77,7 +76,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    ]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## Match Keys Strictly setting
 
@@ -118,7 +117,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // ]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## Hungry For White Space setting
 
@@ -148,7 +147,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## API
 
@@ -166,7 +165,7 @@ deleteObj(input, objToDelete, strictOrNot);
 
 By the way, the input arguments are not mutated in any way.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ### API - Options object
 
@@ -177,7 +176,7 @@ By the way, the input arguments are not mutated in any way.
 | `hungryForWhitespace`  | Boolean | no          | `false` | When active, empty value (one which would get `trim`-med to empty string, `""`) will match any other empty value (which might be different matching strictly, yet `trim` to the same empty string, `""`).                                                          |
 | }                      |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ### API - Output
 
@@ -250,15 +249,15 @@ const delObj = require('ast-delete-object')
 parsedHTMLObject = delObj(parsedHTMLObject, { 'tag': 'style', 'content': {} })
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## The story
 
-I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
+I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
 
-Later I stopped parsing the HTML [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes miliseconds.
+Later I stopped parsing the HTML [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes miliseconds.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## Contributing
 
@@ -268,7 +267,7 @@ Later I stopped parsing the HTML [email-remove-unused-css](https://github.com/co
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-delete-object)**
 
 ## Licence
 
