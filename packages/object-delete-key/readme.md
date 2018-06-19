@@ -3,13 +3,9 @@
 > Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,25 +13,15 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Deleting](#deleting)
-- [API](#api)
-- [Example](#example)
-- [Wildcards](#wildcards)
-- [Rationale](#rationale)
-- [This library vs. \_.omit](#this-library-vs-%5C_omit)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Deleting](#markdown-header-deleting)
+- [API](#markdown-header-api)
+- [Example](#markdown-header-example)
+- [Wildcards](#markdown-header-wildcards)
+- [Rationale](#markdown-header-rationale)
+- [This library vs. \_.omit](#markdown-header-this-library-vs-_omit)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -53,27 +39,27 @@ import deleteKey from "object-delete-key";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-delete-key.cjs.js` | 3&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-delete-key.esm.js` | 2&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-delete-key.umd.js` | 40&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-delete-key.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-delete-key.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-delete-key.umd.js` | 40 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## Deleting
 
 Three modes:
 
-* Delete all `key`/`value` pairs found in any nested plain objects where `key` equals `value`.
-* Delete all `key`/`value` pairs found in any nested plain objects where `key` is equal to a certain thing. `value` doesn't matter.
-* Delete all `key`/`value` pairs found in any nested plain objects where `value` is equal to a certain thing. `key` doesn't matter.
+- Delete all `key`/`value` pairs found in any nested plain objects where `key` equals `value`.
+- Delete all `key`/`value` pairs found in any nested plain objects where `key` is equal to a certain thing. `value` doesn't matter.
+- Delete all `key`/`value` pairs found in any nested plain objects where `value` is equal to a certain thing. `key` doesn't matter.
 
 This library accepts anything as input, including [parsed](https://github.com/posthtml/posthtml-parser) HTML, which is _deeply_ nested arrays of plain objects, arrays and strings. You can feed anything as input into this library - if it's traversable, it will be traversed and searched for your `key` and/or `value` in any plain objects.
 
-If you want to delete any nested objects that contain certain `key`/`value` pair(s), check out [ast-delete-object](https://github.com/codsen/ast-delete-object).
+If you want to delete any nested objects that contain certain `key`/`value` pair(s), check out [ast-delete-object](https://bitbucket.org/codsen/ast-delete-object).
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## API
 
@@ -101,7 +87,7 @@ Input arguments are not mutated; this package clones them first before using.
 
 ^ - at least one, `key` or `val` must be present.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 #### Accepted `opts.only` values
 
@@ -120,7 +106,7 @@ If `opts.only` is set to any string longer than zero characters and is **not** c
 
 I want to relieve users from having to check the documentation for `opts.only` values.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ### API - Output
 
@@ -230,11 +216,11 @@ deleteKey(
 // }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## Wildcards
 
-Wildcards can be used in keys and/or values. This library feeds inputs to [ast-monkey](https://github.com/codsen/ast-monkey) which is doing all the heavy lifting, which, in turn, is using [matcher](https://github.com/sindresorhus/matcher).
+Wildcards can be used in keys and/or values. This library feeds inputs to [ast-monkey](https://bitbucket.org/codsen/ast-monkey) which is doing all the heavy lifting, which, in turn, is using [matcher](https://github.com/sindresorhus/matcher).
 
 ```js
 const res = deleteKey(
@@ -256,7 +242,7 @@ console.log(
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## Rationale
 
@@ -264,9 +250,9 @@ Object-key deletion libraries like [node-dropkey](https://github.com/wankdanker/
 
 But in real life, where we deal with AST _trees_ - nested _spaghetti_ of arrays, plain objects and strings — we can't expect anything. This library accepts _anything_ as an input, and no matter how deeply-nested. Feed it some nested AST's (`input`), then optionally a `key` or optionally a `value` (or both), and you'll get a result with that key/value pair removed from every plain object within the `input`.
 
-I use this library in [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) to delete empty carcases of style tags without any selectors or empty class attributes in the inline HTML CSS.
+I use this library in [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) to delete empty carcases of style tags without any selectors or empty class attributes in the inline HTML CSS.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## This library vs. \_.omit
 
@@ -319,22 +305,22 @@ _.omit(
 
 In conclusion, Lodash `_.omit` is different from this library in that:
 
-* `_.omit` will not work on parsed HTML trees, consisting of nested arrays/plain objects
-* `_.omit` will not clean up any stumps left after the deletion.
+- `_.omit` will not work on parsed HTML trees, consisting of nested arrays/plain objects
+- `_.omit` will not clean up any stumps left after the deletion.
 
 If you want to save time, `object-delete-key` is better than Lodash because former is _specialised tool for dealing with AST's_.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-delete-key/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-delete-key/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-delete-key/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-delete-key)**
 
 ## Licence
 
@@ -344,25 +330,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-delete-key.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-delete-key
-[travis-img]: https://img.shields.io/travis/codsen/object-delete-key.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-delete-key
-[cov-img]: https://coveralls.io/repos/github/codsen/object-delete-key/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-delete-key?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-delete-key.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-delete-key
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-delete-key.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-delete-key/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-delete-key
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-delete-key/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-delete-key?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-delete-key
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-delete-key.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-delete-key/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-delete-key/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-delete-key
 [downloads-img]: https://img.shields.io/npm/dm/object-delete-key.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-delete-key
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-delete-key
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/object-delete-key.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-delete-key/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-delete-key
