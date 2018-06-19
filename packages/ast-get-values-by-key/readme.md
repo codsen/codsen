@@ -13,13 +13,12 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Use](#markdown-header-markdown-header-use)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Use](#markdown-header-use)
+- [Purpose](#markdown-header-purpose)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -35,7 +34,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-get-values-by-key.esm.js` | 1 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-get-values-by-key.umd.js` | 12 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
 ## Use
 
@@ -72,7 +71,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //       }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
 ## Purpose
 
@@ -80,7 +79,7 @@ When you parse some HTML using [posthtml-parser](https://github.com/posthtml/pos
 
 Two arguments triggers GET mode; three arguments is SET (or write over) mode.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
 ## API
 
@@ -97,7 +96,7 @@ getAllValuesByKey(
 
 This library does not mutate any input arguments.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
 ## Contributing
 
@@ -107,7 +106,7 @@ This library does not mutate any input arguments.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
 ## Licence
 
