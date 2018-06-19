@@ -35,18 +35,17 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-thousand-separators.esm.js` | 6 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-thousand-separators.umd.js` | 27 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## Table of Contents
 
-- [Install](#markdown-header-markdown-header-install)
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [Examples](#markdown-header-markdown-header-examples)
-- [API](#markdown-header-markdown-header-api)
-- [Algorithm](#markdown-header-markdown-header-algorithm)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [Examples](#markdown-header-examples)
+- [API](#markdown-header-api)
+- [Algorithm](#markdown-header-algorithm)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Purpose
 
@@ -56,7 +55,7 @@ The main consumer will be [csv-split-easy](https://bitbucket.org/codsen/csv-spli
 
 The numeric string must be NUMERIC, that is, not contain any letters or other unrelated characters. It can contain empty space though, which will be automatically trimmed.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## Examples
 
@@ -98,7 +97,7 @@ console.log(remSep("100'000.2"));
 // => "100000.20" (Swiss notation)
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## API
 
@@ -107,7 +106,7 @@ console.log(remSep("100'000.2"));
 If first argument (input) is not `string`, it will `throw` and error.
 Second input argument, `opts`, is optional. However, if _it is_ present and is not `null`, not `undefined` and not a plain object, it will `throw` and error.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ### options
 
@@ -129,7 +128,7 @@ Second input argument, `opts`, is optional. However, if _it is_ present and is n
 | `forceUKStyle`                        | Boolean | no          | `false` | Should we convert the decimal separator commas into dots? `1,5` → `1.5`?                                                                        |
 | }                                     |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## Algorithm
 
@@ -137,7 +136,7 @@ This library uses my new favourite, string trickle-class ("strickle-class") algo
 
 That's a different approach from using regexes. Regexes are an easy solution when it is possible to achieve it using them. However, most of the cases, limits of regexes dictate the limits of the algorithms, and as a result, we sometimes see crippled web apps that are not smart and not really universal. For example, when we banked with Metro Bank back in 2015, they used to export CSV's with some numbers having a thousand separators and some not having them. Also, separately from that, some numbers were wrapped with double quotes, and some were not. That drew my accounting software crazy, and we had to manually edit the CSV's each time. Funnily, a combination of this library and [csv-split-easy](https://bitbucket.org/codsen/csv-split-easy) would solve such issues. The question is, how come corporate software can't do things that open source can? Is it corporate ceilings of all kinds or is it the power of JavaScript?
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## Contributing
 
@@ -147,7 +146,7 @@ That's a different approach from using regexes. Regexes are an easy solution whe
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-thousand-separators)**
 
 ## Licence
 

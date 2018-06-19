@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-06-20
+
+- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+
 ## [2.2.0] - 2018-06-16
 
 GitHub sold us out. In the meantime, we:
@@ -50,3 +54,4 @@ GitHub sold us out. In the meantime, we:
 [2.0.0]: https://bitbucket.org/codsen/string-remove-thousand-separators/branches/compare/v2.0.0%0Dv1.2.0#diff
 [2.1.0]: https://bitbucket.org/codsen/string-remove-thousand-separators/branches/compare/v2.1.0%0Dv2.0.8#diff
 [2.2.0]: https://bitbucket.org/codsen/string-remove-thousand-separators/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.3.0]: https://bitbucket.org/codsen/string-remove-thousand-separators/branches/compare/v2.3.0%0Dv2.2.0#diff

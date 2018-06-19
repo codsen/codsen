@@ -158,8 +158,8 @@
     "is-numeric": "0.0.9",
     "lodash.isplainobject": "*",
     "lodash.trim": "*",
-    "string-replace-slices-array": "^2.2.2",
-    "string-slices-array-push": "^2.8.1"
+    "ranges-apply": "^2.3.1",
+    "ranges-push": "^2.9.1"
   },
   "devDependencies": {
     "ava": "latest",

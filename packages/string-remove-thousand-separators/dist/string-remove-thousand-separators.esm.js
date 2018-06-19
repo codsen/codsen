@@ -1,5 +1,5 @@
-import replaceSlicesArr from 'string-replace-slices-array';
-import Slices from 'string-slices-array-push';
+import replaceSlicesArr from 'ranges-apply';
+import Slices from 'ranges-push';
 import isObj from 'lodash.isplainobject';
 import checkTypes from 'check-types-mini';
 import isNum from 'is-numeric';

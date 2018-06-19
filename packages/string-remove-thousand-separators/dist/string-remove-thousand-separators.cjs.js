@@ -2,8 +2,8 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var replaceSlicesArr = _interopDefault(require('string-replace-slices-array'));
-var Slices = _interopDefault(require('string-slices-array-push'));
+var replaceSlicesArr = _interopDefault(require('ranges-apply'));
+var Slices = _interopDefault(require('ranges-push'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var isNum = _interopDefault(require('is-numeric'));

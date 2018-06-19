@@ -35,8 +35,8 @@ export default commandLineArgs => {
         "is-numeric",
         "lodash.isplainobject",
         "lodash.trim",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "ranges-apply",
+        "ranges-push"
       ],
       plugins: [
         strip({
@@ -55,8 +55,8 @@ export default commandLineArgs => {
         "is-numeric",
         "lodash.isplainobject",
         "lodash.trim",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "ranges-apply",
+        "ranges-push"
       ],
       plugins: [
         strip({
