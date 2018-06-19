@@ -13,11 +13,10 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
-- [Difference from `ast-compare`](#markdown-header-difference-from-`ast-compare`)
-- [Differences from \_.isMatch](#markdown-header-differences-from-_.ismatch)
+- [Difference from `ast-compare`](#markdown-header-difference-from-ast-compare)
+- [Differences from \_.isMatch](#markdown-header-differences-from-_ismatch)
 - [Competition](#markdown-header-competition)
 - [API](#markdown-header-api)
 - [More examples](#markdown-header-more-examples)
@@ -45,7 +44,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-loose-compare.esm.js` | 3 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-loose-compare.umd.js` | 14 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Purpose
 
@@ -108,13 +107,13 @@ compare(
 // => true
 ```
 
-Main purpose of this library is to compare parsed HTML/CSS trees when deleting empty [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) branches. This library is a dependency for [ast-delete-object](https://github.com/codsen/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
+Main purpose of this library is to compare parsed HTML/CSS trees when deleting empty [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) branches. This library is a dependency for [ast-delete-object](https://bitbucket.org/codsen/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Difference from `ast-compare`
 
-There is another similarly-named library, [ast-compare](https://github.com/codsen/ast-compare). The difference between the two is the following.
+There is another similarly-named library, [ast-compare](https://bitbucket.org/codsen/ast-compare). The difference between the two is the following.
 
 `ast-compare` will check: is something a _subset_ or exactly equal of something. If **subset** query item has empty array or an array with empty string with it, it will search for exactly the same on the **superset** query item. Unlike in [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch), empty array will not be reported as equal to non-empty array.
 
@@ -122,7 +121,7 @@ There is another similarly-named library, [ast-compare](https://github.com/codse
 
 In Lodash [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch), an empty array will be equal to anything that has only empty space (on other objects/arrays containing only empty space). Here, `ast-loose-compare` will report that empty array is not equal to non-empty array (or anything containing non just an empty space).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Differences from \_.isMatch
 
@@ -130,15 +129,15 @@ In Lodash [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch), an empty a
 
 [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. In this library, empty array will not be reported as equal to non-empty array, although if both arguments contain something which is _empty space_, they will be considered equal.
 
-If you want an AST comparison library with a stricter ways towards the _empty space equation_, check [ast-compare](https://github.com/codsen/ast-compare).
+If you want an AST comparison library with a stricter ways towards the _empty space equation_, check [ast-compare](https://bitbucket.org/codsen/ast-compare).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Competition
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of something. Normally `_.isMatch` would do the deed but it positively matches empty arays against any arrays. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## API
 
@@ -155,7 +154,7 @@ looseCompare(
 - For all other cases where inputs are missing/`undefined`, returns `undefined`.
 - If both `smallObj` and `bigObj` contain the same key and their values contain only empty space (differing or not), they will be considered equal.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## More examples
 
@@ -189,7 +188,7 @@ compare({ a: "a" });
 // => undefined, because second input value is missing
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Contributing
 
@@ -199,7 +198,7 @@ compare({ a: "a" });
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Licence
 
