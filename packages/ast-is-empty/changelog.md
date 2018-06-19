@@ -26,4 +26,5 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ First public release.
 
-[1.1.0]: https://github.com/codsen/ast-is-empty/compare/v1.0.1...v1.1.0
+[1.2.0]: https://bitbucket.org/codsen/ast-is-empty/branches/compare/v1.2.0%0Dv1.1.1#diff
+[1.1.0]: https://bitbucket.org/codsen/ast-is-empty/branches/compare/v1.1.0%0Dv1.0.1#diff

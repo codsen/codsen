@@ -13,12 +13,11 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Rationale](#markdown-header-markdown-header-rationale)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Rationale](#markdown-header-rationale)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -43,7 +42,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-is-empty.esm.js` | 875 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-is-empty.umd.js` | 1 KB  |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-is-empty)**
 
 ## Rationale
 
@@ -93,7 +92,7 @@ Practically speaking, when you work with AST's, all the mentioned empty things a
 
 Functions are not considered to be empty and this library will return `null` if it encounters one anywhere within the `input`. Same with as `undefined` or `null` inputs — both will yield `null`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-is-empty)**
 
 ## API
 
@@ -107,7 +106,7 @@ isEmpty(
 // => true||false
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-is-empty)**
 
 ## Contributing
 
@@ -117,7 +116,7 @@ isEmpty(
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-is-empty)**
 
 ## Licence
 
