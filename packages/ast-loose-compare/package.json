@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
