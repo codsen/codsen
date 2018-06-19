@@ -3,13 +3,9 @@
 > Add missing keys into plain objects, according to a reference object
 
 [![Minimum Node version required][node-img]][node-url]
-[![Build Status][travis-img]][travis-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
-[![bitHound Dev Dependencies][dev-img]][dev-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -17,23 +13,13 @@
 
 ## Table of Contents
 
-<!-- prettier-ignore-start -->
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Purpose](#purpose)
-- [How this works](#how-this-works)
-- [Example](#example)
-- [API](#api)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-<!-- prettier-ignore-end -->
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [How this works](#markdown-header-how-this-works)
+- [Example](#markdown-header-example)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -50,19 +36,19 @@ import fillMissingKeys from "object-fill-missing-keys";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                   | Size       |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ---------- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-fill-missing-keys.cjs.js` | 6&nbsp;KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-fill-missing-keys.esm.js` | 6&nbsp;KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-fill-missing-keys.umd.js` | 50&nbsp;KB |
+| Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-fill-missing-keys.cjs.js` | 6 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-fill-missing-keys.esm.js` | 6 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-fill-missing-keys.umd.js` | 51 KB |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## Purpose
 
-This library fills missing keys in a plain object according to a supplied reference object. It is driving the [json-comb-core](https://github.com/codsen/json-comb-core#enforcekeyset) method `enforceKeyset()`.
+This library fills missing keys in a plain object according to a supplied reference object. It is driving the [json-comb-core](https://bitbucket.org/codsen/json-comb-core#enforcekeyset) method `enforceKeyset()`.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## How this works
 
@@ -72,9 +58,9 @@ This library performs the key creation part in the JSON files' _normalisation_ o
 
 First, you take two or more plain objects, normally originating from JSON files' contents.
 
-Then, you [calculate](https://github.com/codsen/json-comb-core#getkeyset) the _schema reference_ out of them. It's a superset object of all possible keys used across the objects (your JSON files).
+Then, you [calculate](https://bitbucket.org/codsen/json-comb-core#getkeyset) the _schema reference_ out of them. It's a superset object of all possible keys used across the objects (your JSON files).
 
-Finally, you go through your plain objects second time, one-by-one and [fill missing keys](https://github.com/codsen/json-comb-core#enforcekeyset) using **this library**. It takes the plain object and your generated _schema reference_ (and optionally a custom placeholder if you don't like Boolean `false`) and creates missing keys/arrays in that plain object.
+Finally, you go through your plain objects second time, one-by-one and [fill missing keys](https://bitbucket.org/codsen/json-comb-core#enforcekeyset) using **this library**. It takes the plain object and your generated _schema reference_ (and optionally a custom placeholder if you don't like Boolean `false`) and creates missing keys/arrays in that plain object.
 
 ---
 
@@ -82,7 +68,7 @@ Alternatively, you can use this library just to add missing keys. Mind you, for 
 
 Previously I kept "insurance" function which took a schema reference object and overwrote all its values to the `opts.placeholder`, but then I understood that "normal" reference schemas will always come with right key values anyway, and such operation would waste resources.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## Example
 
@@ -107,7 +93,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 // }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## API
 
@@ -125,19 +111,19 @@ Input arguments are not mutated, inputs are cloned before being used. That's imp
 | `schemaObj`     | Plain object | yes         | Schema object which contains a desired set of values. Can be nested or hold arrays of things. |
 | `opts`          | Plain object | no          | Optional Options Object, see below for its API                                                |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ### An Optional Options Object
 
-| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| ---------------------------------------------- | ----------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ---------------------------------------------- | ----------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                              |                               |                 |
-| `placeholder`                                  | Anything                      | Boolean `false` | Used only in combination with `doNotFillThesePathsIfTheyContainPlaceholders` as a means to compare do all children keys contain placeholder values. It won't patch up your reference schema objects (for performance reasons). Always make sure your reference schema object has all values [set](https://github.com/codsen/object-set-all-values-to) to be a desired `placeholder` (default placeholder is usually Boolean `false`). |
-| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                    |
-| `useNullAsExplicitFalse`                       | Boolean                       | `true`          | When filling the keys, when this setting is on if there is existing key with `null` value it won't get the value assigned to anything, even if the reference object would otherwise set it to a nested something. Under bonnet it's setting same-named options key for [object-merge-advanced](https://github.com/codsen/object-merge-advanced).                                                                                      |
+| `placeholder`                                  | Anything                      | Boolean `false` | Used only in combination with `doNotFillThesePathsIfTheyContainPlaceholders` as a means to compare do all children keys contain placeholder values. It won't patch up your reference schema objects (for performance reasons). Always make sure your reference schema object has all values [set](https://bitbucket.org/codsen/object-set-all-values-to) to be a desired `placeholder` (default placeholder is usually Boolean `false`). |
+| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                       |
+| `useNullAsExplicitFalse`                       | Boolean                       | `true`          | When filling the keys, when this setting is on if there is existing key with `null` value it won't get the value assigned to anything, even if the reference object would otherwise set it to a nested something. Under bonnet it's setting same-named options key for [object-merge-advanced](https://bitbucket.org/codsen/object-merge-advanced).                                                                                      |
 | }                                              |                               |                 |
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ### `opts.doNotFillThesePathsIfTheyContainPlaceholders`
 
@@ -286,7 +272,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 // }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ### `opts.useNullAsExplicitFalse`
 
@@ -317,7 +303,7 @@ console.log(
 //    }
 ```
 
-But if you turn it off, usual [rules of merging](https://github.com/codsen/object-merge-advanced#purpose) apply and null, being towards the bottom of the value priority scale, gets trumped by nearly every other type of value (not to mention a non-empty array `['z']` in an example below):
+But if you turn it off, usual [rules of merging](https://bitbucket.org/codsen/object-merge-advanced#purpose) apply and null, being towards the bottom of the value priority scale, gets trumped by nearly every other type of value (not to mention a non-empty array `['z']` in an example below):
 
 ```js
 const res1 = fillMissingKeys(
@@ -342,17 +328,17 @@ console.log(
 //    }
 ```
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## Contributing
 
-* If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://github.com/codsen/object-fill-missing-keys/issues).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-fill-missing-keys/issues/new).
 
-* If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://github.com/codsen/object-fill-missing-keys/issues).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-fill-missing-keys/issues/new).
 
-* If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ &nbsp;back to top](#)**
+**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
 ## Licence
 
@@ -362,25 +348,17 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/object-fill-missing-keys.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-fill-missing-keys
-[travis-img]: https://img.shields.io/travis/codsen/object-fill-missing-keys.svg?style=flat-square
-[travis-url]: https://travis-ci.org/codsen/object-fill-missing-keys
-[cov-img]: https://coveralls.io/repos/github/codsen/object-fill-missing-keys/badge.svg?style=flat-square?branch=master
-[cov-url]: https://coveralls.io/github/codsen/object-fill-missing-keys?branch=master
-[overall-img]: https://img.shields.io/bithound/code/github/codsen/object-fill-missing-keys.svg?style=flat-square
-[overall-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys
-[deps-img]: https://img.shields.io/bithound/dependencies/github/codsen/object-fill-missing-keys.svg?style=flat-square
-[deps-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys/master/dependencies/npm
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/object-fill-missing-keys
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-fill-missing-keys/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/object-fill-missing-keys?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-fill-missing-keys
-[dev-img]: https://img.shields.io/bithound/devDependencies/github/codsen/object-fill-missing-keys.svg?style=flat-square
-[dev-url]: https://www.bithound.io/github/codsen/object-fill-missing-keys/master/dependencies/npm
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/object-fill-missing-keys/badge.svg?style=flat-square
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/object-fill-missing-keys
 [downloads-img]: https://img.shields.io/npm/dm/object-fill-missing-keys.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/object-fill-missing-keys
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/object-fill-missing-keys
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[prettier-url]: https://github.com/prettier/prettier
-[license-img]: https://img.shields.io/npm/l/object-fill-missing-keys.svg?style=flat-square
-[license-url]: https://github.com/codsen/object-fill-missing-keys/blob/master/license.md
+[prettier-url]: https://prettier.io
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/object-fill-missing-keys
