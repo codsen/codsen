@@ -32,18 +32,17 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-of-arrays-sort-by-col.esm.js` | 4 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-of-arrays-sort-by-col.umd.js` | 11 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## Table of Contents
 
-- [Install](#markdown-header-markdown-header-install)
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [What it does](#markdown-header-markdown-header-what-it-does)
-- [Sorting by certain column](#markdown-header-markdown-header-sorting-by-certain-column)
-- [API](#markdown-header-markdown-header-api)
-- [Purpose of this library](#markdown-header-markdown-header-purpose-of-this-library)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [What it does](#markdown-header-what-it-does)
+- [Sorting by certain column](#markdown-header-sorting-by-certain-column)
+- [API](#markdown-header-api)
+- [Purpose of this library](#markdown-header-purpose-of-this-library)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## What it does
 
@@ -93,7 +92,7 @@ Rules:
 1 --- null - null
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## Sorting by certain column
 
@@ -113,7 +112,7 @@ console.log(
 // => input = [[1, 7, 5], [1, 8, 2], [1, 9, 0], [1]],
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## API
 
@@ -126,7 +125,7 @@ console.log(
 | `arr`          | Array of zero or more arrays                    | yes         | Source of data to put into an AST                                                                                |
 | `index`        | Natural number or zero, like a number or string | no          | By which column should we match the subarrays (rows)? The default is `0` or the first element of each sub-array. |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ### API - Output
 
@@ -134,7 +133,7 @@ console.log(
 | --------------- | --------------------------------------------------- |
 | Array of arrays | Same thing as input but sorted (if given not empty) |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## Purpose of this library
 
@@ -146,7 +145,7 @@ Outside of this case, this library could be used to sort two-dimensional arrays 
 
 Practically, in human terms, this library makes sure the values clump around the particular column and "float" to the top as much as possible.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## Contributing
 
@@ -156,7 +155,7 @@ Practically, in human terms, this library makes sure the values clump around the
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-array-of-arrays-sort-by-col)**
 
 ## Licence
 
