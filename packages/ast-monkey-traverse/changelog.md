@@ -26,3 +26,7 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.1 - 2017-12-22
 
 - ✨ First public release.
+
+[1.3.0]: https://bitbucket.org/codsen/ast-monkey-traverse/branches/compare/v1.3.0%0Dv1.2.1#diff
+[1.2.0]: https://bitbucket.org/codsen/ast-monkey-traverse/branches/compare/v1.2.0%0Dv1.1.3#diff
+[1.1.0]: https://bitbucket.org/codsen/ast-monkey-traverse/branches/compare/v1.1.0%0Dv1.0.4#diff

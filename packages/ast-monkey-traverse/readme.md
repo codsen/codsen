@@ -15,7 +15,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
@@ -45,7 +44,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey-traverse.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey-traverse.umd.js` | 10 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey-traverse)**
 
 ## Idea
 
@@ -73,7 +72,7 @@ It's very important to **return the value of the callback function** (point mark
 
 If you want to delete, return `NaN`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey-traverse)**
 
 #### innerObj in the callback
 
@@ -103,7 +102,7 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 | `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                      |
 | `}`                     |                                                       |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey-traverse)**
 
 ## Contributing
 
@@ -113,7 +112,7 @@ If `traverse()` is currently traversing an array, going through all elements, a 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ast-monkey-traverse)**
 
 ## Licence
 
