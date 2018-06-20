@@ -3,6 +3,7 @@
 > Check the types of your options object's values after user has customised them
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -12,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
@@ -42,7 +42,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 13 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ## Idea
 
@@ -62,7 +62,7 @@ Originally this library started as a function within one of my libraries. When I
 
 The point of `check-types-mini` is to save your time: time spent coding up all these checks, time spent debugging, and even consumers' time spent debugging your API when they try to use it wrongly. Every library that has options object will need some **type checks** if you let user tinker with it.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ## API
 
@@ -80,7 +80,7 @@ Technically speaking, the main and only job of `check-types-mini` is to _throw_ 
 
 ^`ref` can be `null` or `undefined` if all keys are set via `opts.schema` (see below).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ### Options object
 
@@ -96,7 +96,7 @@ Technically speaking, the main and only job of `check-types-mini` is to _throw_ 
 | `optsVarName`          | String                     | no          | `opts`                                                                                                           | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation. |
 | }                      |                            |             |                                                                                                                  |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ### For example
 
@@ -179,15 +179,15 @@ checkTypes(
 
 If you want, you can blacklist certain keys of your objects so that `opts.acceptArrays` will not apply to them. Just add keys into `opts.acceptArraysIgnore` array.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [ast-delete-object](https://github.com/codsen/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
+When I was coding a new major version of [ast-delete-object](https://bitbucket.org/codsen/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ### `opts.schema`
 
@@ -256,7 +256,7 @@ const res = checkTypes(
 
 All the type values you put into `opts.schema` _are not validated_, on purpose, so please don't make typos.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ## Contributing
 
@@ -266,7 +266,7 @@ All the type values you put into `opts.schema` _are not validated_, on purpose, 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-check-types-mini)**
 
 ## Licence
 
@@ -276,6 +276,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/check-types-mini.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/check-types-mini
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/check-types-mini
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/check-types-mini/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/check-types-mini?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

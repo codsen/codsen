@@ -76,7 +76,7 @@ checkTypes(opts, defaults <...>)
 - ✨ Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
 - More unit tests. Coverage is still solid 100%.
 
-Funny, I discovered this issue when I tried to set up `check-types-mini` on [easy-replace](https://github.com/codsen/easy-replace). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
+Funny, I discovered this issue when I tried to set up `check-types-mini` on [easy-replace](https://bitbucket.org/codsen/easy-replace). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
 
 ## [2.1.0] - 2017-06-18
 
@@ -134,21 +134,22 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 
 - First public release
 
-[1.1.0]: https://github.com/codsen/check-types-mini/compare/v1.0.1...v1.1.0
-[1.2.0]: https://github.com/codsen/check-types-mini/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/check-types-mini/compare/v1.2.2...v1.3.0
-[1.4.0]: https://github.com/codsen/check-types-mini/compare/v1.3.0...v1.4.0
-[1.5.0]: https://github.com/codsen/check-types-mini/compare/v1.4.0...v1.5.0
-[1.6.0]: https://github.com/codsen/check-types-mini/compare/v1.5.0...v1.6.0
-[2.0.0]: https://github.com/codsen/check-types-mini/compare/v1.6.0...v2.0.0
-[2.1.0]: https://github.com/codsen/check-types-mini/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/check-types-mini/compare/v2.1.0...v2.2.0
-[2.3.0]: https://github.com/codsen/check-types-mini/compare/v2.2.0...v2.3.0
-[2.4.0]: https://github.com/codsen/check-types-mini/compare/v2.3.0...v2.4.0
-[2.5.0]: https://github.com/codsen/check-types-mini/compare/v2.4.0...v2.5.0
-[2.6.0]: https://github.com/codsen/check-types-mini/compare/v2.5.0...v2.6.0
-[2.7.0]: https://github.com/codsen/check-types-mini/compare/v2.6.0...v2.7.0
-[3.0.0]: https://github.com/codsen/check-types-mini/compare/v2.7.0...v3.0.0
-[3.1.0]: https://github.com/codsen/check-types-mini/compare/v3.0.4...v3.1.0
-[3.2.0]: https://github.com/codsen/check-types-mini/compare/v3.1.2...v3.2.0
-[3.3.0]: https://github.com/codsen/check-types-mini/compare/v3.2.0...v3.3.0
+[1.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.2.0%0Dv1.1.1#diff
+[1.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.3.0%0Dv1.2.2#diff
+[1.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.5.0%0Dv1.4.1#diff
+[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv3.4.2#diff
+[2.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.0.0%0Dv1.5.0#diff
+[2.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.1.0%0Dv2.0.3#diff
+[2.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.2.0%0Dv2.1.1#diff
+[2.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.3.0%0Dv2.2.1#diff
+[2.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.4.0%0Dv2.3.0#diff
+[2.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.5.0%0Dv2.4.2#diff
+[2.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.6.0%0Dv2.5.0#diff
+[2.7.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.7.0%0Dv2.6.1#diff
+[3.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.0.0%0Dv2.7.0#diff
+[3.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.1.0%0Dv3.0.4#diff
+[3.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.2.0%0Dv3.1.2#diff
+[3.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.3.0%0Dv3.2.0#diff
+[3.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.4.0%0Dv3.3.1#diff
