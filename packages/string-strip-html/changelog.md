@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-06-20
+
+- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+
 ## [2.3.0] - 2018-06-08
 
 - ✨ Improvements to dirty code recognition algorithm
@@ -71,10 +75,12 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/string-strip-html/compare/v1.0.1...v1.1.0
-[1.2.0]: https://github.com/codsen/string-strip-html/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/string-strip-html/compare/v1.2.6...v1.3.0
-[1.4.0]: https://github.com/codsen/string-strip-html/compare/v1.3.2...v1.4.0
-[2.0.0]: https://github.com/codsen/string-strip-html/compare/v1.4.2...v2.0.0
-[2.1.0]: https://github.com/codsen/string-strip-html/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/string-strip-html/compare/v2.1.2...v2.2.0
+[1.1.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v1.3.0%0Dv1.2.6#diff
+[1.4.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v1.4.0%0Dv1.3.2#diff
+[2.0.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.0.0%0Dv1.4.2#diff
+[2.1.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.1.0%0Dv2.0.0#diff
+[2.2.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.2.0%0Dv2.1.2#diff
+[2.3.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.3.0%0Dv2.2.2#diff
+[2.4.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.4.0%0Dv2.3.0#diff

@@ -161,8 +161,8 @@
     "ent": "^2.2.0",
     "lodash.isplainobject": "latest",
     "lodash.trim": "^4.5.1",
-    "string-replace-slices-array": "^2.2.2",
-    "string-slices-array-push": "^2.8.1"
+    "ranges-apply": "^2.3.1",
+    "ranges-push": "^2.9.1"
   },
   "devDependencies": {
     "ava": "latest",

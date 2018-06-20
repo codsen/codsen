@@ -1,5 +1,5 @@
-import replaceSlicesArr from "string-replace-slices-array";
-import Slices from "string-slices-array-push";
+import rangesApply from "ranges-apply";
+import Ranges from "ranges-push";
 import isObj from "lodash.isplainobject";
 import trim from "lodash.trim";
 import checkTypes from "check-types-mini";
@@ -133,7 +133,7 @@ function stripHtml(str, originalOpts) {
 
   const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
 
-  const rangesToDelete = new Slices({ limitToBeAddedWhitespace: true });
+  const rangesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 
   // variables
   // ===========================================================================
@@ -1084,7 +1084,7 @@ function stripHtml(str, originalOpts) {
 
     // catch the ending of the tag
     // -------------------------------------------------------------------------
-    // the tag is "released" into "replaceSlicesArr":
+    // the tag is "released" into "rangesApply":
 
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
@@ -1621,7 +1621,7 @@ function stripHtml(str, originalOpts) {
       );
       return rangesToDelete.current();
     }
-    const untrimmedRes = replaceSlicesArr(str, rangesToDelete.current());
+    const untrimmedRes = rangesApply(str, rangesToDelete.current());
     if (opts.trimOnlySpaces) {
       console.log(
         `1531 returning result with only spaces trimmed: "${trim(

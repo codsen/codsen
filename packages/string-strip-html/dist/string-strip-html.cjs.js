@@ -2,8 +2,8 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var replaceSlicesArr = _interopDefault(require('string-replace-slices-array'));
-var Slices = _interopDefault(require('string-slices-array-push'));
+var rangesApply = _interopDefault(require('ranges-apply'));
+var Ranges = _interopDefault(require('ranges-push'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var trim = _interopDefault(require('lodash.trim'));
 var checkTypes = _interopDefault(require('check-types-mini'));
@@ -24,7 +24,7 @@ function stripHtml(str, originalOpts) {
 
   var stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
 
-  var rangesToDelete = new Slices({ limitToBeAddedWhitespace: true });
+  var rangesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
 
   // variables
   // ===========================================================================
@@ -581,7 +581,7 @@ function stripHtml(str, originalOpts) {
 
     // catch the ending of the tag
     // -------------------------------------------------------------------------
-    // the tag is "released" into "replaceSlicesArr":
+    // the tag is "released" into "rangesApply":
 
     if (tag.lastOpeningBracketAt !== undefined) {
       if (tag.lastClosingBracketAt === undefined) {
@@ -842,7 +842,7 @@ function stripHtml(str, originalOpts) {
     if (opts.returnRangesOnly) {
       return rangesToDelete.current();
     }
-    var untrimmedRes = replaceSlicesArr(str, rangesToDelete.current());
+    var untrimmedRes = rangesApply(str, rangesToDelete.current());
     if (opts.trimOnlySpaces) {
       return trim(untrimmedRes, " ");
     }

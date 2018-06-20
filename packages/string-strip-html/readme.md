@@ -3,6 +3,7 @@
 > Strips HTML tags from strings. Detects legit unencoded brackets.
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -38,12 +39,11 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 41 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 97 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Purpose](#markdown-header-purpose)
 - [Features](#markdown-header-features)
 - [API](#markdown-header-api)
@@ -57,7 +57,7 @@ Here's what you'll get:
 
 This library only detects and removes HTML tags from strings (text, in other words). Not more, not less. If something is deemed to be not a tag, it will not be removed. The bar is set higher than browsers - we aim to tackle as much broken code as possible so that later everything will work on browsers. This library is a development tool.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Features
 
@@ -70,7 +70,7 @@ This library only detects and removes HTML tags from strings (text, in other wor
 - Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn decoding off via `opts.skipHtmlDecoding`)
 - It doesn't assume anything about the input source or purpose of the output string
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## API
 
@@ -85,7 +85,7 @@ String-in string-out, with optional second input argument - an Optional Options 
 
 If input arguments are supplied have any other types, an error will be `throw`n.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ### Optional Options Object
 
@@ -100,7 +100,7 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `dumpLinkHrefsNearby`            | Boolean                                              | `false`                      | Used to retain HREF link URL's - handy when producing email Text versions.                                                                                                              |
 | }                                |                                                      |                              |
 
-The Optional Options Object is validated by [check-types-mini](https://github.com/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+The Optional Options Object is validated by [check-types-mini](https://bitbucket.org/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
 Here is the Optional Options Object in one place (in case you ever want to copy it whole):
 
@@ -115,7 +115,7 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ### API - Output
 
@@ -135,7 +135,7 @@ Now, `string-strip-html` can also return ranges instead of a final string.
 
 **PS.** If you wonder how [Unicode problem](https://mathiasbynens.be/notes/javascript-unicode) affects _ranges_ concept — the answer is — they are not related. As long as you use JavaScript, all strings will use native JS string index system, the same which ranges use. Now it's your challenge is to put _correct_ ranges that mean intended string pieces.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ### `opts.trimOnlySpaces`
 
@@ -167,7 +167,7 @@ is turned into:
 
 Notice how space chunks between `nbsp`'s and text are retained when `opts.trimOnlySpaces` is set to `true`. But the default is `false`; this feature is off by default.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ### `opts.dumpLinkHrefsNearby`
 
@@ -199,13 +199,13 @@ Codsen https://codsen.com
 
 This feature is off by default; you need to turn it on, passing options object with a key `opts.dumpLinkHrefsNearby` set to `true`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Not assuming anything
 
 Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
 
-But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://github.com/codsen/detergent) for example?
+But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://bitbucket.org/codsen/detergent) for example?
 
 For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **to paste the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection and cross-site scripting. Notice there's even spaces around brackets! It's just that the cleaning tool is very _universal_ and just happens _to snuff out and remove HTML_.
 
@@ -215,11 +215,11 @@ But, if you think, a child can code up bracket-to-bracket removal library in 5 m
 
 Choose your HTML stripping tool wisely.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Bigger picture
 
-I scratched my itch, producing [Detergent](https://github.com/codsen/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
+I scratched my itch, producing [Detergent](https://bitbucket.org/codsen/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
 
 Detergent would remove the excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input — stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
 
@@ -229,7 +229,7 @@ I was able to quickly replace all functions that Detergent was consuming from `s
 
 This library is the last missing piece of a puzzle to get rid of `string.js`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Contributing
 
@@ -239,7 +239,7 @@ This library is the last missing piece of a puzzle to get rid of `string.js`.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Licence
 
@@ -249,6 +249,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/string-strip-html.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-strip-html
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/string-strip-html
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-strip-html/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/string-strip-html?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
