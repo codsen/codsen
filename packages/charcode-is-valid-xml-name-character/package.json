@@ -159,7 +159,7 @@
     }
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.5.2"
+    "ranges-is-index-within": "^1.6.0"
   },
   "devDependencies": {
     "ava": "latest",

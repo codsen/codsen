@@ -33,7 +33,7 @@ GitHub sold us out. In the meantime, we:
 
 ### New
 
-- ✨ Tapped the dependency [ranges-is-index-within](https://github.com/codsen/ranges-is-index-within) with sorting turned off to save resources. (`opts.skipIncomingRangeSorting` setting)
+- ✨ Tapped the dependency [ranges-is-index-within](https://bitbucket.org/codsen/ranges-is-index-within) with sorting turned off to save resources. (`opts.skipIncomingRangeSorting` setting)
 
 ## 1.0.0 - 2018-02-05
 
@@ -41,7 +41,8 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/charcode-is-valid-xml-name-character/compare/v1.3.0...v1.4.0
+[1.1.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.4.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.4.0%0Dv1.3.1#diff
+[1.5.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.5.0%0Dv1.4.0#diff

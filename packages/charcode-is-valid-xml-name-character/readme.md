@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [What is does](#markdown-header-what-is-does)
 - [In practice](#markdown-header-in-practice)
@@ -49,7 +48,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 20 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ## What is does
 
@@ -59,7 +58,7 @@ This library is used to detect where (X)HTML element names end.
 
 This article contains an in-depth explanation of the spec terminology: https://www.xml.com/pub/a/2001/07/25/namingparts.html — it helped me to get up to speed on this subject.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ## In practice
 
@@ -75,7 +74,7 @@ In the most simple scenario:
 
 Characters `space` (1) and `=` (2) in the example above mark the ending of the element names (`img` and `class`). OK, so we know spaces and equals' are not allowed as element names and therefore mark their ending. Are there more of such characters? Oh yes. Quite a lot according to [spec](https://www.w3.org/TR/REC-xml/#NT-NameChar) what warrants a proper library dedicated only for that purpose.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ## API
 
@@ -102,7 +101,7 @@ Two functions - one to check requirements for **first character**, another to ch
   </tr>
 </table>
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ### `isProduction4()` / `validFirstChar()` - requirements for 1st char
 
@@ -129,7 +128,7 @@ console.log("res2 = " + res2);
 It **consumes** a single character (can be any Unicode character, including astral-one, comprising two surrogates).
 **Returns** Boolean - is it acceptable as the first character in XML element's name.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ### `isProduction4a()` / `validSecondCharOnwards()` - requirements for 2nd char onwards
 
@@ -155,7 +154,7 @@ console.log("res2 = " + res2);
 It **consumes** a single character (can be any Unicode character, including astral-one, comprising two surrogates).
 **Returns** Boolean - is it acceptable as the second or subsequent character in XML element's name.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ## Contributing
 
@@ -165,7 +164,7 @@ It **consumes** a single character (can be any Unicode character, including astr
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
 ## Licence
 
