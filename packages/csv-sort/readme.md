@@ -17,14 +17,13 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [TLDR;](#markdown-header-markdown-header-tldr)
-- [This library does two twings:](#markdown-header-markdown-header-this-library-does-two-twings)
-- [Usage](#markdown-header-markdown-header-usage)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [TLDR;](#markdown-header-tldr)
+- [This library does two twings:](#markdown-header-this-library-does-two-twings)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -40,7 +39,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 20 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 66 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-sort)**
 
 ## TLDR;
 
@@ -50,7 +49,7 @@ Here's what you'll get:
 
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-sort)**
 
 ## This library does two twings:
 
@@ -63,7 +62,7 @@ In later releases I would like to be able to recognise and fix any offset column
 
 ^ 1D-Trim would be trim of a string. 3D-Trim would be some sort of spatial data trim.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-sort)**
 
 ## Usage
 
@@ -87,6 +86,8 @@ console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
 // 123456,Bought pens,10,,1000
 ```
 
+**[⬆ back to top](#markdown-header-csv-sort)**
+
 ## API
 
 - Input - string
@@ -103,7 +104,7 @@ console.log(`${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${res}`);
 If the input is anything else than a `string`, it will `throw`.
 If the input is an empty string, the output object's `res` key will be equal to `[['']]`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-sort)**
 
 ## Contributing
 
@@ -113,7 +114,7 @@ If the input is an empty string, the output object's `res` key will be equal to 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-sort)**
 
 ## Licence
 
