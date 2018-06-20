@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
 - [API](#markdown-header-api)
@@ -49,19 +48,19 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detect-is-it-html-or-xhtml.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detect-is-it-html-or-xhtml.umd.js` | 795 B |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ## Purpose
 
 As you know, XHTML is slightly different from HTML: **HTML** (4 and 5) does not close the `<img>` and other single tags, while **XHTML** does. There are more to that, but that's the major thing from developer's perspective.
 
-When I was working on the [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
+When I was working on the [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
 
 I couldn't find any library that analyses the code, telling is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
 
 Feed the string into this library. If it's more of an HTML, it will output a string `"html"`. If it's more of an XHTML, it will output a string `xhtml`. If your code doesn't contain any tags, or it does, but there is no `doctype`, and it's impossible to distinguish between the two, it will output `null`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ## API
 
@@ -80,7 +79,7 @@ detect(
 
 If the input is not String type, this package will throw an error. If the input is missing completely, it will return `null`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ### API - Output
 
@@ -88,7 +87,7 @@ If the input is not String type, this package will throw an error. If the input 
 | -------------- | ----------------------- | ----------------------------- |
 | String or null | 'html', 'xhtml' or null | Identified type of your input |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ## Under the hood
 
@@ -99,7 +98,7 @@ The algorithm is the following:
 3.  In a rare case when there is an equal amount of both closed and unclosed tags, lean for `html`.
 4.  If (there are no tags in the input) OR (there are no doctype tags and no singleton tags), return `null`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ## Contributing
 
@@ -109,7 +108,7 @@ The algorithm is the following:
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 
 ## Licence
 
