@@ -25,7 +25,7 @@ GitHub sold us out. In the meantime, we:
 
 ### Added
 
-- ✨ PR [#3](https://github.com/codsen/csv-split-easy/pull/3) from [@mac-](https://github.com/mac-) now caters double quotes wrapping double quotes, used as a means of escaping code
+- ✨ PR [#3](https://bitbucket.org/codsen/csv-split-easy/pull/3) from [@mac-](https://github.com/mac-) now caters double quotes wrapping double quotes, used as a means of escaping code
 - 🔧 Updated dependencies. Rollup is continuously improving and build sizes are getting smaller.
 
 ## [2.0.0] - 2017-11-08
@@ -40,7 +40,7 @@ GitHub sold us out. In the meantime, we:
 
 ### Added
 
-- ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's [string-remove-thousand-separators](https://github.com/codsen/string-remove-thousand-separators) internally doing it.
+- ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's [string-remove-thousand-separators](https://bitbucket.org/codsen/string-remove-thousand-separators) internally doing it.
 - ✨ `opts.padSingleDecimalPlaceNumbers`. On by default. `10.2` → `10.20`.
 - ✨ `opts.forceUKStyle`. Off by default. `10,15` → `10.15`.
 
@@ -62,9 +62,10 @@ GitHub sold us out. In the meantime, we:
 
 - First public release
 
-[1.1.0]: https://github.com/codsen/csv-split-easy/compare/v1.0.2...v1.1.0
-[1.2.0]: https://github.com/codsen/csv-split-easy/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/csv-split-easy/compare/v1.2.0...v1.3.0
-[2.0.0]: https://github.com/codsen/csv-split-easy/compare/v1.3.0...v2.0.0
-[2.1.0]: https://github.com/codsen/csv-split-easy/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/csv-split-easy/compare/v2.1.0...v2.2.0
+[1.1.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v1.1.0%0Dv1.0.2#diff
+[1.2.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v1.3.0%0Dv1.2.1#diff
+[2.0.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v2.0.0%0Dv1.3.0#diff
+[2.1.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v2.1.0%0Dv2.0.6#diff
+[2.2.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.3.0]: https://bitbucket.org/codsen/csv-split-easy/branches/compare/v2.3.0%0Dv2.2.1#diff

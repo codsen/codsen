@@ -3,6 +3,7 @@
 > Splits the CSV string into array of arrays, each representing a row of columns
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -13,7 +14,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
@@ -43,7 +43,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 42 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## Idea
 
@@ -65,10 +65,10 @@ Outside of the scope:
 
 - Trimming the values of leading and trailing empty space. Just use `String.prototype.trim()`
 - Parsing numeric values. Parse them yourself. It's outside of the scope of this lib.
-- Smart detection of the offset columns. See [csv-fix-offset](https://github.com/codsen/csv-fix-offset)
-- Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://github.com/codsen/csv-sort)
+- Smart detection of the offset columns. See [csv-fix-offset](https://bitbucket.org/codsen/csv-fix-offset)
+- Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://bitbucket.org/codsen/csv-sort)
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## API
 
@@ -97,7 +97,7 @@ Empty values, same as numbers too, are set as empty strings.
 | `forceUKStyle`                        | Boolean | no          | `false` | Should we convert the decimal separator commas into dots? `1,5` → `1.5`?                                                                        |
 | }                                     |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ### Returns
 
@@ -140,7 +140,7 @@ console.log("source = " + JSON.stringify(source, null, 4));
 //    ]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## The algorithm
 
@@ -152,9 +152,9 @@ The third requirement is that any of the values can be wrapped with double quote
 
 The requirements mentioned above pretty much rule out the conventional regex-based split algorithms. You [can](https://github.com/sindresorhus/split-lines/blob/master/index.js) just split by `/\r?\n/` but later you'll need to clean up possible empty rows. You can't `string.split` each row by comma because that comma might be a value, you need to check for wrapping double quotes first!
 
-So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://github.com/codsen/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
+So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://bitbucket.org/codsen/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## Contributing
 
@@ -164,7 +164,7 @@ So, the best algorithm is a single `for`-loop traversal on the input string, det
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## Contributors
 
@@ -180,7 +180,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-csv-split-easy)**
 
 ## Licence
 
@@ -190,6 +190,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/csv-split-easy.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/csv-split-easy
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/csv-split-easy
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/csv-split-easy/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/csv-split-easy?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
