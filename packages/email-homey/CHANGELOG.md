@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2018-06-21
+
+GitHub sold us out. In the meantime, we:
+
+- ✨ Migrated to Bitbucket (to host repo + perform CI) and Codacy (for code quality audit)
+- ✨ Dropped BitHound (RIP) and Travis
+
 ## [2.0.0] - 2018-05-04
 
 ### Changed
@@ -98,3 +105,4 @@ Updated to the new version of the API package, CHLU, enabling new features:
 [1.7.0]: https://bitbucket.org/codsen/email-homey/branches/compare/v1.7.0%0Dv1.6.0#diff
 [1.8.0]: https://bitbucket.org/codsen/email-homey/branches/compare/v1.8.0%0Dv1.7.0#diff
 [2.0.0]: https://bitbucket.org/codsen/email-homey/branches/compare/v2.0.0%0Dv1.8.1#diff
+[2.1.0]: https://bitbucket.org/codsen/email-homey/branches/compare/v2.1.0%0Dv2.0.0#diff
