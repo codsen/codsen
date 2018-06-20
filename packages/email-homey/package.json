@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/email-homey.git"
+    "url": "https://bitbucket.org/codsen/email-homey.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/email-homey/issues"
-  },
-  "homepage": "https://github.com/codsen/email-homey#readme",
+  "homepage": "https://bitbucket.org/codsen/email-homey#readme",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -25,17 +22,26 @@
     "homey": "cli.js"
   },
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
     "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "email",
@@ -141,7 +147,8 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
@@ -154,16 +161,21 @@
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "coveralls": "latest",
     "ava": "latest",
-    "nyc": "latest",
+    "codacy-coverage": "latest",
+    "coveralls": "latest",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
     "execa": "^0.10.0",
     "husky": "latest",
+    "nyc": "latest",
     "prettier": "latest"
   }
 }
