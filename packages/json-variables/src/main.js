@@ -8,8 +8,8 @@ import checkTypes from "check-types-mini";
 import arrayiffyIfString from "arrayiffy-if-string";
 import strFindHeadsTails from "string-find-heads-tails";
 import get from "ast-get-values-by-key";
-import Slices from "string-slices-array-push";
-import replaceSlicesArr from "string-replace-slices-array";
+import Ranges from "ranges-push";
+import rangesApply from "ranges-apply";
 import isObj from "lodash.isplainobject";
 import removeDuplicateHeadsTails from "string-remove-duplicate-heads-tails";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
@@ -555,7 +555,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // 1. First, extract all vars
   // ==========================
 
-  let slices = new Slices();
+  let slices = new Ranges();
 
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
     for (let i = 0, len = arr.length; i < len; i++) {
@@ -757,7 +757,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
   if (
     foundHeadsAndTails.length === 1 &&
-    replaceSlicesArr(string, [
+    rangesApply(string, [
       foundHeadsAndTails[0].headsStartAt,
       foundHeadsAndTails[0].tailsEndAt
     ]).trim() === ""
@@ -794,7 +794,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
 
   if (
     foundHeadsAndTails.length === 1 &&
-    replaceSlicesArr(string, [
+    rangesApply(string, [
       foundHeadsAndTails[0].headsStartAt,
       foundHeadsAndTails[0].tailsEndAt
     ]).trim() === ""
@@ -821,7 +821,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   // ================================
   // if (DEBUG && slices) {
   //   console.log(
-  //     `\u001b[${33}m${`\n783 END OF replaceSlicesArr: slices.current() = ${JSON.stringify(
+  //     `\u001b[${33}m${`\n783 END OF rangesApply: slices.current() = ${JSON.stringify(
   //       slices.current(),
   //       null,
   //       4
@@ -840,7 +840,7 @@ function resolveString(input, string, path, opts, incomingBreadCrumbPath = []) {
   //
 
   if (slices && slices.current()) {
-    return replaceSlicesArr(string, slices.current());
+    return rangesApply(string, slices.current());
   }
   return string;
 }

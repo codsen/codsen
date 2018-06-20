@@ -10,8 +10,8 @@ var checkTypes = _interopDefault(require('check-types-mini'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var strFindHeadsTails = _interopDefault(require('string-find-heads-tails'));
 var get = _interopDefault(require('ast-get-values-by-key'));
-var Slices = _interopDefault(require('string-slices-array-push'));
-var replaceSlicesArr = _interopDefault(require('string-replace-slices-array'));
+var Ranges = _interopDefault(require('ranges-push'));
+var rangesApply = _interopDefault(require('ranges-apply'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var removeDuplicateHeadsTails = _interopDefault(require('string-remove-duplicate-heads-tails'));
 var stringMatchLeftRight = require('string-match-left-right');
@@ -499,7 +499,7 @@ function resolveString(input, string, path, opts) {
   // 1. First, extract all vars
   // ==========================
 
-  var slices = new Slices();
+  var slices = new Ranges();
 
   function processHeadsAndTails(arr, dontWrapTheseVars, wholeValueIsVariable) {
     for (var i = 0, len = arr.length; i < len; i++) {
@@ -648,7 +648,7 @@ function resolveString(input, string, path, opts) {
 
   var wholeValueIsVariable = false; // we'll reuse it for non-wrap heads/tails too
 
-  if (foundHeadsAndTails.length === 1 && replaceSlicesArr(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -668,7 +668,7 @@ function resolveString(input, string, path, opts) {
     throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"" + string + "\" at path " + path + ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n" + error);
   }
 
-  if (foundHeadsAndTails.length === 1 && replaceSlicesArr(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
+  if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
     wholeValueIsVariable = true;
   }
 
@@ -687,7 +687,7 @@ function resolveString(input, string, path, opts) {
   // ================================
   // if (DEBUG && slices) {
   //   console.log(
-  //     `\u001b[${33}m${`\n783 END OF replaceSlicesArr: slices.current() = ${JSON.stringify(
+  //     `\u001b[${33}m${`\n783 END OF rangesApply: slices.current() = ${JSON.stringify(
   //       slices.current(),
   //       null,
   //       4
@@ -706,7 +706,7 @@ function resolveString(input, string, path, opts) {
   //
 
   if (slices && slices.current()) {
-    return replaceSlicesArr(string, slices.current());
+    return rangesApply(string, slices.current());
   }
   return string;
 }

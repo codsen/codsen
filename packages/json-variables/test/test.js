@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: 0, padded-blocks: 0 */
 
 import test from "ava";
-import jv from "../dist/json-variables.cjs";
+import jv from "../dist/json-variables.esm";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws

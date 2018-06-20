@@ -3,6 +3,7 @@
 > Preprocessor for JSON to allow keys referencing keys
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -12,9 +13,8 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
-- [Idea - updated for v.7 - full rewrite](#markdown-header-idea---updated-for-v.7---full-rewrite)
+- [Idea - updated for v.7 - full rewrite](#markdown-header-idea-updated-for-v7-full-rewrite)
 - [API](#markdown-header-api)
 - [Use examples](#markdown-header-use-examples)
 - [Contributing](#markdown-header-contributing)
@@ -39,9 +39,9 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 34 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 34 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 89 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 99 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Idea - updated for v.7 - full rewrite
 
@@ -55,7 +55,7 @@ This library allows JSON keys to reference other keys. It is aimed at JSON files
 
 I know, these architectural mistakes look no-brainers _now_ but trust me, they were not so apparent when the original `json-variables` idea was conceived. Also, I didn't anticipate this amount of variable-cross-referencing happening in real production, which was beyond anything that unit tests could imitate.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## API
 
@@ -113,7 +113,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Use examples
 
@@ -251,7 +251,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Data containers
 
@@ -329,7 +329,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Ignores with wildcards
 
@@ -357,7 +357,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Wrapping
 
@@ -386,7 +386,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 #### In practice:
 
@@ -465,7 +465,7 @@ content JSON for PROD build:
 
 Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the program to **skip wrapping, no matter what**.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Mixing Booleans and strings
 
@@ -506,7 +506,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Contributing
 
@@ -516,7 +516,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Licence
 
@@ -526,6 +526,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/json-variables
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/json-variables/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/json-variables?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

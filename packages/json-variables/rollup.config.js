@@ -39,11 +39,11 @@ export default commandLineArgs => {
         "lodash.isplainobject",
         "matcher",
         "object-path",
+        "ranges-apply",
+        "ranges-push",
         "string-find-heads-tails",
         "string-match-left-right",
-        "string-remove-duplicate-heads-tails",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "string-remove-duplicate-heads-tails"
       ],
       plugins: [
         strip({
@@ -66,11 +66,11 @@ export default commandLineArgs => {
         "lodash.isplainobject",
         "matcher",
         "object-path",
+        "ranges-apply",
+        "ranges-push",
         "string-find-heads-tails",
         "string-match-left-right",
-        "string-remove-duplicate-heads-tails",
-        "string-replace-slices-array",
-        "string-slices-array-push"
+        "string-remove-duplicate-heads-tails"
       ],
       plugins: [
         strip({

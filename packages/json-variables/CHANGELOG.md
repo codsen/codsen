@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.4.0] - 2018-06-20
+
+- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+
 ## [7.3.0] - 2018-06-10
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
@@ -182,20 +186,22 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/json-variables/compare/v1.0.1...v1.1.0
-[1.2.0]: https://github.com/codsen/json-variables/compare/v1.1.0...v1.2.0
-[2.0.0]: https://github.com/codsen/json-variables/compare/v1.2.0...v2.0.0
-[3.0.0]: https://github.com/codsen/json-variables/compare/v2.0.0...v3.0.0
-[4.0.0]: https://github.com/codsen/json-variables/compare/v3.1.0...v4.0.0
-[4.1.0]: https://github.com/codsen/json-variables/compare/v4.0.1...v4.1.0
-[4.2.0]: https://github.com/codsen/json-variables/compare/v4.1.0...v4.2.0
-[4.3.0]: https://github.com/codsen/json-variables/compare/v4.2.3...v4.3.0
-[4.4.0]: https://github.com/codsen/json-variables/compare/v4.3.0...v4.4.0
-[4.5.0]: https://github.com/codsen/json-variables/compare/v4.4.0...v4.5.0
-[4.6.0]: https://github.com/codsen/json-variables/compare/v4.5.0...v4.6.0
-[5.0.0]: https://github.com/codsen/json-variables/compare/v4.6.0...v5.0.0
-[6.0.0]: https://github.com/codsen/json-variables/compare/v5.0.0...v6.0.0
-[7.0.0]: https://github.com/codsen/json-variables/compare/v6.0.0...v7.0.0
-[7.1.0]: https://github.com/codsen/json-variables/compare/v7.0.0...v7.1.0
-[7.1.2]: https://github.com/codsen/json-variables/compare/v7.1.0...v7.1.2
-[7.2.0]: https://github.com/codsen/json-variables/compare/v7.1.2...v7.2.0
+[1.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v1.1.0%0Dv1.0.1#diff
+[1.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v1.2.0%0Dv1.1.0#diff
+[2.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v2.0.0%0Dv1.2.0#diff
+[3.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v3.0.0%0Dv2.0.0#diff
+[4.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.0.0%0Dv3.0.1#diff
+[4.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.1.0%0Dv4.0.1#diff
+[4.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.2.0%0Dv4.1.0#diff
+[4.3.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.3.0%0Dv4.2.3#diff
+[4.4.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.4.0%0Dv4.3.0#diff
+[4.5.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.5.0%0Dv4.4.0#diff
+[4.6.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.6.0%0Dv4.5.6#diff
+[5.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v5.0.0%0Dv4.6.1#diff
+[6.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v6.0.0%0Dv5.0.1#diff
+[7.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.0.0%0Dv6.0.6#diff
+[7.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.1.0%0Dv7.0.0#diff
+[7.1.2]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.1.2%0Dv7.1.1#diff
+[7.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.2.0%0Dv7.1.3#diff
+[7.3.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.3.0%0Dv7.2.0#diff
+[7.4.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.4.0%0Dv7.3.0#diff
