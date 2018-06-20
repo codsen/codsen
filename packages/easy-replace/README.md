@@ -3,6 +3,7 @@
 > Replace strings with optional lookarounds, but without regexes
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -12,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Usage](#markdown-header-usage)
 - [API](#markdown-header-api)
@@ -42,13 +42,13 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/easy-replace.esm.js` | 13 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/easy-replace.umd.js` | 20 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ## Usage
 
 The ideal use case for `easy-replace` is when you need complex lookarounds, such as "replace this only when there is something on the left, but also, if there's some things on the right, include them too, yet there can't be such and such on the right". Yes, you could solve this using a regex ([if it exists at all](#rationale)), but it's faster to skip regex solutions and simply use this library.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ## API
 
@@ -68,7 +68,7 @@ er(source_string, options_object, replacement_string);
 
 <!-- prettier-ignore-end -->
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 #### Options object:
 
@@ -89,7 +89,7 @@ er(source_string, options_object, replacement_string);
 
 <!-- prettier-ignore-end -->
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### API - Output
 
@@ -150,7 +150,7 @@ er(
 
 ---
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### "Maybes" — optional surrounding strings to be replaced as well
 
@@ -205,7 +205,7 @@ er(
 
 ---
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### Negative lookahead - if you want to match something _not followed_ by something else
 
@@ -258,7 +258,7 @@ er(
 
 ---
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### Positive lookbehind - if you want to match something that is _preceded_ by something else
 
@@ -289,7 +289,7 @@ er(
 
 ---
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### Negative lookbehind - if you want to match something that is NOT preceded by something else
 
@@ -320,7 +320,7 @@ er(
 
 ---
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ### Real life scenario
 
@@ -371,7 +371,7 @@ er(
 //=> '&nbsp; &nbsp; &nbsp; &nbsp;'
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ## Rationale
 
@@ -387,7 +387,7 @@ Options object is fool-proof — you can omit keys or pass non-existing ones or 
 
 Same with replacment — empty, `null`, `boolean` or `undefined` are accepted and interpreted as a request to delete any results found. There's no replacement, only deletion in such case (see tests 10.1–10.7).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ## Contributing
 
@@ -397,7 +397,7 @@ Same with replacment — empty, `null`, `boolean` or `undefined` are accepted an
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-easy-replace)**
 
 ## Licence
 
@@ -407,6 +407,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/easy-replace.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/easy-replace
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/easy-replace
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/easy-replace/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/easy-replace?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

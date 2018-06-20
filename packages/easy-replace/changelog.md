@@ -101,15 +101,16 @@ Fresh morning and fresh head yields new improvements.
 
 - 🌟 First public release
 
-[2.0.0]: https://github.com/codsen/easy-replace/compare/v1.0.0...v2.0.0
-[2.4.0]: https://github.com/codsen/easy-replace/compare/v2.0.0...v2.4.0
-[2.5.0]: https://github.com/codsen/easy-replace/compare/v2.4.0...v2.5.0
-[2.6.0]: https://github.com/codsen/easy-replace/compare/v2.5.0...v2.6.0
-[2.7.0]: https://github.com/codsen/easy-replace/compare/v2.6.0...v2.7.0
-[2.8.0]: https://github.com/codsen/easy-replace/compare/v2.7.0...v2.8.0
-[2.9.0]: https://github.com/codsen/easy-replace/compare/v2.8.0...v2.9.0
-[2.10.0]: https://github.com/codsen/easy-replace/compare/v2.9.0...v2.10.0
-[2.11.0]: https://github.com/codsen/easy-replace/compare/v2.10.0...v2.11.0
-[2.12.0]: https://github.com/codsen/easy-replace/compare/v2.11.0...v2.12.0
-[3.0.0]: https://github.com/codsen/easy-replace/compare/v2.12.0...v3.0.0
-[3.1.0]: https://github.com/codsen/easy-replace/compare/v3.0.0...v3.1.0
+[2.0.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.0.0%0Dv1.0.2#diff
+[2.4.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.4.0%0Dv2.3.0#diff
+[2.5.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.5.0%0Dv2.4.2#diff
+[2.6.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.6.0%0Dv2.5.1#diff
+[2.7.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.7.0%0Dv2.6.1#diff
+[2.8.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.8.0%0Dv2.7.6#diff
+[2.9.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.9.0%0Dv2.8.1#diff
+[2.10.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.10.0%0Dv2.9.2#diff
+[2.11.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.11.0%0Dv2.10.2#diff
+[2.12.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.12.0%0Dv2.11.0#diff
+[3.0.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.0.0%0Dv2.12.2#diff
+[3.1.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.1.0%0Dv3.0.3#diff
+[3.2.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.2.0%0Dv3.1.2#diff
