@@ -3,6 +3,7 @@
 > Convert shorthand hex color codes into full
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -12,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
 - [Examples](#markdown-header-examples)
@@ -43,7 +43,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 1 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/color-shorthand-hex-to-six-digit.umd.js` | 10 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Purpose
 
@@ -55,7 +55,7 @@ This library takes any input: **array** (of strings, plain objects, other arrays
 
 Additionally, all letters in all hex codes are converted to lowercase.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Examples
 
@@ -95,7 +95,7 @@ conv(null);
 // => null
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Usage in Gulp environment
 
@@ -133,7 +133,7 @@ I coded the `color-shorthand-hex-to-six-digit` to be recursive, that is, you can
 
 If there is nothing to fix, `color-shorthand-hex-to-six-digit` behaves well, returning whatever was given, so feel free to assign your sources to the output of `color-shorthand-hex-to-six-digit`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## API
 
@@ -143,13 +143,13 @@ This way, this library acts like a safety valve that acts when wrong hex codes p
 
 PS. Input argument (in case of plain objects and arrays) is not mutated in any way. This package will clone the input and work on its copy. This is important. No ~~teenage turtle~~ mutations here.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Reliability
 
 I'm using only the best ingredients, namely [hex-color-regex](https://www.npmjs.com/package/hex-color-regex) by [@tunnckocore](https://www.npmjs.com/~tunnckocore) and standalone Lodash functions (`_.clonedeep`, `_.isplainobject` and `_.isstring`). This library is being currently used in commercial projects.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Contributing
 
@@ -159,7 +159,7 @@ I'm using only the best ingredients, namely [hex-color-regex](https://www.npmjs.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
 ## Licence
 
@@ -169,6 +169,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/color-shorthand-hex-to-six-digit.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/color-shorthand-hex-to-six-digit
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/color-shorthand-hex-to-six-digit/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/color-shorthand-hex-to-six-digit?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

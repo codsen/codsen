@@ -73,11 +73,11 @@ Bumping major just in case it breaks somebody's API. It shouldn't though.
 
 Initial release. 100% test coverage.
 
-[1.1.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.1.0%0Dv1.0.0#diff
-[1.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.2.0%0Dv1.1.0#diff
-[1.3.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.3.0%0Dv1.2.0#diff
-[1.4.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.4.0%0Dv1.3.0#diff
-[1.5.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.5.0%0Dv1.4.0#diff
+[1.1.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.1.0%0Dv1.0.2#diff
+[1.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.2.0%0Dv1.1.1#diff
+[1.3.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.3.0%0Dv1.2.1#diff
+[1.4.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.4.0%0Dv1.3.1#diff
+[1.5.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v1.5.0%0Dv1.4.2#diff
 [2.0.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.0.0%0Dv1.5.1#diff
 [2.1.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.1.0%0Dv2.0.9#diff
-[2.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.2.0]: https://bitbucket.org/codsen/color-shorthand-hex-to-six-digit/branches/compare/v2.2.0%0Dv2.1.1#diff
