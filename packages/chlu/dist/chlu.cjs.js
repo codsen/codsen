@@ -361,7 +361,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   var processedGitTags = void 0;
 
-  if ((typeof gitTags === "undefined" ? "undefined" : _typeof$1(gitTags)) === "object" && gitTags !== null && !Array.isArray(gitTags) && gitTags.latest !== undefined) {
+  if ((typeof gitTags === "undefined" ? "undefined" : _typeof$1(gitTags)) === "object" && gitTags !== null && !Array.isArray(gitTags) && existy$1(gitTags.latest)) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(function (val) {
       if (val[0] === "v") {
@@ -660,7 +660,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     return link.rowNum;
   }));
   for (var _i5 = firstRowWithFooterLink + 1, _len4 = newLinesArr.length; _i5 < _len4; _i5++) {
-    if (newLinesArr[_i5] === "" || newLinesArr[_i5] !== undefined && newLinesArr[_i5].trim() === "") {
+    if (newLinesArr[_i5] === "" || typeof newLinesArr[_i5] === "string" && newLinesArr[_i5].trim() === "") {
       newLinesArr.splice(_i5, 1);
       _i5--;
     }

@@ -436,7 +436,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     typeof gitTags === "object" &&
     gitTags !== null &&
     !Array.isArray(gitTags) &&
-    gitTags.latest !== undefined
+    existy$1(gitTags.latest)
   ) {
     processedGitTags = {};
     processedGitTags.latest = gitTags.latest.split("|").map(val => {
@@ -796,7 +796,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   ) {
     if (
       newLinesArr[i] === "" ||
-      (newLinesArr[i] !== undefined && newLinesArr[i].trim() === "")
+      (typeof newLinesArr[i] === "string" && newLinesArr[i].trim() === "")
     ) {
       newLinesArr.splice(i, 1);
       i--;

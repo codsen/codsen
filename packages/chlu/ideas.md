@@ -1,5 +1,9 @@
 # ideas
 
+- [ ] cater scenario: lazy developer adds a new entry, not covered by git tags. Date is automatically updated to today if it's older than today. If it's in the future it's left as it is (maybe it's entry for the future).
+- [ ] cater scenario: feature was coded up and changelog updated, but library not published. After some times passes, author comes back, thinking lib has been published, doesn't check the package.json, creates new entries in changelog as if those were published.
+- [ ] cater scenario: dates are wrong and they're available to pull from git tag data.
+
 - [ ] Add missing title "All notable changes.." as per keepachangelog.com
 - [ ] MAJOR: Read git files, gather versions, wipe all titles and fill them matching versions and dates straight from GIT repo info
 - [ ] If one entry has duplicate sections (like two "Added" sections), merge them.
