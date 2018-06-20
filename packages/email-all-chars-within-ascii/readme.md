@@ -17,14 +17,13 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Idea](#markdown-header-markdown-header-idea)
-- [The API](#markdown-header-markdown-header-the-api)
-- [Usage](#markdown-header-markdown-header-usage)
-- [Practical use](#markdown-header-markdown-header-practical-use)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [The API](#markdown-header-the-api)
+- [Usage](#markdown-header-usage)
+- [Practical use](#markdown-header-practical-use)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -40,7 +39,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-all-chars-within-ascii.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-all-chars-within-ascii.umd.js` | 15 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## Idea
 
@@ -58,7 +57,7 @@ In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and
 
 Also, we want an error `throw`n if any lines exceed the permitted length, 1000 characters. Our algorithm will `throw` earlier, at more than `997` consecutive non-CR/non-LR characters because line lengths count `CRLR` in the end (which is two extra characters, and we don't want to reach 1000).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## The API
 
@@ -82,7 +81,7 @@ Options object is sanitised by [check-types-mini](https://bitbucket.org/codsen/c
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ### Optional Options Object's API:
 
@@ -93,7 +92,7 @@ Options object is sanitised by [check-types-mini](https://bitbucket.org/codsen/c
 | `checkLineLength`      | Boolean | no          | `true`  | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters". |
 | }                      |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## Usage
 
@@ -106,7 +105,7 @@ let res2 = within("Ą");
 // => throws an error because "Ą" is not within allowed ASCII range.
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## Practical use
 
@@ -116,7 +115,7 @@ PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is no
 
 Check out [CLI](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/) version which you can install globally and use in your terminal.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## Contributing
 
@@ -126,7 +125,7 @@ Check out [CLI](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/) 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
 ## Licence
 
