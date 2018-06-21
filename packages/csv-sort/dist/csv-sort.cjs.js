@@ -35,6 +35,9 @@ function findtype(something) {
 var _typeof$1 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var isArr = Array.isArray;
+function existy(x) {
+  return x != null;
+}
 
 function csvSort(input) {
   var content = void 0;
@@ -247,7 +250,7 @@ function csvSort(input) {
       for (var rowNum = traverseUpToThisIndexAtTheTop, len2 = content.length; rowNum < len2; rowNum++) {
         // 1. check for two consecutive equal values
         if (lookForTwoEqualAndConsecutive) {
-          if (previousValue === undefined) {
+          if (!existy(previousValue)) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (previousValue === content[rowNum][suspectedBalanceColumnsIndexNumber]) {
             // potentialBalanceColumnIndexesList.splice(suspectedBalanceColumnsIndexNumber, 1)
@@ -261,7 +264,7 @@ function csvSort(input) {
         }
         // 2. also, tell if ALL values are the same:
         if (lookForAllTheSame) {
-          if (firstValue === undefined) {
+          if (!existy(firstValue)) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue) {
             lookForAllTheSame = false;
@@ -279,7 +282,7 @@ function csvSort(input) {
 
     // now mutate the `potentialBalanceColumnIndexesList` using
     // `deleteFromPotentialBalanceColumnIndexesList`:
-    potentialBalanceColumnIndexesList = pull.apply(undefined, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
+    potentialBalanceColumnIndexesList = pull.apply(undefined$1, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
 
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
@@ -312,7 +315,7 @@ function csvSort(input) {
 
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
-  var potentialCreditDebitColumns = pull.apply(undefined, [Array.from(schema.reduce(function (result, el, index) {
+  var potentialCreditDebitColumns = pull.apply(undefined$1, [Array.from(schema.reduce(function (result, el, index) {
     if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
       result.push(index);
     }

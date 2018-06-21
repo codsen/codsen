@@ -161,7 +161,7 @@
   },
   "dependencies": {
     "bignumber.js": "^7.2.1",
-    "csv-split-easy": "^2.3.0",
+    "csv-split-easy": "^2.3.1",
     "is-numeric": "0.0.9",
     "lodash.pull": "*",
     "ordinal": "^1.0.2"

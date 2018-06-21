@@ -1,5 +1,3 @@
-/* eslint prefer-destructuring:0, max-len:0 */
-
 import split from "csv-split-easy";
 import pull from "lodash.pull";
 import ordinal from "ordinal";
@@ -7,6 +5,9 @@ import BigNumber from "bignumber.js";
 import findtype from "./util";
 
 const isArr = Array.isArray;
+function existy(x) {
+  return x != null;
+}
 
 function csvSort(input) {
   let content;
@@ -266,7 +267,7 @@ function csvSort(input) {
       ) {
         // 1. check for two consecutive equal values
         if (lookForTwoEqualAndConsecutive) {
-          if (previousValue === undefined) {
+          if (!existy(previousValue)) {
             previousValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             previousValue ===
@@ -285,7 +286,7 @@ function csvSort(input) {
         }
         // 2. also, tell if ALL values are the same:
         if (lookForAllTheSame) {
-          if (firstValue === undefined) {
+          if (!existy(firstValue)) {
             firstValue = content[rowNum][suspectedBalanceColumnsIndexNumber];
           } else if (
             content[rowNum][suspectedBalanceColumnsIndexNumber] !== firstValue
