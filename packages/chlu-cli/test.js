@@ -181,7 +181,7 @@ test("01.03 - full set: changelog.md, package.json AND git data", async t => {
   execa.shellSync(`cp -r fixtures/. ${tempFolder}/`);
 
   // 3. confirm the Git data is there in that temp folder:
-  t.regex(execa.shellSync(`cd ${tempFolder} && ls -a`).stdout, /.git/);
+  // t.regex(execa.shellSync(`cd ${tempFolder} && ls -a`).stdout, /.git/);
 
   // 4. confirm git tags from that Git data from temp folder:
   const gitTagsList = execa.shellSync(
