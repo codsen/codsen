@@ -1,6 +1,6 @@
 # chlu-cli
 
-> CH-ange-L-og U-pdate - Automatically fix your changelog file
+> CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
@@ -12,15 +12,12 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [What it does](#markdown-header-markdown-header-what-it-does)
-- [Extras](#markdown-header-markdown-header-extras)
-- [A nifty setup idea](#markdown-header-markdown-header-a-nifty-setup-idea)
-- [Updating it](#markdown-header-markdown-header-updating-it)
-- [Wishlist](#markdown-header-markdown-header-wishlist)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install globally](#markdown-header-install-globally)
+- [What it does](#markdown-header-what-it-does)
+- [A nifty setup idea](#markdown-header-a-nifty-setup-idea)
+- [Updating it](#markdown-header-updating-it)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install globally
 
@@ -40,7 +37,7 @@ Chlu works on both **Bitbucket** and **Github** repositories.
 
 `chlu` stands for **CH**ange**L**og **U**pdate. We should note that all changelogs should follow the rules given by http://keepachangelog.com. Now, the tedious part is **diff links**. Chlu takes care of them.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## What it does
 
@@ -49,7 +46,7 @@ Chlu does two things:
 1.  Creates, updates and fixes the diff links. For example, `## [1.10.0] - 2018-07-07`. It will add missing or fix existing user or project names in the diff link, also set correct format: Bitbucket or Github.
 2.  It tries to normalise the time stamps in the titles. For example, `## [1.10.0] - 2018-07-14`, in [ISO format](https://en.wikipedia.org/wiki/ISO_8601) (year-month-date). It's universal and not ambiguous (unlike US/UK date formats with slashes).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## A nifty setup idea
 
@@ -81,13 +78,13 @@ The example above runs:
 
 It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with `-g` flag.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. [Same tech](https://www.npmjs.com/package/update-notifier) that AVA or npm uses!
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## Contributing
 
@@ -97,7 +94,7 @@ When you install it globally, it will check occasionally, are there newer versio
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## Licence
 

@@ -4,7 +4,7 @@
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
-    "node": ">=10",
+    "node": ">=8",
     "npm": ">=5",
     "yarn": ">=1"
   },
@@ -154,7 +154,7 @@
     }
   },
   "dependencies": {
-    "chlu": "^3.1.0",
+    "chlu": "^3.1.1",
     "fs-extra": "^6.0.1",
     "meow": "^5.0.0",
     "simple-git": "^1.96.0",
