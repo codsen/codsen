@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
@@ -41,7 +40,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 13 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-duplicate-heads-tails.umd.js` | 34 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## Idea
 
@@ -76,7 +75,7 @@ Also, this lib removes the leading/trailing empty clumps of empty heads/tails, w
 
 Obviously, you can configure `heads` and `tails` to be whatever you like, single string or array of them. Also, the length of the different heads in your given set can be different.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## API
 
@@ -93,7 +92,7 @@ removeDuplicateHeadsTails(str, [opts]);
 
 If input string is not given, it will `throw`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ### An Optional Options Object
 
@@ -106,7 +105,7 @@ If input string is not given, it will `throw`.
 
 These double curlies are default for [Nunjucks](https://mozilla.github.io/nunjucks/)/Jinja and many other templating languages. Nunjucks is my favourite.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ### API - Output
 
@@ -120,7 +119,7 @@ Returns a string
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## Licence
 

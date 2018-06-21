@@ -4,8 +4,8 @@ import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import arrayiffy from "arrayiffy-if-string";
 import { matchLeftIncl, matchRightIncl } from "string-match-left-right";
-import Slices from "string-slices-array-push";
-import repl from "string-replace-slices-array";
+import Ranges from "ranges-push";
+import rangesApply from "ranges-apply";
 import trimSpaces from "string-trim-spaces-only";
 
 function removeDuplicateHeadsTails(str, originalOpts = {}) {
@@ -86,7 +86,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
   // Real ranges array is the array that we'll process in the end, cropping pieces
   // out of the string:
-  const realRanges = new Slices({ limitToBeAddedWhitespace: true });
+  const realRanges = new Ranges({ limitToBeAddedWhitespace: true });
 
   // Conditional ranges array depends of the conditions what follows them. If the
   // condition is satisfied, range is merged into realRanges[]; if not, it's deleted.
@@ -94,7 +94,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   // precisely after (not counting whitespace). For another example, for trailing
   // chunks, condition would be end of the string or other heads/tails that leads to
   // the end of the string:
-  const conditionalRanges = new Slices({ limitToBeAddedWhitespace: true });
+  const conditionalRanges = new Ranges({ limitToBeAddedWhitespace: true });
 
   // this flag is requirement for cases where there are at least two chunks
   // wrapped with heads/tails, and we can't "peel off" the first tail that follows
@@ -667,7 +667,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     realRanges.push(conditionalRanges.current());
   }
   if (realRanges.current()) {
-    return repl(str, realRanges.current()).trim();
+    return rangesApply(str, realRanges.current()).trim();
   }
   return str.trim();
 }

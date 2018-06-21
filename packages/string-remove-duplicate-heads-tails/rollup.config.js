@@ -34,9 +34,9 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "check-types-mini",
         "lodash.isplainobject",
+        "ranges-apply",
+        "ranges-push",
         "string-match-left-right",
-        "string-replace-slices-array",
-        "string-slices-array-push",
         "string-trim-spaces-only"
       ],
       plugins: [
@@ -55,9 +55,9 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "check-types-mini",
         "lodash.isplainobject",
+        "ranges-apply",
+        "ranges-push",
         "string-match-left-right",
-        "string-replace-slices-array",
-        "string-slices-array-push",
         "string-trim-spaces-only"
       ],
       plugins: [

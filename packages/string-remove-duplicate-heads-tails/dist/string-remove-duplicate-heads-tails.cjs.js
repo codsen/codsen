@@ -6,8 +6,8 @@ var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringMatchLeftRight = require('string-match-left-right');
-var Slices = _interopDefault(require('string-slices-array-push'));
-var repl = _interopDefault(require('string-replace-slices-array'));
+var Ranges = _interopDefault(require('ranges-push'));
+var rangesApply = _interopDefault(require('ranges-apply'));
 var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -92,7 +92,7 @@ function removeDuplicateHeadsTails(str) {
 
   // Real ranges array is the array that we'll process in the end, cropping pieces
   // out of the string:
-  var realRanges = new Slices({ limitToBeAddedWhitespace: true });
+  var realRanges = new Ranges({ limitToBeAddedWhitespace: true });
 
   // Conditional ranges array depends of the conditions what follows them. If the
   // condition is satisfied, range is merged into realRanges[]; if not, it's deleted.
@@ -100,7 +100,7 @@ function removeDuplicateHeadsTails(str) {
   // precisely after (not counting whitespace). For another example, for trailing
   // chunks, condition would be end of the string or other heads/tails that leads to
   // the end of the string:
-  var conditionalRanges = new Slices({ limitToBeAddedWhitespace: true });
+  var conditionalRanges = new Ranges({ limitToBeAddedWhitespace: true });
 
   // this flag is requirement for cases where there are at least two chunks
   // wrapped with heads/tails, and we can't "peel off" the first tail that follows
@@ -364,7 +364,7 @@ function removeDuplicateHeadsTails(str) {
     realRanges.push(conditionalRanges.current());
   }
   if (realRanges.current()) {
-    return repl(str, realRanges.current()).trim();
+    return rangesApply(str, realRanges.current()).trim();
   }
   return str.trim();
 }
