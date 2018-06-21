@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.10.4",
+  "version": "1.10.3",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -122,6 +122,10 @@
         {
           "contents": "",
           "name": ""
+        },
+        {
+          "name": "bitbucket-pipelines.yml",
+          "contents": "# This is a sample build configuration for JavaScript.\n# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.\n# Only use spaces to indent your .yml configuration.\n# -----\n# You can specify a custom docker image from Docker Hub as your build environment.\nimage: node:alpine\n\npipelines:\n  default:\n    - step:\n        caches:\n          - node\n        script: # Modify the commands below to build your repository.\n          - npm install\n          - npm test\n          - npm run coverage\n"
         }
       ],
       "write_soft": [
