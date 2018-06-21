@@ -69,7 +69,7 @@
       "node": true,
       "npm": true,
       "overall": true,
-      "runkit": true,
+      "runkit": false,
       "travis": true,
       "vulnerabilities": true
     },
