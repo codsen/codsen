@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/csv-sort-cli.git"
+    "url": "https://bitbucket.org/codsen/csv-sort-cli.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/csv-sort-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/csv-sort-cli#readme",
+  "homepage": "https://bitbucket.org/codsen/csv-sort-cli/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -26,17 +23,26 @@
     "sortcsv": "cli.js"
   },
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "csv",
@@ -144,25 +150,31 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "csv-sort": "^2.0.6",
+    "csv-sort": "^2.2.2",
     "globby": "^8.0.1",
-    "inquirer": "^5.2.0",
+    "inquirer": "^6.0.0",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
     "meow": "^5.0.0",
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
+    "codacy-coverage": "latest",
     "eslint": "^4.19.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
     "husky": "*",
     "prettier": "latest"
   }
