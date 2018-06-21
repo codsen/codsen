@@ -3,9 +3,14 @@
   "version": "2.1.1",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "license": "MIT",
-  "repository": "codsen/gulp-email-remove-unused-css",
-  "bugs": {
-    "url": "https://github.com/codsen/gulp-email-remove-unused-css/issues"
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codsen/gulp-email-remove-unused-css.git"
   },
   "homepage": "https://emailcomb.com",
   "author": {
@@ -15,13 +20,25 @@
   },
   "main": "index-es5.js",
   "scripts": {
-    "build": "babel index.js --presets babel-preset-es2015 --out-file index-es5.js",
     "precommit": "npm test",
-    "test": "clear && ./node_modules/.bin/eslint index.js test.js && npm run build"
+    "test": "./node_modules/.bin/eslint index.js"
   },
-  "files": [
-    "index.js"
-  ],
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
   "keywords": [
     "gulp",
     "gulpplugin",
@@ -36,17 +53,115 @@
     "inline",
     "from"
   ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": []
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
   "dependencies": {
-    "email-remove-unused-css": "^2.9.0",
+    "email-remove-unused-css": "^3.1.0",
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "clear-cli": "*",
-    "eslint": "^4.9.0",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "husky": "*"
+    "codacy-coverage": "latest",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-ava": "^4.5.1",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
+    "husky": "*",
+    "prettier": "latest"
   }
 }

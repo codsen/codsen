@@ -1,43 +1,37 @@
 # gulp-email-remove-unused-css
 
-> Remove unused CSS from email templates
+> Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY
 
-[![Link to npm page][npm-img]][npm-url]
-[![Build Status][travis-img]][travis-url]
-[![bitHound Overall Score][overall-img]][overall-url]
-[![bitHound Dependencies][deps-img]][deps-url]
-[![Known Vulnerabilities][vulnerabilities-img]][vulnerabilities-url]
-[![Downloads/Month][downloads-img]][downloads-url]
+[![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Downloads/Month][downloads-img]][downloads-url]
+[![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
+[![MIT License][license-img]][license-url]
 
-_If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css/issues) issue tracker._
+> Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY
+
+_If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/issues/new) issue tracker._
 
 * Online web app: [EmailComb](https://emailcomb.com)
-* PostHTML plugin: [posthtml-email-remove-unused-css](https://github.com/codsen/posthtml-email-remove-unused-css/)
-* The core library: [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css).
+* The core library: [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css).
 
 ## Table of Contents
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [Install](#install)
-- [Example](#example)
-  - [Options](#options)
-- [Next level](#next-level)
-- [Regarding removing unused CSS from web pages & competition](#regarding-removing-unused-css-from-web-pages--competition)
-- [Contributing](#contributing)
-- [Licence](#licence)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- [Install](#markdown-header-install)
+- [Example](#markdown-header-example)
+- [Next level](#markdown-header-next-level)
+- [Regarding removing unused CSS from web pages & competition](#markdown-header-regarding-removing-unused-css-from-web-pages-competition)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
 Install using npm:
 
 ```bash
-$ npm install --save-dev gulp-email-remove-unused-css
+npm i gulp-email-remove-unused-css
 ```
 
 ## Example
@@ -54,6 +48,8 @@ gulp.task('default', function () {
     .pipe(gulp.dest('./dist'));
 });
 ```
+
+**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ### Options
 
@@ -82,6 +78,8 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 // => all class names that begin with ".module-" will not be touched by this library.
 ```
 
+**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+
 ## Next level
 
 If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](email-remove-unused-css) library of it instead.
@@ -106,6 +104,8 @@ gulp.task('build', () => {
 }))
 ```
 
+**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+
 ## Regarding removing unused CSS from web pages & competition
 
 This library is meant to be used on any HTML where there are **no external stylesheets** and there are no JavaScript which could add or remove classes or id's dynamically. It's quite rare to find a **web page** that would be like that, but it's the case for all **email newsletters** and this library is aimed at cleaning email HTML code. If your website's HTML is like that, this library will work perfectly fine on it as well. Email HTML and website HTML are both the same markup language.
@@ -114,65 +114,44 @@ If you need more advanced CSS removal tools, check out [uncss](https://github.co
 
 There's also more direct competitor, [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) which uses [Cheerio](https://www.npmjs.com/package/cheerio), but:
 
-1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://github.com/codsen/detergent) from its [front-end](https://detergent.io).
+1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/detergent) from its [front-end](https://detergent.io).
 
 2) [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
 
+**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+
 ## Contributing
 
-If you see anything incorrect whatsoever, do [raise an issue](https://github.com/codsen/email-all-chars-within-ascii/issues). If you file a pull request, I'll do my best to merge it quickly. If you have any comments on the code, including ideas how to improve something, don't hesitate to contact me by email.
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/gulp-email-remove-unused-css/issues/new).
 
-If something doesn't work as you wished or you don't understand the inner workings of this library, _do raise an issue_. I'm happy to explain what's happening. Often some part of my README documentation is woolly, and I can't spot it myself. I need user feedback.
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/gulp-email-remove-unused-css/issues/new).
 
-Also, if you miss a feature, request it by [raising](https://github.com/codsen/email-all-chars-within-ascii/issues) an issue as well.
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-I know it never happens, but if you would ever forked it and worked on a new feature, before filing a pull request, please make sure code is following the rules set in `.eslintrc` and `npm run test` passes fine. It's basically an `airbnb-base` rules preset of `eslint` with few exceptions: 1. No semicolons. 2. Allow plus-plus in `for` loops. See `./eslintrc`.
-
-I dropped JS Standard because it misses many useful ESLint rules and has been neglected by its maintainers, it's currently using a half-year-old version of ESLint.
-
-Cheers!
+**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ## Licence
 
-> MIT License (MIT)
+MIT License (MIT)
 
-> Copyright (c) 2017 Codsen Ltd, Roy Revelt
+Copyright © 2018 Codsen Ltd, Roy Revelt
 
-> Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
 
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
 
-> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+[node-img]: https://img.shields.io/node/v/gulp-email-remove-unused-css.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
 
-[npm-img]: https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg
-[npm-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/gulp-email-remove-unused-css
 
-[travis-img]: https://travis-ci.org/codsen/gulp-email-remove-unused-css.svg?branch=master
-[travis-url]: https://travis-ci.org/codsen/gulp-email-remove-unused-css
-
-[overall-img]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/badges/score.svg
-[overall-url]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css
-
-[deps-img]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/badges/dependencies.svg
-[deps-url]: https://www.bithound.io/github/codsen/gulp-email-remove-unused-css/master/dependencies/npm
-
-[downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg
-[downloads-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
-
-[vulnerabilities-img]: https://snyk.io/test/github/codsen/gulp-email-remove-unused-css/badge.svg
-[vulnerabilities-url]: https://snyk.io/test/github/codsen/gulp-email-remove-unused-css
-
-[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/gulp-email-remove-unused-css
+
+[downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/gulp-email-remove-unused-css
+
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://prettier.io
+
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/gulp-email-remove-unused-css
