@@ -161,7 +161,7 @@
     "check-types-mini": "latest",
     "lodash.clonedeep": "*",
     "lodash.isplainobject": "*",
-    "object-all-values-equal-to": "^1.1.0",
+    "object-all-values-equal-to": "^1.2.0",
     "object-merge-advanced": "^10.3.0"
   },
   "devDependencies": {

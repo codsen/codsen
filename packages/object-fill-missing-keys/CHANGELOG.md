@@ -97,10 +97,10 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 [2.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.0.0%0Dv1.4.0#diff
 [2.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.1.0%0Dv2.0.0#diff
-[2.2.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.2.0%0Dv7.1.0#diff
-[2.3.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.3.0%0Dv7.1.0#diff
+[2.2.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.2.0%0Dv7.2.0#diff
+[2.3.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.3.0%0Dv7.2.0#diff
 [3.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.0.0%0Dv2.1.4#diff
-[3.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.1.0%0Dv7.1.0#diff
+[3.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.1.0%0Dv7.2.0#diff
 [4.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v4.0.0%0Dv3.0.0#diff
 [6.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v6.0.0%0Dv5.0.0#diff
 [7.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v7.0.0%0Dv6.0.4#diff
