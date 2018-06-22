@@ -13,7 +13,7 @@ export default commandLineArgs => {
       output: {
         file: pkg.browser,
         format: "umd",
-        name: "stringReplaceSlicesArray"
+        name: "rangesApply"
       },
       plugins: [
         strip({
