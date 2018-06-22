@@ -12,8 +12,6 @@
 
 Other siblings of this package:
 
-<!-- * Front end: [csvpony.com](https://csvpony.com) -->
-
 - API for it: [csv-sort](https://bitbucket.org/codsen/csv-sort)
 
 ## Table of Contents
@@ -74,13 +72,13 @@ $ npx csv-sort-cli YOURFILE.csv
 
 1.  It **sorts CSV file rows** to correspond to the [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) principles:
 
-![double bookkeeping example](https://cdn.rawgit.com/codsen/csv-sort/e273cf48/media/img1.png)
+![double bookkeeping example](https://bitbucket.org/codsen/csv-sort-cli/raw/37abd1320fe95378e3869ea13127a1b0e24a4daf/media/example1.gif)
 
 Sometimes internet banking CSV's have rows in a wrong order, especially when entries are on the _same date_. This library helps to sort the rows in correct order.
 
 2.  As a bonus, it will **trim** the empty columns/rows:
 
-![2D trim of a CSV contents](https://cdn.rawgit.com/codsen/csv-sort/2bdf5256/media/img2.png)
+![2D trim of a CSV contents](https://bitbucket.org/codsen/csv-sort-cli/raw/37abd1320fe95378e3869ea13127a1b0e24a4daf/media/example2.gif)
 
 3.  Not to mention, the [our custom CSV parse](https://bitbucket.org/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with a double quotes. Read more in [its repo's readme](https://bitbucket.org/codsen/csv-split-easy).
 
