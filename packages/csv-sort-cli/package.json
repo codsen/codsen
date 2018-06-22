@@ -156,7 +156,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "csv-sort": "^2.2.2",
+    "csv-sort": "^2.2.3",
     "globby": "^8.0.1",
     "inquirer": "^6.0.0",
     "lodash.pullall": "*",
