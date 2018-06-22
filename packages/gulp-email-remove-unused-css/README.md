@@ -9,8 +9,6 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-> Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY
-
 _If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/issues/new) issue tracker._
 
 * Online web app: [EmailComb](https://emailcomb.com)
@@ -81,7 +79,7 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 
 ## Next level
 
-If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](email-remove-unused-css) library of it instead.
+If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://bitbucket.org/codsen/email-remove-unused-css) library of it instead.
 
 The idea is the following: in Gulp, everything flows as a vinyl Buffer streams. You [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations, then convert it back to Buffer and place it back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
 
