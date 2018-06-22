@@ -40,26 +40,11 @@ import mergeAdvanced from "object-merge-advanced";
 
 Here's what you'll get:
 
-<!-- prettier-ignore-start -->
-
-| Type | Key in `package.json` | Path | Size |
-
-Here's what you'll get:
-
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/object-merge-advanced.cjs.js` | 18 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/object-merge-advanced.esm.js` | 19 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/object-merge-advanced.umd.js` | 38 KB
-
-
-
-
-
-
-
-
-<!-- prettier-ignore-end -->
+| Type                                                                                                    | Key in `package.json` | Path                                | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 18 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 19 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 38 KB |
 
 **[⬆ back to top](#markdown-header-object-merge-advanced)**
 
@@ -84,7 +69,7 @@ Imagine, if we merged the identical keys of two objects judging their values by 
 
 The idea is, we strive to retain **as much datum** as possible after merging. For example, you'd be better off with a non-empty string than with an empty array or boolean.
 
-There are plenty of settings (mainly aimed at templating needs) but you can tap the callback and [override the result](#optscb) in any way you like.
+There are plenty of settings (mainly aimed at templating needs) but you can tap the callback and [override the result](#markdown-header-optscb) in any way you like.
 
 **That's what this library does**
 
@@ -101,7 +86,7 @@ When `object-merge-advanced` merges two _objects_, it will recursively traverse 
 
 There are ten possible combinations: 10 types of first input (object #1) and ten types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
-![matching algorithm](https://cdn.rawgit.com/codsen/object-merge-advanced/54bac472/media/object-merge-advanced_algorithm.png)
+![matching algorithm](https://bitbucket.org/codsen/object-merge-advanced/raw/01b04fb168e94411f8a0230336970fc9831a9e02/media/object-merge-advanced_algorithm.png)
 
 A large number in the centre of a square shows which value prevails.
 
@@ -134,34 +119,30 @@ mergeAdvanced(input1, input2 [, { options }])
 
 ### API - Input
 
-<!-- prettier-ignore-start -->
-
-| Input argument | Type         | Obligatory? | Description |
-| -------------- | ------------ | ----------- | ----------- |
+| Input argument | Type         | Obligatory? | Description                                                                                           |
+| -------------- | ------------ | ----------- | ----------------------------------------------------------------------------------------------------- |
 | `input1`       | Anything     | yes         | Normally an object literal, but array or string or whatever else will work too. Can be deeply nested. |
 | `input2`       | Anything     | yes         | Second thing to merge with first-one, normally an object, but can be an array or something else.      |
 | `options`      | Plain object | no          | Optionally, pass all settings in a plain object, as a third argument                                  |
 
-| Options object's key                    | Value                     | Default | Description |
-| --------------------------------------- | ------------------------- | ------- | ----------- |
+| Options object's key                    | Value                     | Default | Description                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------------------------------- | ------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `{`                                     |                           |         |
-| `cb`                                    | Function                  | `null`  | Allows you to intervene on each of merging actions, right before the values are returned. It gives you both values and suggested return result in a callback arguments. See [below](#optscb). |
-| `mergeObjectsOnlyWhenKeysetMatches`     | Boolean                   | `true`  | Controls the merging of the objects within arrays. See dedicated chapter below. |
-| `ignoreKeys`                            | String / Array of strings | n/a     | These keys, if present on `input1`, will be kept and not merged, that is, changed. You can use wildcards. |
-| `hardMergeKeys`                         | String / Array of strings | n/a     | These keys, if present on `input2`, will overwrite their counterparts on `input1` (if present) no matter what. You can use wildcards. |
-| `mergeArraysContainingStringsToBeEmpty` | Boolean                   | `false` | If any arrays contain strings, resulting merged array will be empty IF this setting is set to `true`. |
-| `oneToManyArrayObjectMerge`             | Boolean                   | `false` | If one array has one object, but another array has many objects, when `oneToManyArrayObjectMerge` is `true`, each object from "many-objects" array will be merged with that one object from "one-object" array. Handy when setting defaults on JSON data structures. |
-| `hardMergeEverything`                   | Boolean                   | `false` | If there's a clash of anywhere, second argument's value will always overwrite first one's. That's a unidirectional merge. |
-| `ignoreEverything`                      | Boolean                   | `false` | If there's a clash of anywhere, first argument's value will always overwrite the second one's. That's a unidirectional merge. |
+| `cb`                                    | Function                  | `null`  | Allows you to intervene on each of merging actions, right before the values are returned. It gives you both values and suggested return result in a callback arguments. See [below](#optscb).                                                                                                                                                                                                                                    |
+| `mergeObjectsOnlyWhenKeysetMatches`     | Boolean                   | `true`  | Controls the merging of the objects within arrays. See dedicated chapter below.                                                                                                                                                                                                                                                                                                                                                  |
+| `ignoreKeys`                            | String / Array of strings | n/a     | These keys, if present on `input1`, will be kept and not merged, that is, changed. You can use wildcards.                                                                                                                                                                                                                                                                                                                        |
+| `hardMergeKeys`                         | String / Array of strings | n/a     | These keys, if present on `input2`, will overwrite their counterparts on `input1` (if present) no matter what. You can use wildcards.                                                                                                                                                                                                                                                                                            |
+| `mergeArraysContainingStringsToBeEmpty` | Boolean                   | `false` | If any arrays contain strings, resulting merged array will be empty IF this setting is set to `true`.                                                                                                                                                                                                                                                                                                                            |
+| `oneToManyArrayObjectMerge`             | Boolean                   | `false` | If one array has one object, but another array has many objects, when `oneToManyArrayObjectMerge` is `true`, each object from "many-objects" array will be merged with that one object from "one-object" array. Handy when setting defaults on JSON data structures.                                                                                                                                                             |
+| `hardMergeEverything`                   | Boolean                   | `false` | If there's a clash of anywhere, second argument's value will always overwrite first one's. That's a unidirectional merge.                                                                                                                                                                                                                                                                                                        |
+| `ignoreEverything`                      | Boolean                   | `false` | If there's a clash of anywhere, first argument's value will always overwrite the second one's. That's a unidirectional merge.                                                                                                                                                                                                                                                                                                    |
 | `concatInsteadOfMerging`                | Boolean                   | `true`  | If it's `true` (default), when object keys clash and their values are arrays, when merging, [concatenate](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) those arrays. If it's `false`, array contents from the first argument object's key will go intact into final result, but second array's contents will be added into result only if they don't exist in the first array. |
-| `dedupeStringsInArrayValues`            | Boolean                   | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings. |
-| `mergeBoolsUsingOrNotAnd`               | Boolean                   | `true`  | When two values are Booleans, by default, result will be calculated using logical `OR` on them. If you switch this to `false`, merging will use logical `AND`. Former setting is handy when dealing with JSON content driving email templates, latter is handy when merging [settings](https://github.com/codsen/csv-sort-cli/blob/master/cli.js) ("off", `false` overrides default "on", `true`). |
-| `useNullAsExplicitFalse`                | Boolean                   | `false` | When set to `true`, `null` vs. anything (argument order doesn't matter) will yield `null`. This is used in data structures as an explicit "false" to "turn off" incoming defaults for good without the need of extra values or wrapping with conditionals in templates. |
-| `hardArrayConcat`                       | Boolean                   | `false` | When set to `true`, an array vs. array merge will always result from a concat operation from the `input1` parameter with `input2`, no matter which items are contained on those arrays. |
-| `hardArrayConcatKeys`                   | String / Array of strings | n/a     | These keys, if present on `input1` will force hardArrayConcat option on those values. You can use wildcards. |
+| `dedupeStringsInArrayValues`            | Boolean                   | `false` | When we merge two values and they are arrays, full of strings and only strings, this option allows to dedupe the resulting array of strings. Setting should be used in conjunction with `concatInsteadOfMerging` to really ensure than resulting string array contains only unique strings.                                                                                                                                      |
+| `mergeBoolsUsingOrNotAnd`               | Boolean                   | `true`  | When two values are Booleans, by default, result will be calculated using logical `OR` on them. If you switch this to `false`, merging will use logical `AND`. Former setting is handy when dealing with JSON content driving email templates, latter is handy when merging [settings](https://github.com/codsen/csv-sort-cli/blob/master/cli.js) ("off", `false` overrides default "on", `true`).                               |
+| `useNullAsExplicitFalse`                | Boolean                   | `false` | When set to `true`, `null` vs. anything (argument order doesn't matter) will yield `null`. This is used in data structures as an explicit "false" to "turn off" incoming defaults for good without the need of extra values or wrapping with conditionals in templates.                                                                                                                                                          |
+| `hardArrayConcat`                       | Boolean                   | `false` | When set to `true`, an array vs. array merge will always result from a concat operation from the `input1` parameter with `input2`, no matter which items are contained on those arrays.                                                                                                                                                                                                                                          |
+| `hardArrayConcatKeys`                   | String / Array of strings | n/a     | These keys, if present on `input1` will force hardArrayConcat option on those values. You can use wildcards.                                                                                                                                                                                                                                                                                                                     |
 | `}`                                     |                           |         |
-
-<!-- prettier-ignore-end -->
 
 Here are all defaults in one place:
 
@@ -196,26 +177,22 @@ Objects or arrays in the inputs are **not mutated**. This is very important.
 
 You can name the arguments of your callback function any way you like, only _the order_ matters.
 
-<!-- prettier-ignore-start -->
-
-| Argument | Name    | Purpose |
-| -------- | ------- | ------- |
-| `1st`    | `inputArg1` (call it anyway you like; for example, same as in `Array.forEach`, name the variables as you wish) | It's the _value_ of the key that's clashing; comes from **first** main input argument (named `input1` above) |
-| `2nd`    | `inputArg2` (call it anyway you like — only its position in a row matters) | It's the _value_ of the key that's clashing; comes from **second** main input argument (named `input2` above) |
-| `3rd`    | `resultAboutToBeReturned` (call it anyway you like) | Algorithm already decided what the result would normally be, if you were not using the callback. It's that result here. |
-| `4th`    | `infoObj` (same — variable's name is arbitrary) | This plain object contains the location info about the keys: key names and full paths, plus, the type of the parent (array or object). See the details in the table below. |
+| Argument | Name                                                                                                           | Purpose                                                                                                                                                                    |
+| -------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1st`    | `inputArg1` (call it anyway you like; for example, same as in `Array.forEach`, name the variables as you wish) | It's the _value_ of the key that's clashing; comes from **first** main input argument (named `input1` above)                                                               |
+| `2nd`    | `inputArg2` (call it anyway you like — only its position in a row matters)                                     | It's the _value_ of the key that's clashing; comes from **second** main input argument (named `input2` above)                                                              |
+| `3rd`    | `resultAboutToBeReturned` (call it anyway you like)                                                            | Algorithm already decided what the result would normally be, if you were not using the callback. It's that result here.                                                    |
+| `4th`    | `infoObj` (same — variable's name is arbitrary)                                                                | This plain object contains the location info about the keys: key names and full paths, plus, the type of the parent (array or object). See the details in the table below. |
 
 **Remember always to return either 3rd arg. `resultAboutToBeReturned` or something else because otherwise `undefined` will be written as a result of the particular merge.**
 
 Fourth argument, `infoObj` is a plain object and will contain keys:
 
-| `infoObj` key | Type | Purpose |
-| ------------- | ---- | ------- |
-| `path`        | String | By definition keys clash when two objects have them both at the same path. Therefore, callback will contain only one path value, which applies to both clashing sides. |
-| `key`         | String | If it's an object, that's the name of the keys whose values are clashing and being merged |
-| `type`        | Array of two strings, usually each being either "object" or "array" | Sometimes you might want to be able to distinguish values of arrays from values that belong to plain objects that are being merged. |
-
-<!-- prettier-ignore-end -->
+| `infoObj` key | Type                                                                | Purpose                                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `path`        | String                                                              | By definition keys clash when two objects have them both at the same path. Therefore, callback will contain only one path value, which applies to both clashing sides. |
+| `key`         | String                                                              | If it's an object, that's the name of the keys whose values are clashing and being merged                                                                              |
+| `type`        | Array of two strings, usually each being either "object" or "array" | Sometimes you might want to be able to distinguish values of arrays from values that belong to plain objects that are being merged.                                    |
 
 Callback allows you to intervene on each of merging actions, right before the values are returned. It gives you both values (first two arguments), suggested return result (3rd argument) and info object (4th argument) in a callback arguments. Whatever you return from your callback function is then written as a final value. If you don't want to do anything, just return that third argument. But you can return something different.
 
@@ -558,12 +535,7 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
 
-<!-- prettier-ignore-start -->
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 | [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://bitbucket.org/revelt)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://bitbucket.org/jabiinfante)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://bitbucket.org/project707)<br /> [🐛](https://bitbucket.org/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://bitbucket.org/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://bitbucket.org/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
-| :---: | :---: | :---: | :---: | :---: |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<!-- prettier-ignore-end -->
 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
