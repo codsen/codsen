@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.0] - 2018-06-22
+
+- ✨ implemented and released (but not documented) `opts.strictApi` was merged with `opts.relaxedApi`
+
 ## [3.4.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -112,13 +116,15 @@ They have to be callbacks because I can't predict what checks you will want to c
 
 - ✨ First public release
 
-[1.1.0]: https://github.com/codsen/string-match-left-right/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/string-match-left-right/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/string-match-left-right/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/string-match-left-right/compare/v1.3.6...v1.4.0
-[2.0.0]: https://github.com/codsen/string-match-left-right/compare/v1.4.0...v2.0.0
-[3.0.0]: https://github.com/codsen/string-match-left-right/compare/v2.0.0...v3.0.0
-[3.1.0]: https://github.com/codsen/string-match-left-right/compare/v3.0.0...v3.1.0
-[3.1.1]: https://github.com/codsen/string-match-left-right/compare/v3.1.0...v3.1.1
-[3.2.0]: https://github.com/codsen/string-match-left-right/compare/v3.1.1...v3.2.0
-[3.3.0]: https://github.com/codsen/string-match-left-right/compare/v3.2.0...v3.3.0
+[1.1.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.1.0%0Dv1.0.4#diff
+[1.2.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.2.0%0Dv1.1.5#diff
+[1.3.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.4.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.4.0%0Dv1.3.6#diff
+[2.0.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v2.0.0%0Dv1.4.4#diff
+[3.0.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.0.0%0Dv2.0.6#diff
+[3.1.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.1.0%0Dv3.0.3#diff
+[3.1.1]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.1.1%0Dv3.1.0#diff
+[3.2.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.2.0%0Dv3.1.1#diff
+[3.3.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.3.0%0Dv3.2.0#diff
+[3.4.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.4.0%0Dv3.3.1#diff
+[3.5.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.5.0%0Dv3.4.0#diff

@@ -180,7 +180,7 @@ test(`02.01 - ${`\u001b[${33}m${"matchLeftIncl()"}\u001b[${39}m`}      on a simp
     matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"]);
   });
   t.is(
-    matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"], { strictApi: false }),
+    matchLeftIncl("abcdefghi", 99, ["aaa", "zzz"], { relaxedApi: true }),
     false,
     "02.01.06"
   );
@@ -253,7 +253,7 @@ test(`03.01 - ${`\u001b[${31}m${"matchLeft()"}\u001b[${39}m`}          on a simp
     matchLeft("abcdefghi", 99, ["aaa", "zzz"]);
   });
   t.is(
-    matchLeft("abcdefghi", 99, ["aaa", "zzz"], { strictApi: false }),
+    matchLeft("abcdefghi", 99, ["aaa", "zzz"], { relaxedApi: true }),
     false,
     "03.01.06"
   );
@@ -275,10 +275,10 @@ test(`04.01 - ${`\u001b[${35}m${"matchRightIncl()"}\u001b[${39}m`}     on a simp
   t.is(matchRightIncl("abcdef", 2, ["gjd", "cde"]), "cde", "04.01.04");
   t.throws(() => {
     matchRightIncl("abcdef", 99, ["cde"]);
-    matchRightIncl("abcdef", 99, ["cde"], { strictApi: true });
+    matchRightIncl("abcdef", 99, ["cde"], { relaxedApi: false });
   });
   t.is(
-    matchRightIncl("abcdef", 99, ["cde"], { strictApi: false }),
+    matchRightIncl("abcdef", 99, ["cde"], { relaxedApi: true }),
     false,
     "04.01.05"
   );
@@ -335,7 +335,7 @@ test(`05.01 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}         on a simp
     matchRight("abcdef", 99, ["defg"]);
   });
   t.is(
-    matchRight("abcdef", 99, ["defg"], { strictApi: false }),
+    matchRight("abcdef", 99, ["defg"], { relaxedApi: true }),
     false,
     "05.01.06"
   );
@@ -414,7 +414,7 @@ test(`06.01 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}            callback 
     matchLeftIncl("a", 13, "class=", { cb: isSpace });
   });
   t.is(
-    matchLeftIncl("a", 13, "class=", { cb: isSpace, strictApi: false }),
+    matchLeftIncl("a", 13, "class=", { cb: isSpace, relaxedApi: true }),
     false,
     "06.01.05 - result will fail because substring is not matched"
   );

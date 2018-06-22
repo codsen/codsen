@@ -210,7 +210,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts) {
       console.log("208 THEREFORE, returning false.");
       return false;
     }
-  } else if (opts.strictApi) {
+  } else if (!opts.relaxedApi) {
     throw new Error(
       `string-match-left-right/marchForward(): [THROW_ID_102] second argument, fromIndexInclusive is ${fromIndexInclusive} beyond the input string length, ${
         str.length
@@ -239,7 +239,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
     )}`
   );
   if (fromIndexInclusive >= str.length) {
-    if (opts.strictApi) {
+    if (!opts.relaxedApi) {
       throw new Error(
         `string-match-left-right/marchBackward(): [THROW_ID_203] second argument, starting index, should not be beyond the last character of the input string! Currently the first argument's last character's index is ${
           str.length
@@ -250,9 +250,6 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
         )}`
       );
     } else {
-      console.log(
-        "252 Instead of throw THROW_ID_203, returning false, because index is out of range and opts.strictApi is off"
-      );
       return false;
     }
   }
@@ -410,7 +407,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     i: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
-    strictApi: true,
     relaxedApi: false
   };
   const opts = Object.assign({}, defaults, originalOpts);

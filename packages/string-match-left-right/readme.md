@@ -13,13 +13,12 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [The API](#markdown-header-the-api)
-- [`opts.cb`](#markdown-header-`opts.cb`)
+- [Using a callback - `opts.cb`](#markdown-header-using-a-callback-optscb)
 - [Matching relying only on a callback](#markdown-header-matching-relying-only-on-a-callback)
-- [`opts.trimBeforeMatching`](#markdown-header-`opts.trimbeforematching`)
-- [`opts.trimCharsBeforeMatching`](#markdown-header-`opts.trimcharsbeforematching`)
+- [`opts.trimBeforeMatching`](#markdown-header-optstrimbeforematching)
+- [`opts.trimCharsBeforeMatching`](#markdown-header-optstrimcharsbeforematching)
 - [Unicode is fully supported](#markdown-header-unicode-is-fully-supported)
 - [Algorithm](#markdown-header-algorithm)
 - [Contributing](#markdown-header-contributing)
@@ -56,7 +55,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 19 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 21 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## The API
 
@@ -69,14 +68,14 @@ There are four methods; all have the same API's:
 - **`matchLeft`** — at least one of given substrings has to match what's on the **left** of the given index
 - **`matchRight`** — at least one of given substrings has to match what's on the **right** of the given index
 
-| Input argument | Type                       | Obligatory? | Description                                                                                                                                      |
-| -------------- | -------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `str`          | String                     | yes         | Source string to work on                                                                                                                         |
-| `position`     | Natural number incl. zero  | yes         | Starting index. Can be zero. Otherwise, a natural number.                                                                                        |
-| `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right. If array is given, at one or more matches, the first match value will be returned |
-| `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                                          |
+| Input argument | Type                       | Obligatory? | Description                                                                                                                                                                                                                                                 |
+| -------------- | -------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `str`          | String                     | yes         | Source string to work on                                                                                                                                                                                                                                    |
+| `position`     | Natural number incl. zero  | yes         | Index number of where we start looking. Character at this index may be used (`matchLeftIncl` and `matchRightIncl`) or not (other two methods)                                                                                                               |
+| `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right, of the aforementioned `position`. If anything was found, it will be returned. It's especially handy when here we pass an array of string - this way you know _which_ of strings was matched. |
+| `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                                                                                                                                                     |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ### Output
 
@@ -85,7 +84,7 @@ Returns Boolean `false` or value of the string that was matched, that is,
 - if `whatToMatch` was a string, then returns it, OR
 - if `whatToMatch` was an array, then returns the first match from this array's elements.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ### Optional Options Object's API:
 
@@ -110,7 +109,7 @@ Here it is with defaults, in one place, ready for copying:
 }
 ```
 
-The Optional Options Object is sanitized by [check-types-mini](https://github.com/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add any unrecognized keys.
+The Optional Options Object is sanitized by [check-types-mini](https://bitbucket.org/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add any unrecognized keys.
 
 ```js
 // K E Y
@@ -157,9 +156,9 @@ console.log(`res4 = ${res4}`);
 // => res4 = 'ef'
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
-## `opts.cb`
+## Using a callback - `opts.cb`
 
 Often you need not only to match what's on the left/right of the given index within string, but also to perform checks on what's outside.
 
@@ -262,7 +261,7 @@ const res = matchRightIncl("ab      cdef", 2, "cd", {
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## Matching relying only on a callback
 
@@ -325,33 +324,33 @@ console.log(res4);
 // => true
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## `opts.trimBeforeMatching`
 
-For example, [string-strip-html](https://github.com/codsen/string-strip-html) is using this library to check, is there a known HTML tag name to the right of the opening bracket character (`<`). Like `<div` or `<img`. Now, we want to allow dirty code cases when there's whitespace after the bracket, like `< div`, just in case somebody would sneak in `< script` and some browser would "patch it up". In `string-strip-html`, we want to be able to detect and strip even `<\n\n\nscript>`. That's easy, we set `opts.trimBeforeMatching` to `true`. When matching is performed, substring on the right of `<`, the `\n\n\nscript`, is trimmed into `script`, then matched.
+For example, [string-strip-html](https://bitbucket.org/codsen/string-strip-html) is using this library to check, is there a known HTML tag name to the right of the opening bracket character (`<`). Like `<div` or `<img`. Now, we want to allow dirty code cases when there's whitespace after the bracket, like `< div`, just in case somebody would sneak in `< script` and some browser would "patch it up". In `string-strip-html`, we want to be able to detect and strip even `<\n\n\nscript>`. That's easy, we set `opts.trimBeforeMatching` to `true`. When matching is performed, substring on the right of `<`, the `\n\n\nscript`, is trimmed into `script`, then matched.
 
 By the way it's not on by default because such scenarios are rare. Default comparison should be a strict-one.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## `opts.trimCharsBeforeMatching`
 
-For example, [string-strip-html](https://github.com/codsen/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
+For example, [string-strip-html](https://bitbucket.org/codsen/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## Unicode is fully supported
 
-All astral characters (including emoji) are supported in all parts of the program (as input arguments, as options and so on). Having said that, the indexing system is still the same, native JS-one. I did some mistakes in the past switching to string indexing system, based on grapheme-count where one emoji counts as one character. Later I learned that and produced [converter](https://github.com/codsen/string-convert-indexes) between the two systems, and now I always use only native JS string indexing system. This library is the first-one of mine which takes care of the astral characters **without splitting the input string by grapheme** (letter or emoji) into array. Some famous libraries work that way but I believe that impairs the performance.
+All astral characters (including emoji) are supported in all parts of the program (as input arguments, as options and so on). Having said that, the indexing system is still the same, native JS-one. I did some mistakes in the past switching to string indexing system, based on grapheme-count where one emoji counts as one character. Later I learned that and produced [converter](https://bitbucket.org/codsen/string-convert-indexes) between the two systems, and now I always use only native JS string indexing system. This library is the first-one of mine which takes care of the astral characters **without splitting the input string by grapheme** (letter or emoji) into array. Some famous libraries work that way but I believe that impairs the performance.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## Algorithm
 
 The code in this library contains only `for` loops, iterating on the input string. There's no splitting-by-grapheme into array and later performing all the operations on that array. I think this approach is the most performant. In the end, which library would you choose: more performant-one or less performant but with with less lines of code?
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## Contributing
 
@@ -361,7 +360,7 @@ The code in this library contains only `for` loops, iterating on the input strin
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-match-left-right)**
 
 ## Licence
 

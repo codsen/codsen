@@ -99,7 +99,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts) {
     if (charsToCheckCount > 0) {
       return false;
     }
-  } else if (opts.strictApi) {
+  } else if (!opts.relaxedApi) {
     throw new Error("string-match-left-right/marchForward(): [THROW_ID_102] second argument, fromIndexInclusive is " + fromIndexInclusive + " beyond the input string length, " + str.length + ".");
   } else {
     return false;
@@ -109,7 +109,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts) {
 // A helper f(). Uses 2xx range error codes.
 function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
   if (fromIndexInclusive >= str.length) {
-    if (opts.strictApi) {
+    if (!opts.relaxedApi) {
       throw new Error("string-match-left-right/marchBackward(): [THROW_ID_203] second argument, starting index, should not be beyond the last character of the input string! Currently the first argument's last character's index is " + str.length + " but the second argument is beyond it:\n" + JSON.stringify(fromIndexInclusive, null, 4));
     } else {
       return false;
@@ -164,7 +164,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     i: false,
     trimBeforeMatching: false,
     trimCharsBeforeMatching: [],
-    strictApi: true,
     relaxedApi: false
   };
   var opts = Object.assign({}, defaults, originalOpts);

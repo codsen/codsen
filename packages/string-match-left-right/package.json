@@ -151,7 +151,7 @@
     }
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.2.1",
+    "arrayiffy-if-string": "^3.3.2",
     "check-types-mini": "latest",
     "is-natural-number": "^4.0.1",
     "lodash.isplainobject": "latest",
