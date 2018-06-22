@@ -14,14 +14,13 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
 - [In practice](#markdown-header-in-practice)
 - [API](#markdown-header-api)
-- [`opts.cb`](#markdown-header-`opts.cb`)
-- [Difference from Lodash `_.merge`](#markdown-header-difference-from-lodash-`_.merge`)
-- [Difference from `Object.assign()`](<#markdown-header-difference-from-`object.assign()`>)
+- [`opts.cb`](#markdown-header-optscb)
+- [Difference from Lodash `_.merge`](#markdown-header-difference-from-lodash-_merge)
+- [Difference from `Object.assign()`](#markdown-header-difference-from-objectassign)
 - [Contributing](#markdown-header-contributing)
 - [Contributors](#markdown-header-contributors)
 - [Licence](#markdown-header-licence)
@@ -57,9 +56,12 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 
 
 
+
+
+
 <!-- prettier-ignore-end -->
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Purpose
 
@@ -114,7 +116,7 @@ In some cases, we perform a custom actions:
 
 Check `test.js` unit tests to see this library in action.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## In practice
 
@@ -122,7 +124,7 @@ I use this library to merge humongous JSON files that house my templates' data. 
 
 Also, I use it in small cases where `Object.assign` is not suitable, for example, when filling missing keys in a plain object or doing other operations on objects coming from JSON files.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## API
 
@@ -182,7 +184,7 @@ Here are all defaults in one place:
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ### API - Output
 
@@ -257,7 +259,7 @@ mergeAdvanced(
 )
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ### `opts.cb` bigger example, number one
 
@@ -309,7 +311,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 // }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ### `opts.cb` bigger example, number two
 
@@ -360,7 +362,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 
 Whatever you return from the _callback_ will be written as a result of a clash, so make sure you return either `resultAboutToBeReturned` (third argument in the callback), or something to substitute it. Otherwise, `undefined` will be written.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ### `opts.cb` another example, using paths of the keys to override the merge
 
@@ -447,7 +449,7 @@ const res = mergeAdvanced(
 //     }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ### `opts.mergeObjectsOnlyWhenKeysetMatches` use cases
 
@@ -518,7 +520,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Difference from Lodash `_.merge`
 
@@ -540,7 +542,7 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Contributing
 
@@ -550,7 +552,7 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Contributors
 
@@ -566,7 +568,7 @@ Thanks goes to these wonderful people (hover the cursor over contribution icons 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Licence
 
