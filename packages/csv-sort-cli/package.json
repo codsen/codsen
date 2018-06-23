@@ -26,7 +26,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint cli.js"
   },
   "ava": {
     "compileEnhancements": false,
