@@ -1,6 +1,6 @@
 {
   "name": "ranges-is-index-within",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Efficiently checks if index is within any of the given ranges",
   "license": "MIT",
   "engines": {
