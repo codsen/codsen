@@ -54,8 +54,9 @@ Bumping major just in case this breaks API endpoints.
 
 - ✨ Initial release
 
-[2.0.0]: https://github.com/codsen/ranges-sort/compare/v1.0.0...v2.0.0
-[2.1.0]: https://github.com/codsen/ranges-sort/compare/v2.0.0...v2.1.0
-[3.0.0]: https://github.com/codsen/ranges-sort/compare/v2.1.0...v3.0.0
-[3.1.0]: https://github.com/codsen/ranges-sort/compare/v3.0.0...v3.1.0
-[3.2.0]: https://github.com/codsen/ranges-sort/compare/v3.1.2...v3.2.0
+[2.0.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v2.0.0%0Dv1.0.2#diff
+[2.1.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v2.1.0%0Dv2.0.0#diff
+[3.0.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.0.0%0Dv2.1.0#diff
+[3.1.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.1.0%0Dv3.0.2#diff
+[3.2.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.2.0%0Dv3.1.2#diff
+[3.3.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.3.0%0Dv3.2.0#diff

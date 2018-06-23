@@ -32,12 +32,11 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-sort.esm.js` | 3 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-sort.umd.js` | 15 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Rationale](#markdown-header-rationale)
 - [API](#markdown-header-api)
 - [Contributing](#markdown-header-contributing)
@@ -60,7 +59,7 @@ It sorts the array of index arrays, for example:
 [[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']] => [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']]
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## API
 
@@ -79,7 +78,7 @@ For example,
 
 This package does not mutate the input array.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ### Options object
 
@@ -91,7 +90,7 @@ This package does not mutate the input array.
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Contributing
 
@@ -101,7 +100,7 @@ This package does not mutate the input array.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Licence
 
