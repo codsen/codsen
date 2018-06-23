@@ -3,6 +3,8 @@ import ordinalSuffix from 'ordinal-number-suffix';
 import checkTypes from 'check-types-mini';
 import mergeRanges from 'ranges-merge';
 
+/* eslint no-console:0 */
+
 const isArr = Array.isArray;
 
 function rangesInvert(arrOfRanges, strLen, originalOptions) {

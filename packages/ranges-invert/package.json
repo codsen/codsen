@@ -151,7 +151,7 @@
     "check-types-mini": "latest",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.1",
-    "ranges-merge": "^3.2.0"
+    "ranges-merge": "^3.3.0"
   },
   "devDependencies": {
     "ava": "latest",

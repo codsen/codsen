@@ -1,3 +1,5 @@
+/* eslint no-console:0 */
+
 import isNatNum from "is-natural-number";
 import ordinalSuffix from "ordinal-number-suffix";
 import checkTypes from "check-types-mini";

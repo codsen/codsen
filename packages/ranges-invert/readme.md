@@ -3,6 +3,7 @@
 > Invert natural number string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
 
 [![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -31,12 +32,11 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-invert.esm.js` | 5 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-invert.umd.js` | 18 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-invert)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Purpose](#markdown-header-purpose)
 - [API](#markdown-header-api)
 - [Contributing](#markdown-header-contributing)
@@ -56,7 +56,7 @@ As you noticed the input string is used for reference - to find, how far does th
 
 There is possibility that string will not cover the inverted range. For example, if reference string was "abc" but range-to-invert was `[1,10]`. The result in such case would be `[0, 1]`.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-invert)**
 
 ## API
 
@@ -71,7 +71,7 @@ There is possibility that string will not cover the inverted range. For example,
 
 This package does not mutate the input array, instead it creates and returns a new array with ranges inverted.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-invert)**
 
 ### Options object
 
@@ -81,7 +81,7 @@ This package does not mutate the input array, instead it creates and returns a n
 | `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to true, all ranges must have two and only two elements, otherwise an error will be thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (because of 3 elements), as well as `[ ['a'] ]` (1 element). |
 | }                                  |         |             |         |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-invert)**
 
 ## Contributing
 
@@ -91,7 +91,7 @@ This package does not mutate the input array, instead it creates and returns a n
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-invert)**
 
 ## Licence
 
@@ -101,6 +101,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 
 [node-img]: https://img.shields.io/node/v/ranges-invert.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-invert
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/ranges-invert
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-invert/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/ranges-invert?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
