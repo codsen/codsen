@@ -153,8 +153,8 @@
   "dependencies": {
     "check-types-mini": "latest",
     "lodash.isplainobject": "latest",
-    "ranges-apply": "^2.3.1",
-    "ranges-push": "^2.9.1",
+    "ranges-apply": "^2.3.2",
+    "ranges-push": "^2.9.2",
     "string-match-left-right": "^3.4.0"
   },
   "devDependencies": {
