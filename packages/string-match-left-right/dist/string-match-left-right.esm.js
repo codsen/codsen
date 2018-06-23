@@ -1,6 +1,7 @@
 import isNaturalNumber from 'is-natural-number';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
+import isFun from 'lodash.isfunction';
 import arrayiffy from 'arrayiffy-if-string';
 import { isHighSurrogate, isLowSurrogate } from 'string-character-is-astral-surrogate';
 
@@ -23,7 +24,7 @@ function isAstral(char) {
 // A helper f(). Uses 1xx range error codes.
 // Returns the index number of the first character of "strToMatch". That's location
 // within the input string, "str".
-function marchForward(str, fromIndexInclusive, strToMatch, opts) {
+function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
 
   if (fromIndexInclusive <= str.length) {
     let charsToCheckCount = strToMatch.length;
@@ -121,7 +122,12 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts) {
 }
 
 // A helper f(). Uses 2xx range error codes.
-function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
+function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
+
+  // early ending case if matching EOL being at 0-th index:
+  if (fromIndexInclusive === -1 && special && strToMatch === "EOL") {
+    return strToMatch;
+  }
   if (fromIndexInclusive >= str.length) {
     if (!opts.relaxedApi) {
       throw new Error(
@@ -137,10 +143,13 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
       return false;
     }
   }
-  let charsToCheckCount = strToMatch.length;
+  let charsToCheckCount = special ? 1 : strToMatch.length;
 
   for (let i = fromIndexInclusive + 1; i--; ) {
     if (opts.trimBeforeMatching && str[i].trim() === "") {
+      if (i === 0 && special && strToMatch === "EOL") {
+        return true;
+      }
       continue;
     }
     let currentCharacter = str[i];
@@ -159,6 +168,10 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
       if (currentCharacter.length === 2) {
         // if it was emoji, offset by two
         i -= 1;
+      }
+      if (special && strToMatch === "EOL" && i === 0) {
+        // return true because we reached the zero'th index, exactly what we're looking for
+        return true;
       }
       continue;
     }
@@ -186,6 +199,9 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
     }
   }
   if (charsToCheckCount > 0) {
+    if (special && strToMatch === "EOL") {
+      return true;
+    }
     return false;
   }
 }
@@ -263,12 +279,16 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   let whatToMatch;
 
+  let special = false;
   if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (isArr(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = [""];
+  } else if (isFun(originalWhatToMatch) && isStr(originalWhatToMatch())) {
+    whatToMatch = [originalWhatToMatch()];
+    special = true;
   } else {
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(
@@ -449,7 +469,13 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           startingPosition -= 1;
         }
       }
-      const found = marchBackward(str, startingPosition, whatToMatch[i], opts);
+      const found = marchBackward(
+        str,
+        startingPosition,
+        whatToMatch[i],
+        opts,
+        special
+      );
       // now, the "found" is the index of the first character of what was found.
       // we need to calculate the character to the left of it, which might be emoji
       // so its first character might be either "minus one index" (normal character)
@@ -516,7 +542,13 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       startingPosition += 1;
     }
 
-    const found = marchForward(str, startingPosition, whatToMatch[i], opts);
+    const found = marchForward(
+      str,
+      startingPosition,
+      whatToMatch[i],
+      opts,
+      special
+    );
 
     let indexOfTheCharacterAfter;
     let fullCharacterAfter;

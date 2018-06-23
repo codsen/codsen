@@ -154,6 +154,7 @@
     "arrayiffy-if-string": "^3.3.2",
     "check-types-mini": "latest",
     "is-natural-number": "^4.0.1",
+    "lodash.isfunction": "^3.0.9",
     "lodash.isplainobject": "latest",
     "string-character-is-astral-surrogate": "latest"
   },

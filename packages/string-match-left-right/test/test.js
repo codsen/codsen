@@ -2835,29 +2835,84 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
   );
 });
 
-// 10. Ad-hoc
+// 10. EOL matching
 // -----------------------------------------------------------------------------
 
-test(`10.01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, t => {
-  t.is(matchRight('<a class="something"> text', 19, ">"), ">", "10.01.01");
+test(`10.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}          EOL matching`, t => {
+  t.is(matchLeft("a", 0, "EOL"), false, "10.01.01");
+  t.is(matchLeft("a", 0, () => "EOL"), "EOL", "10.01.02");
+
+  // whitespace trims:
+  t.is(
+    matchLeft(" a", 1, () => "EOL"),
+    false,
+    "10.01.03 - whitespace trim opts control"
+  );
+
+  t.is(matchLeft("EOLa", 3, () => "EOL"), false, "10.01.04 - CHEEKY!!!");
+  t.is(matchLeft("EOLa", 3, "EOL"), "EOL", "10.01.05");
+
+  t.is(
+    matchLeft(" a", 1, () => "EOL", {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.01.06 - whitespace trim opt on"
+  );
+
+  // character trims:
+  t.is(
+    matchLeft("za", 1, () => "EOL"),
+    false,
+    "10.01.07 - whitespace trim opts control"
+  );
+  t.is(
+    matchLeft("za", 1, () => "EOL", {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    "EOL",
+    "10.01.08 - whitespace trim opt on"
+  );
+
+  // trim combos - whitespace+character:
+  t.is(
+    matchLeft("z a", 2, () => "EOL"),
+    false,
+    "10.01.09 - whitespace trim opts control"
+  );
+  t.is(
+    matchLeft("z a", 2, () => "EOL", {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.01.10 - whitespace trim opt on"
+  );
+});
+
+// 11. Ad-hoc
+// -----------------------------------------------------------------------------
+
+test(`11.01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, t => {
+  t.is(matchRight('<a class="something"> text', 19, ">"), ">", "11.01.01");
   t.is(
     matchRight('<a class="something"> text', 19, ">", {
       cb: char => typeof char === "string" && char.trim() === ""
     }),
     ">",
-    "10.01.02"
+    "11.01.02"
   );
 
   t.is(
     matchRightIncl('<a class="something"> text', 20, "> t"),
     "> t",
-    "10.01.03"
+    "11.01.03"
   );
-  t.is(matchRight('<a class="something"> text', 19, "> t"), "> t", "10.01.04");
+  t.is(matchRight('<a class="something"> text', 19, "> t"), "> t", "11.01.04");
   t.is(
     matchRight("ab      cdef", 1, "cde", { trimBeforeMatching: true }),
     "cde",
-    "10.01.05"
+    "11.01.05"
   );
 
   t.is(
@@ -2865,7 +2920,7 @@ test(`10.01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, t => {
       cb: char => char === " "
     }),
     ">",
-    "10.01.06"
+    "11.01.06"
   );
   t.is(
     matchRight("ab      cdef", 1, "cde", {
@@ -2873,15 +2928,15 @@ test(`10.01 - ${`\u001b[${35}m${"ADHOC"}\u001b[${39}m`}, tests set #01`, t => {
       trimBeforeMatching: true
     }),
     "cde",
-    "10.01.07"
+    "11.01.07"
   );
 
   matchRight("ab      cdef", 1, "cd", {
     trimBeforeMatching: true,
     cb: (char, theRemainderOfTheString, index) => {
-      t.is(char, "e", "10.01.08");
-      t.is(theRemainderOfTheString, "ef", "10.01.09");
-      t.is(index, 10, "10.01.10");
+      t.is(char, "e", "11.01.08");
+      t.is(theRemainderOfTheString, "ef", "11.01.09");
+      t.is(index, 10, "11.01.10");
     }
   });
 });

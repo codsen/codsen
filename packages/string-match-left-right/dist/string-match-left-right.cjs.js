@@ -7,6 +7,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isNaturalNumber = _interopDefault(require('is-natural-number'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var isFun = _interopDefault(require('lodash.isfunction'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var stringCharacterIsAstralSurrogate = require('string-character-is-astral-surrogate');
 
@@ -31,7 +32,7 @@ function isAstral(char) {
 // A helper f(). Uses 1xx range error codes.
 // Returns the index number of the first character of "strToMatch". That's location
 // within the input string, "str".
-function marchForward(str, fromIndexInclusive, strToMatch, opts) {
+function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
 
   if (fromIndexInclusive <= str.length) {
     var charsToCheckCount = strToMatch.length;
@@ -107,7 +108,12 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts) {
 }
 
 // A helper f(). Uses 2xx range error codes.
-function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
+function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
+
+  // early ending case if matching EOL being at 0-th index:
+  if (fromIndexInclusive === -1 && special && strToMatch === "EOL") {
+    return strToMatch;
+  }
   if (fromIndexInclusive >= str.length) {
     if (!opts.relaxedApi) {
       throw new Error("string-match-left-right/marchBackward(): [THROW_ID_203] second argument, starting index, should not be beyond the last character of the input string! Currently the first argument's last character's index is " + str.length + " but the second argument is beyond it:\n" + JSON.stringify(fromIndexInclusive, null, 4));
@@ -115,10 +121,13 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
       return false;
     }
   }
-  var charsToCheckCount = strToMatch.length;
+  var charsToCheckCount = special ? 1 : strToMatch.length;
 
   for (var i = fromIndexInclusive + 1; i--;) {
     if (opts.trimBeforeMatching && str[i].trim() === "") {
+      if (i === 0 && special && strToMatch === "EOL") {
+        return true;
+      }
       continue;
     }
     var currentCharacter = str[i];
@@ -133,6 +142,10 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
       if (currentCharacter.length === 2) {
         // if it was emoji, offset by two
         i -= 1;
+      }
+      if (special && strToMatch === "EOL" && i === 0) {
+        // return true because we reached the zero'th index, exactly what we're looking for
+        return true;
       }
       continue;
     }
@@ -154,6 +167,9 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts) {
     }
   }
   if (charsToCheckCount > 0) {
+    if (special && strToMatch === "EOL") {
+      return true;
+    }
     return false;
   }
 }
@@ -211,12 +227,16 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   var whatToMatch = void 0;
 
+  var special = false;
   if (isStr(originalWhatToMatch)) {
     whatToMatch = [originalWhatToMatch];
   } else if (isArr(originalWhatToMatch)) {
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
     whatToMatch = [""];
+  } else if (isFun(originalWhatToMatch) && isStr(originalWhatToMatch())) {
+    whatToMatch = [originalWhatToMatch()];
+    special = true;
   } else {
     throw new Error("string-match-left-right/" + mode + "(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's " + (typeof originalWhatToMatch === "undefined" ? "undefined" : _typeof(originalWhatToMatch)) + ", equal to:\n" + JSON.stringify(originalWhatToMatch, null, 4));
   }
@@ -337,7 +357,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           _startingPosition -= 1;
         }
       }
-      var found = marchBackward(str, _startingPosition, whatToMatch[i], opts);
+      var found = marchBackward(str, _startingPosition, whatToMatch[i], opts, special);
       // now, the "found" is the index of the first character of what was found.
       // we need to calculate the character to the left of it, which might be emoji
       // so its first character might be either "minus one index" (normal character)
@@ -381,7 +401,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       _startingPosition2 += 1;
     }
 
-    var _found = marchForward(str, _startingPosition2, whatToMatch[_i], opts);
+    var _found = marchForward(str, _startingPosition2, whatToMatch[_i], opts, special);
 
     var _indexOfTheCharacterAfter = void 0;
     var fullCharacterAfter = void 0;
