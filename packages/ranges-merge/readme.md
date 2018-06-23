@@ -13,7 +13,6 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install](#markdown-header-install)
 - [The Idea](#markdown-header-the-idea)
 - [API](#markdown-header-api)
@@ -41,7 +40,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-merge.esm.js` | 1 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-merge.umd.js` | 15 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-merge)**
 
 ## The Idea
 
@@ -71,7 +70,7 @@ rangesMerge([
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-merge)**
 
 ## API
 
@@ -87,7 +86,7 @@ It returns a new array of arrays, with ranges merged (where applicable). Origina
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-ranges-merge)**
 
 ## Licence
 
