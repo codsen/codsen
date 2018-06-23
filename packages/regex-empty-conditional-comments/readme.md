@@ -13,11 +13,10 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Usage](#markdown-header-markdown-header-usage)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Usage](#markdown-header-usage)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -40,7 +39,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 87 B  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 276 B |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-regex-empty-conditional-comments)**
 
 ## Usage
 
@@ -79,7 +78,7 @@ emptyCondCommentRegex().exec("<html><!--[if !mso]><![endif]--><title>")[0];
 //=> ['<!--[if !mso]><![endif]-->']
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-regex-empty-conditional-comments)**
 
 ## Contributing
 
@@ -89,7 +88,7 @@ emptyCondCommentRegex().exec("<html><!--[if !mso]><![endif]--><title>")[0];
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-regex-empty-conditional-comments)**
 
 ## Licence
 
