@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "Manage the array of slices referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
