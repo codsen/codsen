@@ -282,7 +282,7 @@ function csvSort(input) {
 
     // now mutate the `potentialBalanceColumnIndexesList` using
     // `deleteFromPotentialBalanceColumnIndexesList`:
-    potentialBalanceColumnIndexesList = pull.apply(undefined$1, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
+    potentialBalanceColumnIndexesList = pull.apply(undefined, [potentialBalanceColumnIndexesList].concat(deleteFromPotentialBalanceColumnIndexesList));
 
     if (potentialBalanceColumnIndexesList.length === 1) {
       balanceColumnIndex = potentialBalanceColumnIndexesList[0];
@@ -315,7 +315,7 @@ function csvSort(input) {
 
   // take schema, filter all indexes that are equal to or are arrays and have
   // "numeric" among their values, then remove the index of "Balance" column:
-  var potentialCreditDebitColumns = pull.apply(undefined$1, [Array.from(schema.reduce(function (result, el, index) {
+  var potentialCreditDebitColumns = pull.apply(undefined, [Array.from(schema.reduce(function (result, el, index) {
     if (typeof el === "string" && el === "numeric" || isArr(el) && el.includes("numeric")) {
       result.push(index);
     }
