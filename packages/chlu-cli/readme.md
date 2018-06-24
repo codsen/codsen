@@ -35,7 +35,7 @@ chlu
 
 On a default setting, `chlu` just silently does the job — checks and fixes your changelog. If you want some output, call it with `--loud` flag. It will say "OK" each time it writes successfully.
 
-Chlu works on both **Bitbucket** and **Github** repositories.
+Chlu works on both **Bitbucket** and **Github** (God bless their hearts) repositories.
 
 `chlu` stands for **CH**ange**L**og **U**pdate. We should note that all changelogs should follow the rules given by http://keepachangelog.com. Now, the tedious part is **diff links**. Chlu takes care of them. Also, changelog should have all dates in ISO format, should have diff links between changelog entries and use a consistent title format, for example, `## [1.11.0] - 2018-07-24`. These are main things, and `chlu-cli` automates updating all that.
 
@@ -49,7 +49,7 @@ Chlu works on both **Bitbucket** and **Github** repositories.
 
 1.  Wraps the version with a link (brackets) and creates the diff URL in the footer.
 2.  Adds missing diff links in the footer. It's intelligent-enough to detect existing links and their order.
-3.  If the `.git` repo data is successfully read, it will create/convert diff links either in Bitbucket or Github (God bless their hearts) style.
+3.  If the `.git` repo data is successfully read, it will create/convert diff links either in Bitbucket- or Github-based repository changelogs.
 4.  User account name in diff link is set correctly as per `package.json`
 5.  Project's name in diff link is set correctly as per `package.json`
 6.  "from" version is chosen wisely. If there is no `git` data available, a previous entry in the changelog will be used. But if there is, the real, previous version will be used. In practice, often there are many patch releases between changelog entries (hence the word used in the title — "notable changes"). If we merely calculated the diff between changelog entries (usually minor/major releases), all patch releases would get caught in between and skew the picture of what was released for real.
