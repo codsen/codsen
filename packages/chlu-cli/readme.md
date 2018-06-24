@@ -37,14 +37,21 @@ Chlu works on both **Bitbucket** and **Github** repositories.
 
 `chlu` stands for **CH**ange**L**og **U**pdate. We should note that all changelogs should follow the rules given by http://keepachangelog.com. Now, the tedious part is **diff links**. Chlu takes care of them.
 
+For the record, all changelogs should be in [Keep a Changelog](http://keepachangelog.com/) format and this library expects the changelogs to be (or aspire to be) in this format. Namely: dates in ISO, diff links and consistent title format, for example, `## [1.11.0] - 2018-07-24`.
+
 **[⬆ back to top](#markdown-header-chlu-cli)**
 
 ## What it does
 
-Chlu does two things:
+7 main features (see above):
 
-1.  Creates, updates and fixes the diff links. For example, `## [1.10.0] - 2018-07-07`. It will add missing or fix existing user or project names in the diff link, also set correct format: Bitbucket or Github.
-2.  It tries to normalise the time stamps in the titles. For example, `## [1.10.0] - 2018-07-14`, in [ISO format](https://en.wikipedia.org/wiki/ISO_8601) (year-month-date). It's universal and not ambiguous (unlike US/UK date formats with slashes).
+1.  Wraps the version with a link (brackets) and creates the diff URL in the footer.
+2.  Adds missing diff links in the footer. It's intelligent-enough to detect existing links and their order.
+3.  If the `.git` repo data is successfully read, it will create/convert diff links either in Bitbucket or Github (God bless their hearts) style.
+4.  User account name in diff link is set correctly as per `package.json`
+5.  Project's name in diff link is set correctly as per `package.json`
+6.  "from" version is chosen wisely. If there is no `git` data available, a previous entry in the changelog will be used. But if there is, the real, previous version will be used. In practice, often there are many patch releases between changelog entries (hence the word used in the title — "notable changes"). If we simply calculated the diff between changelog entries (usually minor/major releases), all patch releases would get caught in between and skew the picture of what was released for real.
+7.  If dates are not in [ISO format](https://en.wikipedia.org/wiki/ISO_8601) (year-month-date) we try to convert them. Couple well-known projects with messed-up changelogs are used as a guinea pigs in our unit tests.
 
 **[⬆ back to top](#markdown-header-chlu-cli)**
 
