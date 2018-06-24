@@ -1,3 +1,5 @@
+![idea](https://bitbucket.org/codsen/chlu-cli/raw/b9c560422e92b7e1a22ca94b1a40a286dac305cd/media/0_idea.png)
+
 # chlu-cli
 
 > CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
@@ -43,7 +45,9 @@ For the record, all changelogs should be in [Keep a Changelog](http://keepachang
 
 ## What it does
 
-7 main features (see above):
+![features](https://bitbucket.org/codsen/chlu-cli/raw/b9c560422e92b7e1a22ca94b1a40a286dac305cd/media/features_comp.png)
+
+**7 main features (see above):**
 
 1.  Wraps the version with a link (brackets) and creates the diff URL in the footer.
 2.  Adds missing diff links in the footer. It's intelligent-enough to detect existing links and their order.
