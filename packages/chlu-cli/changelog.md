@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.11.0] - 2018-07-24
+
+- ✨ Added unit tests. Couldn't get the unit test coverage only for lines which get triggered when CLI fails to write because I can't programmatically trigger disk write failures. Otherwise, it's 100% coverage.
+
 ## [1.10.0] - 2018-07-14
 
 ### Improvements
@@ -105,3 +109,4 @@ Updated to the new version of the API package, CHLU, enabling new features:
 [1.8.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.8.0%0Dv1.7.1#diff
 [1.9.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.9.0%0Dv1.8.9#diff
 [1.10.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.10.0%0Dv1.9.1#diff
+[1.11.0]: https://bitbucket.org/codsen/chlu-cli/branches/compare/v1.11.0%0Dv1.10.4#diff
