@@ -13,7 +13,8 @@
 
 .nyc_output
 coverage
-fixtures
+media
+test
 
 # files:
 
@@ -24,4 +25,3 @@ fixtures
 bitbucket-pipelines.yml
 chlu_adds_missing_diff_links.gif
 feature1.gif
-test.js

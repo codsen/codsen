@@ -22,7 +22,6 @@
     "chlu": "cli.js"
   },
   "scripts": {
-    "dev": "npm run test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
