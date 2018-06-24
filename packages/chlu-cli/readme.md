@@ -85,7 +85,7 @@ The example above runs:
 - then it runs [npm-check](https://www.npmjs.com/package/npm-check) and lastly,
 - it runs the `git add .`.
 
-It means, you always get your readme, changelog, BitHound config (`.bithoundrc`) committed in a correct, updated state. Also, it will notify you if any of your dependencies are outdated or unused. Just install all the packages above globally, with `-g` flag.
+It means, you always get your readme, changelog committed in a correct, updated state and all dependencies checked.
 
 **[⬆ back to top](#markdown-header-chlu-cli)**
 
