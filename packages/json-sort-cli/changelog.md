@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2018-06-11
+
+- ✨ `v5` ESLint is sensitive if being called on files that don't exist. Previously we were quite liberal about the locations of unit test files. Our ESLint configs were targeting multiple locations, attempting to find some unit tests. Now this approach will cause errors so we moved all unit test files to `/test/` folder.
+- ✨ Also, temporarily removing `ava` ESLint plugin because it broke on ESLin `v.5`.
+
 ## [1.7.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -63,9 +68,11 @@ GitHub sold us out. In the meantime, we:
 
 - First public release
 
-[1.1.0]: https://github.com/codsen/json-sort-cli/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/codsen/json-sort-cli/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/codsen/json-sort-cli/compare/v1.2.0...v1.3.0
-[1.4.0]: https://github.com/codsen/json-sort-cli/compare/v1.3.0...v1.4.0
-[1.5.0]: https://github.com/codsen/json-sort-cli/compare/v1.4.0...v1.5.0
-[1.6.0]: https://github.com/codsen/json-sort-cli/compare/v1.5.0...v1.6.0
+[1.1.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.1.0%0Dv1.0.5#diff
+[1.2.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.3.0%0Dv1.2.2#diff
+[1.4.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.5.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.5.0%0Dv1.4.2#diff
+[1.6.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.6.0%0Dv1.5.2#diff
+[1.7.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.7.0%0Dv1.6.1#diff
+[1.8.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.8.0%0Dv1.7.0#diff

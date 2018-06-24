@@ -152,7 +152,7 @@
     }
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.2.1",
+    "ast-monkey-traverse": "^1.3.3",
     "chalk": "latest",
     "fs-extra": "^6.0.1",
     "globby": "latest",

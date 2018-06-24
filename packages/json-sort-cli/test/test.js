@@ -6,7 +6,7 @@ import test from "ava";
 import execa from "execa";
 import tempy from "tempy";
 import pMap from "p-map";
-import pack from "./package";
+import pack from "../package.json";
 
 // -----------------------------------------------------------------------------
 

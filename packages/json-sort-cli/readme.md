@@ -14,9 +14,8 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-table-of-contents)
 - [Install globally, call anywhere](#markdown-header-install-globally-call-anywhere)
-- [API - flags](#markdown-header-api---flags)
+- [API - flags](#markdown-header-api-flags)
 - [What it does exactly](#markdown-header-what-it-does-exactly)
 - [Updating it](#markdown-header-updating-it)
 - [Contributing](#markdown-header-contributing)
@@ -43,7 +42,7 @@ $ jsonsort --help
 
 or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## API - flags
 
@@ -62,7 +61,7 @@ Put either short or long version of a desired flag, before or after the path or 
 - <code>jsonsort templates/springsale03 <b>--silent</b></code>
 - <code>jsonsort <b>--silent</b> templates/springsale03</code>
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## What it does exactly
 
@@ -72,7 +71,7 @@ This is a parsing-type application, so written files are also **prettified** —
 
 Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) and [sorted-object](https://www.npmjs.com/package/sorted-object).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ### Extra features
 
@@ -82,13 +81,13 @@ If a file is a broken JSON file with errors in the markup, it won't cause an err
 
 System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. It's the [same update notifier](https://www.npmjs.com/package/update-notifier) that AVA and [npm](https://www.npmjs.com/package/npm) themselves use!
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## Contributing
 
@@ -98,7 +97,7 @@ When you install it globally, it will check occasionally, are there newer versio
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## Licence
 
