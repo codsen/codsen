@@ -139,7 +139,7 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [1.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.3.0%0Dv1.2.2#diff
 [1.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.4.0%0Dv1.3.0#diff
 [1.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.5.0%0Dv1.4.1#diff
-[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv3.4.2#diff
+[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv3.4.3#diff
 [2.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.0.0%0Dv1.5.0#diff
 [2.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.1.0%0Dv2.0.3#diff
 [2.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.2.0%0Dv2.1.1#diff
