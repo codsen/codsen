@@ -157,7 +157,7 @@
   },
   "dependencies": {
     "check-types-mini": "latest",
-    "object-merge-advanced": "^10.3.0"
+    "object-merge-advanced": "^10.3.2"
   },
   "devDependencies": {
     "ava": "latest",
@@ -177,7 +177,7 @@
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-babel": "^3.0.5",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
