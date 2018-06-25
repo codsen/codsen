@@ -29,7 +29,7 @@ Other siblings of this package:
 $ npm i -g csv-sort-cli
 ```
 
-- then, either call `csvsort` appending your file name (with or without `-o`/`--overwrite` flag):
+- then, either call `csvsort` (or `sortcsv`) appending your file name (with or without `-o`/`--overwrite` flag):
 
 ```bash
 $ csvsort YOURFILE.csv
@@ -44,9 +44,11 @@ $ csvsort --help
 
 **like this:**
 
-![Calling csv-sort-cli directly on a file](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example1.gif)
+![calling directly on a file](https://bitbucket.org/codsen/csv-sort-cli/raw/2667d1c2e02943263eca314130ae418efe7ae1c1/media/example1.gif)
 
-alternatively, the call `sortcsv` will work as well.
+alternatively, don't specify a file — it will let you pick one:
+
+![calling without specifying a file name](https://bitbucket.org/codsen/csv-sort-cli/raw/2667d1c2e02943263eca314130ae418efe7ae1c1/media/example2.gif)
 
 **[⬆ back to top](#markdown-header-csv-sort-cli)**
 
@@ -58,7 +60,7 @@ $ csvsort # omit the file's name, but you can include -o/--overwrite flag
 
 omit the file name and `csv-sort-cli` will offer a list of CSV files in the current folder to choose from:
 
-![Calling csv-sort-cli without file and picking a CSV](https://cdn.rawgit.com/codsen/csv-sort-cli/b2934c92/media/example2.gif)
+![Calling csv-sort-cli without file and picking a CSV]()
 
 You can even try it without installing — use `npx`:
 
@@ -72,13 +74,13 @@ $ npx csv-sort-cli YOURFILE.csv
 
 1.  It **sorts CSV file rows** to correspond to the [double-entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) principles:
 
-![double bookkeeping example](https://bitbucket.org/codsen/csv-sort-cli/raw/37abd1320fe95378e3869ea13127a1b0e24a4daf/media/example1.gif)
+![double bookkeeping example](https://bitbucket.org/codsen/csv-sort/raw/d9c7091cc94baa06e1ed65864745a442a967425c/media/img1.png)
 
 Sometimes internet banking CSV's have rows in a wrong order, especially when entries are on the _same date_. This library helps to sort the rows in correct order.
 
 2.  As a bonus, it will **trim** the empty columns/rows:
 
-![2D trim of a CSV contents](https://bitbucket.org/codsen/csv-sort-cli/raw/37abd1320fe95378e3869ea13127a1b0e24a4daf/media/example2.gif)
+![2D trim of a CSV contents](https://bitbucket.org/codsen/csv-sort/raw/d9c7091cc94baa06e1ed65864745a442a967425c/media/img2.png)
 
 3.  Not to mention, the [our custom CSV parse](https://bitbucket.org/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with a double quotes. Read more in [its repo's readme](https://bitbucket.org/codsen/csv-split-easy).
 

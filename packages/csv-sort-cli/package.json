@@ -23,10 +23,11 @@
     "sortcsv": "cli.js"
   },
   "scripts": {
+    "dev": "npm run test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -165,17 +166,22 @@
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
+    "ava": "^0.25.0",
     "codacy-coverage": "latest",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.12.0",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-import": "latest",
     "eslint-plugin-no-unsanitized": "latest",
     "eslint-plugin-no-wildcard-postmessage": "latest",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
     "esm": "latest",
-    "husky": "*",
-    "prettier": "latest"
+    "execa": "^0.10.0",
+    "fs-extra": "^6.0.1",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "tempy": "latest"
   }
 }

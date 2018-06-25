@@ -9,11 +9,10 @@
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": 2018,
     "sourceType": "module"
   },
   "plugins": [
-    "ava",
     "scanjs-rules",
     "no-unsanitized",
     "import"

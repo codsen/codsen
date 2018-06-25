@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2018-06-25
+
+- ✨ Added unit tests
+- 🌵 Removed ava ESLint plugin until it's fixed for ESLint `v.5`
+
 ## [1.5.0] - 2018-06-21
 
 GitHub sold us out. In the meantime, we:
@@ -46,8 +51,9 @@ GitHub sold us out. In the meantime, we:
 
 - First public release
 
-[1.5.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.5.0%0Dv1.4.0#diff
-[1.4.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.4.0%0Dv1.3.4#diff
-[1.3.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.3.0%0Dv1.2.0#diff
-[1.2.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.2.0%0Dv1.1.1#diff
 [1.1.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.1.0%0Dv1.0.3#diff
+[1.2.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.2.0%0Dv1.1.1#diff
+[1.3.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.3.0%0Dv1.2.0#diff
+[1.4.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.4.0%0Dv1.3.4#diff
+[1.5.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.5.0%0Dv1.4.0#diff
+[1.6.0]: https://bitbucket.org/codsen/csv-sort-cli/branches/compare/v1.6.0%0Dv1.5.1#diff
