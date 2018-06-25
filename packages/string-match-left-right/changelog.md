@@ -5,8 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.5.0] - 2018-06-22
+## [3.5.0] - 2018-06-24
 
+- 🔧 Previously, `opts.cb` second argument, which means the rest of the string on particular side, depending on the method called, left or right, was giving empty string when there was nothing on that side. This, however looked inconsistent when all other callback values were undefined. Now, second `opts.cb` argument comes as `undefined` instead of `empty` string when there's nothing to return.
 - ✨ implemented and released (but not documented) `opts.strictApi` was merged with `opts.relaxedApi`
 
 ## [3.4.0] - 2018-06-11

@@ -28,6 +28,7 @@ function isAstral(char) {
 // Returns the index number of the first character of "strToMatch". That's location
 // within the input string, "str".
 function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
+  // console.log(`args: ${JSON.stringify([...arguments], null, 4)}`);
   console.log(
     `32 marchForward: ${`\u001b[${33}m${"fromIndexInclusive"}\u001b[${39}m`} = ${JSON.stringify(
       fromIndexInclusive,
@@ -111,7 +112,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
       }
 
       console.log(
-        `111 ${`\u001b[${33}m${"whatToCompareTo"}\u001b[${39}m`} = ${JSON.stringify(
+        `114 ${`\u001b[${33}m${"whatToCompareTo"}\u001b[${39}m`} = ${JSON.stringify(
           whatToCompareTo,
           null,
           4
@@ -125,16 +126,16 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
         // if it's emoji, it can be 2
 
         if (charsToCheckCount < 1) {
-          console.log(`125 THIS WAS THE LAST SYMBOL TO CHECK, ${current}`);
+          console.log(`128 THIS WAS THE LAST SYMBOL TO CHECK, ${current}`);
           console.log(
-            `127 ${`\u001b[${33}m${"i"}\u001b[${39}m`} = ${JSON.stringify(
+            `130 ${`\u001b[${33}m${"i"}\u001b[${39}m`} = ${JSON.stringify(
               i,
               null,
               4
             )}`
           );
           console.log(
-            `134 ${`\u001b[${33}m${"strToMatch.length"}\u001b[${39}m`} = ${JSON.stringify(
+            `137 ${`\u001b[${33}m${"strToMatch.length"}\u001b[${39}m`} = ${JSON.stringify(
               strToMatch.length,
               null,
               4
@@ -144,7 +145,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
           let aboutToReturn = i - strToMatch.length + current.length;
 
           console.log(
-            `144 ${`\u001b[${33}m${"aboutToReturn"}\u001b[${39}m`} = ${JSON.stringify(
+            `147 ${`\u001b[${33}m${"aboutToReturn"}\u001b[${39}m`} = ${JSON.stringify(
               aboutToReturn,
               null,
               4
@@ -164,7 +165,7 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
             isHighSurrogate(str[aboutToReturn - 1])
           ) {
             console.log(
-              `164 ${`\u001b[${33}m${"aboutToReturn --1, now = "}\u001b[${39}m`} = ${JSON.stringify(
+              `167 ${`\u001b[${33}m${"aboutToReturn --1, now = "}\u001b[${39}m`} = ${JSON.stringify(
                 aboutToReturn,
                 null,
                 4
@@ -177,27 +178,27 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
         }
 
         console.log(
-          `176 OK. Reduced charsToCheckCount to ${charsToCheckCount}`
+          `180 OK. Reduced charsToCheckCount to ${charsToCheckCount}`
         );
         if (current.length === 2 && isHighSurrogate(str[i])) {
           // if it was emoji, offset by two
           i += 1;
         }
       } else {
-        console.log(`184 str[i = ${i}] = ${JSON.stringify(str[i], null, 4)}`);
+        console.log(`187 str[i = ${i}] = ${JSON.stringify(str[i], null, 4)}`);
         console.log(
-          `105 strToMatch[strToMatch.length - charsToCheckCount = ${strToMatch.length -
+          `189 strToMatch[strToMatch.length - charsToCheckCount = ${strToMatch.length -
             charsToCheckCount}] = ${JSON.stringify(
             strToMatch[strToMatch.length - charsToCheckCount],
             null,
             4
           )}`
         );
-        console.log("193 THEREFORE, returning false.");
+        console.log("196 THEREFORE, returning false.");
         return false;
       }
       console.log(
-        `197 * charsToCheckCount = ${JSON.stringify(
+        `200 * charsToCheckCount = ${JSON.stringify(
           charsToCheckCount,
           null,
           4
@@ -206,9 +207,9 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
     }
     if (charsToCheckCount > 0) {
       console.log(
-        `206 charsToCheckCount = ${JSON.stringify(charsToCheckCount, null, 4)}`
+        `209 charsToCheckCount = ${JSON.stringify(charsToCheckCount, null, 4)}`
       );
-      console.log("208 THEREFORE, returning false.");
+      console.log("211 THEREFORE, returning false.");
       return false;
     }
   } else if (!opts.relaxedApi) {
@@ -224,28 +225,28 @@ function marchForward(str, fromIndexInclusive, strToMatch, opts, special) {
 
 // A helper f(). Uses 2xx range error codes.
 function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
-  console.log(`\n227 \u001b[${35}m${"CALLED marchBackward()"}\u001b[${39}m`);
+  console.log(`\n229 \u001b[${35}m${"CALLED marchBackward()"}\u001b[${39}m`);
+  console.log(
+    `======\nargs:\nstr=${str}\nfromIndexInclusive=${fromIndexInclusive}\nstrToMatch=${strToMatch}\nopts=${opts}\nspecial=${special}\n======\n`
+  );
+
+  const strToMatchVal =
+    typeof strToMatch === "function" ? strToMatch() : strToMatch;
 
   // early ending case if matching EOL being at 0-th index:
-  if (fromIndexInclusive === -1 && special && strToMatch === "EOL") {
-    console.log("231 EARLY ENDING, return true");
-    return strToMatch;
+  if (fromIndexInclusive === -1 && special && strToMatchVal === "EOL") {
+    console.log("233 EARLY ENDING, return true");
+    return strToMatchVal;
   }
 
   console.log(
-    `236 ${`\u001b[${33}m${"fromIndexInclusive"}\u001b[${39}m`} = ${JSON.stringify(
+    `239 ${`\u001b[${33}m${"fromIndexInclusive"}\u001b[${39}m`} = ${JSON.stringify(
       fromIndexInclusive,
       null,
       4
     )}`
   );
-  console.log(
-    `243 ${`\u001b[${33}m${"strToMatch"}\u001b[${39}m`} = ${JSON.stringify(
-      strToMatch,
-      null,
-      4
-    )}`
-  );
+
   if (fromIndexInclusive >= str.length) {
     if (!opts.relaxedApi) {
       throw new Error(
@@ -262,7 +263,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
     }
   }
   let charsToCheckCount = special ? 1 : strToMatch.length;
-  console.log(`265 starting charsToCheckCount = ${charsToCheckCount}`);
+  console.log(`268 starting charsToCheckCount = ${charsToCheckCount}`);
 
   for (let i = fromIndexInclusive + 1; i--; ) {
     console.log(
@@ -271,15 +272,15 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
       }<< [${str[i].charCodeAt(0)}]`
     );
     console.log(
-      `273 ${i - 1}: >>${str[i - 1]}<< [${
+      `274 ${i - 1}: >>${str[i - 1]}<< [${
         existy(str[i - 1]) ? str[i - 1].charCodeAt(0) : "undefined"
       }]`
     );
     if (opts.trimBeforeMatching && str[i].trim() === "") {
-      console.log("276 trimmed");
+      console.log("279 trimmed");
       if (i === 0 && special && strToMatch === "EOL") {
         console.log(
-          "281 start of string reached, matching to EOL, so return true"
+          "282 start of string reached, matching to EOL, so return true"
         );
         return true;
       }
@@ -289,7 +290,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
     if (isLowSurrogate(str[i]) && isHighSurrogate(str[i - 1])) {
       currentCharacter = str[i - 1] + str[i];
       console.log(
-        `283 ${`\u001b[${33}m${"currentCharacter"}\u001b[${39}m`} = ${JSON.stringify(
+        `292 ${`\u001b[${33}m${"currentCharacter"}\u001b[${39}m`} = ${JSON.stringify(
           currentCharacter,
           null,
           4
@@ -299,17 +300,17 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
       currentCharacter = str[i] + str[i + 1];
     }
     console.log(
-      `293 \u001b[${32}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
+      `302 \u001b[${32}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
     );
     console.log(
-      `296 ${`\u001b[${33}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`} = ${JSON.stringify(
+      `305 ${`\u001b[${33}m${"opts.trimCharsBeforeMatching"}\u001b[${39}m`} = ${JSON.stringify(
         opts.trimCharsBeforeMatching,
         null,
         4
       )}`
     );
     console.log(
-      `303 ${`\u001b[${33}m${"opts.trimCharsBeforeMatching.includes(currentCharacter)"}\u001b[${39}m`} = ${JSON.stringify(
+      `312 ${`\u001b[${33}m${"opts.trimCharsBeforeMatching.includes(currentCharacter)"}\u001b[${39}m`} = ${JSON.stringify(
         opts.trimCharsBeforeMatching.includes(currentCharacter),
         null,
         4
@@ -322,7 +323,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
           .map(val => val.toLowerCase())
           .includes(currentCharacter.toLowerCase()))
     ) {
-      console.log("316 char is in the skip list");
+      console.log("325 char is in the skip list");
       if (currentCharacter.length === 2) {
         // if it was emoji, offset by two
         i -= 1;
@@ -337,15 +338,15 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
       continue;
     }
     console.log(
-      `324 ${`\u001b[${33}m${"charsToCheckCount"}\u001b[${39}m`} = ${JSON.stringify(
+      `340 ${`\u001b[${33}m${"charsToCheckCount"}\u001b[${39}m`} = ${JSON.stringify(
         charsToCheckCount,
         null,
         4
       )}`
     );
-    console.log(`330 ${strToMatch[charsToCheckCount - 1]}`);
+    console.log(`346 ${strToMatch[charsToCheckCount - 1]}`);
     console.log(
-      `332 ${strToMatch[charsToCheckCount - 2]}${
+      `348 ${strToMatch[charsToCheckCount - 2]}${
         strToMatch[charsToCheckCount - 1]
       }`
     );
@@ -357,7 +358,7 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
         strToMatch[charsToCheckCount - 1]
       }`;
       console.log(
-        `344 ${`\u001b[${33}m${"charToCompareAgainst"}\u001b[${39}m`} = ${JSON.stringify(
+        `360 ${`\u001b[${33}m${"charToCompareAgainst"}\u001b[${39}m`} = ${JSON.stringify(
           charToCompareAgainst,
           null,
           4
@@ -368,10 +369,10 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
     }
 
     console.log(
-      `\n* 355 \u001b[${31}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
+      `\n* 371 \u001b[${31}m${"currentCharacter"}\u001b[${39}m = ${currentCharacter}`
     );
     console.log(
-      `* 358 \u001b[${31}m${"charToCompareAgainst"}\u001b[${39}m = ${charToCompareAgainst}`
+      `* 374 \u001b[${31}m${"charToCompareAgainst"}\u001b[${39}m = ${charToCompareAgainst}`
     );
     if (
       (!opts.i && currentCharacter === charToCompareAgainst) ||
@@ -381,41 +382,41 @@ function marchBackward(str, fromIndexInclusive, strToMatch, opts, special) {
       charsToCheckCount -= 1;
       if (charsToCheckCount < 1) {
         console.log(
-          `368 all chars matched so returning i = ${i}; charsToCheckCount = ${charsToCheckCount}`
+          `384 all chars matched so returning i = ${i}; charsToCheckCount = ${charsToCheckCount}`
         );
         return i >= 0 ? i : 0;
       }
 
       console.log(
-        `374 ${`\u001b[${32}m${`OK. Reduced charsToCheckCount to ${charsToCheckCount}`}\u001b[${39}m`}`
+        `390 ${`\u001b[${32}m${`OK. Reduced charsToCheckCount to ${charsToCheckCount}`}\u001b[${39}m`}`
       );
     } else {
-      console.log(`377 str[i = ${i}] = ${JSON.stringify(str[i], null, 4)}`);
+      console.log(`393 str[i = ${i}] = ${JSON.stringify(str[i], null, 4)}`);
       console.log(
-        `379 strToMatch[strToMatch.length - charsToCheckCount = ${strToMatch.length -
+        `395 strToMatch[strToMatch.length - charsToCheckCount = ${strToMatch.length -
           charsToCheckCount}] = ${JSON.stringify(
           strToMatch[strToMatch.length - charsToCheckCount],
           null,
           4
         )}`
       );
-      console.log("386 THEREFORE, returning false.");
+      console.log("402 THEREFORE, returning false.");
       return false;
     }
 
     console.log(
-      `391 * charsToCheckCount = ${JSON.stringify(charsToCheckCount, null, 4)}`
+      `407 * charsToCheckCount = ${JSON.stringify(charsToCheckCount, null, 4)}`
     );
   }
   if (charsToCheckCount > 0) {
     if (special && strToMatch === "EOL") {
       console.log(
-        `406 charsToCheckCount = ${charsToCheckCount};\nwent past the beginning of the string and EOL was queried to return TRUE`
+        `413 charsToCheckCount = ${charsToCheckCount};\nwent past the beginning of the string and EOL was queried to return TRUE`
       );
       return true;
     }
     console.log(
-      `411 charsToCheckCount = ${charsToCheckCount} THEREFORE, returning FALSE`
+      `418 charsToCheckCount = ${charsToCheckCount} THEREFORE, returning FALSE`
     );
     return false;
   }
@@ -497,17 +498,27 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   }
   let whatToMatch;
 
-  let special = false;
+  let special;
   if (isStr(originalWhatToMatch)) {
+    console.log("503");
     whatToMatch = [originalWhatToMatch];
   } else if (isArr(originalWhatToMatch)) {
+    console.log("506");
     whatToMatch = originalWhatToMatch;
   } else if (!existy(originalWhatToMatch)) {
-    whatToMatch = [""];
-  } else if (isFun(originalWhatToMatch) && isStr(originalWhatToMatch())) {
-    whatToMatch = [originalWhatToMatch()];
-    special = true;
+    console.log("509");
+    whatToMatch = originalWhatToMatch;
+  } else if (isFun(originalWhatToMatch)) {
+    console.log("512");
+    whatToMatch = [];
+    whatToMatch.push(originalWhatToMatch);
+    console.log(
+      `510 whatToMatch = ${whatToMatch}; Array.isArray(whatToMatch) = ${Array.isArray(
+        whatToMatch
+      )}; whatToMatch.length = ${whatToMatch.length}`
+    );
   } else {
+    console.log("521");
     throw new Error(
       `string-match-left-right/${mode}(): [THROW_ID_05] the third argument, whatToMatch, is neither string nor array of strings! It's ${typeof originalWhatToMatch}, equal to:\n${JSON.stringify(
         originalWhatToMatch,
@@ -516,6 +527,10 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}`
     );
   }
+
+  console.log(
+    `whatToMatch = ${whatToMatch}; typeof whatToMatch = ${typeof whatToMatch}`
+  );
 
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new Error(
@@ -533,15 +548,19 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   // for - is falsey - empty string within array (or not), OR given null
 
   if (
-    !existy(whatToMatch) ||
+    !existy(whatToMatch) || // null || undefined
+    !isArr(whatToMatch) || // 0
+    (isArr(whatToMatch) && !whatToMatch.length) || // []
     (isArr(whatToMatch) &&
-      existy(whatToMatch[0]) &&
-      whatToMatch[0].length === 0)
+      whatToMatch.length === 1 &&
+      isStr(whatToMatch[0]) &&
+      whatToMatch[0].trim().length === 0) // [""]
   ) {
     if (opts.cb) {
+      console.log("542");
       let firstCharOutsideIndex;
 
-      // matchLeft() or matchRightIncl() methods start ar "position"
+      // matchLeft() or matchRightIncl() methods start at index "position"
       let startingPosition = position;
       if (
         mode === "matchRight" &&
@@ -607,7 +626,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
             (opts.trimCharsBeforeMatching.length === 0 ||
               !opts.trimCharsBeforeMatching.includes(currentChar))
           ) {
-            console.log("573 breaking!");
+            console.log("612 breaking!");
             firstCharOutsideIndex = y;
             break;
           }
@@ -619,7 +638,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
       }
       if (firstCharOutsideIndex === undefined) {
-        console.log("585 returning false");
+        console.log("624 returning false");
         return false;
       }
 
@@ -647,19 +666,20 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       ) {
         indexOfTheCharacterAfter += 1;
       }
+
+      let secondArg;
+      if (indexOfTheCharacterAfter && indexOfTheCharacterAfter > 0) {
+        secondArg = str.slice(0, indexOfTheCharacterAfter);
+      }
       if (mode.startsWith("matchLeft")) {
-        return opts.cb(
-          wholeCharacterOutside,
-          str.slice(0, indexOfTheCharacterAfter),
-          firstCharOutsideIndex
-        );
+        return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
       }
       // ELSE matchRight & matchRightIncl
-      return opts.cb(
-        wholeCharacterOutside,
-        str.slice(firstCharOutsideIndex),
-        firstCharOutsideIndex
-      );
+
+      if (firstCharOutsideIndex && firstCharOutsideIndex > 0) {
+        secondArg = str.slice(firstCharOutsideIndex);
+      }
+      return opts.cb(wholeCharacterOutside, secondArg, firstCharOutsideIndex);
     }
     let extraNote = "";
     if (!existy(originalOpts)) {
@@ -680,13 +700,37 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
   if (mode.startsWith("matchLeft")) {
     for (let i = 0, len = whatToMatch.length; i < len; i++) {
       console.log(
+        `\n689 matchLeft() LOOP ${i} ${`\u001b[${32}m${`=================================================================================`}\u001b[${39}m`} \n\n`
+      );
+
+      special = typeof whatToMatch[i] === "function";
+      console.log(`693 special = ${special}`);
+
+      console.log(
         "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥"
       );
-      console.log(`whatToMatch no. ${i} = ${whatToMatch[i]}`);
+      console.log(
+        `695 whatToMatch no. ${i} = ${
+          whatToMatch[i]
+        } (type ${typeof whatToMatch[i]})`
+      );
       console.log(`special = ${special}`);
       console.log(
         "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥"
       );
+
+      // since input can be function, we need to grab the value explicitly:
+      const whatToMatchVal = whatToMatch[i];
+
+      // console.log(`703 typeof whatToMatchVal = ${typeof whatToMatchVal}`);
+      // console.log(
+      //   `702 ${`\u001b[${33}m${`whatToMatchVal()`}\u001b[${39}m`} = ${JSON.stringify(
+      //     whatToMatchVal(),
+      //     null,
+      //     4
+      //   )} (typeof whatToMatchVal = ${typeof whatToMatchVal})`
+      // );
+
       let startingPosition = position;
       if (mode === "matchLeft") {
         // Depends if the current character is surrogate.
@@ -705,16 +749,16 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         }
       }
       console.log(
-        `686 \u001b[${33}m${"marchBackward() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
+        `730 \u001b[${33}m${"marchBackward() called with:"}\u001b[${39}m\n* startingPosition = ${JSON.stringify(
           startingPosition,
           null,
           4
-        )}\n* whatToMatch[${i}] = "${whatToMatch[i]}"\n`
+        )}\n* whatToMatchVal = "${whatToMatchVal}"\n`
       );
       const found = marchBackward(
         str,
         startingPosition,
-        whatToMatch[i],
+        whatToMatchVal,
         opts,
         special
       );
@@ -725,6 +769,18 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
           4
         )}`
       );
+
+      // if marchBackward returned positive result and it was "special" case,
+      // Bob's your uncle, here's the result:
+      if (
+        special &&
+        typeof whatToMatchVal === "function" &&
+        whatToMatchVal() === "EOL"
+      ) {
+        console.log(`750 returning whatToMatchVal() = ${whatToMatchVal()}`);
+        return whatToMatchVal();
+      }
+
       // now, the "found" is the index of the first character of what was found.
       // we need to calculate the character to the left of it, which might be emoji
       // so its first character might be either "minus one index" (normal character)
@@ -732,7 +788,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
       let indexOfTheCharacterInFront;
       let fullCharacterInFront;
-      let restOfStringInFront = "";
+      let restOfStringInFront;
       if (existy(found) && found > 0) {
         indexOfTheCharacterInFront = found - 1;
         fullCharacterInFront = str[indexOfTheCharacterInFront];
@@ -776,10 +832,6 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
         restOfStringInFront = str.slice(0, indexOfTheCharacterInFront + 2);
       }
 
-      if (indexOfTheCharacterInFront < 0) {
-        indexOfTheCharacterInFront = undefined;
-      }
-
       if (
         found !== false &&
         (opts.cb
@@ -790,21 +842,24 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
             )
           : true)
       ) {
-        return whatToMatch[i];
+        return whatToMatchVal;
       }
     }
     return false;
   }
   // ELSE - matchRight & matchRightIncl
   for (let i = 0, len = whatToMatch.length; i < len; i++) {
+    special = typeof whatToMatch[i] === "function";
     console.log(
       "\n\n\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥"
     );
-    console.log(`whatToMatch no. ${i} = ${whatToMatch[i]}`);
+    console.log(`838 whatToMatch no. ${i} = ${whatToMatch[i]}`);
     console.log(`special = ${special}`);
     console.log(
       "🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥"
     );
+
+    const whatToMatchVal = whatToMatch[i];
 
     let startingPosition = position + (mode === "matchRight" ? 1 : 0);
     // compensate for emoji, since if currently we've sat upon emoji,
@@ -826,7 +881,7 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
     const found = marchForward(
       str,
       startingPosition,
-      whatToMatch[i],
+      whatToMatchVal,
       opts,
       special
     );
@@ -840,8 +895,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
 
     let indexOfTheCharacterAfter;
     let fullCharacterAfter;
-    if (existy(found) && existy(str[found + whatToMatch[i].length])) {
-      indexOfTheCharacterAfter = found + whatToMatch[i].length;
+    if (existy(found) && existy(str[found + whatToMatchVal.length])) {
+      indexOfTheCharacterAfter = found + whatToMatchVal.length;
       fullCharacterAfter = str[indexOfTheCharacterAfter];
 
       // fixes for emoji:
@@ -870,19 +925,17 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       )}\n`
     );
 
+    let secondArg;
+    if (existy(indexOfTheCharacterAfter) && indexOfTheCharacterAfter >= 0) {
+      secondArg = str.slice(indexOfTheCharacterAfter);
+    }
     if (
       found !== false &&
       (opts.cb
-        ? opts.cb(
-            fullCharacterAfter,
-            existy(indexOfTheCharacterAfter)
-              ? str.slice(indexOfTheCharacterAfter)
-              : "",
-            indexOfTheCharacterAfter
-          )
+        ? opts.cb(fullCharacterAfter, secondArg, indexOfTheCharacterAfter)
         : true)
     ) {
-      return whatToMatch[i];
+      return whatToMatchVal;
     }
   }
   return false;

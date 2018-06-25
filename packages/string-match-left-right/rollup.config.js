@@ -34,6 +34,7 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "check-types-mini",
         "is-natural-number",
+        "lodash.clone",
         "lodash.isfunction",
         "lodash.isplainobject",
         "string-character-is-astral-surrogate"
@@ -54,6 +55,7 @@ export default commandLineArgs => {
         "arrayiffy-if-string",
         "check-types-mini",
         "is-natural-number",
+        "lodash.clone",
         "lodash.isfunction",
         "lodash.isplainobject",
         "string-character-is-astral-surrogate"

@@ -49,13 +49,13 @@ import {
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                  | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-match-left-right.cjs.js` | 28 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 28 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 26 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-match-left-right.cjs.js` | 30 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-match-left-right.esm.js` | 30 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-match-left-right.umd.js` | 28 KB
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## The API
 
@@ -75,7 +75,7 @@ There are four methods; all have the same API's:
 | `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right, of the aforementioned `position`. If anything was found, it will be returned. It's especially handy when here we pass an array of string - this way you know _which_ of strings was matched. |
 | `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                                                                                                                                                     |
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ### Output
 
@@ -84,7 +84,7 @@ Returns Boolean `false` or value of the string that was matched, that is,
 - if `whatToMatch` was a string, then returns it, OR
 - if `whatToMatch` was an array, then returns the first match from this array's elements.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ### Optional Options Object's API:
 
@@ -156,7 +156,7 @@ console.log(`res4 = ${res4}`);
 // => res4 = 'ef'
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Using a callback - `opts.cb`
 
@@ -261,7 +261,7 @@ const res = matchRightIncl("ab      cdef", 2, "cd", {
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Matching relying only on a callback
 
@@ -324,7 +324,7 @@ console.log(res4);
 // => true
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## `opts.trimBeforeMatching`
 
@@ -332,25 +332,25 @@ For example, [string-strip-html](https://bitbucket.org/codsen/string-strip-html)
 
 By the way it's not on by default because such scenarios are rare. Default comparison should be a strict-one.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## `opts.trimCharsBeforeMatching`
 
 For example, [string-strip-html](https://bitbucket.org/codsen/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Unicode is fully supported
 
 All astral characters (including emoji) are supported in all parts of the program (as input arguments, as options and so on). Having said that, the indexing system is still the same, native JS-one. I did some mistakes in the past switching to string indexing system, based on grapheme-count where one emoji counts as one character. Later I learned that and produced [converter](https://bitbucket.org/codsen/string-convert-indexes) between the two systems, and now I always use only native JS string indexing system. This library is the first-one of mine which takes care of the astral characters **without splitting the input string by grapheme** (letter or emoji) into array. Some famous libraries work that way but I believe that impairs the performance.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Algorithm
 
 The code in this library contains only `for` loops, iterating on the input string. There's no splitting-by-grapheme into array and later performing all the operations on that array. I think this approach is the most performant. In the end, which library would you choose: more performant-one or less performant but with with less lines of code?
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Contributing
 
@@ -360,7 +360,7 @@ The code in this library contains only `for` loops, iterating on the input strin
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆  back to top](#markdown-header-string-match-left-right)**
 
 ## Licence
 
@@ -368,19 +368,28 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
+
 [node-img]: https://img.shields.io/node/v/string-match-left-right.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-match-left-right
+
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/string-match-left-right
+
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-match-left-right/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/string-match-left-right?branch=master
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-match-left-right
+
 [downloads-img]: https://img.shields.io/npm/dm/string-match-left-right.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-match-left-right
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-match-left-right
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/string-match-left-right
