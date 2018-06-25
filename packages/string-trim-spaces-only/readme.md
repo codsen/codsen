@@ -13,12 +13,11 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Usage](#markdown-header-markdown-header-usage)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -41,7 +40,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 833 B |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 527 B |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## Usage
 
@@ -67,7 +66,7 @@ console.log("res4 = " + JSON.stringify(res4, null, 4));
 
 We also tested it with emoji, it copes fine.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## API
 
@@ -75,7 +74,7 @@ API is simple: `string` in, `string` out.
 
 You can pass non-strings too (including `undefined`), they will be returned and no action will be taken. You could also call it with no arguments at all — the API is deliberately friendly. After all, this function will be used within other code and it would be tedious to check are values always `string`s.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## Contributing
 
@@ -85,7 +84,7 @@ You can pass non-strings too (including `undefined`), they will be returned and 
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## Licence
 
