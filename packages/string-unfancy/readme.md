@@ -15,14 +15,14 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Idea](#markdown-header-markdown-header-idea)
-- [Usage](#markdown-header-markdown-header-usage)
-- [API](#markdown-header-markdown-header-api)
-- [Example - treating the image alt attributes - Gulp and stream-tapping](#markdown-header-markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [Usage](#markdown-header-usage)
+- [API](#markdown-header-api)
+- [Example - treating the image alt attributes - Gulp and stream-tapping](#markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping)
+- [Can we use `lodash.deburr` instead?](#markdown-header-can-we-use-lodashdeburr-instead)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -47,7 +47,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-unfancy.esm.js` | 1 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-unfancy.umd.js` | 59 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-unfancy)**
 
 ## Idea
 
@@ -61,7 +61,7 @@ Also, this library will recursively decode any HTML entities before performing t
 
 PS. If you want a higher-level tool, [html-img-alt](https://bitbucket.org/codsen/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-unfancy)**
 
 ## Usage
 
@@ -77,7 +77,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 // => "someone's"
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-unfancy)**
 
 ## API
 
@@ -122,7 +122,7 @@ As you see above, we're running an [inline function](https://developer.mozilla.o
 
 And that's it! All image `alt` attributes will lose their HTML encoding and will have their fancy special characters converted to simple ASCII letter equivalents.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-unfancy)**
 
 ## Can we use `lodash.deburr` instead?
 
@@ -136,7 +136,7 @@ No. It [won't even convert](https://runkit.com/embed/2oy0v80zzfsw) a single m-da
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-string-unfancy)**
 
 ## Licence
 
