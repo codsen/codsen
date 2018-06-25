@@ -23,7 +23,6 @@
     "sortcsv": "cli.js"
   },
   "scripts": {
-    "dev": "npm run test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
@@ -69,7 +68,7 @@
     },
     "badges": {
       "contributors": true,
-      "cov": true,
+      "cov": false,
       "deps": true,
       "deps2d": true,
       "dev": true,
@@ -171,6 +170,7 @@
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
     "eslint-plugin-import": "latest",
     "eslint-plugin-no-unsanitized": "latest",
     "eslint-plugin-no-wildcard-postmessage": "latest",
