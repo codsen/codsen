@@ -46,10 +46,6 @@ $ csvsort --help
 
 ![calling directly on a file](https://bitbucket.org/codsen/csv-sort-cli/raw/2667d1c2e02943263eca314130ae418efe7ae1c1/media/example1.gif)
 
-alternatively, don't specify a file — it will let you pick one:
-
-![calling without specifying a file name](https://bitbucket.org/codsen/csv-sort-cli/raw/2667d1c2e02943263eca314130ae418efe7ae1c1/media/example2.gif)
-
 **[⬆ back to top](#markdown-header-csv-sort-cli)**
 
 ## or, omit the file's name, it will let you pick a CSV:
@@ -60,7 +56,7 @@ $ csvsort # omit the file's name, but you can include -o/--overwrite flag
 
 omit the file name and `csv-sort-cli` will offer a list of CSV files in the current folder to choose from:
 
-![Calling csv-sort-cli without file and picking a CSV]()
+![calling without specifying a file name](https://bitbucket.org/codsen/csv-sort-cli/raw/2667d1c2e02943263eca314130ae418efe7ae1c1/media/example2.gif)
 
 You can even try it without installing — use `npx`:
 
