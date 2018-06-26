@@ -2,6 +2,9 @@ import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 
 function within(str, originalOpts) {
+  function existy(x) {
+    return x != null;
+  }
   if (typeof str !== "string") {
     throw new Error(
       `email-all-chars-within-ascii/within(): [THROW_ID_01] The input is not string but ${typeof str}, equal to: ${JSON.stringify(
@@ -11,11 +14,7 @@ function within(str, originalOpts) {
       )}`
     );
   }
-  if (
-    originalOpts !== undefined &&
-    originalOpts !== null &&
-    !isObj(originalOpts)
-  ) {
+  if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new Error(
       `email-all-chars-within-ascii/within(): [THROW_ID_02] The opts is not a plain object but ${typeof originalOpts}, equal to:\n${JSON.stringify(
         originalOpts,

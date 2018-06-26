@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-06-26
+
+- ✨ Set up Rollup to remove all comments from built files
+- ✨ There was a strange bug in Rollup UMD builds where `undefined` literals were being renamed that caused _throws_ when trying to use UMD builds. What makes things worse, I'm not using UMD builds and all unit tests are pointing to ES Modules build, so, theoretically, if Rollup messed up UMD builds there was no automated way to tell. Now, UMD build should be working correctly. Sorry everybody who got affected.
+
 ## [2.2.0] - 2018-06-15
 
 GitHub sold us out. In the meantime, we:
@@ -62,3 +67,4 @@ Bumping major just in case somebody's API breaks. But it should not break.
 [2.0.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.0.0%0Dv1.3.0#diff
 [2.1.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.1.0%0Dv2.0.4#diff
 [2.2.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.2.0%0Dv2.1.0#diff
+[2.3.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.3.0%0Dv2.2.1#diff
