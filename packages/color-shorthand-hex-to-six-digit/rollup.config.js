@@ -1,6 +1,7 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
+import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
@@ -40,7 +41,8 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        babel()
+        babel(),
+        cleanup()
       ]
     },
 
@@ -57,7 +59,8 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
-        })
+        }),
+        cleanup()
       ]
     }
   ];

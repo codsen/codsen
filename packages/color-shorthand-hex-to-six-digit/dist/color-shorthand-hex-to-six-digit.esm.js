@@ -3,20 +3,12 @@ import isPlainObject from 'lodash.isplainobject';
 import isString from 'lodash.isstring';
 import clone from 'lodash.clonedeep';
 
-/* eslint no-param-reassign:0 */
-
 const { isArray } = Array;
-
 function conv(originalInput) {
-  // prevent any input argument mutation:
   let input = clone(originalInput);
-
-  // f's
-  // ====================
-
   function toFullHex(hex, findings, offset, string) {
     if (
-      string[offset - 1] !== "&" && // consider false positives like &#124;
+      string[offset - 1] !== "&" &&
       hex.length === 4 &&
       hex.charAt(0) === "#"
     ) {
@@ -26,10 +18,6 @@ function conv(originalInput) {
     }
     return hex.toLowerCase();
   }
-
-  // action
-  // ====================
-
   if (isString(originalInput)) {
     input = input.replace(r(), toFullHex);
   } else if (isArray(input)) {
