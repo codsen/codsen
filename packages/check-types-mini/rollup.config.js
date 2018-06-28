@@ -1,6 +1,7 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
+import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
@@ -32,15 +33,18 @@ export default commandLineArgs => {
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
         "arrayiffy-if-string",
+        "ast-monkey-traverse",
         "lodash.intersection",
         "lodash.pullall",
+        "object-path",
         "type-detect"
       ],
       plugins: [
         strip({
           sourceMap: false
         }),
-        babel()
+        babel(),
+        cleanup()
       ]
     },
 
@@ -50,14 +54,17 @@ export default commandLineArgs => {
       output: [{ file: pkg.module, format: "es" }],
       external: [
         "arrayiffy-if-string",
+        "ast-monkey-traverse",
         "lodash.intersection",
         "lodash.pullall",
+        "object-path",
         "type-detect"
       ],
       plugins: [
         strip({
           sourceMap: false
-        })
+        }),
+        cleanup()
       ]
     }
   ];

@@ -2,19 +2,15 @@ import test from "ava";
 import checkTypes from "../dist/check-types-mini.esm";
 
 test("01.01 - throws when all/first args are missing", t => {
-  t.throws(() => {
+  const error = t.throws(() => {
     checkTypes();
-  }, "check-types-mini: [THROW_ID_01] Missing all arguments!");
+  });
+  t.truthy(error.message.includes("THROW_ID_01"));
+  t.truthy(error.message.includes("check-types-mini"));
 });
 
-test("01.02 - throws when second arg is missing", t => {
-  t.throws(() => {
-    checkTypes("zzzz");
-  }, "check-types-mini: [THROW_ID_02] Missing second argument!");
-});
-
-test("01.03 - throws when one of the arguments is of a wrong type", t => {
-  t.throws(() => {
+test.only("01.02 - throws when one of the arguments is of a wrong type", t => {
+  const error = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -27,10 +23,11 @@ test("01.03 - throws when one of the arguments is of a wrong type", t => {
         option3: false
       }
     );
-  }, 'check-types-mini: opts.option2 was customised to "false" which is not boolean but string');
+  });
+  t.truthy(error.message.includes("THROW_ID_01"));
 });
 
-test("01.04 - opts.msg or opts.optsVarName args are wrong-type", t => {
+test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
   t.throws(() => {
     checkTypes(
       {
@@ -69,7 +66,7 @@ test("01.04 - opts.msg or opts.optsVarName args are wrong-type", t => {
   });
 });
 
-test("01.05 - throws if fourth argument is missing", t => {
+test("01.04 - throws if fourth argument is missing", t => {
   t.throws(() => {
     checkTypes(
       {
@@ -124,7 +121,7 @@ test("01.05 - throws if fourth argument is missing", t => {
   });
 });
 
-test("01.06 - throws when opts are set wrong", t => {
+test("01.05 - throws when opts are set wrong", t => {
   t.throws(() => {
     checkTypes(
       { somekey: "a" },
@@ -169,6 +166,76 @@ test("01.06 - throws when opts are set wrong", t => {
       }
     );
   });
+});
+
+test("01.06 - nested options", t => {
+  t.throws(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: "setting2",
+        option3: {
+          aaa: {
+            bbb: true // should be text, not Bool
+          }
+        }
+      },
+      {
+        option1: "setting1",
+        option2: "setting2",
+        option3: {
+          aaa: {
+            bbb: "a"
+          }
+        }
+      }
+    );
+  });
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: "setting2",
+        option3: {}
+      },
+      {
+        option1: "setting1",
+        option2: "setting2",
+        option3: {
+          aaa: true
+        }
+      }
+    );
+  });
+});
+
+test("01.07 - opts.ignorePaths", t => {
+  // control:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        msg: "aa",
+        optsVarName: "bbb",
+        ignoreKeys: false
+      }
+    );
+  }, "zzz");
 });
 
 // ======================

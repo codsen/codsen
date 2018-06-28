@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2018-06-27
+
+I felt need for this feature since beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
+
+- ✨ Now accept and enforce nested options objects. For example, you can have defaults as:
+
+  ```js
+  {
+    oodles: {
+      noodles: true;
+    }
+  }
+  ```
+
+  and if user customised your options object to the following, `check-types-mini` will throw:
+
+  ```js
+  {
+    oodles: {
+      noodles: "zzz"; // string, not Boolean
+    }
+  }
+  ```
+
+- ✨ Also, rebased the code quite substantially, with some new deps and some old deps removed.
+- ✨ `opts.ignorePaths` because now `opts.ignoreKeys` is not enough - what if key names are called the same in different nested opts object key's value child object key's values?
+- ✨ Implemented _throw pinning_. It's fancy term meaning all internal errors are named with an ID and all unit tests are not just checking, _does it throw_ but _does it throw the particular error_, because it can _throw_ but _throw at wrong place_ that would be a defect, yet unit test would pass. As a side effect, this doesn't lock the throw error messages in the unit tests. Since we pin against the ID, we can tweak the error messages' text as much as we want as long as ID is kept the same.
+
 ## [3.4.0] - 2018-06-10
 
 GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
@@ -139,7 +167,7 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [1.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.3.0%0Dv1.2.2#diff
 [1.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.4.0%0Dv1.3.0#diff
 [1.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.5.0%0Dv1.4.1#diff
-[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv3.4.3#diff
+[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv3.4.4#diff
 [2.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.0.0%0Dv1.5.0#diff
 [2.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.1.0%0Dv2.0.3#diff
 [2.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.2.0%0Dv2.1.1#diff
@@ -153,3 +181,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [3.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.2.0%0Dv3.1.2#diff
 [3.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.3.0%0Dv3.2.0#diff
 [3.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.4.0%0Dv3.3.1#diff
+[4.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.0.0%0Dv3.4.4#diff
