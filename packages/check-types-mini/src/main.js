@@ -348,11 +348,11 @@ function checkTypesMini(
         throw new TypeError(
           `${opts.msg}: ${opts.optsVarName}.${
             innerObj.path
-          } was customised to ${JSON.stringify(
-            current,
-            null,
-            0
-          )} which is not ${typ(compareTo).toLowerCase()} but ${typ(
+          } was customised to ${
+            typ(current).toLowerCase() === "string" ? "" : '"'
+          }${JSON.stringify(current, null, 0)}${
+            typ(current).toLowerCase() === "string" ? "" : '"'
+          } which is not ${typ(compareTo).toLowerCase()} but ${typ(
             current
           ).toLowerCase()}`
         );

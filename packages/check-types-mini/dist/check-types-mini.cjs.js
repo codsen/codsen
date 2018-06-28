@@ -117,7 +117,7 @@ function checkTypesMini(obj, ref, originalOptions) {
           throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to be array, but not all of its elements are " + typ(ref[key]).toLowerCase() + "-type");
         }
       } else {
-        throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + JSON.stringify(current, null, 0) + " which is not " + typ(compareTo).toLowerCase() + " but " + typ(current).toLowerCase());
+        throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typ(current).toLowerCase() === "string" ? "" : '"') + JSON.stringify(current, null, 0) + (typ(current).toLowerCase() === "string" ? "" : '"') + " which is not " + typ(compareTo).toLowerCase() + " but " + typ(current).toLowerCase());
       }
     }
     return current;
