@@ -9,7 +9,7 @@ test("01.01 - throws when all/first args are missing", t => {
   t.truthy(error.message.includes("check-types-mini"));
 });
 
-test.only("01.02 - throws when one of the arguments is of a wrong type", t => {
+test("01.02 - throws when one of the arguments is of a wrong type", t => {
   const error = t.throws(() => {
     checkTypes(
       {
@@ -24,7 +24,7 @@ test.only("01.02 - throws when one of the arguments is of a wrong type", t => {
       }
     );
   });
-  t.truthy(error.message.includes("THROW_ID_01"));
+  t.truthy(error.message.includes("not boolean but string"));
 });
 
 test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
@@ -122,7 +122,7 @@ test("01.04 - throws if fourth argument is missing", t => {
 });
 
 test("01.05 - throws when opts are set wrong", t => {
-  t.throws(() => {
+  t.notThrows(() => {
     checkTypes(
       { somekey: "a" },
       { somekey: "b" },
@@ -132,8 +132,9 @@ test("01.05 - throws when opts are set wrong", t => {
         ignoreKeys: false
       }
     );
-  }, "check-types-mini: [THROW_ID_05] opts.ignoreKeys should be an array, currently it's: boolean");
-  t.throws(() => {
+  });
+
+  const err1 = t.throws(() => {
     checkTypes(
       { somekey: "a" },
       { somekey: "b" },
@@ -143,7 +144,9 @@ test("01.05 - throws when opts are set wrong", t => {
         ignoreKeys: false
       }
     );
-  }, "check-types-mini: [THROW_ID_03] opts.msg must be string! Currently it's: number, equal to 1");
+  });
+  t.truthy(err1.message.includes("not string but number"));
+
   t.notThrows(() => {
     checkTypes(
       { somekey: "a" },
@@ -230,12 +233,12 @@ test("01.07 - opts.ignorePaths", t => {
         }
       },
       {
-        msg: "aa",
-        optsVarName: "bbb",
+        msg: "msg",
+        optsVarName: "OPTS",
         ignoreKeys: false
       }
     );
-  }, "zzz");
+  }, 'msg: OPTS.aaa.bbb was customised to "a" which is not boolean but string');
 });
 
 // ======================
@@ -607,7 +610,7 @@ test("03.01 - opts.acceptArrays, strings+arrays", t => {
 // ======================
 
 test("04.01 - opts.schema only", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -619,6 +622,11 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err1.message,
+    "check-types-mini: opts.option2 was customised to null which is not string but null"
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -636,7 +644,8 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -653,6 +662,11 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err2.message,
+    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (string, boolean)'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -668,7 +682,8 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err3 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -683,9 +698,13 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err3.message,
+    "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
+  );
 
   // true not allowed, - only false or null or string
-  t.throws(() => {
+  const err4 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -702,6 +721,11 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err4.message,
+    'check-types-mini: opts.option2 was customised to "true" (boolean) which is not among the allowed types in schema (null, false, string)'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -719,6 +743,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -736,6 +761,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -757,7 +783,7 @@ test("04.01 - opts.schema only", t => {
   // second bunch
 
   // true or string
-  t.throws(() => {
+  const err5 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -774,7 +800,12 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+  t.is(
+    err5.message,
+    'check-types-mini: opts.option2 was customised to "false" (boolean) which is not among the allowed types in schema (true, string)'
+  );
+
+  const err6 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -791,7 +822,12 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+  t.is(
+    err6.message,
+    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (true, string)'
+  );
+
+  const err7 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -808,6 +844,11 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err7.message,
+    'check-types-mini: opts.option2 was customised to "0" (number) which is not among the allowed types in schema (true, string)'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -825,7 +866,8 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err8 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -842,6 +884,11 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err8.message,
+    'check-types-mini: opts.option2 was customised to "zzz" (string) which is not among the allowed types in schema (true)'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -859,6 +906,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -876,6 +924,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -893,6 +942,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -910,6 +960,7 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -927,7 +978,8 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err9 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -944,6 +996,10 @@ test("04.01 - opts.schema only", t => {
       }
     );
   });
+  t.is(
+    err9.message,
+    'check-types-mini: opts.option2 was customised to "true" (string) which is not among the allowed types in schema (boolean)'
+  );
 });
 
 test('04.02 - opts.schema values as strings + "whatever" keys', t => {

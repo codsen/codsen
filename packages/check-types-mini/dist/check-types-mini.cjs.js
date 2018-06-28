@@ -37,11 +37,19 @@ function checkTypesMini(obj, ref, originalOptions) {
   } else {
     opts = Object.assign({}, defaults);
   }
-  opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
-  opts.acceptArraysIgnore = arrayiffyIfString(opts.acceptArraysIgnore);
-  opts.msg = opts.msg.trim();
+  if (!existy(opts.ignoreKeys) || !opts.ignoreKeys) {
+    opts.ignoreKeys = [];
+  } else {
+    opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
+  }
+  if (!existy(opts.acceptArraysIgnore) || !opts.acceptArraysIgnore) {
+    opts.acceptArraysIgnore = [];
+  } else {
+    opts.acceptArraysIgnore = arrayiffyIfString(opts.acceptArraysIgnore);
+  }
+  opts.msg = typeof opts.msg === "string" ? opts.msg.trim() : opts.msg;
   if (opts.msg[opts.msg.length - 1] === ":") {
-    opts.msg = opts.msg.slice(0, opts.msg.length - 1);
+    opts.msg = opts.msg.slice(0, opts.msg.length - 1).trim();
   }
   if (opts.schema) {
     Object.keys(opts.schema).forEach(function (oneKey) {
@@ -55,19 +63,25 @@ function checkTypesMini(obj, ref, originalOptions) {
       });
     });
   }
+  if (!existy(ref)) {
+    ref = {};
+  }
   if (shouldWeCheckTheOpts) {
     checkTypesMini(opts, defaults, null, false);
   }
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
       if (pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))).length !== 0) {
-        throw new TypeError(opts.msg + ": " + opts.optsVarName + ".enforceStrictKeyset is on and the following keys are not covered by schema and/or reference objects: " + JSON.stringify(pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))), null, 4));
+        var keys = pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema)));
+        throw new TypeError(opts.msg + ": " + opts.optsVarName + ".enforceStrictKeyset is on and the following key" + (keys.length > 1 ? "s" : "") + " " + (keys.length > 1 ? "are" : "is") + " not covered by schema and/or reference objects: " + keys.join(", "));
       }
     } else if (existy(ref) && Object.keys(ref).length > 0) {
       if (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0) {
-        throw new TypeError(opts.msg + ": The input object has keys that are not covered by the reference object: " + JSON.stringify(pullAll(Object.keys(obj), Object.keys(ref)), null, 4));
+        var _keys = pullAll(Object.keys(obj), Object.keys(ref));
+        throw new TypeError(opts.msg + ": The input object has key" + (_keys.length > 1 ? "s" : "") + " that " + (_keys.length > 1 ? "are" : "is") + " not covered by the reference object: " + _keys.join(", "));
       } else if (pullAll(Object.keys(ref), Object.keys(obj)).length !== 0) {
-        throw new TypeError(opts.msg + ": The reference object has keys that are not present in the input object: " + JSON.stringify(pullAll(Object.keys(ref), Object.keys(obj)), null, 4));
+        var _keys2 = pullAll(Object.keys(ref), Object.keys(obj));
+        throw new TypeError(opts.msg + ": The reference object has key" + (_keys2.length > 1 ? "s" : "") + " that " + (_keys2.length > 1 ? "are" : "is") + " not present in the input object: " + _keys2.join(", "));
       }
     } else {
       throw new TypeError(opts.msg + ": Both " + opts.optsVarName + ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!");
@@ -85,24 +99,25 @@ function checkTypesMini(obj, ref, originalOptions) {
           if (isArr(current) && opts.acceptArrays) {
             for (var i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
-                throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " is of type " + typ(current[i]).toLowerCase() + ", but only the following are allowed in " + opts.optsVarName + ".schema: " + currentKeysSchema);
+                throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " is of a type " + typ(current[i]).toLowerCase() + ", but only the following are allowed in " + opts.optsVarName + ".schema: " + currentKeysSchema);
               }
             }
           } else {
-            throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " was customised to " + JSON.stringify(current, null, 4) + " which is not among the allowed types in schema (" + currentKeysSchema + ") but " + typ(current));
+            throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " was customised to " + (typ(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typ(current) !== "string" ? '"' : "") + " (" + typ(current) + ") which is not among the allowed types in schema (" + currentKeysSchema.join(", ") + ")");
           }
         }
       }
-    } else if (existy(ref) && Object.keys(ref).length && objectPath.has(ref, innerObj.path) && typ(current) !== typ(objectPath.get(ref, innerObj.path)) && !opts.ignoreKeys.includes(key) && !opts.ignorePaths.includes(innerObj.path)) {
+    } else if (existy(ref) && Object.keys(ref).length && objectPath.has(ref, innerObj.path) && typ(current) !== typ(objectPath.get(ref, innerObj.path)) && (!opts.ignoreKeys || !opts.ignoreKeys.includes(key)) && (!opts.ignorePaths || !opts.ignorePaths.includes(innerObj.path))) {
+      var compareTo = objectPath.get(ref, innerObj.path);
       if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
         var allMatch = current.every(function (el) {
           return typ(el) === typ(ref[key]);
         });
         if (!allMatch) {
-          throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " was customised to be array, but not all of its elements are " + typ(ref[key]) + "-type");
+          throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to be array, but not all of its elements are " + typ(ref[key]).toLowerCase() + "-type");
         }
       } else {
-        throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " was customised to " + JSON.stringify(current, null, 4) + " which is not " + typ(ref[key]) + " but " + typ(current));
+        throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + JSON.stringify(current, null, 0) + " which is not " + typ(compareTo).toLowerCase() + " but " + typ(current).toLowerCase());
       }
     }
     return current;
