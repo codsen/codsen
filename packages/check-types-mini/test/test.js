@@ -569,6 +569,8 @@ test("02.08 - throws when reference and schema are both missing", t => {
   });
 });
 
+test.todo("02.09 - enforceStrictKeyset and nested inputs");
+
 // ======================
 // 03. opts.enforceStrictKeyset
 // ======================
@@ -1065,7 +1067,35 @@ test("04.02 - opts.schema only - deeper level key doesn't even exist in ref", t 
   );
 });
 
-test.only("04.03 - opts.schema only - deeper level key type mismatches but is allowed through a schema", t => {
+test("04.03 - opts.schema only - deeper level key type mismatches but is allowed through a schema", t => {
+  // control - make it throw:
+
+  const err = t.throws(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: {
+          option3: null
+        }
+      },
+      {
+        option1: "zz",
+        option2: { option3: "yy" }
+      },
+      {
+        schema: {
+          option1: ["stRing"]
+        }
+      }
+    );
+  });
+  t.is(
+    err.message,
+    'check-types-mini: opts.option2.option3 was customised to "null" which is not string but null'
+  );
+
+  // now prove that schema works:
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1119,7 +1149,8 @@ test("04.04 - opts.schema only - located deeper", t => {
       null, // << reference object is completely omitted!!!
       {
         schema: {
-          option1: "String",
+          option1: "strinG",
+          option2: "objecT",
           "option2.option3": ["stRing", null]
         }
       }
@@ -1143,7 +1174,7 @@ test("04.04 - opts.schema only - located deeper", t => {
   });
   t.is(
     err3.message,
-    "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
+    "check-types-mini: opts.enforceStrictKeyset is on and the following keys are not covered by schema and/or reference objects: option1, option2"
   );
 
   // make error message mention a missing deeper-level path:
@@ -1157,6 +1188,7 @@ test("04.04 - opts.schema only - located deeper", t => {
       {
         schema: {
           option1: "object", // option1.option2 is missing!
+          option3: "object",
           "option3.option4": ["stRing", null]
         }
       }
@@ -1164,7 +1196,7 @@ test("04.04 - opts.schema only - located deeper", t => {
   });
   t.is(
     err3_2.message,
-    "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
+    "check-types-mini: opts.option1.option2 is neither covered by reference object (second input argument), nor opts.schema!"
   );
 
   // true not allowed, - only false or null or string

@@ -11,14 +11,19 @@ var objectPath = _interopDefault(require('object-path'));
 
 function checkTypesMini(obj, ref, originalOptions) {
   var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-  console.log("\n███████████████████████████████████████ 016 checkTypesMini() called with arguments:");
-  console.log(JSON.stringify([].concat(Array.prototype.slice.call(arguments)), null, 4));
-  console.log("█████████\n");
   function existy(something) {
     return something != null;
   }
   function isObj(something) {
     return typ(something) === "Object";
+  }
+  function goUpByOneLevel(path) {
+    if (path.includes(".")) {
+      var split = path.split(".");
+      split.pop();
+      return split.join(".");
+    }
+    return path;
   }
   var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
   var isArr = Array.isArray;
@@ -70,10 +75,8 @@ function checkTypesMini(obj, ref, originalOptions) {
     ref = {};
   }
   if (shouldWeCheckTheOpts) {
-    console.log("098 about to call itself recursively:");
-    checkTypesMini(opts, defaults, null, false);
+    checkTypesMini(opts, defaults, { enforceStrictKeyset: false }, false);
   }
-  console.log("111");
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
       if (pullAll(Object.keys(obj), Object.keys(ref).concat(Object.keys(opts.schema))).length !== 0) {
@@ -92,41 +95,32 @@ function checkTypesMini(obj, ref, originalOptions) {
       throw new TypeError(opts.msg + ": Both " + opts.optsVarName + ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!");
     }
   }
-  console.log("164");
-  console.log("172 " + ("\x1B[" + 33 + "m" + "obj" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(obj, null, 4));
   traverse(obj, function (key, val, innerObj) {
     var current = val !== undefined ? val : key;
-    console.log("\n\x1B[" + 36 + "m" + (innerObj.path + " ===========================") + "\x1B[" + 39 + "m " + ("\x1B[" + 33 + "m" + "key" + "\x1B[" + 39 + "m") + " = " + key + "; " + ("\x1B[" + 33 + "m" + "val" + "\x1B[" + 39 + "m") + " = " + ("\x1B[" + 35 + "m" + JSON.stringify(val, null, 0) + "\x1B[" + 39 + "m") + "; " + ("\x1B[" + 33 + "m" + "current" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(current, null, 4));
-    console.log("206 " + ("\x1B[" + 33 + "m" + "opts.schema" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(opts.schema, null, 4));
-    if (isObj(opts.schema) && Object.keys(opts.schema).length && objectPath.has(opts.schema, innerObj.path)) {
-      console.log("217");
-      var currentKeysSchema = arrayiffyIfString(objectPath.get(opts.schema, innerObj.path)).map(String).map(function (el) {
-        return el.toLowerCase();
-      });
-      console.log("226 " + ("\x1B[" + 33 + "m" + "currentKeysSchema" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(currentKeysSchema, null, 4));
-      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
-      if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
-        console.log("243 " + ("\x1B[" + 33 + "m" + "currentKeysSchema" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(currentKeysSchema, null, 4));
-        if (current !== true && current !== false && !currentKeysSchema.includes(typ(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
-          console.log("251 I. matching against schema.");
-          if (isArr(current) && opts.acceptArrays) {
-            for (var i = 0, len = current.length; i < len; i++) {
-              if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
-                throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " is of a type " + typ(current[i]).toLowerCase() + ", but only the following are allowed in " + opts.optsVarName + ".schema: " + currentKeysSchema);
+    if (opts.enforceStrictKeyset && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!Array.isArray(innerObj.parent) && !objectPath.has(ref, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
+      throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema!");
+    } else if (isObj(opts.schema) && Object.keys(opts.schema).length && Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path)
+    ) {
+        var currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path]).map(String).map(function (el) {
+          return el.toLowerCase();
+        });
+        objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
+        if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
+          if (current !== true && current !== false && !currentKeysSchema.includes(typ(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
+            if (isArr(current) && opts.acceptArrays) {
+              for (var i = 0, len = current.length; i < len; i++) {
+                if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
+                  throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " is of a type " + typ(current[i]).toLowerCase() + ", but only the following are allowed in " + opts.optsVarName + ".schema: " + currentKeysSchema);
+                }
               }
+            } else {
+              throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typ(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typ(current) !== "string" ? '"' : "") + " (" + typ(current) + ") which is not among the allowed types in schema (" + currentKeysSchema.join(", ") + ")");
             }
-          } else {
-            throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " was customised to " + (typ(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typ(current) !== "string" ? '"' : "") + " (" + typ(current) + ") which is not among the allowed types in schema (" + currentKeysSchema.join(", ") + ")");
           }
         }
-      }
-    } else if (existy(ref) && Object.keys(ref).length && objectPath.has(ref, innerObj.path) && typ(current) !== typ(objectPath.get(ref, innerObj.path)) && (!opts.ignoreKeys || !opts.ignoreKeys.includes(key)) && (!opts.ignorePaths || !opts.ignorePaths.includes(innerObj.path))) {
-      console.log("300 II. matching against ref.");
-      console.log("* 312 " + ("\x1B[" + 33 + "m" + "current" + "\x1B[" + 39 + "m") + " = " + JSON.stringify(current, null, 4) + " (type " + typ(current) + ")");
-      console.log("* 319 " + ("\x1B[" + 33 + "m" + "objectPath.get(ref, innerObj.path)" + "\x1B[" + 39 + "m") + " = \"" + JSON.stringify(objectPath.get(ref, innerObj.path), null, 4) + "\" (type " + typ(objectPath.get(ref, innerObj.path)) + ")");
+      } else if (existy(ref) && Object.keys(ref).length && objectPath.has(ref, innerObj.path) && typ(current) !== typ(objectPath.get(ref, innerObj.path)) && (!opts.ignoreKeys || !opts.ignoreKeys.includes(key)) && (!opts.ignorePaths || !opts.ignorePaths.includes(innerObj.path))) {
       var compareTo = objectPath.get(ref, innerObj.path);
       if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
-        console.log("316");
         var allMatch = current.every(function (el) {
           return typ(el) === typ(ref[key]);
         });
@@ -134,15 +128,11 @@ function checkTypesMini(obj, ref, originalOptions) {
           throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to be array, but not all of its elements are " + typ(ref[key]).toLowerCase() + "-type");
         }
       } else {
-        console.log("328");
         throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typ(current).toLowerCase() === "string" ? "" : '"') + JSON.stringify(current, null, 0) + (typ(current).toLowerCase() === "string" ? "" : '"') + " which is not " + typ(compareTo).toLowerCase() + " but " + typ(current).toLowerCase());
       }
     }
     return current;
   });
-  console.log("███████████████████████████████████████");
-  console.log("████████████████ end ██████████████████");
-  console.log("███████████████████████████████████████\n\n\n\n");
 }
 function externalApi(obj, ref, originalOptions) {
   return checkTypesMini(obj, ref, originalOptions);
