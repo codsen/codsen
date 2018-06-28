@@ -1065,58 +1065,62 @@ test("04.02 - opts.schema only - deeper level key doesn't even exist in ref", t 
   );
 });
 
-test("04.03 - opts.schema only - located deeper", t => {
+test.only("04.03 - opts.schema only - deeper level key type mismatches but is allowed through a schema", t => {
   t.notThrows(() => {
     checkTypes(
       {
         option1: "setting1",
-        option2: null
+        option2: {
+          option3: null
+        }
       },
       {
         option1: "zz",
-        option2: "yy"
+        option2: { option3: "yy" }
       },
       {
         schema: {
-          option2: ["stRing", null]
+          "option2.option3": ["stRing", null]
         }
       }
     );
   });
+});
 
+test("04.04 - opts.schema only - located deeper", t => {
   const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
-        option2: null
+        option2: { option3: null }
       },
       {
         option1: "zz",
-        option2: "yy"
+        option2: { option3: "yy" }
       },
       {
         schema: {
-          option2: ["string", "boolean"]
+          "option2.option3": ["string", "boolean"]
         }
       }
     );
   });
   t.is(
     err2.message,
-    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (string, boolean)'
+    'check-types-mini: opts.option2.option3 was customised to "null" (null) which is not among the allowed types in schema (string, boolean)'
   );
 
   t.notThrows(() => {
     checkTypes(
       {
         option1: "setting1",
-        option2: null
+        option2: { option3: null }
       },
       null, // << reference object is completely omitted!!!
       {
         schema: {
           option1: "String",
-          option2: ["stRing", null]
+          "option2.option3": ["stRing", null]
         }
       }
     );
@@ -1126,19 +1130,40 @@ test("04.03 - opts.schema only - located deeper", t => {
     checkTypes(
       {
         option1: "setting1",
-        option2: null
+        option2: { option3: null }
       },
       null,
       {
         schema: {
           // <<< notice how option1 is missing AND also missing in reference obj
-          option2: ["stRing", null]
+          "option2.option3": ["stRing", null]
         }
       }
     );
   });
   t.is(
     err3.message,
+    "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
+  );
+
+  // make error message mention a missing deeper-level path:
+  const err3_2 = t.throws(() => {
+    checkTypes(
+      {
+        option1: { option2: "setting1" },
+        option3: { option4: null }
+      },
+      null,
+      {
+        schema: {
+          option1: "object", // option1.option2 is missing!
+          "option3.option4": ["stRing", null]
+        }
+      }
+    );
+  });
+  t.is(
+    err3_2.message,
     "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
   );
 
@@ -1441,7 +1466,7 @@ test("04.03 - opts.schema only - located deeper", t => {
   );
 });
 
-test('04.04 - opts.schema values as strings + "whatever" keys', t => {
+test('04.05 - opts.schema values as strings + "whatever" keys', t => {
   t.throws(() => {
     checkTypes(
       {
@@ -1528,7 +1553,7 @@ test('04.04 - opts.schema values as strings + "whatever" keys', t => {
   });
 });
 
-test("04.05 - opts.schema falling back to reference object", t => {
+test("04.06 - opts.schema falling back to reference object", t => {
   // with throwing consequences:
   t.throws(() => {
     checkTypes(
@@ -1567,7 +1592,7 @@ test("04.05 - opts.schema falling back to reference object", t => {
   });
 });
 
-test("04.06 - opts.schema is set to a wrong thing - throws", t => {
+test("04.07 - opts.schema is set to a wrong thing - throws", t => {
   t.throws(() => {
     checkTypes(
       {
@@ -1600,7 +1625,7 @@ test("04.06 - opts.schema is set to a wrong thing - throws", t => {
   });
 });
 
-test("04.07 - opts.schema understands opts.acceptArrays", t => {
+test("04.08 - opts.schema understands opts.acceptArrays", t => {
   t.throws(() => {
     checkTypes(
       {
@@ -1716,7 +1741,7 @@ test("04.07 - opts.schema understands opts.acceptArrays", t => {
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.
 });
 
-test("04.08 - ad-hoc #1", t => {
+test("04.09 - ad-hoc #1", t => {
   t.throws(() => {
     checkTypes(
       {
