@@ -1,13 +1,8 @@
-// high surrogate goes first, low goes second
-
 function isHighSurrogate(something) {
-  // [\uD800-\uDBFF]
   if (typeof something === "string") {
     if (something.length === 0) {
       return false;
     }
-    // \uD800 charCode is 55296
-    // \uDBFF charCode is 56319
     return something.charCodeAt(0) >= 55296 && something.charCodeAt(0) <= 56319;
   } else if (something === undefined) {
     return false;
@@ -17,13 +12,10 @@ function isHighSurrogate(something) {
   );
 }
 function isLowSurrogate(something) {
-  // [\uDC00-\uDFFF]
   if (typeof something === "string") {
     if (something.length === 0) {
       return false;
     }
-    // \uDC00 charCode is 56320
-    // \uDFFF charCode is 57343
     return something.charCodeAt(0) >= 56320 && something.charCodeAt(0) <= 57343;
   } else if (something === undefined) {
     return false;

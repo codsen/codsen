@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2018-06-16
+
+- ✨ Tweaks to the setup: added comment removal during Rollup build and dependency updates
+
 ## [1.2.0] - 2018-06-16
 
 GitHub sold us out. In the meantime, we:
@@ -29,3 +33,4 @@ GitHub sold us out. In the meantime, we:
 
 [1.1.0]: https://bitbucket.org/codsen/string-character-is-astral-surrogate/branches/compare/v1.1.0%0Dv1.0.1#diff
 [1.2.0]: https://bitbucket.org/codsen/string-character-is-astral-surrogate/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.3.0]: https://bitbucket.org/codsen/string-character-is-astral-surrogate/branches/compare/v1.3.0%0Dv1.2.1#diff
