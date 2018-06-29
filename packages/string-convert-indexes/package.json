@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "engines": {
