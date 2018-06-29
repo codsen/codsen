@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.3.0] - 2018-06-29
+
+- ✨ Set up Rollup to remove comments from the code
+
 ## [4.2.0] - 2018-06-16
 
 GitHub sold us out. In the meantime, we:
@@ -86,3 +90,4 @@ This library will detect the first clump of class(es)/array(s), will put each in
 [4.0.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.0.0%0Dv3.4.0#diff
 [4.1.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.1.0%0Dv4.0.6#diff
 [4.2.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.2.0%0Dv4.1.0#diff
+[4.3.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.3.0%0Dv4.2.1#diff
