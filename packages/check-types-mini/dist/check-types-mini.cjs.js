@@ -97,7 +97,7 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   traverse(obj, function (key, val, innerObj) {
     var current = val !== undefined ? val : key;
-    if (opts.enforceStrictKeyset && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!Array.isArray(innerObj.parent) && !objectPath.has(ref, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
+    if (opts.enforceStrictKeyset && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !Array.isArray(innerObj.parent) && !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(opts.schema, goUpByOneLevel(innerObj.path)))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!Array.isArray(innerObj.parent) && !objectPath.has(ref, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
       throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema!");
     } else if (isObj(opts.schema) && Object.keys(opts.schema).length && Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path)
     ) {

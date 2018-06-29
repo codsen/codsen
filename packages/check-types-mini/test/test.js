@@ -1732,7 +1732,7 @@ test("04.06 - opts.schema falling back to reference object", t => {
         option2: "zz"
       },
       {
-        option1: { ww: "zz" },
+        option1: { somekey: "zz" },
         option2: "yy"
       },
       {
@@ -1783,12 +1783,12 @@ test("04.07 - opts.schema is set to a wrong thing - throws", t => {
   );
 });
 
-test.only("delete me", t => {
-  t.notThrows(() => {
+test.skip("delete me", t => {
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
-        option2: ["setting2"]
+        option2: ["setting2", 999]
       },
       {
         option1: "zz"
@@ -1800,7 +1800,11 @@ test.only("delete me", t => {
         }
       }
     );
-  });
+  }); // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.is(
+    err2.message,
+    "check-types-mini: opts.option2 is of a type array, but only the following are allowed in opts.schema: string"
+  );
 });
 
 test("04.08 - opts.schema understands opts.acceptArrays", t => {
@@ -1871,7 +1875,10 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.truthy(err2.message.includes("zzz"));
+  t.is(
+    err2.message,
+    "check-types-mini: opts.option2 is of a type array, but only the following are allowed in opts.schema: string"
+  );
 
   t.notThrows(() => {
     checkTypes(

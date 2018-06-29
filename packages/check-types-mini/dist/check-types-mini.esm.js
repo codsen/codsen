@@ -144,10 +144,16 @@ function checkTypesMini(
         !isObj(opts.schema) ||
         (isObj(opts.schema) &&
           (!Object.keys(opts.schema).length ||
-            !Object.prototype.hasOwnProperty.call(
-              opts.schema,
-              innerObj.path
-            )))) &&
+            ((!Array.isArray(innerObj.parent) &&
+              !Object.prototype.hasOwnProperty.call(
+                opts.schema,
+                innerObj.path
+              )) ||
+              (Array.isArray(innerObj.parent) &&
+                !objectPath.has(
+                  opts.schema,
+                  goUpByOneLevel(innerObj.path)
+                )))))) &&
       (!existy(ref) ||
         !isObj(ref) ||
         (isObj(ref) &&
