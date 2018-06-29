@@ -206,7 +206,7 @@ function checkTypesMini(
                 typ(current) !== "string" ? '"' : ""
               } (${typ(
                 current
-              )}) which is not among the allowed types in schema (${currentKeysSchema.join(
+              ).toLowerCase()}) which is not among the allowed types in schema (${currentKeysSchema.join(
                 ", "
               )})`
             );
@@ -227,7 +227,9 @@ function checkTypesMini(
         isArr(current) &&
         !opts.acceptArraysIgnore.includes(key)
       ) {
-        const allMatch = current.every(el => typ(el) === typ(ref[key]));
+        const allMatch = current.every(
+          el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
+        );
         if (!allMatch) {
           throw new TypeError(
             `${opts.msg}: ${opts.optsVarName}.${

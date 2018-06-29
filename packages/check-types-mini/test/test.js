@@ -28,7 +28,7 @@ test("01.02 - throws when one of the arguments is of a wrong type", t => {
 });
 
 test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -46,7 +46,10 @@ test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
       }
     );
   });
-  t.throws(() => {
+  t.truthy(err1.message.includes("not string but number"));
+  t.truthy(err1.message.includes("opts.optsVarName"));
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -64,6 +67,8 @@ test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
       }
     );
   });
+  t.truthy(err2.message.includes("opts.msg"));
+  t.truthy(err2.message.includes("which is not string but number"));
 });
 
 test("01.04 - throws if fourth argument is missing", t => {
@@ -172,7 +177,7 @@ test("01.05 - throws when opts are set wrong", t => {
 });
 
 test("01.06 - nested options", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -194,6 +199,11 @@ test("01.06 - nested options", t => {
       }
     );
   });
+  t.is(
+    err1.message,
+    'check-types-mini: opts.option3.aaa.bbb was customised to "true" which is not string but boolean'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -246,7 +256,7 @@ test("01.07 - opts.ignorePaths", t => {
 // ======================
 
 test("02.01 - opts.acceptArrays, strings+arrays", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -260,6 +270,12 @@ test("02.01 - opts.acceptArrays, strings+arrays", t => {
       }
     );
   });
+  t.truthy(
+    err1.message.includes(
+      'check-types-mini: opts.option2 was customised to "["setting3","setting4"]" which is not string but array'
+    )
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -279,7 +295,8 @@ test("02.01 - opts.acceptArrays, strings+arrays", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -298,10 +315,14 @@ test("02.01 - opts.acceptArrays, strings+arrays", t => {
       }
     );
   });
+  t.is(
+    err2.message,
+    "message: varname.option2 was customised to be array, but not all of its elements are string-type"
+  );
 });
 
 test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -315,6 +336,11 @@ test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
       }
     );
   });
+  t.is(
+    err1.message,
+    'check-types-mini: opts.option2 was customised to "[true,true]" which is not boolean but array'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -334,7 +360,8 @@ test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -353,7 +380,13 @@ test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
       }
     );
   });
-  t.throws(() => {
+  t.truthy(
+    err2.message.includes(
+      "message: varname.option2 was customised to be array, but not all of its elements are boolean-type"
+    )
+  );
+
+  const err3 = t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
@@ -369,6 +402,31 @@ test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
         msg: "test: [THROW_ID_01]",
         optsVarName: "opts",
         acceptArrays: "this string will cause the throw",
+        acceptArraysIgnore: []
+      }
+    );
+  });
+  t.is(
+    err3.message,
+    'check-types-mini: opts.acceptArrays was customised to "this string will cause the throw" which is not boolean but string'
+  );
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: [1, 0, 1, 0],
+        option2: [true, true],
+        option3: false
+      },
+      {
+        option1: 0,
+        option2: false,
+        option3: false
+      },
+      {
+        msg: "test: [THROW_ID_01]",
+        optsVarName: "opts",
+        acceptArrays: true,
         acceptArraysIgnore: []
       }
     );
@@ -396,7 +454,8 @@ test("02.03 - opts.acceptArraysIgnore", t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
@@ -416,7 +475,13 @@ test("02.03 - opts.acceptArraysIgnore", t => {
       }
     );
   });
-  t.throws(() => {
+  t.truthy(
+    err1.message.includes(
+      'test: [THROW_ID_01]: opts.option1 was customised to "[1,0,1,0]" which is not number but array'
+    )
+  );
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
@@ -436,7 +501,13 @@ test("02.03 - opts.acceptArraysIgnore", t => {
       }
     );
   });
-  t.throws(() => {
+  t.truthy(
+    err2.message.includes(
+      'test: [THROW_ID_01]: opts.option1 was customised to "[1,0,1,0]" which is not number but array'
+    )
+  );
+
+  const err3 = t.throws(() => {
     checkTypes(
       {
         option1: [1, 0, 1, 0],
@@ -456,10 +527,15 @@ test("02.03 - opts.acceptArraysIgnore", t => {
       }
     );
   });
+  t.truthy(
+    err3.message.includes(
+      'check-types-mini: opts.acceptArraysIgnore was customised to "true" which is not array but boolean'
+    )
+  );
 });
 
 test("02.05 - involving null values", t => {
-  t.throws(() => {
+  const err = t.throws(() => {
     checkTypes(
       {
         key: 1,
@@ -473,6 +549,10 @@ test("02.05 - involving null values", t => {
       }
     );
   });
+  t.is(
+    err.message,
+    'check-types-mini: opts.key was customised to "1" which is not null but number'
+  );
 });
 
 test("02.06 - throws/notThrows when keysets mismatch", t => {
@@ -1499,18 +1579,23 @@ test("04.04 - opts.schema only - located deeper", t => {
 });
 
 test('04.05 - opts.schema values as strings + "whatever" keys', t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: { somekey: "setting1" },
         option2: null
       },
       {
-        option1: "zz",
+        option1: { somekey: "zz" },
         option2: "yy"
       }
     );
   });
+  t.is(
+    err1.message,
+    'check-types-mini: opts.option2 was customised to "null" which is not string but null'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1518,7 +1603,7 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
         option2: null
       },
       {
-        option1: "zz",
+        option1: { somekey: "zz" },
         option2: "yy"
       },
       {
@@ -1536,7 +1621,7 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
         option2: null
       },
       {
-        option1: "zz",
+        option1: { somekey: "zz" },
         option2: "yy"
       },
       {
@@ -1547,14 +1632,15 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
       }
     );
   });
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: { somekey: "setting1" },
         option2: null
       },
       {
-        option1: "zz",
+        option1: { somekey: "zz" },
         option2: "yy"
       },
       {
@@ -1565,6 +1651,12 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
       }
     );
   });
+  t.truthy(
+    err2.message.includes(
+      'check-types-mini: opts.option1 was customised to "{"somekey":"setting1"}" (object) which is not among the allowed types in schema (string)'
+    )
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1572,7 +1664,7 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
         option2: null
       },
       {
-        option1: "zz",
+        option1: { somekey: "zz" },
         option2: "yy"
       },
       {
@@ -1583,11 +1675,34 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
       }
     );
   });
+
+  const err3 = t.throws(() => {
+    checkTypes(
+      {
+        option1: { somekey: null },
+        option2: "zz"
+      },
+      {
+        option1: { somekey: "zz" },
+        option2: "yy"
+      },
+      {
+        schema: {
+          option1: ["string", "any"], // option1 is set to "any" but its child option1.somekey is wrong.
+          option2: "whatever" // also observe that it's not an array. Should work anyway!
+        }
+      }
+    );
+  });
+  t.is(
+    err3.message,
+    'check-types-mini: opts.option1.somekey was customised to "null" which is not string but null'
+  );
 });
 
 test("04.06 - opts.schema falling back to reference object", t => {
   // with throwing consequences:
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: { somekey: "setting1" },
@@ -1604,6 +1719,11 @@ test("04.06 - opts.schema falling back to reference object", t => {
       }
     );
   });
+  t.is(
+    err1.message,
+    'check-types-mini: opts.option1 was customised to "{"somekey":"setting1"}" (object) which is not among the allowed types in schema (number)'
+  );
+
   // without throwing consequences:
   t.notThrows(() => {
     checkTypes(
@@ -1625,7 +1745,7 @@ test("04.06 - opts.schema falling back to reference object", t => {
 });
 
 test("04.07 - opts.schema is set to a wrong thing - throws", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: { somekey: "setting1" },
@@ -1640,7 +1760,9 @@ test("04.07 - opts.schema is set to a wrong thing - throws", t => {
       }
     );
   });
-  t.throws(() => {
+  t.truthy(err1.message.includes("zzz"));
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: { somekey: "setting1" },
@@ -1655,10 +1777,34 @@ test("04.07 - opts.schema is set to a wrong thing - throws", t => {
       }
     );
   });
+  t.is(
+    err2.message,
+    'check-types-mini: opts.schema was customised to "null" which is not object but null'
+  );
+});
+
+test.only("delete me", t => {
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: ["setting2"]
+      },
+      {
+        option1: "zz"
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          option2: "string"
+        }
+      }
+    );
+  });
 });
 
 test("04.08 - opts.schema understands opts.acceptArrays", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -1670,6 +1816,11 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // throws because reference's type mismatches.
+  t.is(
+    err1.message,
+    'check-types-mini: opts.option2 was customised to "["setting2"]" which is not string but array'
+  );
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1702,7 +1853,8 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // does not throw because of opts.acceptArrays is matching against schema's keys
-  t.throws(() => {
+
+  const err2 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -1719,6 +1871,8 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.truthy(err2.message.includes("zzz"));
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1736,7 +1890,8 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // number is allowed now
-  t.throws(() => {
+
+  const err3 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -1753,6 +1908,8 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
+  t.truthy(err3.message.includes("zzz"));
+
   t.notThrows(() => {
     checkTypes(
       {
@@ -1774,7 +1931,7 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
 });
 
 test("04.09 - ad-hoc #1", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         heads: "%%_",
@@ -1819,4 +1976,8 @@ test("04.09 - ad-hoc #1", t => {
       }
     );
   }, 'json-variables/jsonVariables(): [THROW_ID_04*]: opts.wrapTailsWith was customised to "false" which is not string but boolean');
+  t.is(
+    err1.message,
+    'json-variables/jsonVariables(): [THROW_ID_04*]: opts.wrapTailsWith was customised to "false" which is not string but boolean'
+  );
 });

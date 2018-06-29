@@ -350,7 +350,7 @@ function checkTypesMini(
                 typ(current) !== "string" ? '"' : ""
               } (${typ(
                 current
-              )}) which is not among the allowed types in schema (${currentKeysSchema.join(
+              ).toLowerCase()}) which is not among the allowed types in schema (${currentKeysSchema.join(
                 ", "
               )})`
             );
@@ -371,14 +371,14 @@ function checkTypesMini(
           current,
           null,
           4
-        )} (type ${typ(current)})`
+        )} (type ${typ(current).toLowerCase()})`
       );
       console.log(
         `* 377 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
           objectPath.get(ref, innerObj.path),
           null,
           4
-        )}" (type ${typ(objectPath.get(ref, innerObj.path))})`
+        )}" (type ${typ(objectPath.get(ref, innerObj.path)).toLowerCase()})`
       );
       const compareTo = objectPath.get(ref, innerObj.path);
 
@@ -388,7 +388,9 @@ function checkTypesMini(
         !opts.acceptArraysIgnore.includes(key)
       ) {
         console.log("390");
-        const allMatch = current.every(el => typ(el) === typ(ref[key]));
+        const allMatch = current.every(
+          el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
+        );
         if (!allMatch) {
           throw new TypeError(
             `${opts.msg}: ${opts.optsVarName}.${

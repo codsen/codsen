@@ -114,7 +114,7 @@ function checkTypesMini(obj, ref, originalOptions) {
                 }
               }
             } else {
-              throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typ(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typ(current) !== "string" ? '"' : "") + " (" + typ(current) + ") which is not among the allowed types in schema (" + currentKeysSchema.join(", ") + ")");
+              throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to " + (typ(current) !== "string" ? '"' : "") + JSON.stringify(current, null, 0) + (typ(current) !== "string" ? '"' : "") + " (" + typ(current).toLowerCase() + ") which is not among the allowed types in schema (" + currentKeysSchema.join(", ") + ")");
             }
           }
         }
@@ -122,7 +122,7 @@ function checkTypesMini(obj, ref, originalOptions) {
       var compareTo = objectPath.get(ref, innerObj.path);
       if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
         var allMatch = current.every(function (el) {
-          return typ(el) === typ(ref[key]);
+          return typ(el).toLowerCase() === typ(ref[key]).toLowerCase();
         });
         if (!allMatch) {
           throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " was customised to be array, but not all of its elements are " + typ(ref[key]).toLowerCase() + "-type");
