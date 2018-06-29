@@ -2,7 +2,6 @@
 
 function collapseLeadingWhitespace(str) {
   if (typeof str === "string") {
-    // quick end
     if (str.length === 0) {
       return "";
     } else if (str.trim() === "") {
@@ -11,9 +10,7 @@ function collapseLeadingWhitespace(str) {
       }
       return " ";
     }
-    // set the default to put in front:
     var startCharacter = "";
-    // if there's some leading whitespace
     if (str[0].trim() === "") {
       startCharacter = " ";
       var lineBreakEncountered = false;
@@ -29,10 +26,7 @@ function collapseLeadingWhitespace(str) {
         startCharacter = "\n";
       }
     }
-
-    // set the default to put in front:
     var endCharacter = "";
-    // if there's some trailing whitespace
     if (str.slice(-1).trim() === "") {
       endCharacter = " ";
       var _lineBreakEncountered = false;
