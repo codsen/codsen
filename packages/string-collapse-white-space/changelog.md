@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.7.0] - 2018-06-20
+
+- ✨ Set up Rollup to remove comments from the code
+
 ## [3.6.0] - 2018-06-20
 
 - ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
@@ -92,3 +96,4 @@ GitHub sold us out. In the meantime, we:
 [3.4.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.4.0%0Dv3.3.2#diff
 [3.5.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.5.0%0Dv3.4.0#diff
 [3.6.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.6.0%0Dv3.5.0#diff
+[3.7.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.7.0%0Dv3.6.1#diff

@@ -9,11 +9,8 @@ var Slices = _interopDefault(require('ranges-push'));
 var stringMatchLeftRight = require('string-match-left-right');
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 function collapse(str, originalOpts) {
-  // f's
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
   }
@@ -29,35 +26,24 @@ function collapse(str, originalOpts) {
   if (str.length === 0) {
     return "";
   }
-
   var finalIndexesToDelete = new Slices();
-
-  // declare defaults, so we can enforce types later:
   var defaults = {
-    trimStart: true, // otherwise, leading whitespace will be collapsed to a single space
-    trimEnd: true, // otherwise, trailing whitespace will be collapsed to a single space
-    trimLines: false, // activates trim per-line basis
-    trimnbsp: false, // non-breaking spaces are trimmed too
-    recogniseHTML: true, // collapses whitespace around HTML brackets
-    removeEmptyLines: false, // if line trim()'s to an empty string, it's removed
-    returnRangesOnly: false // if on, only ranges array is returned
+    trimStart: true,
+    trimEnd: true,
+    trimLines: false,
+    trimnbsp: false,
+    recogniseHTML: true,
+    removeEmptyLines: false,
+    returnRangesOnly: false
   };
-
-  // fill any settings with defaults if missing:
   var opts = Object.assign({}, defaults, originalOpts);
-
-  // the check:
   checkTypes(opts, defaults, {
     msg: "string-collapse-white-space/collapse(): [THROW_ID_03*]"
   });
-
   var preliminaryIndexesToDelete = void 0;
   if (opts.recogniseHTML) {
     preliminaryIndexesToDelete = new Slices();
   }
-
-  // -----------------------------------------------------------------------------
-
   var spacesEndAt = null;
   var whiteSpaceEndsAt = null;
   var lineWhiteSpaceEndsAt = null;
@@ -67,7 +53,7 @@ function collapse(str, originalOpts) {
   var tagMatched = false;
   var tagCanEndHere = false;
   var count = void 0;
-  var bail = false; // bool flag to notify when false positive detected, used in HTML detection
+  var bail = false;
   var resetCounts = function resetCounts() {
     return {
       equalDoubleQuoteCombo: 0,
@@ -77,44 +63,29 @@ function collapse(str, originalOpts) {
       linebreaks: 0
     };
   };
-  var bracketJustFound = false; // dumb state switch, activated by > and terminated by
-  // first non-whitespace char
-
+  var bracketJustFound = false;
   if (opts.recogniseHTML) {
-    count = resetCounts(); // initiates the count object, assigning all keys to zero
+    count = resetCounts();
   }
-
   var lastLineBreaksLastCharIndex = void 0;
-
-  // looping backwards for better efficiency
   for (var i = str.length; i--;) {
-    //
-    // space clauses
     if (str[i] === " ") {
       if (spacesEndAt === null) {
         spacesEndAt = i;
       }
     } else if (spacesEndAt !== null) {
-      // it's not a space character
-      // if we have a sequence of spaces, this character terminates that sequence
       if (i + 1 !== spacesEndAt) {
         finalIndexesToDelete.add(i + 1, spacesEndAt);
       }
       spacesEndAt = null;
     }
-
-    // white space clauses
     if (str[i].trim() === "" && (!opts.trimnbsp && str[i] !== "\xa0" || opts.trimnbsp)) {
-      // it's some sort of white space character, but not a non-breaking space
       if (whiteSpaceEndsAt === null) {
         whiteSpaceEndsAt = i;
       }
-      // line trimming:
       if (str[i] !== "\n" && str[i] !== "\r" && lineWhiteSpaceEndsAt === null) {
         lineWhiteSpaceEndsAt = i + 1;
       }
-
-      // per-line trimming:
       if (str[i] === "\n" || str[i] === "\r") {
         if (lineWhiteSpaceEndsAt !== null) {
           if (opts.trimLines) {
@@ -127,8 +98,6 @@ function collapse(str, originalOpts) {
           endingOfTheLine = true;
         }
       }
-
-      // empty line deletion:
       if (str[i] === "\n") {
         var sliceFrom = i + 1;
         var sliceTo = lastLineBreaksLastCharIndex + 1;
@@ -138,28 +107,20 @@ function collapse(str, originalOpts) {
         lastLineBreaksLastCharIndex = i;
       }
     } else {
-      // it's not white space character
       if (whiteSpaceEndsAt !== null) {
         if (i + 1 !== whiteSpaceEndsAt + 1 && whiteSpaceEndsAt === str.length - 1 && opts.trimEnd) {
           finalIndexesToDelete.add(i + 1, whiteSpaceEndsAt + 1);
         }
         whiteSpaceEndsAt = null;
       }
-
-      // encountered letter resets line trim counters:
       if (lineWhiteSpaceEndsAt !== null) {
         if (endingOfTheLine && opts.trimLines) {
-          endingOfTheLine = false; // apply either way
+          endingOfTheLine = false;
           finalIndexesToDelete.add(i + 1, lineWhiteSpaceEndsAt);
         }
         lineWhiteSpaceEndsAt = null;
       }
     }
-
-    // this chunk could be ported to the (str[i].trim() === '') clause for example,
-    // but it depends on the flags that aforementioned's "else" is setting,
-    // (whiteSpaceEndsAt !== null),
-    // therefore it's less code if we put zero index clauses here.
     if (i === 0) {
       if (whiteSpaceEndsAt !== null && opts.trimStart) {
         finalIndexesToDelete.add(0, whiteSpaceEndsAt + 1);
@@ -167,20 +128,15 @@ function collapse(str, originalOpts) {
         finalIndexesToDelete.add(i + 1, spacesEndAt + 1);
       }
     }
-
     if (opts.recogniseHTML) {
       if (str[i].trim() === "") {
-        // W H I T E S P A C E
         if (stateWithinTag && !tagCanEndHere) {
           tagCanEndHere = true;
         }
         if (tagMatched && !whiteSpaceWithinTagEndsAt) {
-          // cases where there's space between opening bracket and a confirmed HTML tag name
           whiteSpaceWithinTagEndsAt = i + 1;
         }
         if (tagMatched && str[i - 1] !== undefined && str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
-          // bail, something's wrong, there's non-whitespace character to the left of a
-          // recognised HTML tag. For example: "< zzz div ...>"
           tagMatched = false;
           stateWithinTag = false;
           preliminaryIndexesToDelete.wipe();
@@ -189,7 +145,6 @@ function collapse(str, originalOpts) {
           if (str[i - 1] === undefined || str[i - 1].trim() !== "" && str[i - 1] !== "<" && str[i - 1] !== "/") {
             count.spacesBetweenLetterChunks += 1;
           } else {
-            // loop backwards and check, is the first non-space char being "<".
             for (var y = i - 1; y--;) {
               if (str[y].trim() !== "") {
                 if (str[y] === "<") {
@@ -203,10 +158,6 @@ function collapse(str, originalOpts) {
           }
         }
       } else {
-        // N O T   W H I T E S P A C E
-
-        // =========
-        // count equal characters and double quotes
         if (str[i] === "=") {
           count.equalOnly += 1;
           if (str[i + 1] === '"') {
@@ -215,32 +166,17 @@ function collapse(str, originalOpts) {
         } else if (str[i] === '"') {
           count.doubleQuoteOnly += 1;
         }
-
-        // if the dumb flag is on, turn it off.
-        // first non-whitespace character deactivates it.
         if (bracketJustFound) {
           bracketJustFound = false;
         }
-
-        // =========
-        // terminate existing range, push the captured range into preliminaries' array
         if (whiteSpaceWithinTagEndsAt !== null) {
           preliminaryIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt);
-          // finalIndexesToDelete.add(i + 1, whiteSpaceWithinTagEndsAt)
           whiteSpaceWithinTagEndsAt = null;
         }
-
-        // =========
-        // html detection bits:
-        // mind you, we're iterating backwards, so tag starts with ">"
         if (str[i] === ">") {
-          // first, reset the count obj.
           count = resetCounts(count);
-          // set dumb bracket flag to on
           bracketJustFound = true;
-          // two cases:
           if (stateWithinTag) {
-            // this is bad, another closing bracket
             preliminaryIndexesToDelete.wipe();
           } else {
             stateWithinTag = true;
@@ -250,44 +186,32 @@ function collapse(str, originalOpts) {
           }
           if (!tagCanEndHere) {
             tagCanEndHere = true;
-            // tag name might be ending with bracket: <br>
           }
         } else if (str[i] === "<") {
-          // the rest of calculations:
           stateWithinTag = false;
-          // reset bail flag
           if (bail) {
             bail = false;
           }
-          // bail clause, when false positives are detected, such as "a < b and c > d" -
-          // the part: < b and c > looks really deceptive, b is valid tag name...
-          // this bail will detect such cases, freak out and bail, wiping preliminary ranges.
           if (count.spacesBetweenLetterChunks > 0 && count.equalDoubleQuoteCombo === 0) {
             tagMatched = false;
             preliminaryIndexesToDelete.wipe();
           }
-          // if somehow we're within a tag and there are already provisional ranges
           if (tagMatched && preliminaryIndexesToDelete.current()) {
             preliminaryIndexesToDelete.current().forEach(function (_ref) {
               var _ref2 = _slicedToArray(_ref, 2),
                   rangeStart = _ref2[0],
                   rangeEnd = _ref2[1];
-
               return finalIndexesToDelete.add(rangeStart, rangeEnd);
             });
             tagMatched = false;
           }
-          // finally, reset the count obj.
           count = resetCounts(count);
         } else if (stateWithinTag && str[i] === "/") {
           whiteSpaceWithinTagEndsAt = i;
         } else if (stateWithinTag && !tagMatched) {
           if (tagCanEndHere && charCodeBetweenInclusive(str[i], 97, 122)) {
-            // if letters a-z, inclusive:
-            // ---------------------------------------------------------------
             tagCanEndHere = false;
             if (charCodeBetweenInclusive(str[i], 97, 110)) {
-              // if letters a-n, inclusive:
               if (str[i] === "a" && (str[i - 1] === "e" && stringMatchLeftRight.matchLeftIncl(str, i, ["area", "textarea"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
@@ -340,7 +264,6 @@ function collapse(str, originalOpts) {
                 tagMatched = true;
               }
             } else {
-              // o-z, inclusive. codes 111-122, inclusive
               if (str[i] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["bdo", "video", "audio"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
@@ -381,10 +304,7 @@ function collapse(str, originalOpts) {
                 tagMatched = true;
               }
             }
-
-            // ---------------------------------------------------------------
           } else if (tagCanEndHere && charCodeBetweenInclusive(str[i], 49, 54)) {
-            // if digits 1-6
             tagCanEndHere = false;
             if (str[i - 1] === "h" && (str[i - 2] === "<" || str[i - 2].trim() === "")) {
               tagMatched = true;
@@ -396,7 +316,6 @@ function collapse(str, originalOpts) {
       }
     }
   }
-
   if (opts.returnRangesOnly) {
     return finalIndexesToDelete.current();
   }
