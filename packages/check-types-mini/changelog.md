@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [4.0.0] - 2018-06-27
+## [4.0.0] - 2018-07-03
 
-I felt need for this feature since beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
+I felt a need for this feature since the very beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
 
-- ✨ Now accept and enforce nested options objects. For example, you can have defaults as:
+- ✨ Now, we accept and enforce _nested options objects_. For example, you can have defaults as:
 
   ```js
   {
@@ -24,9 +24,10 @@ I felt need for this feature since beginning but only now the API's of my librar
   ```js
   {
     oodles: {
-      noodles: "zzz"; // string, not Boolean
+      noodles: "zzz"; //
     }
   }
+  // => oodles.noodles is a string, not Boolean
   ```
 
 - ✨ Also, rebased the code quite substantially, with some new deps and some old deps removed.
@@ -39,7 +40,6 @@ GitHub sold us out. God bless their souls and the new billionaire. In the meanti
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
-- ✨ Removed `package-lock`
 
 ## [3.3.0] - 2018-05-11
 

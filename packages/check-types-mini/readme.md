@@ -97,6 +97,21 @@ Technically speaking, the main and only job of `check-types-mini` is to _throw_ 
 | `optsVarName`          | String                     | no          | `opts`                                                                                                           | How is your options variable called? It does not matter much, but it's nicer to keep references consistent with your API documentation.                                                                                                                                                                    |
 | }                      |                            |             |                                                                                                                  |
 
+Here are all defaults in one place:
+
+```js
+{
+  ignoreKeys: [],
+  ignorePaths: [],
+  acceptArrays: false,
+  acceptArraysIgnore: [],
+  enforceStrictKeyset: true,
+  schema: {},
+  msg: "check-types-mini",
+  optsVarName: "opts"
+}
+```
+
 **[⬆ back to top](#markdown-header-check-types-mini)**
 
 ### For example

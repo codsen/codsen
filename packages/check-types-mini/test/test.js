@@ -1,7 +1,7 @@
 import test from "ava";
 import checkTypes from "../dist/check-types-mini.esm";
 
-test("01.01 - throws when all/first args are missing", t => {
+test(`01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when all/first args are missing`, t => {
   const error = t.throws(() => {
     checkTypes();
   });
@@ -9,7 +9,7 @@ test("01.01 - throws when all/first args are missing", t => {
   t.truthy(error.message.includes("check-types-mini"));
 });
 
-test("01.02 - throws when one of the arguments is of a wrong type", t => {
+test(`01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when one of the arguments is of a wrong type`, t => {
   const error = t.throws(() => {
     checkTypes(
       {
@@ -27,7 +27,7 @@ test("01.02 - throws when one of the arguments is of a wrong type", t => {
   t.truthy(error.message.includes("not boolean but string"));
 });
 
-test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
+test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.msg or opts.optsVarName args are wrong-type`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -71,7 +71,7 @@ test("01.03 - opts.msg or opts.optsVarName args are wrong-type", t => {
   t.truthy(err2.message.includes("which is not string but number"));
 });
 
-test("01.04 - throws if fourth argument is missing", t => {
+test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - if fourth argument is missing`, t => {
   t.throws(() => {
     checkTypes(
       {
@@ -126,7 +126,7 @@ test("01.04 - throws if fourth argument is missing", t => {
   });
 });
 
-test("01.05 - throws when opts are set wrong", t => {
+test(`01.05 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when opts are set wrong`, t => {
   t.notThrows(() => {
     checkTypes(
       { somekey: "a" },
@@ -176,7 +176,7 @@ test("01.05 - throws when opts are set wrong", t => {
   });
 });
 
-test("01.06 - nested options", t => {
+test(`01.06 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - nested options`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -222,7 +222,7 @@ test("01.06 - nested options", t => {
   });
 });
 
-test("01.07 - opts.ignorePaths", t => {
+test(`01.07 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths`, t => {
   // control:
   t.throws(() => {
     checkTypes(
@@ -245,17 +245,154 @@ test("01.07 - opts.ignorePaths", t => {
       {
         msg: "msg",
         optsVarName: "OPTS",
-        ignoreKeys: false
+        ignoreKeys: false,
+        ignorePaths: null,
+        acceptArraysIgnore: null
       }
     );
   }, 'msg: OPTS.aaa.bbb was customised to "a" which is not boolean but string');
+
+  // for a reference, let's see what will "ignoreKeys" against "bbb" do:
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a" // <---- should be Boolean
+        },
+        ccc: {
+          bbb: "d" // <---- should be Boolean too
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignoreKeys: "bbb" // <-------- string, not array, but that's fine
+      }
+    );
+  });
+
+  // paths ignored - given as array:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.bbb"] // <----- array.
+      }
+    );
+  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+
+  // paths ignored - given as string:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: "aaa.bbb" // <----- string. Should be same thing tho.
+      }
+    );
+  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.bbb", "ccc.bbb"] // <----- both ignored
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        bbb: "zzz",
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        bbb: "",
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.bbb", "ccc.bbb"] // <----- both ignored
+      }
+    );
+  });
 });
 
 // ======================
 // 02. Arrays
 // ======================
 
-test("02.01 - opts.acceptArrays, strings+arrays", t => {
+test(`02.01 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, strings+arrays`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -321,7 +458,7 @@ test("02.01 - opts.acceptArrays, strings+arrays", t => {
   );
 });
 
-test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
+test(`02.02 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArrays, Booleans+arrays`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -433,7 +570,7 @@ test("02.02 - opts.acceptArrays, Booleans+arrays", t => {
   });
 });
 
-test("02.03 - opts.acceptArraysIgnore", t => {
+test(`02.03 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.acceptArraysIgnore`, t => {
   t.notThrows(() => {
     checkTypes(
       {
@@ -534,7 +671,7 @@ test("02.03 - opts.acceptArraysIgnore", t => {
   );
 });
 
-test("02.05 - involving null values", t => {
+test(`02.05 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - involving null values`, t => {
   const err = t.throws(() => {
     checkTypes(
       {
@@ -555,7 +692,7 @@ test("02.05 - involving null values", t => {
   );
 });
 
-test("02.06 - throws/notThrows when keysets mismatch", t => {
+test(`02.06 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws/notThrows when keysets mismatch`, t => {
   t.throws(() => {
     checkTypes(
       {
@@ -616,7 +753,7 @@ test("02.06 - throws/notThrows when keysets mismatch", t => {
   });
 });
 
-test("02.07 - opts.enforceStrictKeyset set to a wrong thing", t => {
+test(`02.07 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - opts.enforceStrictKeyset set to a wrong thing`, t => {
   t.throws(() => {
     checkTypes(
       {
@@ -636,7 +773,7 @@ test("02.07 - opts.enforceStrictKeyset set to a wrong thing", t => {
   });
 });
 
-test("02.08 - throws when reference and schema are both missing", t => {
+test(`02.08 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - throws when reference and schema are both missing`, t => {
   t.throws(() => {
     checkTypes(
       {
@@ -649,13 +786,254 @@ test("02.08 - throws when reference and schema are both missing", t => {
   });
 });
 
-test.todo("02.09 - enforceStrictKeyset and nested inputs");
+test(`02.09 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema + nested`, t => {
+  // control
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        opt1: "aaa",
+        opt2: {
+          opt3: "bbb"
+        }
+      },
+      {
+        opt1: "zzz",
+        opt2: {}
+      },
+      {
+        acceptArrays: false, // <--------
+        schema: {
+          "opt2.opt3": "string"
+        }
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        opt1: "aaa",
+        opt2: {
+          opt3: "bbb"
+        }
+      },
+      {
+        opt1: "zzz",
+        opt2: {}
+      },
+      {
+        acceptArrays: true, // <--------
+        schema: {
+          "opt2.opt3": "string"
+        }
+      }
+    );
+  });
+
+  // the value opt2.opt3 is missing from ref but given in schema. Parent key,
+  // opt2, is present in ref.
+  const err1 = t.throws(() => {
+    checkTypes(
+      {
+        opt1: "aaa",
+        opt2: {
+          opt3: ["bbb"]
+        }
+      },
+      {
+        // <---- ref object
+        opt1: "zzz",
+        opt2: {}
+      },
+      {
+        acceptArrays: false,
+        schema: {
+          "opt2.opt3": "string"
+        }
+      }
+    );
+  }); // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.is(
+    err1.message,
+    'check-types-mini: opts.opt2.opt3 was customised to "["bbb"]" (array) which is not among the allowed types in schema (string)'
+  );
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        opt1: "aaa",
+        opt2: {
+          opt3: ["bbb"]
+        }
+      },
+      {
+        opt1: "zzz",
+        opt2: {}
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          "opt2.opt3": "string"
+        }
+      }
+    );
+  });
+
+  const err2 = t.throws(() => {
+    checkTypes(
+      {
+        opt1: "aaa",
+        opt2: {
+          opt3: ["bbb", 999]
+        }
+      },
+      {
+        opt1: "zzz",
+        opt2: {}
+      },
+      {
+        acceptArrays: true,
+        schema: {
+          "opt2.opt3": "string"
+        }
+      }
+    );
+  }); // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.is(
+    err2.message,
+    "check-types-mini: opts.opt2.opt3.1, the 2nd element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string"
+  );
+});
+
+test(`02.10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`, t => {
+  const err1 = t.throws(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: "setting2",
+        rogueKey: {
+          rogueSubkey: false
+        }
+      },
+      {
+        option1: "zz",
+        option2: "yy",
+        rogueKey: {}
+      }
+    );
+  });
+  t.is(
+    err1.message,
+    "check-types-mini: opts.rogueKey.rogueSubkey is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
+  );
+});
+
+test(`02.11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customising keys`, t => {
+  // default mode (strict) - root level
+
+  // it should not throw because this is typical scenario: array keys are given,
+  // but necessarily they will be on defaults. However, strict mode is on to
+  // prevent any rogue keys and enforce correct values.
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "aaa",
+        ignoreThese: ["zzz", "yyy"], // <----
+        option2: false
+      },
+      {
+        option1: "aaa",
+        ignoreThese: [], // <---- defaults come empty
+        option2: false
+      },
+      {
+        enforceStrictKeyset: true
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "aaa",
+        ignoreThese: ["zzz", "yyy"], // <----
+        option2: false
+      },
+      {
+        option1: "aaa",
+        ignoreThese: [], // <---- defaults come empty
+        option2: false
+      },
+      {
+        enforceStrictKeyset: false
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "aaa",
+        ignoreThese: { here: ["zzz", "yyy"] }, // <---- same, just nested
+        option2: false
+      },
+      {
+        option1: "aaa",
+        ignoreThese: { here: [] }, // <---- defaults come empty here too
+        option2: false
+      },
+      {
+        enforceStrictKeyset: false
+      }
+    );
+  });
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "aaa",
+        ignoreThese: { here: ["zzz", "yyy"] }, // <---- same, just nested
+        option2: false
+      },
+      {
+        option1: "aaa",
+        ignoreThese: { here: [] }, // <---- defaults come empty here too
+        option2: false
+      },
+      {
+        enforceStrictKeyset: true
+      }
+    );
+  });
+
+  const err = t.throws(() => {
+    checkTypes(
+      {
+        option1: "aaa",
+        ignoreThese: [{ a: "zzz" }, { a: "yyy" }], // <----
+        option2: false
+      },
+      {
+        option1: "aaa",
+        ignoreThese: [{ a: "" }], // <---- defaults come empty
+        option2: false
+      },
+      {
+        enforceStrictKeyset: true
+      }
+    );
+  });
+  t.is(
+    err.message,
+    "check-types-mini: opts.ignoreThese.1 is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
+  );
+});
 
 // ======================
 // 03. opts.enforceStrictKeyset
 // ======================
 
-test("03.01 - opts.acceptArrays, strings+arrays", t => {
+test(`03.01 - ${`\u001b[${32}m${`opts.acceptArrays`}\u001b[${39}m`} - strings + arrays`, t => {
   t.throws(() => {
     checkTypes(
       {
@@ -691,7 +1069,7 @@ test("03.01 - opts.acceptArrays, strings+arrays", t => {
 // 04. opts.schema
 // ======================
 
-test("04.01 - opts.schema only - located in root", t => {
+test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in root`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -1084,7 +1462,7 @@ test("04.01 - opts.schema only - located in root", t => {
   );
 });
 
-test("04.02 - opts.schema only - deeper level key doesn't even exist in ref", t => {
+test(`04.02 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key doesn't even exist in ref`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -1147,7 +1525,7 @@ test("04.02 - opts.schema only - deeper level key doesn't even exist in ref", t 
   );
 });
 
-test("04.03 - opts.schema only - deeper level key type mismatches but is allowed through a schema", t => {
+test(`04.03 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - deeper level key type mismatches but is allowed through a schema`, t => {
   // control - make it throw:
 
   const err = t.throws(() => {
@@ -1197,7 +1575,7 @@ test("04.03 - opts.schema only - deeper level key type mismatches but is allowed
   });
 });
 
-test("04.04 - opts.schema only - located deeper", t => {
+test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located deeper`, t => {
   const err2 = t.throws(() => {
     checkTypes(
       {
@@ -1276,7 +1654,7 @@ test("04.04 - opts.schema only - located deeper", t => {
   });
   t.is(
     err3_2.message,
-    "check-types-mini: opts.option1.option2 is neither covered by reference object (second input argument), nor opts.schema!"
+    "check-types-mini: opts.option1.option2 is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
   );
 
   // true not allowed, - only false or null or string
@@ -1578,7 +1956,7 @@ test("04.04 - opts.schema only - located deeper", t => {
   );
 });
 
-test('04.05 - opts.schema values as strings + "whatever" keys', t => {
+test(`04.05 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings + "whatever" keys`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -1700,7 +2078,7 @@ test('04.05 - opts.schema values as strings + "whatever" keys', t => {
   );
 });
 
-test("04.06 - opts.schema falling back to reference object", t => {
+test(`04.06 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`, t => {
   // with throwing consequences:
   const err1 = t.throws(() => {
     checkTypes(
@@ -1744,7 +2122,7 @@ test("04.06 - opts.schema falling back to reference object", t => {
   });
 });
 
-test("04.07 - opts.schema is set to a wrong thing - throws", t => {
+test(`04.07 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} is set to a wrong thing - throws`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -1783,31 +2161,7 @@ test("04.07 - opts.schema is set to a wrong thing - throws", t => {
   );
 });
 
-test.skip("delete me", t => {
-  const err2 = t.throws(() => {
-    checkTypes(
-      {
-        option1: "setting1",
-        option2: ["setting2", 999]
-      },
-      {
-        option1: "zz"
-      },
-      {
-        acceptArrays: true,
-        schema: {
-          option2: "string"
-        }
-      }
-    );
-  }); // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.is(
-    err2.message,
-    "check-types-mini: opts.option2 is of a type array, but only the following are allowed in opts.schema: string"
-  );
-});
-
-test("04.08 - opts.schema understands opts.acceptArrays", t => {
+test(`04.08 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.acceptArrays`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {
@@ -1877,7 +2231,7 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
   t.is(
     err2.message,
-    "check-types-mini: opts.option2 is of a type array, but only the following are allowed in opts.schema: string"
+    "check-types-mini: opts.option2.1, the 2nd element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string"
   );
 
   t.notThrows(() => {
@@ -1915,7 +2269,11 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
       }
     );
   }); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
-  t.truthy(err3.message.includes("zzz"));
+  t.truthy(
+    err3.message.includes(
+      'check-types-mini: opts.option2 was customised to "["setting2",999]" (array) which is not among the allowed types in schema (string, number)'
+    )
+  );
 
   t.notThrows(() => {
     checkTypes(
@@ -1937,7 +2295,7 @@ test("04.08 - opts.schema understands opts.acceptArrays", t => {
   // it might be array of rubbish though, so that's a faulty, short-sighted type check.
 });
 
-test("04.09 - ad-hoc #1", t => {
+test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, t => {
   const err1 = t.throws(() => {
     checkTypes(
       {

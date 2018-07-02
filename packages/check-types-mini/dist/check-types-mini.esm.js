@@ -4,6 +4,7 @@ import traverse from 'ast-monkey-traverse';
 import intersection from 'lodash.intersection';
 import arrayiffyIfString from 'arrayiffy-if-string';
 import objectPath from 'object-path';
+import ordinal from 'ordinal';
 
 function checkTypesMini(
   obj,
@@ -42,6 +43,7 @@ function checkTypesMini(
   }
   const defaults = {
     ignoreKeys: [],
+    ignorePaths: [],
     acceptArrays: false,
     acceptArraysIgnore: [],
     enforceStrictKeyset: true,
@@ -59,6 +61,11 @@ function checkTypesMini(
     opts.ignoreKeys = [];
   } else {
     opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
+  }
+  if (!existy(opts.ignorePaths) || !opts.ignorePaths) {
+    opts.ignorePaths = [];
+  } else {
+    opts.ignorePaths = arrayiffyIfString(opts.ignorePaths);
   }
   if (!existy(opts.acceptArraysIgnore) || !opts.acceptArraysIgnore) {
     opts.acceptArraysIgnore = [];
@@ -114,7 +121,7 @@ function checkTypesMini(
         throw new TypeError(
           `${opts.msg}: The input object has key${
             keys.length > 1 ? "s" : ""
-          } that ${
+          } which ${
             keys.length > 1 ? "are" : "is"
           } not covered by the reference object: ${keys.join(", ")}`
         );
@@ -123,7 +130,7 @@ function checkTypesMini(
         throw new TypeError(
           `${opts.msg}: The reference object has key${
             keys.length > 1 ? "s" : ""
-          } that ${
+          } which ${
             keys.length > 1 ? "are" : "is"
           } not present in the input object: ${keys.join(", ")}`
         );
@@ -140,16 +147,17 @@ function checkTypesMini(
     const current = val !== undefined ? val : key;
     if (
       opts.enforceStrictKeyset &&
+      !(!isObj(current) && !isArr(current) && isArr(innerObj.parent)) &&
       (!existy(opts.schema) ||
         !isObj(opts.schema) ||
         (isObj(opts.schema) &&
           (!Object.keys(opts.schema).length ||
-            ((!Array.isArray(innerObj.parent) &&
+            ((!isArr(innerObj.parent) &&
               !Object.prototype.hasOwnProperty.call(
                 opts.schema,
                 innerObj.path
               )) ||
-              (Array.isArray(innerObj.parent) &&
+              (isArr(innerObj.parent) &&
                 !objectPath.has(
                   opts.schema,
                   goUpByOneLevel(innerObj.path)
@@ -160,9 +168,9 @@ function checkTypesMini(
           (!Object.keys(ref).length ||
             ((!opts.acceptArrays && !objectPath.has(ref, innerObj.path)) ||
               (opts.acceptArrays &&
-                ((!Array.isArray(innerObj.parent) &&
+                ((!isArr(innerObj.parent) &&
                   !objectPath.has(ref, innerObj.path)) ||
-                  (Array.isArray(innerObj.parent) &&
+                  (isArr(innerObj.parent) &&
                     !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))))))
     ) {
       throw new TypeError(
@@ -170,7 +178,11 @@ function checkTypesMini(
           innerObj.path
         } is neither covered by reference object (second input argument), nor ${
           opts.optsVarName
-        }.schema!`
+        }.schema! To stop this error, turn off ${
+          opts.optsVarName
+        }.enforceStrictKeyset or provide some type reference (2nd argument or ${
+          opts.optsVarName
+        }.schema).`
       );
     } else if (
       isObj(opts.schema) &&
@@ -194,11 +206,19 @@ function checkTypesMini(
             for (let i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
                 throw new TypeError(
-                  `${opts.msg}: ${opts.optsVarName}.${key} is of a type ${typ(
+                  `${opts.msg}: ${opts.optsVarName}.${
+                    innerObj.path
+                  }.${i}, the ${ordinal(
+                    i + 1
+                  )} element (equal to ${JSON.stringify(
+                    current[i],
+                    null,
+                    0
+                  )}) is of a type ${typ(
                     current[i]
-                  ).toLowerCase()}, but only the following are allowed in ${
+                  ).toLowerCase()}, but only the following are allowed by the ${
                     opts.optsVarName
-                  }.schema: ${currentKeysSchema}`
+                  }.schema: ${currentKeysSchema.join(", ")}`
                 );
               }
             }

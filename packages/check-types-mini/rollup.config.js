@@ -37,6 +37,7 @@ export default commandLineArgs => {
         "lodash.intersection",
         "lodash.pullall",
         "object-path",
+        "ordinal",
         "type-detect"
       ],
       plugins: [
@@ -58,6 +59,7 @@ export default commandLineArgs => {
         "lodash.intersection",
         "lodash.pullall",
         "object-path",
+        "ordinal",
         "type-detect"
       ],
       plugins: [

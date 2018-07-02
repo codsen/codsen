@@ -8,6 +8,7 @@ var traverse = _interopDefault(require('ast-monkey-traverse'));
 var intersection = _interopDefault(require('lodash.intersection'));
 var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var objectPath = _interopDefault(require('object-path'));
+var ordinal = _interopDefault(require('ordinal'));
 
 function checkTypesMini(obj, ref, originalOptions) {
   var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
@@ -32,6 +33,7 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   var defaults = {
     ignoreKeys: [],
+    ignorePaths: [],
     acceptArrays: false,
     acceptArraysIgnore: [],
     enforceStrictKeyset: true,
@@ -49,6 +51,11 @@ function checkTypesMini(obj, ref, originalOptions) {
     opts.ignoreKeys = [];
   } else {
     opts.ignoreKeys = arrayiffyIfString(opts.ignoreKeys);
+  }
+  if (!existy(opts.ignorePaths) || !opts.ignorePaths) {
+    opts.ignorePaths = [];
+  } else {
+    opts.ignorePaths = arrayiffyIfString(opts.ignorePaths);
   }
   if (!existy(opts.acceptArraysIgnore) || !opts.acceptArraysIgnore) {
     opts.acceptArraysIgnore = [];
@@ -86,10 +93,10 @@ function checkTypesMini(obj, ref, originalOptions) {
     } else if (existy(ref) && Object.keys(ref).length > 0) {
       if (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0) {
         var _keys = pullAll(Object.keys(obj), Object.keys(ref));
-        throw new TypeError(opts.msg + ": The input object has key" + (_keys.length > 1 ? "s" : "") + " that " + (_keys.length > 1 ? "are" : "is") + " not covered by the reference object: " + _keys.join(", "));
+        throw new TypeError(opts.msg + ": The input object has key" + (_keys.length > 1 ? "s" : "") + " which " + (_keys.length > 1 ? "are" : "is") + " not covered by the reference object: " + _keys.join(", "));
       } else if (pullAll(Object.keys(ref), Object.keys(obj)).length !== 0) {
         var _keys2 = pullAll(Object.keys(ref), Object.keys(obj));
-        throw new TypeError(opts.msg + ": The reference object has key" + (_keys2.length > 1 ? "s" : "") + " that " + (_keys2.length > 1 ? "are" : "is") + " not present in the input object: " + _keys2.join(", "));
+        throw new TypeError(opts.msg + ": The reference object has key" + (_keys2.length > 1 ? "s" : "") + " which " + (_keys2.length > 1 ? "are" : "is") + " not present in the input object: " + _keys2.join(", "));
       }
     } else {
       throw new TypeError(opts.msg + ": Both " + opts.optsVarName + ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!");
@@ -97,8 +104,8 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   traverse(obj, function (key, val, innerObj) {
     var current = val !== undefined ? val : key;
-    if (opts.enforceStrictKeyset && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !Array.isArray(innerObj.parent) && !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(opts.schema, goUpByOneLevel(innerObj.path)))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!Array.isArray(innerObj.parent) && !objectPath.has(ref, innerObj.path) || Array.isArray(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
-      throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema!");
+    if (opts.enforceStrictKeyset && !(!isObj(current) && !isArr(current) && isArr(innerObj.parent)) && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !isArr(innerObj.parent) && !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path) || isArr(innerObj.parent) && !objectPath.has(opts.schema, goUpByOneLevel(innerObj.path)))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!isArr(innerObj.parent) && !objectPath.has(ref, innerObj.path) || isArr(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
+      throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + " is neither covered by reference object (second input argument), nor " + opts.optsVarName + ".schema! To stop this error, turn off " + opts.optsVarName + ".enforceStrictKeyset or provide some type reference (2nd argument or " + opts.optsVarName + ".schema).");
     } else if (isObj(opts.schema) && Object.keys(opts.schema).length && Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path)
     ) {
         var currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path]).map(String).map(function (el) {
@@ -110,7 +117,7 @@ function checkTypesMini(obj, ref, originalOptions) {
             if (isArr(current) && opts.acceptArrays) {
               for (var i = 0, len = current.length; i < len; i++) {
                 if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
-                  throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + key + " is of a type " + typ(current[i]).toLowerCase() + ", but only the following are allowed in " + opts.optsVarName + ".schema: " + currentKeysSchema);
+                  throw new TypeError(opts.msg + ": " + opts.optsVarName + "." + innerObj.path + "." + i + ", the " + ordinal(i + 1) + " element (equal to " + JSON.stringify(current[i], null, 0) + ") is of a type " + typ(current[i]).toLowerCase() + ", but only the following are allowed by the " + opts.optsVarName + ".schema: " + currentKeysSchema.join(", "));
                 }
               }
             } else {
