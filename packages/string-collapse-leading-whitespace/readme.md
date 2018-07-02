@@ -17,6 +17,7 @@
 - [Idea](#markdown-header-idea)
 - [API - Input](#markdown-header-api-input)
 - [API - Output](#markdown-header-api-output)
+- [Example](#markdown-header-example)
 - [Purpose](#markdown-header-purpose)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
@@ -59,10 +60,10 @@ Here's what you'll get:
 
 ## API - Input
 
-| Input argument | Type                        | Obligatory? | Default   | Description                                                                            |
-| -------------- | --------------------------- | ----------- | --------- | -------------------------------------------------------------------------------------- |
-| `str`          | String                      | yes         | undefined | Source string to work on                                                               |
-| `position`     | Natural number (excl. zero) | no          | `1`       | Maximum line breaks that will be put when leading or trailing whitespace contains any. |
+| Input argument                 | Type                        | Obligatory? | Default   | Description                                                                            |
+| ------------------------------ | --------------------------- | ----------- | --------- | -------------------------------------------------------------------------------------- |
+| `str`                          | String                      | yes         | undefined | Source string to work on                                                               |
+| `originalLimitLinebreaksCount` | Natural number (excl. zero) | no          | `1`       | Maximum line breaks that will be put when leading or trailing whitespace contains any. |
 
 If first input argument is not a string, it will be just returned back, untouched.
 If second input argument is zero or falsey or not a number, it will be set to `1` and application will continue as normal.
@@ -107,6 +108,8 @@ console.log(
 // result has three leading line breaks, them maxed out - there were three. There were two trailing linebreaks, allowance was for three. End result - two trailing linebreaks.
 // All spaces were removed.
 ```
+
+**[⬆ back to top](#markdown-header-string-collapse-leading-whitespace)**
 
 ## Purpose
 
