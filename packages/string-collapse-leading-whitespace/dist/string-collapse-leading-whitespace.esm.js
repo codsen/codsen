@@ -1,43 +1,57 @@
-function collapseLeadingWhitespace(str) {
+function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
+  let limitLinebreaksCount;
+  if (
+    !originalLimitLinebreaksCount ||
+    typeof originalLimitLinebreaksCount !== "number"
+  ) {
+    limitLinebreaksCount = 1;
+  } else {
+    limitLinebreaksCount = originalLimitLinebreaksCount;
+  }
   if (typeof str === "string") {
     if (str.length === 0) {
       return "";
     } else if (str.trim() === "") {
-      if (str.includes("\n")) {
-        return "\n";
+      const linebreakCount = (str.match(/\n/g) || []).length;
+      if (linebreakCount) {
+        return "\n".repeat(Math.min(linebreakCount, limitLinebreaksCount));
       }
       return " ";
     }
     let startCharacter = "";
     if (str[0].trim() === "") {
       startCharacter = " ";
-      let lineBreakEncountered = false;
+      let lineBreakEncountered = 0;
       for (let i = 0, len = str.length; i < len; i++) {
         if (str[i] === "\n") {
-          lineBreakEncountered = true;
+          lineBreakEncountered++;
         }
-        if (str[i].trim() !== "") {
+        if (str[i].trim().length !== 0) {
           break;
         }
       }
       if (lineBreakEncountered) {
-        startCharacter = "\n";
+        startCharacter = "\n".repeat(
+          Math.min(lineBreakEncountered, limitLinebreaksCount)
+        );
       }
     }
     let endCharacter = "";
     if (str.slice(-1).trim() === "") {
       endCharacter = " ";
-      let lineBreakEncountered = false;
+      let lineBreakEncountered = 0;
       for (let i = str.length; i--; ) {
         if (str[i] === "\n") {
-          lineBreakEncountered = true;
+          lineBreakEncountered++;
         }
-        if (str[i].trim() !== "") {
+        if (str[i].trim().length !== 0) {
           break;
         }
       }
       if (lineBreakEncountered) {
-        endCharacter = "\n";
+        endCharacter = "\n".repeat(
+          Math.min(lineBreakEncountered, limitLinebreaksCount)
+        );
       }
     }
     return startCharacter + str.trim() + endCharacter;

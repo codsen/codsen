@@ -15,7 +15,8 @@
 
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
+- [API - Input](#markdown-header-api-input)
+- [API - Output](#markdown-header-api-output)
 - [Purpose](#markdown-header-purpose)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
@@ -37,9 +38,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                             | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-leading-whitespace.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-leading-whitespace.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-leading-whitespace.umd.js` | 603 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-collapse-leading-whitespace.cjs.js` | 2 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-collapse-leading-whitespace.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-collapse-leading-whitespace.umd.js` | 736 B |
 
 **[⬆ back to top](#markdown-header-string-collapse-leading-whitespace)**
 
@@ -56,11 +57,21 @@ Here's what you'll get:
 
 **[⬆ back to top](#markdown-header-string-collapse-leading-whitespace)**
 
-## API
+## API - Input
 
-API is simple: `string` in, `string` out.
+| Input argument | Type                        | Obligatory? | Default   | Description                                                                            |
+| -------------- | --------------------------- | ----------- | --------- | -------------------------------------------------------------------------------------- |
+| `str`          | String                      | yes         | undefined | Source string to work on                                                               |
+| `position`     | Natural number (excl. zero) | no          | `1`       | Maximum line breaks that will be put when leading or trailing whitespace contains any. |
 
-If input is not a string, it will be just returned back, untouched.
+If first input argument is not a string, it will be just returned back, untouched.
+If second input argument is zero or falsey or not a number, it will be set to `1` and application will continue as normal.
+
+**[⬆ back to top](#markdown-header-string-collapse-leading-whitespace)**
+
+## API - Output
+
+String of zero or more characters. If input was not a string, same thing will be returned back, without an error.
 
 ## Purpose
 
