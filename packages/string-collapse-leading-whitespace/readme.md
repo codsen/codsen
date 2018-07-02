@@ -73,6 +73,41 @@ If second input argument is zero or falsey or not a number, it will be set to `1
 
 String of zero or more characters. If input was not a string, same thing will be returned back, without an error.
 
+## Example
+
+```js
+const collapseLeadingWhitespace = require("string-collapse-leading-whitespace");
+const someStr = "\n\n\n tralalaa \n\n";
+const res1 = collapseLeadingWhitespace(someStr); // default is one leading/trailing line break
+console.log(
+  `${`\u001b[${33}m${`res1`}\u001b[${39}m`} = ${JSON.stringify(res1, null, 4)}`
+);
+// res1 = "\ntralalaa\n"
+// result has single leading/trailing linebreak because second argument's default is 1.
+
+// -----------------------------------------------------------------------------
+
+// now, same thing, but set it to two:
+const res2 = collapseLeadingWhitespace(someStr, 2); // notice second arg set
+console.log(
+  `${`\u001b[${33}m${`res2`}\u001b[${39}m`} = ${JSON.stringify(res2, null, 4)}`
+);
+// res2 = "\n\ntralalaa\n\n"
+// result has two leading, two trailing. Leading count was capped, trailing reached max anyway. There were two only leading line breaks.
+// Notice spaces/tabs are/would be removed.
+
+// -----------------------------------------------------------------------------
+
+// now set it to three:
+const res3 = collapseLeadingWhitespace(someStr, 3); // notice second arg set
+console.log(
+  `${`\u001b[${33}m${`res3`}\u001b[${39}m`} = ${JSON.stringify(res3, null, 4)}`
+);
+// res3 = "\n\n\ntralalaa\n\n"
+// result has three leading line breaks, them maxed out - there were three. There were two trailing linebreaks, allowance was for three. End result - two trailing linebreaks.
+// All spaces were removed.
+```
+
 ## Purpose
 
 I'm going to use it in [string-slices-array-push](https://bitbucket.org/codsen/string-slices-array-push).
