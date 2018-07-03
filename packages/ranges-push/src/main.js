@@ -33,7 +33,8 @@ class Slices {
   constructor(originalOpts) {
     // validation first:
     const defaults = {
-      limitToBeAddedWhitespace: false
+      limitToBeAddedWhitespace: false,
+      limitLinebreaksCount: 1
     };
     const opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
@@ -160,7 +161,10 @@ class Slices {
               ? this.last()[2] + addVal
               : addVal;
           if (this.opts.limitToBeAddedWhitespace) {
-            calculatedVal = collapseLeadingWhitespace(calculatedVal);
+            calculatedVal = collapseLeadingWhitespace(
+              calculatedVal,
+              this.opts.limitLinebreaksCount
+            );
           }
           this.last()[2] = calculatedVal;
         }
@@ -174,7 +178,10 @@ class Slices {
                 from,
                 to,
                 this.opts.limitToBeAddedWhitespace
-                  ? collapseLeadingWhitespace(addVal)
+                  ? collapseLeadingWhitespace(
+                      addVal,
+                      this.opts.limitLinebreaksCount
+                    )
                   : addVal
               ]
             : [from, to]
@@ -221,7 +228,11 @@ class Slices {
       if (this.opts.limitToBeAddedWhitespace) {
         return this.slices.map(val => {
           if (existy(val[2])) {
-            return [val[0], val[1], collapseLeadingWhitespace(val[2])];
+            return [
+              val[0],
+              val[1],
+              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)
+            ];
           }
           return val;
         });

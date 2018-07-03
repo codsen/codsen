@@ -447,7 +447,7 @@ test("06.02  -  LAST() - fetches the last range from non-empty", t => {
 });
 
 // -----------------------------------------------------------------------------
-// 07. limitToBeAddedWhitespace()
+// 07. opts.limitToBeAddedWhitespace
 // -----------------------------------------------------------------------------
 
 test("07.01  -  opts.limitToBeAddedWhitespace - spaces grouped - #1", t => {
@@ -639,4 +639,66 @@ test("07.21.04  -  opts.limitToBeAddedWhitespace - leading whitespace #3", t => 
   slices.add(7, 11);
   slices.add(14, 14, ' alt=""');
   t.deepEqual(slices.current(), [[4, 4, null], [7, 14, ' alt=""']], "07.21.04");
+});
+
+// -----------------------------------------------------------------------------
+// 08. opts.limitLinebreaksCount
+// -----------------------------------------------------------------------------
+
+test("08.01.01  -  opts.limitLinebreaksCount #1 - control", t => {
+  const slices = new Slices(); // <---- with opts
+  slices.add(4, 4, null);
+  slices.add(7, 14, "\n");
+  slices.add(7, 11, "\n\n");
+  slices.add(14, 14, ' alt=""');
+  t.deepEqual(
+    slices.current(),
+    [[4, 4, null], [7, 14, '\n\n\n alt=""']],
+    "08.01.01"
+  );
+});
+
+test("08.01.02  -  opts.limitLinebreaksCount #2 - hardcoded defaults", t => {
+  const slices = new Slices({ limitLinebreaksCount: 1 }); // <---- with opts
+  slices.add(4, 4, null);
+  slices.add(7, 14, "\n");
+  slices.add(7, 11, "\n\n");
+  slices.add(14, 14, ' alt=""');
+  t.deepEqual(
+    slices.current(),
+    [[4, 4, null], [7, 14, '\n\n\n alt=""']],
+    "08.01.02"
+  );
+});
+
+test("08.01.03  -  opts.limitLinebreaksCount #3 - hardcoded defaults", t => {
+  const slices = new Slices({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 1
+  }); // <---- with opts
+  slices.add(4, 4, null);
+  slices.add(7, 14, "\n");
+  slices.add(7, 11, "\n\n");
+  slices.add(14, 14, ' alt=""');
+  t.deepEqual(
+    slices.current(),
+    [[4, 4, null], [7, 14, '\nalt=""']],
+    "08.01.03"
+  );
+});
+
+test("08.01.04  -  opts.limitLinebreaksCount #4 - hardcoded defaults", t => {
+  const slices = new Slices({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount: 2
+  }); // <---- with opts
+  slices.add(4, 4, null);
+  slices.add(7, 14, "\n");
+  slices.add(7, 11, "\n\n");
+  slices.add(14, 14, ' alt=""');
+  t.deepEqual(
+    slices.current(),
+    [[4, 4, null], [7, 14, '\n\nalt=""']],
+    "08.01.04"
+  );
 });

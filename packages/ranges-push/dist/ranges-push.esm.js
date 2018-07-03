@@ -22,29 +22,18 @@ function mandatory(i) {
 function prepNumStr(str) {
   return isNumStr(str, { includeZero: true }) ? parseInt(str, 10) : str;
 }
-
-// -----------------------------------------------------------------------------
-
 class Slices {
-  //
-
-  // O P T I O N S
-  // =============
   constructor(originalOpts) {
-    // validation first:
     const defaults = {
-      limitToBeAddedWhitespace: false
+      limitToBeAddedWhitespace: false,
+      limitLinebreaksCount: 1
     };
     const opts = Object.assign({}, defaults, originalOpts);
     checkTypes(opts, defaults, {
       msg: "string-slices-array-push: [THROW_ID_02*]"
     });
-    // so it's correct, let's get it in:
     this.opts = opts;
   }
-
-  // A D D ()
-  // ========
   add(originalFrom = mandatory(1), originalTo, addVal, ...etc) {
     if (etc.length > 0) {
       throw new TypeError(
@@ -60,7 +49,7 @@ class Slices {
       originalTo === undefined &&
       addVal === undefined
     ) {
-      return; // do nothing about it
+      return;
     }
     const from = isNumStr(originalFrom, { includeZero: true })
       ? parseInt(originalFrom, 10)
@@ -68,11 +57,7 @@ class Slices {
     const to = isNumStr(originalTo, { includeZero: true })
       ? parseInt(originalTo, 10)
       : originalTo;
-
-    // validation
     if (isArr(originalFrom) && !existy(originalTo)) {
-      // This means output of slices array might be given.
-      // But validate that first.
       let culpritId;
       let culpritVal;
       if (originalFrom.length > 0) {
@@ -86,15 +71,10 @@ class Slices {
             return false;
           })
         ) {
-          // So it's array full of arrays.
-          // Let's validate the contents of those arrays and process them right away.
           originalFrom.forEach((arr, idx) => {
             if (isInt(prepNumStr(arr[0]), { includeZero: true })) {
-              // good, continue
               if (isInt(prepNumStr(arr[1]), { includeZero: true })) {
-                // good, continue
                 if (!existy(arr[2]) || isStr(arr[2])) {
-                  // push it into slices range
                   this.add(...arr);
                 } else {
                   throw new TypeError(
@@ -138,7 +118,6 @@ class Slices {
       isInt(from, { includeZero: true }) &&
       isInt(to, { includeZero: true })
     ) {
-      // This means two indexes were given as arguments. Business as usual.
       if (existy(addVal) && !isStr(addVal)) {
         throw new TypeError(
           `string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ${typeof addVal}, equal to:\n${JSON.stringify(
@@ -148,19 +127,18 @@ class Slices {
           )}`
         );
       }
-      // Does the incoming "from" value match the existing last element's "to" value?
       if (this.slices !== undefined && from === this.last()[1]) {
-        // The incoming range is an exact extension of the last range, like
-        // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to;
-        // console.log(`addVal = ${JSON.stringify(addVal, null, 4)}`)
         if (this.last()[2] !== null && existy(addVal)) {
           let calculatedVal =
             existy(this.last()[2]) && this.last()[2].length > 0
               ? this.last()[2] + addVal
               : addVal;
           if (this.opts.limitToBeAddedWhitespace) {
-            calculatedVal = collapseLeadingWhitespace(calculatedVal);
+            calculatedVal = collapseLeadingWhitespace(
+              calculatedVal,
+              this.opts.limitLinebreaksCount
+            );
           }
           this.last()[2] = calculatedVal;
         }
@@ -174,17 +152,16 @@ class Slices {
                 from,
                 to,
                 this.opts.limitToBeAddedWhitespace
-                  ? collapseLeadingWhitespace(addVal)
+                  ? collapseLeadingWhitespace(
+                      addVal,
+                      this.opts.limitLinebreaksCount
+                    )
                   : addVal
               ]
             : [from, to]
         );
       }
     } else {
-      // Error somewhere!
-      // Let's find out where.
-
-      // is it first arg?
       if (!isInt(from, { includeZero: true })) {
         throw new TypeError(
           `string-slices-array-push/Slices/add(): [THROW_ID_09] "from" value, the first input argument, must be a natural number or zero! Currently it's of a type "${typeof from}" equal to: ${JSON.stringify(
@@ -194,7 +171,6 @@ class Slices {
           )}`
         );
       } else {
-        // then it's second...
         throw new TypeError(
           `string-slices-array-push/Slices/add(): [THROW_ID_10] "to" value, the second input argument, must be a natural number or zero! Currently it's of a type "${typeof to}" equal to: ${JSON.stringify(
             to,
@@ -205,23 +181,20 @@ class Slices {
       }
     }
   }
-
-  // P U S H  ()  -  A L I A S   F O R   A D D ()
-  // ============================================
   push(originalFrom, originalTo, addVal, ...etc) {
     this.add(originalFrom, originalTo, addVal, ...etc);
   }
-
-  // C U R R E N T () - kindof a getter
-  // ==================================
   current() {
     if (this.slices != null) {
-      // != is intentional
       this.slices = mergeRanges(this.slices);
       if (this.opts.limitToBeAddedWhitespace) {
         return this.slices.map(val => {
           if (existy(val[2])) {
-            return [val[0], val[1], collapseLeadingWhitespace(val[2])];
+            return [
+              val[0],
+              val[1],
+              collapseLeadingWhitespace(val[2], this.opts.limitLinebreaksCount)
+            ];
           }
           return val;
         });
@@ -230,15 +203,9 @@ class Slices {
     }
     return null;
   }
-
-  // W I P E ()
-  // ==========
   wipe() {
     this.slices = undefined;
   }
-
-  // L A S T ()
-  // ==========
   last() {
     if (this.slices !== undefined && Array.isArray(this.slices)) {
       return this.slices[this.slices.length - 1];
