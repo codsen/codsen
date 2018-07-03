@@ -33,11 +33,11 @@ console.log(stripHtml("aaa<div>bbb</div>ccc")); // => 'aaa bbb ccc'
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 38 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 41 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 97 KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 25 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 28 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 109 KB |
 
 **[⬆ back to top](#markdown-header-string-strip-html)**
 
@@ -47,9 +47,9 @@ Here's what you'll get:
 - [Purpose](#markdown-header-purpose)
 - [Features](#markdown-header-features)
 - [API](#markdown-header-api)
-- [OPTS](#markdown-header-opts)
+- [Options](#markdown-header-options)
 - [Not assuming anything](#markdown-header-not-assuming-anything)
-- [Bigger picture](#markdown-header-bigger-picture)
+- [A bigger picture](#markdown-header-a-bigger-picture)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -61,13 +61,13 @@ This library only detects and removes HTML tags from strings (text, in other wor
 
 ## Features
 
-- Can be used to generate Email Text versions. Any URL links can be extracted and put after previously linked element.
+- Can be used to generate Email Text versions. Any URL links can be extracted and put after a previously linked element.
 - Works when opening or closing tag bracket is missing on some tags.
-- It can detect and skip false positives, for example, `a < b and c > d`
+- It can detect and skip false positives, for example, `a < b and c > d`.
 - Works on dirty code - duplicate brackets, whitespace after opening bracket, messed up closing slashes — you name it, we will aim to tackle them.
 - Adds spaces or line breaks to prevent concatenation. Except where punctuation characters follow.
 - Can remove tags with all the content between opening and closing tag, for example `<style>...</style>` or `<script>...</script>`
-- Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn decoding off via `opts.skipHtmlDecoding`)
+- Uses recursive HTML decoding, so there's no way to cheat this library by using any kind of HTML encoding (unless you turn the decoding off via `opts.skipHtmlDecoding`)
 - It doesn't assume anything about the input source or purpose of the output string
 
 **[⬆ back to top](#markdown-header-string-strip-html)**
@@ -97,10 +97,27 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `skipHtmlDecoding`               | Boolean                                              | `false`                      | By default, all escaped HTML entities for example `&pound;` input will be recursively decoded before HTML-stripping. You can turn it off here if you don't need it.                     |
 | `returnRangesOnly`               | Boolean                                              | `false`                      | When set to `true`, only ranges will be returned. You can use them later in other [_range_- class libraries](https://github.com/search?q=topic%3Aranges+org%3Acodsen&type=Repositories) |
 | `trimOnlySpaces`                 | Boolean                                              | `false`                      | Used mainly in automated setups. It ensures non-spaces are not trimmed from the outer edges of a string.                                                                                |
-| `dumpLinkHrefsNearby`            | Boolean                                              | `false`                      | Used to retain HREF link URL's - handy when producing email Text versions.                                                                                                              |
+| `dumpLinkHrefsNearby`            | Plain object or something _falsey_                   | `false`                      | Used to customise the output of link URL's: to enable the feature, also customise the URL location and wrapping.                                                                        |
 | }                                |                                                      |                              |
 
+**[⬆ back to top](#markdown-header-string-strip-html)**
+
+### opts.dumpLinkHrefsNearby - plain object
+
+| opts.dumpLinkHrefsNearby key | default value | purpose                                                                                                                                                                                                      |
+| ---------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| enabled                      | `false`       | by default, this function is disabled - URL's are not inserted nearby. Set it to Boolean `true` to enable it.                                                                                                |
+| putOnNewLine                 | `false`       | By default, URL is inserted after any whatever was left after stripping the particular linked piece of code. If you want, you can force all inserted URL's to be on a new line, separated with a blank line. |
+| wrapHeads                    | `""`          | This string (default is an empty string) will be inserted in front of every URL. Set it to any string you want, for example `[`.                                                                             |
+| wrapTails                    | `""`          | This string (default is an empty string) will be inserted straight after every URL. Set it to any string you want, for example `]`.                                                                          |
+
+**[⬆ back to top](#markdown-header-string-strip-html)**
+
+### Validation
+
 The Optional Options Object is validated by [check-types-mini](https://bitbucket.org/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+
+---
 
 Here is the Optional Options Object in one place (in case you ever want to copy it whole):
 
@@ -111,7 +128,12 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
   skipHtmlDecoding: false,
   returnRangesOnly: false,
   trimOnlySpaces: false,
-  dumpLinkHrefsNearby: false
+  dumpLinkHrefsNearby: {
+    enabled: false,
+    putOnNewLine: false,
+    wrapHeads: "",
+    wrapTails: ""
+  }
 }
 ```
 
@@ -119,9 +141,11 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 
 ### API - Output
 
-A string of zero or more characters.
+A string of zero or more characters, with all HTML entities (both _named_, like `&nbsp;` and _numeric_, like `&#x20;`) recursively decoded. _Recursive decoding_ means that twice-encoded `&amp;nbsp;` would still get decoded. There's no way tags can get past with the help of encoding.
 
-## OPTS
+**[⬆ back to top](#markdown-header-string-strip-html)**
+
+## Options
 
 ### `opts.returnRangesOnly`
 
@@ -207,7 +231,7 @@ Some HTML tag stripping libraries _assume_ that the input is always valid HTML a
 
 But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://bitbucket.org/codsen/detergent) for example?
 
-For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **to paste the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection and cross-site scripting. Notice there's even spaces around brackets! It's just that the cleaning tool is very _universal_ and just happens _to snuff out and remove HTML_.
+For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **pasting the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection or cross-site scripting. Notice there's even spaces around brackets! Even Chrome will interpret `a < b and c > d` as text. I believe we should not delete `a < b and c > d` from text when stripping the HTML. However, [other](https://www.npmjs.com/package/striptags) [HTML](https://www.npmjs.com/package/strip-html-tags) [stripping](https://www.npmjs.com/package/htmlstrip-native) libraries find excuses to think differently.
 
 This library does not assume anything, and its detection will interpret `a < b and c > d` as **not HTML**. Our competition, on the other hand, will strip `a < b and c > d` into `a d`.
 
@@ -217,7 +241,7 @@ Choose your HTML stripping tool wisely.
 
 **[⬆ back to top](#markdown-header-string-strip-html)**
 
-## Bigger picture
+## A bigger picture
 
 I scratched my itch, producing [Detergent](https://bitbucket.org/codsen/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
 

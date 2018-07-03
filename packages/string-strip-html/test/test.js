@@ -6,6 +6,7 @@ import stripHtml from "../dist/string-strip-html.esm";
 // ==============================
 
 test("01.01 - string is whole (opening) tag", t => {
+  // 01.01.01.01-03:
   t.deepEqual(stripHtml("<a>"), "", "01.01.01.01");
   t.deepEqual(
     stripHtml("<a>", {
@@ -1171,7 +1172,7 @@ test("01.35 - punctuation after tag - simplified, question mark", t => {
     "01.35.02"
   );
   t.deepEqual(
-    stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: true }),
+    stripHtml("a<b>?</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     "a? c",
     "01.35.03"
   );
@@ -1200,29 +1201,34 @@ test("01.36 - punctuation after tag - simplified, exclamation mark", t => {
     "01.36.02"
   );
   t.deepEqual(
-    stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: true }),
-    "a! c",
+    stripHtml(" \t a<b>!</b> c \t ", { trimOnlySpaces: true }),
+    "\t a! c \t",
     "01.36.03"
   );
   t.deepEqual(
-    stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
+    stripHtml("a<b>!</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     "a! c",
     "01.36.04"
   );
   t.deepEqual(
-    stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }),
+    stripHtml("a<b>!</b> c", { stripTogetherWithTheirContents: false }),
     "a! c",
     "01.36.05"
   );
   t.deepEqual(
+    stripHtml("a<b>!</b> c", { ignoreTags: ["zzz"] }),
+    "a! c",
+    "01.36.06"
+  );
+  t.deepEqual(
     stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
     [[1, 4, ""], [5, 10, " "]],
-    "01.36.06"
+    "01.36.07"
   );
 
   // also,
 
-  t.deepEqual(stripHtml("a<b>!</b>c"), "a! c", "01.36.07");
+  t.deepEqual(stripHtml("a<b>!</b>c"), "a! c", "01.36.08");
 });
 
 test("01.37 - punctuation after tag - simplified, ellipsis", t => {
@@ -1233,7 +1239,7 @@ test("01.37 - punctuation after tag - simplified, ellipsis", t => {
     "01.37.02"
   );
   t.deepEqual(
-    stripHtml("a<b>...</b> c", { dumpLinkHrefsNearby: true }),
+    stripHtml("a<b>...</b> c", { dumpLinkHrefsNearby: { enabled: true } }),
     "a... c",
     "01.37.03"
   );
@@ -2067,7 +2073,7 @@ test("09.01 - opts.dumpLinkHrefsNearby - clean code, double quotes", t => {
   t.deepEqual(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-      { dumpLinkHrefsNearby: false }
+      { dumpLinkHrefsNearby: { enabled: false } }
     ),
     "Let's watch RT news this evening",
     "09.01.02 - control, hardcoded default"
@@ -2075,7 +2081,7 @@ test("09.01 - opts.dumpLinkHrefsNearby - clean code, double quotes", t => {
   t.deepEqual(
     stripHtml(
       'Let\'s watch <a href="https://www.rt.com/" target="_blank">RT news</a> this evening',
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Let's watch RT news https://www.rt.com/ this evening",
     "09.01.03 - control, default behaviour"
@@ -2083,7 +2089,7 @@ test("09.01 - opts.dumpLinkHrefsNearby - clean code, double quotes", t => {
   t.deepEqual(
     stripHtml(
       'Let\'s sell some juicy gossip to the <a href="mailto:gossip@thesun.co.uk" target="_blank">The Sun</a> right now!',
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
     "09.01.04 - mailto links without customisation"
@@ -2091,7 +2097,7 @@ test("09.01 - opts.dumpLinkHrefsNearby - clean code, double quotes", t => {
   t.deepEqual(
     stripHtml(
       'Here\'s the <a href="mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night" target="_blank">chief editor\'s</a> email.',
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
     "09.01.05 - mailto links with customisation"
@@ -2109,7 +2115,7 @@ test("09.02 - opts.dumpLinkHrefsNearby - clean code, single quotes", t => {
   t.deepEqual(
     stripHtml(
       "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
-      { dumpLinkHrefsNearby: false }
+      { dumpLinkHrefsNearby: { enabled: false } }
     ),
     "Let's watch RT news this evening",
     "09.02.02 - control, hardcoded default"
@@ -2117,7 +2123,7 @@ test("09.02 - opts.dumpLinkHrefsNearby - clean code, single quotes", t => {
   t.deepEqual(
     stripHtml(
       "Let's watch <a href='https://www.rt.com/' target='_blank'>RT news</a> this evening",
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Let's watch RT news https://www.rt.com/ this evening",
     "09.02.03 - control, default behaviour"
@@ -2125,7 +2131,7 @@ test("09.02 - opts.dumpLinkHrefsNearby - clean code, single quotes", t => {
   t.deepEqual(
     stripHtml(
       "Let's sell some juicy gossip to the <a href='mailto:gossip@thesun.co.uk' target='_blank'>The Sun</a> right now!",
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Let's sell some juicy gossip to the The Sun mailto:gossip@thesun.co.uk right now!",
     "09.02.04 - mailto links without customisation"
@@ -2133,7 +2139,7 @@ test("09.02 - opts.dumpLinkHrefsNearby - clean code, single quotes", t => {
   t.deepEqual(
     stripHtml(
       "Here's the <a href='mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night' target='_blank'>chief editor's</a> email.",
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "Here's the chief editor's mailto:bob@thesun.co.uk?cc=gossip@thesun.co.uk&subject=look%20what%20Kate%20did%20last%20night email.",
     "09.02.05 - mailto links with customisation"
@@ -2148,7 +2154,7 @@ test("09.03 - opts.dumpLinkHrefsNearby - dirty code, HTML is chopped but href ca
   );
   t.deepEqual(
     stripHtml('Let\'s watch <a href="https://www.rt.com/" targ', {
-      dumpLinkHrefsNearby: true
+      dumpLinkHrefsNearby: { enabled: true }
     }),
     "Let's watch https://www.rt.com/",
     "09.03.02 - only href contents are left after stripping"
@@ -2166,7 +2172,7 @@ test("09.04 - opts.dumpLinkHrefsNearby - linked image", t => {
   t.deepEqual(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
-      { dumpLinkHrefsNearby: false }
+      { dumpLinkHrefsNearby: { enabled: false } }
     ),
     "a b",
     "09.04.02 - control, hardcoded default"
@@ -2174,10 +2180,189 @@ test("09.04 - opts.dumpLinkHrefsNearby - linked image", t => {
   t.deepEqual(
     stripHtml(
       `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
-      { dumpLinkHrefsNearby: true }
+      { dumpLinkHrefsNearby: { enabled: true } }
     ),
     "a https://codsen.com b",
     "09.04.03 - dumps href of a linked image"
+  );
+});
+
+test("09.05 - opts.dumpLinkHrefsNearby - .putOnNewLine", t => {
+  // control
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`
+    ),
+    "a b",
+    "09.05.01 - control, default, off"
+  );
+
+  // control
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          putOnNewLine: false // <-------------   !
+        }
+      }
+    ),
+    "a https://codsen.com b",
+    "09.05.02 - dumpLinkHrefsNearby = on; putOnNewLine = off"
+  );
+
+  // control
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          putOnNewLine: true // <-------------   !
+        }
+      }
+    ),
+    "a\n\nhttps://codsen.com\n\nb",
+    "09.05.03 - dumpLinkHrefsNearby = on; putOnNewLine = on"
+  );
+
+  t.deepEqual(
+    stripHtml(
+      `a <a href="https://codsen.com" target="_blank"><img src="http://404.codsen.com/spacer.gif" width="111" height="222" border="0" style="display:block;" alt="linked image"/></a> b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          putOnNewLine: true,
+          wrapHeads: "[", // <------------   !
+          wrapTails: "]" // <-------------   !
+        }
+      }
+    ),
+    "a\n\n[https://codsen.com]\n\nb",
+    "09.05.04 - dumpLinkHrefsNearby = on; putOnNewLine = on; wrapHeads = on; wrapTails = on;"
+  );
+});
+
+test("09.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", t => {
+  // control
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`
+    ),
+    "a z b",
+    "09.06.01 - control, default"
+  );
+
+  // default dump
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true
+        }
+      }
+    ),
+    "a z https://codsen.com b",
+    "09.06.02 - heads only"
+  );
+
+  // wrap heads only
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapHeads: "["
+        }
+      }
+    ),
+    "a z [https://codsen.com b",
+    "09.06.03 - heads only"
+  );
+
+  // wrap heads only
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapTails: "]"
+        }
+      }
+    ),
+    "a z https://codsen.com] b",
+    "09.06.04 - tails only"
+  );
+
+  // wrap heads only
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapHeads: "[",
+          wrapTails: "]"
+        }
+      }
+    ),
+    "a z [https://codsen.com] b",
+    "09.06.05 - tails only"
+  );
+
+  // + ignoreTags
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        ignoreTags: "div",
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapHeads: "[",
+          wrapTails: "]"
+        }
+      }
+    ),
+    "a <div>z</div> [https://codsen.com] b",
+    "09.06.06 - ignore on a div only"
+  );
+
+  // + ignoreTags
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        ignoreTags: "", // <--------- it's an empty string! Will be ignored.
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapHeads: "[",
+          wrapTails: "]"
+        }
+      }
+    ),
+    "a z [https://codsen.com] b",
+    "09.06.07 - ignore on a div only"
+  );
+
+  // + stripTogetherWithTheirContents
+  t.deepEqual(
+    stripHtml(
+      `a<a href="https://codsen.com" target="_blank"><div>z</div></a>b`,
+      {
+        stripTogetherWithTheirContents: "div",
+        dumpLinkHrefsNearby: {
+          enabled: true,
+          wrapHeads: "[",
+          wrapTails: "]"
+        }
+      }
+    ),
+    "a [https://codsen.com] b",
+    "09.06.08 - whole div pair is removed"
   );
 });
 
@@ -2225,7 +2410,43 @@ test("99.02 - rogue keys in opts", t => {
   });
 });
 
-test("99.03 - non-string among whole tags to delete", t => {
+test("99.03 - opts.dumpLinkHrefsNearby", t => {
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: true } });
+  });
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: false } });
+  });
+  t.throws(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: "1" });
+  });
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: 0 }); // fine as well
+  });
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: false }); // falsey values are OK
+  });
+  t.throws(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: true }); // Bool true is not OK - should be a plain object instead
+  });
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: null }); // null's falsey
+  });
+  t.throws(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: 999 }); // will throw
+  });
+  t.notThrows(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: {} }); // fine too
+  });
+  t.throws(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: { zzz: true } }); // rogue key
+  });
+  t.throws(() => {
+    stripHtml("aaa", { dumpLinkHrefsNearby: { enabled: "yes" } }); // wrong type, should be Bool
+  });
+});
+
+test("99.04 - non-string among whole tags to delete", t => {
   t.throws(() => {
     stripHtml("aaa", { stripTogetherWithTheirContents: true });
   });

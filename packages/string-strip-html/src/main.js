@@ -133,8 +133,6 @@ function stripHtml(str, originalOpts) {
 
   const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
 
-  const rangesToDelete = new Ranges({ limitToBeAddedWhitespace: true });
-
   // variables
   // ===========================================================================
 
@@ -153,7 +151,7 @@ function stripHtml(str, originalOpts) {
   // temporary variable to assemble the attribute pieces:
   let attrObj = {};
 
-  // marker to store captured href, used in opts.dumpLinkHrefsNearby
+  // marker to store captured href, used in opts.dumpLinkHrefsNearby.enabled
   let hrefDump = {}; // 2 keys: "tagName" - where href was spotted, "hrefValue" - URL
 
   // used to insert extra things when pushing into ranges array
@@ -173,6 +171,9 @@ function stripHtml(str, originalOpts) {
   // functions
   // ===========================================================================
 
+  function existy(x) {
+    return x != null;
+  }
   function isValidAttributeCharacter(char) {
     // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
@@ -359,7 +360,7 @@ function stripHtml(str, originalOpts) {
 
   function calculateHrefToBeInserted() {
     if (
-      opts.dumpLinkHrefsNearby &&
+      opts.dumpLinkHrefsNearby.enabled &&
       Object.keys(hrefDump).length &&
       hrefDump.tagName === tag.name &&
       tag.lastOpeningBracketAt &&
@@ -374,7 +375,8 @@ function stripHtml(str, originalOpts) {
     }
 
     if (hrefInsertionActive) {
-      stringToInsertAfter = hrefDump.hrefValue;
+      const lineBreaks = opts.dumpLinkHrefsNearby.putOnNewLine ? "\n\n" : "";
+      stringToInsertAfter = `${lineBreaks}${hrefDump.hrefValue}${lineBreaks}`;
       console.log(
         `375 calculateHrefToBeInserted(): stringToInsertAfter = ${stringToInsertAfter}`
       );
@@ -385,7 +387,7 @@ function stripHtml(str, originalOpts) {
   // ===========================================================================
   if (typeof str !== "string") {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${typeof str}, equal to:\n${JSON.stringify(
+      `string-strip-html/stripHtml(): [THROW_ID_01] Input must be string! Currently it's: ${(typeof str).toLowerCase()}, equal to:\n${JSON.stringify(
         str,
         null,
         4
@@ -398,7 +400,7 @@ function stripHtml(str, originalOpts) {
     !isObj(originalOpts)
   ) {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${typeof originalOpts}, equal to:\n${JSON.stringify(
+      `string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(
         originalOpts,
         null,
         4
@@ -422,9 +424,56 @@ function stripHtml(str, originalOpts) {
     skipHtmlDecoding: false,
     returnRangesOnly: false,
     trimOnlySpaces: false,
-    dumpLinkHrefsNearby: false
+    dumpLinkHrefsNearby: {
+      enabled: false,
+      putOnNewLine: false,
+      wrapHeads: "",
+      wrapTails: ""
+    }
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  if (!isObj(opts.dumpLinkHrefsNearby)) {
+    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
+  }
+  console.log(
+    `441 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
+  if (typeof opts.ignoreTags === "string") {
+    if (opts.ignoreTags.length === 0) {
+      opts.ignoreTags = [];
+    } else {
+      opts.ignoreTags = [opts.ignoreTags];
+    }
+  }
+  // Object.assign doesn't deep merge, so we take care of opts.dumpLinkHrefsNearby:
+  opts.dumpLinkHrefsNearby = defaults.dumpLinkHrefsNearby;
+  if (
+    isObj(originalOpts) &&
+    Object.prototype.hasOwnProperty.call(originalOpts, "dumpLinkHrefsNearby") &&
+    existy(originalOpts.dumpLinkHrefsNearby)
+  ) {
+    if (isObj(originalOpts.dumpLinkHrefsNearby)) {
+      opts.dumpLinkHrefsNearby = Object.assign(
+        {},
+        defaults.dumpLinkHrefsNearby,
+        originalOpts.dumpLinkHrefsNearby
+      );
+    } else if (originalOpts.dumpLinkHrefsNearby) {
+      // checking to omit value as number zero
+      throw new TypeError(
+        `string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(
+          originalOpts.dumpLinkHrefsNearby,
+          null,
+          4
+        )}. The only allowed value is a plain object. See the API reference.`
+      );
+    }
+  }
+
   if (!opts.stripTogetherWithTheirContents) {
     opts.stripTogetherWithTheirContents = [];
   } else if (
@@ -433,8 +482,22 @@ function stripHtml(str, originalOpts) {
   ) {
     opts.stripTogetherWithTheirContents = [opts.stripTogetherWithTheirContents];
   }
+  if (
+    !opts.dumpLinkHrefsNearby ||
+    (isObj(opts.dumpLinkHrefsNearby) &&
+      !Object.keys(opts.dumpLinkHrefsNearby).length)
+  ) {
+    opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby); // clone, not just assign
+  }
+  console.log(
+    `456 ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
   checkTypes(opts, defaults, {
-    msg: "string-strip-html/stripHtml(): [THROW_ID_03*]",
+    msg: "string-strip-html/stripHtml(): [THROW_ID_04*]",
     schema: {
       stripTogetherWithTheirContents: ["array", "null", "undefined"]
     }
@@ -459,13 +522,24 @@ function stripHtml(str, originalOpts) {
     })
   ) {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
+      `string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
         somethingCaught.i
       } has a value ${
         somethingCaught.el
-      } which is not string but ${typeof somethingCaught.el}.`
+      } which is not string but ${(typeof somethingCaught.el).toLowerCase()}.`
     );
   }
+
+  // if the links have to be on a new line, we need to increase the allowance for line breaks
+  // in Ranges class, it's the ranges-push API setting opts.limitLinebreaksCount
+  // see https://www.npmjs.com/package/ranges-push#optional-options-object
+  const rangesToDelete = new Ranges({
+    limitToBeAddedWhitespace: true,
+    limitLinebreaksCount:
+      opts.dumpLinkHrefsNearby.enabled && opts.dumpLinkHrefsNearby.putOnNewLine
+        ? 2
+        : 1
+  });
 
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 
@@ -474,7 +548,7 @@ function stripHtml(str, originalOpts) {
   // End sooner if it's an empty or empty-ish string:
 
   if (str === "" || str.trim() === "") {
-    console.log("473 ENDING EARLY, empty input");
+    console.log("489 ENDING EARLY, empty input");
     return str;
   }
 
@@ -482,6 +556,11 @@ function stripHtml(str, originalOpts) {
     while (str !== ent.decode(str)) {
       str = ent.decode(str);
     }
+  }
+
+  // trim first, if allowed
+  if (!opts.trimOnlySpaces) {
+    str = str.trim();
   }
 
   // step 1.
@@ -668,13 +747,15 @@ function stripHtml(str, originalOpts) {
         attrObj = {};
         // 2. finally, delete the quotes marker, we don't need it any more
         tag.quotes = undefined;
-        // 3. if opts.dumpLinkHrefsNearby is on, catch href
+        // 3. if opts.dumpLinkHrefsNearby.enabled is on, catch href
         let hrefVal;
         if (
-          opts.dumpLinkHrefsNearby &&
+          opts.dumpLinkHrefsNearby.enabled &&
           tag.attributes.some(obj => {
-            if (obj.name.toLowerCase() === "href") {
-              hrefVal = obj.value;
+            if (obj.name && obj.name.toLowerCase() === "href") {
+              hrefVal = `${opts.dumpLinkHrefsNearby.wrapHeads || ""}${
+                obj.value
+              }${opts.dumpLinkHrefsNearby.wrapTails || ""}`;
               return true;
             }
           })
@@ -1063,9 +1144,9 @@ function stripHtml(str, originalOpts) {
           tag.attributes.push(attrObj);
           attrObj = {};
         }
-        // 4. if opts.dumpLinkHrefsNearby is on and we just recorded an href,
+        // 4. if opts.dumpLinkHrefsNearby.enabled is on and we just recorded an href,
         if (
-          opts.dumpLinkHrefsNearby &&
+          opts.dumpLinkHrefsNearby.enabled &&
           hrefDump.tagName &&
           !hrefDump.openingTagEnds
         ) {
@@ -1248,7 +1329,7 @@ function stripHtml(str, originalOpts) {
             tag.lastClosingBracketAt
           );
 
-          // calculate optional opts.dumpLinkHrefsNearby HREF to insert
+          // calculate optional opts.dumpLinkHrefsNearby.enabled HREF to insert
           stringToInsertAfter = "";
           hrefInsertionActive = false;
 

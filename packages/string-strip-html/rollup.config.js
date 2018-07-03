@@ -2,6 +2,7 @@ import builtins from "rollup-plugin-node-builtins";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { uglify } from "rollup-plugin-uglify";
+import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import json from "rollup-plugin-json";
@@ -48,7 +49,8 @@ export default commandLineArgs => {
         }),
         builtins(),
         json(),
-        babel()
+        babel(),
+        cleanup()
       ]
     },
 
@@ -69,7 +71,8 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         builtins(),
-        json()
+        json(),
+        cleanup()
       ]
     }
   ];
