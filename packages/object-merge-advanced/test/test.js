@@ -51,6 +51,20 @@ test("01.01 - simple objects, no key clash", t => {
     },
     "01.01.02"
   );
+
+  // https://stackoverflow.com/a/51148924/3943954
+  const x = { a: { a: 1 } };
+  const y = { a: { b: 1 } };
+  t.deepEqual(
+    mergeAdvanced(x, y),
+    {
+      a: {
+        a: 1,
+        b: 1
+      }
+    },
+    "01.01.03"
+  );
 });
 
 test("01.02 - different types, no key clash", t => {

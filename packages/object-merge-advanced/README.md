@@ -42,9 +42,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 18 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 19 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 38 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 13 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 40 KB |
 
 **[⬆ back to top](#markdown-header-object-merge-advanced)**
 
@@ -535,7 +535,12 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
 
+<!-- prettier-ignore-start -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 | [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://bitbucket.org/revelt)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://bitbucket.org/jabiinfante)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://bitbucket.org/project707)<br /> [🐛](https://bitbucket.org/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://bitbucket.org/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://bitbucket.org/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
+| :---: | :---: | :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- prettier-ignore-end -->
 
 This project follows the [all contributors][all-contributors-url] specification.
 Contributions of any kind are welcome!

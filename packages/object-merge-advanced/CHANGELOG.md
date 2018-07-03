@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [10.4.0] - 2018-07-03
+
+- ✨ Set up Rollup to remove comments from all builds
+- ✨ Removed AVA ESLint rules until the plugin is [fixed](https://github.com/avajs/eslint-plugin-ava/issues/195)
+
 ## [10.3.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -229,3 +234,4 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 [10.1.0]: https://bitbucket.org/codsen/object-merge-advanced/branches/compare/v10.1.0%0Dv10.0.1#diff
 [10.2.0]: https://bitbucket.org/codsen/object-merge-advanced/branches/compare/v10.2.0%0Dv10.1.0#diff
 [10.3.0]: https://bitbucket.org/codsen/object-merge-advanced/branches/compare/v10.3.0%0Dv10.2.2#diff
+[10.4.0]: https://bitbucket.org/codsen/object-merge-advanced/branches/compare/v10.4.0%0Dv10.3.2#diff
