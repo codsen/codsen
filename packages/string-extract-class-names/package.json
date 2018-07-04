@@ -132,7 +132,6 @@
     },
     "licence": {
       "extras": [
-        "",
         ""
       ]
     },
@@ -151,8 +150,7 @@
       "travisVersionsOverride": []
     }
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "latest",
     "babel-preset-env": "latest",

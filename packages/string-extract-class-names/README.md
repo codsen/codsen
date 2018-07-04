@@ -19,11 +19,11 @@ npm i string-extract-class-names
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-class-names.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-class-names.esm.js` | 958 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-extract-class-names.umd.js` | 7 KB  |
+| Type                                                                                                    | Key in `package.json` | Path                                     | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-extract-class-names.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-extract-class-names.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-extract-class-names.umd.js` | 1 KB |
 
 **[⬆ back to top](#markdown-header-string-extract-class-names)**
 

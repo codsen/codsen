@@ -31,7 +31,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["lodash.flattendeep", "lodash.replace", "lodash.without"],
+      external: [""],
       plugins: [
         strip({
           sourceMap: false
@@ -45,7 +45,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["lodash.flattendeep", "lodash.replace", "lodash.without"],
+      external: [""],
       plugins: [
         strip({
           sourceMap: false
