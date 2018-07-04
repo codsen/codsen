@@ -1,39 +1,46 @@
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var replace = _interopDefault(require('lodash.replace'));
-var without = _interopDefault(require('lodash.without'));
-var flattenDeep = _interopDefault(require('lodash.flattendeep'));
-
-function stringExtractClassNames(input) {
-  if (input === undefined) {
-    throw new Error();
-  }
-  function chopBeginning(str) {
-    return replace(str, /[^.#]*/m, "");
-  }
-  function chopEnding(str) {
-    return replace(str, /[ ~\\!@$%^&*()+=,/';:"?><[\]\\{}|`].*/g, "");
-  }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;
   }
-  var temp = input.replace(/[\0'"\\\n\r\v\t\b\f]/g, " ").split(/([.#])/);
-  temp.forEach(function (el, i) {
-    if (el === "." || el === "#") {
-      if (existy(temp[i + 1])) {
-        temp[i + 1] = el + temp[i + 1];
+  if (input === undefined) {
+    throw new Error("string-extract-class-names: [THROW_ID_01] input must not be undefined!");
+  } else if (typeof input !== "string") {
+    throw new TypeError("string-extract-class-names: [THROW_ID_02] first input should be string, not " + (typeof input === "undefined" ? "undefined" : _typeof(input)) + ", currently equal to " + JSON.stringify(input, null, 4));
+  }
+  if (!existy(returnRangesInstead) || !returnRangesInstead) {
+    returnRangesInstead = false;
+  } else if (typeof returnRangesInstead !== "boolean") {
+    throw new TypeError("string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not " + (typeof input === "undefined" ? "undefined" : _typeof(input)) + ", currently equal to " + JSON.stringify(input, null, 4));
+  }
+  var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`";
+  var selectorStartsAt = null;
+  var result = [];
+  for (var i = 0, len = input.length; i < len; i++) {
+    if (selectorStartsAt !== null && (badChars.includes(input[i]) || input[i].trim().length === 0)) {
+      if (i > selectorStartsAt + 1) {
+        if (returnRangesInstead) {
+          result.push([selectorStartsAt, i]);
+        } else {
+          result.push(input.slice(selectorStartsAt, i));
+        }
       }
-      temp[i] = "";
+      selectorStartsAt = null;
     }
-  });
-  temp.forEach(function (el, i) {
-    temp[i] = without(chopEnding(chopBeginning(temp[i])).split(/([.#][^.#]*)/), "");
-  });
-  temp = flattenDeep(temp);
-  temp = without(temp, ".", "#");
-  return temp;
+    if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
+      selectorStartsAt = i;
+    }
+    if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
+      if (returnRangesInstead) {
+        result.push([selectorStartsAt, len]);
+      } else {
+        result.push(input.slice(selectorStartsAt, len));
+      }
+    }
+  }
+  return result;
 }
 
 module.exports = stringExtractClassNames;

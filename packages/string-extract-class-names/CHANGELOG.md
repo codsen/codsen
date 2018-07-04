@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2018-07-04
+
+- ✨ Complete rewrite. Now instead of using regexes and string `replace`, we traverse the input string once and compile the array of selectors
+- ✨ Second argument as `true` will force the application to return arrays of ranges for each selector instead of values as strings
+- ✨ Removed all dependencies
+- ✨ Doubled the unit tests amount - one unit test for regular result, array of strings and one unit test for result where ranges are requested instead
+- ✨ Unit test code coverage stays at 100%
+
 ## [4.3.0] - 2018-06-29
 
 - ✨ Set up Rollup to remove comments from the code
@@ -91,3 +99,4 @@ This library will detect the first clump of class(es)/array(s), will put each in
 [4.1.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.1.0%0Dv4.0.6#diff
 [4.2.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.2.0%0Dv4.1.0#diff
 [4.3.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.3.0%0Dv4.2.1#diff
+[5.0.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v5.0.0%0Dv4.3.0#diff

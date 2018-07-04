@@ -1,38 +1,60 @@
-import replace from 'lodash.replace';
-import without from 'lodash.without';
-import flattenDeep from 'lodash.flattendeep';
-
-function stringExtractClassNames(input) {
-  if (input === undefined) {
-    throw new Error();
-  }
-  function chopBeginning(str) {
-    return replace(str, /[^.#]*/m, "");
-  }
-  function chopEnding(str) {
-    return replace(str, /[ ~\\!@$%^&*()+=,/';:"?><[\]\\{}|`].*/g, "");
-  }
+function stringExtractClassNames(input, returnRangesInstead) {
   function existy(x) {
     return x != null;
   }
-  let temp = input.replace(/[\0'"\\\n\r\v\t\b\f]/g, " ").split(/([.#])/);
-  temp.forEach((el, i) => {
-    if (el === "." || el === "#") {
-      if (existy(temp[i + 1])) {
-        temp[i + 1] = el + temp[i + 1];
-      }
-      temp[i] = "";
-    }
-  });
-  temp.forEach((el, i) => {
-    temp[i] = without(
-      chopEnding(chopBeginning(temp[i])).split(/([.#][^.#]*)/),
-      ""
+  if (input === undefined) {
+    throw new Error(
+      `string-extract-class-names: [THROW_ID_01] input must not be undefined!`
     );
-  });
-  temp = flattenDeep(temp);
-  temp = without(temp, ".", "#");
-  return temp;
+  } else if (typeof input !== "string") {
+    throw new TypeError(
+      `string-extract-class-names: [THROW_ID_02] first input should be string, not ${typeof input}, currently equal to ${JSON.stringify(
+        input,
+        null,
+        4
+      )}`
+    );
+  }
+  if (!existy(returnRangesInstead) || !returnRangesInstead) {
+    returnRangesInstead = false;
+  } else if (typeof returnRangesInstead !== "boolean") {
+    throw new TypeError(
+      `string-extract-class-names: [THROW_ID_03] second input argument should be a Boolean, not ${typeof input}, currently equal to ${JSON.stringify(
+        input,
+        null,
+        4
+      )}`
+    );
+  }
+  const badChars = `.# ~\\!@$%^&*()+=,/';:"?><[]{}|\``;
+  let selectorStartsAt = null;
+  const result = [];
+  for (let i = 0, len = input.length; i < len; i++) {
+    if (
+      selectorStartsAt !== null &&
+      (badChars.includes(input[i]) || input[i].trim().length === 0)
+    ) {
+      if (i > selectorStartsAt + 1) {
+        if (returnRangesInstead) {
+          result.push([selectorStartsAt, i]);
+        } else {
+          result.push(input.slice(selectorStartsAt, i));
+        }
+      }
+      selectorStartsAt = null;
+    }
+    if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
+      selectorStartsAt = i;
+    }
+    if (i + 1 === len && selectorStartsAt !== null && i > selectorStartsAt) {
+      if (returnRangesInstead) {
+        result.push([selectorStartsAt, len]);
+      } else {
+        result.push(input.slice(selectorStartsAt, len));
+      }
+    }
+  }
+  return result;
 }
 
 export default stringExtractClassNames;
