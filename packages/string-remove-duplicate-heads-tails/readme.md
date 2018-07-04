@@ -36,9 +36,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 13 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 13 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-duplicate-heads-tails.umd.js` | 34 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 8 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-duplicate-heads-tails.umd.js` | 45 KB |
 
 **[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
