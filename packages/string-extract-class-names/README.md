@@ -48,30 +48,55 @@ Currently there 196 checks in `test.js` running on [AVA](https://github.com/avaj
 
 **[⬆ back to top](#markdown-header-string-extract-class-names)**
 
-## Examples
-
-```js
-var extract = require("string-extract-class-names");
-
-// two classes and one id extracted:
-extract("div.first.second#third a[target=_blank]");
-// => ['.first', '.second', '#third']
-
-// six id's extracted (works even despite the nonsensical question mark characters):
-extract("?#id1#id2? #id3#id4> p > #id5#id6");
-// => ['#id1', '#id2', '#id3', '#id4', '#id5', '#id6']
-```
-
-**[⬆ back to top](#markdown-header-string-extract-class-names)**
-
 ## API
 
 ```js
-extract(
-  string // String. Input.
-);
-// => Extracted classes/id's in an array
+stringExtractClassNames(inputString, [returnRangesInstead]);
 ```
+
+### API - Input
+
+| Input argument      | Type    | Obligatory? | Description                                                                                            |
+| ------------------- | ------- | ----------- | ------------------------------------------------------------------------------------------------------ |
+| inputString         | String  | yes         | String to process                                                                                      |
+| returnRangesInstead | Boolean | no          | Default - `false` - return arrays of strings - selectors; optionally - `true` - return array of ranges |
+
+By ranges we mean string slice ranges, arrays of two elements where both arguments match the `String.slice` first two arguments, `beginIndex` and `endIndex`.
+
+For example,
+
+```js
+const extract = require("string-extract-class-names");
+const str = "div.first-class.second-class";
+
+// default settings: each selector as string will be put in an array and returned:
+const res1 = extract(str);
+console.log("res1 = " + res1);
+// => res1 = [".first-class", ".second-class"]
+
+// optionally, you can request ranges:
+const res2 = extract(str, true);
+console.log("res2 = " + res2);
+// => res2 = [[3, 15], [15, 28]]
+```
+
+## More examples
+
+```js
+const extract = require("string-extract-class-names");
+
+// two classes and one id extracted:
+const res3 = extract("div.first.second#third a[target=_blank]");
+console.log("res3 = " + res3);
+// => res3 = ['.first', '.second', '#third']
+
+// six id's extracted (works even despite the nonsensical question mark characters):
+const res4 = extract("?#id1#id2? #id3#id4> p > #id5#id6");
+console.log("res4 = " + res4);
+// => res4 = ['#id1', '#id2', '#id3', '#id4', '#id5', '#id6']
+```
+
+**[⬆ back to top](#markdown-header-string-extract-class-names)**
 
 ## Contributing
 
