@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ Complete rewrite. Now instead of using regexes and string `replace`, we traverse the input string once and compile the array of selectors
 - ✨ Second argument as `true` will force the application to return arrays of ranges for each selector instead of values as strings
-- ✨ Removed all dependencies
-- ✨ Doubled the unit tests amount - one unit test for regular result, array of strings and one unit test for result where ranges are requested instead
+- ✨ Removed all dependencies (all of them `lodash`)
+- ✨ Doubled the unit tests count - one unit test for a regular result (array of strings) and one unit test for result serving ranges
 - ✨ Unit test code coverage stays at 100%
 
 ## [4.3.0] - 2018-06-29

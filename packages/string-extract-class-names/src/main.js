@@ -7,7 +7,6 @@
  * @param  {String} input                input string
  * @return {Array}                       each detected class/id put into an array, as String or Range (array)
  */
-
 function stringExtractClassNames(input, returnRangesInstead) {
   // insurance
   // =========
