@@ -136,7 +136,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        ""
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -183,7 +185,7 @@
     "prettier": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-cleanup": "^3.0.0-beta.1",
+    "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-commonjs": "^9.1.3",
     "rollup-plugin-json": "latest",
     "rollup-plugin-node-builtins": "latest",
