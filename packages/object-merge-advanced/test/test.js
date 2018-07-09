@@ -4713,3 +4713,123 @@ test("18.05 - \u001b[33mOPTS\u001b[39m - opts.cb - using cb's 4th arg to concate
     "18.05.02 - cb fourth arg's path info used to override to merge strings"
   );
 });
+
+test("18.06 - \u001b[33mOPTS\u001b[39m - opts.hardMergeEverything - revisiting deep-level arrays", t => {
+  // control:
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: [
+            {
+              c: "d"
+            },
+            {
+              e: "f"
+            }
+          ]
+        },
+        k: "l", // should be left intact
+        m: {
+          // should be left intact too
+          n: {
+            o: {
+              p: "r"
+            }
+          }
+        }
+      },
+      {
+        a: {
+          b: [
+            {
+              c: "x"
+            }
+          ]
+        }
+      }
+    ),
+    {
+      a: {
+        b: [
+          {
+            c: "x"
+          },
+          {
+            e: "f"
+          }
+        ]
+      },
+      k: "l", // should be left intact
+      m: {
+        // should be left intact too
+        n: {
+          o: {
+            p: "r"
+          }
+        }
+      }
+    },
+    "18.06.01"
+  );
+
+  // now set the opts.hardMergeEverything
+  t.deepEqual(
+    mergeAdvanced(
+      {
+        a: {
+          b: [
+            {
+              c: "d"
+            },
+            {
+              e: "f"
+            }
+          ],
+          s: "t"
+        },
+        k: "l", // should be left intact
+        m: {
+          // should be left intact too
+          n: {
+            o: {
+              p: "r"
+            }
+          }
+        }
+      },
+      {
+        a: {
+          b: [
+            {
+              c: "x"
+            }
+          ]
+        }
+      },
+      {
+        hardMergeEverything: true
+      }
+    ),
+    {
+      a: {
+        b: [
+          {
+            c: "x"
+          }
+        ],
+        s: "t"
+      },
+      k: "l", // should be left intact
+      m: {
+        // should be left intact too
+        n: {
+          o: {
+            p: "r"
+          }
+        }
+      }
+    },
+    "18.06.02"
+  );
+});

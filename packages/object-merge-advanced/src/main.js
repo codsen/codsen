@@ -911,8 +911,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         })
       : currentResult;
   }
-  console.log(`\n\n\nFINAL ROW 514 - i1=${JSON.stringify(i1, null, 4)}`);
-  console.log(`FINAL ROW 515 - i2=${JSON.stringify(i2, null, 4)}`);
+  console.log(`\n\n\nFINAL ROW 914 - i1=${JSON.stringify(i1, null, 4)}`);
+  console.log(`FINAL ROW 915 - i2=${JSON.stringify(i2, null, 4)}`);
 
   // return i1
 
@@ -924,7 +924,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
   console.log(`FINAL ROW - uniRes = ${JSON.stringify(uniRes, null, 4)}\n\n\n`);
 
   console.log(
-    `\u001b[${33}m${`527 RET: ${JSON.stringify(
+    `\u001b[${33}m${`927 RET: ${JSON.stringify(
       opts.cb
         ? opts.cb(i1, i2, currentResult, {
             path: infoObj.path,
@@ -951,7 +951,6 @@ function externalApi(input1orig, input2orig, originalOpts) {
       "object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing"
     );
   }
-
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   // notice we have first argument tracking the current path, which is not
   // exposed to the external API.
