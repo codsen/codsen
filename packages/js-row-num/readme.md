@@ -45,7 +45,7 @@ Here's what you'll get:
 
 ## Idea
 
-When I create libraries, add new features to them and/or look for bugs, I rely on `console.log` statements. On every one of our libraries, there's Rollup plugins set ([rollup-plugin-strip](https://www.npmjs.com/package/rollup-plugin-strip) and [rollup-plugin-cleanup](https://www.npmjs.com/package/rollup-plugin-cleanup)) who remove all comments and `console.log` statements from the built files that later get published (`dist/` folder's contents). This means, we can commit our source files (`src/` folder's contents) **with** `console.log` statements.
+When I create libraries, add new features to them and/or look for bugs, I rely on `console.log` statements. On every one of our libraries, there's Rollup plugins set ([rollup-plugin-strip](https://www.npmjs.com/package/rollup-plugin-strip) and [rollup-plugin-cleanup](https://www.npmjs.com/package/rollup-plugin-cleanup)) who remove all comments and `console.log` statements from the built files that later get published (`dist/` folder's contents). This means we can commit our source files (`src/` folder's contents) **with** `console.log` statements.
 
 Now, when troubleshooting code, there are two essential pieces of information: **what** happened and **from where** it happened:
 
@@ -57,7 +57,7 @@ console.log(`056 SET counter = ${counter}`);
 
 _Where_ part is the `console.log` statement's row number I like to add.
 
-Now, we need an automated tool to update row numbers because there will be many `console.log` rows and it's enough to add or remove one line of code and all numbers below will be offset.
+Now, we need an automated tool to update row numbers because there will be many `console.log` rows and it's enough to add or remove one line of code, and all numbers below will be offset.
 
 This library updates row numbers in JS file `console.log` statements. It is an API for other tools - it consumes string (hopefully some JS code) and returns a string (hopefully, also, some JS code). Browser plugins, web apps or Node CLI applications can tap this application to do all the updating work.
 
@@ -107,7 +107,7 @@ API is simple: `string` in, `string` out. No options, everything beyond the 1st 
 | `padStart`           | Zero, natural number or anything falsey | `3`           | Sets how much digits will be padded |
 | }                    |                                         |               |                                     |
 
-Here it is all in once place:
+Here it is all in one place:
 
 ```js
 {
@@ -119,9 +119,9 @@ Here it is all in once place:
 
 Only the digits within `console.log` string will be replaced.
 
-If letter (either case) precedes the number, it will not be replaced. We agree that numbers should be in front of the `console.log` statement:
+If the letter (either case) precedes the number, it will not be replaced. We agree that numbers should be in front of the `console.log` statement:
 
-This will be replaced:
+This row number will be replaced:
 
 ```js
 console.log("000 This number in front will be replaced");
@@ -129,14 +129,14 @@ console.log("000 This number in front will be replaced");
 console.log("001 This number in front will be replaced");
 ```
 
-Not not this (because letters precede `000`):
+But not this (because letters precede `000`):
 
 ```js
 // will not be replaced:
 console.log("This number: 000 will not be replaced because letter precedes it");
 ```
 
-The type of quotes doesn't matter: single, double or backticks, as long as opening quote matches closing quote.
+The type of quotes doesn't matter: single, double or backticks, as long as opening quote matches the closing quote.
 
 All non-letter characters in front of a digit will not be touched.
 
@@ -148,11 +148,11 @@ console.log("888 999 This number in front will be replaced");
 console.log("001 999 This number in front will be replaced"); // it's first line, so "001"
 ```
 
-EOL type does not matter, we support all three types of EOL's: `\n`, `\r` and `\r\n` (see unit tests under group `05.01`).
+EOL type does not matter; we support all three types of EOL's: `\n`, `\r` and `\r\n` (see unit tests under group `05.01`).
 
 ## Dependencies used
 
-All dependencies are our-own:
+All dependencies are our own:
 
 | name                                                               | purpose                                                                                                                                                                                |
 | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
