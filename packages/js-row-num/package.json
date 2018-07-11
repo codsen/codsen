@@ -1,0 +1,191 @@
+{
+  "name": "js-row-num",
+  "version": "0.1.0",
+  "description": "Update all row numbers in all console.logs in JS code",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codsen/js-row-num.git"
+  },
+  "homepage": "https://bitbucket.org/codsen/js-row-num#readme",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/js-row-num.cjs.js",
+  "module": "dist/js-row-num.esm.js",
+  "browser": "dist/js-row-num.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "precommit": "npm run format && npm test",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "keywords": [
+    "string",
+    "characters",
+    "replace",
+    "email",
+    "templates",
+    "alt",
+    "tags",
+    "attributes",
+    "fancy",
+    "simple",
+    "quote",
+    "dash",
+    "remove",
+    "encoding"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "dependencies": {
+    "check-types-mini": "^4.0.0",
+    "ranges-apply": "^2.3.2",
+    "ranges-push": "^2.10.0"
+  },
+  "devDependencies": {
+    "ava": "latest",
+    "babel-preset-env": "latest",
+    "codacy-coverage": "latest",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-strip": "^1.1.1",
+    "rollup-plugin-uglify": "^4.0.0"
+  }
+}
