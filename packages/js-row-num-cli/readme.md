@@ -76,11 +76,14 @@ Because it's on row 3.
 
 First, it depends, did you specify a path or not.
 
-- If you did, for example, `` it will process that file (or files, if it was glob).
-- If you didn't, just typing `jsrownum`, it will use the current folder where it was called from and look for files in this order:
-  1.  `./src/main.js` (in the current folder, look for folder `src`, then inside, `main.js`)
-  2.  `./main.js` (same root folder where called, look for a file called `main.js`)
-  3.  `./cli.js` (same root folder where called, look for a file called `cli.js`)
+- If you did, for example, `jsrownum "folder/*.js"` it will process that file (or expand glob into a list of files).
+- If you didn't, just typed `jsrownum`, it will use the current folder where it was called from and look for files in this order:
+
+1.  ./src/main.js
+2.  ./main.js
+3.  ./cli.js
+4.  ./index.js
+5.  ./src/index.js
 
 **Once it picks the file**, it will look for `console.log` statements, and replace the first chunk of an uninterrupted sequence of numbers with a number of a row it sits.
 
