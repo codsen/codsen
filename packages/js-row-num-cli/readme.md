@@ -41,7 +41,7 @@ jsrownum "folder/*.js"
 jrn "folder/*.js"
 ```
 
-If `jsrownum` is too long, you can also type `jrn`; we wired up that as an alternative as well.
+If `jsrownum` is too long, you can also type `jrn`; we wired up that as an alternative.
 
 **[⬆ back to top](#markdown-header-js-row-num-cli)**
 
