@@ -17,6 +17,8 @@
 - [Idea](#markdown-header-idea)
 - [Usage](#markdown-header-usage)
 - [API](#markdown-header-api)
+- [Rules](#markdown-header-rules)
+- [Dependencies used](#markdown-header-dependencies-used)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -37,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 37 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/js-row-num.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/js-row-num.esm.js` | 5 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/js-row-num.umd.js` | 46 KB |
 
 **[⬆ back to top](#markdown-header-js-row-num)**
 
@@ -115,6 +117,8 @@ Here it is all in one place:
 }
 ```
 
+**[⬆ back to top](#markdown-header-js-row-num)**
+
 ## Rules
 
 Only the digits within `console.log` string will be replaced.
@@ -150,6 +154,8 @@ console.log("001 999 This number in front will be replaced"); // it's first line
 
 EOL type does not matter; we support all three types of EOL's: `\n`, `\r` and `\r\n` (see unit tests under group `05.01`).
 
+**[⬆ back to top](#markdown-header-js-row-num)**
+
 ## Dependencies used
 
 All dependencies are our own:
@@ -159,6 +165,8 @@ All dependencies are our own:
 | [check-types-mini](https://www.npmjs.com/package/check-types-mini) | to enforce the correct Optional Options Object's key value types                                                                                                                       |
 | [ranges-push](https://www.npmjs.com/package/ranges-push)           | to compile what needs to be replaced ("ranges" - arrays containing `String.slice` indexes) so we can create result string in one go, as opposed to mutating it each time amend is done |
 | [ranges-apply](https://www.npmjs.com/package/ranges-apply)         | to "apply" the compiled ranges into a string                                                                                                                                           |
+
+**[⬆ back to top](#markdown-header-js-row-num)**
 
 ## Contributing
 

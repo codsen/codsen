@@ -6,6 +6,29 @@ var Slices = _interopDefault(require('ranges-push'));
 var applySlices = _interopDefault(require('ranges-apply'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
+function existy(x) {
+  return x != null;
+}
+function padStart(str, targetLength, padString) {
+  targetLength = targetLength >> 0;
+  padString = existy(padString) ? String(padString) : " ";
+  if (!existy(str)) {
+    return str;
+  } else if (typeof str === "number") {
+    str = String(str);
+  } else if (typeof str !== "string") {
+    return str;
+  }
+  if (str.length >= targetLength) {
+    return str;
+  }
+  targetLength = targetLength - str.length;
+  if (targetLength > padString.length) {
+    padString += padString.repeat(targetLength / padString.length);
+  }
+  return padString.slice(0, targetLength) + str;
+}
+
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
     return str;
@@ -40,7 +63,7 @@ function fixRowNums(str, originalOpts) {
       currentRow++;
     }
     if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
-      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? ("" + currentRow).padStart(opts.padStart, "0") : "" + currentRow);
+      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? padStart(currentRow, opts.padStart, "0") : "" + currentRow);
       digitStartsAt = null;
       wasLetterDetected = true;
     }

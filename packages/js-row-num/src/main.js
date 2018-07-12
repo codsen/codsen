@@ -1,6 +1,7 @@
 import Slices from "ranges-push";
 import applySlices from "ranges-apply";
 import checkTypes from "check-types-mini";
+import { padStart } from "./util";
 
 function fixRowNums(str, originalOpts) {
   if (typeof str !== "string" || str.length === 0) {
@@ -54,22 +55,44 @@ function fixRowNums(str, originalOpts) {
     // catch the ending of the digits within console.log:
     if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
       // replace the digits:
+      console.log("059 THING ABOUT TO BE PUSHED:");
+      console.log(
+        `060 ${`\u001b[${33}m${`opts.padStart`}\u001b[${39}m`} = ${JSON.stringify(
+          opts.padStart,
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `067 ${`\u001b[${33}m${`padStart(${currentRow} (${typeof currentRow}), ${
+          opts.padStart
+        } (typeof ${opts.padStart}), "0")`}\u001b[${39}m`} = ${JSON.stringify(
+          padStart(currentRow, opts.padStart, "0"),
+          null,
+          4
+        )}`
+      );
+      console.log(
+        `076 ${opts.padStart}`
+          ? padStart(currentRow, opts.padStart, "0")
+          : `${currentRow}`
+      );
       finalIndexesToDelete.push(
         digitStartsAt,
         i,
         opts.padStart
-          ? `${currentRow}`.padStart(opts.padStart, "0")
+          ? padStart(currentRow, opts.padStart, "0")
           : `${currentRow}`
       );
       // then, reset:
       digitStartsAt = null;
       console.log(
-        `067 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
+        `090 ${`\u001b[${33}m${`digitStartsAt`}\u001b[${39}m`} = null`
       );
       // set wasLetterDetected as a decoy to prevent further digit lumps from being edited:
       wasLetterDetected = true;
       console.log(
-        `072 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
+        `095 SET ${`\u001b[${33}m${`wasLetterDetected`}\u001b[${39}m`} = true`
       );
     }
 
