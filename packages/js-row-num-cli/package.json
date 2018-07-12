@@ -1,0 +1,190 @@
+{
+  "name": "js-row-num-cli",
+  "version": "0.1.0",
+  "description": "Update all row numbers in all console.logs in JS code",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codsen/js-row-num-cli.git"
+  },
+  "homepage": "https://bitbucket.org/codsen/js-row-num-cli/",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "bin": {
+    "jrn": "cli.js",
+    "jsrownum": "cli.js"
+  },
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
+    "precommit": "npm run format && npm test",
+    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "keywords": [
+    "update",
+    "js",
+    "row",
+    "numbers",
+    "console",
+    "log",
+    "every",
+    "console.log",
+    "debug",
+    "correct",
+    "automatically",
+    "automated",
+    "tool",
+    "cli",
+    "cli-app"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": false,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        },
+        {
+          "contents": "# This is a sample build configuration for JavaScript.\n# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.\n# Only use spaces to indent your .yml configuration.\n# -----\n# You can specify a custom docker image from Docker Hub as your build environment.\nimage: node:alpine\n\npipelines:\n  default:\n    - step:\n        caches:\n          - node\n        script: # Modify the commands below to build your repository.\n          - npm install\n          - npm test\n          - npm run coverage\n",
+          "name": "bitbucket-pipelines.yml"
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "dependencies": {
+    "fs-extra": "^6.0.1",
+    "globby": "^8.0.1",
+    "is-d": "^1.0.0",
+    "js-row-num": "^1.0.1",
+    "meow": "^5.0.0",
+    "p-reduce": "^1.0.0",
+    "update-notifier": "^2.5.0"
+  },
+  "devDependencies": {
+    "ava": "latest",
+    "codacy-coverage": "latest",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
+    "execa": "^0.10.0",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "tempy": "latest"
+  }
+}
