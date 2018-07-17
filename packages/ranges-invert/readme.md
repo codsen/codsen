@@ -60,11 +60,12 @@ There is possibility that string will not cover the inverted range. For example,
 
 ## API
 
-**rangesInvert(arr[, opts])**
+**rangesInvert(arr, strLen [, opts])**
 
 | Input argument | Type                         | Obligatory? | Description                                                                                                                                                                   |
 | -------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges does not have to be [sorted](https://bitbucket.org/codsen/ranges-sort/) or [merged](https://bitbucket.org/codsen/ranges-merge/). |
+| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                               |
 | `opts`         | Plain object                 | no          | Optional options go here.                                                                                                                                                     |
 
 **Output**: array of zero or more arrays (so-called _ranges_) where each consists of two or more natural number (or zero) indexes.
