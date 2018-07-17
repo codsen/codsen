@@ -29,7 +29,9 @@ function stripHtml(str, originalOpts) {
   var singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
   var punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\xBB"];
   var stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
-  var tag = {};
+  var tag = {
+    attributes: []
+  };
   var chunkOfWhitespaceStartsAt = null;
   var chunkOfSpacesStartsAt = null;
   var rangedOpeningTags = [];
@@ -155,6 +157,9 @@ function stripHtml(str, originalOpts) {
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
       hrefDump = {};
@@ -175,6 +180,17 @@ function stripHtml(str, originalOpts) {
     }
   };
   var opts = Object.assign({}, defaults, originalOpts);
+  if (!opts.ignoreTags) {
+    opts.ignoreTags = [];
+  } else if (isArr(opts.ignoreTags)) {
+    opts.ignoreTags = opts.ignoreTags.filter(function (val) {
+      return isStr(val) && val.length > 0;
+    });
+  } else if (isStr(opts.ignoreTags)) {
+    opts.ignoreTags = [opts.ignoreTags];
+  } else if (!isArr(opts.ignoreTags) && !!opts.ignoreTags) {
+    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
+  }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
@@ -190,7 +206,7 @@ function stripHtml(str, originalOpts) {
     if (isObj(originalOpts.dumpLinkHrefsNearby)) {
       opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby, originalOpts.dumpLinkHrefsNearby);
     } else if (originalOpts.dumpLinkHrefsNearby) {
-      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ".concat(_typeof(originalOpts.dumpLinkHrefsNearby), ", equal to ").concat(JSON.stringify(originalOpts.dumpLinkHrefsNearby, null, 4), ". The only allowed value is a plain object. See the API reference."));
     }
   }
   if (!opts.stripTogetherWithTheirContents) {
@@ -202,7 +218,7 @@ function stripHtml(str, originalOpts) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
   checkTypes(opts, defaults, {
-    msg: "string-strip-html/stripHtml(): [THROW_ID_04*]",
+    msg: "string-strip-html/stripHtml(): [THROW_ID_05*]",
     schema: {
       stripTogetherWithTheirContents: ["array", "null", "undefined"]
     }
@@ -219,7 +235,7 @@ function stripHtml(str, originalOpts) {
     }
     return true;
   })) {
-    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
+    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ".concat(somethingCaught.i, " has a value ").concat(somethingCaught.el, " which is not string but ").concat(_typeof(somethingCaught.el).toLowerCase(), "."));
   }
   var rangesToDelete = new Ranges({
     limitToBeAddedWhitespace: true,
@@ -237,11 +253,11 @@ function stripHtml(str, originalOpts) {
     str = str.trim();
   }
   for (var i = 0, len = str.length; i < len; i++) {
-    if (Object.keys(tag).length && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
+    if (Object.keys(tag).length > 1 && tag.lastClosingBracketAt && tag.lastClosingBracketAt < i && str[i] !== " " && spacesChunkWhichFollowsTheClosingBracketEndsAt === null) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
     }
     if (str[i] === ">") {
-      if ((!tag || !Object.keys(tag).length) && i > 1) {
+      if ((!tag || Object.keys(tag).length < 2) && i > 1) {
         for (var y = i; y--;) {
           if (str[y - 1] === undefined || str[y] === ">") {
             var _ret = function () {
@@ -284,15 +300,13 @@ function stripHtml(str, originalOpts) {
     if (tag.nameStarts && tag.nameStarts < i && !tag.quotes && punctuation.includes(str[i]) && !attrObj.equalsAt && tag.attributes && tag.attributes.length === 0 && !tag.lastClosingBracketAt
     ) {
         tag = {};
+        tag.attributes = [];
         attrObj = {};
       }
     if (str[i] === '"' || str[i] === "'") {
       if (tag.nameStarts && tag.quotes && tag.quotes.value && tag.quotes.value === str[i]) {
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
         tag.quotes = undefined;
@@ -353,9 +367,6 @@ function stripHtml(str, originalOpts) {
       }
     }
     if (!tag.quotes && attrObj.nameStarts && attrObj.nameEnds && !attrObj.valueStarts && str[i].trim().length !== 0 && str[i] !== "=") {
-      if (!tag.attributes) {
-        tag.attributes = [];
-      }
       tag.attributes.push(attrObj);
       attrObj = {};
     }
@@ -372,17 +383,11 @@ function stripHtml(str, originalOpts) {
       } else if (str[i] === "/" || str[i] === ">") {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
       } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
       }
@@ -419,9 +424,6 @@ function stripHtml(str, originalOpts) {
         tag.lastClosingBracketAt = i;
         spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
         if (Object.keys(attrObj).length) {
-          if (!tag.attributes) {
-            tag.attributes = [];
-          }
           tag.attributes.push(attrObj);
           attrObj = {};
         }
@@ -462,11 +464,6 @@ function stripHtml(str, originalOpts) {
         tag.attributes && tag.attributes.some(function (attrObj) {
           return attrObj.equalsAt;
         })) {
-          if (opts.ignoreTags.includes(tag.name)) {
-            tag = {};
-            attrObj = {};
-            continue;
-          }
           var _whiteSpaceCompensation2 = calculateWhitespaceToInsert(str, i, tag.leftOuterWhitespace, _endingRangeIndex, tag.lastOpeningBracketAt, tag.lastClosingBracketAt);
           stringToInsertAfter = "";
           hrefInsertionActive = false;
@@ -556,15 +553,10 @@ function stripHtml(str, originalOpts) {
         }
       }
     } else if (chunkOfWhitespaceStartsAt !== null) {
-      if (!tag.quotes && tag.equalsSpottedAt === chunkOfWhitespaceStartsAt - 1 && tag.attributeNameEnds && tag.equalsSpottedAt > tag.attributeNameEnds && str[i] !== '"' && str[i] !== "'") {
+      if (!tag.quotes && attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 && attrObj.nameEnds && attrObj.equalsAt > attrObj.nameEnds && str[i] !== '"' && str[i] !== "'") {
         if (isObj(attrObj)) {
-          attrObj = {};
+          tag.attributes.push(attrObj);
         }
-        attrObj.equalsAt = tag.equalsSpottedAt;
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
-        tag.attributes.push(attrObj);
         attrObj = {};
         tag.equalsSpottedAt = undefined;
       }

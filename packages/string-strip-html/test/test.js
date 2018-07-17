@@ -978,7 +978,28 @@ test("01.26 - dirty code - unclosed attributes", t => {
   t.deepEqual(
     stripHtml('aaaaaaa<br class="zzzz>x<br>bbbbbbbb'),
     "aaaaaaa x bbbbbbbb",
-    "01.26.02"
+    "01.26.03"
+  );
+
+  t.deepEqual(
+    stripHtml('aaaaaaa<br class="zzzz <br>bbbbbbbb'),
+    "aaaaaaa bbbbbbbb",
+    "01.26.04"
+  );
+  t.deepEqual(
+    stripHtml('aaaaaaa<br class="zzzz" <br>bbbbbbbb'),
+    "aaaaaaa bbbbbbbb",
+    "01.26.05"
+  );
+  t.deepEqual(
+    stripHtml("aaaaaaa<br class<br>bbbbbbbb"),
+    "aaaaaaa bbbbbbbb",
+    "01.26.06"
+  );
+  t.deepEqual(
+    stripHtml("aaaaaaa<br class!<br>bbbbbbbb"),
+    "aaaaaaa bbbbbbbb",
+    "01.26.07"
   );
 });
 
@@ -1293,6 +1314,59 @@ test("01.38 - punctuation after tag - real-life", t => {
     ),
     "\u00A0     Hi! Please shop now!      \u00A0",
     "01.38.04"
+  );
+});
+
+test("01.39 - opts.ignoreTags edge cases", t => {
+  t.deepEqual(
+    stripHtml("<a>", {
+      ignoreTags: ["", " ", "a", "b", null]
+    }),
+    "<a>",
+    "01.39.01 - empty string, whitespace string and null in the array"
+  );
+  t.deepEqual(
+    stripHtml("<a>", {
+      ignoreTags: [null]
+    }),
+    "",
+    "01.39.02"
+  );
+  t.deepEqual(
+    stripHtml("<a>", {
+      ignoreTags: [null, "a"]
+    }),
+    "<a>",
+    "01.39.03"
+  );
+  t.deepEqual(
+    stripHtml("a<a>", {
+      ignoreTags: ["\t", "\n\n"]
+    }),
+    "a",
+    "01.39.04"
+  );
+  t.deepEqual(
+    stripHtml("a<a>", {
+      ignoreTags: ["\t", "\n\n", "a", " "]
+    }),
+    "a<a>",
+    "01.39.05"
+  );
+});
+
+test("01.40 - opts.ignoreTags edge cases", t => {
+  t.deepEqual(
+    stripHtml("<article  whatnot  =  whatyes = >zzz< / article>"),
+    "zzz",
+    "01.40.01 - space before and after attribute's equal character"
+  );
+  t.deepEqual(
+    stripHtml(
+      "<article  whatnot  =  whatyes = >xxx< / article> yyy <article  whatnot  =  whatyes = >zzz< / article>"
+    ),
+    "xxx yyy zzz",
+    "01.40.02 - space before and after attribute's equal character"
   );
 });
 
@@ -2055,6 +2129,23 @@ test("08.01 - opts.trimOnlySpaces", t => {
     }),
     "\n a b \t",
     "08.01.17"
+  );
+
+  t.deepEqual(
+    stripHtml(" \n a <article> \xa0 <div> \xa0 </article> b \t ", {
+      trimOnlySpaces: true,
+      ignoreTags: ["div"]
+    }),
+    "\n a <div> b \t",
+    "08.01.18 - opts.ignoreTags combo"
+  );
+  t.deepEqual(
+    stripHtml(" \n a <article> \xa0 < div> \xa0 </article> b \t ", {
+      trimOnlySpaces: true,
+      ignoreTags: ["div"]
+    }),
+    "\n a < div> b \t",
+    "08.01.19 - opts.ignoreTags combo - plausible but recognised"
   );
 });
 

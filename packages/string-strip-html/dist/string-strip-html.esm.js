@@ -1,9 +1,9 @@
-import rangesApply from 'ranges-apply';
-import Ranges from 'ranges-push';
-import isObj from 'lodash.isplainobject';
-import trim from 'lodash.trim';
-import checkTypes from 'check-types-mini';
-import ent from 'ent';
+import rangesApply from "ranges-apply";
+import Ranges from "ranges-push";
+import isObj from "lodash.isplainobject";
+import trim from "lodash.trim";
+import checkTypes from "check-types-mini";
+import ent from "ent";
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
@@ -126,7 +126,7 @@ function stripHtml(str, originalOpts) {
   const singleLetterTags = ["a", "b", "i", "p", "q", "s", "u"];
   const punctuation = [".", ",", "?", ";", ")", "\u2026", '"', "\u00BB"];
   const stripTogetherWithTheirContentsDefaults = ["script", "style", "xml"];
-  let tag = {};
+  let tag = { attributes: [] };
   let chunkOfWhitespaceStartsAt = null;
   let chunkOfSpacesStartsAt = null;
   const rangedOpeningTags = [];
@@ -283,6 +283,9 @@ function stripHtml(str, originalOpts) {
       )}`
     );
   }
+  function isStr(something) {
+    return typeof something === "string";
+  }
   function resetHrefMarkers() {
     if (hrefInsertionActive) {
       hrefDump = {};
@@ -303,6 +306,23 @@ function stripHtml(str, originalOpts) {
     }
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  if (!opts.ignoreTags) {
+    opts.ignoreTags = [];
+  } else if (isArr(opts.ignoreTags)) {
+    opts.ignoreTags = opts.ignoreTags.filter(
+      val => isStr(val) && val.length > 0
+    );
+  } else if (isStr(opts.ignoreTags)) {
+    opts.ignoreTags = [opts.ignoreTags];
+  } else if (!isArr(opts.ignoreTags) && !!opts.ignoreTags) {
+    throw new TypeError(
+      `string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(
+        originalOpts,
+        null,
+        4
+      )}`
+    );
+  }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
@@ -327,7 +347,7 @@ function stripHtml(str, originalOpts) {
       );
     } else if (originalOpts.dumpLinkHrefsNearby) {
       throw new TypeError(
-        `string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(
+        `string-strip-html/stripHtml(): [THROW_ID_04] Optional Options Object's key dumpLinkHrefsNearby was set to ${typeof originalOpts.dumpLinkHrefsNearby}, equal to ${JSON.stringify(
           originalOpts.dumpLinkHrefsNearby,
           null,
           4
@@ -351,7 +371,7 @@ function stripHtml(str, originalOpts) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
   }
   checkTypes(opts, defaults, {
-    msg: "string-strip-html/stripHtml(): [THROW_ID_04*]",
+    msg: "string-strip-html/stripHtml(): [THROW_ID_05*]",
     schema: {
       stripTogetherWithTheirContents: ["array", "null", "undefined"]
     }
@@ -374,7 +394,7 @@ function stripHtml(str, originalOpts) {
     })
   ) {
     throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_05] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
+      `string-strip-html/stripHtml(): [THROW_ID_06] Optional Options Object's key stripTogetherWithTheirContents was set to contain not just string elements! For example, element at index ${
         somethingCaught.i
       } has a value ${
         somethingCaught.el
@@ -401,7 +421,7 @@ function stripHtml(str, originalOpts) {
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (
-      Object.keys(tag).length &&
+      Object.keys(tag).length > 1 &&
       tag.lastClosingBracketAt &&
       tag.lastClosingBracketAt < i &&
       str[i] !== " " &&
@@ -410,7 +430,7 @@ function stripHtml(str, originalOpts) {
       spacesChunkWhichFollowsTheClosingBracketEndsAt = i;
     }
     if (str[i] === ">") {
-      if ((!tag || !Object.keys(tag).length) && i > 1) {
+      if ((!tag || Object.keys(tag).length < 2) && i > 1) {
         for (let y = i; y--; ) {
           if (str[y - 1] === undefined || str[y] === ">") {
             const startingPoint = str[y - 1] === undefined ? y : y + 1;
@@ -484,6 +504,7 @@ function stripHtml(str, originalOpts) {
       !tag.lastClosingBracketAt
     ) {
       tag = {};
+      tag.attributes = [];
       attrObj = {};
     }
     if (str[i] === '"' || str[i] === "'") {
@@ -495,9 +516,6 @@ function stripHtml(str, originalOpts) {
       ) {
         attrObj.valueEnds = i;
         attrObj.value = str.slice(attrObj.valueStarts, i);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
         tag.quotes = undefined;
@@ -592,7 +610,8 @@ function stripHtml(str, originalOpts) {
       attrObj.equalsAt &&
       !attrObj.valueStarts
     ) {
-      if (attrObj.valueEnds) ; else {
+      if (attrObj.valueEnds) {
+      } else {
         attrObj.valueStarts = i;
       }
     }
@@ -614,9 +633,6 @@ function stripHtml(str, originalOpts) {
       str[i].trim().length !== 0 &&
       str[i] !== "="
     ) {
-      if (!tag.attributes) {
-        tag.attributes = [];
-      }
       tag.attributes.push(attrObj);
       attrObj = {};
     }
@@ -633,17 +649,11 @@ function stripHtml(str, originalOpts) {
       } else if (str[i] === "/" || str[i] === ">") {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
       } else if (str[i] === "<" || !isValidAttributeCharacter(str[i])) {
         attrObj.nameEnds = i;
         attrObj.name = str.slice(attrObj.nameStarts, attrObj.nameEnds);
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
         tag.attributes.push(attrObj);
         attrObj = {};
       }
@@ -715,9 +725,6 @@ function stripHtml(str, originalOpts) {
         tag.lastClosingBracketAt = i;
         spacesChunkWhichFollowsTheClosingBracketEndsAt = null;
         if (Object.keys(attrObj).length) {
-          if (!tag.attributes) {
-            tag.attributes = [];
-          }
           tag.attributes.push(attrObj);
           attrObj = {};
         }
@@ -795,11 +802,6 @@ function stripHtml(str, originalOpts) {
             (tag.attributes &&
               tag.attributes.some(attrObj => attrObj.equalsAt)))
         ) {
-          if (opts.ignoreTags.includes(tag.name)) {
-            tag = {};
-            attrObj = {};
-            continue;
-          }
           const whiteSpaceCompensation = calculateWhitespaceToInsert(
             str,
             i,
@@ -963,20 +965,15 @@ function stripHtml(str, originalOpts) {
     } else if (chunkOfWhitespaceStartsAt !== null) {
       if (
         !tag.quotes &&
-        tag.equalsSpottedAt === chunkOfWhitespaceStartsAt - 1 &&
-        tag.attributeNameEnds &&
-        tag.equalsSpottedAt > tag.attributeNameEnds &&
+        attrObj.equalsAt > chunkOfWhitespaceStartsAt - 1 &&
+        attrObj.nameEnds &&
+        attrObj.equalsAt > attrObj.nameEnds &&
         str[i] !== '"' &&
         str[i] !== "'"
       ) {
         if (isObj(attrObj)) {
-          attrObj = {};
+          tag.attributes.push(attrObj);
         }
-        attrObj.equalsAt = tag.equalsSpottedAt;
-        if (!tag.attributes) {
-          tag.attributes = [];
-        }
-        tag.attributes.push(attrObj);
         attrObj = {};
         tag.equalsSpottedAt = undefined;
       }
