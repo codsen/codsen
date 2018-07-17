@@ -1,9 +1,9 @@
-import rangesApply from "ranges-apply";
-import Ranges from "ranges-push";
-import isObj from "lodash.isplainobject";
-import trim from "lodash.trim";
-import checkTypes from "check-types-mini";
-import ent from "ent";
+import rangesApply from 'ranges-apply';
+import Ranges from 'ranges-push';
+import isObj from 'lodash.isplainobject';
+import trim from 'lodash.trim';
+import checkTypes from 'check-types-mini';
+import ent from 'ent';
 
 function stripHtml(str, originalOpts) {
   const isArr = Array.isArray;
@@ -610,8 +610,7 @@ function stripHtml(str, originalOpts) {
       attrObj.equalsAt &&
       !attrObj.valueStarts
     ) {
-      if (attrObj.valueEnds) {
-      } else {
+      if (attrObj.valueEnds) ; else {
         attrObj.valueStarts = i;
       }
     }
