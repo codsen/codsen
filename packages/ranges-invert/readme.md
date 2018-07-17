@@ -1,6 +1,6 @@
 # ranges-invert
 
-> Invert natural number string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+> Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
@@ -19,18 +19,18 @@ npm i ranges-invert
 
 ```js
 // consume as CommonJS require:
-const rangesSort = require("ranges-invert");
+const rangesInvert = require("ranges-invert");
 // or as a native ES module:
-import rangesSort from "ranges-invert";
+import rangesInvert from "ranges-invert";
 ```
 
 Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-invert.cjs.js` | 5 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-invert.esm.js` | 5 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-invert.umd.js` | 18 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-invert.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-invert.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-invert.umd.js` | 29 KB |
 
 **[⬆ back to top](#markdown-header-ranges-invert)**
 
@@ -60,7 +60,7 @@ There is possibility that string will not cover the inverted range. For example,
 
 ## API
 
-**rangesSort(arr[, opts])**
+**rangesInvert(arr[, opts])**
 
 | Input argument | Type                         | Obligatory? | Description                                                                                                                                                                   |
 | -------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
