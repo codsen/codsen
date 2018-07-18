@@ -125,6 +125,7 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 ```js
 {
   ignoreTags: [],
+  onlyStripTags: [],
   stripTogetherWithTheirContents: ["script", "style", "xml"],
   skipHtmlDecoding: false,
   returnRangesOnly: false,
