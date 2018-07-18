@@ -2,6 +2,7 @@ import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
 import isObj from 'lodash.isplainobject';
 import trim from 'lodash.trim';
+import without from 'lodash.without';
 import checkTypes from 'check-types-mini';
 import ent from 'ent';
 
@@ -239,7 +240,10 @@ function stripHtml(str, originalOpts) {
     if (toIdx > lastClosingBracketAt) {
       strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
     }
-    if (!punctuation.includes(str[currCharIdx]) && str[currCharIdx] !== "!") {
+    if (
+      !punctuation.includes(str[currCharIdx]) &&
+      str[currCharIdx] !== "!"
+    ) {
       return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
     }
     return "";
@@ -283,6 +287,22 @@ function stripHtml(str, originalOpts) {
       )}`
     );
   }
+  function prepHopefullyAnArray(something, name) {
+    if (!something) {
+      return [];
+    } else if (isArr(something)) {
+      return something.filter(val => isStr(val) && val.trim().length > 0);
+    } else if (isStr(something)) {
+      if (something.length) {
+        return [something];
+      }
+      return [];
+    } else if (!isArr(something)) {
+      throw new TypeError(
+        `string-strip-html/stripHtml(): [THROW_ID_03] ${name} must be array containing zero or more strings or something falsey. Currently it's equal to: ${something}, that a type of ${typeof something}.`
+      );
+    }
+  }
   function isStr(something) {
     return typeof something === "string";
   }
@@ -294,6 +314,7 @@ function stripHtml(str, originalOpts) {
   }
   const defaults = {
     ignoreTags: [],
+    onlyStripTags: [],
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
     skipHtmlDecoding: false,
     returnRangesOnly: false,
@@ -306,22 +327,14 @@ function stripHtml(str, originalOpts) {
     }
   };
   const opts = Object.assign({}, defaults, originalOpts);
-  if (!opts.ignoreTags) {
-    opts.ignoreTags = [];
-  } else if (isArr(opts.ignoreTags)) {
-    opts.ignoreTags = opts.ignoreTags.filter(
-      val => isStr(val) && val.length > 0
-    );
-  } else if (isStr(opts.ignoreTags)) {
-    opts.ignoreTags = [opts.ignoreTags];
-  } else if (!isArr(opts.ignoreTags) && !!opts.ignoreTags) {
-    throw new TypeError(
-      `string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object must be a plain object! Currently it's: ${(typeof originalOpts).toLowerCase()}, equal to:\n${JSON.stringify(
-        originalOpts,
-        null,
-        4
-      )}`
-    );
+  opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
+  opts.onlyStripTags = prepHopefullyAnArray(
+    opts.onlyStripTags,
+    "opts.onlyStripTags"
+  );
+  const onlyStripTagsMode = !!opts.onlyStripTags.length;
+  if (opts.onlyStripTags.length && opts.ignoreTags.length) {
+    opts.onlyStripTags = without(opts.onlyStripTags, ...opts.ignoreTags);
   }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
@@ -566,7 +579,10 @@ function stripHtml(str, originalOpts) {
         tag.nameEnds +
           (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0)
       );
-      if (opts.ignoreTags.includes(tag.name)) {
+      if (
+        (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name)) ||
+        (onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name))
+      ) {
         tag = {};
         attrObj = {};
         continue;

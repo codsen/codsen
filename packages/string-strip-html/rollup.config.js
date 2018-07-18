@@ -40,6 +40,7 @@ export default commandLineArgs => {
         "ent",
         "lodash.isplainobject",
         "lodash.trim",
+        "lodash.without",
         "ranges-apply",
         "ranges-push"
       ],
@@ -63,6 +64,7 @@ export default commandLineArgs => {
         "ent",
         "lodash.isplainobject",
         "lodash.trim",
+        "lodash.without",
         "ranges-apply",
         "ranges-push"
       ],

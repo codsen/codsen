@@ -163,12 +163,13 @@
     "ent": "^2.2.0",
     "lodash.isplainobject": "latest",
     "lodash.trim": "^4.5.1",
+    "lodash.without": "^4.4.0",
     "ranges-apply": "^2.3.2",
     "ranges-push": "^2.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.54",
-    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/core": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.0.0-beta.53",
     "ava": "1.0.0-beta.6",
     "codacy-coverage": "latest",
     "coveralls": "latest",

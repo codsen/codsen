@@ -1212,6 +1212,11 @@ test("01.35 - punctuation after tag - simplified, question mark", t => {
     [[1, 4, ""], [5, 10, " "]],
     "01.35.06"
   );
+  t.deepEqual(
+    stripHtml("a<b>?</b> c", { ignoreTags: null }),
+    "a? c",
+    "01.35.07"
+  );
 });
 
 test("01.36 - punctuation after tag - simplified, exclamation mark", t => {
@@ -2454,6 +2459,149 @@ test("09.06 - opts.dumpLinkHrefsNearby - wrapHeads/wrapTails", t => {
     ),
     "a [https://codsen.com] b",
     "09.06.08 - whole div pair is removed"
+  );
+});
+
+// ==============================
+// opts.onlyStripTags
+// ==============================
+
+test("10.01 - opts.onlyStripTags - base cases", t => {
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening'
+    ),
+    "Let's watch RT news this evening",
+    "10.01.01 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: "z" }
+    ),
+    'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+    "10.01.02 - non-existent tag option - leaves all tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: null }
+    ),
+    "Let's watch RT news this evening",
+    "10.01.03 - falsey option"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: [] }
+    ),
+    "Let's watch RT news this evening",
+    "10.01.04 - no tags mentioned, will strip all"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: [""] }
+    ),
+    "Let's watch RT news this evening",
+    "10.01.05 - empty strings will be removed and will become default, blank setting"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: ["\t", "\n"] }
+    ),
+    "Let's watch RT news this evening",
+    "10.01.06 - same, whitespace entries will be removed, setting will become default - strip all"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening'
+    ),
+    "Let's watch RT news this evening",
+    "10.01.07 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: "a" }
+    ),
+    "Let's watch <b>RT news</b> this evening",
+    "10.01.08 - only strip anchor tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: ["a"] }
+    ),
+    "Let's watch <b>RT news</b> this evening",
+    "10.01.09 - only strip anchor tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: "b" }
+    ),
+    'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
+    "10.01.10 - only strip anchor tags"
+  );
+  t.deepEqual(
+    stripHtml(
+      'Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening',
+      { onlyStripTags: ["b"] }
+    ),
+    'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
+    "10.01.11 - only strip anchor tags"
+  );
+});
+
+test("10.02 - opts.onlyStripTags + opts.ignoreTags combo", t => {
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>'
+    ),
+    "Let's watch RT news this evening",
+    "10.02.01 - control, default behaviour"
+  );
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+      { onlyStripTags: "a" }
+    ),
+    "<div>Let's watch <b>RT news</b> this evening</div>",
+    "10.02.02"
+  );
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+      { ignoreTags: "a" }
+    ),
+    'Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening', // TODO - detect and skip adding the space here
+    "10.02.03"
+  );
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+      { onlyStripTags: "a", ignoreTags: "a" }
+    ),
+    '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+    "10.02.04 - both entries cancel each one out"
+  );
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+      { onlyStripTags: ["a", "b"], ignoreTags: "a" }
+    ),
+    '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"> RT news </a> this evening</div>', // TODO - detect and skip adding the space here
+    "10.02.05 - both entries cancel each one out"
+  );
+  t.deepEqual(
+    stripHtml(
+      '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+      { onlyStripTags: ["a"], ignoreTags: ["a", "b"] }
+    ),
+    '<div>Let\'s watch <a href="https://www.rt.com/" target="_blank"><b>RT news</b></a> this evening</div>',
+    "10.02.06 - both entries cancel each one out"
   );
 });
 

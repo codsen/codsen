@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0] - 2018-07-17
+
+- ✨ Added `opts.onlyStripTags`
+
 ## [3.0.0] - 2018-07-03
 
 Breaking changes: `opts.dumpLinkHrefsNearby` was previously Boolean. Now it's a plain object and its key `enabled` (`opts.dumpLinkHrefsNearby.enabled`) does the same thing that `opts.dumpLinkHrefsNearby` did before `v3`.
@@ -109,3 +113,4 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 [2.3.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.3.0%0Dv2.2.2#diff
 [2.4.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v2.4.0%0Dv2.3.0#diff
 [3.0.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v3.0.0%0Dv2.4.1#diff
+[3.1.0]: https://bitbucket.org/codsen/string-strip-html/branches/compare/v3.1.0%0Dv3.0.2#diff

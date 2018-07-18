@@ -6,6 +6,7 @@ var rangesApply = _interopDefault(require('ranges-apply'));
 var Ranges = _interopDefault(require('ranges-push'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var trim = _interopDefault(require('lodash.trim'));
+var without = _interopDefault(require('lodash.without'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var ent = _interopDefault(require('ent'));
 
@@ -21,6 +22,26 @@ function _typeof(obj) {
   }
 
   return _typeof(obj);
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
 function stripHtml(str, originalOpts) {
@@ -137,9 +158,11 @@ function stripHtml(str, originalOpts) {
     if (toIdx > lastClosingBracketAt) {
       strToEvaluateForLineBreaks += str.slice(lastClosingBracketAt, toIdx);
     }
-    if (!punctuation.includes(str[currCharIdx]) && str[currCharIdx] !== "!") {
-      return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
-    }
+    if (!punctuation.includes(str[currCharIdx]) &&
+    str[currCharIdx] !== "!"
+    ) {
+        return strToEvaluateForLineBreaks.includes("\n") ? "\n" : " ";
+      }
     return "";
   }
   function calculateHrefToBeInserted() {
@@ -157,6 +180,22 @@ function stripHtml(str, originalOpts) {
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
     throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_02] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
+  function prepHopefullyAnArray(something, name) {
+    if (!something) {
+      return [];
+    } else if (isArr(something)) {
+      return something.filter(function (val) {
+        return isStr(val) && val.trim().length > 0;
+      });
+    } else if (isStr(something)) {
+      if (something.length) {
+        return [something];
+      }
+      return [];
+    } else if (!isArr(something)) {
+      throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] ".concat(name, " must be array containing zero or more strings or something falsey. Currently it's equal to: ").concat(something, ", that a type of ").concat(_typeof(something), "."));
+    }
+  }
   function isStr(something) {
     return typeof something === "string";
   }
@@ -168,6 +207,7 @@ function stripHtml(str, originalOpts) {
   }
   var defaults = {
     ignoreTags: [],
+    onlyStripTags: [],
     stripTogetherWithTheirContents: stripTogetherWithTheirContentsDefaults,
     skipHtmlDecoding: false,
     returnRangesOnly: false,
@@ -180,16 +220,11 @@ function stripHtml(str, originalOpts) {
     }
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  if (!opts.ignoreTags) {
-    opts.ignoreTags = [];
-  } else if (isArr(opts.ignoreTags)) {
-    opts.ignoreTags = opts.ignoreTags.filter(function (val) {
-      return isStr(val) && val.length > 0;
-    });
-  } else if (isStr(opts.ignoreTags)) {
-    opts.ignoreTags = [opts.ignoreTags];
-  } else if (!isArr(opts.ignoreTags) && !!opts.ignoreTags) {
-    throw new TypeError("string-strip-html/stripHtml(): [THROW_ID_03] Optional Options Object must be a plain object! Currently it's: ".concat(_typeof(originalOpts).toLowerCase(), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
+  opts.ignoreTags = prepHopefullyAnArray(opts.ignoreTags, "opts.ignoreTags");
+  opts.onlyStripTags = prepHopefullyAnArray(opts.onlyStripTags, "opts.onlyStripTags");
+  var onlyStripTagsMode = !!opts.onlyStripTags.length;
+  if (opts.onlyStripTags.length && opts.ignoreTags.length) {
+    opts.onlyStripTags = without.apply(void 0, [opts.onlyStripTags].concat(_toConsumableArray(opts.ignoreTags)));
   }
   if (!isObj(opts.dumpLinkHrefsNearby)) {
     opts.dumpLinkHrefsNearby = Object.assign({}, defaults.dumpLinkHrefsNearby);
@@ -334,7 +369,7 @@ function stripHtml(str, originalOpts) {
     if (tag.nameStarts !== undefined && tag.nameEnds === undefined && (str[i].trim().length === 0 || str[i] === "/" || str[i] === "<" || str[i] === ">" || str[i].trim().length !== 0 && str[i + 1] === undefined)) {
       tag.nameEnds = i;
       tag.name = str.slice(tag.nameStarts, tag.nameEnds + (str[i] !== ">" && str[i] !== "/" && str[i + 1] === undefined ? 1 : 0));
-      if (opts.ignoreTags.includes(tag.name)) {
+      if (!onlyStripTagsMode && opts.ignoreTags.includes(tag.name) || onlyStripTagsMode && !opts.onlyStripTags.includes(tag.name)) {
         tag = {};
         attrObj = {};
         continue;
