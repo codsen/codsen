@@ -324,7 +324,7 @@ function stripHtml(str, originalOpts) {
               }
               return "break";
             }();
-            if (_ret === "break") break;
+            break;
           }
         }
       }
