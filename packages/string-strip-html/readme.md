@@ -35,9 +35,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                            | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 27 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 29 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 116 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-strip-html.cjs.js` | 28 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-strip-html.esm.js` | 30 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-strip-html.umd.js` | 123 KB |
 
 **[⬆ back to top](#markdown-header-string-strip-html)**
 
@@ -234,6 +234,8 @@ Sometimes you want to strip only certain HTML tag or tags. It would be impractic
 `opts.onlyStripTags` is an array. When a program starts, it will filter out any empty strings and strings that can be `String.trim()`'ed to zero-length string. It's necessary because a presence on just one string in `opts.onlyStripTags` will switch this application to `delete-only-these` mode and it would be bad if empty, falsey or whitespace string value would accidentally cause it.
 
 This option can work in combination with `opts.ignoreTags`. Any tags listed in `opts.ignoreTags` will be removed from the tags, listed in `opts.onlyStripTags`. If there was one or more tag listed in `opts.onlyStripTags`, the `delete-only-these` mode will be on and will be respected, even if there will be no tags to remove because all were excluded in `opts.onlyStripTags`.
+
+**[⬆ back to top](#markdown-header-string-strip-html)**
 
 ## Not assuming anything
 

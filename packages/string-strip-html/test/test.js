@@ -2020,7 +2020,7 @@ test("06.06 - range tags are overlapping", t => {
 // opts.returnRangesOnly
 // ==============================
 
-test("07.01 - opts.returnRangesOnly", t => {
+test("07.01 - opts.returnRangesOnly - anchor wrapping text", t => {
   // both default known range tags
   t.deepEqual(
     stripHtml(
@@ -2043,6 +2043,17 @@ test("07.01 - opts.returnRangesOnly", t => {
     ),
     [[9, 43, " "], [51, 56, " "]],
     "07.01.03 - opts"
+  );
+});
+
+test("07.02 - opts.returnRangesOnly - no tags were present at all", t => {
+  // t.deepEqual(stripHtml("Some text"), "Some text", "07.02.01 - control");
+  t.deepEqual(
+    stripHtml("Some text", {
+      returnRangesOnly: true
+    }),
+    [],
+    "07.02.02 - returns empty array (no ranges inside)"
   );
 });
 

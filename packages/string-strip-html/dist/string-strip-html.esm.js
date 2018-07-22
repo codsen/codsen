@@ -1011,6 +1011,8 @@ function stripHtml(str, originalOpts) {
       return trim(untrimmedRes, " ");
     }
     return untrimmedRes.trim();
+  } else if (opts.returnRangesOnly) {
+    return [];
   }
   if (opts.trimOnlySpaces) {
     return trim(str, " ");
