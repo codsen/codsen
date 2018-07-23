@@ -122,6 +122,40 @@ const htmlTags = [
   "summary"
 ];
 
+// https://stackoverflow.com/a/1527820/3943954
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// The further function generates random-length strings that do not contain
+// anything to collapse. We use it to catch any false positives.
+const nonWhitespaceBits = [
+  "<br>",
+  "<br/>",
+  '<zzz class="yyy">',
+  "zzz",
+  "1",
+  "_",
+  "a",
+  "&",
+  "#",
+  "."
+]; // bits that each of our tests will comprise of
+function nothingToCollapseGenerator() {
+  const testLength = getRandomInt(2, 50); // how many bits to pick and glue together
+  // final result array which will comprise of "x" strings
+
+  // traverse backwards because direction doesn't matter, yet it's more performant
+  // to go backwards:
+  let temp = "";
+  for (let y = testLength; y--; ) {
+    temp += `${nonWhitespaceBits[getRandomInt(0, 9)]}${
+      Math.random() > 0.75 && y !== 0 ? " " : ""
+    }`;
+  }
+  return temp;
+}
+
 // -----------------------------------------------------------------------------
 // group 01. various throws
 // -----------------------------------------------------------------------------
@@ -921,4 +955,16 @@ test(`07.03 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there 
     "07.03.02 - hardcoded default"
   );
   t.deepEqual(collapse("a\nb", { returnRangesOnly: true }), [], "07.03.03");
+});
+
+// -----------------------------------------------------------------------------
+// 08. check a ten thousand randomly-generated strings that don't need collapsing
+// -----------------------------------------------------------------------------
+
+test(`08 - ${`\u001b[${33}m${`GENERATED TESTS`}\u001b[${39}m`}`, t => {
+  for (let i = 10000; i--; ) {
+    let temp = nothingToCollapseGenerator();
+    t.is(collapse(temp), temp);
+    temp = undefined;
+  }
 });
