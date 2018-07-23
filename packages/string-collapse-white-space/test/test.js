@@ -268,6 +268,16 @@ test("02.05 - sequences of line breaks", t => {
   t.is(collapse("a\nb\nc\n   \n\n\n\nd"), "a\nb\nc\n \n\n\n\nd", "02.05.02");
 });
 
+test("02.06 - tag and linebreak chain", t => {
+  t.is(collapse("a<br>\nb"), "a<br>\nb", "02.06.01");
+  t.is(collapse("a<br>\nb<br>\nc"), "a<br>\nb<br>\nc", "02.06.02");
+  t.is(
+    collapse("a<br>\nb<br>\nc<br>\nd"),
+    "a<br>\nb<br>\nc<br>\nd",
+    "02.06.01"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 03. More tests on trimming, targetting algorithm's weakest spots
 // -----------------------------------------------------------------------------
@@ -701,6 +711,19 @@ test("05.09 - detected erroneous code (space after equal sign in HTML attribute)
 // -----------------------------------------------------------------------------
 // 06. opts.removeEmptyLines
 // -----------------------------------------------------------------------------
+
+// test(`delete me`, t => {
+//   // on
+//   t.is(
+//     collapse("a\n\nb", {
+//       trimLines: true,
+//       trimnbsp: true,
+//       removeEmptyLines: true
+//     }),
+//     "a\nb",
+//     "06.01.01 - \\n - on"
+//   );
+// });
 
 test(`06.01 - ${`\u001b[${33}m${`opts.removeEmptyLines`}\u001b[${39}m`} - easy #1`, t => {
   // on

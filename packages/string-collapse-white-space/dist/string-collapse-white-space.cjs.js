@@ -246,13 +246,15 @@ function collapse(str, originalOpts) {
             tagMatched = false;
             preliminaryIndexesToDelete.wipe();
           }
-          if (tagMatched && preliminaryIndexesToDelete.current()) {
-            preliminaryIndexesToDelete.current().forEach(function (_ref) {
-              var _ref2 = _slicedToArray(_ref, 2),
-                  rangeStart = _ref2[0],
-                  rangeEnd = _ref2[1];
-              return finalIndexesToDelete.add(rangeStart, rangeEnd);
-            });
+          if (tagMatched) {
+            if (preliminaryIndexesToDelete.current()) {
+              preliminaryIndexesToDelete.current().forEach(function (_ref) {
+                var _ref2 = _slicedToArray(_ref, 2),
+                    rangeStart = _ref2[0],
+                    rangeEnd = _ref2[1];
+                return finalIndexesToDelete.add(rangeStart, rangeEnd);
+              });
+            }
             tagMatched = false;
           }
           count = resetCounts(count);

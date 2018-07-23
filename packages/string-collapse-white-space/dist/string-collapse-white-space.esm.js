@@ -239,12 +239,14 @@ function collapse(str, originalOpts) {
             tagMatched = false;
             preliminaryIndexesToDelete.wipe();
           }
-          if (tagMatched && preliminaryIndexesToDelete.current()) {
-            preliminaryIndexesToDelete
-              .current()
-              .forEach(([rangeStart, rangeEnd]) =>
-                finalIndexesToDelete.add(rangeStart, rangeEnd)
-              );
+          if (tagMatched) {
+            if (preliminaryIndexesToDelete.current()) {
+              preliminaryIndexesToDelete
+                .current()
+                .forEach(([rangeStart, rangeEnd]) =>
+                  finalIndexesToDelete.add(rangeStart, rangeEnd)
+                );
+            }
             tagMatched = false;
           }
           count = resetCounts(count);
