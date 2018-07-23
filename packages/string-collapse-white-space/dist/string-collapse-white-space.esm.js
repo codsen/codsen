@@ -487,7 +487,7 @@ function collapse(str, originalOpts) {
     }
   }
   if (opts.returnRangesOnly) {
-    return finalIndexesToDelete.current();
+    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
   }
   return finalIndexesToDelete.current()
     ? replaceSlicesArr(str, finalIndexesToDelete.current())

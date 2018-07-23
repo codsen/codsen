@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2018-07-23
+
+- ✨ When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
+
 ## [3.7.0] - 2018-06-20
 
 - ✨ Set up Rollup to remove comments from the code
@@ -97,3 +101,4 @@ GitHub sold us out. In the meantime, we:
 [3.5.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.5.0%0Dv3.4.0#diff
 [3.6.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.6.0%0Dv3.5.0#diff
 [3.7.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.7.0%0Dv3.6.1#diff
+[4.0.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.0.0%0Dv3.7.0#diff

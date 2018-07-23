@@ -880,12 +880,22 @@ test(`07.01 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there 
   );
 });
 
-test(`07.02 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove`, t => {
+test(`07.02 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #1`, t => {
   t.is(collapse("a b"), "a b", "07.02.01 - defaults");
   t.is(
     collapse("a b", { returnRangesOnly: false }),
     "a b",
     "07.02.02 - hardcoded default"
   );
-  t.is(collapse("a b", { returnRangesOnly: true }), null, "07.02.03");
+  t.deepEqual(collapse("a b", { returnRangesOnly: true }), [], "07.02.03");
+});
+
+test(`07.03 - ${`\u001b[${33}m${`opts.returnRangesOnly`}\u001b[${39}m`} - there was nothing to remove #2`, t => {
+  t.is(collapse("a\nb"), "a\nb", "07.03.01 - defaults");
+  t.is(
+    collapse("a\nb", { returnRangesOnly: false }),
+    "a\nb",
+    "07.03.02 - hardcoded default"
+  );
+  t.deepEqual(collapse("a\nb", { returnRangesOnly: true }), [], "07.03.03");
 });

@@ -8,8 +8,58 @@ var replaceSlicesArr = _interopDefault(require('ranges-apply'));
 var Slices = _interopDefault(require('ranges-push'));
 var stringMatchLeftRight = require('string-match-left-right');
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
 function collapse(str, originalOpts) {
   function charCodeBetweenInclusive(character, from, end) {
     return character.charCodeAt(0) >= from && character.charCodeAt(0) <= end;
@@ -18,10 +68,10 @@ function collapse(str, originalOpts) {
     return character === "<" || character.trim() === "";
   }
   if (typeof str !== "string") {
-    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to: " + JSON.stringify(str, null, 4));
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_01] The input is not string but ".concat(_typeof(str), ", equal to: ").concat(JSON.stringify(str, null, 4)));
   }
   if (originalOpts !== undefined && originalOpts !== null && !isObj(originalOpts)) {
-    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + ", equal to:\n" + JSON.stringify(originalOpts, null, 4));
+    throw new Error("string-collapse-white-space/collapse(): [THROW_ID_02] The opts is not a plain object but ".concat(_typeof(originalOpts), ", equal to:\n").concat(JSON.stringify(originalOpts, null, 4)));
   }
   if (str.length === 0) {
     return "";
@@ -40,7 +90,7 @@ function collapse(str, originalOpts) {
   checkTypes(opts, defaults, {
     msg: "string-collapse-white-space/collapse(): [THROW_ID_03*]"
   });
-  var preliminaryIndexesToDelete = void 0;
+  var preliminaryIndexesToDelete;
   if (opts.recogniseHTML) {
     preliminaryIndexesToDelete = new Slices();
   }
@@ -52,7 +102,7 @@ function collapse(str, originalOpts) {
   var whiteSpaceWithinTagEndsAt = null;
   var tagMatched = false;
   var tagCanEndHere = false;
-  var count = void 0;
+  var count;
   var bail = false;
   var resetCounts = function resetCounts() {
     return {
@@ -67,7 +117,7 @@ function collapse(str, originalOpts) {
   if (opts.recogniseHTML) {
     count = resetCounts();
   }
-  var lastLineBreaksLastCharIndex = void 0;
+  var lastLineBreaksLastCharIndex;
   for (var i = str.length; i--;) {
     if (str[i] === " ") {
       if (spacesEndAt === null) {
@@ -227,19 +277,28 @@ function collapse(str, originalOpts) {
               }) || str[i] === "d" && (str[i - 1] === "a" && stringMatchLeftRight.matchLeftIncl(str, i, ["head", "thead"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["kbd", "dd", "embed", "legend", "td"], { cb: isSpaceOrLeftBracket, i: true })) || str[i] === "e" && (stringMatchLeftRight.matchLeftIncl(str, i, "source", {
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["kbd", "dd", "embed", "legend", "td"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "e" && (stringMatchLeftRight.matchLeftIncl(str, i, "source", {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }) || str[i - 1] === "d" && stringMatchLeftRight.matchLeftIncl(str, i, ["aside", "code"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || str[i - 1] === "l" && stringMatchLeftRight.matchLeftIncl(str, i, ["table", "article", "title", "style"], { cb: isSpaceOrLeftBracket, i: true }) || str[i - 1] === "m" && stringMatchLeftRight.matchLeftIncl(str, i, ["iframe", "time"], {
+              }) || str[i - 1] === "l" && stringMatchLeftRight.matchLeftIncl(str, i, ["table", "article", "title", "style"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i - 1] === "m" && stringMatchLeftRight.matchLeftIncl(str, i, ["iframe", "time"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }) || str[i - 1] === "r" && stringMatchLeftRight.matchLeftIncl(str, i, ["pre", "figure", "picture"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || str[i - 1] === "t" && stringMatchLeftRight.matchLeftIncl(str, i, ["template", "cite", "blockquote"], { cb: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, "base", {
+              }) || str[i - 1] === "t" && stringMatchLeftRight.matchLeftIncl(str, i, ["template", "cite", "blockquote"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, "base", {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "g" && stringMatchLeftRight.matchLeftIncl(str, i, ["img", "strong", "dialog", "svg"], {
@@ -254,10 +313,16 @@ function collapse(str, originalOpts) {
               }) || isSpaceOrLeftBracket(str[i - 1])) || str[i] === "k" && stringMatchLeftRight.matchLeftIncl(str, i, ["track", "link", "mark"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || str[i] === "l" && stringMatchLeftRight.matchLeftIncl(str, i, ["html", "ol", "ul", "dl", "label", "del", "small", "col"], { cb: isSpaceOrLeftBracket, i: true }) || str[i] === "m" && stringMatchLeftRight.matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
+              }) || str[i] === "l" && stringMatchLeftRight.matchLeftIncl(str, i, ["html", "ol", "ul", "dl", "label", "del", "small", "col"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || str[i] === "n" && (str[i - 1] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["section", "caption", "figcaption", "option", "button"], { cb: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
+              }) || str[i] === "m" && stringMatchLeftRight.matchLeftIncl(str, i, ["param", "em", "menuitem", "form"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || str[i] === "n" && (str[i - 1] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["section", "caption", "figcaption", "option", "button"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["span", "keygen", "dfn", "main"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }))) {
@@ -267,13 +332,19 @@ function collapse(str, originalOpts) {
               if (str[i] === "o" && stringMatchLeftRight.matchLeftIncl(str, i, ["bdo", "video", "audio"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && stringMatchLeftRight.matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], { cb: isSpaceOrLeftBracket, i: true }) || stringMatchLeftRight.matchLeftIncl(str, i, ["map", "samp", "rp"], {
+              }) || str[i] === "p" && (isSpaceOrLeftBracket(str[i - 1]) || str[i - 1] === "u" && stringMatchLeftRight.matchLeftIncl(str, i, ["hgroup", "colgroup", "optgroup", "sup"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["map", "samp", "rp"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
               })) || str[i] === "q" && isSpaceOrLeftBracket(str[i - 1]) || str[i] === "r" && (str[i - 1] === "e" && stringMatchLeftRight.matchLeftIncl(str, i, ["header", "meter", "footer"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["var", "br", "abbr", "wbr", "hr", "tr"], { cb: isSpaceOrLeftBracket, i: true })) || str[i] === "s" && (str[i - 1] === "s" && stringMatchLeftRight.matchLeftIncl(str, i, ["address", "progress"], {
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["var", "br", "abbr", "wbr", "hr", "tr"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "s" && (str[i - 1] === "s" && stringMatchLeftRight.matchLeftIncl(str, i, ["address", "progress"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
               }) || stringMatchLeftRight.matchLeftIncl(str, i, ["canvas", "details", "ins"], {
@@ -291,7 +362,10 @@ function collapse(str, originalOpts) {
               }) || str[i - 1] === "u" && stringMatchLeftRight.matchLeftIncl(str, i, ["input", "output"], {
                 cb: isSpaceOrLeftBracket,
                 i: true
-              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], { cb: isSpaceOrLeftBracket, i: true })) || str[i] === "u" && (isSpaceOrLeftBracket(str[i - 1]) || stringMatchLeftRight.matchLeftIncl(str, i, "menu", {
+              }) || stringMatchLeftRight.matchLeftIncl(str, i, ["fieldset", "rt", "datalist", "dt"], {
+                cb: isSpaceOrLeftBracket,
+                i: true
+              })) || str[i] === "u" && (isSpaceOrLeftBracket(str[i - 1]) || stringMatchLeftRight.matchLeftIncl(str, i, "menu", {
                 cb: isSpaceOrLeftBracket,
                 i: true
               })) || str[i] === "v" && stringMatchLeftRight.matchLeftIncl(str, i, ["nav", "div"], {
@@ -317,7 +391,7 @@ function collapse(str, originalOpts) {
     }
   }
   if (opts.returnRangesOnly) {
-    return finalIndexesToDelete.current();
+    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
   }
   return finalIndexesToDelete.current() ? replaceSlicesArr(str, finalIndexesToDelete.current()) : str;
 }

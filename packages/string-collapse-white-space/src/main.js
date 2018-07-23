@@ -96,7 +96,7 @@ function collapse(str, originalOpts) {
   // looping backwards for better efficiency
   for (let i = str.length; i--; ) {
     console.log(
-      `99 ${`\u001b[${36}m${`------------------------`}\u001b[${39}m`} ${
+      `099 ${`\u001b[${36}m${`------------------------`}\u001b[${39}m`} ${
         str[i].trim() !== "" ? str[i] : "space"
       } ------ ${`\u001b[${35}m idx: ${i}\u001b[${39}m`}`
     );
@@ -621,7 +621,7 @@ function collapse(str, originalOpts) {
         4
       )}`
     );
-    return finalIndexesToDelete.current();
+    return finalIndexesToDelete.current() ? finalIndexesToDelete.current() : [];
   }
   return finalIndexesToDelete.current()
     ? replaceSlicesArr(str, finalIndexesToDelete.current())
