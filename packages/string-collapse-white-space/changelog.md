@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.1.0] - 2018-07-24
+
+- ✨ Fixed a strange false-positive bug which was happening around the encountered first bracket when there was no whitespace to remove, but with only a single line break. Sorry about that.
+- ✨ To iron-out all false-positive cases, I created an 8th group unit test where `10,000` randomly generated strings that don't contain anything to collapse are checked. Various pieces are assembled in random order and length: `<br>`, `<br/>`, `<zzz class="yyy">`, `zzz`, `1`, `_`, `a`, `&`, `#`, `.`. Plus, there are single spaces in-between, added with 25% probability.
+
+Here are ten examples of randomly-generated text which should not be changed by string-collapse function (notice there are maximum one space everywhere):
+
+```html
+& 1 _<br/>#<br/><br><br> <br>_a1
+
+a&1_.zzz<br/>.#zzz<br>&.<zzz class="yyy"> <zzz class="yyy">a zzz<br/>_<br><br/> <zzz class="yyy"><br/><zzz class="yyy">zzz1<br>_ <br><br><br>_# <zzz class="yyy">_.<br/>a1zzz 1.zzz<br/><zzz class="yyy">&<zzz class="yyy">.<br>.
+
+aaa1<br>1a &a1<br/>1<br/> <br>..#_1zzz _<br><br/> <zzz class="yyy">1 <br/>zzz azzz&<br>a& &<br/> _a &<zzz class="yyy">#
+
+<zzz class="yyy">__aa..#
+
+_<zzz class="yyy"> <br>. _<br/>zzz... <br/>zzz<br/> 1.<br/> & zzz& 1zzza <br> <br/> <br><br><br>&<zzz class="yyy">zzz1.zzz._& _ ##<br>a#<br>.<br/>
+
+.a<br>zzz _& 1_ 1zzz<zzz class="yyy"> <br/>#<br/>zzz & #<br/><br/> &<br>&<zzz class="yyy">_<br/><zzz class="yyy">.&a<br> &_#_
+
+_azzz 11##
+
+a.<br/>.<br/><br><br/><br/><br/><br/> # _1 1<zzz class="yyy"> .<br/>1<br>&# <br/><br/> <br>_aa <br/>
+
+# zzz& .# .a&1&_aa 1 zzz<zzz class="yyy">zzz.zzz_zzz_##_## <br><br/><br/>1
+
+<zzz class="yyy"> zzz 1<zzz class="yyy">_1<br>zzz.&<zzz class="yyy"> #___zzz<zzz class="yyy">.a a_<br/>1_. <br/> <br/><br> . _1 <br/>
+```
+
+Hopefully bugs like the one we just fixed should not happen any more 🤞
+
 ## [4.0.0] - 2018-07-23
 
 - ✨ When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
@@ -102,3 +133,4 @@ GitHub sold us out. In the meantime, we:
 [3.6.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.6.0%0Dv3.5.0#diff
 [3.7.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.7.0%0Dv3.6.1#diff
 [4.0.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.0.0%0Dv3.7.0#diff
+[4.1.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.1.0%0Dv4.0.0#diff
