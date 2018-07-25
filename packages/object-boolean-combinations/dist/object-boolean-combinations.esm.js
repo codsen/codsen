@@ -39,20 +39,6 @@ function objectBooleanCombinations(
   const propertiesToMix = Object.keys(incomingObject);
   const outcomingObjectsArray = [];
   let propertiesToBeOverridden;
-  if (existy(overrideObject) && isObject(overrideObject)) {
-    Object.keys(overrideObject).forEach(val => {
-      if (
-        overrideObject[val] !== 0 &&
-        overrideObject[val] !== 1 &&
-        overrideObject[val] !== true &&
-        overrideObject[val] !== false
-      ) {
-        throw new Error(
-          "[THROW_ID_04] override object's values must contain only true/valse or 0/1"
-        );
-      }
-    });
-  }
   let override = false;
   if (existy(overrideObject) && Object.keys(overrideObject).length !== 0) {
     override = true;

@@ -54,7 +54,12 @@ test("02.04 - three properties 2 overrides", t => {
   t.deepEqual(
     objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: 1, b: 1 }),
     [{ a: 1, b: 1, c: 0 }, { a: 1, b: 1, c: 1 }],
-    "02.04"
+    "02.04.01"
+  );
+  t.deepEqual(
+    objectBooleanCombinations({ a: 0, b: 0, c: 0 }, { a: "z", b: "y" }),
+    [{ a: "z", b: "y", c: 0 }, { a: "z", b: "y", c: 1 }],
+    "02.04.02 - override key values are strings"
   );
 });
 
@@ -136,7 +141,7 @@ test("03.03 - second input is not an object - throws", t => {
 });
 
 test("03.04 - non-boolean object overrides - throws", t => {
-  t.throws(() => {
+  t.deepEqual(
     objectBooleanCombinations(
       {
         a: 1,
@@ -145,6 +150,8 @@ test("03.04 - non-boolean object overrides - throws", t => {
         d: 0
       },
       { a: "1", b: "1", c: "1" }
-    );
-  });
+    ),
+    [{ a: "1", b: "1", c: "1", d: 0 }, { a: "1", b: "1", c: "1", d: 1 }],
+    "03.04"
+  );
 });
