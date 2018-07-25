@@ -155,7 +155,7 @@ If you construct development tools, different libraries perform separate steps, 
 
 Notes can be stored as _ranges_ - it's a fancy name for arrays of three arguments: `beginIndex`, `endIndex` and `whatToInsert`. First two correspond to [String.prototype.slice()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice) first two arguments. The third argument signifies what will be put in place of this string slice: if it's `undefined` (missing argument) or empty string — that slice will be deleted. If it's a string, its value will be placed instead of deleted slice.
 
-All [_range_- class libraries](https://github.com/search?q=topic%3Aranges+org%3Acodsen&type=Repositories) adhere to this spec.
+All our [_range_- class libraries](https://bitbucket.org/account/user/codsen/projects/RNG) adhere to this spec.
 
 Now, `string-strip-html` can also return ranges instead of a final string.
 

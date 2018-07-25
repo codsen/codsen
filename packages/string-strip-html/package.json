@@ -168,8 +168,8 @@
     "ranges-push": "^2.10.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.53",
-    "@babel/preset-env": "^7.0.0-beta.53",
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
     "ava": "1.0.0-beta.6",
     "codacy-coverage": "latest",
     "coveralls": "latest",
