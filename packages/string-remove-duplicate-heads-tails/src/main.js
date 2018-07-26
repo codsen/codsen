@@ -54,7 +54,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
 
   // trim but only if it's not trimmable to zero length (in that case return intact)
-  const temp = trimSpaces(str);
+  const temp = trimSpaces(str).res;
   if (temp.length === 0) {
     return str;
   }
@@ -132,7 +132,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       return str1;
     }
     // do tails now:
-    console.log("134 calling matchRightIncl()");
+    console.log("135 calling matchRightIncl()");
     const resultOfAttemptToMatchTails = matchRightIncl(
       str1,
       noteDownTheIndex,
@@ -155,14 +155,14 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
   // action
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts)).res;
   }
 
   // delete trailing empty head-tail clumps as in "a ((()))((()))"
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
     // do tails now - match from the end of a string, trimming along:
-    console.log("162 calling matchLeftIncl()");
+    console.log("165 calling matchLeftIncl()");
     const resultOfAttemptToMatchTails = matchLeftIncl(
       str1,
       str1.length - 1,
@@ -181,7 +181,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       return str1;
     }
     // do heads that precede those tails:
-    console.log("181 calling matchLeftIncl()");
+    console.log("184 calling matchLeftIncl()");
     const resultOfAttemptToMatchHeads = matchLeftIncl(
       str1,
       noteDownTheIndex,
@@ -204,12 +204,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
   }
   // action
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
 
   //                      E A R L Y    E N D I N G
 
-  console.log("208 calling both matchRightIncl() and matchLeftIncl()");
+  console.log("212 calling both matchRightIncl() and matchLeftIncl()");
   if (
     !matchRightIncl(str, 0, opts.heads, {
       trimBeforeMatching: true,
@@ -223,7 +223,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     console.log(
       `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
     );
-    return trimSpaces(str);
+    return trimSpaces(str).res;
   }
 
   //                             P A R T   II
@@ -294,7 +294,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
       // match heads
       let noteDownTheIndex;
-      console.log("289 calling matchRightIncl()");
+      console.log("297 calling matchRightIncl()");
       const resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -311,12 +311,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           itsFirstTail = true;
         }
 
-        console.log(`299 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        console.log(`314 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        console.log("310 calling matchRightIncl()");
+        console.log("319 calling matchRightIncl()");
         const resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
@@ -368,7 +368,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           }
 
           console.log(
-            `\u001b[${33}m${`354 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`371 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
@@ -376,7 +376,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
           console.log(
-            `\u001b[${33}m${`362 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`379 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         }
@@ -386,7 +386,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 4. offset the index
         console.log(
-          `\u001b[${33}m${`372 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`389 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
@@ -437,7 +437,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
 
       // match tails
-      console.log("430 calling matchRightIncl()");
+      console.log("440 calling matchRightIncl()");
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -457,7 +457,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // and we can't peel of those wrappings, hence only the second tail
           // can be added to conditionals' array.
           console.log(
-            `\u001b[${33}m${`441 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`460 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
@@ -488,7 +488,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 2. offset the index
         console.log(
-          `\u001b[${33}m${`472 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`491 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;

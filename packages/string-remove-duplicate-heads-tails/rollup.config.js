@@ -1,6 +1,6 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
@@ -23,7 +23,7 @@ export default commandLineArgs => {
         resolve(),
         commonjs(),
         babel(),
-        uglify()
+        terser()
       ]
     },
 

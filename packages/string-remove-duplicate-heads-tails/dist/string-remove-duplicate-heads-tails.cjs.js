@@ -10,7 +10,20 @@ var Ranges = _interopDefault(require('ranges-push'));
 var rangesApply = _interopDefault(require('ranges-apply'));
 var trimSpaces = _interopDefault(require('string-trim-spaces-only'));
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function removeDuplicateHeadsTails(str) {
   var originalOpts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   function existy(x) {
@@ -27,7 +40,7 @@ function removeDuplicateHeadsTails(str) {
     return str;
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + "!");
+    throw new Error("string-remove-duplicate-heads-tails: [THROW_ID_03] The given options are not a plain object but ".concat(_typeof(originalOpts), "!"));
   }
   if (existy(originalOpts) && has.call(originalOpts, "heads")) {
     if (!arrayiffy(originalOpts.heads).every(function (val) {
@@ -47,7 +60,7 @@ function removeDuplicateHeadsTails(str) {
       originalOpts.tails = arrayiffy(originalOpts.tails);
     }
   }
-  var temp = trimSpaces(str);
+  var temp = trimSpaces(str).res;
   if (temp.length === 0) {
     return str;
   }
@@ -68,13 +81,17 @@ function removeDuplicateHeadsTails(str) {
   });
   var firstNonMarkerChunkFound = false;
   var secondNonMarkerChunkFound = false;
-  var realRanges = new Ranges({ limitToBeAddedWhitespace: true });
-  var conditionalRanges = new Ranges({ limitToBeAddedWhitespace: true });
+  var realRanges = new Ranges({
+    limitToBeAddedWhitespace: true
+  });
+  var conditionalRanges = new Ranges({
+    limitToBeAddedWhitespace: true
+  });
   var itsFirstTail = true;
   var itsFirstLetter = true;
   var lastMatched = "";
   function delLeadingEmptyHeadTailChunks(str1, opts1) {
-    var noteDownTheIndex = void 0;
+    var noteDownTheIndex;
     var resultOfAttemptToMatchHeads = stringMatchLeftRight.matchRightIncl(str1, 0, opts1.heads, {
       trimBeforeMatching: true,
       cb: function cb(char, theRemainderOfTheString, index) {
@@ -100,10 +117,10 @@ function removeDuplicateHeadsTails(str) {
     return str1;
   }
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts)).res;
   }
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
-    var noteDownTheIndex = void 0;
+    var noteDownTheIndex;
     var resultOfAttemptToMatchTails = stringMatchLeftRight.matchLeftIncl(str1, str1.length - 1, opts1.tails, {
       trimBeforeMatching: true,
       cb: function cb(char, theRemainderOfTheString, index) {
@@ -129,7 +146,7 @@ function removeDuplicateHeadsTails(str) {
     return str1;
   }
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
   if (!stringMatchLeftRight.matchRightIncl(str, 0, opts.heads, {
     trimBeforeMatching: true,
@@ -138,7 +155,7 @@ function removeDuplicateHeadsTails(str) {
     trimBeforeMatching: true,
     relaxedApi: true
   })) {
-    return trimSpaces(str);
+    return trimSpaces(str).res;
   }
   for (var i = 0, len = str.length; i < len; i++) {
     if (str[i].trim() === "") ; else {

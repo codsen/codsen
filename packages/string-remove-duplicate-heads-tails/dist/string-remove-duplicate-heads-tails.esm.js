@@ -45,7 +45,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       originalOpts.tails = arrayiffy(originalOpts.tails);
     }
   }
-  const temp = trimSpaces(str);
+  const temp = trimSpaces(str).res;
   if (temp.length === 0) {
     return str;
   }
@@ -99,7 +99,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     return str1;
   }
   while (str !== delLeadingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delLeadingEmptyHeadTailChunks(str, opts)).res;
   }
   function delTrailingEmptyHeadTailChunks(str1, opts1) {
     let noteDownTheIndex;
@@ -138,7 +138,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     return str1;
   }
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
-    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts));
+    str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
   if (
     !matchRightIncl(str, 0, opts.heads, {
@@ -150,7 +150,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       relaxedApi: true
     })
   ) {
-    return trimSpaces(str);
+    return trimSpaces(str).res;
   }
   for (let i = 0, len = str.length; i < len; i++) {
     if (str[i].trim() === "") ; else {
