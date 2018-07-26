@@ -34,11 +34,11 @@ import trimSpaces from "string-trim-spaces-only";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                  | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-trim-spaces-only.cjs.js` | 871 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 833 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 527 B |
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-trim-spaces-only.cjs.js` | 2 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 1 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 1 KB |
 
 **[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
@@ -48,33 +48,63 @@ Here's what you'll get:
 const trimSpaces = require("string-trim-spaces-only");
 const res = trimSpaces("  aaa   ");
 console.log("res = " + JSON.stringify(res1, null, 4));
-// => "aaa"
+// => {
+//     res: "aaa",
+//     ranges: [[0, 2], [5, 8]]
+// }
 
 // trimming stops at first non-space:
 const res2 = trimSpaces("   \t  zz   \n    ");
 console.log("res2 = " + JSON.stringify(res2, null, 4));
-// => "\t  zz   \n"
-
-// the API is friendly like a panda - it bypasses everything else than a string:
-const res3 = trimSpaces(true);
-console.log("res3 = " + JSON.stringify(res3, null, 4));
-// => true
-const res4 = trimSpaces({ a: "zzz" });
-console.log("res4 = " + JSON.stringify(res4, null, 4));
-// => {a: 'zzz'}
+// => {
+//     res: "\t  zz   \n",
+//     ranges: [[0, 3], [12, 16]]
+// }
 ```
 
-We also tested it with emoji, it copes fine.
+We also tested it with emoji, it copes fine. Mind you, the indexes are based on native JS String indexes, that is, if emoji `.length` is `2` then such emoji will increase all subsequent character indexes by `2`.
 
 **[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## API
 
-API is simple: `string` in, `string` out.
+**trimSpaces(str, [opts])**
 
-You can pass non-strings too (including `undefined`), they will be returned and no action will be taken. You could also call it with no arguments at all — the API is deliberately friendly. After all, this function will be used within other code and it would be tedious to check are values always `string`s.
+### API - Function's Input
+
+| Input argument | Key value's type | Obligatory? | Description                                        |
+| -------------- | ---------------- | ----------- | -------------------------------------------------- |
+| `input`        | String           | yes         | Input string you want to trim some way             |
+| `opts`         | Plain object     | no          | An Optional Options Object. See below for its API. |
+
+If input arguments are supplied have any other types, an error will be `throw`n.
+
+**[⬆ back to top](#markdown-header-string-strip-html)**
+
+### Optional Options Object
+
+| An Optional Options Object's key | Type of its value | Default | Description                                                                                       |
+| -------------------------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------- |
+| {                                |                   |         |
+| `classicTrim`                    | Boolean           | `false` | If it's set to `true`, trimming becomes the same as `String.trim()`. Use it when you need ranges. |
+| }                                |                   |         |
+
+### API - Function's Output
+
+Since `v.2`, the output is a plain object:
+
+| Key name | Key value's type                  | Description                                                             |
+| -------- | --------------------------------- | ----------------------------------------------------------------------- |
+| {        |                                   |                                                                         |
+| `res`    | String or zero or more characters | Resulting string, what was left after trimming spaces from the input.   |
+| `ranges` | Array of zero or more arrays      | If we trimmed anything, each slice range will be added into this array. |
+| }        |                                   |                                                                         |
 
 **[⬆ back to top](#markdown-header-string-trim-spaces-only)**
+
+## `opts.classicTrim`
+
+`String.trim()` returns string but sometimes you need just ranges of what would be trimmed, to merge them into compiled ranges array and to process later, along everything else. In those cases, use `opts.classicTrim`. If you need just _string_ value, it's not worth to use this function as a substitute for `String.trim()` for performance reasons.
 
 ## Contributing
 

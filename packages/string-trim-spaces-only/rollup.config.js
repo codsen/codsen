@@ -1,6 +1,7 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
+import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
@@ -22,7 +23,7 @@ export default commandLineArgs => {
         resolve(),
         commonjs(),
         babel(),
-        uglify()
+        terser()
       ]
     },
 
@@ -30,12 +31,13 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [""],
+      external: ["check-types-mini"],
       plugins: [
         strip({
           sourceMap: false
         }),
-        babel()
+        babel(),
+        cleanup()
       ]
     },
 
@@ -43,11 +45,12 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [""],
+      external: ["check-types-mini"],
       plugins: [
         strip({
           sourceMap: false
-        })
+        }),
+        cleanup()
       ]
     }
   ];
