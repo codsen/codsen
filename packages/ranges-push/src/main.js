@@ -166,14 +166,17 @@ class Slices {
               this.opts.limitLinebreaksCount
             );
           }
-          this.last()[2] = calculatedVal;
+          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
+            // don't let the zero-length strings past
+            this.last()[2] = calculatedVal;
+          }
         }
       } else {
         if (!this.slices) {
           this.slices = [];
         }
         this.slices.push(
-          addVal !== undefined
+          addVal !== undefined && !(isStr(addVal) && !addVal.length)
             ? [
                 from,
                 to,

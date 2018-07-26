@@ -49,9 +49,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 32 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-push.cjs.js` | 9 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 7 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 33 KB |
 
 **[⬆ back to top](#markdown-header-ranges-push)**
 
@@ -112,6 +112,7 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 ```js
 {
   limitToBeAddedWhitespace: false,
+  limitLinebreaksCount: 1
 }
 ```
 

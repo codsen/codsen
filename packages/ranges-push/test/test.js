@@ -397,6 +397,26 @@ test("03.11  -  ADD() - pushing whole .current() output of another slices class"
   t.deepEqual(slices1.current(), [[1, 12]], "03.11");
 });
 
+test("03.12  -  ADD() - empty string to add", t => {
+  const slices1 = new Slices();
+  slices1.add(1, 2, "");
+  t.deepEqual(slices1.current(), [[1, 2]], "03.12.01");
+
+  const slices2 = new Slices({ limitToBeAddedWhitespace: true });
+  slices2.add(1, 2, "");
+  t.deepEqual(slices2.current(), [[1, 2]], "03.12.02");
+
+  const slices3 = new Slices({ limitToBeAddedWhitespace: true });
+  slices3.add(1, 2, "");
+  slices3.add(1, 2, "");
+  t.deepEqual(slices3.current(), [[1, 2]], "03.12.03");
+
+  const slices4 = new Slices({ limitToBeAddedWhitespace: true });
+  slices4.add(1, 2, "");
+  slices4.add(3, 4, "");
+  t.deepEqual(slices4.current(), [[1, 2], [3, 4]], "03.12.04");
+});
+
 // -----------------------------------------------------------------------------
 // 04. current()
 // -----------------------------------------------------------------------------
@@ -551,7 +571,7 @@ test("07.12  -  opts.limitToBeAddedWhitespace - linebreaks - #4", t => {
   const slices = new Slices({ limitToBeAddedWhitespace: true });
   slices.add(1, 2, "");
   slices.add(2, 4, "");
-  t.deepEqual(slices.current(), [[1, 4, ""]], "07.12");
+  t.deepEqual(slices.current(), [[1, 4]], "07.12");
 });
 
 test("07.13  -  opts.limitToBeAddedWhitespace - null negates 3rd arg #1", t => {

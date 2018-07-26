@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.11.0] - 2018-07-26
+
+- ✨ If third argument is an empty string, now it's being completely omited. This is necessary for unit tests' sanity. Otherwise, it's impossible to `deepEqual`-match.
+
 ## [2.10.0] - 2018-07-03
 
 - ✨ Added `opts.limitLinebreaksCount` - this will allow double linebreaks resulting in an empty row between the content lines.
@@ -128,3 +132,4 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 [2.8.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.8.0%0Dv2.7.0#diff
 [2.9.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.9.0%0Dv2.8.1#diff
 [2.10.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.10.0%0Dv2.9.2#diff
+[2.11.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.11.0%0Dv2.10.0#diff

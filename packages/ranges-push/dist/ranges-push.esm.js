@@ -140,14 +140,16 @@ class Slices {
               this.opts.limitLinebreaksCount
             );
           }
-          this.last()[2] = calculatedVal;
+          if (!(isStr(calculatedVal) && !calculatedVal.length)) {
+            this.last()[2] = calculatedVal;
+          }
         }
       } else {
         if (!this.slices) {
           this.slices = [];
         }
         this.slices.push(
-          addVal !== undefined
+          addVal !== undefined && !(isStr(addVal) && !addVal.length)
             ? [
                 from,
                 to,
