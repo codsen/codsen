@@ -8,14 +8,17 @@ import rangesSort from "ranges-sort";
 const isArr = Array.isArray;
 
 function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-  function existy(something) {
-    return something != null;
+  function existy(x) {
+    return x != null;
   }
   let index;
 
   // validate
   // ================
 
+  if (rangesArr === null) {
+    return false;
+  }
   // - originalIndex
   if (isNatNum(originalIndex, { includeZero: true })) {
     index = originalIndex;

@@ -28,9 +28,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 9 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 9 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 20 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-is-index-within.cjs.js` | 7 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 7 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 31 KB |
 
 **[⬆ back to top](#markdown-header-ranges-is-index-within)**
 
@@ -73,11 +73,11 @@ In the example above, yes, because `79` is within range `[75, 80]`. If you want 
 
 ### API - Input
 
-| Input argument | Type                         | Obligatory? | Description                                          |
-| -------------- | ---------------------------- | ----------- | ---------------------------------------------------- |
-| `index`        | Natural number               | yes         | The natural number index you're checking             |
-| `rangesArr`    | Array of zero or more arrays | yes         | Array of ranges, for example, `[ [1, 5], [10, 20] ]` |
-| `options`      | Plain object                 | no          | Optional options object. See below for its API.      |
+| Input argument | Type                                 | Obligatory? | Description                                          |
+| -------------- | ------------------------------------ | ----------- | ---------------------------------------------------- |
+| `index`        | Natural number                       | yes         | The natural number index you're checking             |
+| `rangesArr`    | Array of zero or more arrays or null | yes         | Array of ranges, for example, `[ [1, 5], [10, 20] ]` |
+| `options`      | Plain object                         | no          | Optional options object. See below for its API.      |
 
 A wrong type will cause `throw`s.
 

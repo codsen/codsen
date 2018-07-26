@@ -6,17 +6,14 @@ import ordinalSuffix from 'ordinal-number-suffix';
 import rangesSort from 'ranges-sort';
 
 const isArr = Array.isArray;
-
 function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
-  function existy(something) {
-    return something != null;
+  function existy(x) {
+    return x != null;
   }
   let index;
-
-  // validate
-  // ================
-
-  // - originalIndex
+  if (rangesArr === null) {
+    return false;
+  }
   if (isNatNum(originalIndex, { includeZero: true })) {
     index = originalIndex;
   } else if (isNatStr(originalIndex, { includeZero: true })) {
@@ -30,7 +27,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       )}`
     );
   }
-  // - rangesArr
   if (!existy(rangesArr)) {
     throw new TypeError(
       "ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_02] We're missing the second input, rangesArr. It's meant to be an array of one or more range arrays."
@@ -76,7 +72,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       )}) does not consist of only natural numbers!`
     );
   }
-  // check if each of the range has ending larger or equal to beginning
   if (
     !rangesArr.every((rangeArr, indx) => {
       if (rangeArr[0] > rangeArr[1]) {
@@ -96,7 +91,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       )}) in the ranges array has beginning of the index bigger than ending! They can be equal but in the backwards order.`
     );
   }
-  // - originalOpts
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new TypeError(
       `ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_08] Options object must be a plain object! Currently its type is: ${typeof originalOpts}, equal to: ${JSON.stringify(
@@ -106,24 +100,16 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       )}`
     );
   }
-
-  //      D E F A U L T S
   const defaults = {
     inclusiveRangeEnds: false,
     returnMatchedRangeInsteadOfTrue: false,
     skipIncomingRangeSorting: false
   };
-
   const opts = Object.assign(Object.assign({}, defaults), originalOpts);
   checkTypes(opts, defaults, {
     msg: "ranges-is-index-within/rangesIsIndexWithin(): [THROW_ID_07*]"
   });
-
-  // now some real action
-  // ====================
-
   if (rangesArr.length < 3) {
-    // if equals 1
     if (rangesArr.length === 1) {
       let res;
       if (opts.inclusiveRangeEnds) {
@@ -136,7 +122,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       }
       return res;
     }
-    // ELSE - if not, equals 2 then because we checked for zero already, see row #30
     let res1;
     let res2;
     if (opts.inclusiveRangeEnds) {
@@ -151,19 +136,12 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     }
     return res1 || res2;
   }
-  // more than two
-
-  // 0. Get the ranges array sorted because few upcoming approaches depend on it.
   const rarr = opts.skipIncomingRangeSorting
     ? rangesArr
     : rangesSort(rangesArr);
-
-  // 1. check for quick wins - maybe given index is outside of the edge values?
   if (index < rarr[0][0] || index > rarr[rarr.length - 1][1]) {
     return false;
   } else if (index === rarr[0][0]) {
-    // index we're checking is equal to the outermost edges of a given indexes
-    // all depends then on opts.inclusiveRangeEnds
     if (opts.inclusiveRangeEnds) {
       if (opts.returnMatchedRangeInsteadOfTrue) {
         return rarr[0];
@@ -172,8 +150,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     }
     return false;
   } else if (index === rarr[rarr.length - 1][1]) {
-    // index we're checking is equal to the outermost edges of a given indexes
-    // all depends then on opts.inclusiveRangeEnds
     if (opts.inclusiveRangeEnds) {
       if (opts.returnMatchedRangeInsteadOfTrue) {
         return rarr[rarr.length - 1];
@@ -182,28 +158,14 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
     }
     return false;
   }
-
-  // the plan is the following.
-  // We got bunch of ranges. Find the middle-one of them and check, is our
-  // index within or below or above it. If it's within, Bob's your uncle,
-  // return `true`. Else, fun continues:
-  // - if it's below, set upper index to the index number of this range, essentially
-  // shortening our searches to half.
-  // - if index is above this range in the middle, set lower index to the index number
-  // of this range.
-  // ----
-  // REPEAT above until the lower and upper index numbers are too close.
-
-  let lowerIndex = 0; // at first, it's zero because we count how many ranges there are, from zero
-  let upperIndex = rarr.length - 1; // at first, it's the total number of indexes.
+  let lowerIndex = 0;
+  let upperIndex = rarr.length - 1;
   let theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
   while (
     Math.floor(upperIndex - lowerIndex) > 1 &&
     theIndexOfTheRangeInTheMiddle !== 0
   ) {
-    // pick the middle index.
     theIndexOfTheRangeInTheMiddle = Math.floor((upperIndex + lowerIndex) / 2);
-
     if (index < rarr[theIndexOfTheRangeInTheMiddle][0]) {
       upperIndex = theIndexOfTheRangeInTheMiddle;
     } else if (index > rarr[theIndexOfTheRangeInTheMiddle][1]) {
@@ -212,7 +174,6 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       index === rarr[theIndexOfTheRangeInTheMiddle][0] ||
       index === rarr[theIndexOfTheRangeInTheMiddle][1]
     ) {
-      // it's on one of the edges!
       if (opts.inclusiveRangeEnds) {
         if (opts.returnMatchedRangeInsteadOfTrue) {
           return rarr[theIndexOfTheRangeInTheMiddle];
@@ -221,15 +182,12 @@ function rangesIsIndexWithin(originalIndex, rangesArr, originalOpts) {
       }
       return false;
     } else {
-      // Bob's your uncle - index is within this middle range we calculated.
       if (opts.returnMatchedRangeInsteadOfTrue) {
         return rarr[theIndexOfTheRangeInTheMiddle];
       }
       return true;
     }
   }
-
-  // this means we narrowed down to two ranges
   let res1;
   let res2;
   if (opts.inclusiveRangeEnds) {

@@ -57,7 +57,7 @@ test("00.06 - second input, ranges, is of a wrong type", t => {
   t.throws(() => {
     wthn(1, ["1, 2"]);
   });
-  t.throws(() => {
+  t.notThrows(() => {
     wthn(1, null);
   });
   t.throws(() => {
@@ -130,6 +130,12 @@ test("01.01 - one range, both defaults and inclusive", t => {
     false,
     "01.01.07 - outside of the range, inclusive"
   );
+  t.deepEqual(
+    wthn(99, null, { inclusiveRangeEnds: true }),
+    false,
+    "01.01.08 - matching against null"
+  );
+  t.deepEqual(wthn(0, null), false, "01.01.09 - matching against null");
 });
 
 test("01.02 - one range, opts.returnMatchedRangeInsteadOfTrue", t => {
