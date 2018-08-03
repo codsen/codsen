@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.9.0] - 2018-08-02
+
+Code refresh:
+
+- ✨ Removed conditional `if(DEBUG)` statements which previously relied on being commented-out
+- ✨ Updated all build parts to suit Babel 7
+- ✨ Set up comments removal from built files
+- ✨ Switched to `rollup-plugin-terser` to finally forget "is it ES or non-ES code" issues
+
+Repo is now living happily in BitBucket; traffic seems to be the same
+
 ## [3.8.0] - 2018-06-16
 
 GitHub sold us out. In the meantime, we:
@@ -118,3 +129,4 @@ now the same example in `v.2` API:
 [3.6.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.6.0%0Dv3.5.7#diff
 [3.7.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.7.0%0Dv3.6.0#diff
 [3.8.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.8.0%0Dv3.7.0#diff
+[3.9.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.9.0%0Dv3.8.3#diff
