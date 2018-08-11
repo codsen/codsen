@@ -417,6 +417,20 @@ test("03.12  -  ADD() - empty string to add", t => {
   t.deepEqual(slices4.current(), [[1, 2], [3, 4]], "03.12.04");
 });
 
+test("03.13  -  ADD() - leading/trailing spaces in the third arg.", t => {
+  const slices = new Slices();
+  slices.add("1", "2", "a");
+  slices.add("2", "2", " click here ");
+  slices.add("2", "3", "b");
+  t.deepEqual(slices.current(), [[1, 3, "a click here b"]], "03.13");
+
+  const slices2 = new Slices({ limitToBeAddedWhitespace: true });
+  slices2.add("1", "2", "a");
+  slices2.add("2", "2", " click here ");
+  slices2.add("2", "3", "b");
+  t.deepEqual(slices2.current(), [[1, 3, "a click here b"]], "03.13");
+});
+
 // -----------------------------------------------------------------------------
 // 04. current()
 // -----------------------------------------------------------------------------
