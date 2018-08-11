@@ -13,18 +13,16 @@ function isStr(something) {
 
 function replaceSlicesArr(str, rangesArr) {
   if (arguments.length === 0) {
-    throw new Error(
-      "string-replace-slices-array/replaceSlicesArr(): [THROW_ID_01] inputs missing!"
-    );
+    throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
   }
   if (!isStr(str)) {
     throw new TypeError(
-      `string-replace-slices-array/replaceSlicesArr(): [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${str}`
+      `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${str}`
     );
   }
   if (!isArr(rangesArr)) {
     throw new TypeError(
-      `string-replace-slices-array/replaceSlicesArr(): [THROW_ID_03] second input argument must be an array! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`
+      `ranges-apply: [THROW_ID_03] second input argument must be an array! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`
     );
   }
   if (
@@ -39,7 +37,7 @@ function replaceSlicesArr(str, rangesArr) {
   rangesArr.forEach((el, i) => {
     if (!isArr(el)) {
       throw new TypeError(
-        `string-replace-slices-array/replaceSlicesArr(): [THROW_ID_05] ranges array, second input arg., has ${ordinal(
+        `ranges-apply: [THROW_ID_04] ranges array, second input arg., has ${ordinal(
           i
         )} element not an array: ${JSON.stringify(
           el,
@@ -53,7 +51,7 @@ function replaceSlicesArr(str, rangesArr) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
         throw new TypeError(
-          `string-replace-slices-array/replaceSlicesArr(): [THROW_ID_06] ranges array, second input arg. has ${ordinal(
+          `ranges-apply: [THROW_ID_05] ranges array, second input arg. has ${ordinal(
             i
           )} element, array [${el[0]},${
             el[1]
@@ -70,7 +68,7 @@ function replaceSlicesArr(str, rangesArr) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {
         throw new TypeError(
-          `string-replace-slices-array/replaceSlicesArr(): [THROW_ID_07] ranges array, second input arg. has ${ordinal(
+          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${ordinal(
             i
           )} element, array [${el[0]},${
             el[1]

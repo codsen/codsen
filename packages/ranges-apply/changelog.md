@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-08-11
+
+- ✨ Updated error labels
+- ✨ Updated all dependencies
+- ✨ Removed AVA ES linting rules and `nyc` code coverage build steps because we migrated to Babel v.7 and `nyc` breaks
+
 ## [2.3.0] - 2018-06-18
 
 - ✨ Renamed to `ranges-apply` and migrated to Bitbucket.
@@ -67,6 +73,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[2.4.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.4.0%0Dv2.3.2#diff
 [2.3.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.3.0%0Dv2.2.2#diff
 [2.2.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.2.0%0Dv2.1.0#diff
 [2.1.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.1.0%0Dv2.0.14#diff

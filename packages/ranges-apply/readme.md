@@ -122,7 +122,7 @@ For example,
 ];
 ```
 
-**PSST.** Check out [string-slices-array-push](https://bitbucket.org/codsen/string-slices-array-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+**PSST.** Check out [ranges-push](https://bitbucket.org/codsen/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
 **[⬆ back to top](#markdown-header-ranges-apply)**
 
