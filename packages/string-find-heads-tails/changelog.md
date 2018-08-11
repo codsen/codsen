@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [3.9.0] - 2018-08-02
+## [3.9.0] - 2018-08-11
 
 Code refresh:
 
@@ -13,6 +13,7 @@ Code refresh:
 - ✨ Updated all build parts to suit Babel 7
 - ✨ Set up comments removal from built files
 - ✨ Switched to `rollup-plugin-terser` to finally forget "is it ES or non-ES code" issues
+- ✨ Temporaroly removed code coverage, `nyc` because it broke after switching to Babel 7, latest `ava` and `esm` combo
 
 Repo is now living happily in BitBucket; traffic seems to be the same
 
