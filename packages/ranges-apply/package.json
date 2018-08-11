@@ -136,7 +136,6 @@
     },
     "licence": {
       "extras": [
-        "",
         ""
       ]
     },
@@ -161,8 +160,8 @@
     "ordinal-number-suffix": "^0.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.1",
-    "@babel/preset-env": "^7.0.0-rc.1",
+    "@babel/core": "^7.0.0-beta.53",
+    "@babel/preset-env": "^7.0.0-beta.53",
     "ava": "1.0.0-beta.6",
     "codacy-coverage": "latest",
     "coveralls": "latest",
