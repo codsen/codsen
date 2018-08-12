@@ -3,21 +3,7 @@ import ordinalSuffix from 'ordinal-number-suffix';
 import checkTypes from 'check-types-mini';
 
 const isArr = Array.isArray;
-
-//
-//                              /\___/\
-//                             ( o   o )
-//                             ====Y====
-//                             (        )
-//                             (         )
-//                             (        )))))))))))
-//
-
-// does this: [ [2, 5], [1, 6] ] => [ [1, 6], [2, 5] ]
-// sorts first by first element, then by second. Retains possible third element.
-
 function rangesSort(arrOfRanges, originalOptions) {
-  // arrOfRanges validation
   if (!isArr(arrOfRanges)) {
     throw new TypeError(
       `ranges-sort: [THROW_ID_01] Input must be an array, consisting of range arrays! Currently its type is: ${typeof arrOfRanges}, equal to: ${JSON.stringify(
@@ -30,25 +16,14 @@ function rangesSort(arrOfRanges, originalOptions) {
   if (arrOfRanges.length === 0) {
     return arrOfRanges;
   }
-
-  // opts validation
-
-  // declare defaults, so we can enforce types later:
   const defaults = {
     strictlyTwoElementsInRangeArrays: false
   };
-  // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptions);
-  // the check:
   checkTypes(opts, defaults, { msg: "ranges-sort: [THROW_ID_02*]" });
-
-  // arrOfRanges validation
-
   let culpritsIndex;
   let culpritsLen;
-
   if (opts.strictlyTwoElementsInRangeArrays) {
-    // validate does every range consist of exactly two indexes:
     if (
       !arrOfRanges.every((rangeArr, indx) => {
         if (rangeArr.length !== 2) {
@@ -70,7 +45,6 @@ function rangesSort(arrOfRanges, originalOptions) {
       );
     }
   }
-  // validate are range indexes natural numbers:
   if (
     !arrOfRanges.every((rangeArr, indx) => {
       if (
