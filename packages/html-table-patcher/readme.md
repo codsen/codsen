@@ -2,8 +2,6 @@
 
 > Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
 
-![Patch HTML tables](https://bitbucket.org/codsen/html-table-patcher/raw/7f43f98aa30cf3b298a230e2962ef3b124ce3251/media/comp.png)
-
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
@@ -118,8 +116,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/html-table-patcher
 [downloads-img]: https://img.shields.io/npm/dm/html-table-patcher.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/html-table-patcher
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
-[runkit-url]: https://npm.runkit.com/html-table-patcher
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square

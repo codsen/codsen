@@ -4,11 +4,15 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var rangesApply = _interopDefault(require('ranges-apply'));
 var Ranges = _interopDefault(require('ranges-push'));
+var htmlCommentRegex = _interopDefault(require('html-comment-regex'));
 
 function isLetter(str) {
   return typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase();
 }
 function deleteAllKindsOfComments(str) {
+  if (typeof str === "string") {
+    return str.replace(htmlCommentRegex, "");
+  }
   return str;
 }
 function patcher(str) {
@@ -25,6 +29,14 @@ function patcher(str) {
   var type3Gaps = new Ranges();
   var type4Gaps = new Ranges();
   outerLoop: for (var i = 0, len = str.length; i < len; i++) {
+    if (str[i] === "<" && str[i + 1] === "!" && str[i + 2] === "-" && str[i + 3] === "-") {
+      for (var y = i; y < len; y++) {
+        if (str[y] === "-" && str[y + 1] === "-" && str[y + 2] === ">" || str[y + 1] === undefined) {
+          i = y + 2;
+          continue outerLoop;
+        }
+      }
+    }
     if (str[i] === "'" || str[i] === '"') {
       if (!quotes) {
         quotes = {
@@ -39,10 +51,10 @@ function patcher(str) {
       if (str[i + 3] === ">") {
         tdClosingEndsAt = i + 3;
       } else {
-        for (var y = i + 3; y < len; y++) {
-          if (str[y] === ">") {
-            tdClosingEndsAt = y;
-            i = y;
+        for (var _y = i + 3; _y < len; _y++) {
+          if (str[_y] === ">") {
+            tdClosingEndsAt = _y;
+            i = _y;
             continue outerLoop;
           }
         }

@@ -157,13 +157,14 @@
     }
   },
   "dependencies": {
+    "html-comment-regex": "^1.1.1",
     "ranges-apply": "^2.4.1",
     "ranges-push": "^2.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.53",
     "@babel/preset-env": "^7.0.0-beta.53",
-    "ava": "1.0.0-beta.7",
+    "ava": "1.0.0-beta.6",
     "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",

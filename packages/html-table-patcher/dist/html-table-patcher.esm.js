@@ -1,5 +1,6 @@
 import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
+import htmlCommentRegex from 'html-comment-regex';
 
 function isLetter(str) {
   return (
@@ -9,6 +10,9 @@ function isLetter(str) {
   );
 }
 function deleteAllKindsOfComments(str) {
+  if (typeof str === "string") {
+    return str.replace(htmlCommentRegex, "");
+  }
   return str;
 }
 function patcher(str) {
@@ -25,6 +29,22 @@ function patcher(str) {
   const type3Gaps = new Ranges();
   const type4Gaps = new Ranges();
   outerLoop: for (let i = 0, len = str.length; i < len; i++) {
+    if (
+      str[i] === "<" &&
+      str[i + 1] === "!" &&
+      str[i + 2] === "-" &&
+      str[i + 3] === "-"
+    ) {
+      for (let y = i; y < len; y++) {
+        if (
+          (str[y] === "-" && str[y + 1] === "-" && str[y + 2] === ">") ||
+          str[y + 1] === undefined
+        ) {
+          i = y + 2;
+          continue outerLoop;
+        }
+      }
+    }
     if (str[i] === "'" || str[i] === '"') {
       if (!quotes) {
         quotes = {

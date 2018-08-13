@@ -98,6 +98,34 @@ test(`01.03 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
+test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TABLE and TR`}\u001b[${39}m`} - unfinished comment`, t => {
+  t.deepEqual(
+    processThis(`<table width="100%">
+  zzz
+  <tr><!--
+    <td>
+      something
+    </td>
+    zzz
+  </tr>
+</table>`),
+    tiny(`<table width="100%">
+  <tr>
+    <td>
+      zzz
+    </td>
+  </tr>
+  <tr><!--
+    <td>
+      something
+    </td>
+    zzz
+  </tr>
+</table>`),
+    "01.04.01 - notice comment is never closed, yet wrapping occurs before it"
+  );
+});
+
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 
@@ -191,4 +219,56 @@ test(`04.01 - ${`\u001b[${35}m${`type 4`}\u001b[${39}m`}${`\u001b[${33}m${` - co
 </table>`),
     "04.01.01 - 1 col"
   );
+});
+
+// 05. false positives
+// -----------------------------------------------------------------------------
+
+test(`05.01 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - various HTML comments`, t => {
+  const str1 = `<!--zzz--><table><!--zzz-->
+  <tr><!--zzz-->
+    <td><!--zzz-->
+      aaa<!--zzz-->
+    </td><!--zzz-->
+    <td><!--zzz-->
+      aaa<!--zzz-->
+    </td><!--zzz-->
+  </tr><!--zzz-->
+  </table><!--zzz-->`;
+  t.deepEqual(patcher(str1), str1, "05.01.01 - tight comments");
+
+  const str2 = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
+  <tr><!--zzz\nyyy-->
+    <td><!--zzz\nyyy-->
+      aaa<!--zzz\nyyy-->
+    </td><!--zzz\nyyy-->
+    <td><!--zzz\nyyy-->
+      aaa<!--zzz\nyyy-->
+    </td><!--zzz\nyyy-->
+  </tr><!--zzz\nyyy-->
+  </table><!--zzz\nyyy-->`;
+  t.deepEqual(patcher(str2), str2, "05.01.02 - comments include line breaks");
+
+  const str3 = `<!--zzz\nyyy--><table><!--zzz\nyyy-->
+<tr><!--zzz<table>zzz<tr>yyy-->
+  <td><!--zzz</td>zzz<td>yyy-->
+    aaa<!--zzz</td><td>yyy-->
+  </td><!--zzz</td><td>yyy-->
+  <td><!--zzz</td><td>yyy-->
+    aaa<!--zzz</td><td>yyy-->
+  </td><!--zzz<td></td>yyy-->
+</tr><!--zzz<tr></tr><tr></tr><table>zzz</table>yyy-->
+</table><!--zzz\nyyy-->`;
+  t.deepEqual(patcher(str3), str3, "05.01.03 - comments include line breaks");
+});
+
+test(`05.02 - ${`\u001b[${36}m${`false positives`}\u001b[${39}m`}${`\u001b[${33}m${` - comments`}\u001b[${39}m`} - doctype`, t => {
+  const str1 = `<!DOCTYPE html>$*%(*$&%(£&$(($£&))))<4873874795 html>lslhflsjhdfljshdlh&£^R*^$*&^@*&$^@£$*@^$*@&$^`;
+  t.deepEqual(patcher(str1), str1, "05.02.01");
+
+  const str2 = `<!DOCTYPE html>@£(&$\n^@£^\n$^ )<!DOCTYPE html>\n$*%(*$&\n%(£&$((\n$£&))))<4873874795 html>\nlslhflsjhdfljshdlh&£\n^R*^$*&^@*&$^@£$\n*@^$*@&$^`;
+  t.deepEqual(patcher(str2), str2, "05.02.02");
+
+  const str3 = `\n\n\n>£$<>@<>@\n£<$>@<£>$<>£<___£($\n(@£&$*&_>\n<!DOCTYPE html>@£(&$^@£^$^ )\n<!DOCTYPE html>$*%(*$&%(£\n&$(($£&))))<4873874795 html>lslhflsjhdfljshdlh&£^R*^$*&^@*&$\n^@£$*@^$*@&$^`;
+  t.deepEqual(patcher(str3), str3, "05.02.03");
 });
