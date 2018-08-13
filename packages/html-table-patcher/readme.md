@@ -61,13 +61,13 @@ Here's what you'll get:
 
 ## Idea
 
-Very often, templating languages (or PHP or Email Service Providers' back-end code) is inserted in-between the HTML table tags: between `table` and `tr`, between `tr` and `td` and so on. If you open such HTML, that inserted code will appear at wrong places because the browser will try to patch it up (but does it incorrectly).
+Very often, templating languages (or PHP or Email Service Providers' back-end code) is inserted in-between the HTML table tags: between `table` and `tr`, between `tr` and `td` and so on. If you open such HTML in a browser, that inserted code will appear at wrong places because the browser will try to patch it up (but will do it incorrectly).
 
 This library patches the HTML, so the browser in the correct places renders that code between the table cells.
 
 The patched code is not meant for production by any means - it's for visual display in a browser only!
 
-This library takes string and outputs string, so it's not an end tool, it's an API for a feature in other tools and browser plugins.
+This library takes string and outputs string, so it's not an _end tool_, it's rather an API for a feature in other tools and browser plugins.
 
 **[⬆ back to top](#markdown-header-html-table-patcher)**
 
@@ -78,29 +78,13 @@ This library takes string and outputs string, so it's not an end tool, it's an A
 
 ## upcoming features
 
-- wrapping code between TR and TD and code between two TD's with correct table cells
+- colspan/rowspan detection
 - automatic whitespace detection
 - ignoring HTML comments between tags
 
 ## API
 
-String-in, string-out. You can pass in the optional options object:
-
-**Defaults**:
-
-```js
-{
-  unfancyTheAltContents: true;
-}
-```
-
-| `options` object's key  | Type    | Obligatory? | Default | Description                                                                                                                       |
-| ----------------------- | ------- | ----------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| {                       |         |             |         |
-| `unfancyTheAltContents` | Boolean | no          | `true`  | Are each image's `alt` attributes contents trimmed and processed by [string-unfancy](https://bitbucket.org/codsen/string-unfancy) |
-| }                       |         |             |         |
-
-**[⬆ back to top](#markdown-header-html-table-patcher)**
+String-in, string-out.
 
 ## The algorithm
 
