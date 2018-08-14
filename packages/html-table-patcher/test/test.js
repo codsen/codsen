@@ -126,6 +126,42 @@ test(`01.04 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - co
   );
 });
 
+test(`01.05 - ${`\u001b[${31}m${`type 1`}\u001b[${39}m`}${`\u001b[${33}m${` - code between TR and TR`}\u001b[${39}m`} - commented-out code + raw code`, t => {
+  t.deepEqual(
+    processThis(`<table width="100%">
+  <tr>
+    <td>
+      something
+    </td>
+  </tr>
+  zzz<!--yyyy-->
+  <tr>
+    <td>
+      else
+    </td>
+  </tr>
+</table>`),
+    tiny(`<table width="100%">
+  <tr>
+    <td>
+      something
+    </td>
+  </tr>
+  <tr>
+    <td>
+      zzz
+    </td>
+  </tr>
+  <tr>
+    <td>
+      else
+    </td>
+  </tr>
+</table>`),
+    "01.05.01 - code + comments"
+  );
+});
+
 // 02. type #2 - code between TR and TD
 // -----------------------------------------------------------------------------
 

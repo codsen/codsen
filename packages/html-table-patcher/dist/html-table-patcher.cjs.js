@@ -68,23 +68,23 @@ function patcher(str) {
       if (
       trOpeningEndsAt !== null && (tdClosingEndsAt === null || tdClosingEndsAt < trOpeningEndsAt)) {
         if (deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim().length !== 0) {
-          type2Gaps.push(trOpeningEndsAt + 1, i, str.slice(trOpeningEndsAt + 1, i));
+          type2Gaps.push(trOpeningEndsAt + 1, i, deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim());
         }
       } else if (
       tdClosingEndsAt !== null && (trClosingEndsAt === null || tdClosingEndsAt > trClosingEndsAt)) {
         if (deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim().length !== 0) {
-          type3Gaps.push(tdClosingEndsAt + 1, i, str.slice(tdClosingEndsAt + 1, i));
+          type3Gaps.push(tdClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim());
         }
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "a" && str[i + 4] === "b" && str[i + 5] === "l" && str[i + 6] === "e" && str[i + 7] === ">") {
       if (deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim().length !== 0) {
-        type1Gaps.push(trClosingEndsAt + 1, i, str.slice(trClosingEndsAt + 1, i));
+        type1Gaps.push(trClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim());
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "t" && str[i + 3] === "r" && str[i + 4] === ">") {
       if (tdClosingEndsAt !== null && deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim().length !== 0) {
-        type4Gaps.push(tdClosingEndsAt + 1, i, str.slice(tdClosingEndsAt + 1, i));
+        type4Gaps.push(tdClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim());
       }
       trClosingEndsAt = i + 4;
       trOpeningStartsAt = null;
@@ -95,18 +95,22 @@ function patcher(str) {
       trOpeningEndsAt = i;
       if (tableTagEndsAt !== null) {
         if (deleteAllKindsOfComments(str.slice(tableTagEndsAt + 1, trOpeningStartsAt)).trim().length !== 0) {
-          type1Gaps.push(tableTagEndsAt + 1, trOpeningStartsAt, str.slice(tableTagEndsAt + 1, trOpeningStartsAt));
+          type1Gaps.push(tableTagEndsAt + 1, trOpeningStartsAt, deleteAllKindsOfComments(str.slice(tableTagEndsAt + 1, trOpeningStartsAt)).trim());
         }
         trOpeningStartsAt = null;
         tableTagEndsAt = null;
       } else if (trClosingEndsAt !== null) {
         if (deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, trOpeningStartsAt)).trim().length !== 0) {
-          type1Gaps.push(trClosingEndsAt + 1, trOpeningStartsAt, str.slice(trClosingEndsAt + 1, trOpeningStartsAt));
+          type1Gaps.push(trClosingEndsAt + 1, trOpeningStartsAt, deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, trOpeningStartsAt)).trim());
         }
         trClosingEndsAt = null;
       }
     }
     if (!quotes && str[i] === "<" && str[i + 1] === "t" && str[i + 2] === "r" && !isLetter(str[i + 3])) {
+      if (trClosingEndsAt !== null && tableTagEndsAt === null && deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim().length !== 0) {
+        type1Gaps.push(trClosingEndsAt + 1, i, deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim());
+        trClosingEndsAt = null;
+      }
       trOpeningStartsAt = i;
     }
     if (!quotes && str[i] === ">" && tableTagStartsAt !== null && tableTagStartsAt < i) {

@@ -105,7 +105,7 @@ function patcher(str) {
           type2Gaps.push(
             trOpeningEndsAt + 1,
             i,
-            str.slice(trOpeningEndsAt + 1, i)
+            deleteAllKindsOfComments(str.slice(trOpeningEndsAt + 1, i)).trim()
           );
         }
       } else if (
@@ -119,7 +119,7 @@ function patcher(str) {
           type3Gaps.push(
             tdClosingEndsAt + 1,
             i,
-            str.slice(tdClosingEndsAt + 1, i)
+            deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
           );
         }
       }
@@ -142,7 +142,7 @@ function patcher(str) {
         type1Gaps.push(
           trClosingEndsAt + 1,
           i,
-          str.slice(trClosingEndsAt + 1, i)
+          deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
         );
       }
     }
@@ -162,7 +162,7 @@ function patcher(str) {
         type4Gaps.push(
           tdClosingEndsAt + 1,
           i,
-          str.slice(tdClosingEndsAt + 1, i)
+          deleteAllKindsOfComments(str.slice(tdClosingEndsAt + 1, i)).trim()
         );
       }
       trClosingEndsAt = i + 4;
@@ -188,7 +188,9 @@ function patcher(str) {
           type1Gaps.push(
             tableTagEndsAt + 1,
             trOpeningStartsAt,
-            str.slice(tableTagEndsAt + 1, trOpeningStartsAt)
+            deleteAllKindsOfComments(
+              str.slice(tableTagEndsAt + 1, trOpeningStartsAt)
+            ).trim()
           );
         }
         trOpeningStartsAt = null;
@@ -202,7 +204,9 @@ function patcher(str) {
           type1Gaps.push(
             trClosingEndsAt + 1,
             trOpeningStartsAt,
-            str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
+            deleteAllKindsOfComments(
+              str.slice(trClosingEndsAt + 1, trOpeningStartsAt)
+            ).trim()
           );
         }
         trClosingEndsAt = null;
@@ -215,6 +219,19 @@ function patcher(str) {
       str[i + 2] === "r" &&
       !isLetter(str[i + 3])
     ) {
+      if (
+        trClosingEndsAt !== null &&
+        tableTagEndsAt === null &&
+        deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
+          .length !== 0
+      ) {
+        type1Gaps.push(
+          trClosingEndsAt + 1,
+          i,
+          deleteAllKindsOfComments(str.slice(trClosingEndsAt + 1, i)).trim()
+        );
+        trClosingEndsAt = null;
+      }
       trOpeningStartsAt = i;
     }
     if (
