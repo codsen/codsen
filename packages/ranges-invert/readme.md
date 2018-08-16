@@ -4,7 +4,6 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -62,11 +61,11 @@ There is possibility that string will not cover the inverted range. For example,
 
 **rangesInvert(arr, strLen [, opts])**
 
-| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                   |
-| -------------- | ---------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges does not have to be [sorted](https://bitbucket.org/codsen/ranges-sort/) or [merged](https://bitbucket.org/codsen/ranges-merge/). |
-| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                               |
-| `opts`         | Plain object                 | no          | Optional options go here.                                                                                                                                                     |
+| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                 |
+| -------------- | ---------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/ranges-sort/) or [merged](https://bitbucket.org/codsen/ranges-merge/). |
+| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                             |
+| `opts`         | Plain object                 | no          | Optional options go here.                                                                                                                                                   |
 
 **Output**: array of zero or more arrays (so-called _ranges_) where each consists of two or more natural number (or zero) indexes.
 
@@ -104,8 +103,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/ranges-invert
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/ranges-invert
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-invert/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/ranges-invert?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-invert
 [downloads-img]: https://img.shields.io/npm/dm/ranges-invert.svg?style=flat-square
