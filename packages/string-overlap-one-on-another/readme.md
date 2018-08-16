@@ -157,6 +157,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-overlap-one-on-another
 [downloads-img]: https://img.shields.io/npm/dm/string-overlap-one-on-another.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-overlap-one-on-another
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/string-overlap-one-on-another
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
