@@ -51,15 +51,15 @@ For example, in this string, "a" has index `7` and "e" has index `14`.
 
 ```
 some example text
-       ^  || |^ |
-0123456789|11|14|
-          10|13|16
-            12 15
+0123456789   13
+          10  14
+           11  15
+            12  16
 ```
 
-If you want to do something to the word "example" above, that's indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
+If you want to do something to the word "example" above, that's characters between indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
 
-![finding_range_indexes_in_atom](https://cdn.rawgit.com/codsen/ranges-apply/cc202bd4/media/finding_range_indexes_in_atom.gif)
+![finding_range_indexes_in_atom](https://bitbucket.org/codsen/ranges-apply/raw/86c4014e0534576d9b8089c6f8ef57720c8f1d7c/media/finding_range_indexes_in_atom.gif)
 
 That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a **replacement operation**).
 
@@ -70,11 +70,11 @@ That's two numbers to put into an array. They mark a _slice_ of string. Let's ad
 ];
 ```
 
-Now what happens when you have a few slices? You put them into a _parent array_.
+Now what happens when you have a few slices? You put them into an _array_.
 
-This library consumes such parent array and does the actual job crunching your string according to the list of _slices_.
+This library consumes such parent arrays and does the actual job of crunching your string - "punching holes" and/or adding more letters.
 
-Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check is the slice you want correspond to the indexes you've got.
+Now, let's do it practically. Slice ranges match `String.slice()` indexing, so you can always check, does the slice you want correspond to the indexes you've got.
 
 ```js
 const repl = require("ranges-apply");
@@ -90,9 +90,13 @@ console.log("str = " + str);
 // => 'aaa zzz bbb yyy ccc',
 ```
 
-If you omit the third argument, that slice will be deleted.
+If you omit the third argument, characters depicted by that index range will be deleted.
 
-Slice ranges can be the **same index**. In that case, if there is third argument, its value will be inserted **before** the string at given index. If there's no third argument, nothing will happen.
+If you just want something inserted at a given index but nothing deleted, set both "from" and "to" as that index. For example, this range instructs to insert characters "abc" into string at position `10`:
+
+```js
+[10, 10, "abc"];
+```
 
 **[⬆ back to top](#markdown-header-ranges-apply)**
 
