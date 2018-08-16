@@ -1,11 +1,12 @@
 import sortRanges from 'ranges-sort';
+import clone from 'lodash.clonedeep';
 
 function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
   const sortedRanges = sortRanges(
-    arrOfRanges.filter(
+    clone(arrOfRanges).filter(
       rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
     )
   );

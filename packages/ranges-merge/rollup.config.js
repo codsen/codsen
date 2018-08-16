@@ -31,7 +31,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["ranges-sort"],
+      external: ["lodash.clonedeep", "ranges-sort"],
       plugins: [
         strip({
           sourceMap: false
@@ -45,7 +45,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["ranges-sort"],
+      external: ["lodash.clonedeep", "ranges-sort"],
       plugins: [
         strip({
           sourceMap: false

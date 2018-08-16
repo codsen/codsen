@@ -155,6 +155,7 @@
     }
   },
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "ranges-sort": "^3.3.2"
   },
   "devDependencies": {

@@ -1,6 +1,7 @@
 /* eslint prefer-destructuring:0 */
 
 import sortRanges from "ranges-sort";
+import clone from "lodash.clonedeep";
 
 // merges the overlapping ranges
 // case #1. exact extension:
@@ -12,7 +13,7 @@ function mergeRanges(arrOfRanges) {
     return arrOfRanges;
   }
   const sortedRanges = sortRanges(
-    arrOfRanges.filter(
+    clone(arrOfRanges).filter(
       // filter out futile ranges with identical starting and ending points with
       // nothing to add (no 3rd argument)
       rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]

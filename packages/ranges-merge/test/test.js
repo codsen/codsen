@@ -1,15 +1,17 @@
 import test from "ava";
 import mergeRanges from "../dist/ranges-merge.esm";
+import clone from "lodash.clonedeep";
 
 // mergeRanges()
 // ==========================
 
 test("01.01 - simples: merges three overlapping ranges", t => {
-  t.deepEqual(
-    mergeRanges([[3, 8], [1, 4], [2, 5]]),
-    [[1, 8]],
-    "01.01.01 - two args"
-  );
+  const input = [[3, 8], [1, 4], [2, 5]];
+  const inputBackup = clone(input);
+  t.deepEqual(mergeRanges(input), [[1, 8]], "01.01.01 - two args");
+
+  // input argument mutation checks:
+  t.deepEqual(input, inputBackup, "01.01.02 - no mutation happened");
 });
 
 test("01.02 - nothing to merge", t => {
@@ -133,8 +135,7 @@ test("01.11 - only one range, nothing to merge", t => {
 });
 
 test("01.12 - input arg mutation prevention", t => {
-  /* eslint prefer-const:0 */
-  let originalInput = [
+  const originalInput = [
     [5, 7, " "],
     [1, 3, " "],
     [6, 8, " "],

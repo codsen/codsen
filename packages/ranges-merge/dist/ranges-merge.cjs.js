@@ -3,12 +3,13 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var sortRanges = _interopDefault(require('ranges-sort'));
+var clone = _interopDefault(require('lodash.clonedeep'));
 
 function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  var sortedRanges = sortRanges(arrOfRanges.filter(
+  var sortedRanges = sortRanges(clone(arrOfRanges).filter(
   function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   }));
