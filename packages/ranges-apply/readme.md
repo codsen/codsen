@@ -165,6 +165,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-apply
 [downloads-img]: https://img.shields.io/npm/dm/ranges-apply.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-apply
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/ranges-apply
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square

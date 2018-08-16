@@ -157,12 +157,13 @@
   "dependencies": {
     "is-natural-number": "*",
     "is-natural-number-string": "*",
-    "ordinal-number-suffix": "^0.1.2"
+    "ordinal-number-suffix": "^0.1.2",
+    "ranges-merge": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.53",
-    "@babel/preset-env": "^7.0.0-beta.53",
-    "ava": "1.0.0-beta.6",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "ava": "1.0.0-beta.7",
     "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",

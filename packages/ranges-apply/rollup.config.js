@@ -34,7 +34,8 @@ export default commandLineArgs => {
       external: [
         "is-natural-number",
         "is-natural-number-string",
-        "ordinal-number-suffix"
+        "ordinal-number-suffix",
+        "ranges-merge"
       ],
       plugins: [
         strip({
@@ -52,7 +53,8 @@ export default commandLineArgs => {
       external: [
         "is-natural-number",
         "is-natural-number-string",
-        "ordinal-number-suffix"
+        "ordinal-number-suffix",
+        "ranges-merge"
       ],
       plugins: [
         strip({

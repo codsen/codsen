@@ -168,6 +168,18 @@ test("02.09 - replaces multiple chunks correctly", t => {
   );
 });
 
+test("02.10 - replaces multiple chunks correctly given in a wrong order", t => {
+  const str = "aaa delete me bbb and me too ccc";
+  // console.log('\n===============\n02.10')
+  // console.log('slice 1: >>>' + str.slice(4, 13) + '<<<')
+  // console.log('slice 2: >>>' + str.slice(18, 28) + '<<<\n')
+  t.deepEqual(
+    repl(str, [[18, 28, "yyy"], [4, 13, "zzz"]]),
+    "aaa zzz bbb yyy ccc",
+    "02.10"
+  );
+});
+
 // -----------------------------------------------------------------------------
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------

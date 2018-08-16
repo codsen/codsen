@@ -1,6 +1,7 @@
 import isInt from "is-natural-number";
 import isNumStr from "is-natural-number-string";
 import ordinal from "ordinal-number-suffix";
+import rangesMerge from "ranges-merge";
 
 const isArr = Array.isArray;
 
@@ -34,6 +35,7 @@ function replaceSlicesArr(str, rangesArr) {
   ) {
     rangesArr = [rangesArr];
   }
+
   rangesArr.forEach((el, i) => {
     if (!isArr(el)) {
       throw new TypeError(
@@ -82,9 +84,11 @@ function replaceSlicesArr(str, rangesArr) {
     }
   });
 
-  if (rangesArr.length > 0) {
-    const tails = str.slice(rangesArr[rangesArr.length - 1][1]);
-    str = rangesArr.reduce((acc, val, i, arr) => {
+  const workingRanges = rangesMerge(rangesArr);
+
+  if (workingRanges.length > 0) {
+    const tails = str.slice(workingRanges[workingRanges.length - 1][1]);
+    str = workingRanges.reduce((acc, val, i, arr) => {
       const beginning = i === 0 ? 0 : arr[i - 1][1];
       const ending = arr[i][0];
       return (

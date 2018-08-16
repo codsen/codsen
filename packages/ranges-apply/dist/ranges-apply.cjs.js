@@ -5,6 +5,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isInt = _interopDefault(require('is-natural-number'));
 var isNumStr = _interopDefault(require('is-natural-number-string'));
 var ordinal = _interopDefault(require('ordinal-number-suffix'));
+var rangesMerge = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -75,9 +76,10 @@ function replaceSlicesArr(str, rangesArr) {
       }
     }
   });
-  if (rangesArr.length > 0) {
-    var tails = str.slice(rangesArr[rangesArr.length - 1][1]);
-    str = rangesArr.reduce(function (acc, val, i, arr) {
+  var workingRanges = rangesMerge(rangesArr);
+  if (workingRanges.length > 0) {
+    var tails = str.slice(workingRanges[workingRanges.length - 1][1]);
+    str = workingRanges.reduce(function (acc, val, i, arr) {
       var beginning = i === 0 ? 0 : arr[i - 1][1];
       var ending = arr[i][0];
       return acc + str.slice(beginning, ending) + (existy(arr[i][2]) ? arr[i][2] : "");
