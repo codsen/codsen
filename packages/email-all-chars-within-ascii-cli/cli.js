@@ -5,7 +5,7 @@
 
 const chalk = require("chalk");
 const within = require("email-all-chars-within-ascii");
-const fs = require("fs");
+const fs = require("fs-extra");
 const globby = require("globby");
 const inquirer = require("inquirer");
 
@@ -45,11 +45,12 @@ function isStr(something) {
 function offerAListOfFilesToPickFrom() {
   const allFilesHere = globby.sync("./*.*");
   if (allFilesHere.length === 0) {
-    return Promise.reject(
-      new Error(
-        "\nemail-all-chars-within-ascii-cli: Alas, computer couldn't find any files in this folder and bailed on us!"
-      )
+    log(
+      chalk.hex("#888888")(
+        "\nemail-all-chars-within-ascii-cli: [THROW_ID_01] "
+      ) + chalk.red(`Alas, there are no files in this folder!`)
     );
+    return process.exit(1);
   }
   ui.log.write(chalk.grey("To quit, press CTRL+C"));
   const questions = [
@@ -123,7 +124,9 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   // write the list of unrecognised file names into the console:
   if (erroneous.length > 0) {
     log(
-      chalk.hex("#888888")("\nemail-all-chars-within-ascii-cli:  ") +
+      chalk.hex("#888888")(
+        "\nemail-all-chars-within-ascii-cli: [THROW_ID_02] "
+      ) +
         chalk.red(
           `Alas, the following file${
             erroneous.length > 1 ? "s don't" : " doesn't"
@@ -143,59 +146,74 @@ if (state.toDoList.length === 0 && Object.keys(cli.flags).length === 0) {
   // ---------------------------------  3  -------------------------------------
   log(
     chalk.yellow(
-      "\nemail-all-chars-within-ascii-cli: Computer didn't recognise any files in your input!"
+      "\nemail-all-chars-within-ascii-cli: [THROW_ID_03] Computer didn't recognise any files in your input!"
     )
   );
 
-  // if there were no valid path in the arguments, query the files from the
-  // existing CSV's in the current folder:
+  // if there were no valid path in the arguments, query the files in the
+  // current folder:
   thePromise = offerAListOfFilesToPickFrom(state);
 }
 
 // Step #3.
 // -----------------------------------------------------------------------------
 
-thePromise.then(receivedState => {
-  let noErrors = true;
-  receivedState.toDoList.forEach(requestedCSVsPath => {
-    // read the file
-    // existence of template.html
-    let filesContents = "";
-    let fileNameInfo = "";
-    if (receivedState.toDoList.length > 0) {
-      fileNameInfo = `${path.basename(requestedCSVsPath)} `;
-    }
-    try {
-      filesContents = String(fs.readFileSync(requestedCSVsPath));
+thePromise
+  .then(receivedState => {
+    let noErrors = true;
+    receivedState.toDoList.forEach(requestedPath => {
+      let filesContents = "";
+      let fileNameInfo = "";
+      if (receivedState.toDoList.length > 0) {
+        fileNameInfo = `${path.basename(requestedPath)} `;
+      }
       try {
-        within(filesContents, { messageOnly: true });
-        log(
-          chalk.hex("#888888")("\nemail-all-chars-within-ascii-cli:  ") +
-            fileNameInfo +
-            chalk.green("ALL OK")
-        );
-      } catch (e2) {
-        let msg = e2.toString();
-        if (msg.slice(0, 7) === "Error: ") {
-          msg = msg.slice(7);
+        filesContents = String(fs.readFileSync(requestedPath));
+        try {
+          within(filesContents, { messageOnly: true });
+          log(
+            chalk.hex("#888888")(
+              "\nemail-all-chars-within-ascii-cli: [THROW_ID_04] "
+            ) +
+              fileNameInfo +
+              chalk.green("ALL OK")
+          );
+        } catch (e2) {
+          let msg = e2.toString();
+          if (msg.slice(0, 7) === "Error: ") {
+            msg = msg.slice(7);
+          }
+          log(
+            chalk.hex("#888888")(
+              "\nemail-all-chars-within-ascii-cli: [THROW_ID_05] "
+            ) +
+              fileNameInfo +
+              chalk.red(msg)
+          );
+          noErrors = false;
         }
+      } catch (e1) {
         log(
-          chalk.hex("#888888")("\nemail-all-chars-within-ascii-cli:  ") +
-            fileNameInfo +
-            chalk.red(msg)
+          chalk.hex("#888888")(
+            "\nemail-all-chars-within-ascii-cli: [THROW_ID_06] "
+          ) +
+            chalk.red(
+              `Alas, computer couldn't fetch the file "${path.basename(
+                requestedPath
+              )}" you requested and bailed on us!`
+            )
         );
         noErrors = false;
       }
-    } catch (e1) {
-      log(
-        chalk.hex("#888888")("\nemail-all-chars-within-ascii-cli:  ") +
-          chalk.red(
-            `Alas, computer couldn't fetch the file "${path.basename(
-              requestedCSVsPath
-            )}" you requested and bailed on us!`
-          )
-      );
-    }
+    });
+    console.log("209");
+    return Promise.resolve(noErrors);
+  })
+  .then(noErrors => {
+    console.log("213");
+    return process.exit(noErrors ? 0 : 1);
+  })
+  .catch(() => {
+    console.log("217");
+    return Promise.resolve(process.exit(1));
   });
-  process.exit(noErrors ? 0 : 1);
-});

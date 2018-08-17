@@ -11,14 +11,15 @@
 
 # folders:
 
+.nyc_output
+coverage
 media
-test-folder
 
 # files:
 
-.bithoundrc
 .eslintrc.json
 .gitignore
 .npmignore
 .prettierignore
-.travis.yml
+bitbucket-pipelines.yml
+test.js

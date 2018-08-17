@@ -1,7 +1,7 @@
 {
   "name": "email-all-chars-within-ascii-cli",
   "version": "1.3.0",
-  "description": "Command line app to scans email templates, are all their characters within ASCII range",
+  "description": "Command line app to scan email templates, are all their characters within ASCII range",
   "license": "MIT",
   "engines": {
     "node": ">=8",
@@ -10,12 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codsen/email-all-chars-within-ascii-cli.git"
+    "url": "https://bitbucket.org/codsen/email-all-chars-within-ascii-cli.git"
   },
-  "bugs": {
-    "url": "https://github.com/codsen/email-all-chars-within-ascii-cli/issues"
-  },
-  "homepage": "https://github.com/codsen/email-all-chars-within-ascii-cli#readme",
+  "homepage": "https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -26,17 +23,27 @@
     "withinascii": "cli.js"
   },
   "scripts": {
-    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test.js --fix",
+    "dev": "ava",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js"
+    "test": "./node_modules/.bin/eslint cli.js && ava"
   },
   "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
     "verbose": true
   },
   "clinton": {
     "rules": {
       "xo": 0
     }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
   },
   "keywords": [
     "email",
@@ -125,7 +132,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        ""
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -138,26 +147,42 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": []
+      "devDependencies": [
+        "tempy"
+      ],
+      "travisVersionsOverride": []
     }
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "email-all-chars-within-ascii": "^2.1.0",
+    "email-all-chars-within-ascii": "^2.3.0",
+    "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
-    "inquirer": "^5.2.0",
+    "inquirer": "^6.1.0",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
     "meow": "^5.0.0",
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-ava": "^4.5.1",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-prettier": "^2.6.0",
-    "husky": "*",
-    "prettier": "latest"
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "ava": "^1.0.0-beta.7",
+    "codacy-coverage": "latest",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "esm": "latest",
+    "execa": "^0.10.0",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "tempy": "latest"
   }
 }
