@@ -11,7 +11,13 @@ function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  const sortedRanges = sortRanges(arrOfRanges);
+  const sortedRanges = sortRanges(
+    arrOfRanges.filter(
+      // filter out futile ranges with identical starting and ending points with
+      // nothing to add (no 3rd argument)
+      rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
+    )
+  );
   for (let i = sortedRanges.length - 1; i > 0; i--) {
     if (
       sortedRanges[i][0] <= sortedRanges[i - 1][0] ||

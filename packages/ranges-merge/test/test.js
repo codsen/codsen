@@ -146,3 +146,12 @@ test("01.12 - input arg mutation prevention", t => {
   t.deepEqual(mergeRanges(originalInput), [[1, 10, " "]], "useless test");
   t.deepEqual(originalInput, originalRef, "01.12.01 - mutation didn't happen");
 });
+
+test("01.13 - only two identical args in the range", t => {
+  t.deepEqual(
+    mergeRanges([[1, 1], [3, 4], [2, 2, "zzz"]]),
+    [[2, 2, "zzz"], [3, 4]],
+    "01.13.01"
+  );
+  t.deepEqual(mergeRanges([[1, 1]]), [], "01.13.02");
+});

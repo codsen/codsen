@@ -8,7 +8,10 @@ function mergeRanges(arrOfRanges) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  var sortedRanges = sortRanges(arrOfRanges);
+  var sortedRanges = sortRanges(arrOfRanges.filter(
+  function (rangeArr) {
+    return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
+  }));
   for (var i = sortedRanges.length - 1; i > 0; i--) {
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);

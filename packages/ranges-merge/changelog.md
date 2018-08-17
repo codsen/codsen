@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0] - 2018-08-17
+
+- ✨ Now, ranges with identical starting and ending points with no third argument (nothing to add) will be removed. They're futile anyway. It's like saying at this index... and saying nothing else.
+
 ## [3.3.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -49,6 +53,7 @@ This change is logical and natural but I'm bumping major version just in case it
 
 - First public release
 
+[3.4.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.4.0%0Dv3.3.2#diff
 [3.3.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.3.0%0Dv3.2.0#diff
 [3.2.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.2.0%0Dv3.1.4#diff
 [3.1.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.1.0%0Dv3.0.2#diff
