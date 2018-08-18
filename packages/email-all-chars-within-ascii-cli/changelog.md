@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - First public release
 
-[1.1.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.1.0%0Dv1.0.3#diff
-[1.2.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.2.0%0Dv1.1.0#diff
-[1.3.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.3.0%0Dv1.2.5#diff
 [1.4.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.3.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.3.0%0Dv1.2.5#diff
+[1.2.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.2.0%0Dv1.1.0#diff
+[1.1.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/branches/compare/v1.1.0%0Dv1.0.3#diff
