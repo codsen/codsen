@@ -77,7 +77,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
     .then(filesContent => {
       let parsedJson;
       // console.log(
-      //   `069 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `080 ${`\u001b[${33}m${`filesContent`}\u001b[${39}m`} = ${JSON.stringify(
       //     filesContent,
       //     null,
       //     4
@@ -85,7 +85,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
       // );
       if (re.test(String(filesContent))) {
         // console.log(
-        //   `077 didn't pass the regex, return null. Content was:\n${JSON.stringify(
+        //   `088 didn't pass the regex, return null. Content was:\n${JSON.stringify(
         //     filesContent,
         //     null,
         //     4
@@ -107,7 +107,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
         }
         return Promise.resolve(null);
       }
-      // console.log("097 all OK, proceeding to sort & write JSON");
+      // console.log("110 all OK, proceeding to sort & write JSON");
       return fs
         .writeJson(
           oneOfPaths,
@@ -182,7 +182,7 @@ globby(input, { dot: true })
       process.exit(0);
     }
     // console.log(
-    //   `176 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `185 ${`\u001b[${33}m${`resolvedPathsArray`}\u001b[${39}m`} = ${JSON.stringify(
     //     resolvedPathsArray,
     //     null,
     //     4
@@ -216,7 +216,7 @@ globby(input, { dot: true })
       // then reduce again, now actually concatenating them all together
     ).then(received => {
       // console.log(
-      //   `210 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+      //   `219 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
       //     received,
       //     null,
       //     4
@@ -237,7 +237,7 @@ globby(input, { dot: true })
   )
   .then(paths => {
     // console.log(
-    //   `231 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `240 ${`\u001b[${33}m${`paths BEFORE`}\u001b[${39}m`} = ${JSON.stringify(
     //     paths,
     //     null,
     //     4
@@ -272,7 +272,7 @@ globby(input, { dot: true })
       );
     });
     // console.log(
-    //   `263 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `275 ${`\u001b[${33}m${`paths AFTER`}\u001b[${39}m`} = ${JSON.stringify(
     //     tempRez,
     //     null,
     //     4
@@ -296,7 +296,7 @@ globby(input, { dot: true })
           readSortAndWriteOverFile(currentPath)
             .then(received => {
               // console.log(
-              //   `294 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
+              //   `299 ${`\u001b[${33}m${`received`}\u001b[${39}m`} = ${JSON.stringify(
               //     received,
               //     null,
               //     4
@@ -327,7 +327,7 @@ globby(input, { dot: true })
         { good: [], bad: [] }
       ).then(counter => {
         // console.log(
-        //   `319 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+        //   `330 ${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
         //     counter,
         //     null,
         //     4

@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.9.0] - 2018-08-19
+
+- 💥 Temporarily removing the `nyc` because it broke the ava builds after switching to Babel v.7
+- ✨ Updated all dependencies and refreshed the readme
+
 ## [1.8.0] - 2018-06-11
 
 - ✨ `v5` ESLint is sensitive if being called on files that don't exist. Previously we were quite liberal about the locations of unit test files. Our ESLint configs were targeting multiple locations, attempting to find some unit tests. Now this approach will cause errors so we moved all unit test files to `/test/` folder.
@@ -76,3 +81,4 @@ GitHub sold us out. In the meantime, we:
 [1.6.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.6.0%0Dv1.5.2#diff
 [1.7.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.7.0%0Dv1.6.1#diff
 [1.8.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.8.0%0Dv1.7.0#diff
+[1.9.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.9.0%0Dv1.8.0#diff
