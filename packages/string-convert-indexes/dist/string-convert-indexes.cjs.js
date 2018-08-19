@@ -12,7 +12,20 @@ var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function existy(x) {
   return x != null;
 }
@@ -20,7 +33,7 @@ function isStr(something) {
   return typeof something === "string";
 }
 function mandatory(i) {
-  throw new Error("string-convert-indexes: [THROW_ID_01*] Missing " + ordinal(i) + " parameter!");
+  throw new Error("string-convert-indexes: [THROW_ID_01*] Missing ".concat(ordinal(i), " parameter!"));
 }
 function prep(something) {
   if (typeof something === "string") {
@@ -41,19 +54,27 @@ function customSort(arr) {
 }
 function strConvertIndexes(mode, str, indexes, originalOpts) {
   if (!isStr(str) || str.length === 0) {
-    throw new TypeError("string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: " + (typeof str === "undefined" ? "undefined" : _typeof(str)) + ", equal to:\n" + str);
+    throw new TypeError("string-convert-indexes: [THROW_ID_02] the first input argument, input string, must be a non-zero-length string! Currently it's: ".concat(_typeof(str), ", equal to:\n").concat(str));
   }
   if (existy(originalOpts) && !isObj(originalOpts)) {
-    throw new TypeError("string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: " + (typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)) + ", equal to:\n" + originalOpts);
+    throw new TypeError("string-convert-indexes: [THROW_ID_03] the third input argument, Optional Options Object, must be a plain object! Currently it's: ".concat(_typeof(originalOpts), ", equal to:\n").concat(originalOpts));
   }
   var defaults = {
     throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "string-convert-indexes: [THROW_ID_04*]" });
-  var data = { id: 0 };
+  checkTypes(opts, defaults, {
+    msg: "string-convert-indexes: [THROW_ID_04*]"
+  });
+  var data = {
+    id: 0
+  };
   var toDoList = [];
-  if (isInt(indexes, { includeZero: true }) || isNumStr(indexes, { includeZero: true })) {
+  if (isInt(indexes, {
+    includeZero: true
+  }) || isNumStr(indexes, {
+    includeZero: true
+  })) {
     toDoList = [{
       id: 1,
       val: indexes
@@ -62,7 +83,11 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     indexes = astMonkey.traverse(indexes, function (key, val) {
       data.id += 1;
       data.val = val !== undefined ? val : key;
-      if (isInt(data.val, { includeZero: true }) || isNumStr(data.val, { includeZero: true })) {
+      if (isInt(data.val, {
+        includeZero: true
+      }) || isNumStr(data.val, {
+        includeZero: true
+      })) {
         toDoList.push(clone(data));
       }
       return data.val;
@@ -109,13 +134,17 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     }
     if (opts.throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString && i === len - 1 && (mode === "n" && prep(toDoList[toDoList.length - 1].val) > len || mode === "u" && prep(toDoList[toDoList.length - 1].val) > unicodeIndex + 1)) {
       if (mode === "n") {
-        throw new Error("string-convert-indexes: [THROW_ID_05] the reference string has native JS string indexes going only upto " + i + ", but you are trying to convert an index larger than that, " + prep(toDoList[toDoList.length - 1].val));
+        throw new Error("string-convert-indexes: [THROW_ID_05] the reference string has native JS string indexes going only upto ".concat(i, ", but you are trying to convert an index larger than that, ").concat(prep(toDoList[toDoList.length - 1].val)));
       } else {
-        throw new Error("string-convert-indexes: [THROW_ID_06] the reference string has Unicode character count going only upto " + unicodeIndex + ", but you are trying to convert an index larger than that, " + prep(toDoList[toDoList.length - 1].val));
+        throw new Error("string-convert-indexes: [THROW_ID_06] the reference string has Unicode character count going only upto ".concat(unicodeIndex, ", but you are trying to convert an index larger than that, ").concat(prep(toDoList[toDoList.length - 1].val)));
       }
     }
   }
-  if (isInt(indexes, { includeZero: true }) || isNumStr(indexes, { includeZero: true })) {
+  if (isInt(indexes, {
+    includeZero: true
+  }) || isNumStr(indexes, {
+    includeZero: true
+  })) {
     return toDoList[0].res !== undefined ? toDoList[0].res : toDoList[0].val;
   }
   var res = clone(indexes);
@@ -130,13 +159,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
 function nativeToUnicode() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
   var indexes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
-  var opts = arguments[2];
+  var opts = arguments.length > 2 ? arguments[2] : undefined;
   return strConvertIndexes("n", str, indexes, opts);
 }
 function unicodeToNative() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : mandatory(1);
   var indexes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : mandatory(2);
-  var opts = arguments[2];
+  var opts = arguments.length > 2 ? arguments[2] : undefined;
   return strConvertIndexes("u", str, indexes, opts);
 }
 

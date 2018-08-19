@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2018-08-19
+
+- ✨ Rebased code to remove any `if (DEBUG)` statements - now `console.log` comments can be left in place - they will be removed during non-dev Rollup builds
+- ✨ Refreshed the setup - temporarily removed `nyc` and updated all dependencies
+
 ## [1.4.0] - 2018-06-29
 
 - ✨ Set up Rollup to remove comments from the code
@@ -54,3 +59,4 @@ that include string's last character.
 [1.2.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.2.0%0Dv1.1.4#diff
 [1.3.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.3.0%0Dv1.2.1#diff
 [1.4.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.4.0%0Dv1.3.0#diff
+[1.5.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.5.0%0Dv1.4.0#diff

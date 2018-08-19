@@ -41,7 +41,6 @@ function customSort(arr) {
 
 // inner function, common for both external API's methods that does the job:
 function strConvertIndexes(mode, str, indexes, originalOpts) {
-  // const DEBUG = 1
   //
   // insurance
   // ---------
@@ -110,7 +109,7 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
     return indexes;
   }
   toDoList = customSort(toDoList);
-  // if (DEBUG) { console.log(`STEP 2. FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`) }
+  console.log(`STEP 2. FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
   // STEP 3.
   // ---------------------------------------------------------------------------
@@ -122,9 +121,13 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   let unicodeIndex = -1;
   let surrogateDetected = false;
   for (let i = 0, len = str.length; i <= len; i++) {
-    // if (DEBUG) { console.log(`---------------------------------------- ${str[i]}  (${i})`) }
-    // if (DEBUG) { console.log(`* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`) }
-    // if (DEBUG) { console.log(`* unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`) }
+    console.log(`---------------------------------------- ${str[i]}  (${i})`);
+    console.log(
+      `* surrogateDetected was ${JSON.stringify(surrogateDetected, null, 4)}`
+    );
+    console.log(
+      `129 * unicodeIndex was ${JSON.stringify(unicodeIndex, null, 4)}`
+    );
     //
     //    PART 1. Bean-counting
     //    =====================
@@ -142,31 +145,53 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
       // if there is no preceding surrogate:
       if (surrogateDetected !== true) {
         unicodeIndex += 1;
-        // if (DEBUG) { console.log(`! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`) }
+        console.log(
+          `149 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+        );
         surrogateDetected = true;
-        // if (DEBUG) { console.log(`! surrogateDetected now ${JSON.stringify(surrogateDetected, null, 4)}`) }
+        console.log(
+          `153 ! surrogateDetected now ${JSON.stringify(
+            surrogateDetected,
+            null,
+            4
+          )}`
+        );
       } else {
         // if there is preceding surrogate - don't bump the Unicode char counter
 
         // but reset the flag, because astral symbols come in pairs
         surrogateDetected = false;
-        // if (DEBUG) { console.log(`! surrogateDetected now ${JSON.stringify(surrogateDetected, null, 4)}`) }
+        console.log(
+          `165 ! surrogateDetected now ${JSON.stringify(
+            surrogateDetected,
+            null,
+            4
+          )}`
+        );
       }
     } else {
       // not surrogate:
 
       // bump the counter:
       unicodeIndex += 1;
-      // if (DEBUG) { console.log(`! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`) }
+      console.log(
+        `178 ! unicodeIndex now ${JSON.stringify(unicodeIndex, null, 4)}`
+      );
       // reset the flag:
       if (surrogateDetected === true) {
         surrogateDetected = false;
-        // if (DEBUG) { console.log(`! surrogateDetected now ${JSON.stringify(surrogateDetected, null, 4)}`) }
+        console.log(
+          `184 ! surrogateDetected now ${JSON.stringify(
+            surrogateDetected,
+            null,
+            4
+          )}`
+        );
       }
     }
 
-    // if (DEBUG) { console.log(`\n---> unicodeIndex:      ${unicodeIndex}`) }
-    // if (DEBUG) { console.log(`---> surrogateDetected: ${surrogateDetected}\n`) }
+    console.log(`\n---> unicodeIndex:      ${unicodeIndex}`);
+    console.log(`---> surrogateDetected: ${surrogateDetected}\n`);
 
     //       PART 2. Action
     //       ==============
@@ -237,7 +262,8 @@ function strConvertIndexes(mode, str, indexes, originalOpts) {
   //       PART 3. Result
   //       ==============
 
-  // if (DEBUG) { console.log(`\n\n\nFINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`) }
+  console.log("\n\n\n");
+  console.log(`266 FINAL toDoList = ${JSON.stringify(toDoList, null, 4)}`);
 
   if (
     isInt(indexes, { includeZero: true }) ||
