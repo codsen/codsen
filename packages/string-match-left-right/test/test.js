@@ -2836,18 +2836,6 @@ test(`09.15 - ${`\u001b[${36}m${"opts.cb()"}\u001b[${39}m`}   ${`\u001b[${32}m${
 // 10. EOL matching
 // -----------------------------------------------------------------------------
 
-test.only(`delete me`, t => {
-  t.is(
-    matchLeft("a", 0, () => "EOL", {
-      cb: () => {
-        return false;
-      }
-    }),
-    false,
-    "10.01.03 - cb blocking result"
-  );
-});
-
 test(`10.01 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, t => {
   t.is(matchLeft("a", 0, "EOL"), false, "10.01.01");
   t.is(matchLeft("a", 0, () => "EOL"), "EOL", "10.01.02");
@@ -3046,29 +3034,397 @@ test(`10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}
     "10.02.26 - whitespace trim opt on"
   );
   t.is(
-    matchLeft("z a", 2, ["z", () => "EOL"]),
+    matchLeft("z a", 2, ["z", () => "EOL"], {
+      trimBeforeMatching: true
+    }),
     "z",
     "10.02.27 - whitespace trim opts control"
   );
   t.is(
-    matchLeft("z a", 2, ["z", () => "EOL"], {
+    matchLeft("z a", 2, ["x", () => "EOL"], {
       trimCharsBeforeMatching: ["z"],
       trimBeforeMatching: true
     }),
-    "z",
+    "EOL",
     "10.02.28 - whitespace trim opt on"
+  );
+  t.is(
+    matchLeft("yz a", 2, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.02.29"
   );
 });
 
-test.todo(
-  `10.02 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching`
-);
-test.todo(
-  `10.03 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`
-);
-test.todo(
-  `10.04 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching`
-);
+test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
+  t.is(matchLeftIncl("a", 0, "EOL"), false, "10.03.01");
+  t.is(matchLeftIncl("a", 0, () => "EOL"), false, "10.03.02");
+  t.is(
+    matchLeftIncl("a", 0, () => "EOL", {
+      cb: () => {
+        return false;
+      }
+    }),
+    false,
+    "10.03.03 - cb blocking result"
+  );
+  t.is(
+    matchLeftIncl("a", 0, () => "EOL", {
+      cb: () => {
+        return true;
+      }
+    }),
+    false,
+    "10.03.04 - useless cb"
+  );
+
+  // whitespace trims:
+  t.is(
+    matchLeftIncl(" a", 1, () => "EOL"),
+    false,
+    "10.03.06 - whitespace trim opts control"
+  );
+
+  t.is(matchLeftIncl("EOLa", 3, () => "EOLa"), false, "10.03.07");
+  t.is(matchLeftIncl("EOLa", 3, "EOL"), false, "10.03.08");
+
+  t.is(
+    matchLeftIncl(" a", 1, () => "EOL", {
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.03.09 - whitespace trim opt on"
+  );
+
+  // character trims:
+  t.is(
+    matchLeftIncl("za", 1, () => "EOL"),
+    false,
+    "10.03.10 - whitespace trim opts control"
+  );
+  t.is(
+    matchLeftIncl("za", 1, () => "EOL", {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    false,
+    "10.03.11 - whitespace trim opt on"
+  );
+
+  // trim combos - whitespace+character:
+  t.is(
+    matchLeftIncl("z a", 2, () => "EOL"),
+    false,
+    "10.03.12 - whitespace trim opts control"
+  );
+  t.is(
+    matchLeftIncl("z a", 2, () => "EOL", {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.03.13 - whitespace trim opt on"
+  );
+});
+
+test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, t => {
+  t.is(matchRight("a", 0, "EOL"), false, "10.04.01");
+  t.is(matchRight("a", 0, () => "EOL"), "EOL", "10.04.02");
+  t.is(
+    matchRight("a", 0, () => "EOL", {
+      cb: () => {
+        return false;
+      }
+    }),
+    false,
+    "10.04.03 - cb blocking result"
+  );
+  t.is(
+    matchRight("a", 0, () => "EOL", {
+      cb: () => {
+        return true;
+      }
+    }),
+    "EOL",
+    "10.04.04 - useless cb, just confirms the incoming truthy result"
+  );
+  matchRight("a", 0, () => "EOL", {
+    cb: (...args) => {
+      t.deepEqual(
+        args,
+        [undefined, undefined, undefined], // because there's nothing outside-right of index 0
+        "10.04.05 - useless cb"
+      );
+      return true;
+    }
+  });
+
+  // whitespace trims:
+  t.is(matchRight("a ", 0, () => "EOL"), false, "10.04.06-1");
+  t.is(matchRight("a ", 1, () => "EOL"), "EOL", "10.04.06-2");
+
+  t.is(matchRight("aEOL", 0, () => "EOL"), false, "10.04.07 - CHEEKY!!!");
+  t.is(matchRight("aEOL", 0, "EOL"), "EOL", "10.04.08 - !!!");
+
+  t.is(
+    matchRight("a ", 0, () => "EOL", {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.04.09 - whitespace trim opt on"
+  );
+
+  // character trims:
+  t.is(
+    matchRight("az", 0, () => "EOL"),
+    false,
+    "10.04.10 - whitespace trim opts control"
+  );
+  t.is(
+    matchRight("az", 0, () => "EOL", {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    "EOL",
+    "10.04.11 - whitespace trim opt on"
+  );
+
+  // trim combos - whitespace+character:
+  t.is(
+    matchRight("a z", 0, () => "EOL"),
+    false,
+    "10.04.12 - whitespace trim opts control"
+  );
+  t.is(
+    matchRight("a z", 2, () => "EOL", {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.04.13 - whitespace trim opt on"
+  );
+});
+
+test(`10.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, t => {
+  t.is(matchRight("a", 0, ["EOL"]), false, "10.05.01");
+  t.is(matchRight("a", 0, ["EOL", "a"]), false, "10.05.02");
+  t.is(matchRight("a", 0, ["EOL", "z"]), false, "10.05.03");
+  t.is(matchRight("a", 0, ["EOL", () => "EOL"]), "EOL", "10.05.04"); // latter, function was matched
+  t.is(matchRight("a", 0, [() => "EOL"]), "EOL", "10.05.05");
+
+  // whitespace trims:
+  t.is(
+    matchRight("a ", 0, [() => "EOL"]),
+    false,
+    "10.05.06 - whitespace trim opts control - one special"
+  );
+  t.is(
+    matchRight("a ", 0, [() => "EOL", () => "EOL"]),
+    false,
+    "10.05.07 - whitespace trim opts control - two specials"
+  );
+  t.is(
+    matchRight("a ", 0, [() => "EOL", "EOL"]),
+    false,
+    "10.05.08 - whitespace trim opts control - special mixed with cheeky"
+  );
+  t.is(
+    matchRight("a ", 0, ["EOL"]),
+    false,
+    "10.05.09 - whitespace trim opts control - cheeky only"
+  );
+
+  t.is(matchRight("aEOL", 0, [() => "EOL"]), false, "10.05.10 - CHEEKY!!!");
+  t.is(matchRight("aEOL", 0, ["EOL"]), "EOL", "10.05.11");
+  t.is(
+    matchRight("aEOL", 0, ["z", () => "EOL"]),
+    false,
+    "10.05.12 - CHEEKY!!!"
+  );
+  t.is(matchRight("aEOL", 0, ["z", "EOL"]), "EOL", "10.05.13");
+
+  t.is(
+    matchRight("a ", 0, [() => "EOL"], {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.14 - array"
+  );
+  t.is(
+    matchRight("a ", 0, ["x", () => "EOL"], {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.15 - other values to match"
+  );
+  t.is(
+    matchRight("a ", 0, [() => "EOL", () => "EOL"], {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.16 - two identical arrow functions in array, both positive"
+  );
+  t.is(
+    matchRight("a ", 0, [() => "EOL", "z", () => "EOL"], {
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.17 - two arrow f's in arrray + non-found"
+  );
+
+  // character trims:
+  t.is(matchRight("az", 0, [() => "EOL"]), false, "10.05.18 - trim off");
+  t.is(
+    matchRight("az", 0, [() => "EOL"], {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    "EOL",
+    "10.05.19 - character trim opt on"
+  );
+  t.is(
+    matchRight("az", 0, ["x", () => "EOL"]),
+    false,
+    "10.05.20 - wrong character to trim"
+  );
+  t.is(
+    matchRight("az", 0, ["z", () => "EOL"]),
+    "z",
+    "10.05.21 - z caught first, before EOL"
+  );
+  t.is(
+    matchRight("az", 0, ["a", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    "EOL",
+    "10.05.22 - whitespace trim opt on"
+  );
+
+  // trim combos - whitespace+character:
+  t.is(
+    matchRight("a z", 0, [() => "EOL"]),
+    false,
+    "10.05.23 - whitespace trim opts control"
+  );
+  t.is(
+    matchRight("a z", 0, [() => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.24 - whitespace trim opt on"
+  );
+  t.is(
+    matchRight("a z", 0, ["x", () => "EOL"]),
+    false,
+    "10.05.25 - whitespace trim opts control"
+  );
+  t.is(
+    matchRight("a z", 0, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.26 - whitespace trim opt on"
+  );
+  t.is(
+    matchRight("a z", 0, ["z", () => "EOL"], {
+      trimBeforeMatching: true
+    }),
+    "z",
+    "10.05.27 - whitespace trim opts control"
+  );
+  t.is(
+    matchRight("a z", 0, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    "EOL",
+    "10.05.28 - unused char to trim"
+  );
+  t.is(
+    matchRight("a zy", 0, ["x", () => "EOL"], {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.05.29 - y stands in the way"
+  );
+});
+
+// EOL can never be found using matchRightIncl() or matchLeftIncl() because
+// "inclusive" in the name means current character is included in the query to
+// match, either in the beginning of it ("matchRightIncl") or end of it
+// ("matchLeftIncl"). Since current character can't be EOL, result of both
+// matchRightIncl() and matchLeftIncl() that search for EOL will always be "false".
+test(`10.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
+  t.is(matchRightIncl("a", 0, "EOL"), false, "10.06.01");
+  t.is(matchRightIncl("a", 0, () => "EOL"), false, "10.06.02");
+  t.is(
+    matchRightIncl("a", 0, () => "EOL", {
+      cb: () => {
+        return false;
+      }
+    }),
+    false,
+    "10.06.03 - cb blocking, but still useless, result was false before cb kicked in"
+  );
+  t.is(
+    matchRightIncl("a", 0, () => "EOL", {
+      cb: () => {
+        return true;
+      }
+    }),
+    false,
+    "10.06.04 - useless cb"
+  );
+
+  // whitespace trims:
+  t.is(
+    matchRightIncl("a ", 0, () => "EOL"),
+    false,
+    "10.06.05 - whitespace trim opts control"
+  );
+
+  t.is(matchRightIncl("aEOL", 0, () => "aEOL"), false, "10.06.06");
+  t.is(matchRightIncl("aEOL", 0, "EOL"), false, "10.06.07");
+
+  t.is(
+    matchRightIncl("a ", 0, () => "EOL", {
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.06.08 - whitespace trim opt on"
+  );
+
+  // character trims:
+  t.is(
+    matchRightIncl("az", 0, () => "EOL"),
+    false,
+    "10.06.10 - whitespace trim opts control"
+  );
+  t.is(
+    matchRightIncl("az", 0, () => "EOL", {
+      trimCharsBeforeMatching: ["z"]
+    }),
+    false,
+    "10.06.11 - whitespace trim opt on"
+  );
+
+  // trim combos - whitespace+character:
+  t.is(
+    matchRightIncl("a z", 0, () => "EOL"),
+    false,
+    "10.06.12 - whitespace trim opts control"
+  );
+  t.is(
+    matchRightIncl("a z", 0, () => "EOL", {
+      trimCharsBeforeMatching: ["z"],
+      trimBeforeMatching: true
+    }),
+    false,
+    "10.06.13 - whitespace trim + character trim"
+  );
+});
 
 // 11. Ad-hoc
 // -----------------------------------------------------------------------------
