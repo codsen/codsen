@@ -53,18 +53,18 @@ or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) 
 | `-h`  | `--help`        | Shows (similar to this) **h**elp                                  |
 | `-v`  | `--version`     | Shows the installed **v**ersion of your `json-sort-cli`           |
 
-Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these below are the same:
+Put either short or long version of a desired flag, before or after the path or list of paths. For example, all these commands below are the same:
 
-- <code>jsonsort templates/springsale03 <b>-s</b></code>
-- <code>jsonsort <b>-s</b> templates/springsale03</code>
-- <code>jsonsort templates/springsale03 <b>--silent</b></code>
-- <code>jsonsort <b>--silent</b> templates/springsale03</code>
+- `jsonsort templates/springsale03 -s`
+- `jsonsort -s templates/springsale03`
+- `jsonsort templates/springsale03 --silent`
+- `jsonsort --silent templates/springsale03`
 
 **[⬆ back to top](#markdown-header-json-sort-cli)**
 
 ## What it does exactly
 
-It **sorts JSON files deeply**. That is, if the object \#1 has an array which has an object \#2, both object \#1 and \#2 keys will be sorted. No matter how deeply nested is a plain object, even within arrays — it will be sorted.
+It **sorts JSON files deeply**. That is, it does not matter is it's a plain object within array within array within a plain object - all objects no matter how deep, will be detected and sorted.
 
 This is a parsing-type application, so written files are also **prettified** — tabulations and whitespace are fixed to an (arbitrary) order. If you leave the default setting, it will indent using two spaces. If you call it with a flag `-t`, one tab will be used.
 
