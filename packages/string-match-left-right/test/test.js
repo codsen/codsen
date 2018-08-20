@@ -3058,7 +3058,7 @@ test(`10.02 - ${`\u001b[${32}m${"matchLeft()"}\u001b[${39}m`}       \u001b[${33}
   );
 });
 
-test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
+test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}   \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
   t.is(matchLeftIncl("a", 0, "EOL"), false, "10.03.01");
   t.is(matchLeftIncl("a", 0, () => "EOL"), false, "10.03.02");
   t.is(
@@ -3128,7 +3128,7 @@ test(`10.03 - ${`\u001b[${32}m${"matchLeftIncl()"}\u001b[${39}m`}       \u001b[$
   );
 });
 
-test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching`, t => {
+test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m matching`, t => {
   t.is(matchRight("a", 0, "EOL"), false, "10.04.01");
   t.is(matchRight("a", 0, () => "EOL"), "EOL", "10.04.02");
   t.is(
@@ -3205,7 +3205,7 @@ test(`10.04 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33
   );
 });
 
-test(`10.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, t => {
+test(`10.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}      \u001b[${33}mEOL\u001b[${39}m EOL mixed with strings`, t => {
   t.is(matchRight("a", 0, ["EOL"]), false, "10.05.01");
   t.is(matchRight("a", 0, ["EOL", "a"]), false, "10.05.02");
   t.is(matchRight("a", 0, ["EOL", "z"]), false, "10.05.03");
@@ -3356,7 +3356,7 @@ test(`10.05 - ${`\u001b[${32}m${"matchRight()"}\u001b[${39}m`}       \u001b[${33
 // match, either in the beginning of it ("matchRightIncl") or end of it
 // ("matchLeftIncl"). Since current character can't be EOL, result of both
 // matchRightIncl() and matchLeftIncl() that search for EOL will always be "false".
-test(`10.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}       \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
+test(`10.06 - ${`\u001b[${32}m${"matchRightIncl()"}\u001b[${39}m`}  \u001b[${33}mEOL\u001b[${39}m matching (not much sense but let's test anyway)`, t => {
   t.is(matchRightIncl("a", 0, "EOL"), false, "10.06.01");
   t.is(matchRightIncl("a", 0, () => "EOL"), false, "10.06.02");
   t.is(
