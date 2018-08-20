@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [3.5.0] - 2018-08-20
 
 - ✨ NEW! Now you can match against `EOL` - end of string (beginning or ending). Since you can't pass letters `"EOL"`, you must pass them as an ES6 arrow function, `() => "EOL"`. In all other aspects, the use is the same.
-- 🔧 Previously, `opts.cb` second argument, which means the rest of the string on particular side, depending on the method called, left or right, was giving empty string when there was nothing on that side. This, however looked inconsistent when all other callback values were undefined. Now, second `opts.cb` argument comes as `undefined` instead of `empty` string when there's nothing to return.
+- 🔧 Previously, `opts.cb` second argument, which means the rest of the string on particular side, depending on the method called, left or right, was giving empty string when there was nothing on that side. This, however looked inconsistent when all other callback values were `undefined`. Now, second `opts.cb` argument comes as `undefined` instead of `empty` string when there's nothing to return.
 - ✨ implemented and released (but not documented) `opts.strictApi` was merged with `opts.relaxedApi`
 
 ## [3.4.0] - 2018-06-11
