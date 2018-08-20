@@ -9,7 +9,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-![example](https://cdn.rawgit.com/codsen/json-sort-cli/2d97ecaa/media/quicktest.gif)
+![example](https://bitbucket.org/codsen/json-sort-cli/raw/ca7bf87734f84f48a8793ed7df0af7d680ef84e4/media/quicktest.gif)
 
 ## Table of Contents
 
