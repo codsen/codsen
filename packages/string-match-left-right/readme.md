@@ -340,9 +340,31 @@ For example, [string-strip-html](https://bitbucket.org/codsen/string-strip-html)
 
 **[⬆ back to top](#markdown-header-string-match-left-right)**
 
-## Unicode is fully supported
+## Matching the beginning of ending of the string
 
-All astral characters (including emoji) are supported in all parts of the program (as input arguments, as options and so on). Having said that, the indexing system is still the same, native JS-one. I did some mistakes in the past switching to string indexing system, based on grapheme-count where one emoji counts as one character. Later I learned that and produced [converter](https://bitbucket.org/codsen/string-convert-indexes) between the two systems, and now I always use only native JS string indexing system. This library is the first-one of mine which takes care of the astral characters **without splitting the input string by grapheme** (letter or emoji) into array. Some famous libraries work that way but I believe that impairs the performance.
+Since `3.5.0`, you can match the beginning or ending of a string (further called "EOL"), for example, is there nothing on the left or right of a given index.
+
+The algorithm is currently limited in that you can't match if "something that ends with EOL is on the left or on the right" of a given index. Currently we can only match "if EOL is on the left or on the right" of a given index.
+
+To avoid "EOL" being interpreted as "real" three letters, we pass an arrow function which returns the same string. In JavaScript, functions are first-class citizens and can be used as raw values.
+
+Algorithm will still be able to retrieve "EOL" from `() => "EOL"`, yet the argument will be function, not string, which will allow to match the beginning or ending correctly:
+
+Consider this example:
+
+```js
+const res = matchRight("az", 0, ["x", () => "EOL"], {
+  trimCharsBeforeMatching: ["z"]
+});
+console.log(res);
+// => "EOL"
+```
+
+We match, is "EOL" or "x" to the right of the character at index `0` (letter "a"). While traversing towards right, we instruct to skip any characters "z". Result is string "EOL".
+
+## Unicode is somewhat supported
+
+Algorithm covers the emoji that comprise of two characters but not longer emoji.
 
 **[⬆ back to top](#markdown-header-string-match-left-right)**
 
