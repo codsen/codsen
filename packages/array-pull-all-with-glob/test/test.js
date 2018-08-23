@@ -106,10 +106,25 @@ test("2.2 - asterisk the only input - pulls everything", t => {
         "elements",
         "elemental"
       ],
-      ["*"]
+      ["*"] // <------ array
     ),
     [],
-    "2.2"
+    "2.2.1"
+  );
+  t.deepEqual(
+    pull(
+      [
+        "module-1",
+        "only this left",
+        "module-2",
+        "module-3",
+        "elements",
+        "elemental"
+      ],
+      "*" // <---- string
+    ),
+    [],
+    "2.2.2"
   );
 });
 
@@ -134,6 +149,15 @@ test("2.5 - empty array as second arg", t => {
     ["module-*", "module-**", "something-*", "something-**"],
     "2.5"
   );
+});
+
+test("2.6 - pulls normal words in various ways", t => {
+  t.deepEqual(pull(["apples", "oranges"], "apples"), ["oranges"], "2.6.1");
+  t.deepEqual(pull(["apples", "oranges"], ["apples"]), ["oranges"], "2.6.2");
+  t.deepEqual(pull(["apples", "oranges"], ["apples*"]), ["oranges"], "2.6.3");
+  t.deepEqual(pull(["apples", "oranges"], "apples*"), ["oranges"], "2.6.4");
+  t.deepEqual(pull(["apples", "oranges"], "a*"), ["oranges"], "2.6.5");
+  t.deepEqual(pull(["apples", "oranges"], ["a*"]), ["oranges"], "2.6.6");
 });
 
 // ==========
@@ -236,15 +260,30 @@ test("3.6 - missing one input - throws", t => {
   });
 });
 
+test('3.7 - 1st arg, "originalInput" is an empty array', t => {
+  t.deepEqual(pull([], "z"), [], "3.7.1");
+  t.deepEqual(pull([], ""), [], "3.7.2");
+  t.deepEqual(pull([], ["z"]), [], "3.7.3");
+});
+
+test('3.8 - 2nd arg, "originalToBeRemoved" is an empty string', t => {
+  t.deepEqual(pull(["apples", "oranges"], ""), ["apples", "oranges"], "3.8.1");
+});
+
 // ========================================
 // checks for accidental input arg mutation
 // ========================================
 
 test("4.1 - does not mutate the input args", t => {
   const arr1 = ["a", "b", "c"];
-  const arr2 = ["c"];
-  const unneededResult = pull(arr1, arr2);
-  t.pass(unneededResult); // filler to shut up the JS Standard complaining
+  const arr2 = "c";
+  const arr3 = ["c"];
+  const unneededResult1 = pull(arr1, arr2);
+  t.pass(unneededResult1); // filler to shut up the linter complaining it's unused
+
+  const unneededResult2 = pull(arr1, arr3);
+  t.pass(unneededResult2); // filler to shut up the linter complaining it's unused
   t.deepEqual(arr1, ["a", "b", "c"], "4.1.1");
-  t.deepEqual(arr2, ["c"], "4.1.2");
+  t.deepEqual(arr2, "c", "4.1.2");
+  t.deepEqual(arr3, ["c"], "4.1.3");
 });

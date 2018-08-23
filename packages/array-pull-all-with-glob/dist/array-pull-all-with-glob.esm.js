@@ -3,16 +3,6 @@ import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 
 const isArr = Array.isArray;
-
-/**
- * pullAllWithGlob - like _.pullAll but pulling stronger
- * Accepts * glob.
- * For example, "module-*" would pull all: "module-1", "module-zzz"...
- *
- * @param  {Array} input           array of strings
- * @param  {Array} toBeRemovedArr  array of strings (might contain asterisk)
- * @return {Array}                 pulled array
- */
 function pullAllWithGlob(
   originalInput,
   originalToBeRemoved,
@@ -24,7 +14,6 @@ function pullAllWithGlob(
   function isStr(something) {
     return typeof something === "string";
   }
-  // insurance
   if (!existy(originalInput)) {
     throw new Error(
       "array-pull-all-with-glob: [THROW_ID_01] first argument is missing!"
@@ -44,7 +33,18 @@ function pullAllWithGlob(
       )}`
     );
   }
-  if (!isArr(originalToBeRemoved)) {
+  let toBeRemoved;
+  if (typeof originalToBeRemoved === "string") {
+    if (originalToBeRemoved.length === 0) {
+      return originalInput;
+    }
+    toBeRemoved = [originalToBeRemoved];
+  } else if (isArr(originalToBeRemoved)) {
+    if (originalToBeRemoved.length === 0) {
+      return originalInput;
+    }
+    toBeRemoved = Array.from(originalToBeRemoved);
+  } else if (!isArr(originalToBeRemoved)) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it's ${typeof originalToBeRemoved}, equal to: ${JSON.stringify(
         originalToBeRemoved,
@@ -65,10 +65,10 @@ function pullAllWithGlob(
       )}`
     );
   }
-  if (!originalToBeRemoved.every(el => isStr(el))) {
+  if (!toBeRemoved.every(el => isStr(el))) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(
-        originalToBeRemoved,
+        toBeRemoved,
         null,
         4
       )}`
@@ -81,7 +81,6 @@ function pullAllWithGlob(
       }`
     );
   }
-
   let opts;
   const defaults = {
     caseSensitive: true
@@ -91,16 +90,13 @@ function pullAllWithGlob(
   } else {
     opts = Object.assign({}, defaults, originalOpts);
   }
-
-  // the check:
   checkTypes(opts, defaults, {
     msg: "newLibrary/yourFunction(): [THROW_ID_08]",
     optsVarName: "opts"
   });
-
   return Array.from(originalInput).filter(
     originalVal =>
-      !originalToBeRemoved.some(remVal =>
+      !toBeRemoved.some(remVal =>
         matcher.isMatch(originalVal, remVal, {
           caseSensitive: opts.caseSensitive
         })

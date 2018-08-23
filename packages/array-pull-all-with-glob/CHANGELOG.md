@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.6.0] - 2018-08-23
+
+- ✨ Now we allow the second input argument to be a string or an array of zero or more strings
+
 ## [4.5.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -58,6 +62,7 @@ Also, I set up [check-types-mini](https://bitbucket.org/codsen/check-types-mini)
 - 🔧 Tightened the API with insurance against missing args or wrong types in the input. Now if the main input is missing, it will throw. If first argument (remove from where) is present, but second (what to remove) is missing, first arguement is returned. It's called being nice with others (libraries).
 - ✨ Added changelog.md
 
+[4.6.0]: https://bitbucket.org/codsen/array-pull-all-with-glob/branches/compare/v4.6.0%0Dv4.5.2#diff
 [4.5.0]: https://bitbucket.org/codsen/array-pull-all-with-glob/branches/compare/v4.5.0%0Dv4.4.1#diff
 [4.4.0]: https://bitbucket.org/codsen/array-pull-all-with-glob/branches/compare/v4.4.0%0Dv4.3.3#diff
 [4.3.0]: https://bitbucket.org/codsen/array-pull-all-with-glob/branches/compare/v4.3.0%0Dv4.2.0#diff

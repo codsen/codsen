@@ -44,7 +44,19 @@ function pullAllWithGlob(
       )}`
     );
   }
-  if (!isArr(originalToBeRemoved)) {
+
+  let toBeRemoved;
+  if (typeof originalToBeRemoved === "string") {
+    if (originalToBeRemoved.length === 0) {
+      return originalInput;
+    }
+    toBeRemoved = [originalToBeRemoved];
+  } else if (isArr(originalToBeRemoved)) {
+    if (originalToBeRemoved.length === 0) {
+      return originalInput;
+    }
+    toBeRemoved = Array.from(originalToBeRemoved);
+  } else if (!isArr(originalToBeRemoved)) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_04] first argument must be an array! Currently it's ${typeof originalToBeRemoved}, equal to: ${JSON.stringify(
         originalToBeRemoved,
@@ -65,10 +77,10 @@ function pullAllWithGlob(
       )}`
     );
   }
-  if (!originalToBeRemoved.every(el => isStr(el))) {
+  if (!toBeRemoved.every(el => isStr(el))) {
     throw new Error(
       `array-pull-all-with-glob: [THROW_ID_06] first argument array contains non-string elements: ${JSON.stringify(
-        originalToBeRemoved,
+        toBeRemoved,
         null,
         4
       )}`
@@ -100,7 +112,7 @@ function pullAllWithGlob(
 
   return Array.from(originalInput).filter(
     originalVal =>
-      !originalToBeRemoved.some(remVal =>
+      !toBeRemoved.some(remVal =>
         matcher.isMatch(originalVal, remVal, {
           caseSensitive: opts.caseSensitive
         })

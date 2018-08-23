@@ -28,9 +28,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                   | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 4 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-pull-all-with-glob.cjs.js` | 3 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-pull-all-with-glob.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-pull-all-with-glob.umd.js` | 16 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-pull-all-with-glob.umd.js` | 28 KB |
 
 **[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
@@ -74,11 +74,11 @@ pullAllWithGlob(
 
 ### API - Input
 
-| Input argument | Type         | Obligatory? | Description                                      |
-| -------------- | ------------ | ----------- | ------------------------------------------------ |
-| `sourceArray`  | Array        | yes         | Source array of strings                          |
-| `removeThese`  | Array        | yes         | Array of strings to remove from the source array |
-| `otps`         | Plain object | no          | An Optional Options Object. See its API below.   |
+| Input argument | Type                                      | Obligatory? | Description                                                                          |
+| -------------- | ----------------------------------------- | ----------- | ------------------------------------------------------------------------------------ |
+| `sourceArray`  | Array                                     | yes         | Source array of strings                                                              |
+| `removeThese`  | Array of zero or more strings or a string | yes         | Array of zero or more strings or a single string to be removed from the source array |
+| `otps`         | Plain object                              | no          | An Optional Options Object. See its API below.                                       |
 
 By the way, none of the input arguments are mutated. That's checked by unit tests from group 4.x
 
