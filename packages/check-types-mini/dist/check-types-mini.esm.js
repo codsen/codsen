@@ -6,7 +6,6 @@ import arrayiffyIfString from 'arrayiffy-if-string';
 import objectPath from 'object-path';
 import ordinal from 'ordinal';
 import matcher from 'matcher';
-import pullAllWithGlob from 'array-pull-all-with-glob';
 
 function checkTypesMini(
   obj,
@@ -19,6 +18,19 @@ function checkTypesMini(
   }
   function isObj(something) {
     return typ(something) === "Object";
+  }
+  function pullAllWithGlob(originalInput, toBeRemoved) {
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = [toBeRemoved];
+    }
+    return Array.from(originalInput).filter(
+      originalVal =>
+        !toBeRemoved.some(remVal =>
+          matcher.isMatch(originalVal, remVal, {
+            caseSensitive: true
+          })
+        )
+    );
   }
   function goUpByOneLevel(path) {
     if (path.includes(".")) {

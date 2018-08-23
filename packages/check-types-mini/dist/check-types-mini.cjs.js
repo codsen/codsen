@@ -10,7 +10,6 @@ var arrayiffyIfString = _interopDefault(require('arrayiffy-if-string'));
 var objectPath = _interopDefault(require('object-path'));
 var ordinal = _interopDefault(require('ordinal'));
 var matcher = _interopDefault(require('matcher'));
-var pullAllWithGlob = _interopDefault(require('array-pull-all-with-glob'));
 
 function checkTypesMini(obj, ref, originalOptions) {
   var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
@@ -19,6 +18,18 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   function isObj(something) {
     return typ(something) === "Object";
+  }
+  function pullAllWithGlob(originalInput, toBeRemoved) {
+    if (typeof toBeRemoved === "string") {
+      toBeRemoved = [toBeRemoved];
+    }
+    return Array.from(originalInput).filter(function (originalVal) {
+      return !toBeRemoved.some(function (remVal) {
+        return matcher.isMatch(originalVal, remVal, {
+          caseSensitive: true
+        });
+      });
+    });
   }
   function goUpByOneLevel(path) {
     if (path.includes(".")) {
