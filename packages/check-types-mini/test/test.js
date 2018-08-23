@@ -388,6 +388,261 @@ test(`01.07 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths`, t 
   });
 });
 
+test(`01.08 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths with wildcards`, t => {
+  // paths ignored - given as string:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: "aaa.*" // <----- string, not string in an array
+      }
+    );
+  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+
+  // paths ignored - given as array:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: true
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.*"] // <----- array
+      }
+    );
+  }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+
+  // paths ignored - given as string:
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true,
+          zzz: "whatever"
+        },
+        ccc: {
+          bbb: true,
+          this_key_should_throw: "as well"
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.*", "ccc.*"] // <------ both ignored
+      }
+    );
+  });
+});
+
+test(`01.09 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignoreKeys with wildcards not referenced by schema/reference obj.`, t => {
+  // the control
+  t.throws(() => {
+    checkTypes(
+      {
+        www1: "yyy",
+        www2: "zzz"
+      },
+      {
+        aaa: "bbb",
+        ccc: "ddd"
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS"
+      }
+    );
+  }, "msg: The input object has keys which are not covered by the reference object: www1, www2");
+
+  // the bizness
+  // default mode is Strict, opts.enforceStrictKeyset = true by default, so
+  // even though "www1" and "www2" will be bailed out, the check-types-mini will
+  // ask, WTF are the keys "aaa" and "ccc":
+  t.throws(() => {
+    checkTypes(
+      {
+        www1: "yyy",
+        www2: "zzz"
+      },
+      {
+        aaa: "bbb",
+        ccc: "ddd"
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignoreKeys: "www*"
+      }
+    );
+  }, "msg: The reference object has keys which are not present in the input object: aaa, ccc");
+  // and it will throw the question at you.
+
+  // but if we turn off Strict mode, no more throws:
+  t.notThrows(() => {
+    checkTypes(
+      {
+        www1: "yyy",
+        www2: "zzz"
+      },
+      {
+        aaa: "bbb",
+        ccc: "ddd"
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignoreKeys: "www*",
+        enforceStrictKeyset: false
+      }
+    );
+  });
+});
+
+test(`01.10 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - some keys bailed through ignoreKeys, some through ignorePaths and as a result it does not throw`, t => {
+  // the control:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "ccc"
+        },
+        ddd: {
+          eee: "fff"
+        }
+      },
+      {
+        aaa: {
+          bbb: false
+        },
+        ddd: {
+          eee: false
+        }
+      },
+      {
+        msg: "msg"
+      }
+    );
+  }, 'msg: opts.aaa.bbb was customised to "ccc" which is not boolean but string');
+
+  // bail the "aaa.bbb" via "ignoreKeys"
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "ccc"
+        },
+        ddd: {
+          eee: "fff" // <----- ddd.eee fill cause a throw now
+        }
+      },
+      {
+        aaa: {
+          bbb: false
+        },
+        ddd: {
+          eee: false
+        }
+      },
+      {
+        msg: "msg",
+        ignoreKeys: "bbb"
+      }
+    );
+  }, 'msg: opts.ddd.eee was customised to "fff" which is not boolean but string');
+
+  // bail the "aaa.bbb" via "opts.ignoreKeys" and "ddd.eee" via "opts.ignorePaths"
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "ccc"
+        },
+        ddd: {
+          eee: "fff" // <----- ddd.eee fill cause a throw now
+        }
+      },
+      {
+        aaa: {
+          bbb: false
+        },
+        ddd: {
+          eee: false
+        }
+      },
+      {
+        msg: "msg",
+        ignoreKeys: "bbb",
+        ignorePaths: "ddd.eee"
+      }
+    );
+  });
+
+  // just to make sure options can fail too:
+  t.throws(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "ccc"
+        },
+        ddd: {
+          eee: "fff"
+        }
+      },
+      {
+        aaa: {
+          bbb: false
+        },
+        ddd: {
+          eee: false
+        }
+      },
+      {
+        msg: "msg",
+        ignoreKeys: "zzz", // <------ unused key name
+        ignorePaths: "ddd.yyy" // <-- unused path
+      }
+    );
+  });
+});
+
 // ======================
 // 02. Arrays
 // ======================

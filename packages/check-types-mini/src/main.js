@@ -5,6 +5,8 @@ import intersection from "lodash.intersection";
 import arrayiffyIfString from "arrayiffy-if-string";
 import objectPath from "object-path";
 import ordinal from "ordinal";
+import matcher from "matcher";
+import pullAllWithGlob from "array-pull-all-with-glob";
 
 // fourth input argument is shielded from an external API:
 function checkTypesMini(
@@ -124,7 +126,7 @@ function checkTypesMini(
   // validate the opts. Otherwise, we would get a recursion. But we know opts
   // are fine anyway when we're calling them internally :)
   if (shouldWeCheckTheOpts) {
-    console.log("121 about to call itself recursively:");
+    console.log("129 about to call itself recursively:");
     checkTypesMini(opts, defaults, { enforceStrictKeyset: false }, false);
   }
 
@@ -144,16 +146,20 @@ function checkTypesMini(
   // During traversal, we'll check if each value is a plain object/array and
   // match the keysets as well. However, traversal won't "see" root level keys.
 
-  console.log("141");
+  console.log("149");
 
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
       if (
-        pullAll(
-          Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(opts.schema))
+        pullAllWithGlob(
+          pullAll(
+            Object.keys(obj),
+            Object.keys(ref).concat(Object.keys(opts.schema))
+          ),
+          opts.ignoreKeys
         ).length !== 0
       ) {
+        console.log("162");
         const keys = pullAll(
           Object.keys(obj),
           Object.keys(ref).concat(Object.keys(opts.schema))
@@ -169,7 +175,12 @@ function checkTypesMini(
         );
       }
     } else if (existy(ref) && Object.keys(ref).length > 0) {
-      if (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0) {
+      if (
+        pullAllWithGlob(
+          pullAll(Object.keys(obj), Object.keys(ref)),
+          opts.ignoreKeys
+        ).length !== 0
+      ) {
         const keys = pullAll(Object.keys(obj), Object.keys(ref));
         throw new TypeError(
           `${opts.msg}: The input object has key${
@@ -178,7 +189,12 @@ function checkTypesMini(
             keys.length > 1 ? "are" : "is"
           } not covered by the reference object: ${keys.join(", ")}`
         );
-      } else if (pullAll(Object.keys(ref), Object.keys(obj)).length !== 0) {
+      } else if (
+        pullAllWithGlob(
+          pullAll(Object.keys(ref), Object.keys(obj)),
+          opts.ignoreKeys
+        ).length !== 0
+      ) {
         const keys = pullAll(Object.keys(ref), Object.keys(obj));
         throw new TypeError(
           `${opts.msg}: The reference object has key${
@@ -198,13 +214,13 @@ function checkTypesMini(
     }
   }
 
-  console.log("195");
+  console.log("217");
 
   // 2. Call the monkey and traverse the schema object, checking each value-as-object
   // or value-as-array separately, if opts.enforceStrictKeyset is on. Root level
   // was checked in step 1. above. What's left is deeper levels.
   console.log(
-    `201 ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
+    `223 ${`\u001b[${33}m${`obj`}\u001b[${39}m`} = ${JSON.stringify(
       obj,
       null,
       4
@@ -233,7 +249,7 @@ function checkTypesMini(
     // If schema exists, types defined there will be used to compare against:
 
     console.log(
-      `230 ${`\u001b[${33}m${`opts.schema`}\u001b[${39}m`} = ${JSON.stringify(
+      `252 ${`\u001b[${33}m${`opts.schema`}\u001b[${39}m`} = ${JSON.stringify(
         opts.schema,
         null,
         4
@@ -277,7 +293,7 @@ function checkTypesMini(
                     !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))))))
     ) {
       console.log(
-        `267 ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
+        `296 ${`\u001b[${33}m${`innerObj.path`}\u001b[${39}m`} = ${JSON.stringify(
           innerObj.path,
           null,
           4
@@ -299,12 +315,12 @@ function checkTypesMini(
       Object.keys(opts.schema).length &&
       Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path) // fancy Object.hasOwnProperty
     ) {
-      console.log("289");
+      console.log("318");
       // step 1. Fetch the current keys schema and normalise it - it's an array
       // which holds strings. Those strings have to be lowercased. It also can
       // be raw null/undefined, which would be arrayified and turned into string.
       console.log(
-        `294 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
+        `323 ${`\u001b[${33}m${`objectPath.get(opts.schema, innerObj.path)`}\u001b[${39}m`} = ${JSON.stringify(
           objectPath.get(opts.schema, innerObj.path),
           null,
           4
@@ -314,7 +330,7 @@ function checkTypesMini(
         .map(String)
         .map(el => el.toLowerCase());
       console.log(
-        `304 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
+        `333 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
           currentKeysSchema,
           null,
           4
@@ -331,7 +347,7 @@ function checkTypesMini(
         // in granular fashion: as just "true" or just "false".
 
         console.log(
-          `321 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
+          `350 ${`\u001b[${33}m${`currentKeysSchema`}\u001b[${39}m`} = ${JSON.stringify(
             currentKeysSchema,
             null,
             4
@@ -345,13 +361,13 @@ function checkTypesMini(
             !currentKeysSchema.includes(String(current)) &&
             !currentKeysSchema.includes("boolean"))
         ) {
-          console.log("335 I. matching against schema.");
+          console.log("364 I. matching against schema.");
           // new in v.2.2
           // Check if key's value is array. Then, if it is, check if opts.acceptArrays is on.
           // If it is, then iterate through the array, checking does each value conform to the
           // types listed in that key's schema entry.
           if (isArr(current) && opts.acceptArrays) {
-            console.log("341 1-1: check acceptArrays");
+            console.log("370 1-1: check acceptArrays");
             // check each key:
             for (let i = 0, len = current.length; i < len; i++) {
               if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
@@ -373,7 +389,7 @@ function checkTypesMini(
               }
             }
           } else {
-            console.log("363 1-2: matching against schema");
+            console.log("392 1-2: matching against schema");
             // only then do throw...
             throw new TypeError(
               `${opts.msg}: ${opts.optsVarName}.${
@@ -396,19 +412,25 @@ function checkTypesMini(
       Object.keys(ref).length &&
       objectPath.has(ref, innerObj.path) &&
       typ(current) !== typ(objectPath.get(ref, innerObj.path)) &&
-      (!opts.ignoreKeys || !opts.ignoreKeys.includes(key)) &&
-      (!opts.ignorePaths || !opts.ignorePaths.includes(innerObj.path))
+      (!opts.ignoreKeys ||
+        !opts.ignoreKeys.some(oneOfKeysToIgnore =>
+          matcher.isMatch(key, oneOfKeysToIgnore)
+        )) &&
+      (!opts.ignorePaths ||
+        !opts.ignorePaths.some(oneOfPathsToIgnore =>
+          matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
+        ))
     ) {
-      console.log("389 II. matching against ref.");
+      console.log("424 II. matching against ref.");
       console.log(
-        `* 391 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
+        `* 426 ${`\u001b[${33}m${`current`}\u001b[${39}m`} = ${JSON.stringify(
           current,
           null,
           4
         )} (type ${typ(current).toLowerCase()})`
       );
       console.log(
-        `* 398 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
+        `* 433 ${`\u001b[${33}m${`objectPath.get(ref, innerObj.path)`}\u001b[${39}m`} = "${JSON.stringify(
           objectPath.get(ref, innerObj.path),
           null,
           4
@@ -421,7 +443,7 @@ function checkTypesMini(
         isArr(current) &&
         !opts.acceptArraysIgnore.includes(key)
       ) {
-        console.log("411 2-1: check accept arrays");
+        console.log("446 2-1: check accept arrays");
         const allMatch = current.every(
           el => typ(el).toLowerCase() === typ(ref[key]).toLowerCase()
         );
@@ -435,7 +457,7 @@ function checkTypesMini(
           );
         }
       } else {
-        console.log("425 - 2-2: match against ref");
+        console.log("460 - 2-2: match against ref");
         throw new TypeError(
           `${opts.msg}: ${opts.optsVarName}.${
             innerObj.path
@@ -450,7 +472,7 @@ function checkTypesMini(
       }
     }
 
-    console.log(`440 return: ${JSON.stringify(current, null, 4)}`);
+    console.log(`475 return: ${JSON.stringify(current, null, 4)}`);
     return current;
   });
   console.log("███████████████████████████████████████");

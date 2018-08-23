@@ -5,6 +5,8 @@ import intersection from 'lodash.intersection';
 import arrayiffyIfString from 'arrayiffy-if-string';
 import objectPath from 'object-path';
 import ordinal from 'ordinal';
+import matcher from 'matcher';
+import pullAllWithGlob from 'array-pull-all-with-glob';
 
 function checkTypesMini(
   obj,
@@ -96,9 +98,12 @@ function checkTypesMini(
   if (opts.enforceStrictKeyset) {
     if (existy(opts.schema) && Object.keys(opts.schema).length > 0) {
       if (
-        pullAll(
-          Object.keys(obj),
-          Object.keys(ref).concat(Object.keys(opts.schema))
+        pullAllWithGlob(
+          pullAll(
+            Object.keys(obj),
+            Object.keys(ref).concat(Object.keys(opts.schema))
+          ),
+          opts.ignoreKeys
         ).length !== 0
       ) {
         const keys = pullAll(
@@ -116,7 +121,12 @@ function checkTypesMini(
         );
       }
     } else if (existy(ref) && Object.keys(ref).length > 0) {
-      if (pullAll(Object.keys(obj), Object.keys(ref)).length !== 0) {
+      if (
+        pullAllWithGlob(
+          pullAll(Object.keys(obj), Object.keys(ref)),
+          opts.ignoreKeys
+        ).length !== 0
+      ) {
         const keys = pullAll(Object.keys(obj), Object.keys(ref));
         throw new TypeError(
           `${opts.msg}: The input object has key${
@@ -125,7 +135,12 @@ function checkTypesMini(
             keys.length > 1 ? "are" : "is"
           } not covered by the reference object: ${keys.join(", ")}`
         );
-      } else if (pullAll(Object.keys(ref), Object.keys(obj)).length !== 0) {
+      } else if (
+        pullAllWithGlob(
+          pullAll(Object.keys(ref), Object.keys(obj)),
+          opts.ignoreKeys
+        ).length !== 0
+      ) {
         const keys = pullAll(Object.keys(ref), Object.keys(obj));
         throw new TypeError(
           `${opts.msg}: The reference object has key${
@@ -244,8 +259,14 @@ function checkTypesMini(
       Object.keys(ref).length &&
       objectPath.has(ref, innerObj.path) &&
       typ(current) !== typ(objectPath.get(ref, innerObj.path)) &&
-      (!opts.ignoreKeys || !opts.ignoreKeys.includes(key)) &&
-      (!opts.ignorePaths || !opts.ignorePaths.includes(innerObj.path))
+      (!opts.ignoreKeys ||
+        !opts.ignoreKeys.some(oneOfKeysToIgnore =>
+          matcher.isMatch(key, oneOfKeysToIgnore)
+        )) &&
+      (!opts.ignorePaths ||
+        !opts.ignorePaths.some(oneOfPathsToIgnore =>
+          matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
+        ))
     ) {
       const compareTo = objectPath.get(ref, innerObj.path);
       if (

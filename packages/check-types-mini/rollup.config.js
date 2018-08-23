@@ -1,6 +1,6 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
@@ -23,7 +23,7 @@ export default commandLineArgs => {
         resolve(),
         commonjs(),
         babel(),
-        uglify()
+        terser()
       ]
     },
 
@@ -32,10 +32,12 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-monkey-traverse",
         "lodash.intersection",
         "lodash.pullall",
+        "matcher",
         "object-path",
         "ordinal",
         "type-detect"
@@ -54,10 +56,12 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-monkey-traverse",
         "lodash.intersection",
         "lodash.pullall",
+        "matcher",
         "object-path",
         "ordinal",
         "type-detect"
