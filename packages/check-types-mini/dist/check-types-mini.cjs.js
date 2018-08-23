@@ -20,9 +20,7 @@ function checkTypesMini(obj, ref, originalOptions) {
     return typ(something) === "Object";
   }
   function pullAllWithGlob(originalInput, toBeRemoved) {
-    if (typeof toBeRemoved === "string") {
-      toBeRemoved = [toBeRemoved];
-    }
+    toBeRemoved = arrayiffyIfString(toBeRemoved);
     return Array.from(originalInput).filter(function (originalVal) {
       return !toBeRemoved.some(function (remVal) {
         return matcher.isMatch(originalVal, remVal, {
