@@ -247,10 +247,15 @@ test("02.05  -  ADD() - head and tail markers in new are smaller than last one's
   t.deepEqual(slices.current(), [[1, 5], [10, 20]], "02.05");
 });
 
-test("02.06  -  ADD() - same value in heads and tails", t => {
+test("02.06.01  -  ADD() - same value in heads and tails", t => {
   const slices = new Slices();
   slices.add(1, 1);
-  t.deepEqual(slices.current(), [[1, 1]], "02.06");
+  t.deepEqual(slices.current(), [], "02.06.01");
+});
+test("02.06.02  -  ADD() - same value in heads and tails", t => {
+  const slices = new Slices();
+  slices.add(1, 1, "zzz");
+  t.deepEqual(slices.current(), [[1, 1, "zzz"]], "02.06.02");
 });
 
 test("02.07  -  ADD() - same range again and again", t => {
@@ -429,6 +434,32 @@ test("03.13  -  ADD() - leading/trailing spaces in the third arg.", t => {
   slices2.add("2", "2", " click here ");
   slices2.add("2", "3", "b");
   t.deepEqual(slices2.current(), [[1, 3, "a click here b"]], "03.13");
+});
+
+test("03.14  -  ADD() - whole ranges array is pushed", t => {
+  const slices1 = new Slices();
+  const slices2 = new Slices();
+
+  slices1.add(1, 2);
+  slices1.add(3, 4);
+
+  slices2.push(5, 6);
+  slices2.push(slices1.current());
+  t.deepEqual(slices2.current(), [[1, 2], [3, 4], [5, 6]], "03.14");
+});
+
+test("03.15  -  ADD() - empty array is pushed", t => {
+  const slices1 = new Slices();
+  slices1.push([]);
+  t.is(slices1.current(), null, "03.15");
+});
+
+test("03.16  -  ADD() - null is pushed", t => {
+  const slices1 = new Slices();
+  const slices2 = new Slices();
+  slices1.push(slices2.current());
+  t.is(slices1.current(), null, "03.16.01");
+  t.is(slices1.current(), null, "03.16.02");
 });
 
 // -----------------------------------------------------------------------------
