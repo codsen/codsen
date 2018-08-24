@@ -1,6 +1,6 @@
 # ranges-regex
 
-> Perform a regex search on string and return ranges array of findings (or null)
+> Perform a regex search on string and get a ranges array of findings (or null)
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
