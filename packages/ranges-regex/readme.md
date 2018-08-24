@@ -48,7 +48,7 @@ It takes a string, matches the given regex on it and returns an array of ranges 
 
 This is handy when using _range_-class libraries, for both deletion and/or insertion of character ranges [later](https://www.npmjs.com/package/ranges-apply), down the line.
 
-Similarly to `String.prototype.match()`, a no results case will yield `null`. Some results will be a ranges array - array of arrays (ranges), each 2 or 3 elements long.
+Similarly to `String.prototype.match()`, a no results case will yield `null`.
 
 **[⬆ back to top](#markdown-header-ranges-regex)**
 
