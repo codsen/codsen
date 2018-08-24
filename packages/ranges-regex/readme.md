@@ -28,8 +28,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-regex.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-regex.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-regex.umd.js` | 37 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-regex.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-regex.umd.js` | 38 KB |
 
 **[⬆ back to top](#markdown-header-ranges-regex)**
 
@@ -38,6 +38,7 @@ Here's what you'll get:
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
 - [API](#markdown-header-api)
+- [Examples](#markdown-header-examples)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -87,6 +88,8 @@ console.log(JSON.stringify(res, null, 4));
 Notice, you can use all the features of regexes: global, case insensitive flags and so on.
 
 PS. Be careful not to signify the intention to omit the third argument by setting it to `null`. The `null` is a valid value in _ranges_ [ecosystem](https://bitbucket.org/account/user/codsen/projects/RNG) and it is used in ranges to "kill off" any present insertion values. For example, you merge two ranges and one says "add this" (in a form of third argument) and second says, disregard all that content to add, here's `null` to defuse them for good.
+
+**[⬆ back to top](#markdown-header-ranges-regex)**
 
 ## Contributing
 

@@ -34,15 +34,15 @@ function rangesRegex(regx, str, replacement) {
   if (str.length === 0) {
     return null;
   }
-  var array1;
+  var tempArr;
   var resRange = [];
   if (replacement === null || typeof replacement === "string" && replacement.length > 0) {
-    while ((array1 = regx.exec(str)) !== null) {
-      resRange.push([regx.lastIndex - array1[0].length, regx.lastIndex, replacement]);
+    while ((tempArr = regx.exec(str)) !== null) {
+      resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex, replacement]);
     }
   } else {
-    while ((array1 = regx.exec(str)) !== null) {
-      resRange.push([regx.lastIndex - array1[0].length, regx.lastIndex]);
+    while ((tempArr = regx.exec(str)) !== null) {
+      resRange.push([regx.lastIndex - tempArr[0].length, regx.lastIndex]);
     }
   }
   if (resRange.length) {
