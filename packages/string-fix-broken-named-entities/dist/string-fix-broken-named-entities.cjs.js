@@ -38,11 +38,15 @@ function stringFixBrokenNamedEntities(str) {
   }
   var rangesArr = [];
   outerloop: for (var i = 0, len = str.length + 1; i < len; i++) {
-    if (nbsp.nameStartsAt && nbsp.matchedN && nbsp.matchedB && nbsp.matchedS && nbsp.matchedP && str[i] !== ";") {
+    console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ", "\x1B[".concat(31, "m", str[i] ? str[i].trim() === "" ? str[i] === null ? "null" : str[i] === "\n" ? "line break" : str[i] === "\t" ? "tab" : str[i] === " " ? "space" : "???" : str[i] : "undefined", "\x1B[", 39, "m")), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m"));
+    if (nbsp.nameStartsAt !== null && nbsp.matchedN && nbsp.matchedB && nbsp.matchedS && nbsp.matchedP && str[i] !== ";") {
+      console.log("\x1B[".concat(32, "m", "129 ENDING OF AN NBSP; PUSH [".concat(nbsp.nameStartsAt, ", ").concat(i, "]"), "\x1B[", 39, "m"));
       rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       nbspWipe();
+      console.log("136 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m"), ", now = ", JSON.stringify(nbsp, null, 4)));
     }
     if (str[i] === "&") {
+      console.log("158 & caught");
       if (str[i + 1] === "a" && str[i + 2] === "m" && str[i + 3] === "p" && str[i + 4] === ";") {
         state_AmpersandNotNeeded = true;
         var endingOfAmpRepetition = i + 5;
@@ -50,43 +54,59 @@ function stringFixBrokenNamedEntities(str) {
           endingOfAmpRepetition += 4;
         }
         rangesArr.push([i + 1, endingOfAmpRepetition]);
+        console.log("182 PUSH \x1B[".concat(33, "m", "[".concat(i + 1, ", ").concat(endingOfAmpRepetition, "]"), "\x1B[", 39, "m"));
         i = endingOfAmpRepetition - 1;
         continue outerloop;
       }
-      if (!nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt !== null) {
         if (nbsp.ampersandNecessary === null) {
           nbsp.nameStartsAt = i;
+          console.log("199 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
           nbsp.ampersandNecessary = false;
+          console.log("205 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
         }
       }
     }
     if (str[i] && str[i].toLowerCase() === "n") {
+      console.log("215 n caught");
       nbsp.matchedN = true;
-      if (!nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
+        console.log("221 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
+          console.log("230 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
         }
       }
     }
     if (str[i] && str[i].toLowerCase() === "b") {
-      if (nbsp.nameStartsAt) {
+      console.log("240 b caught");
+      if (nbsp.nameStartsAt !== null) {
         nbsp.matchedB = true;
+        console.log("245 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedB", "\x1B[", 39, "m"), " = ", nbsp.matchedB));
       }
     }
     if (str[i] && str[i].toLowerCase() === "s") {
-      if (nbsp.nameStartsAt) {
+      console.log("254 s caught");
+      if (nbsp.nameStartsAt !== null) {
         nbsp.matchedS = true;
+        console.log("259 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedS", "\x1B[", 39, "m"), " = ", nbsp.matchedS));
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
-      if (nbsp.nameStartsAt) {
+      console.log("268 p caught");
+      if (nbsp.nameStartsAt !== null) {
         nbsp.matchedP = true;
+        console.log("273 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedP", "\x1B[", 39, "m"), " = ", nbsp.matchedP));
       }
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
+      console.log("297 SET ".concat("\x1B[".concat(33, "m", "state_AmpersandNotNeeded", "\x1B[", 39, "m"), " = ", JSON.stringify(state_AmpersandNotNeeded, null, 4)));
     }
+    console.log("---------------");
+    console.log("state_AmpersandNotNeeded = ".concat(state_AmpersandNotNeeded));
+    console.log("".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m"), " = ", JSON.stringify(nbsp, null, 4)));
   }
   return rangesArr.length ? rangesMerge(rangesArr) : null;
 }

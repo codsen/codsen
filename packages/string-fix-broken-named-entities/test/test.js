@@ -39,7 +39,7 @@ test("01.01 - empty string", t => {
 // 02. special attention to nbsp - people will type it by hand often, making mistakes
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing ampersand`, t => {
+test.only(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing ampersand`, t => {
   t.deepEqual(
     fix("zzznbsp;zzznbsp;"),
     [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]],
@@ -54,6 +54,12 @@ test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missi
     fix("zz\nnbsp;zz\nnbsp;"),
     [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]],
     "02.01.03 - line break + nbsp"
+  );
+  t.deepEqual(fix("nbsp;"), [[0, 5, "&nbsp;"]], "02.01.04");
+  t.deepEqual(
+    fix("nbsp;zzznbsp;"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"]],
+    "02.01.04"
   );
 });
 test(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {

@@ -118,7 +118,7 @@ function stringFixBrokenNamedEntities(str) {
 
     // catch ending of an nbsp (or messed up set of its characters)
     if (
-      nbsp.nameStartsAt &&
+      nbsp.nameStartsAt !== null &&
       nbsp.matchedN &&
       nbsp.matchedB &&
       nbsp.matchedS &&
@@ -188,7 +188,7 @@ function stringFixBrokenNamedEntities(str) {
       }
 
       // 2. mark the potential beginning of an nbsp:
-      if (!nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt !== null) {
         if (nbsp.ampersandNecessary === null) {
           // The check above is for not false but null because null means it's
           // not set false is set to false. Thus check can't be "if false".
@@ -214,7 +214,7 @@ function stringFixBrokenNamedEntities(str) {
     if (str[i] && str[i].toLowerCase() === "n") {
       console.log("215 n caught");
       nbsp.matchedN = true;
-      if (!nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt === null) {
         // 1. mark it
         nbsp.nameStartsAt = i;
         console.log(
@@ -238,7 +238,7 @@ function stringFixBrokenNamedEntities(str) {
     // catch "b"
     if (str[i] && str[i].toLowerCase() === "b") {
       console.log("240 b caught");
-      if (nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt !== null) {
         // clean code, N was already detected
         nbsp.matchedB = true;
         console.log(
@@ -252,7 +252,7 @@ function stringFixBrokenNamedEntities(str) {
     // catch "s"
     if (str[i] && str[i].toLowerCase() === "s") {
       console.log("254 s caught");
-      if (nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt !== null) {
         // clean code
         nbsp.matchedS = true;
         console.log(
@@ -266,7 +266,7 @@ function stringFixBrokenNamedEntities(str) {
     // catch "p"
     if (str[i] && str[i].toLowerCase() === "p") {
       console.log("268 p caught");
-      if (nbsp.nameStartsAt) {
+      if (nbsp.nameStartsAt !== null) {
         // clean code
         nbsp.matchedP = true;
         console.log(
