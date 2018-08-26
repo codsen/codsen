@@ -41,11 +41,11 @@ import {
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                           | Size   |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 1 KB   |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 910 B  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 1004 B |
+| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 5 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 31 KB |
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 

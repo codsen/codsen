@@ -39,7 +39,7 @@ test("01.01 - empty string", t => {
 // 02. special attention to nbsp - people will type it by hand often, making mistakes
 // -----------------------------------------------------------------------------
 
-test.only(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing ampersand`, t => {
+test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing ampersand`, t => {
   t.deepEqual(
     fix("zzznbsp;zzznbsp;"),
     [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]],
@@ -62,9 +62,46 @@ test.only(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, 
     "02.01.04"
   );
 });
-test(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {
-  //
+
+test.only(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {
+  // t.deepEqual(fix("&nbspz"), [[0, 5, "&nbsp;"]], "02.02.00 - warmup");
+  t.deepEqual(
+    fix("&nbspzzz&nbspzzz&nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.01 - surrounded by letters"
+  );
+  t.deepEqual(
+    fix("&nbsp...&nbsp...&nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.02 - surrounded by dots"
+  );
+  t.deepEqual(
+    fix("&nbsp\n\n\n&nbsp\n\n\n&nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.03 - surrounded by line breaks"
+  );
+  t.deepEqual(
+    fix("&nbsp   &nbsp   &nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.04 - surrounded by spaces"
+  );
+  t.deepEqual(
+    fix("&nbsp,&nbsp,&nbsp"),
+    [[0, 5, "&nbsp;"], [6, 11, "&nbsp;"], [12, 17, "&nbsp;"]],
+    "02.02.05 - surrounded by colons"
+  );
+  t.deepEqual(
+    fix("&nbsp123&nbsp123&nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.06 - surrounded by digits"
+  );
+  t.deepEqual(
+    fix("&nbsp\t\t\t&nbsp\t\t\t&nbsp"),
+    [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
+    "02.02.07 - surrounded by tabs"
+  );
 });
+
 test(`02.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing both ampersand and semicol`, t => {
   //
 });
@@ -74,75 +111,6 @@ test(`02.04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling, rep
 test(`02.05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling, repeated characters, incomplete set`, t => {
   // missing ampersand
   t.deepEqual(fix("aaannbsp;aaaa"), [[3, 9, "&nbsp;"]], "02.05.01");
-});
-
-test("99.12 - part 1", t => {
-  t.deepEqual(
-    fix("a\nnsp;a\nnsp;"),
-    [[2, 6, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.02"
-  );
-  t.deepEqual(
-    fix("a\nnbp;a\nnbp;"),
-    [[2, 6, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.03"
-  );
-  t.deepEqual(
-    fix("a\nnbs;"),
-    [[2, 6, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.04"
-  );
-  t.deepEqual(
-    fix("text&nbstext&nbstext"),
-    [[4, 8, "&nbsp;"], [12, 16, "&nbsp;"]],
-    "99.12.05"
-  );
-  t.deepEqual(
-    fix("textnsp;textnsp;"),
-    [[4, 8, "&nbsp;"], [12, 16, "&nbsp;"]],
-    "99.12.06"
-  );
-  t.deepEqual(
-    fix("text&nsp;text&nsp;"),
-    [[4, 9, "&nbsp;"], [13, 18, "&nbsp;"]],
-    "99.12.07"
-  );
-
-  t.deepEqual(
-    fix("&nsptext&nsptext"),
-    [[0, 4, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.08"
-  );
-  t.deepEqual(
-    fix("&bsptext&bsptext"),
-    [[0, 4, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.09"
-  );
-  t.deepEqual(
-    fix("&nsp;text&nsp;text"),
-    [[0, 5, "&nbsp;"], [9, 14, "&nbsp;"]],
-    "99.12.10"
-  );
-  t.deepEqual(
-    fix("&bsp;text&bsp;text"),
-    [[0, 5, "&nbsp;"], [9, 14, "&nbsp;"]],
-    "99.12.11"
-  );
-  t.deepEqual(
-    fix("&nbptext&nbptext"),
-    [[0, 4, "&nbsp;"], [8, 12, "&nbsp;"]],
-    "99.12.12"
-  );
-  t.deepEqual(
-    fix("&nbp;text&nbp;text"),
-    [[0, 5, "&nbsp;"], [9, 14, "&nbsp;"]],
-    "99.12.13"
-  );
-  t.deepEqual(
-    fix("text&nbs;text&nbs;"),
-    [[4, 9, "&nbsp;"], [31, 18, "&nbsp;"]],
-    "99.12.14"
-  );
 });
 
 test("99.13 - part 2", t => {

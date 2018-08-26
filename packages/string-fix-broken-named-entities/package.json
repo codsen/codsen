@@ -160,11 +160,12 @@
     }
   },
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "ranges-merge": "^3.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.3",
-    "@babel/preset-env": "^7.0.0-rc.3",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
     "ava": "1.0.0-beta.7",
     "codacy-coverage": "latest",
     "coveralls": "latest",
