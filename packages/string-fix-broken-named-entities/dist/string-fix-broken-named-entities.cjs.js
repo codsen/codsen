@@ -40,14 +40,15 @@ function stringFixBrokenNamedEntities(str) {
   var rangesArr = [];
   outerloop: for (var i = 0, len = str.length + 1; i < len; i++) {
     console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ", "\x1B[".concat(31, "m", str[i] ? str[i].trim() === "" ? str[i] === null ? "null" : str[i] === "\n" ? "line break" : str[i] === "\t" ? "tab" : str[i] === " " ? "space" : "???" : str[i] : "undefined", "\x1B[", 39, "m")), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m"));
-    if (nbsp.nameStartsAt !== null && nbsp.matchedN && nbsp.matchedB && nbsp.matchedS && nbsp.matchedP && str[i] !== ";") {
-      console.log("\x1B[".concat(32, "m", "130 ENDING OF AN NBSP; PUSH [".concat(nbsp.nameStartsAt, ", ").concat(i, ", \"&nbsp;\"]"), "\x1B[", 39, "m"));
+    var matchedLettersCount = (nbsp.matchedN ? 1 : 0) + (nbsp.matchedB ? 1 : 0) + (nbsp.matchedS ? 1 : 0) + (nbsp.matchedP ? 1 : 0);
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (!str[i] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";") {
+      console.log("\x1B[".concat(32, "m", "140 ENDING OF AN NBSP; PUSH [".concat(nbsp.nameStartsAt, ", ").concat(i, ", \"&nbsp;\"]"), "\x1B[", 39, "m"));
       rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       nbspWipe();
-      console.log("137 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m"), ", now = ", JSON.stringify(nbsp, null, 4)));
+      console.log("147 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m"), ", now = ", JSON.stringify(nbsp, null, 4)));
     }
     if (str[i] === "&") {
-      console.log("159 & caught");
+      console.log("169 & caught");
       if (str[i + 1] === "a" && str[i + 2] === "m" && str[i + 3] === "p" && str[i + 4] === ";") {
         state_AmpersandNotNeeded = true;
         var endingOfAmpRepetition = i + 5;
@@ -55,55 +56,55 @@ function stringFixBrokenNamedEntities(str) {
           endingOfAmpRepetition += 4;
         }
         rangesArr.push([i + 1, endingOfAmpRepetition]);
-        console.log("183 PUSH \x1B[".concat(33, "m", "[".concat(i + 1, ", ").concat(endingOfAmpRepetition, "]"), "\x1B[", 39, "m"));
+        console.log("193 PUSH \x1B[".concat(33, "m", "[".concat(i + 1, ", ").concat(endingOfAmpRepetition, "]"), "\x1B[", 39, "m"));
         i = endingOfAmpRepetition - 1;
         continue outerloop;
       }
       if (nbsp.nameStartsAt === null) {
         if (nbsp.ampersandNecessary === null) {
           nbsp.nameStartsAt = i;
-          console.log("200 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
+          console.log("210 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
           nbsp.ampersandNecessary = false;
-          console.log("206 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
+          console.log("216 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
         }
       }
     }
     if (str[i] && str[i].toLowerCase() === "n") {
-      console.log("216 n caught");
+      console.log("226 n caught");
       nbsp.matchedN = true;
       if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
-        console.log("222 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
+        console.log("232 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
-          console.log("231 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
+          console.log("241 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
         }
       }
     }
     if (str[i] && str[i].toLowerCase() === "b") {
-      console.log("241 b caught");
+      console.log("251 b caught");
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedB = true;
-        console.log("246 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedB", "\x1B[", 39, "m"), " = ", nbsp.matchedB));
+        console.log("256 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedB", "\x1B[", 39, "m"), " = ", nbsp.matchedB));
       }
     }
     if (str[i] && str[i].toLowerCase() === "s") {
-      console.log("255 s caught");
+      console.log("265 s caught");
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedS = true;
-        console.log("260 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedS", "\x1B[", 39, "m"), " = ", nbsp.matchedS));
+        console.log("270 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedS", "\x1B[", 39, "m"), " = ", nbsp.matchedS));
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
-      console.log("269 p caught");
+      console.log("279 p caught");
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedP = true;
-        console.log("274 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedP", "\x1B[", 39, "m"), " = ", nbsp.matchedP));
+        console.log("284 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedP", "\x1B[", 39, "m"), " = ", nbsp.matchedP));
       }
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
-      console.log("298 SET ".concat("\x1B[".concat(33, "m", "state_AmpersandNotNeeded", "\x1B[", 39, "m"), " = ", JSON.stringify(state_AmpersandNotNeeded, null, 4)));
+      console.log("308 SET ".concat("\x1B[".concat(33, "m", "state_AmpersandNotNeeded", "\x1B[", 39, "m"), " = ", JSON.stringify(state_AmpersandNotNeeded, null, 4)));
     }
     console.log("---------------");
     console.log("state_AmpersandNotNeeded = ".concat(state_AmpersandNotNeeded));

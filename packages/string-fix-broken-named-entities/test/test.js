@@ -63,8 +63,8 @@ test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missi
   );
 });
 
-test.only(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {
-  // t.deepEqual(fix("&nbspz"), [[0, 5, "&nbsp;"]], "02.02.00 - warmup");
+test(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {
+  t.deepEqual(fix("&nbspz"), [[0, 5, "&nbsp;"]], "02.02.00 - warmup");
   t.deepEqual(
     fix("&nbspzzz&nbspzzz&nbsp"),
     [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
@@ -103,14 +103,239 @@ test.only(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, 
 });
 
 test(`02.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing both ampersand and semicol`, t => {
-  //
+  t.deepEqual(fix("nbspz"), [[0, 4, "&nbsp;"]], "02.03.00 - warmup");
+  t.deepEqual(
+    fix("nbspzzznbspzzznbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.01 - surrounded by letters"
+  );
+  t.deepEqual(
+    fix("nbsp...nbsp...nbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.02 - surrounded by dots"
+  );
+  t.deepEqual(
+    fix("nbsp\n\n\nnbsp\n\n\nnbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.03 - surrounded by line breaks"
+  );
+  t.deepEqual(
+    fix("nbsp   nbsp   nbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.04 - surrounded by spaces"
+  );
+  t.deepEqual(
+    fix("nbsp,nbsp,nbsp"),
+    [[0, 4, "&nbsp;"], [5, 9, "&nbsp;"], [10, 14, "&nbsp;"]],
+    "02.03.05 - surrounded by colons"
+  );
+  t.deepEqual(
+    fix("nbsp123nbsp123nbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.06 - surrounded by digits"
+  );
+  t.deepEqual(
+    fix("nbsp\t\t\tnbsp\t\t\tnbsp"),
+    [[0, 4, "&nbsp;"], [7, 11, "&nbsp;"], [14, 18, "&nbsp;"]],
+    "02.03.07 - surrounded by tabs"
+  );
 });
-test(`02.04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling, repeated characters, complete set`, t => {
-  //
+
+test(`02.04 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling (repeated characters), complete set`, t => {
+  t.deepEqual(
+    fix("&&nbsp;x&&nbsp;y&&nbsp;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.01 - duplicate ampersand"
+  );
+  t.deepEqual(
+    fix("&nnbsp;x&nnbsp;y&nnbsp;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.02 - duplicate n"
+  );
+  t.deepEqual(
+    fix("&nbbsp;x&nbbsp;y&nbbsp;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.03 - duplicate b"
+  );
+  t.deepEqual(
+    fix("&nbssp;x&nbssp;y&nbssp;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.04 - duplicate s"
+  );
+  t.deepEqual(
+    fix("&nbspp;x&nbspp;y&nbspp;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.05 - duplicate p"
+  );
+  t.deepEqual(
+    fix("&nbsp;;x&nbsp;;y&nbsp;;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]],
+    "02.04.06 - duplicate semicolon"
+  );
 });
-test(`02.05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling, repeated characters, incomplete set`, t => {
-  // missing ampersand
-  t.deepEqual(fix("aaannbsp;aaaa"), [[3, 9, "&nbsp;"]], "02.05.01");
+
+test(`02.05 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling (repeated characters), incomplete set`, t => {
+  // repeated ampersand + ...
+  t.deepEqual(
+    fix("&&bsp;x&&bsp;y&&bsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.01 - repeated ampersand + n missing"
+  );
+  t.deepEqual(
+    fix("&&nsp;x&&nsp;y&&nsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.02 - repeated ampersand + b missing"
+  );
+  t.deepEqual(
+    fix("&&nbp;x&&nbp;y&&nbp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.03 - repeated ampersand + s missing"
+  );
+  t.deepEqual(
+    fix("&&nbs;x&&nbs;y&&nbs;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.04 - repeated ampersand + p missing"
+  );
+  t.deepEqual(
+    fix("&&nbspx&&nbspy&&nbsp"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.05 - repeated ampersand + semicol missing"
+  );
+
+  // repeated n + ...
+  t.deepEqual(
+    fix("nnbsp;xnnbsp;ynnbsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.06 - repeated n + ampersand missing"
+  );
+  t.deepEqual(
+    fix("&nnsp;x&nnsp;y&nnsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.07 - repeated n + b missing"
+  );
+  t.deepEqual(
+    fix("&nnbp;x&nnbp;y&nnbp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.08 - repeated n + s missing"
+  );
+  t.deepEqual(
+    fix("&nnbs;x&nnbs;y&nnbs;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.09 - repeated n + p missing"
+  );
+  t.deepEqual(
+    fix("&nnbspx&nnbspy&nnbsp"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.10 - repeated n + semicol missing"
+  );
+
+  // repeated b + ...
+  t.deepEqual(
+    fix("nbbsp;xnbbsp;ynbbsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.11 - repeated b + ampersand missing"
+  );
+  t.deepEqual(
+    fix("&bbsp;x&bbsp;y&bbsp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.12 - repeated b + n missing"
+  );
+  t.deepEqual(
+    fix("&nbbp;x&nbbp;y&nbbp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.13 - repeated b + s missing"
+  );
+  t.deepEqual(
+    fix("&nbbs;x&nbbs;y&nbbs;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.14 - repeated b + p missing"
+  );
+  t.deepEqual(
+    fix("&nbbspx&nbbspy&nbbsp"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.15 - repeated b + semicol missing"
+  );
+
+  // repeated s + ...
+  t.deepEqual(
+    fix("nbssp;xnbssp;ynbssp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.16 - repeated s + ampersand missing"
+  );
+  t.deepEqual(
+    fix("&bssp;x&bssp;y&bssp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.17 - repeated s + n missing"
+  );
+  t.deepEqual(
+    fix("&nssp;x&nssp;y&nssp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.18 - repeated s + b missing"
+  );
+  t.deepEqual(
+    fix("&nbss;x&nbss;y&nbss;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.19 - repeated s + p missing"
+  );
+  t.deepEqual(
+    fix("&nbsspx&nbsspy&nbssp"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.20 - repeated s + semicol missing"
+  );
+
+  // repeated p + ...
+  t.deepEqual(
+    fix("nbspp;xnbspp;ynbspp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.21 - repeated p + ampersand missing"
+  );
+  t.deepEqual(
+    fix("&bspp;x&bspp;y&bspp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.22 - repeated p + n missing"
+  );
+  t.deepEqual(
+    fix("&nspp;x&nspp;y&nspp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.23 - repeated p + b missing"
+  );
+  t.deepEqual(
+    fix("&nbpp;x&nbpp;y&nbpp;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.24 - repeated p + s missing"
+  );
+  t.deepEqual(
+    fix("&nbsppx&nbsppy&nbspp"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.25 - repeated p + semicol missing"
+  );
+
+  // repeated semicol + ...
+  t.deepEqual(
+    fix("nbsp;;xnbsp;;ynbsp;;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.26 - repeated semicol + ampersand missing"
+  );
+  t.deepEqual(
+    fix("&bsp;;x&bsp;;y&bsp;;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.27 - repeated semicol + n missing"
+  );
+  t.deepEqual(
+    fix("&nsp;;x&nsp;;y&nsp;;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.28 - repeated semicol + b missing"
+  );
+  t.deepEqual(
+    fix("&nbp;;x&nbp;;y&nbp;;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.29 - repeated semicol + s missing"
+  );
+  t.deepEqual(
+    fix("&nbs;;x&nbs;;y&nbs;;"),
+    [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]],
+    "02.04.30 - repeated semicol + p missing"
+  );
 });
 
 test("99.13 - part 2", t => {
