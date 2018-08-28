@@ -8,15 +8,6 @@ import clone from "lodash.clonedeep";
  * @return {array}  ranges array OR null
  */
 function stringFixBrokenNamedEntities(str) {
-  // functions
-  function isLetter(str) {
-    return (
-      typeof str === "string" &&
-      str.length === 1 &&
-      str.toUpperCase() !== str.toLowerCase()
-    );
-  }
-
   // state flags
 
   // this one is to mark the exception when current character is not ampersand
@@ -34,10 +25,11 @@ function stringFixBrokenNamedEntities(str) {
     nameStartsAt: null, // when we'll insert range, we'll use this or "this - 1"
     ampersandNecessary: null, // default is not Boolean, to mark the state it needs tending
     patience: 1, // one letter can be omitted from name
-    matchedN: false,
-    matchedB: false,
-    matchedS: false,
-    matchedP: false
+    matchedN: null, // set the index of the first catch
+    matchedB: null, // set the index of the first catch
+    matchedS: null, // set the index of the first catch
+    matchedP: null, // set the index of the first catch
+    matchedSemicol: null // set the index of the first catch
   };
   let nbsp = clone(nbspDefault);
   const nbspWipe = () => {
@@ -122,34 +114,37 @@ function stringFixBrokenNamedEntities(str) {
     // itself is missing.
 
     const matchedLettersCount =
-      (nbsp.matchedN ? 1 : 0) +
-      (nbsp.matchedB ? 1 : 0) +
-      (nbsp.matchedS ? 1 : 0) +
-      (nbsp.matchedP ? 1 : 0);
+      (nbsp.matchedN !== null ? 1 : 0) +
+      (nbsp.matchedB !== null ? 1 : 0) +
+      (nbsp.matchedS !== null ? 1 : 0) +
+      (nbsp.matchedP !== null ? 1 : 0);
     if (
       nbsp.nameStartsAt !== null &&
       matchedLettersCount > 2 &&
-      (!str[i] ||
-        (str[i].toLowerCase() !== "n" &&
-          str[i].toLowerCase() !== "b" &&
-          str[i].toLowerCase() !== "s" &&
-          str[i].toLowerCase() !== "p")) &&
+      (nbsp.matchedSemicol !== null ||
+        (!str[i] ||
+          (nbsp.matchedN !== null &&
+            nbsp.matchedB !== null &&
+            nbsp.matchedS !== null &&
+            nbsp.matchedP !== null &&
+            str[i] !== str[i - 1]) ||
+          (str[i].toLowerCase() !== "n" &&
+            str[i].toLowerCase() !== "b" &&
+            str[i].toLowerCase() !== "s" &&
+            str[i].toLowerCase() !== "p"))) &&
       str[i] !== ";"
     ) {
-      console.log(
-        `\u001b[${32}m${`140 ENDING OF AN NBSP; PUSH [${
-          nbsp.nameStartsAt
-        }, ${i}, "&nbsp;"]`}\u001b[${39}m`
-      );
-      rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
+      if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
+        console.log(
+          `\u001b[${32}m${`139 ENDING OF AN NBSP; PUSH [${
+            nbsp.nameStartsAt
+          }, ${i}, "&nbsp;"]`}\u001b[${39}m`
+        );
+        rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
+      }
       nbspWipe();
-      console.log(
-        `147 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}, now = ${JSON.stringify(
-          nbsp,
-          null,
-          4
-        )}`
-      );
+      console.log(`146 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+      continue outerloop;
     }
 
     //            |
@@ -166,7 +161,7 @@ function stringFixBrokenNamedEntities(str) {
 
     // catch ampersand
     if (str[i] === "&") {
-      console.log("169 & caught");
+      console.log("164 & caught");
       // 1. catch recursively-encoded cases. They're easy actually, the task will
       // be deleting sequence of repeated "amp;" between ampersand and letter.
       if (
@@ -175,6 +170,11 @@ function stringFixBrokenNamedEntities(str) {
         str[i + 3] === "p" &&
         str[i + 4] === ";"
       ) {
+        // Mark the potential start of the nbsp. If following characters don't
+        // match the nbsp pattern, we'll quickly wipe it.
+        if (nbsp.nameStartsAt === null) {
+          nbsp.nameStartsAt = i;
+        }
         // activate the state:
         state_AmpersandNotNeeded = true;
         // catch all subsequent repetitions of "amp;"
@@ -224,7 +224,7 @@ function stringFixBrokenNamedEntities(str) {
     // catch "n"
     if (str[i] && str[i].toLowerCase() === "n") {
       console.log("226 n caught");
-      nbsp.matchedN = true;
+      nbsp.matchedN = i;
       if (nbsp.nameStartsAt === null) {
         // 1. mark it
         nbsp.nameStartsAt = i;
@@ -233,57 +233,199 @@ function stringFixBrokenNamedEntities(str) {
             nbsp.nameStartsAt
           }`
         );
-        // 2. tend ampersand situation
+        // 2. tend the ampersand situation
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           // if by now there are signs of ampersand records, it must be added later:
           nbsp.ampersandNecessary = true;
-          console.log(
-            `241 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
-              nbsp.ampersandNecessary
-            }`
-          );
+        } else if (nbsp.ampersandNecessary !== true) {
+          // in all other cases, set it as not needed
+          nbsp.ampersandNecessary = false;
         }
+        console.log(
+          `245 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
+            nbsp.ampersandNecessary
+          }`
+        );
       }
     }
 
     // catch "b"
     if (str[i] && str[i].toLowerCase() === "b") {
-      console.log("251 b caught");
+      console.log("254 b caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code, N was already detected
-        nbsp.matchedB = true;
+        nbsp.matchedB = i;
         console.log(
-          `256 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = ${
+          `259 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = ${
             nbsp.matchedB
           }`
         );
+      } else if (nbsp.patience) {
+        // dirty code case because ampersand or "n" are missing so far
+
+        // 1. Patience is reduced for every single character missing. There can
+        // be only one character missing out of n-b-s-p.
+        nbsp.patience--;
+        console.log(
+          `270 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+            nbsp.patience
+          }`
+        );
+
+        // 2. mark the start
+        nbsp.nameStartsAt = i;
+        console.log(
+          `278 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+            nbsp.nameStartsAt
+          }`
+        );
+        nbsp.matchedB = i;
+        console.log(
+          `284 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = true`
+        );
+
+        // 3. tend the ampersand situation
+        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          // if by now there are signs of ampersand records, it must be added later:
+          nbsp.ampersandNecessary = true;
+          console.log(
+            `292 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+          );
+        } else if (nbsp.ampersandNecessary !== true) {
+          // in all other cases, set it as not needed
+          nbsp.ampersandNecessary = false;
+          console.log(
+            `298 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+          );
+        }
+      } else {
+        // wipe
+        nbspWipe();
+        console.log(`304 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        continue outerloop;
       }
     }
 
     // catch "s"
     if (str[i] && str[i].toLowerCase() === "s") {
-      console.log("265 s caught");
+      console.log("311 s caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code
-        nbsp.matchedS = true;
+        nbsp.matchedS = i;
         console.log(
-          `270 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = ${
+          `316 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = ${
             nbsp.matchedS
           }`
         );
+      } else if (nbsp.patience) {
+        // dirty code case because ampersand or "n" are missing so far
+
+        // 1. Patience is reduced for every single character missing. There can
+        // be only one character missing out of n-b-s-p.
+        nbsp.patience--;
+        console.log(
+          `327 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+            nbsp.patience
+          }`
+        );
+
+        // 2. mark the start
+        nbsp.nameStartsAt = i;
+        console.log(
+          `335 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+            nbsp.nameStartsAt
+          }`
+        );
+        nbsp.matchedS = i;
+        console.log(
+          `341 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = true`
+        );
+
+        // 3. tend the ampersand situation
+        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          // if by now there are signs of ampersand records, it must be added later:
+          nbsp.ampersandNecessary = true;
+          console.log(
+            `349 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+          );
+        } else if (nbsp.ampersandNecessary !== true) {
+          // in all other cases, set it as not needed
+          nbsp.ampersandNecessary = false;
+          console.log(
+            `355 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+          );
+        }
+      } else {
+        // wipe
+        nbspWipe();
+        console.log(`361 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        continue outerloop;
       }
     }
 
     // catch "p"
     if (str[i] && str[i].toLowerCase() === "p") {
-      console.log("279 p caught");
+      console.log("368 p caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code
-        nbsp.matchedP = true;
+        nbsp.matchedP = i;
         console.log(
-          `284 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = ${
+          `373 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = ${
             nbsp.matchedP
           }`
+        );
+      } else if (nbsp.patience) {
+        // dirty code case because ampersand or "n" are missing so far
+
+        // 1. Patience is reduced for every single character missing. There can
+        // be only one character missing out of n-b-s-p.
+        nbsp.patience--;
+        console.log(
+          `384 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+            nbsp.patience
+          }`
+        );
+
+        // 2. mark the start
+        nbsp.nameStartsAt = i;
+        console.log(
+          `392 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+            nbsp.nameStartsAt
+          }`
+        );
+        nbsp.matchedP = i;
+        console.log(
+          `398 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = true`
+        );
+
+        // 3. tend the ampersand situation
+        if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
+          // if by now there are signs of ampersand records, it must be added later:
+          nbsp.ampersandNecessary = true;
+          console.log(
+            `406 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+          );
+        } else if (nbsp.ampersandNecessary !== true) {
+          // in all other cases, set it as not needed
+          nbsp.ampersandNecessary = false;
+          console.log(
+            `412 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+          );
+        }
+      } else {
+        // wipe
+        nbspWipe();
+        console.log(`418 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        continue outerloop;
+      }
+    }
+
+    // catch semicolon
+    if (str[i] === ";") {
+      if (nbsp.nameStartsAt !== null) {
+        nbsp.matchedSemicol = i;
+        console.log(
+          `428 SET ${`\u001b[${33}m${`nbsp.matchedSemicol`}\u001b[${39}m`} = true`
         );
       }
     }
@@ -305,7 +447,7 @@ function stringFixBrokenNamedEntities(str) {
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
       console.log(
-        `308 SET ${`\u001b[${33}m${`state_AmpersandNotNeeded`}\u001b[${39}m`} = ${JSON.stringify(
+        `450 SET ${`\u001b[${33}m${`state_AmpersandNotNeeded`}\u001b[${39}m`} = ${JSON.stringify(
           state_AmpersandNotNeeded,
           null,
           4
