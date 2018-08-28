@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.3.0] - 2018-08-28
+
+- ✨ Switched to newest Babel (v.7) but `ava`+`esm`+`nyc` didn't work together so we had to disable `nyc`, our code coverage, until further notice
+- ✨ Added comment removal on Rollup production builds
+
 ## [7.2.0] - 2018-06-19
 
 GitHub sold us out. In the meantime, we:
@@ -97,12 +102,13 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 
 [2.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.0.0%0Dv1.4.0#diff
 [2.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.1.0%0Dv2.0.0#diff
-[2.2.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.2.0%0Dv7.2.0#diff
-[2.3.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.3.0%0Dv7.2.0#diff
+[2.2.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.2.0%0Dv7.2.1#diff
+[2.3.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v2.3.0%0Dv7.2.1#diff
 [3.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.0.0%0Dv2.1.4#diff
-[3.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.1.0%0Dv7.2.0#diff
+[3.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v3.1.0%0Dv7.2.1#diff
 [4.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v4.0.0%0Dv3.0.0#diff
 [6.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v6.0.0%0Dv5.0.0#diff
 [7.0.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v7.0.0%0Dv6.0.4#diff
 [7.1.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v7.1.0%0Dv7.0.0#diff
 [7.2.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v7.2.0%0Dv7.1.0#diff
+[7.3.0]: https://bitbucket.org/codsen/object-fill-missing-keys/branches/compare/v7.3.0%0Dv7.2.1#diff
