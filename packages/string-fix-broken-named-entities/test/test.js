@@ -5,7 +5,7 @@ import fix from "../dist/string-fix-broken-named-entities.esm";
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test("01.01 - empty string", t => {
+test(`01.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - various cases of wrong input arguments`, t => {
   t.notThrows(() => {
     fix("");
   });
@@ -545,6 +545,22 @@ test(`02.12 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - very very suspicious ca
   );
 });
 
+test(`02.13 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - n-b-s-p set plus another letter`, t => {
+  t.deepEqual(fix("&nbspx;"), [[0, 7, "&nbsp;"]], "02.13.01");
+  t.deepEqual(fix("&nbspn;"), [[0, 7, "&nbsp;"]], "02.13.02");
+  t.deepEqual(fix("&nbspb;"), [[0, 7, "&nbsp;"]], "02.13.03");
+  t.deepEqual(fix("&nbsps;"), [[0, 7, "&nbsp;"]], "02.13.04");
+  t.deepEqual(fix("&nbspp;"), [[0, 7, "&nbsp;"]], "02.13.05");
+  t.deepEqual(fix("&nbsp.;"), [[0, 7, "&nbsp;"]], "02.13.06");
+  t.deepEqual(fix("a&nbspl;;b"), [[1, 9, "&nbsp;"]], "02.13.07");
+});
+
+test(`02.14 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - n-b-s-p with one letter missing plus another letter`, t => {
+  t.deepEqual(fix("&nspx;"), [[0, 6, "&nbsp;"]], "02.14.01");
+  t.deepEqual(fix("&nbpy;"), [[0, 6, "&nbsp;"]], "02.14.02");
+  t.deepEqual(fix("&n_sp;"), [[0, 6, "&nbsp;"]], "02.14.03");
+});
+
 // -----------------------------------------------------------------------------
 // 03. nothing to fix
 // -----------------------------------------------------------------------------
@@ -559,64 +575,71 @@ test(`03.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - do not touch healthy &n
 // 04. other entities
 // -----------------------------------------------------------------------------
 
-test("99.14 - part 3", t => {
+test(`04.01 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - various tests`, t => {
   t.deepEqual(
     fix("text &ang text&ang text"),
     [[5, 9, "&ang;"], [14, 18, "&ang;"]],
-    "99.14.02"
+    "04.01.01"
   );
   t.deepEqual(
     fix("text&angtext&angtext"),
     [[4, 8, "&ang;"], [12, 16, "&ang;"]],
-    "99.14.03"
+    "04.01.02"
   );
   t.deepEqual(
     fix("text&angsttext&angsttext"),
     [[4, 10, "&angst;"], [14, 20, "&angst;"]],
-    "99.14.04"
+    "04.01.03"
   );
   t.deepEqual(
     fix("text&pitext&pitext"),
     [[4, 7, "&pi;"], [11, 14, "&pi;"]],
-    "99.14.05"
+    "04.01.04"
+  );
+  t.deepEqual(
+    fix("text&pivtext&pivtext"),
+    [[4, 8, "&piv;"], [12, 16, "&piv;"]],
+    "04.01.05"
   );
   t.deepEqual(
     fix("text&Pitext&Pitext"),
     [[4, 7, "&Pi;"], [11, 14, "&Pi;"]],
-    "99.14.06"
+    "04.01.06"
   );
   t.deepEqual(
     fix("text&sigmatext&sigmatext"),
     [[4, 10, "&sigma;"], [14, 20, "&sigma;"]],
-    "99.14.07"
+    "04.01.07"
   );
   t.deepEqual(
     fix("text&subtext&subtext"),
     [[4, 8, "&sub;"], [12, 16, "&sub;"]],
-    "99.14.08"
+    "04.01.08"
   );
   t.deepEqual(
     fix("text&suptext&suptext"),
-    [[4, 8, "&sub;"], [12, 16, "&sub;"]],
-    "99.14.09"
-  );
-  t.deepEqual(
-    fix("text&pivtext&pivtext"),
-    [[4, 8, "&sub;"], [12, 16, "&sub;"]],
-    "99.14.10"
+    [[4, 8, "&sup;"], [12, 16, "&sup;"]],
+    "04.01.09"
   );
   t.deepEqual(
     fix("text&thetatext&thetatext"),
     [[4, 10, "&theta;"], [14, 20, "&theta;"]],
-    "99.14.11"
+    "04.01.10"
   );
   t.deepEqual(
-    fix("a thinsp b\nthinsp\nc"),
-    [[2, 8, ""], [(11, 17, "")]],
-    "99.14.13"
+    fix("a &thinsp b\n&thinsp\nc"),
+    [[2, 9, "&thinsp;"], [12, 19, "&thinsp;"]],
+    "04.01.11"
   );
-  t.deepEqual(fix("&thinsp"), [[0, 7, "&thinsp;"]], "99.14.14");
-  t.deepEqual(fix("thinsp;"), [[0, 7, "&thinsp;"]], "99.14.15");
-  t.deepEqual(fix("&thinsp&thinsp"), [[0, 14, "&thinsp;&thinsp;"]], "99.14.16");
-  t.deepEqual(fix("thinsp;thinsp;"), [[0, 14, "&thinsp;&thinsp;"]], "99.14.17");
+  t.deepEqual(fix("&thinsp"), [[0, 7, "&thinsp;"]], "04.01.12");
+  t.deepEqual(
+    fix("&thinsp&thinsp"),
+    [[0, 14, "&thinsp;&thinsp;"]],
+    "04.01.13 - joins"
+  );
 });
+
+// Tend the following:
+// aacute
+// eacute
+// zwj

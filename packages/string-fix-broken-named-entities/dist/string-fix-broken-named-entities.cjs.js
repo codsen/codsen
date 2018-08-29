@@ -41,7 +41,7 @@ function stringFixBrokenNamedEntities(str) {
   var rangesArr = [];
   outerloop: for (var i = 0, len = str.length + 1; i < len; i++) {
     var matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";") {
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
         rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       }
@@ -68,8 +68,61 @@ function stringFixBrokenNamedEntities(str) {
           nbsp.ampersandNecessary = false;
         }
       }
+      if (str[i + 1] === "a" && str[i + 2] === "n" && str[i + 3] === "g") {
+        if (str[i + 4] !== "s" && str[i + 4] !== ";") {
+          rangesArr.push([i, i + 4, "&ang;"]);
+          i += 3;
+          continue outerloop;
+        } else if (str[i + 4] === "s" && str[i + 5] === "t" && str[i + 6] !== ";") {
+          rangesArr.push([i, i + 6, "&angst;"]);
+          i += 5;
+          continue outerloop;
+        }
+      } else if (str[i + 1] === "p" && str[i + 2] === "i") {
+        if (str[i + 3] !== "v" && str[i + 3] !== ";") {
+          rangesArr.push([i, i + 3, "&pi;"]);
+          i += 3;
+          continue outerloop;
+        } else if (str[i + 3] === "v" && str[i + 4] !== ";") {
+          rangesArr.push([i, i + 4, "&piv;"]);
+          i += 3;
+          continue outerloop;
+        }
+      } else if (str[i + 1] === "P" && str[i + 2] === "i" && str[i + 3] !== ";") {
+        rangesArr.push([i, i + 3, "&Pi;"]);
+        i += 2;
+        continue outerloop;
+      } else if (str[i + 1] === "s") {
+        if (str[i + 2] === "i" && str[i + 3] === "g" && str[i + 4] === "m" && str[i + 5] === "a" && str[i + 6] !== ";" && str[i + 6] !== "f") {
+          rangesArr.push([i, i + 6, "&sigma;"]);
+          i += 5;
+          continue outerloop;
+        } else if (str[i + 2] === "u" && str[i + 3] === "b" && str[i + 4] !== ";" && str[i + 4] !== "e") {
+          rangesArr.push([i, i + 4, "&sub;"]);
+          i += 3;
+          continue outerloop;
+        } else if (str[i + 2] === "u" && str[i + 3] === "p" && str[i + 4] !== "f" && str[i + 4] !== "e" && str[i + 4] !== "1" && str[i + 4] !== "2" && str[i + 4] !== "3" && str[i + 4] !== ";") {
+          rangesArr.push([i, i + 4, "&sup;"]);
+          i += 3;
+          continue outerloop;
+        }
+      } else if (str[i + 1] === "t") {
+        if (str[i + 2] === "h" && str[i + 3] === "e" && str[i + 4] === "t" && str[i + 5] === "a" && str[i + 6] !== "s" && str[i + 6] !== ";") {
+          rangesArr.push([i, i + 6, "&theta;"]);
+          i += 5;
+          continue outerloop;
+        } else if (str[i + 2] === "h" && str[i + 3] === "i" && str[i + 4] === "n" && str[i + 5] === "s" && str[i + 6] === "p" && str[i + 7] !== ";") {
+          rangesArr.push([i, i + 7, "&thinsp;"]);
+          i += 6;
+          continue outerloop;
+        }
+      }
     }
     if (str[i] && str[i].toLowerCase() === "n") {
+      if (str[i - 1] === "i" && str[i + 1] === "s") {
+        nbspWipe();
+        continue outerloop;
+      }
       nbsp.matchedN = i;
       if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
@@ -135,6 +188,9 @@ function stringFixBrokenNamedEntities(str) {
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedSemicol = i;
       }
+    }
+    if (str[i] && str[i].trim().length === 0 && nbsp.nameStartsAt !== null) {
+      nbspWipe();
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
