@@ -35,8 +35,10 @@ function replaceSlicesArr(str, rangesArr) {
   if (!isStr(str)) {
     throw new TypeError("ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ".concat(_typeof(str), ", equal to: ").concat(str));
   }
-  if (!isArr(rangesArr)) {
-    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array! Currently it's: ".concat(_typeof(rangesArr), ", equal to: ").concat(rangesArr));
+  if (rangesArr === null) {
+    return str;
+  } else if (!isArr(rangesArr)) {
+    throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(rangesArr), ", equal to: ").concat(rangesArr));
   }
   if (isArr(rangesArr) && (isInt(rangesArr[0], {
     includeZero: true

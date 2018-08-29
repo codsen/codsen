@@ -21,9 +21,11 @@ function replaceSlicesArr(str, rangesArr) {
       `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${str}`
     );
   }
-  if (!isArr(rangesArr)) {
+  if (rangesArr === null) {
+    return str;
+  } else if (!isArr(rangesArr)) {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_03] second input argument must be an array! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`
+      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`
     );
   }
   if (

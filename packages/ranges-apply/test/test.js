@@ -180,6 +180,11 @@ test("02.10 - replaces multiple chunks correctly given in a wrong order", t => {
   );
 });
 
+test("02.11 - null as replacement range - does nothing", t => {
+  const str = "zzzzzzzz";
+  t.deepEqual(repl(str, null), str, "02.11.01");
+});
+
 // -----------------------------------------------------------------------------
 // 03. replacement - both "from" and "to" markers are equal
 // -----------------------------------------------------------------------------
