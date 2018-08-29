@@ -571,6 +571,12 @@ test(`03.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - do not touch healthy &n
   t.deepEqual(fix("a&nbsp;b"), null, "03.01.03 - surrounded by letters");
 });
 
+test(`03.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`, t => {
+  t.deepEqual(fix("insp;"), null, "03.02.01");
+  t.deepEqual(fix("an insp;"), null, "03.02.02");
+  t.deepEqual(fix("an inspp;"), null, "03.02.03");
+});
+
 // -----------------------------------------------------------------------------
 // 04. other entities
 // -----------------------------------------------------------------------------

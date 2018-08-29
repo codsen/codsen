@@ -28,15 +28,9 @@ npm i string-fix-broken-named-entities
 
 ```js
 // consume via a require():
-const {
-  nativeToUnicode,
-  unicodeToNative
-} = require("string-fix-broken-named-entities");
+const fix = require("string-fix-broken-named-entities");
 // or as a ES Module:
-import {
-  nativeToUnicode,
-  unicodeToNative
-} from "string-fix-broken-named-entities";
+import fix from "string-fix-broken-named-entities";
 ```
 
 Here's what you'll get:
@@ -51,137 +45,88 @@ Here's what you'll get:
 
 ## Idea
 
-We are talking about indexes, the numbers used in, for example, `String.slice`.
+Detects and proposes fixes for a string that contains broken named HTML entities (for example, `&nnbsp;` with repeated "n"). The result is not a string but a `null` (nothing to fix) or an array of [ranges](https://bitbucket.org/account/user/codsen/projects/RNG) of index arrays with a value to replace. For example, `[[0, 6, "&nbsp;"]]` means replace from index `0` to `6` putting `&nbsp;`. Notice it's array of arrays because each range is an array and there can be few.
 
-Some libraries use JS native indexing where emoji counts as two characters.
-Some libraries use indexing based on character-count where one emoji counts as one character.
+For example:
 
-This is a converter that converts between the two systems.
+```js
+console.log(JSON.stringify(fix("aaa&nnnbbssssp.ppp"), null, 4));
+// => [[3, 14, "&nbsp;"]]
 
-Highlights:
+console.log(JSON.stringify(fix("a&amp;nbsp;b"), null, 4));
+// => [[1, 11, "&nbsp;"]]
 
-- Efficient algorithm - input string is traversed only once.
-- No regexes - no potential security issues.
-- Input can be a number or a numeric string or it can be **nested tree of them**. This library will convert _any_ natural numbers (set as numbers or strings). For example, `1` is fine, just like `[["1", "5"], ["5", "7"]]`.
-- Untranspiled ES Modules build is wired up to `module` key in `package.json` - WebPack and Rollup will recognise and consume it.
-- The main export is transpiled to ES5 (wired up to `main` key in `package.json`). You'll have no issues with `create-react-app`.
+console.log(JSON.stringify(fix("a&bnsp;b&nsbp;c&nspb;"), null, 4));
+// => [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]]
+```
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
 ## Usage
 
+Normally the workflow goes like this. First, you tap the `ranges-push` to get the ranges manager and `ranges-apply` to "apply" ranges onto a string later.
+
+Now, this library produces either ranges array or `null`. Latter is deliberate so that it is _falsey_. An empty array would have been _truthy_ and more clumsy to check. Either way, ranges manager, the JS Class, recognises `null` being pushed and skips it, so you can safely push the output of this library into ranges array:
+
 ```js
-const {
-  nativeToUnicode,
-  unicodeToNative
-} = require("string-fix-broken-named-entities");
-// or
-import {
-  nativeToUnicode,
-  unicodeToNative
-} from "string-fix-broken-named-entities";
+import Ranges from "ranges-push"; // you get a JS class
+import rangesApply from "ranges-apply"; // you get a JS class
+let rangesToDelete = new Ranges(); // create a new container
+import fix from "string-fix-broken-named-entities"; // import this library :)
 
-// CONVERTING NATIVE JS INDEXES TO UNICODE-CHAR-COUNT-BASED
+// define some broken HTML:
+const brokenStr = "x &nbbbsp; y";
 
-// convert the index of the character at index zero, to Unicode-character-count-based index:
-const res1 = nativeToUnicode("\uD834\uDF06aa", 0);
-console.log(`res1 = ${JSON.stringify(res1, null, 4)}`);
-// => 0
+// push output (if any) straight to our ranges container:
+rangesToDelete.push(fix(brokenStr));
+// PS. The .push() above is custom method, not a Array.push(). It's named the same way because it's familiar and acts the same way. There is array underneath the Class actually, it's just helper functions are doing all the cleaning/sorting.
 
-// at index #1 we have second surrogate of Unicode astral symbol which has index number #0
-const res2 = nativeToUnicode("\uD834\uDF06aa", "1");
-console.log(`res2 = ${JSON.stringify(res2, null, 4)}`);
-// => '0' <--- notice it's retained as string. Same type as input is kept!
+// to retrieve the current state of ranges class, use .current() method:
+// see full API at https://bitbucket.org/codsen/ranges-push/
+console.log(
+  "current rangesToDelete.current() = " +
+    JSON.stringify(rangesToDelete.current(), null, 4)
+);
+// => current rangesToDelete.current() = [[2, 10, "&nbsp;"]]
 
-// at position index #2 we have first letter a
-// its Unicode-based index, character count starting at zero, would be 1:
-const res3 = nativeToUnicode("\uD834\uDF06aa", 2);
-console.log(`res3 = ${JSON.stringify(res3, null, 4)}`);
-// => 1
-
-// at index #1 we have second surrogate of Unicode astral symbol which has index number #0
-const res4 = nativeToUnicode("\uD834\uDF06aa", 3);
-console.log(`res4 = ${JSON.stringify(res4, null, 4)}`);
-// => 0
-
-// convert many indexes at once - any nested data structure is fine:
-const res5 = nativeToUnicode("\uD834\uDF06aa", [1, 0, 2, 3]);
-console.log(`res5 = ${JSON.stringify(res5, null, 4)}`);
-// => [0, 0, 1, 2]
-
-// Also, works with numeric strings, as long as they are natural numbers or zeros.
-// Observe how nested array is retained and string values are given back as strings:
-const res6 = nativeToUnicode("\uD834\uDF06aa", [1, "0", [[[2]]], 3]);
-console.log(`res6 = ${JSON.stringify(res6, null, 4)}`);
-// => ['0', 0, [[[1]]], 2]
-
-// CONVERTING UNICODE-CHAR-COUNT-BASED TO NATIVE JS INDEXES
-
-const res7 = unicodeToNative("\uD834\uDF06aa", [0, 1, 2]);
-console.log(`res7 = ${JSON.stringify(res7, null, 4)}`);
-// => [0, 2, 3]
-
-const res8 = unicodeToNative("\uD834\uDF06aa", [1, 0, 2]);
-console.log(`res8 = ${JSON.stringify(res8, null, 4)}`);
-// => [2, 0, 3],
-
-const res9 = unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3]);
-// throws an error!
-// that's because there's no character (counting Unicode characters) with index 3
-// we have only three Unicode characters, so indexes go only up until 2, not reaching 3 we need
+// let's "apply" the ranges and produce a clean string:
+const resultStr = rangesApply(brokenStr, rangesToDelete.current());
+console.log(`resultStr = "${resultStr}"`);
+// => resultStr = "x &nbsp; y"
 ```
-
-**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
 ## API
 
-Two methods:
+**Input**: string
+**Output**: array or arrays OR null
 
-**nativeToUnicode(str, indexes\[, opts])**
+You can save time and improve the workflow by making use of other range- class libraries:
 
-Converts JS native indexes to indexes (used in let's say `String.slice()`), based on Unicode character count.
+- [ranges-push](https://bitbucket.org/codsen/ranges-push/src) manages ranges: sorts and merges them. Instead of pushing into an array, you push into a Class which performs all cleaning. You can fetch the current contents using `.current()` method.
+- [ranges-apply](https://bitbucket.org/codsen/ranges-apply/src) applies ranges onto a string, producing a result string: ranges without third element mean deletion, ranges with the third element mean replacement. That library does all those deletions/replacements according to a given ranges array.
 
----
-
-**unicodeToNative(str, indexes\[, opts])**
-
-Converts Unicode character count-based indexes to JS native indexes.
+There are [other libraries](https://bitbucket.org/account/user/codsen/projects/RNG) for [cropping](https://bitbucket.org/codsen/ranges-crop/src), [sorting](https://bitbucket.org/codsen/ranges-sort/src), [merging](https://bitbucket.org/codsen/ranges-merge/src), performing regex-to-range [searches](https://bitbucket.org/codsen/ranges-regex/src) and others.
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
-### API - Input
+## Why not regexes?
 
-API for both methods is the same:
+If you think about it, each regex will perform a search on a string. That's one full traversal of all indexes in a string. No matter how well it's optimised by the Node or browser, it is going to happen. Now, this library traverses the input string **only once** and registers all errors. You can't do that easily with regexes - the resulting regex would get unwieldy and hard to debug.
 
-| Input argument | Type         | Obligatory? | Description                                                                                                                                                                                     |
-| -------------- | ------------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `str`          | String       | yes         | The string in which you want to perform a search                                                                                                                                                |
-| `indexes`      | Whatever     | yes         | It can be anything: from numbers to nested arrays or arrays of numeric strings. Only natural numbers (incl. zero) in number or string shape will be compiled and replaced with converted value. |
-| `opts`         | Plain object | no          | Options object. See its API below in a separate table.                                                                                                                                          |
+Furthermore, the rules in this library's algorithm are too complex for regexes, we use an equivalent of lookarounds and heavily rely on surroundings of a particular character we're evaluating. For example, here's how we detect the ending of a confirmed broken nbsp:
 
-**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
+- we have detected its beginning (with the ampersand or "n" or "b" or "s" or "p" characters in case ampersand was missing)
+- characters in the "chunk" comprise of at least three types of: `["n", "b", "s", "p"]`
+- the chunk includes a semicolon, or one is missing and
+- current character is not a semicolon
+- the character that follows either does not exist (EOL) or is not a semicolon (to catch extra characters between nbsp and semicolon)
+- the ending letter is either: a) outside of a string loop (we traverse string length + 1 to complete all clauses) OR b) one of 2 cases: 1) all letters of a set "n", "b", "s" and "p" have been matched at least once and ending letter is not equal to the one before (no repetition in the ending) OR ending letter is not any of a set: "n", "b", "s" and "p" (case insensitive).
 
-### Optional Options Object
-
-| Optional Options Object's key                          | Type of its value | Default | Description                                                                                                                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------ | ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                                                      |                   |         |
-| `throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString` | Boolean           | `true`  | If some index is not covered by Unicode character at that index (`unicodeToNative` conversion) or by native JS string index (`nativeToUnicode` conversion), we can't reliably convert that index. We don't know how many astral characters lead to it (or not). If you want to turn off error throwing in such cases and make this package leave those uncovered indexes alone, set it to `false`. |
-| }                                                      |                   |         |
-
-Here are all the defaults in one place:
-
-```js
-{
-  throwIfAnyOfTheIndexesAreOutsideOfTheReferenceString: true,
-}
-```
-
-**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
+Good luck putting the above in a regex and later troubleshooting it, after a few months.
 
 ## Practical use
 
-I have created quite a few string processing libraries, and some are using native JS indexes, while some are using Unicode character count-based indexing. This library will make them all more universal.
+This library was initially part of [Detergent.js](https://bitbucket.org/codsen/detergent/) and was taken out, rewritten; its unit tests were beefed up and consolidated and appropriately organised. Almost any tool that deals with HTML can make use of this library, especially, since it **only reports what was done** (instead of returning a mutated string which is up to you to compare and see what was done). It's easy to catch false positives this way.
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
