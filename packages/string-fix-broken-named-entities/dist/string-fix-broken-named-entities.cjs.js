@@ -19,12 +19,35 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
 function stringFixBrokenNamedEntities(str) {
+  function isNotaLetter(str) {
+    return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
+  }
   var state_AmpersandNotNeeded = false;
   var nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
-    patience: 1,
+    patience: 2,
     matchedN: null,
     matchedB: null,
     matchedS: null,
@@ -39,12 +62,25 @@ function stringFixBrokenNamedEntities(str) {
     throw new Error("string-fix-broken-named-entities: [THROW_ID_01] the input must be string! Currently we've been given ".concat(_typeof(str), ", equal to:\n").concat(JSON.stringify(str, null, 4)));
   }
   var rangesArr = [];
+  var smallestCharFromTheSetAt;
+  var largestCharFromTheSetAt;
+  var matchedLettersCount;
+  var setOfValues;
   outerloop: for (var i = 0, len = str.length + 1; i < len; i++) {
-    var matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
+    matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
+    setOfValues = [nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP].filter(function (val) {
+      return val !== null;
+    });
+    smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
+    largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
         rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       }
+      nbspWipe();
+      continue outerloop;
+    }
+    if (str[i] && str[i - 1] === ";" && str[i] !== ";" && matchedLettersCount > 0) {
       nbspWipe();
       continue outerloop;
     }
@@ -194,6 +230,14 @@ function stringFixBrokenNamedEntities(str) {
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
+    }
+    if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&") {
+      if (nbsp.patience) {
+        nbsp.patience = nbsp.patience - 1;
+      } else {
+        nbspWipe();
+        continue outerloop;
+      }
     }
   }
   return rangesArr.length ? rangesMerge(rangesArr) : null;

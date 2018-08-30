@@ -64,7 +64,18 @@ test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missi
 });
 
 test(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing semicol`, t => {
-  t.deepEqual(fix("&nbspz"), [[0, 5, "&nbsp;"]], "02.02.00 - warmup");
+  t.deepEqual(
+    fix("&nbspz &nbspz"),
+    [[0, 5, "&nbsp;"], [7, 12, "&nbsp;"]],
+    "02.02.00-1 - warmup"
+  );
+  // // but:
+  t.deepEqual(
+    fix("&nbspz; &nbspz;"),
+    [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"]],
+    "02.02.00-2 - warmup"
+  );
+
   t.deepEqual(
     fix("&nbspzzz&nbspzzz&nbsp"),
     [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
@@ -575,6 +586,11 @@ test(`03.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`, 
   t.deepEqual(fix("insp;"), null, "03.02.01");
   t.deepEqual(fix("an insp;"), null, "03.02.02");
   t.deepEqual(fix("an inspp;"), null, "03.02.03");
+});
+
+test(`03.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - first bug spotted - v1.0.1 release`, t => {
+  // t.deepEqual(fix("z&hairsp;y"), null, "03.03.01");
+  t.deepEqual(fix("y&VeryThinSpace;z"), null, "03.03.02");
 });
 
 // -----------------------------------------------------------------------------

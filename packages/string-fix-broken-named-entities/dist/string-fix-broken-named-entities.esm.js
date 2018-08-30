@@ -2,11 +2,18 @@ import rangesMerge from 'ranges-merge';
 import clone from 'lodash.clonedeep';
 
 function stringFixBrokenNamedEntities(str) {
+  function isNotaLetter(str) {
+    return !(
+      typeof str === "string" &&
+      str.length === 1 &&
+      str.toUpperCase() !== str.toLowerCase()
+    );
+  }
   let state_AmpersandNotNeeded = false;
   const nbspDefault = {
     nameStartsAt: null,
     ampersandNecessary: null,
-    patience: 1,
+    patience: 2,
     matchedN: null,
     matchedB: null,
     matchedS: null,
@@ -27,32 +34,56 @@ function stringFixBrokenNamedEntities(str) {
     );
   }
   const rangesArr = [];
+  let smallestCharFromTheSetAt;
+  let largestCharFromTheSetAt;
+  let matchedLettersCount;
+  let setOfValues;
   outerloop: for (let i = 0, len = str.length + 1; i < len; i++) {
-    const matchedLettersCount =
+    matchedLettersCount =
       (nbsp.matchedN !== null ? 1 : 0) +
       (nbsp.matchedB !== null ? 1 : 0) +
       (nbsp.matchedS !== null ? 1 : 0) +
       (nbsp.matchedP !== null ? 1 : 0);
+    setOfValues = [
+      nbsp.matchedN,
+      nbsp.matchedB,
+      nbsp.matchedS,
+      nbsp.matchedP
+    ].filter(val => val !== null);
+    smallestCharFromTheSetAt = Math.min(...setOfValues);
+    largestCharFromTheSetAt = Math.max(...setOfValues);
     if (
       nbsp.nameStartsAt !== null &&
       matchedLettersCount > 2 &&
       (nbsp.matchedSemicol !== null ||
-        (!str[i] ||
-          (nbsp.matchedN !== null &&
-            nbsp.matchedB !== null &&
-            nbsp.matchedS !== null &&
-            nbsp.matchedP !== null &&
-            str[i] !== str[i - 1]) ||
-          (str[i].toLowerCase() !== "n" &&
-            str[i].toLowerCase() !== "b" &&
-            str[i].toLowerCase() !== "s" &&
-            str[i].toLowerCase() !== "p"))) &&
+        !nbsp.ampersandNecessary ||
+        ((isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
+          largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4)) &&
+      (!str[i] ||
+        (nbsp.matchedN !== null &&
+          nbsp.matchedB !== null &&
+          nbsp.matchedS !== null &&
+          nbsp.matchedP !== null &&
+          str[i] !== str[i - 1]) ||
+        (str[i].toLowerCase() !== "n" &&
+          str[i].toLowerCase() !== "b" &&
+          str[i].toLowerCase() !== "s" &&
+          str[i].toLowerCase() !== "p")) &&
       str[i] !== ";" &&
       (str[i + 1] === undefined || str[i + 1] !== ";")
     ) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
         rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       }
+      nbspWipe();
+      continue outerloop;
+    }
+    if (
+      str[i] &&
+      str[i - 1] === ";" &&
+      str[i] !== ";" &&
+      matchedLettersCount > 0
+    ) {
       nbspWipe();
       continue outerloop;
     }
@@ -255,6 +286,23 @@ function stringFixBrokenNamedEntities(str) {
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
+    }
+    if (
+      nbsp.nameStartsAt !== null &&
+      i > nbsp.nameStartsAt &&
+      str[i] &&
+      str[i].toLowerCase() !== "n" &&
+      str[i].toLowerCase() !== "b" &&
+      str[i].toLowerCase() !== "s" &&
+      str[i].toLowerCase() !== "p" &&
+      str[i] !== "&"
+    ) {
+      if (nbsp.patience) {
+        nbsp.patience = nbsp.patience - 1;
+      } else {
+        nbspWipe();
+        continue outerloop;
+      }
     }
   }
   return rangesArr.length ? rangesMerge(rangesArr) : null;

@@ -79,7 +79,7 @@ const brokenStr = "x &nbbbsp; y";
 
 // push output (if any) straight to our ranges container:
 rangesToDelete.push(fix(brokenStr));
-// PS. The .push() above is custom method, not a Array.push(). It's named the same way because it's familiar and acts the same way. There is array underneath the Class actually, it's just helper functions are doing all the cleaning/sorting.
+// PS. The .push() above is custom method, not a Array.push(). It's named the same way because it's familiar and acts the same way. There is array underneath the Class actually, its helper functions are doing all the cleaning/sorting when values are pushed into a real, internal array.
 
 // to retrieve the current state of ranges class, use .current() method:
 // see full API at https://bitbucket.org/codsen/ranges-push/
