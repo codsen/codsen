@@ -58,7 +58,15 @@ function stringFixBrokenNamedEntities(str) {
       (nbsp.matchedSemicol !== null ||
         !nbsp.ampersandNecessary ||
         ((isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])) ||
-          largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4)) &&
+          ((isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) &&
+            largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) ||
+          (nbsp.matchedN !== null &&
+            nbsp.matchedB !== null &&
+            nbsp.matchedS !== null &&
+            nbsp.matchedP !== null &&
+            nbsp.matchedN + 1 === nbsp.matchedB &&
+            nbsp.matchedB + 1 === nbsp.matchedS &&
+            nbsp.matchedS + 1 === nbsp.matchedP))) &&
       (!str[i] ||
         (nbsp.matchedN !== null &&
           nbsp.matchedB !== null &&

@@ -589,7 +589,7 @@ test(`03.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`, 
 });
 
 test(`03.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - first bug spotted - v1.0.1 release`, t => {
-  // t.deepEqual(fix("z&hairsp;y"), null, "03.03.01");
+  t.deepEqual(fix("z&hairsp;y"), null, "03.03.01");
   t.deepEqual(fix("y&VeryThinSpace;z"), null, "03.03.02");
 });
 
