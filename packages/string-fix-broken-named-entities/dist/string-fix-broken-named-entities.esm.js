@@ -295,7 +295,8 @@ function stringFixBrokenNamedEntities(str) {
       str[i].toLowerCase() !== "b" &&
       str[i].toLowerCase() !== "s" &&
       str[i].toLowerCase() !== "p" &&
-      str[i] !== "&"
+      str[i] !== "&" &&
+      str[i] !== ";"
     ) {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;

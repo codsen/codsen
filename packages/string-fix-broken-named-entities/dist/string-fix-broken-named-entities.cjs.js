@@ -231,7 +231,7 @@ function stringFixBrokenNamedEntities(str) {
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
     }
-    if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&") {
+    if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";") {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
       } else {

@@ -710,14 +710,15 @@ function stringFixBrokenNamedEntities(str) {
       str[i].toLowerCase() !== "b" &&
       str[i].toLowerCase() !== "s" &&
       str[i].toLowerCase() !== "p" &&
-      str[i] !== "&"
+      str[i] !== "&" &&
+      str[i] !== ";"
     ) {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
-        console.log(`717 nbsp.patience--, now equal to: ${nbsp.patience}`);
+        console.log(`718 nbsp.patience--, now equal to: ${nbsp.patience}`);
       } else {
         nbspWipe();
-        console.log(`720 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        console.log(`721 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         continue outerloop;
       }
     }
