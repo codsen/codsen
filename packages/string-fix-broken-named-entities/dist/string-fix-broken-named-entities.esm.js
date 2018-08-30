@@ -68,7 +68,8 @@ function stringFixBrokenNamedEntities(str) {
         (str[i].toLowerCase() !== "n" &&
           str[i].toLowerCase() !== "b" &&
           str[i].toLowerCase() !== "s" &&
-          str[i].toLowerCase() !== "p")) &&
+          str[i].toLowerCase() !== "p") ||
+        str[i - 1] === ";") &&
       str[i] !== ";" &&
       (str[i + 1] === undefined || str[i + 1] !== ";")
     ) {

@@ -515,22 +515,22 @@ test(`02.11 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - swapped letters`, t => 
   t.deepEqual(
     fix("a&bsp;b&sbp;c&spb;"),
     [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]],
-    "02.11.02 - n missing"
+    "02.11.03 - n missing"
   );
   t.deepEqual(
     fix("a&nsp;b&nsp;c&nsp;"),
     [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]],
-    "02.11.02 - b missing"
+    "02.11.04 - b missing"
   );
   t.deepEqual(
     fix("a&bnp;b&nbp;c&npb;"),
     [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]],
-    "02.11.02 - s missing"
+    "02.11.05 - s missing"
   );
   t.deepEqual(
     fix("a&bns;b&nsb;c&nsb;"),
     [[1, 6, "&nbsp;"], [7, 12, "&nbsp;"], [13, 18, "&nbsp;"]],
-    "02.11.02 - p missing"
+    "02.11.06 - p missing"
   );
 });
 

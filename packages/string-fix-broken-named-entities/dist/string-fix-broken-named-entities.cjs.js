@@ -73,7 +73,7 @@ function stringFixBrokenNamedEntities(str) {
     });
     smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[i - 1] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
         rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
       }
