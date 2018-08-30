@@ -108,13 +108,16 @@ stringReplaceSlicesArray(inputString, rangesArray);
 
 Returns a string with requested slices deleted/replaced.
 
-#### inputString
+#### inputString - 1st argument
 
 **Type**: `string` - the string we want to work on.
 
-#### rangesArray
+#### rangesArray - 2nd argument
 
-**Type**: `array` - the array of zero or more arrays containing a range and an optional replacement string.
+**Type**:
+
+- `array` - the array of zero or more arrays containing a range and an optional replacement string.
+- `null` - alternatively, it can be given as `null`. That's the alternative output of range classes in [ranges-push](https://www.npmjs.com/package/ranges-push).
 
 For example,
 
