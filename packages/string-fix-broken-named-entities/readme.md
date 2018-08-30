@@ -16,6 +16,7 @@
 - [Idea](#markdown-header-idea)
 - [Usage](#markdown-header-usage)
 - [API](#markdown-header-api)
+- [Why not regexes?](#markdown-header-why-not-regexes)
 - [Practical use](#markdown-header-practical-use)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
@@ -37,9 +38,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 5 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 5 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 31 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 9 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 33 KB |
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
@@ -95,6 +96,8 @@ console.log(`resultStr = "${resultStr}"`);
 // => resultStr = "x &nbsp; y"
 ```
 
+**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
+
 ## API
 
 **Input**: string
@@ -123,6 +126,8 @@ Furthermore, the rules in this library's algorithm are too complex for regexes, 
 - the ending letter is either: a) outside of a string loop (we traverse string length + 1 to complete all clauses) OR b) one of 2 cases: 1) all letters of a set "n", "b", "s" and "p" have been matched at least once and ending letter is not equal to the one before (no repetition in the ending) OR ending letter is not any of a set: "n", "b", "s" and "p" (case insensitive).
 
 Good luck putting the above in a regex and later troubleshooting it, after a few months.
+
+**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
 ## Practical use
 
