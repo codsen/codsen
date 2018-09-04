@@ -150,7 +150,11 @@ class Slices {
         );
       }
       // Does the incoming "from" value match the existing last element's "to" value?
-      if (this.slices !== undefined && from === this.last()[1]) {
+      if (
+        existy(this.slices) &&
+        isArr(this.last()) &&
+        from === this.last()[1]
+      ) {
         // The incoming range is an exact extension of the last range, like
         // [1, 100] gets added [100, 200] => you can merge into: [1, 200].
         this.last()[1] = to;

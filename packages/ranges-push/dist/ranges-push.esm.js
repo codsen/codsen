@@ -127,7 +127,11 @@ class Slices {
           )}`
         );
       }
-      if (this.slices !== undefined && from === this.last()[1]) {
+      if (
+        existy(this.slices) &&
+        isArr(this.last()) &&
+        from === this.last()[1]
+      ) {
         this.last()[1] = to;
         if (this.last()[2] !== null && existy(addVal)) {
           let calculatedVal =

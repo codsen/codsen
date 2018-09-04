@@ -159,7 +159,7 @@ function () {
         if (existy(addVal) && !isStr(addVal)) {
           throw new TypeError("string-slices-array-push/Slices/add(): [THROW_ID_08] The third argument, the value to add, was given not as string but ".concat(_typeof(addVal), ", equal to:\n").concat(JSON.stringify(addVal, null, 4)));
         }
-        if (this.slices !== undefined && from === this.last()[1]) {
+        if (existy(this.slices) && isArr(this.last()) && from === this.last()[1]) {
           this.last()[1] = to;
           if (this.last()[2] !== null && existy(addVal)) {
             var calculatedVal = existy(this.last()[2]) && this.last()[2].length > 0 ? this.last()[2] + addVal : addVal;

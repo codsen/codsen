@@ -138,4 +138,4 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 [2.9.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.9.0%0Dv2.8.1#diff
 [2.10.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.10.0%0Dv2.9.2#diff
 [2.11.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.11.0%0Dv2.10.0#diff
-[2.12.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.12.0%0Dv2.11.1#diff
+[2.12.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.12.0%0Dv2.11.2#diff
