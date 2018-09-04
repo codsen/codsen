@@ -163,9 +163,9 @@
     "string-collapse-leading-whitespace": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.1",
-    "@babel/preset-env": "^7.0.0-rc.1",
-    "ava": "1.0.0-beta.7",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "ava": "1.0.0-beta.8",
     "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",
@@ -181,11 +181,11 @@
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^4.0.0-beta.7",
+    "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-cleanup": "^3.0.0",
-    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-commonjs": "^9.1.6",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-terser": "^2.0.2"
   }
 }
