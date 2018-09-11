@@ -128,7 +128,7 @@ function expander(originalOpts) {
   let to = opts.to;
 
   console.log(
-    `134 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `131 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
   );
 
   // 1. expand the given range outwards and leave a single space or
@@ -142,7 +142,7 @@ function expander(originalOpts) {
         opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`148 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`145 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
@@ -151,13 +151,13 @@ function expander(originalOpts) {
       ) {
         from = i + 2;
         console.log(
-          `157 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+          `154 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
         );
         break;
       } else if (i === 0) {
         from = 1;
         console.log(
-          `163 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+          `160 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
         );
         break;
       }
@@ -171,13 +171,13 @@ function expander(originalOpts) {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`177 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`174 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if ((str[i] && str[i].trim().length) || str[i] === undefined) {
         to = i - 1;
         console.log(
-          `183 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `180 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -203,7 +203,7 @@ function expander(originalOpts) {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("209");
+    console.log("206");
     if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1])) {
       from--;
       console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
@@ -214,7 +214,7 @@ function expander(originalOpts) {
     }
   }
 
-  console.log(`220 RETURN: [${from}, ${to}]`);
+  console.log(`217 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 
