@@ -62,7 +62,7 @@ console.log("res = " + JSON.stringify(res1, null, 4));
 // => [10, 21]
 ```
 
-This library is used to manage the whitespace in the string index selections. The "from" and "to" indexes correspond the `String.slice()` "beginIndex" and "endIndex" API as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/String/slice.html&platform=javascript&repo=Main&source=developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice).
+This library is used to manage the whitespace in the string index selections. The "from" and "to" indexes correspond the `String.slice()` "beginIndex" and "endIndex" API as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice).
 
 **[⬆ back to top](#markdown-header-string-range-expander)**
 
