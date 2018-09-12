@@ -95,6 +95,8 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | `ifRightSideIncludesThisThenCropTightly` | string                                       | no          | `""` (empty) | All characters to the right side of given range you want to tigger a tight crop. All concatenated into one chunk. |
 | `ifRightSideIncludesThisCropItToo`       | string                                       | no          | `""` (empty) | All characters to the right side of given range you want to skip as if they were whitespace                       |
 | `extendToOneSide`                        | Boolean `false` or strings "left" or "right" | no          | `false`      | You can expand the range only to one side if you want using this.                                                 |
+| `wipeAllWhitespaceOnLeft`                | Boolean                                      | no          | `false`      | If on, range will be extended to the left until it reaches the first non-whitespace character (or EOL)            |
+| `wipeAllWhitespaceOnRight`               | Boolean                                      | no          | `false`      | If on, range will be extended to the right until it reaches the first non-whitespace character (or EOL)           |
 | }                                        |                                              |             |              |
 
 Here it is in one place if you want to copy-paste it somewhere:
@@ -108,7 +110,9 @@ Here it is in one place if you want to copy-paste it somewhere:
   ifLeftSideIncludesThisCropItToo: "",
   ifRightSideIncludesThisThenCropTightly: "",
   ifRightSideIncludesThisCropItToo: "",
-  extendToOneSide: false
+  extendToOneSide: false,
+  wipeAllWhitespaceOnLeft: false,
+  wipeAllWhitespaceOnRight: false
 }
 ```
 
