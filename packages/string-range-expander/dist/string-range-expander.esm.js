@@ -97,7 +97,9 @@ function expander(originalOpts) {
     ifLeftSideIncludesThisCropItToo: "",
     ifRightSideIncludesThisThenCropTightly: "",
     ifRightSideIncludesThisCropItToo: "",
-    extendToOneSide: false
+    extendToOneSide: false,
+    wipeAllWhitespaceOnLeft: false,
+    wipeAllWhitespaceOnRight: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
@@ -124,10 +126,18 @@ function expander(originalOpts) {
         str[i].trim().length &&
         !opts.ifLeftSideIncludesThisCropItToo.includes(str[i])
       ) {
-        from = i + 2;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = i + 1;
+        } else {
+          from = i + 2;
+        }
         break;
       } else if (i === 0) {
-        from = 1;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = 0;
+        } else {
+          from = 1;
+        }
         break;
       }
     }
@@ -139,7 +149,11 @@ function expander(originalOpts) {
   ) {
     for (let i = to, len = str.length; i < len; i++) {
       if ((str[i] && str[i].trim().length) || str[i] === undefined) {
-        to = i - 1;
+        if (opts.wipeAllWhitespaceOnRight) {
+          to = i;
+        } else {
+          to = i - 1;
+        }
         break;
       }
     }
@@ -162,10 +176,18 @@ function expander(originalOpts) {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1])) {
+    if (
+      opts.extendToOneSide !== "right" &&
+      isWhitespace(str[from - 1]) &&
+      !opts.wipeAllWhitespaceOnLeft
+    ) {
       from--;
     }
-    if (opts.extendToOneSide !== "left" && isWhitespace(str[to])) {
+    if (
+      opts.extendToOneSide !== "left" &&
+      isWhitespace(str[to]) &&
+      !opts.wipeAllWhitespaceOnRight
+    ) {
       to++;
     }
   }

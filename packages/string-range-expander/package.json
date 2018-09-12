@@ -158,7 +158,7 @@
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
     "ava": "1.0.0-beta.8",
     "codacy-coverage": "latest",
@@ -176,11 +176,11 @@
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^4.0.2",
+    "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-commonjs": "^9.1.6",
-    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-terser": "^2.0.2"
   }
 }

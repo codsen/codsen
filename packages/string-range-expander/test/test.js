@@ -133,8 +133,6 @@ test("01.01 - nothing to expand", t => {
     [2, 5],
     "01.01.01"
   );
-
-  // real deal:
   t.deepEqual(
     e({
       str: "aaaaaaaaaaaa",
@@ -170,6 +168,16 @@ test("01.01 - nothing to expand", t => {
     }),
     [12, 12],
     "01.01.05"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 5,
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [2, 5],
+    "01.01.06"
   );
 });
 
@@ -218,6 +226,89 @@ test("01.02 - expanding from the middle of a gap", t => {
     }),
     [2, 6],
     "01.02.05"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 6,
+      wipeAllWhitespaceOnLeft: false
+    }),
+    [2, 6],
+    "01.02.06"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 4,
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [1, 5],
+    "01.02.07"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [1, 6],
+    "01.02.08"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 4,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [2, 6],
+    "01.02.09"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 6,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [2, 6],
+    "01.02.10"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 3,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [1, 6],
+    "01.02.11"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 1,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [1, 6],
+    "01.02.12"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 1,
+      to: 6,
+      wipeAllWhitespaceOnLeft: false,
+      wipeAllWhitespaceOnRight: false
+    }),
+    [1, 6],
+    "01.02.13"
   );
 });
 
@@ -678,6 +769,52 @@ test(`05.01 - ${`\u001b[${33}m${`opts.extendToOneSide`}\u001b[${39}m`} - one sid
     }),
     [3, 5],
     "05.01.04 - left only"
+  );
+});
+
+// 06. opts.wipeAllWhitespaceOnLeft & opts.wipeAllWhitespaceOnRight
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} - extends to both sides`, t => {
+  t.deepEqual(
+    e({
+      str: "a>     <b",
+      from: 4,
+      to: 5
+    }),
+    [3, 6],
+    "06.01.01 - a control"
+  );
+  t.deepEqual(
+    e({
+      str: "a>     <b",
+      from: 4,
+      to: 5,
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [2, 6],
+    "06.01.02 - left"
+  );
+  t.deepEqual(
+    e({
+      str: "a>     <b",
+      from: 4,
+      to: 5,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [3, 7],
+    "06.01.03 - right"
+  );
+  t.deepEqual(
+    e({
+      str: "a>     <b",
+      from: 4,
+      to: 5,
+      wipeAllWhitespaceOnLeft: true,
+      wipeAllWhitespaceOnRight: true
+    }),
+    [2, 7],
+    "06.01.04 - both"
   );
 });
 

@@ -108,7 +108,9 @@ function expander(originalOpts) {
     ifLeftSideIncludesThisCropItToo: "",
     ifRightSideIncludesThisThenCropTightly: "",
     ifRightSideIncludesThisCropItToo: "",
-    extendToOneSide: false
+    extendToOneSide: false,
+    wipeAllWhitespaceOnLeft: false,
+    wipeAllWhitespaceOnRight: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
@@ -128,7 +130,7 @@ function expander(originalOpts) {
   let to = opts.to;
 
   console.log(
-    `131 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `133 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
   );
 
   // 1. expand the given range outwards and leave a single space or
@@ -142,22 +144,30 @@ function expander(originalOpts) {
         opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`145 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`147 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
         str[i].trim().length &&
         !opts.ifLeftSideIncludesThisCropItToo.includes(str[i])
       ) {
-        from = i + 2;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = i + 1;
+        } else {
+          from = i + 2;
+        }
         console.log(
-          `154 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+          `160 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
         );
         break;
       } else if (i === 0) {
-        from = 1;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = 0;
+        } else {
+          from = 1;
+        }
         console.log(
-          `160 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+          `170 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
         );
         break;
       }
@@ -171,13 +181,17 @@ function expander(originalOpts) {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`174 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`184 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if ((str[i] && str[i].trim().length) || str[i] === undefined) {
-        to = i - 1;
+        if (opts.wipeAllWhitespaceOnRight) {
+          to = i;
+        } else {
+          to = i - 1;
+        }
         console.log(
-          `180 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `194 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -203,18 +217,26 @@ function expander(originalOpts) {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("206");
-    if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1])) {
+    console.log("220");
+    if (
+      opts.extendToOneSide !== "right" &&
+      isWhitespace(str[from - 1]) &&
+      !opts.wipeAllWhitespaceOnLeft
+    ) {
       from--;
       console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
     }
-    if (opts.extendToOneSide !== "left" && isWhitespace(str[to])) {
+    if (
+      opts.extendToOneSide !== "left" &&
+      isWhitespace(str[to]) &&
+      !opts.wipeAllWhitespaceOnRight
+    ) {
       console.log(`${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`);
       to++;
     }
   }
 
-  console.log(`217 RETURN: [${from}, ${to}]`);
+  console.log(`239 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

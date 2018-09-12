@@ -68,7 +68,9 @@ function expander(originalOpts) {
     ifLeftSideIncludesThisCropItToo: "",
     ifRightSideIncludesThisThenCropTightly: "",
     ifRightSideIncludesThisCropItToo: "",
-    extendToOneSide: false
+    extendToOneSide: false,
+    wipeAllWhitespaceOnLeft: false,
+    wipeAllWhitespaceOnRight: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
@@ -85,10 +87,18 @@ function expander(originalOpts) {
   if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]))) {
     for (var i = from; i--;) {
       if (str[i].trim().length && !opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
-        from = i + 2;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = i + 1;
+        } else {
+          from = i + 2;
+        }
         break;
       } else if (i === 0) {
-        from = 1;
+        if (opts.wipeAllWhitespaceOnLeft) {
+          from = 0;
+        } else {
+          from = 1;
+        }
         break;
       }
     }
@@ -96,16 +106,20 @@ function expander(originalOpts) {
   if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && isWhitespace(str[to + 1]) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
     for (var _i = to, len = str.length; _i < len; _i++) {
       if (str[_i] && str[_i].trim().length || str[_i] === undefined) {
-        to = _i - 1;
+        if (opts.wipeAllWhitespaceOnRight) {
+          to = _i;
+        } else {
+          to = _i - 1;
+        }
         break;
       }
     }
   }
   if (opts.extendToOneSide !== "right" && isStr(opts.ifLeftSideIncludesThisThenCropTightly) && opts.ifLeftSideIncludesThisThenCropTightly.length && (str[from - 2] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 2]) || str[from - 1] && opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) || opts.extendToOneSide !== "left" && isStr(opts.ifRightSideIncludesThisThenCropTightly) && opts.ifRightSideIncludesThisThenCropTightly.length && (str[to + 1] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to + 1]) || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))) {
-    if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1])) {
+    if (opts.extendToOneSide !== "right" && isWhitespace(str[from - 1]) && !opts.wipeAllWhitespaceOnLeft) {
       from--;
     }
-    if (opts.extendToOneSide !== "left" && isWhitespace(str[to])) {
+    if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
       to++;
     }
   }
