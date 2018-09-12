@@ -141,10 +141,11 @@ function expander(originalOpts) {
       (isWhitespace(str[from - 2]) ||
         opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2]))) ||
       (str[from - 1] &&
-        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])))
+        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])) ||
+      (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`147 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`148 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
@@ -157,7 +158,7 @@ function expander(originalOpts) {
           from = i + 2;
         }
         console.log(
-          `160 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+          `161 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
         );
         break;
       } else if (i === 0) {
@@ -167,7 +168,7 @@ function expander(originalOpts) {
           from = 1;
         }
         console.log(
-          `170 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+          `171 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
         );
         break;
       }
@@ -177,11 +178,12 @@ function expander(originalOpts) {
   // 2. expand forward
   if (
     opts.extendToOneSide !== "left" &&
-    ((isWhitespace(str[to]) && isWhitespace(str[to + 1])) ||
+    ((isWhitespace(str[to]) &&
+      (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`184 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`186 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if ((str[i] && str[i].trim().length) || str[i] === undefined) {
@@ -191,7 +193,7 @@ function expander(originalOpts) {
           to = i - 1;
         }
         console.log(
-          `194 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `196 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -217,7 +219,7 @@ function expander(originalOpts) {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("220");
+    console.log("222");
     if (
       opts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -236,7 +238,7 @@ function expander(originalOpts) {
     }
   }
 
-  console.log(`239 RETURN: [${from}, ${to}]`);
+  console.log(`241 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 

@@ -84,7 +84,7 @@ function expander(originalOpts) {
   var str = opts.str;
   var from = opts.from;
   var to = opts.to;
-  if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]))) {
+  if (opts.extendToOneSide !== "right" && (isWhitespace(str[from - 1]) && (isWhitespace(str[from - 2]) || opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2])) || str[from - 1] && opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1]) || opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1]))) {
     for (var i = from; i--;) {
       if (str[i].trim().length && !opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
         if (opts.wipeAllWhitespaceOnLeft) {
@@ -103,7 +103,7 @@ function expander(originalOpts) {
       }
     }
   }
-  if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && isWhitespace(str[to + 1]) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
+  if (opts.extendToOneSide !== "left" && (isWhitespace(str[to]) && (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1])) || opts.ifRightSideIncludesThisCropItToo.includes(str[to]))) {
     for (var _i = to, len = str.length; _i < len; _i++) {
       if (str[_i] && str[_i].trim().length || str[_i] === undefined) {
         if (opts.wipeAllWhitespaceOnRight) {

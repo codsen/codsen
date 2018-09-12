@@ -818,6 +818,31 @@ test(`06.01 - ${`\u001b[${33}m${`opts.wipeAllWhitespaceOnLeft`}\u001b[${39}m`} -
   );
 });
 
+// 07. Various
+// -----------------------------------------------------------------------------
+
+test(`07.01 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, t => {
+  const str = `<head>
+<style type="text/css">
+  aa, .unused[z], bb {z:2;}
+</style>
+</head>
+<body id   =   ""  ><a class  =  "" >z</a>
+</body>`;
+
+  t.deepEqual(
+    e({
+      str,
+      from: 82,
+      to: 93,
+      ifRightSideIncludesThisThenCropTightly: "/>",
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [81, 95],
+    "07.01"
+  );
+});
+
 // -----------------------------------------------------------------------------
 
 //             ▄▄ ▄████▄▐▄▄▄▌

@@ -119,7 +119,8 @@ function expander(originalOpts) {
       (isWhitespace(str[from - 2]) ||
         opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 2]))) ||
       (str[from - 1] &&
-        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])))
+        opts.ifLeftSideIncludesThisCropItToo.includes(str[from - 1])) ||
+      (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     for (let i = from; i--; ) {
       if (
@@ -144,7 +145,8 @@ function expander(originalOpts) {
   }
   if (
     opts.extendToOneSide !== "left" &&
-    ((isWhitespace(str[to]) && isWhitespace(str[to + 1])) ||
+    ((isWhitespace(str[to]) &&
+      (opts.wipeAllWhitespaceOnRight || isWhitespace(str[to + 1]))) ||
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     for (let i = to, len = str.length; i < len; i++) {
