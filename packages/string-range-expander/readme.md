@@ -120,7 +120,7 @@ Here it is in one place if you want to copy-paste it somewhere:
 
 ### API - Function's Output
 
-The output is an array of two indexes, the new "from" and new "to".
+The output is an array of two indexes, the new "from" and new "to". For example, `[12, 14]`.
 
 ## Contributing
 
