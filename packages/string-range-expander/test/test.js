@@ -677,7 +677,7 @@ test(`04.01 - ${`\u001b[${33}m${`opts.ifLeftSideIncludesThisCropItToo`}\u001b[${
       to: 20,
       ifLeftSideIncludesThisCropItToo: "\n\t"
     }),
-    [11, 20],
+    [10, 20],
     "04.01.02 - control #2"
   );
   t.deepEqual(
@@ -840,6 +840,52 @@ test(`07.01 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #1`, t => {
     }),
     [81, 95],
     "07.01"
+  );
+});
+
+test(`07.02 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #2`, t => {
+  const str = `<head>
+<style>
+  @media screen {.col-1,.col-2 {z: y;}}
+</style>
+</head>
+<body>z
+</body>`;
+
+  t.deepEqual(
+    e({
+      str,
+      from: 32,
+      to: 38,
+      ifRightSideIncludesThisCropItToo: ",",
+      ifRightSideIncludesThisThenCropTightly: ".#",
+      extendToOneSide: "right"
+    }),
+    [32, 39],
+    "07.02"
+  );
+});
+
+test(`07.03 - ${`\u001b[${36}m${`various`}\u001b[${39}m`} - adhoc #3`, t => {
+  const str = `<head>
+<style>
+  @media screen {.col-1,.col-2 {z: y;}}
+</style>
+</head>
+<body>z
+</body>`;
+
+  t.deepEqual(
+    e({
+      str,
+      from: 39,
+      to: 45,
+      ifLeftSideIncludesThisCropItToo: ",",
+      ifLeftSideIncludesThisThenCropTightly: ".#",
+      extendToOneSide: "left"
+    }),
+    [38, 45],
+    "07.03"
   );
 });
 

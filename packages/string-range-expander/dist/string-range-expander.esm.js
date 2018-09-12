@@ -123,23 +123,25 @@ function expander(originalOpts) {
       (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     for (let i = from; i--; ) {
-      if (
-        str[i].trim().length &&
-        !opts.ifLeftSideIncludesThisCropItToo.includes(str[i])
-      ) {
-        if (opts.wipeAllWhitespaceOnLeft) {
-          from = i + 1;
-        } else {
-          from = i + 2;
+      if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
+        if (str[i].trim().length) {
+          if (
+            opts.wipeAllWhitespaceOnLeft ||
+            opts.ifLeftSideIncludesThisCropItToo.includes(str[i + 1])
+          ) {
+            from = i + 1;
+          } else {
+            from = i + 2;
+          }
+          break;
+        } else if (i === 0) {
+          if (opts.wipeAllWhitespaceOnLeft) {
+            from = 0;
+          } else {
+            from = 1;
+          }
+          break;
         }
-        break;
-      } else if (i === 0) {
-        if (opts.wipeAllWhitespaceOnLeft) {
-          from = 0;
-        } else {
-          from = 1;
-        }
-        break;
       }
     }
   }
@@ -150,8 +152,14 @@ function expander(originalOpts) {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     for (let i = to, len = str.length; i < len; i++) {
-      if ((str[i] && str[i].trim().length) || str[i] === undefined) {
-        if (opts.wipeAllWhitespaceOnRight) {
+      if (
+        !opts.ifRightSideIncludesThisCropItToo.includes(str[i]) &&
+        ((str[i] && str[i].trim().length) || str[i] === undefined)
+      ) {
+        if (
+          opts.wipeAllWhitespaceOnRight ||
+          opts.ifRightSideIncludesThisCropItToo.includes(str[i - 1])
+        ) {
           to = i;
         } else {
           to = i - 1;
