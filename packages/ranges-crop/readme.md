@@ -28,8 +28,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                      | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-crop.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-crop.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-crop.umd.js` | 29 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-crop.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-crop.umd.js` | 38 KB |
 
 **[⬆ back to top](#markdown-header-ranges-crop)**
 
@@ -61,7 +61,7 @@ That's what this library does - it takes an **array of ranges** and the **length
 
 ## API
 
-**rangesInvert(arr, strLen)**
+**rangesCrop(arr, strLen)**
 
 | Input argument | Type                         | Obligatory? | Description                                                                                                                                                                 |
 | -------------- | ---------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
