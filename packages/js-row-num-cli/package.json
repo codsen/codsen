@@ -26,7 +26,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
     "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js && nyc --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint cli.js && ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -78,6 +78,7 @@
       "npm": true,
       "overall": true,
       "runkit": true,
+      "travis": true,
       "vulnerabilities": true
     },
     "contribution_types": [
@@ -160,13 +161,14 @@
     }
   },
   "dependencies": {
-    "fs-extra": "^6.0.1",
+    "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
     "is-d": "^1.0.0",
     "js-row-num": "^1.0.1",
     "meow": "^5.0.0",
     "p-reduce": "^1.0.0",
-    "update-notifier": "^2.5.0"
+    "update-notifier": "^2.5.0",
+    "write-file-atomic": "^2.3.0"
   },
   "devDependencies": {
     "ava": "latest",
@@ -181,7 +183,7 @@
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
     "esm": "latest",
-    "execa": "^0.10.0",
+    "execa": "^1.0.0",
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",

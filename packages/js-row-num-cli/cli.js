@@ -7,6 +7,7 @@ const fs = require("fs-extra");
 const globby = require("globby");
 const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
+const writeFileAtomic = require("write-file-atomic");
 
 const fixRowNums = require("js-row-num");
 const updateNotifier = require("update-notifier");
@@ -60,17 +61,21 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
     .then(filesContent => {
-      return fs
-        .writeFile(
+      if (typeof filesContent === "string" && filesContent.length) {
+        return writeFileAtomic(
           oneOfPaths,
-          fixRowNums(filesContent, { padStart: paddingVal })
-        )
-        .then(() => {
-          log(
-            `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
-          );
-          return true;
-        });
+          fixRowNums(filesContent, { padStart: paddingVal }),
+          err => {
+            if (err) {
+              throw err;
+            }
+            log(
+              `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
+            );
+            return true;
+          }
+        );
+      }
     })
     .catch(err => {
       `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;

@@ -11,7 +11,7 @@
 
 ## Table of Contents
 
-- [Install globally](#markdown-header-install-globally)
+- [Install globally or npx-it](#markdown-header-install-globally-or-npx-it)
 - [TLDR](#markdown-header-tldr)
 - [What it does](#markdown-header-what-it-does)
 - [A nifty setup idea](#markdown-header-a-nifty-setup-idea)
@@ -164,8 +164,6 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/js-row-num-cli
 [downloads-img]: https://img.shields.io/npm/dm/js-row-num-cli.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/js-row-num-cli
-[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
-[runkit-url]: https://npm.runkit.com/js-row-num-cli
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
