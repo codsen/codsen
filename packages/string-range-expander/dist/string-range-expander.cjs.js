@@ -70,7 +70,8 @@ function expander(originalOpts) {
     ifRightSideIncludesThisCropItToo: "",
     extendToOneSide: false,
     wipeAllWhitespaceOnLeft: false,
-    wipeAllWhitespaceOnRight: false
+    wipeAllWhitespaceOnRight: false,
+    addSingleSpaceToPreventAccidentalConcatenation: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
@@ -124,6 +125,9 @@ function expander(originalOpts) {
     if (opts.extendToOneSide !== "left" && isWhitespace(str[to]) && !opts.wipeAllWhitespaceOnRight) {
       to++;
     }
+  }
+  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length) {
+    return [from, to, " "];
   }
   return [from, to];
 }

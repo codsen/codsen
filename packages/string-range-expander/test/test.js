@@ -135,13 +135,61 @@ test("01.01 - nothing to expand", t => {
   );
   t.deepEqual(
     e({
+      str: "a     b",
+      from: 2,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [2, 5],
+    "01.01.02"
+  );
+  t.deepEqual(
+    e({
+      str: "a     b",
+      from: 2,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [2, 5],
+    "01.01.03"
+  );
+
+  //
+  // middle
+  // --------------
+  t.deepEqual(
+    e({
       str: "aaaaaaaaaaaa",
       from: 2,
       to: 5
     }),
     [2, 5],
-    "01.01.02"
+    "01.01.04 - addSingleSpaceToPreventAccidentalConcatenation default"
   );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [2, 5],
+    "01.01.05 - addSingleSpaceToPreventAccidentalConcatenation hardcoded default"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [2, 5, " "],
+    "01.01.06"
+  );
+
+  //
+  // touches start EOL
+  // --------------
   t.deepEqual(
     e({
       str: "aaaaaaaaaaaa",
@@ -149,8 +197,32 @@ test("01.01 - nothing to expand", t => {
       to: 5
     }),
     [0, 5],
-    "01.01.03"
+    "01.01.07"
   );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 0,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [0, 5],
+    "01.01.08"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 0,
+      to: 5,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [0, 5],
+    "01.01.09 - does not add space if touching EOL"
+  );
+
+  //
+  // touches end EOL
+  // --------------
   t.deepEqual(
     e({
       str: "aaaaaaaaaaaa",
@@ -158,8 +230,32 @@ test("01.01 - nothing to expand", t => {
       to: 12
     }),
     [2, 12],
-    "01.01.04"
+    "01.01.10"
   );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 12,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [2, 12],
+    "01.01.11"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 12,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [2, 12],
+    "01.01.12"
+  );
+
+  //
+  // touches both EOLS's
+  // --------------
   t.deepEqual(
     e({
       str: "aaaaaaaaaaaa",
@@ -167,8 +263,32 @@ test("01.01 - nothing to expand", t => {
       to: 12
     }),
     [12, 12],
-    "01.01.05"
+    "01.01.13"
   );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 12,
+      to: 12,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [12, 12],
+    "01.01.14"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 12,
+      to: 12,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [12, 12],
+    "01.01.15"
+  );
+
+  //
+  // combo with wipe
+  // --------------
   t.deepEqual(
     e({
       str: "aaaaaaaaaaaa",
@@ -177,7 +297,29 @@ test("01.01 - nothing to expand", t => {
       wipeAllWhitespaceOnLeft: true
     }),
     [2, 5],
-    "01.01.06"
+    "01.01.16"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 5,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [2, 5],
+    "01.01.17 - hardcoded addSingleSpaceToPreventAccidentalConcatenation default"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaaaaaaaaa",
+      from: 2,
+      to: 5,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [2, 5, " "],
+    "01.01.18 - combo, no whitespace"
   );
 });
 
@@ -351,7 +493,7 @@ test("01.03 - starting point is touching the edge (non-whitespace) even though t
   );
 });
 
-test("01.02 - both ends are equal", t => {
+test("01.04 - both ends are equal", t => {
   t.deepEqual(
     e({
       str: "ab",
@@ -359,7 +501,7 @@ test("01.02 - both ends are equal", t => {
       to: 1
     }),
     [1, 1],
-    "01.02.01"
+    "01.04.01"
   );
   t.deepEqual(
     e({
@@ -368,7 +510,266 @@ test("01.02 - both ends are equal", t => {
       to: 2
     }),
     [2, 2],
-    "01.02.02"
+    "01.04.02"
+  );
+});
+
+test("01.05 - addSingleSpaceToPreventAccidentalConcatenation", t => {
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6
+    }),
+    [5, 6],
+    "01.05.01"
+  );
+
+  // wipeAllWhitespaceOnLeft
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: false
+    }),
+    [5, 6],
+    "01.05.02 - wipeAllWhitespaceOnLeft hardcoded default"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true
+    }),
+    [5, 6],
+    "01.05.03 - wipeAllWhitespaceOnLeft on"
+  );
+
+  // addSingleSpaceToPreventAccidentalConcatenation
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 6],
+    "01.05.04"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 6, " "],
+    "01.05.05 - combo, no whitespace"
+  );
+
+  // combo
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 6, " "],
+    "01.05.06 - true-true"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 6],
+    "01.05.07 - true-false"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: false,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 6, " "],
+    "01.05.08 - false-true"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa aaaaaaa",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnLeft: false,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 6],
+    "01.05.09 - false-false"
+  );
+});
+
+test("01.06 - wipeAllWhitespaceOnLeft + addSingleSpaceToPreventAccidentalConcatenation", t => {
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: false,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [6, 7],
+    "01.06.01"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: false,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [6, 7],
+    "01.06.02"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 7],
+    "01.06.03"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 7, " "],
+    "01.06.04"
+  );
+});
+
+test("01.07 - wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation", t => {
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnRight: false,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 6],
+    "01.07.01"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnRight: false,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 6],
+    "01.07.02"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnRight: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 7],
+    "01.07.03"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa  bbbbb",
+      from: 5,
+      to: 6,
+      wipeAllWhitespaceOnRight: true,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 7, " "],
+    "01.07.04"
+  );
+});
+
+test("01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpaceToPreventAccidentalConcatenation", t => {
+  t.deepEqual(
+    e({
+      str: "aaaaa   bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnRight: false,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [6, 7],
+    "01.08.01"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa   bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 7],
+    "01.08.02"
+  );
+  t.deepEqual(
+    e({
+      str: "aaaaa   bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnRight: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [6, 8],
+    "01.08.03"
+  );
+
+  // both on result in tight crop:
+  t.deepEqual(
+    e({
+      str: "aaaaa   bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: true,
+      wipeAllWhitespaceOnRight: true,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [5, 8],
+    "01.08.04"
+  );
+
+  t.deepEqual(
+    e({
+      str: "aaaaa   bbbbb",
+      from: 6,
+      to: 7,
+      wipeAllWhitespaceOnLeft: true,
+      wipeAllWhitespaceOnRight: true,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 8, " "],
+    "01.08.05"
   );
 });
 
