@@ -19,6 +19,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+var isArr = Array.isArray;
 function expander(originalOpts) {
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
@@ -82,6 +83,22 @@ function expander(originalOpts) {
       extendToOneSide: ["false", "string"]
     }
   });
+  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    var culpritsIndex;
+    var culpritsValue;
+    if (opts.ifLeftSideIncludesThisThenCropTightly.every(function (val, i) {
+      if (!isStr(val)) {
+        culpritsIndex = i;
+        culpritsValue = val;
+        return false;
+      }
+      return true;
+    })) {
+      opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join("");
+    } else {
+      throw new Error("string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n".concat(JSON.stringify(opts.ifLeftSideIncludesThisThenCropTightly, null, 4), ". Now, that array contains not only string elements. For example, an element at index ").concat(culpritsIndex, " is of a type ").concat(_typeof(culpritsValue), " (equal to ").concat(JSON.stringify(culpritsValue, null, 0), ")."));
+    }
+  }
   var str = opts.str;
   var from = opts.from;
   var to = opts.to;
@@ -126,7 +143,7 @@ function expander(originalOpts) {
       to++;
     }
   }
-  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length) {
+  if (opts.addSingleSpaceToPreventAccidentalConcatenation && str[from - 1] && str[from - 1].trim().length && str[to] && str[to].trim().length && (!opts.ifLeftSideIncludesThisThenCropTightly && !opts.ifRightSideIncludesThisThenCropTightly || !((!opts.ifLeftSideIncludesThisThenCropTightly || opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) && (!opts.ifRightSideIncludesThisThenCropTightly || str[to] && opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))) {
     return [from, to, " "];
   }
   return [from, to];

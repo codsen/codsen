@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0] - 2018-09-20
+
+- ✨ Improvements to cases when `opts.ifLeftSideIncludesThisThenCropTightly`/`opts.ifRightSideIncludesThisThenCropTightly` is an array
+- ✨ Now we tend an edge case when `opts.addSingleSpaceToPreventAccidentalConcatenation` is surrounded by characters, whitelisted by `opts.ifLeftSideIncludesThisThenCropTightly` and `opts.ifRightSideIncludesThisThenCropTightly` (or just one of them, but then the other is a falsey empty string). In that case, the compensation space is not added.
+
 ## [1.2.0] - 2018-09-18
 
 - ✨ New feature - `opts.addSingleSpaceToPreventAccidentalConcatenation`. It's off by default but if it's on, it can prevent accidental concatenation of string when chunk is deleted. It checks the outer edges of the string range what is about to be deleted and if non-whitespace surrounds both sides it adds a single space (as range's third argument).
@@ -19,5 +24,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[1.3.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.3.0%0Dv1.2.0#diff
 [1.2.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.2.0%0Dv1.1.3#diff
 [1.1.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.1.0%0Dv1.0.2#diff

@@ -773,6 +773,116 @@ test("01.08 - wipeAllWhitespaceOnLeft + wipeAllWhitespaceOnRight + addSingleSpac
   );
 });
 
+test("01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored", t => {
+  t.deepEqual(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: false
+    }),
+    [8, 16],
+    "01.09.01 - baseline"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [8, 16, " "],
+    "01.09.02"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong><!-- --></strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [8, 16],
+    "01.09.03"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong><!-- -->a</strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [8, 16, " "],
+    "01.09.04"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong>a<!-- --></strong>",
+      from: 9,
+      to: 17,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [9, 17, " "],
+    "01.09.05"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong>a<!-- -->a</strong>",
+      from: 9,
+      to: 17,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [9, 17, " "],
+    "01.09.06"
+  );
+
+  // AND...
+
+  t.deepEqual(
+    e({
+      str: "<strong>  <!-- -->  </strong>",
+      from: 10,
+      to: 18,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [8, 20],
+    "01.09.07"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong>  <!-- --></strong>",
+      from: 10,
+      to: 18,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [8, 18],
+    "01.09.08"
+  );
+  t.deepEqual(
+    e({
+      str: "<strong><!-- -->  </strong>",
+      from: 8,
+      to: 16,
+      addSingleSpaceToPreventAccidentalConcatenation: true,
+      ifLeftSideIncludesThisThenCropTightly: ">",
+      ifRightSideIncludesThisThenCropTightly: "<"
+    }),
+    [8, 18],
+    "01.09.09"
+  );
+});
+
 // 02. opts.ifLeftSideIncludesThisThenCropTightly
 // -----------------------------------------------------------------------------
 

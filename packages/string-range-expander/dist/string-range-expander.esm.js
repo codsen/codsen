@@ -1,6 +1,7 @@
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 
+const isArr = Array.isArray;
 function expander(originalOpts) {
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
@@ -111,6 +112,36 @@ function expander(originalOpts) {
       extendToOneSide: ["false", "string"]
     }
   });
+  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    let culpritsIndex;
+    let culpritsValue;
+    if (
+      opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+        if (!isStr(val)) {
+          culpritsIndex = i;
+          culpritsValue = val;
+          return false;
+        }
+        return true;
+      })
+    ) {
+      opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join(
+        ""
+      );
+    } else {
+      throw new Error(
+        `string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(
+          opts.ifLeftSideIncludesThisThenCropTightly,
+          null,
+          4
+        )}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(
+          culpritsValue,
+          null,
+          0
+        )}).`
+      );
+    }
+  }
   const str = opts.str;
   let from = opts.from;
   let to = opts.to;
@@ -207,7 +238,16 @@ function expander(originalOpts) {
     str[from - 1] &&
     str[from - 1].trim().length &&
     str[to] &&
-    str[to].trim().length
+    str[to].trim().length &&
+    ((!opts.ifLeftSideIncludesThisThenCropTightly &&
+      !opts.ifRightSideIncludesThisThenCropTightly) ||
+      !(
+        (!opts.ifLeftSideIncludesThisThenCropTightly ||
+          opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) &&
+        (!opts.ifRightSideIncludesThisThenCropTightly ||
+          (str[to] &&
+            opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))
+      ))
   ) {
     return [from, to, " "];
   }

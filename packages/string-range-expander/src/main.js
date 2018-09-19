@@ -1,5 +1,6 @@
 import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
+const isArr = Array.isArray;
 
 function expander(originalOpts) {
   // Internal functions
@@ -122,6 +123,36 @@ function expander(originalOpts) {
       extendToOneSide: ["false", "string"]
     }
   });
+  if (isArr(opts.ifLeftSideIncludesThisThenCropTightly)) {
+    let culpritsIndex;
+    let culpritsValue;
+    if (
+      opts.ifLeftSideIncludesThisThenCropTightly.every((val, i) => {
+        if (!isStr(val)) {
+          culpritsIndex = i;
+          culpritsValue = val;
+          return false;
+        }
+        return true;
+      })
+    ) {
+      opts.ifLeftSideIncludesThisThenCropTightly = opts.ifLeftSideIncludesThisThenCropTightly.join(
+        ""
+      );
+    } else {
+      throw new Error(
+        `string-range-expander: [THROW_ID_09] The opts.ifLeftSideIncludesThisThenCropTightly was set to an array:\n${JSON.stringify(
+          opts.ifLeftSideIncludesThisThenCropTightly,
+          null,
+          4
+        )}. Now, that array contains not only string elements. For example, an element at index ${culpritsIndex} is of a type ${typeof culpritsValue} (equal to ${JSON.stringify(
+          culpritsValue,
+          null,
+          0
+        )}).`
+      );
+    }
+  }
 
   // Real deal
   // ---------------------------------------------------------------------------
@@ -131,7 +162,7 @@ function expander(originalOpts) {
   let to = opts.to;
 
   console.log(
-    `134 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
+    `165 START ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}; ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}`
   );
 
   // 1. expand the given range outwards and leave a single space or
@@ -146,7 +177,7 @@ function expander(originalOpts) {
       (opts.wipeAllWhitespaceOnLeft && isWhitespace(str[from - 1])))
   ) {
     // loop backwards
-    console.log(`149 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
+    console.log(`180 ${`\u001b[${36}m${`LOOP BACKWARDS`}\u001b[${39}m`}`);
     for (let i = from; i--; ) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (!opts.ifLeftSideIncludesThisCropItToo.includes(str[i])) {
@@ -160,7 +191,7 @@ function expander(originalOpts) {
             from = i + 2;
           }
           console.log(
-            `163 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
+            `194 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}, BREAK`
           );
           break;
         } else if (i === 0) {
@@ -170,7 +201,7 @@ function expander(originalOpts) {
             from = 1;
           }
           console.log(
-            `173 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
+            `204 SET ${`\u001b[${33}m${`from`}\u001b[${39}m`} = ${from}`
           );
           break;
         }
@@ -186,7 +217,7 @@ function expander(originalOpts) {
       opts.ifRightSideIncludesThisCropItToo.includes(str[to]))
   ) {
     // loop forward
-    console.log(`189 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
+    console.log(`220 ${`\u001b[${36}m${`LOOP FORWARD`}\u001b[${39}m`}`);
     for (let i = to, len = str.length; i < len; i++) {
       console.log(`\u001b[${36}m${`---- str[${i}]=${str[i]}`}\u001b[${39}m`);
       if (
@@ -202,7 +233,7 @@ function expander(originalOpts) {
           to = i - 1;
         }
         console.log(
-          `205 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
+          `236 SET ${`\u001b[${33}m${`to`}\u001b[${39}m`} = ${to}, BREAK`
         );
         break;
       }
@@ -228,7 +259,7 @@ function expander(originalOpts) {
         (str[to] &&
           opts.ifRightSideIncludesThisThenCropTightly.includes(str[to]))))
   ) {
-    console.log("231");
+    console.log("262");
     if (
       opts.extendToOneSide !== "right" &&
       isWhitespace(str[from - 1]) &&
@@ -252,12 +283,21 @@ function expander(originalOpts) {
     str[from - 1] &&
     str[from - 1].trim().length &&
     str[to] &&
-    str[to].trim().length
+    str[to].trim().length &&
+    ((!opts.ifLeftSideIncludesThisThenCropTightly &&
+      !opts.ifRightSideIncludesThisThenCropTightly) ||
+      !(
+        (!opts.ifLeftSideIncludesThisThenCropTightly ||
+          opts.ifLeftSideIncludesThisThenCropTightly.includes(str[from - 1])) &&
+        (!opts.ifRightSideIncludesThisThenCropTightly ||
+          (str[to] &&
+            opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))
+      ))
   ) {
-    console.log(`257 RETURN: [${from}, ${to}, " "]`);
+    console.log(`297 RETURN: [${from}, ${to}, " "]`);
     return [from, to, " "];
   }
-  console.log(`260 RETURN: [${from}, ${to}]`);
+  console.log(`300 RETURN: [${from}, ${to}]`);
   return [from, to];
 }
 
