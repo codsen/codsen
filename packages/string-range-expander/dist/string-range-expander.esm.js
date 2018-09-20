@@ -3,6 +3,7 @@ import isObj from 'lodash.isplainobject';
 
 const isArr = Array.isArray;
 function expander(originalOpts) {
+  const letterOrDigit = /^[0-9a-zA-Z]+$/;
   function isWhitespace(char) {
     if (!char || typeof char !== "string") {
       return false;
@@ -247,7 +248,8 @@ function expander(originalOpts) {
         (!opts.ifRightSideIncludesThisThenCropTightly ||
           (str[to] &&
             opts.ifRightSideIncludesThisThenCropTightly.includes(str[to])))
-      ))
+      )) &&
+    (letterOrDigit.test(str[from - 1]) || letterOrDigit.test(str[to]))
   ) {
     return [from, to, " "];
   }

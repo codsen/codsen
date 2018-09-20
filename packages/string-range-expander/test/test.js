@@ -791,8 +791,28 @@ test("01.09 - addSingleSpaceToPreventAccidentalConcatenation ignored", t => {
       to: 16,
       addSingleSpaceToPreventAccidentalConcatenation: true
     }),
-    [8, 16, " "],
-    "01.09.02"
+    [8, 16],
+    "01.09.02.01 - non digits and non letters"
+  );
+  t.deepEqual(
+    e({
+      str: "a<!-- -->b",
+      from: 1,
+      to: 9,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [1, 9, " "],
+    "01.09.02.02 - letters"
+  );
+  t.deepEqual(
+    e({
+      str: "<zzz><!-- -->b",
+      from: 5,
+      to: 13,
+      addSingleSpaceToPreventAccidentalConcatenation: true
+    }),
+    [5, 13, " "],
+    "01.09.02.03 - letter on one side"
   );
   t.deepEqual(
     e({
