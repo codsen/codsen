@@ -8,6 +8,8 @@ const globby = require("globby");
 const pReduce = require("p-reduce");
 const isDirectory = require("is-d");
 const writeFileAtomic = require("write-file-atomic");
+const pify = require("pify");
+const write = pify(writeFileAtomic);
 
 const fixRowNums = require("js-row-num");
 const updateNotifier = require("update-notifier");
@@ -61,21 +63,15 @@ function readUpdateAndWriteOverFile(oneOfPaths) {
   return fs
     .readFile(oneOfPaths, "utf8")
     .then(filesContent => {
-      if (typeof filesContent === "string" && filesContent.length) {
-        return writeFileAtomic(
-          oneOfPaths,
-          fixRowNums(filesContent, { padStart: paddingVal }),
-          err => {
-            if (err) {
-              throw err;
-            }
-            log(
-              `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
-            );
-            return true;
-          }
+      return write(
+        oneOfPaths,
+        fixRowNums(filesContent, { padStart: paddingVal })
+      ).then(() => {
+        log(
+          `${messagePrefix}${oneOfPaths} - ${`\u001b[${32}m${`OK`}\u001b[${39}m`}`
         );
-      }
+        return true;
+      });
     })
     .catch(err => {
       `${oneOfPaths} - ${`\u001b[${31}m${`BAD`}\u001b[${39}m`} - ${err}`;
@@ -136,8 +132,14 @@ function processPaths(paths) {
               }),
           { good: [], bad: [] }
         ).then(counter => {
-          log(
-            `\n${messagePrefix}${`\u001b[${32}m${`${
+          let message;
+          if (
+            (!counter.bad || !counter.bad.length) &&
+            (!counter.good || !counter.good.length)
+          ) {
+            message = `Nothing to fix.`;
+          } else {
+            message = `${`\u001b[${32}m${`${
               counter.bad &&
               counter.bad.length === 0 &&
               counter.good.length !== 1
@@ -155,8 +157,9 @@ function processPaths(paths) {
                     " - "
                   )}\u001b[${39}m`}`
                 : ""
-            }`
-          );
+            }`;
+          }
+          log(`\n${messagePrefix}${message}`);
         })
       )
   );

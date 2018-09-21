@@ -167,6 +167,7 @@
     "js-row-num": "^1.0.1",
     "meow": "^5.0.0",
     "p-reduce": "^1.0.0",
+    "pify": "^4.0.0",
     "update-notifier": "^2.5.0",
     "write-file-atomic": "^2.3.0"
   },
