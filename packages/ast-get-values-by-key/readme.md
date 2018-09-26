@@ -60,9 +60,9 @@ const get = require("ast-get-values-by-key");
 var res = get(
   {
     tag: "html"
-  },
-  "tag",
-  ["style"]
+  }, // <--- input
+  "tag", // <--- key to look for
+  ["style"] // <---- list of values to rewrite the values of the above keys if found
 );
 console.log("res = " + JSON.stringify(res, null, 4));
 // res = {
