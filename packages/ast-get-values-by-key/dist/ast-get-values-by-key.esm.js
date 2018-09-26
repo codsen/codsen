@@ -5,7 +5,6 @@ import clone from 'lodash.clonedeep';
 function existy(x) {
   return x != null;
 }
-
 function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
   if (!existy(originalInput)) {
     throw new Error(
@@ -17,9 +16,7 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
       "ast-get-values-by-key: [THROW_ID_02] the second argument is missing!"
     );
   }
-
   let replacement;
-
   if (existy(originalReplacement)) {
     if (typeof originalReplacement === "string") {
       replacement = [originalReplacement];
@@ -27,7 +24,6 @@ function getAllValuesByKey(originalInput, whatToFind, originalReplacement) {
       replacement = clone(originalReplacement);
     }
   }
-
   const res = [];
   const input = traverse(originalInput, (key, val) => {
     const current = val !== undefined ? val : key;
