@@ -29,7 +29,7 @@
     "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -136,7 +136,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        ""
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -158,8 +160,9 @@
     "matcher": "^1.1.1"
   },
   "devDependencies": {
-    "ava": "latest",
-    "babel-preset-env": "latest",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "ava": "1.0.0-beta.8",
     "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",
@@ -175,10 +178,11 @@
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^3.0.5",
-    "rollup-plugin-commonjs": "^9.1.3",
-    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-uglify": "^4.0.0"
+    "rollup-plugin-terser": "^3.0.0"
   }
 }
