@@ -29,6 +29,12 @@
         ]
       }
     ],
+    "no-constant-condition": [
+      "error",
+      {
+        "checkLoops": false
+      }
+    ],
     "no-console": "off",
     "no-else-return": "error",
     "no-inner-declarations": "error",
