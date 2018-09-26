@@ -186,6 +186,7 @@
     "esm": "latest",
     "husky": "latest",
     "nyc": "latest",
+    "object-path": "^0.11.4",
     "prettier": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "^4.0.3",

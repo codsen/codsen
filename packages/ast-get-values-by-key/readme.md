@@ -49,7 +49,7 @@ var res = get(
   "tag" // < tag to look for
 );
 console.log("res = " + JSON.stringify(res, null, 4));
-// => res = ["html"]
+// => res = [{val: "html", path: "tag"}]
 ```
 
 Tag setter in parsed HTML — just pass array of values to write as a third argument:
@@ -90,8 +90,9 @@ getAllValuesByKey(
 );
 ```
 
-- If two arguments are given, an **array zero or more of values** from matched key-value pairs within objects will be returned.
-- If three arguments are given, **an amended clone of your input** will be returned.
+- If two arguments are given, it's **getter**. You'll receive an array of zero or more plain objects with keys: `val` and `path`, where `path` follows [object-path](https://www.npmjs.com/package/object-path) notation.
+
+- If three arguments are given, it's **setter**. You'll receive a copy of original input, changed accordingly.
 
 This library does not mutate any input arguments.
 

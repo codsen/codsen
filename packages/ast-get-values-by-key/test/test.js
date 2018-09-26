@@ -1,21 +1,30 @@
 import test from "ava";
 import get from "../dist/ast-get-values-by-key.esm";
+import objectPath from "object-path";
 
 // ==============================
 // GET
 // ==============================
 
 test("01.01 - just a plain object", t => {
+  const source = {
+    tag: "html"
+  };
+
   t.deepEqual(
-    get(
+    get(source, "tag"),
+    [
       {
-        tag: "html"
-      },
-      "tag"
-    ),
-    ["html"],
+        val: "html",
+        path: "tag"
+      }
+    ],
     "01.01.01"
   );
+  // double check, is the result's path pointing to exactly the same value if
+  // queries via object-path library:
+  t.is(objectPath.get(source, "tag"), "html", "01.01.02");
+
   t.deepEqual(
     get(
       {
@@ -24,36 +33,45 @@ test("01.01 - just a plain object", t => {
       "tag"
     ),
     [],
-    "01.01.02"
+    "01.01.03"
   );
 });
 
 test("01.02 - single plain object within array", t => {
+  const source = [
+    {
+      tag: "html"
+    }
+  ];
   t.deepEqual(
-    get(
-      [
-        {
-          tag: "html"
-        }
-      ],
-      "tag"
-    ),
-    ["html"],
-    "01.02"
+    get(source, "tag"),
+    [
+      {
+        val: "html",
+        path: "0.tag"
+      }
+    ],
+    "01.02.01"
   );
+  // double check, is the result's path pointing to exactly the same value if
+  // queries via object-path library:
+  t.is(objectPath.get(source, "0.tag"), "html", "01.02.02");
 });
 
 test("01.03 - string in array as result", t => {
-  t.deepEqual(
-    get(
-      {
-        tag: ["html"]
-      },
-      "tag"
-    ),
-    [["html"]],
-    "01.03"
-  );
+  const source = {
+    tag: ["html"]
+  };
+  const res = [
+    {
+      val: ["html"],
+      path: "tag"
+    }
+  ];
+  t.deepEqual(get(source, "tag"), res, "01.03.01");
+  // double check, is the result's path pointing to exactly the same value if
+  // queries via object-path library:
+  t.deepEqual(objectPath.get(source, "tag"), ["html"], "01.03.02");
 });
 
 test("01.04 - two strings as result", t => {
@@ -77,8 +95,14 @@ test("01.04 - two strings as result", t => {
       ],
       "tag"
     ),
-    ["html1", "html2"],
-    "01.04"
+    [
+      {
+        val: "html1",
+        path: "0.tag"
+      },
+      { val: "html2", path: "1.tag" }
+    ],
+    "01.04.01"
   );
 });
 
@@ -110,48 +134,55 @@ test("01.05 - query by key, returns mixed results", t => {
       ],
       "tag"
     ),
-    [["html1"], { html2: "html2" }, "html3"],
-    "01.05"
+    [
+      { val: ["html1"], path: "0.tag" },
+      { val: { html2: "html2" }, path: "1.tag" },
+      { val: "html3", path: "2.tag" }
+    ],
+    "01.05.01"
   );
 });
 
 test("01.06 - deep tree", t => {
-  t.deepEqual(
-    get(
-      [
-        {
-          a: {
-            b: [
-              {
-                c: {
-                  d: [
-                    {
-                      e: {
-                        f: [
-                          {
-                            g: {
-                              h: {
-                                tag: "html"
-                              }
-                            }
+  const source = [
+    {
+      a: {
+        b: [
+          {
+            c: {
+              d: [
+                {
+                  e: {
+                    f: [
+                      {
+                        g: {
+                          h: {
+                            tag: "html"
                           }
-                        ]
+                        }
                       }
-                    },
-                    "whatnot"
-                  ]
-                }
-              },
-              "also here too"
-            ]
-          }
-        }
-      ],
-      "tag"
-    ),
-    ["html"],
-    "01.06"
+                    ]
+                  }
+                },
+                "whatnot"
+              ]
+            }
+          },
+          "also here too"
+        ]
+      }
+    }
+  ];
+  const retrievedPath = "0.a.b.0.c.d.0.e.f.0.g.h.tag";
+  t.deepEqual(
+    get(source, "tag"),
+    [{ val: "html", path: retrievedPath }],
+    "01.06.01"
   );
+
+  // double check, is the result's path pointing to exactly the same value if
+  // queries via object-path library:
+  t.is(objectPath.get(source, retrievedPath), "html", "01.06.02");
 });
 
 test("01.07 - query returns an array", t => {
@@ -164,7 +195,7 @@ test("01.07 - query returns an array", t => {
       ],
       "tag"
     ),
-    [["z"]],
+    [{ val: ["z"], path: "0.tag" }],
     "01.07"
   );
 });
@@ -179,32 +210,15 @@ test("01.08 - query returns a string", t => {
       ],
       "tag"
     ),
-    ["z"],
+    [{ val: "z", path: "0.tag" }],
     "01.08"
   );
 });
 
 test("01.09 - query returns array with two objects", t => {
-  t.deepEqual(
-    get(
-      [
-        {
-          tag: [
-            {
-              a: "a",
-              b: "b"
-            },
-            {
-              c: "c",
-              d: "d"
-            }
-          ]
-        }
-      ],
-      "tag"
-    ),
-    [
-      [
+  const source = [
+    {
+      tag: [
         {
           a: "a",
           b: "b"
@@ -214,9 +228,32 @@ test("01.09 - query returns array with two objects", t => {
           d: "d"
         }
       ]
+    }
+  ];
+  const retrievedValue = [
+    {
+      a: "a",
+      b: "b"
+    },
+    {
+      c: "c",
+      d: "d"
+    }
+  ];
+  t.deepEqual(
+    get(source, "tag"),
+    [
+      {
+        val: retrievedValue,
+        path: "0.tag"
+      }
     ],
     "01.09"
   );
+
+  // double check, is the result's path pointing to exactly the same value if
+  // queries via object-path library:
+  t.deepEqual(objectPath.get(source, "0.tag"), retrievedValue, "01.09.02");
 });
 
 // ==============================
@@ -476,7 +513,8 @@ test("05.02 - input is plain object, replacement is string", t => {
 // ==============================
 
 test("06.01 - wrong type of second argument", t => {
-  t.throws(() => {
+  // throw pinning:
+  const error1 = t.throws(() => {
     get(
       {
         style: "html"
@@ -485,6 +523,7 @@ test("06.01 - wrong type of second argument", t => {
       ["meta"]
     );
   });
+  t.regex(error1.message, /THROW_ID_04/g, "06.01.01");
 });
 
 test("06.02 - input is plain object, replacement is unrecognised (is a function)", t => {
@@ -503,7 +542,7 @@ test("06.02 - input is plain object, replacement is unrecognised (is a function)
 });
 
 test("06.03 - one of the whatToFind array values is a sneaky non-string", t => {
-  t.throws(() => {
+  const error2 = t.throws(() => {
     get(
       {
         style: "html"
@@ -512,6 +551,7 @@ test("06.03 - one of the whatToFind array values is a sneaky non-string", t => {
       ["meta"]
     );
   });
+  t.regex(error2.message, /THROW_ID_03/);
 });
 
 test("06.04 - one of the replacement array values is a sneaky non-string", t => {
@@ -531,24 +571,31 @@ test("06.05.01 - input present but non-container sort", t => {
 });
 
 test("06.05.02 - input completely missing", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     get();
   });
-  t.throws(() => {
+  t.regex(err1.message, /THROW_ID_01/g, "06.05.02.01");
+
+  const err2 = t.throws(() => {
     get(null);
   });
-  t.throws(() => {
+  t.regex(err2.message, /THROW_ID_01/g, "06.05.02.02");
+
+  const err3 = t.throws(() => {
     get(undefined);
   });
+  t.regex(err3.message, /THROW_ID_01/g, "06.05.02.03");
 });
 
 test("06.06 - second argument is completely missing", t => {
-  t.throws(() => {
+  const err1 = t.throws(() => {
     get({
       style: "meta"
     });
   });
-  t.throws(() => {
+  t.regex(err1.message, /THROW_ID_02/g, "06.06.01");
+
+  const err2 = t.throws(() => {
     get(
       {
         style: "meta"
@@ -557,7 +604,9 @@ test("06.06 - second argument is completely missing", t => {
       ["a"]
     );
   });
-  t.throws(() => {
+  t.regex(err2.message, /THROW_ID_02/g, "06.06.02");
+
+  const err3 = t.throws(() => {
     get(
       {
         style: "meta"
@@ -566,4 +615,5 @@ test("06.06 - second argument is completely missing", t => {
       ["a"]
     );
   });
+  t.regex(err3.message, /THROW_ID_02/g, "06.06.03");
 });

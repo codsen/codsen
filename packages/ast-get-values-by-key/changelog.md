@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2018-09-27
+
+🔨 Major API changes: now the result is not array of strings, but array of plain objects, where previous string is under key `val`. This lets us get another key - `path` of that value.
+
+Setter method behaves the same.
+
 ## [1.3.0] - 2018-06-13
 
 GitHub sold us out. In the meantime, we:
@@ -37,3 +43,4 @@ GitHub sold us out. In the meantime, we:
 [1.1.0]: https://bitbucket.org/codsen/ast-get-values-by-key/branches/compare/v1.1.0%0Dv1.0.1#diff
 [1.2.0]: https://bitbucket.org/codsen/ast-get-values-by-key/branches/compare/v1.2.0%0Dv1.1.1#diff
 [1.3.0]: https://bitbucket.org/codsen/ast-get-values-by-key/branches/compare/v1.3.0%0Dv1.2.1#diff
+[2.0.0]: https://bitbucket.org/codsen/ast-get-values-by-key/branches/compare/v2.0.0%0Dv1.3.3#diff
