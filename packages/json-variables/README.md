@@ -39,7 +39,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 19 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 20 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 91 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 95 KB |
 
 **[⬆ back to top](#markdown-header-json-variables)**
 
@@ -371,8 +371,7 @@ For example:
 
 ```json
 {
-  "key":
-    "%%-firstName-%% will not get wrapped but this one will: %%_firstName_%%",
+  "key": "%%-firstName-%% will not get wrapped but this one will: %%_firstName_%%",
   "firstName": "John"
 }
 ```
@@ -435,8 +434,7 @@ content JSON for PROD build:
 
 ```json
 {
-  "hero_title_wrapper":
-    "{% if %%_first_name_%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
+  "hero_title_wrapper": "{% if %%_first_name_%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
   "first_name": "user.firstName"
 }
 ```
@@ -457,8 +455,7 @@ content JSON for PROD build:
 
 ```json
 {
-  "hero_title_wrapper":
-    "{% if %%-first_name-%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
+  "hero_title_wrapper": "{% if %%-first_name-%% %}%%_hero_title_%%{% else %}%%_hero_title_alt_%%{% endif %}",
   "first_name": "user.firstName"
 }
 ```

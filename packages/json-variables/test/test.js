@@ -11,17 +11,17 @@ test("01.01 - basic throws related to wrong input", t => {
   const err1 = t.throws(() => {
     jv();
   });
-  t.truthy(err1.message.includes("[THROW_ID_01]"));
+  t.regex(err1.message, /THROW_ID_01/);
 
   const err2 = t.throws(() => {
     jv("zzzz");
   });
-  t.truthy(err2.message.includes("[THROW_ID_02]"));
+  t.regex(err2.message, /THROW_ID_02/);
 
   const err3 = t.throws(() => {
     jv("{}"); // string curlies...
   });
-  t.truthy(err3.message.includes("[THROW_ID_02]"));
+  t.regex(err3.message, /THROW_ID_02/);
 
   // empty plain object does not throw
   t.deepEqual(jv({}), {}, "empty plain object");
@@ -29,7 +29,7 @@ test("01.01 - basic throws related to wrong input", t => {
   const err5 = t.throws(() => {
     jv([]); // empty array
   });
-  t.truthy(err5.message.includes("[THROW_ID_02]"));
+  t.regex(err5.message, /THROW_ID_02/);
 });
 
 test("01.02 - throws when options heads and/or tails are empty", t => {
@@ -41,7 +41,7 @@ test("01.02 - throws when options heads and/or tails are empty", t => {
       { heads: "" }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_06]"));
+  t.regex(err1.message, /THROW_ID_06/);
 
   const err2 = t.throws(() => {
     jv(
@@ -51,7 +51,7 @@ test("01.02 - throws when options heads and/or tails are empty", t => {
       { tails: "" }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_07]"));
+  t.regex(err2.message, /THROW_ID_07/);
 
   const err3 = t.throws(() => {
     jv(
@@ -61,7 +61,7 @@ test("01.02 - throws when options heads and/or tails are empty", t => {
       { heads: "", tails: "" }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_06]"));
+  t.regex(err3.message, /THROW_ID_06/);
 });
 
 test("01.03 - throws when data container key lookup is enabled and container tails are given blank", t => {
@@ -73,7 +73,7 @@ test("01.03 - throws when data container key lookup is enabled and container tai
       { lookForDataContainers: true, dataContainerIdentifierTails: "" }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_08]"));
+  t.regex(err1.message, /THROW_ID_08/);
 
   t.deepEqual(
     jv(
@@ -96,7 +96,7 @@ test("01.03 - throws when data container key lookup is enabled and container tai
       { dataContainerIdentifierTails: "" }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_08]"));
+  t.regex(err3.message, /THROW_ID_08/);
 });
 
 test("01.04 - throws when heads and tails are equal", t => {
@@ -108,14 +108,14 @@ test("01.04 - throws when heads and tails are equal", t => {
       { heads: "%%", tails: "%%" }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_09]"));
+  t.regex(err1.message, /THROW_ID_09/);
 });
 
 test("01.05 - throws when input is not a plain object", t => {
   const err1 = t.throws(() => {
     jv(["zzz"], { heads: "%%", tails: "%%" });
   });
-  t.truthy(err1.message.includes("[THROW_ID_02]"));
+  t.regex(err1.message, /THROW_ID_02/);
 });
 
 test("01.06 - throws when keys contain variables", t => {
@@ -127,7 +127,7 @@ test("01.06 - throws when keys contain variables", t => {
       var2: "value2"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_15]"));
+  t.regex(err1.message, /THROW_ID_15/);
 
   const err2 = t.throws(() => {
     jv(
@@ -140,7 +140,7 @@ test("01.06 - throws when keys contain variables", t => {
       { heads: "zz", tails: "yy" }
     ); // custom heads and tails
   });
-  t.truthy(err2.message.includes("[THROW_ID_15]"));
+  t.regex(err2.message, /THROW_ID_15/);
 });
 
 test("01.07 - throws when there are unequal number of marker heads and tails", t => {
@@ -184,7 +184,7 @@ test("01.08 - throws when data is missing", t => {
       b: "something"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
   const err2 = t.throws(() => {
     jv({
       a: "some text %%_var1_%% more text",
@@ -192,7 +192,7 @@ test("01.08 - throws when data is missing", t => {
       a_data: "zzz"
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_18]"));
+  t.regex(err2.message, /THROW_ID_18/);
 });
 
 test("01.09 - throws when data container lookup is turned off and var is missing", t => {
@@ -205,7 +205,7 @@ test("01.09 - throws when data container lookup is turned off and var is missing
       { lookForDataContainers: false }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
 
   // since v.7 the value will be found if such key exists anywhere
   t.deepEqual(
@@ -314,7 +314,7 @@ test("01.10 - throws when data container name append is not string", t => {
       { lookForDataContainers: true, dataContainerIdentifierTails: false }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 
   const err2 = t.throws(() => {
     jv(
@@ -325,7 +325,7 @@ test("01.10 - throws when data container name append is not string", t => {
       { lookForDataContainers: true, dataContainerIdentifierTails: 1 }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_04*]"));
+  t.regex(err2.message, /THROW_ID_04*/);
 });
 
 test("01.11 - not throws when data container name append is given empty, but data container lookup is turned off", t => {
@@ -350,7 +350,7 @@ test("01.12 - throws when data container name append is given empty", t => {
       { lookForDataContainers: true, dataContainerIdentifierTails: "" }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_08]"));
+  t.regex(err1.message, /THROW_ID_08/);
   const err2 = t.throws(() => {
     jv(
       {
@@ -360,7 +360,7 @@ test("01.12 - throws when data container name append is given empty", t => {
       { lookForDataContainers: true, dataContainerIdentifierTails: "" }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_08]"));
+  t.regex(err2.message, /THROW_ID_08/);
 });
 
 test("01.13 - throws when opts.wrapHeadsWith is customised to anything other than string", t => {
@@ -373,7 +373,7 @@ test("01.13 - throws when opts.wrapHeadsWith is customised to anything other tha
       { wrapHeadsWith: false }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]")); // thx to check-types-mini
+  t.regex(err1.message, /THROW_ID_04*/); // thx to check-types-mini
 });
 
 test("01.14 - opts.wrapHeadsWith does not affect failing resolving", t => {
@@ -386,7 +386,7 @@ test("01.14 - opts.wrapHeadsWith does not affect failing resolving", t => {
       { wrapHeadsWith: "" }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
 });
 
 test("01.15 - throws when opts.wrapTailsWith is customised to anything other than string", t => {
@@ -399,7 +399,7 @@ test("01.15 - throws when opts.wrapTailsWith is customised to anything other tha
       { wrapTailsWith: false }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 });
 
 test("01.16 - not throws when opts.wrapTailsWith is customised to an empty string", t => {
@@ -424,7 +424,7 @@ test("01.17 - throws when opts.heads is not string", t => {
       { heads: 1 }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 });
 
 test("01.18 - throws when opts.tails is not string", t => {
@@ -437,14 +437,14 @@ test("01.18 - throws when opts.tails is not string", t => {
       { tails: 1 }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 });
 
 test("01.19 - throws when all args are missing", t => {
   const err1 = t.throws(() => {
     jv();
   });
-  t.truthy(err1.message.includes("[THROW_ID_01]"));
+  t.regex(err1.message, /THROW_ID_01/);
 });
 
 test("01.20 - throws when key references itself", t => {
@@ -453,14 +453,14 @@ test("01.20 - throws when key references itself", t => {
       a: "%%_a_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 
   const err2 = t.throws(() => {
     jv({
       a: "something %%_a_%% aaaa %%_a_%%"
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_19]"));
+  t.regex(err2.message, /THROW_ID_19/);
 });
 
 test("01.21 - throws when key references itself", t => {
@@ -471,7 +471,7 @@ test("01.21 - throws when key references itself", t => {
       c: "%%_c_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 });
 
 test("01.22 - throws when key references key which references itself", t => {
@@ -481,7 +481,7 @@ test("01.22 - throws when key references key which references itself", t => {
       a: "%%_a_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 });
 
 test("01.23 - throws when there's recursion (with distraction)", t => {
@@ -491,7 +491,7 @@ test("01.23 - throws when there's recursion (with distraction)", t => {
       a: "%%_b_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 
   const err2 = t.throws(() => {
     jv({
@@ -499,7 +499,7 @@ test("01.23 - throws when there's recursion (with distraction)", t => {
       shorterKeyN: "%%_longerKeyName_%%"
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_19]"));
+  t.regex(err2.message, /THROW_ID_19/);
 
   const err3 = t.throws(() => {
     jv({
@@ -516,7 +516,7 @@ test("01.23 - throws when there's recursion (with distraction)", t => {
       }
     });
   });
-  t.truthy(err3.message.includes("[THROW_ID_19]"));
+  t.regex(err3.message, /THROW_ID_19/);
 
   const err4 = t.throws(() => {
     jv({
@@ -536,7 +536,7 @@ test("01.23 - throws when there's recursion (with distraction)", t => {
       }
     });
   });
-  t.truthy(err4.message.includes("[THROW_ID_19]"));
+  t.regex(err4.message, /THROW_ID_19/);
 });
 
 test("01.24 - throws when there's a longer recursion", t => {
@@ -549,7 +549,7 @@ test("01.24 - throws when there's a longer recursion", t => {
       e: "%%_b_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 });
 
 test("01.25 - throws when opts.lookForDataContainers is not boolean", t => {
@@ -562,7 +562,7 @@ test("01.25 - throws when opts.lookForDataContainers is not boolean", t => {
       { lookForDataContainers: 1 }
     ); // as number, should be Bool
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 
   const err2 = t.throws(() => {
     jv(
@@ -573,7 +573,7 @@ test("01.25 - throws when opts.lookForDataContainers is not boolean", t => {
       { lookForDataContainers: "false" }
     ); // as string, should be Bool
   });
-  t.truthy(err2.message.includes("[THROW_ID_04*]"));
+  t.regex(err2.message, /THROW_ID_04*/);
 });
 
 test("01.26 - throws when opts.preventDoubleWrapping is not boolean", t => {
@@ -586,7 +586,7 @@ test("01.26 - throws when opts.preventDoubleWrapping is not boolean", t => {
       { preventDoubleWrapping: 1 }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_04*]"));
+  t.regex(err1.message, /THROW_ID_04*/);
 
   const err2 = t.throws(() => {
     jv(
@@ -597,7 +597,7 @@ test("01.26 - throws when opts.preventDoubleWrapping is not boolean", t => {
       { preventDoubleWrapping: "false" }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_04*]"));
+  t.regex(err2.message, /THROW_ID_04*/);
 });
 
 test("01.27 - throws when opts.heads and opts.headsNoWrap are customised to be equal", t => {
@@ -613,7 +613,7 @@ test("01.27 - throws when opts.heads and opts.headsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_10]"));
+  t.regex(err1.message, /THROW_ID_10/);
 
   const err2 = t.throws(() => {
     jv(
@@ -627,7 +627,7 @@ test("01.27 - throws when opts.heads and opts.headsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_10]"));
+  t.regex(err2.message, /THROW_ID_10/);
 
   const err3 = t.throws(() => {
     jv(
@@ -640,7 +640,7 @@ test("01.27 - throws when opts.heads and opts.headsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_10]"));
+  t.regex(err3.message, /THROW_ID_10/);
 });
 
 test("01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be equal", t => {
@@ -656,7 +656,7 @@ test("01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_11]"));
+  t.regex(err1.message, /THROW_ID_11/);
 
   const err2 = t.throws(() => {
     jv(
@@ -670,7 +670,7 @@ test("01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_11]"));
+  t.regex(err2.message, /THROW_ID_11/);
 
   const err3 = t.throws(() => {
     jv(
@@ -683,7 +683,7 @@ test("01.28 - throws when opts.tails and opts.tailsNoWrap are customised to be e
       }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_11]"));
+  t.regex(err3.message, /THROW_ID_11/);
 });
 
 test("01.29 - empty nowraps", t => {
@@ -699,7 +699,7 @@ test("01.29 - empty nowraps", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_12]"));
+  t.regex(err1.message, /THROW_ID_12/);
 
   const err2 = t.throws(() => {
     jv(
@@ -713,7 +713,7 @@ test("01.29 - empty nowraps", t => {
       }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_13]"));
+  t.regex(err2.message, /THROW_ID_13/);
 
   const err3 = t.throws(() => {
     jv(
@@ -726,7 +726,7 @@ test("01.29 - empty nowraps", t => {
       }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_12]"));
+  t.regex(err3.message, /THROW_ID_12/);
 
   const err4 = t.throws(() => {
     jv(
@@ -739,7 +739,7 @@ test("01.29 - empty nowraps", t => {
       }
     );
   });
-  t.truthy(err4.message.includes("[THROW_ID_13]"));
+  t.regex(err4.message, /THROW_ID_13/);
 });
 
 test("01.30 - equal nowraps", t => {
@@ -755,7 +755,7 @@ test("01.30 - equal nowraps", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_14]"));
+  t.regex(err1.message, /THROW_ID_14/);
 
   const err2 = t.throws(() => {
     jv(
@@ -769,7 +769,7 @@ test("01.30 - equal nowraps", t => {
       }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_14]"));
+  t.regex(err2.message, /THROW_ID_14/);
 
   const err3 = t.throws(() => {
     jv(
@@ -782,7 +782,7 @@ test("01.30 - equal nowraps", t => {
       }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_14]"));
+  t.regex(err3.message, /THROW_ID_14/);
 });
 
 test("01.31 - throws there's simple recursion loop in array", t => {
@@ -791,21 +791,21 @@ test("01.31 - throws there's simple recursion loop in array", t => {
       a: "%%_a_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 
   const err2 = t.throws(() => {
     jv({
       a: { b: "%%_a_%%" }
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_20]"));
+  t.regex(err2.message, /THROW_ID_20/);
 
   const err3 = t.throws(() => {
     jv({
       a: ["%%_a_%%"]
     });
   });
-  t.truthy(err3.message.includes("[THROW_ID_20]"));
+  t.regex(err3.message, /THROW_ID_20/);
 
   const err4 = t.throws(() => {
     jv({
@@ -813,19 +813,19 @@ test("01.31 - throws there's simple recursion loop in array", t => {
       b: ["%%_a_%%"]
     });
   });
-  t.truthy(err4.message.includes("[THROW_ID_20]"));
+  t.regex(err4.message, /THROW_ID_20/);
 
   const err5 = t.throws(() => {
     jv({
       a: ["%%_b_%%", "%%_b_%%"]
     });
   });
-  t.truthy(err5.message.includes("[THROW_ID_18]"));
+  t.regex(err5.message, /THROW_ID_18/);
 
   const err6 = t.throws(() => {
     jv({ z: ["%%_a_%%"] });
   });
-  t.truthy(err6.message.includes("[THROW_ID_18]"));
+  t.regex(err6.message, /THROW_ID_18/);
 });
 
 test("01.32 - throws referencing what does not exist", t => {
@@ -834,13 +834,13 @@ test("01.32 - throws referencing what does not exist", t => {
       a: "%%_b_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
   const err2 = t.throws(() => {
     jv({
       a: ["%%_b_%%"]
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_18]"));
+  t.regex(err2.message, /THROW_ID_18/);
 });
 
 test("01.33 - throws when referencing the multi-level object keys that don't exist", t => {
@@ -852,7 +852,7 @@ test("01.33 - throws when referencing the multi-level object keys that don't exi
       var2: { key2: "value2" }
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
 
   const err2 = t.throws(() => {
     jv({
@@ -862,7 +862,7 @@ test("01.33 - throws when referencing the multi-level object keys that don't exi
       var2: { key4: "value4", key5: "value5", key6: "value6" }
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_18]"));
+  t.regex(err2.message, /THROW_ID_18/);
 
   const err3 = t.throws(() => {
     jv(
@@ -878,7 +878,7 @@ test("01.33 - throws when referencing the multi-level object keys that don't exi
       }
     );
   });
-  t.truthy(err3.message.includes("[THROW_ID_18]"));
+  t.regex(err3.message, /THROW_ID_18/);
 });
 
 test("01.34 - throws when opts are given truthy but not a plain object", t => {
@@ -891,7 +891,7 @@ test("01.34 - throws when opts are given truthy but not a plain object", t => {
       "zzz"
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_03]"));
+  t.regex(err1.message, /THROW_ID_03/);
 });
 
 // -----------------------------------------------------------------------------
@@ -1148,7 +1148,7 @@ test("02.11 - opts.noSingleMarkers - on", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_16]"));
+  t.regex(err1.message, /THROW_ID_16/);
 });
 
 test("02.12 - opts.noSingleMarkers - off - more throw tests", t => {
@@ -1166,7 +1166,7 @@ test("02.12 - opts.noSingleMarkers - off - more throw tests", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_16]"));
+  t.regex(err1.message, /THROW_ID_16/);
 });
 
 test("02.13 - custom heads/tails, values equal to them are present in data", t => {
@@ -1941,7 +1941,7 @@ test("03.06 - multiple variables resolved", t => {
       f: "%%_b_%%"
     });
   });
-  t.truthy(err1.message.includes("[THROW_ID_19]"));
+  t.regex(err1.message, /THROW_ID_19/);
 
   const err2 = t.throws(() => {
     jv({
@@ -1953,7 +1953,7 @@ test("03.06 - multiple variables resolved", t => {
       f: "%%_b_%%"
     });
   });
-  t.truthy(err2.message.includes("[THROW_ID_19]"));
+  t.regex(err2.message, /THROW_ID_19/);
 });
 
 test("03.07 - preventDoubleWrapping: on & off", t => {
@@ -2892,7 +2892,7 @@ test("05.05 - arrays, whitelisting as array #2", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_18]"));
+  t.regex(err1.message, /THROW_ID_18/);
 });
 
 // -----------------------------------------------------------------------------
@@ -2929,7 +2929,7 @@ test("06.01 - UTIL > single markers in the values", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_16]"));
+  t.regex(err1.message, /THROW_ID_16/);
 
   t.notThrows(() => {
     jv({
@@ -2960,7 +2960,7 @@ test("06.01 - UTIL > single markers in the values", t => {
       }
     );
   });
-  t.truthy(err2.message.includes("[THROW_ID_16]"));
+  t.regex(err2.message, /THROW_ID_16/);
 });
 
 // -----------------------------------------------------------------------------
@@ -4289,7 +4289,7 @@ test("11.03 - opts.throwWhenNonStringInsertedInString", t => {
       }
     );
   });
-  t.truthy(err1.message.includes("[THROW_ID_23]"));
+  t.regex(err1.message, /THROW_ID_23/);
 
   t.notThrows(() => {
     jv({

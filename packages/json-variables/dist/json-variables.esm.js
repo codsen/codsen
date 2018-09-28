@@ -215,22 +215,26 @@ function findValues(input, varName, path, opts) {
   }
   if (resolveValue === undefined) {
     if (varName.indexOf(".") === -1) {
-      const gotPath = get(input, varName);
-      if (gotPath.length > 0) {
-        for (let y = 0, len2 = gotPath.length; y < len2; y++) {
-          if (isStr(gotPath[y]) || isBool(gotPath[y]) || isNull(gotPath[y])) {
-            resolveValue = gotPath[y];
+      const gotPathArr = get(input, varName);
+      if (gotPathArr.length > 0) {
+        for (let y = 0, len2 = gotPathArr.length; y < len2; y++) {
+          if (
+            isStr(gotPathArr[y].val) ||
+            isBool(gotPathArr[y].val) ||
+            isNull(gotPathArr[y].val)
+          ) {
+            resolveValue = gotPathArr[y].val;
             break;
-          } else if (isNum(gotPath[y])) {
-            resolveValue = String(gotPath[y]);
+          } else if (isNum(gotPathArr[y].val)) {
+            resolveValue = String(gotPathArr[y].val);
             break;
-          } else if (isArr(gotPath[y])) {
-            resolveValue = gotPath[y].join("");
+          } else if (isArr(gotPathArr[y].val)) {
+            resolveValue = gotPathArr[y].val.join("");
             break;
           } else {
             throw new Error(
               `json-variables/findValues(): [THROW_ID_21] While trying to resolve: "${varName}" at path "${path}", we actually found the key named ${varName}, but it was not equal to a string but to:\n${JSON.stringify(
-                gotPath[y],
+                gotPathArr[y],
                 null,
                 4
               )}\nWe can't resolve a string with that! It should be a string.`
@@ -242,7 +246,10 @@ function findValues(input, varName, path, opts) {
       const gotPath = get(input, getTopmostKey(varName));
       if (gotPath.length > 0) {
         for (let y = 0, len2 = gotPath.length; y < len2; y++) {
-          const temp = objectPath.get(gotPath[y], withoutTopmostKey(varName));
+          const temp = objectPath.get(
+            gotPath[y].val,
+            withoutTopmostKey(varName)
+          );
           if (temp && isStr(temp)) {
             resolveValue = temp;
           }

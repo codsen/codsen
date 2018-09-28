@@ -16,7 +16,20 @@ var isObj = _interopDefault(require('lodash.isplainobject'));
 var removeDuplicateHeadsTails = _interopDefault(require('string-remove-duplicate-heads-tails'));
 var stringMatchLeftRight = require('string-match-left-right');
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 var isArr = Array.isArray;
 var has = Object.prototype.hasOwnProperty;
 function isStr(something) {
@@ -87,8 +100,8 @@ function containsHeadsOrTails(str, opts) {
   return false;
 }
 function removeWrappingHeadsAndTails(str, heads, tails) {
-  var tempFrom = void 0;
-  var tempTo = void 0;
+  var tempFrom;
+  var tempTo;
   if (typeof str === "string" && str.length > 0 && stringMatchLeftRight.matchRightIncl(str, 0, heads, {
     trimBeforeMatching: true,
     cb: function cb(char, theRemainderOfTheString, index) {
@@ -108,7 +121,7 @@ function removeWrappingHeadsAndTails(str, heads, tails) {
 }
 function wrap(placementValue, opts) {
   var dontWrapTheseVars = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  var oldVarName = arguments[5];
+  var oldVarName = arguments.length > 5 ? arguments[5] : undefined;
   if (isStr(placementValue) && !dontWrapTheseVars && opts.wrapGlobalFlipSwitch && !opts.dontWrapVars.some(function (val) {
     return matcher.isMatch(oldVarName, val);
   }) && (
@@ -130,7 +143,7 @@ function wrap(placementValue, opts) {
   return placementValue;
 }
 function findValues(input, varName, path, opts) {
-  var resolveValue = void 0;
+  var resolveValue;
   if (path.indexOf(".") !== -1) {
     var currentPath = path;
     var handBrakeOff = true;
@@ -144,7 +157,7 @@ function findValues(input, varName, path, opts) {
     while (handBrakeOff && currentPath.indexOf(".") !== -1) {
       currentPath = goLevelUp(currentPath);
       if (getLastKey(currentPath) === varName) {
-        throw new Error("json-variables/findValues(): [THROW_ID_20] While trying to resolve: \"" + varName + "\" at path \"" + path + "\", we encountered a closed loop. The parent key \"" + getLastKey(currentPath) + "\" is called the same as the variable \"" + varName + "\" we're looking for.");
+        throw new Error("json-variables/findValues(): [THROW_ID_20] While trying to resolve: \"".concat(varName, "\" at path \"").concat(path, "\", we encountered a closed loop. The parent key \"").concat(getLastKey(currentPath), "\" is called the same as the variable \"").concat(varName, "\" we're looking for."));
       }
       if (opts.lookForDataContainers && typeof opts.dataContainerIdentifierTails === "string" && opts.dataContainerIdentifierTails.length > 0 && !currentPath.endsWith(opts.dataContainerIdentifierTails)) {
         var _gotPath = objectPath.get(input, currentPath + opts.dataContainerIdentifierTails);
@@ -170,28 +183,28 @@ function findValues(input, varName, path, opts) {
   }
   if (resolveValue === undefined) {
     if (varName.indexOf(".") === -1) {
-      var _gotPath4 = get(input, varName);
-      if (_gotPath4.length > 0) {
-        for (var y = 0, len2 = _gotPath4.length; y < len2; y++) {
-          if (isStr(_gotPath4[y]) || isBool(_gotPath4[y]) || isNull(_gotPath4[y])) {
-            resolveValue = _gotPath4[y];
+      var gotPathArr = get(input, varName);
+      if (gotPathArr.length > 0) {
+        for (var y = 0, len2 = gotPathArr.length; y < len2; y++) {
+          if (isStr(gotPathArr[y].val) || isBool(gotPathArr[y].val) || isNull(gotPathArr[y].val)) {
+            resolveValue = gotPathArr[y].val;
             break;
-          } else if (isNum(_gotPath4[y])) {
-            resolveValue = String(_gotPath4[y]);
+          } else if (isNum(gotPathArr[y].val)) {
+            resolveValue = String(gotPathArr[y].val);
             break;
-          } else if (isArr(_gotPath4[y])) {
-            resolveValue = _gotPath4[y].join("");
+          } else if (isArr(gotPathArr[y].val)) {
+            resolveValue = gotPathArr[y].val.join("");
             break;
           } else {
-            throw new Error("json-variables/findValues(): [THROW_ID_21] While trying to resolve: \"" + varName + "\" at path \"" + path + "\", we actually found the key named " + varName + ", but it was not equal to a string but to:\n" + JSON.stringify(_gotPath4[y], null, 4) + "\nWe can't resolve a string with that! It should be a string.");
+            throw new Error("json-variables/findValues(): [THROW_ID_21] While trying to resolve: \"".concat(varName, "\" at path \"").concat(path, "\", we actually found the key named ").concat(varName, ", but it was not equal to a string but to:\n").concat(JSON.stringify(gotPathArr[y], null, 4), "\nWe can't resolve a string with that! It should be a string."));
           }
         }
       }
     } else {
-      var _gotPath5 = get(input, getTopmostKey(varName));
-      if (_gotPath5.length > 0) {
-        for (var _y = 0, _len = _gotPath5.length; _y < _len; _y++) {
-          var temp = objectPath.get(_gotPath5[_y], withoutTopmostKey(varName));
+      var _gotPath4 = get(input, getTopmostKey(varName));
+      if (_gotPath4.length > 0) {
+        for (var _y = 0, _len = _gotPath4.length; _y < _len; _y++) {
+          var temp = objectPath.get(_gotPath4[_y].val, withoutTopmostKey(varName));
           if (temp && isStr(temp)) {
             resolveValue = temp;
           }
@@ -210,9 +223,9 @@ function resolveString(input, string, path, opts) {
       extra = incomingBreadCrumbPath.reduce(function (accum, curr, idx) {
         return accum + (idx === 0 ? "" : separator) + (curr === path ? "💥 " : "  ") + curr;
       }, " Here's the path we travelled up until we hit the recursion:\n\n");
-      extra += separator + "\uD83D\uDCA5 " + path;
+      extra += "".concat(separator, "\uD83D\uDCA5 ").concat(path);
     }
-    throw new Error("json-variables/resolveString(): [THROW_ID_19] While trying to resolve: \"" + string + "\" at path \"" + path + "\", we encountered a closed loop, the key is referencing itself.\"" + extra);
+    throw new Error("json-variables/resolveString(): [THROW_ID_19] While trying to resolve: \"".concat(string, "\" at path \"").concat(path, "\", we encountered a closed loop, the key is referencing itself.\"").concat(extra));
   }
   var secretResolvedVarsStash = {};
   var breadCrumbPath = clone(incomingBreadCrumbPath);
@@ -238,10 +251,10 @@ function resolveString(input, string, path, opts) {
         opts
         );
         if (resolvedValue === undefined) {
-          throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable " + string.slice(obj.headsEndAt, obj.tailsStartAt) + ". We're at path: \"" + path + "\".");
+          throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_18] We couldn't find the value to resolve the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), ". We're at path: \"").concat(path, "\"."));
         }
         if (!wholeValueIsVariable && opts.throwWhenNonStringInsertedInString && !isStr(resolvedValue)) {
-          throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable " + string.slice(obj.headsEndAt, obj.tailsStartAt) + " at path " + path + ", it resolved into a non-string value, " + JSON.stringify(resolvedValue, null, 4) + ". This is happening because options setting \"throwWhenNonStringInsertedInString\" is active (set to \"true\").");
+          throw new Error("json-variables/processHeadsAndTails(): [THROW_ID_23] While resolving the variable ".concat(string.slice(obj.headsEndAt, obj.tailsStartAt), " at path ").concat(path, ", it resolved into a non-string value, ").concat(JSON.stringify(resolvedValue, null, 4), ". This is happening because options setting \"throwWhenNonStringInsertedInString\" is active (set to \"true\")."));
         }
         if (isBool(resolvedValue)) {
           if (opts.resolveToBoolIfAnyValuesContainBool) {
@@ -262,7 +275,7 @@ function resolveString(input, string, path, opts) {
         } else {
           resolvedValue = String(resolvedValue);
         }
-        var newPath = path.includes(".") ? goLevelUp(path) + "." + varName : varName;
+        var newPath = path.includes(".") ? "".concat(goLevelUp(path), ".").concat(varName) : varName;
         if (containsHeadsOrTails(resolvedValue, opts)) {
           var replacementVal = wrap(resolveString(
           input, resolvedValue, newPath, opts, breadCrumbPath), opts, dontWrapTheseVars, breadCrumbPath, newPath, varName.trim());
@@ -284,14 +297,14 @@ function resolveString(input, string, path, opts) {
     }
     return undefined;
   }
-  var foundHeadsAndTails = void 0;
+  var foundHeadsAndTails;
   try {
     foundHeadsAndTails = strFindHeadsTails(string, opts.heads, opts.tails, {
       source: "",
       throwWhenSomethingWrongIsDetected: false
     });
   } catch (error) {
-    throw new Error("json-variables/resolveString(): [THROW_ID_17] While trying to resolve string: \"" + string + "\" at path " + path + ", something wrong with heads and tails was detected! Here's the internal error message:\n" + error);
+    throw new Error("json-variables/resolveString(): [THROW_ID_17] While trying to resolve string: \"".concat(string, "\" at path ").concat(path, ", something wrong with heads and tails was detected! Here's the internal error message:\n").concat(error));
   }
   var wholeValueIsVariable = false;
   if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
@@ -304,9 +317,12 @@ function resolveString(input, string, path, opts) {
     return temp1;
   }
   try {
-    foundHeadsAndTails = strFindHeadsTails(string, opts.headsNoWrap, opts.tailsNoWrap, { source: "", throwWhenSomethingWrongIsDetected: false });
+    foundHeadsAndTails = strFindHeadsTails(string, opts.headsNoWrap, opts.tailsNoWrap, {
+      source: "",
+      throwWhenSomethingWrongIsDetected: false
+    });
   } catch (error) {
-    throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"" + string + "\" at path " + path + ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n" + error);
+    throw new Error("json-variables/resolveString(): [THROW_ID_22] While trying to resolve string: \"".concat(string, "\" at path ").concat(path, ", something wrong with no-wrap heads and no-wrap tails was detected! Here's the internal error message:\n").concat(error));
   }
   if (foundHeadsAndTails.length === 1 && rangesApply(string, [foundHeadsAndTails[0].headsStartAt, foundHeadsAndTails[0].tailsEndAt]).trim() === "") {
     wholeValueIsVariable = true;
@@ -328,10 +344,10 @@ function jsonVariables(inputOriginal) {
     throw new Error("json-variables/jsonVariables(): [THROW_ID_01] Alas! Inputs are missing!");
   }
   if (!isObj(inputOriginal)) {
-    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: " + (Array.isArray(inputOriginal) ? "array" : typeof inputOriginal === "undefined" ? "undefined" : _typeof(inputOriginal)));
+    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_02] Alas! The input must be a plain object! Currently it's: ".concat(Array.isArray(inputOriginal) ? "array" : _typeof(inputOriginal)));
   }
   if (!isObj(originalOpts)) {
-    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: " + (Array.isArray(originalOpts) ? "array" : typeof originalOpts === "undefined" ? "undefined" : _typeof(originalOpts)));
+    throw new TypeError("json-variables/jsonVariables(): [THROW_ID_03] Alas! An Optional Options Object must be a plain object! Currently it's: ".concat(Array.isArray(originalOpts) ? "array" : _typeof(originalOpts)));
   }
   var input = clone(inputOriginal);
   var defaults = {
@@ -364,8 +380,8 @@ function jsonVariables(inputOriginal) {
       tailsNoWrap: ["string", "null", "undefined"]
     }
   });
-  var culpritVal = void 0;
-  var culpritIndex = void 0;
+  var culpritVal;
+  var culpritIndex;
   if (opts.dontWrapVars.length > 0 && !opts.dontWrapVars.every(function (el, idx) {
     if (!isStr(el)) {
       culpritVal = el;
@@ -374,7 +390,7 @@ function jsonVariables(inputOriginal) {
     }
     return true;
   })) {
-    throw new Error("json-variables/jsonVariables(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value \"" + culpritVal + "\" at index " + culpritIndex + ", which is not string but " + (Array.isArray(culpritVal) ? "array" : typeof culpritVal === "undefined" ? "undefined" : _typeof(culpritVal)) + "!");
+    throw new Error("json-variables/jsonVariables(): [THROW_ID_05] Alas! All variable names set in opts.dontWrapVars should be of a string type. Computer detected a value \"".concat(culpritVal, "\" at index ").concat(culpritIndex, ", which is not string but ").concat(Array.isArray(culpritVal) ? "array" : _typeof(culpritVal), "!"));
   }
   if (opts.heads === "") {
     throw new Error("json-variables/jsonVariables(): [THROW_ID_06] Alas! opts.heads are empty!");
@@ -403,10 +419,10 @@ function jsonVariables(inputOriginal) {
   if (opts.headsNoWrap === opts.tailsNoWrap) {
     throw new Error("json-variables/jsonVariables(): [THROW_ID_14] Alas! opts.headsNoWrap and opts.tailsNoWrap can't be equal!");
   }
-  var current = void 0;
+  var current;
   return traverse(input, function (key, val, innerObj) {
     if (existy(val) && containsHeadsOrTails(key, opts)) {
-      throw new Error("json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: " + key);
+      throw new Error("json-variables/jsonVariables(): [THROW_ID_15] Alas! Object keys can't contain variables!\nPlease check the following key: ".concat(key));
     }
     if (val !== undefined) {
       current = val;
@@ -420,7 +436,7 @@ function jsonVariables(inputOriginal) {
       if (!opts.noSingleMarkers) {
         return current;
       }
-      throw new Error("json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon " + trimIfString(current) + " which is equal to " + (trimIfString(current) === trimIfString(opts.heads) ? "heads" : "") + (trimIfString(current) === trimIfString(opts.tails) ? "tails" : "") + (isStr(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "") + (isStr(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "") + ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (" + trimIfString(current) + ") alone");
+      throw new Error("json-variables/jsonVariables(): [THROW_ID_16] Alas! While processing the input, we stumbled upon ".concat(trimIfString(current), " which is equal to ").concat(trimIfString(current) === trimIfString(opts.heads) ? "heads" : "").concat(trimIfString(current) === trimIfString(opts.tails) ? "tails" : "").concat(isStr(opts.headsNoWrap) && trimIfString(current) === trimIfString(opts.headsNoWrap) ? "headsNoWrap" : "").concat(isStr(opts.tailsNoWrap) && trimIfString(current) === trimIfString(opts.tailsNoWrap) ? "tailsNoWrap" : "", ". If you wouldn't have set opts.noSingleMarkers to \"true\" this error would not happen and computer would have left the current element (").concat(trimIfString(current), ") alone"));
     }
     if (isStr(current) && containsHeadsOrTails(current, opts)) {
       return resolveString(input, current, innerObj.path, opts);
