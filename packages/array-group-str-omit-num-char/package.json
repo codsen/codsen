@@ -1,0 +1,200 @@
+{
+  "name": "array-group-str-omit-num-char",
+  "version": "0.1.0",
+  "description": "Groups array of strings by omitting number characters",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codsen/array-group-str-omit-num-char.git"
+  },
+  "homepage": "https://bitbucket.org/codsen/array-group-str-omit-num-char/",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/array-group-str-omit-num-char.cjs.js",
+  "module": "dist/array-group-str-omit-num-char.esm.js",
+  "browser": "dist/array-group-str-omit-num-char.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "keywords": [
+    "array",
+    "string",
+    "strings",
+    "group",
+    "filter",
+    "common",
+    "remove",
+    "digits",
+    "matching",
+    "reduce",
+    "length",
+    "display",
+    "list",
+    "classes",
+    "ids"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "check-types-mini": "^4.1.1",
+    "lodash.isplainobject": "^4.0.6",
+    "lodash.uniq": "^4.5.0",
+    "ranges-apply": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "ava": "1.0.0-beta.8",
+    "babel-plugin-istanbul": "^5.0.1",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "husky": "latest",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-strip": "^1.2.0",
+    "rollup-plugin-terser": "^3.0.0"
+  }
+}
