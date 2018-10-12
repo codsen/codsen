@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0] - 2018-10-12
+
+- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+
 ## [3.3.0] - 2018-06-15
 
 GitHub sold us out. In the meantime, we:
@@ -45,3 +49,4 @@ GitHub sold us out. In the meantime, we:
 [3.1.0]: https://bitbucket.org/codsen/arrayiffy-if-string/branches/compare/v3.1.0%0Dv3.0.6#diff
 [3.2.0]: https://bitbucket.org/codsen/arrayiffy-if-string/branches/compare/v3.2.0%0Dv3.1.1#diff
 [3.3.0]: https://bitbucket.org/codsen/arrayiffy-if-string/branches/compare/v3.3.0%0Dv3.2.1#diff
+[3.4.0]: https://bitbucket.org/codsen/arrayiffy-if-string/branches/compare/v3.4.0%0Dv3.3.3#diff
