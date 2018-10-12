@@ -5,10 +5,7 @@ import empty from 'ast-contains-only-empty-space';
 import matcher from 'matcher';
 import checkTypes from 'check-types-mini';
 
-/* eslint max-len:0 */
-
 const isArr = Array.isArray;
-
 function existy(x) {
   return x != null;
 }
@@ -36,7 +33,6 @@ function isBlank(something) {
   return false;
 }
 function isTheTypeLegit(something) {
-  // same as JSON spec:
   return (
     isObj(something) ||
     isStr(something) ||
@@ -48,8 +44,6 @@ function isTheTypeLegit(something) {
 }
 
 const isArr$1 = Array.isArray;
-
-// bo = bigObject original; so = smallObject original
 function compare(bo, so, originalOpts) {
   if (bo === undefined) {
     throw new TypeError(
@@ -61,7 +55,6 @@ function compare(bo, so, originalOpts) {
       "ast-compare/compare(): [THROW_ID_02] second argument is missing!"
     );
   }
-
   if (existy(bo) && !isTheTypeLegit(bo)) {
     throw new TypeError(
       `ast-compare/compare(): [THROW_ID_03] first input argument is of a wrong type, ${typeDetect(
@@ -83,16 +76,12 @@ function compare(bo, so, originalOpts) {
       )} and equal to: ${JSON.stringify(originalOpts, null, 4)}`
     );
   }
-
-  // clone to prevent an accidental mutation
-  const s = clone(so); // s stands for Small Object, a set
-  const b = clone(bo); // b stands for Big Object, super set (or equal to)
+  const s = clone(so);
+  const b = clone(bo);
   let sKeys;
   let bKeys;
   let found;
   let bOffset = 0;
-
-  // prep opts
   const defaults = {
     hungryForWhitespace: false,
     matchStrictly: false,
@@ -101,8 +90,6 @@ function compare(bo, so, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, { msg: "ast-compare/compare(): [THROW_ID_06*]" });
-
-  // edge case when hungryForWhitespace=true, matchStrictly=true and matching against blank object:
   if (
     opts.hungryForWhitespace &&
     opts.matchStrictly &&
@@ -113,8 +100,6 @@ function compare(bo, so, originalOpts) {
   ) {
     return true;
   }
-
-  // instant (falsey) result
   if (
     ((!opts.hungryForWhitespace ||
       (opts.hungryForWhitespace && !empty(bo) && empty(so))) &&
@@ -127,9 +112,6 @@ function compare(bo, so, originalOpts) {
   ) {
     return false;
   }
-
-  // A C T I O N
-
   if (isStr(b) && isStr(s)) {
     if (opts.hungryForWhitespace && empty(b) && empty(s)) {
       return true;
@@ -169,7 +151,6 @@ function compare(bo, so, originalOpts) {
       if (b.length === 0) {
         return true;
       }
-      // so b is not zero-long, but s is.
       if (opts.verboseWhenMismatches) {
         return `The given array has no elements, but the array on the other end, ${JSON.stringify(
           b,
@@ -219,17 +200,14 @@ function compare(bo, so, originalOpts) {
               4
             )}.`
           : "";
-
       const uniqueKeysOnB = pullAll(clone(bKeys), clone(sKeys));
       const bMessage =
         uniqueKeysOnB.length > 0
           ? `Second object has unique keys:
         ${JSON.stringify(uniqueKeysOnB, null, 4)}.`
           : "";
-
       return `When matching strictly, we found that both objects have different amount of keys. ${sMessage} ${bMessage}`;
     }
-
     for (let i = 0, len = sKeys.length; i < len; i++) {
       if (!existy(b[sKeys[i]])) {
         if (
@@ -242,13 +220,12 @@ function compare(bo, so, originalOpts) {
           return `The given object has key ${
             sKeys[i]
           } which the other-one does not have.`;
-        } // so wildcards are on and sKeys[i] contains a wildcard
+        }
         else if (
           Object.keys(b).some(bKey =>
             matcher.isMatch(bKey, sKeys[i], { caseSensitive: true })
           )
         ) {
-          // so some keys do match. Return true
           return true;
         }
         if (!opts.verboseWhenMismatches) {
@@ -282,9 +259,6 @@ function compare(bo, so, originalOpts) {
         existy(b[sKeys[i]]) &&
         typeDetect(b[sKeys[i]]) !== typeDetect(s[sKeys[i]])
       ) {
-        // Types mismatch. Probably falsey result, unless comparing with
-        // empty/blank things. Let's check.
-        // it might be blank array vs blank object:
         if (
           !(
             empty(b[sKeys[i]]) &&
@@ -302,7 +276,6 @@ function compare(bo, so, originalOpts) {
           )}, on the second-one, it's ${typeDetect(b[sKeys[i]])}`;
         }
       }
-      // so key does exist and type matches
       else if (compare(b[sKeys[i]], s[sKeys[i]], opts) !== true) {
         if (!opts.verboseWhenMismatches) {
           return false;

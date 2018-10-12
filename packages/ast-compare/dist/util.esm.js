@@ -1,9 +1,6 @@
 import type from 'type-detect';
 
-/* eslint max-len:0 */
-
 const isArr = Array.isArray;
-
 function existy(x) {
   return x != null;
 }
@@ -31,7 +28,6 @@ function isBlank(something) {
   return false;
 }
 function isTheTypeLegit(something) {
-  // same as JSON spec:
   return (
     isObj(something) ||
     isStr(something) ||

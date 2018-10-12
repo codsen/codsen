@@ -36,7 +36,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-compare.cjs.js` | 9 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 31 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 33 KB |
 
 **[⬆ back to top](#markdown-header-ast-compare)**
 
