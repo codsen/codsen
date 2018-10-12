@@ -176,6 +176,7 @@
     "@babel/register": "^7.0.0",
     "ava": "1.0.0-beta.8",
     "babel-plugin-istanbul": "^5.0.1",
+    "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-plugin-ava": "latest",
