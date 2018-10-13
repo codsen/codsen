@@ -46,6 +46,11 @@
     "await": true,
     "cjs": true
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
   "keywords": [
     "plain",
     "object",
@@ -187,7 +192,7 @@
     "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
-    "husky": "latest",
+    "husky": "^1.1.2",
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
