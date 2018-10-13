@@ -7,32 +7,19 @@ import astCompare from 'ast-compare';
 import traverse from 'ast-monkey-traverse';
 export { default as traverse } from 'ast-monkey-traverse';
 
-/* eslint no-param-reassign:0, no-console:0, max-len:0 */
-
-// import isEqual from 'lodash.isequal'
-// import matcher from 'matcher'
-
-// -----------------------------------------------------------------------------
-
 function existy(x) {
   return x != null;
 }
 function notUndef(x) {
   return x !== undefined;
 }
-// function isStr(x) { return typeof x === 'string' }
 function compareIsEqual(a, b) {
   if (types(a) !== types(b)) {
     return false;
   }
   return astCompare(a, b, { matchStrictly: true, useWildcards: true });
 }
-
-// -----------------------------------------------------------------------------
-
 function monkey(inputOriginal, opts) {
-  // -----------------------------------
-  // precautions
   if (!existy(inputOriginal)) {
     throw new Error("ast-monkey/main.js/monkey(): Please provide an input");
   }
@@ -44,25 +31,19 @@ function monkey(inputOriginal, opts) {
     },
     opts
   );
-  // ---------------------------------------------------------------------------
-  // action
-
   if (opts.mode === "info") ;
   const data = { count: 0, gatherPath: [], finding: null };
   const findings = [];
-
-  let ko = false; // key only
-  let vo = false; // value only
+  let ko = false;
+  let vo = false;
   if (existy(opts.key) && !notUndef(opts.val)) {
     ko = true;
   }
   if (!existy(opts.key) && notUndef(opts.val)) {
     vo = true;
   }
-
   if (opts.mode === "info") ;
   if (opts.mode === "info") ;
-
   if (
     opts.mode === "arrayFirstOnly" &&
     Array.isArray(input) &&
@@ -70,11 +51,6 @@ function monkey(inputOriginal, opts) {
   ) {
     input = [input[0]];
   }
-
-  //
-  //
-  //
-
   input = traverse(input, (key, val, innerObj) => {
     let temp;
     data.count += 1;
@@ -95,10 +71,9 @@ function monkey(inputOriginal, opts) {
       }
     } else if (opts.mode === "find" || opts.mode === "del") {
       if (
-        // opts.only satisfied
         (opts.only === "any" ||
           (opts.only === "array" && val === undefined) ||
-          (opts.only === "object" && val !== undefined)) && // match
+          (opts.only === "object" && val !== undefined)) &&
         ((ko && compareIsEqual(key, opts.key)) ||
           (vo && compareIsEqual(val, opts.val)) ||
           (!ko &&
@@ -110,18 +85,16 @@ function monkey(inputOriginal, opts) {
           temp = {};
           temp.index = data.count;
           temp.key = key;
-          temp.val = val; // can be also undefined!
+          temp.val = val;
           temp.path = clone(data.gatherPath);
           findings.push(temp);
         } else {
-          // del() then!
           return NaN;
         }
       } else {
         return val !== undefined ? val : key;
       }
     }
-
     if (opts.mode === "info") ;
     if (opts.mode === "set" && data.count === opts.index) {
       return opts.val;
@@ -137,8 +110,6 @@ function monkey(inputOriginal, opts) {
     }
     return val !== undefined ? val : key;
   });
-
-  // returns
   if (opts.mode === "get") {
     return data.finding;
   } else if (opts.mode === "find") {
@@ -146,10 +117,6 @@ function monkey(inputOriginal, opts) {
   }
   return input;
 }
-
-// -----------------------------------------------------------------------------
-// Validate and prep all the options right here
-
 function find(input, opts) {
   if (!notUndef(opts.key) && !notUndef(opts.val)) {
     throw new Error(
@@ -173,7 +140,6 @@ function find(input, opts) {
   }
   return monkey(input, Object.assign({}, opts, { mode: "find" }));
 }
-
 function get(input, opts) {
   if (!existy(opts.index)) {
     throw new Error("ast-monkey/main.js/get(): Please provide opts.index");
@@ -203,7 +169,6 @@ function get(input, opts) {
   }
   return monkey(input, Object.assign({}, opts, { mode: "get" }));
 }
-
 function set(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
     throw new Error("ast-monkey/main.js/set(): Please provide opts.val");
@@ -240,7 +205,6 @@ function set(input, opts) {
   });
   return monkey(input, Object.assign({}, opts, { mode: "set" }));
 }
-
 function drop(input, opts) {
   if (!existy(opts.index)) {
     throw new Error("ast-monkey/main.js/drop(): Please provide opts.index");
@@ -270,11 +234,9 @@ function drop(input, opts) {
   });
   return monkey(input, Object.assign({}, opts, { mode: "drop" }));
 }
-
 function info(input) {
   return monkey(input, { mode: "info" });
 }
-
 function del(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
     throw new Error(
@@ -298,7 +260,6 @@ function del(input, opts) {
   }
   return monkey(input, Object.assign({}, opts, { mode: "del" }));
 }
-
 function arrayFirstOnly(input) {
   return monkey(input, { mode: "arrayFirstOnly" });
 }

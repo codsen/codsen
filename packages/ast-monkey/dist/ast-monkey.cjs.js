@@ -12,32 +12,22 @@ var isNaturalNumber = _interopDefault(require('is-natural-number'));
 var astCompare = _interopDefault(require('ast-compare'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
-/* eslint no-param-reassign:0, no-console:0, max-len:0 */
-
-// import isEqual from 'lodash.isequal'
-// import matcher from 'matcher'
-
-// -----------------------------------------------------------------------------
-
 function existy(x) {
   return x != null;
 }
 function notUndef(x) {
   return x !== undefined;
 }
-// function isStr(x) { return typeof x === 'string' }
 function compareIsEqual(a, b) {
   if (types(a) !== types(b)) {
     return false;
   }
-  return astCompare(a, b, { matchStrictly: true, useWildcards: true });
+  return astCompare(a, b, {
+    matchStrictly: true,
+    useWildcards: true
+  });
 }
-
-// -----------------------------------------------------------------------------
-
 function monkey(inputOriginal, opts) {
-  // -----------------------------------
-  // precautions
   if (!existy(inputOriginal)) {
     throw new Error("ast-monkey/main.js/monkey(): Please provide an input");
   }
@@ -46,35 +36,28 @@ function monkey(inputOriginal, opts) {
     key: null,
     val: undefined
   }, opts);
-  // ---------------------------------------------------------------------------
-  // action
-
   if (opts.mode === "info") ;
-  var data = { count: 0, gatherPath: [], finding: null };
+  var data = {
+    count: 0,
+    gatherPath: [],
+    finding: null
+  };
   var findings = [];
-
-  var ko = false; // key only
-  var vo = false; // value only
+  var ko = false;
+  var vo = false;
   if (existy(opts.key) && !notUndef(opts.val)) {
     ko = true;
   }
   if (!existy(opts.key) && notUndef(opts.val)) {
     vo = true;
   }
-
   if (opts.mode === "info") ;
   if (opts.mode === "info") ;
-
   if (opts.mode === "arrayFirstOnly" && Array.isArray(input) && input.length > 0) {
     input = [input[0]];
   }
-
-  //
-  //
-  //
-
   input = traverse(input, function (key, val, innerObj) {
-    var temp = void 0;
+    var temp;
     data.count += 1;
     if (opts.mode === "info") ;
     if (opts.mode === "info") ;
@@ -93,25 +76,22 @@ function monkey(inputOriginal, opts) {
       }
     } else if (opts.mode === "find" || opts.mode === "del") {
       if (
-      // opts.only satisfied
-      (opts.only === "any" || opts.only === "array" && val === undefined || opts.only === "object" && val !== undefined) && ( // match
+      (opts.only === "any" || opts.only === "array" && val === undefined || opts.only === "object" && val !== undefined) && (
       ko && compareIsEqual(key, opts.key) || vo && compareIsEqual(val, opts.val) || !ko && !vo && compareIsEqual(key, opts.key) && compareIsEqual(val, opts.val))) {
         if (opts.mode === "find") {
           temp = {};
           temp.index = data.count;
           temp.key = key;
-          temp.val = val; // can be also undefined!
+          temp.val = val;
           temp.path = clone(data.gatherPath);
           findings.push(temp);
         } else {
-          // del() then!
           return NaN;
         }
       } else {
         return val !== undefined ? val : key;
       }
     }
-
     if (opts.mode === "info") ;
     if (opts.mode === "set" && data.count === opts.index) {
       return opts.val;
@@ -127,8 +107,6 @@ function monkey(inputOriginal, opts) {
     }
     return val !== undefined ? val : key;
   });
-
-  // returns
   if (opts.mode === "get") {
     return data.finding;
   } else if (opts.mode === "find") {
@@ -136,10 +114,6 @@ function monkey(inputOriginal, opts) {
   }
   return input;
 }
-
-// -----------------------------------------------------------------------------
-// Validate and prep all the options right here
-
 function find(input, opts) {
   if (!notUndef(opts.key) && !notUndef(opts.val)) {
     throw new Error("ast-monkey/main.js/find(): Please provide opts.key or opts.val");
@@ -159,18 +133,21 @@ function find(input, opts) {
   } else {
     opts.only = "any";
   }
-  return monkey(input, Object.assign({}, opts, { mode: "find" }));
+  return monkey(input, Object.assign({}, opts, {
+    mode: "find"
+  }));
 }
-
 function get(input, opts) {
   if (!existy(opts.index)) {
     throw new Error("ast-monkey/main.js/get(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {
+      includeZero: true
+    })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: " + opts.index);
+      throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   }
   checkTypes(opts, null, {
@@ -178,12 +155,15 @@ function get(input, opts) {
       index: "number"
     }
   });
-  if (!isNaturalNumber(opts.index, { includeZero: true })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: " + opts.index);
+  if (!isNaturalNumber(opts.index, {
+    includeZero: true
+  })) {
+    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
-  return monkey(input, Object.assign({}, opts, { mode: "get" }));
+  return monkey(input, Object.assign({}, opts, {
+    mode: "get"
+  }));
 }
-
 function set(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
     throw new Error("ast-monkey/main.js/set(): Please provide opts.val");
@@ -192,13 +172,17 @@ function set(input, opts) {
     throw new Error("ast-monkey/main.js/set(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {
+      includeZero: true
+    })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: " + opts.index);
+      throw new Error("ast-monkey/main.js/set(): opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
-  } else if (!isNaturalNumber(opts.index, { includeZero: true })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: " + opts.index);
+  } else if (!isNaturalNumber(opts.index, {
+    includeZero: true
+  })) {
+    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   if (existy(opts.key) && !notUndef(opts.val)) {
     opts.val = opts.key;
@@ -210,35 +194,42 @@ function set(input, opts) {
       index: "number"
     }
   });
-  return monkey(input, Object.assign({}, opts, { mode: "set" }));
+  return monkey(input, Object.assign({}, opts, {
+    mode: "set"
+  }));
 }
-
 function drop(input, opts) {
   if (!existy(opts.index)) {
     throw new Error("ast-monkey/main.js/drop(): Please provide opts.index");
   }
   if (typeof opts.index === "string") {
-    if (isNaturalNumber(parseFloat(opts.index, 10), { includeZero: true })) {
+    if (isNaturalNumber(parseFloat(opts.index, 10), {
+      includeZero: true
+    })) {
       opts.index = parseInt(opts.index, 10);
     } else {
-      throw new Error("ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: " + opts.index);
+      throw new Error("ast-monkey/main.js/drop(): opts.index must be a natural number. It was given as: ".concat(opts.index));
     }
   }
-  if (!isNaturalNumber(opts.index, { includeZero: true })) {
-    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: " + opts.index);
+  if (!isNaturalNumber(opts.index, {
+    includeZero: true
+  })) {
+    throw new Error("ast-monkey/main.js/get(): opts.index must be a natural number. It was given as: ".concat(opts.index));
   }
   checkTypes(opts, null, {
     schema: {
       index: "number"
     }
   });
-  return monkey(input, Object.assign({}, opts, { mode: "drop" }));
+  return monkey(input, Object.assign({}, opts, {
+    mode: "drop"
+  }));
 }
-
 function info(input) {
-  return monkey(input, { mode: "info" });
+  return monkey(input, {
+    mode: "info"
+  });
 }
-
 function del(input, opts) {
   if (!existy(opts.key) && !notUndef(opts.val)) {
     throw new Error("ast-monkey/main.js/del(): Please provide opts.key or opts.val");
@@ -258,11 +249,14 @@ function del(input, opts) {
   } else {
     opts.only = "any";
   }
-  return monkey(input, Object.assign({}, opts, { mode: "del" }));
+  return monkey(input, Object.assign({}, opts, {
+    mode: "del"
+  }));
 }
-
 function arrayFirstOnly(input) {
-  return monkey(input, { mode: "arrayFirstOnly" });
+  return monkey(input, {
+    mode: "arrayFirstOnly"
+  });
 }
 
 exports.traverse = traverse;

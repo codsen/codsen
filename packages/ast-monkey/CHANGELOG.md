@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.6.0] - 2018-10-13
+
+- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+
 ## [7.5.0] - 2018-06-10
 
 - ✨ Moved to BitBucket. GitHub sold us out.
@@ -283,7 +287,7 @@ BREAKING API CHANGES.
 [2.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.5.0%0Dv2.4.0#diff
 [2.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.6.0%0Dv2.5.0#diff
 [2.7.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.7.0%0Dv2.6.0#diff
-[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.5.1#diff
+[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.5.2#diff
 [2.9.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.9.0%0Dv2.7.0#diff
 [3.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.0.0%0Dv2.9.0#diff
 [3.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.1.0%0Dv3.0.1#diff
@@ -303,8 +307,9 @@ BREAKING API CHANGES.
 [6.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.4.0%0Dv6.3.2#diff
 [7.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.0.0%0Dv6.4.4#diff
 [7.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.1.0%0Dv7.0.1#diff
-[v4]: https://bitbucket.org/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [7.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.2.0%0Dv7.1.6#diff
+[v4]: https://bitbucket.org/codsen/ast-monkey/compare/v3.3.0...v4.0.0
 [7.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.3.0%0Dv7.2.5#diff
 [7.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.4.0%0Dv7.3.4#diff
 [7.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.5.0%0Dv7.4.3#diff
+[7.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.6.0%0Dv7.5.2#diff
