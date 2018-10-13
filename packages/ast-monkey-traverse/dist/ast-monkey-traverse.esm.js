@@ -1,10 +1,7 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-/* eslint no-param-reassign:0 */
-
 const isArr = Array.isArray;
-
 function trimFirstDot(str) {
   if (typeof str === "string" && str.length > 0 && str[0] === ".") {
     return str.slice(1);
@@ -15,12 +12,8 @@ function existy(x) {
   return x != null;
 }
 function astMonkeyTraverse(tree1, cb1) {
-  //
-  // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
-  //
   function traverseInner(treeOriginal, callback, innerObj) {
     const tree = clone(treeOriginal);
-
     let i;
     let len;
     let res;
@@ -33,7 +26,6 @@ function astMonkeyTraverse(tree1, cb1) {
         const path = `${innerObj.path}.${i}`;
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
-          // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
             callback(
               tree[i],

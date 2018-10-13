@@ -5,10 +5,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
-/* eslint no-param-reassign:0 */
-
 var isArr = Array.isArray;
-
 function trimFirstDot(str) {
   if (typeof str === "string" && str.length > 0 && str[0] === ".") {
     return str.slice(1);
@@ -19,26 +16,28 @@ function existy(x) {
   return x != null;
 }
 function astMonkeyTraverse(tree1, cb1) {
-  //
-  // traverseInner() needs a wrapper to shield the internal last argument and simplify external API.
-  //
   function traverseInner(treeOriginal, callback, innerObj) {
     var tree = clone(treeOriginal);
-
-    var i = void 0;
-    var len = void 0;
-    var res = void 0;
-    var allKeys = void 0;
-    var key = void 0;
-    innerObj = Object.assign({ depth: -1, path: "" }, innerObj);
+    var i;
+    var len;
+    var res;
+    var allKeys;
+    var key;
+    innerObj = Object.assign({
+      depth: -1,
+      path: ""
+    }, innerObj);
     innerObj.depth += 1;
     if (isArr(tree)) {
       for (i = 0, len = tree.length; i < len; i++) {
-        var path = innerObj.path + "." + i;
+        var path = "".concat(innerObj.path, ".").concat(i);
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
-          // innerObj.path = `${innerObj.path}[${i}]`
-          res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, { path: trimFirstDot(path) })), callback, Object.assign({}, innerObj, { path: trimFirstDot(path) }));
+          res = traverseInner(callback(tree[i], undefined, Object.assign({}, innerObj, {
+            path: trimFirstDot(path)
+          })), callback, Object.assign({}, innerObj, {
+            path: trimFirstDot(path)
+          }));
           if (Number.isNaN(res) && i < tree.length) {
             tree.splice(i, 1);
             i -= 1;
@@ -53,12 +52,16 @@ function astMonkeyTraverse(tree1, cb1) {
       allKeys = Object.keys(tree);
       for (i = 0, len = allKeys.length; i < len; i++) {
         key = allKeys[i];
-        var _path = innerObj.path + "." + key;
+        var _path = "".concat(innerObj.path, ".").concat(key);
         if (innerObj.depth === 0 && existy(key)) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
-        res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, { path: trimFirstDot(_path) })), callback, Object.assign({}, innerObj, { path: trimFirstDot(_path) }));
+        res = traverseInner(callback(key, tree[key], Object.assign({}, innerObj, {
+          path: trimFirstDot(_path)
+        })), callback, Object.assign({}, innerObj, {
+          path: trimFirstDot(_path)
+        }));
         if (Number.isNaN(res)) {
           delete tree[key];
         } else {
