@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2018-10-13
+
+- 💥 BREAKING CHANGES - if you use schema and "blanket" values "any" or "whatever" for any paths, now that will apply to all children nodes of that path.
+
+For example, if you have options object:
+
+```js
+{
+  oodles: {
+    enabled: true;
+  }
+}
+```
+
+and if you use `check-types-mini` to check its types and if you pass the following options object to `check-types-mini`:
+
+```js
+{
+  schema: {
+    oodles: "any";
+  }
+}
+```
+
+then, both paths `oodles` and `oodles.enabled` will not be checked. Previously, you had to explicitly instruct each children node to be skipped OR those children nodes had to be referenced in defaults. I found that tedious and in come cases, impossible to solve - sometimes random nested value might be passed in the options as _something to be written_. Then, it's impossible to anticipate what keys/paths user has gave.
+
+Technically, this is a breaking change, warranting **a major semver release**.
+
 ## [4.1.0] - 2018-08-23
 
 - ✨ Implemented [matcher](https://www.npmjs.com/package/matcher) on `opts.ignorePaths` and `opts.ignoreKeys`. Now we can use wildcards in both.
@@ -188,3 +216,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [3.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.4.0%0Dv3.3.1#diff
 [4.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.0.0%0Dv3.4.4#diff
 [4.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.1.0%0Dv4.0.0#diff
+[5.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v5.0.0%0Dv4.1.1#diff
