@@ -2,23 +2,17 @@ import empty from 'ast-contains-only-empty-space';
 import isString from 'lodash.isstring';
 import isPlainObject from 'lodash.isplainobject';
 
-/* eslint no-param-reassign:0 */
-
 function looseCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
   }
   let i;
   let len;
-  // precautions
   if (res === undefined) {
-    // means original cycle, function is called first time from outside
     if (!existy(bigObj) || !existy(smallObj)) {
       return undefined;
     }
   } else if (!existy(bigObj) || !existy(smallObj)) {
-    // means it's inner cycle, outside doesn't use res
-    // false because it's for recursion
     return false;
   }
   res = res || true;
@@ -28,7 +22,6 @@ function looseCompare(bigObj, smallObj, res) {
     }
     return false;
   }
-  // if both are arrays
   if (Array.isArray(bigObj) && Array.isArray(smallObj)) {
     if (smallObj.length > 0) {
       for (i = 0, len = smallObj.length; i < len; i++) {
@@ -56,7 +49,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else if (isPlainObject(bigObj) && isPlainObject(smallObj)) {
-    // if both are plain objects
     if (Object.keys(smallObj).length > 0) {
       const keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
@@ -88,7 +80,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else if (isString(bigObj) && isString(smallObj)) {
-    // if both are strings
     if (bigObj !== smallObj) {
       if (empty(smallObj) && empty(bigObj)) {
         return true;
@@ -97,7 +88,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else {
-    // or if both are empty
     if (empty(smallObj) && empty(bigObj)) {
       return true;
     }

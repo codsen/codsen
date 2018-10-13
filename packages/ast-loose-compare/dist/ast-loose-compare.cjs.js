@@ -6,33 +6,40 @@ var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var isString = _interopDefault(require('lodash.isstring'));
 var isPlainObject = _interopDefault(require('lodash.isplainobject'));
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 
 function looseCompare(bigObj, smallObj, res) {
   function existy(x) {
     return x != null;
   }
-  var i = void 0;
-  var len = void 0;
-  // precautions
+  var i;
+  var len;
   if (res === undefined) {
-    // means original cycle, function is called first time from outside
     if (!existy(bigObj) || !existy(smallObj)) {
       return undefined;
     }
   } else if (!existy(bigObj) || !existy(smallObj)) {
-    // means it's inner cycle, outside doesn't use res
-    // false because it's for recursion
     return false;
   }
   res = res || true;
-  if ((typeof bigObj === "undefined" ? "undefined" : _typeof(bigObj)) !== (typeof smallObj === "undefined" ? "undefined" : _typeof(smallObj))) {
+  if (_typeof(bigObj) !== _typeof(smallObj)) {
     if (empty(bigObj) && empty(smallObj)) {
       return true;
     }
     return false;
   }
-  // if both are arrays
   if (Array.isArray(bigObj) && Array.isArray(smallObj)) {
     if (smallObj.length > 0) {
       for (i = 0, len = smallObj.length; i < len; i++) {
@@ -57,7 +64,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else if (isPlainObject(bigObj) && isPlainObject(smallObj)) {
-    // if both are plain objects
     if (Object.keys(smallObj).length > 0) {
       var keysArr = Object.keys(smallObj);
       for (i = 0, len = keysArr.length; i < len; i++) {
@@ -81,7 +87,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else if (isString(bigObj) && isString(smallObj)) {
-    // if both are strings
     if (bigObj !== smallObj) {
       if (empty(smallObj) && empty(bigObj)) {
         return true;
@@ -90,7 +95,6 @@ function looseCompare(bigObj, smallObj, res) {
       return false;
     }
   } else {
-    // or if both are empty
     if (empty(smallObj) && empty(bigObj)) {
       return true;
     }
