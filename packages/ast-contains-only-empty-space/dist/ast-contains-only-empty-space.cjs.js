@@ -6,15 +6,12 @@ var trim = _interopDefault(require('lodash.trim'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var traverse = _interopDefault(require('ast-monkey-traverse'));
 
-/* eslint no-param-reassign:0 */
-
 function containsOnlyEmptySpace(input) {
   function isStr(something) {
     return typeof something === "string";
   }
   var isArr = Array.isArray;
   var found = true;
-
   if (!isArr(input) && !isObj(input) && !isStr(input)) {
     return false;
   } else if (isStr(input)) {
@@ -27,7 +24,6 @@ function containsOnlyEmptySpace(input) {
     }
     return current;
   });
-
   return found;
 }
 

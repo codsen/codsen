@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.0] - 2018-10-13
+
+- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+
 ## [1.3.0] - 2018-06-13
 
 GitHub sold us out. In the meantime, we:
@@ -34,6 +38,7 @@ GitHub sold us out. In the meantime, we:
 
 - First public release
 
+[1.4.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.4.0%0Dv1.3.3#diff
 [1.3.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.3.0%0Dv1.2.2#diff
 [1.2.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.2.0%0Dv1.1.1#diff
 [1.1.0]: https://bitbucket.org/codsen/ast-contains-only-empty-space/branches/compare/v1.1.0%0Dv1.0.2#diff
