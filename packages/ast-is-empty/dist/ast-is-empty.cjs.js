@@ -5,8 +5,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function isEmpty(input) {
-  var i = void 0;
-  var len = void 0;
+  var i;
+  var len;
   var res = true;
   if (Array.isArray(input)) {
     if (input.length === 0) {
