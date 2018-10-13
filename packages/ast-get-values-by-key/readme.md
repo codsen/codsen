@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -29,9 +30,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-get-values-by-key.cjs.js` | 1 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-get-values-by-key.esm.js` | 1 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-get-values-by-key.umd.js` | 11 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ast-get-values-by-key.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-get-values-by-key.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-get-values-by-key.umd.js` | 12 KB |
 
 **[⬆ back to top](#markdown-header-ast-get-values-by-key)**
 
@@ -118,6 +119,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/ast-get-values-by-key
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/ast-get-values-by-key
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ast-get-values-by-key/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/ast-get-values-by-key?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-get-values-by-key
 [downloads-img]: https://img.shields.io/npm/dm/ast-get-values-by-key.svg?style=flat-square

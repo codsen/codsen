@@ -28,7 +28,7 @@
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -160,9 +160,18 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": [],
+      "devDependencies": [
+        "object-path"
+      ],
       "travisVersionsOverride": []
     }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
   },
   "dependencies": {
     "ast-monkey-traverse": "^1.3.3",
@@ -170,10 +179,11 @@
     "matcher": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.0",
+    "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
     "ava": "1.0.0-beta.8",
-    "codacy-coverage": "latest",
+    "babel-plugin-istanbul": "^5.0.1",
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
@@ -183,17 +193,16 @@
     "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
-    "esm": "latest",
     "husky": "latest",
     "nyc": "latest",
-    "object-path": "^0.11.4",
+    "object-path": "latest",
     "prettier": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-cleanup": "^3.0.0",
-    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-strip": "^1.1.1",
+    "rollup-plugin-strip": "^1.2.0",
     "rollup-plugin-terser": "^3.0.0"
   }
 }
