@@ -168,8 +168,16 @@ function checkTypesMini(
       );
     }
   }
+  const blanketPathsArr = [];
   traverse(obj, (key, val, innerObj) => {
     const current = val !== undefined ? val : key;
+    if (
+      isArr(blanketPathsArr) &&
+      blanketPathsArr.length &&
+      blanketPathsArr.some(path => innerObj.path.startsWith(path))
+    ) {
+      return current;
+    }
     if (
       opts.enforceStrictKeyset &&
       !(!isObj(current) && !isArr(current) && isArr(innerObj.parent)) &&
@@ -263,6 +271,8 @@ function checkTypesMini(
             );
           }
         }
+      } else {
+        blanketPathsArr.push(innerObj.path);
       }
     } else if (
       existy(ref) &&

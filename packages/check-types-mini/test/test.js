@@ -2309,7 +2309,7 @@ test(`04.05 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings 
     );
   });
 
-  const err3 = t.throws(() => {
+  t.notThrows(() => {
     checkTypes(
       {
         option1: { somekey: null },
@@ -2327,10 +2327,6 @@ test(`04.05 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings 
       }
     );
   });
-  t.is(
-    err3.message,
-    'check-types-mini: opts.option1.somekey was customised to "null" which is not string but null'
-  );
 });
 
 test(`04.06 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to reference object`, t => {
@@ -2600,4 +2596,63 @@ test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, t => {
     err1.message,
     'json-variables/jsonVariables(): [THROW_ID_04*]: opts.wrapTailsWith was customised to "false" which is not string but boolean'
   );
+});
+
+test(`04.10 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`, t => {
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: { somekey: { anotherlevel: "setting1" } },
+        option2: null
+      },
+      {
+        option1: { somekey: "zz" },
+        option2: "yy"
+      },
+      {
+        schema: {
+          option1: "any", // <------ !
+          option2: "whatever"
+        }
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: { somekey: { anotherlevel: "setting1" } },
+        option2: null
+      },
+      {
+        option1: { somekey: "zz" },
+        option2: "yy"
+      },
+      {
+        schema: {
+          "option1.somekey": "any", // <------ !
+          option2: "whatever"
+        }
+      }
+    );
+  });
+
+  // t.notThrows(() => {
+  //   checkTypes(
+  //     {
+  //       option1: { somekey: { anotherlevel: "setting1" } },
+  //       option2: null
+  //     },
+  //     {
+  //       option1: { somekey: "zz" },
+  //       option2: "yy"
+  //     },
+  //     {
+  //       schema: {
+  //         option1: { somekey: "any" }, // <------ !
+  //         option2: "whatever"
+  //       }
+  //     }
+  //   );
+  // });
 });

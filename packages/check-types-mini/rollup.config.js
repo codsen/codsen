@@ -32,7 +32,6 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-monkey-traverse",
         "lodash.intersection",
@@ -56,7 +55,6 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "array-pull-all-with-glob",
         "arrayiffy-if-string",
         "ast-monkey-traverse",
         "lodash.intersection",
