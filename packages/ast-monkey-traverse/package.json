@@ -187,7 +187,7 @@
     "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
-    "husky": "latest",
+    "husky": "^1.1.2",
     "lodash.isequal": "latest",
     "nyc": "latest",
     "object-path": "latest",
