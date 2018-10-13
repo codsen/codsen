@@ -12,7 +12,6 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
   function existy(x) {
     return x != null;
   }
-
   if (!existy(originalInput)) {
     throw new Error("ast-delete-object/deleteObj(): Missing input!");
   }
@@ -22,27 +21,23 @@ function deleteObj(originalInput, originalObjToDelete, originalOpts) {
   if (existy(originalOpts) && !isObj(originalOpts)) {
     throw new Error("ast-delete-object/deleteObj(): Third argument, options object, must be an object!");
   }
-
   var defaults = {
     matchKeysStrictly: false,
     hungryForWhitespace: false
   };
   var opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, { msg: "ast-delete-object/deleteObj():" });
-
+  checkTypes(opts, defaults, {
+    msg: "ast-delete-object/deleteObj():"
+  });
   var input = clone(originalInput);
   var objToDelete = clone(originalObjToDelete);
-  var current = void 0;
-
-  // compare input itself
+  var current;
   if (compare(input, objToDelete, {
     hungryForWhitespace: opts.hungryForWhitespace,
     matchStrictly: opts.matchKeysStrictly
   })) {
     return {};
   }
-
-  // traversal
   input = traverse(input, function (key, val) {
     current = val !== undefined ? val : key;
     if (isObj(current)) {
