@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.12.0] - 2018-10-14
 
+- ✨ Set up file writing to be atomic
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
 
 ## [1.11.0] - 2018-07-24
