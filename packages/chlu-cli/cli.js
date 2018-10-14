@@ -5,10 +5,12 @@
 const meow = require("meow");
 const chlu = require("chlu");
 const fs = require("fs-extra");
+const writeFileAtomic = require("write-file-atomic");
 const git = require("simple-git/promise");
+const pify = require("pify");
 
 const pack = "./package.json";
-const change = "./changelog.md";
+const changeLogFile = "./changelog.md";
 const updateNotifier = require("update-notifier");
 
 const { log } = console;
@@ -50,9 +52,9 @@ updateNotifier({ pkg: cli.pkg }).notify();
 
   let changelogData;
   try {
-    changelogData = await fs.readFile(change, "utf8");
+    changelogData = await fs.readFile(changeLogFile, "utf8");
     // console.log(
-    //   `55 CHLU CLI: ${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `057 CHLU CLI: ${`\u001b[${33}m${`changelogData`}\u001b[${39}m`} = ${JSON.stringify(
     //     changelogData,
     //     null,
     //     4
@@ -78,7 +80,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
     }
   }
   // console.log(
-  //   `81 CHLU CLI: ${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `083 CHLU CLI: ${`\u001b[${33}m${`packageData`}\u001b[${39}m`} = ${JSON.stringify(
   //     packageData,
   //     null,
   //     4
@@ -100,7 +102,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
     }
   }
   // console.log(
-  //   `103 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `105 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
   //     gitData,
   //     null,
   //     4
@@ -110,13 +112,20 @@ updateNotifier({ pkg: cli.pkg }).notify();
   //                                4.
 
   try {
-    await fs
-      .writeFile(change, chlu(changelogData, gitData, packageData), "utf8")
-      .then(() => {
-        if (cli.flags.loud) {
-          log(`${messagePrefix} ${`\u001b[${32}m${`OK.`}\u001b[${39}m`}`);
-        }
-      });
+    const contentToWrite = chlu(changelogData, gitData, packageData);
+    // insurance against writing empty file:
+    if (
+      !contentToWrite ||
+      typeof contentToWrite !== "string" ||
+      !contentToWrite.length
+    ) {
+      process.exit(0);
+    }
+    await pify(writeFileAtomic)(changeLogFile, contentToWrite).then(() => {
+      if (cli.flags.loud) {
+        log(`${messagePrefix} ${`\u001b[${32}m${`OK.`}\u001b[${39}m`}`);
+      }
+    });
   } catch (e) {
     log(
       `${messagePrefix}[ID_4] Alas! We couldn't write the changelog.md!\n${e}`
