@@ -13,20 +13,10 @@ import includes from 'lodash.includes';
 import min from 'lodash.min';
 import dd from 'dehumanize-date';
 
-/* eslint prefer-destructuring:0, no-param-reassign:0 */
-
 const emojiRegex = emojiRegexLib();
-
-// REGEXES
-// -----------------------------------------------------------------------------
-
 const versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g;
 const versionWithoutBracketsRegex = /v?\d+\.\d+(\.\d+)*/g;
 const versionWithoutBracketsRegexNoVersion = /\d+\.\d+(\.\d+)*/g;
-
-// FUNCTIONS
-// -----------------------------------------------------------------------------
-
 function existy(x) {
   return x != null;
 }
@@ -45,7 +35,6 @@ function aContainsB(a, b) {
   }
   return a.indexOf(b) >= 0;
 }
-
 function isFooterLink(str) {
   if (str === undefined) {
     return false;
@@ -60,10 +49,6 @@ function isFooterLink(str) {
     aContainsB(str, "]:")
   );
 }
-
-// Is current string (line as input one-by-one) a title?
-// For example, "## [1.2.0] - 2017-04-24" is.
-// For example, "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0" is not
 function isTitle(str) {
   if (str === undefined) {
     return false;
@@ -92,14 +77,12 @@ function isTitle(str) {
     str.includes("#")
   );
 }
-
 function getTitlesAndFooterLinks(linesArr) {
   const titles = [];
   const footerLinks = [];
   let i;
   let len;
   let temp;
-
   for (i = 0, len = linesArr.length; i < len; i++) {
     if (isTitle(linesArr[i])) {
       const firstEncounteredVersion = linesArr[i].match(
@@ -127,9 +110,7 @@ function getTitlesAndFooterLinks(linesArr) {
     footerLinks
   };
 }
-
 function getPreviousVersion(currVers, originalVersionsArr) {
-  // removes leading "v" and "v."
   function prep(str = "") {
     if (str.startsWith("v")) {
       if (str[1] === ".") {
@@ -139,7 +120,6 @@ function getPreviousVersion(currVers, originalVersionsArr) {
     }
     return str;
   }
-
   if (arguments.length < 2) {
     throw new Error(
       "chlu/util.js/getPreviousVersion(): [THROW_ID_03] There must be two arguments, string and an array."
@@ -157,22 +137,17 @@ function getPreviousVersion(currVers, originalVersionsArr) {
       `chlu/util.js/getPreviousVersion(): [THROW_ID_05] The second argument must be an array. Currently it's ${typeof originalVersionsArr} equal to:\nJSON.stringify(originalVersionsArr, null, 4)`
     );
   }
-
   const versionsArr = clone(originalVersionsArr)
     .map(val => prep(val))
     .sort(semverCompare);
-  // first, check if it's the first version from the versions array.
-  // in that case, there's no previous version, so we return null:
   if (currVers === versionsArr[0]) {
     return null;
   }
-  // next, iterate versions array and try to get the previous version:
   for (let i = 0, len = versionsArr.length; i < len; i++) {
     if (versionsArr[i] === currVers && existy(versionsArr[i - 1])) {
       return versionsArr[i - 1];
     }
   }
-  // if nothing was found yet, throw:
   throw new Error(
     `chlu/util.js/getPreviousVersion(): [THROW_ID_06] The given version (${currVers}) is not in the versions array (${JSON.stringify(
       versionsArr,
@@ -181,7 +156,6 @@ function getPreviousVersion(currVers, originalVersionsArr) {
     )})`
   );
 }
-
 function setRow(rowsArray, index, content) {
   const res = clone(rowsArray);
   for (let i = 0, len = res.length; i < len; i++) {
@@ -191,7 +165,6 @@ function setRow(rowsArray, index, content) {
   }
   return res;
 }
-
 function getRow(rowsArray, index) {
   if (!existy(index) || !isNum(index)) {
     throw new TypeError(
@@ -218,68 +191,32 @@ function getRow(rowsArray, index) {
   }
   return null;
 }
-
-// gets and sets various pieces in strings of the format:
-// "[1.1.0]: https://github.com/userName/libName/compare/v1.0.1...v1.1.0"
-// or
-// "[1.1.0]: https://bitbucket.org/userName/libName/branches/compare/v1.1.0%0Dv1.0.1
 function getSetFooterLink(str, o = {}) {
-  // console.log(`\n\u001b[${35}m${`==== getSetFooterLink() ====`}\u001b[${39}m`);
-  // console.log(
-  //   `\nUTIL 221 ${`\u001b[${33}m${`str`}\u001b[${39}m`} = ${JSON.stringify(
-  //     str,
-  //     null,
-  //     4
-  //   )}`
-  // );
-
   let mode;
   if (typeof o === "object" && o !== null && typeof o.mode === "string") {
     mode = o.mode;
   } else {
     mode = "get";
   }
-  // console.log(`\u001b[${32}m${`MODE = ${mode}`}\u001b[${39}m`);
-
   if (typeof str !== "string" || !str.includes("/")) {
     return null;
   }
   const split = str.split("/");
   const res = {};
-
-  // console.log(
-  //   `\nUTIL 242 ${`\u001b[${33}m${`split`}\u001b[${39}m`} = ${JSON.stringify(
-  //     split,
-  //     null,
-  //     4
-  //   )}`
-  // );
-
   if (!o) {
     o = {};
     o.type = "github";
   } else if (!o.type) {
     o.type = "github";
   }
-
-  // console.log(
-  //   `\nUTIL 259 ${`\u001b[${33}m${`o.type`}\u001b[${39}m`} = ${JSON.stringify(
-  //     o.type,
-  //     null,
-  //     4
-  //   )}`
-  // );
-
   const currentlyWeHaveLinkOfAType = str.includes("github")
     ? "github"
     : "bitbucket";
-
   for (let i = 0, len = split.length; i < len; i++) {
     if (split[i] === "github.com" || split[i] === "bitbucket.org") {
       res.user = existy(o.user) ? o.user : split[i + 1];
       res.project = existy(o.project) ? o.project : split[i + 2];
     } else if (split[i] === "compare") {
-      // github notation:
       if (split[i + 1].includes("...")) {
         const splitVersions = trim(split[i + 1], "#diff").split("...");
         res.versBefore = existy(o.versBefore)
@@ -299,7 +236,6 @@ function getSetFooterLink(str, o = {}) {
               "v"
             );
       } else if (split[i + 1].includes("%0D")) {
-        // bitbucket notation:
         const splitVersions = trim(split[i + 1], "#diff").split("%0D");
         res.versBefore = existy(o.versBefore)
           ? o.versBefore
@@ -318,7 +254,6 @@ function getSetFooterLink(str, o = {}) {
               "v"
             );
       } else {
-        // insurance against broken compare links:
         return null;
       }
     } else if (i === 0) {
@@ -327,13 +262,6 @@ function getSetFooterLink(str, o = {}) {
         : split[i].match(versionWithoutBracketsRegex)[0];
     }
   }
-  // console.log(
-  //   `UTIL 319 END ${`\u001b[${33}m${`res`}\u001b[${39}m`} = ${JSON.stringify(
-  //     res,
-  //     null,
-  //     4
-  //   )}`
-  // );
   if (mode === "get") {
     res.type = currentlyWeHaveLinkOfAType;
     return res;
@@ -348,11 +276,9 @@ function getSetFooterLink(str, o = {}) {
     }/branches/compare/v${res.versAfter}%0Dv${res.versBefore}#diff`;
   }
 }
-
 function versionSort(a, b) {
   return semverCompare(a.version, b.version);
 }
-
 function filterDate(someString) {
   let res = someString.trim();
   res = easyReplace(res, {
@@ -376,62 +302,15 @@ function filterDate(someString) {
   return res;
 }
 
-/* eslint prefer-destructuring:0, no-loop-func:0, no-plusplus:0, consistent-return:0 */
 const isArr$1 = Array.isArray;
-
-// F'S
-// -----------------------------------------------------------------------------
-
 function existy$1(x) {
   return x != null;
 }
-
-// ACTION
-// -----------------------------------------------------------------------------
-
-// gitTags will come either as null or a plain object, for example:
-// {
-//     "latest": "v1.9.1",
-//     "all": [
-//         "v1.0.1",
-//         "v1.1.0",
-//         ...
-//         "v1.9.0",
-//         "v1.9.1"
-//     ]
-// }
-
 function chlu(changelogContents, gitTags, packageJsonContents) {
   if (arguments.length === 0 || !existy$1(changelogContents)) {
     return;
   }
-
-  // process the gitTags input.
-  // result will be in the following format:
-
-  // processedGitTags = {
-  //     "latest": [
-  //         "2017-04-18",
-  //         "1.3.5"
-  //     ],
-  //     "all": {
-  //         "1.0.0": "2017-04-01",
-  //         "1.0.1": "2017-04-02",
-  //         ...
-  //         "1.3.4": "2017-04-17",
-  //         "1.3.5": "2017-04-18"
-  //     },
-  //     "versionsOnly": [
-  //         "1.0.0",
-  //         "1.0.1",
-  //         ...
-  //         "1.3.4",
-  //         "1.3.5"
-  //     ]
-  // }
-
   let processedGitTags;
-
   if (
     typeof gitTags === "object" &&
     gitTags !== null &&
@@ -454,14 +333,10 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       });
     }
   }
-
   const changelogMd = changelogContents;
-
   let packageJson;
-  // package.json might come in falsey in case it's unavailable
   if (packageJsonContents) {
     packageJson = getPkgRepo(packageJsonContents);
-    // throw only if the package.json was parsed and type is not recognised
     if (
       packageJson &&
       packageJson.type &&
@@ -475,30 +350,14 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       );
     }
   }
-
   let temp;
   let titles = [];
   let footerLinks = [];
   let newLinesArr = [];
-
-  // ACTION
-  // -----------------------------------------------------------------------------
-
-  // =======
-  // stage 1: iterate through all lines and:
-  // - record all titles, like:
-  //   "## [1.2.0] - 2017-04-24"
-  // - record all url links at the bottom, like:
-  //   "[1.1.0]: https://github.com/codsen/wrong-lib/compare/v1.0.1...v1.1.0"
   const linesArr = splitLines(changelogMd);
-
   let titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-
-  // =======
-  // stage 2: remove any invalid footer links
-
   for (let i = 0, len = footerLinks.length; i < len; i++) {
     if (
       !existy$1(
@@ -510,18 +369,13 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       linesArr.splice(footerLinks[i].rowNum, 1);
     }
   }
-
-  // recalculate:
   titlesAndFooterLinks = getTitlesAndFooterLinks(linesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-
   let assumedPackageJsonType;
   let assumedPackageUser;
   let assumedPackageProject;
   if (!packageJson) {
-    // if the package.json was not given, infer the type of diff links from the
-    // first footer link's URL:
     if (
       footerLinks[0] &&
       footerLinks[0].content &&
@@ -539,11 +393,8 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
         `chlu/main.js: [THROW_ID_02] Both package.json and Git data were missing and we had to rely on the first footer link to detect the type of repository: Github or Bitbucket. But we couldn't extract the first link from your changelog's footer!`
       );
     }
-
     if (assumedPackageJsonType) {
       footerLinks[0].content.split("/").forEach((chunkOfLine, i, arr) => {
-        // if the chunk contains "bitbucket.org", next chunk is user, further next
-        // chunk is project. Grab those.
         if (
           chunkOfLine.includes("bitbucket.org") ||
           chunkOfLine.includes("github.com")
@@ -562,19 +413,10 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       });
     }
   }
-
-  // =======
-  // stage 3: get the ordered array of all title versions
-
   const sortedTitlesArray = titles.map(el => el.version).sort(semverCompare);
-
-  // =======
-  // stage 4: find unused footer links
-
   let unusedFooterLinks = footerLinks.filter(
     link => !includes(titles.map(title => title.version), link.version)
   );
-
   while (unusedFooterLinks.length > 0) {
     linesArr.splice(unusedFooterLinks[0].rowNum, 1);
     footerLinks = getTitlesAndFooterLinks(linesArr).footerLinks;
@@ -582,10 +424,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       link => !includes(titles.map(title => title.version), link.version)
     );
   }
-
-  // =======
-  // stage 5: create footer links for all titles except the smallest version-one
-
   const missingFooterLinks = [];
   for (let i = 0, len = titles.length; i < len; i++) {
     if (len > 1 && titles[i].version !== sortedTitlesArray[0]) {
@@ -597,13 +435,8 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       }
     }
   }
-
-  // =======
-  // stage 6: find out what is the order of footer links
-
   let ascendingFooterLinkCount = 0;
   let descendingFooterLinkCount = 0;
-
   if (footerLinks.length > 1) {
     for (let i = 0, len = footerLinks.length; i < len - 1; i++) {
       if (
@@ -615,21 +448,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       }
     }
   }
-
   let ascending = true;
   if (ascendingFooterLinkCount <= descendingFooterLinkCount) {
     ascending = false;
   }
-
-  // =======
-  // stage 7: calculate what goes where
-
   let whereToPlaceIt;
-  // calculate the Where
   if (footerLinks.length === 0) {
-    // count from the end of the file.
-    // if last non-empty line has "]:" in it, place right after it.
-    // otherwise, insert an empty line. This means there's content only and no links yet.
     for (let i = linesArr.length - 1, start = 0; i >= start; i--) {
       if (existy$1(linesArr[i]) && !empty(linesArr[i])) {
         whereToPlaceIt = i + 2;
@@ -639,10 +463,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   } else {
     whereToPlaceIt = footerLinks[0].rowNum;
   }
-
-  // =======
-  // stage 8: assemble the new chunk - array of new lines
-
   temp = [];
   if (
     (packageJson && packageJson.type && packageJson.type === "github") ||
@@ -672,19 +492,10 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       );
     });
   }
-
   if (ascending) {
     temp = reverse(temp);
   }
-
-  // =======
-  // stage 9: insert new rows into linesArr
   newLinesArr = insert(linesArr, temp, whereToPlaceIt);
-
-  // =======
-  // stage 10: prepare for checking are footerLinks correct.
-  // calculate title and footerLinks again, this time, including our additions
-
   temp = getTitlesAndFooterLinks(newLinesArr);
   titles = temp.titles;
   footerLinks = temp.footerLinks;
@@ -692,7 +503,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
     const extracted = getSetFooterLink(footerLinks[i].content, {
       mode: "get"
     });
-
     const finalUser = assumedPackageUser || packageJson.user;
     const finalProject = assumedPackageProject || packageJson.project;
     let finalVersBefore = getPreviousVersion(
@@ -700,12 +510,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       sortedTitlesArray
     );
     if (processedGitTags) {
-      // if we have the Git info, pick "from" git version from Git data:
-      //
-      // 1. check if current "to" diff Git version, "extracted.version", does not
-      // exist yet among git tags
       if (!processedGitTags.versionsOnly.includes(extracted.version)) {
-        // Current version is not among existing Git tags. Just pick the last.
         finalVersBefore =
           processedGitTags.versionsOnly[
             processedGitTags.versionsOnly.length - 1
@@ -717,44 +522,19 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
         );
       }
     } else {
-      // if the Git data is not available, use existing parsed Changelog data.
-
-      // Let's calculate the "from" version in the link, the "1.3.5" in:
-      // [1.4.0]: https://github.com/codsen/wrong-lib/compare/v1.3.5...v1.4.0
-
-      // 1. It can come from existing value in the changelog, from this very row:
       const extractedVersBefore = extracted.versBefore;
-      // 2. It can come from the previous title from the entries mentioned in the
-      // changelog. Each heading mentions a version and we extract them all from there.
       const titlesVersBefore = getPreviousVersion(
         extracted.version,
         sortedTitlesArray
       );
-
-      // The order of preference is:
-      // 1. Git data - pick previous version from known Git tags
-      // 2. Existing Changelog markdown file - current row might be custom-tweaked
-      // 3. Data from the titles.
-
-      // Since #1 is not available (see other part of outer IF clause above),
-      // it's the choice between #2 and #3.
-
-      // We would fall back to #3 only on emergency cases - when it's messed up.
-
-      // TODO: add more checks, like is it digit.digit.digit notation in extracted
-      // version from changelog ("extractedVersBefore")?
       if (semverCompare(extractedVersBefore, titlesVersBefore) < 1) {
-        // mess up cases, #3
         finalVersBefore = titlesVersBefore;
       } else {
-        // all OK, default case #2
         finalVersBefore = extractedVersBefore;
       }
     }
     const finalVersAfter = extracted.version;
     const finalVersion = extracted.version;
-
-    // finally, set the row's value:
     footerLinks[i].content = getSetFooterLink(footerLinks[i].content, {
       user: finalUser,
       project: finalProject,
@@ -764,30 +544,19 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       type: assumedPackageJsonType || packageJson.type,
       mode: "set"
     });
-
-    // write over:
     newLinesArr = setRow(
       newLinesArr,
       footerLinks[i].rowNum,
       footerLinks[i].content
     );
   }
-
-  // ========
-  // stage 11: sort all footer links, depending on a current preference
-
   temp = clone(footerLinks).sort(versionSort);
   if (!ascending) {
     temp = temp.reverse();
   }
-
   footerLinks.forEach((footerLink, index) => {
     newLinesArr = setRow(newLinesArr, footerLink.rowNum, temp[index].content);
   });
-
-  // ========
-  // stage 12: delete empty rows between footer links:
-
   const firstRowWithFooterLink = min(footerLinks.map(link => link.rowNum));
   for (
     let i = firstRowWithFooterLink + 1, len = newLinesArr.length;
@@ -802,21 +571,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       i--;
     }
   }
-
-  // ========
-  // stage 13: add trailing empty line if it's missing:
-
   if (newLinesArr[newLinesArr.length - 1] !== "") {
     newLinesArr.push("");
   }
-
-  // ========
-  // stage 14: add any missing line break before footer links
-
   titlesAndFooterLinks = getTitlesAndFooterLinks(newLinesArr);
   titles = titlesAndFooterLinks.titles;
   footerLinks = titlesAndFooterLinks.footerLinks;
-
   if (
     existy$1(footerLinks) &&
     footerLinks.length > 0 &&
@@ -824,11 +584,9 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   ) {
     newLinesArr.splice(footerLinks[0].rowNum, 0, "");
   }
-
   {
     titles.forEach(title => {
       const fixedDate = dd(filterDate(title.afterVersion));
-
       if (fixedDate !== null) {
         newLinesArr = setRow(
           newLinesArr,
@@ -838,7 +596,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           }${title.version !== sortedTitlesArray[0] ? "]" : ""} - ${fixedDate}`
         );
       } else {
-        // if date is unrecogniseable leave it alone, fix the rest of the title
         newLinesArr = setRow(
           newLinesArr,
           title.rowNum,
@@ -851,7 +608,6 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       }
     });
   }
-
   return newLinesArr.join("\n");
 }
 
