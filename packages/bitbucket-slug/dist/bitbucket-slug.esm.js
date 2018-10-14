@@ -5,21 +5,17 @@ function bSlug(str) {
   if (typeof str !== "string") {
     return "";
   }
-
-  // decode entities
   while (str !== ent.decode(str)) {
     str = ent.decode(str);
   }
-
-  // characters which will be deleted:
   return `markdown-header-${deburr(str)
-    .replace(/\]\((.*?)\)/g, "") // remove all within brackets (Markdown links)
+    .replace(/\]\((.*?)\)/g, "")
     .replace(/ [-]+ /gi, " ")
-    .replace(/[^\w\d\s-]/g, "") // remove non-letters
-    .replace(/\s+/g, " ") // collapse whitespace
+    .replace(/[^\w\d\s-]/g, "")
+    .replace(/\s+/g, " ")
     .toLowerCase()
     .trim()
-    .replace(/ /g, "-")}`; // replace spaces with dashes
+    .replace(/ /g, "-")}`;
 }
 
 export default bSlug;
