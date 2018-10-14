@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2018-10-14
+
+- ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
+
 ## [1.5.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -46,3 +50,4 @@ GitHub sold us out. In the meantime, we:
 [1.3.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.3.0%0Dv1.2.0#diff
 [1.4.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.4.0%0Dv1.3.1#diff
 [1.5.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.5.0%0Dv1.4.0#diff
+[1.6.0]: https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/branches/compare/v1.6.0%0Dv1.5.2#diff

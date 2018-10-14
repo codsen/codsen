@@ -44,9 +44,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                               | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 2 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 20 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/charcode-is-valid-xml-name-character.cjs.js` | 1 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/charcode-is-valid-xml-name-character.esm.js` | 1 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/charcode-is-valid-xml-name-character.umd.js` | 32 KB |
 
 **[⬆ back to top](#markdown-header-charcode-is-valid-xml-name-character)**
 
