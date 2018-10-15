@@ -79,6 +79,20 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   if (opts.schema) {
     Object.keys(opts.schema).forEach(function (oneKey) {
+      if (isObj(opts.schema[oneKey])) {
+        var tempObj = {};
+        traverse(opts.schema[oneKey], function (key, val, innerObj) {
+          var current = val !== undefined ? val : key;
+          if (!isArr(current) && !isObj(current)) {
+            tempObj["".concat(oneKey, ".").concat(innerObj.path)] = current;
+          }
+          return current;
+        });
+        delete opts.schema[oneKey];
+        opts.schema = Object.assign(opts.schema, tempObj);
+      }
+    });
+    Object.keys(opts.schema).forEach(function (oneKey) {
       if (!isArr(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
       }
@@ -140,7 +154,7 @@ function checkTypesMini(obj, ref, originalOptions) {
                 }
               }
             } else {
-              throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typ(current) !== "string" ? '"' : "", " (").concat(typ(current).toLowerCase(), ") which is not among the allowed types in schema (").concat(currentKeysSchema.join(", "), ")"));
+              throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typ(current) !== "string" ? '"' : "", " (type: ").concat(typ(current).toLowerCase(), ") which is not among the allowed types in schema (which is equal to ").concat(JSON.stringify(currentKeysSchema, null, 0), ")"));
             }
           }
         } else {

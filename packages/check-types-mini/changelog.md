@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2018-10-15
+
+- ✨ `opts.schema` now can be given in nested order as well, for example, given as:
+
+```js
+{
+  schema: {
+    option1: { somekey: "any" },
+    option2: "whatever"
+  }
+}
+```
+
+instead of:
+
+```js
+{
+  schema: {
+    "option1.somekey": "any",
+    option2: "whatever"
+  }
+}
+```
+
 ## [5.0.0] - 2018-10-13
 
 - 💥 BREAKING CHANGES - if you use schema and "blanket" values "any" or "whatever" for any paths, now that will apply to all children nodes of that path.
@@ -200,7 +224,7 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [1.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.3.0%0Dv1.2.2#diff
 [1.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.4.0%0Dv1.3.0#diff
 [1.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.5.0%0Dv1.4.1#diff
-[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv4.1.1#diff
+[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv5.0.0#diff
 [2.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.0.0%0Dv1.5.0#diff
 [2.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.1.0%0Dv2.0.3#diff
 [2.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.2.0%0Dv2.1.1#diff
@@ -217,3 +241,4 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 [4.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.0.0%0Dv3.4.4#diff
 [4.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.1.0%0Dv4.0.0#diff
 [5.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v5.0.0%0Dv4.1.1#diff
+[5.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v5.1.0%0Dv5.0.0#diff

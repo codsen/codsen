@@ -1108,11 +1108,13 @@ test(`02.09 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema
         }
       }
     );
-  }); // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.is(
-    err1.message,
-    'check-types-mini: opts.opt2.opt3 was customised to "["bbb"]" (array) which is not among the allowed types in schema (string)'
-  );
+  });
+  // throws because schema and opts.acceptArrays detects wrong type within input's array
+  t.regex(err1.message, /opts.opt2.opt3 was customised to/gi);
+  // error message mentions array:
+  t.regex(err1.message, /array/gi);
+  // error message mentions string:
+  t.regex(err1.message, /string/gi);
 
   t.notThrows(() => {
     checkTypes(
@@ -1155,10 +1157,9 @@ test(`02.09 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - acceptArrays + schema
       }
     );
   }); // throws because schema and opts.acceptArrays detects wrong type within input's array
-  t.is(
-    err2.message,
-    "check-types-mini: opts.opt2.opt3.1, the 2nd element (equal to 999) is of a type number, but only the following are allowed by the opts.schema: string"
-  );
+  t.regex(err2.message, /opts.opt2.opt3.1, the 2nd element/gi);
+  t.regex(err2.message, /number/gi);
+  t.regex(err2.message, /string/gi);
 });
 
 test(`02.10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset and nested inputs`, t => {
@@ -1337,10 +1338,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
-    err1.message,
-    'check-types-mini: opts.option2 was customised to "null" which is not string but null'
-  );
+  t.regex(err1.message, /opts.option2 was customised to/gi);
+  t.regex(err1.message, /string/gi);
+  t.regex(err1.message, /null/gi);
 
   t.notThrows(() => {
     checkTypes(
@@ -1377,10 +1377,7 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
-    err2.message,
-    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (string, boolean)'
-  );
+  t.regex(err2.message, /opts\.option2 was customised to "null"/gi);
 
   t.notThrows(() => {
     checkTypes(
@@ -1413,10 +1410,11 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err3.message,
-    "check-types-mini: opts.enforceStrictKeyset is on and the following key is not covered by schema and/or reference objects: option1"
+    /opts\.enforceStrictKeyset is on and the following key/gi
   );
+  t.regex(err3.message, /option1/gi);
 
   // true not allowed, - only false or null or string
   const err4 = t.throws(() => {
@@ -1436,10 +1434,10 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
-    err4.message,
-    'check-types-mini: opts.option2 was customised to "true" (boolean) which is not among the allowed types in schema (null, false, string)'
-  );
+  t.regex(err4.message, /opts\.option2 was customised to "true"/gi);
+  t.regex(err4.message, /boolean/gi);
+  t.regex(err4.message, /null/gi);
+  t.regex(err4.message, /false/gi);
 
   t.notThrows(() => {
     checkTypes(
@@ -1515,9 +1513,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err5.message,
-    'check-types-mini: opts.option2 was customised to "false" (boolean) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/gi
   );
 
   const err6 = t.throws(() => {
@@ -1537,9 +1535,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err6.message,
-    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "null"/gi
   );
 
   const err7 = t.throws(() => {
@@ -1559,9 +1557,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err7.message,
-    'check-types-mini: opts.option2 was customised to "0" (number) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "0"/
   );
 
   t.notThrows(() => {
@@ -1599,9 +1597,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err8.message,
-    'check-types-mini: opts.option2 was customised to "zzz" (string) which is not among the allowed types in schema (true)'
+    /check-types-mini: opts\.option2 was customised to "zzz"/gi
   );
 
   t.notThrows(() => {
@@ -1711,9 +1709,9 @@ test(`04.01 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located in 
       }
     );
   });
-  t.is(
+  t.regex(
     err9.message,
-    'check-types-mini: opts.option2 was customised to "true" (string) which is not among the allowed types in schema (boolean)'
+    /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/gi
   );
 });
 
@@ -1848,9 +1846,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err2.message,
-    'check-types-mini: opts.option2.option3 was customised to "null" (null) which is not among the allowed types in schema (string, boolean)'
+    /check-types-mini: opts\.option2\.option3 was customised to "null" \(type: null\)/gi
   );
 
   t.notThrows(() => {
@@ -1930,9 +1928,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err4.message,
-    'check-types-mini: opts.option2 was customised to "true" (boolean) which is not among the allowed types in schema (null, false, string)'
+    /check-types-mini: opts\.option2 was customised to "true" \(type: boolean\)/gi
   );
 
   t.notThrows(() => {
@@ -2009,9 +2007,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err5.message,
-    'check-types-mini: opts.option2 was customised to "false" (boolean) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "false" \(type: boolean\)/gi
   );
 
   const err6 = t.throws(() => {
@@ -2031,9 +2029,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err6.message,
-    'check-types-mini: opts.option2 was customised to "null" (null) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "null" \(type: null\)/gi
   );
 
   const err7 = t.throws(() => {
@@ -2053,9 +2051,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err7.message,
-    'check-types-mini: opts.option2 was customised to "0" (number) which is not among the allowed types in schema (true, string)'
+    /check-types-mini: opts\.option2 was customised to "0" \(type: number\)/gi
   );
 
   t.notThrows(() => {
@@ -2093,9 +2091,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err8.message,
-    'check-types-mini: opts.option2 was customised to "zzz" (string) which is not among the allowed types in schema (true)'
+    /check-types-mini: opts\.option2 was customised to "zzz" \(type: string\)/gi
   );
 
   t.notThrows(() => {
@@ -2205,9 +2203,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err9.message,
-    'check-types-mini: opts.option2 was customised to "true" (string) which is not among the allowed types in schema (boolean)'
+    /check-types-mini: opts\.option2 was customised to "true" \(type: string\)/gi
   );
 });
 
@@ -2284,10 +2282,9 @@ test(`04.05 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} values as strings 
       }
     );
   });
-  t.truthy(
-    err2.message.includes(
-      'check-types-mini: opts.option1 was customised to "{"somekey":"setting1"}" (object) which is not among the allowed types in schema (string)'
-    )
+  t.regex(
+    err2.message,
+    /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/gi
   );
 
   t.notThrows(() => {
@@ -2348,9 +2345,9 @@ test(`04.06 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} falling back to re
       }
     );
   });
-  t.is(
+  t.regex(
     err1.message,
-    'check-types-mini: opts.option1 was customised to "{"somekey":"setting1"}" (object) which is not among the allowed types in schema (number)'
+    /check-types-mini: opts\.option1 was customised to "{"somekey":"setting1"}" \(type: object\)/gi
   );
 
   // without throwing consequences:
@@ -2520,10 +2517,9 @@ test(`04.08 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} understands opts.a
       }
     );
   }); // number is allowed in schema, but not in an array, and opts.acceptArrays is off, so throws
-  t.truthy(
-    err3.message.includes(
-      'check-types-mini: opts.option2 was customised to "["setting2",999]" (array) which is not among the allowed types in schema (string, number)'
-    )
+  t.regex(
+    err3.message,
+    /check-types-mini: opts\.option2 was customised to "\["setting2",999\]" \(type: array\)/gi
   );
 
   t.notThrows(() => {
@@ -2637,22 +2633,22 @@ test(`04.10 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies
     );
   });
 
-  // t.notThrows(() => {
-  //   checkTypes(
-  //     {
-  //       option1: { somekey: { anotherlevel: "setting1" } },
-  //       option2: null
-  //     },
-  //     {
-  //       option1: { somekey: "zz" },
-  //       option2: "yy"
-  //     },
-  //     {
-  //       schema: {
-  //         option1: { somekey: "any" }, // <------ !
-  //         option2: "whatever"
-  //       }
-  //     }
-  //   );
-  // });
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: { somekey: { anotherlevel: "setting1" } },
+        option2: null
+      },
+      {
+        option1: { somekey: "zz" },
+        option2: "yy"
+      },
+      {
+        schema: {
+          option1: { somekey: "any" }, // <------ !
+          option2: "whatever"
+        }
+      }
+    );
+  });
 });

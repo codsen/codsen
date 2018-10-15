@@ -90,6 +90,20 @@ function checkTypesMini(
   }
   if (opts.schema) {
     Object.keys(opts.schema).forEach(oneKey => {
+      if (isObj(opts.schema[oneKey])) {
+        const tempObj = {};
+        traverse(opts.schema[oneKey], (key, val, innerObj) => {
+          const current = val !== undefined ? val : key;
+          if (!isArr(current) && !isObj(current)) {
+            tempObj[`${oneKey}.${innerObj.path}`] = current;
+          }
+          return current;
+        });
+        delete opts.schema[oneKey];
+        opts.schema = Object.assign(opts.schema, tempObj);
+      }
+    });
+    Object.keys(opts.schema).forEach(oneKey => {
       if (!isArr(opts.schema[oneKey])) {
         opts.schema[oneKey] = [opts.schema[oneKey]];
       }
@@ -263,10 +277,12 @@ function checkTypesMini(
                 typ(current) !== "string" ? '"' : ""
               }${JSON.stringify(current, null, 0)}${
                 typ(current) !== "string" ? '"' : ""
-              } (${typ(
+              } (type: ${typ(
                 current
-              ).toLowerCase()}) which is not among the allowed types in schema (${currentKeysSchema.join(
-                ", "
+              ).toLowerCase()}) which is not among the allowed types in schema (which is equal to ${JSON.stringify(
+                currentKeysSchema,
+                null,
+                0
               )})`
             );
           }

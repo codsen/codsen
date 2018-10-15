@@ -39,7 +39,7 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------ | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/check-types-mini.cjs.js` | 10 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/check-types-mini.esm.js` | 11 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/check-types-mini.umd.js` | 27 KB |
 
 **[⬆ back to top](#markdown-header-check-types-mini)**
