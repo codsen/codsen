@@ -174,8 +174,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.6.0",
-    "ast-monkey-traverse": "^1.4.0",
+    "ast-compare": "^1.6.1",
+    "ast-monkey-traverse": "^1.4.1",
     "check-types-mini": "latest",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "*",
@@ -186,7 +186,7 @@
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
-    "ava": "1.0.0-beta.8",
+    "ava": "1.0.0-rc.1",
     "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "latest",
     "eslint": "latest",

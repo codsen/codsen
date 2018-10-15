@@ -287,7 +287,7 @@ BREAKING API CHANGES.
 [2.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.5.0%0Dv2.4.0#diff
 [2.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.6.0%0Dv2.5.0#diff
 [2.7.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.7.0%0Dv2.6.0#diff
-[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.5.2#diff
+[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.6.0#diff
 [2.9.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.9.0%0Dv2.7.0#diff
 [3.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.0.0%0Dv2.9.0#diff
 [3.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.1.0%0Dv3.0.1#diff
