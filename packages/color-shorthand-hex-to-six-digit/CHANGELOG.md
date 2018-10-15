@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [2.3.0] - 2018-06-27
 
+- ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
+
+## [2.3.0] - 2018-06-27
+
 - ✨ Set up Rollup to remove any comments from build files
 - ✨ Attempt to fix reported issues with UMD builds `undefined$3` variable not found
 

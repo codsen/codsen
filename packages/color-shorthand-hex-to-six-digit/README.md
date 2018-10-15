@@ -41,7 +41,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/color-shorthand-hex-to-six-digit.cjs.js` | 1 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/color-shorthand-hex-to-six-digit.esm.js` | 999 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/color-shorthand-hex-to-six-digit.umd.js` | 9 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/color-shorthand-hex-to-six-digit.umd.js` | 10 KB |
 
 **[⬆ back to top](#markdown-header-color-shorthand-hex-to-six-digit)**
 
