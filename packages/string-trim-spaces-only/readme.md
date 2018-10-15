@@ -16,6 +16,7 @@
 - [Install](#markdown-header-install)
 - [Usage](#markdown-header-usage)
 - [API](#markdown-header-api)
+- [`opts.classicTrim`](#markdown-header-optsclassictrim)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -34,11 +35,11 @@ import trimSpaces from "string-trim-spaces-only";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                  | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-trim-spaces-only.cjs.js` | 2 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 1 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 1 KB |
+| Type                                                                                                    | Key in `package.json` | Path                                  | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-trim-spaces-only.cjs.js` | 2 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-trim-spaces-only.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-trim-spaces-only.umd.js` | 27 KB |
 
 **[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
@@ -79,7 +80,7 @@ We also tested it with emoji, it copes fine. Mind you, the indexes are based on 
 
 If input arguments are supplied have any other types, an error will be `throw`n.
 
-**[⬆ back to top](#markdown-header-string-strip-html)**
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ### Optional Options Object
 
@@ -88,6 +89,8 @@ If input arguments are supplied have any other types, an error will be `throw`n.
 | {                                |                   |         |
 | `classicTrim`                    | Boolean           | `false` | If it's set to `true`, trimming becomes the same as `String.trim()`. Use it when you need ranges. |
 | }                                |                   |         |
+
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ### API - Function's Output
 
@@ -105,6 +108,8 @@ Since `v.2`, the output is a plain object:
 ## `opts.classicTrim`
 
 `String.trim()` returns string but sometimes you need just ranges of what would be trimmed, to merge them into compiled ranges array and to process later, along everything else. In those cases, use `opts.classicTrim`. If you need just _string_ value, it's not worth to use this function as a substitute for `String.trim()` for performance reasons.
+
+**[⬆ back to top](#markdown-header-string-trim-spaces-only)**
 
 ## Contributing
 
