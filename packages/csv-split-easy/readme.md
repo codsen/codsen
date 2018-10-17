@@ -39,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                         | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-split-easy.cjs.js` | 8 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 42 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-split-easy.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-split-easy.esm.js` | 5 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-split-easy.umd.js` | 55 KB |
 
 **[⬆ back to top](#markdown-header-csv-split-easy)**
 
