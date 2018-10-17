@@ -46,7 +46,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/detect-is-it-html-or-xhtml.cjs.js` | 2 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/detect-is-it-html-or-xhtml.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detect-is-it-html-or-xhtml.umd.js` | 795 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/detect-is-it-html-or-xhtml.umd.js` | 753 B |
 
 **[⬆ back to top](#markdown-header-detect-is-it-html-or-xhtml)**
 

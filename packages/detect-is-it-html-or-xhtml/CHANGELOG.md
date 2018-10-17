@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0] - 2018-10-17
+
+- ✨ Updated all dependencies
+- ✨ Restored unit test coverage tracking: reporting in terminal and coveralls.io
+- ✨ Restored unit test linting
+
 ## [3.2.0] - 2018-06-11
 
 GitHub sold us out. In the meantime, we:
@@ -33,6 +39,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ In order to prevent accidental input argument mutation when object is given, now we're throwing a type error when the input argument is present, but of a wrong type. That's enough to warrant a major API change under semver.
 
-[3.2.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.2.0%0Dv3.1.1#diff
-[3.1.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.1.0%0Dv3.0.4#diff
 [3.0.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.0.0%0Dv2.0.2#diff
+[3.1.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.1.0%0Dv3.0.4#diff
+[3.2.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.2.0%0Dv3.1.1#diff
+[3.3.0]: https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/branches/compare/v3.3.0%0Dv3.2.2#diff
