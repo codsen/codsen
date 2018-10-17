@@ -23,10 +23,8 @@
     "withinascii": "cli.js"
   },
   "scripts": {
-    "dev": "ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "exit 0",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
-    "precommit": "npm run format && npm test",
     "test": "./node_modules/.bin/eslint cli.js && ava"
   },
   "ava": {
@@ -44,6 +42,11 @@
   "esm": {
     "await": true,
     "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
   },
   "keywords": [
     "email",
@@ -153,21 +156,30 @@
       "travisVersionsOverride": []
     }
   },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
   "dependencies": {
     "chalk": "^2.4.1",
-    "email-all-chars-within-ascii": "^2.3.0",
+    "email-all-chars-within-ascii": "^2.4.0",
     "fs-extra": "^7.0.0",
     "globby": "^8.0.1",
-    "inquirer": "^6.1.0",
+    "inquirer": "^6.2.0",
     "lodash.pullall": "*",
     "lodash.uniq": "*",
     "meow": "^5.0.0",
     "update-notifier": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.1",
-    "@babel/preset-env": "^7.0.0-rc.1",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
     "ava": "^1.0.0-beta.7",
+    "babel-plugin-istanbul": "^5.1.0",
     "codacy-coverage": "latest",
     "coveralls": "latest",
     "eslint": "latest",
@@ -179,7 +191,7 @@
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
     "esm": "latest",
-    "execa": "^0.10.0",
+    "execa": "^1.0.0",
     "husky": "latest",
     "nyc": "latest",
     "prettier": "latest",

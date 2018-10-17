@@ -14,6 +14,7 @@
 .nyc_output
 coverage
 media
+test
 
 # files:
 
@@ -22,4 +23,3 @@ media
 .npmignore
 .prettierignore
 bitbucket-pipelines.yml
-test.js
