@@ -35,9 +35,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                   | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-sort.cjs.js` | 19 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 20 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 66 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/csv-sort.cjs.js` | 13 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/csv-sort.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/csv-sort.umd.js` | 77 KB |
 
 **[⬆ back to top](#markdown-header-csv-sort)**
 
