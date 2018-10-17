@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-10-17
+
+- ✨ Updated all dependencies
+- ✨ Restored unit test coverage tracking: reporting in terminal and coveralls.io
+- ✨ Restored unit test linting
+
 ## [2.3.0] - 2018-06-26
 
 - ✨ Set up Rollup to remove all comments from built files
@@ -68,3 +74,4 @@ Bumping major just in case somebody's API breaks. But it should not break.
 [2.1.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.1.0%0Dv2.0.4#diff
 [2.2.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.2.0%0Dv2.1.0#diff
 [2.3.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.3.0%0Dv2.2.1#diff
+[2.4.0]: https://bitbucket.org/codsen/email-all-chars-within-ascii/branches/compare/v2.4.0%0Dv2.3.0#diff
