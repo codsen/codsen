@@ -12,7 +12,20 @@ var arrayiffyString = _interopDefault(require('arrayiffy-if-string'));
 var nonEmpty = _interopDefault(require('util-nonempty'));
 var includesAll = _interopDefault(require('array-includes-all'));
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function isArr(something) {
   return Array.isArray(something);
 }
@@ -39,7 +52,7 @@ function getType(something) {
   } else if (isArr(something)) {
     return "array";
   }
-  return typeof something === "undefined" ? "undefined" : _typeof(something);
+  return _typeof(something);
 }
 function mergeAdvanced(infoObj, input1orig, input2orig) {
   var originalOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
@@ -77,7 +90,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   if (opts.ignoreKeys.includes("*")) {
     opts.ignoreEverything = true;
   }
-  var currPath = void 0;
+  var currPath;
   if (opts.useNullAsExplicitFalse && (input1orig === null || input2orig === null)) {
     return opts.cb ? opts.cb(input1orig, input2orig, null, {
       path: infoObj.path,
@@ -87,7 +100,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
   }
   var i1 = isArr(input1orig) || isObj(input1orig) ? clone(input1orig) : input1orig;
   var i2 = isArr(input2orig) || isObj(input2orig) ? clone(input2orig) : input2orig;
-  var uniRes = void 0;
+  var uniRes;
   if (opts.ignoreEverything) {
     uniRes = i1;
   } else if (opts.hardMergeEverything) {
@@ -115,7 +128,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         }
         var temp = [];
         for (var index = 0, len = Math.max(i1.length, i2.length); index < len; index++) {
-          currPath = infoObj.path.length ? infoObj.path + "." + index : "" + index;
+          currPath = infoObj.path.length ? "".concat(infoObj.path, ".").concat(index) : "".concat(index);
           if (isObj(i1[index]) && isObj(i2[index]) && (opts.mergeObjectsOnlyWhenKeysetMatches && equalOrSubsetKeys(i1[index], i2[index]) || !opts.mergeObjectsOnlyWhenKeysetMatches)) {
             temp.push(mergeAdvanced({
               path: currPath,
@@ -198,26 +211,32 @@ function mergeAdvanced(infoObj, input1orig, input2orig) {
         }) : _currentResult8;
       } else if (isObj(i2)) {
         Object.keys(i2).forEach(function (key) {
-          currPath = infoObj.path && infoObj.path.length ? infoObj.path + "." + key : "" + key;
+          currPath = infoObj.path && infoObj.path.length ? "".concat(infoObj.path, ".").concat(key) : "".concat(key);
           if (i1.hasOwnProperty(key)) {
             if (includes(key, opts.ignoreKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, { ignoreEverything: true }));
+              }, i1[key], i2[key], Object.assign({}, opts, {
+                ignoreEverything: true
+              }));
             } else if (includes(key, opts.hardMergeKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, { hardMergeEverything: true }));
+              }, i1[key], i2[key], Object.assign({}, opts, {
+                hardMergeEverything: true
+              }));
             } else if (includes(key, opts.hardArrayConcatKeys)) {
               i1[key] = mergeAdvanced({
                 path: currPath,
                 key: key,
                 type: [getType(i1), getType(i2)]
-              }, i1[key], i2[key], Object.assign({}, opts, { hardArrayConcat: true }));
+              }, i1[key], i2[key], Object.assign({}, opts, {
+                hardArrayConcat: true
+              }));
             } else {
               i1[key] = mergeAdvanced({
                 path: currPath,
@@ -362,7 +381,11 @@ function externalApi(input1orig, input2orig, originalOpts) {
   if (arguments.length === 0) {
     throw new TypeError("object-merge-advanced/mergeAdvanced(): [THROW_ID_01] Both inputs are missing");
   }
-  return mergeAdvanced({ key: null, path: "", type: [getType(input1orig), getType(input2orig)] }, input1orig, input2orig, originalOpts);
+  return mergeAdvanced({
+    key: null,
+    path: "",
+    type: [getType(input1orig), getType(input2orig)]
+  }, input1orig, input2orig, originalOpts);
 }
 
 module.exports = externalApi;

@@ -124,7 +124,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     (input1orig === null || input2orig === null)
   ) {
     console.log(
-      `\u001b[${33}m${`124 RET: ${
+      `\u001b[${33}m${`127 RET: ${
         opts.cb
           ? opts.cb(input1orig, input2orig, null, {
               path: infoObj.path,
@@ -167,16 +167,16 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     `\u001b[${32}m${"========================================================"}\u001b[${39}m`
   );
   console.log(
-    `159 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
+    `170 \u001b[${36}m${`i1 = ${JSON.stringify(i1, null, 0)}`}\u001b[${39}m`
   );
   console.log(
-    `162 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
+    `173 \u001b[${36}m${`i2 = ${JSON.stringify(i2, null, 0)}`}\u001b[${39}m`
   );
-  // console.log(`164 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
-  // console.log(`165 uni = ${JSON.stringify(uni, null, 4)}`);
+  // console.log(`175 uniRes = ${JSON.stringify(uniRes, null, 4)}`);
+  // console.log(`176 uni = ${JSON.stringify(uni, null, 4)}`);
 
   console.log(
-    `176 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
+    `179 received ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
       infoObj,
       null,
       4
@@ -199,7 +199,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         ) {
           const currentResult = uni ? uniRes : [];
           console.log(
-            `\u001b[${33}m${`191 RET: ${
+            `\u001b[${33}m${`202 RET: ${
               opts.cb
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
@@ -220,7 +220,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         if (opts.hardArrayConcat) {
           const currentResult = uni ? uniRes : i1.concat(i2);
           console.log(
-            `\u001b[${33}m${`222 RET: ${
+            `\u001b[${33}m${`223 RET: ${
               opts.cb
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
@@ -249,7 +249,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
             ? `${infoObj.path}.${index}`
             : `${index}`;
           console.log(
-            `209 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+            `252 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
           );
 
           // calculate the merge outcome:
@@ -328,7 +328,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         // cases 2, 3, 4, 5, 6, 7, 8, 9, 10
         const currentResult = uni ? uniRes : i1;
         console.log(
-          `\u001b[${33}m${`237 RET: ${
+          `\u001b[${33}m${`331 RET: ${
             opts.cb
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
@@ -352,7 +352,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         // cases 11, 13, 15, 17
         const currentResult = uni ? uniRes : i2;
         console.log(
-          `\u001b[${33}m${`249 RET: ${
+          `\u001b[${33}m${`355 RET: ${
             opts.cb
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
@@ -373,7 +373,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 12, 14, 16, 18, 19, 20
       const currentResult = uni ? uniRes : i1;
       console.log(
-        `\u001b[${33}m${`258 RET: ${
+        `\u001b[${33}m${`376 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: currPath,
@@ -401,7 +401,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
           // case 21
           const currentResult = uni ? uniRes : i2;
           console.log(
-            `\u001b[${33}m${`274 RET: ${
+            `\u001b[${33}m${`404 RET: ${
               opts.cb
                 ? opts.cb(i1, i2, currentResult, {
                     path: currPath,
@@ -422,7 +422,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         // case 22
         const currentResult = uni ? uniRes : i1;
         console.log(
-          `\u001b[${33}m${`283 RET: ${
+          `\u001b[${33}m${`425 RET: ${
             opts.cb
               ? opts.cb(i1, i2, currentResult, {
                   path: currPath,
@@ -449,18 +449,18 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               ? `${infoObj.path}.${key}`
               : `${key}`;
           console.log(
-            `204 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
+            `452 ${`\u001b[${35}m${`currPath`}\u001b[${39}m`} = ${currPath}`
           );
 
           // calculate the merge outcome:
           if (i1.hasOwnProperty(key)) {
-            console.log(`293 working on i1 and i2 objects' keys "${key}"`);
+            console.log(`457 working on i1 and i2 objects' keys "${key}"`);
             // key clash
             if (includes(key, opts.ignoreKeys)) {
               // set the ignoreEverything for all deeper recursive traversals,
               // otherwise, it will get lost, yet, ignores apply to all children
-              // console.log('1. - ignoreEverything')
-              console.log(`1st Recursion @299, key=${key}`);
+              // console.log('462. - ignoreEverything')
+              console.log(`463st Recursion @299, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -477,8 +477,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               // without this switch (opts.hardMergeEverything) we'd lose the visibility
               // of the name of the key; we can't "bubble up" to check all parents' key names,
               // are any of them positive for "hard merge"...
-              // console.log('2. - hardMergeEverything')
-              console.log(`2nd Recursion @312, key=${key}`);
+              // console.log('480. - hardMergeEverything')
+              console.log(`481nd Recursion @312, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -493,8 +493,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               // set the hardArrayConcat option to true for all deeper values.
               // It will force a concat of both values, as long as they are both arrays
               // No merge will happen.
-              // console.log('3. - hardArrayConcat')
-              console.log(`3rd Recursion @323, key=${key}`);
+              // console.log('496. - hardArrayConcat')
+              console.log(`497rd Recursion @323, key=${key}`);
               i1[key] = mergeAdvanced(
                 {
                   path: currPath,
@@ -507,8 +507,8 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
               );
             } else {
               // regular merge
-              // console.log('4.')
-              console.log("332 4th Recursion");
+              // console.log('510.')
+              console.log("511 4th Recursion");
               console.log(
                 `\n334 ${`\u001b[${33}m${`infoObj`}\u001b[${39}m`} = ${JSON.stringify(
                   {
@@ -539,7 +539,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
                 opts
               );
               console.log(
-                `338 AFTER RECURSION i1[${key}] = ${JSON.stringify(
+                `542 AFTER RECURSION i1[${key}] = ${JSON.stringify(
                   i1[key],
                   null,
                   4
@@ -555,7 +555,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 24, 25, 26, 27, 28, 29, 30
       const currentResult = uni ? uniRes : i1;
       console.log(
-        `\u001b[${33}m${`354 RET: ${
+        `\u001b[${33}m${`558 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -579,7 +579,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 31, 32, 33, 34, 35, 37
       const currentResult = uni ? uniRes : i2;
       console.log(
-        `\u001b[${33}m${`366 RET: ${
+        `\u001b[${33}m${`582 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -600,7 +600,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // 36, 38, 39, 40
     const currentResult = uni ? uniRes : i1;
     console.log(
-      `\u001b[${33}m${`375 RET: ${
+      `\u001b[${33}m${`603 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
@@ -625,7 +625,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
         // take care of hard merge setting cases, opts.hardMergeKeys
         const currentResult = uni ? uniRes : i2;
         console.log(
-          `\u001b[${33}m${`388 RET: ${
+          `\u001b[${33}m${`628 RET: ${
             opts.cb
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
@@ -646,7 +646,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 42, 44, 46, 47, 48, 49, 50
       const currentResult = uni ? uniRes : i1;
       console.log(
-        `\u001b[${33}m${`397 RET: ${
+        `\u001b[${33}m${`649 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -670,7 +670,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 51, 52, 53, 54, 55, 56, 57
       const currentResult = uni ? uniRes : i2;
       console.log(
-        `\u001b[${33}m${`409 RET: ${
+        `\u001b[${33}m${`673 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -691,7 +691,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // 58, 59, 60
     const currentResult = uni ? uniRes : i1;
     console.log(
-      `\u001b[${33}m${`418 RET: ${
+      `\u001b[${33}m${`694 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
@@ -714,7 +714,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 61, 63, 65, 67
       const currentResult = uni ? uniRes : i2;
       console.log(
-        `\u001b[${33}m${`429 RET: ${
+        `\u001b[${33}m${`717 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -735,7 +735,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // cases 62, 64, 66, 68, 69, 70
     const currentResult = uni ? uniRes : i1;
     console.log(
-      `\u001b[${33}m${`438 RET: ${
+      `\u001b[${33}m${`738 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
@@ -759,7 +759,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       if (opts.mergeBoolsUsingOrNotAnd) {
         const currentResult = uni ? uniRes : i1 || i2; // default - OR
         console.log(
-          `\u001b[${33}m${`450 RET: ${
+          `\u001b[${33}m${`762 RET: ${
             opts.cb
               ? opts.cb(i1, i2, currentResult, {
                   path: infoObj.path,
@@ -779,7 +779,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       }
       const currentResult = uni ? uniRes : i1 && i2; // alternative merge using AND
       console.log(
-        `\u001b[${33}m${`458 RET: ${
+        `\u001b[${33}m${`782 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -801,7 +801,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       // cases 71, 72, 73, 74, 75, 76, 77
       const currentResult = uni ? uniRes : i2;
       console.log(
-        `\u001b[${33}m${`468 RET: ${
+        `\u001b[${33}m${`804 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -823,7 +823,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // cases 79*, 80
     const currentResult = uni ? uniRes : i1;
     console.log(
-      `\u001b[${33}m${`478 RET: ${
+      `\u001b[${33}m${`826 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
@@ -851,7 +851,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
       );
       console.log(`\u001b[${32}m${`opts.cb`}\u001b[${39}m = ${!!opts.cb}`);
       console.log(
-        `\u001b[${33}m${`490 RET: ${
+        `\u001b[${33}m${`854 RET: ${
           opts.cb
             ? opts.cb(i1, i2, currentResult, {
                 path: infoObj.path,
@@ -872,7 +872,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // cases 89, 90
     const currentResult = uni ? uniRes : i1;
     console.log(
-      `\u001b[${33}m${`499 RET: ${
+      `\u001b[${33}m${`875 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
@@ -893,7 +893,7 @@ function mergeAdvanced(infoObj, input1orig, input2orig, originalOpts = {}) {
     // cases 91-100
     const currentResult = uni ? uniRes : i2;
     console.log(
-      `\u001b[${33}m${`508 RET: ${
+      `\u001b[${33}m${`896 RET: ${
         opts.cb
           ? opts.cb(i1, i2, currentResult, {
               path: infoObj.path,
