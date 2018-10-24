@@ -37,9 +37,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                     | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-all-values-equal-to.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-all-values-equal-to.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-all-values-equal-to.umd.js` | 24 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-all-values-equal-to.cjs.js` | 2 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-all-values-equal-to.esm.js` | 2 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-all-values-equal-to.umd.js` | 37 KB |
 
 **[⬆ back to top](#markdown-header-object-all-values-equal-to)**
 

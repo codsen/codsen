@@ -3,9 +3,6 @@ import isEq from 'lodash.isequal';
 import checkTypes from 'check-types-mini';
 
 const isArr = Array.isArray;
-
-// T H E   M A I N   F U N C T I O N   T H A T   D O E S   T H E   J O B
-// -----------------------------------------------------------------------------
 function allValuesEqualTo(input, value, opts) {
   if (isArr(input)) {
     if (input.length === 0) {
@@ -18,8 +15,6 @@ function allValuesEqualTo(input, value, opts) {
     ) {
       return false;
     }
-    // so at this point
-    // backwards traversal for increased performance:
     for (let i = input.length; i--; ) {
       if (!allValuesEqualTo(input[i], value, opts)) {
         return false;
@@ -40,14 +35,7 @@ function allValuesEqualTo(input, value, opts) {
   }
   return isEq(input, value);
 }
-
-// T H E   E X P O S E D   W R A P P E R   F U N C T I O N
-// -----------------------------------------------------------------------------
-// we use this wrapper function because there will be recursive calls and it would
-// be a waste of resources to perform the input checks each time within recursion
-
 function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
-  // precautions:
   if (inputOriginal === undefined) {
     throw new Error(
       "object-all-values-equal-to: [THROW_ID_01] The first input is undefined! Please provide the first argument."
@@ -71,8 +59,6 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
       )}`
     );
   }
-
-  // prep opts
   const defaults = {
     arraysMustNotContainPlaceholders: true
   };
@@ -80,8 +66,6 @@ function allValuesEqualToWrapper(inputOriginal, valueOriginal, originalOpts) {
   checkTypes(opts, defaults, {
     msg: "object-all-values-equal-to: [THROW_ID_04*]"
   });
-
-  // and finally,
   return allValuesEqualTo(inputOriginal, valueOriginal, opts);
 }
 
