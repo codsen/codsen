@@ -5,8 +5,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
-/* eslint no-param-reassign:0 */
-
 function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   var isArr = Array.isArray;
   var defaults = {
@@ -14,9 +12,9 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   };
   if (Number.isFinite(originalOptsOuter)) {
     if (!Number.isInteger(originalOptsOuter)) {
-      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_03] The third argument, options object, is not only not an object, it's not even an integer! It's currently: " + originalOptsOuter + " and computer doesn't like it very much.");
+      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_03] The third argument, options object, is not only not an object, it's not even an integer! It's currently: ".concat(originalOptsOuter, " and computer doesn't like it very much."));
     } else {
-      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] Please pass a plain object with a key \"mode\" set to 1 or 2, not the number " + originalOptsOuter + " directly! Computer doesn't like that.");
+      throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_02] Please pass a plain object with a key \"mode\" set to 1 or 2, not the number ".concat(originalOptsOuter, " directly! Computer doesn't like that."));
     }
   }
   var optsOuter = Object.assign({}, defaults, originalOptsOuter);
@@ -24,48 +22,43 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     optsOuter.mode = parseInt(optsOuter.mode, 10);
   }
   if (optsOuter.mode !== 1 && optsOuter.mode !== 2) {
-    throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, \"" + optsOuter.mode + "\" while it should be either natural number 1 or 2.");
+    throw new TypeError("object-no-new-keys/objectNoNewKeys(): [THROW_ID_01] opts.mode was customised to be a wrong thing, \"".concat(optsOuter.mode, "\" while it should be either natural number 1 or 2."));
   }
   checkTypes(optsOuter, defaults, {
     msg: "object-no-new-keys/objectNoNewKeys(): [THROW_ID_04*]"
   });
-
   function objectNoNewKeysInternal(input, reference, opts, innerVar) {
-    var temp = void 0;
+    var temp;
     if (innerVar === undefined) {
-      innerVar = { path: "", res: [] };
+      innerVar = {
+        path: "",
+        res: []
+      };
     }
     if (isObj(input)) {
       if (isObj(reference)) {
-        // input and reference both are objects.
-        // match the keys and record any unique-ones.
-        // then traverse recursively.
         Object.keys(input).forEach(function (key) {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
-            temp = innerVar.path.length > 0 ? innerVar.path + "." + key : key;
+            temp = innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
             innerVar.res.push(temp);
           } else if (isObj(input[key]) || isArr(input[key])) {
             temp = {
-              path: innerVar.path.length > 0 ? innerVar.path + "." + key : key,
+              path: innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key,
               res: innerVar.res
             };
             innerVar.res = objectNoNewKeysInternal(input[key], reference[key], opts, temp).res;
           }
         });
       } else {
-        // input is object, but reference is not.
-        // record all the keys of the input, but don't traverse deeper
         innerVar.res = innerVar.res.concat(Object.keys(input).map(function (key) {
-          return innerVar.path.length > 0 ? innerVar.path + "." + key : key;
+          return innerVar.path.length > 0 ? "".concat(innerVar.path, ".").concat(key) : key;
         }));
       }
     } else if (isArr(input)) {
       if (isArr(reference)) {
-        // both input and reference are arrays.
-        // traverse each
         for (var i = 0, len = input.length; i < len; i++) {
           temp = {
-            path: (innerVar.path.length > 0 ? innerVar.path : "") + "[" + i + "]",
+            path: "".concat(innerVar.path.length > 0 ? innerVar.path : "", "[").concat(i, "]"),
             res: innerVar.res
           };
           if (opts.mode === 2) {
@@ -75,10 +68,8 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           }
         }
       } else {
-        // mismatch
-        // traverse all elements of the input and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(input.map(function (el, i) {
-          return (innerVar.path.length > 0 ? innerVar.path : "") + "[" + i + "]";
+          return "".concat(innerVar.path.length > 0 ? innerVar.path : "", "[").concat(i, "]");
         }));
       }
     }

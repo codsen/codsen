@@ -1,8 +1,6 @@
 import isObj from 'lodash.isplainobject';
 import checkTypes from 'check-types-mini';
 
-/* eslint no-param-reassign:0 */
-
 function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   const isArr = Array.isArray;
   const defaults = {
@@ -33,7 +31,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
   checkTypes(optsOuter, defaults, {
     msg: "object-no-new-keys/objectNoNewKeys(): [THROW_ID_04*]"
   });
-
   function objectNoNewKeysInternal(input, reference, opts, innerVar) {
     let temp;
     if (innerVar === undefined) {
@@ -41,9 +38,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
     }
     if (isObj(input)) {
       if (isObj(reference)) {
-        // input and reference both are objects.
-        // match the keys and record any unique-ones.
-        // then traverse recursively.
         Object.keys(input).forEach(key => {
           if (!Object.prototype.hasOwnProperty.call(reference, key)) {
             temp = innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key;
@@ -62,8 +56,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           }
         });
       } else {
-        // input is object, but reference is not.
-        // record all the keys of the input, but don't traverse deeper
         innerVar.res = innerVar.res.concat(
           Object.keys(input).map(
             key => (innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key)
@@ -72,8 +64,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
       }
     } else if (isArr(input)) {
       if (isArr(reference)) {
-        // both input and reference are arrays.
-        // traverse each
         for (let i = 0, len = input.length; i < len; i++) {
           temp = {
             path: `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`,
@@ -96,8 +86,6 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
           }
         }
       } else {
-        // mismatch
-        // traverse all elements of the input and put their locations to innerVar.res
         innerVar.res = innerVar.res.concat(
           input.map(
             (el, i) => `${innerVar.path.length > 0 ? innerVar.path : ""}[${i}]`
