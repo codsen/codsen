@@ -8,25 +8,15 @@ var typ = _interopDefault(require('type-detect'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 
 var isArr = Array.isArray;
-
 function flattenAllArrays(originalIncommingObj, originalOpts) {
-  //
-  // internal functions
-  // ==================
-
   function arrayContainsStr(arr) {
     return arr.some(function (val) {
       return typeof val === "string";
     });
   }
-
   function isObj(something) {
     return typ(something) === "Object";
   }
-
-  // setup
-  // =====
-
   var defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   };
@@ -34,16 +24,10 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   checkTypes(opts, defaults, {
     msg: "object-flatten-all-arrays: [THROW_ID_02*]"
   });
-
   var incommingObj = clone(originalIncommingObj);
-  var isFirstObj = void 0;
-  var combinedObj = void 0;
-  var firstObjIndex = void 0;
-
-  // action
-  // ======
-
-  // 1. check current
+  var isFirstObj;
+  var combinedObj;
+  var firstObjIndex;
   if (isArr(incommingObj)) {
     if (opts.flattenArraysContainingStringsToBeEmpty && arrayContainsStr(incommingObj)) {
       return [];
@@ -67,7 +51,6 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       incommingObj[firstObjIndex] = clone(combinedObj);
     }
   }
-  // 2. traverse deeper
   if (isObj(incommingObj)) {
     Object.keys(incommingObj).forEach(function (key) {
       if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {

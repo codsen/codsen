@@ -4,23 +4,13 @@ import typ from 'type-detect';
 import checkTypes from 'check-types-mini';
 
 const isArr = Array.isArray;
-
 function flattenAllArrays(originalIncommingObj, originalOpts) {
-  //
-  // internal functions
-  // ==================
-
   function arrayContainsStr(arr) {
     return arr.some(val => typeof val === "string");
   }
-
   function isObj(something) {
     return typ(something) === "Object";
   }
-
-  // setup
-  // =====
-
   const defaults = {
     flattenArraysContainingStringsToBeEmpty: false
   };
@@ -28,16 +18,10 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
   checkTypes(opts, defaults, {
     msg: "object-flatten-all-arrays: [THROW_ID_02*]"
   });
-
   const incommingObj = clone(originalIncommingObj);
   let isFirstObj;
   let combinedObj;
   let firstObjIndex;
-
-  // action
-  // ======
-
-  // 1. check current
   if (isArr(incommingObj)) {
     if (
       opts.flattenArraysContainingStringsToBeEmpty &&
@@ -64,7 +48,6 @@ function flattenAllArrays(originalIncommingObj, originalOpts) {
       incommingObj[firstObjIndex] = clone(combinedObj);
     }
   }
-  // 2. traverse deeper
   if (isObj(incommingObj)) {
     Object.keys(incommingObj).forEach(key => {
       if (isObj(incommingObj[key]) || isArr(incommingObj[key])) {
