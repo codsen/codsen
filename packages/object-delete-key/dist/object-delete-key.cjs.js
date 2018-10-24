@@ -8,9 +8,6 @@ var clone = _interopDefault(require('lodash.clonedeep'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var validateTheOnly = _interopDefault(require('util-array-object-or-both'));
 
-// ---------------------------------------------------------------------
-// MAIN:
-
 function deleteKey(originalInput, originalOpts) {
   function existy(x) {
     return x != null;
@@ -40,26 +37,25 @@ function deleteKey(originalInput, originalOpts) {
     msg: "object-delete-key/deleteKey(): [THROW_ID_03]",
     optsVarName: "opts.only"
   });
-  // after this, opts.only is equal to either: 1) object, 2) array OR 3) any
-
   if (!existy(opts.key) && !existy(opts.val)) {
     throw new Error("object-delete-key/deleteKey(): [THROW_ID_04] Please provide at least a key or a value.");
   }
   var input = clone(originalInput);
-
   if (opts.cleanup) {
     var findings = astMonkey.find(input, {
       key: opts.key,
       val: opts.val,
       only: opts.only
     });
-    var currentIndex = void 0;
-    var nodeToDelete = void 0;
+    var currentIndex;
+    var nodeToDelete;
     while (findings) {
       nodeToDelete = findings[0].index;
       for (var i = 1, len = findings[0].path.length; i < len; i++) {
         currentIndex = findings[0].path[len - 1 - i];
-        if (isEmpty(astMonkey.del(astMonkey.get(input, { index: currentIndex }), {
+        if (isEmpty(astMonkey.del(astMonkey.get(input, {
+          index: currentIndex
+        }), {
           key: opts.key,
           val: opts.val,
           only: opts.only
@@ -67,12 +63,22 @@ function deleteKey(originalInput, originalOpts) {
           nodeToDelete = currentIndex;
         }
       }
-      input = astMonkey.drop(input, { index: nodeToDelete });
-      findings = astMonkey.find(input, { key: opts.key, val: opts.val, only: opts.only });
+      input = astMonkey.drop(input, {
+        index: nodeToDelete
+      });
+      findings = astMonkey.find(input, {
+        key: opts.key,
+        val: opts.val,
+        only: opts.only
+      });
     }
     return input;
   }
-  return astMonkey.del(input, { key: opts.key, val: opts.val, only: opts.only });
+  return astMonkey.del(input, {
+    key: opts.key,
+    val: opts.val,
+    only: opts.only
+  });
 }
 
 module.exports = deleteKey;
