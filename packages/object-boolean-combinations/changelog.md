@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.0] - 2018-10-24
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [2.3.0] - 2018-07-25
 
 - ✨ Allow override object key values to be of any type
@@ -39,3 +45,4 @@ Bumping the major version just in case it breaks something. But it should not.
 [2.1.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.1.0%0Dv2.0.5#diff
 [2.2.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.2.0%0Dv2.1.1#diff
 [2.3.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.3.0%0Dv2.2.1#diff
+[2.4.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.4.0%0Dv2.3.0#diff
