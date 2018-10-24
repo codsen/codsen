@@ -3,14 +3,12 @@ import clone from 'lodash.clonedeep';
 import isStringInt from 'is-string-int';
 
 const isArr = Array.isArray;
-
 function isStr(something) {
   return type(something) === "string";
 }
 function isObj(something) {
   return type(something) === "Object";
 }
-
 function flattenObject(objOrig, opts) {
   if (arguments.length === 0 || Object.keys(objOrig).length === 0) {
     return [];
@@ -34,7 +32,6 @@ function flattenObject(objOrig, opts) {
   }
   return res;
 }
-
 function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   if (arguments.length === 0 || arrOrig.length === 0) {
     return "";
@@ -64,7 +61,6 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
             arr[i] +
             (wrap ? opts.wrapTailsWith : "");
         } else if (isArr(arr[i])) {
-          // there's an array among elements
           if (arr[i].length > 0 && arr[i].every(isStr)) {
             let lineBreak = "";
             if (opts.mergeArraysWithLineBreaks && res.length > 0) {
@@ -110,7 +106,6 @@ function flattenArr(arrOrig, opts, wrap, joinArraysUsingBrs) {
   }
   return res;
 }
-
 function arrayiffyString(something) {
   if (isStr(something)) {
     if (something.length > 0) {
@@ -120,7 +115,6 @@ function arrayiffyString(something) {
   }
   return something;
 }
-
 function reclaimIntegerString(something) {
   if (isStr(something) && isStringInt(something.trim())) {
     return parseInt(something.trim(), 10);

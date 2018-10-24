@@ -26,10 +26,9 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
-    "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc --require esm --reporter=html --reporter=text ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -46,6 +45,11 @@
   "esm": {
     "await": true,
     "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
   },
   "keywords": [
     "object",
@@ -135,7 +139,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        ""
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -152,19 +158,28 @@
       "travisVersionsOverride": []
     }
   },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
   "dependencies": {
     "check-types-mini": "latest",
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "*",
     "lodash.includes": "*",
     "matcher": "^1.1.1",
-    "str-indexes-of-plus": "^2.2.1",
+    "str-indexes-of-plus": "^2.2.2",
     "type-detect": "^4.0.8"
   },
   "devDependencies": {
-    "ava": "latest",
-    "babel-preset-env": "latest",
-    "codacy-coverage": "latest",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "ava": "1.0.0-rc.1",
+    "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
@@ -174,15 +189,15 @@
     "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
-    "esm": "latest",
-    "husky": "latest",
+    "husky": "^1.1.2",
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^3.0.4",
-    "rollup-plugin-commonjs": "^9.1.3",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-uglify": "^4.0.0"
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-strip": "^1.2.0",
+    "rollup-plugin-terser": "^3.0.0"
   }
 }
