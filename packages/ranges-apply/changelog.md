@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.7.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [2.6.0] - 2018-08-29
 
 - ✨ Now second argument, ranges array, can be `null`. This means, output of [ranges-push](https://www.npmjs.com/package/ranges-push) classes method`.current()` can be fed directly into this library without even checking. If it's null, original string will be returned.
@@ -81,6 +87,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[2.7.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.7.0%0Dv2.6.0#diff
 [2.6.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.6.0%0Dv2.5.1#diff
 [2.5.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.5.0%0Dv2.4.1#diff
 [2.4.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.4.0%0Dv2.3.2#diff
