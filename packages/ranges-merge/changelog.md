@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.6.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [3.5.0] - 2018-08-17
 
 - ✨ Apparently the input arguments were mutated on some cases. That's fixed now.
@@ -57,6 +63,7 @@ This change is logical and natural but I'm bumping major version just in case it
 
 - First public release
 
+[3.6.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.6.0%0Dv3.5.0#diff
 [3.5.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.5.0%0Dv3.4.0#diff
 [3.4.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.4.0%0Dv3.3.2#diff
 [3.3.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.3.0%0Dv3.2.0#diff
