@@ -170,7 +170,7 @@
     "is-natural-number": "*",
     "is-natural-number-string": "*",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^3.5.0",
+    "ranges-merge": "^3.6.0",
     "string-collapse-leading-whitespace": "^1.4.0"
   },
   "devDependencies": {

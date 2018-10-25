@@ -5,16 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [2.13.0] - 2018-10-25
+## [2.12.0] - 2018-10-25
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
-
-## [2.12.0] - 2018-08-23
-
-- ✨ Added more unit tests but no new code lines.
-- ✨ Temporarily removing `nyc`, the code coverage because it breaks the ava tests after Babel v.7 migration.
 
 ## [2.11.0] - 2018-07-26
 
@@ -145,4 +140,3 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 [2.10.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.10.0%0Dv2.9.2#diff
 [2.11.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.11.0%0Dv2.10.0#diff
 [2.12.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.12.0%0Dv2.11.3#diff
-[2.13.0]: https://bitbucket.org/codsen/ranges-push/branches/compare/v2.13.0%0Dv2.11.3#diff
