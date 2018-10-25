@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.8.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [1.7.0] - 2018-07-26
 
 We now allow 2nd argument to be `null`. This will instantly yield `false` result and will not `throw`. It's because we want to avoid type checks, and Slices method `.current()` returns either ranges array or `null`. Latter would have `throw`n up until now.
@@ -54,3 +60,4 @@ Setup refresh. Plus:
 [1.5.0]: https://bitbucket.org/codsen/ranges-is-index-within/branches/compare/v1.5.0%0Dv1.4.1#diff
 [1.6.0]: https://bitbucket.org/codsen/ranges-is-index-within/branches/compare/v1.6.0%0Dv1.5.2#diff
 [1.7.0]: https://bitbucket.org/codsen/ranges-is-index-within/branches/compare/v1.7.0%0Dv1.6.1#diff
+[1.8.0]: https://bitbucket.org/codsen/ranges-is-index-within/branches/compare/v1.8.0%0Dv1.7.1#diff
