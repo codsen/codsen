@@ -26,10 +26,9 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
-    "precommit": "npm run format && npm test",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && ava"
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
   },
   "ava": {
     "compileEnhancements": false,
@@ -46,6 +45,11 @@
   "esm": {
     "await": true,
     "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
   },
   "keywords": [
     "string",
@@ -149,17 +153,25 @@
       "travisVersionsOverride": []
     }
   },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
   "dependencies": {
     "check-types-mini": "latest",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^3.3.2"
+    "ranges-merge": "^3.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.53",
-    "@babel/preset-env": "^7.0.0-beta.53",
-    "ava": "1.0.0-beta.7",
-    "codacy-coverage": "latest",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "ava": "1.0.0-rc.1",
+    "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
@@ -169,16 +181,15 @@
     "eslint-plugin-no-wildcard-postmessage": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-plugin-scanjs-rules": "latest",
-    "esm": "latest",
-    "husky": "latest",
+    "husky": "^1.1.2",
     "nyc": "latest",
     "prettier": "latest",
     "rollup": "latest",
-    "rollup-plugin-babel": "^4.0.0-beta.7",
+    "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-cleanup": "^3.0.0",
-    "rollup-plugin-commonjs": "^9.1.5",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-terser": "^1.0.1"
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-strip": "^1.2.0",
+    "rollup-plugin-terser": "^3.0.0"
   }
 }
