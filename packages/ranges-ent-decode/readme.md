@@ -26,11 +26,11 @@ import decode from "ranges-ent-decode";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-ent-decode.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-ent-decode.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-ent-decode.umd.js` | 91 KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-ent-decode.cjs.js` | 3 KB   |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-ent-decode.esm.js` | 3 KB   |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-ent-decode.umd.js` | 109 KB |
 
 **[⬆ back to top](#markdown-header-ranges-ent-decode)**
 
