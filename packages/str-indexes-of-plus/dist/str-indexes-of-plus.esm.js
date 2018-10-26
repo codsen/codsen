@@ -2,15 +2,12 @@ import toArr from 'lodash.toarray';
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 
-/* eslint no-param-reassign:0 */
-
 function existy(x) {
   return x != null;
 }
 function isStr(something) {
   return typeof something === "string";
 }
-
 function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (arguments.length === 0) {
     throw new Error("str-indexes-of-plus/strIndexesOfPlus(): inputs missing!");
@@ -49,11 +46,9 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
   if (!existy(fromIndex)) {
     fromIndex = 0;
   }
-
   const res = [];
   let matchMode = false;
   let potentialFinding;
-
   for (let i = fromIndex, len = strArr.length; i < len; i++) {
     if (matchMode) {
       if (strArr[i] === searchValueArr[i - potentialFinding]) {
@@ -65,7 +60,6 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
         matchMode = false;
       }
     }
-
     if (!matchMode) {
       if (strArr[i] === searchValueArr[0]) {
         if (searchValueArr.length === 1) {
@@ -77,7 +71,6 @@ function strIndexesOfPlus(str, searchValue, fromIndex) {
       }
     }
   }
-
   return res;
 }
 
