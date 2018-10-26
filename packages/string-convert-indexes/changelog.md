@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.6.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [1.5.0] - 2018-08-19
 
 - ✨ Rebased code to remove any `if (DEBUG)` statements - now `console.log` comments can be left in place - they will be removed during non-dev Rollup builds
@@ -60,3 +66,4 @@ that include string's last character.
 [1.3.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.3.0%0Dv1.2.1#diff
 [1.4.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.4.0%0Dv1.3.0#diff
 [1.5.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.5.0%0Dv1.4.0#diff
+[1.6.0]: https://bitbucket.org/codsen/string-convert-indexes/branches/compare/v1.6.0%0Dv1.5.0#diff

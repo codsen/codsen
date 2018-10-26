@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: node:6.9.4
+image: node:latest
 
 pipelines:
   default:
@@ -13,3 +13,4 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - npm install
           - npm test
+          - npm run coverage
