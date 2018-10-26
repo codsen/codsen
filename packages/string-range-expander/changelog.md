@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.5.0] - 2018-10-26
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [1.4.0] - 2018-09-20
 
 - ✨ Improvements to `opts.addSingleSpaceToPreventAccidentalConcatenation`, now it detects is there at least one digit or number around and if there's none, it doesn't add a space.
@@ -28,6 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[1.5.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.5.0%0Dv1.4.0#diff
 [1.4.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.4.0%0Dv1.3.0#diff
 [1.3.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.3.0%0Dv1.2.0#diff
 [1.2.0]: https://bitbucket.org/codsen/string-range-expander/branches/compare/v1.2.0%0Dv1.1.3#diff
