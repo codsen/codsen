@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-10-26
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [2.2.0] - 2018-07-16
 
 GitHub sold us out. In the meantime, we:
@@ -47,6 +53,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ First public release
 
+[2.3.0]: https://bitbucket.org/codsen/util-nonempty/branches/compare/v2.3.0%0Dv2.2.0#diff
 [2.2.0]: https://bitbucket.org/codsen/util-nonempty/branches/compare/v2.2.0%0Dv2.1.2#diff
 [2.1.0]: https://bitbucket.org/codsen/util-nonempty/branches/compare/v2.1.0%0Dv2.0.4#diff
 [2.0.0]: https://bitbucket.org/codsen/util-nonempty/branches/compare/v2.0.0%0Dv1.4.2#diff

@@ -9,7 +9,6 @@ function isStr(something) {
 function isNum(something) {
   return typeof something === "number";
 }
-
 function nonEmpty(input) {
   if (arguments.length === 0 || input === undefined) {
     return false;

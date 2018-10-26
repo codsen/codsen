@@ -13,12 +13,11 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [API](#markdown-header-markdown-header-api)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [API](#markdown-header-api)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -40,11 +39,11 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-nonempty.cjs.js` | 757 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-nonempty.esm.js` | 604 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 1 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-nonempty.cjs.js` | 756 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-nonempty.esm.js` | 603 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 929 B |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-nonempty)**
 
 ## Purpose
 
@@ -84,7 +83,7 @@ If you want to check _non-emptiness_ of complex nested trees of objects, arrays 
 - If you want to check for **strict** emptiness, that is `[]` or `{}` is empty, but `{aaa: ' \n\n\n ', ' \t'}` is not, see [ast-is-empty](https://www.npmjs.com/package/ast-is-empty)
 - If your "emptiness" definition is "everything that `String.trim()`'s to an empty string'" (this includes tabs, spaces and line breaks for example, but not letters), see [ast-contains-only-empty-space](https://www.npmjs.com/package/ast-contains-only-empty-space).
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-nonempty)**
 
 ## API
 
@@ -98,7 +97,7 @@ Anything-in, Boolean-out.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-nonempty)**
 
 ## Licence
 
