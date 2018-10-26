@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.2.0] - 2018-10-26
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [2.1.0] - 2018-10-15
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
@@ -53,3 +59,4 @@ GitHub sold us out. In the meantime, we:
 [1.2.0]: https://bitbucket.org/codsen/string-trim-spaces-only/branches/compare/v1.2.0%0Dv1.1.0#diff
 [2.0.0]: https://bitbucket.org/codsen/string-trim-spaces-only/branches/compare/v2.0.0%0Dv1.2.2#diff
 [2.1.0]: https://bitbucket.org/codsen/string-trim-spaces-only/branches/compare/v2.1.0%0Dv2.0.0#diff
+[2.2.0]: https://bitbucket.org/codsen/string-trim-spaces-only/branches/compare/v2.2.0%0Dv2.1.0#diff

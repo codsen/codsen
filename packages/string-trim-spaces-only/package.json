@@ -166,7 +166,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.0.0"
+    "check-types-mini": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
