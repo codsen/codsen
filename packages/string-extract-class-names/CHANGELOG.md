@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [5.0.0] - 2018-07-04
 
 - ✨ Complete rewrite. Now instead of using regexes and string `replace`, we traverse the input string once and compile the array of selectors
@@ -100,3 +106,4 @@ This library will detect the first clump of class(es)/array(s), will put each in
 [4.2.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.2.0%0Dv4.1.0#diff
 [4.3.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v4.3.0%0Dv4.2.1#diff
 [5.0.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v5.0.0%0Dv4.3.0#diff
+[5.1.0]: https://bitbucket.org/codsen/string-extract-class-names/branches/compare/v5.1.0%0Dv5.0.0#diff

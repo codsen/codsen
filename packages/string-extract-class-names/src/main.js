@@ -66,12 +66,12 @@ function stringExtractClassNames(input, returnRangesInstead) {
         if (returnRangesInstead) {
           result.push([selectorStartsAt, i]);
           console.log(
-            `070 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] to result[]`
+            `069 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] to result[]`
           );
         } else {
           result.push(input.slice(selectorStartsAt, i));
           console.log(
-            `075 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] = "${input.slice(
+            `074 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${i}] = "${input.slice(
               selectorStartsAt,
               i
             )}" to result[]`
@@ -80,7 +80,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
       }
       selectorStartsAt = null;
       console.log(
-        `084 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
+        `083 ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = null`
       );
     }
 
@@ -88,7 +88,7 @@ function stringExtractClassNames(input, returnRangesInstead) {
     if (selectorStartsAt === null && (input[i] === "." || input[i] === "#")) {
       selectorStartsAt = i;
       console.log(
-        `092 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
+        `091 SET ${`\u001b[${33}m${`selectorStartsAt`}\u001b[${39}m`} = ${selectorStartsAt}`
       );
     }
 
@@ -97,12 +97,12 @@ function stringExtractClassNames(input, returnRangesInstead) {
       if (returnRangesInstead) {
         result.push([selectorStartsAt, len]);
         console.log(
-          `105 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
+          `100 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] to result[]`
         );
       } else {
         result.push(input.slice(selectorStartsAt, len));
         console.log(
-          `111 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
+          `105 ${`\u001b[${33}m${`PUSH`}\u001b[${39}m`} [${selectorStartsAt}, ${len}] = "${input.slice(
             selectorStartsAt,
             len
           )}" to result[]`

@@ -31,8 +31,8 @@ Here's what you'll get:
 
 - [Install](#markdown-header-install)
 - [Purpose](#markdown-header-purpose)
-- [Examples](#markdown-header-examples)
 - [API](#markdown-header-api)
+- [More examples](#markdown-header-more-examples)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -79,6 +79,8 @@ const res2 = extract(str, true);
 console.log("res2 = " + res2);
 // => res2 = [[3, 15], [15, 28]]
 ```
+
+**[⬆ back to top](#markdown-header-string-extract-class-names)**
 
 ## More examples
 
