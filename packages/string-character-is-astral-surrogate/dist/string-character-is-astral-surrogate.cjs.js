@@ -2,7 +2,20 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
 function isHighSurrogate(something) {
   if (typeof something === "string") {
     if (something.length === 0) {
@@ -12,7 +25,7 @@ function isHighSurrogate(something) {
   } else if (something === undefined) {
     return false;
   }
-  throw new TypeError("string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
+  throw new TypeError("string-character-is-astral-surrogate/isHighSurrogate(): the input is not string but ".concat(_typeof(something)));
 }
 function isLowSurrogate(something) {
   if (typeof something === "string") {
@@ -23,7 +36,7 @@ function isLowSurrogate(something) {
   } else if (something === undefined) {
     return false;
   }
-  throw new TypeError("string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but " + (typeof something === "undefined" ? "undefined" : _typeof(something)));
+  throw new TypeError("string-character-is-astral-surrogate/isLowSurrogate(): the input is not string but ".concat(_typeof(something)));
 }
 
 exports.isHighSurrogate = isHighSurrogate;
