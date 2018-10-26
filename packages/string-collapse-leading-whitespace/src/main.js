@@ -80,14 +80,14 @@ function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
       }
     }
     console.log(
-      `076 ${`\u001b[${33}m${`startCharacter`}\u001b[${39}m`} = ${JSON.stringify(
+      `083 ${`\u001b[${33}m${`startCharacter`}\u001b[${39}m`} = ${JSON.stringify(
         startCharacter,
         null,
         4
       )}`
     );
     console.log(
-      `083 ${`\u001b[${33}m${`endCharacter`}\u001b[${39}m`} = ${JSON.stringify(
+      `090 ${`\u001b[${33}m${`endCharacter`}\u001b[${39}m`} = ${JSON.stringify(
         endCharacter,
         null,
         4

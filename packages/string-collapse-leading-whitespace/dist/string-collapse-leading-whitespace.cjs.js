@@ -1,7 +1,7 @@
 'use strict';
 
 function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {
-  var limitLinebreaksCount = void 0;
+  var limitLinebreaksCount;
   if (!originalLimitLinebreaksCount ||
   typeof originalLimitLinebreaksCount !== "number") {
     limitLinebreaksCount = 1;
