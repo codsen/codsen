@@ -1,11 +1,8 @@
 import he from 'he';
 
-/* eslint quote-props:0 */
-
 function existy(x) {
   return x != null;
 }
-
 function unfancy(str) {
   const CHARS = {
     "\u00B4": "'",
@@ -41,7 +38,6 @@ function unfancy(str) {
       `string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ${typeof str}`
     );
   }
-  // decode anticipating multiple encoding on top of one another
   let res = str;
   while (he.decode(res) !== res) {
     res = he.decode(res);

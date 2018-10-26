@@ -4,12 +4,23 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var he = _interopDefault(require('he'));
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
 
 function existy(x) {
   return x != null;
 }
-
 function unfancy(str) {
   var CHARS = {
     "\xB4": "'",
@@ -39,9 +50,8 @@ function unfancy(str) {
     throw new Error("string-unfancy/unfancy(): [THROW_ID_01] The input is missing!");
   }
   if (typeof str !== "string") {
-    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: " + (typeof str === "undefined" ? "undefined" : _typeof(str)));
+    throw new Error("string-unfancy/unfancy(): [THROW_ID_02] The input is not a string! It's: ".concat(_typeof(str)));
   }
-  // decode anticipating multiple encoding on top of one another
   var res = str;
   while (he.decode(res) !== res) {
     res = he.decode(res);
