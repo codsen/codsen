@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [4.1.0] - 2018-07-24
 
 - ✨ Fixed a strange false-positive bug which was happening around the encountered first bracket when there was no whitespace to remove, but with only a single line break. Sorry about that.
@@ -134,3 +140,4 @@ GitHub sold us out. In the meantime, we:
 [3.7.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v3.7.0%0Dv3.6.1#diff
 [4.0.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.0.0%0Dv3.7.0#diff
 [4.1.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.1.0%0Dv4.0.0#diff
+[4.2.0]: https://bitbucket.org/codsen/string-collapse-white-space/branches/compare/v4.2.0%0Dv4.1.0#diff
