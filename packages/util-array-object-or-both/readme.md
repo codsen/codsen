@@ -13,14 +13,13 @@
 
 ## Table of Contents
 
-- [Table of Contents](#markdown-header-markdown-header-table-of-contents)
-- [Install](#markdown-header-markdown-header-install)
-- [Purpose](#markdown-header-markdown-header-purpose)
-- [API](#markdown-header-markdown-header-api)
-- [Use](#markdown-header-markdown-header-use)
-- [Critique](#markdown-header-markdown-header-critique)
-- [Contributing](#markdown-header-markdown-header-contributing)
-- [Licence](#markdown-header-markdown-header-licence)
+- [Install](#markdown-header-install)
+- [Purpose](#markdown-header-purpose)
+- [API](#markdown-header-api)
+- [Use](#markdown-header-use)
+- [Critique](#markdown-header-critique)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
 
 ## Install
 
@@ -41,9 +40,9 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-array-object-or-both.cjs.js` | 3 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-array-object-or-both.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-array-object-or-both.umd.js` | 17 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-array-object-or-both.umd.js` | 30 KB |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## Purpose
 
@@ -67,7 +66,7 @@ When I give the user ability to choose their preference out of: `array`, `object
 | <br>               | `----`                      | `----`      | `----`       |
 | **Output string:** | `array`                     | `object`    | `any`        |
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## API
 
@@ -93,7 +92,7 @@ For example, set `optsVarName` to `opts.only` and set `msg` to `ast-delete-key/d
 
     ast-delete-key/deleteKey(): [THROW_ID_01] The variable "opts.only" was customised to an unrecognised value: sweetcarrots. Please check it against the API documentation.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## Use
 
@@ -145,7 +144,7 @@ function myPrecious (input, opts) {
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## Critique
 
@@ -165,7 +164,7 @@ I'm going to use it in:
 
 and others. So, it's not that niche as it might seem!
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## Contributing
 
@@ -175,7 +174,7 @@ and others. So, it's not that niche as it might seem!
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#)**
+**[⬆ back to top](#markdown-header-util-array-object-or-both)**
 
 ## Licence
 

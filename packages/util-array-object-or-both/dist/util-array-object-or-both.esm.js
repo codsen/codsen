@@ -33,7 +33,6 @@ function arrObjOrBoth(str, originalOpts) {
       )}`
     );
   }
-
   const onlyObjectValues = ["object", "objects", "obj", "ob", "o"];
   const onlyArrayValues = ["array", "arrays", "arr", "aray", "arr", "a"];
   const onlyAnyValues = [
@@ -47,7 +46,6 @@ function arrObjOrBoth(str, originalOpts) {
     "whatevs",
     "e"
   ];
-
   const defaults = {
     msg: "",
     optsVarName: "given variable"
@@ -67,7 +65,6 @@ function arrObjOrBoth(str, originalOpts) {
   if (opts.optsVarName !== "given variable") {
     opts.optsVarName = `variable "${opts.optsVarName}"`;
   }
-
   if (includes(onlyObjectValues, str.toLowerCase().trim())) {
     return "object";
   } else if (includes(onlyArrayValues, str.toLowerCase().trim())) {
