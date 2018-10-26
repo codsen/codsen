@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.8.0] - 2018-10-26
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [2.7.0] - 2018-06-26
 
 - ✨ Updated dependencies, particularly, [string-trim-spaces-only](https://www.npmjs.com/package/string-trim-spaces-only) and others
@@ -57,3 +63,4 @@ GitHub sold us out. In the meantime, we:
 [2.5.0]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails/branches/compare/v2.5.0%0Dv2.4.1#diff
 [2.6.0]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails/branches/compare/v2.6.0%0Dv2.5.0#diff
 [2.7.0]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails/branches/compare/v2.7.0%0Dv2.6.1#diff
+[2.8.0]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails/branches/compare/v2.8.0%0Dv2.7.0#diff
