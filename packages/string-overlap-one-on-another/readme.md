@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -16,6 +17,7 @@
 - [Idea](#markdown-header-idea)
 - [API](#markdown-header-api)
 - [Practical use](#markdown-header-practical-use)
+- [Edge cases](#markdown-header-edge-cases)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -37,8 +39,8 @@ Here's what you'll get:
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-overlap-one-on-another.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-overlap-one-on-another.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-overlap-one-on-another.umd.js` | 26 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-overlap-one-on-another.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-overlap-one-on-another.umd.js` | 28 KB |
 
 **[⬆ back to top](#markdown-header-string-overlap-one-on-another)**
 
@@ -133,6 +135,8 @@ console.log(`res = ${res}`);
 
 Consider the sample above - even though offset is long enough to warrant the filler, no characters are added to the `str2`, `456` because the first argument, `str1` is empty.
 
+**[⬆ back to top](#markdown-header-string-overlap-one-on-another)**
+
 ## Contributing
 
 - If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/string-overlap-one-on-another/issues/new).
@@ -153,6 +157,8 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [node-url]: https://www.npmjs.com/package/string-overlap-one-on-another
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/string-overlap-one-on-another
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-overlap-one-on-another/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/string-overlap-one-on-another?branch=master
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-overlap-one-on-another
 [downloads-img]: https://img.shields.io/npm/dm/string-overlap-one-on-another.svg?style=flat-square
