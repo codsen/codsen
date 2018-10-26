@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.10.0] - 2018-10-25
+
+- ✨ Updated all dependencies
+- ✨ Restored coveralls.io reporting
+- ✨ Restored unit test linting
+
 ## [3.9.0] - 2018-08-11
 
 Code refresh:
@@ -131,3 +137,4 @@ now the same example in `v.2` API:
 [3.7.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.7.0%0Dv3.6.0#diff
 [3.8.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.8.0%0Dv3.7.0#diff
 [3.9.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.9.0%0Dv3.8.3#diff
+[3.10.0]: https://bitbucket.org/codsen/string-find-heads-tails/branches/compare/v3.10.0%0Dv3.9.0#diff
