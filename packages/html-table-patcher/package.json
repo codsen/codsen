@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "engines": {
