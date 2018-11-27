@@ -86,9 +86,19 @@ This package does not mutate the input array.
 | ---------------------------------- | ------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                  |         |             |         |
 | `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to true, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element). |
+| `progressFn`                       | Function | no          | `null` | If a function is given, it will be called with natural number meaning percentage of the total work done. It's approximate and used in worker setups. |
 | }                                  |         |             |         |
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
+
+Here is whole Optional Options Object in one place, with all defaults, in case you want to copy it:
+
+```js
+{
+  strictlyTwoElementsInRangeArrays: false,
+  progressFn: null
+}
+```
 
 **[⬆  back to top](#markdown-header-ranges-sort)**
 
