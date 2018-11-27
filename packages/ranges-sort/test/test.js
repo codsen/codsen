@@ -187,3 +187,40 @@ test("03.07 readme example #6", t => {
     "03.07 - 3rd argument and onwards are ignored"
   );
 });
+
+// ==============================
+// 04. opts.progressFn
+// ==============================
+
+// TODO:
+test("04.01 - calls progress callback correctly", t => {
+  t.deepEqual(
+    srt([[0, 3], [5, 8], [5, 6]], {
+      progressFn: null
+    }),
+    [[0, 3], [5, 6], [5, 8]],
+    "04.01.01 - callback fn is null"
+  );
+  t.deepEqual(
+    srt([[0, 3], [5, 8], [5, 6]], {
+      progressFn: false
+    }),
+    [[0, 3], [5, 6], [5, 8]],
+    "04.01.02 - callback fn is false"
+  );
+  t.deepEqual(
+    srt([[0, 3], [5, 8], [5, 6]], {}),
+    [[0, 3], [5, 6], [5, 8]],
+    "04.01.03 - empty opts obj"
+  );
+  t.deepEqual(
+    srt([[0, 3], [5, 8], [5, 6]], {
+      progressFn: percentage => {
+        // console.log(`percentage = ${percentage}`);
+        t.pass(`worked - ${percentage}`);
+      }
+    }),
+    [[0, 3], [5, 6], [5, 8]],
+    "04.01.04 - baseline, no fn to call"
+  );
+});

@@ -35,41 +35,47 @@ function rangesSort(arrOfRanges, originalOptions) {
 
   // declare defaults, so we can enforce types later:
   const defaults = {
-    strictlyTwoElementsInRangeArrays: false
+    strictlyTwoElementsInRangeArrays: false,
+    progressFn: null
   };
   // fill any settings with defaults if missing:
   const opts = Object.assign({}, defaults, originalOptions);
   // the check:
-  checkTypes(opts, defaults, { msg: "ranges-sort: [THROW_ID_02*]" });
+  checkTypes(opts, defaults, {
+    msg: "ranges-sort: [THROW_ID_02*]",
+    schema: {
+      progressFn: ["function", "false", "null"]
+    }
+  });
 
   // arrOfRanges validation
 
   let culpritsIndex;
   let culpritsLen;
 
-  if (opts.strictlyTwoElementsInRangeArrays) {
-    // validate does every range consist of exactly two indexes:
-    if (
-      !arrOfRanges.every((rangeArr, indx) => {
-        if (rangeArr.length !== 2) {
-          culpritsIndex = indx;
-          culpritsLen = rangeArr.length;
-          return false;
-        }
-        return true;
-      })
-    ) {
-      throw new TypeError(
-        `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${ordinalSuffix(
-          culpritsIndex
-        )} range (${JSON.stringify(
-          arrOfRanges[culpritsIndex],
-          null,
-          4
-        )}) has not two but ${culpritsLen} elements!`
-      );
-    }
+  // validate does every range consist of exactly two indexes:
+  if (
+    opts.strictlyTwoElementsInRangeArrays &&
+    !arrOfRanges.every((rangeArr, indx) => {
+      if (rangeArr.length !== 2) {
+        culpritsIndex = indx;
+        culpritsLen = rangeArr.length;
+        return false;
+      }
+      return true;
+    })
+  ) {
+    throw new TypeError(
+      `ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ${ordinalSuffix(
+        culpritsIndex
+      )} range (${JSON.stringify(
+        arrOfRanges[culpritsIndex],
+        null,
+        4
+      )}) has not two but ${culpritsLen} elements!`
+    );
   }
+
   // validate are range indexes natural numbers:
   if (
     !arrOfRanges.every((rangeArr, indx) => {
@@ -93,7 +99,16 @@ function rangesSort(arrOfRanges, originalOptions) {
       )}) does not consist of only natural numbers!`
     );
   }
+
+  // let's assume worst case scenario is N x N.
+  const maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+  let counter = 0;
+
   return Array.from(arrOfRanges).sort((range1, range2) => {
+    if (opts.progressFn) {
+      counter++;
+      opts.progressFn(Math.floor((counter * 100) / maxPossibleIterations));
+    }
     if (range1[0] === range2[0]) {
       if (range1[1] < range2[1]) {
         return -1;

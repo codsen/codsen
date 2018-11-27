@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.5.0] - 2018-11-27
+
+- ✨ Added `opts.progressFn` - if you pass a function, it will report the progress, calling that function with a number between `0` and `100`. It's not precise and meant to be used as an approximate progress indicator.
+
 ## [3.4.0] - 2018-10-25
 
 - ✨ Updated all dependencies
@@ -67,3 +71,4 @@ Bumping major just in case this breaks API endpoints.
 [3.2.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.2.0%0Dv3.1.2#diff
 [3.3.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.3.0%0Dv3.2.0#diff
 [3.4.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.4.0%0Dv3.3.2#diff
+[3.5.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.5.0%0Dv3.4.0#diff

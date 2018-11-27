@@ -26,13 +26,13 @@ import rangesSort from "ranges-sort";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-sort.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-sort.esm.js` | 2 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-sort.umd.js` | 28 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-sort.cjs.js` | 3 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-sort.esm.js` | 3 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-sort.umd.js` | 28 KB
 
-**[⬆ back to top](#markdown-header-ranges-sort)**
+**[⬆  back to top](#markdown-header-ranges-sort)**
 
 ## Table of Contents
 
@@ -59,7 +59,7 @@ It sorts the array of index arrays, for example:
 [[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']] => [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']]
 ```
 
-**[⬆ back to top](#markdown-header-ranges-sort)**
+**[⬆  back to top](#markdown-header-ranges-sort)**
 
 ## API
 
@@ -78,7 +78,7 @@ For example,
 
 This package does not mutate the input array.
 
-**[⬆ back to top](#markdown-header-ranges-sort)**
+**[⬆  back to top](#markdown-header-ranges-sort)**
 
 ### Options object
 
@@ -90,7 +90,7 @@ This package does not mutate the input array.
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
-**[⬆ back to top](#markdown-header-ranges-sort)**
+**[⬆  back to top](#markdown-header-ranges-sort)**
 
 ## Contributing
 
@@ -100,7 +100,7 @@ This package does not mutate the input array.
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#markdown-header-ranges-sort)**
+**[⬆  back to top](#markdown-header-ranges-sort)**
 
 ## Licence
 
@@ -108,19 +108,28 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
+
 [node-img]: https://img.shields.io/node/v/ranges-sort.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-sort
+
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/ranges-sort
+
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-sort/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/ranges-sort?branch=master
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-sort
+
 [downloads-img]: https://img.shields.io/npm/dm/ranges-sort.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-sort
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-sort
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/ranges-sort

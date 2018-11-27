@@ -29,25 +29,27 @@ function rangesSort(arrOfRanges, originalOptions) {
     return arrOfRanges;
   }
   var defaults = {
-    strictlyTwoElementsInRangeArrays: false
+    strictlyTwoElementsInRangeArrays: false,
+    progressFn: null
   };
   var opts = Object.assign({}, defaults, originalOptions);
   checkTypes(opts, defaults, {
-    msg: "ranges-sort: [THROW_ID_02*]"
+    msg: "ranges-sort: [THROW_ID_02*]",
+    schema: {
+      progressFn: ["function", "false", "null"]
+    }
   });
   var culpritsIndex;
   var culpritsLen;
-  if (opts.strictlyTwoElementsInRangeArrays) {
-    if (!arrOfRanges.every(function (rangeArr, indx) {
-      if (rangeArr.length !== 2) {
-        culpritsIndex = indx;
-        culpritsLen = rangeArr.length;
-        return false;
-      }
-      return true;
-    })) {
-      throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(ordinalSuffix(culpritsIndex), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
+  if (opts.strictlyTwoElementsInRangeArrays && !arrOfRanges.every(function (rangeArr, indx) {
+    if (rangeArr.length !== 2) {
+      culpritsIndex = indx;
+      culpritsLen = rangeArr.length;
+      return false;
     }
+    return true;
+  })) {
+    throw new TypeError("ranges-sort: [THROW_ID_03] The first argument should be an array and must consist of arrays which are natural number indexes representing TWO string index ranges. However, ".concat(ordinalSuffix(culpritsIndex), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") has not two but ").concat(culpritsLen, " elements!"));
   }
   if (!arrOfRanges.every(function (rangeArr, indx) {
     if (!isNatNum(rangeArr[0], {
@@ -62,7 +64,13 @@ function rangesSort(arrOfRanges, originalOptions) {
   })) {
     throw new TypeError("ranges-sort: [THROW_ID_04] The first argument should be an array and must consist of arrays which are natural number indexes representing string index ranges. However, ".concat(ordinalSuffix(culpritsIndex), " range (").concat(JSON.stringify(arrOfRanges[culpritsIndex], null, 4), ") does not consist of only natural numbers!"));
   }
+  var maxPossibleIterations = arrOfRanges.length * arrOfRanges.length;
+  var counter = 0;
   return Array.from(arrOfRanges).sort(function (range1, range2) {
+    if (opts.progressFn) {
+      counter++;
+      opts.progressFn(Math.floor(counter * 100 / maxPossibleIterations));
+    }
     if (range1[0] === range2[0]) {
       if (range1[1] < range2[1]) {
         return -1;
