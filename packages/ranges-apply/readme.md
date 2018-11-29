@@ -38,9 +38,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-apply.cjs.js` | 4 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-apply.esm.js` | 3 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-apply.umd.js` | 31 KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-apply.cjs.js` | 5 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-apply.esm.js` | 4 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-apply.umd.js` | 32 KB
 
 **[⬆  back to top](#markdown-header-ranges-apply)**
 
@@ -107,6 +107,8 @@ stringReplaceSlicesArray(inputString, rangesArray[, progressFn]) — in other wo
 
 Function returns a string with requested slices deleted/replaced.
 
+**[⬆  back to top](#markdown-header-ranges-apply)**
+
 #### inputString - 1st argument
 
 **Type**: `string` - the string we want to work on.
@@ -128,6 +130,8 @@ For example,
 ```
 
 **PSST.** Check out [ranges-push](https://bitbucket.org/codsen/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 #### progressFn - 3rd argument
 
