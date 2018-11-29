@@ -103,7 +103,7 @@ If you just want something inserted at a given index but nothing deleted, set bo
 
 ## API
 
-stringReplaceSlicesArray(inputString, rangesArray[, progressFn]) — in other words, this library gives you a _function_ and you must feed a string (`inputString`, above) into its first argument and a ranges array (`rangesArray`, above.). Also, if you wish, you can feed a third argument, a _progressFn_ (bracket in `[, progressFn]` means "optional").
+**stringReplaceSlicesArray(inputString, rangesArray\[, progressFn])** — in other words, this library gives you a _function_ and you must feed a string (`inputString`, above) into its first argument and a ranges array (`rangesArray`, above.). Also, if you wish, you can feed a third argument, a _progressFn_ (bracket in `[, progressFn]` means "optional").
 
 Function returns a string with requested slices deleted/replaced.
 
