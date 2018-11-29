@@ -61,27 +61,52 @@ test("01.04 - more complex case", t => {
   t.true(counter > 5, "01.04.03");
 });
 
-test("01.05 - third arg", t => {
+test("01.05 - even more complex case", t => {
+  let last;
+  const counter = 0;
   t.deepEqual(
-    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5, "b"]]),
-    [[1, 8, "abc"]],
+    mergeRanges(
+      [
+        [40, 40, "rrrr"],
+        [20, 25, "yyy"],
+        [5, 5],
+        [15, 16],
+        [3, 4, "y"],
+        [29, 38],
+        [0, 0, "rrr"],
+        [30, 30],
+        [17, 19, "zzz"],
+        [8, 11],
+        [24, 28, "aaaa"],
+        [4, 5],
+        [29, 37],
+        [22, 23],
+        [30, 33],
+        [1, 2, "z"],
+        [30, 37],
+        [5, 7]
+      ],
+      perc => {
+        // console.log(`done: ${perc}`);
+        // ensure there are no repetitions on status percentages reported
+        t.true(perc !== last);
+        last = perc;
+      }
+    ),
+    [
+      [0, 0, "rrr"],
+      [1, 2, "z"],
+      [3, 7, "y"],
+      [8, 11],
+      [15, 16],
+      [17, 19, "zzz"],
+      [20, 28, "yyyaaaa"],
+      [29, 38],
+      [40, 40, "rrrr"]
+    ],
     "01.05.01"
   );
-  t.deepEqual(
-    mergeRanges([[3, 8, "c"], [1, 4], [2, 5, "b"]]),
-    [[1, 8, "bc"]],
-    "01.05.02"
-  );
-  t.deepEqual(
-    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5]]),
-    [[1, 8, "ac"]],
-    "01.05.03"
-  );
-  t.deepEqual(
-    mergeRanges([[3, 8], [1, 4, "a"], [2, 5, "b"]]),
-    [[1, 8, "ab"]],
-    "01.05.04"
-  );
+  t.true(counter < 100, "01.05.02");
 });
 
 test("01.06 - more merging examples", t => {
@@ -181,4 +206,27 @@ test("01.13 - only two identical args in the range", t => {
     "01.13.01"
   );
   t.deepEqual(mergeRanges([[1, 1]]), [], "01.13.02");
+});
+
+test("01.14 - third arg", t => {
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5, "b"]]),
+    [[1, 8, "abc"]],
+    "01.14.01"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4], [2, 5, "b"]]),
+    [[1, 8, "bc"]],
+    "01.14.02"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5]]),
+    [[1, 8, "ac"]],
+    "01.14.03"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8], [1, 4, "a"], [2, 5, "b"]]),
+    [[1, 8, "ab"]],
+    "01.14.04"
+  );
 });

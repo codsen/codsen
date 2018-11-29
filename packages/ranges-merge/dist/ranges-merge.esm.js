@@ -18,24 +18,31 @@ function mergeRanges(arrOfRanges, progressFn) {
     rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
   );
   let sortedRanges;
+  let lastPercentageDone;
+  let percentageDone;
   if (progressFn) {
     sortedRanges = sortRanges(filtered, {
-      progressFn: percentage => progressFn(Math.floor(percentage / 5))
+      progressFn: percentage => {
+        percentageDone = Math.floor(percentage / 5);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
     });
   } else {
     sortedRanges = sortRanges(filtered);
   }
-  let lastDoneSoFar;
-  let doneSoFar;
   const len = sortedRanges.length - 1;
-  let counter = len + 1;
   for (let i = len; i > 0; i--) {
     if (progressFn) {
-      counter--;
-      doneSoFar = Math.floor((1 - counter / len) * 78) + 21;
-      if (doneSoFar !== lastDoneSoFar) {
-        lastDoneSoFar = doneSoFar;
-        progressFn(doneSoFar);
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (
+        percentageDone !== lastPercentageDone &&
+        percentageDone > lastPercentageDone
+      ) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
       }
     }
     if (

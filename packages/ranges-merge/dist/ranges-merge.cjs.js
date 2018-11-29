@@ -31,26 +31,28 @@ function mergeRanges(arrOfRanges, _progressFn) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
   });
   var sortedRanges;
+  var lastPercentageDone;
+  var percentageDone;
   if (_progressFn) {
     sortedRanges = sortRanges(filtered, {
       progressFn: function progressFn(percentage) {
-        return _progressFn(Math.floor(percentage / 5));
+        percentageDone = Math.floor(percentage / 5);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          _progressFn(percentageDone);
+        }
       }
     });
   } else {
     sortedRanges = sortRanges(filtered);
   }
-  var lastDoneSoFar;
-  var doneSoFar;
   var len = sortedRanges.length - 1;
-  var counter = len + 1;
   for (var i = len; i > 0; i--) {
     if (_progressFn) {
-      counter--;
-      doneSoFar = Math.floor((1 - counter / len) * 78) + 21;
-      if (doneSoFar !== lastDoneSoFar) {
-        lastDoneSoFar = doneSoFar;
-        _progressFn(doneSoFar);
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        _progressFn(percentageDone);
       }
     }
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {

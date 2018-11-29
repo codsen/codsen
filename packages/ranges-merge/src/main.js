@@ -30,30 +30,39 @@ function mergeRanges(arrOfRanges, progressFn) {
   );
 
   let sortedRanges;
+  let lastPercentageDone;
+  let percentageDone;
+
   if (progressFn) {
     // progress already gets reported in [0,100] range, so we just need to
     // divide by 5 in order to "compress" that into 20% range.
     sortedRanges = sortRanges(filtered, {
-      progressFn: percentage => progressFn(Math.floor(percentage / 5))
+      progressFn: percentage => {
+        percentageDone = Math.floor(percentage / 5);
+        // ensure each percent is passed only once:
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
     });
   } else {
     sortedRanges = sortRanges(filtered);
   }
 
-  let lastDoneSoFar;
-  let doneSoFar;
   const len = sortedRanges.length - 1;
-  let counter = len + 1;
   // reset 80% of progress is this loop:
   for (let i = len; i > 0; i--) {
     if (progressFn) {
-      counter--;
-      doneSoFar = Math.floor((1 - counter / len) * 78) + 21;
-      if (doneSoFar !== lastDoneSoFar) {
-        lastDoneSoFar = doneSoFar;
-        progressFn(doneSoFar);
+      percentageDone = Math.floor((1 - i / len) * 78) + 21;
+      if (
+        percentageDone !== lastPercentageDone &&
+        percentageDone > lastPercentageDone
+      ) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
         // console.log(
-        //   `056 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
+        //   `065 REPORTING ${`\u001b[${33}m${`doneSoFar`}\u001b[${39}m`} = ${doneSoFar}`
         // );
       }
     }
