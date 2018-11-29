@@ -42,9 +42,13 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
-## Rationale
+## What it does
 
-It sorts the array of index arrays, for example:
+Background: strings in JavaScript consist of characters. For example, `abc` is a string. Each character has an index number and the numbering starts from zero. For example, in "abc", "a" has index `0`, "b" has index `1` and so on.
+
+We use arrays to **mark what to delete** from a string, from example, deletion from index `0` to index `5` would be `[0, 5]`. If we added a third element, that would mean we want to **insert it**, replacing the given index range. For example, if a string is `abc` and we want to delete "b", that would be range `[1, 2]`. If we wanted to replace "b" with "x", that would be range `[1, 2, "x"]`.
+
+Now, if you have _an array_ of such ranges (that's an _array of arrays_), this library can **sort them**. For example:
 
 ```js
 [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
@@ -59,15 +63,21 @@ It sorts the array of index arrays, for example:
 [[3, 4, 'aaa', 'bbb'], [1, 2, 'zzz']] => [[1, 2, 'zzz'], [3, 4, 'aaa', 'bbb']]
 ```
 
+This is a specialised library to sort these types of arrays, not any type of arrays. We expect first two elements in each array to be a natural number and there can be optional third argument (of any type).
+
+The purpose of string index ranges is to avoid changing a string many times but instead, track the changes (ranges of indexes), compiling them in an array, and later perform all changes in one go. This guarantees the original characters in the string retain the original positions throughout the whole operation. It's easier and faster to process strings this way.
+
+The purpose of _range sorting_ is to make life easier for other range-processing libraries.
+
 **[⬆  back to top](#markdown-header-ranges-sort)**
 
 ## API
 
-**rangesSort(arr[, opts])**
+**rangesSort(arr[, opts])** — in other words, this library gives you a _function_ and you must feed an array into its first argument and also if you wish, you can feed a second argument, the _Optional Options Object_ (bracket in `[, opts]` means "optional").
 
 | Input argument | Type         | Obligatory? | Description                                                                  |
 | -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
-| `arrOfRanges`  | Plain object | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
+| `arrOfRanges`  | Array       | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
 | `opts`         | Plain object | no          | Optional options go here.                                                    |
 
 For example,
@@ -76,7 +86,7 @@ For example,
 [ [5, 9], [5, 3] ] => [ [5, 3], [5, 9] ]
 ```
 
-This package does not mutate the input array.
+This library does not mutate the inputs. In theory, a function in JavaScript could mutate its arguments, but only if they are on an "object" primitive type (an array or a plain object, for example).
 
 **[⬆  back to top](#markdown-header-ranges-sort)**
 
@@ -85,7 +95,7 @@ This package does not mutate the input array.
 | `options` object's key             | Type    | Obligatory? | Default | Description                                                                                                                                                                                       |
 | ---------------------------------- | ------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                  |         |             |         |
-| `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to true, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element). |
+| `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to `true`, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element). |
 | `progressFn`                       | Function | no          | `null` | If a function is given, it will be called with natural number meaning percentage of the total work done. It's approximate and used in worker setups. |
 | }                                  |         |             |         |
 
