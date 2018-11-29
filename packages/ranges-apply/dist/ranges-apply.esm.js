@@ -10,20 +10,39 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function replaceSlicesArr(str, rangesArr) {
+function replaceSlicesArr(str, rangesArr, progressFn) {
+  let percentageDone = 0;
+  let lastPercentageDone = 0;
   if (arguments.length === 0) {
     throw new Error("ranges-apply: [THROW_ID_01] inputs missing!");
   }
   if (!isStr(str)) {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${str}`
+      `ranges-apply: [THROW_ID_02] first input argument must be a string! Currently it's: ${typeof str}, equal to: ${JSON.stringify(
+        str,
+        null,
+        4
+      )}`
     );
   }
   if (rangesArr === null) {
     return str;
   } else if (!isArr(rangesArr)) {
     throw new TypeError(
-      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${rangesArr}`
+      `ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ${typeof rangesArr}, equal to: ${JSON.stringify(
+        rangesArr,
+        null,
+        4
+      )}`
+    );
+  }
+  if (progressFn && typeof progressFn !== "function") {
+    throw new TypeError(
+      `ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ${typeof progressFn}, equal to: ${JSON.stringify(
+        progressFn,
+        null,
+        4
+      )}`
     );
   }
   if (
@@ -35,10 +54,19 @@ function replaceSlicesArr(str, rangesArr) {
   ) {
     rangesArr = [rangesArr];
   }
+  const len = rangesArr.length;
+  let counter = 0;
   rangesArr.forEach((el, i) => {
+    if (progressFn) {
+      percentageDone = Math.floor((counter / len) * 10);
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    }
     if (!isArr(el)) {
       throw new TypeError(
-        `ranges-apply: [THROW_ID_04] ranges array, second input arg., has ${ordinal(
+        `ranges-apply: [THROW_ID_05] ranges array, second input arg., has ${ordinal(
           i
         )} element not an array: ${JSON.stringify(
           el,
@@ -52,7 +80,7 @@ function replaceSlicesArr(str, rangesArr) {
         rangesArr[i][0] = Number.parseInt(rangesArr[i][0], 10);
       } else {
         throw new TypeError(
-          `ranges-apply: [THROW_ID_05] ranges array, second input arg. has ${ordinal(
+          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${ordinal(
             i
           )} element, array [${el[0]},${
             el[1]
@@ -69,7 +97,7 @@ function replaceSlicesArr(str, rangesArr) {
         rangesArr[i][1] = Number.parseInt(rangesArr[i][1], 10);
       } else {
         throw new TypeError(
-          `ranges-apply: [THROW_ID_06] ranges array, second input arg. has ${ordinal(
+          `ranges-apply: [THROW_ID_07] ranges array, second input arg. has ${ordinal(
             i
           )} element, array [${el[0]},${
             el[1]
@@ -81,11 +109,28 @@ function replaceSlicesArr(str, rangesArr) {
         );
       }
     }
+    counter++;
   });
-  const workingRanges = rangesMerge(rangesArr);
-  if (workingRanges.length > 0) {
-    const tails = str.slice(workingRanges[workingRanges.length - 1][1]);
+  const workingRanges = rangesMerge(rangesArr, perc => {
+    if (progressFn) {
+      percentageDone = 10 + Math.floor(perc / 10);
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        progressFn(percentageDone);
+      }
+    }
+  });
+  const len2 = workingRanges.length;
+  if (len2 > 0) {
+    const tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce((acc, val, i, arr) => {
+      if (progressFn) {
+        percentageDone = 20 + Math.floor((i / len2) * 80);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
+      }
       const beginning = i === 0 ? 0 : arr[i - 1][1];
       const ending = arr[i][0];
       return (

@@ -36,13 +36,13 @@ import replaceSlicesArr from "ranges-apply";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                       | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-apply.cjs.js` | 4 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-apply.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-apply.umd.js` | 31 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-apply.cjs.js` | 4 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-apply.esm.js` | 3 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-apply.umd.js` | 31 KB
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## Idea
 
@@ -99,15 +99,13 @@ If you just want something inserted at a given index but nothing deleted, set bo
 [10, 10, "abc"];
 ```
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## API
 
-```js
-stringReplaceSlicesArray(inputString, rangesArray);
-```
+stringReplaceSlicesArray(inputString, rangesArray[, progressFn]) — in other words, this library gives you a _function_ and you must feed a string (`inputString`, above) into its first argument and a ranges array (`rangesArray`, above.). Also, if you wish, you can feed a third argument, a _progressFn_ (bracket in `[, progressFn]` means "optional").
 
-Returns a string with requested slices deleted/replaced.
+Function returns a string with requested slices deleted/replaced.
 
 #### inputString - 1st argument
 
@@ -131,7 +129,11 @@ For example,
 
 **PSST.** Check out [ranges-push](https://bitbucket.org/codsen/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+#### progressFn - 3rd argument
+
+This optional third input argument is used in worker setups where user wants to report the progress of the job. If a function is passed as third input argument, it will be called with first argument, natural number, which means percentage done so far (from `0` to `100`).
+
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## The algorithm
 
@@ -139,7 +141,7 @@ The plan is simple - we `array.reduce` your given ranges array, slicing the inpu
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## In my case
 
@@ -147,7 +149,7 @@ Originally this library was part of [email-remove-unused-css](https://bitbucket.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## Contributing
 
@@ -157,7 +159,7 @@ I'm going to use this library in all my HTML processing libraries who work on HT
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆  back to top](#markdown-header-ranges-apply)**
 
 ## Licence
 
@@ -165,19 +167,28 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
+
 [node-img]: https://img.shields.io/node/v/ranges-apply.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-apply
+
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/ranges-apply
+
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-apply/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/ranges-apply?branch=master
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-apply
+
 [downloads-img]: https://img.shields.io/npm/dm/ranges-apply.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-apply
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-apply
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/ranges-apply

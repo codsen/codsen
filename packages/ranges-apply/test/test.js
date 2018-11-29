@@ -7,60 +7,91 @@ import repl from "../dist/ranges-apply.esm";
 
 test("01.01 - wrong inputs", t => {
   // no input
-  t.throws(() => {
+  const error1 = t.throws(() => {
     repl();
   });
+  t.regex(error1.message, /THROW_ID_01/);
 
   // first arg not string
-  t.throws(() => {
+  const error2 = t.throws(() => {
     repl(1);
   });
-  t.throws(() => {
+  t.regex(error2.message, /THROW_ID_02/);
+
+  const error3 = t.throws(() => {
     repl(1, [[4, 13]]);
   });
+  t.regex(error3.message, /THROW_ID_02/);
 
   // second arg not array
-  t.throws(() => {
+  const error4 = t.throws(() => {
     repl("aaa", 1);
   });
+  t.regex(error4.message, /THROW_ID_03/);
 
   // ranges array contain something else than arrays
-  t.throws(() => {
-    repl("aaa", [1], {});
+  const error5 = t.throws(() => {
+    repl("aaa", [1]);
   });
-  t.throws(() => {
-    repl("aaa", [[1, "a"]], {});
+  t.regex(error5.message, /THROW_ID_05/);
+
+  const error6 = t.throws(() => {
+    repl("aaa", [[1, "a"]]);
+  });
+  t.regex(error6.message, /THROW_ID_07/);
+
+  t.notThrows(() => {
+    repl("aaa", [["1", 2]]);
   });
   t.notThrows(() => {
-    repl("aaa", [["1", 2]], {});
+    repl("aaa", [[1, "2"]]);
   });
   t.notThrows(() => {
-    repl("aaa", [[1, "2"]], {});
+    repl("aaa", [[1, "2"], ["3", "4"]]);
   });
   t.notThrows(() => {
-    repl("aaa", [[1, "2"], ["3", "4"]], {});
+    repl("aaa", [[1, 2]]);
   });
-  t.notThrows(() => {
-    repl("aaa", [[1, 2]], {});
+
+  const error7 = t.throws(() => {
+    repl("aaa", [[1], [10, 20]]);
   });
-  t.throws(() => {
-    repl("aaa", [[1], [10, 20]], {});
+  t.regex(error7.message, /THROW_ID_07/);
+
+  const error8 = t.throws(() => {
+    repl("aaa", [[10, 20], [30]]);
   });
-  t.throws(() => {
-    repl("aaa", [[10, 20], [30]], {});
+  t.regex(error8.message, /THROW_ID_07/);
+
+  const error9 = t.throws(() => {
+    repl("aaa", [[10.1, 20]]);
   });
-  t.throws(() => {
-    repl("aaa", [[10.1, 20]], {});
+  t.regex(error9.message, /THROW_ID_06/);
+
+  const error10 = t.throws(() => {
+    repl("aaa", [["10.1", "20"]]);
   });
-  t.throws(() => {
-    repl("aaa", [["10.1", "20"]], {});
+  t.regex(error10.message, /THROW_ID_06/);
+
+  const error11 = t.throws(() => {
+    repl("sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh", [[10, 20], [15, 16]], 1);
   });
+  t.regex(error11.message, /THROW_ID_04/);
+
+  const error12 = t.throws(() => {
+    repl(
+      "sldfsljfldjfgldflgkdjlgjlkgjhlfjglhjflgh",
+      [[10, 20], [15, 16]],
+      true
+    );
+  });
+  t.regex(error12.message, /THROW_ID_04/);
 });
 
 test("01.02 - correct inputs", t => {
   // all inputs can be empty as long as types are correct
   t.notThrows(() => {
-    repl("", [], {});
+    repl("", []);
   });
 
   // opts can be falsey, the absence being hardcoded
@@ -208,4 +239,69 @@ test("03.02 - multiple replacement pieces", t => {
 test("03.03 - null in replacement op - does nothing", t => {
   t.deepEqual(repl("aaa  ccc", [[4, 4, null]]), "aaa  ccc", "03.03.01");
   t.deepEqual(repl("aaa  ccc", [4, 4, null]), "aaa  ccc", "03.03.02");
+});
+
+// -----------------------------------------------------------------------------
+// 04. progressFn
+// -----------------------------------------------------------------------------
+
+test("04.01 - progressFn - basic replacement", t => {
+  let count = 0;
+  t.deepEqual(
+    repl("lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj", [
+      [40, 40, "rrrr"],
+      [20, 25, "yyy"],
+      [5, 5],
+      [15, 16],
+      [3, 4, "y"],
+      [29, 38],
+      [0, 0, "rrr"],
+      [30, 30],
+      [17, 19, "zzz"],
+      [8, 11],
+      [24, 28, "aaaa"],
+      [4, 5],
+      [29, 37],
+      [22, 23],
+      [30, 33],
+      [1, 2, "z"],
+      [30, 37],
+      [5, 7]
+    ]),
+    "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
+    "04.01 - baseline"
+  );
+  t.deepEqual(
+    repl(
+      "lkg jdlg dfljhlfgjlkhjf;gjh ;jsdlfj sldf lsjfldksj",
+      [
+        [40, 40, "rrrr"],
+        [20, 25, "yyy"],
+        [5, 5],
+        [15, 16],
+        [3, 4, "y"],
+        [29, 38],
+        [0, 0, "rrr"],
+        [30, 30],
+        [17, 19, "zzz"],
+        [8, 11],
+        [24, 28, "aaaa"],
+        [4, 5],
+        [29, 37],
+        [22, 23],
+        [30, 33],
+        [1, 2, "z"],
+        [30, 37],
+        [5, 7]
+      ],
+      perc => {
+        // console.log(`perc = ${perc}`);
+        t.true(typeof perc === "number");
+        count++;
+      }
+    ),
+    "rrrlzgygljhlgzzzkyyyaaaa;dfrrrr lsjfldksj",
+    "04.02 - calls the progress function"
+  );
+  t.true(count <= 101, "04.03");
 });
