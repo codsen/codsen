@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.7.0] - 2018-11-29
+
+- ✨ Second input argument - `progressFn` is added, it will report percentage done so far. It's used in worker setups.
+
 ## [3.6.0] - 2018-10-25
 
 - ✨ Updated all dependencies
@@ -38,7 +42,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ If third argument is `null` on any side being merged, output is always `null`. This will stand for explicit "no" to remove any content to be added. Sibling [libraries](https://github.com/codsen/string-slices-array-push) will tap this feature.
 
-Previously `null` would have been turned into a string and shown/concatenated like that which was meaningless and kindof erroneous. We never used `null` anyway. That's why this is not a major semver bump but minor - it's only feature, an extension of the API.
+Previously `null` would have been turned into a string and shown/concatenated like that which was meaningless and kindof erroneous. We never used `null` anyway. That's why this is not a major semver bump but minor - it's only a feature, an extension of the API.
 
 ## [3.0.0] - 2017-12-05
 
@@ -63,6 +67,7 @@ This change is logical and natural but I'm bumping major version just in case it
 
 - First public release
 
+[3.7.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.7.0%0Dv3.6.0#diff
 [3.6.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.6.0%0Dv3.5.0#diff
 [3.5.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.5.0%0Dv3.4.0#diff
 [3.4.0]: https://bitbucket.org/codsen/ranges-merge/branches/compare/v3.4.0%0Dv3.3.2#diff

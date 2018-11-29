@@ -5,15 +5,54 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var sortRanges = _interopDefault(require('ranges-sort'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 
-function mergeRanges(arrOfRanges) {
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function mergeRanges(arrOfRanges, _progressFn) {
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  var sortedRanges = sortRanges(clone(arrOfRanges).filter(
+  if (_progressFn && typeof _progressFn !== "function") {
+    throw new Error("ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: \"".concat(_typeof(_progressFn), "\", equal to ").concat(JSON.stringify(_progressFn, null, 4)));
+  }
+  var filtered = clone(arrOfRanges).filter(
   function (rangeArr) {
     return rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1];
-  }));
-  for (var i = sortedRanges.length - 1; i > 0; i--) {
+  });
+  var sortedRanges;
+  if (_progressFn) {
+    sortedRanges = sortRanges(filtered, {
+      progressFn: function progressFn(percentage) {
+        return _progressFn(Math.floor(percentage / 5));
+      }
+    });
+  } else {
+    sortedRanges = sortRanges(filtered);
+  }
+  var lastDoneSoFar;
+  var doneSoFar;
+  var len = sortedRanges.length - 1;
+  var counter = len + 1;
+  for (var i = len; i > 0; i--) {
+    if (_progressFn) {
+      counter--;
+      doneSoFar = Math.floor((1 - counter / len) * 78) + 21;
+      if (doneSoFar !== lastDoneSoFar) {
+        lastDoneSoFar = doneSoFar;
+        _progressFn(doneSoFar);
+      }
+    }
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
       sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
