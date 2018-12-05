@@ -462,8 +462,8 @@ function main(mode, str, position, originalWhatToMatch, originalOpts) {
       cb: ["null", "undefined", "function"]
     }
   });
-  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(
-    el => (isStr(el) ? el : String(el))
+  opts.trimCharsBeforeMatching = opts.trimCharsBeforeMatching.map(el =>
+    isStr(el) ? el : String(el)
   );
 
   let culpritsIndex;
