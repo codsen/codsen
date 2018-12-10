@@ -1,0 +1,212 @@
+{
+  "name": "html-crush",
+  "version": "0.0.1",
+  "description": "Minifies HTML, accepts HTML, mixed with other sources",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6",
+    "npm": ">=5",
+    "yarn": ">=1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/codsen/html-crush.git"
+  },
+  "homepage": "https://bitbucket.org/codsen/html-crush/",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/html-crush.cjs.js",
+  "module": "dist/html-crush.esm.js",
+  "browser": "dist/html-crush.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "dev": "rollup -c --dev --silent",
+    "format": "./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "clinton": {
+    "rules": {
+      "xo": 0
+    }
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "keywords": [
+    "html",
+    "minify",
+    "parse",
+    "no",
+    "line",
+    "breaks",
+    "remove",
+    "reduce",
+    "size",
+    "email",
+    "templates",
+    "tool",
+    "utility"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [
+        "@babel/polyfill",
+        "rollup-plugin-node-builtins",
+        "rollup-plugin-json"
+      ],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "check-types-mini": "^5.1.1",
+    "lodash.isplainobject": "^4.0.6",
+    "ranges-apply": "^2.8.1",
+    "ranges-push": "^2.12.0",
+    "string-match-left-right": "^3.5.0",
+    "string-range-expander": "^1.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/polyfill": "latest",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/register": "^7.0.0",
+    "ava": "1.0.0-rc.2",
+    "babel-plugin-istanbul": "^5.1.0",
+    "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-ava": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-no-unsanitized": "latest",
+    "eslint-plugin-no-wildcard-postmessage": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-scanjs-rules": "latest",
+    "husky": "^1.2.0",
+    "nyc": "latest",
+    "prettier": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "latest",
+    "rollup-plugin-node-builtins": "latest",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-strip": "^1.2.0",
+    "rollup-plugin-terser": "^3.0.0"
+  }
+}
