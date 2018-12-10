@@ -35,7 +35,7 @@ var scripts = {
 	prepare: "npm run build",
 	pretest: "npm run build",
 	test: "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava",
-	version: "npm run build"
+	version: "npm run build && git add ."
 };
 var ava = {
 	compileEnhancements: false,
