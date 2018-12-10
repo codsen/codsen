@@ -6,7 +6,7 @@ import { matchRightIncl } from 'string-match-left-right';
 import expand from 'string-range-expander';
 
 var name = "html-crush";
-var version = "0.1.0";
+var version = "0.1.1";
 var description = "Minifies HTML, accepts HTML, mixed with other sources";
 var license = "MIT";
 var engines = {

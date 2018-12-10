@@ -131,6 +131,7 @@ If supplied input arguments have any other types, an error will be thrown.
 | `removeIndentations` | Boolean                                 | `true`  | Should we remove indentations? The default is, yes.                                                                                                                                                                                                               |
 | `removeLineBreaks`   | Boolean                                 | `false`  | Should we remove the line breaks? The default is, yes. Enabling it automatically enables `opts.removeIndentations`.                                                                                                     |
 | `reportProgressFunc` | `null` or Boolean `false` or `function` | `null`  | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object. |
+| `breakToTheLeftOf`   | `array` of zero or more strings | `see below`  | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
 | }                    |                                         |         |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
