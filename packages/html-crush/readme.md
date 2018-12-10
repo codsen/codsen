@@ -15,10 +15,11 @@
 
 - [Install](#markdown-header-install)
 - [Usage](#markdown-header-usage)
+- [TLDR](#markdown-header-tldr)
 - [Features](#markdown-header-features)
 - [API](#markdown-header-api)
-- [`opts.removeLineBreaks`](#markdown-header-optsremovelinebreaks)
 - [Competition](#markdown-header-competition)
+- [Non-deterministic unit tests](#markdown-header-non-deterministic-unit-tests)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -75,6 +76,8 @@ console.log("res:\n" + JSON.stringify(res, null, 4));
 In short, if your code is mixed with something else besides HTML (like email template HTML), you pretty much have no other option but to use this library to minify it.
 
 But, if your input is pure, valid HTML/CSS/JS, there are better alternatives, like [Kangax html-minifier](https://www.npmjs.com/package/html-minifier).
+
+**[⬆  back to top](#markdown-header-html-crush)**
 
 ## Features
 
@@ -224,6 +227,8 @@ ava test_alt/nondeterministic.js -- --time=3s
 ```
 
 Call the file `nondeterministic.js` located in folder `test_alt` in `ava`, pass the duration in seconds you want to generate and run tests. More time, more random tests. Just number, for example `-- --time=3` means `3 milliseconds`. "s" appended means seconds, for example, `-- --time=3s`. Three minutes would be `-- --time=3m`.
+
+**[⬆  back to top](#markdown-header-html-crush)**
 
 ## Contributing
 
