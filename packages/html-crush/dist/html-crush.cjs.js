@@ -112,7 +112,8 @@ var scripts = {
 	format: "./node_modules/.bin/eslint src/*.js test/*.js --fix",
 	prepare: "npm run build",
 	pretest: "npm run build",
-	test: "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
+	test: "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava",
+	version: "npm run build"
 };
 var ava = {
 	compileEnhancements: false,
