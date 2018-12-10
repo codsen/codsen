@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Minifies HTML, accepts HTML, mixed with other sources",
   "license": "MIT",
   "engines": {
