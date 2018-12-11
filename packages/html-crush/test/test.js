@@ -1083,6 +1083,76 @@ test(`02.11 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - break-position-friendly 
   );
 });
 
+test(`02.12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`, t => {
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    "a <script>\n \t\t   na\n  \tz</script> z",
+    "02.12.01"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    "a <script>\n \t\t   na\n  \tz</script> z",
+    "02.12.02 - default"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      removeLineBreaks: true,
+      removeIndentations: false
+    }).result,
+    "a <script>\n \t\t   na\n  \tz</script> z",
+    "02.12.03"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz</script> z    ", {
+      removeLineBreaks: true,
+      removeIndentations: true
+    }).result,
+    "a <script>\n \t\t   na\n  \tz</script> z",
+    "02.12.04"
+  );
+});
+
+test(`02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags are skipped too`, t => {
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz    z    ", {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    "a <script>\n \t\t   na\n  \tz    z    ",
+    "02.13.01"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz    z    ", {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    "a <script>\n \t\t   na\n  \tz    z    ",
+    "02.13.02 - default"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz    z    ", {
+      removeLineBreaks: true,
+      removeIndentations: false
+    }).result,
+    "a <script>\n \t\t   na\n  \tz    z    ",
+    "02.13.03"
+  );
+  t.deepEqual(
+    m("a <script>\n \t\t   na\n  \tz    z    ", {
+      removeLineBreaks: true,
+      removeIndentations: true
+    }).result,
+    "a <script>\n \t\t   na\n  \tz    z    ",
+    "02.13.04"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 

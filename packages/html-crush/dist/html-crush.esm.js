@@ -263,6 +263,8 @@ const defaults = {
     "<head",
     "<meta",
     "<table",
+    "<script",
+    "</script",
     "<!DOCTYPE",
     "<style",
     "</style",
@@ -353,6 +355,8 @@ function crush(str, originalOpts) {
   let countCharactersPerLine = 0;
   let withinStyleTag = false;
   let styleCommentStartedAt = null;
+  let scriptStartedAt = null;
+  let doNothing = false;
   let stageFrom = null;
   let stageTo = null;
   let stageAdd = null;
@@ -384,6 +388,37 @@ function crush(str, originalOpts) {
         }
       }
       if (
+        scriptStartedAt !== null &&
+        str[i] === "<" &&
+        str[i + 1] === "/" &&
+        str[i + 2] === "s" &&
+        str[i + 3] === "c" &&
+        str[i + 4] === "r" &&
+        str[i + 5] === "i" &&
+        str[i + 6] === "p" &&
+        str[i + 7] === "t"
+      ) {
+        scriptStartedAt = null;
+        doNothing = false;
+        i += 8;
+        continue;
+      }
+      if (
+        !withinStyleTag &&
+        str[i] === "<" &&
+        str[i + 1] === "s" &&
+        str[i + 2] === "c" &&
+        str[i + 3] === "r" &&
+        str[i + 4] === "i" &&
+        str[i + 5] === "p" &&
+        str[i + 6] === "t"
+      ) {
+        scriptStartedAt = i;
+        doNothing = true;
+        whitespaceStartedAt = null;
+      }
+      if (
+        !doNothing &&
         withinStyleTag &&
         styleCommentStartedAt !== null &&
         str[i] === "*" &&
@@ -408,6 +443,7 @@ function crush(str, originalOpts) {
         }
       }
       if (
+        !doNothing &&
         withinStyleTag &&
         styleCommentStartedAt === null &&
         str[i] === "/" &&
@@ -416,6 +452,7 @@ function crush(str, originalOpts) {
         styleCommentStartedAt = i;
       }
       if (
+        !doNothing &&
         withinStyleTag &&
         styleCommentStartedAt === null &&
         str[i] === "<" &&
@@ -428,6 +465,7 @@ function crush(str, originalOpts) {
       ) {
         withinStyleTag = false;
       } else if (
+        !doNothing &&
         !withinStyleTag &&
         styleCommentStartedAt === null &&
         str[i] === "<" &&
@@ -439,11 +477,14 @@ function crush(str, originalOpts) {
       ) {
         withinStyleTag = true;
       }
-      if (!str[i].trim().length) {
+      if (!doNothing && !str[i].trim().length) {
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = i;
         }
-      } else if (!(withinStyleTag && styleCommentStartedAt !== null)) {
+      } else if (
+        !doNothing &&
+        !(withinStyleTag && styleCommentStartedAt !== null)
+      ) {
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
             countCharactersPerLine++;
@@ -570,6 +611,7 @@ function crush(str, originalOpts) {
         }
       }
       if (
+        !doNothing &&
         !beginningOfAFile &&
         i !== 0 &&
         opts.removeLineBreaks &&
@@ -685,6 +727,7 @@ function crush(str, originalOpts) {
         }
       }
       if (
+        !doNothing &&
         !beginningOfAFile &&
         opts.removeLineBreaks &&
         opts.lineLengthLimit &&
@@ -720,7 +763,7 @@ function crush(str, originalOpts) {
         }
       }
       if (
-        str[i] === "\n" ||
+        (!doNothing && str[i] === "\n") ||
         (str[i] === "\r" &&
           (!str[i + 1] || (str[i + 1] && str[i + 1] !== "\n")))
       ) {

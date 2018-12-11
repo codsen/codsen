@@ -337,7 +337,7 @@ var defaults = {
   removeIndentations: true,
   removeLineBreaks: false,
   reportProgressFunc: null,
-  breakToTheLeftOf: ["</td", "<html", "<head", "<meta", "<table", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</html", "</body", "<!--[if", "<!--<![endif"]
+  breakToTheLeftOf: ["</td", "<html", "<head", "<meta", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</html", "</body", "<!--[if", "<!--<![endif"]
 };
 function isStr(something) {
   return typeof something === "string";
@@ -389,6 +389,8 @@ function crush(str, originalOpts) {
   var countCharactersPerLine = 0;
   var withinStyleTag = false;
   var styleCommentStartedAt = null;
+  var scriptStartedAt = null;
+  var doNothing = false;
   var stageFrom = null;
   var stageTo = null;
   var stageAdd = null;
@@ -419,7 +421,18 @@ function crush(str, originalOpts) {
           }
         }
       }
-      if (withinStyleTag && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
+      if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t") {
+        scriptStartedAt = null;
+        doNothing = false;
+        _i += 8;
+        continue;
+      }
+      if (!withinStyleTag && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "c" && str[_i + 3] === "r" && str[_i + 4] === "i" && str[_i + 5] === "p" && str[_i + 6] === "t") {
+        scriptStartedAt = _i;
+        doNothing = true;
+        whitespaceStartedAt = null;
+      }
+      if (!doNothing && withinStyleTag && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
         var _expand = expand({
           str: str,
           from: styleCommentStartedAt,
@@ -439,19 +452,19 @@ function crush(str, originalOpts) {
           continue;
         }
       }
-      if (withinStyleTag && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
+      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
         styleCommentStartedAt = _i;
       }
-      if (withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e") {
+      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e") {
         withinStyleTag = false;
-      } else if (!withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e") {
+      } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e") {
         withinStyleTag = true;
       }
-      if (!str[_i].trim().length) {
+      if (!doNothing && !str[_i].trim().length) {
         if (whitespaceStartedAt === null) {
           whitespaceStartedAt = _i;
         }
-      } else if (!(withinStyleTag && styleCommentStartedAt !== null)) {
+      } else if (!doNothing && !(withinStyleTag && styleCommentStartedAt !== null)) {
         if (whitespaceStartedAt !== null) {
           if (opts.removeLineBreaks) {
             countCharactersPerLine++;
@@ -531,7 +544,7 @@ function crush(str, originalOpts) {
           nonWhitespaceCharMet = true;
         }
       }
-      if (!beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length)) {
+      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length)) {
         if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;
@@ -588,7 +601,7 @@ function crush(str, originalOpts) {
           }
         }
       }
-      if (!beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i])) {
+      if (!doNothing && !beginningOfAFile && opts.removeLineBreaks && opts.lineLengthLimit && countCharactersPerLine >= opts.lineLengthLimit && stageFrom !== null && stageTo !== null && !CHARS_BREAK_ON_THE_RIGHT_OF_THEM.includes(str[_i]) && !CHARS_BREAK_ON_THE_LEFT_OF_THEM.includes(str[_i])) {
         if (!(countCharactersPerLine === opts.lineLengthLimit && str[_i + 1] && !str[_i + 1].trim().length)) {
           var _whatToAdd2 = "\n";
           if (str[_i + 1] && !str[_i + 1].trim().length && countCharactersPerLine === opts.lineLengthLimit) {
@@ -604,7 +617,7 @@ function crush(str, originalOpts) {
           stageAdd = null;
         }
       }
-      if (str[_i] === "\n" || str[_i] === "\r" && (!str[_i + 1] || str[_i + 1] && str[_i + 1] !== "\n")) {
+      if (!doNothing && str[_i] === "\n" || str[_i] === "\r" && (!str[_i + 1] || str[_i + 1] && str[_i + 1] !== "\n")) {
         lastLinebreak = _i;
         if (nonWhitespaceCharMet) {
           nonWhitespaceCharMet = false;
