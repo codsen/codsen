@@ -283,6 +283,12 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+function isLetter(something) {
+  return (
+    typeof something === "string" &&
+    something.toUpperCase() !== something.toLowerCase()
+  );
+}
 function crush(str, originalOpts) {
   const start = Date.now();
   if (!isStr(str)) {
@@ -356,6 +362,8 @@ function crush(str, originalOpts) {
   let withinStyleTag = false;
   let styleCommentStartedAt = null;
   let scriptStartedAt = null;
+  let preStartedAt = null;
+  let codeStartedAt = null;
   let doNothing = false;
   let stageFrom = null;
   let stageTo = null;
@@ -388,6 +396,90 @@ function crush(str, originalOpts) {
         }
       }
       if (
+        !doNothing &&
+        preStartedAt !== null &&
+        codeStartedAt !== null &&
+        i >= preStartedAt &&
+        i >= codeStartedAt
+      ) {
+        doNothing = true;
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        codeStartedAt !== null &&
+        str[i] === "<" &&
+        str[i + 1] === "/" &&
+        str[i + 2] === "c" &&
+        str[i + 3] === "o" &&
+        str[i + 4] === "d" &&
+        str[i + 5] === "e" &&
+        !isLetter(str[i + 6])
+      ) {
+        if (preStartedAt !== null && doNothing) {
+          doNothing = false;
+        }
+        codeStartedAt = null;
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        codeStartedAt === null &&
+        str[i] === "<" &&
+        str[i + 1] === "c" &&
+        str[i + 2] === "o" &&
+        str[i + 3] === "d" &&
+        str[i + 4] === "e" &&
+        !isLetter(str[i + 5])
+      ) {
+        if (str[i + 5] === ">") {
+          codeStartedAt = i + 6;
+        } else {
+          for (let y = i + 5; y < len; y++) {
+            if (str[y] === ">") {
+              codeStartedAt = y + 1;
+              i = y;
+              break;
+            }
+          }
+        }
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        preStartedAt !== null &&
+        str[i] === "<" &&
+        str[i + 1] === "/" &&
+        str[i + 2] === "p" &&
+        str[i + 3] === "r" &&
+        str[i + 4] === "e" &&
+        !isLetter(str[i + 5])
+      ) {
+        preStartedAt = null;
+      }
+      if (
+        !doNothing &&
+        !withinStyleTag &&
+        preStartedAt === null &&
+        str[i] === "<" &&
+        str[i + 1] === "p" &&
+        str[i + 2] === "r" &&
+        str[i + 3] === "e" &&
+        !isLetter(str[i + 4])
+      ) {
+        if (str[i + 4] === ">") {
+          preStartedAt = i + 5;
+        } else {
+          for (let y = i + 4; y < len; y++) {
+            if (str[y] === ">") {
+              preStartedAt = y + 1;
+              i = y;
+              break;
+            }
+          }
+        }
+      }
+      if (
         scriptStartedAt !== null &&
         str[i] === "<" &&
         str[i + 1] === "/" &&
@@ -396,7 +488,8 @@ function crush(str, originalOpts) {
         str[i + 4] === "r" &&
         str[i + 5] === "i" &&
         str[i + 6] === "p" &&
-        str[i + 7] === "t"
+        str[i + 7] === "t" &&
+        !isLetter(str[i + 8])
       ) {
         scriptStartedAt = null;
         doNothing = false;
@@ -404,6 +497,7 @@ function crush(str, originalOpts) {
         continue;
       }
       if (
+        !doNothing &&
         !withinStyleTag &&
         str[i] === "<" &&
         str[i + 1] === "s" &&
@@ -411,7 +505,8 @@ function crush(str, originalOpts) {
         str[i + 3] === "r" &&
         str[i + 4] === "i" &&
         str[i + 5] === "p" &&
-        str[i + 6] === "t"
+        str[i + 6] === "t" &&
+        !isLetter(str[i + 7])
       ) {
         scriptStartedAt = i;
         doNothing = true;
@@ -461,7 +556,8 @@ function crush(str, originalOpts) {
         str[i + 3] === "t" &&
         str[i + 4] === "y" &&
         str[i + 5] === "l" &&
-        str[i + 6] === "e"
+        str[i + 6] === "e" &&
+        !isLetter(str[i + 7])
       ) {
         withinStyleTag = false;
       } else if (
@@ -473,7 +569,8 @@ function crush(str, originalOpts) {
         str[i + 2] === "t" &&
         str[i + 3] === "y" &&
         str[i + 4] === "l" &&
-        str[i + 5] === "e"
+        str[i + 5] === "e" &&
+        !isLetter(str[i + 6])
       ) {
         withinStyleTag = true;
       }

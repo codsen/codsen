@@ -345,6 +345,9 @@ function isStr(something) {
 function existy(x) {
   return x != null;
 }
+function isLetter(something) {
+  return typeof something === "string" && something.toUpperCase() !== something.toLowerCase();
+}
 function crush(str, originalOpts) {
   var start = Date.now();
   if (!isStr(str)) {
@@ -390,6 +393,8 @@ function crush(str, originalOpts) {
   var withinStyleTag = false;
   var styleCommentStartedAt = null;
   var scriptStartedAt = null;
+  var preStartedAt = null;
+  var codeStartedAt = null;
   var doNothing = false;
   var stageFrom = null;
   var stageTo = null;
@@ -421,13 +426,51 @@ function crush(str, originalOpts) {
           }
         }
       }
-      if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t") {
+      if (!doNothing && preStartedAt !== null && codeStartedAt !== null && _i >= preStartedAt && _i >= codeStartedAt) {
+        doNothing = true;
+      }
+      if (!doNothing && !withinStyleTag && codeStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "c" && str[_i + 3] === "o" && str[_i + 4] === "d" && str[_i + 5] === "e" && !isLetter(str[_i + 6])) {
+        if (preStartedAt !== null && doNothing) {
+          doNothing = false;
+        }
+        codeStartedAt = null;
+      }
+      if (!doNothing && !withinStyleTag && codeStartedAt === null && str[_i] === "<" && str[_i + 1] === "c" && str[_i + 2] === "o" && str[_i + 3] === "d" && str[_i + 4] === "e" && !isLetter(str[_i + 5])) {
+        if (str[_i + 5] === ">") {
+          codeStartedAt = _i + 6;
+        } else {
+          for (var y = _i + 5; y < len; y++) {
+            if (str[y] === ">") {
+              codeStartedAt = y + 1;
+              _i = y;
+              break;
+            }
+          }
+        }
+      }
+      if (!doNothing && !withinStyleTag && preStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "p" && str[_i + 3] === "r" && str[_i + 4] === "e" && !isLetter(str[_i + 5])) {
+        preStartedAt = null;
+      }
+      if (!doNothing && !withinStyleTag && preStartedAt === null && str[_i] === "<" && str[_i + 1] === "p" && str[_i + 2] === "r" && str[_i + 3] === "e" && !isLetter(str[_i + 4])) {
+        if (str[_i + 4] === ">") {
+          preStartedAt = _i + 5;
+        } else {
+          for (var _y = _i + 4; _y < len; _y++) {
+            if (str[_y] === ">") {
+              preStartedAt = _y + 1;
+              _i = _y;
+              break;
+            }
+          }
+        }
+      }
+      if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t" && !isLetter(str[_i + 8])) {
         scriptStartedAt = null;
         doNothing = false;
         _i += 8;
         continue;
       }
-      if (!withinStyleTag && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "c" && str[_i + 3] === "r" && str[_i + 4] === "i" && str[_i + 5] === "p" && str[_i + 6] === "t") {
+      if (!doNothing && !withinStyleTag && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "c" && str[_i + 3] === "r" && str[_i + 4] === "i" && str[_i + 5] === "p" && str[_i + 6] === "t" && !isLetter(str[_i + 7])) {
         scriptStartedAt = _i;
         doNothing = true;
         whitespaceStartedAt = null;
@@ -455,9 +498,9 @@ function crush(str, originalOpts) {
       if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "/" && str[_i + 1] === "*") {
         styleCommentStartedAt = _i;
       }
-      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e") {
+      if (!doNothing && withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "t" && str[_i + 4] === "y" && str[_i + 5] === "l" && str[_i + 6] === "e" && !isLetter(str[_i + 7])) {
         withinStyleTag = false;
-      } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e") {
+      } else if (!doNothing && !withinStyleTag && styleCommentStartedAt === null && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "t" && str[_i + 3] === "y" && str[_i + 4] === "l" && str[_i + 5] === "e" && !isLetter(str[_i + 6])) {
         withinStyleTag = true;
       }
       if (!doNothing && !str[_i].trim().length) {

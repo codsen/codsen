@@ -1153,6 +1153,42 @@ test(`02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags a
   );
 });
 
+test(`02.14 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - code-pre blocks are not touched`, t => {
+  const preBlock = `<pre id="lalalaa"><code class="tralalaa">    \n    \t   zz    z  \n  \t  r  r  \n \t  </code></pre>`;
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    preBlock,
+    "02.14.01"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    preBlock,
+    "02.14.02"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: true,
+      removeIndentations: false
+    }).result,
+    preBlock,
+    "02.14.03"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: true,
+      removeIndentations: true
+    }).result,
+    preBlock,
+    "02.14.04"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
