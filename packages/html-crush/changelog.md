@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.3.0] - 2018-12-12
+
+- ✨ Improvements to whitespace control in front of `<script>` tag when some options are on.
+
 ## [0.2.0] - 2018-12-11
 
 - ✨ Program will not touch:
@@ -16,4 +20,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[0.3.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.3.0%0Dv0.2.1#diff
 [0.2.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.2.0%0Dv0.1.3#diff
