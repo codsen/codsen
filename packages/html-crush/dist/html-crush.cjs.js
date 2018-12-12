@@ -483,6 +483,13 @@ function crush(str, originalOpts) {
       if (!doNothing && !withinStyleTag && str[_i] === "<" && str[_i + 1] === "s" && str[_i + 2] === "c" && str[_i + 3] === "r" && str[_i + 4] === "i" && str[_i + 5] === "p" && str[_i + 6] === "t" && !isLetter(str[_i + 7])) {
         scriptStartedAt = _i;
         doNothing = true;
+        var whatToInsert = "";
+        if (opts.removeLineBreaks || opts.removeIndentations) {
+          if (whitespaceStartedAt > 0) {
+            whatToInsert = "\n";
+          }
+          finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToInsert);
+        }
         whitespaceStartedAt = null;
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {

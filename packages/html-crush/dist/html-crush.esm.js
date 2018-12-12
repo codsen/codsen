@@ -531,6 +531,13 @@ function crush(str, originalOpts) {
       ) {
         scriptStartedAt = i;
         doNothing = true;
+        let whatToInsert = "";
+        if (opts.removeLineBreaks || opts.removeIndentations) {
+          if (whitespaceStartedAt > 0) {
+            whatToInsert = "\n";
+          }
+          finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
+        }
         whitespaceStartedAt = null;
       }
       if (

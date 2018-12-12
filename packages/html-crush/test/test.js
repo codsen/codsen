@@ -1097,7 +1097,7 @@ test(`02.12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`
       removeLineBreaks: false,
       removeIndentations: true
     }).result,
-    "a <script>\n \t\t   na\n  \tz</script> z",
+    "a\n<script>\n \t\t   na\n  \tz</script> z",
     "02.12.02 - default"
   );
   t.deepEqual(
@@ -1105,7 +1105,7 @@ test(`02.12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`
       removeLineBreaks: true,
       removeIndentations: false
     }).result,
-    "a <script>\n \t\t   na\n  \tz</script> z",
+    "a\n<script>\n \t\t   na\n  \tz</script> z",
     "02.12.03"
   );
   t.deepEqual(
@@ -1113,7 +1113,7 @@ test(`02.12 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - script tags are skipped`
       removeLineBreaks: true,
       removeIndentations: true
     }).result,
-    "a <script>\n \t\t   na\n  \tz</script> z",
+    "a\n<script>\n \t\t   na\n  \tz</script> z",
     "02.12.04"
   );
 });
@@ -1132,7 +1132,7 @@ test(`02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags a
       removeLineBreaks: false,
       removeIndentations: true
     }).result,
-    "a <script>\n \t\t   na\n  \tz    z    ",
+    "a\n<script>\n \t\t   na\n  \tz    z    ",
     "02.13.02 - default"
   );
   t.deepEqual(
@@ -1140,7 +1140,7 @@ test(`02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags a
       removeLineBreaks: true,
       removeIndentations: false
     }).result,
-    "a <script>\n \t\t   na\n  \tz    z    ",
+    "a\n<script>\n \t\t   na\n  \tz    z    ",
     "02.13.03"
   );
   t.deepEqual(
@@ -1148,7 +1148,7 @@ test(`02.13 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - unfinished script tags a
       removeLineBreaks: true,
       removeIndentations: true
     }).result,
-    "a <script>\n \t\t   na\n  \tz    z    ",
+    "a\n<script>\n \t\t   na\n  \tz    z    ",
     "02.13.04"
   );
 });
@@ -1809,40 +1809,42 @@ test(`07.07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
   );
 });
 
-// test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of <script>`, t => {
-//   t.deepEqual(
-//     m(
-//       `a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b`,
-//       {
-//         removeLineBreaks: false,
-//         removeIndentations: false
-//       }
-//     ).result,
-//     `a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b`,
-//     "07.08.01"
-//   );
-//   t.deepEqual(
-//     m(
-//       `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
-//       {
-//         removeLineBreaks: false,
-//         removeIndentations: true
-//       }
-//     ).result,
-//     `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
-//     "07.08.02"
-//   );
-//   t.deepEqual(
-//     m(
-//       `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
-//       {
-//         removeLineBreaks: true
-//       }
-//     ).result,
-//     `a <script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b`,
-//     "07.08.03"
-//   );
-// });
+test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of <script>`, t => {
+  const source =
+    'a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b';
+
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    source,
+    "07.08.01"
+  );
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb',
+    "07.08.02"
+  );
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: true
+    }).result,
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b',
+    "07.08.03"
+  );
+  t.deepEqual(
+    m(source, {
+      removeLineBreaks: true,
+      lineLengthLimit: 10
+    }).result,
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b',
+    "07.08.04"
+  );
+});
 
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
@@ -1907,13 +1909,14 @@ test(`99.05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
 
 test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`, t => {
   const chunk = "    <script >   >]] > < div>";
-  t.deepEqual(m(chunk, { removeLineBreaks: true }).result, chunk, "99.06.01");
+  const res = "<script >   >]] > < div>";
+  t.deepEqual(m(chunk, { removeLineBreaks: true }).result, res, "99.06.01");
   t.deepEqual(
     m(chunk, {
       removeLineBreaks: false,
       removeIndentations: true
     }).result,
-    chunk,
+    res,
     "99.06.02"
   );
   t.deepEqual(
