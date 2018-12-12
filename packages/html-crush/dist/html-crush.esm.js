@@ -479,6 +479,27 @@ function crush(str, originalOpts) {
           }
         }
       }
+      if (str[i] === ">" && str[i - 1] === "]" && str[i - 2] === "]") {
+        if (doNothing) {
+          doNothing = false;
+          continue;
+        }
+      }
+      if (
+        !doNothing &&
+        str[i] === "<" &&
+        str[i + 1] === "!" &&
+        str[i + 2] === "[" &&
+        str[i + 3] === "C" &&
+        str[i + 4] === "D" &&
+        str[i + 5] === "A" &&
+        str[i + 6] === "T" &&
+        str[i + 7] === "A" &&
+        str[i + 8] === "["
+      ) {
+        doNothing = true;
+        whitespaceStartedAt = null;
+      }
       if (
         scriptStartedAt !== null &&
         str[i] === "<" &&

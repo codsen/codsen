@@ -1189,6 +1189,42 @@ test(`02.14 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - code-pre blocks are not 
   );
 });
 
+test(`02.15 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - CDATA blocks are not touched`, t => {
+  const preBlock = `<![CDATA[          \n     \t   \n  a  a \r     \n a    \t    \t\t\t\t\t  a   \n     \t\t\t    ]]>`;
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    preBlock,
+    "02.15.01"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    preBlock,
+    "02.15.02"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: true,
+      removeIndentations: false
+    }).result,
+    preBlock,
+    "02.15.03"
+  );
+  t.deepEqual(
+    m(preBlock, {
+      removeLineBreaks: true,
+      removeIndentations: true
+    }).result,
+    preBlock,
+    "02.15.04"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 

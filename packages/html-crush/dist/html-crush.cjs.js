@@ -464,6 +464,16 @@ function crush(str, originalOpts) {
           }
         }
       }
+      if (str[_i] === ">" && str[_i - 1] === "]" && str[_i - 2] === "]") {
+        if (doNothing) {
+          doNothing = false;
+          continue;
+        }
+      }
+      if (!doNothing && str[_i] === "<" && str[_i + 1] === "!" && str[_i + 2] === "[" && str[_i + 3] === "C" && str[_i + 4] === "D" && str[_i + 5] === "A" && str[_i + 6] === "T" && str[_i + 7] === "A" && str[_i + 8] === "[") {
+        doNothing = true;
+        whitespaceStartedAt = null;
+      }
       if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t" && !isLetter(str[_i + 8])) {
         scriptStartedAt = null;
         doNothing = false;
