@@ -88,28 +88,26 @@ console.log("res:\n" + JSON.stringify(res, null, 4));
 
 ## TLDR;
 
-In short, if your code is mixed with something else besides HTML (like email template HTML), you pretty much have no other option but to use this library to minify it.
+Let's minify any input (preferably but not necessarily HTML) without parsing, and do it according to how HTML interprets the whitespace.
 
-But, if your input is pure, valid HTML/CSS/JS, there are better alternatives, like [Kangax html-minifier](https://www.npmjs.com/package/html-minifier).
+We built this minifier so that we were able to minify email templates containing Nunjucks template literals, for example, `{% if order.price < 50 %}` (notice the bracket). Other tools on the market will fail upon first encounter of non-HTML code.
 
 **[⬆  back to top](#markdown-header-html-crush)**
 
 ## Features
 
-Let's process any input (preferably but not necessarily HTML) as text, without parsing, and minify it according to how HTML interprets the whitespace.
-
 This program:
 
-- Does not parse the input — input can be (X)HTML or whatever or mixed whatever
+- Does not parse the input — input can be (X)HTML or whatever or mixed with whatever
 - Equally, the input can be with HTML errors, broken HTML, incomplete HTML or not-quite-HTML or whatever
-- Since we don't HTML or CSS-parse, styles within `<head>` are recognised, but CSS errors, incomplete CSS, or invalid CSS will not throw errors
+- Mailchimp, Responsys, Exact Target, Campaign Monitor tags in your HTML - all fine - it will minify it
 
 In short, we prioritise the support of broken or mixed-HTML support over both:
 
-1) minification amount (Kangax minifier will compress more);
+1) minification amount (Kangax [html-minifier](https://www.npmjs.com/package/html-minifier) will compress more);
 2) speed
 
-The price we pay is, we are not able to detect invalid HTML/CSS/JS input.
+The price we pay is, we are not able to detect an invalid HTML/CSS/JS.
 
 As a side priority, this application also takes into consideration **human-friendliness**:
 
@@ -129,7 +127,7 @@ This library exports a plain object where main function is under a key "crush". 
 import { crush, defaults, version } from "../dist/html-crush.esm";
 ```
 
-Once you get the function, it's API is the following:
+Once you get the function, `crush`, it's API is the following:
 
 **crush(str, \[opts])** — in other words, two arguments: first — string, optional second — options — plain object
 
