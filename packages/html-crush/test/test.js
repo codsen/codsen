@@ -1870,6 +1870,27 @@ test(`99.05 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spa
   );
 });
 
+test(`99.06 - ${`\u001b[${90}m${`adhoc 5`}\u001b[${39}m`} - raw non-breaking spaces`, t => {
+  const chunk = "    <script >   >]] > < div>";
+  t.deepEqual(m(chunk, { removeLineBreaks: true }).result, chunk, "99.06.01");
+  t.deepEqual(
+    m(chunk, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    chunk,
+    "99.06.02"
+  );
+  t.deepEqual(
+    m(chunk, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    chunk,
+    "99.06.03"
+  );
+});
+
 // -----------------------------------------------------------------------------
 //
 //             ▄▄ ▄████▄▐▄▄▄▌
