@@ -34,13 +34,13 @@ import removeDuplicateHeadsTails from "string-remove-duplicate-heads-tails";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                              | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 8 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 8 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-duplicate-heads-tails.umd.js` | 45 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-remove-duplicate-heads-tails.cjs.js` | 8 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-remove-duplicate-heads-tails.esm.js` | 8 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-remove-duplicate-heads-tails.umd.js` | 45 KB
 
-**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
+**[⬆  back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## Idea
 
@@ -75,7 +75,7 @@ Also, this lib removes the leading/trailing empty clumps of empty heads/tails, w
 
 Obviously, you can configure `heads` and `tails` to be whatever you like, single string or array of them. Also, the length of the different heads in your given set can be different.
 
-**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
+**[⬆  back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## API
 
@@ -92,7 +92,7 @@ removeDuplicateHeadsTails(str, [opts]);
 
 If input string is not given, it will `throw`.
 
-**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
+**[⬆  back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ### An Optional Options Object
 
@@ -105,7 +105,7 @@ If input string is not given, it will `throw`.
 
 These double curlies are default for [Nunjucks](https://mozilla.github.io/nunjucks/)/Jinja and many other templating languages. Nunjucks is my favourite.
 
-**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
+**[⬆  back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ### API - Output
 
@@ -119,7 +119,7 @@ Returns a string
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
-**[⬆ back to top](#markdown-header-string-remove-duplicate-heads-tails)**
+**[⬆  back to top](#markdown-header-string-remove-duplicate-heads-tails)**
 
 ## Licence
 
@@ -127,19 +127,28 @@ MIT License (MIT)
 
 Copyright © 2018 Codsen Ltd, Roy Revelt
 
+
+
 [node-img]: https://img.shields.io/node/v/string-remove-duplicate-heads-tails.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-remove-duplicate-heads-tails
+
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails
+
 [cov-img]: https://coveralls.io/repos/bitbucket/codsen/string-remove-duplicate-heads-tails/badge.svg?style=flat-square&branch=master
 [cov-url]: https://coveralls.io/bitbucket/codsen/string-remove-duplicate-heads-tails?branch=master
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-remove-duplicate-heads-tails
+
 [downloads-img]: https://img.shields.io/npm/dm/string-remove-duplicate-heads-tails.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-remove-duplicate-heads-tails
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-remove-duplicate-heads-tails
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/string-remove-duplicate-heads-tails
