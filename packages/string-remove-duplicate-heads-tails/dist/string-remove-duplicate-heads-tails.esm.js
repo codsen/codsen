@@ -141,14 +141,16 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
     str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
   if (
+    !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
       trimBeforeMatching: true,
       relaxedApi: true
     }) ||
-    !matchLeftIncl(str, str.length - 1, opts.tails, {
-      trimBeforeMatching: true,
-      relaxedApi: true
-    })
+    (!opts.tails.length ||
+      !matchLeftIncl(str, str.length - 1, opts.tails, {
+        trimBeforeMatching: true,
+        relaxedApi: true
+      }))
   ) {
     return trimSpaces(str).res;
   }

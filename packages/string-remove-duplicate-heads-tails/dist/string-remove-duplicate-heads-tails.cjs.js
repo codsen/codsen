@@ -148,10 +148,10 @@ function removeDuplicateHeadsTails(str) {
   while (str !== delTrailingEmptyHeadTailChunks(str, opts)) {
     str = trimSpaces(delTrailingEmptyHeadTailChunks(str, opts)).res;
   }
-  if (!stringMatchLeftRight.matchRightIncl(str, 0, opts.heads, {
+  if (!opts.heads.length || !stringMatchLeftRight.matchRightIncl(str, 0, opts.heads, {
     trimBeforeMatching: true,
     relaxedApi: true
-  }) || !stringMatchLeftRight.matchLeftIncl(str, str.length - 1, opts.tails, {
+  }) || !opts.tails.length || !stringMatchLeftRight.matchLeftIncl(str, str.length - 1, opts.tails, {
     trimBeforeMatching: true,
     relaxedApi: true
   })) {

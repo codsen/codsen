@@ -211,14 +211,16 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
   console.log("212 calling both matchRightIncl() and matchLeftIncl()");
   if (
+    !opts.heads.length ||
     !matchRightIncl(str, 0, opts.heads, {
       trimBeforeMatching: true,
       relaxedApi: true
     }) ||
-    !matchLeftIncl(str, str.length - 1, opts.tails, {
-      trimBeforeMatching: true,
-      relaxedApi: true
-    })
+    (!opts.tails.length ||
+      !matchLeftIncl(str, str.length - 1, opts.tails, {
+        trimBeforeMatching: true,
+        relaxedApi: true
+      }))
   ) {
     console.log(
       `\u001b[${33}m${"211 STRING IS NOT WRAPPED WITH HEADS AND TAILS! Bye."}\u001b[${39}m`
@@ -294,7 +296,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
       // match heads
       let noteDownTheIndex;
-      console.log("297 calling matchRightIncl()");
+      console.log("299 calling matchRightIncl()");
       const resultOfAttemptToMatchHeads = matchRightIncl(str, i, opts.heads, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -311,12 +313,12 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           itsFirstTail = true;
         }
 
-        console.log(`314 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
+        console.log(`316 HEADS MATCHED: ${resultOfAttemptToMatchHeads}`);
 
         // 0. Just in case, check maybe there are tails following right away,
         // in that case definitely remove both
         let tempIndexUpTo;
-        console.log("319 calling matchRightIncl()");
+        console.log("321 calling matchRightIncl()");
         const resultOfAttemptToMatchTails = matchRightIncl(
           str,
           noteDownTheIndex,
@@ -368,7 +370,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           }
 
           console.log(
-            `\u001b[${33}m${`371 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`373 adding new conditional range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           // then, add this new range:
           conditionalRanges.push(i, noteDownTheIndex);
@@ -376,7 +378,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // Every heads or tails go to conditional array. First encountered
           // non-head/tail wipes all.
           console.log(
-            `\u001b[${33}m${`379 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`381 adding new range: [${i},${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         }
@@ -386,7 +388,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 4. offset the index
         console.log(
-          `\u001b[${33}m${`389 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`391 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
@@ -437,7 +439,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
       }
 
       // match tails
-      console.log("440 calling matchRightIncl()");
+      console.log("442 calling matchRightIncl()");
       const resultOfAttemptToMatchTails = matchRightIncl(str, i, opts.tails, {
         trimBeforeMatching: true,
         cb: (char, theRemainderOfTheString, index) => {
@@ -457,7 +459,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
           // and we can't peel of those wrappings, hence only the second tail
           // can be added to conditionals' array.
           console.log(
-            `\u001b[${33}m${`460 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
+            `\u001b[${33}m${`462 pushing into conditionals: [${i}, ${noteDownTheIndex}]`}\u001b[${39}m`
           );
           conditionalRanges.push(i, noteDownTheIndex);
         } else {
@@ -488,7 +490,7 @@ function removeDuplicateHeadsTails(str, originalOpts = {}) {
 
         // 2. offset the index
         console.log(
-          `\u001b[${33}m${`491 offsetting i to ${noteDownTheIndex -
+          `\u001b[${33}m${`493 offsetting i to ${noteDownTheIndex -
             1}`}\u001b[${39}m`
         );
         i = noteDownTheIndex - 1;
