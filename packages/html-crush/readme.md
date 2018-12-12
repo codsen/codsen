@@ -11,6 +11,8 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+- Online web app: [htmlcrush.com](https://htmlcrush.com)
+
 ## Table of Contents
 
 - [Install](#markdown-header-install)
@@ -26,7 +28,20 @@
 ## Install
 
 ```bash
-import minify from "html-minify-noparse";
+npm i "html-crush";
+```
+
+then,
+
+```js
+// import using CommonJS require():
+const htmlCrush = require("html-crush");
+const crush = htmlCrush.crush; // main function
+const defaults = htmlCrush.defaults; // current API's default options object
+const version = htmlCrush.version; // current API's version, as on https://www.npmjs.com/package/html-crush
+
+// or import as an ES Module, using "import":
+import { crush, defaults, version } from "../dist/html-crush.esm";
 ```
 
 Here's what you'll get:
@@ -42,8 +57,8 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 ## Usage
 
 ```js
-const minify = require("html-minify-noparse");
-const res = minify(
+const crush = require("html-crush");
+const res = crush(
   `  <a>
      <b>
    c </b>
@@ -71,7 +86,7 @@ console.log("res:\n" + JSON.stringify(res, null, 4));
 
 **[⬆  back to top](#markdown-header-html-crush)**
 
-## TLDR
+## TLDR;
 
 In short, if your code is mixed with something else besides HTML (like email template HTML), you pretty much have no other option but to use this library to minify it.
 
@@ -108,20 +123,22 @@ As a side priority, this application also takes into consideration **human-frien
 
 ## API
 
-**minify(str \[, opts])**
+This library exports a plain object where main function is under a key "crush". That's why you consume it like this:
 
-The function is exported as _default_, and you can name it any way you like when you `import`/`require`.
+```js
+import { crush, defaults, version } from "../dist/html-crush.esm";
+```
 
-### API - Function's Input
+Once you get the function, it's API is the following:
 
-**minify(strin, opts])**
+**crush(str, \[opts])** — in other words, two arguments: first — string, optional second — options — plain object
 
 | Input argument | Key value's type | Obligatory? | Description                                        |
 | -------------- | ---------------- | ----------- | -------------------------------------------------- |
 | `str`          | String           | yes         | The input string of zero or more characters        |
 | `opts`         | Plain object     | no          | An Optional Options Object. See below for its API. |
 
-If supplied input arguments have any other types, an error will be thrown.
+If supplied input arguments are of any other types, an error will be thrown.
 
 **[⬆  back to top](#markdown-header-html-crush)**
 
@@ -151,6 +168,8 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
     "<head",
     "<meta",
     "<table",
+    "<script",
+    "</script",
     "<!DOCTYPE",
     "<style",
     "</style",

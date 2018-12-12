@@ -1809,6 +1809,41 @@ test(`07.07 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
   );
 });
 
+// test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whitespace in front of <script>`, t => {
+//   t.deepEqual(
+//     m(
+//       `a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b`,
+//       {
+//         removeLineBreaks: false,
+//         removeIndentations: false
+//       }
+//     ).result,
+//     `a\n    <script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\n    b`,
+//     "07.08.01"
+//   );
+//   t.deepEqual(
+//     m(
+//       `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
+//       {
+//         removeLineBreaks: false,
+//         removeIndentations: true
+//       }
+//     ).result,
+//     `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
+//     "07.08.02"
+//   );
+//   t.deepEqual(
+//     m(
+//       `a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb`,
+//       {
+//         removeLineBreaks: true
+//       }
+//     ).result,
+//     `a <script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b`,
+//     "07.08.03"
+//   );
+// });
+
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
 
