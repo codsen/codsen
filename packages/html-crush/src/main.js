@@ -1240,7 +1240,9 @@ function crush(str, originalOpts) {
           finalIndexesToDelete.current(),
           null,
           0
-        )}; ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${nonWhitespaceCharMet};`
+        )}; ${`\u001b[${33}m${`nonWhitespaceCharMet`}\u001b[${39}m`} = ${nonWhitespaceCharMet}; ${`\u001b[${
+          doNothing ? 31 : 32
+        }m${`██ doNothing ${doNothing ? "ON" : "OFF"} ██`}\u001b[${39}m`}`
       );
 
       //
@@ -1249,7 +1251,7 @@ function crush(str, originalOpts) {
       // end of the loop
     }
     console.log(
-      `1252 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
+      `1254 AFTER THE LOOP, finalIndexesToDelete.current() = ${JSON.stringify(
         finalIndexesToDelete.current(),
         null,
         4
@@ -1272,7 +1274,7 @@ function crush(str, originalOpts) {
       const rangesCopy = Array.from(finalIndexesToDelete.current());
       finalIndexesToDelete.wipe();
       console.log(
-        `1275 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
+        `1277 returning ${`\u001b[${33}m${`res`}\u001b[${39}m`} =\n\n${JSON.stringify(
           res,
           null,
           4
@@ -1297,7 +1299,7 @@ function crush(str, originalOpts) {
   }
   // ELSE - return the original input string
   console.log(
-    `1300 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
+    `1302 returning original ${`\u001b[${33}m${`str`}\u001b[${39}m`} =\n\n${JSON.stringify(
       str,
       null,
       4
