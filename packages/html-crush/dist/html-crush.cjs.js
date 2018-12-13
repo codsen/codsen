@@ -475,6 +475,16 @@ function crush(str, originalOpts) {
         whitespaceStartedAt = null;
       }
       if (scriptStartedAt !== null && str[_i] === "<" && str[_i + 1] === "/" && str[_i + 2] === "s" && str[_i + 3] === "c" && str[_i + 4] === "r" && str[_i + 5] === "i" && str[_i + 6] === "p" && str[_i + 7] === "t" && !isLetter(str[_i + 8])) {
+        if ((opts.removeIndentations || opts.removeLineBreaks) && _i > 0 && str[_i - 1] && !str[_i - 1].trim().length) {
+          for (var _y2 = _i; _y2--;) {
+            if (str[_y2] === "\n" || str[_y2] === "\r" || str[_y2].trim().length) {
+              if (_y2 + 1 < _i) {
+                finalIndexesToDelete.push(_y2 + 1, _i);
+              }
+              break;
+            }
+          }
+        }
         scriptStartedAt = null;
         doNothing = false;
         _i += 8;
@@ -484,13 +494,14 @@ function crush(str, originalOpts) {
         scriptStartedAt = _i;
         doNothing = true;
         var whatToInsert = "";
-        if (opts.removeLineBreaks || opts.removeIndentations) {
+        if ((opts.removeLineBreaks || opts.removeIndentations) && whitespaceStartedAt !== null) {
           if (whitespaceStartedAt > 0) {
             whatToInsert = "\n";
           }
           finalIndexesToDelete.push(whitespaceStartedAt, _i, whatToInsert);
         }
         whitespaceStartedAt = null;
+        lastLinebreak = null;
       }
       if (!doNothing && withinStyleTag && styleCommentStartedAt !== null && str[_i] === "*" && str[_i + 1] === "/") {
         var _expand = expand({
@@ -504,7 +515,7 @@ function crush(str, originalOpts) {
         stageFrom = _expand2[0];
         stageTo = _expand2[1];
         styleCommentStartedAt = null;
-        if (str[stageTo] === undefined) {
+        if (stageFrom != null && str[stageTo] === undefined) {
           finalIndexesToDelete.push(stageFrom, stageTo);
         } else {
           countCharactersPerLine++;

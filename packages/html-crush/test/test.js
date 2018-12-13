@@ -1225,6 +1225,97 @@ test(`02.15 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - CDATA blocks are not tou
   );
 });
 
+test(`02.16 - ${`\u001b[${35}m${`BAU`}\u001b[${39}m`} - whitespace in front of </script>`, t => {
+  // 0. baseline - no whitespace in front of </script>
+  const code1 = 'a\n<script>const a = "test";</script> b';
+  t.deepEqual(
+    m(code1, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    code1,
+    "02.16.01"
+  );
+  t.deepEqual(
+    m(code1, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    code1,
+    "02.16.02"
+  );
+  t.deepEqual(
+    m(code1, {
+      removeLineBreaks: true,
+      removeIndentations: false
+    }).result,
+    code1,
+    "02.16.03"
+  );
+  t.deepEqual(
+    m(code1, {
+      removeLineBreaks: true,
+      removeIndentations: true
+    }).result,
+    code1,
+    "02.16.04"
+  );
+
+  // case 1 - stops at non-whitespace character, ";"
+  const code2 = 'a\n<script>const a = "test";   \t   </script> b';
+  const minified2 = 'a\n<script>const a = "test";</script> b';
+  t.deepEqual(
+    m(code2, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    code2,
+    "02.16.05"
+  );
+  t.deepEqual(
+    m(code2, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    minified2,
+    "02.16.06"
+  );
+  t.deepEqual(
+    m(code2, {
+      removeLineBreaks: true
+    }).result,
+    minified2,
+    "02.16.07"
+  );
+
+  // case 2 - stops at line break character
+  const code3 = 'a\n<script>const a = "test";   \n   </script> b';
+  const minified3 = 'a\n<script>const a = "test";   \n</script> b';
+  t.deepEqual(
+    m(code3, {
+      removeLineBreaks: false,
+      removeIndentations: false
+    }).result,
+    code3,
+    "02.16.08"
+  );
+  t.deepEqual(
+    m(code3, {
+      removeLineBreaks: false,
+      removeIndentations: true
+    }).result,
+    minified3,
+    "02.16.09"
+  );
+  t.deepEqual(
+    m(code3, {
+      removeLineBreaks: true
+    }).result,
+    minified3,
+    "02.16.10"
+  );
+});
+
 // 03. opts.reportProgressFunc
 // -----------------------------------------------------------------------------
 
@@ -1826,14 +1917,14 @@ test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
       removeLineBreaks: false,
       removeIndentations: true
     }).result,
-    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script>\nb',
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n</script>\nb',
     "07.08.02"
   );
   t.deepEqual(
     m(source, {
       removeLineBreaks: true
     }).result,
-    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b',
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
     "07.08.03"
   );
   t.deepEqual(
@@ -1841,7 +1932,7 @@ test(`07.08 - ${`\u001b[${34}m${`CSS minification`}\u001b[${39}m`} - removes whi
       removeLineBreaks: true,
       lineLengthLimit: 10
     }).result,
-    'a\n<script src="tralala.js">    \n    \t    a  a   \n  \t   </script> b',
+    'a\n<script src="tralala.js">    \n    \t    a  a   \n</script> b',
     "07.08.04"
   );
 });

@@ -512,6 +512,21 @@ function crush(str, originalOpts) {
         str[i + 7] === "t" &&
         !isLetter(str[i + 8])
       ) {
+        if (
+          (opts.removeIndentations || opts.removeLineBreaks) &&
+          i > 0 &&
+          str[i - 1] &&
+          !str[i - 1].trim().length
+        ) {
+          for (let y = i; y--; ) {
+            if (str[y] === "\n" || str[y] === "\r" || str[y].trim().length) {
+              if (y + 1 < i) {
+                finalIndexesToDelete.push(y + 1, i);
+              }
+              break;
+            }
+          }
+        }
         scriptStartedAt = null;
         doNothing = false;
         i += 8;
@@ -532,13 +547,17 @@ function crush(str, originalOpts) {
         scriptStartedAt = i;
         doNothing = true;
         let whatToInsert = "";
-        if (opts.removeLineBreaks || opts.removeIndentations) {
+        if (
+          (opts.removeLineBreaks || opts.removeIndentations) &&
+          whitespaceStartedAt !== null
+        ) {
           if (whitespaceStartedAt > 0) {
             whatToInsert = "\n";
           }
           finalIndexesToDelete.push(whitespaceStartedAt, i, whatToInsert);
         }
         whitespaceStartedAt = null;
+        lastLinebreak = null;
       }
       if (
         !doNothing &&
@@ -557,7 +576,7 @@ function crush(str, originalOpts) {
             DELETE_IN_STYLE_TIGHTLY_IF_ON_RIGHT_IS || ""
         });
         styleCommentStartedAt = null;
-        if (str[stageTo] === undefined) {
+        if (stageFrom != null && str[stageTo] === undefined) {
           finalIndexesToDelete.push(stageFrom, stageTo);
         } else {
           countCharactersPerLine++;
