@@ -1,3 +1,12 @@
+/**
+ * array-of-arrays-into-ast
+ * turns an array of arrays of data into a nested tree of plain objects
+ * Version: 1.3.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/array-of-arrays-into-ast/
+ */
+
 import checkTypes from 'check-types-mini';
 import mergeAdvanced from 'object-merge-advanced';
 
