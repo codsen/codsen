@@ -1,6 +1,6 @@
 # html-crush
 
-> Minifies HTML, accepts HTML, mixed with other sources
+> Minifies HTML/CSS: valid or broken, pure or mixed with other languages
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
@@ -17,9 +17,10 @@
 
 - [Install](#markdown-header-install)
 - [Usage](#markdown-header-usage)
-- [TLDR](#markdown-header-tldr)
+- [TLDR;](#markdown-header-tldr)
 - [Features](#markdown-header-features)
-- [API](#markdown-header-api)
+- [API - Input](#markdown-header-api-input)
+- [API - Output](#markdown-header-api-output)
 - [Competition](#markdown-header-competition)
 - [Non-deterministic unit tests](#markdown-header-non-deterministic-unit-tests)
 - [Contributing](#markdown-header-contributing)
@@ -28,7 +29,7 @@
 ## Install
 
 ```bash
-npm i "html-crush";
+npm i html-crush
 ```
 
 then,
@@ -45,9 +46,9 @@ Here's what you'll get:
 
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-crush.cjs.js` | 22 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-crush.esm.js` | 22 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-crush.umd.js` | 71 KB
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-crush.cjs.js` | 27 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-crush.esm.js` | 28 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-crush.umd.js` | 72 KB
 
 **[⬆  back to top](#markdown-header-html-crush)**
 
@@ -149,6 +150,8 @@ The function exported under key `crush` will return **a plain object** where you
 | `log`          | Plain object                              | For example, `{ timeTakenInMiliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
 | `ranges`       | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]` |
 | `result`       | String                                    | The string version where all ranges were applied to it. |
+
+**[⬆  back to top](#markdown-header-html-crush)**
 
 ### Optional Options Object
 
