@@ -1,7 +1,7 @@
 {
   "name": "html-crush",
   "version": "0.4.0",
-  "description": "Minifies HTML, accepts HTML, mixed with other sources",
+  "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "engines": {
     "node": ">=6",
@@ -54,18 +54,25 @@
   },
   "keywords": [
     "html",
+    "css",
     "minify",
+    "minifier",
+    "minification",
+    "crush",
     "parse",
     "no",
     "line",
     "breaks",
     "remove",
     "reduce",
+    "file",
     "size",
     "email",
     "templates",
     "tool",
-    "utility"
+    "utility",
+    "small",
+    "smaller"
   ],
   "lect": {
     "babelrc": {
@@ -207,6 +214,7 @@
     "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "latest",
+    "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-builtins": "latest",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.0",

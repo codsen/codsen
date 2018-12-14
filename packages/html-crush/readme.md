@@ -11,7 +11,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- Online web app: [htmlcrush.com](https://htmlcrush.com)
+**Online web app:** [htmlcrush.com](https://htmlcrush.com)
 
 ## Table of Contents
 
@@ -35,13 +35,10 @@ then,
 
 ```js
 // import using CommonJS require():
-const htmlCrush = require("html-crush");
-const crush = htmlCrush.crush; // main function
-const defaults = htmlCrush.defaults; // current API's default options object
-const version = htmlCrush.version; // current API's version, as on https://www.npmjs.com/package/html-crush
+const { crush, defaults, version } = require("html-crush");
 
 // or import as an ES Module, using "import":
-import { crush, defaults, version } from "../dist/html-crush.esm";
+import { crush, defaults, version } from "html-crush";
 ```
 
 Here's what you'll get:
@@ -57,7 +54,7 @@ Main export - **CommonJS version**, transpiled to ES5, contains `require` and `m
 ## Usage
 
 ```js
-const crush = require("html-crush");
+const { crush } = require("html-crush");
 const res = crush(
   `  <a>
      <b>
@@ -71,8 +68,8 @@ const res = crush(
      <b>
    c </b>
    </a>`,
-  { lineLengthLimit: 8 }
-);
+  { removeLineBreaks: true, lineLengthLimit: 8 }
+).result;
 console.log("res:\n" + JSON.stringify(res, null, 4));
 // => "res:
 // <a><b> c
@@ -119,17 +116,20 @@ As a side priority, this application also takes into consideration **human-frien
 
 **[⬆  back to top](#markdown-header-html-crush)**
 
-## API
+## API - Input
 
 This library exports a plain object where main function is under a key "crush". That's why you consume it like this:
 
 ```js
-import { crush, defaults, version } from "../dist/html-crush.esm";
+import { crush, defaults, version } from "html-crush";
 ```
 
 Once you get the function, `crush`, it's API is the following:
 
-**crush(str, \[opts])** — in other words, two arguments: first — string, optional second — options — plain object
+**crush(str, \[opts])** — in other words, two arguments:
+
+1. first argument — string,
+2. optional (marked with square brackets above) second argument — options — a plain object
 
 | Input argument | Key value's type | Obligatory? | Description                                        |
 | -------------- | ---------------- | ----------- | -------------------------------------------------- |
@@ -139,6 +139,16 @@ Once you get the function, `crush`, it's API is the following:
 If supplied input arguments are of any other types, an error will be thrown.
 
 **[⬆  back to top](#markdown-header-html-crush)**
+
+## API - Output
+
+The function exported under key `crush` will return **a plain object** where you'll find log data, result string and corresponding string ranges of all actions performed:
+
+| Key's name     | Key value's type                          | Description                                        |
+| -------------- | ----------------------------------------- | -------------------------------------------------- |
+| `log`          | Plain object                              | For example, `{ timeTakenInMiliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
+| `ranges`       | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]` |
+| `result`       | String                                    | The string version where all ranges were applied to it. |
 
 ### Optional Options Object
 

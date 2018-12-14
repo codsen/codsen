@@ -1,3 +1,12 @@
+/**
+ * html-crush
+ * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
+ * Version: 0.4.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/html-crush/
+ */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import applySlices from 'ranges-apply';
@@ -7,7 +16,7 @@ import expand from 'string-range-expander';
 
 var name = "html-crush";
 var version = "0.4.0";
-var description = "Minifies HTML, accepts HTML, mixed with other sources";
+var description = "Minifies HTML/CSS: valid or broken, pure or mixed with other languages";
 var license = "MIT";
 var engines = {
 	node: ">=6",
@@ -222,6 +231,7 @@ var devDependencies = {
 	"rollup-plugin-cleanup": "^3.0.0",
 	"rollup-plugin-commonjs": "^9.2.0",
 	"rollup-plugin-json": "latest",
+	"rollup-plugin-license": "^0.7.0",
 	"rollup-plugin-node-builtins": "latest",
 	"rollup-plugin-node-resolve": "^4.0.0",
 	"rollup-plugin-strip": "^1.2.0",

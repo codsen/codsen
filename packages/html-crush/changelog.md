@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.0] - 2018-12-14
+
+- ✨ Added licence banner at the top of each built file (all files in `dist/` folder)
+- ✨ Improved readme file
+
 ## [0.4.0] - 2018-12-13
 
 - ✨ Delete whitespace within `<script>` tag, before closing `</script>`.
@@ -25,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ First public release
 
+[0.5.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.5.0%0Dv0.4.0#diff
 [0.4.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.4.0%0Dv0.3.0#diff
 [0.3.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.3.0%0Dv0.2.1#diff
 [0.2.0]: https://bitbucket.org/codsen/html-crush/branches/compare/v0.2.0%0Dv0.1.3#diff
