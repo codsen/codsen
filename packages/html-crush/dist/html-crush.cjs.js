@@ -147,18 +147,25 @@ var husky = {
 };
 var keywords = [
 	"html",
+	"css",
 	"minify",
+	"minifier",
+	"minification",
+	"crush",
 	"parse",
 	"no",
 	"line",
 	"breaks",
 	"remove",
 	"reduce",
+	"file",
 	"size",
 	"email",
 	"templates",
 	"tool",
-	"utility"
+	"utility",
+	"small",
+	"smaller"
 ];
 var lect = {
 	babelrc: {
