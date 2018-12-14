@@ -1,3 +1,12 @@
+/**
+ * array-group-str-omit-num-char
+ * Groups array of strings by omitting number characters
+ * Version: 1.0.2
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/array-group-str-omit-num-char/
+ */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import uniq from 'lodash.uniq';
