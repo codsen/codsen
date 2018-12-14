@@ -123,7 +123,7 @@ function crush(str, originalOpts) {
   }
 
   console.log(
-    `${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
+    `126 ${`\u001b[${33}m${`breakToTheLeftOfFirstLetters`}\u001b[${39}m`} = ${JSON.stringify(
       breakToTheLeftOfFirstLetters,
       null,
       4
