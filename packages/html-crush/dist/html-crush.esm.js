@@ -191,7 +191,9 @@ var lect = {
 		devDependencies: [
 			"@babel/polyfill",
 			"rollup-plugin-node-builtins",
-			"rollup-plugin-json"
+			"rollup-plugin-json",
+			"node-fetch",
+			"p-map"
 		],
 		travisVersionsOverride: [
 		]
@@ -229,12 +231,12 @@ var devDependencies = {
 	"eslint-plugin-prettier": "latest",
 	"eslint-plugin-scanjs-rules": "latest",
 	husky: "^1.2.0",
-	"node-fetch": "^2.3.0",
+	"node-fetch": "latest",
 	nyc: "latest",
-	"p-map": "^2.0.0",
+	"p-map": "latest",
 	prettier: "latest",
 	rollup: "latest",
-	"rollup-plugin-babel": "^4.0.3",
+	"rollup-plugin-babel": "^4.1.0",
 	"rollup-plugin-cleanup": "^3.0.0",
 	"rollup-plugin-commonjs": "^9.2.0",
 	"rollup-plugin-json": "latest",
