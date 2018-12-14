@@ -1,3 +1,12 @@
+/**
+ * array-of-arrays-sort-by-col
+ * sort array of arrays by column, rippling the sorting outwards from that column
+ * Version: 2.2.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

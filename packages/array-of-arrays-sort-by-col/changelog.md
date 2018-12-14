@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2018-12-14
+
+- ✨ Updated all dependencies and restored AVA linting, added licence to the top of each built file
+
 ## [2.2.0] - 2018-10-12
 
 - ✨ Updated all dependencies and restored coverage reporting both in terminal and sending to coveralls
@@ -41,6 +45,7 @@ For example, the `1` should be on top of `null` if sorting "axis" is third colum
 
 - ✨ Public release
 
+[2.3.0]: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/branches/compare/v2.3.0%0Dv2.2.1#diff
 [2.2.0]: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/branches/compare/v2.2.0%0Dv2.1.2#diff
 [2.1.0]: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/branches/compare/v2.1.0%0Dv2.0.2#diff
 [2.0.0]: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/branches/compare/v2.0.0%0Dv1.0.4#diff
