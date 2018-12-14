@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.4.0] - 2018-12-13
 
 - ✨ Delete whitespace within `<script>` tag, before closing `</script>`.
+- ✨ Added unit tests minifying a handful of real-world websites. If URL fetch succeeds and source HTML is a string and not an empty-one, we minify with couple settings and measure, are results less than or equal to the original sources.
 
 ## [0.3.0] - 2018-12-12
 
