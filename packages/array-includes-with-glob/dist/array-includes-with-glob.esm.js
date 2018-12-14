@@ -1,3 +1,12 @@
+/**
+ * array-includes-with-glob
+ * like _.includes but with wildcards
+ * Version: 2.4.2
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/array-includes-with-glob/
+ */
+
 import matcher from 'matcher';
 
 const isArr = Array.isArray;

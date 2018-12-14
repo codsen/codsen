@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.5.0] - 2018-12-14
+
+ - 🔧 Restored AVA linting, updated all dependencies, added licence to the top of each built file
+
 ## [2.4.0] - 2018-10-12
 
 - ✨ Updated all dependencies and restored coverage reporting both in terminal and sending to coveralls
@@ -62,3 +66,4 @@ Bumping major just in case it breaks somebody's API. But I don't think it will.
 [2.2.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.2.0%0Dv2.1.0#diff
 [2.3.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.3.0%0Dv2.2.2#diff
 [2.4.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.4.0%0Dv2.3.13#diff
+[2.5.0]: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.5.0%0Dv2.4.2#diff
