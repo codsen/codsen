@@ -1,0 +1,465 @@
+# email-comb
+
+> Remove unused CSS from email templates
+
+[![Minimum Node version required][node-img]][node-url]
+[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
+[![View dependencies as 2D chart][deps2d-img]][deps2d-url]
+[![Downloads/Month][downloads-img]][downloads-url]
+[![Test in browser][runkit-img]][runkit-url]
+[![Code style: prettier][prettier-img]][prettier-url]
+[![All Contributors][contributors-img]][contributors-url]
+[![MIT License][license-img]][license-url]
+
+- Online web app: [EmailComb](https://emailcomb.com)
+- Gulp plugin (ideally, don't use it, tap the stream directly (see instructions and code samples below): [gulp-email-comb](https://www.npmjs.com/package/gulp-email-comb)
+
+## Table of Contents
+
+- [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
+- [API](#markdown-header-api)
+- [Options - `opts.whitelist`](#markdown-header-options-optswhitelist)
+- [Options - `opts.backend`](#markdown-header-options-optsbackend)
+- [Tapping the stream in Gulp](#markdown-header-tapping-the-stream-in-gulp)
+- [Extreme example of unused CSS](#markdown-header-extreme-example-of-unused-css)
+- [Removing unused CSS from web pages](#markdown-header-removing-unused-css-from-web-pages)
+- [Why it's important to be able to process HTML with back-end code](#markdown-header-why-its-important-to-be-able-to-process-html-with-back-end-code)
+- [Contributing](#markdown-header-contributing)
+- [Licence](#markdown-header-licence)
+
+## Install
+
+```bash
+npm i email-comb
+```
+
+then,
+
+```js
+const comb = require("email-comb");
+```
+
+or
+
+```js
+import comb from "email-comb";
+```
+
+Name the function as `comb` or any way you like because we're using `export default`.
+
+Here's what you'll get:
+
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/email-comb.cjs.js` | 52 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/email-comb.esm.js` | 53 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/email-comb.umd.js` | 74 KB
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Idea
+
+**This library removes unused CSS from HTML without parsing it**
+
+STRENGTHS:
+
+- Aimed at Email development workflows
+- Accepts HTML **mixed** with other templating/programming languages
+- Works on broken or incomplete or invalid HTML/XHTML code
+- Works on both classes and id's
+- Optionally uglifies the class or id names
+- The algorithm will cope with style tags inside the `body` tag or multiple style tags
+- Strips CSS and HTML comments; recognises Outlook conditional comments
+- Has email-specific features like [removing](regex-empty-conditional-comments) empty Outlook conditional comments
+- Faster than parsing cleaners - algorithm completes cleaning in two input (string) traversals
+- Attempts to fix some code issues, for example, remove space in `< body` (which would otherwise break in Chrome)
+- API contains no file I/O operations or anything front-end-related — it's "string-in, string-out"
+- All dependencies are either our own or Lodash's or Mr Sindre Sorhus'
+- CommonJS, ES Modules and UMD builds available, published to npm and available to consume via CDN's like unpkg.com
+- Complete console logging set and retained in the source (which is automatically removed from builds)
+- Modern setup: ava pointing at ES Modules build, Rollup bundling the builds, coverage high and [tracked](https://coveralls.io/bitbucket/codsen/email-comb), prettier and ESLint in place
+- Lets you improve the algorithm precision by letting it know how do templating variables look
+
+WEAKNESSES:
+
+- Increased risk of bugs compared to cleaners that use parsing because, essentially, we work on input as text. This library is used by some top UK brands and agencies and is well-tested.
+- Custom algorithm narrows the possible contributors' pool (compared to the competition who use PostCSS)
+- **Does not support external stylesheets** or JS injecting more classes (because it's an email development-oriented tool)
+
+COMPETITORS (ALL WEB DEVELOPMENT-ORIENTED):
+
+- [purgecss](https://github.com/FullHuman/purgecss)
+- [purifycss](https://github.com/purifycss/purifycss)
+- [uncss](https://github.com/uncss/uncss)
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## API
+
+```js
+comb(str, [options]);
+```
+
+### API - Input
+
+| Input argument | Type         | Obligatory? | Description                               |
+| -------------- | ------------ | ----------- | ----------------------------------------- |
+| str            | String       | yes         | HTML code as string                       |
+| options        | Plain object | no          | Any options, as a plain object, see below |
+
+For example,
+
+```js
+// Require it first. You get a function which you can feed with strings:
+const comb = require("email-comb");
+// Let's define a string to work upon:
+const html = '<html>zzz</html><body class="class-1">zzz</body>';
+// Assign a new string to the output of this library:
+const { result } = comb(html, {
+  whitelist: [".class-1", "#id-1", ".module-*"]
+});
+// Log its result:
+console.log("result = " + JSON.stringify(result, null, 4));
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+### API - Input - Options object
+
+Optionally, you can pass the Optional Options Object as a second argument:
+
+| Options object's key                             | Type                                      | Default             | Example                                                        | Description                                                                                                                                                                                                      |
+| ------------------------------------------------ | ----------------------------------------- | ------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `whitelist`                                      | Array                                     | `[]`                | `[".class-1", "#id-1", ".module-*"]`                           | List all classes or id's you want this library to ignore. You can use all [matcher](https://www.npmjs.com/package/matcher) patterns.                                                                             |
+| `backend`                                        | Array                                     | `[]`                | `[{ heads: "{{", tails: "}}" }, { heads: "{%", tails: "%}" }]` | If your code has back-end code within clss or id values, for example, `class="{{ red }} main-box"` you can stop `{{`, `red` and `}}` to be treated as class names                                                |
+| `uglify`                                         | Boolean                                   | `false`             | n/a                                                            | Will rename all class and id names to be few characters-long. This might reduce your file size by another kilobyte.                                                                                              |
+| `removeHTMLComments`                             | Boolean                                   | `true`              | n/a                                                            | When enabled, all HTML comments (`<!--` to `-->`) will be removed                                                                                                                                                |
+| `doNotRemoveHTMLCommentsWhoseOpeningTagContains` | Array of zero or more insensitive strings | `["[if", "[endif"]` | n/a                                                            | Email code often contains Outlook or IE conditional comments which you probably don't want to remove. Whatever strings you list here, if comment's opening tag will contain these, that tag will not be removed. |
+
+Here are all options in one place in case you need to copy the whole thing:
+
+```json5
+{
+  whitelist: [], // for example, [".class-1", "#id-1", ".module-*"]
+  backend: [], // for example, [{ heads: "{{", tails: "}}" }, { heads: "{%", tails: "%}" }]
+  uglify: false,
+  removeHTMLComments: true,
+  doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+}
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+### API - Output
+
+A **plain object** is returned. It will have the following keys:
+
+| Key               | Its value's type | Description                                                              |
+| ----------------- | ---------------- | ------------------------------------------------------------------------ |
+| `log`             | Plain object     | Various information about performed operations                           |
+| `result`          | String           | A string containing cleaned HTML                                         |
+| `allInHead`       | Array            | Deduped and sorted array of all classes and `id`'s between `<head>` tags |
+| `allInBody`       | Array            | Deduped and sorted array of all classes and `id`'s between `<body>` tags |
+| `deletedFromHead` | Array            | Array of classes/id's that were deleted inside `<head>` _at least once_^ |
+| `deletedFromBody` | Array            | Array of classes/id's that were deleted inside `<body>` _at least once_^ |
+
+^ Some legit, used classes/id's might be "sandwiched" with unused-ones (like `.head-only.real-class`) and deleted in some `<style>` tags, but not in all. That's a rare case, added back in `v1.12`.
+
+For example, log key would contain:
+
+```json5
+{
+  timeTakenInMiliseconds: 55,
+  traversedTotalCharacters: 504,
+  traversedTimesInputLength: 4.24,
+  originalLength: 118,
+  cleanedLength: 87,
+  bytesSaved: 32,
+  percentageReducedOfOriginal: 27,
+  nonIndentationsWhitespaceLength: 9,
+  nonIndentationsTakeUpPercentageOfOriginal: 8,
+  commentsLength: 10,
+  commentsTakeUpPercentageOfOriginal: 1
+}
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Options - `opts.whitelist`
+
+Since the main purpose of this library is to clean **email** HTML, it needs to cater for email code specifics. One of them is that CSS styles will contain fix or hack styles, meant for email software. For example, here are few of them:
+
+```html
+#outlook a { padding:0; } .ExternalClass, .ReadMsgBody { width:100%; }
+.ExternalClass, .ExternalClass div, .ExternalClass font, .ExternalClass p,
+.ExternalClass span, .ExternalClass td { line-height:100%; }
+```
+
+You will not be using these classes within the `<body>` of your HTML code, so they would get removed as "unused" because they are present in `<head>` only. To avoid that, pass the classes, and `id`'s in the _whitelist_ key's value, as an array. For example:
+
+```js
+var html = "<!DOCTYPE html>...";
+comb(html, {
+  whitelist: ["#outlook", ".ExternalClass", ".ReadMsgBody"]
+});
+```
+
+You can also use a _wildcard_, for example in order to whitelist classes `module-1`, `module-2` ... `module-99`, `module-100`, you can simply whitelist them as `module-*`:
+
+```js
+var html = "<!DOCTYPE html>...";
+comb(html, {
+  whitelist: [".module-*"]
+});
+// => all class names that begin with ".module-" will not be touched by this library.
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Options - `opts.backend`
+
+This library, differently from competition, is aiming to support code which contains back-end code: other programming languages (Java JSP's), other templating languages (like Nunjucks) and/or proprietary ESP templating languages.
+
+All different languages can be present in the input source, and parser won't care, EXCEPT when they are in class or id names. For example, `<td class="mt10 {{ module.on }} module-box blackbg"`. Notice how `{{ module.on }}` sits in the middle and it's variable value from a different programming language. Eventually, it will be rendered into strings `on` or `off` but at this stage, this is raw, unrendered template and we want to remove all unused CSS from it.
+
+It's possible to clean this too.
+
+If you let this library know how are your back-end language's variables marked, for example, that "heads" are `{{` and "tails" are `}}` (as in `Hi {{data.firstname}}`), the algorithm will ignore all variables within `class` or `id` names.
+
+If you don't put templating variables into classes or id's, don't use the feature because it still costs computing resources to perform those checks.
+
+Here's an example:
+
+```js
+// Require it first. You get a function which you can feed with strings.
+// Notice you can name it any way you want (because in the source it's using "export default").
+const comb = require("email-comb");
+
+// Let's define a string equal to some processed HTML:
+const res = comb(
+  `<!doctype html>
+<html>
+<head>
+<style>
+.aaa {
+color:  black;
+}
+</style></head>
+<body class="{% var1 %}">
+<div class="{{ var2 }}">
+</div>
+</body>
+</html>
+`,
+  {
+    // <------------ Optional Options Object - second input argument of our function, remove()
+    backend: [
+      {
+        heads: "{{", // define heads and tails in pairs
+        tails: "}}"
+      },
+      {
+        heads: "{%", // second pair
+        tails: "%}"
+      }
+    ]
+  }
+).result; // <------ output of this library is a plain object. String result is in a key "result". We grab it here.
+
+// Log the result:
+console.log("res =\n" + res);
+// res =
+// <!doctype html>
+// <html>
+// <head>
+// </head>
+// <body class="{% var1 %}">
+// <div class="{{ var2 }}">
+// </div>
+// </body>
+// </html>
+//
+```
+
+In templating languages, it's also possible to have IF-ELSE clauses. For example, in Nunjucks, you can have:
+
+```html
+<td class="db{% if module_on || oodles %}on{% else %}off{% endif %} pt10"></td>
+```
+
+`db` and `pt10` are normal CSS class names, but everything else between `{%` and `%}` is Nunjucks code.
+
+Now, in those cases, notice that Nunjucks code is only wrapping the variables. Even if you set `heads` to `{%` and tails to `%}`, classes `on` and `off` will not get ignored and theoretically can get removed!!!
+
+The solution is to ensure that all back-end class names are contained within back-end tags. With Nunjucks, it is easily done by performing calculations outside `class=` declarations, then assigning the calculation's result to a variable and using the variable instead.
+
+For example, let's rewrite the same snippet used above:
+
+```html
+{% set switch = 'off' %} {% if module_on || oodles %} {% set switch = 'on' %} {%
+else %}
+<td class="db {{ switch }} pt10"></td>
+```
+
+Now, set `heads` to `{{` and tails to `}}` and `switch` will be ignored completely.
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Tapping the stream in Gulp
+
+In Gulp, everything flows as vinyl Buffer streams. You could [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations (like remove unused CSS), then convert it back to Buffer and place the stream back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
+
+Code-wise, here's the idea:
+
+```js
+const tap = require("gulp-tap");
+const comb = require("email-comb");
+const util = require("gulp-util");
+const whitelist = [
+  ".External*",
+  ".ReadMsgBody",
+  ".yshortcuts",
+  ".Mso*",
+  "#outlook",
+  ".module*"
+];
+
+gulp.task("build", () => {
+  return gulp.src("emails/*.html").pipe(
+    tap(file => {
+      const cleanedHtmlResult = comb(file.contents.toString(), {
+        whitelist
+      });
+      util.log(
+        util.colors.green(
+          `\nremoved ${
+            cleanedHtmlResult.deletedFromHead.length
+          } from head: ${cleanedHtmlResult.deletedFromHead.join(" ")}`
+        )
+      );
+      util.log(
+        util.colors.green(
+          `\nremoved ${
+            cleanedHtmlResult.deletedFromBody.length
+          } from body: ${cleanedHtmlResult.deletedFromBody.join(" ")}`
+        )
+      );
+      file.contents = Buffer.from(cleanedHtmlResult.result);
+    })
+  );
+});
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Extreme example of unused CSS
+
+This piece of HTML doesn't even have `<head>` and `<style>` CSS is at the very bottom, within `<body>`. Our application still cleans it allright:
+
+```html
+<html>
+  <body id="unused-1">
+    <table class="unused-2 unused-3">
+      <tr>
+        <td class="unused-4 unused-5">text</td>
+      </tr>
+    </table>
+
+    <style>
+      .unused-6 {
+        display: block;
+      }
+      #unused-7 {
+        height: auto;
+      }
+    </style>
+  </body>
+</html>
+```
+
+Cleaned result:
+
+```html
+<html>
+  <body>
+    <table>
+      <tr>
+        <td>text</td>
+      </tr>
+    </table>
+  </body>
+</html>
+```
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Removing unused CSS from web pages
+
+This library is meant to be used on any HTML where there are **no external CSS stylesheets**. It's quite rare to find a **web page** that would have no external stylesheets, but 100% of **email newsletters** are like that and this library suits them perfectly. Otherwise, look for a different tool.
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Why it's important to be able to process HTML with back-end code
+
+Common unused CSS removal tools on the market ([purgecss](https://github.com/FullHuman/purgecss), [purifycss](https://github.com/purifycss/purifycss) and [uncss](https://github.com/uncss/uncss) for example) work only on valid HTML which does not contain back-end code: ESP templating strings (Oracle Responsys, Adobe Neolane, Exact Target, SalesForce or Mailchimp), different templating languages (Mustache, Jinja or Nunjucks) or different programming languages (PHP or Java JSP's).
+
+But, in email development, it is normal to expect that code will contain templating code (like `Hi {{ data.firatName }}!`).
+
+`email-comb` can process the email template after it has been wired up as a campaign.
+
+Practically, this means, you save lots of time - imagine having to render HTML, so it contains no more ESP back-end templating language bits, then cleaning its CSS, then manually merging that cleaned CSS with your original HTML template. That's a tedious, manual and error-prone job.
+
+On the other hand, you can clean your email campaign's HTML template, along with its Mailchimp, Responsys or other ESP wirings, as it is, using this library.
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Contributing
+
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/email-comb/issues/new).
+
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/email-comb/issues/new).
+
+- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+
+**[⬆  back to top](#markdown-header-email-comb)**
+
+## Licence
+
+MIT License (MIT)
+
+Copyright © 2018 Codsen Ltd, Roy Revelt
+
+Adapted a `generateShortname()` function from:
+https://github.com/cazzer/gulp-selectors/blob/master/lib/utils/generate-shortname.js
+MIT License (MIT) Copyright © 2014 Caleb Brewer
+
+[node-img]: https://img.shields.io/node/v/email-comb.svg?style=flat-square&label=works%20on%20node
+[node-url]: https://www.npmjs.com/package/email-comb
+
+[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
+[bitbucket-url]: https://bitbucket.org/codsen/email-comb
+
+[cov-img]: https://coveralls.io/repos/bitbucket/codsen/email-comb/badge.svg?style=flat-square&branch=master
+[cov-url]: https://coveralls.io/bitbucket/codsen/email-comb?branch=master
+
+[deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
+[deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb
+
+[downloads-img]: https://img.shields.io/npm/dm/email-comb.svg?style=flat-square
+[downloads-url]: https://npmcharts.com/compare/email-comb
+
+[runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
+[runkit-url]: https://npm.runkit.com/email-comb
+
+[prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[prettier-url]: https://prettier.io
+
+[contributors-img]: https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square
+[contributors-url]: #contributors
+
+[license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
+[license-url]: https://bitbucket.org/codsen/email-comb
+
+[all-contributors-url]: https://github.com/kentcdodds/all-contributors

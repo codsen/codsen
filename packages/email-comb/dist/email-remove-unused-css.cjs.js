@@ -1,0 +1,1201 @@
+/**
+ * email-remove-unused-css
+ * Remove unused CSS from email templates
+ * Version: 4.7.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/email-remove-unused-css/
+ */
+
+'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var stringMatchLeftRight = require('string-match-left-right');
+var emptyCondCommentRegex = _interopDefault(require('regex-empty-conditional-comments'));
+var pullAllWithGlob = _interopDefault(require('array-pull-all-with-glob'));
+var extract = _interopDefault(require('string-extract-class-names'));
+var intersection = _interopDefault(require('lodash.intersection'));
+var expander = _interopDefault(require('string-range-expander'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var applySlices = _interopDefault(require('ranges-apply'));
+var pullAll = _interopDefault(require('lodash.pullall'));
+var isEmpty = _interopDefault(require('ast-is-empty'));
+var Slices = _interopDefault(require('ranges-push'));
+var uniq = _interopDefault(require('lodash.uniq'));
+var matcher = _interopDefault(require('matcher'));
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+function generateShortname(seed) {
+  var library = "abcdefghijklmnopqrstuvwxyz";
+  var libraryLength = 26;
+  var prefix = "";
+  if (seed >= libraryLength) {
+    prefix = generateShortname(Math.floor(seed / libraryLength) - 1);
+  }
+  return prefix + library[seed % libraryLength];
+}
+
+var isArr = Array.isArray;
+function emailRemoveUnusedCss(str, opts) {
+  var start = Date.now();
+  var finalIndexesToDelete = new Slices({
+    limitToBeAddedWhitespace: true
+  });
+  var currentChunksMinifiedSelectors = new Slices();
+  var lineBreaksToDelete = new Slices();
+  function characterSuitableForNames(char) {
+    return /[-_A-Za-z0-9]/.test(char);
+  }
+  function hasOwnProp(obj, prop) {
+    return Object.prototype.hasOwnProperty.call(obj, prop);
+  }
+  function existy(x) {
+    return x != null;
+  }
+  function isStr(something) {
+    return typeof something === "string";
+  }
+  function resetBodyClassOrId() {
+    var initObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return Object.assign({
+      valuesStart: null,
+      valueStart: null,
+      nameStart: null
+    }, initObj);
+  }
+  var i;
+  var prevailingEOL;
+  var styleStartedAt;
+  var styleEndedAt;
+  var headSelectorsArr = [];
+  var bodyClassesArr = [];
+  var bodyIdsArr = [];
+  var commentStartedAt;
+  var commentNearlyStartedAt;
+  var bodyStartedAt;
+  var bodyClass;
+  var bodyId;
+  var headSelectorsCount = {};
+  var totalCounter = 0;
+  var checkingInsideCurlyBraces;
+  var insideCurlyBraces;
+  var beingCurrentlyAt;
+  var bodyItsTheFirstClassOrId;
+  var bogusHTMLComment;
+  var ruleChunkStartedAt;
+  var headSelectorChunkStartedAt;
+  var selectorChunkCanBeDeleted = false;
+  var singleSelectorStartedAt;
+  var headWholeLineCanBeDeleted;
+  var lastKeptChunksCommaAt = null;
+  var onlyDeletedChunksFollow = false;
+  var bodyClassOrIdCanBeDeleted;
+  var round1RangesClone;
+  var nonIndentationsWhitespaceLength = 0;
+  var commentsLength = 0;
+  var regexEmptyStyleTag = /[\n]?\s*<style[^>]*>\s*<\/style\s*>/g;
+  var regexEmptyMediaQuery = /[\n]?\s*@(media|supports|document)[^{]*{\s*}/g;
+  var badChars = ".# ~\\!@$%^&*()+=,/';:\"?><[]{}|`\t\n";
+  var atRulesWhichMightWrapStyles = ["media", "supports", "document"];
+  var atRulesWhichNeedToBeIgnored = ["font-feature-values", "counter-style", "namespace", "font-face", "keyframes", "viewport", "charset", "import", "page"];
+  var atRuleBreakCharacters = ["{", "(", "<", '"', "'", "@", ";"];
+  if (typeof str !== "string") {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_01] Input must be string! Currently it's ".concat(_typeof(str)));
+  }
+  if (!isObj(opts)) {
+    if (opts === undefined || opts === null) {
+      opts = {};
+    } else {
+      throw new TypeError("email-remove-unused-css: [THROW_ID_02] Options, second input argument, must be a plain object! Currently it's ".concat(_typeof(opts), ", equal to: ").concat(JSON.stringify(opts, null, 4)));
+    }
+  }
+  if (isStr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains)) {
+    if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length) {
+      opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains];
+    } else {
+      opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains = [];
+    }
+  }
+  var defaults = {
+    whitelist: [],
+    backend: [],
+    uglify: false,
+    removeHTMLComments: true,
+    doNotRemoveHTMLCommentsWhoseOpeningTagContains: ["[if", "[endif"]
+  };
+  if (isObj(opts) && hasOwnProp(opts, "backend") && isEmpty(opts.backend)) {
+    opts.backend = [];
+  }
+  opts = Object.assign({}, defaults, opts);
+  if (isStr(opts.whitelist)) {
+    opts.whitelist = [opts.whitelist];
+  }
+  if (!isArr(opts.whitelist)) {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_03] opts.whitelist should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.whitelist, null, 4)));
+  }
+  if (opts.whitelist.length > 0 && !opts.whitelist.every(function (el) {
+    return isStr(el);
+  })) {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_04] opts.whitelist array should contain only string-type elements. Currently we\x0Be got:\n".concat(JSON.stringify(opts.whitelist, null, 4)));
+  }
+  if (!isArr(opts.backend)) {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_05] opts.backend should be an array, but it was customised to a wrong thing, ".concat(JSON.stringify(opts.backend, null, 4)));
+  }
+  if (opts.backend.length > 0 && opts.backend.some(function (val) {
+    return !isObj(val);
+  })) {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_06] opts.backend array should contain only plain objects but it contains something else:\n".concat(JSON.stringify(opts.backend, null, 4)));
+  }
+  if (opts.backend.length > 0 && !opts.backend.every(function (obj) {
+    return hasOwnProp(obj, "heads") && hasOwnProp(obj, "tails");
+  })) {
+    throw new TypeError("email-remove-unused-css: [THROW_ID_07] every object within opts.backend should contain keys \"heads\" and \"tails\" but currently it's not the case. Whole \"opts.backend\" value array is currently equal to:\n".concat(JSON.stringify(opts.backend, null, 4)));
+  }
+  if (typeof opts.uglify !== "boolean") {
+    if (opts.uglify === 1 || opts.uglify === 0) {
+      opts.uglify = !!opts.uglify;
+    } else {
+      throw new TypeError("email-remove-unused-css: [THROW_ID_08] opts.uglify should be a Boolean. Currently it's set to: ".concat(JSON.stringify(opts.uglify, null, 4), "}"));
+    }
+  }
+  var allHeads = null;
+  var allTails = null;
+  if (isArr(opts.backend) && opts.backend.length) {
+    allHeads = opts.backend.map(function (headsAndTailsObj) {
+      return headsAndTailsObj.heads;
+    });
+    allTails = opts.backend.map(function (headsAndTailsObj) {
+      return headsAndTailsObj.tails;
+    });
+  }
+  var len = str.length;
+  var trailingLinebreakLengthCorrection = 0;
+  if (!str.length || !"\r\n".includes(str[str.length - 1])) {
+    trailingLinebreakLengthCorrection = 1;
+  }
+  var doNothing;
+  var doNothingUntil;
+  var allClassesAndIdsThatWereCompletelyDeletedFromHead;
+  var allClassesAndIdsWithinHeadFinal;
+  var allClassesAndIdsWithinHead;
+  var allClassesAndIdsWithinBody;
+  var headSelectorsCountClone;
+  var stateWithinHeadStyles;
+  var currentlyWithinQuotes;
+  var whitespaceStartedAt;
+  var bodyClassesToDelete;
+  var stateWithinBody;
+  var bodyIdsToDelete;
+  var bodyCssToDelete;
+  var headCssToDelete;
+  var currentChunk;
+  var canDelete;
+  var usedOnce;
+  var endingsCount = {
+    n: 0,
+    r: 0,
+    rn: 0
+  };
+  var _loop = function _loop(round) {
+    checkingInsideCurlyBraces = false;
+    headSelectorChunkStartedAt = null;
+    selectorChunkCanBeDeleted = false;
+    bodyClassOrIdCanBeDeleted = true;
+    headWholeLineCanBeDeleted = true;
+    bodyClass = resetBodyClassOrId();
+    bodyItsTheFirstClassOrId = true;
+    onlyDeletedChunksFollow = false;
+    singleSelectorStartedAt = null;
+    bodyId = resetBodyClassOrId();
+    commentNearlyStartedAt = null;
+    stateWithinHeadStyles = false;
+    lastKeptChunksCommaAt = null;
+    currentlyWithinQuotes = null;
+    whitespaceStartedAt = null;
+    insideCurlyBraces = false;
+    ruleChunkStartedAt = null;
+    beingCurrentlyAt = null;
+    stateWithinBody = false;
+    commentStartedAt = null;
+    doNothingUntil = null;
+    styleStartedAt = null;
+    bodyStartedAt = null;
+    currentChunk = null;
+    styleEndedAt = null;
+    doNothing = false;
+    totalCounter += len;
+    stepouter: for (i = 0; i < len; i++) {
+      var chr = str[i];
+      if (str[i] === "\n") {
+        if (str[i - 1] === "\r") {
+          if (round === 1) {
+            endingsCount.rn++;
+          }
+        } else {
+          if (round === 1) {
+            endingsCount.n++;
+          }
+        }
+      } else if (str[i] === "\r" && str[i + 1] !== "\n") {
+        if (round === 1) {
+          endingsCount.r++;
+        }
+      }
+      if (stateWithinHeadStyles !== true && (
+      styleEndedAt === null && styleStartedAt !== null && i >= styleStartedAt ||
+      styleStartedAt !== null && styleEndedAt !== null && styleStartedAt > styleEndedAt && styleStartedAt < i)) {
+        stateWithinHeadStyles = true;
+        stateWithinBody = false;
+      } else if (stateWithinBody !== true && bodyStartedAt !== null && (styleStartedAt === null || styleStartedAt < i) && (styleEndedAt === null || styleEndedAt < i)) {
+        stateWithinBody = true;
+        stateWithinHeadStyles = false;
+      }
+      if (!doNothing && (str[i] === '"' || str[i] === "'")) {
+        if (insideCurlyBraces) {
+          if (!currentlyWithinQuotes) {
+            currentlyWithinQuotes = str[i];
+          } else {
+            currentlyWithinQuotes = null;
+          }
+        }
+      }
+      if (doNothing) {
+        if (doNothingUntil === null || typeof doNothingUntil !== "string" || typeof doNothingUntil === "string" && doNothingUntil.length === 0) {
+          doNothing = false;
+        } else if (stringMatchLeftRight.matchRightIncl(str, i, doNothingUntil)) {
+          if (commentStartedAt !== null) {
+            if (round === 1) {
+              var lineBreakPresentOnTheLeft = stringMatchLeftRight.matchLeft(str, commentStartedAt, ["\r\n", "\n", "\r"]);
+              var startingIndex = commentStartedAt;
+              if (lineBreakPresentOnTheLeft) {
+                startingIndex -= lineBreakPresentOnTheLeft.length;
+              }
+              if (str[startingIndex - 1] && characterSuitableForNames(str[startingIndex - 1]) && str[i + doNothingUntil.length] && characterSuitableForNames(str[i + doNothingUntil.length])) {
+                finalIndexesToDelete.push(startingIndex, i + doNothingUntil.length, ";");
+                commentsLength += i + doNothingUntil.length - startingIndex;
+              } else {
+                finalIndexesToDelete.push(startingIndex, i + doNothingUntil.length);
+                commentsLength += i + doNothingUntil.length - startingIndex;
+              }
+            }
+            commentStartedAt = null;
+          }
+          i = i + doNothingUntil.length - 1;
+          doNothingUntil = null;
+          doNothing = false;
+          continue stepouter;
+        }
+      }
+      if (!doNothing && str[i] === "<" && str[i + 1] === "s" && str[i + 2] === "t" && str[i + 3] === "y" && str[i + 4] === "l" && str[i + 5] === "e") {
+        checkingInsideCurlyBraces = true;
+        for (var y = i; y < len; y++) {
+          totalCounter++;
+          if (str[y] === ">") {
+            styleStartedAt = y + 1;
+            ruleChunkStartedAt = y + 1;
+            break;
+          }
+        }
+      }
+      if (!doNothing && stateWithinHeadStyles && str[i] === "<" && str[i + 1] === "/" && str[i + 2] === "s" && str[i + 3] === "t" && str[i + 4] === "y" && str[i + 5] === "l" && str[i + 6] === "e") {
+        checkingInsideCurlyBraces = false;
+        styleEndedAt = i - 1;
+        ruleChunkStartedAt = null;
+      }
+      if (round === 1 && commentStartedAt !== null && str[i] === "*" && str[i + 1] === "/") {
+        var deleteUpTo = i + 2;
+        if (str[i + 2] === "\n" || str[i + 2] === "\r" && str[i + 3] !== "\n") {
+          deleteUpTo = i + 3;
+        } else if (str[i + 2] === "\r" && str[i + 3] === "\n") {
+          deleteUpTo = i + 4;
+        }
+        var calculatedRange = expander({
+          str: str,
+          from: commentStartedAt,
+          to: deleteUpTo,
+          wipeAllWhitespaceOnLeft: true
+        });
+        finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(calculatedRange));
+        commentStartedAt = null;
+        doNothing = false;
+      }
+      if (round === 1 && (stateWithinHeadStyles || stateWithinBody) && str[i] === "/" && str[i + 1] === "*" && !commentStartedAt) {
+        commentStartedAt = i;
+        doNothing = true;
+        doNothingUntil = "*/";
+        i++;
+        continue stepouter;
+      }
+      if (!doNothing && stateWithinHeadStyles && str[i] === "@") {
+        if (whitespaceStartedAt) {
+          whitespaceStartedAt = null;
+        }
+        var matchedAtTagsName = stringMatchLeftRight.matchRight(str, i, atRulesWhichMightWrapStyles) || stringMatchLeftRight.matchRight(str, i, atRulesWhichNeedToBeIgnored);
+        if (matchedAtTagsName) {
+          var temp = void 0;
+          if (str[i + matchedAtTagsName.length + 1] === ";" || str[i + matchedAtTagsName.length + 1] && !str[i + matchedAtTagsName.length + 1].trim().length && stringMatchLeftRight.matchRight(str, i + matchedAtTagsName.length + 1, ";", {
+            trimBeforeMatching: true,
+            cb: function cb(char, theRemainderOfTheString, index) {
+              temp = index;
+              return true;
+            }
+          })) {
+            finalIndexesToDelete.push(i, temp ? temp : i + matchedAtTagsName.length + 2);
+          }
+          var secondaryStopper = void 0;
+          for (var z = i + 1; z < len; z++) {
+            totalCounter++;
+            if (secondaryStopper && str[z] === secondaryStopper) {
+              if (str[z] === "}" && atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) || str[z] === "{" && atRulesWhichMightWrapStyles.includes(matchedAtTagsName)) {
+                i = z;
+                ruleChunkStartedAt = z + 1;
+                continue stepouter;
+              } else {
+                secondaryStopper = undefined;
+                continue;
+              }
+            }
+            if (str[z] === '"' && !secondaryStopper) {
+              secondaryStopper = '"';
+            } else if (str[z] === "'" && !secondaryStopper) {
+              secondaryStopper = "'";
+            } else if (str[z] === "(" && !secondaryStopper) {
+              secondaryStopper = ")";
+            } else if (atRulesWhichNeedToBeIgnored.includes(matchedAtTagsName) && str[z] === "{" && !secondaryStopper) {
+              secondaryStopper = "}";
+            }
+            if (!secondaryStopper && atRuleBreakCharacters.includes(str[z])) {
+              var pushRangeFrom = void 0;
+              var pushRangeTo = void 0;
+              if (str[z] === "{" || str[z] === ";") {
+                insideCurlyBraces = false;
+                ruleChunkStartedAt = z + 1;
+                i = z;
+                continue stepouter;
+              } else if (str[z] === "@" || str[z] === "<") {
+                if (round === 1 && !str.slice(i, z).includes("{") && !str.slice(i, z).includes("(") && !str.slice(i, z).includes('"') && !str.slice(i, z).includes("'")) {
+                  pushRangeFrom = i;
+                  pushRangeTo = z + (str[z] === ";" ? 1 : 0);
+                  finalIndexesToDelete.push(pushRangeFrom, pushRangeTo);
+                }
+              }
+              var iOffset = pushRangeTo ? pushRangeTo - 1 : z - 1 + (str[z] === "{" ? 1 : 0);
+              i = iOffset;
+              ruleChunkStartedAt = iOffset + 1;
+              continue stepouter;
+            }
+          }
+        }
+      }
+      if (!doNothing && stateWithinHeadStyles && insideCurlyBraces && checkingInsideCurlyBraces && chr === "}" && !currentlyWithinQuotes) {
+        insideCurlyBraces = false;
+        if (round === 2 && headWholeLineCanBeDeleted && ruleChunkStartedAt) {
+          finalIndexesToDelete.push(ruleChunkStartedAt, i + 1);
+        }
+        if (ruleChunkStartedAt) {
+          ruleChunkStartedAt = i + 1;
+        }
+        headSelectorChunkStartedAt = null;
+        selectorChunkCanBeDeleted = false;
+        headWholeLineCanBeDeleted = true;
+        singleSelectorStartedAt = null;
+        lastKeptChunksCommaAt = null;
+        onlyDeletedChunksFollow = false;
+      }
+      if (!doNothing && !commentStartedAt && styleStartedAt && i >= styleStartedAt && (
+      styleEndedAt === null && i >= styleStartedAt ||
+      styleStartedAt > styleEndedAt && styleStartedAt < i) && i >= beingCurrentlyAt && !insideCurlyBraces) {
+        if (singleSelectorStartedAt === null) {
+          if (chr === "." || chr === "#") {
+            singleSelectorStartedAt = i;
+          } else if (chr.trim().length !== 0) {
+            if (chr === "}") {
+              ruleChunkStartedAt = i + 1;
+              currentChunk = null;
+            } else if (chr === "<" && str[i + 1] === "!") {
+              for (var _y = i; _y < len; _y++) {
+                totalCounter++;
+                if (str[_y] === ">") {
+                  ruleChunkStartedAt = _y + 1;
+                  headSelectorChunkStartedAt = _y + 1;
+                  i = _y;
+                  continue stepouter;
+                }
+              }
+            }
+          }
+        } else {
+          if (singleSelectorStartedAt !== null && !characterSuitableForNames(chr)) {
+            var singleSelector = str.slice(singleSelectorStartedAt, i);
+            if (round === 2 && !selectorChunkCanBeDeleted && headCssToDelete.includes(singleSelector)) {
+              selectorChunkCanBeDeleted = true;
+              onlyDeletedChunksFollow = true;
+            } else if (round === 2 && !selectorChunkCanBeDeleted) {
+              if (opts.uglify && (!isArr(opts.whitelist) || !opts.whitelist.length || !matcher([singleSelector], opts.whitelist).length) && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)))) {
+                currentChunksMinifiedSelectors.push(singleSelectorStartedAt + 1, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(singleSelector)));
+              }
+              if (chr === ",") {
+                lastKeptChunksCommaAt = i;
+                onlyDeletedChunksFollow = false;
+              }
+            }
+            if (chr === "." || chr === "#") {
+              singleSelectorStartedAt = i;
+            } else {
+              singleSelectorStartedAt = null;
+            }
+          }
+        }
+        if (headSelectorChunkStartedAt === null) {
+          if (chr.trim().length !== 0 && chr !== "}" && chr !== ";" && !(str[i] === "/" && str[i + 1] === "*")) {
+            selectorChunkCanBeDeleted = false;
+            headSelectorChunkStartedAt = i;
+          }
+        } else {
+          if (",{".includes(chr)) {
+            var sliceTo = whitespaceStartedAt ? whitespaceStartedAt : i;
+            currentChunk = str.slice(headSelectorChunkStartedAt, sliceTo);
+            if (round === 1) {
+              if (whitespaceStartedAt) {
+                if (chr === "," && whitespaceStartedAt < i) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i);
+                  nonIndentationsWhitespaceLength += i - whitespaceStartedAt;
+                } else if (chr === "{" && whitespaceStartedAt < i - 1) {
+                  finalIndexesToDelete.push(whitespaceStartedAt, i - 1);
+                  nonIndentationsWhitespaceLength += i - 1 - whitespaceStartedAt;
+                }
+              }
+              headSelectorsArr.push(currentChunk);
+            } else {
+              if (selectorChunkCanBeDeleted) {
+                var fromIndex = headSelectorChunkStartedAt;
+                var toIndex = i;
+                var tempFindingIndex = void 0;
+                if (chr === "{" && str[fromIndex - 1] !== ">" && str[fromIndex - 1] !== "}") {
+                  for (var _y2 = headSelectorChunkStartedAt - 1; _y2--;) {
+                    totalCounter++;
+                    if (str[_y2].trim().length !== 0 && str[_y2] !== ",") {
+                      fromIndex = _y2 + 1;
+                      break;
+                    }
+                  }
+                  if (str[i - 1].trim().length === 0) {
+                    toIndex = i - 1;
+                  }
+                } else if (chr === "," && str[i + 1].trim().length === 0) {
+                  for (var _y3 = i + 1; _y3 < len; _y3++) {
+                    totalCounter++;
+                    if (str[_y3].trim().length !== 0) {
+                      toIndex = _y3;
+                      break;
+                    }
+                  }
+                } else if (stringMatchLeftRight.matchLeft(str, fromIndex, "{", {
+                  trimBeforeMatching: true,
+                  cb: function cb(char, theRemainderOfTheString, index) {
+                    tempFindingIndex = index;
+                    return true;
+                  }
+                })) {
+                  fromIndex = tempFindingIndex + 2;
+                }
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+                  str: str,
+                  from: fromIndex,
+                  to: toIndex,
+                  ifRightSideIncludesThisThenCropTightly: ".#",
+                  ifRightSideIncludesThisCropItToo: ",",
+                  extendToOneSide: "right"
+                })));
+                if (opts.uglify) {
+                  currentChunksMinifiedSelectors.wipe();
+                }
+              } else {
+                if (headWholeLineCanBeDeleted) {
+                  headWholeLineCanBeDeleted = false;
+                }
+                if (opts.uglify) {
+                  finalIndexesToDelete.push(currentChunksMinifiedSelectors.current());
+                  currentChunksMinifiedSelectors.wipe();
+                }
+              }
+            }
+            if (chr !== "{") {
+              headSelectorChunkStartedAt = null;
+            } else if (round === 2) {
+              if (!headWholeLineCanBeDeleted && lastKeptChunksCommaAt !== null && onlyDeletedChunksFollow) {
+                var _deleteUpTo = lastKeptChunksCommaAt + 1;
+                if ("\n\r".includes(str[lastKeptChunksCommaAt + 1])) {
+                  for (var _y4 = lastKeptChunksCommaAt + 1; _y4 < len; _y4++) {
+                    if (str[_y4].trim().length) {
+                      _deleteUpTo = _y4;
+                      break;
+                    }
+                  }
+                }
+                finalIndexesToDelete.push(lastKeptChunksCommaAt, _deleteUpTo);
+                lastKeptChunksCommaAt = null;
+                onlyDeletedChunksFollow = false;
+              }
+            }
+          }
+        }
+      }
+      if (!doNothing && !stateWithinHeadStyles && stateWithinBody && str[i] === "/" && stringMatchLeftRight.matchRight(str, i, "body", {
+        trimBeforeMatching: true,
+        i: true
+      }) && stringMatchLeftRight.matchLeft(str, i, "<", {
+        trimBeforeMatching: true
+      })) {
+        stateWithinBody = false;
+        bodyStartedAt = null;
+      }
+      if (!doNothing && str[i] === "<" && stringMatchLeftRight.matchRight(str, i, "body", {
+        i: true,
+        trimBeforeMatching: true,
+        cb: function cb(char, theRemainderOfTheString, index) {
+          if (round === 1) {
+            if (char !== undefined && (char.trim() === "" || char === ">")) {
+              if (index - i > 5) {
+                finalIndexesToDelete.push(i, index, "<body");
+                nonIndentationsWhitespaceLength += index - i - 5;
+              } else {
+                return true;
+              }
+            }
+            return true;
+          }
+          return true;
+        }
+      })) {
+        for (var _y5 = i; _y5 < len; _y5++) {
+          totalCounter++;
+          if (str[_y5] === ">") {
+            bodyStartedAt = _y5 + 1;
+            break;
+          }
+        }
+      }
+      if (!doNothing && stateWithinBody && str[i] === "s" && str[i + 1] === "t" && str[i + 2] === "y" && str[i + 3] === "l" && str[i + 4] === "e" && str[i + 5] === "=" && badChars.includes(str[i - 1])
+      ) {
+          if ("\"'".includes(str[i + 6])) ;
+        }
+      if (!doNothing && stateWithinBody && str[i] === "c" && str[i + 1] === "l" && str[i + 2] === "a" && str[i + 3] === "s" && str[i + 4] === "s" && badChars.includes(str[i - 1])
+      ) {
+          var valuesStart = void 0;
+          if (str[i + 5] === "=") {
+            if (str[i + 6] === '"' || str[i + 6] === "'") {
+              valuesStart = i + 7;
+            } else if (str[i + 6] && (!str[i + 6].trim().length || "/>".includes(str[i + 6]))) {
+              var _calculatedRange = expander({
+                str: str,
+                from: i,
+                to: i + 6,
+                ifRightSideIncludesThisThenCropTightly: "/>",
+                wipeAllWhitespaceOnLeft: true
+              });
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange));
+            }
+          } else if (str[i + 5].trim().length === 0) {
+            for (var _y6 = i + 5; _y6 < len; _y6++) {
+              totalCounter++;
+              if (str[_y6].trim().length) {
+                if (str[_y6] === "=") {
+                  if (_y6 > i + 5 && round === 1) {
+                    finalIndexesToDelete.push(i + 5, _y6);
+                  }
+                  if ((str[_y6 + 1] === '"' || str[_y6 + 1] === "'") && str[_y6 + 2]) {
+                    valuesStart = _y6 + 2;
+                  } else if (str[_y6 + 1] && str[_y6 + 1].trim().length === 0) {
+                    for (var _z = _y6 + 1; _z < len; _z++) {
+                      totalCounter++;
+                      if (str[_z].trim().length) {
+                        if (_z > _y6 + 1 && round === 1) {
+                          finalIndexesToDelete.push(_y6 + 1, _z);
+                        }
+                        if ((str[_z] === '"' || str[_z] === "'") && str[_z + 1]) {
+                          valuesStart = _z + 1;
+                        }
+                        break;
+                      }
+                    }
+                  }
+                } else {
+                  if (round === 1) {
+                    var _calculatedRange2 = expander({
+                      str: str,
+                      from: i,
+                      to: _y6 - 1,
+                      ifRightSideIncludesThisThenCropTightly: "/>",
+                      wipeAllWhitespaceOnLeft: true
+                    });
+                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange2));
+                  }
+                }
+                break;
+              }
+            }
+          }
+          if (valuesStart) {
+            bodyClass = resetBodyClassOrId({
+              valuesStart: valuesStart,
+              nameStart: i
+            });
+            if (round === 1) {
+              bodyItsTheFirstClassOrId = true;
+            } else if (round === 2) {
+              bodyClassOrIdCanBeDeleted = true;
+            }
+          }
+        }
+      if (!doNothing && bodyStartedAt !== null && str[i] === "i" && str[i + 1] === "d" && badChars.includes(str[i - 1])
+      ) {
+          var _valuesStart = void 0;
+          if (str[i + 2] === "=") {
+            if (str[i + 3] === '"' || str[i + 3] === "'") {
+              _valuesStart = i + 4;
+            } else if (str[i + 3] && (!str[i + 3].trim().length || "/>".includes(str[i + 3]))) {
+              var _calculatedRange3 = expander({
+                str: str,
+                from: i,
+                to: i + 3,
+                ifRightSideIncludesThisThenCropTightly: "/>",
+                wipeAllWhitespaceOnLeft: true
+              });
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange3));
+            }
+          } else if (str[i + 2].trim().length === 0) {
+            for (var _y7 = i + 2; _y7 < len; _y7++) {
+              totalCounter++;
+              if (str[_y7].trim().length) {
+                if (str[_y7] === "=") {
+                  if (_y7 > i + 2 && round === 1) {
+                    finalIndexesToDelete.push(i + 2, _y7);
+                  }
+                  if ((str[_y7 + 1] === '"' || str[_y7 + 1] === "'") && str[_y7 + 2]) {
+                    _valuesStart = _y7 + 2;
+                  } else if (str[_y7 + 1] && str[_y7 + 1].trim().length === 0) {
+                    for (var _z2 = _y7 + 1; _z2 < len; _z2++) {
+                      totalCounter++;
+                      if (str[_z2].trim().length) {
+                        if (_z2 > _y7 + 1 && round === 1) {
+                          finalIndexesToDelete.push(_y7 + 1, _z2);
+                        }
+                        if ((str[_z2] === '"' || str[_z2] === "'") && str[_z2 + 1]) {
+                          _valuesStart = _z2 + 1;
+                        }
+                        break;
+                      }
+                    }
+                  }
+                } else {
+                  if (round === 1) {
+                    var _calculatedRange4 = expander({
+                      str: str,
+                      from: i,
+                      to: _y7 - 1,
+                      ifRightSideIncludesThisThenCropTightly: "/>",
+                      wipeAllWhitespaceOnLeft: true
+                    });
+                    finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange4));
+                  }
+                }
+                break;
+              }
+            }
+          }
+          if (_valuesStart) {
+            bodyId = resetBodyClassOrId({
+              valuesStart: _valuesStart,
+              nameStart: i
+            });
+            if (round === 1) {
+              bodyItsTheFirstClassOrId = true;
+            } else if (round === 2) {
+              bodyClassOrIdCanBeDeleted = true;
+            }
+          }
+        }
+      if (!doNothing && bodyClass.valuesStart !== null && i >= bodyClass.valuesStart && bodyClass.valueStart === null) {
+        if (allHeads && stringMatchLeftRight.matchRightIncl(str, i, allHeads)) {
+          (function () {
+            doNothing = true;
+            bodyClassOrIdCanBeDeleted = false;
+            if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
+              var _calculatedRange5 = expander({
+                str: str,
+                from: whitespaceStartedAt,
+                to: i,
+                ifLeftSideIncludesThisThenCropTightly: "\"'",
+                ifRightSideIncludesThisThenCropTightly: "\"'"
+              });
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange5));
+              whitespaceStartedAt = null;
+            } else if (whitespaceStartedAt) {
+              whitespaceStartedAt = null;
+            }
+            var matchedHeads = stringMatchLeftRight.matchRightIncl(str, i, allHeads);
+            var findings = opts.backend.find(function (headsTailsObj) {
+              return headsTailsObj.heads === matchedHeads;
+            });
+            doNothingUntil = findings["tails"];
+          })();
+        } else if (characterSuitableForNames(chr)) {
+          bodyClass.valueStart = i;
+          if (round === 1) {
+            if (bodyItsTheFirstClassOrId && bodyClass.valuesStart !== null && str.slice(bodyClass.valuesStart, i).trim().length === 0 && bodyClass.valuesStart < i) {
+              finalIndexesToDelete.push(bodyClass.valuesStart, i);
+              nonIndentationsWhitespaceLength += i - bodyClass.valuesStart;
+              bodyItsTheFirstClassOrId = false;
+            } else if (whitespaceStartedAt !== null && whitespaceStartedAt < i - 1) {
+              finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+              nonIndentationsWhitespaceLength += i - whitespaceStartedAt + 1;
+            }
+          }
+        }
+      }
+      if (!doNothing && bodyClass.valueStart !== null && i > bodyClass.valueStart && (!characterSuitableForNames(chr) || allTails && stringMatchLeftRight.matchRightIncl(str, i, allTails))) {
+        var carvedClass = "".concat(str.slice(bodyClass.valueStart, i));
+        if (round === 1) {
+          bodyClassesArr.push(".".concat(carvedClass));
+        } else {
+          if (bodyClass.valueStart != null && bodyClassesToDelete.includes(carvedClass)) {
+            var expandedRange = expander({
+              str: str,
+              from: bodyClass.valueStart,
+              to: i,
+              ifLeftSideIncludesThisThenCropTightly: "\"'",
+              ifRightSideIncludesThisThenCropTightly: "\"'",
+              wipeAllWhitespaceOnLeft: true
+            });
+            if (str[expandedRange[0] - 1] && str[expandedRange[0] - 1].trim().length && str[expandedRange[1]] && str[expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, expandedRange[1], allHeads))) {
+              expandedRange[0] += 1;
+            }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expandedRange));
+          } else {
+            bodyClassOrIdCanBeDeleted = false;
+            if (opts.uglify && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))))) {
+              finalIndexesToDelete.push(bodyClass.valueStart, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf(".".concat(carvedClass))));
+            }
+          }
+        }
+        bodyClass.valueStart = null;
+      }
+      if (!doNothing && bodyId.valueStart !== null && i > bodyId.valueStart && (!characterSuitableForNames(chr) || allTails && stringMatchLeftRight.matchRightIncl(str, i, allTails))) {
+        var carvedId = str.slice(bodyId.valueStart, i);
+        if (round === 1) {
+          bodyIdsArr.push("#".concat(carvedId));
+        } else {
+          if (bodyId.valueStart != null && bodyIdsToDelete.includes(carvedId)) {
+            var _expandedRange = expander({
+              str: str,
+              from: bodyId.valueStart,
+              to: i,
+              ifRightSideIncludesThisThenCropTightly: "\"'",
+              wipeAllWhitespaceOnLeft: true
+            });
+            if (str[_expandedRange[0] - 1] && str[_expandedRange[0] - 1].trim().length && str[_expandedRange[1]] && str[_expandedRange[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange[0], allTails) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange[1], allHeads))) {
+              _expandedRange[0] += 1;
+            }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange));
+          } else {
+            bodyClassOrIdCanBeDeleted = false;
+            if (opts.uglify && isStr(generateShortname(allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))))) {
+              finalIndexesToDelete.push(bodyId.valueStart, i, generateShortname(allClassesAndIdsWithinHeadFinal.indexOf("#".concat(carvedId))));
+            }
+          }
+        }
+        bodyId.valueStart = null;
+      }
+      if (!doNothing && bodyClass.valuesStart != null && (chr === "'" || chr === '"') &&
+      i >= bodyClass.valuesStart) {
+        if (i === bodyClass.valuesStart) {
+          if (round === 1) {
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+              str: str,
+              from: bodyClass.nameStart,
+              to: i + 1,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            })));
+          }
+        } else {
+          if (round === 2 && bodyClassOrIdCanBeDeleted) {
+            var _expandedRange2 = expander({
+              str: str,
+              from: bodyClass.valuesStart - 7,
+              to: i + 1,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            });
+            if (str[_expandedRange2[0] - 1] && str[_expandedRange2[0] - 1].trim().length && str[_expandedRange2[1]] && str[_expandedRange2[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange2[0], allHeads) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange2[1], allTails))) {
+              _expandedRange2[0] += 1;
+            }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange2));
+          }
+          if (whitespaceStartedAt !== null) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        }
+        bodyClass = resetBodyClassOrId();
+      }
+      if (!doNothing && bodyId.valuesStart !== null && (chr === "'" || chr === '"') &&
+      i >= bodyId.valuesStart) {
+        if (i === bodyId.valuesStart) {
+          if (round === 1) {
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+              str: str,
+              from: bodyId.nameStart,
+              to: i + 1,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            })));
+          }
+        } else {
+          if (round === 2 && bodyClassOrIdCanBeDeleted) {
+            var _expandedRange3 = expander({
+              str: str,
+              from: bodyId.valuesStart - 4,
+              to: i + 1,
+              ifRightSideIncludesThisThenCropTightly: "/>",
+              wipeAllWhitespaceOnLeft: true
+            });
+            if (str[_expandedRange3[0] - 1] && str[_expandedRange3[0] - 1].trim().length && str[_expandedRange3[1]] && str[_expandedRange3[1]].trim().length && (allHeads || allTails) && (allHeads && stringMatchLeftRight.matchLeft(str, _expandedRange3[0], allHeads) || allTails && stringMatchLeftRight.matchRightIncl(str, _expandedRange3[1], allTails))) {
+              _expandedRange3[0] += 1;
+            }
+            finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_expandedRange3));
+          }
+          if (whitespaceStartedAt !== null) {
+            finalIndexesToDelete.push(whitespaceStartedAt, i);
+          }
+        }
+        bodyId = resetBodyClassOrId();
+      }
+      if (!doNothing && bodyId.valuesStart && i >= bodyId.valuesStart && bodyId.valueStart === null) {
+        if (allHeads && stringMatchLeftRight.matchRightIncl(str, i, allHeads)) {
+          (function () {
+            doNothing = true;
+            bodyClassOrIdCanBeDeleted = false;
+            if (whitespaceStartedAt && i > whitespaceStartedAt + 1) {
+              var _calculatedRange6 = expander({
+                str: str,
+                from: whitespaceStartedAt,
+                to: i,
+                ifLeftSideIncludesThisThenCropTightly: "\"'",
+                ifRightSideIncludesThisThenCropTightly: "\"'"
+              });
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange6));
+              whitespaceStartedAt = null;
+            } else if (whitespaceStartedAt) {
+              whitespaceStartedAt = null;
+            }
+            var matchedHeads = stringMatchLeftRight.matchRightIncl(str, i, allHeads);
+            var findings = opts.backend.find(function (headsTailsObj) {
+              return headsTailsObj.heads === matchedHeads;
+            });
+            doNothingUntil = findings["tails"];
+          })();
+        } else if (characterSuitableForNames(chr)) {
+          bodyId.valueStart = i;
+          if (round === 1) {
+            if (bodyItsTheFirstClassOrId && bodyId.valuesStart !== null && str.slice(bodyId.valuesStart, i).trim().length === 0 && bodyId.valuesStart < i) {
+              finalIndexesToDelete.push(bodyId.valuesStart, i);
+              nonIndentationsWhitespaceLength += i - bodyId.valuesStart;
+              bodyItsTheFirstClassOrId = false;
+            } else if (whitespaceStartedAt !== null && whitespaceStartedAt < i - 1) {
+              finalIndexesToDelete.push(whitespaceStartedAt + 1, i);
+              nonIndentationsWhitespaceLength += i - whitespaceStartedAt + 1;
+            }
+          }
+        }
+      }
+      if (!doNothing && round === 1) {
+        if (commentStartedAt !== null && commentStartedAt < i && str[i] === ">" && !usedOnce) {
+          if (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+            return val.trim().length && str.slice(commentStartedAt, i).toLowerCase().includes(val);
+          })) {
+            canDelete = false;
+          }
+          usedOnce = true;
+        }
+        if (commentStartedAt !== null && str[i] === ">") {
+          if (!bogusHTMLComment && str[i - 1] === "-" && str[i - 2] === "-") {
+            var _calculatedRange7 = expander({
+              str: str,
+              from: commentStartedAt,
+              to: i + 1,
+              wipeAllWhitespaceOnLeft: true,
+              addSingleSpaceToPreventAccidentalConcatenation: true
+            });
+            if (opts.removeHTMLComments && canDelete) {
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange7));
+            }
+            commentsLength += _calculatedRange7[1] - _calculatedRange7[0];
+            commentStartedAt = null;
+            bogusHTMLComment = undefined;
+          } else if (bogusHTMLComment) {
+            var _calculatedRange8 = expander({
+              str: str,
+              from: commentStartedAt,
+              to: i + 1,
+              wipeAllWhitespaceOnLeft: true,
+              addSingleSpaceToPreventAccidentalConcatenation: true
+            });
+            if (opts.removeHTMLComments && canDelete) {
+              finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(_calculatedRange8));
+            }
+            commentsLength += _calculatedRange8[1] - _calculatedRange8[0];
+            commentStartedAt = null;
+            bogusHTMLComment = undefined;
+          }
+        }
+        if (opts.removeHTMLComments && commentStartedAt === null && str[i] === "<" && str[i + 1] === "!") {
+          if ((!allHeads || isArr(allHeads) && allHeads.length && !allHeads.includes("<!")) && (!allTails || isArr(allTails) && allTails.length && !allTails.includes("<!"))) {
+            if (!stringMatchLeftRight.matchRight(str, i + 1, "doctype", {
+              i: true,
+              trimBeforeMatching: true
+            }) && !(str[i + 2] === "-" && str[i + 3] === "-" && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && stringMatchLeftRight.matchRight(str, i + 3, opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains, {
+              trimBeforeMatching: true
+            }))) {
+              commentStartedAt = i;
+              usedOnce = false;
+              canDelete = true;
+            }
+            bogusHTMLComment = !(str[i + 2] === "-" && str[i + 3] === "-");
+          }
+          if (commentStartedAt !== i) {
+            commentNearlyStartedAt = i;
+          }
+        }
+      }
+      if (!doNothing && chr === "{" && checkingInsideCurlyBraces && !insideCurlyBraces) {
+        insideCurlyBraces = true;
+        if (whitespaceStartedAt !== null && (str.slice(whitespaceStartedAt, i).includes("\n") || str.slice(whitespaceStartedAt, i).includes("\r"))) {
+          finalIndexesToDelete.push(whitespaceStartedAt, i);
+        }
+      }
+      if (!doNothing) {
+        if (!str[i].trim().length) {
+          if (whitespaceStartedAt === null) {
+            whitespaceStartedAt = i;
+          }
+        } else if (whitespaceStartedAt !== null) {
+          whitespaceStartedAt = null;
+        }
+      }
+      if (!doNothing && round === 2 && isArr(round1RangesClone) && round1RangesClone.length && i === round1RangesClone[0][0]) {
+        var _temp = round1RangesClone.shift();
+        if (_temp[1] - 1 > i) {
+          i = _temp[1] - 1;
+        }
+        continue stepouter;
+      }
+      if (commentNearlyStartedAt !== null && str[i] === ">") {
+        commentNearlyStartedAt = null;
+        var _temp2 = void 0;
+        if (opts.removeHTMLComments && isArr(opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains) && opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.length && (opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          return val.includes("if");
+        }) || opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          return val.includes("mso");
+        }) || opts.doNotRemoveHTMLCommentsWhoseOpeningTagContains.some(function (val) {
+          return val.includes("ie");
+        })) && stringMatchLeftRight.matchRight(str, i, "<!--", {
+          trimBeforeMatching: true,
+          cb: function cb(char, theRemainderOfTheString, index) {
+            _temp2 = index;
+            return true;
+          }
+        })) {
+          if (stringMatchLeftRight.matchRight(str, _temp2 - 1, "-->", {
+            trimBeforeMatching: true,
+            cb: function cb(char, theRemainderOfTheString, index) {
+              _temp2 = index;
+              return true;
+            }
+          })) ;
+          i = _temp2 - 1;
+          continue;
+        }
+      }
+    }
+    if (round === 1) {
+      allClassesAndIdsWithinBody = uniq(bodyClassesArr.concat(bodyIdsArr).sort());
+      headSelectorsArr.forEach(function (el) {
+        extract(el).forEach(function (selector) {
+          if (Object.prototype.hasOwnProperty.call(headSelectorsCount, selector)) {
+            headSelectorsCount[selector] += 1;
+          } else {
+            headSelectorsCount[selector] = 1;
+          }
+        });
+      });
+      headSelectorsCountClone = Object.assign({}, headSelectorsCount);
+      allClassesAndIdsWithinHead = uniq(headSelectorsArr.reduce(function (arr, el) {
+        return arr.concat(extract(el));
+      }, [])).sort();
+      var preppedHeadSelectorsArr = Array.from(headSelectorsArr);
+      var deletedFromHeadArr = [];
+      for (var _y8 = 0, len2 = preppedHeadSelectorsArr.length; _y8 < len2; _y8++) {
+        totalCounter++;
+        var _temp3 = void 0;
+        if (existy(preppedHeadSelectorsArr[_y8])) {
+          _temp3 = extract(preppedHeadSelectorsArr[_y8]);
+        }
+        if (!_temp3.every(function (el) {
+          return allClassesAndIdsWithinBody.includes(el);
+        })) {
+          var _deletedFromHeadArr;
+          (_deletedFromHeadArr = deletedFromHeadArr).push.apply(_deletedFromHeadArr, _toConsumableArray(extract(preppedHeadSelectorsArr[_y8])));
+          preppedHeadSelectorsArr.splice(_y8, 1);
+          _y8 -= 1;
+          len2 -= 1;
+        }
+      }
+      deletedFromHeadArr = uniq(pullAllWithGlob(deletedFromHeadArr, opts.whitelist));
+      var preppedAllClassesAndIdsWithinHead;
+      if (preppedHeadSelectorsArr.length > 0) {
+        preppedAllClassesAndIdsWithinHead = preppedHeadSelectorsArr.reduce(function (arr, el) {
+          return arr.concat(extract(el));
+        }, []);
+      } else {
+        preppedAllClassesAndIdsWithinHead = [];
+      }
+      headCssToDelete = pullAllWithGlob(pullAll(uniq(Array.from(allClassesAndIdsWithinHead)), bodyClassesArr.concat(bodyIdsArr)), opts.whitelist);
+      bodyCssToDelete = uniq(pullAllWithGlob(pullAll(bodyClassesArr.concat(bodyIdsArr), preppedAllClassesAndIdsWithinHead), opts.whitelist));
+      headCssToDelete = uniq(headCssToDelete.concat(intersection(deletedFromHeadArr, bodyCssToDelete))).sort();
+      bodyClassesToDelete = bodyCssToDelete.filter(function (s) {
+        return s.startsWith(".");
+      }).map(function (s) {
+        return s.slice(1);
+      });
+      bodyIdsToDelete = bodyCssToDelete.filter(function (s) {
+        return s.startsWith("#");
+      }).map(function (s) {
+        return s.slice(1);
+      });
+      allClassesAndIdsThatWereCompletelyDeletedFromHead = Object.keys(headSelectorsCountClone).filter(function (singleSelector) {
+        return headSelectorsCountClone[singleSelector] < 1;
+      });
+      bodyClassesToDelete = uniq(bodyClassesToDelete.concat(intersection(pullAllWithGlob(allClassesAndIdsWithinBody, opts.whitelist), allClassesAndIdsThatWereCompletelyDeletedFromHead).filter(function (val) {
+        return val[0] === ".";
+      })
+      .map(function (val) {
+        return val.slice(1);
+      })));
+      var allClassesAndIdsWithinBodyThatWereWhitelisted = matcher(allClassesAndIdsWithinBody, opts.whitelist);
+      bodyCssToDelete = uniq(bodyCssToDelete.concat(bodyClassesToDelete.map(function (val) {
+        return ".".concat(val);
+      }), bodyIdsToDelete.map(function (val) {
+        return "#".concat(val);
+      }))).sort();
+      allClassesAndIdsWithinHeadFinal = pullAll(pullAll(Array.from(allClassesAndIdsWithinHead), bodyCssToDelete), headCssToDelete);
+      if (isArr(allClassesAndIdsWithinBodyThatWereWhitelisted) && allClassesAndIdsWithinBodyThatWereWhitelisted.length) {
+        allClassesAndIdsWithinHeadFinal = allClassesAndIdsWithinHeadFinal.concat(allClassesAndIdsWithinBodyThatWereWhitelisted);
+      }
+      if (finalIndexesToDelete.current()) {
+        round1RangesClone = Array.from(finalIndexesToDelete.current());
+      } else {
+        round1RangesClone = null;
+      }
+      if (endingsCount.rn > endingsCount.r && endingsCount.rn > endingsCount.n) {
+        prevailingEOL = "\r\n";
+      } else if (endingsCount.r > endingsCount.rn && endingsCount.r > endingsCount.n) {
+        prevailingEOL = "\r";
+      } else {
+        prevailingEOL = "\n";
+      }
+    } else if (round === 2) {
+      if (!"\r\n".includes(str[len - 1])) {
+        finalIndexesToDelete.push(len, len, prevailingEOL);
+      }
+    }
+  };
+  for (var round = 1; round <= 2; round++) {
+    _loop(round);
+  }
+  finalIndexesToDelete.push(lineBreaksToDelete.current());
+  if (str.length && finalIndexesToDelete.current()) {
+    str = applySlices(str, finalIndexesToDelete.current());
+    finalIndexesToDelete.wipe();
+  }
+  while (regexEmptyMediaQuery.test(str)) {
+    str = str.replace(regexEmptyMediaQuery, "");
+    totalCounter += str.length;
+  }
+  str = str.replace(regexEmptyStyleTag, "\n");
+  totalCounter += str.length;
+  var tempLen = str.length;
+  str = str.replace(emptyCondCommentRegex(), "");
+  totalCounter += str.length;
+  if (tempLen !== str.length) {
+    commentsLength += str.length - tempLen;
+  }
+  tempLen = str.length;
+  str = str.replace(/(\r?\n|\r)*[ ]*(\r?\n|\r)+/g, prevailingEOL);
+  if (tempLen !== str.length) {
+    nonIndentationsWhitespaceLength += str.length - tempLen;
+  }
+  totalCounter += str.length;
+  if (str.length) {
+    if ((!str[0].trim().length || !str[str.length - 1].trim().length) && str.length !== str.trim().length) {
+      nonIndentationsWhitespaceLength += str.length - str.trim().length;
+    }
+    str = "".concat(str.trim()).concat(prevailingEOL);
+  }
+  return {
+    log: {
+      timeTakenInMiliseconds: Date.now() - start,
+      traversedTotalCharacters: totalCounter,
+      traversedTimesInputLength: len ? Math.round(totalCounter / len * 100) / 100 : 0,
+      originalLength: len,
+      cleanedLength: str.length,
+      bytesSaved: Math.max(len - str.length, 0),
+      percentageReducedOfOriginal: len ? Math.round(Math.max(len - str.length, 0) * 100 / len) : 0,
+      nonIndentationsWhitespaceLength: Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0),
+      nonIndentationsTakeUpPercentageOfOriginal: len && Math.max(nonIndentationsWhitespaceLength - trailingLinebreakLengthCorrection, 0) ? Math.round(Math.max(nonIndentationsWhitespaceLength, 0) * 100 / len) : 0,
+      commentsLength: commentsLength,
+      commentsTakeUpPercentageOfOriginal: len && commentsLength ? Math.round(commentsLength * 100 / len) : 0
+    },
+    result: str,
+    allInHead: allClassesAndIdsWithinHead,
+    allInBody: allClassesAndIdsWithinBody,
+    deletedFromHead: headCssToDelete.sort(),
+    deletedFromBody: bodyCssToDelete.sort()
+  };
+}
+
+module.exports = emailRemoveUnusedCss;
