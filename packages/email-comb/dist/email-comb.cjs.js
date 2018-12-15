@@ -4,7 +4,7 @@
  * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/email-remove-unused-css/
+ * Homepage: https://bitbucket.org/codsen/email-comb/
  */
 
 'use strict';
@@ -70,7 +70,7 @@ function generateShortname(seed) {
 }
 
 var isArr = Array.isArray;
-function emailRemoveUnusedCss(str, opts) {
+function comb(str, opts) {
   var start = Date.now();
   var finalIndexesToDelete = new Slices({
     limitToBeAddedWhitespace: true
@@ -1198,4 +1198,4 @@ function emailRemoveUnusedCss(str, opts) {
   };
 }
 
-module.exports = emailRemoveUnusedCss;
+module.exports = comb;

@@ -4,7 +4,7 @@
  * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/email-remove-unused-css/
+ * Homepage: https://bitbucket.org/codsen/email-comb/
  */
 
 import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
@@ -32,7 +32,7 @@ function generateShortname(seed) {
 }
 
 const isArr = Array.isArray;
-function emailRemoveUnusedCss(str, opts) {
+function comb(str, opts) {
   const start = Date.now();
   const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
   const currentChunksMinifiedSelectors = new Slices();
@@ -1623,4 +1623,4 @@ function emailRemoveUnusedCss(str, opts) {
   };
 }
 
-export default emailRemoveUnusedCss;
+export default comb;
