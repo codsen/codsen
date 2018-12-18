@@ -1,0 +1,17 @@
+0 silly argv { _: [ 'import' ],
+0 silly argv   flatten: true,
+0 silly argv   lernaVersion: '3.6.0',
+0 silly argv   '$0': '/Users/royston/bin/npm-packages/bin/lerna',
+0 silly argv   dir: '/Users/royston/Documents/__PROJECTS/____libs/email-homey' }
+1 notice cli v3.6.0
+2 verbose rootPath /Users/royston/Documents/__PROJECTS/____libs2
+3 info versioning independent
+4 error SyntaxError: /Users/royston/Documents/__PROJECTS/____libs/email-homey/package.json: Unexpected end of JSON input
+4 error     at JSON.parse (<anonymous>)
+4 error     at Object.Module._extensions..json (internal/modules/cjs/loader.js:708:27)
+4 error     at Module.load (internal/modules/cjs/loader.js:599:32)
+4 error     at tryModuleLoad (internal/modules/cjs/loader.js:538:12)
+4 error     at Function.Module._load (internal/modules/cjs/loader.js:530:3)
+4 error     at Module.require (internal/modules/cjs/loader.js:637:17)
+4 error     at require (internal/modules/cjs/helpers.js:22:18)
+4 error     at ImportCommand.initialize (/Users/royston/bin/npm-packages/lib/node_modules/lerna/node_modules/@lerna/import/index.js:56:25)
