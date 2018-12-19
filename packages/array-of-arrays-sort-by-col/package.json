@@ -170,14 +170,14 @@
   "dependencies": {
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
-    "lodash.clonedeep": "4.5.0"
+    "lodash.clonedeep": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
+    "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
     "@babel/register": "^7.0.0",
-    "array-shuffle": "1.0.1",
-    "ava": "1.0.0-rc.2",
+    "array-shuffle": "^1.0.1",
+    "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.10.0",
@@ -188,7 +188,7 @@
     "eslint-plugin-no-wildcard-postmessage": "^0.1.3",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-scanjs-rules": "^0.2.1",
-    "husky": "^1.2.1",
+    "husky": "^1.3.0",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
     "rollup": "^0.68.0",
