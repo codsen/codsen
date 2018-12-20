@@ -1,10 +1,10 @@
 import typ from 'type-detect';
 import clone from 'lodash.clonedeep';
-import isStringInt from 'is-string-int';
 import search from 'str-indexes-of-plus';
 import includes from 'lodash.includes';
 import matcher from 'matcher';
 import checkTypes from 'check-types-mini';
+import isStringInt from 'is-string-int';
 
 const isArr = Array.isArray;
 function isStr(something) {

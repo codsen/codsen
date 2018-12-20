@@ -57,8 +57,8 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
         });
       } else {
         innerVar.res = innerVar.res.concat(
-          Object.keys(input).map(
-            key => (innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key)
+          Object.keys(input).map(key =>
+            innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key
           )
         );
       }

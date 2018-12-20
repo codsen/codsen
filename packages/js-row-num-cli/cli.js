@@ -86,15 +86,14 @@ function processPaths(paths) {
           paths,
           (concattedTotal, singleDirOrFilePath) =>
             concattedTotal.concat(
-              isDirectory(singleDirOrFilePath).then(
-                bool =>
-                  bool
-                    ? globby(singleDirOrFilePath, {
-                        expandDirectories: {
-                          files: ["*.js"]
-                        }
-                      })
-                    : [singleDirOrFilePath]
+              isDirectory(singleDirOrFilePath).then(bool =>
+                bool
+                  ? globby(singleDirOrFilePath, {
+                      expandDirectories: {
+                        files: ["*.js"]
+                      }
+                    })
+                  : [singleDirOrFilePath]
               )
             ),
           []
@@ -112,17 +111,16 @@ function processPaths(paths) {
           received,
           (counter, currentPath) =>
             readUpdateAndWriteOverFile(currentPath)
-              .then(
-                res =>
-                  res
-                    ? {
-                        good: counter.good.concat([currentPath]),
-                        bad: counter.bad
-                      }
-                    : {
-                        good: counter.good,
-                        bad: counter.bad.concat([currentPath])
-                      }
+              .then(res =>
+                res
+                  ? {
+                      good: counter.good.concat([currentPath]),
+                      bad: counter.bad
+                    }
+                  : {
+                      good: counter.good,
+                      bad: counter.bad.concat([currentPath])
+                    }
               )
               .catch(err => {
                 log(

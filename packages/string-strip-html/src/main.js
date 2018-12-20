@@ -622,10 +622,10 @@ function stripHtml(str, originalOpts) {
           ? str[i] === null
             ? "null"
             : str[i] === "\n"
-              ? "line break"
-              : str[i] === "\t"
-                ? "tab"
-                : "space"
+            ? "line break"
+            : str[i] === "\t"
+            ? "tab"
+            : "space"
           : str[i]
       }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`
     );

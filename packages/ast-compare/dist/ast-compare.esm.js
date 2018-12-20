@@ -1,6 +1,6 @@
-import typeDetect from 'type-detect';
 import clone from 'lodash.clonedeep';
 import pullAll from 'lodash.pullall';
+import typeDetect from 'type-detect';
 import empty from 'ast-contains-only-empty-space';
 import matcher from 'matcher';
 import checkTypes from 'check-types-mini';

@@ -196,20 +196,19 @@ globby(input, { dot: true })
       resolvedPathsArray,
       (concattedTotal, singleDirOrFilePath) =>
         concattedTotal.concat(
-          isDirectory(singleDirOrFilePath).then(
-            bool =>
-              bool
-                ? globby(
-                    cli.flags.n
-                      ? [singleDirOrFilePath, "!node_modules"]
-                      : singleDirOrFilePath,
-                    {
-                      expandDirectories: {
-                        files: [".*", "*.json"]
-                      }
+          isDirectory(singleDirOrFilePath).then(bool =>
+            bool
+              ? globby(
+                  cli.flags.n
+                    ? [singleDirOrFilePath, "!node_modules"]
+                    : singleDirOrFilePath,
+                  {
+                    expandDirectories: {
+                      files: [".*", "*.json"]
                     }
-                  )
-                : [singleDirOrFilePath]
+                  }
+                )
+              : [singleDirOrFilePath]
           )
         ),
       []
@@ -225,15 +224,14 @@ globby(input, { dot: true })
       return pReduce(received, (total, single) => total.concat(single), []);
     })
   )
-  .then(
-    res =>
-      !cli.flags.n
-        ? res.filter(
-            oneOfPaths =>
-              !oneOfPaths.includes("node_modules") &&
-              !oneOfPaths.includes("package-lock.json")
-          )
-        : res
+  .then(res =>
+    !cli.flags.n
+      ? res.filter(
+          oneOfPaths =>
+            !oneOfPaths.includes("node_modules") &&
+            !oneOfPaths.includes("package-lock.json")
+        )
+      : res
   )
   .then(paths => {
     // console.log(
@@ -304,17 +302,16 @@ globby(input, { dot: true })
               // );
               return received;
             })
-            .then(
-              res =>
-                res
-                  ? {
-                      good: counter.good.concat([currentPath]),
-                      bad: counter.bad
-                    }
-                  : {
-                      good: counter.good,
-                      bad: counter.bad.concat([currentPath])
-                    }
+            .then(res =>
+              res
+                ? {
+                    good: counter.good.concat([currentPath]),
+                    bad: counter.bad
+                  }
+                : {
+                    good: counter.good,
+                    bad: counter.bad.concat([currentPath])
+                  }
             )
             .catch(err => {
               log(

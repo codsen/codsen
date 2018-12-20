@@ -65,8 +65,8 @@ function objectNoNewKeys(inputOuter, referenceOuter, originalOptsOuter) {
         // input is object, but reference is not.
         // record all the keys of the input, but don't traverse deeper
         innerVar.res = innerVar.res.concat(
-          Object.keys(input).map(
-            key => (innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key)
+          Object.keys(input).map(key =>
+            innerVar.path.length > 0 ? `${innerVar.path}.${key}` : key
           )
         );
       }

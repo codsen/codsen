@@ -322,29 +322,23 @@ A clone of an input object, with the same key set as the `schema` object.
 const obj1 = {
   b: [
     {
-      c: 'ccc',
-      d: 'ddd',
-    },
+      c: "ccc",
+      d: "ddd"
+    }
   ],
-  a: 'aaa',
-}
+  a: "aaa"
+};
 const obj2 = {
-  a: 'ccc',
-  e: 'eee',
-}
+  a: "ccc",
+  e: "eee"
+};
 const obj3 = {
-  a: 'zzz',
-}
+  a: "zzz"
+};
 // calculate the schema:
-const schema = await getKeyset(
-  [
-    obj1,
-    obj2,
-    obj3,
-  ]
-)
+const schema = await getKeyset([obj1, obj2, obj3]);
 // log the schema:
-console.log(`schema = ${JSON.stringify(schema, null, 4)}`)
+console.log(`schema = ${JSON.stringify(schema, null, 4)}`);
 // => {
 //      a: false,
 //      b: [
@@ -356,8 +350,8 @@ console.log(`schema = ${JSON.stringify(schema, null, 4)}`)
 //      e: false,
 //    }
 
-const obj1Normalised = await enforceKeyset(obj1, schema)
-console.log(`obj1Normalised = ${JSON.stringify(obj1Normalised, null, 4)}`)
+const obj1Normalised = await enforceKeyset(obj1, schema);
+console.log(`obj1Normalised = ${JSON.stringify(obj1Normalised, null, 4)}`);
 // => {
 //      a: 'aaa',
 //      b: [
@@ -369,8 +363,8 @@ console.log(`obj1Normalised = ${JSON.stringify(obj1Normalised, null, 4)}`)
 //      e: false, // <------ new key added
 //    }
 
-const obj2Normalised = await enforceKeyset(obj2, schema)
-console.log(`obj2Normalised = ${JSON.stringify(obj2Normalised, null, 4)}`)
+const obj2Normalised = await enforceKeyset(obj2, schema);
+console.log(`obj2Normalised = ${JSON.stringify(obj2Normalised, null, 4)}`);
 // => {
 //      a: 'ccc',
 //      b: [ // <------- new key added
@@ -382,8 +376,8 @@ console.log(`obj2Normalised = ${JSON.stringify(obj2Normalised, null, 4)}`)
 //      e: 'eee',
 //    }
 
-const obj3Normalised = await enforceKeyset(obj3, schema)
-console.log(`obj3Normalised = ${JSON.stringify(obj3Normalised, null, 4)}`)
+const obj3Normalised = await enforceKeyset(obj3, schema);
+console.log(`obj3Normalised = ${JSON.stringify(obj3Normalised, null, 4)}`);
 // => {
 //      a: 'zzz',
 //      b: [ // <------- new key added

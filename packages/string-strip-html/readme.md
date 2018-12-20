@@ -202,7 +202,8 @@ This feature is aimed at producing Text versions for promotional or transactiona
 If input string is has a linked text, URL will be put after it:
 
 ```html
-I watch both <a href="https://www.rt.com" target="_blank">RT</a> and <a href="https://www.bbc.co.uk" target="_blank">BBC</a>.
+I watch both <a href="https://www.rt.com" target="_blank">RT</a> and
+<a href="https://www.bbc.co.uk" target="_blank">BBC</a>.
 ```
 
 it's turned into:
@@ -214,7 +215,18 @@ I watch both RT https://www.rt.com and BBC https://www.bbc.co.uk.
 But equally, any link on any tag, even one without text, will be retained:
 
 ```html
-Codsen <div><a href="https://codsen.com" target="_blank"><img src="logo.png" width="100" height="100" border="0" style="display:block;" alt="Codsen logo"/></a></div>
+Codsen
+<div>
+  <a href="https://codsen.com" target="_blank"
+    ><img
+      src="logo.png"
+      width="100"
+      height="100"
+      border="0"
+      style="display:block;"
+      alt="Codsen logo"
+  /></a>
+</div>
 ```
 
 it's turned into:

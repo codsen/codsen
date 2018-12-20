@@ -2,9 +2,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var typeDetect = _interopDefault(require('type-detect'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var pullAll = _interopDefault(require('lodash.pullall'));
+var typeDetect = _interopDefault(require('type-detect'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var matcher = _interopDefault(require('matcher'));
 var checkTypes = _interopDefault(require('check-types-mini'));

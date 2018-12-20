@@ -4,11 +4,11 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var typ = _interopDefault(require('type-detect'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var isStringInt = _interopDefault(require('is-string-int'));
 var search = _interopDefault(require('str-indexes-of-plus'));
 var includes = _interopDefault(require('lodash.includes'));
 var matcher = _interopDefault(require('matcher'));
 var checkTypes = _interopDefault(require('check-types-mini'));
+var isStringInt = _interopDefault(require('is-string-int'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {

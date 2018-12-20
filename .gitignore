@@ -3,6 +3,7 @@
 /packages/*/node_modules
 /packages/*/LICENSE
 /packages/*/license.md
+/packages/*/.nyc_output
 *.log
 *.cache
 /build
@@ -11,6 +12,5 @@
 /browser-polyfill.js
 /runtime.js
 coverage
-dist
 /.package.json
 yarn.lock

@@ -99,12 +99,12 @@ function stringFixBrokenNamedEntities(str) {
             ? str[i] === null
               ? "null"
               : str[i] === "\n"
-                ? "line break"
-                : str[i] === "\t"
-                  ? "tab"
-                  : str[i] === " "
-                    ? "space"
-                    : "???"
+              ? "line break"
+              : str[i] === "\t"
+              ? "tab"
+              : str[i] === " "
+              ? "space"
+              : "???"
             : str[i]
           : "undefined"
       }\u001b[${39}m`}`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`

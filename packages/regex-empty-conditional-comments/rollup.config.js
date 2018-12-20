@@ -20,9 +20,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
-        commonjs(),
-        babel(),
-        uglify()
+        commonjs()
       ]
     },
 
@@ -34,8 +32,7 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
-        }),
-        babel()
+        })
       ]
     },
 
