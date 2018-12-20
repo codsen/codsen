@@ -1,6 +1,10 @@
 {
   "name": "codsen",
   "private": true,
+  "license": "MIT",
+  "scripts": {
+    "initial": "lerna bootstrap --ignore-scripts --hoist"
+  },
   "devDependencies": {
     "lerna": "^3.6.0"
   }
