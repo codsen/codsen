@@ -2,11 +2,11 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isNumeric = _interopDefault(require('is-numeric'));
 var split = _interopDefault(require('csv-split-easy'));
 var pull = _interopDefault(require('lodash.pull'));
 var ordinal = _interopDefault(require('ordinal'));
 var BigNumber = _interopDefault(require('bignumber.js'));
+var isNumeric = _interopDefault(require('is-numeric'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {

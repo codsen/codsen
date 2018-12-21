@@ -402,8 +402,8 @@ function findUnusedSync(arrOriginal, originalOpts) {
   // ---------------------------------------------------------------------------
 
   function removeLeadingDot(something) {
-    return something.map(
-      finding => (finding.charAt(0) === "." ? finding.slice(1) : finding)
+    return something.map(finding =>
+      finding.charAt(0) === "." ? finding.slice(1) : finding
     );
   }
 

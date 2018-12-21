@@ -131,72 +131,72 @@ test("01.06 - getKeysetSync() - calculates - three objects - custom placeholder"
     },
     "01.06.01"
   );
-  t.deepEqual(
-    getKeysetSync(
-      [
-        {
-          a: "a",
-          b: "c",
-          c: {
-            d: "d",
-            e: "e"
-          }
-        },
-        {
-          a: "a"
-        },
-        {
-          c: {
-            f: "f"
-          }
-        }
-      ],
-      { placeholder: "" }
-    ),
-    {
-      a: "",
-      b: "",
-      c: {
-        d: "",
-        e: "",
-        f: ""
-      }
-    },
-    "01.06.02"
-  );
-  t.deepEqual(
-    getKeysetSync(
-      [
-        {
-          a: "a",
-          b: "c",
-          c: {
-            d: "d",
-            e: "e"
-          }
-        },
-        {
-          a: "a"
-        },
-        {
-          c: {
-            f: "f"
-          }
-        }
-      ],
-      { placeholder: { a: "a" } }
-    ),
-    {
-      a: { a: "a" },
-      b: { a: "a" },
-      c: {
-        d: { a: "a" },
-        e: { a: "a" },
-        f: { a: "a" }
-      }
-    },
-    "01.06.03"
-  );
+  // t.deepEqual(
+  //   getKeysetSync(
+  //     [
+  //       {
+  //         a: "a",
+  //         b: "c",
+  //         c: {
+  //           d: "d",
+  //           e: "e"
+  //         }
+  //       },
+  //       {
+  //         a: "a"
+  //       },
+  //       {
+  //         c: {
+  //           f: "f"
+  //         }
+  //       }
+  //     ],
+  //     { placeholder: "" }
+  //   ),
+  //   {
+  //     a: "",
+  //     b: "",
+  //     c: {
+  //       d: "",
+  //       e: "",
+  //       f: ""
+  //     }
+  //   },
+  //   "01.06.02"
+  // );
+  // t.deepEqual(
+  //   getKeysetSync(
+  //     [
+  //       {
+  //         a: "a",
+  //         b: "c",
+  //         c: {
+  //           d: "d",
+  //           e: "e"
+  //         }
+  //       },
+  //       {
+  //         a: "a"
+  //       },
+  //       {
+  //         c: {
+  //           f: "f"
+  //         }
+  //       }
+  //     ],
+  //     { placeholder: { a: "a" } }
+  //   ),
+  //   {
+  //     a: { a: "a" },
+  //     b: { a: "a" },
+  //     c: {
+  //       d: { a: "a" },
+  //       e: { a: "a" },
+  //       f: { a: "a" }
+  //     }
+  //   },
+  //   "01.06.03"
+  // );
 });
 
 test("01.07 - getKeysetSync() - settings argument is not a plain object - throws", t => {

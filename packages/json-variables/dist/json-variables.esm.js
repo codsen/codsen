@@ -10,7 +10,7 @@ import Ranges from 'ranges-push';
 import rangesApply from 'ranges-apply';
 import isObj from 'lodash.isplainobject';
 import removeDuplicateHeadsTails from 'string-remove-duplicate-heads-tails';
-import { matchLeftIncl, matchRightIncl } from 'string-match-left-right';
+import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 
 const isArr = Array.isArray;
 const has = Object.prototype.hasOwnProperty;

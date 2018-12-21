@@ -1,4 +1,4 @@
-import { set, traverse } from 'ast-monkey';
+import { traverse, set } from 'ast-monkey';
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import ordinal from 'ordinal-number-suffix';

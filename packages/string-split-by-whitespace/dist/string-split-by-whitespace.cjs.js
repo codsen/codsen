@@ -9,13 +9,16 @@ function split(str, originalOpts) {
   if (str === undefined) {
     throw new Error("string-split-by-whitespace: [THROW_ID_01] The input is missing!");
   }
+
   if (typeof str !== "string") {
     return str;
-  }
-  // early ending:
+  } // early ending:
+
+
   if (str.trim() === "") {
     return [];
   }
+
   var defaults = {
     ignoreRanges: []
   };
@@ -23,15 +26,17 @@ function split(str, originalOpts) {
   checkTypes(opts, defaults, {
     msg: "string-split-by-whitespace: [THROW_ID_02*]"
   });
+
   if (opts.ignoreRanges.length > 0 && !opts.ignoreRanges.every(function (arr) {
     return Array.isArray(arr);
   })) {
     throw new Error("string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!");
-  }
+  } // if reached this far, traverse and slice accordingly
 
-  // if reached this far, traverse and slice accordingly
+
   var nonWhitespaceSubStringStartsAt = null;
   var res = [];
+
   for (var i = 0, len = str.length; i < len; i++) {
     // catch the first non-whitespace character
     if (nonWhitespaceSubStringStartsAt === null && str[i].trim() !== "" && (opts.ignoreRanges.length === 0 || opts.ignoreRanges.length !== 0 && !within(i, opts.ignoreRanges.map(function (arr) {
@@ -40,8 +45,9 @@ function split(str, originalOpts) {
       inclusiveRangeEnds: true
     }))) {
       nonWhitespaceSubStringStartsAt = i;
-    }
-    // catch the first whitespace char when recording substring
+    } // catch the first whitespace char when recording substring
+
+
     if (nonWhitespaceSubStringStartsAt !== null) {
       if (str[i].trim() === "") {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));
@@ -54,6 +60,7 @@ function split(str, originalOpts) {
       }
     }
   }
+
   return res;
 }
 

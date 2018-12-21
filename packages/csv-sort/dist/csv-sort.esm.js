@@ -1,8 +1,8 @@
-import isNumeric from 'is-numeric';
 import split from 'csv-split-easy';
 import pull from 'lodash.pull';
 import ordinal from 'ordinal';
 import BigNumber from 'bignumber.js';
+import isNumeric from 'is-numeric';
 
 const currencySigns = [
   "د.إ",

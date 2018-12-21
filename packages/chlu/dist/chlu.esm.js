@@ -1,17 +1,17 @@
+import reverse from 'lodash.reverse';
+import splitLines from 'split-lines';
+import getPkgRepo from 'get-pkg-repo';
 import semverCompare from 'semver-compare';
+import empty from 'ast-contains-only-empty-space';
+import insert from 'just-insert';
 import clone from 'lodash.clonedeep';
+import includes from 'lodash.includes';
+import min from 'lodash.min';
+import dd from 'dehumanize-date';
 import isNum from 'is-natural-number';
 import trim from 'lodash.trim';
 import easyReplace from 'easy-replace';
 import emojiRegexLib from 'emoji-regex';
-import reverse from 'lodash.reverse';
-import splitLines from 'split-lines';
-import getPkgRepo from 'get-pkg-repo';
-import empty from 'ast-contains-only-empty-space';
-import insert from 'just-insert';
-import includes from 'lodash.includes';
-import min from 'lodash.min';
-import dd from 'dehumanize-date';
 
 const emojiRegex = emojiRegexLib();
 const versionWithBracketsRegex = /\[v?\d+\.\d+(\.\d+)*\]/g;
@@ -336,7 +336,15 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   const changelogMd = changelogContents;
   let packageJson;
   if (packageJsonContents) {
-    packageJson = getPkgRepo(packageJsonContents);
+    let parsedContents;
+    try {
+      parsedContents = JSON.parse(packageJsonContents);
+    } catch (e) {
+      throw new Error(
+        `chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n${e}`
+      );
+    }
+    packageJson = getPkgRepo(parsedContents);
     if (
       packageJson &&
       packageJson.type &&

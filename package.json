@@ -3,7 +3,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "initial": "lerna bootstrap --ignore-scripts --hoist"
+    "initial": "lerna bootstrap --hoist",
+    "fresh": "rm -rf node_modules && lerna clean -y && npm run initial",
+    "build": "lerna run test --bail --concurrency 1"
   },
   "devDependencies": {
     "lerna": "^3.6.0"

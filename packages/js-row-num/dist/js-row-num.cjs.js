@@ -34,12 +34,10 @@ function fixRowNums(str, originalOpts) {
     return str;
   }
   function isDigit(something) {
-    return (/[0-9]/.test(something)
-    );
+    return /[0-9]/.test(something);
   }
   function isAZ(something) {
-    return (/[A-Za-z]/.test(something)
-    );
+    return /[A-Za-z]/.test(something);
   }
   var defaults = {
     padStart: 3
@@ -48,9 +46,11 @@ function fixRowNums(str, originalOpts) {
   if (!opts.padStart || typeof opts.padStart !== "number" || typeof opts.padStart === "number" && opts.padStart < 0) {
     opts.padStart = 0;
   }
-  checkTypes(opts, defaults, { msg: "js-row-num: [THROW_ID_04*]" });
+  checkTypes(opts, defaults, {
+    msg: "js-row-num: [THROW_ID_04*]"
+  });
   var finalIndexesToDelete = new Slices();
-  var i = void 0;
+  var i;
   var len = str.length;
   var quotes = null;
   var consoleStartsAt = null;
@@ -63,7 +63,7 @@ function fixRowNums(str, originalOpts) {
       currentRow++;
     }
     if (digitStartsAt && !isDigit(str[i]) && i > digitStartsAt) {
-      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? padStart(currentRow, opts.padStart, "0") : "" + currentRow);
+      finalIndexesToDelete.push(digitStartsAt, i, opts.padStart ? padStart(currentRow, opts.padStart, "0") : "".concat(currentRow));
       digitStartsAt = null;
       wasLetterDetected = true;
     }

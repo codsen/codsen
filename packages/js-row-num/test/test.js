@@ -52,26 +52,6 @@ console.log('006 something')
 `,
     "02.01.01 - no whitespace"
   );
-});
-
-test("02.01 - single straight quotes", t => {
-  t.is(
-    fixRowNums(`
-zzz
-zzz
-zzz
-console.log('099 something')
-console.log('1 something')
-`),
-    `
-zzz
-zzz
-zzz
-console.log('005 something')
-console.log('006 something')
-`,
-    "02.01.01 - no whitespace"
-  );
   t.is(
     fixRowNums(`
 zzz

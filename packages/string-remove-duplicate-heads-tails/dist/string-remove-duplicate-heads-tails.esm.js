@@ -1,7 +1,7 @@
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import arrayiffy from 'arrayiffy-if-string';
-import { matchLeftIncl, matchRightIncl } from 'string-match-left-right';
+import { matchRightIncl, matchLeftIncl } from 'string-match-left-right';
 import Ranges from 'ranges-push';
 import rangesApply from 'ranges-apply';
 import trimSpaces from 'string-trim-spaces-only';

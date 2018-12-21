@@ -2,20 +2,20 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var reverse = _interopDefault(require('lodash.reverse'));
+var splitLines = _interopDefault(require('split-lines'));
+var getPkgRepo = _interopDefault(require('get-pkg-repo'));
 var semverCompare = _interopDefault(require('semver-compare'));
+var empty = _interopDefault(require('ast-contains-only-empty-space'));
+var insert = _interopDefault(require('just-insert'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var includes = _interopDefault(require('lodash.includes'));
+var min = _interopDefault(require('lodash.min'));
+var dd = _interopDefault(require('dehumanize-date'));
 var isNum = _interopDefault(require('is-natural-number'));
 var trim = _interopDefault(require('lodash.trim'));
 var easyReplace = _interopDefault(require('easy-replace'));
 var emojiRegexLib = _interopDefault(require('emoji-regex'));
-var reverse = _interopDefault(require('lodash.reverse'));
-var splitLines = _interopDefault(require('split-lines'));
-var getPkgRepo = _interopDefault(require('get-pkg-repo'));
-var empty = _interopDefault(require('ast-contains-only-empty-space'));
-var insert = _interopDefault(require('just-insert'));
-var includes = _interopDefault(require('lodash.includes'));
-var min = _interopDefault(require('lodash.min'));
-var dd = _interopDefault(require('dehumanize-date'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -272,7 +272,13 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var changelogMd = changelogContents;
   var packageJson;
   if (packageJsonContents) {
-    packageJson = getPkgRepo(packageJsonContents);
+    var parsedContents;
+    try {
+      parsedContents = JSON.parse(packageJsonContents);
+    } catch (e) {
+      throw new Error("chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n".concat(e));
+    }
+    packageJson = getPkgRepo(parsedContents);
     if (packageJson && packageJson.type && packageJson.type !== "github" && packageJson.type !== "bitbucket") {
       throw new Error("chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ".concat(packageJson.type));
     }

@@ -7,7 +7,7 @@
  * Homepage: https://bitbucket.org/codsen/email-comb/
  */
 
-import { matchRightIncl, matchRight, matchLeft } from 'string-match-left-right';
+import { matchRightIncl, matchLeft, matchRight } from 'string-match-left-right';
 import emptyCondCommentRegex from 'regex-empty-conditional-comments';
 import pullAllWithGlob from 'array-pull-all-with-glob';
 import extract from 'string-extract-class-names';
