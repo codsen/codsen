@@ -5,6 +5,7 @@ import semverCompare from 'semver-compare';
 import empty from 'ast-contains-only-empty-space';
 import insert from 'just-insert';
 import clone from 'lodash.clonedeep';
+import isObj from 'lodash.isplainobject';
 import includes from 'lodash.includes';
 import min from 'lodash.min';
 import dd from 'dehumanize-date';
@@ -337,14 +338,36 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   let packageJson;
   if (packageJsonContents) {
     let parsedContents;
+    if (typeof packageJsonContents === "string") {
+      try {
+        parsedContents = JSON.parse(packageJsonContents);
+      } catch (e) {
+        throw new Error(
+          `chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n${e}\n\nBy the way, we're talking about contents:\n${JSON.stringify(
+            packageJsonContents,
+            null,
+            0
+          )}\ntheir type is: "${typeof packageJsonContents}"${
+            typeof packageJsonContents === "string"
+              ? ` and its length is: ${packageJsonContents.length}`
+              : ""
+          }`
+        );
+      }
+    } else if (isObj(packageJsonContents)) {
+      parsedContents = packageJsonContents;
+    }
     try {
-      parsedContents = JSON.parse(packageJsonContents);
+      packageJson = getPkgRepo(parsedContents);
     } catch (e) {
       throw new Error(
-        `chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n${e}`
+        `chlu/main.js: [THROW_ID_05] There was an error in get-pkg-repo:\n${e}\n\nBy the way, we're talking about contents:\n${JSON.stringify(
+          parsedContents,
+          null,
+          4
+        )}`
       );
     }
-    packageJson = getPkgRepo(parsedContents);
     if (
       packageJson &&
       packageJson.type &&

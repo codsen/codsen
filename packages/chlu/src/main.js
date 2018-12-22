@@ -7,6 +7,7 @@ import semverCompare from "semver-compare";
 import empty from "ast-contains-only-empty-space";
 import insert from "just-insert";
 import clone from "lodash.clonedeep";
+import isObj from "lodash.isplainobject";
 import includes from "lodash.includes";
 import min from "lodash.min";
 import dd from "dehumanize-date";
@@ -117,19 +118,43 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
         packageJsonContents,
         null,
         4
-      )}`
+      )}\n(type is ${typeof packageJsonContents})`
     );
     let parsedContents;
+
+    if (typeof packageJsonContents === "string") {
+      try {
+        parsedContents = JSON.parse(packageJsonContents);
+      } catch (e) {
+        throw new Error(
+          `chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n${e}\n\nBy the way, we're talking about contents:\n${JSON.stringify(
+            packageJsonContents,
+            null,
+            0
+          )}\ntheir type is: "${typeof packageJsonContents}"${
+            typeof packageJsonContents === "string"
+              ? ` and its length is: ${packageJsonContents.length}`
+              : ""
+          }`
+        );
+      }
+    } else if (isObj(packageJsonContents)) {
+      parsedContents = packageJsonContents;
+    }
+
     try {
-      parsedContents = JSON.parse(packageJsonContents);
+      packageJson = getPkgRepo(parsedContents);
     } catch (e) {
       throw new Error(
-        `chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n${e}`
+        `chlu/main.js: [THROW_ID_05] There was an error in get-pkg-repo:\n${e}\n\nBy the way, we're talking about contents:\n${JSON.stringify(
+          parsedContents,
+          null,
+          4
+        )}`
       );
     }
-    packageJson = getPkgRepo(parsedContents);
     console.log(
-      `132 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
+      `143 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
         packageJson,
         null,
         4
@@ -466,7 +491,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             processedGitTags.versionsOnly.length - 1
           ];
         console.log(
-          `469 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+          `480 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
             processedGitTags.versionsOnly,
             null,
             4
@@ -478,12 +503,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly
         );
         console.log(
-          `481 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+          `492 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
         );
       }
     } else {
       console.log(
-        `486 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+        `497 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
       );
       // if the Git data is not available, use existing parsed Changelog data.
 
@@ -543,7 +568,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       mode: "set"
     });
     console.log(
-      `546 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+      `557 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
         footerLinks[i].content,
         null,
         4

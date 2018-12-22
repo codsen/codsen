@@ -44,6 +44,11 @@
     "await": true,
     "cjs": true
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
   "keywords": [
     "update",
     "js",

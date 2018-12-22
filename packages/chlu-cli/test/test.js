@@ -23,7 +23,9 @@ test("01.01 - there are no usable files at all", async t => {
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "file.md"), "zzz")
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa.shell(
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`
+      )
     )
     .then(() => fs.readFile(path.join(tempFolder, "file.md"), "utf8"))
     .catch(err => t.fail(err));
@@ -161,7 +163,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   const processedFileContents = fs
     .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa.shell(
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`
+      )
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch(err => t.fail(err));
@@ -331,7 +335,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
       fs.writeJson(path.join(tempFolder, "package.json"), inputPackageJson)
     )
     .then(() =>
-      execa.shell(`cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js`)
+      execa.shell(
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")}`
+      )
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
     .catch(err => t.fail(err));
@@ -470,7 +476,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     .writeFile(path.join(tempFolder, "changelog.md"), originalChangelog)
     .then(() =>
       execa.shell(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js --loud`
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} --loud`
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))
@@ -642,7 +648,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     )
     .then(() =>
       execa.shell(
-        `cd ${tempFolder} && ${path.join(__dirname, "../")}/cli.js --loud`
+        `cd ${tempFolder} && ${path.join(__dirname, "../", "cli.js")} --loud`
       )
     )
     .then(() => fs.readFile(path.join(tempFolder, "changelog.md"), "utf8"))

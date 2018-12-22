@@ -9,6 +9,7 @@ var semverCompare = _interopDefault(require('semver-compare'));
 var empty = _interopDefault(require('ast-contains-only-empty-space'));
 var insert = _interopDefault(require('just-insert'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 var includes = _interopDefault(require('lodash.includes'));
 var min = _interopDefault(require('lodash.min'));
 var dd = _interopDefault(require('dehumanize-date'));
@@ -273,12 +274,20 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   var packageJson;
   if (packageJsonContents) {
     var parsedContents;
-    try {
-      parsedContents = JSON.parse(packageJsonContents);
-    } catch (e) {
-      throw new Error("chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n".concat(e));
+    if (typeof packageJsonContents === "string") {
+      try {
+        parsedContents = JSON.parse(packageJsonContents);
+      } catch (e) {
+        throw new Error("chlu/main.js: [THROW_ID_04] Package JSON could not be parsed, JSON.parse gave error:\n".concat(e, "\n\nBy the way, we're talking about contents:\n").concat(JSON.stringify(packageJsonContents, null, 0), "\ntheir type is: \"").concat(_typeof(packageJsonContents), "\"").concat(typeof packageJsonContents === "string" ? " and its length is: ".concat(packageJsonContents.length) : ""));
+      }
+    } else if (isObj(packageJsonContents)) {
+      parsedContents = packageJsonContents;
     }
-    packageJson = getPkgRepo(parsedContents);
+    try {
+      packageJson = getPkgRepo(parsedContents);
+    } catch (e) {
+      throw new Error("chlu/main.js: [THROW_ID_05] There was an error in get-pkg-repo:\n".concat(e, "\n\nBy the way, we're talking about contents:\n").concat(JSON.stringify(parsedContents, null, 4)));
+    }
     if (packageJson && packageJson.type && packageJson.type !== "github" && packageJson.type !== "bitbucket") {
       throw new Error("chlu/main.js: [THROW_ID_01] Package JSON shows the library is neither GitHub nor BitBucket-based - ".concat(packageJson.type));
     }

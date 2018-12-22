@@ -91,6 +91,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
 
   let gitData = null;
   try {
+    fs.accessSync("./.git");
     gitData = await git().tags({
       "--format": "%(creatordate:short)|%(refname:short)"
     });
@@ -102,7 +103,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
     }
   }
   // console.log(
-  //   `105 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `106 CHLU CLI: ${`\u001b[${33}m${`gitData`}\u001b[${39}m`} = ${JSON.stringify(
   //     gitData,
   //     null,
   //     4
@@ -112,6 +113,7 @@ updateNotifier({ pkg: cli.pkg }).notify();
   //                                4.
 
   try {
+    // console.log(`116 chlu-cli: typeof packageData = ${typeof packageData}`);
     const contentToWrite = chlu(changelogData, gitData, packageData);
     // insurance against writing empty file:
     if (
