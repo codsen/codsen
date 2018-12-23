@@ -60,8 +60,29 @@ function getKeyset(arrOfPromises, originalOpts) {
     placeholder: false
   };
   const opts = Object.assign({}, defaults, originalOpts);
+  console.log(
+    `064 CALLING check-types-mini:\nopts = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}\ndefaults = ${JSON.stringify(
+      defaults,
+      null,
+      4
+    )}\nopts = ${JSON.stringify(
+      {
+        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+        schema: {
+          placeholder: ["null", "number", "string", "boolean", "object"]
+        }
+      },
+      null,
+      4
+    )}`
+  );
   checkTypes(opts, defaults, {
     msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+    ignorePaths: ["placeholder.*"],
     schema: {
       placeholder: ["null", "number", "string", "boolean", "object"]
     }

@@ -2817,6 +2817,7 @@ test("08.05 - getKeyset() - calculates - three objects - custom placeholder", as
     },
     "08.05.01"
   );
+
   t.deepEqual(
     await getKeyset(
       [
@@ -2850,6 +2851,7 @@ test("08.05 - getKeyset() - calculates - three objects - custom placeholder", as
     },
     "08.05.02"
   );
+
   t.deepEqual(
     await getKeyset(
       [

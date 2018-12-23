@@ -13,6 +13,7 @@ function checkTypesMini(
   originalOptions,
   shouldWeCheckTheOpts = true
 ) {
+  const hasKey = Object.prototype.hasOwnProperty;
   function existy(something) {
     return something != null;
   }
@@ -29,14 +30,6 @@ function checkTypesMini(
           })
         )
     );
-  }
-  function goUpByOneLevel(path) {
-    if (path.includes(".")) {
-      const split = path.split(".");
-      split.pop();
-      return split.join(".");
-    }
-    return path;
   }
   const NAMESFORANYTYPE = [
     "any",
@@ -182,43 +175,53 @@ function checkTypesMini(
       );
     }
   }
-  const blanketPathsArr = [];
+  const ignoredPathsArr = [];
   traverse(obj, (key, val, innerObj) => {
     const current = val !== undefined ? val : key;
+    const objKey = val !== undefined ? key : undefined;
     if (
-      isArr(blanketPathsArr) &&
-      blanketPathsArr.length &&
-      blanketPathsArr.some(path => innerObj.path.startsWith(path))
+      isArr(ignoredPathsArr) &&
+      ignoredPathsArr.length &&
+      ignoredPathsArr.some(path => innerObj.path.startsWith(path))
     ) {
       return current;
     }
     if (
+      objKey &&
+      opts.ignoreKeys.some(oneOfKeysToIgnore =>
+        matcher.isMatch(objKey, oneOfKeysToIgnore)
+      )
+    ) {
+      return current;
+    }
+    if (
+      opts.ignorePaths.some(oneOfPathsToIgnore =>
+        matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
+      )
+    ) {
+      return current;
+    }
+    const isNotAnArrayChild = !(
+      !isObj(current) &&
+      !isArr(current) &&
+      isArr(innerObj.parent)
+    );
+    let optsSchemaHasThisPathDefined = false;
+    if (
+      isObj(opts.schema) &&
+      hasKey.call(opts.schema, objectPath.get(innerObj.path))
+    ) {
+      optsSchemaHasThisPathDefined = true;
+    }
+    let refHasThisPathDefined = false;
+    if (isObj(ref) && objectPath.has(ref, objectPath.get(innerObj.path))) {
+      refHasThisPathDefined = true;
+    }
+    if (
       opts.enforceStrictKeyset &&
-      !(!isObj(current) && !isArr(current) && isArr(innerObj.parent)) &&
-      (!existy(opts.schema) ||
-        !isObj(opts.schema) ||
-        (isObj(opts.schema) &&
-          (!Object.keys(opts.schema).length ||
-            ((!isArr(innerObj.parent) &&
-              !Object.prototype.hasOwnProperty.call(
-                opts.schema,
-                innerObj.path
-              )) ||
-              (isArr(innerObj.parent) &&
-                !objectPath.has(
-                  opts.schema,
-                  goUpByOneLevel(innerObj.path)
-                )))))) &&
-      (!existy(ref) ||
-        !isObj(ref) ||
-        (isObj(ref) &&
-          (!Object.keys(ref).length ||
-            ((!opts.acceptArrays && !objectPath.has(ref, innerObj.path)) ||
-              (opts.acceptArrays &&
-                ((!isArr(innerObj.parent) &&
-                  !objectPath.has(ref, innerObj.path)) ||
-                  (isArr(innerObj.parent) &&
-                    !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))))))
+      isNotAnArrayChild &&
+      !optsSchemaHasThisPathDefined &&
+      !refHasThisPathDefined
     ) {
       throw new TypeError(
         `${opts.msg}: ${opts.optsVarName}.${
@@ -229,13 +232,14 @@ function checkTypesMini(
           opts.optsVarName
         }.enforceStrictKeyset or provide some type reference (2nd argument or ${
           opts.optsVarName
-        }.schema).`
+        }.schema).\n\nDebug info:\n
+obj = ${JSON.stringify(obj, null, 4)}\n
+ref = ${JSON.stringify(ref, null, 4)}\n
+innerObj = ${JSON.stringify(innerObj, null, 4)}\n
+opts = ${JSON.stringify(opts, null, 4)}\n
+current = ${JSON.stringify(current, null, 4)}\n\n`
       );
-    } else if (
-      isObj(opts.schema) &&
-      Object.keys(opts.schema).length &&
-      Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path)
-    ) {
+    } else if (optsSchemaHasThisPathDefined) {
       const currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path])
         .map(String)
         .map(el => el.toLowerCase());
@@ -288,22 +292,9 @@ function checkTypesMini(
           }
         }
       } else {
-        blanketPathsArr.push(innerObj.path);
+        ignoredPathsArr.push(innerObj.path);
       }
-    } else if (
-      existy(ref) &&
-      Object.keys(ref).length &&
-      objectPath.has(ref, innerObj.path) &&
-      typ(current) !== typ(objectPath.get(ref, innerObj.path)) &&
-      (!opts.ignoreKeys ||
-        !opts.ignoreKeys.some(oneOfKeysToIgnore =>
-          matcher.isMatch(key, oneOfKeysToIgnore)
-        )) &&
-      (!opts.ignorePaths ||
-        !opts.ignorePaths.some(oneOfPathsToIgnore =>
-          matcher.isMatch(innerObj.path, oneOfPathsToIgnore)
-        ))
-    ) {
+    } else if (refHasThisPathDefined) {
       const compareTo = objectPath.get(ref, innerObj.path);
       if (
         opts.acceptArrays &&
@@ -322,7 +313,7 @@ function checkTypesMini(
             ).toLowerCase()}-type`
           );
         }
-      } else {
+      } else if (typ(current) !== typ(compareTo)) {
         throw new TypeError(
           `${opts.msg}: ${opts.optsVarName}.${
             innerObj.path

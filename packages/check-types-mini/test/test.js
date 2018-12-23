@@ -10,7 +10,7 @@ test(`01.01 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when all/first args a
 });
 
 test(`01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when one of the arguments is of a wrong type`, t => {
-  const error = t.throws(() => {
+  const err1 = t.throws(() => {
     checkTypes(
       {
         option1: "setting1",
@@ -24,7 +24,27 @@ test(`01.02 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - when one of the argum
       }
     );
   });
-  t.truthy(error.message.includes("not boolean but string"));
+  t.regex(err1.message, /not boolean but string/g, "01.02.01");
+
+  // with opts.enforceStrictKeyset === false
+  const err2 = t.throws(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: "false",
+        option3: false
+      },
+      {
+        option1: "setting1",
+        option2: false,
+        option3: false
+      },
+      {
+        enforceStrictKeyset: false
+      }
+    );
+  });
+  t.regex(err2.message, /not boolean but string/g, "01.02.02");
 });
 
 test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.msg or opts.optsVarName args are wrong-type`, t => {
@@ -46,8 +66,8 @@ test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.msg or opts.opts
       }
     );
   });
-  t.truthy(err1.message.includes("not string but number"));
-  t.truthy(err1.message.includes("opts.optsVarName"));
+  t.regex(err1.message, /not string but number/g, "01.03.01");
+  t.regex(err1.message, /opts\.optsVarName/g, "01.03.02");
 
   const err2 = t.throws(() => {
     checkTypes(
@@ -67,8 +87,8 @@ test(`01.03 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.msg or opts.opts
       }
     );
   });
-  t.truthy(err2.message.includes("opts.msg"));
-  t.truthy(err2.message.includes("which is not string but number"));
+  t.regex(err2.message, /opts\.msg/g, "01.03.03");
+  t.regex(err2.message, /which is not string but number/g, "01.03.04");
 });
 
 test(`01.04 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - if fourth argument is missing`, t => {
@@ -305,6 +325,110 @@ test(`01.07 - ${`\u001b[${31}m${`throws`}\u001b[${39}m`} - opts.ignorePaths`, t 
       }
     );
   }, 'msg: OPTS.ccc.bbb was customised to "d" which is not boolean but string');
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: ""
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: "aaa.bbb" // <----- string.
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: ""
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.bbb"] // <----- array.
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: ""
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: "aaa.*" // <----- with glob, string.
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        aaa: {
+          bbb: "a"
+        },
+        ccc: {
+          bbb: "d"
+        }
+      },
+      {
+        aaa: {
+          bbb: true
+        },
+        ccc: {
+          bbb: ""
+        }
+      },
+      {
+        msg: "msg",
+        optsVarName: "OPTS",
+        ignorePaths: ["aaa.*"] // <----- with glob, array.
+      }
+    );
+  });
 
   // paths ignored - given as string:
   t.throws(() => {
@@ -1179,9 +1303,9 @@ test(`02.10 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - enforceStrictKeyset a
       }
     );
   });
-  t.is(
+  t.regex(
     err1.message,
-    "check-types-mini: opts.rogueKey.rogueSubkey is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
+    /check-types-mini: opts\.rogueKey\.rogueSubkey is neither covered by reference object \(second input argument\), nor opts\.schema/g
   );
 });
 
@@ -1279,9 +1403,9 @@ test(`02.11 - ${`\u001b[${33}m${`arrays`}\u001b[${39}m`} - strict mode, customis
       }
     );
   });
-  t.is(
+  t.regex(
     err.message,
-    "check-types-mini: opts.ignoreThese.1 is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
+    /check-types-mini: opts\.ignoreThese\.1 is neither covered by reference object/g
   );
 });
 
@@ -1905,9 +2029,9 @@ test(`04.04 - ${`\u001b[${36}m${`opts.schema`}\u001b[${39}m`} only - located dee
       }
     );
   });
-  t.is(
+  t.regex(
     err3_2.message,
-    "check-types-mini: opts.option1.option2 is neither covered by reference object (second input argument), nor opts.schema! To stop this error, turn off opts.enforceStrictKeyset or provide some type reference (2nd argument or opts.schema)."
+    /check-types-mini: opts\.option1\.option2 is neither covered by reference object/gi
   );
 
   // true not allowed, - only false or null or string
@@ -2594,7 +2718,71 @@ test(`04.09 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #1`, t => {
   );
 });
 
-test(`04.10 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`, t => {
+test(`04.10 - ${`\u001b[${35}m${`ad-hoc`}\u001b[${39}m`} #2 - enforcing first-level key types but ignoring sub-level values`, t => {
+  // root level "placeholder" gets flagged up, deeper levels given in "ignorePaths"
+  // don't even matter.
+  const err1 = t.throws(() => {
+    checkTypes(
+      {
+        placeholder: {}
+      },
+      {
+        placeholder: false
+      },
+      {
+        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+        ignorePaths: ["placeholder.*"],
+        schema: {
+          placeholder: ["null", "number", "string", "boolean"] // <--- no object here!
+        }
+      }
+    );
+  });
+  t.regex(err1.message, /THROW_ID_10\*/g, "04.10.01");
+
+  // adding "object" in schema stops the throws:
+  t.notThrows(() => {
+    checkTypes(
+      {
+        placeholder: {}
+      },
+      {
+        placeholder: false
+      },
+      {
+        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+        ignorePaths: ["placeholder.*"],
+        schema: {
+          placeholder: ["null", "number", "string", "boolean", "object"] // <--- added object here!
+        }
+      }
+    );
+  });
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        placeholder: {
+          a: {
+            b: "c"
+          }
+        }
+      },
+      {
+        placeholder: false
+      },
+      {
+        msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+        ignorePaths: ["placeholder.*"],
+        schema: {
+          placeholder: ["null", "number", "string", "boolean", "object"]
+        }
+      }
+    );
+  });
+});
+
+test(`04.11 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies to all deeper levels`, t => {
   t.notThrows(() => {
     checkTypes(
       {

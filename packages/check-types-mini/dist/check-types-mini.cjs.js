@@ -13,6 +13,7 @@ var matcher = _interopDefault(require('matcher'));
 
 function checkTypesMini(obj, ref, originalOptions) {
   var shouldWeCheckTheOpts = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+  var hasKey = Object.prototype.hasOwnProperty;
   function existy(something) {
     return something != null;
   }
@@ -28,14 +29,6 @@ function checkTypesMini(obj, ref, originalOptions) {
         });
       });
     });
-  }
-  function goUpByOneLevel(path) {
-    if (path.includes(".")) {
-      var split = path.split(".");
-      split.pop();
-      return split.join(".");
-    }
-    return path;
   }
   var NAMESFORANYTYPE = ["any", "anything", "every", "everything", "all", "whatever", "whatevs"];
   var isArr = Array.isArray;
@@ -129,42 +122,57 @@ function checkTypesMini(obj, ref, originalOptions) {
       throw new TypeError("".concat(opts.msg, ": Both ").concat(opts.optsVarName, ".schema and reference objects are missing! We don't have anything to match the keys as you requested via opts.enforceStrictKeyset!"));
     }
   }
-  var blanketPathsArr = [];
+  var ignoredPathsArr = [];
   traverse(obj, function (key, val, innerObj) {
     var current = val !== undefined ? val : key;
-    if (isArr(blanketPathsArr) && blanketPathsArr.length && blanketPathsArr.some(function (path) {
+    var objKey = val !== undefined ? key : undefined;
+    if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
       return innerObj.path.startsWith(path);
     })) {
       return current;
     }
-    if (opts.enforceStrictKeyset && !(!isObj(current) && !isArr(current) && isArr(innerObj.parent)) && (!existy(opts.schema) || !isObj(opts.schema) || isObj(opts.schema) && (!Object.keys(opts.schema).length || !isArr(innerObj.parent) && !Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path) || isArr(innerObj.parent) && !objectPath.has(opts.schema, goUpByOneLevel(innerObj.path)))) && (!existy(ref) || !isObj(ref) || isObj(ref) && (!Object.keys(ref).length || !opts.acceptArrays && !objectPath.has(ref, innerObj.path) || opts.acceptArrays && (!isArr(innerObj.parent) && !objectPath.has(ref, innerObj.path) || isArr(innerObj.parent) && !objectPath.has(ref, goUpByOneLevel(innerObj.path)))))) {
-      throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " is neither covered by reference object (second input argument), nor ").concat(opts.optsVarName, ".schema! To stop this error, turn off ").concat(opts.optsVarName, ".enforceStrictKeyset or provide some type reference (2nd argument or ").concat(opts.optsVarName, ".schema)."));
-    } else if (isObj(opts.schema) && Object.keys(opts.schema).length && Object.prototype.hasOwnProperty.call(opts.schema, innerObj.path)
-    ) {
-        var currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path]).map(String).map(function (el) {
-          return el.toLowerCase();
-        });
-        objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
-        if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
-          if (current !== true && current !== false && !currentKeysSchema.includes(typ(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
-            if (isArr(current) && opts.acceptArrays) {
-              for (var i = 0, len = current.length; i < len; i++) {
-                if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
-                  throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(ordinal(i + 1), " element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typ(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
-                }
-              }
-            } else {
-              throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typ(current) !== "string" ? '"' : "", " (type: ").concat(typ(current).toLowerCase(), ") which is not among the allowed types in schema (which is equal to ").concat(JSON.stringify(currentKeysSchema, null, 0), ")"));
-            }
-          }
-        } else {
-          blanketPathsArr.push(innerObj.path);
-        }
-      } else if (existy(ref) && Object.keys(ref).length && objectPath.has(ref, innerObj.path) && typ(current) !== typ(objectPath.get(ref, innerObj.path)) && (!opts.ignoreKeys || !opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
-      return matcher.isMatch(key, oneOfKeysToIgnore);
-    })) && (!opts.ignorePaths || !opts.ignorePaths.some(function (oneOfPathsToIgnore) {
+    if (objKey && opts.ignoreKeys.some(function (oneOfKeysToIgnore) {
+      return matcher.isMatch(objKey, oneOfKeysToIgnore);
+    })) {
+      return current;
+    }
+    if (opts.ignorePaths.some(function (oneOfPathsToIgnore) {
       return matcher.isMatch(innerObj.path, oneOfPathsToIgnore);
-    }))) {
+    })) {
+      return current;
+    }
+    var isNotAnArrayChild = !(!isObj(current) && !isArr(current) && isArr(innerObj.parent));
+    var optsSchemaHasThisPathDefined = false;
+    if (isObj(opts.schema) && hasKey.call(opts.schema, objectPath.get(innerObj.path))) {
+      optsSchemaHasThisPathDefined = true;
+    }
+    var refHasThisPathDefined = false;
+    if (isObj(ref) && objectPath.has(ref, objectPath.get(innerObj.path))) {
+      refHasThisPathDefined = true;
+    }
+    if (opts.enforceStrictKeyset && isNotAnArrayChild && !optsSchemaHasThisPathDefined && !refHasThisPathDefined) {
+      throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " is neither covered by reference object (second input argument), nor ").concat(opts.optsVarName, ".schema! To stop this error, turn off ").concat(opts.optsVarName, ".enforceStrictKeyset or provide some type reference (2nd argument or ").concat(opts.optsVarName, ".schema).\n\nDebug info:\n\nobj = ").concat(JSON.stringify(obj, null, 4), "\n\nref = ").concat(JSON.stringify(ref, null, 4), "\n\ninnerObj = ").concat(JSON.stringify(innerObj, null, 4), "\n\nopts = ").concat(JSON.stringify(opts, null, 4), "\n\ncurrent = ").concat(JSON.stringify(current, null, 4), "\n\n"));
+    } else if (optsSchemaHasThisPathDefined) {
+      var currentKeysSchema = arrayiffyIfString(opts.schema[innerObj.path]).map(String).map(function (el) {
+        return el.toLowerCase();
+      });
+      objectPath.set(opts.schema, innerObj.path, currentKeysSchema);
+      if (!intersection(currentKeysSchema, NAMESFORANYTYPE).length) {
+        if (current !== true && current !== false && !currentKeysSchema.includes(typ(current).toLowerCase()) || (current === true || current === false) && !currentKeysSchema.includes(String(current)) && !currentKeysSchema.includes("boolean")) {
+          if (isArr(current) && opts.acceptArrays) {
+            for (var i = 0, len = current.length; i < len; i++) {
+              if (!currentKeysSchema.includes(typ(current[i]).toLowerCase())) {
+                throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, ".").concat(i, ", the ").concat(ordinal(i + 1), " element (equal to ").concat(JSON.stringify(current[i], null, 0), ") is of a type ").concat(typ(current[i]).toLowerCase(), ", but only the following are allowed by the ").concat(opts.optsVarName, ".schema: ").concat(currentKeysSchema.join(", ")));
+              }
+            }
+          } else {
+            throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ(current) !== "string" ? '"' : "").concat(JSON.stringify(current, null, 0)).concat(typ(current) !== "string" ? '"' : "", " (type: ").concat(typ(current).toLowerCase(), ") which is not among the allowed types in schema (which is equal to ").concat(JSON.stringify(currentKeysSchema, null, 0), ")"));
+          }
+        }
+      } else {
+        ignoredPathsArr.push(innerObj.path);
+      }
+    } else if (refHasThisPathDefined) {
       var compareTo = objectPath.get(ref, innerObj.path);
       if (opts.acceptArrays && isArr(current) && !opts.acceptArraysIgnore.includes(key)) {
         var allMatch = current.every(function (el) {
@@ -173,7 +181,7 @@ function checkTypesMini(obj, ref, originalOptions) {
         if (!allMatch) {
           throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to be array, but not all of its elements are ").concat(typ(ref[key]).toLowerCase(), "-type"));
         }
-      } else {
+      } else if (typ(current) !== typ(compareTo)) {
         throw new TypeError("".concat(opts.msg, ": ").concat(opts.optsVarName, ".").concat(innerObj.path, " was customised to ").concat(typ(current).toLowerCase() === "string" ? "" : '"').concat(JSON.stringify(current, null, 0)).concat(typ(current).toLowerCase() === "string" ? "" : '"', " which is not ").concat(typ(compareTo).toLowerCase(), " but ").concat(typ(current).toLowerCase()));
       }
     }

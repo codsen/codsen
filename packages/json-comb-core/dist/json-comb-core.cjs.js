@@ -137,6 +137,7 @@ function getKeyset(arrOfPromises, originalOpts) {
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
     msg: "json-comb-core/getKeyset(): [THROW_ID_10*]",
+    ignorePaths: ["placeholder.*"],
     schema: {
       placeholder: ["null", "number", "string", "boolean", "object"]
     }
