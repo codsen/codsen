@@ -27,7 +27,7 @@ function deleteKey(originalInput, originalOpts) {
   var opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
     msg: "object-delete-key/deleteKey(): [THROW_ID_00*]",
-    ignoreKeys: "val",
+    ignorePaths: "val.*",
     schema: {
       key: ["null", "string"],
       val: "whatever"

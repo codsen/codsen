@@ -19,7 +19,8 @@ function split(str, originalOpts) {
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
-    msg: "string-split-by-whitespace: [THROW_ID_02*]"
+    msg: "string-split-by-whitespace: [THROW_ID_02*]",
+    ignorePaths: ["ignoreRanges.*"]
   });
   if (
     opts.ignoreRanges.length > 0 &&

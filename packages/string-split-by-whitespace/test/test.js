@@ -1,5 +1,5 @@
-import strFindHeadsTails from "string-find-heads-tails";
 import test from "ava";
+import strFindHeadsTails from "string-find-heads-tails";
 import split from "../dist/string-split-by-whitespace.esm";
 
 // -----------------------------------------------------------------------------

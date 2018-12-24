@@ -216,7 +216,7 @@ var dependencies = {
 };
 var devDependencies = {
 	"@babel/core": "^7.2.2",
-	"@babel/polyfill": "^7.2.3",
+	"@babel/polyfill": "^7.2.5",
 	"@babel/preset-env": "^7.2.3",
 	"@babel/register": "^7.0.0",
 	ava: "^1.0.1",

@@ -1209,7 +1209,7 @@ test("01.35 - punctuation after tag - simplified, question mark", t => {
   );
   t.deepEqual(
     stripHtml("a<b>?</b> c", { returnRangesOnly: true }),
-    [[1, 4, ""], [5, 10, " "]],
+    [[1, 4], [5, 10, " "]],
     "01.35.06"
   );
   t.deepEqual(
@@ -1248,7 +1248,7 @@ test("01.36 - punctuation after tag - simplified, exclamation mark", t => {
   );
   t.deepEqual(
     stripHtml("a<b>!</b> c", { returnRangesOnly: true }),
-    [[1, 4, ""], [5, 10, " "]],
+    [[1, 4], [5, 10, " "]],
     "01.36.07"
   );
 
@@ -1281,7 +1281,7 @@ test("01.37 - punctuation after tag - simplified, ellipsis", t => {
   );
   t.deepEqual(
     stripHtml("a<b>...</b> c", { returnRangesOnly: true }),
-    [[1, 4, ""], [7, 12, " "]],
+    [[1, 4], [7, 12, " "]],
     "01.37.06"
   );
 });
