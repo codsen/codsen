@@ -5,7 +5,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
     "fresh": "rm -rf node_modules && lerna clean -y && npm run bootstrap",
-    "build": "lerna run test --bail --concurrency 1"
+    "build": "lerna run test --bail --concurrency 2"
   },
   "devDependencies": {
     "lerna": "^3.6.0"
