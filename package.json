@@ -5,9 +5,18 @@
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
     "fresh": "rm -rf node_modules && lerna clean -y && npm run bootstrap",
-    "build": "lerna run test --bail --concurrency 2"
+    "build": "lerna run test --bail --concurrency 2",
+    "cm": "git-cz",
+    "pub": "lerna publish"
   },
   "devDependencies": {
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
     "lerna": "^3.6.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
