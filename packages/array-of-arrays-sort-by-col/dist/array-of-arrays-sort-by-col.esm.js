@@ -4,7 +4,7 @@
  * Version: 2.3.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/array-of-arrays-sort-by-col/
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col
  */
 
 import clone from 'lodash.clonedeep';

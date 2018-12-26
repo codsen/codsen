@@ -4,7 +4,7 @@
  * Version: 1.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/array-of-arrays-into-ast/
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast
  */
 
 'use strict';

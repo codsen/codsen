@@ -4,7 +4,7 @@
  * Version: 0.5.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/html-crush/
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
  */
 
 import checkTypes from 'check-types-mini';
@@ -23,11 +23,8 @@ var engines = {
 	npm: ">=5",
 	yarn: ">=1"
 };
-var repository = {
-	type: "git",
-	url: "https://bitbucket.org/codsen/html-crush.git"
-};
-var homepage = "https://bitbucket.org/codsen/html-crush/";
+var repository = "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush";
+var homepage = "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush";
 var author = {
 	email: "roy@codsen.com",
 	name: "Roy Revelt",

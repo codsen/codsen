@@ -4,7 +4,7 @@
  * Version: 2.5.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/array-includes-with-glob/
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob
  */
 
 import matcher from 'matcher';
