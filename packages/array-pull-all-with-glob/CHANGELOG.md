@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 4.8.0 (2018-12-26)
+
+
+### Features
+
+* second input arg. can now be a string ([fd68131](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/fd68131))
+
+
+
+
+
 ## 4.7.0 (2018-10-12)
 
 - ✨ Updated all dependencies and restored the coverage tracking both in unit tests and via coveralls.io
@@ -58,4 +74,3 @@ Also, I set up [check-types-mini](https://bitbucket.org/codsen/check-types-mini)
 - 🔧 New unit tests to guarantee that.
 - 🔧 Tightened the API with insurance against missing args or wrong types in the input. Now if the main input is missing, it will throw. If first argument (remove from where) is present, but second (what to remove) is missing, first arguement is returned. It's called being nice with others (libraries).
 - ✨ Added changelog.md
-

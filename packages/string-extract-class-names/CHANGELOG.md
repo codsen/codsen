@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 5.2.0 (2018-12-26)
+
+
+### Features
+
+* complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
+
+
+
+
+
 ## 5.1.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -88,4 +104,3 @@ Once the space is encountered, there won't be any more additions to the array.
 There is no second argument any more, to choose between id's or classes. Since array can contain a mix of classes and id's, it's unpractical to impose any other restrictions upon user any more.
 
 This library will detect the first clump of class(es)/array(s), will put each into an array, discarding everything else around.
-

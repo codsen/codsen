@@ -1,6 +1,6 @@
 {
   "name": "ast-monkey",
-  "version": "7.6.1",
+  "version": "7.6.2",
   "description": "Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
@@ -171,13 +171,13 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.6.1",
-    "ast-monkey-traverse": "^1.4.1",
-    "check-types-mini": "^5.1.1",
+    "ast-compare": "^1.7.0",
+    "ast-monkey-traverse": "^1.4.2",
+    "check-types-mini": "^5.2.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "^4.5.0",
     "type-detect": "^4.0.8",
-    "util-array-object-or-both": "^2.3.0"
+    "util-array-object-or-both": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

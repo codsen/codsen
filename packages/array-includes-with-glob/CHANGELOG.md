@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.5.1 (2018-12-26)
+
+**Note:** Version bump only for package array-includes-with-glob
+
+
+
+
+
 ## 2.5.0 (2018-12-14)
 
  - 🔧 Restored AVA linting, updated all dependencies, added licence to the top of each built file
@@ -49,4 +62,3 @@ Bumping major just in case it breaks somebody's API. But I don't think it will.
 ## 1.0.0 (2017-04-22)
 
 - ✨ First public release
-

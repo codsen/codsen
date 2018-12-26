@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 4.3.1 (2018-12-26)
+
+**Note:** Version bump only for package object-flatten-all-arrays
+
+
+
+
+
 ## 4.3.0 (2018-10-24)
 
 - ✨ Updated all dependencies
@@ -34,4 +47,3 @@ GitHub sold us out. In the meantime, we:
 - ✨ Pinned JS Standard not to be the latest, to avoid sudden linting issues coming from nowhere and blocking builds when a new version of JS Standard is released.
 - ✨ Even more tests.
 - ✨ Unit test coverage is still a solid 100%.
-

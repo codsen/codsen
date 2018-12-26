@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.4.1 (2018-12-26)
+
+**Note:** Version bump only for package color-shorthand-hex-to-six-digit
+
+
+
+
+
 ## 2.4.0 (2018-10-15)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
@@ -74,4 +87,3 @@ Bumping major just in case it breaks somebody's API. It shouldn't though.
 ## 1.0.0 (2017-01-06)
 
 Initial release. 100% test coverage.
-

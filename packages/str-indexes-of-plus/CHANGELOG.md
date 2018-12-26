@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.3.1 (2018-12-26)
+
+**Note:** Version bump only for package str-indexes-of-plus
+
+
+
+
+
 ## 2.3.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -28,4 +41,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2017-03-23)
 
 - ✨ First public release
-

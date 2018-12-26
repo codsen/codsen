@@ -1,6 +1,6 @@
 {
   "name": "regex-empty-conditional-comments",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Regular expression for matching HTML empty conditional comments",
   "license": "MIT",
   "engines": {
@@ -151,7 +151,6 @@
       "travisVersionsOverride": []
     }
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.2.3",
     "ava": "^1.0.1",

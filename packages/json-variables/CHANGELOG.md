@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 7.5.2 (2018-12-26)
+
+**Note:** Version bump only for package json-variables
+
+
+
+
+
 ## 7.5.0 (2018-10-28)
 
 - ✨ Updated all dependencies
@@ -182,4 +195,3 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 ## 1.0.0 (2017-03-28)
 
 - ✨ First public release
-

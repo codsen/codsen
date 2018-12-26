@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 10.6.0 (2018-12-26)
+
+
+### Features
+
+* fourth argument in the callback ([306e3da](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/commits/306e3da))
+
+
+
+
+
 ## 10.5.0 (2018-10-24)
 
 - ✨ Updated all dependencies
@@ -207,4 +223,3 @@ By the way, I needed this myself, placeholder default values in merged JSON file
 - 🔧 Major API change. Input argument objects are not mutated any more. Function first clones what it later uses.
 - 🔧 Adding tests for input argument mutation (`3.x` group).
 - 🔧 All auxiliary functions are ported inside the main exported function. Looks cleaner.
-

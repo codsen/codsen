@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
@@ -158,7 +158,6 @@
     ],
     "sourceMap": false
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",

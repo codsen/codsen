@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 2.1.1 (2018-12-26)
+
+**Note:** Version bump only for package email-homey
+
+
+
+
+
 ## 2.1.0 (2018-06-21)
 
 GitHub sold us out. In the meantime, we:
@@ -86,4 +99,3 @@ Updated to the new version of the API package, CHLU, enabling new features:
 ## 1.0.0 (2017-05-17)
 
 - First public release
-

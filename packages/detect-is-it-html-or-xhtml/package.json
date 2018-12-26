@@ -1,6 +1,6 @@
 {
   "name": "detect-is-it-html-or-xhtml",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,6 @@
     ],
     "sourceMap": false
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",

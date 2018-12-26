@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 6.2.1 (2018-12-26)
+
+**Note:** Version bump only for package json-comb-core
+
+
+
+
+
 ## 6.2.0 (2018-06-11)
 
 GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
@@ -126,4 +139,3 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 
 - 🆕 First public release
 - Unit test coverage is solid 100%
-

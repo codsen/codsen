@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 7.6.2 (2018-12-26)
+
+**Note:** Version bump only for package ast-monkey
+
+
+
+
+
 ## 7.6.0 (2018-10-14)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io

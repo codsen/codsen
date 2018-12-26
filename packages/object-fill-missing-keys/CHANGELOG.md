@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 7.5.0 (2018-12-26)
+
+
+### Features
+
+* opts.doNotFillThesePathsIfTheyContainPlaceholders ([8c6080e](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys/commits/8c6080e))
+
+
+
+
+
 ## 7.4.0 (2018-10-24)
 
 - ✨ Updated all dependencies
@@ -96,4 +112,3 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 ### Improved
 
 - ✨ Put some test variables into correct scope. It does not change anything, but still.
-

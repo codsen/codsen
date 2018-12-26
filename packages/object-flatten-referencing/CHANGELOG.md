@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 4.6.1 (2018-12-26)
+
+**Note:** Version bump only for package object-flatten-referencing
+
+
+
+
+
 ## 4.6.0 (2018-10-24)
 
 - ✨ Updated all dependencies
@@ -143,4 +156,3 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 ## 1.0.0 (2017-04-03)
 
 - ✨ First public release
-

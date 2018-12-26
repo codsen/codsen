@@ -1,6 +1,6 @@
 {
   "name": "string-range-expander",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.1.1",
+    "check-types-mini": "^5.2.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {

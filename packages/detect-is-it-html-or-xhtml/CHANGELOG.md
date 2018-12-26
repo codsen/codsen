@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 3.3.1 (2018-12-26)
+
+**Note:** Version bump only for package detect-is-it-html-or-xhtml
+
+
+
+
+
 ## 3.3.0 (2018-10-17)
 
 - ✨ Updated all dependencies
@@ -31,4 +44,3 @@ GitHub sold us out. In the meantime, we:
 ### Changed
 
 - ✨ In order to prevent accidental input argument mutation when object is given, now we're throwing a type error when the input argument is present, but of a wrong type. That's enough to warrant a major API change under semver.
-

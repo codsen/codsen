@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-leading-whitespace",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Collapse the leading and trailing whitespace of a string",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,6 @@
     ],
     "sourceMap": false
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
