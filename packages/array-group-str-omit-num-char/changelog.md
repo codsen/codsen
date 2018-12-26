@@ -1,10 +1,8 @@
-## [1.1.0] (2018-12-14)
+## 1.1.0 (2018-12-14)
 
 - ✨ Restore ava linting
 - ✨ General setup refresh
 
-## 1.0.0 - 2018-10-11
+## 1.0.0 (2018-10-11)
 
 - ✨ Initial release
-
-[1.1.0]: https://bitbucket.org/codsen/array-group-str-omit-num-char/branches/compare/v1.1.0%0Dv1.0.2#diff

@@ -1,4 +1,4 @@
-## [5.1.0] (2018-10-15)
+## 5.1.0 (2018-10-15)
 
 - ✨ `opts.schema` now can be given in nested order as well, for example, given as:
 
@@ -22,7 +22,7 @@ instead of:
 }
 ```
 
-# [5.0.0] (2018-10-13)
+# 5.0.0 (2018-10-13)
 
 - 💥 BREAKING CHANGES - if you use schema and "blanket" values "any" or "whatever" for any paths, now that will apply to all children nodes of that path.
 
@@ -50,12 +50,12 @@ then, both paths `oodles` and `oodles.enabled` will not be checked. Previously, 
 
 Technically, this is a breaking change, warranting **a major semver release**.
 
-## [4.1.0] (2018-08-23)
+## 4.1.0 (2018-08-23)
 
 - ✨ Implemented [matcher](https://www.npmjs.com/package/matcher) on `opts.ignorePaths` and `opts.ignoreKeys`. Now we can use wildcards in both.
 - 🔧 Now keys that are covered by `opts.ignoreKeys` won't be flagged up as not covered by schema or a reference object. Previously, every key had to be covered, `opts.ignoreKeys` was only regarding the type comparison which was skipped. I know, that's illogical, it was a bug and it's now fixed. Sorry about that.
 
-# [4.0.0] (2018-07-03)
+# 4.0.0 (2018-07-03)
 
 I felt a need for this feature since the very beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
 
@@ -84,49 +84,49 @@ I felt a need for this feature since the very beginning but only now the API's o
 - ✨ `opts.ignorePaths` because now `opts.ignoreKeys` is not enough - what if key names are called the same in different nested opts object key's value child object key's values?
 - ✨ Implemented _throw pinning_. It's fancy term meaning all internal errors are named with an ID and all unit tests are not just checking, _does it throw_ but _does it throw the particular error_, because it can _throw_ but _throw at wrong place_ that would be a defect, yet unit test would pass. As a side effect, this doesn't lock the throw error messages in the unit tests. Since we pin against the ID, we can tweak the error messages' text as much as we want as long as ID is kept the same.
 
-## [3.4.0] (2018-06-10)
+## 3.4.0 (2018-06-10)
 
 GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [3.3.0] (2018-05-11)
+## 3.3.0 (2018-05-11)
 
 - ✨ Now unit tests point to ES Modules build. This means, code coverage will be correct from now on... No more missed Babel functions...
 
-## [3.2.0] (2018-05-02)
+## 3.2.0 (2018-05-02)
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
-## [3.1.0] (2018-01-29)
+## 3.1.0 (2018-01-29)
 
 - ✨ `true` and `false` as precise types in `opts.schema`
 - 💥 Removed `lodash.includes` (replaced with `Array.includes`)
 
-# [3.0.0] (2017-12-08)
+# 3.0.0 (2017-12-08)
 
 - 🔧 Rebased all the source to be in ES Modules.
 - ✨ Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)
 
 Bumping major just in case. API is the same, just when you consume from Rollup setups, `package.json` key entry `module` will be recognised and ES Modules build will be used natively. You'll get all the benefits of ES Modules, like tree-shaking.
 
-## [2.7.0] (2017-10-14)
+## 2.7.0 (2017-10-14)
 
 - 🔧 Moved to Babel's `babel-preset-env` preset, created `.babelrc` config file.
 - 🔧 Set up to run unit tests against the transpiled version
 
-## [2.6.0] (2017-09-19)
+## 2.6.0 (2017-09-19)
 
 - 🔧 Now serving the main export transpiled, straight from root, `index-es5.js`.
 
-## [2.5.0] (2017-09-12)
+## 2.5.0 (2017-09-12)
 
 - 🔧 Removed JS Standard and replaced it with raw ESLint running on `airbnb-base` preset, with two exceptions: 1. no semicolons; 2. allow plus-plus in `for` loops.
 
-## [2.4.0] (2017-08-07)
+## 2.4.0 (2017-08-07)
 
 ### Updated
 
@@ -141,13 +141,13 @@ checkTypes(opts, defaults <...>)
 - Removed redundant cloning of `Object.keys` in `Object.keys(ref).concat(` - the `concat` does not mutate the inputs, so I don't know what I was thinking when I coded that. Anyway, it's sorted now.
 - Added some line breaks on the IF conditions to make them more readable.
 
-## [2.3.0] (2017-07-20)
+## 2.3.0 (2017-07-20)
 
 - All deps and removed few redundant ones, switching to ES6 counterparts.
 - Name in documentation and licenses
 - Added .npmignore
 
-## [2.2.0] (2017-07-04)
+## 2.2.0 (2017-07-04)
 
 ### Added
 
@@ -156,82 +156,57 @@ checkTypes(opts, defaults <...>)
 
 Funny, I discovered this issue when I tried to set up `check-types-mini` on [easy-replace](https://bitbucket.org/codsen/easy-replace). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
 
-## [2.1.0] (2017-06-18)
+## 2.1.0 (2017-06-18)
 
 ### Added
 
 - ✨ Now, the errors which are caused by misconfiguration of the `check-types-mini` itself will reference it as a source of an error. Once this library is configured correctly, then the errors can be personalised as per `opts.msg`.
 
-# [2.0.0] (2017-06-12)
+# 2.0.0 (2017-06-12)
 
 ### Changed
 
 - ✨ BREAKING API CHANGES. Third argument `msg` moved to `opts.msg`. Fourth argument `optsVarName` moved to `opts.optsVarName`. That was the right thing to do. Sorry for any hassle updating.
 
-## [1.6.0] (2017-06-11)
+## 1.6.0 (2017-06-11)
 
 ### Added
 
 - ✨ `opts.schema` - let's you enforce any schema you want for any key. Case-insensitive, just put types. `object` means plain object, not `array`. `whatever`, and `any` are also valid values. Algorithm will check the `opts.schema` first, then if the keys does not exist there, will check its type in `defaults`.
 
-## [1.5.0] (2017-06-11)
+## 1.5.0 (2017-06-11)
 
 ### Changed
 
 - 🔧 Fixed a bug involving `null` values. I overused `existy()`, in this case, using it to check existence of a key in an Object. The right way is to use `.hasOwnProperty`. Silly me. {facepalm}
 - 🔧 Now `opts.enforceStrictKeyset` checks both ways, the keysets of both object and reference object have to match _strictly_. Previously I tried to cheat and check only one direction, assuming the object will be `object-assign`'ed from the reference. But this morning I was thinking, what it isn't? For me it's easy to close this error rabbit-hole, so let's do it.
 
-## [1.4.0] (2017-06-10)
+## 1.4.0 (2017-06-10)
 
 ### Added
 
 - ✨ `opts.enforceStrictKeyset` will now by default `throw` if there are any keys in the options object, that don't exist in the reference object.
 
-## [1.3.0] (2017-05-22)
+## 1.3.0 (2017-05-22)
 
 ### Added
 
 - ✨ `opts.acceptArrays` will accept arrays too, if they contain only the same type elements as the one that's being checked.
 - ✨ `opts.acceptArraysIgnore` - lets you ignore per-key level when `opts.acceptArrays` is on. 👍
 
-## [1.2.0] (2017-05-15)
+## 1.2.0 (2017-05-15)
 
 ### Added
 
 - `opts.ignoreKeys` won't throw now if input is a single string.
 
-## [1.1.0] (2017-05-15)
+## 1.1.0 (2017-05-15)
 
 ### Added
 
 - ✨ `opts.ignoreKeys`
 
-## 1.0.0 - 2017-05-15
-
-### New
+## 1.0.0 (2017-05-15)
 
 - First public release
 
-[1.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.1.0%0Dv1.0.1#diff
-[1.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.2.0%0Dv1.1.1#diff
-[1.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.3.0%0Dv1.2.2#diff
-[1.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.4.0%0Dv1.3.0#diff
-[1.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.5.0%0Dv1.4.1#diff
-[1.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v1.6.0%0Dv5.1.0#diff
-[2.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.0.0%0Dv1.5.0#diff
-[2.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.1.0%0Dv2.0.3#diff
-[2.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.2.0%0Dv2.1.1#diff
-[2.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.3.0%0Dv2.2.1#diff
-[2.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.4.0%0Dv2.3.0#diff
-[2.5.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.5.0%0Dv2.4.2#diff
-[2.6.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.6.0%0Dv2.5.0#diff
-[2.7.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v2.7.0%0Dv2.6.1#diff
-[3.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.0.0%0Dv2.7.0#diff
-[3.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.1.0%0Dv3.0.4#diff
-[3.2.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.2.0%0Dv3.1.2#diff
-[3.3.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.3.0%0Dv3.2.0#diff
-[3.4.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v3.4.0%0Dv3.3.1#diff
-[4.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.0.0%0Dv3.4.4#diff
-[4.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v4.1.0%0Dv4.0.0#diff
-[5.0.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v5.0.0%0Dv4.1.1#diff
-[5.1.0]: https://bitbucket.org/codsen/check-types-mini/branches/compare/v5.1.0%0Dv5.0.0#diff

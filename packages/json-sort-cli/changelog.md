@@ -1,14 +1,14 @@
-## [1.9.0] (2018-08-19)
+## 1.9.0 (2018-08-19)
 
 - 💥 Temporarily removing the `nyc` because it broke the ava builds after switching to Babel v.7
 - ✨ Updated all dependencies and refreshed the readme
 
-## [1.8.0] (2018-06-11)
+## 1.8.0 (2018-06-11)
 
 - ✨ `v5` ESLint is sensitive if being called on files that don't exist. Previously we were quite liberal about the locations of unit test files. Our ESLint configs were targeting multiple locations, attempting to find some unit tests. Now this approach will cause errors so we moved all unit test files to `/test/` folder.
 - ✨ Also, temporarily removing `ava` ESLint plugin because it broke on ESLin `v.5`.
 
-## [1.7.0] (2018-06-11)
+## 1.7.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -16,11 +16,11 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [1.6.0] (2018-05-29)
+## 1.6.0 (2018-05-29)
 
 - ✨ Excluded `.DS_Store` and other system files by default
 
-## [1.5.0] (2018-05-27)
+## 1.5.0 (2018-05-27)
 
 - ✨ Sorts dot files too, as long as they pass the JSON parser and don't contain evil extensions like `yml`, `yaml` or `toml`.
 - ✨ Restored `-s`/`--silent` mode. When it's on, only report of two lines is shown: successful and failed counts. When it's off (default), one row per sorted file output after each attempt to sort (successful or not), then the same report of two line in the end is shown.
@@ -31,7 +31,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ `-d`/`--dry` mode. It's too much hassle to maintain it, after all, the operation performed on files is not deleting anything. Dry mode is normally used for risky operations, to test first. In our case there's no risk. Files come out the same, just with sorted keys.
 
-## [1.4.0] (2018-05-23)
+## 1.4.0 (2018-05-23)
 
 ### Added
 
@@ -42,36 +42,23 @@ GitHub sold us out. In the meantime, we:
 - ✨ Removed `package-lock.json` and `.editorconfig`
 - ✨ Set up [Prettier](https://prettier.io/)
 
-## [1.3.0] (2018-01-30)
+## 1.3.0 (2018-01-30)
 
 ### Added
 
 - ✨ `-s` or `--silent` flag. When enabled, shows only one row's output. Handy when there are many files.
 
-## [1.2.0] (2017-12-14)
+## 1.2.0 (2017-12-14)
 
 ### Added
 
 - ✨ Now if input contains only folder's name, non-JSON's are filtered-out. Basically, now this CLI is dumb-proofed, you can feed any paths and globs, containing or not containing JSON's.
 
-## [1.1.0] (2017-12-11)
-
-### New
+## 1.1.0 (2017-12-11)
 
 - ✨ Now serving transpiled code, aiming at Node `v.4`
 
-## 1.0.0 - 2017-10-12
-
-### New
+## 1.0.0 (2017-10-12)
 
 - First public release
 
-[1.1.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.1.0%0Dv1.0.5#diff
-[1.2.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.2.0%0Dv1.1.0#diff
-[1.3.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.3.0%0Dv1.2.2#diff
-[1.4.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.4.0%0Dv1.3.0#diff
-[1.5.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.5.0%0Dv1.4.2#diff
-[1.6.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.6.0%0Dv1.5.2#diff
-[1.7.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.7.0%0Dv1.6.1#diff
-[1.8.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.8.0%0Dv1.7.0#diff
-[1.9.0]: https://bitbucket.org/codsen/json-sort-cli/branches/compare/v1.9.0%0Dv1.8.0#diff

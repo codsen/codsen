@@ -1,10 +1,10 @@
-## [3.3.0] (2018-10-17)
+## 3.3.0 (2018-10-17)
 
 - ✨ Updated all dependencies
 - ✨ Restored unit test coverage tracking: reporting in terminal and coveralls.io
 - ✨ Restored unit test linting
 
-## [3.2.0] (2018-06-11)
+## 3.2.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -12,14 +12,14 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [3.1.0] (2018-05-17)
+## 3.1.0 (2018-05-17)
 
 - ✨ Set up [Prettier](https://prettier.io) on custom ESLint rules
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-# [3.0.0] (2017-12-09)
+# 3.0.0 (2017-12-09)
 
 ### Added
 
@@ -28,19 +28,19 @@ GitHub sold us out. In the meantime, we:
 
 API didn't change, it actually became even more flexible. `main`, `module` and `browser` keys in `package.json` lead to different build flavours.
 
-## [2.12.0] (2017-09-15)
+## 2.12.0 (2017-09-15)
 
 ### Removed
 
 - Removed JS Standard and moved onto ESLint with tweaked AirBnB preset with semicolons off. Blimey, so many issues were reported by ESLint that JS Standard missed!
 
-## [2.11.0] (2017-09-09)
+## 2.11.0 (2017-09-09)
 
 ### Added
 
 - Prevented defaults object's mutation. Don't know if it affects the final result anyhow, (looking from unit tests, it does not).
 
-## [2.10.0] (2017-07-08)
+## 2.10.0 (2017-07-08)
 
 Fresh morning and fresh head yields new improvements.
 
@@ -48,7 +48,7 @@ Fresh morning and fresh head yields new improvements.
 
 - Improved the main search algorithm to better account for edge cases where there are missing inputs.
 
-## [2.9.0] (2017-07-07)
+## 2.9.0 (2017-07-07)
 
 ### Added
 
@@ -57,60 +57,44 @@ Fresh morning and fresh head yields new improvements.
 - Added `continue`'s and `break`'s, so loops should terminate earlier, at the first moment when algorithm detects first false match. This should, in theory, relieve us from redundant calculations when the outcome is already decided. In other words, this library _should_ run faster.
 - Bunch of new tests to maintain 100% code coverage.
 
-## [2.8.0] (2017-07-05)
+## 2.8.0 (2017-07-05)
 
 ### Added
 
 - ✨ Changelog. Ha!
 - Tapped `check-types-mini` to enforce the input types better.
 
-## [2.7.0] (2017-02-17)
+## 2.7.0 (2017-02-17)
 
 ### Changed
 
 - Various minor updates including BitHound config.
 
-## [2.6.0] (2017-02-17)
+## 2.6.0 (2017-02-17)
 
 ### Changed
 
 - Code refresh: updated some info and all deps.
 
-## [2.5.0] (2016-12-23)
+## 2.5.0 (2016-12-23)
 
 ### Added
 
 - JS Standard precommit hook and unit test coverage.
 
-## [2.4.0] (2016-11-16)
+## 2.4.0 (2016-11-16)
 
 ### Changed
 
 - Now tapping Lodash functions one-by-one.
 
-# [2.0.0] (2016-09-20)
+# 2.0.0 (2016-09-20)
 
 ### Changed
 
 - Complete rewrite.
 
-## 1.0.0 - 2016-08-25
-
-### New
+## 1.0.0 (2016-08-25)
 
 - 🌟 First public release
 
-[2.0.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.0.0%0Dv1.0.2#diff
-[2.4.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.4.0%0Dv2.3.0#diff
-[2.5.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.5.0%0Dv2.4.2#diff
-[2.6.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.6.0%0Dv2.5.1#diff
-[2.7.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.7.0%0Dv2.6.1#diff
-[2.8.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.8.0%0Dv2.7.6#diff
-[2.9.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.9.0%0Dv2.8.1#diff
-[2.10.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.10.0%0Dv2.9.2#diff
-[2.11.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.11.0%0Dv2.10.2#diff
-[2.12.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v2.12.0%0Dv2.11.0#diff
-[3.0.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.0.0%0Dv2.12.2#diff
-[3.1.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.1.0%0Dv3.0.3#diff
-[3.2.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.2.0%0Dv3.1.2#diff
-[3.3.0]: https://bitbucket.org/codsen/easy-replace/branches/compare/v3.3.0%0Dv3.2.1#diff

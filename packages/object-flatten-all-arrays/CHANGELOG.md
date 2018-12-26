@@ -1,43 +1,37 @@
-## [4.3.0] (2018-10-24)
+## 4.3.0 (2018-10-24)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [4.2.0] (2018-06-16)
+## 4.2.0 (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to Bitbucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [4.1.0] (2018-05-26)
+## 4.1.0 (2018-05-26)
 
 - ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-# [4.0.0] (2017-12-12)
+# 4.0.0 (2017-12-12)
 
 - ✨ Rebased in ES Modules
 - ✨ Set up Rollup. Now we generate three builds: CommonJS, UMD and ES Modules.
 - ✨ Major setup overhaul and deps refresh.
 
-## [3.1.0] (2017-05-12)
+## 3.1.0 (2017-05-12)
 
 - ✨ `opts.flattenArraysContainingStringsToBeEmpty` now lets you flatten object values which have arrays which have strings into empty arrays. This is important. Trust me. No, seriously.
 
-## 3.0.0 - 2017-03-17
+## 3.0.0 (2017-03-17)
 
 - ✨ Recoded all the core, improving the algorithm and making everything cleaner (hope so).
 - ✨ Pinned JS Standard not to be the latest, to avoid sudden linting issues coming from nowhere and blocking builds when a new version of JS Standard is released.
 - ✨ Even more tests.
 - ✨ Unit test coverage is still a solid 100%.
 
-[3.0.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v3.0.0%0Dv2.0.0#diff
-[3.1.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v3.1.0%0Dv3.0.1#diff
-[4.0.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v4.0.0%0Dv3.1.4#diff
-[4.1.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v4.1.0%0Dv4.0.6#diff
-[4.2.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v4.2.0%0Dv4.1.0#diff
-[4.3.0]: https://bitbucket.org/codsen/object-flatten-all-arrays/branches/compare/v4.3.0%0Dv4.2.0#diff

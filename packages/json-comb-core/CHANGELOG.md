@@ -1,4 +1,4 @@
-## [6.2.0] (2018-06-11)
+## 6.2.0 (2018-06-11)
 
 GitHub sold us out. God bless their souls and the new billionaire. In the meantime, we:
 
@@ -6,27 +6,27 @@ GitHub sold us out. God bless their souls and the new billionaire. In the meanti
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Remove `package-lock`
 
-## [6.1.0] (2018-05-23)
+## 6.1.0 (2018-05-23)
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
 
-# [6.0.0] (2018-03-13)
+# 6.0.0 (2018-03-13)
 
 - ✨ Added `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods
 
 Since it's on by default (which is sensible), that's technically a breaking change, which warrants a major semver bump.
 
-## [5.1.0] (2018-01-27)
+## 5.1.0 (2018-01-27)
 
 ### Added
 
 - ✨ `doNotFillThesePathsIfTheyContainPlaceholders` on both `enforceKeysetSync()` and `enforceKeyset`
 - ✨ `placeholder` on both `enforceKeysetSync()` and `enforceKeyset`
 
-# [5.0.0] (2017-12-28)
+# 5.0.0 (2017-12-28)
 
 ### Changed
 
@@ -46,25 +46,25 @@ In their place, **async-alternatives** were placed. For starters, we have async 
 
 Please update your API's appending "Sync" on the function names, or better, tap async-ones instead.
 
-## [4.2.0] (2017-12-12)
+## 4.2.0 (2017-12-12)
 
 ### Changed
 
 - ✨ Small rebasing, improvements to the setup and proper deps refresh.
 
-## [4.1.0] (2017-10-11)
+## 4.1.0 (2017-10-11)
 
 ### Added
 
 - ✨ Tapped [`sort-keys`](https://www.npmjs.com/package/sort-keys) on a `deep` setting, replacing the existing deep sort function.
 
-# [4.0.0] (2017-10-09)
+# 4.0.0 (2017-10-09)
 
 ### Changed
 
 - 🔧 method `sortIfObject()` renamed to `sortAllObjects()`. It now performs a _deep sort_ of any objects within anything. If a non-array and non-object is given, same thing is returned bypassing the operations, so it's safe to apply on any JS types. That's thanks to [ast-monkey](https://github.com/codsen/ast-monkey#traverse) which performs the deep traversal.
 
-# [3.0.0] (2017-10-06)
+# 3.0.0 (2017-10-06)
 
 API-wise, there are no changes, but since it's rewrite in ES modules and the arrangement of files is different, I'll bump _semver major_ just in case. Cheers!
 
@@ -73,25 +73,25 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`. As a bonus, the Babel setup does not ignore `node_modules` where all dependencies sit, what means no matter were they transpiled or not, this library will not cause problems in `create-react-app` and the likes.
 
-## [2.5.0] (2017-09-06)
+## 2.5.0 (2017-09-06)
 
 ### Added
 
 - ✨ `findUnused()` new options key: `opts.comments`. It let's you ignore and exclude the comment keys from reports.
 
-## [2.4.0] (2017-07-29)
+## 2.4.0 (2017-07-29)
 
 ### Added
 
 - `object-assign` replaced with ES6 `Object.assign`
 
-## [2.3.0] (2017-06-05)
+## 2.3.0 (2017-06-05)
 
 ### Updated
 
 - ☝️ Improved some error messages, now outputting both its type and value.
 
-## [2.2.0] (2017-06-02)
+## 2.2.0 (2017-06-02)
 
 ### Added
 
@@ -100,7 +100,7 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 
 > Last-one means a lot in practice. For example, mapping files are usually under unidirectional merges - they always overwrite everything lower in the "food chain" of data hierarchy. As a result, often PROD mapping data files are often _incomplete_, because we don't want or need to overwrite everything in DEV data. Which in turn means, that if you tried to run `findUnused()` on both your data JSON files (normalised) AND mapping JSON files (not normalised) before this version, you'd rarely get a result at all. Now it's fixed! 👨‍🔧✨
 
-## [2.1.0] (2017-06-02)
+## 2.1.0 (2017-06-02)
 
 ### Added
 
@@ -110,7 +110,7 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 
 - Unused dependency from `package.json`
 
-# [2.0.0] (2017-05-15)
+# 2.0.0 (2017-05-15)
 
 ### Added
 
@@ -120,24 +120,10 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 
 - ☝️ Tightened up the API, there were major changes within dependencies.
 
-## 1.0.0 - 2017-03-18
+## 1.0.0 (2017-03-18)
 
 ### Added
 
 - 🆕 First public release
 - Unit test coverage is solid 100%
 
-[2.0.0]: https://github.com/codsen/json-comb-core/compare/v1.0.1...v2.0.0
-[2.1.0]: https://github.com/codsen/json-comb-core/compare/v2.0.0...v2.1.0
-[2.2.0]: https://github.com/codsen/json-comb-core/compare/v2.1.0...v2.2.0
-[2.3.0]: https://github.com/codsen/json-comb-core/compare/v2.2.0...v2.3.0
-[2.4.0]: https://github.com/codsen/json-comb-core/compare/v2.3.0...v2.4.0
-[2.5.0]: https://github.com/codsen/json-comb-core/compare/v2.4.0...v2.5.0
-[3.0.0]: https://github.com/codsen/json-comb-core/compare/v2.5.0...v3.0.0
-[4.0.0]: https://github.com/codsen/json-comb-core/compare/v3.0.0...v4.0.0
-[4.1.0]: https://github.com/codsen/json-comb-core/compare/v4.0.0...v4.1.0
-[4.2.0]: https://github.com/codsen/json-comb-core/compare/v4.1.0...v4.2.0
-[5.0.0]: https://github.com/codsen/json-comb-core/compare/v4.2.0...v5.0.0
-[5.1.0]: https://github.com/codsen/json-comb-core/compare/v5.0.0...v5.1.0
-[6.0.0]: https://github.com/codsen/json-comb-core/compare/v5.1.3...v6.0.0
-[6.1.0]: https://github.com/codsen/json-comb-core/compare/v6.0.0...v6.1.0

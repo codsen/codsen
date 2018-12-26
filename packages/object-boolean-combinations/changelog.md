@@ -1,22 +1,22 @@
-## [2.4.0] (2018-10-24)
+## 2.4.0 (2018-10-24)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [2.3.0] (2018-07-25)
+## 2.3.0 (2018-07-25)
 
 - ✨ Allow override object key values to be of any type
 - ✨ Small improvements to the setup
 
-## [2.2.0] (2018-06-16)
+## 2.2.0 (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to Bitbucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [2.1.0] (2018-05-17)
+## 2.1.0 (2018-05-17)
 
 ### Changed
 
@@ -25,7 +25,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Now unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-## 2.0.0 - 2017-12-12
+## 2.0.0 (2017-12-12)
 
 ### Changed
 
@@ -35,7 +35,3 @@ GitHub sold us out. In the meantime, we:
 
 Bumping the major version just in case it breaks something. But it should not.
 
-[2.1.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.1.0%0Dv2.0.5#diff
-[2.2.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.2.0%0Dv2.1.1#diff
-[2.3.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.3.0%0Dv2.2.1#diff
-[2.4.0]: https://bitbucket.org/codsen/object-boolean-combinations/branches/compare/v2.4.0%0Dv2.3.0#diff

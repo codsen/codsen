@@ -1,14 +1,14 @@
-## [7.6.0] (2018-10-14)
+## 7.6.0 (2018-10-14)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
-## [7.5.0] (2018-06-10)
+## 7.5.0 (2018-06-10)
 
 - ✨ Moved to BitBucket. GitHub sold us out.
 - ✨ Removed Travis and BitHound (RIP), enabled Codacy (for code quality audit)
 - ✨ Removed `package-lock`
 
-## [7.4.0] (2018-05-02)
+## 7.4.0 (2018-05-02)
 
 ### Added
 
@@ -16,57 +16,57 @@
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
-## [7.3.0] (2018-01-03)
+## 7.3.0 (2018-01-03)
 
 ### Added
 
 - ✨ Updated to the latest release of [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
 
-## [7.2.0] (2017-12-23)
+## 7.2.0 (2017-12-23)
 
 ### Changed
 
 - ✨ Separated `traverse()` into a [standalone library](https://bitbucket.org/codsen/ast-monkey-traverse) and then tapped it
 
-## [7.1.0] (2017-10-29)
+## 7.1.0 (2017-10-29)
 
 ### Added
 
 - ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://bitbucket.org/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
 - ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
 
-# [7.0.0] (2017-10-23)
+# 7.0.0 (2017-10-23)
 
 ### Changed
 
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
-## [6.4.0] (2017-09-19)
+## 6.4.0 (2017-09-19)
 
 ### Removed
 
 - 🔧 JS Standard and replaced it with raw ESLint on `airbnb-base` config, with override to ban semicolons.
 
-## [6.3.0] (2017-07-29)
+## 6.3.0 (2017-07-29)
 
 ### Removed
 
 - 🔧 Removed `object-assign` and replaced it with ES6 native `Object.assign`.
 
-## [6.2.0] (2017-06-18)
+## 6.2.0 (2017-06-18)
 
 ### Removed
 
 - 🔧 Removed `monkey.existy()` from the exported methods list. It's not used any more as checks are done stricly against `undefined`. Now `null` can be a valid value, as per JSON data types spec.
 
-## [6.1.0] (2017-06-18)
+## 6.1.0 (2017-06-18)
 
 ### Added
 
 - ✨ Added checkTypes() onto drop(). Missed it this morning. Now all sorted.
 
-# [6.0.0] (2017-06-18)
+# 6.0.0 (2017-06-18)
 
 BREAKING CHANGES
 
@@ -105,7 +105,7 @@ This changes how you interact with `traversal()` function. Sorry about this brea
 ];
 ```
 
-## [5.5.0] (2017-06-17)
+## 5.5.0 (2017-06-17)
 
 Hardened the API, namely, all added more validations to options object key values.
 
@@ -113,31 +113,31 @@ Hardened the API, namely, all added more validations to options object key value
 
 - ✨ Recoded all options objects' validations, on each method. Preparing for next big secret feature. We'll need this.
 
-## [5.4.0] (2017-06-10)
+## 5.4.0 (2017-06-10)
 
 ### Added
 
 - ✨ [Holes in arrays](http://speakingjs.com/es5/ch18.html#array_holes) were skipped in `traverse()` as if they didn't exist. Now I push it further, `traverse()` will silently delete any holes in arrays it encounters. I think this feature a no-brainer since array holes have no use in JS.
 
-## [5.3.0] (2017-05-15)
+## 5.3.0 (2017-05-15)
 
 ### Added
 
 - ✨ Set `standard` to be consumer under normal semver range, not _the latest_ in order to prevent surprises in the future. Which happened as late as v10.
 
-## [5.2.0] (2017-05-15)
+## 5.2.0 (2017-05-15)
 
 ### Added
 
 - ✨ Tighetened the API in cases when `monkey()` inputs are missing or falsey.
 
-## [5.1.0] (2017-05-02)
+## 5.1.0 (2017-05-02)
 
 ### Added
 
 - ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://bitbucket.org/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
 
-# [5.0.0] (2017-04-30)
+# 5.0.0 (2017-04-30)
 
 After spending nearly whole Sunday testing [v4], I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
 
@@ -149,7 +149,7 @@ After spending nearly whole Sunday testing [v4], I discovered that passing `unde
 
 - 🔧 All the methods stay the same. I just rewired all internal messaging to use `NaN` instead of `undefined` as an instruction for `traverse()` to delete.
 
-# [4.0.0] (2017-04-30)
+# 4.0.0 (2017-04-30)
 
 The good thing about being not popular is you can make breaking changes and very few (if anybody) will care. I will make use of this privilege and do some cardinal yet necessary API changes.
 
@@ -162,13 +162,13 @@ The good thing about being not popular is you can make breaking changes and very
 
 - 🔧 All the methods stay the same. I just rewired all internal messaging to use `undefined` instead of `null` as an instruction for `traverse()` to delete.
 
-## [3.3.0] (2017-04-29)
+## 3.3.0 (2017-04-29)
 
 ### Added
 
 - `🐒.traverse()` gets _options_! ✨ Optional `opts.nullDeletes===false` now let's you to write `null` values during traversal. Previously on all cases (and currently during default `opts.nullDeletes===true`) `null` would be interpreted as an instruction to delete the current piece of AST. Now you can essentially turn off the deletion in favor of being able to write `null` as value. For the record, `null` is a valid JSON value type. 🦄
 
-## [3.2.0] (2017-04-04)
+## 3.2.0 (2017-04-04)
 
 ### Added
 
@@ -188,7 +188,7 @@ When you'll be traversing the array, `['something', 'anything']`, you'll have ac
 
 I needed this feature for [json-variables](https://bitbucket.org/codsen/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
 
-## [3.1.0] (2017-04-01) International Fools day No tricks here though
+## 3.1.0 (2017-04-01) International Fools day No tricks here though
 
 ### Improved
 
@@ -202,7 +202,7 @@ I needed this feature for [json-variables](https://bitbucket.org/codsen/json-var
 
 - Unit test coverage stays solid 100% lines.
 
-# [3.0.0] (2017-03-20)
+# 3.0.0 (2017-03-20)
 
 ### Changed
 
@@ -214,7 +214,7 @@ BREAKING API CHANGES.
 
 - ✨ Exposed `.traverse()` too; shielded its inner API with another function (one input arguement-less now)
 
-## [2.9.0] (2017-03-09) International recursive alrorithms day
+## 2.9.0 (2017-03-09) International recursive alrorithms day
 
 ### Added
 
@@ -225,84 +225,50 @@ BREAKING API CHANGES.
 
 - `.info()` now returns the input, not `undefined`. This doesn't warrant major version bump because method was for logging only and nothing changes in this aspect.
 
-## [2.8.0] (2017-03-02)
+## 2.8.0 (2017-03-02)
 
 ### Added
 
 - ✨ Now cloning all arguments in main `🐒()` and auxiliary `traverse()` functions' input object args to prevent any accidental mutation. **This is big and very important.**
 
-## [2.7.0] (2017-02-20)
+## 2.7.0 (2017-02-20)
 
 ### Tweaks
 
 - Replaced spread operator with lodash equivalent to avoid unnecessary Babel use 😌
 
-## [2.6.0] (2017-02-19) Actual day of NTFS invention
+## 2.6.0 (2017-02-19) Actual day of NTFS invention
 
 ### Added
 
 - ✨ Incoming input is cloned upon receiving and clone is used instead, so that original input is not mutated. This is very important. ✨
 
-## [2.5.0] (2017-02-18)
+## 2.5.0 (2017-02-18)
 
 ### Added
 
 - ✨ Rebased the requirements for `opts.key` or `opts.val` to exist, now `find()` and `del()` are combined.
 
-## [2.4.0] (2017-02-18)
+## 2.4.0 (2017-02-18)
 
 ### Added
 
 - ✨ Enforcing the {index: ?} to be provided for `drop()`. ✨
 
-## [2.3.0] (2017-02-18)
+## 2.3.0 (2017-02-18)
 
 ### Added
 
 - ✨ Added `index` key to each of `find()` result object. 👌
 
-## [2.2.0] (2017-02-16) International software testers commemoration day
+## 2.2.0 (2017-02-16) International software testers commemoration day
 
 ### Added
 
 - ✨ Added `del()` method which deletes pieces from AST's by key or by value or by both. It leaves empty stumps and does not clean after deletion.
 
-## 2.0.0 - 2017-02-16
+## 2.0.0 (2017-02-16)
 
 ### Changed
 
 - 🔧 Major API change. Initial release's `get()` didn't make sense. It was returning a "synthetic" object with a separate keys containing info about fetched piece of AST, not the piece itself. This meant, it was not possible to actually _get_ the whole intact piece! Now, I am simply returning the whole finding from `get()`. That's it. 😌
-
-[2.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.0.0%0Dv1.0.1#diff
-[2.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.2.0%0Dv2.1.0#diff
-[2.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.3.0%0Dv2.2.1#diff
-[2.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.4.0%0Dv2.3.0#diff
-[2.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.5.0%0Dv2.4.0#diff
-[2.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.6.0%0Dv2.5.0#diff
-[2.7.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.7.0%0Dv2.6.0#diff
-[2.8.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.8.0%0Dv7.6.0#diff
-[2.9.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v2.9.0%0Dv2.7.0#diff
-[3.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.0.0%0Dv2.9.0#diff
-[3.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.1.0%0Dv3.0.1#diff
-[3.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.2.0%0Dv3.1.3#diff
-[3.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v3.3.0%0Dv3.2.2#diff
-[4.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v4.0.0%0Dv3.3.0#diff
-[5.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.0.0%0Dv4.0.2#diff
-[5.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.1.0%0Dv5.0.0#diff
-[5.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.2.0%0Dv5.1.0#diff
-[5.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.3.0%0Dv5.2.1#diff
-[5.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.4.0%0Dv5.3.1#diff
-[5.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v5.5.0%0Dv5.4.1#diff
-[6.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.0.0%0Dv5.5.0#diff
-[6.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.1.0%0Dv6.0.0#diff
-[6.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.2.0%0Dv6.1.1#diff
-[6.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.3.0%0Dv6.2.1#diff
-[6.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v6.4.0%0Dv6.3.2#diff
-[7.0.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.0.0%0Dv6.4.4#diff
-[7.1.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.1.0%0Dv7.0.1#diff
-[7.2.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.2.0%0Dv7.1.6#diff
-[v4]: https://bitbucket.org/codsen/ast-monkey/compare/v3.3.0...v4.0.0
-[7.3.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.3.0%0Dv7.2.5#diff
-[7.4.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.4.0%0Dv7.3.4#diff
-[7.5.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.5.0%0Dv7.4.3#diff
-[7.6.0]: https://bitbucket.org/codsen/ast-monkey/branches/compare/v7.6.0%0Dv7.5.2#diff

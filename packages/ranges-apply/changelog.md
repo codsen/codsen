@@ -1,4 +1,4 @@
-## [2.8.0] (2018-11-29)
+## 2.8.0 (2018-11-29)
 
 - ✨ Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
 - ✨ Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
@@ -15,31 +15,31 @@ const error1 = t.throws(() => {
 t.regex(error1.message, /THROW_ID_01/);
 ```
 
-## [2.7.0] (2018-10-25)
+## 2.7.0 (2018-10-25)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [2.6.0] (2018-08-29)
+## 2.6.0 (2018-08-29)
 
 - ✨ Now second argument, ranges array, can be `null`. This means, output of [ranges-push](https://www.npmjs.com/package/ranges-push) classes method`.current()` can be fed directly into this library without even checking. If it's null, original string will be returned.
 
-## [2.5.0] (2018-08-16)
+## 2.5.0 (2018-08-16)
 
 - ✨ Now we merge all input ranges using [ranges-merge](https://www.npmjs.com/package/ranges-merge) because it's necessary for algorithm and we can't rely on user to always provide merged ranges only.
 
-## [2.4.0] (2018-08-11)
+## 2.4.0 (2018-08-11)
 
 - ✨ Updated error labels
 - ✨ Updated all dependencies
 - ✨ Removed AVA ES linting rules and `nyc` code coverage build steps because we migrated to Babel v.7 and `nyc` breaks
 
-## [2.3.0] (2018-06-18)
+## 2.3.0 (2018-06-18)
 
 - ✨ Renamed to `ranges-apply` and migrated to Bitbucket.
 
-## [2.2.0] (2018-05-11)
+## 2.2.0 (2018-05-11)
 
 ### Improved
 
@@ -48,20 +48,20 @@ t.regex(error1.message, /THROW_ID_01/);
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-## [2.1.0] (2018-02-13)
+## 2.1.0 (2018-02-13)
 
 ### Added
 
 - ✨ Now accepts a single range as well, not only array of ranges.
 
-# [2.0.0] (2017-11-02)
+# 2.0.0 (2017-11-02)
 
 ### Added
 
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
-## [1.4.0] (2017-09-19)
+## 1.4.0 (2017-09-19)
 
 ### Changed
 
@@ -71,7 +71,7 @@ t.regex(error1.message, /THROW_ID_01/);
 
 - Options, third input argument. It did nothing and I was expecting to add options, but now I don't want any. I removed the unused code related to options.
 
-## [1.3.0] (2017-08-30)
+## 1.3.0 (2017-08-30)
 
 ### Changed
 
@@ -79,34 +79,19 @@ t.regex(error1.message, /THROW_ID_01/);
 - 🔧 I restored all template strings as they were in `v1.1.0`.
 - 🔧 Tweaked the npm scripts, so ES5 version is generated as a pre-commit step.
 
-## [1.2.0] (2017-08-29)
+## 1.2.0 (2017-08-29)
 
 ### Changed
 
 - 🔧 Guys, strange stuff. I was generating a production build of [emailcomb](https://emailcomb.com) and it refused to minify this library because of the first backtick in the ES6 template strings. So, I replaced them with ES5 code. Let's see how it will go. Geez!
 
-## [1.1.0] (2017-08-16)
+## 1.1.0 (2017-08-16)
 
 ### Fixed
 
 - 🔧 Now allowing zeros as values in ranges too. Sorry about that, the integer-checking library was not accepting zeros. Fixed now.
 
-## 1.0.0 - 2017-07-25
-
-### New
+## 1.0.0 (2017-07-25)
 
 - ✨ First public release
 
-[2.8.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.8.0%0Dv2.7.0#diff
-[2.7.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.7.0%0Dv2.6.0#diff
-[2.6.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.6.0%0Dv2.5.1#diff
-[2.5.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.5.0%0Dv2.4.1#diff
-[2.4.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.4.0%0Dv2.3.2#diff
-[2.3.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.3.0%0Dv2.2.2#diff
-[2.2.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.2.0%0Dv2.1.0#diff
-[2.1.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.1.0%0Dv2.0.14#diff
-[2.0.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v2.0.0%0Dv1.4.0#diff
-[1.4.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.4.0%0Dv1.3.1#diff
-[1.3.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.3.0%0Dv1.2.0#diff
-[1.2.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.2.0%0Dv1.1.0#diff
-[1.1.0]: https://bitbucket.org/codsen/ranges-apply/branches/compare/v1.1.0%0Dv1.0.5#diff

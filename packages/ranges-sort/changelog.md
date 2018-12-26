@@ -1,14 +1,14 @@
-## [3.5.0] (2018-11-29)
+## 3.5.0 (2018-11-29)
 
 - ✨ Added `opts.progressFn` - if you pass a function, it will report the progress, calling that function with a number between `0` and `100`. It's not precise and meant to be used as an approximate progress indicator.
 
-## [3.4.0] (2018-10-25)
+## 3.4.0 (2018-10-25)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [3.3.0] (2018-06-11)
+## 3.3.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -16,20 +16,20 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [3.2.0] (2018-05-26)
+## 3.2.0 (2018-05-26)
 
 - ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-## [3.1.0] (2018-01-10)
+## 3.1.0 (2018-01-10)
 
 ### Added
 
 - ✨ Updated all dependencies and setup in general
 
-# [3.0.0] (2017-12-03)
+# 3.0.0 (2017-12-03)
 
 ### Added
 
@@ -38,30 +38,22 @@ GitHub sold us out. In the meantime, we:
 
 Bumping major just in case this breaks API endpoints.
 
-## [2.1.0] (2017-09-13)
+## 2.1.0 (2017-09-13)
 
 ### Added
 
 - ✨ More description in readme.
 - ✨ More unit tests, including tests for examples used in readme.
 
-# [2.0.0] (2017-09-12)
+# 2.0.0 (2017-09-12)
 
 ### Added
 
 - ✨ `opts.strictlyTwoElementsInRangeArrays` (default is `false`, differently from v1 which is opposite).
 
-## 1.0.0 - 2017-09-11
+## 1.0.0 (2017-09-11)
 
 ### Added
 
 - ✨ Initial release
 
-[2.0.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v2.0.0%0Dv1.0.2#diff
-[2.1.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v2.1.0%0Dv2.0.0#diff
-[3.0.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.0.0%0Dv2.1.0#diff
-[3.1.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.1.0%0Dv3.0.2#diff
-[3.2.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.2.0%0Dv3.1.2#diff
-[3.3.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.3.0%0Dv3.2.0#diff
-[3.4.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.4.0%0Dv3.3.2#diff
-[3.5.0]: https://bitbucket.org/codsen/ranges-sort/branches/compare/v3.5.0%0Dv3.4.0#diff

@@ -1,40 +1,40 @@
-## [7.5.0] (2018-10-28)
+## 7.5.0 (2018-10-28)
 
 - ✨ Updated all dependencies
 - ✨ Restored unit test coverage tracking: reporting in terminal and coveralls.io
 - ✨ Restored unit test linting
 
-## [7.4.0] (2018-06-20)
+## 7.4.0 (2018-06-20)
 
 - ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
 
-## [7.3.0] (2018-06-10)
+## 7.3.0 (2018-06-10)
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Remove `package-lock`
 
-## [7.2.0] (2018-03-28)
+## 7.2.0 (2018-03-28)
 
 ### Added
 
 - ✨ Fixed one edge case where variables were resolving to non-strings and error was thrown.
 - ✨ Set up prettier and removed `.editorconfig`.
 
-## [7.1.2] (2018-03-06)
+## 7.1.2 (2018-03-06)
 
 ### Added
 
 - 🔧 Updated all dependencies again. I was/am tinkering with [string-match-left-right](https://github.com/codsen/string-match-left-right) and its previous version could have caused `throw`s on certain cases. Sorry about that. Big features are coming soon for compensation 😋.
 
-## [7.1.0] (2018-02-16)
+## 7.1.0 (2018-02-16)
 
 ### Added
 
 - ✨ Updated all dependencies.
 - ✨ Fixed some edge-cases where variables could have been wrapped where they shouldn't have been wrapped and the opposite.
 
-# [7.0.0] (2018-02-14)
+# 7.0.0 (2018-02-14)
 
 Full rewrite. Same and more unit tests.
 
@@ -45,7 +45,7 @@ Full rewrite. Same and more unit tests.
 - ✨ Way leaner and efficient algorithm and dependencies' choice.
 - ✨ Added more unit tests too.
 
-# [6.0.0] (2018-01-02)
+# 6.0.0 (2018-01-02)
 
 **Small but nonetheless breaking changes.**
 
@@ -61,7 +61,7 @@ Bumping _semver major_ just in case (could have bumped minor) but let's better b
 - ✨ Tapped [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) directly, without the need for the whole [ast-monkey](https://www.npmjs.com/package/ast-monkey).
 - ✨ Many other improvements on the setup
 
-# [5.0.0] (2017-12-15)
+# 5.0.0 (2017-12-15)
 
 ### Changed
 
@@ -69,32 +69,32 @@ Bumping _semver major_ just in case (could have bumped minor) but let's better b
 - ✨ Set up Rollup to generate three builds: CommonJS, UMD and ES Modules
 - ✨ Dropped JS Standard and tapped raw ESLint on `airbnb-base` preset, with an override to ban semicolons
 
-## [4.6.0] (2017-07-29)
+## 4.6.0 (2017-07-29)
 
 ### Removed
 
 - Replaced `object-assign` with ES6 `Object.assign`
 
-## [4.5.0] (2017-05-23)
+## 4.5.0 (2017-05-23)
 
 ### Added
 
 - ✨ Separated the `arrayiffy-if-string` into a standalone library and tapped it.
 
-## [4.4.0] (2017-05-20)
+## 4.4.0 (2017-05-20)
 
 ### Updated
 
 - Deps
 - Codsen name
 
-## [4.3.0] (2017-05-15)
+## 4.3.0 (2017-05-15)
 
 ### Added
 
 - ✨ Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini) and removed internal equivalents.
 
-## [4.2.0] (2017-05-05)
+## 4.2.0 (2017-05-05)
 
 ### Added
 
@@ -125,14 +125,14 @@ jv({
 
 Blimey, we've got 99 unit tests! 🍾 We'll need to celebrate the 100th! 🍻✨
 
-## [4.1.0] (2017-05-03)
+## 4.1.0 (2017-05-03)
 
 ### Added
 
 - ✨ Variables are not correctly resolved from linking to the same (deeper) level. If not found, search continues in that level's data store key (default key name for data stores is `<same-key-name>_data`). If not found there, search jumps to root level, and looks for key there. If not found, search continues for data store at the root. If failed, error is thrown.
 - ✨ Some rebasing done to clean things up 🚿.
 
-# [4.0.0] (2017-04-30)
+# 4.0.0 (2017-04-30)
 
 Breaking changes in the API, or rather output. When Boolean values are encountered and written as values (and no other string characters are present on the original placeholder), we output empty string, not `false` or `true`. Nobody needs Booleans converted to String. I need this for my email templating projects. 🦄
 
@@ -145,7 +145,7 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - ✨ `opts.resolveToBoolIfAnyValuesContainBool` - if `true` (default), if any variable's value is Boolean, upon resolving it will set the whole value to itself. For example, `aaaa %%_var_%% bbbbb` and `var=true` would resolve to `true`. If setting is `false`, it will resolve to empty string, in this example's case, `aaaa bbbbb`. I don't see why anybody would set it to other value than `default`, but hey, the more freedom the better.
 - ✨ `opts.resolveToFalseIfAnyValuesContainBool` - if Boolean variable is enountered, the whole thing always resolves to `false`. Even if the first encountered variable's value was `true`. This is needed for email templating, so that when Booleans are encountered, we bail setting the whole thing to `false`.
 
-# [3.0.0] (2017-04-27)
+# 3.0.0 (2017-04-27)
 
 ### Added
 
@@ -156,13 +156,13 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - `opts.wrapHeads` is now `opts.wrapHeadsWith`
 - `opts.wrapTails` is now `opts.wrapTailsWith`
 
-# [2.0.0] (2017-04-25)
+# 2.0.0 (2017-04-25)
 
 ### Changed
 
 - Breaking changes & major semver version bump: `opts.dontWrapVarsStartingWith` and `opts.dontWrapVarsEndingWith` merged into one and allow wildcards now. It's way more powerful since you can _glob_ not only the starting/ending pieces of string but _anything within it_. You can put a wildcard in the middle now or even multiple wildcards!
 
-## [1.2.0] (2017-04-20)
+## 1.2.0 (2017-04-20)
 
 ### Added
 
@@ -172,36 +172,14 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 
 - Did some code rebasing.
 
-## [1.1.0] (2017-04-06)
+## 1.1.0 (2017-04-06)
 
 ### Improved
 
 - Fixed one edge case where the source was array, it was querying variable from `_data` key store, which was in turn querying variable from its key data store.
 - More tests to keep coverage at 100%
 
-## 1.0.0 - 2017-03-28
-
-### New
+## 1.0.0 (2017-03-28)
 
 - ✨ First public release
 
-[1.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v1.1.0%0Dv1.0.1#diff
-[1.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v1.2.0%0Dv1.1.0#diff
-[2.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v2.0.0%0Dv1.2.0#diff
-[3.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v3.0.0%0Dv2.0.0#diff
-[4.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.0.0%0Dv3.0.1#diff
-[4.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.1.0%0Dv4.0.1#diff
-[4.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.2.0%0Dv4.1.0#diff
-[4.3.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.3.0%0Dv4.2.3#diff
-[4.4.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.4.0%0Dv4.3.0#diff
-[4.5.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.5.0%0Dv4.4.0#diff
-[4.6.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v4.6.0%0Dv4.5.6#diff
-[5.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v5.0.0%0Dv4.6.1#diff
-[6.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v6.0.0%0Dv5.0.1#diff
-[7.0.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.0.0%0Dv6.0.6#diff
-[7.1.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.1.0%0Dv7.0.0#diff
-[7.1.2]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.1.2%0Dv7.1.1#diff
-[7.2.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.2.0%0Dv7.1.3#diff
-[7.3.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.3.0%0Dv7.2.0#diff
-[7.4.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.4.0%0Dv7.3.0#diff
-[7.5.0]: https://bitbucket.org/codsen/json-variables/branches/compare/v7.5.0%0Dv7.4.1#diff

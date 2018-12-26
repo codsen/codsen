@@ -1,11 +1,11 @@
-## [3.5.0] (2018-12-04)
+## 3.5.0 (2018-12-04)
 
 - ✨ NEW! Now you can match against `EOL` - end of string (beginning or ending). Since you can't pass letters `"EOL"`, you must pass them as an ES6 arrow function, `() => "EOL"`. In all other aspects, the use is the same.
 - 🔧 Previously, `opts.cb` second argument, which means the rest of the string on particular side, depending on the method called, left or right, was giving empty string when there was nothing on that side. This, however looked inconsistent when all other callback values were `undefined`. Now, second `opts.cb` argument comes as `undefined` instead of `empty` string when there's nothing to return.
 - ✨ Implemented and released (but not documented) `opts.strictApi` was merged with `opts.relaxedApi`
 - ✨ Restored unit test coverage and ava linting
 
-## [3.4.0] (2018-06-11)
+## 3.4.0 (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -13,11 +13,11 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [3.3.0] (2018-05-16)
+## 3.3.0 (2018-05-16)
 
 - ✨ Added `opts.relaxedApi`
 
-## [3.2.0] (2018-05-15)
+## 3.2.0 (2018-05-15)
 
 Setup refresh.
 
@@ -30,19 +30,19 @@ Setup refresh.
 - ✨ Removed `DEBUG` statements from the code
 - ✨ Added `esm` config to package.json which somehow enables CJS compat in `ava`.
 
-## [3.1.1] (2018-03-06)
+## 3.1.1 (2018-03-06)
 
 ### Fixed
 
 - 🔧 Looks like the new callback feature was causing throws on certain cases. Not any more. Sorry about that. Very big release in coming soon with great new features. 👍
 
-## [3.1.0] (2018-03-01)
+## 3.1.0 (2018-03-01)
 
 ### Added
 
 - ✨ Third argument, `whatToMatch`, can now be empty string. In such case, you have to provide callback and result will be calculated purely using the callback. It's handy when you want to perform complex matching, beyond "character is equal to" level. Personally, I reached this level and it's necessary for the feature I'm producing on the other package. It must be handy for everybody else too.
 
-# [3.0.0] (2018-01-15)
+# 3.0.0 (2018-01-15)
 
 ### Changed
 
@@ -60,7 +60,7 @@ Index is handy in cases when you set trimming and it's not clear where exactly i
 
 - 🔧 I think `matchLeftIncl` previously was returning `theRemainderOfTheString` **together with the matched substring** (on the right of it). That's against the spec because the spec says "everything outside of the matched substring is given". But not including it. Sorry for this error. I'll bump the _major_ just in case the correct behaviour breaks somebody's code.
 
-# [2.0.0] (2017-12-21)
+# 2.0.0 (2017-12-21)
 
 ### Changed
 
@@ -72,7 +72,7 @@ If you relied on the result being explicitly Boolean, `true` or `false`, prepare
 
 - ✨ `opts.cbLeft` and `opts.cbRight` were joined into one, `opts.cb`. Same behaviour, except there's less to think about. Just pass the callback function - it will be called with the substring which is on the left or right, depending if you called left-side (`matchLeftIncl`/`matchLeft`) or right-side (`matchRightIncl`/`matchRight`) method.
 
-## [1.4.0] (2017-12-10)
+## 1.4.0 (2017-12-10)
 
 ### Added
 
@@ -81,19 +81,19 @@ If you relied on the result being explicitly Boolean, `true` or `false`, prepare
 
 I needed this when I was coding [email-remove-unused-css](https://github.com/codsen/email-remove-unused-css) and I was traversing the string. I wanted to check, do any of given _heads_ are equal to what's on the right of the current character being traversed. For example, if there are Nunjucks variables in HTML, they would start with `{{` and end with `}}`. I wanted `email-remove-unused-css` to ignore everything between such `heads` and `tails` (which can be customised to anything, to support any templating/programming languages).
 
-## [1.3.0] (2017-11-23)
+## 1.3.0 (2017-11-23)
 
 ### Added
 
 - ✨ `opts.trimCharsBeforeMatching`
 
-## [1.2.0] (2017-11-22)
+## 1.2.0 (2017-11-22)
 
 ### Added
 
 - ✨ `opts.trimBeforeMatching`
 
-## [1.1.0] (2017-10-28)
+## 1.1.0 (2017-10-28)
 
 ### Added
 
@@ -106,21 +106,7 @@ Here comes in the callback functions.
 
 They have to be callbacks because I can't predict what checks you will want to check on the outer-left and outer-right characters. Just pass your function and this library will feed them (the outer-left and outer-right characters) as arguments. You can then find out yourself what to do about it.
 
-## 1.0.0 - 2017-10-28
-
-### New
+## 1.0.0 (2017-10-28)
 
 - ✨ First public release
 
-[1.1.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.1.0%0Dv1.0.4#diff
-[1.2.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.2.0%0Dv1.1.5#diff
-[1.3.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.3.0%0Dv1.2.0#diff
-[1.4.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v1.4.0%0Dv1.3.6#diff
-[2.0.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v2.0.0%0Dv1.4.4#diff
-[3.0.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.0.0%0Dv2.0.6#diff
-[3.1.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.1.0%0Dv3.0.3#diff
-[3.1.1]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.1.1%0Dv3.1.0#diff
-[3.2.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.2.0%0Dv3.1.1#diff
-[3.3.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.3.0%0Dv3.2.0#diff
-[3.4.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.4.0%0Dv3.3.1#diff
-[3.5.0]: https://bitbucket.org/codsen/string-match-left-right/branches/compare/v3.5.0%0Dv3.4.0#diff
