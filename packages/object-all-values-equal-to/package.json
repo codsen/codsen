@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/object-all-values-equal-to.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/object-all-values-equal-to/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

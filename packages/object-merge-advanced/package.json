@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/object-merge-advanced.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/object-merge-advanced/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

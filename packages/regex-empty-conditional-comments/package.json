@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/regex-empty-conditional-comments.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/regex-empty-conditional-comments/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

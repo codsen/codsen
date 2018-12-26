@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/util-array-object-or-both.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/util-array-object-or-both/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/bitbucket-slug.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/bitbucket-slug#readme",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

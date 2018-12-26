@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/string-match-left-right.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/string-match-left-right/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

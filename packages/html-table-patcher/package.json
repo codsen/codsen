@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/html-table-patcher.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/html-table-patcher#readme",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

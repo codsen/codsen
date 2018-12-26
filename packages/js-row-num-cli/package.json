@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/js-row-num-cli.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/js-row-num-cli/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

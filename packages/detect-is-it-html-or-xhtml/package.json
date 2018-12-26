@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/detect-is-it-html-or-xhtml.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/detect-is-it-html-or-xhtml/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

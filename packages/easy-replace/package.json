@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/easy-replace.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/easy-replace/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

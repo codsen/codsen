@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/str-indexes-of-plus.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/str-indexes-of-plus/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

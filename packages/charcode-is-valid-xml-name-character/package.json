@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/charcode-is-valid-xml-name-character.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/charcode-is-valid-xml-name-character/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",

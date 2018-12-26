@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/object-boolean-combinations.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/object-boolean-combinations/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations",
   "author": "Roy Revelt <roy@codsen.com> (http://codsen.com/)",
   "main": "dist/object-boolean-combinations.cjs.js",
   "module": "dist/object-boolean-combinations.esm.js",

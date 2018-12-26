@@ -8,11 +8,8 @@
     "npm": ">=5",
     "yarn": ">=1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/codsen/string-trim-spaces-only.git"
-  },
-  "homepage": "https://bitbucket.org/codsen/string-trim-spaces-only/",
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
