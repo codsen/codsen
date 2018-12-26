@@ -1,22 +1,15 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [10.5.0] - 2018-10-24
+## [10.5.0] (2018-10-24)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [10.4.0] - 2018-07-03
+## [10.4.0] (2018-07-03)
 
 - ✨ Set up Rollup to remove comments from all builds
 - ✨ Removed AVA ESLint rules until the plugin is [fixed](https://github.com/avajs/eslint-plugin-ava/issues/195)
 
-## [10.3.0] - 2018-06-11
+## [10.3.0] (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -24,7 +17,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [10.2.0] - 2018-05-16
+## [10.2.0] (2018-05-16)
 
 - ✨ Fourth argument in the callback. It will allow to make decisions evaluating key names, paths and their type (is it a key of an array or an object?).
 
@@ -35,13 +28,13 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-## [10.1.0] - 2018-03-28
+## [10.1.0] (2018-03-28)
 
 ### Changed
 
 - ✨ Dropped `airbnb-base` as ESLint preset and set up Prettier. Now contributors don't have to worry about the code style any more.
 
-## [10.0.0] - 2018-03-13
+# [10.0.0] (2018-03-13)
 
 ### Changed
 
@@ -49,7 +42,7 @@ GitHub sold us out. In the meantime, we:
 
 This feature is needed to maintain the data integrity. When merging in multiple rounds, if `null` under `opts.useNullAsExplicitFalse` yielded `false`, after the first round, the `null` would be lost. Now, `null` is kept and all subsequent merges will yield `null`. Practically, this means that it's enough to place `null` anywhere on any any level of template data and the result is guaranteed to be null. It's super-easy way to remove default values _arrays_ or _objects_ — the merged result `null` will not cause defaults to show up now.
 
-## [9.1.0] - 2018-02-15
+## [9.1.0] (2018-02-15)
 
 ### Added
 
@@ -57,7 +50,7 @@ This feature is needed to maintain the data integrity. When merging in multiple 
 - ✨ Rebased a lot of code, merged `util.js` into the main file
 - ✨ Code coverage is now 100% line & function-wise
 
-## [9.0.0] - 2018-02-08
+# [9.0.0] (2018-02-08)
 
 ### Changed
 
@@ -65,7 +58,7 @@ Previously, `opts.hardMergeKeys`, `opts.ignoreKeys` as well as `opts.hardMergeEv
 
 Also, single asterisk wildcard `*` among `opts.ignoreKeys` sets `opts.ignoreEverything` to `true`. Same with `*` among `opts.hardMergeKeys`.
 
-## [8.4.0] - 2018-02-07
+## [8.4.0] (2018-02-07)
 
 ### Added
 
@@ -74,25 +67,25 @@ Thanks to [@jabiinfante](https://github.com/jabiinfante) PR:
 - ✨ `opts.hardArrayConcat`
 - ✨ `opts.hardArrayConcatKeys`
 
-## [8.3.0] - 2018-01-05
+## [8.3.0] (2018-01-05)
 
 ### Added
 
 - ✨ `opts.dedupeStringsInArrayValues` now returns sorted arrays
 
-## [8.2.0] - 2017-12-11
+## [8.2.0] (2017-12-11)
 
 ### Added
 
 - ✨ `opts.useNullAsExplicitFalse`
 
-## [8.1.0] - 2017-11-12
+## [8.1.0] (2017-11-12)
 
 ### Added
 
 - ✨ `opts.mergeBoolsUsingOrNotAnd`
 
-## [8.0.0] - 2017-11-09
+# [8.0.0] (2017-11-09)
 
 ### Added
 
@@ -102,7 +95,7 @@ Thanks to [@jabiinfante](https://github.com/jabiinfante) PR:
 
 Bumping major just in case.
 
-## [7.1.0] - 2017-09-21
+## [7.1.0] (2017-09-21)
 
 ### Added
 
@@ -111,7 +104,7 @@ Bumping major just in case.
 - ✨ Now serving transpiled code. Sorry everybody impacted by this, I got onto Sindre's bandwagon but I guess it's too early. I'll transpile all my libs.
 - ✨ [Tweaked](https://github.com/codsen/bitsausage) bithound config.
 
-## [7.0.0] - 2017-08-21
+# [7.0.0] (2017-08-21)
 
 Bumping the _major_ just in case because strictly speaking, while things behave more _correct_ now, they behave slightly different. This involves more precise hard merging and ignoring keys, when values are container-like (arrays or plain objects). For the rest, the merging algorithm's behaviour is the same. Read below.
 
@@ -123,31 +116,31 @@ Bumping the _major_ just in case because strictly speaking, while things behave 
 
 - Unit test coverage is still 100%, counting per-functions, per-statement, per-branches and per-line.
 
-## [6.5.0] - 2017-06-29
+## [6.5.0] (2017-06-29)
 
 ### Added
 
 - ✨ `opts.oneToManyArrayObjectMerge`. It's an essential feature when setting defaults on data structures in JSON. When your default values object has array with single object, but your working object has an array with many objects. That's one-to-many merge. `opts.oneToManyArrayObjectMerge` is off by default in order to keep the release semver "minor". 🦄
 
-## [6.4.0] - 2017-06-02
+## [6.4.0] (2017-06-02)
 
 ### Changed
 
 - 🔧 Slightly rebased so that there's 100% branch coverage too, not only statements/lines.
 
-## [6.3.0] - 2017-05-15
+## [6.3.0] (2017-05-15)
 
 ### Added
 
 - ✨ Switched to [check-types-mini](https://www.npmjs.com/package/check-types-mini); removed all existing functions responsible for options' types.
 
-## [6.2.0] - 2017-05-12
+## [6.2.0] (2017-05-12)
 
 ### Added
 
 - ✨ opts.mergeArraysContainingStringsToBeEmpty
 
-## [6.1.0] - 2017-04-23 weekend
+## [6.1.0] (2017-04-23) weekend
 
 ### Added
 
@@ -167,31 +160,31 @@ It's nice to use the modular way of coding JS: I found bug here on this library 
 
 Like changing a broken carburettor with another, working-one. 🎉
 
-## [6.0.0] - 2017-03-14
+# [6.0.0] (2017-03-14)
 
 ### Changed
 
 - 🔧 Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
 
-## [5.0.0] - 2017-03-13
+# [5.0.0] (2017-03-13)
 
 ### API addition
 
 - ✨ Added an optional options object, the third argument. Now `opts.mergeObjectsOnlyWhenKeysetMatches` allow more granular control over how objects within arrays are merged. The default setting is balanced option, `opts.mergeObjectsOnlyWhenKeysetMatches = false` is more _gung-ho_ merging approach (behaviour like v4, previous version).
 
-## [4.2.0] - 2017-03-03
+## [4.2.0] (2017-03-03)
 
 ### Changed
 
 - 🔧 Updated dependencies, now requesting JS Standard as normal version range, to prevent future surprises.
 
-## [4.1.0] - 2017-02-28
+## [4.1.0] (2017-02-28)
 
 ### Changed
 
 - 🔧 Improved the algorithm, removed redundant insurance, cloning input variable.
 
-## [4.0.0] - 2017-02-28
+# [4.0.0] (2017-02-28)
 
 ### Changed
 
@@ -199,7 +192,7 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 If none are present, `undefined` is returned as before.
 
-## [3.0.0] - 2017-02-28
+# [3.0.0] (2017-02-28)
 
 ### Changed
 

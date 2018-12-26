@@ -1,15 +1,8 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [3.4.0] - 2018-10-12
+## [3.4.0] (2018-10-12)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
-## [3.3.0] - 2018-06-15
+## [3.3.0] (2018-06-15)
 
 GitHub sold us out. In the meantime, we:
 
@@ -17,14 +10,14 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [3.2.0] - 2018-05-14
+## [3.2.0] (2018-05-14)
 
 ### Improved
 
 - ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
 - ✨ Tweaks to ava [config](https://github.com/avajs/ava/blob/master/docs/recipes/es-modules.md) in `package.json`, properly enabling the `dev` Rollup builds.
 
-## [3.1.0] - 2018-04-29
+## [3.1.0] (2018-04-29)
 
 ### Improvements
 
@@ -32,7 +25,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove them during the builds.
 
-## [3.0.0] - 2017-11-22
+# [3.0.0] (2017-11-22)
 
 ### Changed
 

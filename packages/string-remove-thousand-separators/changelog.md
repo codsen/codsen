@@ -1,28 +1,21 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [2.4.0] - 2018-10-26
+## [2.4.0] (2018-10-26)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [2.3.0] - 2018-06-20
+## [2.3.0] (2018-06-20)
 
 - ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
 
-## [2.2.0] - 2018-06-16
+## [2.2.0] (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [2.1.0] - 2018-05-26
+## [2.1.0] (2018-05-26)
 
 ### Improvements
 
@@ -31,19 +24,19 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-## [2.0.0] - 2017-11-08
+# [2.0.0] (2017-11-08)
 
 ### Changed
 
 - ✨ Rewrote in ES Modules and set up Rollup to serve 3 flavours: 1. CommonJS, 2. UMD and 3. ES Modules.
 
-## [1.2.0] - 2017-09-22
+## [1.2.0] (2017-09-22)
 
 ### Changed
 
 - ✨ Dropped JS Standard and switched to raw ESLint on `airbnb-base` preset with override to ban semicolons.
 
-## [1.1.0] - 2017-08-16
+## [1.1.0] (2017-08-16)
 
 ### Added
 

@@ -1,20 +1,13 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [1.12.0] - 2018-10-14
+## [1.12.0] (2018-10-14)
 
 - ✨ Set up file writing to be atomic
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
 
-## [1.11.0] - 2018-07-24
+## [1.11.0] (2018-07-24)
 
 - ✨ Added unit tests. Couldn't get the unit test coverage only for lines which get triggered when CLI fails to write because I can't programmatically trigger disk write failures. Otherwise, it's 100% coverage.
 
-## [1.10.0] - 2018-07-14
+## [1.10.0] (2018-07-14)
 
 ### Improvements
 
@@ -23,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ It taps the Git data (if available) to make the diff links more precise: the "from" tag's version is picked not from existing titles in changelog (where only minor releases are often mentioned) but from real, previous patch release (which can be done way later than the last release, mentioned in changelog). This means, diff link contents will have less info about meaningless maintenance (patch) updates.
 - ✨ Alongside, developed and tapped the API's, `chlu` diff link correction.
 
-## [1.9.0] - 2018-05-03
+## [1.9.0] (2018-05-03)
 
 ### Improvements
 
@@ -32,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove them during the builds.
 - ✨ Stopped transpiling to ES5, dropped Babel and bumped the Node engines to `>=8`
 
-## [1.8.0] - 2017-09-24
+## [1.8.0] (2017-09-24)
 
 ### Changed
 
@@ -42,7 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Added gif files to `npmignore` so they don't get `npm i`nstalled
 - ✨ Updated bithound config to reflect the new setup
 
-## [1.7.0] - 2017-08-22
+## [1.7.0] (2017-08-22)
 
 ### Added
 
@@ -52,13 +45,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ Deps and `package.json`
 
-## [1.6.0] - 2017-07-23
+## [1.6.0] (2017-07-23)
 
 ### Updated
 
 - ✨ Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
 
-## [1.5.0] - 2017-07-22
+## [1.5.0] (2017-07-22)
 
 ### Updated
 
@@ -69,13 +62,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ✨ `npmignore`
 
-## [1.4.0] - 2017-06-29
+## [1.4.0] (2017-06-29)
 
 ### Updated
 
 Updated all dependencies
 
-## [1.3.0] - 2017-06-29
+## [1.3.0] (2017-06-29)
 
 ### Added
 
@@ -83,7 +76,7 @@ Updated to the new version of the API package, CHLU, enabling new features:
 
 - ✨ Improved algorithm, reducing the change of false positives when versions are mentioned within the text.
 
-## [1.2.0] - 2017-06-23
+## [1.2.0] (2017-06-23)
 
 ### Added
 
@@ -92,7 +85,7 @@ Updated to the new version of the API package, CHLU, enabling new features:
 - ✨ Automatic title linking
 - ✨ Unused footer link removal
 
-## [1.1.0] - 2017-05-19
+## [1.1.0] (2017-05-19)
 
 ### Added
 

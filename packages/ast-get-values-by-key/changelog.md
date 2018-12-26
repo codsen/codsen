@@ -1,21 +1,14 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [2.1.0] - 2018-10-13
+## [2.1.0] (2018-10-13)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
-## [2.0.0] - 2018-09-27
+# [2.0.0] (2018-09-27)
 
 🔨 Major API changes: now the result is not array of strings, but array of plain objects, where previous string is under key `val`. This lets us get another key - `path` of that value.
 
 Setter method behaves the same.
 
-## [1.3.0] - 2018-06-13
+## [1.3.0] (2018-06-13)
 
 GitHub sold us out. In the meantime, we:
 
@@ -23,14 +16,14 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [1.2.0] - 2018-05-14
+## [1.2.0] (2018-05-14)
 
 ### Improved
 
 - ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
 - ✨ Tweaks to ava [config](https://github.com/avajs/ava/blob/master/docs/recipes/es-modules.md) in `package.json`, properly enabling the `dev` Rollup builds.
 
-## [1.1.0] - 2018-05-02
+## [1.1.0] (2018-05-02)
 
 ### Added
 

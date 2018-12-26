@@ -1,28 +1,21 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [1.4.0] - 2018-10-25
+## [1.4.0] (2018-10-25)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [1.3.0] - 2018-06-16
+## [1.3.0] (2018-06-16)
 
 - ✨ Tweaks to the setup: added comment removal during Rollup build and dependency updates
 
-## [1.2.0] - 2018-06-16
+## [1.2.0] (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [1.1.0] - 2018-05-26
+## [1.1.0] (2018-05-26)
 
 ### Improvements
 

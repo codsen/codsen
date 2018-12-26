@@ -1,15 +1,8 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [1.3.0] - 2018-10-13
+## [1.3.0] (2018-10-13)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
-## [1.2.0] - 2018-06-11
+## [1.2.0] (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -17,7 +10,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [1.1.0] - 2018-05-02
+## [1.1.0] (2018-05-02)
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`

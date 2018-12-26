@@ -1,17 +1,10 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [5.1.0] - 2018-10-25
+## [5.1.0] (2018-10-25)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [5.0.0] - 2018-07-04
+# [5.0.0] (2018-07-04)
 
 - ✨ Complete rewrite. Now instead of using regexes and string `replace`, we traverse the input string once and compile the array of selectors
 - ✨ Second argument as `true` will force the application to return arrays of ranges for each selector instead of values as strings
@@ -19,46 +12,46 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - ✨ Doubled the unit tests count - one unit test for a regular result (array of strings) and one unit test for result serving ranges
 - ✨ Unit test code coverage stays at 100%
 
-## [4.3.0] - 2018-06-29
+## [4.3.0] (2018-06-29)
 
 - ✨ Set up Rollup to remove comments from the code
 
-## [4.2.0] - 2018-06-16
+## [4.2.0] (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [4.1.0] - 2018-05-26
+## [4.1.0] (2018-05-26)
 
 - ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-## [4.0.0] - 2017-12-13
+# [4.0.0] (2017-12-13)
 
 - ✨ Rebased in ES Modules
 - ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules
 
 No API changes, but bumping major just in case.
 
-## [3.4.0] - 2017-08-28
+## [3.4.0] (2017-08-28)
 
 - Relaxed the requirements and made single character selector names to pass.
 
-## [3.3.0] - 2017-01-01
+## [3.3.0] (2017-01-01)
 
 - Recognises `\n`, `\t` and other escaped JS characters
 - Doesn't extract empty classes and id's (`.` and `#`)
 - Doesn't extract any classes or id's that are one character long
 
-## [3.2.0] - 2016-12-27
+## [3.2.0] (2016-12-27)
 
 - Readme updates
 
-## [3.1.0] - 2016-12-23
+## [3.1.0] (2016-12-23)
 
 - Standard JS precommit hooks to enforce code style
 

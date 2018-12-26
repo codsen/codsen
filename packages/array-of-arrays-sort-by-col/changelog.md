@@ -1,19 +1,12 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [2.3.0] - 2018-12-14
+## [2.3.0] (2018-12-14)
 
 - ✨ Updated all dependencies and restored AVA linting, added licence to the top of each built file
 
-## [2.2.0] - 2018-10-12
+## [2.2.0] (2018-10-12)
 
 - ✨ Updated all dependencies and restored coverage reporting both in terminal and sending to coveralls
 
-## [2.1.0] - 2017-06-15
+## [2.1.0] (2017-06-15)
 
 GitHub sold us out. In the meantime, we:
 
@@ -21,7 +14,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [2.0.0] - 2017-05-05
+# [2.0.0] (2017-05-05)
 
 Complete rewrite.
 

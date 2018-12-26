@@ -1,22 +1,15 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [2.3.0] - 2018-10-17
+## [2.3.0] (2018-10-17)
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
 
-## [2.2.0] - 2018-06-14
+## [2.2.0] (2018-06-14)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [2.1.0] - 2018-05-03
+## [2.1.0] (2018-05-03)
 
 ### Improvements
 
@@ -24,7 +17,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove them during the builds.
 
-## [2.0.0] - 2017-11-12
+# [2.0.0] (2017-11-12)
 
 ### Changed
 

@@ -1,33 +1,26 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [1.6.0] - 2018-10-25
+## [1.6.0] (2018-10-25)
 
 - ✨ Updated all dependencies
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-## [1.5.0] - 2018-08-19
+## [1.5.0] (2018-08-19)
 
 - ✨ Rebased code to remove any `if (DEBUG)` statements - now `console.log` comments can be left in place - they will be removed during non-dev Rollup builds
 - ✨ Refreshed the setup - temporarily removed `nyc` and updated all dependencies
 
-## [1.4.0] - 2018-06-29
+## [1.4.0] (2018-06-29)
 
 - ✨ Set up Rollup to remove comments from the code
 
-## [1.3.0] - 2018-06-16
+## [1.3.0] (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to BitBucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [1.2.0] - 2018-05-10
+## [1.2.0] (2018-05-10)
 
 ### Added
 
@@ -36,7 +29,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-## [1.1.0] - 2017-12-27
+## [1.1.0] (2017-12-27)
 
 ### Added
 

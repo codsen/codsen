@@ -1,15 +1,8 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [1.6.0] - 2018-10-14
+## [1.6.0] (2018-10-14)
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
 
-## [1.5.0] - 2018-06-11
+## [1.5.0] (2018-06-11)
 
 GitHub sold us out. In the meantime, we:
 
@@ -17,23 +10,23 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 - ✨ Removed `package-lock`
 
-## [1.4.0] - 2018-05-31
+## [1.4.0] (2018-05-31)
 
 - ✨ I found myself looking again and again at the spec, double-checking which function name `isProduction4` or `isProduction4a` is for the first character, which is for second character onwards. To make life easier, I decided to supplement exported function with aliase keys `validFirstChar` and `validSecondCharOnwards` which are the same functions but named more sensibly.
 
-## [1.3.0] - 2018-05-03
+## [1.3.0] (2018-05-03)
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove them during the builds.
 
-## [1.2.0] - 2018-02-16
+## [1.2.0] (2018-02-16)
 
 ### Added
 
 - ✨ First checking lowercase letters, then the rest.
 
-## [1.1.0] - 2018-02-06
+## [1.1.0] (2018-02-06)
 
 ### New
 

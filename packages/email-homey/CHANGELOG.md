@@ -1,18 +1,11 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-## [2.1.0] - 2018-06-21
+## [2.1.0] (2018-06-21)
 
 GitHub sold us out. In the meantime, we:
 
 - ✨ Migrated to Bitbucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-## [2.0.0] - 2018-05-04
+# [2.0.0] (2018-05-04)
 
 ### Changed
 
@@ -24,7 +17,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Added unit tests!
 
-## [1.8.0] - 2017-09-24
+## [1.8.0] (2017-09-24)
 
 ### Changed
 
@@ -34,7 +27,7 @@ GitHub sold us out. In the meantime, we:
 - Added gif files to `npmignore` so they don't get `npm i`nstalled
 - Updated bithound config to reflect the new setup
 
-## [1.7.0] - 2017-08-22
+## [1.7.0] (2017-08-22)
 
 ### Added
 
@@ -44,13 +37,13 @@ GitHub sold us out. In the meantime, we:
 
 - Deps and `package.json`
 
-## [1.6.0] - 2017-07-23
+## [1.6.0] (2017-07-23)
 
 ### Updated
 
 - Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
 
-## [1.5.0] - 2017-07-22
+## [1.5.0] (2017-07-22)
 
 ### Updated
 
@@ -61,13 +54,13 @@ GitHub sold us out. In the meantime, we:
 
 - `npmignore`
 
-## [1.4.0] - 2017-06-29
+## [1.4.0] (2017-06-29)
 
 ### Updated
 
 Updated all dependencies
 
-## [1.3.0] - 2017-06-29
+## [1.3.0] (2017-06-29)
 
 ### Added
 
@@ -75,7 +68,7 @@ Updated to the new version of the API package, CHLU, enabling new features:
 
 - Improved algorithm, reducing the change of false positives when versions are mentioned within the text.
 
-## [1.2.0] - 2017-06-23
+## [1.2.0] (2017-06-23)
 
 ### Added
 
@@ -84,7 +77,7 @@ Updated to the new version of the API package, CHLU, enabling new features:
 - Automatic title linking
 - Unused footer link removal
 
-## [1.1.0] - 2017-05-19
+## [1.1.0] (2017-05-19)
 
 ### Added
 
