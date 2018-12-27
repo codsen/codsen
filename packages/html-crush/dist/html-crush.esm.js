@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 0.6.1
+ * Version: 0.6.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
@@ -15,7 +15,7 @@ import { matchRightIncl } from 'string-match-left-right';
 import expand from 'string-range-expander';
 
 var name = "html-crush";
-var version = "0.6.1";
+var version = "0.6.2";
 var description = "Minifies HTML/CSS: valid or broken, pure or mixed with other languages";
 var license = "MIT";
 var engines = {
@@ -204,12 +204,12 @@ var nyc = {
 	sourceMap: false
 };
 var dependencies = {
-	"check-types-mini": "^5.2.1",
+	"check-types-mini": "^5.2.2",
 	"lodash.isplainobject": "^4.0.6",
-	"ranges-apply": "^2.9.1",
-	"ranges-push": "^2.13.1",
-	"string-match-left-right": "^3.6.1",
-	"string-range-expander": "^1.6.1"
+	"ranges-apply": "^2.9.2",
+	"ranges-push": "^2.13.2",
+	"string-match-left-right": "^3.6.2",
+	"string-range-expander": "^1.6.2"
 };
 var devDependencies = {
 	"@babel/core": "^7.2.2",
@@ -243,7 +243,6 @@ var devDependencies = {
 	"rollup-plugin-strip": "^1.2.0",
 	"rollup-plugin-terser": "^3.0.0"
 };
-var gitHead = "31af5cb68a7bc35514196b3da276bda6b272fe8f";
 var pack = {
 	name: name,
 	version: version,
@@ -265,8 +264,7 @@ var pack = {
 	lect: lect,
 	nyc: nyc,
 	dependencies: dependencies,
-	devDependencies: devDependencies,
-	gitHead: gitHead
+	devDependencies: devDependencies
 };
 
 const isArr = Array.isArray;

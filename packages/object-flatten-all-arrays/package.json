@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-all-arrays",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "description": "Merge and flatten any arrays found in all values within plain objects",
   "license": "MIT",
   "engines": {
@@ -164,7 +164,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.1",
+    "check-types-mini": "^5.2.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.1",
     "type-detect": "^4.0.8"

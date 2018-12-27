@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
@@ -156,9 +156,9 @@
     }
   },
   "dependencies": {
-    "check-types-mini": "^5.2.1",
-    "ranges-apply": "^2.9.1",
-    "ranges-push": "^2.13.1"
+    "check-types-mini": "^5.2.2",
+    "ranges-apply": "^2.9.2",
+    "ranges-push": "^2.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
