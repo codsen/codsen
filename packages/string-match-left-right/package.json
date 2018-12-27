@@ -1,6 +1,6 @@
 {
   "name": "string-match-left-right",
-  "version": "3.6.0",
+  "version": "3.6.1",
   "description": "Do substrings match what's on the left or right of a given index?",
   "license": "MIT",
   "engines": {
@@ -161,12 +161,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.4.2",
-    "check-types-mini": "^5.2.0",
+    "arrayiffy-if-string": "^3.4.3",
+    "check-types-mini": "^5.2.1",
     "is-natural-number": "^4.0.1",
     "lodash.isfunction": "^3.0.9",
     "lodash.isplainobject": "^4.0.6",
-    "string-character-is-astral-surrogate": "^1.4.1"
+    "string-character-is-astral-surrogate": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

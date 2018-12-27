@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 0.6.0
+ * Version: 0.6.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
@@ -15,7 +15,7 @@ import { matchRightIncl } from 'string-match-left-right';
 import expand from 'string-range-expander';
 
 var name = "html-crush";
-var version = "0.6.0";
+var version = "0.6.1";
 var description = "Minifies HTML/CSS: valid or broken, pure or mixed with other languages";
 var license = "MIT";
 var engines = {
@@ -204,12 +204,12 @@ var nyc = {
 	sourceMap: false
 };
 var dependencies = {
-	"check-types-mini": "^5.2.0",
+	"check-types-mini": "^5.2.1",
 	"lodash.isplainobject": "^4.0.6",
-	"ranges-apply": "^2.9.0",
-	"ranges-push": "^2.13.0",
-	"string-match-left-right": "^3.6.0",
-	"string-range-expander": "^1.6.0"
+	"ranges-apply": "^2.9.1",
+	"ranges-push": "^2.13.1",
+	"string-match-left-right": "^3.6.1",
+	"string-range-expander": "^1.6.1"
 };
 var devDependencies = {
 	"@babel/core": "^7.2.2",

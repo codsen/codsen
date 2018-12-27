@@ -1,6 +1,6 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
@@ -171,7 +171,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.4.2",
+    "ast-monkey-traverse": "^1.4.3",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^1.1.1"
   },
