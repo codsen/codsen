@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.7.0 (2018-12-26)
+
+
+### Features
+
+* add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
+
+
+
+
+
 ## 1.6.0 (2018-10-14)
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
@@ -33,4 +49,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-02-05)
 
 - ✨ First public release
-

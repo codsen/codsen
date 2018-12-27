@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.4.0 (2018-12-26)
+
+
+### Features
+
+* cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
+* rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
+
+
+
+
+
 ## 2.3.0 (2018-12-14)
 
 - ✨ Updated all dependencies and restored AVA linting, added licence to the top of each built file
@@ -37,4 +54,3 @@ For example, the `1` should be on top of `null` if sorting "axis" is third colum
 ## 1.0.0 (2017-04-04)
 
 - ✨ Public release
-

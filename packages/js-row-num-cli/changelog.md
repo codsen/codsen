@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.3.0 (2018-12-26)
+
+
+### Features
+
+* atomic file write ([b9a3c2b](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/b9a3c2b))
+* improved messages when zero files found + promisified write function ([83d2bee](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/83d2bee))
+
+
+
+
+
 ## 1.2.0 (2018-09-20)
 
 - ✨ Properly set the message when there were zero files to update
@@ -11,4 +28,3 @@
 ## 1.0.0 (2018-07-12)
 
 - ✨ First public release
-

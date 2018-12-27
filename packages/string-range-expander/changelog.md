@@ -1,3 +1,28 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.6.0 (2018-12-26)
+
+
+### Bug Fixes
+
+* fix for opts.wipeAllWhitespaceOnRight and left too ([72c26e6](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/72c26e6))
+* if****SideIncludesThisCropItToo algorithm tweaks when there is no whitespace ([d4676d8](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/d4676d8))
+
+
+### Features
+
+* improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/8bb929a))
+* opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/19b1390))
+* opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/47df5be))
+* opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([73d763b](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/73d763b))
+
+
+
+
+
 ## 1.5.0 (2018-10-26)
 
 - ✨ Updated all dependencies
@@ -24,4 +49,3 @@
 ## 1.0.0 (2018-09-11)
 
 - ✨ First public release
-

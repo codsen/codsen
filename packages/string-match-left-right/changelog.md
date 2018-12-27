@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 3.6.0 (2018-12-26)
+
+
+### Features
+
+* EOL matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
+* opts.relaxedApi ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
+
+
+
+
+
 ## 3.5.0 (2018-12-04)
 
 - ✨ NEW! Now you can match against `EOL` - end of string (beginning or ending). Since you can't pass letters `"EOL"`, you must pass them as an ES6 arrow function, `() => "EOL"`. In all other aspects, the use is the same.
@@ -109,4 +126,3 @@ They have to be callbacks because I can't predict what checks you will want to c
 ## 1.0.0 (2017-10-28)
 
 - ✨ First public release
-

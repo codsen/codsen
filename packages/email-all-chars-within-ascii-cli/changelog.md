@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.6.0 (2018-12-26)
+
+
+### Features
+
+* add unit tests, rebase some functions ([59c5f46](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/commits/59c5f46))
+
+
+
+
+
 ## 1.5.0 (2018-08-17)
 
 - ✨ Updated all dependencies
@@ -26,4 +42,3 @@
 ## 1.0.0 (2017-08-27)
 
 - First public release
-

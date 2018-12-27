@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 1.6.1 (2018-12-26)
+
+**Note:** Version bump only for package string-convert-indexes
+
+
+
+
+
 ## 1.6.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -51,4 +64,3 @@ that include string's last character.
 ## 1.0.0 (2017-12-25)
 
 - ✨ First public release
-

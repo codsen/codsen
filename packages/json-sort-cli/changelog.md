@@ -1,3 +1,24 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.10.0 (2018-12-26)
+
+
+### Features
+
+* -s (--silent) flag ([294dc8b](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/294dc8b))
+* address single/plural cases in unsortable files ([345d3d1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/345d3d1))
+* exclude DS_Store and other system files by default ([02f0b31](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/02f0b31))
+* labeling improvement ([f81653d](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f81653d))
+* setup improvements, unit tests and deep sort ([5dff488](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/5dff488))
+* silent mode, more unit tests and improved reporting ([f43fcca](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f43fcca))
+
+
+
+
+
 ## 1.9.0 (2018-08-19)
 
 - 💥 Temporarily removing the `nyc` because it broke the ava builds after switching to Babel v.7
@@ -61,4 +82,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2017-10-12)
 
 - First public release
-

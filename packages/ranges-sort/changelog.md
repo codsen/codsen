@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 3.6.0 (2018-12-26)
+
+
+### Features
+
+* opts.progressFn ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
+
+
+
+
+
 ## 3.5.0 (2018-11-29)
 
 - ✨ Added `opts.progressFn` - if you pass a function, it will report the progress, calling that function with a number between `0` and `100`. It's not precise and meant to be used as an approximate progress indicator.
@@ -56,4 +72,3 @@ Bumping major just in case this breaks API endpoints.
 ### Added
 
 - ✨ Initial release
-

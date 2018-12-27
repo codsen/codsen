@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 1.2.2 (2018-12-26)
+
+**Note:** Version bump only for package regex-empty-conditional-comments
+
+
+
+
+
 ## 1.2.0 (2018-06-16)
 
 GitHub sold us out. In the meantime, we:
@@ -17,4 +30,3 @@ GitHub sold us out. In the meantime, we:
 ### Added
 
 - ✨ Initial release
-

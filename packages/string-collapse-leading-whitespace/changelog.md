@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.6.0 (2018-12-26)
+
+
+### Features
+
+* second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/74e2458))
+
+
+
+
+
 ## 1.5.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -29,4 +45,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-01-18)
 
 - ✨ First public release
-

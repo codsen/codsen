@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.3.0 (2018-12-26)
+
+
+### Features
+
+* opts.classicTrim, returns plain object now ([0fe61a1](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/commits/0fe61a1))
+
+
+
+
+
 ## 2.2.0 (2018-10-26)
 
 - ✨ Updated all dependencies
@@ -43,4 +59,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-02-13)
 
 - ✨ First public release
-

@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.3.0 (2018-12-26)
+
+
+### Features
+
+* recognise consecutive dashes ([b44ff9d](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/b44ff9d))
+
+
+
+
+
 ## 1.2.0 (2018-10-14)
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
@@ -9,4 +25,3 @@
 ## 1.0.0 (2018-06-13)
 
 - ✨ First public release
-

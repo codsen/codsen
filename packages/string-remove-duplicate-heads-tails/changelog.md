@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.9.0 (2018-12-26)
+
+
+### Features
+
+* relax the API and switch to Prettier ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
+
+
+
+
+
 ## 2.8.0 (2018-10-26)
 
 - ✨ Updated all dependencies
@@ -47,4 +63,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-01-11)
 
 - ✨ First public release
-

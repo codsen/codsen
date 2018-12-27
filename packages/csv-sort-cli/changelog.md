@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.7.0 (2018-12-26)
+
+
+### Features
+
+* add unit tests for CLI operations ([3676894](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/3676894))
+
+
+
+
+
 ## 1.6.0 (2018-06-25)
 
 - ✨ Added unit tests
@@ -39,4 +55,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2017-08-26)
 
 - First public release
-

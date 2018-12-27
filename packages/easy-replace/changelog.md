@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 3.3.1 (2018-12-26)
+
+**Note:** Version bump only for package easy-replace
+
+
+
+
+
 ## 3.3.0 (2018-10-17)
 
 - ✨ Updated all dependencies
@@ -97,4 +110,3 @@ Fresh morning and fresh head yields new improvements.
 ## 1.0.0 (2016-08-25)
 
 - 🌟 First public release
-

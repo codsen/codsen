@@ -1,3 +1,27 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 5.2.0 (2018-12-26)
+
+
+### Bug Fixes
+
+* pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/2948a28))
+
+
+### Features
+
+* matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/4648ad5))
+* opts.ignorePaths and nested opts support ([c1128d6](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/c1128d6))
+* opts.schema can now be given in nested formatting too ([d102784](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/d102784))
+* schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/568eb33))
+
+
+
+
+
 ## 5.1.0 (2018-10-15)
 
 - ✨ `opts.schema` now can be given in nested order as well, for example, given as:
@@ -209,4 +233,3 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 ## 1.0.0 (2017-05-15)
 
 - First public release
-

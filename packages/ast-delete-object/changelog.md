@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 1.4.2 (2018-12-26)
+
+**Note:** Version bump only for package ast-delete-object
+
+
+
+
+
 ## 1.4.0 (2018-10-13)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
@@ -28,4 +41,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-03-11)
 
 - ✨ First public release
-

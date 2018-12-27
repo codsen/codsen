@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.5.0 (2018-12-26)
+
+
+### Features
+
+* opts.messageOnly ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
+
+
+
+
+
 ## 2.4.0 (2018-10-17)
 
 - ✨ Updated all dependencies
@@ -51,4 +67,3 @@ Bumping major just in case somebody's API breaks. But it should not break.
 ## 1.0.0 (2017-08-24)
 
 - ✨ First public release
-

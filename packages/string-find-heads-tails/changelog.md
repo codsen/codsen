@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## 3.10.1 (2018-12-26)
+
+**Note:** Version bump only for package string-find-heads-tails
+
+
+
+
+
 ## 3.10.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -112,4 +125,3 @@ now the same example in `v.2` API:
 ## 1.0.0 (2017-12-22)
 
 - ✨ First public release
-

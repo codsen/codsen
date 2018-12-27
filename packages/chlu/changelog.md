@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 3.3.0 (2018-12-26)
+
+
+### Features
+
+* Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
+* support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
+
+
+
+
+
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.
 
@@ -97,4 +114,3 @@ It's necessary so that we could accomodate the Git tag customisations.
 ## 1.0.0 (2017-05-16)
 
 - 🌟 First public release
-

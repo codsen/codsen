@@ -1,3 +1,22 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.13.0 (2018-12-26)
+
+
+### Features
+
+* hardening the type checks just in case ([106ae7a](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/106ae7a))
+* implement throw pinning in unit tests ([6b8c789](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/6b8c789))
+* omit the 3rd argument when it's equal to an empty string ([343c153](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/343c153))
+* opts.limitLinebreaksCount ([55eedfa](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/55eedfa))
+
+
+
+
+
 ## 2.12.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -113,4 +132,3 @@ Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This i
 ## 1.0.0 (2017-07-28)
 
 - First public release
-

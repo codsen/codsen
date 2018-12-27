@@ -1,3 +1,22 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.13.0 (2018-12-26)
+
+
+### Features
+
+* add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
+* atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
+* bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
+* recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
+
+
+
+
+
 ## 1.12.0 (2018-10-14)
 
 - ✨ Set up file writing to be atomic
@@ -90,4 +109,3 @@ Updated to the new version of the API package, CHLU, enabling new features:
 ## 1.0.0 (2017-05-17)
 
 - ✨ First public release
-

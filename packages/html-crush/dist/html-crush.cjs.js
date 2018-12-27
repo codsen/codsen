@@ -321,6 +321,7 @@ var devDependencies = {
 	"rollup-plugin-strip": "^1.2.0",
 	"rollup-plugin-terser": "^3.0.0"
 };
+var gitHead = "7101106bf752c185421f50798c6d845ec34f67c5";
 var pack = {
 	name: name,
 	version: version,
@@ -342,7 +343,8 @@ var pack = {
 	lect: lect,
 	nyc: nyc,
 	dependencies: dependencies,
-	devDependencies: devDependencies
+	devDependencies: devDependencies,
+	gitHead: gitHead
 };
 
 var isArr = Array.isArray;

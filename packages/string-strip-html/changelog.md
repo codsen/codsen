@@ -1,3 +1,29 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 3.3.0 (2018-12-26)
+
+
+### Bug Fixes
+
+* throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
+
+
+### Features
+
+* algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
+* delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
+* improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
+* opts.dumpLinkHrefsNearby and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
+* opts.onlyStripTags ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
+* opts.trimOnlySpaces ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
+
+
+
+
+
 ## 3.2.0 (2018-07-22)
 
 - ✨ Fixed `opts.returnRangesOnly` - when there are no HTML tags in the input and the option is on, an empty array is returned (as opposed to the input string, incorrectly returned previously). Sorry about that.
@@ -99,4 +125,3 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 ### Added
 
 - ✨ First public release
-

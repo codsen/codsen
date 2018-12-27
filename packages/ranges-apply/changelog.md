@@ -1,3 +1,26 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.9.0 (2018-12-26)
+
+
+### Bug Fixes
+
+* actually rename files ([0a32cb8](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0a32cb8))
+
+
+### Features
+
+* 3rd input arg - progressFn ([f6735e2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/f6735e2))
+* accept null as second input argument, instead of ranges ([0c59484](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0c59484))
+* ranges-merge (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/35e3c4b))
+
+
+
+
+
 ## 2.8.0 (2018-11-29)
 
 - ✨ Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
@@ -94,4 +117,3 @@ t.regex(error1.message, /THROW_ID_01/);
 ## 1.0.0 (2017-07-25)
 
 - ✨ First public release
-

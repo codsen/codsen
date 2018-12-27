@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 4.3.0 (2018-12-26)
+
+
+### Features
+
+* add generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/43d7dc4))
+* opts.removeEmptyLines ([75e0671](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/75e0671))
+
+
+
+
+
 ## 4.2.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -115,4 +132,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2017-09-02)
 
 - ✨ First public release
-

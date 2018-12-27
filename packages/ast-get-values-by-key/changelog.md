@@ -1,3 +1,19 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 2.2.0 (2018-12-26)
+
+
+### Features
+
+* supplement the getter's result with path ([1594a36](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/1594a36))
+
+
+
+
+
 ## 2.1.0 (2018-10-13)
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
@@ -34,4 +50,3 @@ GitHub sold us out. In the meantime, we:
 ## 1.0.0 (2018-03-11)
 
 - ✨ First public release
-

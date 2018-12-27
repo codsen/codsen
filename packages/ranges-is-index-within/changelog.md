@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 1.9.0 (2018-12-26)
+
+
+### Features
+
+* allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
+* setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
+
+
+
+
+
 ## 1.8.0 (2018-10-25)
 
 - ✨ Updated all dependencies
@@ -45,4 +62,3 @@ Setup refresh. Plus:
 ## 1.0.0 (2017-09-13)
 
 - ✨ Initial release
-

@@ -1,3 +1,20 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+# 3.8.0 (2018-12-26)
+
+
+### Features
+
+* improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
+* removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
+
+
+
+
+
 ## 3.7.0 (2018-11-29)
 
 - ✨ Second input argument - `progressFn` is added, it will report percentage done so far. It's used in worker setups.
@@ -59,4 +76,3 @@ This change is logical and natural but I'm bumping major version just in case it
 ## 1.0.0 (2017-09-18)
 
 - First public release
-
