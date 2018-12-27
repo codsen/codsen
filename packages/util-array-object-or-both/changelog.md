@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both/compare/util-array-object-or-both@2.3.1...util-array-object-or-both@2.3.2) (2018-12-27)
+
+**Note:** Version bump only for package util-array-object-or-both
+
+
+
+
+
 ## 2.3.1 (2018-12-26)
 
 **Note:** Version bump only for package util-array-object-or-both

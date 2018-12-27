@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.2...ast-monkey-traverse@1.4.3) (2018-12-27)
+
+**Note:** Version bump only for package ast-monkey-traverse
+
+
+
+
+
 ## 1.4.2 (2018-12-26)
 
 **Note:** Version bump only for package ast-monkey-traverse

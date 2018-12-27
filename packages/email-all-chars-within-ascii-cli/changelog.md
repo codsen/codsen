@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/compare/email-all-chars-within-ascii-cli@1.6.0...email-all-chars-within-ascii-cli@1.6.1) (2018-12-27)
+
+**Note:** Version bump only for package email-all-chars-within-ascii-cli
+
+
+
+
+
 # 1.6.0 (2018-12-26)
 
 

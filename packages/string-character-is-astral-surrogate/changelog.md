@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/compare/string-character-is-astral-surrogate@1.4.1...string-character-is-astral-surrogate@1.4.2) (2018-12-27)
+
+**Note:** Version bump only for package string-character-is-astral-surrogate
+
+
+
+
+
 ## 1.4.1 (2018-12-26)
 
 **Note:** Version bump only for package string-character-is-astral-surrogate
