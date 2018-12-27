@@ -297,7 +297,7 @@ var devDependencies = {
 	ava: "^1.0.1",
 	"babel-plugin-istanbul": "^5.1.0",
 	coveralls: "^3.0.2",
-	eslint: "^5.11.0",
+	eslint: "^5.11.1",
 	"eslint-config-prettier": "^3.3.0",
 	"eslint-plugin-ava": "^5.1.1",
 	"eslint-plugin-import": "^2.14.0",
@@ -312,7 +312,7 @@ var devDependencies = {
 	prettier: "^1.15.3",
 	rollup: "^0.68.2",
 	"rollup-plugin-babel": "^4.1.0",
-	"rollup-plugin-cleanup": "^3.0.0",
+	"rollup-plugin-cleanup": "^3.1.0",
 	"rollup-plugin-commonjs": "^9.2.0",
 	"rollup-plugin-json": "^3.1.0",
 	"rollup-plugin-license": "^0.7.0",
@@ -321,7 +321,6 @@ var devDependencies = {
 	"rollup-plugin-strip": "^1.2.0",
 	"rollup-plugin-terser": "^3.0.0"
 };
-var gitHead = "7101106bf752c185421f50798c6d845ec34f67c5";
 var pack = {
 	name: name,
 	version: version,
@@ -343,8 +342,7 @@ var pack = {
 	lect: lect,
 	nyc: nyc,
 	dependencies: dependencies,
-	devDependencies: devDependencies,
-	gitHead: gitHead
+	devDependencies: devDependencies
 };
 
 var isArr = Array.isArray;

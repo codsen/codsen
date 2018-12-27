@@ -3,8 +3,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
-    "fresh": "rm -rf node_modules && lerna clean -y && npm run bootstrap",
+    "bootstrap": "npx lerna bootstrap --hoist",
+    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap",
     "build": "lerna run test --bail --concurrency 2",
     "cm": "git-cz",
     "pub": "lerna publish",
