@@ -1,3 +1,12 @@
+/**
+ * array-pull-all-with-glob
+ * pullAllWithGlob - like _.pullAll but pulling stronger, with globs
+ * Version: 4.8.1
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob
+ */
+
 import matcher from 'matcher';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';

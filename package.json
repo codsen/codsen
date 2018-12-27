@@ -7,7 +7,7 @@
     "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap",
     "build": "lerna run test --bail --concurrency 2",
     "cm": "git-cz",
-    "pub": "lerna publish",
+    "pub": "lerna publish --no-git-reset",
     "license": "make clone-license"
   },
   "devDependencies": {
