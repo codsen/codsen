@@ -191,5 +191,6 @@
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
     "tempy": "^0.2.1"
-  }
+  },
+  "gitHead": "e99ef54c0bac616e3b12cc4133aafb617f3fc053"
 }

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode/compare/ranges-ent-decode@1.1.2...ranges-ent-decode@1.1.3) (2018-12-27)
+
+**Note:** Version bump only for package ranges-ent-decode
+
+
+
+
+
 ## [1.1.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode/compare/ranges-ent-decode@1.1.1...ranges-ent-decode@1.1.2) (2018-12-27)
 
 **Note:** Version bump only for package ranges-ent-decode
