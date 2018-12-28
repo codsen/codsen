@@ -2,7 +2,6 @@
 
 > Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]

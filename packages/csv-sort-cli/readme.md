@@ -2,7 +2,6 @@
 
 > Command line app to sort double-entry CSVs coming from internet banking statements
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]

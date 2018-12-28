@@ -2,7 +2,6 @@
 
 > Is the input (plain object, array, string or whatever) not empty?
 
-[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]

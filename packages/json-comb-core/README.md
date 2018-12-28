@@ -2,7 +2,6 @@
 
 > The inner core of json-comb
 
-[![Minimum Node version required][node-img]][node-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]

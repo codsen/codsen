@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "npx lerna bootstrap --hoist",
-    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap",
+    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap && lerna run ava",
     "build": "lerna run test --bail --concurrency 2",
     "cm": "git-cz",
     "pub": "lerna publish --conventional-commits",

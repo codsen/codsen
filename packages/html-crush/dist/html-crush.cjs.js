@@ -137,6 +137,7 @@ var esm = {
 	"await": true,
 	cjs: true
 };
+var gitHead = "e99ef54c0bac616e3b12cc4133aafb617f3fc053";
 var husky = {
 	hooks: {
 		"pre-commit": "npm run format && npm test"
@@ -303,9 +304,9 @@ var devDependencies = {
 	"eslint-plugin-import": "^2.14.0",
 	"eslint-plugin-no-unsanitized": "^3.0.2",
 	"eslint-plugin-no-wildcard-postmessage": "^0.1.3",
-	"eslint-plugin-prettier": "^3.0.0",
+	"eslint-plugin-prettier": "^3.0.1",
 	"eslint-plugin-scanjs-rules": "^0.2.1",
-	husky: "^1.2.1",
+	husky: "^1.3.1",
 	"node-fetch": "^2.3.0",
 	nyc: "^13.1.0",
 	"p-map": "^2.0.0",
@@ -321,7 +322,6 @@ var devDependencies = {
 	"rollup-plugin-strip": "^1.2.0",
 	"rollup-plugin-terser": "^3.0.0"
 };
-var gitHead = "e99ef54c0bac616e3b12cc4133aafb617f3fc053";
 var pack = {
 	name: name,
 	version: version,
@@ -338,13 +338,13 @@ var pack = {
 	ava: ava,
 	clinton: clinton,
 	esm: esm,
+	gitHead: gitHead,
 	husky: husky,
 	keywords: keywords,
 	lect: lect,
 	nyc: nyc,
 	dependencies: dependencies,
-	devDependencies: devDependencies,
-	gitHead: gitHead
+	devDependencies: devDependencies
 };
 
 var isArr = Array.isArray;
