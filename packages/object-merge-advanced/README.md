@@ -85,7 +85,7 @@ When `object-merge-advanced` merges two _objects_, it will recursively traverse 
 
 There are ten possible combinations: 10 types of first input (object #1) and ten types of second input (object #2): non-empty (full) object, empty object, non-empty array, empty array, non-empty string, empty string, number, boolean, undefined and null.
 
-![matching algorithm](https://bitbucket.org/codsen/object-merge-advanced/raw/01b04fb168e94411f8a0230336970fc9831a9e02/media/object-merge-advanced_algorithm.png)
+![matching algorithm](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/object-merge-advanced/media/object-merge-advanced_algorithm.png)
 
 A large number in the centre of a square shows which value prevails.
 

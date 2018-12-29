@@ -44,7 +44,7 @@ Here's what you'll get:
 
 `csv-sort` can correct the order of rows of _any_ accounting CSV files that come in [double entry bookkeeping](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system) format:
 
-![double bookkeeping example](https://bitbucket.org/codsen/csv-sort/raw/47683eb03fbe1fc254d7363f53ccc0b874e474b2/media/img1.png)
+![double bookkeeping example](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/csv-sort/media/img1.png)
 
 Currently (late 2017) Lloyds Bank website exports CSV files with some rows from the same day in a wrong order. This library is my attempt to to fix such CSV's.
 
@@ -55,7 +55,7 @@ Currently (late 2017) Lloyds Bank website exports CSV files with some rows from 
 - Sorts rows in correct order that follows the double-entry format.
 - Trims the empty columns and rows (so-called 2D-Trim^).
 
-![2D trim of a CSV contents](https://bitbucket.org/codsen/csv-sort/raw/47683eb03fbe1fc254d7363f53ccc0b874e474b2/media/img2.png)
+![2D trim of a CSV contents](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/csv-sort/media/img2.png)
 
 In later releases I would like to be able to recognise and fix any offset columns caused by misinterpreted commas as values.
 
