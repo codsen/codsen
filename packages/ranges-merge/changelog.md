@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.3...ranges-merge@3.8.4) (2018-12-29)
+
+**Note:** Version bump only for package ranges-merge
+
+
+
+
+
 ## [3.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.2...ranges-merge@3.8.3) (2018-12-29)
 
 **Note:** Version bump only for package ranges-merge

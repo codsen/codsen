@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.4...string-convert-indexes@1.6.5) (2018-12-29)
+
+**Note:** Version bump only for package string-convert-indexes
+
+
+
+
+
 ## [1.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.3...string-convert-indexes@1.6.4) (2018-12-29)
 
 **Note:** Version bump only for package string-convert-indexes

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.3...ranges-sort@3.6.4) (2018-12-29)
+
+**Note:** Version bump only for package ranges-sort
+
+
+
+
+
 ## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.2...ranges-sort@3.6.3) (2018-12-29)
 
 **Note:** Version bump only for package ranges-sort

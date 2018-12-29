@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.3...json-sort-cli@1.10.4) (2018-12-29)
+
+**Note:** Version bump only for package json-sort-cli
+
+
+
+
+
 ## [1.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.2...json-sort-cli@1.10.3) (2018-12-29)
 
 **Note:** Version bump only for package json-sort-cli
