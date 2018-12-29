@@ -1,6 +1,6 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
@@ -167,7 +167,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.4.5",
+    "ast-contains-only-empty-space": "^1.4.6",
     "lodash.isplainobject": "^4.0.6",
     "lodash.isstring": "^4.0.1"
   },

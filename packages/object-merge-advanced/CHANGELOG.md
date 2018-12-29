@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.3...object-merge-advanced@10.6.4) (2018-12-29)
+
+**Note:** Version bump only for package object-merge-advanced
+
+
+
+
+
 ## [10.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.2...object-merge-advanced@10.6.3) (2018-12-29)
 
 **Note:** Version bump only for package object-merge-advanced
