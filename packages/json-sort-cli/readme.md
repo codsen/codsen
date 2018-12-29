@@ -8,7 +8,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-![example](https://bitbucket.org/codsen/json-sort-cli/raw/ca7bf87734f84f48a8793ed7df0af7d680ef84e4/media/quicktest.gif)
+![example](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/json-sort-cli/media/quicktest.gif)
 
 ## Table of Contents
 
