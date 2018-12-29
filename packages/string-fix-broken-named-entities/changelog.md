@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/compare/string-fix-broken-named-entities@1.1.3...string-fix-broken-named-entities@1.1.4) (2018-12-29)
+
+**Note:** Version bump only for package string-fix-broken-named-entities
+
+
+
+
+
 ## [1.1.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/compare/string-fix-broken-named-entities@1.1.2...string-fix-broken-named-entities@1.1.3) (2018-12-27)
 
 **Note:** Version bump only for package string-fix-broken-named-entities

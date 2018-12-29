@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.0.4...email-comb@1.0.5) (2018-12-29)
+
+**Note:** Version bump only for package email-comb
+
+
+
+
+
 ## [1.0.4](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.0.3...email-comb@1.0.4) (2018-12-27)
 
 **Note:** Version bump only for package email-comb

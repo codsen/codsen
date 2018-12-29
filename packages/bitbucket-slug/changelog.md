@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.2...bitbucket-slug@1.3.3) (2018-12-29)
+
+**Note:** Version bump only for package bitbucket-slug
+
+
+
+
+
 ## [1.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.1...bitbucket-slug@1.3.2) (2018-12-27)
 
 **Note:** Version bump only for package bitbucket-slug

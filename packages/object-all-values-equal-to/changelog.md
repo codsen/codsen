@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.3...object-all-values-equal-to@1.3.4) (2018-12-29)
+
+**Note:** Version bump only for package object-all-values-equal-to
+
+
+
+
+
 ## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.2...object-all-values-equal-to@1.3.3) (2018-12-27)
 
 **Note:** Version bump only for package object-all-values-equal-to
