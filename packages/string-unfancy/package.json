@@ -1,6 +1,6 @@
 {
   "name": "string-unfancy",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "Replace all fancy dashes, quotes etc with their simpler equivalents",
   "license": "MIT",
   "engines": {
