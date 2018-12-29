@@ -3,11 +3,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "bootstrap": "npx lerna bootstrap --hoist",
-    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap && lerna run ava",
-    "build": "lerna run test --bail --concurrency 2",
+    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
+    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap && npm run build",
+    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
-    "pub": "lerna version --conventional-commits && lerna publish from-package --no-git-reset",
+    "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna publish from-package --no-git-reset",
     "pubold": "lerna publish --conventional-commits --no-git-reset",
     "license": "make clone-license"
   },
@@ -19,6 +19,11 @@
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
     }
   }
 }
