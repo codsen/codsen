@@ -59,7 +59,7 @@ some example text
 
 If you want to do something to the word "example" above, that's characters between indexes `5` and `12`. You can easily see them if you select the string - good code editors will report the index of the end of the selection in the status bar. Like Atom for example:
 
-![finding_range_indexes_in_atom](https://bitbucket.org/codsen/ranges-apply/raw/86c4014e0534576d9b8089c6f8ef57720c8f1d7c/media/finding_range_indexes_in_atom.gif)
+![finding_range_indexes_in_atom](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/ranges-apply/media/finding_range_indexes_in_atom.gif)
 
 That's two numbers to put into an array. They mark a _slice_ of string. Let's add a third element into that array - what to put instead. If it's blank, nothing will be added (it becomes a deletion operation), if it's a non-empty string, it will be inserted insted of the deleted characters (it becomes a **replacement operation**).
 
