@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.3...string-extract-class-names@5.2.4) (2019-01-01)
+
+**Note:** Version bump only for package string-extract-class-names
+
+
+
+
+
 ## [5.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.2...string-extract-class-names@5.2.3) (2018-12-29)
 
 **Note:** Version bump only for package string-extract-class-names
