@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
-    "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap && npm run build",
+    "wipe": "rm -rf node_modules && npx lerna clean -y",
+    "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
     "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && lerna publish from-package",

@@ -311,14 +311,14 @@ var devDependencies = {
 	"p-map": "^2.0.0",
 	prettier: "^1.15.3",
 	rollup: "^1.0.0",
-	"rollup-plugin-babel": "^4.1.0",
+	"rollup-plugin-babel": "^4.2.0",
 	"rollup-plugin-cleanup": "^3.1.0",
 	"rollup-plugin-commonjs": "^9.2.0",
 	"rollup-plugin-json": "^3.1.0",
 	"rollup-plugin-license": "^0.7.0",
 	"rollup-plugin-node-builtins": "^2.1.2",
 	"rollup-plugin-node-resolve": "^4.0.0",
-	"rollup-plugin-strip": "^1.2.0",
+	"rollup-plugin-strip": "^1.2.1",
 	"rollup-plugin-terser": "^3.0.0"
 };
 var pack = {
