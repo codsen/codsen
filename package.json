@@ -7,7 +7,7 @@
     "fresh": "rm -rf node_modules && npx lerna clean -y && npm run bootstrap && npm run build",
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
-    "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && lerna publish from-package --no-git-reset",
+    "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && lerna publish from-package",
     "pubold": "FORCE_COLOR=1 lerna publish --conventional-commits --no-git-reset",
     "license": "make clone-license"
   },
@@ -15,7 +15,7 @@
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^1.3.1",
-    "lerna": "^3.6.0"
+    "lerna": "^3.8.1"
   },
   "config": {
     "commitizen": {
