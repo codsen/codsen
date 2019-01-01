@@ -8,7 +8,7 @@
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
     "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && lerna publish from-package --no-git-reset",
-    "pubold": "lerna publish --conventional-commits --no-git-reset",
+    "pubold": "FORCE_COLOR=1 lerna publish --conventional-commits --no-git-reset",
     "license": "make clone-license"
   },
   "devDependencies": {
