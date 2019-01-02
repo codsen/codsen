@@ -137,7 +137,7 @@ var esm = {
 	"await": true,
 	cjs: true
 };
-var gitHead = "fcdbe2ceff11e19410522aa26425791a4faca21b";
+var gitHead = "96b8e72904ab8cc755f5547c1bb21926855b1dcc";
 var husky = {
 	hooks: {
 		"pre-commit": "npm run format && npm test"

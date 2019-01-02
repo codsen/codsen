@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex/compare/ranges-regex@1.1.5...ranges-regex@1.1.6) (2019-01-01)
+
+**Note:** Version bump only for package ranges-regex
+
+
+
+
+
 ## [1.1.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex/compare/ranges-regex@1.1.4...ranges-regex@1.1.5) (2018-12-29)
 
 **Note:** Version bump only for package ranges-regex

@@ -2,6 +2,14 @@
   "name": "codsen",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "npm": ">=5.6.0",
+    "node": ">=8.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/codsen/codsen.git"
+  },
   "scripts": {
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
     "wipe": "rm -rf node_modules && npx lerna clean -y",
@@ -25,7 +33,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FORCE_COLOR=1 lerna run test --since --concurrency 2"
+      "pre-commit": "lerna run test --since --concurrency 2 && git add ."
     }
   }
 }

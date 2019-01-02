@@ -5,10 +5,8 @@
   "version": "independent",
   "command": {
     "publish": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "message": "chore(release): %s"
     }
-  },
-  "ignoreChanges": [
-    "**/*.md"
-  ]
+  }
 }

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.5...string-find-heads-tails@3.10.6) (2019-01-01)
+
+**Note:** Version bump only for package string-find-heads-tails
+
+
+
+
+
 ## [3.10.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.4...string-find-heads-tails@3.10.5) (2018-12-29)
 
 **Note:** Version bump only for package string-find-heads-tails
