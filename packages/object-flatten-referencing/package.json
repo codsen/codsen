@@ -1,6 +1,6 @@
 {
   "name": "object-flatten-referencing",
-  "version": "4.6.6",
+  "version": "4.6.7",
   "description": "Flatten complex nested objects according to a reference objects",
   "license": "MIT",
   "engines": {
@@ -164,7 +164,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.5",
+    "check-types-mini": "^5.2.6",
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",

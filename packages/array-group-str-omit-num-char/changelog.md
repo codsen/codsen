@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/compare/array-group-str-omit-num-char@1.1.6...array-group-str-omit-num-char@1.1.7) (2019-01-02)
+
+**Note:** Version bump only for package array-group-str-omit-num-char
+
+
+
+
+
 ## [1.1.6](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/compare/array-group-str-omit-num-char@1.1.5...array-group-str-omit-num-char@1.1.6) (2019-01-01)
 
 **Note:** Version bump only for package array-group-str-omit-num-char

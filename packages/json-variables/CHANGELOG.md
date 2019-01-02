@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.8](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.7...json-variables@7.5.8) (2019-01-02)
+
+**Note:** Version bump only for package json-variables
+
+
+
+
+
 ## [7.5.7](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.6...json-variables@7.5.7) (2019-01-01)
 
 **Note:** Version bump only for package json-variables

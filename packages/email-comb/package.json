@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {
@@ -182,19 +182,19 @@
     "sourceMap": false
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.8.8",
-    "ast-is-empty": "^1.3.7",
+    "array-pull-all-with-glob": "^4.8.9",
+    "ast-is-empty": "^1.3.8",
     "lodash.intersection": "^4.4.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "matcher": "^1.1.1",
-    "ranges-apply": "^2.9.5",
-    "ranges-push": "^2.13.5",
-    "regex-empty-conditional-comments": "^1.2.7",
+    "ranges-apply": "^2.9.6",
+    "ranges-push": "^2.13.6",
+    "regex-empty-conditional-comments": "^1.2.8",
     "string-extract-class-names": "^5.2.4",
-    "string-match-left-right": "^3.6.5",
-    "string-range-expander": "^1.6.5"
+    "string-match-left-right": "^3.6.6",
+    "string-range-expander": "^1.6.6"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

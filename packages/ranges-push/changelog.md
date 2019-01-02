@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.13.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.5...ranges-push@2.13.6) (2019-01-02)
+
+**Note:** Version bump only for package ranges-push
+
+
+
+
+
 ## [2.13.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.4...ranges-push@2.13.5) (2019-01-01)
 
 **Note:** Version bump only for package ranges-push

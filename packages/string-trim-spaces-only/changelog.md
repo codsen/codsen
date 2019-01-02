@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.5...string-trim-spaces-only@2.3.6) (2019-01-02)
+
+**Note:** Version bump only for package string-trim-spaces-only
+
+
+
+
+
 ## [2.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.4...string-trim-spaces-only@2.3.5) (2019-01-01)
 
 **Note:** Version bump only for package string-trim-spaces-only

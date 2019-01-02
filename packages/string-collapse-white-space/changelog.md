@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.5...string-collapse-white-space@4.3.6) (2019-01-02)
+
+**Note:** Version bump only for package string-collapse-white-space
+
+
+
+
+
 ## [4.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.4...string-collapse-white-space@4.3.5) (2019-01-01)
 
 **Note:** Version bump only for package string-collapse-white-space

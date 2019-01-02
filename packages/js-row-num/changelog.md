@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num/compare/js-row-num@1.1.5...js-row-num@1.1.6) (2019-01-02)
+
+**Note:** Version bump only for package js-row-num
+
+
+
+
+
 ## [1.1.5](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num/compare/js-row-num@1.1.4...js-row-num@1.1.5) (2019-01-01)
 
 **Note:** Version bump only for package js-row-num

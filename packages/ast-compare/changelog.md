@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.5...ast-compare@1.7.6) (2019-01-02)
+
+**Note:** Version bump only for package ast-compare
+
+
+
+
+
 ## [1.7.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.4...ast-compare@1.7.5) (2019-01-01)
 
 **Note:** Version bump only for package ast-compare

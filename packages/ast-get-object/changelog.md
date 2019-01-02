@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.8](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-object/compare/ast-get-object@1.4.7...ast-get-object@1.4.8) (2019-01-02)
+
+**Note:** Version bump only for package ast-get-object
+
+
+
+
+
 ## [1.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-object/compare/ast-get-object@1.4.6...ast-get-object@1.4.7) (2019-01-01)
 
 **Note:** Version bump only for package ast-get-object

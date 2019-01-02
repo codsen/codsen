@@ -1,6 +1,6 @@
 {
   "name": "ast-contains-only-empty-space",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "Returns Boolean depending if passed AST contain only empty space",
   "license": "MIT",
   "engines": {
@@ -167,7 +167,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.4.7",
+    "ast-monkey-traverse": "^1.4.8",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1"
   },
