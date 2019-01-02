@@ -3,6 +3,9 @@
     "packages/*"
   ],
   "version": "independent",
+  "lifecycle": {
+    "version": "npm run build && git add ."
+  },
   "command": {
     "publish": {
       "conventionalCommits": true,
