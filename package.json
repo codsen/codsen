@@ -16,7 +16,7 @@
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
-    "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && lerna publish from-package",
+    "pub": "FORCE_COLOR=1 lerna version --conventional-commits && lerna run test --since && git add . && lerna publish from-package",
     "pubold": "FORCE_COLOR=1 lerna publish --conventional-commits --no-git-reset",
     "license": "make clone-license"
   },
@@ -33,7 +33,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lerna run test --since --concurrency 2 && git add ."
+      "pre-commit": "FORCE_COLOR=1 lerna run test --since --concurrency 2 && git add ."
     }
   }
 }
