@@ -16,9 +16,7 @@
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
     "cm": "git-cz",
-    "prepublish": "lerna run test --since && git add .",
-    "publish": "FORCE_COLOR=1 lerna version --conventional-commits && lerna publish from-package",
-    "pubold": "FORCE_COLOR=1 lerna publish --conventional-commits --no-git-reset",
+    "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add . && lerna publish from-package",
     "license": "make clone-license"
   },
   "devDependencies": {
