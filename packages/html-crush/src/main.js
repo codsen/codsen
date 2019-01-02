@@ -2,13 +2,12 @@ import checkTypes from "check-types-mini";
 import isObj from "lodash.isplainobject";
 import applySlices from "ranges-apply";
 import Slices from "ranges-push";
-import pack from "../package.json";
+import { version } from "../package.json";
 import { matchRightIncl } from "string-match-left-right";
 import expand from "string-range-expander";
 
 const isArr = Array.isArray;
 const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
-const { version } = pack;
 const defaults = {
   lineLengthLimit: 500,
   removeIndentations: true,

@@ -2025,9 +2025,7 @@ test(`08.01-0${
           }% size savings)`
         );
         console.log(
-          `08.0${rowNum + 1}.05 - ${
-            websiteArr[1]
-          } - only indentations removed: ${
+          `08.0${rowNum + 1}.05 - ${websiteArr[1]} - linebreaks removed: ${
             minifiedResult2.log.percentageReducedOfOriginal
           }% size savings`
         );
@@ -2042,31 +2040,6 @@ test(`08.01-0${
       })
   );
 });
-
-// test(`08.01 - ${`\u001b[${90}m${`real websites`}\u001b[${39}m`} - html-crush on Bitbucket`, async t => {
-//   const source = await fetch(
-//     "https://bitbucket.org/codsen/html-crush/src/master/"
-//   ).then(res => res.text());
-//   t.true(
-//     typeof source === "string" && source.length > 0,
-//     "08.01.01 - fetched non-empty, valid HTML source"
-//   );
-//   const minifiedResult = m(source, {
-//     removeLineBreaks: true,
-//     lineLengthLimit: 10
-//   });
-//   t.true(
-//     minifiedResult.result.length <= source.length,
-//     `08.01.02 - minified size is the same or less (${
-//       minifiedResult.log.percentageReducedOfOriginal
-//     }% size savings)`
-//   );
-//   console.log(
-//     `08.01 - html-crush on Bitbucket: ${
-//       minifiedResult.log.percentageReducedOfOriginal
-//     }% size savings`
-//   );
-// });
 
 // 99. AD-HOC
 // -----------------------------------------------------------------------------
