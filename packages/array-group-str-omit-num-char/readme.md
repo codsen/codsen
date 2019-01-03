@@ -2,8 +2,8 @@
 
 > Groups array of strings by omitting number characters
 
+[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -27,9 +27,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                        | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-group-str-omit-num-char.cjs.js` | 3 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/array-group-str-omit-num-char.cjs.js` | 4 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/array-group-str-omit-num-char.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-group-str-omit-num-char.umd.js` | 41 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/array-group-str-omit-num-char.umd.js` | 37 KB |
 
 **[⬆ back to top](#markdown-header-array-group-str-omit-num-char)**
 
@@ -43,33 +43,37 @@ Here's what you'll get:
 
 ## Idea
 
-Take an array of strings and if they differ only in number characters, group them.
+Take an array of strings, group those which differ only in a certain number.
 
-For example, consider this input - array of strings:
+For example, consider this array atomic CSS class names coming from some report (for example, `email-comb` [output](https://www.npmjs.com/package/email-comb#api---output) object's key `deletedFromHead`):
 
 ```js
 [
-  "aaaaaa9-1"
-  "aaaaaa9-2"
-  "bbbbbb"
-  "aaaaaa9-3"
-]
+  "wbr425-padding-top-1",
+  "wbr425-padding-top-2",
+  "main-title",
+  "wbr425-padding-top-3"
+];
 ```
 
-Output - plain object:
+This npm library groups similar strings, in this case producing:
 
+```json
 {
-"aaaaaa9-\*": 3
-"bbbbbb": 1
+  "wbr425-padding-top-*": 3,
+  "main-title": 1
 }
+```
 
-Notice the `aaa...` were grouped and `9` was not replaced with wildcard because it was constant on all strings. This feature, retaining constant digits, was the reason why we got into hassle producing this library.
-
-Practically, we're going to use it to filter unused class and id names which were removed in [emailcomb.com](https://emailcomb.com). The list can get quite long, 7000 or more unused atomic classes and id's are not uncommon. To make such lists more manageable, this library will be used to group them, to reduce the amount of entries in the list.
+Notice the "425" in `wbr425` was not replaced with wildcard because it was constant on all strings that were grouped. This feature, retaining constant digits, was the reason why we got into hassle producing this library. You see, the quickest, alternative (gung-ho) algorithm is to replace all digits with "\*" and filter the unique values, but "425" in `wbr425` would be lost. Practically, this means, classes that apply under certain viewport widths get reported correctly using this library.
 
 **[⬆ back to top](#markdown-header-array-group-str-omit-num-char)**
 
 ## API
+
+The main function is exported as _default_, so you can name it whatever you want when you `import`/`require`. For example, instead of "group", you could name the main function "brambles": `const brambles = require("array-group-str-omit-num-char");`. But let's consider you chose default name, "group".
+
+The API of this library is the following:
 
 ```js
 group(
@@ -133,9 +137,9 @@ console.log(group(["a1-1", "a2-2", "b3-3", "c4-4"]));
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/array-group-str-omit-num-char/issues/new).
+- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here).
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/array-group-str-omit-num-char/issues/new).
+- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here).
 
 - If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
 
@@ -143,16 +147,14 @@ console.log(group(["a1-1", "a2-2", "b3-3", "c4-4"]));
 
 ## Licence
 
-MIT License (MIT)
+MIT License
 
-Copyright © 2018 Codsen Ltd, Roy Revelt
+Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/array-group-str-omit-num-char.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-group-str-omit-num-char
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/array-group-str-omit-num-char
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/array-group-str-omit-num-char/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/array-group-str-omit-num-char?branch=master
+[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-group-str-omit-num-char
 [downloads-img]: https://img.shields.io/npm/dm/array-group-str-omit-num-char.svg?style=flat-square
@@ -162,4 +164,4 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/array-group-str-omit-num-char
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char
