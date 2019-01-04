@@ -43,7 +43,7 @@ Here's what you'll get:
 
 ## Idea
 
-Take an array of strings, group those which differ only in a certain number.
+Take an array of strings, group those which differ only by a certain number.
 
 For example, consider this array atomic CSS class names coming from some report (for example, `email-comb` [output](https://www.npmjs.com/package/email-comb#api---output) object's key `deletedFromHead`):
 
@@ -56,7 +56,9 @@ For example, consider this array atomic CSS class names coming from some report 
 ];
 ```
 
-This npm library groups similar strings, in this case producing:
+In real life, you could have for example, `wbr425-padding-top-*` would be shorter and go up to `500` and there were, let's say, 20 other groups like it.
+
+This npm library groups strings, in this case producing:
 
 ```json
 {
@@ -65,13 +67,15 @@ This npm library groups similar strings, in this case producing:
 }
 ```
 
-Notice the "425" in `wbr425` was not replaced with wildcard because it was constant on all strings that were grouped. This feature, retaining constant digits, was the reason why we got into hassle producing this library. You see, the quickest, alternative (gung-ho) algorithm is to replace all digits with "\*" and filter the unique values, but "425" in `wbr425` would be lost. Practically, this means, classes that apply under certain viewport widths get reported correctly using this library.
+Notice the "425" in `wbr425` was not replaced with wildcard because it was constant on all strings that were grouped. This feature, retaining constant digits, was the reason why we got into hassle producing this library.
+
+You see, the quickest, alternative (gung-ho) algorithm is to replace all digits with "`*`" and filter the unique values, but "`425`" in `wbr425` would be lost. That's why we need this library.
 
 **[⬆ back to top](#markdown-header-array-group-str-omit-num-char)**
 
 ## API
 
-The main function is exported as _default_, so you can name it whatever you want when you `import`/`require`. For example, instead of "group", you could name the main function "brambles": `const brambles = require("array-group-str-omit-num-char");`. But let's consider you chose default name, "group".
+The main function is exported as _default_, so you can name it whatever you want when you `import`/`require`. For example, instead of "group", you could name the main function "`brambles`": `const brambles = require("array-group-str-omit-num-char");`. But let's consider you chose default name, "`group`".
 
 The API of this library is the following:
 
@@ -82,11 +86,15 @@ group(
 );
 ```
 
+In other words, that variable you imported, "`group`" (or "`brambles`" or whatever) is a **function** which consumes two input arguments.
+
+**[⬆ back to top](#markdown-header-array-group-str-omit-num-char)**
+
 ### API - Input
 
 | Input argument | Type         | Obligatory? | Description                                    |
 | -------------- | ------------ | ----------- | ---------------------------------------------- |
-| `sourceArray`  | Array        | yes         | Source array of strings                        |
+| `sourceArray`  | Array        | yes         | Array of zero or more strings                  |
 | `otps`         | Plain object | no          | An Optional Options Object. See its API below. |
 
 By the way, none of the input arguments are mutated.
@@ -119,8 +127,8 @@ To explicitly mark the refusal to set custom Optional Options, it can be also pa
 
 ### API - Output
 
-Empty array input will yield empty plain object as result.
-Non-empty array (with at least one string inside) will yield a plain object: strings will be grouped and put as **keys**, they count will be put as integer **values**.
+An empty array input will give output of a empty plain object.
+A non-empty array (with at least one string inside) will yield a plain object: strings will be grouped and put as **keys**, they count will be put as integer **values**.
 
 For example:
 
@@ -137,11 +145,14 @@ console.log(group(["a1-1", "a2-2", "b3-3", "c4-4"]));
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here).
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/codsen/issues/new?title=array-group-str-omit-num-char%20package%20-%20put%20title%20here).
+In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
 **[⬆ back to top](#markdown-header-array-group-str-omit-num-char)**
 
