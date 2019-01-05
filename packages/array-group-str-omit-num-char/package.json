@@ -19,9 +19,9 @@
   "module": "dist/array-group-str-omit-num-char.esm.js",
   "browser": "dist/array-group-str-omit-num-char.umd.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rm -rf dist && rollup -c",
     "coverage": "nyc report --reporter=json-summary",
-    "dev": "rollup -c --dev --silent",
+    "dev": "rm -rf dist && rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lint": "./node_modules/.bin/eslint src/*.js test/*.js --fix",
     "prepare": "npm run build",
