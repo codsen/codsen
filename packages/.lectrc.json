@@ -346,7 +346,6 @@
       "@babel/register": "^7.0.0",
       "ava": "^1.0.1",
       "babel-plugin-istanbul": "^5.1.0",
-      "coveralls": "^3.0.2",
       "eslint": "^5.11.1",
       "eslint-config-prettier": "^3.3.0",
       "eslint-plugin-ava": "^5.1.1",
