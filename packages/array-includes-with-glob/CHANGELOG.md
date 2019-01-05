@@ -7,45 +7,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package array-includes-with-glob
 
-
-
-
-
 ## [2.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.3...array-includes-with-glob@2.5.4) (2018-12-29)
 
 **Note:** Version bump only for package array-includes-with-glob
-
-
-
-
 
 ## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.2...array-includes-with-glob@2.5.3) (2018-12-29)
 
 **Note:** Version bump only for package array-includes-with-glob
 
-
-
-
-
 ## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.1...array-includes-with-glob@2.5.2) (2018-12-27)
 
 **Note:** Version bump only for package array-includes-with-glob
-
-
-
-
 
 ## 2.5.1 (2018-12-26)
 
 **Note:** Version bump only for package array-includes-with-glob
 
-
-
-
-
 ## 2.5.0 (2018-12-14)
 
- - 🔧 Restored AVA linting, updated all dependencies, added licence to the top of each built file
+- 🔧 Restored AVA linting, updated all dependencies, added licence to the top of each built file
 
 ## 2.4.0 (2018-10-12)
 
