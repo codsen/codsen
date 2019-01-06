@@ -1,3 +1,12 @@
+/**
+ * util-nonempty
+ * Is the input (plain object, array, string or whatever) not empty?
+ * Version: 2.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

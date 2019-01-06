@@ -1,3 +1,12 @@
+/**
+ * csv-split-easy
+ * Splits the CSV string into array of arrays, each representing a row of columns
+ * Version: 2.4.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy
+ */
+
 import remSep from 'string-remove-thousand-separators';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';

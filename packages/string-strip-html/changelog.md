@@ -7,70 +7,40 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-strip-html
 
-
-
-
-
 ## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.4...string-strip-html@3.3.5) (2019-01-01)
 
 **Note:** Version bump only for package string-strip-html
-
-
-
-
 
 ## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.3...string-strip-html@3.3.4) (2018-12-29)
 
 **Note:** Version bump only for package string-strip-html
 
-
-
-
-
 ## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.2...string-strip-html@3.3.3) (2018-12-29)
 
 **Note:** Version bump only for package string-strip-html
-
-
-
-
 
 ## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.1...string-strip-html@3.3.2) (2018-12-27)
 
 **Note:** Version bump only for package string-strip-html
 
-
-
-
-
 ## [3.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.0...string-strip-html@3.3.1) (2018-12-27)
 
 **Note:** Version bump only for package string-strip-html
 
-
-
-
-
 # 3.3.0 (2018-12-26)
-
 
 ### Bug Fixes
 
-* throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
-
+- throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
 
 ### Features
 
-* algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
-* delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
-* improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
-* opts.dumpLinkHrefsNearby and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
-* opts.onlyStripTags ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
-* opts.trimOnlySpaces ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
-
-
-
-
+- algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
+- delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
+- improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
+- opts.dumpLinkHrefsNearby and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
+- opts.onlyStripTags ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
+- opts.trimOnlySpaces ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
 
 ## 3.2.0 (2018-07-22)
 

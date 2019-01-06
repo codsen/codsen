@@ -1,3 +1,12 @@
+/**
+ * ranges-regex
+ * Perform a regex search on string and get a ranges array of findings (or null)
+ * Version: 1.1.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex
+ */
+
 import mergeRanges from 'ranges-merge';
 import isregexp from 'lodash.isregexp';
 

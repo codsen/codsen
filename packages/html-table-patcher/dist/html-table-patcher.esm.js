@@ -1,3 +1,12 @@
+/**
+ * html-table-patcher
+ * Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly
+ * Version: 0.3.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher
+ */
+
 import rangesApply from 'ranges-apply';
 import Ranges from 'ranges-push';
 import htmlCommentRegex from 'html-comment-regex';

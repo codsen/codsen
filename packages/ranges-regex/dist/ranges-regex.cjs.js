@@ -1,3 +1,12 @@
+/**
+ * ranges-regex
+ * Perform a regex search on string and get a ranges array of findings (or null)
+ * Version: 1.1.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

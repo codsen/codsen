@@ -7,6 +7,13 @@ import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
 
+const licensePiece = `${pkg.name}
+${pkg.description}
+Version: ${pkg.version}
+Author: Roy Revelt, Codsen Ltd
+License: ${pkg.license}
+Homepage: ${pkg.homepage}`;
+
 export default commandLineArgs => {
   const finalConfig = [
     // browser-friendly UMD build
@@ -24,7 +31,10 @@ export default commandLineArgs => {
         resolve(),
         commonjs(),
         babel(),
-        terser()
+        terser(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 
@@ -38,7 +48,10 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         babel(),
-        cleanup()
+        cleanup(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 
@@ -51,7 +64,10 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
-        cleanup()
+        cleanup(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 

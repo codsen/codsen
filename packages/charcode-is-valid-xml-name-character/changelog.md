@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
 
-
-
-
-
 ## [1.7.5](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.4...charcode-is-valid-xml-name-character@1.7.5) (2019-01-01)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
-
-
-
-
 
 ## [1.7.4](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.3...charcode-is-valid-xml-name-character@1.7.4) (2018-12-29)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
 
-
-
-
-
 ## [1.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.2...charcode-is-valid-xml-name-character@1.7.3) (2018-12-29)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
-
-
-
-
 
 ## [1.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.1...charcode-is-valid-xml-name-character@1.7.2) (2018-12-27)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
 
-
-
-
-
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.0...charcode-is-valid-xml-name-character@1.7.1) (2018-12-27)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character
 
-
-
-
-
 # 1.7.0 (2018-12-26)
-
 
 ### Features
 
-* add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
-
-
-
-
+- add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
 
 ## 1.6.0 (2018-10-14)
 

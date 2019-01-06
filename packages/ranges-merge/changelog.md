@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-merge
 
-
-
-
-
 ## [3.8.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.4...ranges-merge@3.8.5) (2019-01-01)
 
 **Note:** Version bump only for package ranges-merge
-
-
-
-
 
 ## [3.8.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.3...ranges-merge@3.8.4) (2018-12-29)
 
 **Note:** Version bump only for package ranges-merge
 
-
-
-
-
 ## [3.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.2...ranges-merge@3.8.3) (2018-12-29)
 
 **Note:** Version bump only for package ranges-merge
-
-
-
-
 
 ## [3.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.1...ranges-merge@3.8.2) (2018-12-27)
 
 **Note:** Version bump only for package ranges-merge
 
-
-
-
-
 ## [3.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.0...ranges-merge@3.8.1) (2018-12-27)
 
 **Note:** Version bump only for package ranges-merge
 
-
-
-
-
 # 3.8.0 (2018-12-26)
-
 
 ### Features
 
-* improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
-* removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
-
-
-
-
+- improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
+- removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
 
 ## 3.7.0 (2018-11-29)
 

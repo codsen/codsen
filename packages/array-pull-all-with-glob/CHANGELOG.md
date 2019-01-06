@@ -7,84 +7,43 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package array-pull-all-with-glob
 
-
-
-
-
 ## [4.8.8](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.7...array-pull-all-with-glob@4.8.8) (2019-01-01)
 
 **Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
 
 ## [4.8.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.6...array-pull-all-with-glob@4.8.7) (2019-01-01)
 
 **Note:** Version bump only for package array-pull-all-with-glob
 
-
-
-
-
 ## [4.8.6](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.5...array-pull-all-with-glob@4.8.6) (2018-12-29)
 
 **Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
 
 ## [4.8.5](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.4...array-pull-all-with-glob@4.8.5) (2018-12-29)
 
 **Note:** Version bump only for package array-pull-all-with-glob
 
-
-
-
-
 ## [4.8.4](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.3...array-pull-all-with-glob@4.8.4) (2018-12-29)
 
 **Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
 
 ## [4.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.2...array-pull-all-with-glob@4.8.3) (2018-12-29)
 
 **Note:** Version bump only for package array-pull-all-with-glob
 
-
-
-
-
 ## [4.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.1...array-pull-all-with-glob@4.8.2) (2018-12-27)
 
 **Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
 
 ## [4.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.0...array-pull-all-with-glob@4.8.1) (2018-12-27)
 
 **Note:** Version bump only for package array-pull-all-with-glob
 
-
-
-
-
 # 4.8.0 (2018-12-26)
-
 
 ### Features
 
-* second input arg. can now be a string ([fd68131](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/fd68131))
-
-
-
-
+- second input arg. can now be a string ([fd68131](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/fd68131))
 
 ## 4.7.0 (2018-10-12)
 

@@ -1,3 +1,12 @@
+/**
+ * ranges-apply
+ * Take an array of string slice ranges, delete/replace the string according to them
+ * Version: 2.9.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply
+ */
+
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';
 import ordinal from 'ordinal-number-suffix';

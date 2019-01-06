@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package regex-empty-conditional-comments
 
-
-
-
-
 ## [1.2.7](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.2.6...regex-empty-conditional-comments@1.2.7) (2019-01-01)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
-
-
-
-
 
 ## [1.2.6](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.2.5...regex-empty-conditional-comments@1.2.6) (2018-12-29)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
 
-
-
-
-
 ## [1.2.5](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.2.4...regex-empty-conditional-comments@1.2.5) (2018-12-29)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
-
-
-
-
 
 ## [1.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.2.3...regex-empty-conditional-comments@1.2.4) (2018-12-27)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
 
-
-
-
-
 ## [1.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.2.2...regex-empty-conditional-comments@1.2.3) (2018-12-27)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
 
-
-
-
-
 ## 1.2.2 (2018-12-26)
 
 **Note:** Version bump only for package regex-empty-conditional-comments
-
-
-
-
 
 ## 1.2.0 (2018-06-16)
 

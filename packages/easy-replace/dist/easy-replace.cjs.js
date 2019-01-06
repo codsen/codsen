@@ -1,3 +1,12 @@
+/**
+ * easy-replace
+ * Replace strings with optional lookarounds, but without regexes
+ * Version: 3.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

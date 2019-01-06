@@ -1,3 +1,12 @@
+/**
+ * object-delete-key
+ * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
+ * Version: 1.5.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key
+ */
+
 import { find, del, get, drop } from 'ast-monkey';
 import isEmpty from 'ast-is-empty';
 import clone from 'lodash.clonedeep';

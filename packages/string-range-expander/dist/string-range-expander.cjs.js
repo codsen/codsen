@@ -1,3 +1,12 @@
+/**
+ * string-range-expander
+ * Expands string index ranges within whitespace boundaries until letters are met
+ * Version: 1.6.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

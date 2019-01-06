@@ -1,3 +1,12 @@
+/**
+ * object-all-values-equal-to
+ * Does the AST/nested-plain-object/array/whatever contain only one kind of value?
+ * Version: 1.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to
+ */
+
 import isObj from 'lodash.isplainobject';
 import isEq from 'lodash.isequal';
 import checkTypes from 'check-types-mini';

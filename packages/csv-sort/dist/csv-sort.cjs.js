@@ -1,3 +1,12 @@
+/**
+ * csv-sort
+ * Sorts double-entry bookkeeping CSV coming from internet banking
+ * Version: 2.4.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

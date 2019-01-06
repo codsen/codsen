@@ -1,3 +1,12 @@
+/**
+ * ast-monkey
+ * Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
+ * Version: 7.6.8
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey
+ */
+
 import clone from 'lodash.clonedeep';
 import arrayObjectOrBoth from 'util-array-object-or-both';
 import checkTypes from 'check-types-mini';

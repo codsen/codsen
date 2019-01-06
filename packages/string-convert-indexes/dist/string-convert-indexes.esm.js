@@ -1,3 +1,12 @@
+/**
+ * string-convert-indexes
+ * Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
+ * Version: 1.6.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes
+ */
+
 import { traverse, set } from 'ast-monkey';
 import isInt from 'is-natural-number';
 import isNumStr from 'is-natural-number-string';

@@ -7,44 +7,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-extract-class-names
 
-
-
-
-
 ## [5.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.2...string-extract-class-names@5.2.3) (2018-12-29)
 
 **Note:** Version bump only for package string-extract-class-names
-
-
-
-
 
 ## [5.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.1...string-extract-class-names@5.2.2) (2018-12-29)
 
 **Note:** Version bump only for package string-extract-class-names
 
-
-
-
-
 ## [5.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.0...string-extract-class-names@5.2.1) (2018-12-27)
 
 **Note:** Version bump only for package string-extract-class-names
 
-
-
-
-
 # 5.2.0 (2018-12-26)
-
 
 ### Features
 
-* complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
-
-
-
-
+- complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
 
 ## 5.1.0 (2018-10-25)
 

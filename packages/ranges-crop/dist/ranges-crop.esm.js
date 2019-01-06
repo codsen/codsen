@@ -1,3 +1,12 @@
+/**
+ * ranges-crop
+ * Crop array of ranges when they go beyond the reference string's length
+ * Version: 1.1.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop
+ */
+
 import isNatNum from 'is-natural-number';
 import ordinalSuffix from 'ordinal-number-suffix';
 import mergeRanges from 'ranges-merge';

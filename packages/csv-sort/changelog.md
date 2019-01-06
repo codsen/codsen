@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-sort
 
-
-
-
-
 ## [2.4.5](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.4.4...csv-sort@2.4.5) (2019-01-01)
 
 **Note:** Version bump only for package csv-sort
-
-
-
-
 
 ## [2.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.4.3...csv-sort@2.4.4) (2018-12-29)
 
 **Note:** Version bump only for package csv-sort
 
-
-
-
-
 ## [2.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.4.2...csv-sort@2.4.3) (2018-12-29)
 
 **Note:** Version bump only for package csv-sort
-
-
-
-
 
 ## [2.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.4.1...csv-sort@2.4.2) (2018-12-27)
 
 **Note:** Version bump only for package csv-sort
 
-
-
-
-
 ## [2.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.4.0...csv-sort@2.4.1) (2018-12-27)
 
 **Note:** Version bump only for package csv-sort
 
-
-
-
-
 # 2.4.0 (2018-12-26)
-
 
 ### Features
 
-* rebase to point to es modules builds ([8d4635e](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/8d4635e))
-
-
-
-
+- rebase to point to es modules builds ([8d4635e](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/8d4635e))
 
 ## 2.3.0 (2018-10-17)
 

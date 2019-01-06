@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 ## [1.9.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.4...ranges-is-index-within@1.9.5) (2019-01-01)
 
 **Note:** Version bump only for package ranges-is-index-within
-
-
-
-
 
 ## [1.9.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.3...ranges-is-index-within@1.9.4) (2018-12-29)
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 ## [1.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.2...ranges-is-index-within@1.9.3) (2018-12-29)
 
 **Note:** Version bump only for package ranges-is-index-within
-
-
-
-
 
 ## [1.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.1...ranges-is-index-within@1.9.2) (2018-12-27)
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 ## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.0...ranges-is-index-within@1.9.1) (2018-12-27)
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 # 1.9.0 (2018-12-26)
-
 
 ### Features
 
-* allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
-* setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
-
-
-
-
+- allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
+- setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
 
 ## 1.8.0 (2018-10-25)
 

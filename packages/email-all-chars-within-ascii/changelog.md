@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package email-all-chars-within-ascii
 
-
-
-
-
 ## [2.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.4...email-all-chars-within-ascii@2.5.5) (2019-01-01)
 
 **Note:** Version bump only for package email-all-chars-within-ascii
-
-
-
-
 
 ## [2.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.3...email-all-chars-within-ascii@2.5.4) (2018-12-29)
 
 **Note:** Version bump only for package email-all-chars-within-ascii
 
-
-
-
-
 ## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.2...email-all-chars-within-ascii@2.5.3) (2018-12-29)
 
 **Note:** Version bump only for package email-all-chars-within-ascii
-
-
-
-
 
 ## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.1...email-all-chars-within-ascii@2.5.2) (2018-12-27)
 
 **Note:** Version bump only for package email-all-chars-within-ascii
 
-
-
-
-
 ## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.0...email-all-chars-within-ascii@2.5.1) (2018-12-27)
 
 **Note:** Version bump only for package email-all-chars-within-ascii
 
-
-
-
-
 # 2.5.0 (2018-12-26)
-
 
 ### Features
 
-* opts.messageOnly ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
-
-
-
-
+- opts.messageOnly ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
 
 ## 2.4.0 (2018-10-17)
 

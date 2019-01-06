@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package json-variables
 
-
-
-
-
 ## [7.5.7](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.6...json-variables@7.5.7) (2019-01-01)
 
 **Note:** Version bump only for package json-variables
-
-
-
-
 
 ## [7.5.6](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.5...json-variables@7.5.6) (2018-12-29)
 
 **Note:** Version bump only for package json-variables
 
-
-
-
-
 ## [7.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.4...json-variables@7.5.5) (2018-12-29)
 
 **Note:** Version bump only for package json-variables
-
-
-
-
 
 ## [7.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.3...json-variables@7.5.4) (2018-12-27)
 
 **Note:** Version bump only for package json-variables
 
-
-
-
-
 ## [7.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.2...json-variables@7.5.3) (2018-12-27)
 
 **Note:** Version bump only for package json-variables
 
-
-
-
-
 ## 7.5.2 (2018-12-26)
 
 **Note:** Version bump only for package json-variables
-
-
-
-
 
 ## 7.5.0 (2018-10-28)
 

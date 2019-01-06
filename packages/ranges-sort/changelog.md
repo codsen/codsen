@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-sort
 
-
-
-
-
 ## [3.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.4...ranges-sort@3.6.5) (2019-01-01)
 
 **Note:** Version bump only for package ranges-sort
-
-
-
-
 
 ## [3.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.3...ranges-sort@3.6.4) (2018-12-29)
 
 **Note:** Version bump only for package ranges-sort
 
-
-
-
-
 ## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.2...ranges-sort@3.6.3) (2018-12-29)
 
 **Note:** Version bump only for package ranges-sort
-
-
-
-
 
 ## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.1...ranges-sort@3.6.2) (2018-12-27)
 
 **Note:** Version bump only for package ranges-sort
 
-
-
-
-
 ## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.0...ranges-sort@3.6.1) (2018-12-27)
 
 **Note:** Version bump only for package ranges-sort
 
-
-
-
-
 # 3.6.0 (2018-12-26)
-
 
 ### Features
 
-* opts.progressFn ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
-
-
-
-
+- opts.progressFn ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
 
 ## 3.5.0 (2018-11-29)
 

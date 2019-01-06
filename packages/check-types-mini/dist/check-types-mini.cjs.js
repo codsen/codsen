@@ -1,3 +1,12 @@
+/**
+ * check-types-mini
+ * Check the types of your options object's values after user has customised them
+ * Version: 5.2.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

@@ -1,3 +1,12 @@
+/**
+ * ast-get-values-by-key
+ * Read or edit parsed HTML (or AST in general)
+ * Version: 2.2.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key
+ */
+
 import traverse from 'ast-monkey-traverse';
 import matcher from 'matcher';
 import clone from 'lodash.clonedeep';

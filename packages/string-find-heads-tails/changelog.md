@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-find-heads-tails
 
-
-
-
-
 ## [3.10.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.5...string-find-heads-tails@3.10.6) (2019-01-01)
 
 **Note:** Version bump only for package string-find-heads-tails
-
-
-
-
 
 ## [3.10.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.4...string-find-heads-tails@3.10.5) (2018-12-29)
 
 **Note:** Version bump only for package string-find-heads-tails
 
-
-
-
-
 ## [3.10.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.3...string-find-heads-tails@3.10.4) (2018-12-29)
 
 **Note:** Version bump only for package string-find-heads-tails
-
-
-
-
 
 ## [3.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.2...string-find-heads-tails@3.10.3) (2018-12-27)
 
 **Note:** Version bump only for package string-find-heads-tails
 
-
-
-
-
 ## [3.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.1...string-find-heads-tails@3.10.2) (2018-12-27)
 
 **Note:** Version bump only for package string-find-heads-tails
 
-
-
-
-
 ## 3.10.1 (2018-12-26)
 
 **Note:** Version bump only for package string-find-heads-tails
-
-
-
-
 
 ## 3.10.0 (2018-10-25)
 

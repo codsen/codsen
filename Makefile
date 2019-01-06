@@ -1,7 +1,7 @@
 clone-license:
 	./scripts/clone-license.sh
 
-lect:
+run-lect:
 	./scripts/run-lect.sh
 
 publish:

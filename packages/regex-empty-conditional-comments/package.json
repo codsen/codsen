@@ -155,7 +155,6 @@
   "devDependencies": {
     "@babel/preset-env": "^7.2.3",
     "ava": "^1.0.1",
-    "codacy-coverage": "^3.3.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",

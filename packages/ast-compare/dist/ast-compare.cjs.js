@@ -1,3 +1,12 @@
+/**
+ * ast-compare
+ * Compare anything: AST, objects, arrays, strings and nested thereof
+ * Version: 1.7.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

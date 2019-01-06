@@ -1,3 +1,12 @@
+/**
+ * charcode-is-valid-xml-name-character
+ * Does a given character belong to XML spec's "Production 4 OR 4a" type (is acceptable for XML element's name)
+ * Version: 1.7.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character
+ */
+
 import rangesIsIndexWithin from 'ranges-is-index-within';
 
 const nameStartChar = [

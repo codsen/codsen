@@ -14,10 +14,11 @@
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
     "wipe": "rm -rf node_modules && npx lerna clean -y",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
-    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 2",
+    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 1",
     "cm": "git-cz",
     "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add . && lerna publish from-package --yes && git push",
-    "license": "make clone-license"
+    "license": "make clone-license",
+    "lect": "make run-lect"
   },
   "devDependencies": {
     "commitizen": "^3.0.5",

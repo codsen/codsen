@@ -1,3 +1,12 @@
+/**
+ * csv-sort
+ * Sorts double-entry bookkeeping CSV coming from internet banking
+ * Version: 2.4.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort
+ */
+
 import split from 'csv-split-easy';
 import pull from 'lodash.pull';
 import ordinal from 'ordinal';

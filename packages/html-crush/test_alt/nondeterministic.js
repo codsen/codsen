@@ -1,4 +1,4 @@
-/* eslint ava/no-ignored-test-files:0 */
+/* eslint ava/no-ignored-test-files:0, import/no-extraneous-dependencies:0 */
 
 // ava test_alt/nondeterministic.js -- --time=3s
 

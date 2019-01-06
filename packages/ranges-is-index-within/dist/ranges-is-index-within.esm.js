@@ -1,3 +1,12 @@
+/**
+ * ranges-is-index-within
+ * Efficiently checks if index is within any of the given ranges
+ * Version: 1.9.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within
+ */
+
 import isObj from 'lodash.isplainobject';
 import checkTypes from 'check-types-mini';
 import isNatStr from 'is-natural-number-string';

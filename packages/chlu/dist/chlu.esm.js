@@ -1,3 +1,12 @@
+/**
+ * chlu
+ * CH-ange-L-og U-pdate - Automatically fix errors in your changelog file
+ * Version: 3.3.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/chlu
+ */
+
 import reverse from 'lodash.reverse';
 import splitLines from 'split-lines';
 import getPkgRepo from 'get-pkg-repo';

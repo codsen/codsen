@@ -2,9 +2,17 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import cleanup from "rollup-plugin-cleanup";
+import license from "rollup-plugin-license";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
+
+const licensePiece = `${pkg.name}
+${pkg.description}
+Version: ${pkg.version}
+Author: Roy Revelt, Codsen Ltd
+License: ${pkg.license}
+Homepage: ${pkg.homepage}`;
 
 export default commandLineArgs => {
   const finalConfig = [
@@ -23,7 +31,10 @@ export default commandLineArgs => {
         resolve(),
         commonjs(),
         babel(),
-        terser()
+        terser(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 
@@ -31,16 +42,16 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "lodash.clonedeep",
-        "ranges-sort"
-      ],
+      external: ["lodash.clonedeep", "ranges-sort"],
       plugins: [
         strip({
           sourceMap: false
         }),
         babel(),
-        cleanup()
+        cleanup(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 
@@ -48,15 +59,15 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "lodash.clonedeep",
-        "ranges-sort"
-      ],
+      external: ["lodash.clonedeep", "ranges-sort"],
       plugins: [
         strip({
           sourceMap: false
         }),
-        cleanup()
+        cleanup(),
+        license({
+          banner: licensePiece
+        })
       ]
     }
   ];

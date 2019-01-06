@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
 
-
-
-
-
 ## [2.9.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.4...string-remove-duplicate-heads-tails@2.9.5) (2019-01-01)
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-
-
-
 
 ## [2.9.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.3...string-remove-duplicate-heads-tails@2.9.4) (2018-12-29)
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
 
-
-
-
-
 ## [2.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.2...string-remove-duplicate-heads-tails@2.9.3) (2018-12-29)
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-
-
-
 
 ## [2.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.1...string-remove-duplicate-heads-tails@2.9.2) (2018-12-27)
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
 
-
-
-
-
 ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.0...string-remove-duplicate-heads-tails@2.9.1) (2018-12-27)
 
 **Note:** Version bump only for package string-remove-duplicate-heads-tails
 
-
-
-
-
 # 2.9.0 (2018-12-26)
-
 
 ### Features
 
-* relax the API and switch to Prettier ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
-
-
-
-
+- relax the API and switch to Prettier ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
 
 ## 2.8.0 (2018-10-26)
 

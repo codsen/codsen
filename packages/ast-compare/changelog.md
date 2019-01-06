@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-compare
 
-
-
-
-
 ## [1.7.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.4...ast-compare@1.7.5) (2019-01-01)
 
 **Note:** Version bump only for package ast-compare
-
-
-
-
 
 ## [1.7.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.3...ast-compare@1.7.4) (2018-12-29)
 
 **Note:** Version bump only for package ast-compare
 
-
-
-
-
 ## [1.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.2...ast-compare@1.7.3) (2018-12-29)
 
 **Note:** Version bump only for package ast-compare
-
-
-
-
 
 ## [1.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.1...ast-compare@1.7.2) (2018-12-27)
 
 **Note:** Version bump only for package ast-compare
 
-
-
-
-
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/compare/ast-compare@1.7.0...ast-compare@1.7.1) (2018-12-27)
 
 **Note:** Version bump only for package ast-compare
 
-
-
-
-
 # 1.7.0 (2018-12-26)
-
 
 ### Features
 
-* opts.useWildcards ([d541cab](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/commits/d541cab))
-
-
-
-
+- opts.useWildcards ([d541cab](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/commits/d541cab))
 
 ## 1.6.0 (2018-10-12)
 

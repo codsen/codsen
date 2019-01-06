@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-convert-indexes
 
-
-
-
-
 ## [1.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.5...string-convert-indexes@1.6.6) (2019-01-01)
 
 **Note:** Version bump only for package string-convert-indexes
-
-
-
-
 
 ## [1.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.4...string-convert-indexes@1.6.5) (2018-12-29)
 
 **Note:** Version bump only for package string-convert-indexes
 
-
-
-
-
 ## [1.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.3...string-convert-indexes@1.6.4) (2018-12-29)
 
 **Note:** Version bump only for package string-convert-indexes
-
-
-
-
 
 ## [1.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.2...string-convert-indexes@1.6.3) (2018-12-27)
 
 **Note:** Version bump only for package string-convert-indexes
 
-
-
-
-
 ## [1.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.1...string-convert-indexes@1.6.2) (2018-12-27)
 
 **Note:** Version bump only for package string-convert-indexes
 
-
-
-
-
 ## 1.6.1 (2018-12-26)
 
 **Note:** Version bump only for package string-convert-indexes
-
-
-
-
 
 ## 1.6.0 (2018-10-25)
 

@@ -1,3 +1,12 @@
+/**
+ * ast-loose-compare
+ * Compare anything: AST, objects, arrays and strings
+ * Version: 1.3.8
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

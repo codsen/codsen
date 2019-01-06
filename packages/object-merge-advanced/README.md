@@ -2,8 +2,8 @@
 
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
+[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -21,7 +21,6 @@
 - [Difference from Lodash `_.merge`](#markdown-header-difference-from-lodash-_merge)
 - [Difference from `Object.assign()`](#markdown-header-difference-from-objectassign)
 - [Contributing](#markdown-header-contributing)
-- [Contributors](#markdown-header-contributors)
 - [Licence](#markdown-header-licence)
 
 ## Install
@@ -41,7 +40,7 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 13 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/object-merge-advanced.cjs.js` | 14 KB |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 14 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 40 KB |
 
@@ -522,42 +521,27 @@ If merging were done using `object-merge-advanced`, all would be fine, because S
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/object-merge-advanced/issues/new).
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/object-merge-advanced/issues/new).
+In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
-
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
-
-## Contributors
-
-Thanks goes to these wonderful people (hover the cursor over contribution icons for a tooltip to appear):
-
-<!-- prettier-ignore-start -->
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars1.githubusercontent.com/u/8344688?v=4" width="100px;"/><br /><sub><b>Roy Revelt</b></sub>](https://bitbucket.org/revelt)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=revelt "Tests") | [<img src="https://avatars1.githubusercontent.com/u/2393956?v=4" width="100px;"/><br /><sub><b>Jabi</b></sub>](https://bitbucket.org/jabiinfante)<br /> [💻](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Code") [📖](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Documentation") [⚠️](https://bitbucket.org/codsen/object-merge-advanced/commits?author=jabiinfante "Tests") | [<img src="https://avatars3.githubusercontent.com/u/872643?v=4" width="100px;"/><br /><sub><b>Jason Ware</b></sub>](https://bitbucket.org/project707)<br /> [🐛](https://bitbucket.org/codsen/object-merge-advanced/issues?q=author%3Aproject707 "Bug reports") | [<img src="https://avatars1.githubusercontent.com/u/5131112?v=4" width="100px;"/><br /><sub><b>Andreas Wiedel</b></sub>](https://bitbucket.org/Kaishiyoku)<br /> [🤔](#ideas-kaishiyoku "Ideas, Planning, & Feedback") | [<img src="https://avatars3.githubusercontent.com/u/14291499?v=4" width="100px;"/><br /><sub><b>Mike de Snoo</b></sub>](https://bitbucket.org/SnooHD)<br /> [🤔](#ideas-snoohd "Ideas, Planning, & Feedback") |
-| :---: | :---: | :---: | :---: | :---: |
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-<!-- prettier-ignore-end -->
-
-This project follows the [all contributors][all-contributors-url] specification.
-Contributions of any kind are welcome!
+The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
 **[⬆ back to top](#markdown-header-object-merge-advanced)**
 
 ## Licence
 
-MIT License (MIT)
+MIT License
 
-Copyright © 2018 Codsen Ltd, Roy Revelt
+Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-merge-advanced
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/object-merge-advanced
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/object-merge-advanced/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/object-merge-advanced?branch=master
+[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-merge-advanced
 [downloads-img]: https://img.shields.io/npm/dm/object-merge-advanced.svg?style=flat-square
@@ -569,5 +553,5 @@ Copyright © 2018 Codsen Ltd, Roy Revelt
 [contributors-img]: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/object-merge-advanced
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced
 [all-contributors-url]: https://github.com/kentcdodds/all-contributors

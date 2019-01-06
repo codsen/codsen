@@ -7,41 +7,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package color-shorthand-hex-to-six-digit
 
-
-
-
-
 ## [2.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/compare/color-shorthand-hex-to-six-digit@2.4.3...color-shorthand-hex-to-six-digit@2.4.4) (2018-12-29)
 
 **Note:** Version bump only for package color-shorthand-hex-to-six-digit
-
-
-
-
 
 ## [2.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/compare/color-shorthand-hex-to-six-digit@2.4.2...color-shorthand-hex-to-six-digit@2.4.3) (2018-12-29)
 
 **Note:** Version bump only for package color-shorthand-hex-to-six-digit
 
-
-
-
-
 ## [2.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/compare/color-shorthand-hex-to-six-digit@2.4.1...color-shorthand-hex-to-six-digit@2.4.2) (2018-12-27)
 
 **Note:** Version bump only for package color-shorthand-hex-to-six-digit
 
-
-
-
-
 ## 2.4.1 (2018-12-26)
 
 **Note:** Version bump only for package color-shorthand-hex-to-six-digit
-
-
-
-
 
 ## 2.4.0 (2018-10-15)
 

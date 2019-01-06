@@ -1,3 +1,12 @@
+/**
+ * util-array-object-or-both
+ * Validate and normalise user choice: array, object or both?
+ * Version: 2.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

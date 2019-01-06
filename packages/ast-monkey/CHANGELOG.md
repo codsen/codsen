@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-monkey
 
-
-
-
-
 ## [7.6.7](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.6...ast-monkey@7.6.7) (2019-01-01)
 
 **Note:** Version bump only for package ast-monkey
-
-
-
-
 
 ## [7.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.5...ast-monkey@7.6.6) (2018-12-29)
 
 **Note:** Version bump only for package ast-monkey
 
-
-
-
-
 ## [7.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.4...ast-monkey@7.6.5) (2018-12-29)
 
 **Note:** Version bump only for package ast-monkey
-
-
-
-
 
 ## [7.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.3...ast-monkey@7.6.4) (2018-12-27)
 
 **Note:** Version bump only for package ast-monkey
 
-
-
-
-
 ## [7.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.2...ast-monkey@7.6.3) (2018-12-27)
 
 **Note:** Version bump only for package ast-monkey
 
-
-
-
-
 ## 7.6.2 (2018-12-26)
 
 **Note:** Version bump only for package ast-monkey
-
-
-
-
 
 ## 7.6.0 (2018-10-14)
 

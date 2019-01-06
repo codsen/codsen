@@ -2,8 +2,8 @@
 
 > Preprocessor for JSON to allow keys referencing keys
 
+[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -34,13 +34,13 @@ import jsonVariables from "json-variables";
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/json-variables.cjs.js` | 19 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/json-variables.esm.js` | 20 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/json-variables.umd.js` | 93 KB
+| Type                                                                                                    | Key in `package.json` | Path                         | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/json-variables.cjs.js` | 20 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-variables.esm.js` | 20 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-variables.umd.js` | 67 KB |
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Idea - updated for v.7 - full rewrite
 
@@ -54,7 +54,7 @@ This library allows JSON keys to reference other keys. It is aimed at JSON files
 
 I know, these architectural mistakes look no-brainers _now_ but trust me, they were not so apparent when the original `json-variables` idea was conceived. Also, I didn't anticipate this amount of variable-cross-referencing happening in real production, which was beyond anything that unit tests could imitate.
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## API
 
@@ -112,7 +112,7 @@ Type: `object` - an optional options object. (PS. Nice accidental rhyming)
 }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Use examples
 
@@ -250,7 +250,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Data containers
 
@@ -328,7 +328,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Ignores with wildcards
 
@@ -356,7 +356,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Wrapping
 
@@ -384,7 +384,7 @@ When processed with options `{ wrapHeadsWith: '{{ ', wrapTailsWith: ' }}' }`, it
 }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 #### In practice:
 
@@ -443,7 +443,10 @@ with intention to bake the following HTML:
 HTML template:
 
 ```html
-<div>{% if user.firstName %}Hi {{ user.firstName }}, check out our seasonal offers!{% else %}Hi, check out our seasonal offers!{% endif %}</div>
+<div>
+  {% if user.firstName %}Hi {{ user.firstName }}, check out our seasonal
+  offers!{% else %}Hi, check out our seasonal offers!{% endif %}
+</div>
 ```
 
 Now notice that in the example above, the first `first_name` does not need to be wrapped with `{{` and `}}` because it's already in a Nunjucks statement, but the second one _does need to be wrapped_.
@@ -461,7 +464,7 @@ content JSON for PROD build:
 
 Notice `%%-first_name-%%` above. The non-wrapping heads and tails instruct the program to **skip wrapping, no matter what**.
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ### Mixing Booleans and strings
 
@@ -502,46 +505,38 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/json-variables/issues/new).
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-variables%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-variables%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-variables%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/json-variables/issues/new).
+In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#markdown-header-json-variables)**
+**[⬆ back to top](#markdown-header-json-variables)**
 
 ## Licence
 
-MIT License (MIT)
+MIT License
 
-Copyright © 2018 Codsen Ltd, Roy Revelt
-
-
+Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/json-variables.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-variables
-
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/json-variables
-
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/json-variables/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/json-variables?branch=master
-
+[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/json-variables
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-variables
-
 [downloads-img]: https://img.shields.io/npm/dm/json-variables.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/json-variables
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/json-variables
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/json-variables
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/json-variables

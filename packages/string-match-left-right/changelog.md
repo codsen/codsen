@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-match-left-right
 
-
-
-
-
 ## [3.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.4...string-match-left-right@3.6.5) (2019-01-01)
 
 **Note:** Version bump only for package string-match-left-right
-
-
-
-
 
 ## [3.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.3...string-match-left-right@3.6.4) (2018-12-29)
 
 **Note:** Version bump only for package string-match-left-right
 
-
-
-
-
 ## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.2...string-match-left-right@3.6.3) (2018-12-29)
 
 **Note:** Version bump only for package string-match-left-right
-
-
-
-
 
 ## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.1...string-match-left-right@3.6.2) (2018-12-27)
 
 **Note:** Version bump only for package string-match-left-right
 
-
-
-
-
 ## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.0...string-match-left-right@3.6.1) (2018-12-27)
 
 **Note:** Version bump only for package string-match-left-right
 
-
-
-
-
 # 3.6.0 (2018-12-26)
-
 
 ### Features
 
-* EOL matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
-* opts.relaxedApi ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
-
-
-
-
+- EOL matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
+- opts.relaxedApi ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
 
 ## 3.5.0 (2018-12-04)
 

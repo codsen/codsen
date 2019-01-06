@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package arrayiffy-if-string
 
-
-
-
-
 ## [3.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string/compare/arrayiffy-if-string@3.4.6...arrayiffy-if-string@3.4.7) (2019-01-01)
 
 **Note:** Version bump only for package arrayiffy-if-string
-
-
-
-
 
 ## [3.4.6](https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string/compare/arrayiffy-if-string@3.4.5...arrayiffy-if-string@3.4.6) (2018-12-29)
 
 **Note:** Version bump only for package arrayiffy-if-string
 
-
-
-
-
 ## [3.4.5](https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string/compare/arrayiffy-if-string@3.4.4...arrayiffy-if-string@3.4.5) (2018-12-29)
 
 **Note:** Version bump only for package arrayiffy-if-string
-
-
-
-
 
 ## [3.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string/compare/arrayiffy-if-string@3.4.3...arrayiffy-if-string@3.4.4) (2018-12-27)
 
 **Note:** Version bump only for package arrayiffy-if-string
 
-
-
-
-
 ## [3.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string/compare/arrayiffy-if-string@3.4.2...arrayiffy-if-string@3.4.3) (2018-12-27)
 
 **Note:** Version bump only for package arrayiffy-if-string
 
-
-
-
-
 ## 3.4.2 (2018-12-26)
 
 **Note:** Version bump only for package arrayiffy-if-string
-
-
-
-
 
 ## 3.4.0 (2018-10-12)
 

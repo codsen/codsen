@@ -2,8 +2,8 @@
 
 > Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
 
+[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -25,18 +25,18 @@ import rangesSort from "ranges-sort";
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/ranges-sort.cjs.js` | 3 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/ranges-sort.esm.js` | 3 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/ranges-sort.umd.js` | 28 KB
+| Type                                                                                                    | Key in `package.json` | Path                      | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-sort.cjs.js` | 3 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-sort.esm.js` | 3 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-sort.umd.js` | 28 KB |
 
-**[⬆  back to top](#markdown-header-ranges-sort)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Table of Contents
 
 - [Install](#markdown-header-install)
-- [Rationale](#markdown-header-rationale)
+- [What it does](#markdown-header-what-it-does)
 - [API](#markdown-header-api)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
@@ -68,7 +68,7 @@ The purpose of string index ranges is to avoid changing a string many times but 
 
 The purpose of _range sorting_ is to make life easier for other range-processing libraries.
 
-**[⬆  back to top](#markdown-header-ranges-sort)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## API
 
@@ -76,7 +76,7 @@ The purpose of _range sorting_ is to make life easier for other range-processing
 
 | Input argument | Type         | Obligatory? | Description                                                                  |
 | -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array       | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
+| `arrOfRanges`  | Array        | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
 | `opts`         | Plain object | no          | Optional options go here.                                                    |
 
 For example,
@@ -87,16 +87,16 @@ For example,
 
 This library does not mutate the inputs. In theory, a function in JavaScript could mutate its arguments, but only if they are on an "object" primitive type (an array or a plain object, for example).
 
-**[⬆  back to top](#markdown-header-ranges-sort)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ### Options object
 
-| `options` object's key             | Type    | Obligatory? | Default | Description                                                                                                                                                                                       |
-| ---------------------------------- | ------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                                  |         |             |         |
-| `strictlyTwoElementsInRangeArrays` | Boolean | no          | `false` | If set to `true`, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element). |
-| `progressFn`                       | Function | no          | `null` | If a function is given, it will be called with natural number meaning percentage of the total work done. It's approximate and used in worker setups. |
-| }                                  |         |             |         |
+| `options` object's key             | Type     | Obligatory? | Default | Description                                                                                                                                                                                         |
+| ---------------------------------- | -------- | ----------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                                  |          |             |         |
+| `strictlyTwoElementsInRangeArrays` | Boolean  | no          | `false` | If set to `true`, all ranges must have two and only elements, otherwise error is thrown. For example, input being `[ [1, 2, 'zzz'] ]` would throw (3 elements), as well as `[ ['a'] ]` (1 element). |
+| `progressFn`                       | Function | no          | `null`  | If a function is given, it will be called with natural number meaning percentage of the total work done. It's approximate and used in worker setups.                                                |
+| }                                  |          |             |         |
 
 **Output:** Sorted input array. First, we sort by the first argument of each child range array, then by second.
 
@@ -109,46 +109,38 @@ Here is whole Optional Options Object in one place, with all defaults, in case y
 }
 ```
 
-**[⬆  back to top](#markdown-header-ranges-sort)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/ranges-sort/issues/new).
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-sort%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-sort%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-sort%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/ranges-sort/issues/new).
+In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#markdown-header-ranges-sort)**
+**[⬆ back to top](#markdown-header-ranges-sort)**
 
 ## Licence
 
-MIT License (MIT)
+MIT License
 
-Copyright © 2018 Codsen Ltd, Roy Revelt
-
-
+Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ranges-sort.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-sort
-
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/ranges-sort
-
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/ranges-sort/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/ranges-sort?branch=master
-
+[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-sort
-
 [downloads-img]: https://img.shields.io/npm/dm/ranges-sort.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/ranges-sort
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/ranges-sort
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/ranges-sort
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort

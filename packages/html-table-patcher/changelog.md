@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 ## [0.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.4...html-table-patcher@0.3.5) (2019-01-01)
 
 **Note:** Version bump only for package html-table-patcher
-
-
-
-
 
 ## [0.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.3...html-table-patcher@0.3.4) (2018-12-29)
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 ## [0.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.2...html-table-patcher@0.3.3) (2018-12-29)
 
 **Note:** Version bump only for package html-table-patcher
-
-
-
-
 
 ## [0.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.1...html-table-patcher@0.3.2) (2018-12-27)
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 ## [0.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.0...html-table-patcher@0.3.1) (2018-12-27)
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 # 0.3.0 (2018-12-26)
-
 
 ### Features
 
-* comments skip ([4afb7c4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4afb7c4))
-* improvements to tag recognition algorithm ([d265d1e](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/d265d1e))
-
-
-
-
+- comments skip ([4afb7c4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4afb7c4))
+- improvements to tag recognition algorithm ([d265d1e](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/d265d1e))
 
 ## 0.2.0 (2018-10-28)
 

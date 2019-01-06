@@ -7,41 +7,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-set-all-values-to
 
-
-
-
-
 ## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.3.3...object-set-all-values-to@3.3.4) (2018-12-29)
 
 **Note:** Version bump only for package object-set-all-values-to
-
-
-
-
 
 ## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.3.2...object-set-all-values-to@3.3.3) (2018-12-29)
 
 **Note:** Version bump only for package object-set-all-values-to
 
-
-
-
-
 ## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.3.1...object-set-all-values-to@3.3.2) (2018-12-27)
 
 **Note:** Version bump only for package object-set-all-values-to
 
-
-
-
-
 ## 3.3.1 (2018-12-26)
 
 **Note:** Version bump only for package object-set-all-values-to
-
-
-
-
 
 ## 3.3.0 (2018-10-24)
 

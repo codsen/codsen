@@ -1,3 +1,12 @@
+/**
+ * object-set-all-values-to
+ * Recursively walk the input and set all found values in plain objects to something
+ * Version: 3.3.5
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

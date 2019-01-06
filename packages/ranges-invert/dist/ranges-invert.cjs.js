@@ -1,3 +1,12 @@
+/**
+ * ranges-invert
+ * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
+ * Version: 1.1.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

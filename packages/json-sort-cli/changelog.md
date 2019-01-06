@@ -7,65 +7,36 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 ## [1.10.5](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.4...json-sort-cli@1.10.5) (2019-01-01)
 
 **Note:** Version bump only for package json-sort-cli
-
-
-
-
 
 ## [1.10.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.3...json-sort-cli@1.10.4) (2018-12-29)
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 ## [1.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.2...json-sort-cli@1.10.3) (2018-12-29)
 
 **Note:** Version bump only for package json-sort-cli
-
-
-
-
 
 ## [1.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.1...json-sort-cli@1.10.2) (2018-12-27)
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 ## [1.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.0...json-sort-cli@1.10.1) (2018-12-27)
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 # 1.10.0 (2018-12-26)
-
 
 ### Features
 
-* -s (--silent) flag ([294dc8b](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/294dc8b))
-* address single/plural cases in unsortable files ([345d3d1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/345d3d1))
-* exclude DS_Store and other system files by default ([02f0b31](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/02f0b31))
-* labeling improvement ([f81653d](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f81653d))
-* setup improvements, unit tests and deep sort ([5dff488](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/5dff488))
-* silent mode, more unit tests and improved reporting ([f43fcca](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f43fcca))
-
-
-
-
+- -s (--silent) flag ([294dc8b](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/294dc8b))
+- address single/plural cases in unsortable files ([345d3d1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/345d3d1))
+- exclude DS_Store and other system files by default ([02f0b31](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/02f0b31))
+- labeling improvement ([f81653d](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f81653d))
+- setup improvements, unit tests and deep sort ([5dff488](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/5dff488))
+- silent mode, more unit tests and improved reporting ([f43fcca](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f43fcca))
 
 ## 1.9.0 (2018-08-19)
 

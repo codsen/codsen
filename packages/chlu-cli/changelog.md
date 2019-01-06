@@ -7,63 +7,34 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package chlu-cli
 
-
-
-
-
 ## [1.13.5](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.4...chlu-cli@1.13.5) (2019-01-01)
 
 **Note:** Version bump only for package chlu-cli
-
-
-
-
 
 ## [1.13.4](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.3...chlu-cli@1.13.4) (2018-12-29)
 
 **Note:** Version bump only for package chlu-cli
 
-
-
-
-
 ## [1.13.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.2...chlu-cli@1.13.3) (2018-12-29)
 
 **Note:** Version bump only for package chlu-cli
-
-
-
-
 
 ## [1.13.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.1...chlu-cli@1.13.2) (2018-12-27)
 
 **Note:** Version bump only for package chlu-cli
 
-
-
-
-
 ## [1.13.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.0...chlu-cli@1.13.1) (2018-12-27)
 
 **Note:** Version bump only for package chlu-cli
 
-
-
-
-
 # 1.13.0 (2018-12-26)
-
 
 ### Features
 
-* add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
-* atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
-* bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
-* recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
-
-
-
-
+- add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
+- atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
+- bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
+- recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
 
 ## 1.12.0 (2018-10-14)
 

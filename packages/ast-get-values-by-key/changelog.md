@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 ## [2.2.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.4...ast-get-values-by-key@2.2.5) (2019-01-01)
 
 **Note:** Version bump only for package ast-get-values-by-key
-
-
-
-
 
 ## [2.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.3...ast-get-values-by-key@2.2.4) (2018-12-29)
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 ## [2.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.2...ast-get-values-by-key@2.2.3) (2018-12-29)
 
 **Note:** Version bump only for package ast-get-values-by-key
-
-
-
-
 
 ## [2.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.1...ast-get-values-by-key@2.2.2) (2018-12-27)
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 ## [2.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.0...ast-get-values-by-key@2.2.1) (2018-12-27)
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 # 2.2.0 (2018-12-26)
-
 
 ### Features
 
-* supplement the getter's result with path ([1594a36](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/1594a36))
-
-
-
-
+- supplement the getter's result with path ([1594a36](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/1594a36))
 
 ## 2.1.0 (2018-10-13)
 

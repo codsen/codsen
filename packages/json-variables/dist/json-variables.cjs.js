@@ -1,3 +1,12 @@
+/**
+ * json-variables
+ * Preprocessor for JSON to allow keys referencing keys
+ * Version: 7.5.8
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/json-variables
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

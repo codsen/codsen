@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-boolean-combinations
 
-
-
-
-
 ## [2.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.4...object-boolean-combinations@2.5.5) (2019-01-01)
 
 **Note:** Version bump only for package object-boolean-combinations
-
-
-
-
 
 ## [2.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.3...object-boolean-combinations@2.5.4) (2018-12-29)
 
 **Note:** Version bump only for package object-boolean-combinations
 
-
-
-
-
 ## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.2...object-boolean-combinations@2.5.3) (2018-12-29)
 
 **Note:** Version bump only for package object-boolean-combinations
-
-
-
-
 
 ## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.1...object-boolean-combinations@2.5.2) (2018-12-27)
 
 **Note:** Version bump only for package object-boolean-combinations
 
-
-
-
-
 ## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.0...object-boolean-combinations@2.5.1) (2018-12-27)
 
 **Note:** Version bump only for package object-boolean-combinations
 
-
-
-
-
 # 2.5.0 (2018-12-26)
-
 
 ### Features
 
-* allow any types in override object key values ([af4f99d](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/af4f99d))
-
-
-
-
+- allow any types in override object key values ([af4f99d](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/af4f99d))
 
 ## 2.4.0 (2018-10-24)
 

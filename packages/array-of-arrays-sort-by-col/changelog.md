@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
 
-
-
-
-
 ## [2.4.5](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.4...array-of-arrays-sort-by-col@2.4.5) (2019-01-01)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
-
-
-
-
 
 ## [2.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.3...array-of-arrays-sort-by-col@2.4.4) (2018-12-29)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
 
-
-
-
-
 ## [2.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.2...array-of-arrays-sort-by-col@2.4.3) (2018-12-29)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
-
-
-
-
 
 ## [2.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.1...array-of-arrays-sort-by-col@2.4.2) (2018-12-27)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
 
-
-
-
-
 ## [2.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.0...array-of-arrays-sort-by-col@2.4.1) (2018-12-27)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
 
-
-
-
-
 # 2.4.0 (2018-12-26)
-
 
 ### Features
 
-* cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
-* rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
-
-
-
-
+- cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
+- rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
 
 ## 2.3.0 (2018-12-14)
 

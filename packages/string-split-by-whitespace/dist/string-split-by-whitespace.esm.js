@@ -1,3 +1,12 @@
+/**
+ * string-split-by-whitespace
+ * Split string into array by chunks of whitespace
+ * Version: 1.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace
+ */
+
 import checkTypes from 'check-types-mini';
 import within from 'ranges-is-index-within';
 
@@ -10,7 +19,6 @@ function split(str, originalOpts) {
   if (typeof str !== "string") {
     return str;
   }
-  // early ending:
   if (str.trim() === "") {
     return [];
   }
@@ -30,12 +38,9 @@ function split(str, originalOpts) {
       "string-split-by-whitespace: [THROW_ID_03] The opts.ignoreRanges contains elements which are not arrays!"
     );
   }
-
-  // if reached this far, traverse and slice accordingly
   let nonWhitespaceSubStringStartsAt = null;
   const res = [];
   for (let i = 0, len = str.length; i < len; i++) {
-    // catch the first non-whitespace character
     if (
       nonWhitespaceSubStringStartsAt === null &&
       str[i].trim() !== "" &&
@@ -47,7 +52,6 @@ function split(str, originalOpts) {
     ) {
       nonWhitespaceSubStringStartsAt = i;
     }
-    // catch the first whitespace char when recording substring
     if (nonWhitespaceSubStringStartsAt !== null) {
       if (str[i].trim() === "") {
         res.push(str.slice(nonWhitespaceSubStringStartsAt, i));

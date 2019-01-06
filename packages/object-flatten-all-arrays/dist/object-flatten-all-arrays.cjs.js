@@ -1,3 +1,12 @@
+/**
+ * object-flatten-all-arrays
+ * Merge and flatten any arrays found in all values within plain objects
+ * Version: 4.3.7
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

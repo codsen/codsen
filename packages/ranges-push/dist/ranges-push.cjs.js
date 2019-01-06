@@ -1,3 +1,12 @@
+/**
+ * ranges-push
+ * Manage the array of slices referencing the index ranges within the string
+ * Version: 2.13.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

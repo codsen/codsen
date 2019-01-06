@@ -7,33 +7,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package email-homey
 
-
-
-
-
 ## [2.1.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.2...email-homey@2.1.3) (2018-12-29)
 
 **Note:** Version bump only for package email-homey
-
-
-
-
 
 ## [2.1.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.1...email-homey@2.1.2) (2018-12-27)
 
 **Note:** Version bump only for package email-homey
 
-
-
-
-
 ## 2.1.1 (2018-12-26)
 
 **Note:** Version bump only for package email-homey
-
-
-
-
 
 ## 2.1.0 (2018-06-21)
 

@@ -27,14 +27,14 @@
     ],
     "verbose": true
   },
-  "clinton": {
-    "rules": {
-      "xo": 0
-    }
-  },
   "esm": {
     "await": true,
     "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
   },
   "keywords": [
     "gulp",
@@ -126,7 +126,9 @@
       "rightFloatedBadge": []
     },
     "licence": {
-      "extras": []
+      "extras": [
+        ""
+      ]
     },
     "npmignore": {
       "badFiles": [],
@@ -143,12 +145,22 @@
       "travisVersionsOverride": []
     }
   },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
   "dependencies": {
     "email-remove-unused-css": "^4.7.0",
     "gulp-util": "^3.0.8"
   },
   "devDependencies": {
-    "codacy-coverage": "^3.3.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "babel-plugin-istanbul": "^5.1.0",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",

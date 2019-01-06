@@ -20,10 +20,12 @@
     "jsrownum": "cli.js"
   },
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
-    "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js && ava"
+    "coverage": "nyc report --reporter=json-summary",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "test": "npm run lint && npm run unittest",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
+    "version": "npm run build && git add ."
   },
   "ava": {
     "compileEnhancements": false,
@@ -31,11 +33,6 @@
       "esm"
     ],
     "verbose": true
-  },
-  "clinton": {
-    "rules": {
-      "xo": 0
-    }
   },
   "esm": {
     "await": true,
@@ -163,6 +160,13 @@
       "travisVersionsOverride": []
     }
   },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
   "dependencies": {
     "fs-extra": "^7.0.1",
     "globby": "^8.0.1",
@@ -175,9 +179,12 @@
     "write-file-atomic": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
+    "babel-plugin-istanbul": "^5.1.0",
     "codacy-coverage": "^3.3.0",
-    "coveralls": "^3.0.2",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",

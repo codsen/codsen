@@ -1,3 +1,12 @@
+/**
+ * ast-contains-only-empty-space
+ * Returns Boolean depending if passed AST contain only empty space
+ * Version: 1.4.8
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space
+ */
+
 'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }

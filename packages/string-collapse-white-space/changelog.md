@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-collapse-white-space
 
-
-
-
-
 ## [4.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.4...string-collapse-white-space@4.3.5) (2019-01-01)
 
 **Note:** Version bump only for package string-collapse-white-space
-
-
-
-
 
 ## [4.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.3...string-collapse-white-space@4.3.4) (2018-12-29)
 
 **Note:** Version bump only for package string-collapse-white-space
 
-
-
-
-
 ## [4.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.2...string-collapse-white-space@4.3.3) (2018-12-29)
 
 **Note:** Version bump only for package string-collapse-white-space
-
-
-
-
 
 ## [4.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.1...string-collapse-white-space@4.3.2) (2018-12-27)
 
 **Note:** Version bump only for package string-collapse-white-space
 
-
-
-
-
 ## [4.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.0...string-collapse-white-space@4.3.1) (2018-12-27)
 
 **Note:** Version bump only for package string-collapse-white-space
 
-
-
-
-
 # 4.3.0 (2018-12-26)
-
 
 ### Features
 
-* add generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/43d7dc4))
-* opts.removeEmptyLines ([75e0671](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/75e0671))
-
-
-
-
+- add generated tests - 10000 random strings are checked to catch any false-positives ([43d7dc4](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/43d7dc4))
+- opts.removeEmptyLines ([75e0671](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/75e0671))
 
 ## 4.2.0 (2018-10-25)
 

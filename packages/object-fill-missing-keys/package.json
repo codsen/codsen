@@ -19,13 +19,16 @@
   "module": "dist/object-fill-missing-keys.esm.js",
   "browser": "dist/object-fill-missing-keys.umd.js",
   "scripts": {
-    "build": "rollup -c",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "rollup -c --dev --silent",
-    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint src/*.js test/*.js --fix",
+    "build": "rm -rf dist && rollup -c",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "rm -rf dist && rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
     "prepare": "npm run build",
     "pretest": "npm run build",
-    "test": "./node_modules/.bin/eslint src/*.js test/*.js && nyc ava"
+    "test": "npm run lint && npm run unittest",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
+    "version": "npm run build && git add ."
   },
   "ava": {
     "compileEnhancements": false,
@@ -33,11 +36,6 @@
       "esm"
     ],
     "verbose": true
-  },
-  "clinton": {
-    "rules": {
-      "xo": 0
-    }
   },
   "esm": {
     "await": true,
@@ -181,7 +179,6 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "coveralls": "^3.0.2",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",
@@ -196,6 +193,7 @@
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^3.0.0"

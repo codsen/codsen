@@ -7,61 +7,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package chlu
 
-
-
-
-
 ## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.4...chlu@3.3.5) (2019-01-01)
 
 **Note:** Version bump only for package chlu
-
-
-
-
 
 ## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.3...chlu@3.3.4) (2018-12-29)
 
 **Note:** Version bump only for package chlu
 
-
-
-
-
 ## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.2...chlu@3.3.3) (2018-12-29)
 
 **Note:** Version bump only for package chlu
-
-
-
-
 
 ## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.1...chlu@3.3.2) (2018-12-27)
 
 **Note:** Version bump only for package chlu
 
-
-
-
-
 ## [3.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.0...chlu@3.3.1) (2018-12-27)
 
 **Note:** Version bump only for package chlu
 
-
-
-
-
 # 3.3.0 (2018-12-26)
-
 
 ### Features
 
-* Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
-* support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
-
-
-
-
+- Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
+- support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
 
 and this project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a Changelog](http://keepachangelog.com/) spec.

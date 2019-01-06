@@ -7,57 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-loose-compare
 
-
-
-
-
 ## [1.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.6...ast-loose-compare@1.3.7) (2019-01-01)
 
 **Note:** Version bump only for package ast-loose-compare
-
-
-
-
 
 ## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.5...ast-loose-compare@1.3.6) (2018-12-29)
 
 **Note:** Version bump only for package ast-loose-compare
 
-
-
-
-
 ## [1.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.4...ast-loose-compare@1.3.5) (2018-12-29)
 
 **Note:** Version bump only for package ast-loose-compare
-
-
-
-
 
 ## [1.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.3...ast-loose-compare@1.3.4) (2018-12-27)
 
 **Note:** Version bump only for package ast-loose-compare
 
-
-
-
-
 ## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.2...ast-loose-compare@1.3.3) (2018-12-27)
 
 **Note:** Version bump only for package ast-loose-compare
 
-
-
-
-
 ## 1.3.2 (2018-12-26)
 
 **Note:** Version bump only for package ast-loose-compare
-
-
-
-
 
 ## 1.3.0 (2018-10-13)
 

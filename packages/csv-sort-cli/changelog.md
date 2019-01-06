@@ -7,60 +7,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 ## [1.7.5](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.4...csv-sort-cli@1.7.5) (2019-01-01)
 
 **Note:** Version bump only for package csv-sort-cli
-
-
-
-
 
 ## [1.7.4](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.3...csv-sort-cli@1.7.4) (2018-12-29)
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 ## [1.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.2...csv-sort-cli@1.7.3) (2018-12-29)
 
 **Note:** Version bump only for package csv-sort-cli
-
-
-
-
 
 ## [1.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.1...csv-sort-cli@1.7.2) (2018-12-27)
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.0...csv-sort-cli@1.7.1) (2018-12-27)
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 # 1.7.0 (2018-12-26)
-
 
 ### Features
 
-* add unit tests for CLI operations ([3676894](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/3676894))
-
-
-
-
+- add unit tests for CLI operations ([3676894](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/3676894))
 
 ## 1.6.0 (2018-06-25)
 

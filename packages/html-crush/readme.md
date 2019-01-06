@@ -2,8 +2,8 @@
 
 > Minifies HTML/CSS: valid or broken, pure or mixed with other languages
 
+[![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
-[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -43,13 +43,13 @@ import { crush, defaults, version } from "html-crush";
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/html-crush.cjs.js` | 27 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/html-crush.esm.js` | 28 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/html-crush.umd.js` | 72 KB
+| Type                                                                                                    | Key in `package.json` | Path                     | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------ | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/html-crush.cjs.js` | 22 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 23 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 56 KB |
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## Usage
 
@@ -81,7 +81,7 @@ console.log("res:\n" + JSON.stringify(res, null, 4));
 // "
 ```
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## TLDR;
 
@@ -89,7 +89,7 @@ Let's minify any input (preferably but not necessarily HTML) without parsing, an
 
 We built this minifier so that we were able to minify email templates containing Nunjucks template literals, for example, `{% if order.price < 50 %}` (notice the bracket). Other tools on the market will fail upon first encounter of non-HTML code.
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## Features
 
@@ -101,20 +101,20 @@ This program:
 
 In short, we prioritise the support of broken or mixed-HTML support over both:
 
-1) minification amount (Kangax [html-minifier](https://www.npmjs.com/package/html-minifier) will compress more);
-2) speed
+1. minification amount (Kangax [html-minifier](https://www.npmjs.com/package/html-minifier) will compress more);
+2. speed
 
 The price we pay is, we are not able to detect an invalid HTML/CSS/JS.
 
 As a side priority, this application also takes into consideration **human-friendliness**:
 
-1) Its API (this npm library) reports progress and its GUI front-end https://htmlcrush.com utilises it to allow a responsive UI
-2) We deliberately keep options count under [7](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two)
-3) GUI also considers white and dark interfaces, use of modern toggle switches, CSS hovers to react to any interaction
-4) API (this library) considers giving all possible JavaScript use choices: CommonJS transpiled to ES5, modern untranspiled ES Modules code in ES6, and UMD transpiled to ES5 with all dependencies baked-in, all published to npm and accessible via [unpkg](https://unpkg.com/html-crush) CDN
-5) Developer friendliness - source is fully set up with `console.log`s which report the line numbers and all actions as they happen. Production builds (`dist/`) strip all logging, of course. This means it's easy to come back later or the first time and debug the code
+1. Its API (this npm library) reports progress and its GUI front-end https://htmlcrush.com utilises it to allow a responsive UI
+2. We deliberately keep options count under [7](https://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two)
+3. GUI also considers white and dark interfaces, use of modern toggle switches, CSS hovers to react to any interaction
+4. API (this library) considers giving all possible JavaScript use choices: CommonJS transpiled to ES5, modern untranspiled ES Modules code in ES6, and UMD transpiled to ES5 with all dependencies baked-in, all published to npm and accessible via [unpkg](https://unpkg.com/html-crush) CDN
+5. Developer friendliness - source is fully set up with `console.log`s which report the line numbers and all actions as they happen. Production builds (`dist/`) strip all logging, of course. This means it's easy to come back later or the first time and debug the code
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## API - Input
 
@@ -138,31 +138,31 @@ Once you get the function, `crush`, it's API is the following:
 
 If supplied input arguments are of any other types, an error will be thrown.
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## API - Output
 
 The function exported under key `crush` will return **a plain object** where you'll find log data, result string and corresponding string ranges of all actions performed:
 
-| Key's name     | Key value's type                          | Description                                        |
-| -------------- | ----------------------------------------- | -------------------------------------------------- |
-| `log`          | Plain object                              | For example, `{ timeTakenInMiliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
-| `ranges`       | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]` |
-| `result`       | String                                    | The string version where all ranges were applied to it. |
+| Key's name | Key value's type                          | Description                                                                                                                      |
+| ---------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `log`      | Plain object                              | For example, `{ timeTakenInMiliseconds: 6, originalLength: 0, cleanedLength: 0, bytesSaved: 0, percentageReducedOfOriginal: 0 }` |
+| `ranges`   | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]`               |
+| `result`   | String                                    | The string version where all ranges were applied to it.                                                                          |
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ### Optional Options Object
 
-| Options Object's key | The type of its value                   | Default | Description                                                                                                                                                                                                                                                   |
-| -------------------- | --------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {                    |                                         |         |
-| `lineLengthLimit`    | number                                  | `500`   | When removing line breaks, what is the maximum line length to keep. Relevant only when `opts.removeLineBreaks` is on                                                                                                                                           |
-| `removeIndentations` | Boolean                                 | `true`  | Should we remove indentations? The default is, yes.                                                                                                                                                                                                               |
-| `removeLineBreaks`   | Boolean                                 | `false`  | Should we remove the line breaks? The default is, yes. Enabling it automatically enables `opts.removeIndentations`.                                                                                                     |
-| `reportProgressFunc` | `null` or Boolean `false` or `function` | `null`  | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object. |
-| `breakToTheLeftOf`   | `array` of zero or more strings | `see below`  | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
-| }                    |                                         |         |
+| Options Object's key | The type of its value                   | Default     | Description                                                                                                                                                                                                                                                                          |
+| -------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| {                    |                                         |             |
+| `lineLengthLimit`    | number                                  | `500`       | When removing line breaks, what is the maximum line length to keep. Relevant only when `opts.removeLineBreaks` is on                                                                                                                                                                 |
+| `removeIndentations` | Boolean                                 | `true`      | Should we remove indentations? The default is, yes.                                                                                                                                                                                                                                  |
+| `removeLineBreaks`   | Boolean                                 | `false`     | Should we remove the line breaks? The default is, yes. Enabling it automatically enables `opts.removeIndentations`.                                                                                                                                                                  |
+| `reportProgressFunc` | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
+| `breakToTheLeftOf`   | `array` of zero or more strings         | `see below` | When any of given strings are encountered AND `removeLineBreaks` option is on, current line will be terminated. This setting is not active if `removeLineBreaks` is turned off. If you want to disable a default set, either set this key to `false` or `null` or to an empty array. |
+| }                    |                                         |             |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
 
@@ -194,7 +194,7 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
 }
 ```
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 # `opts.reportProgressFunc`
 
@@ -235,7 +235,7 @@ also,
 
 In general, when you want to minify **a mixed source code** like HTML template which contains ESP templating code (or other back-end code), you've pretty much got **no choice**: either this library or nothing. Web development-oriented libraries are all parsing, (like tried to use this library but it misbehaves, or you need a) and they will not tolerate the mixed sources. Or you'll jump over hoops to make them bypass your non-HTML/CSS parts until you aren't able to jump any more. For example, aforementioned `html-minifier` has escape latches for cheeky code in the _tag attributes_ but no matter how much you tweak its settings — it will fail sooner or later. For example, Nunjucks' `IF` statements are impossible to exclude in settings, an error is inevitable.
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## Non-deterministic unit tests
 
@@ -257,46 +257,38 @@ ava test_alt/nondeterministic.js -- --time=3s
 
 Call the file `nondeterministic.js` located in folder `test_alt` in `ava`, pass the duration in seconds you want to generate and run tests. More time, more random tests. Just number, for example `-- --time=3` means `3 milliseconds`. "s" appended means seconds, for example, `-- --time=3s`. Three minutes would be `-- --time=3m`.
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## Contributing
 
-- If you **want a new feature** in this package or you would like us to change some of its functionality, raise an [issue on this repo](https://bitbucket.org/codsen/html-crush/issues/new).
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
-- If you tried to use this library but it misbehaves, or **you need advice setting it up**, and its readme doesn't make sense, just document it and raise an [issue on this repo](https://bitbucket.org/codsen/html-crush/issues/new).
+In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
-- If you would like to **add or change some features**, just fork it, hack away, and file a pull request. We'll do our best to merge it quickly. _Prettier_ is enabled, so you don't need to worry about the code style.
+The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#markdown-header-html-crush)**
 
 ## Licence
 
-MIT License (MIT)
+MIT License
 
-Copyright © 2018 Codsen Ltd, Roy Revelt
-
-
+Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/html-crush.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/html-crush
-
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/html-crush
-
-[cov-img]: https://coveralls.io/repos/bitbucket/codsen/html-crush/badge.svg?style=flat-square&branch=master
-[cov-url]: https://coveralls.io/bitbucket/codsen/html-crush?branch=master
-
+[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/html-crush
-
 [downloads-img]: https://img.shields.io/npm/dm/html-crush.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/html-crush
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/html-crush
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/html-crush
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush

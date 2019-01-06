@@ -1,3 +1,12 @@
+/**
+ * string-collapse-white-space
+ * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
+ * Version: 4.3.6
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space
+ */
+
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import replaceSlicesArr from 'ranges-apply';
