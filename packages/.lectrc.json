@@ -71,8 +71,8 @@
     {
       "cov": {
         "alt": "Coverage",
-        "img": "https://coveralls.io/repos/bitbucket/%USERNAME%/%REPONAME%/badge.svg?style=flat-square&branch=master",
-        "url": "https://coveralls.io/bitbucket/%USERNAME%/%REPONAME%?branch=master"
+        "img": "https://img.shields.io/badge/coverage-%COVPERC%-%COVBADGECOLOR%.svg?style=flat-square",
+        "url": "https://bitbucket.org/%USERNAME%/%REPONAME%"
       }
     },
     {
