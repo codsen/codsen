@@ -50,7 +50,7 @@ function within(str, originalOpts) {
   for (var i = 0, len = str.length; i < len; i++) {
     counter += 1;
     if (str[i].codePointAt(0) > 126 || str[i].codePointAt(0) < 9 || str[i].codePointAt(0) === 11 || str[i].codePointAt(0) === 12 || str[i].codePointAt(0) > 13 && str[i].codePointAt(0) < 32) {
-      throw new Error("".concat(opts.messageOnly ? "" : "email-all-chars-within-ascii: ", "Non ascii character found at index ").concat(i, ", equal to: ").concat(str[i], ", its decimal code point is ").concat(str[i].codePointAt(0), "."));
+      throw new Error("".concat(opts.messageOnly ? "" : "email-all-chars-within-ascii: ", "Non ascii character found at index ").concat(i, ", equal to: ").concat(JSON.stringify(str[i], null, 4), ", its decimal code point is ").concat(str[i].codePointAt(0), "."));
     }
     if (counter > 997 && opts.checkLineLength) {
       throw new Error("".concat(opts.messageOnly ? "" : "email-all-chars-within-ascii: ", "Line length is beyond 999 characters!"));

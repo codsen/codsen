@@ -233,7 +233,7 @@ If you want, you can blacklist certain keys of your objects so that `opts.accept
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [ast-delete-object](https://bitbucket.org/codsen/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
+When I was coding a new major version of [ast-delete-object](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
@@ -342,4 +342,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

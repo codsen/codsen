@@ -253,9 +253,9 @@ parsedHTMLObject = delObj(parsedHTMLObject, { 'tag': 'style', 'content': {} })
 
 ## The story
 
-I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
+I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
 
-Later I stopped parsing the HTML [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes miliseconds.
+Later I stopped parsing the HTML [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes milliseconds.
 
 **[⬆ back to top](#markdown-header-ast-delete-object)**
 
@@ -293,4 +293,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

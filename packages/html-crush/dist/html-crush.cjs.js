@@ -103,7 +103,7 @@ var defaults = {
   removeIndentations: true,
   removeLineBreaks: false,
   reportProgressFunc: null,
-  breakToTheLeftOf: ["</td", "<html", "<head", "<meta", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</html", "</body", "<!--[if", "<!--<![endif"]
+  breakToTheLeftOf: ["</td", "<html", "</html", "<head", "</head", "<meta", "<table", "<script", "</script", "<!DOCTYPE", "<style", "</style", "<title", "<body", "@media", "</body", "<!--[if", "<!--<![endif"]
 };
 function isStr(something) {
   return typeof something === "string";

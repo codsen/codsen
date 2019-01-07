@@ -173,7 +173,7 @@ Boolean: `true` or `false`.
 
 ## Why we need this
 
-For example, I was working on [object-fill-missing-keys](https://bitbucket.org/codsen/object-fill-missing-keys). The library takes an object, a reference object, and fills in missing keys according to the reference. I was implementing a feature, a options switch, which let to skip filling for chosen keys if they currently contain only placeholders.
+For example, I was working on [object-fill-missing-keys](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys). The library takes an object, a reference object, and fills in missing keys according to the reference. I was implementing a feature, a options switch, which let to skip filling for chosen keys if they currently contain only placeholders.
 
 You'll need this library when you want to check, does the AST contain only certain value throughout the whole tree. Also, it can be a simple object, in which case, we'd be checking, are all values of all keys equal to something.
 
@@ -213,4 +213,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

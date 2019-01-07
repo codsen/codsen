@@ -13,7 +13,7 @@
 
 Other siblings of this package:
 
-- CLI, command-line version: [email-all-chars-within-ascii-cli](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli)
+- CLI, command-line version: [email-all-chars-within-ascii-cli](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli)
 
 ## Table of Contents
 
@@ -35,7 +35,7 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-all-chars-within-ascii.cjs.js` | 2 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-all-chars-within-ascii.cjs.js` | 3 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-all-chars-within-ascii.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-all-chars-within-ascii.umd.js` | 28 KB |
 
@@ -85,11 +85,11 @@ Options object is sanitised by [check-types-mini](https://bitbucket.org/codsen/c
 
 ### Optional Options Object's API:
 
-| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                                                                 |
-| ---------------------- | ------- | ----------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                                                                      |
+| ---------------------- | ------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                      |         |             |         |
-| `messageOnly`          | Boolean | no          | `false` | Should we not append `email-all-chars-within-ascii:` in front of each error message? Set to `true` to turn it off, like in [CLI app](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/).                       |
-| `checkLineLength`      | Boolean | no          | `true`  | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters". |
+| `messageOnly`          | Boolean | no          | `false` | Should we not append `email-all-chars-within-ascii:` in front of each error message? Set to `true` to turn it off, like in [CLI app](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/). |
+| `checkLineLength`      | Boolean | no          | `true`  | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters".      |
 | }                      |         |             |         |
 
 **[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
@@ -109,11 +109,11 @@ let res2 = within("Ą");
 
 ## Practical use
 
-I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://bitbucket.org/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, what encoding it is using to deploy emails: 7bit, 8bit, quoted-printable or base64, also, does the back-end validate and encode the unacceptable characters for you. However, I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
+I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://www.npmjs.com/package/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, what encoding it is using to deploy emails: 7bit, 8bit, quoted-printable or base64, also, does the back-end validate and encode the unacceptable characters for you. However, I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
 PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is not acceptable in templates.
 
-Check out [CLI](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/) version which you can install globally and use in your terminal.
+Check out [CLI](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/) version which you can install globally and use in your terminal.
 
 **[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
 
@@ -151,4 +151,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

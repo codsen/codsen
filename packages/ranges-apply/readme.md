@@ -129,7 +129,7 @@ For example,
 ];
 ```
 
-**PSST.** Check out [ranges-push](https://bitbucket.org/codsen/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+**PSST.** Check out [ranges-push](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
 **[⬆ back to top](#markdown-header-ranges-apply)**
 
@@ -149,7 +149,7 @@ The main thing is unit tests and edge case scenarios. Also, fancy optional featu
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
+Originally this library was part of [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
@@ -189,4 +189,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

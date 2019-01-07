@@ -142,4 +142,4 @@ List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Co
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

@@ -62,11 +62,11 @@ There is possibility that string will not cover the inverted range. For example,
 
 **rangesInvert(arr, strLen [, opts])**
 
-| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                 |
-| -------------- | ---------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/ranges-sort/) or [merged](https://bitbucket.org/codsen/ranges-merge/). |
-| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                             |
-| `opts`         | Plain object                 | no          | Optional options go here.                                                                                                                                                   |
+| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                                                                     |
+| -------------- | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort) or [merged](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge). |
+| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                                                                                 |
+| `opts`         | Plain object                 | no          | Optional options go here.                                                                                                                                                                                                       |
 
 **Output**: array of zero or more arrays (so-called _ranges_) where each consists of two or more natural number (or zero) indexes.
 
@@ -118,4 +118,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

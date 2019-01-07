@@ -26,7 +26,9 @@ const defaults = {
   breakToTheLeftOf: [
     "</td",
     "<html",
+    "</html",
     "<head",
+    "</head",
     "<meta",
     "<table",
     "<script",
@@ -37,7 +39,6 @@ const defaults = {
     "<title",
     "<body",
     "@media",
-    "</html",
     "</body",
     "<!--[if",
     "<!--<![endif"

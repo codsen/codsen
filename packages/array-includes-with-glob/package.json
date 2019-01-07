@@ -161,7 +161,6 @@
     ],
     "sourceMap": false
   },
-  "runkitExampleFilename": "runkit_example.js",
   "dependencies": {
     "matcher": "^1.1.1"
   },

@@ -112,7 +112,7 @@ console.log(
 
 ## Purpose
 
-I'm going to use it in [string-slices-array-push](https://bitbucket.org/codsen/string-slices-array-push).
+I'm going to use it in [ranges-push](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push).
 
 ## Contributing
 
@@ -146,4 +146,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

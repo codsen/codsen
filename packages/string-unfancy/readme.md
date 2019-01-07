@@ -30,7 +30,7 @@
 npm i string-unfancy
 ```
 
-> or, if you work with image `alt` attributes, check out [html-img-alt](https://bitbucket.org/codsen/html-img-alt) which uses `string-unfancy`.
+> or, if you work with image `alt` attributes, check out [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt) which uses `string-unfancy`.
 
 ```js
 // consume via a CommonJS require:
@@ -51,7 +51,7 @@ Here's what you'll get:
 
 ## Idea
 
-This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. One could say it's the opposite of [Detergent](https://bitbucket.org/codsen/detergent).
+This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. One could say it's the opposite of [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent).
 
 `string-unfancy` main purpose is to simplify the images `alt` attribute content in email templates.
 
@@ -59,7 +59,7 @@ The list of covered characters includes all kinds of single quotes, double quote
 
 Also, this library will recursively decode any HTML entities before performing the replacement.
 
-PS. If you want a higher-level tool, [html-img-alt](https://bitbucket.org/codsen/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
+PS. If you want a higher-level tool, [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
 
 **[⬆ back to top](#markdown-header-string-unfancy)**
 
@@ -162,4 +162,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

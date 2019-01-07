@@ -64,10 +64,10 @@ That's what this library does - it takes an **array of ranges** and the **length
 
 **rangesCrop(arr, strLen)**
 
-| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                 |
-| -------------- | ---------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/ranges-sort/) or [merged](https://bitbucket.org/codsen/ranges-merge/). |
-| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                             |
+| Input argument | Type                         | Obligatory? | Description                                                                                                                                                                                                                     |
+| -------------- | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort) or [merged](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge). |
+| `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                                                                                 |
 
 **Output**: array of zero or more arrays (so-called _ranges_) where each consists of two or more natural number (or zero) indexes.
 
@@ -109,4 +109,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

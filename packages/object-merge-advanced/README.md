@@ -556,5 +556,5 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [contributors-img]: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
 [all-contributors-url]: https://github.com/kentcdodds/all-contributors

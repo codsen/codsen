@@ -75,7 +75,7 @@ Imagine, you want to delete bunch of characters from a string. Like making a bun
 
 ---
 
-**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [ranges-apply](https://bitbucket.org/codsen/ranges-apply) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
+**PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
 
 **[⬆ back to top](#markdown-header-ranges-push)**
 
@@ -105,7 +105,7 @@ You can also provide an Optional Options Object when creating the class:
 | `limitLinebreaksCount`     | Number            | `1`     | By default, if whole input is whitespace or there's leading/trailing whitespace and that whitespace contains at least one line break, whole whitespace will be turned into a single linebreak. That's because default maximum is set to `1`. If you set it to `2`, if `opts.limitToBeAddedWhitespace` is on and there are no linebreaks in the whitespace, it will be turned into a single space. If there's one linebreak within whitespace, it will be turned into single line break. If there are two linebreaks, it will be turned into two consecutive linebreaks. More linebreaks will still yield the number you set, in this case, `2`. |
 | }                          |                   |         |
 
-The Optional Options Object is validated by [check-types-mini](https://bitbucket.org/codsen/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
+The Optional Options Object is validated by [check-types-mini](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini), so please behave: the settings' values have to match the API and settings object should not have any extra keys, not defined in the API. Naughtiness will cause error `throw`s. I know, it's strict, but it prevents any API misconfigurations and helps to identify some errors early-on.
 
 Here is the Optional Options Object in one place (in case you ever want to copy it):
 
@@ -124,11 +124,11 @@ You then interact with your newly-created slices class by calling its _methods_:
 
 alias - **.push**
 
-| Input argument | Type                    | Obligatory? | Description                                                                                                                |
-| -------------- | ----------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice                                                                                               |
-| `deleteTo`     | Integer, natural number | yes         | Ending index of the slice                                                                                                  |
-| `str`          | String                  | no          | If you want not only to delete but [insert](https://bitbucket.org/codsen/ranges-apply) something, put that new string here |
+| Input argument | Type                    | Obligatory? | Description                                                                                                                                           |
+| -------------- | ----------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice                                                                                                                          |
+| `deleteTo`     | Integer, natural number | yes         | Ending index of the slice                                                                                                                             |
+| `str`          | String                  | no          | If you want not only to delete but [insert](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply) something, put that new string here |
 
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
 
@@ -178,9 +178,9 @@ Result is either
 
 In theory, since `.current()` does not mutate our slices array in the memory, you could add more ranges and call `.current()` again, this time possibly with a slightly different result. However, be aware that merging will lose some of the data in the ranges.
 
-Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and became `[ [10, 20, 'bbbaaa'] ]`. Now if you use this range in [ranges-apply](https://bitbucket.org/codsen/ranges-apply) to amend the string, but then later discover that you left out the range `[12, 17, ccc]`, that is, you wanted to delete between indexes 12 and 17, and then insert `ccc`, you'll be in trouble. Since you amended your string, you can't "stick in" `ccc` between original `bbb` and `aaa` — your desired place to add `ccc`, at index 17 has been "merged" by `bbb` and `aaa`.
+Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and became `[ [10, 20, 'bbbaaa'] ]`. Now if you use this range in [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply) to amend the string, but then later discover that you left out the range `[12, 17, ccc]`, that is, you wanted to delete between indexes 12 and 17, and then insert `ccc`, you'll be in trouble. Since you amended your string, you can't "stick in" `ccc` between original `bbb` and `aaa` — your desired place to add `ccc`, at index 17 has been "merged" by `bbb` and `aaa`.
 
-**Conclusion**: complete all your operations, `add()`-ing ranges. Then, fetch your master ranges array _once_, using `.current` and feed it into [ranges-apply](https://bitbucket.org/codsen/ranges-apply). At this point don't do any more `add()`ing, or if you really want that, process the ranges you've got using [ranges-apply](https://bitbucket.org/codsen/ranges-apply), `wipe()` everything and start `add()`ing again.
+**Conclusion**: complete all your operations, `add()`-ing ranges. Then, fetch your master ranges array _once_, using `.current` and feed it into [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply). At this point don't do any more `add()`ing, or if you really want that, process the ranges you've got using [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply), `wipe()` everything and start `add()`ing again.
 
 **[⬆ back to top](#markdown-header-ranges-push)**
 
@@ -202,15 +202,15 @@ Outputs:
 
 ---
 
-PSST. Later, feed your ranges array into [ranges-apply](https://bitbucket.org/codsen/ranges-apply) to delete/replace all those ranges in your string.
+PSST. Later, feed your ranges array into [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply) to delete/replace all those ranges in your string.
 
 **[⬆ back to top](#markdown-header-ranges-push)**
 
 ## In my case
 
-Originally this library was part of [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://bitbucket.org/codsen/html-img-alt). Since then, [Detergent](https://bitbucket.org/codsen/detergent) also uses it, so its unit test wouldn't take an hour, calculating all possible combinations of the options, while input string is mutated again and again in the for a loop.
+Originally this library was part of [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), but I tore it off and placed into a separate (this) library when I needed the same function in [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt). Since then, [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) also uses it, so its unit test wouldn't take an hour, calculating all possible combinations of the options, while input string is mutated again and again in the for a loop.
 
-This library is part one of two library combo, second one being [ranges-apply](https://bitbucket.org/codsen/ranges-apply).
+This library is part one of two library combo, second one being [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply).
 
 **[⬆ back to top](#markdown-header-ranges-push)**
 
@@ -248,4 +248,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

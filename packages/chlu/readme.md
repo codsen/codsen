@@ -81,4 +81,4 @@ Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated er
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/chlu
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

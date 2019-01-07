@@ -53,9 +53,11 @@ function within(str, originalOpts) {
       throw new Error(
         `${
           opts.messageOnly ? "" : "email-all-chars-within-ascii: "
-        }Non ascii character found at index ${i}, equal to: ${
-          str[i]
-        }, its decimal code point is ${str[i].codePointAt(0)}.`
+        }Non ascii character found at index ${i}, equal to: ${JSON.stringify(
+          str[i],
+          null,
+          4
+        )}, its decimal code point is ${str[i].codePointAt(0)}.`
       );
     }
     if (counter > 997 && opts.checkLineLength) {

@@ -84,7 +84,7 @@ rangesToDelete.push(fix(brokenStr));
 // PS. The .push() above is custom method, not a Array.push(). It's named the same way because it's familiar and acts the same way. There is array underneath the Class actually, its helper functions are doing all the cleaning/sorting when values are pushed into a real, internal array.
 
 // to retrieve the current state of ranges class, use .current() method:
-// see full API at https://bitbucket.org/codsen/ranges-push/
+// see full API at https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/
 console.log(
   "current rangesToDelete.current() = " +
     JSON.stringify(rangesToDelete.current(), null, 4)
@@ -106,10 +106,10 @@ console.log(`resultStr = "${resultStr}"`);
 
 You can save time and improve the workflow by making use of other range- class libraries:
 
-- [ranges-push](https://bitbucket.org/codsen/ranges-push/src) manages ranges: sorts and merges them. Instead of pushing into an array, you push into a Class which performs all cleaning. You can fetch the current contents using `.current()` method.
-- [ranges-apply](https://bitbucket.org/codsen/ranges-apply/src) applies ranges onto a string, producing a result string: ranges without third element mean deletion, ranges with the third element mean replacement. That library does all those deletions/replacements according to a given ranges array.
+- [ranges-push](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push) manages ranges: sorts and merges them. Instead of pushing into an array, you push into a Class which performs all cleaning. You can fetch the current contents using `.current()` method.
+- [ranges-apply](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply) applies ranges onto a string, producing a result string: ranges without third element mean deletion, ranges with the third element mean replacement. That library does all those deletions/replacements according to a given ranges array.
 
-There are [other libraries](https://bitbucket.org/account/user/codsen/projects/RNG) for [cropping](https://bitbucket.org/codsen/ranges-crop/src), [sorting](https://bitbucket.org/codsen/ranges-sort/src), [merging](https://bitbucket.org/codsen/ranges-merge/src), performing regex-to-range [searches](https://bitbucket.org/codsen/ranges-regex/src) and others.
+There are [other libraries](https://bitbucket.org/account/user/codsen/projects/RNG) for [cropping](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop), [sorting](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort), [merging](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge), performing regex-to-range [searches](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex) and others.
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
@@ -132,7 +132,7 @@ Good luck putting the above in a regex and later troubleshooting it, after a few
 
 ## Practical use
 
-This library was initially part of [Detergent.js](https://bitbucket.org/codsen/detergent/) and was taken out, rewritten; its unit tests were beefed up and consolidated and appropriately organised. Almost any tool that deals with HTML can make use of this library, especially, since it **only reports what was done** (instead of returning a mutated string which is up to you to compare and see what was done). It's easy to catch false positives this way.
+This library was initially part of [Detergent.js](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) and was taken out, rewritten; its unit tests were beefed up and consolidated and appropriately organised. Almost any tool that deals with HTML can make use of this library, especially, since it **only reports what was done** (instead of returning a mutated string which is up to you to compare and see what was done). It's easy to catch false positives this way.
 
 **[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
@@ -170,4 +170,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

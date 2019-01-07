@@ -11,7 +11,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- Check out the parent library which does even more: [ast-monkey](https://bitbucket.org/codsen/ast-monkey/)
+- Check out the parent library which does even more: [ast-monkey](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/)
 
 ## Table of Contents
 
@@ -138,4 +138,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

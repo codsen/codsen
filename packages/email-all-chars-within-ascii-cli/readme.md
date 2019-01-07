@@ -12,7 +12,7 @@
 
 Other siblings of this package:
 
-- API for it: [email-all-chars-within-ascii](https://bitbucket.org/codsen/email-all-chars-within-ascii)
+- API for it: [email-all-chars-within-ascii](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii)
 
 ## TLDR; Usage
 
@@ -71,13 +71,13 @@ We don't want any invisible control characters (anything below decimal point 32)
 
 ## Practical use
 
-I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://bitbucket.org/codsen/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, because your ESP back-end _might_ encode the rogue characters for you. But it might not, and you'd be in trouble.
+I'm going to use this library to validate my email templates, as a part of final QA. In theory, all email templates should be [HTML encoded](https://www.npmjs.com/package/detergent) and have no characters outside the basic ASCII range (or invisible control characters like ETX). In practice, all depends on the server, because your ESP back-end _might_ encode the rogue characters for you. But it might not, and you'd be in trouble.
 
 I'm going to prepare for the worst and deliver all my templates ready for ANY encoding, conforming to 7bit spec: no characters beyond first 126 decimal point.
 
 PS. I'm saying 126, not 127 because 127 is "invisible" [DEL](http://www.fileformat.info/info/unicode/char/007f/index.htm) character which is not acceptable in templates.
 
-Check out [the API](https://bitbucket.org/codsen/email-all-chars-within-ascii) version which works well in Gulp environment.
+Check out [the API](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii) version which works well in Gulp environment.
 
 **[⬆ back to top](#markdown-header-email-all-chars-within-ascii-cli)**
 
@@ -113,4 +113,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

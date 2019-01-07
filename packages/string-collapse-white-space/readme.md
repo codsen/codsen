@@ -175,7 +175,7 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's wra
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
 
-I'm going to use it first in [Detergent](https://bitbucket.org/codsen/detergent), but you never know, it might prove handy in email template building in general.
+I'm going to use it first in [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent), but you never know, it might prove handy in email template building in general.
 
 **[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
@@ -213,4 +213,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

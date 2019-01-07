@@ -49,7 +49,7 @@ Take any input: nested array, nested plain object or whatever really, no matter 
 
 It does not mutate the input arguments. Operations are done on a cloned input.
 
-I needed this library to [overwrite](https://bitbucket.org/codsen/json-comb-core) all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
+I needed this library to [overwrite](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core) all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
 
 This library is well-tested and is being used in commercial projects.
 
@@ -125,4 +125,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

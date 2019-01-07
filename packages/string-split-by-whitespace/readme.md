@@ -89,7 +89,7 @@ The `opts.ignoreRanges` can be an empty array, but if it contains anything else 
 
 It works like cropping the ranges. The characters in those ranges will not be included in the result.
 
-For example, use library [string-find-heads-tails](https://bitbucket.org/codsen/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
+For example, use library [string-find-heads-tails](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
 
 ```js
 const input = "some interesting {{text}} {% and %} {{ some more }} text.";
@@ -127,7 +127,7 @@ const res2 = split(input, {
 // => ['some', 'interesting', 'text.']
 ```
 
-We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://bitbucket.org/codsen/string-find-heads-tails) output, which is in format (index numbers are only examples):
+We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails) output, which is in format (index numbers are only examples):
 
 ```js
 [
@@ -198,4 +198,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

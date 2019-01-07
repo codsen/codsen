@@ -39,7 +39,7 @@ Here's what you'll get:
 
 This library extracts the class and id names from the string and returns them all put into an array.
 
-I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) which detects and deletes the unused CSS styles.
+I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which detects and deletes the unused CSS styles.
 
 Since deleting of people's code is a risky task, a huge responsibility falls onto parts which identify _what should be deleted_, and more importantly, parts which identify _class names and id's_. That's why I extracted the `string-extract-class-names` from the `email-remove-unused-css` and set up a proper test suite.
 
@@ -131,4 +131,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

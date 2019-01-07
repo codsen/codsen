@@ -104,7 +104,7 @@ In example above, `a` and `b` are "pinned" to `1`, thus reducing the amount of c
 
 ## Overriding the combinations — in practice
 
-In practice, I use this overriding to perform the specific tests on [Detergent.js](https://bitbucket.org/codsen/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
+In practice, I use this overriding to perform the specific tests on [Detergent.js](https://bitbucket.org/codsen/codsen/src/master/packages/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
 
 - first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
 - second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
@@ -161,4 +161,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

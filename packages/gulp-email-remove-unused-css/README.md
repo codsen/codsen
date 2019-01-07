@@ -9,10 +9,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-_If you have any difficulties with the output of this plugin, please use the [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css/issues/new) issue tracker._
+_If you have any difficulties with the output of this plugin, please use the [email-comb](https://bitbucket.org/codsen/codsen/issues/new?title=email-comb%20package%20-%20put%20title%20here) issue tracker._
 
 * Online web app: [EmailComb](https://emailcomb.com)
-* The core library: [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css).
+* The core library: [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb).
 
 ## Table of Contents
 
@@ -79,7 +79,7 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 
 ## Next level
 
-If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://bitbucket.org/codsen/email-remove-unused-css) library of it instead.
+If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) library of it instead.
 
 The idea is the following: in Gulp, everything flows as a vinyl Buffer streams. You [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations, then convert it back to Buffer and place it back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
 
@@ -111,7 +111,7 @@ If you need more advanced CSS removal tools, check out [uncss](https://github.co
 
 There's also more direct competitor, [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) which uses [Cheerio](https://www.npmjs.com/package/cheerio), but:
 
-1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-remove-unused-css](https://bitbucket.org/codsen/email-remove-unused-css) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/detergent) from its [front-end](https://detergent.io).
+1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) from its [front-end](https://detergent.io).
 
 2) [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
 
@@ -154,4 +154,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-url]: https://prettier.io
 
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

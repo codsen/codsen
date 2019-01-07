@@ -11,7 +11,7 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-- If you only need traversal function, install just it: [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse)
+- If you only need traversal function, install just it: [ast-monkey-traverse](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse)
 
 ## Table of Contents
 
@@ -109,7 +109,7 @@ Method `find()` can search objects by key or by value or by both and return the 
 
 Either `opts.key` or `opts.val` or both must be present. If both are missing, `ast-monkey` will throw an error.
 
-`opts.only` is validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+`opts.only` is validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
 | Either type  | Interpreted as array-type | Interpreted as object-type |
 | ------------ | ------------------------- | -------------------------- |
@@ -477,7 +477,7 @@ Use method `del()` to delete all chosen key/value pairs from all objects found w
 
 If you set only `key`, any value will be deleted as long as `key` matches. Same with specifying only `val`. If you specify both, both will have to match; otherwise, key/value pair (in objects) will not be deleted. Since arrays won't have any `val`ues, no elements in arrays will be deleted if you set both `key` and `val`.
 
-`opts.only` values are validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
+`opts.only` values are validated via dedicated package, [util-array-object-or-both](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both). Here are the permitted values for `opts.only`, case-insensitive:
 
 | Either type  | Interpreted as array-type | Interpreted as object-type |
 | ------------ | ------------------------- | -------------------------- |
@@ -581,7 +581,7 @@ In practice, it's handy when you want to simplify the data objects. For example,
 
 ### .traverse()
 
-`traverse()` comes from a standalone library, [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse) and you can install and use it as a standalone. Since all methods depend on it, we are exporting it along all other methods. However, it "comes from outside", it's not part of this package's code and the true source of its API is on its own readme. Here, we're just reiterating how to use it.
+`traverse()` comes from a standalone library, [ast-monkey-traverse](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse) and you can install and use it as a standalone. Since all methods depend on it, we are exporting it along all other methods. However, it "comes from outside", it's not part of this package's code and the true source of its API is on its own readme. Here, we're just reiterating how to use it.
 
 `traverse()` is an inner method used by other functions. It does the actual traversal of the AST tree (or whatever input you gave, from simplest string to most complex spaghetti of nested arrays and plain objects). This ~method~ function is used via a callback function, similarly to `Array.forEach()`.
 
@@ -702,4 +702,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

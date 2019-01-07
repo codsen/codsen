@@ -123,7 +123,7 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 
 If you use this library as an internal dependency and you know the ranges upfront, it makes sense to sort them upfront, before feeding into this library and turn off the sorting here.
 
-You can wire up temporary `console.log` and use [ranges-sort](https://bitbucket.org/codsen/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
+You can wire up temporary `console.log` and use [ranges-sort](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
 
 Now you can save users' resources and turn off range sorting in this library using `opts.skipIncomingRangeSorting`.
 
@@ -298,4 +298,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

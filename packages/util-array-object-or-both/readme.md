@@ -158,9 +158,9 @@ I think the API should accept a very wide spectrum of values, so users would not
 
 I'm going to use it in:
 
-- [ast-monkey](https://bitbucket.org/codsen/ast-monkey)
-- [json-variables](https://bitbucket.org/codsen/json-variables)
-- [ast-delete-key](https://bitbucket.org/codsen/ast-delete-key)
+- [ast-monkey](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey)
+- [json-variables](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables)
+- [ast-delete-key](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-key)
 
 and others. So, it's not that niche as it might seem!
 
@@ -200,4 +200,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

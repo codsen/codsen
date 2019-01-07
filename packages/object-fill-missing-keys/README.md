@@ -46,7 +46,7 @@ Here's what you'll get:
 
 ## Purpose
 
-This library fills missing keys in a plain object according to a supplied reference object. It is driving the [json-comb-core](https://bitbucket.org/codsen/json-comb-core#enforcekeyset) method `enforceKeyset()`.
+This library fills missing keys in a plain object according to a supplied reference object. It is driving the [json-comb-core](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core) method `enforceKeyset()`.
 
 **[⬆ back to top](#markdown-header-object-fill-missing-keys)**
 
@@ -58,9 +58,9 @@ This library performs the key creation part in the JSON files' _normalisation_ o
 
 First, you take two or more plain objects, normally originating from JSON files' contents.
 
-Then, you [calculate](https://bitbucket.org/codsen/json-comb-core#getkeyset) the _schema reference_ out of them. It's a superset object of all possible keys used across the objects (your JSON files).
+Then, you [calculate](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core) the _schema reference_ out of them. It's a superset object of all possible keys used across the objects (your JSON files).
 
-Finally, you go through your plain objects second time, one-by-one and [fill missing keys](https://bitbucket.org/codsen/json-comb-core#enforcekeyset) using **this library**. It takes the plain object and your generated _schema reference_ (and optionally a custom placeholder if you don't like Boolean `false`) and creates missing keys/arrays in that plain object.
+Finally, you go through your plain objects second time, one-by-one and [fill missing keys](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core) using **this library**. It takes the plain object and your generated _schema reference_ (and optionally a custom placeholder if you don't like Boolean `false`) and creates missing keys/arrays in that plain object.
 
 ---
 
@@ -115,12 +115,12 @@ Input arguments are not mutated, inputs are cloned before being used. That's imp
 
 ### An Optional Options Object
 
-| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| ---------------------------------------------- | ----------------------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------------------------------------------- | ----------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                              |                               |                 |
-| `placeholder`                                  | Anything                      | Boolean `false` | Used only in combination with `doNotFillThesePathsIfTheyContainPlaceholders` as a means to compare do all children keys contain placeholder values. It won't patch up your reference schema objects (for performance reasons). Always make sure your reference schema object has all values [set](https://bitbucket.org/codsen/object-set-all-values-to) to be a desired `placeholder` (default placeholder is usually Boolean `false`). |
-| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                       |
-| `useNullAsExplicitFalse`                       | Boolean                       | `true`          | When filling the keys, when this setting is on if there is existing key with `null` value it won't get the value assigned to anything, even if the reference object would otherwise set it to a nested something. Under bonnet it's setting same-named options key for [object-merge-advanced](https://bitbucket.org/codsen/object-merge-advanced).                                                                                      |
+| `placeholder`                                  | Anything                      | Boolean `false` | Used only in combination with `doNotFillThesePathsIfTheyContainPlaceholders` as a means to compare do all children keys contain placeholder values. It won't patch up your reference schema objects (for performance reasons). Always make sure your reference schema object has all values [set](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to) to be a desired `placeholder` (default placeholder is usually Boolean `false`). |
+| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                                                  |
+| `useNullAsExplicitFalse`                       | Boolean                       | `true`          | When filling the keys, when this setting is on if there is existing key with `null` value it won't get the value assigned to anything, even if the reference object would otherwise set it to a nested something. Under bonnet it's setting same-named options key for [object-merge-advanced](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced).                                                                                      |
 | }                                              |                               |                 |
 
 **[⬆ back to top](#markdown-header-object-fill-missing-keys)**
@@ -303,7 +303,7 @@ console.log(
 //    }
 ```
 
-But if you turn it off, usual [rules of merging](https://bitbucket.org/codsen/object-merge-advanced#purpose) apply and null, being towards the bottom of the value priority scale, gets trumped by nearly every other type of value (not to mention a non-empty array `['z']` in an example below):
+But if you turn it off, usual [rules of merging](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced) apply and null, being towards the bottom of the value priority scale, gets trumped by nearly every other type of value (not to mention a non-empty array `['z']` in an example below):
 
 ```js
 const res1 = fillMissingKeys(
@@ -364,4 +364,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
