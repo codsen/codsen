@@ -1,7 +1,7 @@
 /**
  * ast-monkey-traverse
  * Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
- * Version: 1.4.8
+ * Version: 1.5.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse
