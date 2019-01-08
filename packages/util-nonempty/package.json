@@ -1,6 +1,6 @@
 {
   "name": "util-nonempty",
-  "version": "2.3.7",
+  "version": "2.4.0",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "license": "MIT",
   "engines": {

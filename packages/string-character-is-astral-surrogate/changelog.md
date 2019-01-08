@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/compare/string-character-is-astral-surrogate@1.4.7...string-character-is-astral-surrogate@1.5.0) (2019-01-07)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
+
+
+
+
+
 ## [1.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/compare/string-character-is-astral-surrogate@1.4.6...string-character-is-astral-surrogate@1.4.7) (2019-01-02)
 
 **Note:** Version bump only for package string-character-is-astral-surrogate

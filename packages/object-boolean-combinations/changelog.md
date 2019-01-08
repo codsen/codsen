@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.6.0) (2019-01-07)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
+
+
+
+
+
 ## [2.5.6](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.5...object-boolean-combinations@2.5.6) (2019-01-02)
 
 **Note:** Version bump only for package object-boolean-combinations
