@@ -4,9 +4,7 @@
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli",
@@ -24,8 +22,7 @@
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "test": "npm run lint && npm run unittest",
-    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
-    "version": "npm run build && git add ."
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
   },
   "ava": {
     "compileEnhancements": false,
@@ -123,10 +120,6 @@
         {
           "contents": "",
           "name": ""
-        },
-        {
-          "contents": "# This is a sample build configuration for JavaScript.\n# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.\n# Only use spaces to indent your .yml configuration.\n# -----\n# You can specify a custom docker image from Docker Hub as your build environment.\nimage: node:alpine\n\npipelines:\n  default:\n    - step:\n        caches:\n          - node\n        script: # Modify the commands below to build your repository.\n          - npm install\n          - npm test\n          - npm run coverage\n",
-          "name": "bitbucket-pipelines.yml"
         }
       ],
       "write_soft": [
@@ -184,8 +177,8 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "codacy-coverage": "^3.3.0",
-    "eslint": "^5.11.1",
+    "codacy-coverage": "^3.4.0",
+    "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.14.0",

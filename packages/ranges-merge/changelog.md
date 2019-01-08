@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.6...ranges-merge@3.9.0) (2019-01-08)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/4f00871))
 
 ## [3.8.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/compare/ranges-merge@3.8.5...ranges-merge@3.8.6) (2019-01-02)
 

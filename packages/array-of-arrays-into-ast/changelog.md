@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/compare/array-of-arrays-into-ast@1.4.7...array-of-arrays-into-ast@1.5.0) (2019-01-08)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/commits/4f00871))
 
 ## [1.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/compare/array-of-arrays-into-ast@1.4.6...array-of-arrays-into-ast@1.4.7) (2019-01-02)
 

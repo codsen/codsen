@@ -159,8 +159,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "email-all-chars-within-ascii": "^2.6.0",
+    "chalk": "^2.4.2",
+    "email-all-chars-within-ascii": "^2.5.6",
     "fs-extra": "^7.0.1",
     "globby": "^8.0.1",
     "inquirer": "^6.2.1",
@@ -175,7 +175,7 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "eslint": "^5.11.1",
+    "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.14.0",

@@ -164,8 +164,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.7.0",
-    "ast-monkey-traverse": "^1.7.0",
+    "arrayiffy-if-string": "^3.5.0",
+    "ast-monkey-traverse": "^1.5.0",
     "lodash.intersection": "^4.4.0",
     "lodash.pullall": "^4.2.0",
     "matcher": "^1.1.1",
@@ -179,7 +179,7 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "eslint": "^5.11.1",
+    "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.14.0",
@@ -189,13 +189,13 @@
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
-    "rollup": "^1.0.0",
+    "rollup": "^1.0.2",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^3.0.0"
+    "rollup-plugin-terser": "^4.0.1"
   }
 }

@@ -4,9 +4,7 @@
   "description": "like _.includes but with wildcards",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob",
@@ -170,7 +168,7 @@
     "@babel/register": "^7.0.0",
     "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
-    "eslint": "^5.11.1",
+    "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.14.0",
@@ -180,13 +178,13 @@
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
-    "rollup": "^1.0.0",
+    "rollup": "^1.0.2",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^3.0.0"
+    "rollup-plugin-terser": "^4.0.1"
   }
 }

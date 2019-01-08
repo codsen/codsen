@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/compare/ast-delete-object@1.4.8...ast-delete-object@1.5.0) (2019-01-08)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/commits/4f00871))
 
 ## [1.4.8](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/compare/ast-delete-object@1.4.7...ast-delete-object@1.4.8) (2019-01-02)
 
