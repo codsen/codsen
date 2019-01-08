@@ -456,4 +456,3 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
-[all-contributors-url]: https://github.com/kentcdodds/all-contributors
