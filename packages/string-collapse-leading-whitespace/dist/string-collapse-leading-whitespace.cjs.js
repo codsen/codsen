@@ -1,3 +1,12 @@
+/**
+ * string-collapse-leading-whitespace
+ * Collapse the leading and trailing whitespace of a string
+ * Version: 1.8.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace
+ */
+
 'use strict';
 
 function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {

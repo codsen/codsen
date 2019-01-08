@@ -1,3 +1,12 @@
+/**
+ * string-extract-class-names
+ * Extract class (or id) name from a string
+ * Version: 5.4.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names
+ */
+
 'use strict';
 
 function _typeof(obj) {

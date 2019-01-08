@@ -1,5 +1,16 @@
+/**
+ * regex-empty-conditional-comments
+ * Regular expression for matching HTML empty conditional comments
+ * Version: 1.4.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments
+ */
+
 'use strict';
 
-var main = () => /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
+var main = (function () {
+  return /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
+});
 
 module.exports = main;

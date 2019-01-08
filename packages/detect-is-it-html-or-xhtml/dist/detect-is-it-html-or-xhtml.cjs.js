@@ -1,3 +1,12 @@
+/**
+ * detect-is-it-html-or-xhtml
+ * Answers, is the string input string more an HTML or XHTML (or neither)
+ * Version: 3.5.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml
+ */
+
 'use strict';
 
 function detectIsItHTMLOrXhtml(input) {

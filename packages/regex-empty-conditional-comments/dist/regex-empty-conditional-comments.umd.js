@@ -1,11 +1,10 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global = global || self, global.regexEmptyConditionalComments = factory());
-}(this, function () { 'use strict';
+/**
+ * regex-empty-conditional-comments
+ * Regular expression for matching HTML empty conditional comments
+ * Version: 1.4.0
+ * Author: Roy Revelt, Codsen Ltd
+ * License: MIT
+ * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments
+ */
 
-	var main = () => /<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi;
-
-	return main;
-
-}));
+!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):(e=e||self).regexEmptyConditionalComments=n()}(this,function(){"use strict";return function(){return/<!(--)?\[if[^\]]*]>[<>!-\s]*<!\[endif\]\1>/gi}});

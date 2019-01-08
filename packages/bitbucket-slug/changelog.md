@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.6...bitbucket-slug@1.5.0) (2019-01-08)
+
+### Features
+
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
+
 ## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.5...bitbucket-slug@1.3.6) (2019-01-02)
 
 **Note:** Version bump only for package bitbucket-slug

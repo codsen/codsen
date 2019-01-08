@@ -1,9 +1,18 @@
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
+import cleanup from "rollup-plugin-cleanup";
+import license from "rollup-plugin-license";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
+
+const licensePiece = `${pkg.name}
+${pkg.description}
+Version: ${pkg.version}
+Author: Roy Revelt, Codsen Ltd
+License: ${pkg.license}
+Homepage: ${pkg.homepage}`;
 
 export default commandLineArgs => {
   const finalConfig = [
@@ -20,7 +29,12 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
-        commonjs()
+        commonjs(),
+        babel(),
+        terser(),
+        license({
+          banner: licensePiece
+        })
       ]
     },
 
@@ -32,6 +46,11 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
+        }),
+        babel(),
+        cleanup(),
+        license({
+          banner: licensePiece
         })
       ]
     },
@@ -44,6 +63,10 @@ export default commandLineArgs => {
       plugins: [
         strip({
           sourceMap: false
+        }),
+        cleanup(),
+        license({
+          banner: licensePiece
         })
       ]
     }

@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -113,6 +114,8 @@ JSON regex used from https://github.com/validate-io/json - Copyright © 2015. At
 [node-url]: https://www.npmjs.com/package/json-sort-cli
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli
+[cov-img]: https://img.shields.io/badge/coverage-Unknown%-red.svg?style=flat-square
+[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-sort-cli
 [downloads-img]: https://img.shields.io/npm/dm/json-sort-cli.svg?style=flat-square
@@ -120,4 +123,4 @@ JSON regex used from https://github.com/validate-io/json - Copyright © 2015. At
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli
+[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

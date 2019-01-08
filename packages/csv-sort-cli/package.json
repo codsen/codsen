@@ -24,8 +24,7 @@
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "test": "npm run lint && npm run unittest",
-    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
-    "version": "npm run build && git add ."
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
   },
   "ava": {
     "compileEnhancements": false,

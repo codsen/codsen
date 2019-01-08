@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -34,9 +35,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                              | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/arrayiffy-if-string.cjs.js` | 232 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/arrayiffy-if-string.esm.js` | 215 B |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/arrayiffy-if-string.umd.js` | 267 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/arrayiffy-if-string.cjs.js` | 518 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/arrayiffy-if-string.esm.js` | 501 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/arrayiffy-if-string.umd.js` | 553 B |
 
 **[⬆ back to top](#markdown-header-arrayiffy-if-string)**
 
@@ -94,6 +95,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/arrayiffy-if-string
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string
+[cov-img]: https://img.shields.io/badge/coverage-100%-brightgreen.svg?style=flat-square
+[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/arrayiffy-if-string
 [downloads-img]: https://img.shields.io/npm/dm/arrayiffy-if-string.svg?style=flat-square

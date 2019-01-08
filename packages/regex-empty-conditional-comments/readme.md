@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -34,9 +35,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/regex-empty-conditional-comments.cjs.js` | 104 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 87 B  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 389 B |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/regex-empty-conditional-comments.cjs.js` | 408 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 369 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 568 B |
 
 **[⬆ back to top](#markdown-header-regex-empty-conditional-comments)**
 
@@ -102,6 +103,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/regex-empty-conditional-comments
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments
+[cov-img]: https://img.shields.io/badge/coverage-100%-brightgreen.svg?style=flat-square
+[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/regex-empty-conditional-comments
 [downloads-img]: https://img.shields.io/npm/dm/regex-empty-conditional-comments.svg?style=flat-square

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/compare/ast-is-empty@1.3.8...ast-is-empty@1.4.0) (2019-01-07)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/commits/4f00871))
 
 ## [1.3.8](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/compare/ast-is-empty@1.3.7...ast-is-empty@1.3.8) (2019-01-02)
 
