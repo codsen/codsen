@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.6.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
+
+
+
+
+
 # [3.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.5.0) (2019-01-08)
 
 ### Features

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/compare/ast-is-empty@1.3.8...ast-is-empty@1.6.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/commits/4f00871))
+
+
+
+
+
 # [1.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-is-empty/compare/ast-is-empty@1.3.8...ast-is-empty@1.4.0) (2019-01-07)
 
 ### Features

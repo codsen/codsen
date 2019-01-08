@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.5.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
+
+
+
+
+
 # [5.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.4.0) (2019-01-08)
 
 ### Features

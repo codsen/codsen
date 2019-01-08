@@ -1,7 +1,7 @@
 /**
  * regex-empty-conditional-comments
  * Regular expression for matching HTML empty conditional comments
- * Version: 1.4.0
+ * Version: 1.5.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments

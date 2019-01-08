@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.6...ast-get-values-by-key@2.3.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/4f00871))
+
+
+
+
+
 ## [2.2.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.5...ast-get-values-by-key@2.2.6) (2019-01-02)
 
 **Note:** Version bump only for package ast-get-values-by-key

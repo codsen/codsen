@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy/compare/string-unfancy@3.3.7...string-unfancy@3.6.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy/commits/4f00871))
+
+
+
+
+
 ## [3.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy/compare/string-unfancy@3.3.6...string-unfancy@3.3.7) (2019-01-02)
 
 **Note:** Version bump only for package string-unfancy

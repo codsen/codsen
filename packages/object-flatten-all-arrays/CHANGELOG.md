@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.3.7...object-flatten-all-arrays@4.4.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/commits/4f00871))
+
+
+
+
+
 ## [4.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.3.6...object-flatten-all-arrays@4.3.7) (2019-01-02)
 
 **Note:** Version bump only for package object-flatten-all-arrays

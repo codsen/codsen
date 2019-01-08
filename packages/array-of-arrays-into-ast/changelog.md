@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/compare/array-of-arrays-into-ast@1.4.7...array-of-arrays-into-ast@1.5.0) (2019-01-08)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/commits/4f00871))
+
+
+
+
+
 ## [1.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-into-ast/compare/array-of-arrays-into-ast@1.4.6...array-of-arrays-into-ast@1.4.7) (2019-01-02)
 
 **Note:** Version bump only for package array-of-arrays-into-ast
