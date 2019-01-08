@@ -1,12 +1,10 @@
 {
   "name": "chlu-cli",
-  "version": "1.13.6",
+  "version": "1.14.0",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli",
@@ -23,8 +21,7 @@
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "test": "npm run lint && npm run unittest",
-    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
-    "version": "npm run build && git add ."
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
   },
   "ava": {
     "compileEnhancements": false,
@@ -163,7 +160,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chlu": "^3.3.6",
+    "chlu": "^3.5.0",
     "fs-extra": "^7.0.1",
     "meow": "^5.0.0",
     "pify": "^4.0.1",

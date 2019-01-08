@@ -1,12 +1,10 @@
 {
   "name": "chlu",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/chlu",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/chlu",
@@ -169,9 +167,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.4.8",
+    "ast-contains-only-empty-space": "^1.6.0",
     "dehumanize-date": "^2.6.2",
-    "easy-replace": "^3.3.7",
+    "easy-replace": "^3.5.0",
     "emoji-regex": "^7.0.3",
     "get-pkg-repo": "^4.1.0",
     "is-natural-number": "^4.0.1",

@@ -1,12 +1,10 @@
 {
   "name": "object-flatten-referencing",
-  "version": "4.7.0",
+  "version": "4.8.0",
   "description": "Flatten complex nested objects according to a reference objects",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing",
@@ -162,12 +160,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.6",
+    "check-types-mini": "^5.4.0",
     "is-string-int": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "matcher": "^1.1.1",
-    "str-indexes-of-plus": "^2.4.0",
+    "str-indexes-of-plus": "^2.7.0",
     "type-detect": "^4.0.8"
   },
   "devDependencies": {

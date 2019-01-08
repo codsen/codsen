@@ -1,12 +1,10 @@
 {
   "name": "ast-monkey",
-  "version": "7.7.0",
+  "version": "7.8.0",
   "description": "Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey",
@@ -170,13 +168,13 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.7.6",
-    "ast-monkey-traverse": "^1.5.0",
-    "check-types-mini": "^5.2.6",
+    "ast-compare": "^1.9.0",
+    "ast-monkey-traverse": "^1.8.0",
+    "check-types-mini": "^5.4.0",
     "is-natural-number": "^4.0.1",
     "lodash.clonedeep": "^4.5.0",
     "type-detect": "^4.0.8",
-    "util-array-object-or-both": "^2.3.7"
+    "util-array-object-or-both": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

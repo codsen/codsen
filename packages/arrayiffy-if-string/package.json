@@ -1,12 +1,10 @@
 {
   "name": "arrayiffy-if-string",
-  "version": "3.7.0",
+  "version": "3.8.0",
   "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string",

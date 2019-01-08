@@ -1,6 +1,6 @@
 {
   "name": "email-homey",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "license": "MIT",
   "engines": {

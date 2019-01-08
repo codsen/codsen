@@ -1,12 +1,10 @@
 {
   "name": "object-no-new-keys",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys",
@@ -164,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.6",
+    "check-types-mini": "^5.4.0",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {

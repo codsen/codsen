@@ -1,12 +1,10 @@
 {
   "name": "ast-loose-compare",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Compare anything: AST, objects, arrays and strings",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare",
@@ -165,7 +163,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.4.8",
+    "ast-contains-only-empty-space": "^1.6.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.isstring": "^4.0.1"
   },

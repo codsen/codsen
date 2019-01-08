@@ -1,12 +1,10 @@
 {
   "name": "json-sort-cli",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "description": "Command line app to deep sort JSON files, also dot-files as long as they are valid JSON",
   "license": "MIT",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli",
@@ -20,10 +18,11 @@
     "sortjson": "cli.js"
   },
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && ./node_modules/.bin/eslint cli.js test/*.js --fix",
-    "precommit": "npm run format && npm test",
-    "test": "./node_modules/.bin/eslint cli.js && ava"
+    "coverage": "nyc report --reporter=json-summary",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
+    "test": "npm run lint && npm run unittest",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
   },
   "ava": {
     "compileEnhancements": false,
@@ -158,7 +157,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.5.0",
+    "ast-monkey-traverse": "^1.8.0",
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "globby": "^8.0.1",

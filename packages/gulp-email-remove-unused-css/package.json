@@ -1,12 +1,10 @@
 {
   "name": "gulp-email-remove-unused-css",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css",
@@ -17,8 +15,16 @@
   },
   "main": "index-es5.js",
   "scripts": {
-    "precommit": "npm test",
-    "test": "./node_modules/.bin/eslint index.js"
+    "build": "rm -rf dist && rollup -c",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "rm -rf dist && rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "npm run lint && npm run unittest",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
+    "version": "npm run build && git add ."
   },
   "ava": {
     "compileEnhancements": false,

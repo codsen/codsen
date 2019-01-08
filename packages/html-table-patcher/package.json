@@ -4,9 +4,7 @@
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher",

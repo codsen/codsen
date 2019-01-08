@@ -3,16 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.4.0) (2019-01-08)
-
+# [3.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.5.0) (2019-01-08)
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
 
+# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.4.0) (2019-01-08)
 
+### Features
 
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
 
 ## [3.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.5...chlu@3.3.6) (2019-01-02)
 

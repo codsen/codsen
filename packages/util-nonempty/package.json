@@ -1,12 +1,10 @@
 {
   "name": "util-nonempty",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty",

@@ -1,12 +1,10 @@
 {
   "name": "json-comb-core",
-  "version": "6.2.7",
+  "version": "6.3.0",
   "description": "The inner core of json-comb",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core",
@@ -164,14 +162,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.6",
+    "check-types-mini": "^5.4.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
-    "object-fill-missing-keys": "^7.5.6",
-    "object-flatten-all-arrays": "^4.3.7",
-    "object-merge-advanced": "^10.6.6",
-    "object-no-new-keys": "^2.3.7",
-    "object-set-all-values-to": "^3.4.0",
+    "object-fill-missing-keys": "^7.7.0",
+    "object-flatten-all-arrays": "^4.5.0",
+    "object-merge-advanced": "^10.8.0",
+    "object-no-new-keys": "^2.5.0",
+    "object-set-all-values-to": "^3.7.0",
     "p-map": "^2.0.0",
     "p-one": "^1.0.0",
     "p-reduce": "^1.0.0",

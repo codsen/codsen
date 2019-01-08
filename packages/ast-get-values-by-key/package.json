@@ -1,12 +1,10 @@
 {
   "name": "ast-get-values-by-key",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key",
@@ -170,7 +168,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.5.0",
+    "ast-monkey-traverse": "^1.8.0",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^1.1.1"
   },

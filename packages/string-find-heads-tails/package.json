@@ -1,12 +1,10 @@
 {
   "name": "string-find-heads-tails",
-  "version": "3.11.0",
+  "version": "3.12.0",
   "description": "Search for string pairs. A special case of string search algorithm.",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails",
@@ -162,14 +160,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.5.0",
-    "check-types-mini": "^5.2.6",
+    "arrayiffy-if-string": "^3.8.0",
+    "check-types-mini": "^5.4.0",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.2",
-    "string-match-left-right": "^3.6.6"
+    "string-match-left-right": "^3.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

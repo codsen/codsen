@@ -1,12 +1,10 @@
 {
   "name": "color-shorthand-hex-to-six-digit",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "Convert shorthand hex color codes into full",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit",

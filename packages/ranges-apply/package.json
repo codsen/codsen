@@ -1,12 +1,10 @@
 {
   "name": "ranges-apply",
-  "version": "2.9.6",
+  "version": "2.10.0",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply",
@@ -165,7 +163,7 @@
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^3.8.6"
+    "ranges-merge": "^3.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

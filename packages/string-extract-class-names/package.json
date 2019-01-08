@@ -1,12 +1,10 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names",

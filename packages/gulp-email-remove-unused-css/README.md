@@ -11,8 +11,8 @@
 
 _If you have any difficulties with the output of this plugin, please use the [email-comb](https://bitbucket.org/codsen/codsen/issues/new?title=email-comb%20package%20-%20put%20title%20here) issue tracker._
 
-* Online web app: [EmailComb](https://emailcomb.com)
-* The core library: [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb).
+- Online web app: [EmailComb](https://emailcomb.com)
+- The core library: [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb).
 
 ## Table of Contents
 
@@ -34,28 +34,39 @@ npm i gulp-email-remove-unused-css
 ## Example
 
 ```js
-var gulp = require('gulp');
-var remove = require('gulp-email-remove-unused-css');
+var gulp = require("gulp");
+var remove = require("gulp-email-remove-unused-css");
 
-gulp.task('default', function () {
-  return gulp.src('src/*.html')
-    .pipe(remove({
-      whitelist: ['.ExternalClass', '.ReadMsgBody', '.yshortcuts', '.Mso*', '.maxwidth-apple-mail-fix', '#outlook', '.module-*']
-    }))
-    .pipe(gulp.dest('./dist'));
+gulp.task("default", function() {
+  return gulp
+    .src("src/*.html")
+    .pipe(
+      remove({
+        whitelist: [
+          ".ExternalClass",
+          ".ReadMsgBody",
+          ".yshortcuts",
+          ".Mso*",
+          ".maxwidth-apple-mail-fix",
+          "#outlook",
+          ".module-*"
+        ]
+      })
+    )
+    .pipe(gulp.dest("./dist"));
 });
 ```
 
-**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+**[⬆ back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ### Options
 
 Since the main purpose of this library is to clean **email** HTML, it needs to cater for email code specifics. One of them is that CSS styles will contain fix or hack styles, meant for email software. For example, here are few of them:
 
 ```html
-#outlook a { padding:0; }
-.ExternalClass, .ReadMsgBody { width:100%; }
-.ExternalClass, .ExternalClass div, .ExternalClass font, .ExternalClass p, .ExternalClass span, .ExternalClass td { line-height:100%; }
+#outlook a { padding:0; } .ExternalClass, .ReadMsgBody { width:100%; }
+.ExternalClass, .ExternalClass div, .ExternalClass font, .ExternalClass p,
+.ExternalClass span, .ExternalClass td { line-height:100%; }
 ```
 
 Obviously, you will not be using the above classes and id's in the `<body>` of your HTML code, what means they would get removed — they are present in `<head>` only. To avoid that, pass the classes and id's in the _whitelist_ key's value, as an array, for example:
@@ -75,7 +86,7 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 // => all class names that begin with ".module-" will not be touched by this library.
 ```
 
-**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+**[⬆ back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ## Next level
 
@@ -101,7 +112,7 @@ gulp.task('build', () => {
 }))
 ```
 
-**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+**[⬆ back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ## Regarding removing unused CSS from web pages & competition
 
@@ -111,24 +122,24 @@ If you need more advanced CSS removal tools, check out [uncss](https://github.co
 
 There's also more direct competitor, [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) which uses [Cheerio](https://www.npmjs.com/package/cheerio), but:
 
-1) `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) from its [front-end](https://detergent.io).
+1. `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) from its [front-end](https://detergent.io).
 
-2) [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
+2. [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
 
-**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+**[⬆ back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ## Contributing
 
-* If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here).
-* If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here). Let's discuss it.
-* If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here). We'll try to help.
-* If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=gulp-email-remove-unused-css%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#markdown-header-gulp-email-remove-unused-css)**
+**[⬆ back to top](#markdown-header-gulp-email-remove-unused-css)**
 
 ## Licence
 
@@ -136,22 +147,15 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-
-
 [node-img]: https://img.shields.io/node/v/gulp-email-remove-unused-css.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
-
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/gulp-email-remove-unused-css
-
 [downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/gulp-email-remove-unused-css
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE

@@ -1,12 +1,10 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Like String.trim() but trims only spaces",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only",
@@ -162,7 +160,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.6"
+    "check-types-mini": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

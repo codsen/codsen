@@ -3,16 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.6.6...string-collapse-leading-whitespace@1.9.0) (2019-01-08)
-
+# [1.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.6.6...string-collapse-leading-whitespace@1.10.0) (2019-01-08)
 
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
 
+# [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.6.6...string-collapse-leading-whitespace@1.9.0) (2019-01-08)
 
+### Features
 
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
 
 # [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.6.6...string-collapse-leading-whitespace@1.8.0) (2019-01-08)
 

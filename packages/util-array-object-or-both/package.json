@@ -1,12 +1,10 @@
 {
   "name": "util-array-object-or-both",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Validate and normalise user choice: array, object or both?",
   "license": "MIT",
   "engines": {
-    "node": ">=6",
-    "npm": ">=5",
-    "yarn": ">=1"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",
@@ -161,7 +159,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.2.6",
+    "check-types-mini": "^5.4.0",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6"
   },
