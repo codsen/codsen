@@ -13,19 +13,14 @@
     "name": "Roy Revelt",
     "url": "codsen.com"
   },
-  "main": "index-es5.js",
+  "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && rollup -c",
     "coverage": "nyc report --reporter=json-summary",
-    "dev": "rm -rf dist && rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lect": "lect",
-    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
-    "prepare": "npm run build",
-    "pretest": "npm run build",
+    "lint": "./node_modules/.bin/eslint **/*.js --fix",
     "test": "npm run lint && npm run unittest",
-    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
-    "version": "npm run build && git add ."
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
   },
   "ava": {
     "compileEnhancements": false,
@@ -148,7 +143,9 @@
         "enabled": true,
         "label": ""
       },
-      "devDependencies": [],
+      "devDependencies": [
+        "tempy"
+      ],
       "travisVersionsOverride": []
     }
   },
@@ -160,13 +157,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "email-remove-unused-css": "^4.7.0",
-    "gulp-util": "^3.0.8"
+    "email-comb": "^1.0.11",
+    "plugin-error": "^1.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
+    "ava": "^1.0.1",
     "babel-plugin-istanbul": "^5.1.0",
     "eslint": "^5.12.0",
     "eslint-config-prettier": "^3.3.0",
@@ -177,6 +175,9 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "esm": "^3.0.84",
-    "prettier": "^1.15.3"
+    "execa": "^1.0.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.15.3",
+    "tempy": "^0.2.1"
   }
 }

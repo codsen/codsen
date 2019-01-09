@@ -62,8 +62,6 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.1.0 (2018-05-02)
 
-### Added
-
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.

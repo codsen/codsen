@@ -167,9 +167,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.6.0",
+    "ast-contains-only-empty-space": "^1.4.8",
     "dehumanize-date": "^2.6.2",
-    "easy-replace": "^3.5.0",
+    "easy-replace": "^3.3.7",
     "emoji-regex": "^7.0.3",
     "get-pkg-repo": "^4.1.0",
     "is-natural-number": "^4.0.1",
@@ -199,7 +199,7 @@
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
-    "rollup": "^1.0.2",
+    "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
@@ -208,6 +208,6 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^4.0.1"
+    "rollup-plugin-terser": "^4.0.2"
   }
 }

@@ -18,7 +18,8 @@
     "cm": "git-cz",
     "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add . && lerna publish from-package --yes && git push",
     "license": "make clone-license",
-    "lect": "make run-lect"
+    "lect": "make run-lect",
+    "readme": "node ./scripts/generate-readme.js"
   },
   "devDependencies": {
     "commitizen": "^3.0.5",

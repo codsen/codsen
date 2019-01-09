@@ -1,7 +1,7 @@
 /**
  * string-split-by-whitespace
  * Split string into array by chunks of whitespace
- * Version: 1.3.7
+ * Version: 1.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace

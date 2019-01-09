@@ -163,14 +163,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.4.0",
+    "check-types-mini": "^5.2.6",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
-    "object-fill-missing-keys": "^7.7.0",
-    "object-flatten-all-arrays": "^4.5.0",
-    "object-merge-advanced": "^10.8.0",
-    "object-no-new-keys": "^2.5.0",
-    "object-set-all-values-to": "^3.7.0",
+    "object-fill-missing-keys": "^7.5.6",
+    "object-flatten-all-arrays": "^4.3.7",
+    "object-merge-advanced": "^10.6.6",
+    "object-no-new-keys": "^2.3.7",
+    "object-set-all-values-to": "^3.4.0",
     "p-map": "^2.0.0",
     "p-one": "^1.0.0",
     "p-reduce": "^1.0.0",
@@ -193,13 +193,13 @@
     "eslint-plugin-scanjs-rules": "^0.2.1",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
-    "rollup": "^1.0.2",
+    "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^4.0.1"
+    "rollup-plugin-terser": "^4.0.2"
   }
 }

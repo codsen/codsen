@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chlu": "^3.5.0",
+    "chlu": "^3.3.6",
     "fs-extra": "^7.0.1",
     "meow": "^5.0.0",
     "pify": "^4.0.1",

@@ -159,7 +159,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "email-all-chars-within-ascii": "^2.7.0",
+    "email-all-chars-within-ascii": "^2.5.6",
     "fs-extra": "^7.0.1",
     "globby": "^8.0.1",
     "inquirer": "^6.2.1",

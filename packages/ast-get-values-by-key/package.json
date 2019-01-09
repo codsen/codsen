@@ -168,7 +168,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey-traverse": "^1.8.0",
+    "ast-monkey-traverse": "^1.5.0",
     "lodash.clonedeep": "^4.5.0",
     "matcher": "^1.1.1"
   },
@@ -189,13 +189,13 @@
     "nyc": "^13.1.0",
     "object-path": "^0.11.4",
     "prettier": "^1.15.3",
-    "rollup": "^1.0.2",
+    "rollup": "^1.1.0",
     "rollup-plugin-babel": "^4.2.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^4.0.1"
+    "rollup-plugin-terser": "^4.0.2"
   }
 }
