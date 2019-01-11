@@ -350,7 +350,7 @@ fs.writeFile(
     )
     .replace(
       /%ISSUELINK%/gm,
-      "https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here-%20put%20issue%20title%20here"
+      "https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here"
     )
     .replace(/ - /gm, " — "),
   err => {

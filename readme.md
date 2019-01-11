@@ -162,9 +162,9 @@ You use them in the Terminal (command line), for example:
 | `util-nonempty` | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/) |
 
 ## 🤝 Contributing
-* If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here-%20put%20issue%20title%20here).
-* If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here-%20put%20issue%20title%20here). Let's discuss it.
-* If you tried to use a package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here-%20put%20issue%20title%20here). We'll try to help.
+* If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here).
+* If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here). Let's discuss it.
+* If you tried to use a package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here). We'll try to help.
 * If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
