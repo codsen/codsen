@@ -63,9 +63,11 @@ function urlize(something) {
 }
 
 function row(lib, webApp) {
-  return `| \`${lib}\` | ${getDescr(lib)} |${
-    webApp ? ` ${urlize(webApps[lib])} |` : ""
-  } ${getNpm(lib)} | ${bucket(lib)} |`;
+  return `| [\`${lib}\`](https://bitbucket.org/codsen/codsen/src/master/packages/${lib}/) | ${getDescr(
+    lib
+  )} |${webApp ? ` ${urlize(webApps[lib])} |` : ""} ${getNpm(lib)} | ${bucket(
+    lib
+  )} |`;
 }
 
 function topRow(webapp) {
