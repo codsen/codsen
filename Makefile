@@ -1,6 +1,3 @@
-clone-license:
-	./scripts/clone-license.sh
-
 run-lect:
 	./scripts/run-lect.sh
 

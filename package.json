@@ -1,40 +1,54 @@
 {
   "name": "codsen",
-  "private": true,
   "license": "MIT",
+  "private": true,
   "engines": {
-    "npm": ">=5.6.0",
-    "node": ">=8.9"
+    "node": ">=8.9",
+    "npm": ">=5.6.0"
   },
   "repository": {
     "type": "git",
     "url": "git+https://bitbucket.org/codsen/codsen.git"
-  },
-  "scripts": {
-    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
-    "wipe": "rm -rf node_modules && npx lerna clean -y",
-    "fresh": "npm run wipe && npm run bootstrap && npm run build",
-    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 1",
-    "cm": "git-cz",
-    "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add . && lerna publish from-package --yes && git push",
-    "license": "make clone-license",
-    "lect": "make run-lect",
-    "readme": "node ./scripts/generate-readme.js"
-  },
-  "devDependencies": {
-    "commitizen": "^3.0.5",
-    "cz-conventional-changelog": "^2.1.0",
-    "husky": "^1.3.1",
-    "lerna": "^3.9.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "scripts": {
+    "all:test:full": "lerna run test --bail --concurrency 1",
+    "all:test:only": "lerna run unittest --bail --concurrency 1",
+    "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
+    "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run readme:generate",
+    "cm": "git-cz",
+    "fresh": "npm run wipe && npm run bootstrap && npm run build",
+    "lect": "make run-lect",
+    "publish": "FORCE_COLOR=1 npm run readme:generate && lerna version --conventional-commits && git add . && lerna publish from-package --yes && git push",
+    "readme:edit": "npm-watch",
+    "readme:generate": "node ./scripts/generate-readme.js",
+    "wipe": "rm -rf node_modules && npx lerna clean -y"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "FORCE_COLOR=1 lerna run test --since --concurrency 2 && git add ."
     }
+  },
+  "watch": {
+    "readme:generate": "scripts/generate-readme.js"
+  },
+  "devDependencies": {
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^1.3.1",
+    "lerna": "^3.9.0",
+    "npm-watch": "^0.5.0",
+    "eslint": "^5.12.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-no-wildcard-postmessage": "^0.1.3",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-scanjs-rules": "^0.2.1",
+    "prettier": "^1.15.3"
   }
 }
