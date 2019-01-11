@@ -5,11 +5,11 @@
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#markdown-header-flagship-libraries)
-- [Range Libraries](#markdown-header-range-libraries)
-- [String Processing Libraries](#markdown-header-string-processing-libraries)
-- [Object Processing Libraries](#markdown-header-object-processing-libraries)
-- [CLI Apps](#markdown-header-cli-apps)
-- [Miscellaneous Libraries](#markdown-header-miscellaneous-libraries)
+- [Range Libraries](#markdown-header-10-range-libraries)
+- [String Processing Libraries](#markdown-header-25-string-processing-libraries)
+- [Object Processing Libraries](#markdown-header-20-object-processing-libraries)
+- [CLI Apps](#markdown-header-5-cli-apps)
+- [Miscellaneous Libraries](#markdown-header-15-miscellaneous-libraries)
 - [Licence](#markdown-header-licence)
 
 ## 🚢 Flagship Libraries

@@ -239,11 +239,19 @@ const template = `# 📦 Codsen 📦
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#markdown-header-flagship-libraries)
-- [Range Libraries](#markdown-header-range-libraries)
-- [String Processing Libraries](#markdown-header-string-processing-libraries)
-- [Object Processing Libraries](#markdown-header-object-processing-libraries)
-- [CLI Apps](#markdown-header-cli-apps)
-- [Miscellaneous Libraries](#markdown-header-miscellaneous-libraries)
+- [Range Libraries](#markdown-header-${
+  filteredRangeLibsList.length
+}-range-libraries)
+- [String Processing Libraries](#markdown-header-${
+  filteredStringLibsList.length
+}-string-processing-libraries)
+- [Object Processing Libraries](#markdown-header-${
+  filteredObjectLibsList.length
+}-object-processing-libraries)
+- [CLI Apps](#markdown-header-${filteredCliAppsList.length}-cli-apps)
+- [Miscellaneous Libraries](#markdown-header-${
+  filteredOtherLibsList.length
+}-miscellaneous-libraries)
 - [Licence](#markdown-header-licence)
 
 ## 🚢 Flagship Libraries
