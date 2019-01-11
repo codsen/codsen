@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [0.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.9...html-crush@0.7.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/4f00871))
 
 ## [0.6.9](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.8...html-crush@0.6.9) (2019-01-02)
 

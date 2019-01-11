@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.8...ast-loose-compare@1.6.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/commits/4f00871))
 
 # [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.8...ast-loose-compare@1.5.0) (2019-01-08)
 

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.6...csv-sort-cli@1.8.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/4f00871))
 
 ## [1.7.6](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.5...csv-sort-cli@1.7.6) (2019-01-02)
 

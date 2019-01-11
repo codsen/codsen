@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.15.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.6...chlu-cli@1.15.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/4f00871))
 
 ## [1.13.6](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.5...chlu-cli@1.13.6) (2019-01-02)
 

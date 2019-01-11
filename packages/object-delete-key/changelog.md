@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/compare/object-delete-key@1.5.7...object-delete-key@1.7.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/commits/4f00871))
 
 # [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/compare/object-delete-key@1.5.7...object-delete-key@1.6.0) (2019-01-08)
 

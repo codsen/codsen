@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.6...charcode-is-valid-xml-name-character@1.9.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/4f00871))
 
 ## [1.7.6](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.7.5...charcode-is-valid-xml-name-character@1.7.6) (2019-01-02)
 

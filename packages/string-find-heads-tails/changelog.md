@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [3.13.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.7...string-find-heads-tails@3.13.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
 
 # [3.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.7...string-find-heads-tails@3.12.0) (2019-01-08)
 

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.6...string-remove-duplicate-heads-tails@2.10.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/4f00871))
 
 ## [2.9.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.5...string-remove-duplicate-heads-tails@2.9.6) (2019-01-02)
 

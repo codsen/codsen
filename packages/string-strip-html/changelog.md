@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.6...string-strip-html@3.4.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/4f00871))
 
 ## [3.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.5...string-strip-html@3.3.6) (2019-01-02)
 

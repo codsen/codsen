@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.2.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/compare/array-group-str-omit-num-char@1.1.7...array-group-str-omit-num-char@1.2.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/commits/4f00871))
 
 ## [1.1.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char/compare/array-group-str-omit-num-char@1.1.6...array-group-str-omit-num-char@1.1.7) (2019-01-02)
 

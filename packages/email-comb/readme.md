@@ -442,7 +442,7 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [node-url]: https://www.npmjs.com/package/email-comb
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/email-comb
-[cov-img]: https://img.shields.io/badge/coverage-96.9%-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-96.9%25-brightgreen.svg?style=flat-square
 [cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/email-comb
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-comb
@@ -456,3 +456,4 @@ MIT License (MIT) Copyright © 2014 Caleb Brewer
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[all-contributors-url]: https://github.com/kentcdodds/all-contributors

@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package json-sort-cli
 
-
-
-
-
 ## [1.10.8](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.6...json-sort-cli@1.10.8) (2019-01-08)
 
 **Note:** Version bump only for package json-sort-cli

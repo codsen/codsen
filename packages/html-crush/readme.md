@@ -283,7 +283,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/html-crush
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
-[cov-img]: https://img.shields.io/badge/coverage-97.37%-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-97.37%25-brightgreen.svg?style=flat-square
 [cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/html-crush

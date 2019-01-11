@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [4.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.6...string-collapse-white-space@4.4.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/4f00871))
 
 ## [4.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.5...string-collapse-white-space@4.3.6) (2019-01-02)
 

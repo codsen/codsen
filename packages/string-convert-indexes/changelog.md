@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.7...string-convert-indexes@1.8.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/commits/4f00871))
 
 ## [1.6.7](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.6...string-convert-indexes@1.6.7) (2019-01-02)
 

@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.9.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
 
 # [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.8.0) (2019-01-08)
 

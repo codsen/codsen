@@ -5,14 +5,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/compare/util-nonempty@2.3.7...util-nonempty@2.8.0) (2019-01-11)
 
-
 ### Features
 
-* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/commits/4f00871))
-
-
-
-
+- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/commits/4f00871))
 
 # [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/compare/util-nonempty@2.3.7...util-nonempty@2.7.0) (2019-01-08)
 
