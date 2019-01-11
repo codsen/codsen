@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space/compare/ast-contains-only-empty-space@1.4.8...ast-contains-only-empty-space@1.7.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space/commits/4f00871))
+
+
+
+
+
 # [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space/compare/ast-contains-only-empty-space@1.4.8...ast-contains-only-empty-space@1.6.0) (2019-01-08)
 
 ### Features

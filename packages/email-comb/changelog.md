@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.0.11...email-comb@1.1.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/commits/4f00871))
+
+
+
+
+
 ## [1.0.11](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.0.10...email-comb@1.0.11) (2019-01-02)
 
 **Note:** Version bump only for package email-comb

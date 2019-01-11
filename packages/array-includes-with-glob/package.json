@@ -1,6 +1,6 @@
 {
   "name": "array-includes-with-glob",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "like _.includes but with wildcards",
   "license": "MIT",
   "engines": {

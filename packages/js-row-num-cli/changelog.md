@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/compare/js-row-num-cli@1.3.6...js-row-num-cli@1.4.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/4f00871))
+
+
+
+
+
 ## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/compare/js-row-num-cli@1.3.5...js-row-num-cli@1.3.6) (2019-01-02)
 
 **Note:** Version bump only for package js-row-num-cli

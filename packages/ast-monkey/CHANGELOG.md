@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.8...ast-monkey@7.9.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/commits/4f00871))
+
+
+
+
+
 # [7.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.8...ast-monkey@7.8.0) (2019-01-08)
 
 ### Features

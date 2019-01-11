@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.5...array-includes-with-glob@2.10.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f00871))
+
+
+
+
+
 # [2.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.5...array-includes-with-glob@2.9.0) (2019-01-08)
 
 ### Features

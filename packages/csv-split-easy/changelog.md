@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.7...csv-split-easy@2.5.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/commits/4f00871))
+
+
+
+
+
 ## [2.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.6...csv-split-easy@2.4.7) (2019-01-02)
 
 **Note:** Version bump only for package csv-split-easy

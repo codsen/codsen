@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.9.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
+
+
+
+
+
 # [4.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.8.0) (2019-01-08)
 
 ### Features

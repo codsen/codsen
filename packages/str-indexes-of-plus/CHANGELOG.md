@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.8.0) (2019-01-11)
+
+
+### Features
+
+* Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
+
+
+
+
+
 # [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.7.0) (2019-01-08)
 
 ### Features
