@@ -1,6 +1,6 @@
 {
   "name": "csv-sort",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Sorts double-entry bookkeeping CSV coming from internet banking",
   "license": "MIT",
   "engines": {
@@ -168,7 +168,7 @@
   },
   "dependencies": {
     "bignumber.js": "^8.0.1",
-    "csv-split-easy": "^2.5.0",
+    "csv-split-easy": "^2.5.1",
     "is-numeric": "^0.0.9",
     "lodash.pull": "^4.1.0",
     "ordinal": "^1.0.2"

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.8.0...object-set-all-values-to@3.8.1) (2019-01-13)
+
+**Note:** Version bump only for package object-set-all-values-to
+
+
+
+
+
 # [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.3.5...object-set-all-values-to@3.8.0) (2019-01-11)
 
 ### Features

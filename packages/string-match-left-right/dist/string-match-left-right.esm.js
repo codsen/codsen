@@ -1,7 +1,7 @@
 /**
  * string-match-left-right
  * Do substrings match what's on the left or right of a given index?
- * Version: 3.9.0
+ * Version: 3.9.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right

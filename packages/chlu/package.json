@@ -1,6 +1,6 @@
 {
   "name": "chlu",
-  "version": "3.6.0",
+  "version": "3.6.1",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -168,9 +168,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-contains-only-empty-space": "^1.7.0",
+    "ast-contains-only-empty-space": "^1.7.1",
     "dehumanize-date": "^2.6.2",
-    "easy-replace": "^3.6.0",
+    "easy-replace": "^3.6.1",
     "emoji-regex": "^7.0.3",
     "get-pkg-repo": "^4.1.0",
     "is-natural-number": "^4.0.1",

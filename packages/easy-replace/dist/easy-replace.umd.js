@@ -1,7 +1,7 @@
 /**
  * easy-replace
  * Replace strings with optional lookarounds, but without regexes
- * Version: 3.6.0
+ * Version: 3.6.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace

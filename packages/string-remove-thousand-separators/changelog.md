@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-thousand-separators/compare/string-remove-thousand-separators@2.5.0...string-remove-thousand-separators@2.5.1) (2019-01-13)
+
+**Note:** Version bump only for package string-remove-thousand-separators
+
+
+
+
+
 # [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-thousand-separators/compare/string-remove-thousand-separators@2.4.7...string-remove-thousand-separators@2.5.0) (2019-01-11)
 
 ### Features

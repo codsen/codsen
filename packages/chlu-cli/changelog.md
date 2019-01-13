@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.15.0...chlu-cli@1.15.1) (2019-01-13)
+
+**Note:** Version bump only for package chlu-cli
+
+
+
+
+
 # [1.15.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.6...chlu-cli@1.15.0) (2019-01-11)
 
 ### Features

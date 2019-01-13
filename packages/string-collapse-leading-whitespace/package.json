@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-leading-whitespace",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Collapse the leading and trailing whitespace of a string",
   "license": "MIT",
   "engines": {

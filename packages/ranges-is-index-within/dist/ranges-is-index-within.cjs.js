@@ -1,7 +1,7 @@
 /**
  * ranges-is-index-within
  * Efficiently checks if index is within any of the given ranges
- * Version: 1.12.0
+ * Version: 1.12.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within

@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 0.7.0
+ * Version: 0.7.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
@@ -14,7 +14,7 @@ import Slices from 'ranges-push';
 import { matchRightIncl } from 'string-match-left-right';
 import expand from 'string-range-expander';
 
-var version = "0.7.0";
+var version = "0.7.1";
 
 const isArr = Array.isArray;
 const finalIndexesToDelete = new Slices({ limitToBeAddedWhitespace: true });
