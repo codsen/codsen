@@ -163,7 +163,7 @@
   },
   "dependencies": {
     "fs-extra": "^7.0.1",
-    "globby": "^8.0.2",
+    "globby": "^9.0.0",
     "is-d": "^1.0.0",
     "js-row-num": "^1.2.0",
     "meow": "^5.0.0",

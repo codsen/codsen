@@ -164,7 +164,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "csv-sort": "^2.5.0",
-    "globby": "^8.0.2",
+    "globby": "^9.0.0",
     "inquirer": "^6.2.1",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
