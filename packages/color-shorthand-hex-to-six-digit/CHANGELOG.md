@@ -71,8 +71,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ Fixed false positive cases of HTML entities, for example `&#124;`. Thanks James Kupczak!
 - ✨ Rebased a little
 - ✨ Migrated to BitBucket...
-- ✨ ...which means we dropped Travis. But we kept [Coveralls]().
-- ✨ RIP BitHound, hi [Codacy]()!
+- ✨ ...which means we dropped Travis. But we kept Coveralls.
+- ✨ RIP BitHound
 
 ## 2.1.0 (2018-05-03)
 
