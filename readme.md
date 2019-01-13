@@ -176,3 +176,4 @@ The npm script within each package's `package.json` "`dev`", the `"dev": "rollup
 MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
+
