@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.9.1...ast-monkey@7.9.2) (2019-01-15)
+
+**Note:** Version bump only for package ast-monkey
+
+
+
+
+
 ## [7.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.9.0...ast-monkey@7.9.1) (2019-01-13)
 
 **Note:** Version bump only for package ast-monkey

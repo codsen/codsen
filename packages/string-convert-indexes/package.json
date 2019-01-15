@@ -1,6 +1,6 @@
 {
   "name": "string-convert-indexes",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "engines": {
@@ -160,8 +160,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-monkey": "^7.9.1",
-    "check-types-mini": "^5.5.1",
+    "ast-monkey": "^7.9.2",
+    "check-types-mini": "^5.5.2",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.clonedeep": "^4.5.0",

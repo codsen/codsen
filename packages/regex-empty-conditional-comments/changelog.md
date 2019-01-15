@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.7.1...regex-empty-conditional-comments@1.7.2) (2019-01-15)
+
+**Note:** Version bump only for package regex-empty-conditional-comments
+
+
+
+
+
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/compare/regex-empty-conditional-comments@1.7.0...regex-empty-conditional-comments@1.7.1) (2019-01-13)
 
 **Note:** Version bump only for package regex-empty-conditional-comments

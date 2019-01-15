@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/compare/object-no-new-keys@2.6.1...object-no-new-keys@2.6.2) (2019-01-15)
+
+**Note:** Version bump only for package object-no-new-keys
+
+
+
+
+
 ## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/compare/object-no-new-keys@2.6.0...object-no-new-keys@2.6.1) (2019-01-13)
 
 **Note:** Version bump only for package object-no-new-keys

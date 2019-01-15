@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.5.1...csv-sort@2.5.2) (2019-01-15)
+
+**Note:** Version bump only for package csv-sort
+
+
+
+
+
 ## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/compare/csv-sort@2.5.0...csv-sort@2.5.1) (2019-01-13)
 
 **Note:** Version bump only for package csv-sort
