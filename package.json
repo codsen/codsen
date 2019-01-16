@@ -37,6 +37,7 @@
     "readme:generate": "scripts/generate-readme.js"
   },
   "devDependencies": {
+    "@pectin/cli": "^3.0.1",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^5.12.0",
