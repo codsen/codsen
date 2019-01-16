@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-invert
 
-
-
-
-
 ## [1.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert/compare/ranges-invert@1.3.0...ranges-invert@1.3.1) (2019-01-13)
 
 **Note:** Version bump only for package ranges-invert
-
-
-
-
 
 # [1.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert/compare/ranges-invert@1.1.7...ranges-invert@1.3.0) (2019-01-11)
 

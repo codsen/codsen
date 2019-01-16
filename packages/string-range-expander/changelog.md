@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-range-expander
 
-
-
-
-
 ## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.9.0...string-range-expander@1.9.1) (2019-01-13)
 
 **Note:** Version bump only for package string-range-expander
-
-
-
-
 
 # [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.6...string-range-expander@1.9.0) (2019-01-11)
 

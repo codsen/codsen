@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package html-table-patcher
 
-
-
-
-
 ## [0.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.4.0...html-table-patcher@0.4.1) (2019-01-13)
 
 **Note:** Version bump only for package html-table-patcher
-
-
-
-
 
 # [0.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.6...html-table-patcher@0.4.0) (2019-01-11)
 

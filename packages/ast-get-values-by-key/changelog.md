@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-get-values-by-key
 
-
-
-
-
 ## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.5.0...ast-get-values-by-key@2.5.1) (2019-01-13)
 
 **Note:** Version bump only for package ast-get-values-by-key
-
-
-
-
 
 # [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.6...ast-get-values-by-key@2.5.0) (2019-01-11)
 

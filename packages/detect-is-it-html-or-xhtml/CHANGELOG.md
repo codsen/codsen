@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package detect-is-it-html-or-xhtml
 
-
-
-
-
 ## [3.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.0...detect-is-it-html-or-xhtml@3.8.1) (2019-01-13)
 
 **Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-
-
-
 
 # [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.8.0) (2019-01-11)
 

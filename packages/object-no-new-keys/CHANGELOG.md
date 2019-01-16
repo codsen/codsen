@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-no-new-keys
 
-
-
-
-
 ## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/compare/object-no-new-keys@2.6.0...object-no-new-keys@2.6.1) (2019-01-13)
 
 **Note:** Version bump only for package object-no-new-keys
-
-
-
-
 
 # [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/compare/object-no-new-keys@2.3.7...object-no-new-keys@2.6.0) (2019-01-11)
 

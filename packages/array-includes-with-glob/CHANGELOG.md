@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package array-includes-with-glob
 
-
-
-
-
 ## [2.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.10.0...array-includes-with-glob@2.10.1) (2019-01-13)
 
 **Note:** Version bump only for package array-includes-with-glob
-
-
-
-
 
 # [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.5.5...array-includes-with-glob@2.10.0) (2019-01-11)
 

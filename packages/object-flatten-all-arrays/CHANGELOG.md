@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-flatten-all-arrays
 
-
-
-
-
 ## [4.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.6.0...object-flatten-all-arrays@4.6.1) (2019-01-13)
 
 **Note:** Version bump only for package object-flatten-all-arrays
-
-
-
-
 
 # [4.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.3.7...object-flatten-all-arrays@4.6.0) (2019-01-11)
 

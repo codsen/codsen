@@ -1,42 +1,26 @@
 {
-  "scripts": {
-    "rollup": {
-      "build": "rm -rf dist && rollup -c",
-      "coverage": "nyc report --reporter=json-summary",
-      "dev": "rm -rf dist && rollup -c --dev --silent",
-      "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
-      "lect": "lect",
-      "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
-      "prepare": "npm run build",
-      "pretest": "npm run build",
-      "test": "npm run lint && npm run unittest",
-      "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
-      "version": "npm run build && git add ."
-    },
-    "cli": {
-      "coverage": "nyc report --reporter=json-summary",
-      "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
-      "lect": "lect",
-      "lint": "./node_modules/.bin/eslint **/*.js --fix",
-      "test": "npm run lint && npm run unittest",
-      "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
-    }
-  },
   "babelrc": {
     "cli": {
       "presets": [
         [
           "@babel/preset-env",
           {
+            "modules": false,
             "targets": {
               "node": "4.0"
-            },
-            "modules": false
+            }
           }
         ]
       ]
     },
     "set": {
+      "env": {
+        "test": {
+          "plugins": [
+            "istanbul"
+          ]
+        }
+      },
       "presets": [
         [
           "@babel/preset-env",
@@ -44,14 +28,7 @@
             "modules": false
           }
         ]
-      ],
-      "env": {
-        "test": {
-          "plugins": [
-            "istanbul"
-          ]
-        }
-      }
+      ]
     }
   },
   "badges": [
@@ -131,7 +108,6 @@
     }
   },
   "eslintrc": {
-    "root": true,
     "env": {
       "es6": true,
       "node": true
@@ -146,10 +122,10 @@
     },
     "plugins": [
       "ava",
-      "scanjs-rules",
       "no-unsanitized",
       "import"
     ],
+    "root": true,
     "rules": {
       "ava/assertion-arguments": "error",
       "ava/max-asserts": [
@@ -160,7 +136,6 @@
       "ava/no-cb-test": "off",
       "ava/no-duplicate-modifiers": "error",
       "ava/no-identical-title": "error",
-      "ava/no-ignored-test-files": "error",
       "ava/no-invalid-end": "error",
       "ava/no-nested-tests": "error",
       "ava/no-only-test": "error",
@@ -192,13 +167,13 @@
           ]
         }
       ],
+      "no-console": "off",
       "no-constant-condition": [
         "error",
         {
           "checkLoops": false
         }
       ],
-      "no-console": "off",
       "no-else-return": "error",
       "no-inner-declarations": "error",
       "no-unneeded-ternary": "error",
@@ -212,41 +187,6 @@
       "prefer-const": "error",
       "prefer-template": "error",
       "strict": "error",
-      "scanjs-rules/accidental_assignment": 1,
-      "scanjs-rules/assign_to_hostname": 1,
-      "scanjs-rules/assign_to_href": 1,
-      "scanjs-rules/assign_to_location": 1,
-      "scanjs-rules/assign_to_onmessage": 1,
-      "scanjs-rules/assign_to_pathname": 1,
-      "scanjs-rules/assign_to_protocol": 1,
-      "scanjs-rules/assign_to_search": 1,
-      "scanjs-rules/assign_to_src": 1,
-      "scanjs-rules/call_Function": 1,
-      "scanjs-rules/call_addEventListener": 1,
-      "scanjs-rules/call_addEventListener_deviceproximity": 1,
-      "scanjs-rules/call_addEventListener_message": 1,
-      "scanjs-rules/call_connect": 1,
-      "scanjs-rules/call_eval": 1,
-      "scanjs-rules/call_execScript": 1,
-      "scanjs-rules/call_hide": 1,
-      "scanjs-rules/call_open_remote=true": 1,
-      "scanjs-rules/call_parseFromString": 1,
-      "scanjs-rules/call_setImmediate": 1,
-      "scanjs-rules/call_setInterval": 1,
-      "scanjs-rules/call_setTimeout": 1,
-      "scanjs-rules/identifier_indexedDB": 1,
-      "scanjs-rules/identifier_localStorage": 1,
-      "scanjs-rules/identifier_sessionStorage": 1,
-      "scanjs-rules/new_Function": 1,
-      "scanjs-rules/property_addIdleObserver": 1,
-      "scanjs-rules/property_createContextualFragment": 1,
-      "scanjs-rules/property_crypto": 1,
-      "scanjs-rules/property_geolocation": 1,
-      "scanjs-rules/property_getUserMedia": 1,
-      "scanjs-rules/property_indexedDB": 1,
-      "scanjs-rules/property_localStorage": 1,
-      "scanjs-rules/property_mgmt": 1,
-      "scanjs-rules/property_sessionStorage": 1,
       "symbol-description": "error",
       "yoda": [
         "error",
@@ -256,6 +196,40 @@
         }
       ]
     }
+  },
+  "files": {
+    "delete": [
+      ".gitignore",
+      ".editorconfig",
+      ".gitattributes",
+      ".bithoundrc",
+      ".travis.yml",
+      "bitbucket-pipelines.yml"
+    ],
+    "write_hard": [
+      {
+        "contents": "",
+        "name": ""
+      },
+      {
+        "contents": "dist/\ntest/fixtures\nfixtures/\n*.json\n",
+        "name": ".prettierignore"
+      },
+      {
+        "contents": "package-lock=false\n",
+        "name": ".npmrc"
+      },
+      {
+        "contents": "MIT License\n\nCopyright (c) 2015-%YEAR% Roy Revelt and other contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+        "name": "LICENSE"
+      }
+    ],
+    "write_soft": [
+      {
+        "contents": "",
+        "name": ""
+      }
+    ]
   },
   "footer": {
     "alwaysAddTheseLinks": {
@@ -330,17 +304,6 @@
       ],
       "verbose": true
     },
-    "esm": {
-      "await": true,
-      "cjs": true
-    },
-    "nyc": {
-      "instrument": false,
-      "require": [
-        "@babel/register"
-      ],
-      "sourceMap": false
-    },
     "devDependencies": {
       "@babel/core": "^7.2.2",
       "@babel/preset-env": "^7.2.3",
@@ -352,9 +315,7 @@
       "eslint-plugin-ava": "^5.1.1",
       "eslint-plugin-import": "^2.14.0",
       "eslint-plugin-no-unsanitized": "^3.0.2",
-      "eslint-plugin-no-wildcard-postmessage": "^0.1.3",
       "eslint-plugin-prettier": "^3.0.1",
-      "eslint-plugin-scanjs-rules": "^0.2.1",
       "nyc": "^13.1.0",
       "prettier": "^1.15.3",
       "rollup": "^1.0.0",
@@ -367,13 +328,24 @@
       "rollup-plugin-terser": "^3.0.0"
     },
     "engines": {
-      "node": ">=8"
+      "node": ">=8.9"
     },
-    "license": "MIT",
+    "esm": {
+      "await": true,
+      "cjs": true
+    },
     "husky": {
       "hooks": {
         "pre-commit": "npm run format && npm test"
       }
+    },
+    "license": "MIT",
+    "nyc": {
+      "instrument": false,
+      "require": [
+        "@babel/register"
+      ],
+      "sourceMap": false
     }
   },
   "rollup": {
@@ -384,6 +356,29 @@
     },
     "infoTitle": "Here's what you'll get:"
   },
+  "scripts": {
+    "cli": {
+      "coverage": "nyc report --reporter=json-summary",
+      "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+      "lect": "lect",
+      "lint": "./node_modules/.bin/eslint **/*.js --fix",
+      "test": "npm run lint && npm run unittest",
+      "unittest": "./node_modules/.bin/nyc ava && npm run coverage"
+    },
+    "rollup": {
+      "build": "rm -rf dist && rollup -c",
+      "coverage": "nyc report --reporter=json-summary",
+      "dev": "rm -rf dist && rollup -c --dev --silent",
+      "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+      "lect": "lect",
+      "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
+      "prepare": "npm run build",
+      "pretest": "npm run build",
+      "test": "npm run lint && npm run unittest",
+      "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
+      "version": "npm run build && git add ."
+    }
+  },
   "travis": false,
   "various": {
     "addBlanks": true,
@@ -392,39 +387,5 @@
       "label": "⬆  back to top",
       "url": "#markdown-header-%REPONAME%"
     }
-  },
-  "files": {
-    "delete": [
-      ".gitignore",
-      ".editorconfig",
-      ".gitattributes",
-      ".bithoundrc",
-      ".travis.yml",
-      "bitbucket-pipelines.yml"
-    ],
-    "write_hard": [
-      {
-        "name": "",
-        "contents": ""
-      },
-      {
-        "name": ".prettierignore",
-        "contents": "dist/\ntest/fixtures\nfixtures/\n*.json\n"
-      },
-      {
-        "name": ".npmrc",
-        "contents": "package-lock=false\n"
-      },
-      {
-        "name": "LICENSE",
-        "contents": "MIT License\n\nCopyright (c) 2015-%YEAR% Roy Revelt and other contributors\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE."
-      }
-    ],
-    "write_soft": [
-      {
-        "name": "",
-        "contents": ""
-      }
-    ]
   }
 }

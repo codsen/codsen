@@ -150,6 +150,136 @@ const sortedTabbedTestFileContents = [
 }`
 ];
 
+const minifiedContents = `{"root":true,"env":{"es6":true,"node":true},"extends":["eslint:recommended","plugin:prettier/recommended"],"parserOptions":{"ecmaVersion":2018,"sourceType":"module"},"plugins":["ava","scanjs-rules","no-unsanitized","import"],"rules":{"ava/assertion-arguments":"error","ava/max-asserts":["off",5],"ava/no-async-fn-without-await":"error","ava/no-cb-test":"off","ava/no-duplicate-modifiers":"error","ava/no-identical-title":"error","ava/no-invalid-end":"error","ava/no-nested-tests":"error","ava/no-only-test":"error","ava/no-skip-assert":"error","ava/no-skip-test":"error","ava/no-statement-after-end":"error","ava/no-todo-implementation":"error","ava/no-todo-test":"warn","ava/no-unknown-modifiers":"error","ava/prefer-async-await":"error","ava/prefer-power-assert":"off","ava/test-ended":"error","ava/test-title":["error","if-multiple"],"ava/use-t":"error","ava/use-t-well":"error","ava/use-test":"error","ava/use-true-false":"error","curly":"error","import/no-extraneous-dependencies":["error",{"devDependencies":["**/*test.js","test/**/*.*","rollup.config.js"]}],"no-constant-condition":["error",{"checkLoops":false}],"no-console":"off","no-else-return":"error","no-inner-declarations":"error","no-unneeded-ternary":"error","no-useless-return":"error","no-var":"error","one-var":["error","never"],"prefer-arrow-callback":"error","prefer-const":"error","prefer-template":"error","strict":"error","scanjs-rules/accidental_assignment":1,"scanjs-rules/assign_to_hostname":1,"scanjs-rules/assign_to_href":1,"scanjs-rules/assign_to_location":1,"scanjs-rules/assign_to_onmessage":1,"scanjs-rules/assign_to_pathname":1,"scanjs-rules/assign_to_protocol":1,"scanjs-rules/assign_to_search":1,"scanjs-rules/assign_to_src":1,"scanjs-rules/call_Function":1,"scanjs-rules/call_addEventListener":1,"scanjs-rules/call_addEventListener_deviceproximity":1,"scanjs-rules/call_addEventListener_message":1,"scanjs-rules/call_connect":1,"scanjs-rules/call_eval":1,"scanjs-rules/call_execScript":1,"scanjs-rules/call_hide":1,"scanjs-rules/call_open_remote=true":1,"scanjs-rules/call_parseFromString":1,"scanjs-rules/call_setImmediate":1,"scanjs-rules/call_setInterval":1,"scanjs-rules/call_setTimeout":1,"scanjs-rules/identifier_indexedDB":1,"scanjs-rules/identifier_localStorage":1,"scanjs-rules/identifier_sessionStorage":1,"scanjs-rules/new_Function":1,"scanjs-rules/property_addIdleObserver":1,"scanjs-rules/property_createContextualFragment":1,"scanjs-rules/property_crypto":1,"scanjs-rules/property_geolocation":1,"scanjs-rules/property_getUserMedia":1,"scanjs-rules/property_indexedDB":1,"scanjs-rules/property_localStorage":1,"scanjs-rules/property_mgmt":1,"scanjs-rules/property_sessionStorage":1,"symbol-description":"error","yoda":["error","never",{"exceptRange":true}]}}`;
+
+const prettifiedContents = `{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "ava",
+    "scanjs-rules",
+    "no-unsanitized",
+    "import"
+  ],
+  "root": true,
+  "rules": {
+    "ava/assertion-arguments": "error",
+    "ava/max-asserts": [
+      "off",
+      5
+    ],
+    "ava/no-async-fn-without-await": "error",
+    "ava/no-cb-test": "off",
+    "ava/no-duplicate-modifiers": "error",
+    "ava/no-identical-title": "error",
+    "ava/no-invalid-end": "error",
+    "ava/no-nested-tests": "error",
+    "ava/no-only-test": "error",
+    "ava/no-skip-assert": "error",
+    "ava/no-skip-test": "error",
+    "ava/no-statement-after-end": "error",
+    "ava/no-todo-implementation": "error",
+    "ava/no-todo-test": "warn",
+    "ava/no-unknown-modifiers": "error",
+    "ava/prefer-async-await": "error",
+    "ava/prefer-power-assert": "off",
+    "ava/test-ended": "error",
+    "ava/test-title": [
+      "error",
+      "if-multiple"
+    ],
+    "ava/use-t": "error",
+    "ava/use-t-well": "error",
+    "ava/use-test": "error",
+    "ava/use-true-false": "error",
+    "curly": "error",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*test.js",
+          "test/**/*.*",
+          "rollup.config.js"
+        ]
+      }
+    ],
+    "no-console": "off",
+    "no-constant-condition": [
+      "error",
+      {
+        "checkLoops": false
+      }
+    ],
+    "no-else-return": "error",
+    "no-inner-declarations": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "one-var": [
+      "error",
+      "never"
+    ],
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "scanjs-rules/accidental_assignment": 1,
+    "scanjs-rules/assign_to_hostname": 1,
+    "scanjs-rules/assign_to_href": 1,
+    "scanjs-rules/assign_to_location": 1,
+    "scanjs-rules/assign_to_onmessage": 1,
+    "scanjs-rules/assign_to_pathname": 1,
+    "scanjs-rules/assign_to_protocol": 1,
+    "scanjs-rules/assign_to_search": 1,
+    "scanjs-rules/assign_to_src": 1,
+    "scanjs-rules/call_Function": 1,
+    "scanjs-rules/call_addEventListener": 1,
+    "scanjs-rules/call_addEventListener_deviceproximity": 1,
+    "scanjs-rules/call_addEventListener_message": 1,
+    "scanjs-rules/call_connect": 1,
+    "scanjs-rules/call_eval": 1,
+    "scanjs-rules/call_execScript": 1,
+    "scanjs-rules/call_hide": 1,
+    "scanjs-rules/call_open_remote=true": 1,
+    "scanjs-rules/call_parseFromString": 1,
+    "scanjs-rules/call_setImmediate": 1,
+    "scanjs-rules/call_setInterval": 1,
+    "scanjs-rules/call_setTimeout": 1,
+    "scanjs-rules/identifier_indexedDB": 1,
+    "scanjs-rules/identifier_localStorage": 1,
+    "scanjs-rules/identifier_sessionStorage": 1,
+    "scanjs-rules/new_Function": 1,
+    "scanjs-rules/property_addIdleObserver": 1,
+    "scanjs-rules/property_createContextualFragment": 1,
+    "scanjs-rules/property_crypto": 1,
+    "scanjs-rules/property_geolocation": 1,
+    "scanjs-rules/property_getUserMedia": 1,
+    "scanjs-rules/property_indexedDB": 1,
+    "scanjs-rules/property_localStorage": 1,
+    "scanjs-rules/property_mgmt": 1,
+    "scanjs-rules/property_sessionStorage": 1,
+    "strict": "error",
+    "symbol-description": "error",
+    "yoda": [
+      "error",
+      "never",
+      {
+        "exceptRange": true
+      }
+    ]
+  }
+}
+`;
+
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
@@ -373,7 +503,26 @@ test.serial("01.04 - silent mode", async t => {
   t.deepEqual(await processedFileContents, sortedTestFileContents);
 });
 
-test.serial("01.05 - version output mode", async t => {
+test.serial("01.05 - fixes minified dotfiles in JSON format", async t => {
+  const tempFolder = "temp";
+  fs.ensureDirSync(path.resolve(tempFolder));
+  const pathOfTheTestfile = path.join(tempFolder, ".eslintrc.json");
+
+  const processedFileContents = fs
+    .writeFile(pathOfTheTestfile, minifiedContents)
+    .then(() => execa("./cli.js", [tempFolder, ".eslintrc.json"]))
+    .then(() => fs.readFile(pathOfTheTestfile, "utf8"))
+    .then(received =>
+      execa
+        .shell(`rm -rf ${path.join(__dirname, "../temp")}`)
+        .then(() => received)
+    )
+    .catch(err => t.fail(err));
+
+  t.deepEqual(await processedFileContents, prettifiedContents);
+});
+
+test.serial("01.06 - version output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-v"]);
   t.is(reportedVersion1.stdout, pack.version);
 
@@ -381,7 +530,7 @@ test.serial("01.05 - version output mode", async t => {
   t.is(reportedVersion2.stdout, pack.version);
 });
 
-test.serial("01.06 - help output mode", async t => {
+test.serial("01.07 - help output mode", async t => {
   const reportedVersion1 = await execa("./cli.js", ["-h"]);
   t.regex(reportedVersion1.stdout, /Usage/);
   t.regex(reportedVersion1.stdout, /Options/);
@@ -393,7 +542,7 @@ test.serial("01.06 - help output mode", async t => {
   t.regex(reportedVersion2.stdout, /Example/);
 });
 
-test.serial("01.07 - no files found in the given directory", async t => {
+test.serial("01.08 - no files found in the given directory", async t => {
   // fetch us a random temp folder
   // const tempFolder = tempy.directory();
   const tempFolder = "temp";

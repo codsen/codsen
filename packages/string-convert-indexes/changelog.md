@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-convert-indexes
 
-
-
-
-
 ## [1.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.8.0...string-convert-indexes@1.8.1) (2019-01-13)
 
 **Note:** Version bump only for package string-convert-indexes
-
-
-
-
 
 # [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes/compare/string-convert-indexes@1.6.7...string-convert-indexes@1.8.0) (2019-01-11)
 

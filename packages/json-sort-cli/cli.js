@@ -57,10 +57,6 @@ const badFiles = [
   "npm-shrinkwrap.json"
 ];
 
-// The following regex - Copyright (c) 2015. Athan Reines.
-// https://github.com/validate-io/json/blob/master/lib/index.js
-const re = /^\{[\s\S]*\}$|^\[[\s\S]*\]$/;
-
 // FUNCTIONS
 // -----------------------------------------------------------------------------
 
@@ -83,16 +79,6 @@ function readSortAndWriteOverFile(oneOfPaths) {
       //     4
       //   )}`
       // );
-      if (re.test(String(filesContent))) {
-        // console.log(
-        //   `088 didn't pass the regex, return null. Content was:\n${JSON.stringify(
-        //     filesContent,
-        //     null,
-        //     4
-        //   )}`
-        // );
-        return Promise.resolve(null);
-      }
       try {
         // try to parse JSON
         parsedJson = JSON.parse(filesContent);

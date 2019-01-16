@@ -1,58 +1,58 @@
 {
-  "root":true,
-  "env":{
-    "es6":true,
-    "node":true
+  "env": {
+    "es6": true,
+    "node": true
   },
-  "extends":[
+  "extends": [
     "eslint:recommended",
     "plugin:prettier/recommended"
   ],
-  "parserOptions":{
-    "ecmaVersion":2018,
-    "sourceType":"module"
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
-  "plugins":[
+  "plugins": [
     "import"
   ],
-  "rules":{
-    "curly":"error",
-    "import/no-extraneous-dependencies":[
+  "root": true,
+  "rules": {
+    "curly": "error",
+    "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies":[
+        "devDependencies": [
           "**/*test.js",
           "test/**/*.*",
           "rollup.config.js"
         ]
       }
     ],
-    "no-constant-condition":[
+    "no-console": "off",
+    "no-constant-condition": [
       "error",
       {
-        "checkLoops":false
+        "checkLoops": false
       }
     ],
-    "no-console":"off",
-    "no-else-return":"error",
-    "no-inner-declarations":"error",
-    "no-unneeded-ternary":"error",
-    "no-useless-return":"error",
-    "no-var":"error",
-    "one-var":[
+    "no-else-return": "error",
+    "no-inner-declarations": "error",
+    "no-unneeded-ternary": "error",
+    "no-useless-return": "error",
+    "no-var": "error",
+    "one-var": [
       "error",
       "never"
     ],
-    "prefer-arrow-callback":"error",
-    "prefer-const":"error",
-    "prefer-template":"error",
-    "strict":"error",
-    "symbol-description":"error",
-    "yoda":[
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "strict": "error",
+    "symbol-description": "error",
+    "yoda": [
       "error",
       "never",
       {
-        "exceptRange":true
+        "exceptRange": true
       }
     ]
   }

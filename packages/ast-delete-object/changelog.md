@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-delete-object
 
-
-
-
-
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/compare/ast-delete-object@1.7.0...ast-delete-object@1.7.1) (2019-01-13)
 
 **Note:** Version bump only for package ast-delete-object
-
-
-
-
 
 # [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object/compare/ast-delete-object@1.4.8...ast-delete-object@1.7.0) (2019-01-11)
 

@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package check-types-mini
 
-
-
-
-
 ## [5.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.5.0...check-types-mini@5.5.1) (2019-01-13)
 
 **Note:** Version bump only for package check-types-mini
-
-
-
-
 
 # [5.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.6...check-types-mini@5.5.0) (2019-01-11)
 

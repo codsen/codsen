@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-loose-compare
 
-
-
-
-
 ## [1.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.6.0...ast-loose-compare@1.6.1) (2019-01-13)
 
 **Note:** Version bump only for package ast-loose-compare
-
-
-
-
 
 # [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare/compare/ast-loose-compare@1.3.8...ast-loose-compare@1.6.0) (2019-01-11)
 

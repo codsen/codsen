@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ast-monkey-traverse
 
-
-
-
-
 ## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.9.0...ast-monkey-traverse@1.9.1) (2019-01-13)
 
 **Note:** Version bump only for package ast-monkey-traverse
-
-
-
-
 
 # [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.8...ast-monkey-traverse@1.9.0) (2019-01-11)
 

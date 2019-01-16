@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-boolean-combinations
 
-
-
-
-
 ## [2.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.10.0...object-boolean-combinations@2.10.1) (2019-01-13)
 
 **Note:** Version bump only for package object-boolean-combinations
-
-
-
-
 
 # [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.10.0) (2019-01-11)
 

@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-trim-spaces-only
 
-
-
-
-
 ## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.6.0...string-trim-spaces-only@2.6.1) (2019-01-13)
 
 **Note:** Version bump only for package string-trim-spaces-only
-
-
-
-
 
 # [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.6...string-trim-spaces-only@2.6.0) (2019-01-11)
 

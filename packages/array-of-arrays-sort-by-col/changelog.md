@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
 
-
-
-
-
 ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.9.0...array-of-arrays-sort-by-col@2.9.1) (2019-01-13)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col
-
-
-
-
 
 # [2.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.4.6...array-of-arrays-sort-by-col@2.9.0) (2019-01-11)
 

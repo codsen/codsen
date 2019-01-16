@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-sort-cli
 
-
-
-
-
 ## [1.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.8.0...csv-sort-cli@1.8.1) (2019-01-13)
 
 **Note:** Version bump only for package csv-sort-cli
-
-
-
-
 
 # [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/compare/csv-sort-cli@1.7.6...csv-sort-cli@1.8.0) (2019-01-11)
 

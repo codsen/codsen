@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-split-by-whitespace
 
-
-
-
-
 ## [1.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.5.0...string-split-by-whitespace@1.5.1) (2019-01-13)
 
 **Note:** Version bump only for package string-split-by-whitespace
-
-
-
-
 
 # [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.7...string-split-by-whitespace@1.5.0) (2019-01-11)
 

@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package email-comb
 
-
-
-
-
 ## [1.1.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.1.0...email-comb@1.1.1) (2019-01-13)
 
 **Note:** Version bump only for package email-comb
-
-
-
-
 
 # [1.1.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb/compare/email-comb@1.0.11...email-comb@1.1.0) (2019-01-11)
 

@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package easy-replace
 
-
-
-
-
 ## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.0...easy-replace@3.6.1) (2019-01-13)
 
 **Note:** Version bump only for package easy-replace
-
-
-
-
 
 # [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.7...easy-replace@3.6.0) (2019-01-11)
 

@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package js-row-num
 
-
-
-
-
 ## [1.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num/compare/js-row-num@1.2.0...js-row-num@1.2.1) (2019-01-13)
 
 **Note:** Version bump only for package js-row-num
-
-
-
-
 
 # [1.2.0](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num/compare/js-row-num@1.1.6...js-row-num@1.2.0) (2019-01-11)
 

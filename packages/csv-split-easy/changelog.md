@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package csv-split-easy
 
-
-
-
-
 ## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.5.0...csv-split-easy@2.5.1) (2019-01-13)
 
 **Note:** Version bump only for package csv-split-easy
-
-
-
-
 
 # [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.7...csv-split-easy@2.5.0) (2019-01-11)
 

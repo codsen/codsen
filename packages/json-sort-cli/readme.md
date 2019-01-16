@@ -108,8 +108,6 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-JSON regex used from https://github.com/validate-io/json - Copyright © 2015. Athan Reines.
-
 [node-img]: https://img.shields.io/node/v/json-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-sort-cli
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square

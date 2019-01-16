@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-delete-key
 
-
-
-
-
 ## [1.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/compare/object-delete-key@1.7.0...object-delete-key@1.7.1) (2019-01-13)
 
 **Note:** Version bump only for package object-delete-key
-
-
-
-
 
 # [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/compare/object-delete-key@1.5.7...object-delete-key@1.7.0) (2019-01-11)
 

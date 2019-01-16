@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package object-flatten-referencing
 
-
-
-
-
 ## [4.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.0...object-flatten-referencing@4.9.1) (2019-01-13)
 
 **Note:** Version bump only for package object-flatten-referencing
-
-
-
-
 
 # [4.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.9.0) (2019-01-11)
 

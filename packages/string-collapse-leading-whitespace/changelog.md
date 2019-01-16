@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-collapse-leading-whitespace
 
-
-
-
-
 ## [1.11.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.11.0...string-collapse-leading-whitespace@1.11.1) (2019-01-13)
 
 **Note:** Version bump only for package string-collapse-leading-whitespace
-
-
-
-
 
 # [1.11.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.6.6...string-collapse-leading-whitespace@1.11.0) (2019-01-11)
 

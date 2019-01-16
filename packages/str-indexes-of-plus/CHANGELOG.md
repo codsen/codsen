@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package str-indexes-of-plus
 
-
-
-
-
 ## [2.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.8.0...str-indexes-of-plus@2.8.1) (2019-01-13)
 
 **Note:** Version bump only for package str-indexes-of-plus
-
-
-
-
 
 # [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.8.0) (2019-01-11)
 

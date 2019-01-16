@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package ranges-is-index-within
 
-
-
-
-
 ## [1.12.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.12.0...ranges-is-index-within@1.12.1) (2019-01-13)
 
 **Note:** Version bump only for package ranges-is-index-within
-
-
-
-
 
 # [1.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.6...ranges-is-index-within@1.12.0) (2019-01-11)
 

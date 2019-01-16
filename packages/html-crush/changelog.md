@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package html-crush
 
-
-
-
-
 ## [0.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.0...html-crush@0.7.1) (2019-01-13)
 
 **Note:** Version bump only for package html-crush
-
-
-
-
 
 # [0.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.9...html-crush@0.7.0) (2019-01-11)
 

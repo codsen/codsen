@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-overlap-one-on-another
 
-
-
-
-
 ## [1.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-overlap-one-on-another/compare/string-overlap-one-on-another@1.4.0...string-overlap-one-on-another@1.4.1) (2019-01-13)
 
 **Note:** Version bump only for package string-overlap-one-on-another
-
-
-
-
 
 # [1.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-overlap-one-on-another/compare/string-overlap-one-on-another@1.1.7...string-overlap-one-on-another@1.4.0) (2019-01-11)
 

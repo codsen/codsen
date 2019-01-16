@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package string-match-left-right
 
-
-
-
-
 ## [3.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.9.0...string-match-left-right@3.9.1) (2019-01-13)
 
 **Note:** Version bump only for package string-match-left-right
-
-
-
-
 
 # [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.9.0) (2019-01-11)
 

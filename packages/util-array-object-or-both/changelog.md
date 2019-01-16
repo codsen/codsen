@@ -7,17 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package util-array-object-or-both
 
-
-
-
-
 ## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both/compare/util-array-object-or-both@2.6.0...util-array-object-or-both@2.6.1) (2019-01-13)
 
 **Note:** Version bump only for package util-array-object-or-both
-
-
-
-
 
 # [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both/compare/util-array-object-or-both@2.3.7...util-array-object-or-both@2.6.0) (2019-01-11)
 
