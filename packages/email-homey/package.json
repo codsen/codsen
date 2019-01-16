@@ -184,5 +184,6 @@
     "execa": "^1.0.0",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3"
-  }
+  },
+  "gitHead": "4bac439c9ec27203e87ebc6fcb4ec1c9bc108b82"
 }

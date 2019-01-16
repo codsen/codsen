@@ -179,5 +179,6 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.2"
-  }
+  },
+  "gitHead": "4bac439c9ec27203e87ebc6fcb4ec1c9bc108b82"
 }

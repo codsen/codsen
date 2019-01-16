@@ -40,7 +40,7 @@
     "await": true,
     "cjs": true
   },
-  "gitHead": "fcdbe2ceff11e19410522aa26425791a4faca21b",
+  "gitHead": "4bac439c9ec27203e87ebc6fcb4ec1c9bc108b82",
   "husky": {
     "hooks": {
       "pre-commit": "npm run format && npm test"
