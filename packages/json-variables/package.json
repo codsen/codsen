@@ -1,6 +1,6 @@
 {
   "name": "json-variables",
-  "version": "7.6.2",
+  "version": "7.6.3",
   "description": "Preprocessor for JSON to allow keys referencing keys",
   "license": "MIT",
   "engines": {
@@ -167,19 +167,19 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.9.2",
-    "ast-get-values-by-key": "^2.5.2",
-    "ast-monkey-traverse": "^1.9.2",
-    "check-types-mini": "^5.5.2",
+    "arrayiffy-if-string": "^3.9.3",
+    "ast-get-values-by-key": "^2.5.3",
+    "ast-monkey-traverse": "^1.9.3",
+    "check-types-mini": "^5.5.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^1.1.1",
     "object-path": "^0.11.4",
-    "ranges-apply": "^2.11.2",
-    "ranges-push": "^2.15.2",
-    "string-find-heads-tails": "^3.13.2",
-    "string-match-left-right": "^3.9.2",
-    "string-remove-duplicate-heads-tails": "^2.10.2"
+    "ranges-apply": "^2.11.3",
+    "ranges-push": "^2.15.3",
+    "string-find-heads-tails": "^3.13.3",
+    "string-match-left-right": "^3.9.3",
+    "string-remove-duplicate-heads-tails": "^2.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

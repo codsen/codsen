@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.6.2...object-flatten-all-arrays@4.6.3) (2019-01-16)
+
+**Note:** Version bump only for package object-flatten-all-arrays
+
+
+
+
+
 ## [4.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays/compare/object-flatten-all-arrays@4.6.1...object-flatten-all-arrays@4.6.2) (2019-01-15)
 
 **Note:** Version bump only for package object-flatten-all-arrays

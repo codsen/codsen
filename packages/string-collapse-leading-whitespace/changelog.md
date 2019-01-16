@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.11.2...string-collapse-leading-whitespace@1.11.3) (2019-01-16)
+
+**Note:** Version bump only for package string-collapse-leading-whitespace
+
+
+
+
+
 ## [1.11.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/compare/string-collapse-leading-whitespace@1.11.1...string-collapse-leading-whitespace@1.11.2) (2019-01-15)
 
 **Note:** Version bump only for package string-collapse-leading-whitespace

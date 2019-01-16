@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.2...easy-replace@3.6.3) (2019-01-16)
+
+**Note:** Version bump only for package easy-replace
+
+
+
+
+
 ## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.1...easy-replace@3.6.2) (2019-01-15)
 
 **Note:** Version bump only for package easy-replace

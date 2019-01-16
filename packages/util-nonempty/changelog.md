@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/compare/util-nonempty@2.8.2...util-nonempty@2.8.3) (2019-01-16)
+
+**Note:** Version bump only for package util-nonempty
+
+
+
+
+
 ## [2.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/compare/util-nonempty@2.8.1...util-nonempty@2.8.2) (2019-01-15)
 
 **Note:** Version bump only for package util-nonempty

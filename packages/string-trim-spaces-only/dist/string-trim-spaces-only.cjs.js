@@ -1,7 +1,7 @@
 /**
  * string-trim-spaces-only
  * Like String.trim() but trims only spaces
- * Version: 2.6.2
+ * Version: 2.6.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only

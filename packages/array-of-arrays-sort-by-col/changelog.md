@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.9.2...array-of-arrays-sort-by-col@2.9.3) (2019-01-16)
+
+**Note:** Version bump only for package array-of-arrays-sort-by-col
+
+
+
+
+
 ## [2.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/compare/array-of-arrays-sort-by-col@2.9.1...array-of-arrays-sort-by-col@2.9.2) (2019-01-15)
 
 **Note:** Version bump only for package array-of-arrays-sort-by-col

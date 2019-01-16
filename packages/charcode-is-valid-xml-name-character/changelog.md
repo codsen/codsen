@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.9.2...charcode-is-valid-xml-name-character@1.9.3) (2019-01-16)
+
+**Note:** Version bump only for package charcode-is-valid-xml-name-character
+
+
+
+
+
 ## [1.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/compare/charcode-is-valid-xml-name-character@1.9.1...charcode-is-valid-xml-name-character@1.9.2) (2019-01-15)
 
 **Note:** Version bump only for package charcode-is-valid-xml-name-character

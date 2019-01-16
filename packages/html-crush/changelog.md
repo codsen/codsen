@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.2...html-crush@0.7.3) (2019-01-16)
+
+**Note:** Version bump only for package html-crush
+
+
+
+
+
 ## [0.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.1...html-crush@0.7.2) (2019-01-15)
 
 **Note:** Version bump only for package html-crush

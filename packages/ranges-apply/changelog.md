@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.11.2...ranges-apply@2.11.3) (2019-01-16)
+
+**Note:** Version bump only for package ranges-apply
+
+
+
+
+
 ## [2.11.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.11.1...ranges-apply@2.11.2) (2019-01-15)
 
 **Note:** Version bump only for package ranges-apply

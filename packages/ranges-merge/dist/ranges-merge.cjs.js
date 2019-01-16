@@ -1,7 +1,7 @@
 /**
  * ranges-merge
  * Merge and sort arrays which mean string slice ranges
- * Version: 3.11.2
+ * Version: 3.11.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge
