@@ -3,55 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.6.2...email-homey@2.6.3) (2019-01-16)
-
-**Note:** Version bump only for package email-homey
-
-
-
-
-
-## [2.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.6.1...email-homey@2.6.2) (2019-01-15)
-
-**Note:** Version bump only for package email-homey
-
-## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.6.0...email-homey@2.6.1) (2019-01-13)
-
-**Note:** Version bump only for package email-homey
-
-# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.4...email-homey@2.6.0) (2019-01-11)
+## 2.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
 
-# [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.4...email-homey@2.5.0) (2019-01-08)
+## 2.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
 
-# [2.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.4...email-homey@2.4.0) (2019-01-08)
+## 2.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
-
-## [2.1.4](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.3...email-homey@2.1.4) (2018-12-29)
-
-**Note:** Version bump only for package email-homey
-
-## [2.1.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.2...email-homey@2.1.3) (2018-12-29)
-
-**Note:** Version bump only for package email-homey
-
-## [2.1.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.1.1...email-homey@2.1.2) (2018-12-27)
-
-**Note:** Version bump only for package email-homey
-
-## 2.1.1 (2018-12-26)
-
-**Note:** Version bump only for package email-homey
 
 ## 2.1.0 (2018-06-21)
 
@@ -60,7 +28,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Migrated to Bitbucket (to host repo + perform CI) and Codacy (for code quality audit)
 - ✨ Dropped BitHound (RIP) and Travis
 
-# 2.0.0 (2018-05-04)
+## 2.0.0 (2018-05-04)
 
 ### Changed
 

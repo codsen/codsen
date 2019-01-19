@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.6.2...string-trim-spaces-only@2.6.3) (2019-01-16)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-
-
-
-
-## [2.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.6.1...string-trim-spaces-only@2.6.2) (2019-01-15)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.6.0...string-trim-spaces-only@2.6.1) (2019-01-13)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.6...string-trim-spaces-only@2.6.0) (2019-01-11)
+## 2.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/commits/4f00871))
 
-# [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.6...string-trim-spaces-only@2.5.0) (2019-01-08)
+## 2.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/commits/4f00871))
 
-# [2.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.6...string-trim-spaces-only@2.4.0) (2019-01-08)
+## 2.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/commits/4f00871))
 
-## [2.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.5...string-trim-spaces-only@2.3.6) (2019-01-02)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.4...string-trim-spaces-only@2.3.5) (2019-01-01)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.3...string-trim-spaces-only@2.3.4) (2018-12-29)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.2...string-trim-spaces-only@2.3.3) (2018-12-29)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.1...string-trim-spaces-only@2.3.2) (2018-12-27)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-## [2.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only/compare/string-trim-spaces-only@2.3.0...string-trim-spaces-only@2.3.1) (2018-12-27)
-
-**Note:** Version bump only for package string-trim-spaces-only
-
-# 2.3.0 (2018-12-26)
+## 2.3.0 (2018-12-26)
 
 ### Features
 
@@ -77,7 +37,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - ✨ Updated all dependencies and restored unit test coverage tracking: reporting in terminal and coveralls.io
 
-# 2.0.0 (2018-07-26)
+## 2.0.0 (2018-07-26)
 
 - 📦 API change: now the result is not a string but a plain object, for example:
 

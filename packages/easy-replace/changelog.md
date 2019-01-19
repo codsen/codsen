@@ -3,67 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.2...easy-replace@3.6.3) (2019-01-16)
-
-**Note:** Version bump only for package easy-replace
-
-
-
-
-
-## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.1...easy-replace@3.6.2) (2019-01-15)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.6.0...easy-replace@3.6.1) (2019-01-13)
-
-**Note:** Version bump only for package easy-replace
-
-# [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.7...easy-replace@3.6.0) (2019-01-11)
+## 3.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/commits/4f00871))
 
-# [3.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.7...easy-replace@3.5.0) (2019-01-08)
+## 3.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/commits/4f00871))
 
-# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.7...easy-replace@3.4.0) (2019-01-08)
+## 3.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/commits/4f00871))
-
-## [3.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.6...easy-replace@3.3.7) (2019-01-02)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.5...easy-replace@3.3.6) (2019-01-01)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.4...easy-replace@3.3.5) (2018-12-29)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.3...easy-replace@3.3.4) (2018-12-29)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.2...easy-replace@3.3.3) (2018-12-27)
-
-**Note:** Version bump only for package easy-replace
-
-## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace/compare/easy-replace@3.3.1...easy-replace@3.3.2) (2018-12-27)
-
-**Note:** Version bump only for package easy-replace
-
-## 3.3.1 (2018-12-26)
-
-**Note:** Version bump only for package easy-replace
 
 ## 3.3.0 (2018-10-17)
 
@@ -86,7 +42,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
-# 3.0.0 (2017-12-09)
+## 3.0.0 (2017-12-09)
 
 ### Added
 
@@ -155,7 +111,7 @@ Fresh morning and fresh head yields new improvements.
 
 - Now tapping Lodash functions one-by-one.
 
-# 2.0.0 (2016-09-20)
+## 2.0.0 (2016-09-20)
 
 ### Changed
 

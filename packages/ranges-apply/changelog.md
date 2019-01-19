@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.11.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.11.2...ranges-apply@2.11.3) (2019-01-16)
-
-**Note:** Version bump only for package ranges-apply
-
-
-
-
-
-## [2.11.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.11.1...ranges-apply@2.11.2) (2019-01-15)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.11.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.11.0...ranges-apply@2.11.1) (2019-01-13)
-
-**Note:** Version bump only for package ranges-apply
-
-# [2.11.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.6...ranges-apply@2.11.0) (2019-01-11)
+## 2.11.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/4f00871))
 
-## [2.9.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.5...ranges-apply@2.9.6) (2019-01-02)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.9.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.4...ranges-apply@2.9.5) (2019-01-01)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.9.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.3...ranges-apply@2.9.4) (2018-12-29)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.2...ranges-apply@2.9.3) (2018-12-29)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.1...ranges-apply@2.9.2) (2018-12-27)
-
-**Note:** Version bump only for package ranges-apply
-
-## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
-
-**Note:** Version bump only for package ranges-apply
-
-# 2.9.0 (2018-12-26)
+## 2.9.0 (2018-12-26)
 
 ### Bug Fixes
 
@@ -117,7 +77,7 @@ t.regex(error1.message, /THROW_ID_01/);
 
 - ✨ Now accepts a single range as well, not only array of ranges.
 
-# 2.0.0 (2017-11-02)
+## 2.0.0 (2017-11-02)
 
 ### Added
 

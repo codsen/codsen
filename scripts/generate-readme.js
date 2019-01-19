@@ -258,8 +258,6 @@ const template = `# 📦 Codsen 📦
 
 ## 🚢 Flagship Libraries
 
-These libraries are the largest and most complex of them all. Their web apps are driven by UMD builds, usually consumed straight from npm, via the [unpkg CDN](https://unpkg.com).
-
 ${topRow(true)}
 ${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
 

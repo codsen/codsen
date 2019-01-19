@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.4.2...html-table-patcher@0.4.3) (2019-01-16)
-
-**Note:** Version bump only for package html-table-patcher
-
-
-
-
-
-## [0.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.4.1...html-table-patcher@0.4.2) (2019-01-15)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.4.0...html-table-patcher@0.4.1) (2019-01-13)
-
-**Note:** Version bump only for package html-table-patcher
-
-# [0.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.6...html-table-patcher@0.4.0) (2019-01-11)
+## 0.4.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4f00871))
 
-## [0.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.5...html-table-patcher@0.3.6) (2019-01-02)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.4...html-table-patcher@0.3.5) (2019-01-01)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.3...html-table-patcher@0.3.4) (2018-12-29)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.2...html-table-patcher@0.3.3) (2018-12-29)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.1...html-table-patcher@0.3.2) (2018-12-27)
-
-**Note:** Version bump only for package html-table-patcher
-
-## [0.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.3.0...html-table-patcher@0.3.1) (2018-12-27)
-
-**Note:** Version bump only for package html-table-patcher
-
-# 0.3.0 (2018-12-26)
+## 0.3.0 (2018-12-26)
 
 ### Features
 

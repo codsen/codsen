@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.9.2...ranges-sort@3.9.3) (2019-01-16)
-
-**Note:** Version bump only for package ranges-sort
-
-
-
-
-
-## [3.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.9.1...ranges-sort@3.9.2) (2019-01-15)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.9.0...ranges-sort@3.9.1) (2019-01-13)
-
-**Note:** Version bump only for package ranges-sort
-
-# [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.6...ranges-sort@3.9.0) (2019-01-11)
+## 3.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
 
-# [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.6...ranges-sort@3.8.0) (2019-01-08)
+## 3.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
 
-# [3.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.6...ranges-sort@3.7.0) (2019-01-08)
+## 3.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
 
-## [3.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.5...ranges-sort@3.6.6) (2019-01-02)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.4...ranges-sort@3.6.5) (2019-01-01)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.3...ranges-sort@3.6.4) (2018-12-29)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.2...ranges-sort@3.6.3) (2018-12-29)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.1...ranges-sort@3.6.2) (2018-12-27)
-
-**Note:** Version bump only for package ranges-sort
-
-## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/compare/ranges-sort@3.6.0...ranges-sort@3.6.1) (2018-12-27)
-
-**Note:** Version bump only for package ranges-sort
-
-# 3.6.0 (2018-12-26)
+## 3.6.0 (2018-12-26)
 
 ### Features
 
@@ -98,7 +58,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Updated all dependencies and setup in general
 
-# 3.0.0 (2017-12-03)
+## 3.0.0 (2017-12-03)
 
 ### Added
 
@@ -114,7 +74,7 @@ Bumping major just in case this breaks API endpoints.
 - ✨ More description in readme.
 - ✨ More unit tests, including tests for examples used in readme.
 
-# 2.0.0 (2017-09-12)
+## 2.0.0 (2017-09-12)
 
 ### Added
 

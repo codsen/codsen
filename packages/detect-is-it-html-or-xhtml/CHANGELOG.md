@@ -3,71 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.2...detect-is-it-html-or-xhtml@3.8.3) (2019-01-16)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-
-
-
-
-## [3.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.1...detect-is-it-html-or-xhtml@3.8.2) (2019-01-15)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-## [3.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.0...detect-is-it-html-or-xhtml@3.8.1) (2019-01-13)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-# [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.8.0) (2019-01-11)
+## 3.8.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
 
-# [3.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.7.0) (2019-01-08)
+## 3.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
 
-# [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.6.0) (2019-01-08)
+## 3.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
 
-# [3.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.5.0) (2019-01-08)
+## 3.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
 
-# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.5...detect-is-it-html-or-xhtml@3.4.0) (2019-01-07)
+## 3.4.0 (2019-01-07)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
-
-## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.4...detect-is-it-html-or-xhtml@3.3.5) (2019-01-01)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.3...detect-is-it-html-or-xhtml@3.3.4) (2018-12-29)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.2...detect-is-it-html-or-xhtml@3.3.3) (2018-12-29)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.3.1...detect-is-it-html-or-xhtml@3.3.2) (2018-12-27)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
-
-## 3.3.1 (2018-12-26)
-
-**Note:** Version bump only for package detect-is-it-html-or-xhtml
 
 ## 3.3.0 (2018-10-17)
 
@@ -89,7 +53,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 
-# 3.0.0 (2017-12-09)
+## 3.0.0 (2017-12-09)
 
 ### Changed
 

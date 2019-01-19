@@ -3,71 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.8.2...bitbucket-slug@1.8.3) (2019-01-16)
-
-**Note:** Version bump only for package bitbucket-slug
-
-
-
-
-
-## [1.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.8.1...bitbucket-slug@1.8.2) (2019-01-15)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.8.0...bitbucket-slug@1.8.1) (2019-01-13)
-
-**Note:** Version bump only for package bitbucket-slug
-
-# [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.6...bitbucket-slug@1.8.0) (2019-01-11)
+## 1.8.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
 
-# [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.6...bitbucket-slug@1.7.0) (2019-01-08)
+## 1.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
 
-# [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.6...bitbucket-slug@1.6.0) (2019-01-08)
+## 1.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
 
-# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.6...bitbucket-slug@1.5.0) (2019-01-08)
+## 1.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
 
-## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.5...bitbucket-slug@1.3.6) (2019-01-02)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.4...bitbucket-slug@1.3.5) (2019-01-01)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.3...bitbucket-slug@1.3.4) (2018-12-29)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.2...bitbucket-slug@1.3.3) (2018-12-29)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.1...bitbucket-slug@1.3.2) (2018-12-27)
-
-**Note:** Version bump only for package bitbucket-slug
-
-## [1.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.3.0...bitbucket-slug@1.3.1) (2018-12-27)
-
-**Note:** Version bump only for package bitbucket-slug
-
-# 1.3.0 (2018-12-26)
+## 1.3.0 (2018-12-26)
 
 ### Features
 

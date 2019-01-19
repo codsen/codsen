@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.5.2...ast-get-values-by-key@2.5.3) (2019-01-16)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-
-
-
-
-## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.5.1...ast-get-values-by-key@2.5.2) (2019-01-15)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.5.0...ast-get-values-by-key@2.5.1) (2019-01-13)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-# [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.6...ast-get-values-by-key@2.5.0) (2019-01-11)
+## 2.5.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/4f00871))
 
-# [2.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.6...ast-get-values-by-key@2.4.0) (2019-01-08)
+## 2.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/4f00871))
 
-# [2.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.6...ast-get-values-by-key@2.3.0) (2019-01-08)
+## 2.3.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/commits/4f00871))
 
-## [2.2.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.5...ast-get-values-by-key@2.2.6) (2019-01-02)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.2.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.4...ast-get-values-by-key@2.2.5) (2019-01-01)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.3...ast-get-values-by-key@2.2.4) (2018-12-29)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.2...ast-get-values-by-key@2.2.3) (2018-12-29)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.1...ast-get-values-by-key@2.2.2) (2018-12-27)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-## [2.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key/compare/ast-get-values-by-key@2.2.0...ast-get-values-by-key@2.2.1) (2018-12-27)
-
-**Note:** Version bump only for package ast-get-values-by-key
-
-# 2.2.0 (2018-12-26)
+## 2.2.0 (2018-12-26)
 
 ### Features
 
@@ -71,7 +31,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - ✨ Updated all dependencies and restored coverage tracking both via terminal when testing and through coveralls.io
 
-# 2.0.0 (2018-09-27)
+## 2.0.0 (2018-09-27)
 
 🔨 Major API changes: now the result is not array of strings, but array of plain objects, where previous string is under key `val`. This lets us get another key - `path` of that value.
 

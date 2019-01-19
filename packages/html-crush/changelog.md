@@ -3,65 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.2...html-crush@0.7.3) (2019-01-16)
-
-**Note:** Version bump only for package html-crush
-
-
-
-
-
-## [0.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.1...html-crush@0.7.2) (2019-01-15)
-
-**Note:** Version bump only for package html-crush
-
-## [0.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.7.0...html-crush@0.7.1) (2019-01-13)
-
-**Note:** Version bump only for package html-crush
-
-# [0.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.9...html-crush@0.7.0) (2019-01-11)
+## 0.7.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/4f00871))
 
-## [0.6.9](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.8...html-crush@0.6.9) (2019-01-02)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.8](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.7...html-crush@0.6.8) (2019-01-02)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.7](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.6...html-crush@0.6.7) (2019-01-01)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.5...html-crush@0.6.6) (2018-12-29)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.4...html-crush@0.6.5) (2018-12-29)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.3...html-crush@0.6.4) (2018-12-29)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.2...html-crush@0.6.3) (2018-12-29)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.1...html-crush@0.6.2) (2018-12-27)
-
-**Note:** Version bump only for package html-crush
-
-## [0.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/compare/html-crush@0.6.0...html-crush@0.6.1) (2018-12-27)
-
-**Note:** Version bump only for package html-crush
-
-# 0.6.0 (2018-12-26)
+## 0.6.0 (2018-12-26)
 
 ### Features
 

@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [10.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.9.2...object-merge-advanced@10.9.3) (2019-01-16)
-
-**Note:** Version bump only for package object-merge-advanced
-
-
-
-
-
-## [10.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.9.1...object-merge-advanced@10.9.2) (2019-01-15)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.9.0...object-merge-advanced@10.9.1) (2019-01-13)
-
-**Note:** Version bump only for package object-merge-advanced
-
-# [10.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.6...object-merge-advanced@10.9.0) (2019-01-11)
+## 10.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/commits/4f00871))
 
-# [10.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.6...object-merge-advanced@10.8.0) (2019-01-08)
+## 10.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/commits/4f00871))
 
-# [10.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.6...object-merge-advanced@10.7.0) (2019-01-08)
+## 10.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/commits/4f00871))
 
-## [10.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.5...object-merge-advanced@10.6.6) (2019-01-02)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.4...object-merge-advanced@10.6.5) (2019-01-01)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.3...object-merge-advanced@10.6.4) (2018-12-29)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.2...object-merge-advanced@10.6.3) (2018-12-29)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.1...object-merge-advanced@10.6.2) (2018-12-27)
-
-**Note:** Version bump only for package object-merge-advanced
-
-## [10.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/compare/object-merge-advanced@10.6.0...object-merge-advanced@10.6.1) (2018-12-27)
-
-**Note:** Version bump only for package object-merge-advanced
-
-# 10.6.0 (2018-12-26)
+## 10.6.0 (2018-12-26)
 
 ### Features
 
@@ -103,7 +63,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Dropped `airbnb-base` as ESLint preset and set up Prettier. Now contributors don't have to worry about the code style any more.
 
-# 10.0.0 (2018-03-13)
+## 10.0.0 (2018-03-13)
 
 ### Changed
 
@@ -119,7 +79,7 @@ This feature is needed to maintain the data integrity. When merging in multiple 
 - ✨ Rebased a lot of code, merged `util.js` into the main file
 - ✨ Code coverage is now 100% line & function-wise
 
-# 9.0.0 (2018-02-08)
+## 9.0.0 (2018-02-08)
 
 ### Changed
 
@@ -154,7 +114,7 @@ Thanks to [@jabiinfante](https://github.com/jabiinfante) PR:
 
 - ✨ `opts.mergeBoolsUsingOrNotAnd`
 
-# 8.0.0 (2017-11-09)
+## 8.0.0 (2017-11-09)
 
 ### Added
 
@@ -173,7 +133,7 @@ Bumping major just in case.
 - ✨ Now serving transpiled code. Sorry everybody impacted by this, I got onto Sindre's bandwagon but I guess it's too early. I'll transpile all my libs.
 - ✨ [Tweaked](https://github.com/codsen/bitsausage) bithound config.
 
-# 7.0.0 (2017-08-21)
+## 7.0.0 (2017-08-21)
 
 Bumping the _major_ just in case because strictly speaking, while things behave more _correct_ now, they behave slightly different. This involves more precise hard merging and ignoring keys, when values are container-like (arrays or plain objects). For the rest, the merging algorithm's behaviour is the same. Read below.
 
@@ -229,13 +189,13 @@ It's nice to use the modular way of coding JS: I found bug here on this library 
 
 Like changing a broken carburettor with another, working-one. 🎉
 
-# 6.0.0 (2017-03-14)
+## 6.0.0 (2017-03-14)
 
 ### Changed
 
 - 🔧 Recoded everything, adding Number type. This means, now there are 100 possibilities of the merge. Looks even more clean and optimal now, but that's a subjective thing.
 
-# 5.0.0 (2017-03-13)
+## 5.0.0 (2017-03-13)
 
 ### API addition
 
@@ -253,7 +213,7 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 - 🔧 Improved the algorithm, removed redundant insurance, cloning input variable.
 
-# 4.0.0 (2017-02-28)
+## 4.0.0 (2017-02-28)
 
 ### Changed
 
@@ -261,7 +221,7 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 If none are present, `undefined` is returned as before.
 
-# 3.0.0 (2017-02-28)
+## 3.0.0 (2017-02-28)
 
 ### Changed
 

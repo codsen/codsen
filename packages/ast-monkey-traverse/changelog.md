@@ -3,73 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.9.2...ast-monkey-traverse@1.9.3) (2019-01-16)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-
-
-
-
-## [1.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.9.1...ast-monkey-traverse@1.9.2) (2019-01-15)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.9.0...ast-monkey-traverse@1.9.1) (2019-01-13)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-# [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.8...ast-monkey-traverse@1.9.0) (2019-01-11)
+## 1.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/commits/4f00871))
 
-# [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.8...ast-monkey-traverse@1.8.0) (2019-01-08)
+## 1.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/commits/4f00871))
 
-# [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.8...ast-monkey-traverse@1.7.0) (2019-01-08)
+## 1.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/commits/4f00871))
 
-# [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.8...ast-monkey-traverse@1.6.0) (2019-01-08)
+## 1.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/commits/4f00871))
-
-## [1.4.8](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.7...ast-monkey-traverse@1.4.8) (2019-01-02)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.6...ast-monkey-traverse@1.4.7) (2019-01-01)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.4.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.5...ast-monkey-traverse@1.4.6) (2018-12-29)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.4.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.4...ast-monkey-traverse@1.4.5) (2018-12-29)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.3...ast-monkey-traverse@1.4.4) (2018-12-27)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## [1.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse/compare/ast-monkey-traverse@1.4.2...ast-monkey-traverse@1.4.3) (2018-12-27)
-
-**Note:** Version bump only for package ast-monkey-traverse
-
-## 1.4.2 (2018-12-26)
-
-**Note:** Version bump only for package ast-monkey-traverse
 
 ## 1.4.0 (2018-10-13)
 

@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.15.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.15.2...ranges-push@2.15.3) (2019-01-16)
-
-**Note:** Version bump only for package ranges-push
-
-
-
-
-
-## [2.15.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.15.1...ranges-push@2.15.2) (2019-01-15)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.15.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.15.0...ranges-push@2.15.1) (2019-01-13)
-
-**Note:** Version bump only for package ranges-push
-
-# [2.15.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.6...ranges-push@2.15.0) (2019-01-11)
+## 2.15.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/4f00871))
 
-## [2.13.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.5...ranges-push@2.13.6) (2019-01-02)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.13.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.4...ranges-push@2.13.5) (2019-01-01)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.13.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.3...ranges-push@2.13.4) (2018-12-29)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.13.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.2...ranges-push@2.13.3) (2018-12-29)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.13.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.1...ranges-push@2.13.2) (2018-12-27)
-
-**Note:** Version bump only for package ranges-push
-
-## [2.13.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/compare/ranges-push@2.13.0...ranges-push@2.13.1) (2018-12-27)
-
-**Note:** Version bump only for package ranges-push
-
-# 2.13.0 (2018-12-26)
+## 2.13.0 (2018-12-26)
 
 ### Features
 
@@ -130,7 +90,7 @@ In practice, I'm going to use it in [string-remove-duplicate-heads-tails](https:
 
 What this feature gives you is you can activate it and freely push chunks of string in, extracting whitespace along it and pushing it too. You don't need to care about excessive amount of it - this library will truncate it automatically. It's very handy when stripping strings from [HTML tags](https://github.com/codsen/string-strip-html) for example.
 
-# 2.0.0 (2017-12-05)
+## 2.0.0 (2017-12-05)
 
 - ✨ Rewrite in ES modules
 - ✨ Now serving three builds: CommonJS, UMD and ES modules, all wired up to appropriate end-points on `package.json`

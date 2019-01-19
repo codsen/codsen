@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.10.2...string-remove-duplicate-heads-tails@2.10.3) (2019-01-16)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-
-
-
-
-## [2.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.10.1...string-remove-duplicate-heads-tails@2.10.2) (2019-01-15)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.10.0...string-remove-duplicate-heads-tails@2.10.1) (2019-01-13)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-# [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.6...string-remove-duplicate-heads-tails@2.10.0) (2019-01-11)
+## 2.10.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/4f00871))
 
-## [2.9.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.5...string-remove-duplicate-heads-tails@2.9.6) (2019-01-02)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.9.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.4...string-remove-duplicate-heads-tails@2.9.5) (2019-01-01)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.9.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.3...string-remove-duplicate-heads-tails@2.9.4) (2018-12-29)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.2...string-remove-duplicate-heads-tails@2.9.3) (2018-12-29)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.1...string-remove-duplicate-heads-tails@2.9.2) (2018-12-27)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/compare/string-remove-duplicate-heads-tails@2.9.0...string-remove-duplicate-heads-tails@2.9.1) (2018-12-27)
-
-**Note:** Version bump only for package string-remove-duplicate-heads-tails
-
-# 2.9.0 (2018-12-26)
+## 2.9.0 (2018-12-26)
 
 ### Features
 
@@ -97,7 +57,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Trimming now touches only spaces. Line breaks, tabs and non-breaking spaces are not touched.
 
-# 2.0.0 (2018-02-13)
+## 2.0.0 (2018-02-13)
 
 - ✨ Rewrote the whole thing. Added more unit tests.
 

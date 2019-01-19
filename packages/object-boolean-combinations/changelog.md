@@ -3,71 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.10.2...object-boolean-combinations@2.10.3) (2019-01-16)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-
-
-
-
-## [2.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.10.1...object-boolean-combinations@2.10.2) (2019-01-15)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.10.0...object-boolean-combinations@2.10.1) (2019-01-13)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-# [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.10.0) (2019-01-11)
+## 2.10.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
 
-# [2.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.9.0) (2019-01-08)
+## 2.9.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
 
-# [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.8.0) (2019-01-08)
+## 2.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
 
-# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.6...object-boolean-combinations@2.6.0) (2019-01-07)
+## 2.6.0 (2019-01-07)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
 
-## [2.5.6](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.5...object-boolean-combinations@2.5.6) (2019-01-02)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.4...object-boolean-combinations@2.5.5) (2019-01-01)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.3...object-boolean-combinations@2.5.4) (2018-12-29)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.2...object-boolean-combinations@2.5.3) (2018-12-29)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.1...object-boolean-combinations@2.5.2) (2018-12-27)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.5.0...object-boolean-combinations@2.5.1) (2018-12-27)
-
-**Note:** Version bump only for package object-boolean-combinations
-
-# 2.5.0 (2018-12-26)
+## 2.5.0 (2018-12-26)
 
 ### Features
 

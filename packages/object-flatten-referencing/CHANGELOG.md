@@ -3,67 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.2...object-flatten-referencing@4.9.3) (2019-01-16)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-
-
-
-
-## [4.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.1...object-flatten-referencing@4.9.2) (2019-01-15)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.0...object-flatten-referencing@4.9.1) (2019-01-13)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-# [4.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.9.0) (2019-01-11)
+## 4.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
 
-# [4.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.8.0) (2019-01-08)
+## 4.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
 
-# [4.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.7...object-flatten-referencing@4.7.0) (2019-01-08)
+## 4.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
-
-## [4.6.7](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.6...object-flatten-referencing@4.6.7) (2019-01-02)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.5...object-flatten-referencing@4.6.6) (2019-01-01)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.4...object-flatten-referencing@4.6.5) (2018-12-29)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.3...object-flatten-referencing@4.6.4) (2018-12-29)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.2...object-flatten-referencing@4.6.3) (2018-12-27)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## [4.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.6.1...object-flatten-referencing@4.6.2) (2018-12-27)
-
-**Note:** Version bump only for package object-flatten-referencing
-
-## 4.6.1 (2018-12-26)
-
-**Note:** Version bump only for package object-flatten-referencing
 
 ## 4.6.0 (2018-10-24)
 
@@ -97,7 +53,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ `opts.preventWrappingIfContains`. It lets you extend functionality of `opts.wrapHeadsWith` - more variable patterns can be added to be ignored.
 
-# 4.0.0 (2017-10-04)
+## 4.0.0 (2017-10-04)
 
 New: `opts.mergeWithoutTrailingBrIfLineContainsBr` - affects default behaviour
 Changed: `opts.mergeArraysWithoutLineBreaks` renamed to `opts.mergeArraysWithLineBreaks`
@@ -183,12 +139,12 @@ With `opts.mergeArraysWithoutLineBreaks` off, the flatten function of this libra
 
 For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string `%%_aaa_%% %%_bbb_%% %%_ccc_%%` (that's default wrapping settings, which can be customised).
 
-# 3.0.0 (2017-04-27)
+## 3.0.0 (2017-04-27)
 
 - 🔧 `opts.wrapHeads` is now `opts.wrapHeadsWith`
 - 🔧 `opts.wrapTails` is now `opts.wrapTailsWith`
 
-# 2.0.0 (2017-04-25)
+## 2.0.0 (2017-04-25)
 
 - 🔧 Major API change and major semver bump: `opts.dontWrapKeysStartingWith` and `opts.dontWrapKeysEndingWith` are now one key, `opts.dontWrapKeys` and the same (and better) result is achieved using wildcards (`*` symbols). Now you can have as many wildcards as you like, not only at the beginning or the ending of a string (or arrays of strings), but also anywhere in the middle too. Also you can set multiple wildcards in the same string.
 

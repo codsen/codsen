@@ -3,67 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.6.2...object-all-values-equal-to@1.6.3) (2019-01-16)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-
-
-
-
-## [1.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.6.1...object-all-values-equal-to@1.6.2) (2019-01-15)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.6.0...object-all-values-equal-to@1.6.1) (2019-01-13)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-# [1.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.7...object-all-values-equal-to@1.6.0) (2019-01-11)
+## 1.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/commits/4f00871))
 
-# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.7...object-all-values-equal-to@1.5.0) (2019-01-08)
+## 1.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/commits/4f00871))
 
-# [1.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.7...object-all-values-equal-to@1.4.0) (2019-01-08)
+## 1.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/commits/4f00871))
-
-## [1.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.6...object-all-values-equal-to@1.3.7) (2019-01-02)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.5...object-all-values-equal-to@1.3.6) (2019-01-01)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.4...object-all-values-equal-to@1.3.5) (2018-12-29)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.3...object-all-values-equal-to@1.3.4) (2018-12-29)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.2...object-all-values-equal-to@1.3.3) (2018-12-27)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## [1.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to/compare/object-all-values-equal-to@1.3.1...object-all-values-equal-to@1.3.2) (2018-12-27)
-
-**Note:** Version bump only for package object-all-values-equal-to
-
-## 1.3.1 (2018-12-26)
-
-**Note:** Version bump only for package object-all-values-equal-to
 
 ## 1.3.0 (2018-10-24)
 

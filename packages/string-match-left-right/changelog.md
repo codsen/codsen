@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.9.2...string-match-left-right@3.9.3) (2019-01-16)
-
-**Note:** Version bump only for package string-match-left-right
-
-
-
-
-
-## [3.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.9.1...string-match-left-right@3.9.2) (2019-01-15)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.9.0...string-match-left-right@3.9.1) (2019-01-13)
-
-**Note:** Version bump only for package string-match-left-right
-
-# [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.9.0) (2019-01-11)
+## 3.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
 
-# [3.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.8.0) (2019-01-08)
+## 3.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
 
-# [3.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.6...string-match-left-right@3.7.0) (2019-01-08)
+## 3.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
 
-## [3.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.5...string-match-left-right@3.6.6) (2019-01-02)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.4...string-match-left-right@3.6.5) (2019-01-01)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.3...string-match-left-right@3.6.4) (2018-12-29)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.2...string-match-left-right@3.6.3) (2018-12-29)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.1...string-match-left-right@3.6.2) (2018-12-27)
-
-**Note:** Version bump only for package string-match-left-right
-
-## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/compare/string-match-left-right@3.6.0...string-match-left-right@3.6.1) (2018-12-27)
-
-**Note:** Version bump only for package string-match-left-right
-
-# 3.6.0 (2018-12-26)
+## 3.6.0 (2018-12-26)
 
 ### Features
 
@@ -112,7 +72,7 @@ Setup refresh.
 
 - ✨ Third argument, `whatToMatch`, can now be empty string. In such case, you have to provide callback and result will be calculated purely using the callback. It's handy when you want to perform complex matching, beyond "character is equal to" level. Personally, I reached this level and it's necessary for the feature I'm producing on the other package. It must be handy for everybody else too.
 
-# 3.0.0 (2018-01-15)
+## 3.0.0 (2018-01-15)
 
 ### Changed
 
@@ -130,7 +90,7 @@ Index is handy in cases when you set trimming and it's not clear where exactly i
 
 - 🔧 I think `matchLeftIncl` previously was returning `theRemainderOfTheString` **together with the matched substring** (on the right of it). That's against the spec because the spec says "everything outside of the matched substring is given". But not including it. Sorry for this error. I'll bump the _major_ just in case the correct behaviour breaks somebody's code.
 
-# 2.0.0 (2017-12-21)
+## 2.0.0 (2017-12-21)
 
 ### Changed
 

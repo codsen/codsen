@@ -3,55 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.5.2...string-split-by-whitespace@1.5.3) (2019-01-16)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-
-
-
-
-## [1.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.5.1...string-split-by-whitespace@1.5.2) (2019-01-15)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.5.0...string-split-by-whitespace@1.5.1) (2019-01-13)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.7...string-split-by-whitespace@1.5.0) (2019-01-11)
+## 1.5.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/commits/4f00871))
-
-## [1.3.7](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.6...string-split-by-whitespace@1.3.7) (2019-01-02)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.5...string-split-by-whitespace@1.3.6) (2019-01-01)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.4...string-split-by-whitespace@1.3.5) (2018-12-29)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.3...string-split-by-whitespace@1.3.4) (2018-12-29)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.2...string-split-by-whitespace@1.3.3) (2018-12-27)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## [1.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/compare/string-split-by-whitespace@1.3.1...string-split-by-whitespace@1.3.2) (2018-12-27)
-
-**Note:** Version bump only for package string-split-by-whitespace
-
-## 1.3.1 (2018-12-26)
-
-**Note:** Version bump only for package string-split-by-whitespace
 
 ## 1.3.0 (2018-06-16)
 

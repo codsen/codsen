@@ -3,61 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.13.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.13.2...string-find-heads-tails@3.13.3) (2019-01-16)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-
-
-
-
-## [3.13.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.13.1...string-find-heads-tails@3.13.2) (2019-01-15)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.13.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.13.0...string-find-heads-tails@3.13.1) (2019-01-13)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-# [3.13.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.7...string-find-heads-tails@3.13.0) (2019-01-11)
+## 3.13.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
 
-# [3.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.7...string-find-heads-tails@3.12.0) (2019-01-08)
+## 3.12.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
-
-## [3.10.7](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.6...string-find-heads-tails@3.10.7) (2019-01-02)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.10.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.5...string-find-heads-tails@3.10.6) (2019-01-01)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.10.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.4...string-find-heads-tails@3.10.5) (2018-12-29)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.10.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.3...string-find-heads-tails@3.10.4) (2018-12-29)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.2...string-find-heads-tails@3.10.3) (2018-12-27)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## [3.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/compare/string-find-heads-tails@3.10.1...string-find-heads-tails@3.10.2) (2018-12-27)
-
-**Note:** Version bump only for package string-find-heads-tails
-
-## 3.10.1 (2018-12-26)
-
-**Note:** Version bump only for package string-find-heads-tails
 
 ## 3.10.0 (2018-10-25)
 
@@ -127,7 +83,7 @@ No new features, only under-bonnet improvements.
 
 - ✨ Pinned all unit tests' throws to exact errors. Practically, this means we test not only does it throw in particular case, but also does it raise the exact error that we intended to raise.
 
-# 3.0.0 (2017-12-28)
+## 3.0.0 (2017-12-28)
 
 ### Breaking API changes
 
@@ -137,7 +93,7 @@ No new features, only under-bonnet improvements.
 - ✨ `opts.allowWholeValueToBeOnlyHeadsOrTails` — When processing JSON data structures, it's possible that they will contain their own config. For example, JSON will use heads and tails, but also, there will be fields that DEFINE those heads and tails as well. This is a peculiar case - whole string will be equal to heads or tails. These cases will be recognised and errors won't be `throw`n. Unless you set `opts.allowWholeValueToBeOnlyHeadsOrTails` to `false`.
 - ✨ `optssource` - allows to `throw` errors in different name. Useful for parent libraries.
 
-# 2.0.0 (2017-12-27)
+## 2.0.0 (2017-12-27)
 
 ### Changes
 

@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.9.2...string-range-expander@1.9.3) (2019-01-16)
-
-**Note:** Version bump only for package string-range-expander
-
-
-
-
-
-## [1.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.9.1...string-range-expander@1.9.2) (2019-01-15)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.9.0...string-range-expander@1.9.1) (2019-01-13)
-
-**Note:** Version bump only for package string-range-expander
-
-# [1.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.6...string-range-expander@1.9.0) (2019-01-11)
+## 1.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/4f00871))
 
-# [1.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.6...string-range-expander@1.8.0) (2019-01-08)
+## 1.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/4f00871))
 
-# [1.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.6...string-range-expander@1.7.0) (2019-01-08)
+## 1.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/4f00871))
 
-## [1.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.5...string-range-expander@1.6.6) (2019-01-02)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.4...string-range-expander@1.6.5) (2019-01-01)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.3...string-range-expander@1.6.4) (2018-12-29)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.2...string-range-expander@1.6.3) (2018-12-29)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.1...string-range-expander@1.6.2) (2018-12-27)
-
-**Note:** Version bump only for package string-range-expander
-
-## [1.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/compare/string-range-expander@1.6.0...string-range-expander@1.6.1) (2018-12-27)
-
-**Note:** Version bump only for package string-range-expander
-
-# 1.6.0 (2018-12-26)
+## 1.6.0 (2018-12-26)
 
 ### Bug Fixes
 

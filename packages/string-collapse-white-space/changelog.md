@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.4.2...string-collapse-white-space@4.4.3) (2019-01-16)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-
-
-
-
-## [4.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.4.1...string-collapse-white-space@4.4.2) (2019-01-15)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.4.0...string-collapse-white-space@4.4.1) (2019-01-13)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-# [4.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.6...string-collapse-white-space@4.4.0) (2019-01-11)
+## 4.4.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/commits/4f00871))
 
-## [4.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.5...string-collapse-white-space@4.3.6) (2019-01-02)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.4...string-collapse-white-space@4.3.5) (2019-01-01)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.3...string-collapse-white-space@4.3.4) (2018-12-29)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.2...string-collapse-white-space@4.3.3) (2018-12-29)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.1...string-collapse-white-space@4.3.2) (2018-12-27)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-## [4.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space/compare/string-collapse-white-space@4.3.0...string-collapse-white-space@4.3.1) (2018-12-27)
-
-**Note:** Version bump only for package string-collapse-white-space
-
-# 4.3.0 (2018-12-26)
+## 4.3.0 (2018-12-26)
 
 ### Features
 
@@ -86,14 +46,14 @@ _azzz 11##
 
 a.<br/>.<br/><br><br/><br/><br/><br/> # _1 1<zzz class="yyy"> .<br/>1<br>&# <br/><br/> <br>_aa <br/>
 
-# zzz& .# .a&1&_aa 1 zzz<zzz class="yyy">zzz.zzz_zzz_##_## <br><br/><br/>1
+## zzz& .# .a&1&_aa 1 zzz<zzz class="yyy">zzz.zzz_zzz_##_## <br><br/><br/>1
 
 <zzz class="yyy"> zzz 1<zzz class="yyy">_1<br>zzz.&<zzz class="yyy"> #___zzz<zzz class="yyy">.a a_<br/>1_. <br/> <br/><br> . _1 <br/>
 ```
 
 Hopefully bugs like the one we just fixed should not happen any more 🤞
 
-# 4.0.0 (2018-07-23)
+## 4.0.0 (2018-07-23)
 
 - ✨ When `opts.returnRangesOnly` is on and there are no results, instead of `null` (_a falsey thing_) now we return empty array (_a truthy thing_). It's better now because while you can't easily check for its existence (a la `if result`), actually you don't have to any more. Just map over its result. It will always be array, albeit sometimes empty.
 
@@ -142,7 +102,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ AVA unit test linting via ESLint plugin
 
-# 3.0.0 (2017-09-30)
+## 3.0.0 (2017-09-30)
 
 ### Added
 
@@ -164,7 +124,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ Correctly treats non-breaking spaces - they are not considered _collapsable_ or _trimmable_ now.
 
-# 2.0.0 (2017-09-03)
+## 2.0.0 (2017-09-03)
 
 ### Changed
 

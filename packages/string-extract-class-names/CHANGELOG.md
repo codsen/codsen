@@ -3,69 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.7.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.7.2...string-extract-class-names@5.7.3) (2019-01-16)
-
-**Note:** Version bump only for package string-extract-class-names
-
-
-
-
-
-## [5.7.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.7.1...string-extract-class-names@5.7.2) (2019-01-15)
-
-**Note:** Version bump only for package string-extract-class-names
-
-## [5.7.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.7.0...string-extract-class-names@5.7.1) (2019-01-13)
-
-**Note:** Version bump only for package string-extract-class-names
-
-# [5.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.7.0) (2019-01-11)
+## 5.7.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
 
-# [5.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.6.0) (2019-01-08)
+## 5.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
 
-# [5.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.5.0) (2019-01-08)
+## 5.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
 
-# [5.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.4.0) (2019-01-08)
+## 5.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
 
-# [5.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.4...string-extract-class-names@5.3.0) (2019-01-07)
+## 5.3.0 (2019-01-07)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
 
-## [5.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.3...string-extract-class-names@5.2.4) (2019-01-01)
-
-**Note:** Version bump only for package string-extract-class-names
-
-## [5.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.2...string-extract-class-names@5.2.3) (2018-12-29)
-
-**Note:** Version bump only for package string-extract-class-names
-
-## [5.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.1...string-extract-class-names@5.2.2) (2018-12-29)
-
-**Note:** Version bump only for package string-extract-class-names
-
-## [5.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.2.0...string-extract-class-names@5.2.1) (2018-12-27)
-
-**Note:** Version bump only for package string-extract-class-names
-
-# 5.2.0 (2018-12-26)
+## 5.2.0 (2018-12-26)
 
 ### Features
 
@@ -77,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ Restored coveralls.io reporting
 - ✨ Restored unit test linting
 
-# 5.0.0 (2018-07-04)
+## 5.0.0 (2018-07-04)
 
 - ✨ Complete rewrite. Now instead of using regexes and string `replace`, we traverse the input string once and compile the array of selectors
 - ✨ Second argument as `true` will force the application to return arrays of ranges for each selector instead of values as strings
@@ -103,7 +71,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-# 4.0.0 (2017-12-13)
+## 4.0.0 (2017-12-13)
 
 - ✨ Rebased in ES Modules
 - ✨ Now using Rollup to serve three builds: CommonJS, UMD and ES Modules

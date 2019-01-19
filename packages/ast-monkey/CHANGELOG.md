@@ -3,67 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.9.2...ast-monkey@7.9.3) (2019-01-16)
-
-**Note:** Version bump only for package ast-monkey
-
-
-
-
-
-## [7.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.9.1...ast-monkey@7.9.2) (2019-01-15)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.9.0...ast-monkey@7.9.1) (2019-01-13)
-
-**Note:** Version bump only for package ast-monkey
-
-# [7.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.8...ast-monkey@7.9.0) (2019-01-11)
+## 7.9.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/commits/4f00871))
 
-# [7.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.8...ast-monkey@7.8.0) (2019-01-08)
+## 7.8.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/commits/4f00871))
 
-# [7.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.8...ast-monkey@7.7.0) (2019-01-08)
+## 7.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/commits/4f00871))
-
-## [7.6.8](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.7...ast-monkey@7.6.8) (2019-01-02)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.6.7](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.6...ast-monkey@7.6.7) (2019-01-01)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.6.6](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.5...ast-monkey@7.6.6) (2018-12-29)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.6.5](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.4...ast-monkey@7.6.5) (2018-12-29)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.6.4](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.3...ast-monkey@7.6.4) (2018-12-27)
-
-**Note:** Version bump only for package ast-monkey
-
-## [7.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey/compare/ast-monkey@7.6.2...ast-monkey@7.6.3) (2018-12-27)
-
-**Note:** Version bump only for package ast-monkey
-
-## 7.6.2 (2018-12-26)
-
-**Note:** Version bump only for package ast-monkey
 
 ## 7.6.0 (2018-10-14)
 
@@ -102,7 +58,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://bitbucket.org/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
 - ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
 
-# 7.0.0 (2017-10-23)
+## 7.0.0 (2017-10-23)
 
 ### Changed
 
@@ -133,7 +89,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - ✨ Added checkTypes() onto drop(). Missed it this morning. Now all sorted.
 
-# 6.0.0 (2017-06-18)
+## 6.0.0 (2017-06-18)
 
 BREAKING CHANGES
 
@@ -204,7 +160,7 @@ Hardened the API, namely, all added more validations to options object key value
 
 - ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://bitbucket.org/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
 
-# 5.0.0 (2017-04-30)
+## 5.0.0 (2017-04-30)
 
 After spending nearly whole Sunday testing [v4], I discovered that passing `undefined` as an instruction to delete is wrong, because how do you pass the message that the current item is an array? Previously, when there were no `null` values allowed, null in the value meant array, but also, when received as a result of `traverse()` it meant an instruction to delete. Now we can't touch `null` because it's a legitimate value! So we switched to `undefined`. But we can't use it for both as an instruction to delete AND as a marker of an array, because that way we will not be able to delete from arrays.
 
@@ -216,7 +172,7 @@ After spending nearly whole Sunday testing [v4], I discovered that passing `unde
 
 - 🔧 All the methods stay the same. I just rewired all internal messaging to use `NaN` instead of `undefined` as an instruction for `traverse()` to delete.
 
-# 4.0.0 (2017-04-30)
+## 4.0.0 (2017-04-30)
 
 The good thing about being not popular is you can make breaking changes and very few (if anybody) will care. I will make use of this privilege and do some cardinal yet necessary API changes.
 
@@ -269,7 +225,7 @@ I needed this feature for [json-variables](https://bitbucket.org/codsen/json-var
 
 - Unit test coverage stays solid 100% lines.
 
-# 3.0.0 (2017-03-20)
+## 3.0.0 (2017-03-20)
 
 ### Changed
 

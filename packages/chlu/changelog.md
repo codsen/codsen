@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.6.2...chlu@3.6.3) (2019-01-16)
-
-**Note:** Version bump only for package chlu
-
-
-
-
-
-## [3.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.6.1...chlu@3.6.2) (2019-01-15)
-
-**Note:** Version bump only for package chlu
-
-## [3.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.6.0...chlu@3.6.1) (2019-01-13)
-
-**Note:** Version bump only for package chlu
-
-# [3.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.6.0) (2019-01-11)
+## 3.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
 
-# [3.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.5.0) (2019-01-08)
+## 3.5.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
 
-# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.6...chlu@3.4.0) (2019-01-08)
+## 3.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
 
-## [3.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.5...chlu@3.3.6) (2019-01-02)
-
-**Note:** Version bump only for package chlu
-
-## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.4...chlu@3.3.5) (2019-01-01)
-
-**Note:** Version bump only for package chlu
-
-## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.3...chlu@3.3.4) (2018-12-29)
-
-**Note:** Version bump only for package chlu
-
-## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.2...chlu@3.3.3) (2018-12-29)
-
-**Note:** Version bump only for package chlu
-
-## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.1...chlu@3.3.2) (2018-12-27)
-
-**Note:** Version bump only for package chlu
-
-## [3.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/compare/chlu@3.3.0...chlu@3.3.1) (2018-12-27)
-
-**Note:** Version bump only for package chlu
-
-# 3.3.0 (2018-12-26)
+## 3.3.0 (2018-12-26)
 
 ### Features
 
@@ -79,7 +39,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/) and
 
 - ✨ Now we really support input with only `changelog.md` data (no package.json, no git tags data)
 
-# 3.0.0 (2018-06-13)
+## 3.0.0 (2018-06-13)
 
 API changes - new input argument - `gitTags` comes as 2nd, and existing arguments from 2nd (inclusive) onwards shift by one place further.
 It's necessary so that we could accomodate the Git tag customisations.
@@ -141,7 +101,7 @@ It's necessary so that we could accomodate the Git tag customisations.
 
 - ✨ Added n-dash, m-dash, tab, comma, full stop and non-breaking space to the list of what's being trimmed after link titles. This means, bigger variation of non-standard titles would get recognised and there will be less chance that the remainder will not get recognised by `dehumanize-date`.
 
-# 2.0.0 (2017-06-26)
+## 2.0.0 (2017-06-26)
 
 - ✨ Merged getRepoInfo and setRepoInfo. This might prevent some bugs when both algorithms are not the same. I anticipate to improve getter/setter algorithms in the future and it's easier when both are within the same function. The only difference between getter and setter is presence of second argument - if it's not provided, it's get. If it is, it's set.
 - ✨ Footer link versions within GitHub magic diff links are validated and fixed if necessary. Fixes in include wrong versions (before and/or after), missing or multiple letters `v` before version and complete rubbish within any of the parts of the footer link (like text instead of diff link's version, in the URL).

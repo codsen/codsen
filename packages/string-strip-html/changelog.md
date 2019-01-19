@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.4.2...string-strip-html@3.4.3) (2019-01-16)
-
-**Note:** Version bump only for package string-strip-html
-
-
-
-
-
-## [3.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.4.1...string-strip-html@3.4.2) (2019-01-15)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.4.0...string-strip-html@3.4.1) (2019-01-13)
-
-**Note:** Version bump only for package string-strip-html
-
-# [3.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.6...string-strip-html@3.4.0) (2019-01-11)
+## 3.4.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/4f00871))
 
-## [3.3.6](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.5...string-strip-html@3.3.6) (2019-01-02)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.4...string-strip-html@3.3.5) (2019-01-01)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.3...string-strip-html@3.3.4) (2018-12-29)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.2...string-strip-html@3.3.3) (2018-12-29)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.1...string-strip-html@3.3.2) (2018-12-27)
-
-**Note:** Version bump only for package string-strip-html
-
-## [3.3.1](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/compare/string-strip-html@3.3.0...string-strip-html@3.3.1) (2018-12-27)
-
-**Note:** Version bump only for package string-strip-html
-
-# 3.3.0 (2018-12-26)
+## 3.3.0 (2018-12-26)
 
 ### Bug Fixes
 
@@ -72,7 +32,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 - ✨ Added `opts.onlyStripTags`
 
-# 3.0.0 (2018-07-03)
+## 3.0.0 (2018-07-03)
 
 Breaking changes: `opts.dumpLinkHrefsNearby` was previously Boolean. Now it's a plain object and its key `enabled` (`opts.dumpLinkHrefsNearby.enabled`) does the same thing that `opts.dumpLinkHrefsNearby` did before `v3`.
 
@@ -123,7 +83,7 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 
   This becomes a challenge in automated environments where data is considered to be clean and multiple datum can be parts of another. For example, we might be cleaning JSON fields where value is "sandwitched" out of three fields: "Hi&nbsp;", "%%-firstname-%%", ", welcome to special club!". To improve formatting, some outer spaces like after "Hi" can be replaced with a non-breaking space. This way, words would never wrap there. However, if all fields were cleaned by a tool which used this HTML stripping function, outer non-breaking spaces would get deleted and result would end up: "HiJohn, welcome to special club!". This option makes trimming more strict - only spaces deleted during string trimming.
 
-# 2.0.0 (2018-05-30)
+## 2.0.0 (2018-05-30)
 
 One day I noticed that my Nunjucks code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
 

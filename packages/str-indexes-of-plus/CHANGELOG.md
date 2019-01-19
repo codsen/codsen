@@ -3,59 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.8.2...str-indexes-of-plus@2.8.3) (2019-01-16)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-
-
-
-
-## [2.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.8.1...str-indexes-of-plus@2.8.2) (2019-01-15)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-## [2.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.8.0...str-indexes-of-plus@2.8.1) (2019-01-13)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-# [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.8.0) (2019-01-11)
+## 2.8.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
 
-# [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.7.0) (2019-01-08)
+## 2.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
 
-# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.5...str-indexes-of-plus@2.6.0) (2019-01-08)
+## 2.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
-
-## [2.3.5](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.4...str-indexes-of-plus@2.3.5) (2019-01-01)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-## [2.3.4](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.3...str-indexes-of-plus@2.3.4) (2018-12-29)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-## [2.3.3](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.2...str-indexes-of-plus@2.3.3) (2018-12-29)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-## [2.3.2](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.3.1...str-indexes-of-plus@2.3.2) (2018-12-27)
-
-**Note:** Version bump only for package str-indexes-of-plus
-
-## 2.3.1 (2018-12-26)
-
-**Note:** Version bump only for package str-indexes-of-plus
 
 ## 2.3.0 (2018-10-25)
 
@@ -77,7 +41,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-# 2.0.0 (2017-12-03)
+## 2.0.0 (2017-12-03)
 
 - ✨ Rebased the source to be in ES modules
 - ✨ Set up Rollup to generate three flavours: CommonJS, UMD and native ES Modules (source)

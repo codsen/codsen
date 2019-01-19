@@ -3,55 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.6.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.6.2...json-variables@7.6.3) (2019-01-16)
-
-**Note:** Version bump only for package json-variables
-
-
-
-
-
-## [7.6.2](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.6.1...json-variables@7.6.2) (2019-01-15)
-
-**Note:** Version bump only for package json-variables
-
-## [7.6.1](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.6.0...json-variables@7.6.1) (2019-01-13)
-
-**Note:** Version bump only for package json-variables
-
-# [7.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.8...json-variables@7.6.0) (2019-01-11)
+## 7.6.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/commits/4f00871))
-
-## [7.5.8](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.7...json-variables@7.5.8) (2019-01-02)
-
-**Note:** Version bump only for package json-variables
-
-## [7.5.7](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.6...json-variables@7.5.7) (2019-01-01)
-
-**Note:** Version bump only for package json-variables
-
-## [7.5.6](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.5...json-variables@7.5.6) (2018-12-29)
-
-**Note:** Version bump only for package json-variables
-
-## [7.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.4...json-variables@7.5.5) (2018-12-29)
-
-**Note:** Version bump only for package json-variables
-
-## [7.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.3...json-variables@7.5.4) (2018-12-27)
-
-**Note:** Version bump only for package json-variables
-
-## [7.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables/compare/json-variables@7.5.2...json-variables@7.5.3) (2018-12-27)
-
-**Note:** Version bump only for package json-variables
-
-## 7.5.2 (2018-12-26)
-
-**Note:** Version bump only for package json-variables
 
 ## 7.5.0 (2018-10-28)
 
@@ -89,7 +45,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ Updated all dependencies.
 - ✨ Fixed some edge-cases where variables could have been wrapped where they shouldn't have been wrapped and the opposite.
 
-# 7.0.0 (2018-02-14)
+## 7.0.0 (2018-02-14)
 
 Full rewrite. Same and more unit tests.
 
@@ -100,7 +56,7 @@ Full rewrite. Same and more unit tests.
 - ✨ Way leaner and efficient algorithm and dependencies' choice.
 - ✨ Added more unit tests too.
 
-# 6.0.0 (2018-01-02)
+## 6.0.0 (2018-01-02)
 
 **Small but nonetheless breaking changes.**
 
@@ -116,7 +72,7 @@ Bumping _semver major_ just in case (could have bumped minor) but let's better b
 - ✨ Tapped [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) directly, without the need for the whole [ast-monkey](https://www.npmjs.com/package/ast-monkey).
 - ✨ Many other improvements on the setup
 
-# 5.0.0 (2017-12-15)
+## 5.0.0 (2017-12-15)
 
 ### Changed
 
@@ -187,7 +143,7 @@ Blimey, we've got 99 unit tests! 🍾 We'll need to celebrate the 100th! 🍻✨
 - ✨ Variables are not correctly resolved from linking to the same (deeper) level. If not found, search continues in that level's data store key (default key name for data stores is `<same-key-name>_data`). If not found there, search jumps to root level, and looks for key there. If not found, search continues for data store at the root. If failed, error is thrown.
 - ✨ Some rebasing done to clean things up 🚿.
 
-# 4.0.0 (2017-04-30)
+## 4.0.0 (2017-04-30)
 
 Breaking changes in the API, or rather output. When Boolean values are encountered and written as values (and no other string characters are present on the original placeholder), we output empty string, not `false` or `true`. Nobody needs Booleans converted to String. I need this for my email templating projects. 🦄
 
@@ -200,7 +156,7 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - ✨ `opts.resolveToBoolIfAnyValuesContainBool` - if `true` (default), if any variable's value is Boolean, upon resolving it will set the whole value to itself. For example, `aaaa %%_var_%% bbbbb` and `var=true` would resolve to `true`. If setting is `false`, it will resolve to empty string, in this example's case, `aaaa bbbbb`. I don't see why anybody would set it to other value than `default`, but hey, the more freedom the better.
 - ✨ `opts.resolveToFalseIfAnyValuesContainBool` - if Boolean variable is enountered, the whole thing always resolves to `false`. Even if the first encountered variable's value was `true`. This is needed for email templating, so that when Booleans are encountered, we bail setting the whole thing to `false`.
 
-# 3.0.0 (2017-04-27)
+## 3.0.0 (2017-04-27)
 
 ### Added
 
@@ -211,7 +167,7 @@ Breaking changes in the API, or rather output. When Boolean values are encounter
 - `opts.wrapHeads` is now `opts.wrapHeadsWith`
 - `opts.wrapTails` is now `opts.wrapTailsWith`
 
-# 2.0.0 (2017-04-25)
+## 2.0.0 (2017-04-25)
 
 ### Changed
 

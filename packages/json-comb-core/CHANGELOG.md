@@ -3,61 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.4.2...json-comb-core@6.4.3) (2019-01-16)
-
-**Note:** Version bump only for package json-comb-core
-
-
-
-
-
-## [6.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.4.1...json-comb-core@6.4.2) (2019-01-15)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.4.1](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.4.0...json-comb-core@6.4.1) (2019-01-13)
-
-**Note:** Version bump only for package json-comb-core
-
-# [6.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.7...json-comb-core@6.4.0) (2019-01-11)
+## 6.4.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/commits/4f00871))
 
-# [6.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.7...json-comb-core@6.3.0) (2019-01-08)
+## 6.3.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/commits/4f00871))
-
-## [6.2.7](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.6...json-comb-core@6.2.7) (2019-01-02)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.2.6](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.5...json-comb-core@6.2.6) (2019-01-01)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.2.5](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.4...json-comb-core@6.2.5) (2018-12-29)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.3...json-comb-core@6.2.4) (2018-12-29)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.2...json-comb-core@6.2.3) (2018-12-27)
-
-**Note:** Version bump only for package json-comb-core
-
-## [6.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.2.1...json-comb-core@6.2.2) (2018-12-27)
-
-**Note:** Version bump only for package json-comb-core
-
-## 6.2.1 (2018-12-26)
-
-**Note:** Version bump only for package json-comb-core
 
 ## 6.2.0 (2018-06-11)
 
@@ -74,7 +30,7 @@ GitHub sold us out. God bless their souls and the new billionaire. In the meanti
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
 - ✨ Now pointing unit tests at ES Modules build, not CommonJS-one. This means, unit test coverage will be correct (higher) because there won't be any missing rows that Babel added which are impossible to cover.
 
-# 6.0.0 (2018-03-13)
+## 6.0.0 (2018-03-13)
 
 - ✨ Added `opts.useNullAsExplicitFalse` on all both sync and async getKeyset methods
 
@@ -87,7 +43,7 @@ Since it's on by default (which is sensible), that's technically a breaking chan
 - ✨ `doNotFillThesePathsIfTheyContainPlaceholders` on both `enforceKeysetSync()` and `enforceKeyset`
 - ✨ `placeholder` on both `enforceKeysetSync()` and `enforceKeyset`
 
-# 5.0.0 (2017-12-28)
+## 5.0.0 (2017-12-28)
 
 ### Changed
 
@@ -119,13 +75,13 @@ Please update your API's appending "Sync" on the function names, or better, tap 
 
 - ✨ Tapped [`sort-keys`](https://www.npmjs.com/package/sort-keys) on a `deep` setting, replacing the existing deep sort function.
 
-# 4.0.0 (2017-10-09)
+## 4.0.0 (2017-10-09)
 
 ### Changed
 
 - 🔧 method `sortIfObject()` renamed to `sortAllObjects()`. It now performs a _deep sort_ of any objects within anything. If a non-array and non-object is given, same thing is returned bypassing the operations, so it's safe to apply on any JS types. That's thanks to [ast-monkey](https://github.com/codsen/ast-monkey#traverse) which performs the deep traversal.
 
-# 3.0.0 (2017-10-06)
+## 3.0.0 (2017-10-06)
 
 API-wise, there are no changes, but since it's rewrite in ES modules and the arrangement of files is different, I'll bump _semver major_ just in case. Cheers!
 
@@ -171,7 +127,7 @@ API-wise, there are no changes, but since it's rewrite in ES modules and the arr
 
 - Unused dependency from `package.json`
 
-# 2.0.0 (2017-05-15)
+## 2.0.0 (2017-05-15)
 
 ### Added
 

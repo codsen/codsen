@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.8.2...email-all-chars-within-ascii@2.8.3) (2019-01-16)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-
-
-
-
-## [2.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.8.1...email-all-chars-within-ascii@2.8.2) (2019-01-15)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.8.0...email-all-chars-within-ascii@2.8.1) (2019-01-13)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-# [2.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.6...email-all-chars-within-ascii@2.8.0) (2019-01-11)
+## 2.8.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
 
-# [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.6...email-all-chars-within-ascii@2.7.0) (2019-01-08)
+## 2.7.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
 
-# [2.6.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.6...email-all-chars-within-ascii@2.6.0) (2019-01-08)
+## 2.6.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
 
-## [2.5.6](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.5...email-all-chars-within-ascii@2.5.6) (2019-01-02)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.5.5](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.4...email-all-chars-within-ascii@2.5.5) (2019-01-01)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.5.4](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.3...email-all-chars-within-ascii@2.5.4) (2018-12-29)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.2...email-all-chars-within-ascii@2.5.3) (2018-12-29)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.1...email-all-chars-within-ascii@2.5.2) (2018-12-27)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/compare/email-all-chars-within-ascii@2.5.0...email-all-chars-within-ascii@2.5.1) (2018-12-27)
-
-**Note:** Version bump only for package email-all-chars-within-ascii
-
-# 2.5.0 (2018-12-26)
+## 2.5.0 (2018-12-26)
 
 ### Features
 
@@ -92,7 +52,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 
-# 2.0.0 (2017-12-05)
+## 2.0.0 (2017-12-05)
 
 ### Added
 

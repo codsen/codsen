@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.12.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.12.2...ranges-is-index-within@1.12.3) (2019-01-16)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-
-
-
-
-## [1.12.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.12.1...ranges-is-index-within@1.12.2) (2019-01-15)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.12.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.12.0...ranges-is-index-within@1.12.1) (2019-01-13)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-# [1.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.6...ranges-is-index-within@1.12.0) (2019-01-11)
+## 1.12.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
 
-# [1.11.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.6...ranges-is-index-within@1.11.0) (2019-01-08)
+## 1.11.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
 
-# [1.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.6...ranges-is-index-within@1.10.0) (2019-01-08)
+## 1.10.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
 
-## [1.9.6](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.5...ranges-is-index-within@1.9.6) (2019-01-02)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.9.5](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.4...ranges-is-index-within@1.9.5) (2019-01-01)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.9.4](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.3...ranges-is-index-within@1.9.4) (2018-12-29)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.9.3](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.2...ranges-is-index-within@1.9.3) (2018-12-29)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.9.2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.1...ranges-is-index-within@1.9.2) (2018-12-27)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/compare/ranges-is-index-within@1.9.0...ranges-is-index-within@1.9.1) (2018-12-27)
-
-**Note:** Version bump only for package ranges-is-index-within
-
-# 1.9.0 (2018-12-26)
+## 1.9.0 (2018-12-26)
 
 ### Features
 

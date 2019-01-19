@@ -3,65 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.5.2...check-types-mini@5.5.3) (2019-01-16)
-
-**Note:** Version bump only for package check-types-mini
-
-
-
-
-
-## [5.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.5.1...check-types-mini@5.5.2) (2019-01-15)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.5.0...check-types-mini@5.5.1) (2019-01-13)
-
-**Note:** Version bump only for package check-types-mini
-
-# [5.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.6...check-types-mini@5.5.0) (2019-01-11)
+## 5.5.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/4f00871))
 
-# [5.4.0](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.6...check-types-mini@5.4.0) (2019-01-08)
+## 5.4.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/4f00871))
 
-# [5.3.0](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.6...check-types-mini@5.3.0) (2019-01-08)
+## 5.3.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/4f00871))
 
-## [5.2.6](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.5...check-types-mini@5.2.6) (2019-01-02)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.2.5](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.4...check-types-mini@5.2.5) (2019-01-01)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.2.4](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.3...check-types-mini@5.2.4) (2018-12-29)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.2.3](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.2...check-types-mini@5.2.3) (2018-12-29)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.2.2](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.1...check-types-mini@5.2.2) (2018-12-27)
-
-**Note:** Version bump only for package check-types-mini
-
-## [5.2.1](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/compare/check-types-mini@5.2.0...check-types-mini@5.2.1) (2018-12-27)
-
-**Note:** Version bump only for package check-types-mini
-
-# 5.2.0 (2018-12-26)
+## 5.2.0 (2018-12-26)
 
 ### Bug Fixes
 
@@ -98,7 +58,7 @@ instead of:
 }
 ```
 
-# 5.0.0 (2018-10-13)
+## 5.0.0 (2018-10-13)
 
 - 💥 BREAKING CHANGES - if you use schema and "blanket" values "any" or "whatever" for any paths, now that will apply to all children nodes of that path.
 
@@ -131,7 +91,7 @@ Technically, this is a breaking change, warranting **a major semver release**.
 - ✨ Implemented [matcher](https://www.npmjs.com/package/matcher) on `opts.ignorePaths` and `opts.ignoreKeys`. Now we can use wildcards in both.
 - 🔧 Now keys that are covered by `opts.ignoreKeys` won't be flagged up as not covered by schema or a reference object. Previously, every key had to be covered, `opts.ignoreKeys` was only regarding the type comparison which was skipped. I know, that's illogical, it was a bug and it's now fixed. Sorry about that.
 
-# 4.0.0 (2018-07-03)
+## 4.0.0 (2018-07-03)
 
 I felt a need for this feature since the very beginning but only now the API's of my librarires started to become complex-enough to warrant nested options' objects.
 
@@ -182,7 +142,7 @@ GitHub sold us out. God bless their souls and the new billionaire. In the meanti
 - ✨ `true` and `false` as precise types in `opts.schema`
 - 💥 Removed `lodash.includes` (replaced with `Array.includes`)
 
-# 3.0.0 (2017-12-08)
+## 3.0.0 (2017-12-08)
 
 - 🔧 Rebased all the source to be in ES Modules.
 - ✨ Set up Rollup and generate three flavours of the distribution: CommonJS, UMD and ES Modules (native source)
@@ -238,7 +198,7 @@ Funny, I discovered this issue when I tried to set up `check-types-mini` on [eas
 
 - ✨ Now, the errors which are caused by misconfiguration of the `check-types-mini` itself will reference it as a source of an error. Once this library is configured correctly, then the errors can be personalised as per `opts.msg`.
 
-# 2.0.0 (2017-06-12)
+## 2.0.0 (2017-06-12)
 
 ### Changed
 

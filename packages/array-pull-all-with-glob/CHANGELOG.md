@@ -3,77 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.11.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.11.2...array-pull-all-with-glob@4.11.3) (2019-01-16)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
-
-## [4.11.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.11.1...array-pull-all-with-glob@4.11.2) (2019-01-15)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.11.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.11.0...array-pull-all-with-glob@4.11.1) (2019-01-13)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-# [4.11.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.9...array-pull-all-with-glob@4.11.0) (2019-01-11)
+## 4.11.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
 
-# [4.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.9...array-pull-all-with-glob@4.10.0) (2019-01-08)
+## 4.10.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
 
-# [4.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.9...array-pull-all-with-glob@4.9.0) (2019-01-08)
+## 4.9.0 (2019-01-08)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
 
-## [4.8.9](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.8...array-pull-all-with-glob@4.8.9) (2019-01-02)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.8](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.7...array-pull-all-with-glob@4.8.8) (2019-01-01)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.7](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.6...array-pull-all-with-glob@4.8.7) (2019-01-01)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.6](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.5...array-pull-all-with-glob@4.8.6) (2018-12-29)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.5](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.4...array-pull-all-with-glob@4.8.5) (2018-12-29)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.4](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.3...array-pull-all-with-glob@4.8.4) (2018-12-29)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.3](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.2...array-pull-all-with-glob@4.8.3) (2018-12-29)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.1...array-pull-all-with-glob@4.8.2) (2018-12-27)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-## [4.8.1](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.8.0...array-pull-all-with-glob@4.8.1) (2018-12-27)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-# 4.8.0 (2018-12-26)
+## 4.8.0 (2018-12-26)
 
 ### Features
 
@@ -116,7 +64,7 @@ Also, I set up [check-types-mini](https://bitbucket.org/codsen/check-types-mini)
 
 - ✨ Shortened the error source function paths in error messages. There's no point to report the name of the main function when there's only one function. The package name will suffice.
 
-# 4.0.0 (2017-10-23)
+## 4.0.0 (2017-10-23)
 
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
@@ -125,7 +73,7 @@ Also, I set up [check-types-mini](https://bitbucket.org/codsen/check-types-mini)
 
 - ✨ Now generating transpiled version within `/es5/` folder, which you can require like that, `var pull = require('array-pull-all-with-glob/es5')`
 
-# 3.0.0 (2017-08-25)
+## 3.0.0 (2017-08-25)
 
 - ✨ Switched to [matcher](https://github.com/sindresorhus/matcher/) to do all the globbing.
 

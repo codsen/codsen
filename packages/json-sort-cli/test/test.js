@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import path from "path";
 import test from "ava";
 import execa from "execa";
-// import tempy from "tempy";
+import tempy from "tempy";
 import pMap from "p-map";
 import pack from "../package.json";
 
@@ -544,8 +544,8 @@ test.serial("01.07 - help output mode", async t => {
 
 test.serial("01.08 - no files found in the given directory", async t => {
   // fetch us a random temp folder
-  // const tempFolder = tempy.directory();
-  const tempFolder = "temp";
+  const tempFolder = tempy.directory();
+  // const tempFolder = "temp";
 
   // call execa on that empty folder
   const stdOutContents = await execa("./cli.js", [tempFolder]);

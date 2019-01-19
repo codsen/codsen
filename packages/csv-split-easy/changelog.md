@@ -3,55 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.5.2...csv-split-easy@2.5.3) (2019-01-16)
-
-**Note:** Version bump only for package csv-split-easy
-
-
-
-
-
-## [2.5.2](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.5.1...csv-split-easy@2.5.2) (2019-01-15)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.5.0...csv-split-easy@2.5.1) (2019-01-13)
-
-**Note:** Version bump only for package csv-split-easy
-
-# [2.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.7...csv-split-easy@2.5.0) (2019-01-11)
+## 2.5.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/commits/4f00871))
-
-## [2.4.7](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.6...csv-split-easy@2.4.7) (2019-01-02)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.4.6](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.5...csv-split-easy@2.4.6) (2019-01-01)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.4.5](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.4...csv-split-easy@2.4.5) (2018-12-29)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.4.4](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.3...csv-split-easy@2.4.4) (2018-12-29)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.4.3](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.2...csv-split-easy@2.4.3) (2018-12-27)
-
-**Note:** Version bump only for package csv-split-easy
-
-## [2.4.2](https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy/compare/csv-split-easy@2.4.1...csv-split-easy@2.4.2) (2018-12-27)
-
-**Note:** Version bump only for package csv-split-easy
-
-## 2.4.1 (2018-12-26)
-
-**Note:** Version bump only for package csv-split-easy
 
 ## 2.4.0 (2018-10-17)
 
@@ -82,7 +38,7 @@ GitHub sold us out. In the meantime, we:
 - ✨ PR [#3](https://bitbucket.org/codsen/csv-split-easy/pull/3) from [@mac-](https://github.com/mac-) now caters double quotes wrapping double quotes, used as a means of escaping code
 - 🔧 Updated dependencies. Rollup is continuously improving and build sizes are getting smaller.
 
-# 2.0.0 (2017-11-08)
+## 2.0.0 (2017-11-08)
 
 ### Added
 

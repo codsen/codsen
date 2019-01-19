@@ -3,59 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.10.12](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.11...json-sort-cli@1.10.12) (2019-01-16)
-
-**Note:** Version bump only for package json-sort-cli
-
-
-
-
-
-## [1.10.11](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.10...json-sort-cli@1.10.11) (2019-01-15)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.10](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.9...json-sort-cli@1.10.10) (2019-01-13)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.9](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.6...json-sort-cli@1.10.9) (2019-01-11)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.8](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.6...json-sort-cli@1.10.8) (2019-01-08)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.7](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.6...json-sort-cli@1.10.7) (2019-01-08)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.6](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.5...json-sort-cli@1.10.6) (2019-01-02)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.5](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.4...json-sort-cli@1.10.5) (2019-01-01)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.4](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.3...json-sort-cli@1.10.4) (2018-12-29)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.2...json-sort-cli@1.10.3) (2018-12-29)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.2](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.1...json-sort-cli@1.10.2) (2018-12-27)
-
-**Note:** Version bump only for package json-sort-cli
-
-## [1.10.1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/compare/json-sort-cli@1.10.0...json-sort-cli@1.10.1) (2018-12-27)
-
-**Note:** Version bump only for package json-sort-cli
-
-# 1.10.0 (2018-12-26)
+## 1.10.0 (2018-12-26)
 
 ### Features
 

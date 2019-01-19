@@ -3,53 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.15.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.15.2...chlu-cli@1.15.3) (2019-01-16)
-
-**Note:** Version bump only for package chlu-cli
-
-
-
-
-
-## [1.15.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.15.1...chlu-cli@1.15.2) (2019-01-15)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.15.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.15.0...chlu-cli@1.15.1) (2019-01-13)
-
-**Note:** Version bump only for package chlu-cli
-
-# [1.15.0](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.6...chlu-cli@1.15.0) (2019-01-11)
+## 1.15.0 (2019-01-11)
 
 ### Features
 
 - Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/4f00871))
 
-## [1.13.6](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.5...chlu-cli@1.13.6) (2019-01-02)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.13.5](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.4...chlu-cli@1.13.5) (2019-01-01)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.13.4](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.3...chlu-cli@1.13.4) (2018-12-29)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.13.3](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.2...chlu-cli@1.13.3) (2018-12-29)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.13.2](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.1...chlu-cli@1.13.2) (2018-12-27)
-
-**Note:** Version bump only for package chlu-cli
-
-## [1.13.1](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/compare/chlu-cli@1.13.0...chlu-cli@1.13.1) (2018-12-27)
-
-**Note:** Version bump only for package chlu-cli
-
-# 1.13.0 (2018-12-26)
+## 1.13.0 (2018-12-26)
 
 ### Features
 
