@@ -1,7 +1,7 @@
 /**
  * util-array-object-or-both
  * Validate and normalise user choice: array, object or both?
- * Version: 2.6.3
+ * Version: 2.7.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both

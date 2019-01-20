@@ -1,7 +1,7 @@
 /**
  * lerna-clean-changelogs
  * Cleans all the crap from Lerna and Conventional Commits-generated changelogs
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs
@@ -9,7 +9,7 @@
 
 import splitLines from 'split-lines';
 
-var version = "0.1.0";
+var version = "0.2.0";
 
 function isStr(something) {
   return typeof something === "string";

@@ -1,7 +1,7 @@
 /**
  * str-indexes-of-plus
  * Search for a string in another string. Get array of indexes. Full Unicode support.
- * Version: 2.8.3
+ * Version: 2.9.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus

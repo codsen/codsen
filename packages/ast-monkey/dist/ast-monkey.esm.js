@@ -1,7 +1,7 @@
 /**
  * ast-monkey
  * Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
- * Version: 7.9.3
+ * Version: 7.10.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey

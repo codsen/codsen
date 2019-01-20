@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys/compare/object-fill-missing-keys@7.8.3...object-fill-missing-keys@7.9.0) (2019-01-20)
+
+
+### Features
+
+* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys/commits/4f35bfb))
+
+
+
+
+
 ## 7.8.0 (2019-01-11)
 
 ### Features

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.3...object-flatten-referencing@4.10.0) (2019-01-20)
+
+
+### Features
+
+* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f35bfb))
+
+
+
+
+
 ## 4.9.0 (2019-01-11)
 
 ### Features

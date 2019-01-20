@@ -1,6 +1,6 @@
 {
   "name": "util-array-object-or-both",
-  "version": "2.6.3",
+  "version": "2.7.0",
   "description": "Validate and normalise user choice: array, object or both?",
   "license": "MIT",
   "engines": {
@@ -160,7 +160,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.5.3",
+    "check-types-mini": "^5.6.0",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6"
   },

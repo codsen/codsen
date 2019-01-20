@@ -1,7 +1,7 @@
 /**
  * object-delete-key
  * Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.
- * Version: 1.7.3
+ * Version: 1.8.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key

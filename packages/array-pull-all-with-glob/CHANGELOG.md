@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.11.3...array-pull-all-with-glob@4.12.0) (2019-01-20)
+
+
+### Features
+
+* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f35bfb))
+
+
+
+
+
 ## 4.11.0 (2019-01-11)
 
 ### Features

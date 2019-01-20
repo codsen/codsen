@@ -1,6 +1,6 @@
 {
   "name": "ranges-invert",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]",
   "license": "MIT",
   "engines": {
@@ -156,10 +156,10 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.5.3",
+    "check-types-mini": "^5.6.0",
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^3.11.3"
+    "ranges-merge": "^3.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

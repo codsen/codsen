@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.3...detect-is-it-html-or-xhtml@3.9.0) (2019-01-20)
+
+
+### Features
+
+* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f35bfb))
+
+
+
+
+
 ## 3.8.0 (2019-01-11)
 
 ### Features
