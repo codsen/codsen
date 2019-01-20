@@ -4,7 +4,7 @@
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/email-homey",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/email-homey",

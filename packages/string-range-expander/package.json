@@ -4,7 +4,7 @@
   "description": "Expands string index ranges within whitespace boundaries until letters are met",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander",

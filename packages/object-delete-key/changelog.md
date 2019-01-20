@@ -3,17 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.7.0 (2019-01-11)
+## 1.8.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/commits/4f00871))
-
-## 1.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.5.0 (2018-10-24)
 
@@ -37,19 +30,13 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.2.0 (2018-03-11)
 
-### Added
-
 - ✨ Updated all dependencies
 - ✨ Switched from deprecated [posthtml-ast-is-empty](https://bitbucket.org/codsen/posthtml-ast-is-empty) to [ast-is-empty](https://bitbucket.org/codsen/ast-is-empty)
 
 ## 1.1.0 (2017-10-30)
 
-### Added
-
 - ✨ Now accepts globs everywhere, see [matcher](https://github.com/sindresorhus/matcher)'s API which is driving the globbing. This comes from [ast-monkey](https://bitbucket.org/codsen/ast-monkey) tapping `matcher`.
 
 ## 1.0.0 (2017-10-23)
-
-### Released
 
 - ✨ First public release

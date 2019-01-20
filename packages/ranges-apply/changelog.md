@@ -3,40 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.11.0 (2019-01-11)
+## 2.12.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.9.0 (2018-12-26)
 
-### Bug Fixes
-
-- actually rename files ([0a32cb8](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0a32cb8))
-
-### Features
-
-- 3rd input arg - progressFn ([f6735e2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/f6735e2))
-- accept null as second input argument, instead of ranges ([0c59484](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0c59484))
-- ranges-merge (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/35e3c4b))
+- ✨ Add 3rd input arg - progressFn ([f6735e2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/f6735e2))
+- ✨ Accept `null` as second input argument, instead of ranges ([0c59484](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0c59484))
+- ✨ [`ranges-merge`](https://www.npmjs.com/package/ranges-merge) (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/35e3c4b))
 
 ## 2.8.0 (2018-11-29)
 
 - ✨ Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
 - ✨ Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
 
-1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
-2. It's easier to sort unit tests this way (order by throw ID) in a test file
-3. It's easier to perfect the unit test coverage when throws can be easier identified.
-4. It's faster to comprehend a number compared to a sentence. "THROW_ID_01" is faster to comprehend than a full title (which can differ from other title by a single word). At the end of the day, being less tired means achieving more.
+    1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
+    2. It's easier to sort unit tests this way (order by throw ID) in a test file
+    3. It's easier to perfect the unit test coverage when throws can be easier identified.
+    4. It's faster to comprehend a number compared to a sentence. "THROW_ID_01" is faster to comprehend than a full title (which can differ from other title by a single word). At the end of the day, being less tired means achieving more.
 
-```js
-const error1 = t.throws(() => {
-  repl();
-});
-t.regex(error1.message, /THROW_ID_01/);
-```
+    ```js
+    const error1 = t.throws(() => {
+      repl();
+    });
+    t.regex(error1.message, /THROW_ID_01/);
+    ```
 
 ## 2.7.0 (2018-10-25)
 
@@ -64,8 +57,6 @@ t.regex(error1.message, /THROW_ID_01/);
 
 ## 2.2.0 (2018-05-11)
 
-### Improved
-
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — Rollup will remove from production code.
@@ -73,30 +64,19 @@ t.regex(error1.message, /THROW_ID_01/);
 
 ## 2.1.0 (2018-02-13)
 
-### Added
-
 - ✨ Now accepts a single range as well, not only array of ranges.
 
 ## 2.0.0 (2017-11-02)
-
-### Added
 
 - ✨ The main source now is in ES2015 modules with `import`/`export`.
 - ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
 
 ## 1.4.0 (2017-09-19)
 
-### Changed
-
 - 🔧 Switching to ESLint on `airbnb-base` preset with semicolons-off override. JS Standard is rubbish because it's too relaxed and it's been using half-year-old ESLint. Actually it's even flagged as insecure by BitHound at the moment because of shell.js dependency two levels deep. ESLint itself is fine however.
-
-### Removed
-
-- Options, third input argument. It did nothing and I was expecting to add options, but now I don't want any. I removed the unused code related to options.
+- 💥 Removed _options_, the third input argument. It did nothing and I was expecting to add options, but now I don't want any. I removed the unused code related to options.
 
 ## 1.3.0 (2017-08-30)
-
-### Changed
 
 - 🔧 OK, so after replacing ES6 template strings, the `let`s stopped minification of [emailcomb](https://emailcomb.com). I came up with idea to transpile the source to `/es5/index.js`, after publishing it should be available for consumption via `require('string-replace-slices-array/es5')`. Let's see how it goes.
 - 🔧 I restored all template strings as they were in `v1.1.0`.
@@ -104,13 +84,9 @@ t.regex(error1.message, /THROW_ID_01/);
 
 ## 1.2.0 (2017-08-29)
 
-### Changed
-
-- 🔧 Guys, strange stuff. I was generating a production build of [emailcomb](https://emailcomb.com) and it refused to minify this library because of the first backtick in the ES6 template strings. So, I replaced them with ES5 code. Let's see how it will go. Geez!
+- 🔧 Guys, strange stuff. I was generating a production build of [emailcomb](https://emailcomb.com) and it refused to minify this library because of the first backtick in the ES6 template strings. So, I replaced them with ES5 code. Let's see how it will go.
 
 ## 1.1.0 (2017-08-16)
-
-### Fixed
 
 - 🔧 Now allowing zeros as values in ranges too. Sorry about that, the integer-checking library was not accepting zeros. Fixed now.
 

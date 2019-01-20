@@ -4,7 +4,7 @@
   "description": "Do substrings match what's on the left or right of a given index?",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right",

@@ -3,26 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.4.0 (2019-01-11)
+## 3.5.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-12-26)
 
 ### Bug Fixes
 
-- throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
+- 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
 
 ### Features
 
-- algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
-- delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
-- improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
-- opts.dumpLinkHrefsNearby and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
-- opts.onlyStripTags ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
-- opts.trimOnlySpaces ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
+- ✨ Algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
+- ✨ Delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
+- ✨ Improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
+- ✨ `opts.dumpLinkHrefsNearby` and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
+- ✨ Add `opts.onlyStripTags` ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
+- ✨ Add `opts.trimOnlySpaces` ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
 
 ## 3.2.0 (2018-07-22)
 
@@ -85,7 +84,7 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 
 ## 2.0.0 (2018-05-30)
 
-One day I noticed that my Nunjucks code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
+One day I noticed that my [Nunjucks](https://mozilla.github.io/nunjucks/) code (just a greater-than comparison against a number) gets falsely interpreted as HTML by this library and went on to rewrite the whole thing from scratch. Now it's leaner, cleaner and with the same and double extra more unit tests.
 
 ### Added
 
@@ -95,8 +94,6 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 
 ## 1.4.0 (2018-05-11)
 
-### Improved
-
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. It means, we can now leave the `console.log`s in the source code — Rollup will remove from production code.
@@ -104,24 +101,16 @@ One day I noticed that my Nunjucks code (just a greater-than comparison against 
 
 ## 1.3.0 (2018-02-19)
 
-### Added
-
 - ✨ Now strips HTML comments too.
 
 ## 1.2.0 (2017-12-31)
-
-### Improved
 
 - ✨ Improvements to `opts.stripTogetherWithTheirContents` and done a lot of rebasing.
 
 ## 1.1.0 (2017-12-07)
 
-### Added
-
-- ✨ `opts.stripTogetherWithTheirContents`
+- ✨ Add `opts.stripTogetherWithTheirContents`
 
 ## 1.0.0 (2017-11-27)
-
-### Added
 
 - ✨ First public release

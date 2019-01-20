@@ -3,33 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.6.0 (2019-01-11)
+## 3.7.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
-
-## 3.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
-
-## 3.4.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-12-26)
 
-### Features
-
-- Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
-- support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
-
-and this project adheres to [Semantic Versioning](http://semver.org/) and
-[Keep a Changelog](http://keepachangelog.com/) spec.
+- ✨ Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
+- ✨ Support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
 
 ## 3.2.0 (2018-10-14)
 

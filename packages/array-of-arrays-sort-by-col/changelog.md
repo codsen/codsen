@@ -3,36 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.9.0 (2019-01-11)
+## 2.10.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/4f00871))
-
-## 2.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/4f00871))
-
-## 2.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.4.0 (2018-12-26)
 
 ### Features
 
-- cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
-- rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
+- ✨ cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
+- ✨ rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
 
 ## 2.3.0 (2018-12-14)
 

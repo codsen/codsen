@@ -3,40 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.12.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/compare/array-pull-all-with-glob@4.11.3...array-pull-all-with-glob@4.12.0) (2019-01-20)
+## 4.12.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f35bfb))
-
-
-
-
-
-## 4.11.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
-
-## 4.10.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
-
-## 4.9.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/4f00871))
-
-## 4.8.0 (2018-12-26)
-
-### Features
-
-- second input arg. can now be a string ([fd68131](https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob/commits/fd68131))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 4.7.0 (2018-10-12)
 

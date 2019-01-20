@@ -3,29 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.8.0 (2019-01-11)
+## 2.9.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/commits/4f00871))
-
-## 2.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.3.0 (2018-10-26)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- ✨ Update all dependencies
+- ✨ Restore coveralls.io reporting
+- ✨ Restore unit test linting
 
 ## 2.2.0 (2018-07-16)
 
@@ -43,23 +30,17 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-11-09)
 
-### Changed/Added
-
 - ✨ Numbers are not correctly reported as "non-empty"
 - ✨ Some rebasing and improvements to the setup
 
 ## 1.4.0 (2017-09-23)
 
-### Added
-
-- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`.
+- ✨ Implemented Rollup to generate 3 flavours of this package: CommonJS, UMD and ESM `module` with `import`/`export`
 
 ## 1.3.0 (2017-09-18)
 
-### Added
-
-- ✨ This changelog.
-- ✨ Switched from JS Standard to ESLint on `airbnb-base` preset. It's way better.
+- ✨ Add this changelog
+- ✨ Switched from JS Standard to ESLint on `airbnb-base` preset. It's way better
 
 ## 1.0.0 (2016-12-23)
 

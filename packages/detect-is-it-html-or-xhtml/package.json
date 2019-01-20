@@ -4,7 +4,7 @@
   "description": "Answers, is the string input string more an HTML or XHTML (or neither)",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml",

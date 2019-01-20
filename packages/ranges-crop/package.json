@@ -4,7 +4,7 @@
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop",

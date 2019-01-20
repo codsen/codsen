@@ -3,34 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/compare/object-flatten-referencing@4.9.3...object-flatten-referencing@4.10.0) (2019-01-20)
+## 4.10.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f35bfb))
-
-
-
-
-
-## 4.9.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
-
-## 4.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
-
-## 4.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 4.6.0 (2018-10-24)
 
@@ -96,7 +72,7 @@ instead, we want:
 \n{%- if %%-row2_var-%% -%}%%_row2_var_%%<br />{%- endif -%}
 ```
 
-That's what this feature is about.
+That's what this feature is about. Also,
 
 - ✨ `opts.mergeArraysWithoutLineBreaks` renamed to `opts.mergeArraysWithLineBreaks`. I don't know what happend in back then in the summer but this setting is named opposite it should have been named.
 
@@ -167,12 +143,7 @@ For example, `['aaa', 'bbb', 'ccc']` referencing string 'zzz' would yield string
 
 - ✨ New options setting `opts.ignore` which lets you skip flattening on an array (or a single string) of keys.
 - ✨ New options setting `opts.whatToDoWhenReferenceIsMissing` which allows you to specify exactly what do you want to happen when the equivalent value in the reference (object/array/string/whatever) is falsey.
-
 - 🔧 Done some rebasing, for example, `util.arrayiffyString` now DRY'ies the code a bit.
-
-- Readme
-
-- Code coverage is still 100%
 
 ## 1.0.0 (2017-04-03)
 

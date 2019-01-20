@@ -3,20 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.15.0 (2019-01-11)
+## 1.16.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.13.0 (2018-12-26)
 
-### Features
-
-- add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
-- atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
-- bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
-- recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
+- ✨ Add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
+- ✨ Add atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
+- ✨ Add Bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
+- ✨ Now recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
 
 ## 1.12.0 (2018-10-14)
 

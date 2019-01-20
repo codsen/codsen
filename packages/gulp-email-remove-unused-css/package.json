@@ -4,7 +4,7 @@
   "description": "Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css",

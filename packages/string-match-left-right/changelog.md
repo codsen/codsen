@@ -3,34 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.9.0 (2019-01-11)
+## 3.10.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
-
-## 3.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
-
-## 3.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.6.0 (2018-12-26)
 
-### Features
-
-- EOL matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
-- opts.relaxedApi ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
+- ✨ Add `EOL` matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
+- ✨ Add `opts.relaxedApi` ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
 
 ## 3.5.0 (2018-12-04)
 
-- ✨ NEW! Now you can match against `EOL` - end of string (beginning or ending). Since you can't pass letters `"EOL"`, you must pass them as an ES6 arrow function, `() => "EOL"`. In all other aspects, the use is the same.
+- ✨ **NEW!** Now you can match against `EOL` - end of string (beginning or ending). Since you can't pass letters `"EOL"`, you must pass them as an ES6 arrow function, `() => "EOL"`. In all other aspects, the use is the same.
 - 🔧 Previously, `opts.cb` second argument, which means the rest of the string on particular side, depending on the method called, left or right, was giving empty string when there was nothing on that side. This, however looked inconsistent when all other callback values were `undefined`. Now, second `opts.cb` argument comes as `undefined` instead of `empty` string when there's nothing to return.
 - ✨ Implemented and released (but not documented) `opts.strictApi` was merged with `opts.relaxedApi`
 - ✨ Restored unit test coverage and ava linting
@@ -45,13 +30,9 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.3.0 (2018-05-16)
 
-- ✨ Added `opts.relaxedApi`
+- ✨ Add `opts.relaxedApi`
 
 ## 3.2.0 (2018-05-15)
-
-Setup refresh.
-
-### Added
 
 - ✨ Set up [Prettier](https://prettier.io)
 - ✨ Removed `package.lock` and `.editorconfig`
@@ -62,29 +43,23 @@ Setup refresh.
 
 ## 3.1.1 (2018-03-06)
 
-### Fixed
-
 - 🔧 Looks like the new callback feature was causing throws on certain cases. Not any more. Sorry about that. Very big release in coming soon with great new features. 👍
 
 ## 3.1.0 (2018-03-01)
 
-### Added
-
-- ✨ Third argument, `whatToMatch`, can now be empty string. In such case, you have to provide callback and result will be calculated purely using the callback. It's handy when you want to perform complex matching, beyond "character is equal to" level. Personally, I reached this level and it's necessary for the feature I'm producing on the other package. It must be handy for everybody else too.
+- ✨ Add the third argument, `whatToMatch`, can now be empty string. In such case, you have to provide callback and result will be calculated purely using the callback. It's handy when you want to perform complex matching, beyond "character is equal to" level. Personally, I reached this level and it's necessary for the feature I'm producing on the other package. It must be handy for everybody else too.
 
 ## 3.0.0 (2018-01-15)
-
-### Changed
 
 - ✨ Rewrote a lot of code, relieving us from all `lodash` dependencies.
 - ✨ `opts.trimCharsBeforeMatching` must be a string of single character or an array of single characters. Previously merged string of characters was accepted but now it's not accepted.
 - ✨ Callback `cb` now returns three arguments:
 
-1.  `char` - the character just outside of the matched substring (as previously)
-2.  `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
-3.  `index` - NEW - the index of the `char`.
+    1.  `char` - the character just outside of the matched substring (as previously)
+    2.  `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
+    3.  `index` - NEW - the index of the `char`.
 
-Index is handy in cases when you set trimming and it's not clear where exactly is the `char` located in the string. Also, from here you can easily calculate the index of the match - just substract its length from `index`.
+    Index is handy in cases when you set trimming and it's not clear where exactly is the `char` located in the string. Also, from here you can easily calculate the index of the match - just substract its length from `index`.
 
 ### Fixed
 
@@ -113,22 +88,16 @@ I needed this when I was coding [email-remove-unused-css](https://github.com/cod
 
 ## 1.3.0 (2017-11-23)
 
-### Added
-
-- ✨ `opts.trimCharsBeforeMatching`
+- ✨ Add `opts.trimCharsBeforeMatching`
 
 ## 1.2.0 (2017-11-22)
 
-### Added
-
-- ✨ `opts.trimBeforeMatching`
+- ✨ Add `opts.trimBeforeMatching`
 
 ## 1.1.0 (2017-10-28)
 
-### Added
-
-- ✨ `opts.cbLeft`
-- ✨ `opts.cbRight`
+- ✨ Add `opts.cbLeft`
+- ✨ Add `opts.cbRight`
 
 Often you want to check not only what's to the left or right of the certain index in the string, but also perform certain checks on what's even further to the left/right. For example, you have a piace of HTML, `class=` and you are an index which is at character `=`. You can use `string-match-left-right` to check, is `class` on the left using `matchLeft`. Which is fine. There's a gotcha though. You also need to check, what's further to the left of `class=` - is it a character, a space or something else? Because it might be that you looked for `class` attribute but matched `superclass`, an (imaginary) custom attribute!
 

@@ -3,30 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.11.0 (2019-01-11)
+## 3.12.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/4f00871))
-
-## 3.10.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/4f00871))
-
-## 3.9.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.8.0 (2018-12-26)
 
-### Features
-
-- improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
-- removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
+- ✨ Improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
+- ✨ Removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
 
 ## 3.7.0 (2018-11-29)
 

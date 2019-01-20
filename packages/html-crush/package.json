@@ -4,7 +4,7 @@
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush",

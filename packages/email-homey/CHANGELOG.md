@@ -3,34 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/compare/email-homey@2.6.3...email-homey@2.7.0) (2019-01-20)
+## 2.7.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f35bfb))
-
-
-
-
-
-## 2.6.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
-
-## 2.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
-
-## 2.4.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.1.0 (2018-06-21)
 
@@ -40,8 +16,6 @@ GitHub sold us out. In the meantime, we:
 - ✨ Dropped BitHound (RIP) and Travis
 
 ## 2.0.0 (2018-05-04)
-
-### Changed
 
 - ✨ Complete rewrite. Now, the only thing `homey` does is it compiles the list of folder names from the input path, then replaces the given placeholder in a given file with the array of the paths to those folder names.
 
@@ -53,70 +27,43 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.8.0 (2017-09-24)
 
-### Changed
-
-- Removed JS Standard and swiched to raw ESLint on `airbnb-base` preset with config override to ban semicolons.
-- Made all linting checks to pass
-- Tweaked readme
-- Added gif files to `npmignore` so they don't get `npm i`nstalled
-- Updated bithound config to reflect the new setup
+- ✨ Removed JS Standard and swiched to raw ESLint on `airbnb-base` preset with config override to ban semicolons.
+- ✨ Made all linting checks to pass
+- ✨ Tweaked readme
+- ✨ Added gif files to `npmignore` so they don't get `npm i`nstalled
+- ✨ Updated bithound config to reflect the new setup
 
 ## 1.7.0 (2017-08-22)
 
-### Added
-
-- More badges to `readme`
-
-### Updated
-
-- Deps and `package.json`
+- ✨ More badges to `readme`
+- ✨ Updated all dependencies and `package.json`
 
 ## 1.6.0 (2017-07-23)
 
-### Updated
-
-- Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
+- ✨ Updated to the latest API, adding recognition of the dates in titles in format `2014/04-15`
 
 ## 1.5.0 (2017-07-22)
 
-### Updated
-
-- Updated to the latest API, adding improved recognition of the titles
-- Documentation with up-to-date author's name
-
-### Added
-
-- `npmignore`
+- ✨ Updated to the latest API, adding improved recognition of the titles
+- ✨ Documentation with up-to-date author's name
+- ✨ Added `.npmignore`
 
 ## 1.4.0 (2017-06-29)
 
-### Updated
-
-Updated all dependencies
+- ✨ Updated all dependencies
 
 ## 1.3.0 (2017-06-29)
 
-### Added
-
-Updated to the new version of the API package, CHLU, enabling new features:
-
-- Improved algorithm, reducing the change of false positives when versions are mentioned within the text.
+- ✨ Updated to the new version of the API package, CHLU, enabling new features: improved algorithm, reducing the change of false positives when versions are mentioned within the text.
 
 ## 1.2.0 (2017-06-23)
 
-### Added
-
-Updated to the new version of the API package, CHLU, enabling new features:
-
-- Automatic title linking
-- Unused footer link removal
+- ✨ Updated to the new version of the API package, CHLU, enabling new features: automatic title linking, unused footer link removal
 
 ## 1.1.0 (2017-05-19)
 
-### Added
-
-- Set up the `update-notifier`
+- ✨ Set up the `update-notifier`
 
 ## 1.0.0 (2017-05-17)
 
-- First public release
+- ✨ First public release

@@ -4,7 +4,7 @@
   "description": "Is the input (plain object, array, string or whatever) not empty?",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty",

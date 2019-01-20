@@ -3,34 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/compare/object-set-all-values-to@3.8.3...object-set-all-values-to@3.9.0) (2019-01-20)
+## 3.9.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/commits/4f35bfb))
-
-
-
-
-
-## 3.8.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/commits/4f00871))
-
-## 3.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/commits/4f00871))
-
-## 3.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-10-24)
 
@@ -60,36 +36,33 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-03-16)
 
-- Now this library does not mutate the input arguments. Yes, I know, it should have been done from the beginning, but hey, everybody's learning. This warrants a major semver bump. Otherwise, no changes in functionality.
-
-- Unit test coverage is still solid 100%
+- ✨ Now, this library does not mutate the input arguments. Yes, I know, it should have been done from the beginning, but hey, everybody's learning. This warrants a major semver bump. Otherwise, no changes in functionality.
 
 ## 1.3.0 (2017-02-17)
 
-- Table of Contents to README
-
-- Requesting deps version ranges more bravely, latest no matter what
-- Updated company's name
-- Updated BitHound config
-- Added extension to CHANGELOG
+- ✨ Add Table of Contents to README
+- ✨ Requesting deps version ranges more bravely, latest no matter what
+- ✨ Updated company's name
+- ✨ Updated BitHound config
+- ✨ Added extension to CHANGELOG
 
 ## 1.2.0 (2016-12-23)
 
-- Precommit hooks for JS Standard
+- ✨ Add precommit hooks for JS Standard
 
 ## 1.1.2 (2016-12-21)
 
-- Coverage badge
+- ✨ Add coverage badge
 
 ## 1.1.1 (2016-12-21)
 
-- Now git-ignoring `.nyc_output` folder.
+- ✨ Now git-ignoring `.nyc_output` folder.
 
 ## 1.1.0 (2016-12-21)
 
-- Coveralls
-- Changelog
+- ✨ Add coveralls
+- ✨ Add this changelog
 
 ## 1.0.0 (2016-12-02)
 
-- First public release
+- ✨ First public release

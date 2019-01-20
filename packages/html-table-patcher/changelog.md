@@ -3,18 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 0.4.0 (2019-01-11)
+## 0.5.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 0.3.0 (2018-12-26)
 
-### Features
-
-- comments skip ([4afb7c4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4afb7c4))
-- improvements to tag recognition algorithm ([d265d1e](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/d265d1e))
+- ✨ Comments skip ([4afb7c4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4afb7c4))
+- ✨ Improvements to tag recognition algorithm ([d265d1e](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/d265d1e))
 
 ## 0.2.0 (2018-10-28)
 

@@ -4,7 +4,7 @@
   "description": "like _.includes but with wildcards",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob",

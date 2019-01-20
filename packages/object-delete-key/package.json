@@ -4,7 +4,7 @@
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key",

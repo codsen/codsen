@@ -3,17 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.10.0 (2019-01-11)
+## 2.11.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.9.0 (2018-12-26)
 
-### Features
-
-- relax the API and switch to Prettier ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
+- ✨ Relax the API and switch to _Prettier_ ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
 
 ## 2.8.0 (2018-10-26)
 

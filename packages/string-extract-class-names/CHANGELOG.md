@@ -3,52 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [5.8.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/compare/string-extract-class-names@5.7.3...string-extract-class-names@5.8.0) (2019-01-20)
+## 5.8.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f35bfb))
-
-
-
-
-
-## 5.7.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
-
-## 5.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
-
-## 5.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
-
-## 5.4.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
-
-## 5.3.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 5.2.0 (2018-12-26)
 
-### Features
-
-- complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
+- ✨ Complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
 
 ## 5.1.0 (2018-10-25)
 

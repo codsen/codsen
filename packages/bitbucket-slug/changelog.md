@@ -3,35 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.8.0 (2019-01-11)
+## 1.9.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
-
-## 1.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
-
-## 1.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
-
-## 1.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.3.0 (2018-12-26)
 
-### Features
-
-- recognise consecutive dashes ([b44ff9d](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/b44ff9d))
+- ✨ recognise consecutive dashes ([b44ff9d](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/b44ff9d))
 
 ## 1.2.0 (2018-10-14)
 

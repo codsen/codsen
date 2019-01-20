@@ -3,30 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.12.0 (2019-01-11)
+## 1.13.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
-
-## 1.11.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
-
-## 1.10.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.9.0 (2018-12-26)
 
-### Features
-
-- allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
-- setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
+- ✨ Now we allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
+- ✨ Setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
 
 ## 1.8.0 (2018-10-25)
 
@@ -36,7 +21,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.7.0 (2018-07-26)
 
-We now allow 2nd argument to be `null`. This will instantly yield `false` result and will not `throw`. It's because we want to avoid type checks, and Slices method `.current()` returns either ranges array or `null`. Latter would have `throw`n up until now.
+- ✨ We now allow 2nd argument to be `null`. This will instantly yield `false` result and will not `throw`. It's because we want to avoid type checks, and Slices method `.current()` returns either ranges array or `null`. Latter would have `throw`n up until now.
 
 ## 1.6.0 (2018-06-16)
 

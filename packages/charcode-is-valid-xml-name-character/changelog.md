@@ -3,17 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.9.0 (2019-01-11)
+## 1.10.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.7.0 (2018-12-26)
 
-### Features
-
-- add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
+- ✨ Add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
 
 ## 1.6.0 (2018-10-14)
 

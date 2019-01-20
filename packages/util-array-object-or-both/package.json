@@ -4,7 +4,7 @@
   "description": "Validate and normalise user choice: array, object or both?",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both",

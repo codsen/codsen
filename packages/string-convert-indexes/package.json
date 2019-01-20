@@ -4,7 +4,7 @@
   "description": "Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes",

@@ -3,40 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.11.0](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.10.3...array-includes-with-glob@2.11.0) (2019-01-20)
+## 2.11.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f35bfb))
-
-
-
-
-
-## 2.10.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f00871))
-
-## 2.9.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f00871))
-
-## 2.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.5.0 (2018-12-14)
 

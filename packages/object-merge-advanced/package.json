@@ -4,7 +4,7 @@
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced",

@@ -3,17 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.13.0 (2019-01-11)
+## 3.14.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
-
-## 3.12.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.10.0 (2018-10-25)
 
@@ -47,35 +40,25 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.6.0 (2018-04-27)
 
-### Added
-
 - ✨ Set up [prettier](https://prettier.io) and removed `.editorconfig`
-- ✨ Removed `package-lock.json`
+- ✨ Remove `package-lock.json`
 - ✨ Made some error messages to display content in colour.
 
 ## 3.5.0 (2018-01-22)
-
-### Added
 
 - ✨ Improvements to error messages — now reporting index of the heads or tails in question.
 
 ## 3.4.0 (2018-01-04)
 
-### Added
-
-- ✨ `opts.relaxedAPI`
+- ✨ Add `opts.relaxedAPI`
 
 ## 3.3.0 (2018-01-04)
-
-### Added
 
 - ✨ Improvements to the algorithm. If the situation is vague and there's overlap of tails and heads (tails slightly preceding heads), algorithm will pick heads and ignore tails in front.
 
 ## 3.2.0 (2018-01-03)
 
-### Added
-
-- ✨ `opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder`
+- ✨ Add `opts.matchHeadsAndTailsStrictlyInPairsByTheirOrder`
 
 ## 3.1.0 (2018-01-02)
 
@@ -88,14 +71,11 @@ No new features, only under-bonnet improvements.
 ### Breaking API changes
 
 - ✨ Moved fourth argument, `fromIndex`, into `opts` because it stood in the way.
-
 - ✨ `opts.throwWhenSomethingWrongIsDetected` – When I tapped this API myself for the first time, I noticed errors with heads and tails should be `throw`n here, at this package, not at its consumers. For example, both heads and tails are found but they're in the opposite order. Now, the default settings will leads to `throw`n error. You can turn it off and make it behave like previous version by setting `opts.throwWhenSomethingWrongIsDetected` to `false`
 - ✨ `opts.allowWholeValueToBeOnlyHeadsOrTails` — When processing JSON data structures, it's possible that they will contain their own config. For example, JSON will use heads and tails, but also, there will be fields that DEFINE those heads and tails as well. This is a peculiar case - whole string will be equal to heads or tails. These cases will be recognised and errors won't be `throw`n. Unless you set `opts.allowWholeValueToBeOnlyHeadsOrTails` to `false`.
 - ✨ `optssource` - allows to `throw` errors in different name. Useful for parent libraries.
 
 ## 2.0.0 (2017-12-27)
-
-### Changes
 
 Complete rewrite of the API.
 

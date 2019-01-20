@@ -3,35 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.10.0 (2019-01-11)
+## 2.11.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
-
-## 2.9.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
-
-## 2.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
-
-## 2.6.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.5.0 (2018-12-26)
 
-### Features
-
-- allow any types in override object key values ([af4f99d](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/af4f99d))
+- ✨ Allow any types in override object key values ([af4f99d](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/af4f99d))
 
 ## 2.4.0 (2018-10-24)
 
@@ -68,4 +47,4 @@ GitHub sold us out. In the meantime, we:
 - ✨ Set up Rollup and now we are generating three builds: CommonJS, UMD and ES Modules (native code).
 - ✨ Small tweaks to the code, no changes to the API.
 
-Bumping the major version just in case it breaks something. But it should not.
+**PS. Bumping the major version just in case it breaks something. But it should not.**

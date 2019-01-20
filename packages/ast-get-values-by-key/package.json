@@ -4,7 +4,7 @@
   "description": "Read or edit parsed HTML (or AST in general)",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key",

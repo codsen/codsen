@@ -4,7 +4,7 @@
   "description": "Manage the array of slices referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push",

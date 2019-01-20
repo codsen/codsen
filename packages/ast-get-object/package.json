@@ -4,7 +4,7 @@
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-object",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-object",

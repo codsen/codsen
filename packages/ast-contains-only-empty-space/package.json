@@ -4,7 +4,7 @@
   "description": "Returns Boolean depending if passed AST contain only empty space",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-contains-only-empty-space",

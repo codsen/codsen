@@ -3,24 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.0 (2019-01-20)
+
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
+
 ## 0.7.0 (2019-01-11)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/4f00871))
+- ✨ Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/4f00871))
 
 ## 0.6.0 (2018-12-26)
 
-### Features
-
-- add licence block at the top of built files in dist/ folder ([cb2c259](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/cb2c259))
-- add more logging for doNothing state ([25262e5](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/25262e5))
-- do not touch CDATA blocks ([920e9d9](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/920e9d9))
-- don't minify script tags contents ([557e8fa](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/557e8fa))
-- don't touch code within pre-code blocks ([d32c092](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/d32c092))
-- fetch handful of real websites and minify them for tests ([f7e8153](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/f7e8153))
-- remove whitespace within <script> blocks, in front of </script> ([d1efb20](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/d1efb20))
-- treat the whitespace in front of <script> ([75d85dc](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/75d85dc))
+- ✨ Add licence block at the top of built files in dist/ folder ([cb2c259](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/cb2c259))
+- ✨ Add more logging for doNothing state ([25262e5](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/25262e5))
+- ✨ Do not touch CDATA blocks ([920e9d9](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/920e9d9))
+- ✨ Don't minify script tags contents ([557e8fa](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/557e8fa))
+- ✨ Don't touch code within pre-code blocks ([d32c092](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/d32c092))
+- ✨ Fetch a handful of real websites and minify them for tests ([f7e8153](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/f7e8153))
+- ✨ Remove whitespace within `<script>` blocks, in front of `</script>` ([d1efb20](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/d1efb20))
+- ✨ Treat the whitespace in front of `<script>` ([75d85dc](https://bitbucket.org/codsen/codsen/src/master/packages/html-crush/commits/75d85dc))
 
 ## 0.5.0 (2018-12-14)
 

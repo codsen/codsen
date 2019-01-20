@@ -3,18 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.4.0 (2019-01-11)
+## 1.5.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.3.0 (2018-12-26)
 
-### Features
-
-- atomic file write ([b9a3c2b](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/b9a3c2b))
-- improved messages when zero files found + promisified write function ([83d2bee](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/83d2bee))
+- ✨ Implement **atomic file write** ([b9a3c2b](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/b9a3c2b))
+- ✨ Improved messages when zero files found + promisified write function ([83d2bee](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/83d2bee))
 
 ## 1.2.0 (2018-09-20)
 

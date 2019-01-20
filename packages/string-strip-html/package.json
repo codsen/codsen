@@ -4,7 +4,7 @@
   "description": "Strips HTML tags from strings. Detects legit unencoded brackets.",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html",

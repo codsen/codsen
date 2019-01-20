@@ -3,11 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.5.0 (2019-01-11)
+## 1.6.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.3.0 (2018-06-16)
 
@@ -25,9 +24,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.1.0 (2018-01-12)
 
-### Added
-
-- ✨ `opts.ignoreRanges`
+- ✨ Add `opts.ignoreRanges`
 
 ## 1.0.0 (2018-01-11)
 

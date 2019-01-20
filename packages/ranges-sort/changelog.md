@@ -3,33 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 3.9.0 (2019-01-11)
+## 3.10.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
-
-## 3.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
-
-## 3.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.6.0 (2018-12-26)
 
-### Features
-
-- opts.progressFn ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
+- ✨ Add `opts.progressFn` ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
 
 ## 3.5.0 (2018-11-29)
 
-- ✨ Added `opts.progressFn` - if you pass a function, it will report the progress, calling that function with a number between `0` and `100`. It's not precise and meant to be used as an approximate progress indicator.
+- ✨ Add `opts.progressFn` - if you pass a function, it will report the progress, calling that function with a number between `0` and `100`. It's not precise and meant to be used as an approximate progress indicator.
 
 ## 3.4.0 (2018-10-25)
 
@@ -54,34 +39,24 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.1.0 (2018-01-10)
 
-### Added
-
 - ✨ Updated all dependencies and setup in general
 
 ## 3.0.0 (2017-12-03)
 
-### Added
-
 - ✨ Set up Rollup, generating three builds: CommonJS, UMD and ES Modules
-- ✨ Rebased the code to be natively in ES Modules
+- ✨ Rebase the code to be natively in ES Modules
 
-Bumping major just in case this breaks API endpoints.
+**PS. Bumping major just in case this breaks API endpoints.**
 
 ## 2.1.0 (2017-09-13)
 
-### Added
-
-- ✨ More description in readme.
-- ✨ More unit tests, including tests for examples used in readme.
+- ✨ Add more description in readme
+- ✨ Add more unit tests, including tests for examples used in readme
 
 ## 2.0.0 (2017-09-12)
 
-### Added
-
-- ✨ `opts.strictlyTwoElementsInRangeArrays` (default is `false`, differently from v1 which is opposite).
+- ✨ Add `opts.strictlyTwoElementsInRangeArrays` (default is `false`, differently from v1 which is opposite)
 
 ## 1.0.0 (2017-09-11)
-
-### Added
 
 - ✨ Initial release

@@ -3,40 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.10.0](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/compare/color-shorthand-hex-to-six-digit@2.9.3...color-shorthand-hex-to-six-digit@2.10.0) (2019-01-20)
+## 2.10.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/commits/4f35bfb))
-
-
-
-
-
-## 2.9.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/commits/4f00871))
-
-## 2.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/commits/4f00871))
-
-## 2.5.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.4.0 (2018-10-15)
 

@@ -3,41 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.9.0 (2019-01-11)
+## 1.10.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
-
-## 1.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
-
-## 1.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
-
-## 1.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
-
-## 1.5.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-character-is-astral-surrogate/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.4.0 (2018-10-25)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- ✨ Update all dependencies
+- ✨ Restore coveralls.io reporting
+- ✨ Restore unit test linting
 
 ## 1.3.0 (2018-06-16)
 
@@ -53,7 +28,7 @@ GitHub sold us out. In the meantime, we:
 ## 1.1.0 (2018-05-26)
 
 - ✨ Set up [Prettier](https://prettier.io) on a custom ESLint rule set.
-- ✨ Removed `package.lock` and `.editorconfig`
+- ✨ Remove `package.lock` and `.editorconfig`
 - ✨ Wired Rollup to remove comments from non-dev builds. This means we can now leave the `console.log`s in the source code — there's no need to comment-out `console.log` statements or care about them not spilling into production. Now it's done automatically.
 - ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed. This is important because now code coverage is real again and now there are no excuses not to perfect it.
 

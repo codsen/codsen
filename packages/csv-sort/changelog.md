@@ -3,17 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.5.0 (2019-01-11)
+## 2.6.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.4.0 (2018-12-26)
 
-### Features
-
-- rebase to point to es modules builds ([8d4635e](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/8d4635e))
+- ✨ Rebase to point to es modules builds ([8d4635e](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/8d4635e))
 
 ## 2.3.0 (2018-10-17)
 
@@ -34,11 +31,9 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-11-12)
 
-### Changed
+- 🔧 Rewrote in ES Modules and set up the Rollup to generate 3 flavours of it: CommonJS, UMD and ES Modules.
 
-- ✨ Rewrote in ES Modules and set up the Rollup to generate 3 flavours of it: CommonJS, UMD and ES Modules.
-
-Bumping major just in case the Rollup setup messes up somebody's API's (which it shouldn't but let's be on the safe side).
+**PS.** Bumping major just in case the Rollup setup messes up somebody's API's (which it shouldn't but let's be on the safe side).
 
 ## 1.0.0 (2017-08-22)
 

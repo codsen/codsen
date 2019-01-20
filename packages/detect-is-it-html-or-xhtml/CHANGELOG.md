@@ -3,46 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.8.3...detect-is-it-html-or-xhtml@3.9.0) (2019-01-20)
+## 3.9.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f35bfb))
-
-
-
-
-
-## 3.8.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
-
-## 3.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
-
-## 3.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
-
-## 3.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
-
-## 3.4.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-10-17)
 
@@ -66,14 +30,10 @@ GitHub sold us out. In the meantime, we:
 
 ## 3.0.0 (2017-12-09)
 
-### Changed
-
 - ✨ Rebased in ES node_modules
 - ✨ Set up the Rollup (nice rhyming). Now we generate CommonJS, UMD and ES Module (native code) builds.
 - ✨ Set up raw ESLint on `airbnb-base` preset with semicolons off. Also linting for AVA unit tests.
 
 ## 2.0.0 (2017-03-02)
-
-### Changed
 
 - ✨ In order to prevent accidental input argument mutation when object is given, now we're throwing a type error when the input argument is present, but of a wrong type. That's enough to warrant a major API change under semver.

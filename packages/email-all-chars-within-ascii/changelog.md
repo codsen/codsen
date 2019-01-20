@@ -3,29 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.8.0 (2019-01-11)
+## 2.9.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
-
-## 2.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.5.0 (2018-12-26)
 
-### Features
-
-- opts.messageOnly ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
+- ✨ Added `opts.messageOnly` ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
 
 ## 2.4.0 (2018-10-17)
 
@@ -54,18 +39,14 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.0.0 (2017-12-05)
 
-### Added
-
 - ✨ Rebased in ES modules
 - ✨ Set up Rollup (nice ryming) to serve CommonJS, UMD and ES Module builds
 - ✨ Refreshed all deps
 - ✨ Edited readme a bit
 
-Bumping major just in case somebody's API breaks. But it should not break.
+**PS.** Bumping major just in case somebody's API breaks. But it should not break.
 
 ## 1.3.0 (2017-09-19)
-
-### Changed
 
 - 🔧 Switching to raw ESLint with `airbnb-base` config with no-semicolons override. For posterity, JS Standard sucks - it's neglected by maintainers (consumes half-year-old version of ESLint), it's flagged as insecure by BitHound (because of `shell.js` two levels deep in dependencies) and doesn't have as much rules active as `airbnb` presets.
 

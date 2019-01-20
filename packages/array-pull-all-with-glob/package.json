@@ -4,7 +4,7 @@
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob",

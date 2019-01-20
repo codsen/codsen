@@ -3,40 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.9.0](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/compare/str-indexes-of-plus@2.8.3...str-indexes-of-plus@2.9.0) (2019-01-20)
+## 2.9.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f35bfb))
-
-
-
-
-
-## 2.8.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
-
-## 2.7.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
-
-## 2.6.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.3.0 (2018-10-25)
 
-- ✨ Updated all dependencies
-- ✨ Restored coveralls.io reporting
-- ✨ Restored unit test linting
+- ✨ Update all dependencies
+- ✨ Restore coveralls.io reporting
+- ✨ Restore unit test linting
 
 ## 2.2.0 (2018-06-16)
 

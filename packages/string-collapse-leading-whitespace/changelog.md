@@ -3,41 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 1.11.0 (2019-01-11)
+## 1.12.0 (2019-01-20)
 
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
-
-## 1.10.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
-
-## 1.9.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
-
-## 1.8.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
-
-## 1.7.0 (2019-01-07)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 1.6.0 (2018-12-26)
 
-### Features
-
-- second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/74e2458))
+- ✨ Add the second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/74e2458))
 
 ## 1.5.0 (2018-10-25)
 

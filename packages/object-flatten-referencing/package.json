@@ -4,7 +4,7 @@
   "description": "Flatten complex nested objects according to a reference objects",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing",

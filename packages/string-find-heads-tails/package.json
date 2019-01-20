@@ -4,7 +4,7 @@
   "description": "Search for string pairs. A special case of string search algorithm.",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails",

@@ -4,7 +4,7 @@
   "description": "Perform a regex search on string and get a ranges array of findings (or null)",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex",

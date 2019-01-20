@@ -3,34 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.7.0](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/compare/object-no-new-keys@2.6.3...object-no-new-keys@2.7.0) (2019-01-20)
+## 2.7.0 (2019-01-20)
 
-
-### Features
-
-* Initial release ([4f35bfb](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/commits/4f35bfb))
-
-
-
-
-
-## 2.6.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/commits/4f00871))
-
-## 2.5.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/commits/4f00871))
-
-## 2.4.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/commits/4f00871))
+- ✨ Various documentation and setup tweaks after we migrated to monorepo
+- ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 2.3.0 (2018-10-24)
 
