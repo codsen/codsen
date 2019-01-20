@@ -1,6 +1,6 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 76 npm libraries
+    A lerna monorepo for our 78 npm libraries
 
 ## 💡 Table of Contents
 
@@ -8,13 +8,11 @@
 - [Range Libraries](#markdown-header-10-range-libraries)
 - [String Processing Libraries](#markdown-header-25-string-processing-libraries)
 - [Object Processing Libraries](#markdown-header-20-object-processing-libraries)
-- [CLI Apps](#markdown-header-5-cli-apps)
-- [Miscellaneous Libraries](#markdown-header-15-miscellaneous-libraries)
+- [CLI Apps](#markdown-header-6-cli-apps)
+- [Miscellaneous Libraries](#markdown-header-16-miscellaneous-libraries)
 - [Licence](#markdown-header-licence)
 
 ## 🚢 Flagship Libraries
-
-These libraries are the largest and most complex of them all. Their web apps are driven by UMD builds, usually consumed straight from npm, via the [unpkg CDN](https://unpkg.com).
 
 | Library's name | Purpose |Web app | Link on npm | Source code in monorepo |
 | -------------- | ------- | ------- | ----------- | ----------------------- |
@@ -125,7 +123,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) |
 
-## ✂️ 5 CLI Apps
+## ✂️ 6 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -140,8 +138,9 @@ You use them in the Terminal (command line), for example:
 | [`email-all-chars-within-ascii-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/) | Command line app to scan email templates, are all their characters within ASCII range | [![email-all-chars-within-ascii-cli on npm](https://img.shields.io/npm/v/email-all-chars-within-ascii-cli.svg?style=flat-square)](https://www.npmjs.com/package/email-all-chars-within-ascii-cli) | [packages/email-all-chars-within-ascii-cli](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/) |
 | [`js-row-num-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/) | Update all row numbers in all console.logs in JS code | [![js-row-num-cli on npm](https://img.shields.io/npm/v/js-row-num-cli.svg?style=flat-square)](https://www.npmjs.com/package/js-row-num-cli) | [packages/js-row-num-cli](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/) |
 | [`json-sort-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, also dot-files as long as they are valid JSON | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/) |
+| [`lerna-clean-changelogs-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli/) |
 
-## 🛠️ 15 Miscellaneous Libraries
+## 🛠️ 16 Miscellaneous Libraries
 
 | Library's name | Purpose | Link on npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -157,6 +156,7 @@ You use them in the Terminal (command line), for example:
 | [`color-shorthand-hex-to-six-digit`](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/) |
 | [`email-homey`](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/) |
 | [`gulp-email-remove-unused-css`](https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css/) |
+| [`lerna-clean-changelogs`](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/) |
 | [`util-array-object-or-both`](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both/) |
 | [`util-nonempty`](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/) | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty/) |
