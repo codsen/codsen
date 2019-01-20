@@ -5,6 +5,7 @@ import cleanup from "rollup-plugin-cleanup";
 import license from "rollup-plugin-license";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
+import json from "rollup-plugin-json";
 import pkg from "./package.json";
 
 const licensePiece = `${pkg.name}
@@ -29,6 +30,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
+        json(),
         commonjs(),
         babel(),
         terser(),
@@ -54,6 +56,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        json(),
         babel(),
         cleanup(),
         license({
@@ -78,6 +81,7 @@ export default commandLineArgs => {
         strip({
           sourceMap: false
         }),
+        json(),
         cleanup(),
         license({
           banner: licensePiece
@@ -95,6 +99,7 @@ export default commandLineArgs => {
           sourceMap: false
         }),
         resolve(),
+        json(),
         cleanup()
       ]
     }

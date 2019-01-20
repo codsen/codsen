@@ -34,7 +34,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "FORCE_COLOR=1 lerna run test --since --concurrency 2 && git add ."
+      "pre-commit": "FORCE_COLOR=1 lerna run test --since --concurrency 2 && git add packages/*/dist/*.*"
     }
   },
   "watch": {

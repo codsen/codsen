@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -17,6 +18,7 @@ Other siblings of this package:
 ## Table of Contents
 
 - [Install](#markdown-header-install)
+- [Idea](#markdown-header-idea)
 - [API - Input](#markdown-header-api-input)
 - [API - Output](#markdown-header-api-output)
 - [Purpose](#markdown-header-purpose)
@@ -41,6 +43,14 @@ const preppedChangelog = cleanChangelogs("# Change Log...");
 console.log(preppedChangelog);
 ```
 
+Here's what you'll get:
+
+| Type                                                                                                    | Key in `package.json` | Path                                 | Size |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------ | ---- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/lerna-clean-changelogs.cjs.js` | 3 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/lerna-clean-changelogs.esm.js` | 2 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/lerna-clean-changelogs.umd.js` | 2 KB |
+
 **[⬆ back to top](#markdown-header-lerna-clean-changelogs)**
 
 ## Idea
@@ -52,6 +62,8 @@ If you want a ready-to-use _cleaning tool_, consider the sibling CLI application
 ```bash
 npm i -g lerna-clean-changelogs-cli
 ```
+
+**[⬆ back to top](#markdown-header-lerna-clean-changelogs)**
 
 ## API - Input
 
@@ -96,41 +108,41 @@ This package performs the following cleaning steps:
 
 1. It removes bump-only changelog entries that `conventional-changelog` generates. There can be many reasons For example:
 
-    ```
-    **Note:** Version bump only for package ranges-apply
-    ```
+   ```
+   **Note:** Version bump only for package ranges-apply
+   ```
 
-    These will be deleted along with their headings.
+   These will be deleted along with their headings.
 
 2. It removes diff links from headings. Change the following:
 
-    ```
-    ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
-    ```
+   ```
+   ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
+   ```
 
-    into:
+   into:
 
-    ```
-    ## 2.9.1 (2018-12-27)
-    ```
+   ```
+   ## 2.9.1 (2018-12-27)
+   ```
 
-    We need to do that because those links don't work on BitBucket and, generally, are _a noise_.
+   We need to do that because those links don't work on BitBucket and, generally, are _a noise_.
 
 3. Remove `h1` headings and turn them into `h2`, with the exception of the first, main heading of the changelog.
 
-    For exampe, change the following:
+   For exampe, change the following:
 
-    ```
-    # [2.0.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.0.0...ranges-apply@1.9.1) (2018-12-27)
-    ```
+   ```
+   # [2.0.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.0.0...ranges-apply@1.9.1) (2018-12-27)
+   ```
 
-    into:
+   into:
 
-    ```
-    ## 2.0.0 (2018-12-27)
-    ```
+   ```
+   ## 2.0.0 (2018-12-27)
+   ```
 
-    (notice how a second hash character added, beside link being removed)
+   (notice how a second hash character added, beside link being removed)
 
 ---
 
@@ -167,6 +179,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/lerna-clean-changelogs
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/lerna-clean-changelogs
 [downloads-img]: https://img.shields.io/npm/dm/lerna-clean-changelogs.svg?style=flat-square
