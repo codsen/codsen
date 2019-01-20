@@ -1,7 +1,7 @@
 /**
  * lerna-clean-changelogs
  * Cleans all the crap from Lerna and Conventional Commits-generated changelogs
- * Version: 0.2.0
+ * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs
@@ -27,7 +27,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var version = "0.2.0";
+var version = "1.0.0";
 
 function isStr(something) {
   return typeof something === "string";
