@@ -3372,11 +3372,11 @@ ${`\u001b[${90}m${`commentStartedAt`}\u001b[${39}m = ${commentStartedAt}`};
         opts.uglify
           ? `\n\n\n\n\n\n   ====== ${`\u001b[${36}m${`UGLIFICATION`}\u001b[${39}m`} ======
 ${(allClassesAndIdsWithinHeadFinal.reduce((accum, val) => {
-              return `${accum}   ${`\u001b[${33}m${generateShortname(
-                allClassesAndIdsWithinHeadFinal.indexOf(val)
-              )}\u001b[${39}m`} --- ${`\u001b[${31}m${val}\u001b[${39}m`}`;
-            }),
-            "\n")}   ==========================\n`
+  return `${accum}   ${`\u001b[${33}m${generateShortname(
+    allClassesAndIdsWithinHeadFinal.indexOf(val)
+  )}\u001b[${39}m`} --- ${`\u001b[${31}m${val}\u001b[${39}m`}`;
+}),
+"\n")}   ==========================\n`
           : ""
       );
 
