@@ -40,6 +40,7 @@
     "await": true,
     "cjs": true
   },
+  "gitHead": "7817409b3c017d4e543e266f4304a536488fac8d",
   "husky": {
     "hooks": {
       "pre-commit": "npm run format && npm test"
@@ -177,8 +178,8 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     "nyc": "^13.1.0",
-    "prettier": "^1.15.3",
-    "rollup": "^1.1.1",
+    "prettier": "^1.16.0",
+    "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^9.2.0",
@@ -187,6 +188,5 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.2"
-  },
-  "gitHead": "7817409b3c017d4e543e266f4304a536488fac8d"
+  }
 }
