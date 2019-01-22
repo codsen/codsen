@@ -5,7 +5,7 @@ import fix from "../dist/string-fix-broken-named-entities.esm";
 // group 01. various throws
 // -----------------------------------------------------------------------------
 
-test(`01.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - various cases of wrong input arguments`, t => {
+test(`01.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 1st input arg is wrong`, t => {
   t.notThrows(() => {
     fix("");
   });
@@ -35,11 +35,34 @@ test(`01.01 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - various cases of wron
   t.regex(error5.message, /THROW_ID_01/);
 });
 
+test(`01.02 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wrong`, t => {
+  const error1 = t.throws(() => {
+    fix("aaa", "bbb");
+  });
+  t.regex(error1.message, /THROW_ID_02/);
+  t.regex(error1.message, /string-type/);
+
+  const error2 = t.throws(() => {
+    fix("aaa", true);
+  });
+  t.regex(error2.message, /THROW_ID_02/);
+  t.regex(error2.message, /boolean-type/);
+
+  // does not throw on falsey:
+  t.notThrows(() => {
+    fix("zzz", null);
+  });
+  t.notThrows(() => {
+    fix("zzz", undefined);
+  });
+});
+
 // -----------------------------------------------------------------------------
 // 02. special attention to nbsp - people will type it by hand often, making mistakes
 // -----------------------------------------------------------------------------
 
 test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missing ampersand`, t => {
+  // encoded
   t.deepEqual(
     fix("zzznbsp;zzznbsp;"),
     [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]],
@@ -60,6 +83,28 @@ test(`02.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missi
     fix("nbsp;zzznbsp;"),
     [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"]],
     "02.01.04"
+  );
+  // decode
+  t.deepEqual(
+    fix("zzznbsp;zzznbsp;", { decode: true }),
+    [[3, 8, "\xA0"], [11, 16, "\xA0"]],
+    "02.01.05 - letter + nbsp"
+  );
+  t.deepEqual(
+    fix("zz nbsp;zz nbsp;", { decode: true }),
+    [[3, 8, "\xA0"], [11, 16, "\xA0"]],
+    "02.01.06 - space + nbsp"
+  );
+  t.deepEqual(
+    fix("zz\nnbsp;zz\nnbsp;", { decode: true }),
+    [[3, 8, "\xA0"], [11, 16, "\xA0"]],
+    "02.01.07 - line break + nbsp"
+  );
+  t.deepEqual(fix("nbsp;", { decode: true }), [[0, 5, "\xA0"]], "02.01.08");
+  t.deepEqual(
+    fix("nbsp;zzznbsp;", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"]],
+    "02.01.09"
   );
 });
 
@@ -110,6 +155,56 @@ test(`02.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - correct spelling, missi
     fix("&nbsp\t\t\t&nbsp\t\t\t&nbsp"),
     [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]],
     "02.02.07 - surrounded by tabs"
+  );
+
+  // decode
+
+  t.deepEqual(
+    fix("&nbspz &nbspz", { decode: true }),
+    [[0, 5, "\xA0"], [7, 12, "\xA0"]],
+    "02.02.08-1 - warmup"
+  );
+  // // but:
+  t.deepEqual(
+    fix("&nbspz; &nbspz;", { decode: true }),
+    [[0, 7, "\xA0"], [8, 15, "\xA0"]],
+    "02.02.08-2 - warmup"
+  );
+
+  t.deepEqual(
+    fix("&nbspzzz&nbspzzz&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.09 - surrounded by letters"
+  );
+  t.deepEqual(
+    fix("&nbsp...&nbsp...&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.10 - surrounded by dots"
+  );
+  t.deepEqual(
+    fix("&nbsp\n\n\n&nbsp\n\n\n&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.11 - surrounded by line breaks"
+  );
+  t.deepEqual(
+    fix("&nbsp   &nbsp   &nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.12 - surrounded by spaces"
+  );
+  t.deepEqual(
+    fix("&nbsp,&nbsp,&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]],
+    "02.02.13 - surrounded by colons"
+  );
+  t.deepEqual(
+    fix("&nbsp123&nbsp123&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.14 - surrounded by digits"
+  );
+  t.deepEqual(
+    fix("&nbsp\t\t\t&nbsp\t\t\t&nbsp", { decode: true }),
+    [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]],
+    "02.02.15 - surrounded by tabs"
   );
 });
 
@@ -383,6 +478,27 @@ test(`02.06 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - incorrect spelling (amp
   t.deepEqual(fix("aaaa nsp; aaaa"), [[5, 9, "&nbsp;"]], "02.06.22");
   t.deepEqual(fix("aaaa nbp; aaaa"), [[5, 9, "&nbsp;"]], "02.06.23");
   t.deepEqual(fix("aaaa nbs; aaaa"), [[5, 9, "&nbsp;"]], "02.06.24");
+
+  t.deepEqual(
+    fix("aaaa bsp; aaaa", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.06.25"
+  );
+  t.deepEqual(
+    fix("aaaa nsp; aaaa", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.06.26"
+  );
+  t.deepEqual(
+    fix("aaaa nbp; aaaa", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.06.27"
+  );
+  t.deepEqual(
+    fix("aaaa nbs; aaaa", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.06.28"
+  );
 });
 
 test(`02.07 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - at least one of each of the set [n, b, s, p] is present, repetitions`, t => {
@@ -453,6 +569,18 @@ test(`02.08 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - recursively encoded ent
 test(`02.09 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - no ampersand, no semicolon`, t => {
   t.deepEqual(fix("text;Nbsptext"), [[5, 9, "&nbsp;"]], "02.09.01");
   t.deepEqual(fix("text Nbsptext"), [[5, 9, "&nbsp;"]], "02.09.02");
+
+  // decode
+  t.deepEqual(
+    fix("text;Nbsptext", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.09.03"
+  );
+  t.deepEqual(
+    fix("text Nbsptext", { decode: true }),
+    [[5, 9, "\xA0"]],
+    "02.09.04"
+  );
 });
 
 test(`02.10 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - ampersand present, no semicolon`, t => {
@@ -580,24 +708,50 @@ test(`03.01 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - do not touch healthy &n
   t.deepEqual(fix("&nbsp;"), null, "03.01.01 - one, surrounded by EOL");
   t.deepEqual(fix("&nbsp; &nbsp;"), null, "03.01.02 - two, surrounded by EOL");
   t.deepEqual(fix("a&nbsp;b"), null, "03.01.03 - surrounded by letters");
+
+  // decode
+  t.deepEqual(
+    fix("&nbsp;", { decode: true }),
+    null,
+    "03.01.04 - one, surrounded by EOL"
+  );
+  t.deepEqual(
+    fix("&nbsp; &nbsp;", { decode: true }),
+    null,
+    "03.01.05 - two, surrounded by EOL"
+  );
+  t.deepEqual(
+    fix("a&nbsp;b", { decode: true }),
+    null,
+    "03.01.06 - surrounded by letters"
+  );
 });
 
 test(`03.02 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - more false positives`, t => {
   t.deepEqual(fix("insp;"), null, "03.02.01");
   t.deepEqual(fix("an insp;"), null, "03.02.02");
   t.deepEqual(fix("an inspp;"), null, "03.02.03");
+
+  // decode on:
+  t.deepEqual(fix("insp;", { decode: true }), null, "03.02.04");
+  t.deepEqual(fix("an insp;", { decode: true }), null, "03.02.05");
+  t.deepEqual(fix("an inspp;", { decode: true }), null, "03.02.06");
 });
 
 test(`03.03 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - first bug spotted - v1.0.1 release`, t => {
   t.deepEqual(fix("z&hairsp;y"), null, "03.03.01");
   t.deepEqual(fix("y&VeryThinSpace;z"), null, "03.03.02");
+
+  // decode on:
+  t.deepEqual(fix("z&hairsp;y", { decode: true }), null, "03.03.03");
+  t.deepEqual(fix("y&VeryThinSpace;z", { decode: true }), null, "03.03.04");
 });
 
 // -----------------------------------------------------------------------------
 // 04. other entities
 // -----------------------------------------------------------------------------
 
-test(`04.01 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - various tests`, t => {
+test(`04.01 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - various tests - no decode`, t => {
   t.deepEqual(
     fix("text &ang text&ang text"),
     [[5, 9, "&ang;"], [14, 18, "&ang;"]],
@@ -658,6 +812,70 @@ test(`04.01 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - 
     fix("&thinsp&thinsp"),
     [[0, 14, "&thinsp;&thinsp;"]],
     "04.01.13 - joins"
+  );
+});
+
+test(`04.02 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - various tests - with decode`, t => {
+  t.deepEqual(
+    fix("text &ang text&ang text", { decode: true }),
+    [[5, 9, "\u2220"], [14, 18, "\u2220"]],
+    "04.02.01"
+  );
+  t.deepEqual(
+    fix("text&angtext&angtext", { decode: true }),
+    [[4, 8, "\u2220"], [12, 16, "\u2220"]],
+    "04.02.02"
+  );
+  t.deepEqual(
+    fix("text&angsttext&angsttext", { decode: true }),
+    [[4, 10, "\xC5"], [14, 20, "\xC5"]],
+    "04.02.03"
+  );
+  t.deepEqual(
+    fix("text&pitext&pitext", { decode: true }),
+    [[4, 7, "\u03C0"], [11, 14, "\u03C0"]],
+    "04.02.04"
+  );
+  t.deepEqual(
+    fix("text&pivtext&pivtext", { decode: true }),
+    [[4, 8, "\u03D6"], [12, 16, "\u03D6"]],
+    "04.02.05"
+  );
+  t.deepEqual(
+    fix("text&Pitext&Pitext", { decode: true }),
+    [[4, 7, "\u03A0"], [11, 14, "\u03A0"]],
+    "04.02.06"
+  );
+  t.deepEqual(
+    fix("text&sigmatext&sigmatext", { decode: true }),
+    [[4, 10, "\u03C3"], [14, 20, "\u03C3"]],
+    "04.02.07"
+  );
+  t.deepEqual(
+    fix("text&subtext&subtext", { decode: true }),
+    [[4, 8, "\u2282"], [12, 16, "\u2282"]],
+    "04.02.08"
+  );
+  t.deepEqual(
+    fix("text&suptext&suptext", { decode: true }),
+    [[4, 8, "\u2283"], [12, 16, "\u2283"]],
+    "04.02.09"
+  );
+  t.deepEqual(
+    fix("text&thetatext&thetatext", { decode: true }),
+    [[4, 10, "\u03B8"], [14, 20, "\u03B8"]],
+    "04.02.10"
+  );
+  t.deepEqual(
+    fix("a &thinsp b\n&thinsp\nc", { decode: true }),
+    [[2, 9, "\u2009"], [12, 19, "\u2009"]],
+    "04.02.11"
+  );
+  t.deepEqual(fix("&thinsp", { decode: true }), [[0, 7, "\u2009"]], "04.02.12");
+  t.deepEqual(
+    fix("&thinsp&thinsp", { decode: true }),
+    [[0, 14, "\u2009\u2009"]],
+    "04.02.13 - joins"
   );
 });
 

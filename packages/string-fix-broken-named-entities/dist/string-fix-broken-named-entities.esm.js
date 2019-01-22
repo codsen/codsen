@@ -9,14 +9,43 @@
 
 import rangesMerge from 'ranges-merge';
 import clone from 'lodash.clonedeep';
+import isObj from 'lodash.isplainobject';
 
-function stringFixBrokenNamedEntities(str) {
+function stringFixBrokenNamedEntities(str, originalOpts) {
   function isNotaLetter(str) {
     return !(
       typeof str === "string" &&
       str.length === 1 &&
       str.toUpperCase() !== str.toLowerCase()
     );
+  }
+  if (typeof str !== "string") {
+    throw new Error(
+      `string-fix-broken-named-entities: [THROW_ID_01] the first input argument must be string! It was given as:\n${JSON.stringify(
+        str,
+        null,
+        4
+      )} (${typeof str}-type)`
+    );
+  }
+  const defaults = {
+    decode: false
+  };
+  let opts;
+  if (originalOpts != null) {
+    if (!isObj(originalOpts)) {
+      throw new Error(
+        `string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )} (${typeof originalOpts}-type)`
+      );
+    } else {
+      opts = Object.assign({}, defaults, originalOpts);
+    }
+  } else {
+    opts = defaults;
   }
   let state_AmpersandNotNeeded = false;
   const nbspDefault = {
@@ -33,15 +62,6 @@ function stringFixBrokenNamedEntities(str) {
   const nbspWipe = () => {
     nbsp = clone(nbspDefault);
   };
-  if (typeof str !== "string") {
-    throw new Error(
-      `string-fix-broken-named-entities: [THROW_ID_01] the input must be string! Currently we've been given ${typeof str}, equal to:\n${JSON.stringify(
-        str,
-        null,
-        4
-      )}`
-    );
-  }
   const rangesArr = [];
   let smallestCharFromTheSetAt;
   let largestCharFromTheSetAt;
@@ -91,7 +111,7 @@ function stringFixBrokenNamedEntities(str) {
       (str[i + 1] === undefined || str[i + 1] !== ";")
     ) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
-        rangesArr.push([nbsp.nameStartsAt, i, "&nbsp;"]);
+        rangesArr.push([nbsp.nameStartsAt, i, opts.decode ? "\xA0" : "&nbsp;"]);
       }
       nbspWipe();
       continue outerloop;
@@ -137,7 +157,7 @@ function stringFixBrokenNamedEntities(str) {
       }
       if (str[i + 1] === "a" && str[i + 2] === "n" && str[i + 3] === "g") {
         if (str[i + 4] !== "s" && str[i + 4] !== ";") {
-          rangesArr.push([i, i + 4, "&ang;"]);
+          rangesArr.push([i, i + 4, opts.decode ? "\u2220" : "&ang;"]);
           i += 3;
           continue outerloop;
         } else if (
@@ -145,17 +165,17 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 5] === "t" &&
           str[i + 6] !== ";"
         ) {
-          rangesArr.push([i, i + 6, "&angst;"]);
+          rangesArr.push([i, i + 6, opts.decode ? "\xC5" : "&angst;"]);
           i += 5;
           continue outerloop;
         }
       } else if (str[i + 1] === "p" && str[i + 2] === "i") {
         if (str[i + 3] !== "v" && str[i + 3] !== ";") {
-          rangesArr.push([i, i + 3, "&pi;"]);
+          rangesArr.push([i, i + 3, opts.decode ? "\u03C0" : "&pi;"]);
           i += 3;
           continue outerloop;
         } else if (str[i + 3] === "v" && str[i + 4] !== ";") {
-          rangesArr.push([i, i + 4, "&piv;"]);
+          rangesArr.push([i, i + 4, opts.decode ? "\u03D6" : "&piv;"]);
           i += 3;
           continue outerloop;
         }
@@ -164,7 +184,7 @@ function stringFixBrokenNamedEntities(str) {
         str[i + 2] === "i" &&
         str[i + 3] !== ";"
       ) {
-        rangesArr.push([i, i + 3, "&Pi;"]);
+        rangesArr.push([i, i + 3, opts.decode ? "\u03A0" : "&Pi;"]);
         i += 2;
         continue outerloop;
       } else if (str[i + 1] === "s") {
@@ -176,7 +196,7 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 6] !== ";" &&
           str[i + 6] !== "f"
         ) {
-          rangesArr.push([i, i + 6, "&sigma;"]);
+          rangesArr.push([i, i + 6, opts.decode ? "\u03C3" : "&sigma;"]);
           i += 5;
           continue outerloop;
         } else if (
@@ -185,7 +205,7 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 4] !== ";" &&
           str[i + 4] !== "e"
         ) {
-          rangesArr.push([i, i + 4, "&sub;"]);
+          rangesArr.push([i, i + 4, opts.decode ? "\u2282" : "&sub;"]);
           i += 3;
           continue outerloop;
         } else if (
@@ -198,7 +218,7 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 4] !== "3" &&
           str[i + 4] !== ";"
         ) {
-          rangesArr.push([i, i + 4, "&sup;"]);
+          rangesArr.push([i, i + 4, opts.decode ? "\u2283" : "&sup;"]);
           i += 3;
           continue outerloop;
         }
@@ -211,7 +231,7 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 6] !== "s" &&
           str[i + 6] !== ";"
         ) {
-          rangesArr.push([i, i + 6, "&theta;"]);
+          rangesArr.push([i, i + 6, opts.decode ? "\u03B8" : "&theta;"]);
           i += 5;
           continue outerloop;
         } else if (
@@ -222,7 +242,7 @@ function stringFixBrokenNamedEntities(str) {
           str[i + 6] === "p" &&
           str[i + 7] !== ";"
         ) {
-          rangesArr.push([i, i + 7, "&thinsp;"]);
+          rangesArr.push([i, i + 7, opts.decode ? "\u2009" : "&thinsp;"]);
           i += 6;
           continue outerloop;
         }
