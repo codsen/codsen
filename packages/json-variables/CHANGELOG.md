@@ -91,24 +91,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ `opts.throwWhenNonStringInsertedInString` (off by default)
 - ✨ Now allowing to query deeper-level values. For example:
 
-    ```js
-    jv({
-      a: "some text %%_b.key2_%% more text",
-      b: {
-        key1: "val1",
-        key2: "val2",
-        key3: "val3"
-      }
-    });
-    // => {
-    //      a: 'some text val2 more text',
-    //      b: {
-    //        key1: 'val1',
-    //        key2: 'val2',
-    //        key3: 'val3'
-    //      }
-    //    }
-    ```
+  ```js
+  jv({
+    a: "some text %%_b.key2_%% more text",
+    b: {
+      key1: "val1",
+      key2: "val2",
+      key3: "val3"
+    }
+  });
+  // => {
+  //      a: 'some text val2 more text',
+  //      b: {
+  //        key1: 'val1',
+  //        key2: 'val2',
+  //        key3: 'val3'
+  //      }
+  //    }
+  ```
 
 - ✨ Obviously, the new changes above threw the `opts.dontWrapVars` out of track a little bit since instead of `key` now we've possibly got `key.key[element.key]`, so I fixed that too and added more unit tests.
 

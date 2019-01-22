@@ -19,17 +19,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 - ✨ Added third argument, `progressFn` — it reports progress, feeding natural numbers meaning percentage done to any function that is in the third input argument.
 - ✨ Pinned all the throws on all unit tests. "Pinning unit test throws" means we not just assert the fact that function threw, but match the throw's error message too. This gives more assurance:
 
-    1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
-    2. It's easier to sort unit tests this way (order by throw ID) in a test file
-    3. It's easier to perfect the unit test coverage when throws can be easier identified.
-    4. It's faster to comprehend a number compared to a sentence. "THROW_ID_01" is faster to comprehend than a full title (which can differ from other title by a single word). At the end of the day, being less tired means achieving more.
+  1. When there are many cases when an algorithm can throw and generic "function threw" assertion is used, a unit test can anticipate one throw to be thrown but another was thrown. Generic "function threw" assertions would still pass, throw is throw after all. But not pinned throws:
+  2. It's easier to sort unit tests this way (order by throw ID) in a test file
+  3. It's easier to perfect the unit test coverage when throws can be easier identified.
+  4. It's faster to comprehend a number compared to a sentence. "THROW_ID_01" is faster to comprehend than a full title (which can differ from other title by a single word). At the end of the day, being less tired means achieving more.
 
-    ```js
-    const error1 = t.throws(() => {
-      repl();
-    });
-    t.regex(error1.message, /THROW_ID_01/);
-    ```
+  ```js
+  const error1 = t.throws(() => {
+    repl();
+  });
+  t.regex(error1.message, /THROW_ID_01/);
+  ```
 
 ## 2.7.0 (2018-10-25)
 

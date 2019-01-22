@@ -55,11 +55,11 @@ GitHub sold us out. In the meantime, we:
 - ✨ `opts.trimCharsBeforeMatching` must be a string of single character or an array of single characters. Previously merged string of characters was accepted but now it's not accepted.
 - ✨ Callback `cb` now returns three arguments:
 
-    1.  `char` - the character just outside of the matched substring (as previously)
-    2.  `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
-    3.  `index` - NEW - the index of the `char`.
+  1.  `char` - the character just outside of the matched substring (as previously)
+  2.  `theRemainderOfTheString` - whole string outside of the matched substring (as previously)
+  3.  `index` - NEW - the index of the `char`.
 
-    Index is handy in cases when you set trimming and it's not clear where exactly is the `char` located in the string. Also, from here you can easily calculate the index of the match - just substract its length from `index`.
+  Index is handy in cases when you set trimming and it's not clear where exactly is the `char` located in the string. Also, from here you can easily calculate the index of the match - just substract its length from `index`.
 
 ### Fixed
 

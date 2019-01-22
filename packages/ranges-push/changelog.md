@@ -55,7 +55,7 @@ Setup refresh.
 
 - ✨ Now accepts output of another slices class (its `.current()` output) as the first input argument. Now, it won't throw an error that second argument is missing, provided the validation of the array from the 1st argument passes.
 
-    In practice, I'm going to use it in [string-remove-duplicate-heads-tails](https://www.npmjs.com/package/string-remove-duplicate-heads-tails) for example, where I there will be two-step process. Range comes in as a plausible range, then we traverse further and if further ranges are found, that plausible-one is merged into the real ranges slices array class. This merging up until now was a problem - it could only be done iterating one array and `.push`ing each range one-by-one into another slices array.
+  In practice, I'm going to use it in [string-remove-duplicate-heads-tails](https://www.npmjs.com/package/string-remove-duplicate-heads-tails) for example, where I there will be two-step process. Range comes in as a plausible range, then we traverse further and if further ranges are found, that plausible-one is merged into the real ranges slices array class. This merging up until now was a problem - it could only be done iterating one array and `.push`ing each range one-by-one into another slices array.
 
 - 🔧 Because of the above I had to rewrite the whole validation and error throwing part. All unit tests are the same and more were added, so there shoud not be any breaking changes.
 
@@ -92,13 +92,13 @@ What this feature gives you is you can activate it and freely push chunks of str
 - ✨ Now serving three builds: CommonJS, UMD and ES modules, all wired up to appropriate end-points on `package.json`
 - ✨ If you have two ranges where second-one completely overlaps the first-one and the first has third argument, something to insert in its place, that third argument will be discarded upon merge.
 
-    Let's say you got these two ranges:
+  Let's say you got these two ranges:
 
-    ```js
-    [[5, 6, " "], [1, 10]];
-    ```
+  ```js
+  [[5, 6, " "], [1, 10]];
+  ```
 
-    Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.
+  Previously, result would be `[1, 10, ' ']`. Now result will be `[1, 10]`. This is logical, because each range should take care to consider its vicinity. If `[1, 10]` came in without instructions to add something in its place, we assume this was intentional.
 
 ## 1.6.0 (2017-09-25)
 

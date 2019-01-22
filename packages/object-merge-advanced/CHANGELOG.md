@@ -163,7 +163,7 @@ Like changing a broken carburettor with another, working-one. 🎉
 
 - 🔧 Making API even more user-friendly. If one of the input args is missing, instead of returning the `undefined` now it's returning the argument that's present. What's the point to return `undefined`?
 
-    If none are present, `undefined` is returned as before.
+  If none are present, `undefined` is returned as before.
 
 ## 3.0.0 (2017-02-28)
 

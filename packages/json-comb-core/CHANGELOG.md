@@ -48,15 +48,15 @@ Since it's on by default (which is sensible), that's technically a breaking chan
 
 - ✨ All functions up until now were synchronous. Now all were renamed:
 
-    ```
-    getKeyset      => getKeysetSync
-    enforceKeyset  => enforceKeysetSync
-    sortAllObjects => sortAllObjectsSync
-    noNewKeys      => noNewKeysSync
-    findUnused     => findUnusedSync
-    ```
+  ```
+  getKeyset      => getKeysetSync
+  enforceKeyset  => enforceKeysetSync
+  sortAllObjects => sortAllObjectsSync
+  noNewKeys      => noNewKeysSync
+  findUnused     => findUnusedSync
+  ```
 
-    In their place, **async-alternatives** were placed. For starters, we have async `getKeyset` and `enforceKeyset` - both consume and return _promises_.
+  In their place, **async-alternatives** were placed. For starters, we have async `getKeyset` and `enforceKeyset` - both consume and return _promises_.
 
 **Please update your API's appending "Sync" on the function names, or better, tap async-ones instead.**
 

@@ -4,7 +4,7 @@
   "description": "Command line app to deep sort JSON files, also dot-files as long as they are valid JSON",
   "license": "MIT",
   "engines": {
-    "node": ">=8.9"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli",
@@ -170,7 +170,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
     "ava": "^1.1.0",
     "babel-plugin-istanbul": "^5.1.0",

@@ -4,6 +4,7 @@
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Test in browser][runkit-img]][runkit-url]
@@ -15,7 +16,10 @@
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
 - [Usage](#markdown-header-usage)
-- [API](#markdown-header-api)
+- [API - Input](#markdown-header-api-input)
+- [API - Output](#markdown-header-api-output)
+- [`opts.decode`](#markdown-header-optsdecode)
+- [Tips](#markdown-header-tips)
 - [Why not regexes?](#markdown-header-why-not-regexes)
 - [Practical use](#markdown-header-practical-use)
 - [Contributing](#markdown-header-contributing)
@@ -105,6 +109,8 @@ console.log(`resultStr = "${resultStr}"`);
 | `str`          | String       | yes         | Input string                                              |
 | `opts`         | Plain object | no          | Pass the Optional Options Object here, as second argument |
 
+**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
+
 ### Optional Options Object
 
 | Options Object's key | The type of its value | Default | Description                                         |
@@ -112,6 +118,8 @@ console.log(`resultStr = "${resultStr}"`);
 | {                    |                       |         |
 | `decode`             | Boolean               | `false` | Whatever is fixed, will be written in decoded form. |
 | }                    |                       |         |
+
+**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
 ## API - Output
 
@@ -122,6 +130,8 @@ console.log(`resultStr = "${resultStr}"`);
 If you set `opts.decode` and there are healthy encoded entities, those will not be decoded. Only if there are broken entities, those will be set in ranges as decoded values. If you want full decoding, consider filter the input with [normal decoding library](https://www.npmjs.com/package/ranges-ent-decode) right after filtering using this library.
 
 For example, you'd first filter the string using this library, `string-fix-broken-named-entities`. Then you'd filter the same input skipping already recorded ranges, using [ranges-ent-decode](https://www.npmjs.com/package/ranges-ent-decode). Then you'd merge the ranges.
+
+**[⬆ back to top](#markdown-header-string-fix-broken-named-entities)**
 
 ## Tips
 
@@ -180,6 +190,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities
+[cov-img]: https://img.shields.io/badge/coverage-90.73%25-brightgreen.svg?style=flat-square
+[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities
 [downloads-img]: https://img.shields.io/npm/dm/string-fix-broken-named-entities.svg?style=flat-square
