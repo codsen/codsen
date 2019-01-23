@@ -1,0 +1,184 @@
+{
+  "name": "ranges-process-outside",
+  "version": "1.0.0",
+  "description": "Iterate through string and optionally a given ranges as if they were one",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8"
+  },
+  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-process-outside",
+  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ranges-process-outside",
+  "author": {
+    "email": "roy@codsen.com",
+    "name": "Roy Revelt",
+    "url": "codsen.com"
+  },
+  "main": "dist/ranges-process-outside.cjs.js",
+  "module": "dist/ranges-process-outside.esm.js",
+  "browser": "dist/ranges-process-outside.umd.js",
+  "scripts": {
+    "build": "rm -rf dist && rollup -c",
+    "coverage": "nyc report --reporter=json-summary",
+    "dev": "rm -rf dist && rollup -c --dev --silent",
+    "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
+    "lect": "lect",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
+    "prepare": "npm run build",
+    "pretest": "npm run build",
+    "test": "npm run lint && npm run unittest",
+    "unittest": "./node_modules/.bin/nyc ava && npm run coverage",
+    "version": "npm run build && git add ."
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "require": [
+      "esm"
+    ],
+    "verbose": true
+  },
+  "esm": {
+    "await": true,
+    "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
+  },
+  "keywords": [
+    "string",
+    "ranges",
+    "array",
+    "sort",
+    "indexes"
+  ],
+  "lect": {
+    "babelrc": {
+      "override": false,
+      "set": false
+    },
+    "badges": {
+      "contributors": true,
+      "cov": true,
+      "deps": true,
+      "deps2d": true,
+      "dev": true,
+      "downloads": true,
+      "license": true,
+      "node": true,
+      "npm": true,
+      "overall": true,
+      "runkit": true,
+      "travis": true,
+      "vulnerabilities": true
+    },
+    "contribution_types": [
+      "Blogposts",
+      "Bug reports",
+      "Code",
+      "Design",
+      "Documentation",
+      "Event Organizing",
+      "Examples",
+      "Financial",
+      "Funding Finding",
+      "Ideas, Planning, & Feedback",
+      "Infrastructure (Hosting, Build-Tools, etc)",
+      "Plugin/utility libraries",
+      "Answering Questions",
+      "Reviewed Pull Requests",
+      "Talks",
+      "Tests",
+      "Tools",
+      "Translation",
+      "Tutorials",
+      "Videos"
+    ],
+    "contributors": [
+      {
+        "contribution": [
+          "Code",
+          "Documentation",
+          "Tests"
+        ],
+        "username": "revelt"
+      }
+    ],
+    "eslintrc": {
+      "add": [],
+      "remove": []
+    },
+    "files": {
+      "delete": [],
+      "write_hard": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ],
+      "write_soft": [
+        {
+          "contents": "",
+          "name": ""
+        }
+      ]
+    },
+    "header": {
+      "dontQuoteDescription": false,
+      "rightFloatedBadge": []
+    },
+    "licence": {
+      "extras": [
+        ""
+      ]
+    },
+    "npmignore": {
+      "badFiles": [],
+      "badFolders": [],
+      "goodFiles": [],
+      "goodFolders": []
+    },
+    "various": {
+      "back_to_top": {
+        "enabled": true,
+        "label": ""
+      },
+      "devDependencies": [],
+      "travisVersionsOverride": []
+    }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+  },
+  "dependencies": {
+    "ranges-merge": "^3.12.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "ava": "^1.1.0",
+    "babel-plugin-istanbul": "^5.1.0",
+    "eslint": "^5.12.1",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-plugin-ava": "^5.1.1",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-no-unsanitized": "^3.0.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "nyc": "^13.1.0",
+    "prettier": "^1.16.1",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-license": "^0.8.1",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-strip": "^1.2.1",
+    "rollup-plugin-terser": "^4.0.2"
+  }
+}
