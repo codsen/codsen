@@ -1,6 +1,6 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 79 npm libraries
+    A lerna monorepo for our 80 npm libraries
 
 ## 💡 Table of Contents
 
@@ -8,7 +8,7 @@
 - [Range Libraries](#markdown-header-11-range-libraries)
 - [String Processing Libraries](#markdown-header-25-string-processing-libraries)
 - [Object Processing Libraries](#markdown-header-20-object-processing-libraries)
-- [CLI Apps](#markdown-header-6-cli-apps)
+- [CLI Apps](#markdown-header-7-cli-apps)
 - [Miscellaneous Libraries](#markdown-header-16-miscellaneous-libraries)
 - [Licence](#markdown-header-licence)
 
@@ -124,7 +124,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) |
 
-## ✂️ 6 CLI Apps
+## ✂️ 7 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -134,6 +134,7 @@ You use them in the Terminal (command line), for example:
 
 | Library's name | Purpose | Link on npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
+| [`update-versions`](https://bitbucket.org/codsen/codsen/src/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://bitbucket.org/codsen/codsen/src/master/packages/update-versions/) |
 | [`chlu-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu-cli on npm](https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square)](https://www.npmjs.com/package/chlu-cli) | [packages/chlu-cli](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/) |
 | [`csv-sort-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/) |
 | [`email-all-chars-within-ascii-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/) | Command line app to scan email templates, are all their characters within ASCII range | [![email-all-chars-within-ascii-cli on npm](https://img.shields.io/npm/v/email-all-chars-within-ascii-cli.svg?style=flat-square)](https://www.npmjs.com/package/email-all-chars-within-ascii-cli) | [packages/email-all-chars-within-ascii-cli](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/) |
