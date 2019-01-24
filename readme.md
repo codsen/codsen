@@ -1,11 +1,11 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 78 npm libraries
+    A lerna monorepo for our 79 npm libraries
 
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#markdown-header-flagship-libraries)
-- [Range Libraries](#markdown-header-10-range-libraries)
+- [Range Libraries](#markdown-header-11-range-libraries)
 - [String Processing Libraries](#markdown-header-25-string-processing-libraries)
 - [Object Processing Libraries](#markdown-header-20-object-processing-libraries)
 - [CLI Apps](#markdown-header-6-cli-apps)
@@ -21,7 +21,7 @@
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
-## 🎯 10 Range Libraries
+## 🎯 11 Range Libraries
 
 > _Range_ means an array of two text character index numbers, "from" and "to" (plus optional third element, string, which marks "what to add").
 
@@ -60,6 +60,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 | [`ranges-ent-decode`](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode/) | Decode HTML entities recursively, get string index ranges of what needs to be replaced where | [![ranges-ent-decode on npm](https://img.shields.io/npm/v/ranges-ent-decode.svg?style=flat-square)](https://www.npmjs.com/package/ranges-ent-decode) | [packages/ranges-ent-decode](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode/) |
 | [`ranges-invert`](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert/) | Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ] | [![ranges-invert on npm](https://img.shields.io/npm/v/ranges-invert.svg?style=flat-square)](https://www.npmjs.com/package/ranges-invert) | [packages/ranges-invert](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-invert/) |
 | [`ranges-is-index-within`](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/) | Efficiently checks if index is within any of the given ranges | [![ranges-is-index-within on npm](https://img.shields.io/npm/v/ranges-is-index-within.svg?style=flat-square)](https://www.npmjs.com/package/ranges-is-index-within) | [packages/ranges-is-index-within](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/) |
+| [`ranges-process-outside`](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-process-outside/) | Iterate through string and optionally a given ranges as if they were one | [![ranges-process-outside on npm](https://img.shields.io/npm/v/ranges-process-outside.svg?style=flat-square)](https://www.npmjs.com/package/ranges-process-outside) | [packages/ranges-process-outside](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-process-outside/) |
 | [`ranges-regex`](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex/) | Perform a regex search on string and get a ranges array of findings (or null) | [![ranges-regex on npm](https://img.shields.io/npm/v/ranges-regex.svg?style=flat-square)](https://www.npmjs.com/package/ranges-regex) | [packages/ranges-regex](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-regex/) |
 
 ## 🎻 25 String Processing Libraries

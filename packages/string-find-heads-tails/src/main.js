@@ -307,18 +307,21 @@ function strFindHeadsTails(str, heads, tails, opts) {
   const headsAndTailsFirstCharIndexesRange = heads
     .concat(tails)
     .map(value => value.charAt(0)) // get first letters
-    .reduce((res, val) => {
-      if (val.charCodeAt(0) > res[1]) {
-        return [res[0], val.charCodeAt(0)]; // find the char index of the max char index out of all
-      }
-      if (val.charCodeAt(0) < res[0]) {
-        return [val.charCodeAt(0), res[1]]; // find the char index of the min char index out of all
-      }
-      return res;
-    }, [
-      heads[0].charCodeAt(0), // base is the 1st char index of 1st el.
-      heads[0].charCodeAt(0)
-    ]);
+    .reduce(
+      (res, val) => {
+        if (val.charCodeAt(0) > res[1]) {
+          return [res[0], val.charCodeAt(0)]; // find the char index of the max char index out of all
+        }
+        if (val.charCodeAt(0) < res[0]) {
+          return [val.charCodeAt(0), res[1]]; // find the char index of the min char index out of all
+        }
+        return res;
+      },
+      [
+        heads[0].charCodeAt(0), // base is the 1st char index of 1st el.
+        heads[0].charCodeAt(0)
+      ]
+    );
   console.log(
     `326 headsAndTailsFirstCharIndexesRange = ${JSON.stringify(
       headsAndTailsFirstCharIndexesRange,

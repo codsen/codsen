@@ -40,7 +40,6 @@
     "await": true,
     "cjs": true
   },
-  "gitHead": "7817409b3c017d4e543e266f4304a536488fac8d",
   "husky": {
     "hooks": {
       "pre-commit": "npm run format && npm test"
@@ -180,11 +179,11 @@
     "eslint": "^5.12.1",
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-ava": "^5.1.1",
-    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-import": "^2.15.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.0",
+    "prettier": "^1.16.1",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

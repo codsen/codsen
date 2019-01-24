@@ -259,18 +259,21 @@ function strFindHeadsTails(str, heads, tails, opts) {
   const headsAndTailsFirstCharIndexesRange = heads
     .concat(tails)
     .map(value => value.charAt(0))
-    .reduce((res, val) => {
-      if (val.charCodeAt(0) > res[1]) {
-        return [res[0], val.charCodeAt(0)];
-      }
-      if (val.charCodeAt(0) < res[0]) {
-        return [val.charCodeAt(0), res[1]];
-      }
-      return res;
-    }, [
-      heads[0].charCodeAt(0),
-      heads[0].charCodeAt(0)
-    ]);
+    .reduce(
+      (res, val) => {
+        if (val.charCodeAt(0) > res[1]) {
+          return [res[0], val.charCodeAt(0)];
+        }
+        if (val.charCodeAt(0) < res[0]) {
+          return [val.charCodeAt(0), res[1]];
+        }
+        return res;
+      },
+      [
+        heads[0].charCodeAt(0),
+        heads[0].charCodeAt(0)
+      ]
+    );
   const res = [];
   let oneHeadFound = false;
   let tempResObj = {};
