@@ -36,7 +36,7 @@ const stringLibsList = [
   "html-table-patcher",
   "js-row-num"
 ];
-const cliAppsList = [];
+const cliAppsList = ["update-versions"];
 
 // FUNCTIONS
 // =========

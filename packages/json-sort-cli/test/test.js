@@ -283,7 +283,7 @@ const prettifiedContents = `{
 // Finally, unit tests...
 // -----------------------------------------------------------------------------
 
-test("01.01 - default sort, called on the whole folder", async t => {
+test.serial("01.01 - default sort, called on the whole folder", async t => {
   // 1. fetch us an empty, random, temporary folder:
 
   // Re-route the test files into `temp/` folder instead for easier access when
