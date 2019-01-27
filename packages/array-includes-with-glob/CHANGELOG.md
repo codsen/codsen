@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.11.2](https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob/compare/array-includes-with-glob@2.11.0...array-includes-with-glob@2.11.2) (2019-01-27)
-
-**Note:** Version bump only for package array-includes-with-glob
-
 
 
 

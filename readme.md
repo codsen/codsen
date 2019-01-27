@@ -1,6 +1,6 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 80 npm libraries
+    A lerna monorepo for our 82 npm libraries
 
 ## 💡 Table of Contents
 
@@ -8,8 +8,8 @@
 - [Range Libraries](#markdown-header-11-range-libraries)
 - [String Processing Libraries](#markdown-header-25-string-processing-libraries)
 - [Object Processing Libraries](#markdown-header-20-object-processing-libraries)
-- [CLI Apps](#markdown-header-7-cli-apps)
-- [Miscellaneous Libraries](#markdown-header-16-miscellaneous-libraries)
+- [CLI Apps](#markdown-header-8-cli-apps)
+- [Miscellaneous Libraries](#markdown-header-17-miscellaneous-libraries)
 - [Licence](#markdown-header-licence)
 
 ## 🚢 Flagship Libraries
@@ -124,7 +124,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://bitbucket.org/codsen/codsen/src/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to/) |
 
-## ✂️ 7 CLI Apps
+## ✂️ 8 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
 
@@ -134,6 +134,7 @@ You use them in the Terminal (command line), for example:
 
 | Library's name | Purpose | Link on npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
+| [`lect`](https://bitbucket.org/codsen/codsen/src/master/packages/lect/) | Maintenance automation for Readme's and, optionally, other project files | [![lect on npm](https://img.shields.io/npm/v/lect.svg?style=flat-square)](https://www.npmjs.com/package/lect) | [packages/lect](https://bitbucket.org/codsen/codsen/src/master/packages/lect/) |
 | [`update-versions`](https://bitbucket.org/codsen/codsen/src/master/packages/update-versions/) | Like npm-check-updates but supports Lerna monorepos and enforces strict semver values | [![update-versions on npm](https://img.shields.io/npm/v/update-versions.svg?style=flat-square)](https://www.npmjs.com/package/update-versions) | [packages/update-versions](https://bitbucket.org/codsen/codsen/src/master/packages/update-versions/) |
 | [`chlu-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu-cli on npm](https://img.shields.io/npm/v/chlu-cli.svg?style=flat-square)](https://www.npmjs.com/package/chlu-cli) | [packages/chlu-cli](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/) |
 | [`csv-sort-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/) | Command line app to sort double-entry CSVs coming from internet banking statements | [![csv-sort-cli on npm](https://img.shields.io/npm/v/csv-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/csv-sort-cli) | [packages/csv-sort-cli](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/) |
@@ -142,7 +143,7 @@ You use them in the Terminal (command line), for example:
 | [`json-sort-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, also dot-files as long as they are valid JSON | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/) |
 | [`lerna-clean-changelogs-cli`](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli/) |
 
-## 🛠️ 16 Miscellaneous Libraries
+## 🛠️ 17 Miscellaneous Libraries
 
 | Library's name | Purpose | Link on npm | Source code in monorepo |
 | -------------- | ------- | ----------- | ----------------------- |
@@ -157,6 +158,7 @@ You use them in the Terminal (command line), for example:
 | [`chlu`](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/) | CH-ange-L-og U-pdate — Automatically fix errors in your changelog file | [![chlu on npm](https://img.shields.io/npm/v/chlu.svg?style=flat-square)](https://www.npmjs.com/package/chlu) | [packages/chlu](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/) |
 | [`color-shorthand-hex-to-six-digit`](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/) | Convert shorthand hex color codes into full | [![color-shorthand-hex-to-six-digit on npm](https://img.shields.io/npm/v/color-shorthand-hex-to-six-digit.svg?style=flat-square)](https://www.npmjs.com/package/color-shorthand-hex-to-six-digit) | [packages/color-shorthand-hex-to-six-digit](https://bitbucket.org/codsen/codsen/src/master/packages/color-shorthand-hex-to-six-digit/) |
 | [`email-homey`](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/) | Generate homepage in the Browsersync root with links/screenshots to all your email templates | [![email-homey on npm](https://img.shields.io/npm/v/email-homey.svg?style=flat-square)](https://www.npmjs.com/package/email-homey) | [packages/email-homey](https://bitbucket.org/codsen/codsen/src/master/packages/email-homey/) |
+| [`emlint`](https://bitbucket.org/codsen/codsen/src/master/packages/emlint/) | Detects errors in HTML/CSS, proposes fixes, email-template friendly | [![emlint on npm](https://img.shields.io/npm/v/emlint.svg?style=flat-square)](https://www.npmjs.com/package/emlint) | [packages/emlint](https://bitbucket.org/codsen/codsen/src/master/packages/emlint/) |
 | [`gulp-email-remove-unused-css`](https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css/) | Gulp plugin to remove unused CSS classes/id's from styles in HTML HEAD and inline within BODY | [![gulp-email-remove-unused-css on npm](https://img.shields.io/npm/v/gulp-email-remove-unused-css.svg?style=flat-square)](https://www.npmjs.com/package/gulp-email-remove-unused-css) | [packages/gulp-email-remove-unused-css](https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css/) |
 | [`lerna-clean-changelogs`](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs/) | Cleans all the crap from Lerna and Conventional Commits-generated changelogs | [![lerna-clean-changelogs on npm](https://img.shields.io/npm/v/lerna-clean-changelogs.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs) | [packages/lerna-clean-changelogs](https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs/) |
 | [`regex-empty-conditional-comments`](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/) | Regular expression for matching HTML empty conditional comments | [![regex-empty-conditional-comments on npm](https://img.shields.io/npm/v/regex-empty-conditional-comments.svg?style=flat-square)](https://www.npmjs.com/package/regex-empty-conditional-comments) | [packages/regex-empty-conditional-comments](https://bitbucket.org/codsen/codsen/src/master/packages/regex-empty-conditional-comments/) |
