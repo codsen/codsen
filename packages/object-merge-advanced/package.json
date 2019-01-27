@@ -204,7 +204,7 @@
     "babel-plugin-istanbul": "^5.1.0",
     "deep-equal": "^1.0.1",
     "eslint": "^5.12.1",
-    "eslint-config-prettier": "^3.6.0",
+    "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-import": "^2.15.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
@@ -219,6 +219,6 @@
     "rollup-plugin-license": "^0.8.1",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-strip": "^1.2.1",
-    "rollup-plugin-terser": "^4.0.2"
+    "rollup-plugin-terser": "^4.0.3"
   }
 }
