@@ -1,7 +1,7 @@
 /**
  * object-flatten-all-arrays
  * Merge and flatten any arrays found in all values within plain objects
- * Version: 4.7.1
+ * Version: 4.7.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays

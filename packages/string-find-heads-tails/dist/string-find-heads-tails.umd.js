@@ -1,7 +1,7 @@
 /**
  * string-find-heads-tails
  * Search for string pairs. A special case of string search algorithm.
- * Version: 3.14.1
+ * Version: 3.14.2
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails

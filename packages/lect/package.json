@@ -1,6 +1,6 @@
 {
   "name": "lect",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Maintenance automation for Readme's and, optionally, other project files",
   "license": "MIT",
   "engines": {
@@ -151,10 +151,10 @@
     }
   },
   "dependencies": {
-    "array-pull-all-with-glob": "^4.12.1",
-    "arrayiffy-if-string": "^3.10.1",
-    "ast-monkey-traverse": "^1.10.1",
-    "bitbucket-slug": "^1.9.1",
+    "array-pull-all-with-glob": "^4.12.2",
+    "arrayiffy-if-string": "^3.10.2",
+    "ast-monkey-traverse": "^1.10.2",
+    "bitbucket-slug": "^1.9.2",
     "chalk": "^2.4.2",
     "execa": "^1.0.0",
     "filesize": "^4.0.0",
@@ -172,8 +172,8 @@
     "log-symbols": "^2.2.0",
     "matcher": "^1.1.1",
     "meow": "^5.0.0",
-    "object-delete-key": "^1.8.1",
-    "object-merge-advanced": "^10.10.1",
+    "object-delete-key": "^1.8.2",
+    "object-merge-advanced": "^10.10.2",
     "object-path": "^0.11.4",
     "p-map": "^2.0.0",
     "p-reduce": "^1.0.0",
