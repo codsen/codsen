@@ -1,7 +1,7 @@
 /**
  * ranges-push
  * Manage the array of slices referencing the index ranges within the string
- * Version: 2.16.2
+ * Version: 2.16.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push

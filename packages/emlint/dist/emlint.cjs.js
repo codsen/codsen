@@ -1,7 +1,7 @@
 /**
  * emlint
  * Detects errors in HTML/CSS, proposes fixes, email-template friendly
- * Version: 0.3.0
+ * Version: 0.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
@@ -31,7 +31,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var version = "0.3.0";
+var version = "0.4.0";
 
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
 function isLowerCaseLetter(char) {

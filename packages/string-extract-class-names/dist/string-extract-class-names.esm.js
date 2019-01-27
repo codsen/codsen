@@ -1,7 +1,7 @@
 /**
  * string-extract-class-names
  * Extract class (or id) name from a string
- * Version: 5.8.2
+ * Version: 5.8.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names

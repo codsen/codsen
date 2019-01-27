@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.3](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/compare/json-comb-core@6.5.2...json-comb-core@6.5.3) (2019-01-27)
+
+**Note:** Version bump only for package json-comb-core
+
+
+
+
+
 
 
 

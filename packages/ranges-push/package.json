@@ -1,6 +1,6 @@
 {
   "name": "ranges-push",
-  "version": "2.16.2",
+  "version": "2.16.3",
   "description": "Manage the array of slices referencing the index ranges within the string",
   "license": "MIT",
   "engines": {
@@ -160,12 +160,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.6.2",
+    "check-types-mini": "^5.6.3",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^3.12.2",
-    "string-collapse-leading-whitespace": "^1.12.2"
+    "ranges-merge": "^3.12.3",
+    "string-collapse-leading-whitespace": "^1.12.3"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

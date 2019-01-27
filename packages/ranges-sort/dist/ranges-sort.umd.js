@@ -1,7 +1,7 @@
 /**
  * ranges-sort
  * Sort natural number index ranges [ [5, 6], [1, 3] ] => [ [1, 3], [5, 6] ]
- * Version: 3.10.2
+ * Version: 3.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort

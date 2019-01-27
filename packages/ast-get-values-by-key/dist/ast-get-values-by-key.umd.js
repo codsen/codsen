@@ -1,7 +1,7 @@
 /**
  * ast-get-values-by-key
  * Read or edit parsed HTML (or AST in general)
- * Version: 2.6.2
+ * Version: 2.6.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ast-get-values-by-key

@@ -1,7 +1,7 @@
 /**
  * string-collapse-white-space
  * Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition
- * Version: 4.5.2
+ * Version: 4.5.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space

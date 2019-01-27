@@ -1,7 +1,7 @@
 /**
  * ranges-process-outside
  * Iterate through string and optionally a given ranges as if they were one
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-process-outside

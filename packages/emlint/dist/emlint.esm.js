@@ -1,7 +1,7 @@
 /**
  * emlint
  * Detects errors in HTML/CSS, proposes fixes, email-template friendly
- * Version: 0.3.0
+ * Version: 0.4.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
@@ -11,7 +11,7 @@ import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 import merge from 'ranges-merge';
 
-var version = "0.3.0";
+var version = "0.4.0";
 
 const lowAsciiCharacterNames = [
   "null",
