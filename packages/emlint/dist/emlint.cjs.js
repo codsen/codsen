@@ -1,7 +1,7 @@
 /**
  * emlint
  * Detects errors in HTML/CSS, proposes fixes, email-template friendly
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
@@ -30,7 +30,7 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-var version = "0.1.0";
+var version = "0.2.0";
 
 function isLowerCaseLetter(char) {
   return isStr(char) && char.length === 1 && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;

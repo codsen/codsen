@@ -1,7 +1,7 @@
 /**
  * emlint
  * Detects errors in HTML/CSS, proposes fixes, email-template friendly
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
@@ -10,7 +10,7 @@
 import clone from 'lodash.clonedeep';
 import isObj from 'lodash.isplainobject';
 
-var version = "0.1.0";
+var version = "0.2.0";
 
 function isLowerCaseLetter(char) {
   return (

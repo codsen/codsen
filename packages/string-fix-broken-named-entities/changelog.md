@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/compare/string-fix-broken-named-entities@1.4.0...string-fix-broken-named-entities@1.5.0) (2019-01-27)
+
+
+### Features
+
+* Add opts.decode ([ae22fea](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/commits/ae22fea))
+
+
+
+
+
 ## 1.4.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

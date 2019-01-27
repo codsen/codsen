@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml/compare/detect-is-it-html-or-xhtml@3.9.0...detect-is-it-html-or-xhtml@3.9.1) (2019-01-27)
+
+**Note:** Version bump only for package detect-is-it-html-or-xhtml
+
+
+
+
+
 ## 3.9.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

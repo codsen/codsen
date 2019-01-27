@@ -1,6 +1,6 @@
 {
   "name": "json-comb-core",
-  "version": "6.5.0",
+  "version": "6.5.1",
   "description": "The inner core of json-comb",
   "license": "MIT",
   "engines": {
@@ -162,14 +162,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.6.0",
+    "check-types-mini": "^5.6.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
-    "object-fill-missing-keys": "^7.9.0",
-    "object-flatten-all-arrays": "^4.7.0",
-    "object-merge-advanced": "^10.10.0",
-    "object-no-new-keys": "^2.7.0",
-    "object-set-all-values-to": "^3.9.0",
+    "object-fill-missing-keys": "^7.9.1",
+    "object-flatten-all-arrays": "^4.7.1",
+    "object-merge-advanced": "^10.10.1",
+    "object-no-new-keys": "^2.7.1",
+    "object-set-all-values-to": "^3.9.1",
     "p-map": "^2.0.0",
     "p-one": "^1.0.0",
     "p-reduce": "^1.0.0",

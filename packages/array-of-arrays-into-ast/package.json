@@ -1,6 +1,6 @@
 {
   "name": "array-of-arrays-into-ast",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "turns an array of arrays of data into a nested tree of plain objects",
   "license": "MIT",
   "engines": {
@@ -163,8 +163,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.6.0",
-    "object-merge-advanced": "^10.10.0"
+    "check-types-mini": "^5.6.1",
+    "object-merge-advanced": "^10.10.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

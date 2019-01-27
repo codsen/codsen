@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Detects errors in HTML/CSS, proposes fixes, email-template friendly",
   "license": "MIT",
   "engines": {

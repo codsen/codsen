@@ -509,10 +509,10 @@ import license from "rollup-plugin-license";
 import strip from "rollup-plugin-strip";
 import babel from "rollup-plugin-babel";
 ${
-    pack.devDependencies["rollup-plugin-json"]
-      ? `import json from "rollup-plugin-json";\n`
-      : ""
-  }import pkg from "./package.json";
+  pack.devDependencies["rollup-plugin-json"]
+    ? `import json from "rollup-plugin-json";\n`
+    : ""
+}import pkg from "./package.json";
 
 const licensePiece = \`\${pkg.name}
 \${pkg.description}
