@@ -15,6 +15,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var clone = _interopDefault(require('lodash.clonedeep'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var merge = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -32,6 +33,7 @@ function _typeof(obj) {
 
 var version = "0.3.0";
 
+var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
 function isLowerCaseLetter(char) {
   return isStr(char) && char.length === 1 && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
 }
@@ -42,6 +44,8 @@ function charSuitableForTagName(char) {
   return isLowerCaseLetter(char);
 }
 
+var errors = "./errors.json";
+var isArr = Array.isArray;
 function emlint(str, originalOpts) {
   if (!isStr(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
@@ -75,31 +79,39 @@ function emlint(str, originalOpts) {
     issues: []
   };
   for (var i = 0, len = str.length; i < len; i++) {
-    console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ").concat(str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m"));
+    var charcode = str[i].charCodeAt(0);
+    if (charcode < 32) {
+      var name$$1 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
+      if (charcode === 9) {
+        retObj.issues.push({
+          name: name$$1,
+          position: [[i, i + 1, "  "]]
+        });
+      } else if (charcode === 10 || charcode === 13) ; else {
+        retObj.issues.push({
+          name: name$$1,
+          position: [[i, i + 1]]
+        });
+      }
+    }
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       resetLogWhitespace();
-      console.log("131 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logWhitespace.startAt", "\x1B[", 39, "m"), " = ", JSON.stringify(logWhitespace.startAt, null, 4)));
     }
     if (!str[i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = i;
-      console.log("143 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logWhitespace.startAt", "\x1B[", 39, "m"), " = ", JSON.stringify(logWhitespace.startAt, null, 4)));
     }
     if (str[i] === "\n" || str[i] === "\r") {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
-        console.log("156 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logWhitespace.includesLinebreaks", "\x1B[", 39, "m"), " = ", JSON.stringify(logWhitespace.includesLinebreaks, null, 4)));
       }
       logWhitespace.lastLinebreakAt = i;
     }
     if (logTag.tagNameStartAt !== null && !charSuitableForTagName(str[i])) {
-      console.log("168 character not suitable for tag name");
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
-      console.log("172 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logTag.tagNameEndAt", "\x1B[", 39, "m"), " = ", logTag.tagNameEndAt, "; ", "\x1B[".concat(33, "m", "logTag.tagName", "\x1B[", 39, "m"), " = ").concat(JSON.stringify(logTag.tagName, null, 0)));
     }
     if (logTag.tagStartAt !== null && logTag.tagNameStartAt === null && charSuitableForTagName(str[i]) && logTag.tagStartAt < i) {
       logTag.tagNameStartAt = i;
-      console.log("191 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logTag.tagNameStartAt", "\x1B[", 39, "m"), " = ", logTag.tagNameStartAt));
       if (logTag.tagStartAt < i - 1) {
         retObj.issues.push({
           name: "space-after-opening-bracket",
@@ -109,20 +121,17 @@ function emlint(str, originalOpts) {
     }
     if (str[i] === "<" && logTag.tagStartAt === null) {
       logTag.tagStartAt = i;
-      console.log("209 ".concat("\x1B[".concat(32, "m", "SET", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "logTag.tagStartAt", "\x1B[", 39, "m"), " = ", logTag.tagStartAt));
     }
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
-      console.log("219 end of tag - ".concat("\x1B[".concat(32, "m", "RESET", "\x1B[", 39, "m"), " logTag"));
     }
-    var output = {
-      logTag: true,
-      logWhitespace: true
-    };
-    console.log("".concat("\x1B[".concat(31, "m", "\u2588 ", "\x1B[", 39, "m"), output.logTag && logTag.tagStartAt !== null ? "".concat("\x1B[".concat(33, "m", "logTag", "\x1B[", 39, "m"), " ", JSON.stringify(logTag, null, 0), "; ") : "").concat(output.logWhitespace && logWhitespace.startAt !== null ? "".concat("\x1B[".concat(33, "m", "logWhitespace", "\x1B[", 39, "m"), " ", JSON.stringify(logWhitespace, null, 0), "; ") : ""));
   }
+  retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.reduce(function (acc, obj) {
+    return acc.concat(obj.position);
+  }, [])) : null;
   return retObj;
 }
 
 exports.emlint = emlint;
 exports.version = version;
+exports.errors = errors;

@@ -1,10 +1,39 @@
-const errors = {
-  "space-after-opening-bracket": {
-    name: "space-between-opening-bracket-and-tag-name",
-    excerpt: "space between opening bracket and tag name",
-    description: "Chrome might not consider this a tag"
-  }
-};
+const lowAsciiCharacterNames = [
+  "null",
+  "start-of-heading",
+  "start-of-text",
+  "end-of-text",
+  "end-of-transmission",
+  "enquiry",
+  "acknowledge",
+  "bell",
+  "backspace",
+  "character-tabulation",
+  "line-feed",
+  "line-tabulation",
+  "form-feed",
+  "carriage-return",
+  "shift-out",
+  "shift-in",
+  "data-link-escape",
+  "device-control-one",
+  "device-control-two",
+  "device-control-three",
+  "device-control-four",
+  "negative-acknowledge",
+  "synchronous-idle",
+  "end-of-transmission-block",
+  "cancel",
+  "end-of-medium",
+  "substitute",
+  "escape",
+  "information-separator-four",
+  "information-separator-three",
+  "information-separator-two",
+  "information-separator-one",
+  "space",
+  "exclamation-mark"
+];
 const knownHTMLTags = [
   "abbr",
   "address",
@@ -137,5 +166,17 @@ function isLowercase(char) {
 function charSuitableForTagName(char) {
   return isLowerCaseLetter(char);
 }
+function log(...pairs) {
+  return pairs.reduce((accum, curr, idx, arr) => {
+    if (idx === 0 && typeof curr === "string") {
+      return `\u001b[${32}m${curr.toUpperCase()}\u001b[${39}m`;
+    } else if (idx % 2 !== 0) {
+      return `${accum} \u001b[${33}m${curr}\u001b[${39}m`;
+    }
+    return `${accum} = ${JSON.stringify(curr, null, 4)}${
+      arr[idx + 1] ? ";" : ""
+    }`;
+  }, "");
+}
 
-export { knownHTMLTags, charSuitableForTagName, isLowercase, errors, isStr };
+export { knownHTMLTags, charSuitableForTagName, isLowercase, isStr, lowAsciiCharacterNames, log };

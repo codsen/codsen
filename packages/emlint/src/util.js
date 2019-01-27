@@ -1,14 +1,39 @@
-// eslint: no-unused-vars:0
-
-// This is a makeshift database of all errors. It's needed to keep single point
-// of reference of all error names and other metadata
-const errors = {
-  "space-after-opening-bracket": {
-    name: "space-between-opening-bracket-and-tag-name",
-    excerpt: "space between opening bracket and tag name",
-    description: "Chrome might not consider this a tag"
-  }
-};
+const lowAsciiCharacterNames = [
+  "null",
+  "start-of-heading",
+  "start-of-text",
+  "end-of-text",
+  "end-of-transmission",
+  "enquiry",
+  "acknowledge",
+  "bell",
+  "backspace",
+  "character-tabulation",
+  "line-feed",
+  "line-tabulation",
+  "form-feed",
+  "carriage-return",
+  "shift-out",
+  "shift-in",
+  "data-link-escape",
+  "device-control-one",
+  "device-control-two",
+  "device-control-three",
+  "device-control-four",
+  "negative-acknowledge",
+  "synchronous-idle",
+  "end-of-transmission-block",
+  "cancel",
+  "end-of-medium",
+  "substitute",
+  "escape",
+  "information-separator-four",
+  "information-separator-three",
+  "information-separator-two",
+  "information-separator-one",
+  "space",
+  "exclamation-mark"
+];
 
 const knownHTMLTags = [
   "abbr",
@@ -147,4 +172,27 @@ function charSuitableForTagName(char) {
   return isLowerCaseLetter(char);
 }
 
-export { knownHTMLTags, charSuitableForTagName, isLowercase, errors, isStr };
+function log(...pairs) {
+  return pairs.reduce((accum, curr, idx, arr) => {
+    if (idx === 0 && typeof curr === "string") {
+      // 1st arg
+      return `\u001b[${32}m${curr.toUpperCase()}\u001b[${39}m`;
+    } else if (idx % 2 !== 0) {
+      // 2nd arg, 4th, 6th and so on, even numbers
+      return `${accum} \u001b[${33}m${curr}\u001b[${39}m`;
+    }
+    // 3rd, 5th, 7th and so on, uneven numbers
+    return `${accum} = ${JSON.stringify(curr, null, 4)}${
+      arr[idx + 1] ? ";" : ""
+    }`;
+  }, "");
+}
+
+export {
+  knownHTMLTags,
+  charSuitableForTagName,
+  isLowercase,
+  isStr,
+  lowAsciiCharacterNames,
+  log
+};
