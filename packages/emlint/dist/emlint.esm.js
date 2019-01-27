@@ -72,21 +72,57 @@ function emlint(str, originalOpts) {
     issues: []
   };
   for (let i = 0, len = str.length; i < len; i++) {
+    console.log(
+      `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${35}m${`str[ ${i} ] = ${
+        str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
+      }`}\u001b[${39}m \u001b[${36}m${`===============================`}\u001b[${39}m`
+    );
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       resetLogWhitespace();
+      console.log(
+        `131 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logWhitespace.startAt`}\u001b[${39}m`} = ${JSON.stringify(
+          logWhitespace.startAt,
+          null,
+          4
+        )}`
+      );
     }
     if (!str[i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = i;
+      console.log(
+        `143 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logWhitespace.startAt`}\u001b[${39}m`} = ${JSON.stringify(
+          logWhitespace.startAt,
+          null,
+          4
+        )}`
+      );
     }
     if (str[i] === "\n" || str[i] === "\r") {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
+        console.log(
+          `156 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logWhitespace.includesLinebreaks`}\u001b[${39}m`} = ${JSON.stringify(
+            logWhitespace.includesLinebreaks,
+            null,
+            4
+          )}`
+        );
       }
       logWhitespace.lastLinebreakAt = i;
     }
     if (logTag.tagNameStartAt !== null && !charSuitableForTagName(str[i])) {
+      console.log("168 character not suitable for tag name");
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
+      console.log(
+        `172 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logTag.tagNameEndAt`}\u001b[${39}m`} = ${
+          logTag.tagNameEndAt
+        }; ${`\u001b[${33}m${`logTag.tagName`}\u001b[${39}m`} = ${JSON.stringify(
+          logTag.tagName,
+          null,
+          0
+        )}`
+      );
     }
     if (
       logTag.tagStartAt !== null &&
@@ -95,6 +131,11 @@ function emlint(str, originalOpts) {
       logTag.tagStartAt < i
     ) {
       logTag.tagNameStartAt = i;
+      console.log(
+        `191 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logTag.tagNameStartAt`}\u001b[${39}m`} = ${
+          logTag.tagNameStartAt
+        }`
+      );
       if (logTag.tagStartAt < i - 1) {
         retObj.issues.push({
           name: "space-after-opening-bracket",
@@ -104,10 +145,37 @@ function emlint(str, originalOpts) {
     }
     if (str[i] === "<" && logTag.tagStartAt === null) {
       logTag.tagStartAt = i;
+      console.log(
+        `209 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`logTag.tagStartAt`}\u001b[${39}m`} = ${
+          logTag.tagStartAt
+        }`
+      );
     }
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
+      console.log(
+        `219 end of tag - ${`\u001b[${32}m${`RESET`}\u001b[${39}m`} logTag`
+      );
     }
+    console.log(
+      `${`\u001b[${31}m${`█ `}\u001b[${39}m`}${
+        logTag.tagStartAt !== null
+          ? `${`\u001b[${33}m${`logTag`}\u001b[${39}m`} ${JSON.stringify(
+              logTag,
+              null,
+              0
+            )}; `
+          : ""
+      }${
+        logWhitespace.startAt !== null
+          ? `${`\u001b[${33}m${`logWhitespace`}\u001b[${39}m`} ${JSON.stringify(
+              logWhitespace,
+              null,
+              0
+            )}; `
+          : ""
+      }`
+    );
   }
   return retObj;
 }

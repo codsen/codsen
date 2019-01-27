@@ -4,7 +4,7 @@
   "description": "Maintenance automation for Readme's and, optionally, other project files",
   "license": "MIT",
   "engines": {
-    "node": ">=8.9"
+    "node": ">=8"
   },
   "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/lect",
   "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/lect",
@@ -34,6 +34,11 @@
   "esm": {
     "await": true,
     "cjs": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && npm test"
+    }
   },
   "keywords": [
     "update",
@@ -132,6 +137,7 @@
     },
     "licence": {
       "extras": [
+        "",
         "Icons mapping in util.js/`defaultTypes` taken from [all-contributors-cli](https://github.com/jfmengels/all-contributors-cli). MIT Licence."
       ]
     },
@@ -149,6 +155,13 @@
       "devDependencies": [],
       "travisVersionsOverride": []
     }
+  },
+  "nyc": {
+    "instrument": false,
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
   },
   "dependencies": {
     "array-pull-all-with-glob": "^4.12.2",

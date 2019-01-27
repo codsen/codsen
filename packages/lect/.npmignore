@@ -11,12 +11,14 @@
 
 # folders:
 
+.nyc_output
+coverage
+docs
+reference
 test
 
 # files:
 
 .eslintrc.json
-.gitignore
 .npmignore
 .prettierignore
-.travis.yml
