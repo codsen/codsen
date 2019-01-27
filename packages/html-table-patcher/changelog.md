@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.5.1](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/compare/html-table-patcher@0.5.0...html-table-patcher@0.5.1) (2019-01-27)
-
-**Note:** Version bump only for package html-table-patcher
-
 
 
 

@@ -179,13 +179,13 @@ thePromise.then(received => {
         }),
     { good: [], bad: [], ignored: [] }
   ).then(counter => {
-    console.log(
-      `${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
-        counter,
-        null,
-        4
-      )}`
-    );
+    // console.log(
+    //   `${`\u001b[${33}m${`counter`}\u001b[${39}m`} = ${JSON.stringify(
+    //     counter,
+    //     null,
+    //     4
+    //   )}`
+    // );
     let writtenAndSkippedMsg = ""; // message regarding written and skipped files
 
     // calculate writtenAndSkippedMsg

@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.11.1](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/compare/object-boolean-combinations@2.11.0...object-boolean-combinations@2.11.1) (2019-01-27)
-
-**Note:** Version bump only for package object-boolean-combinations
-
 
 
 

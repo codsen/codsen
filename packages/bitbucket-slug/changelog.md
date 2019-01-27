@@ -3,10 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/compare/bitbucket-slug@1.9.0...bitbucket-slug@1.9.1) (2019-01-27)
-
-**Note:** Version bump only for package bitbucket-slug
-
 
 
 
