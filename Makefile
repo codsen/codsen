@@ -6,3 +6,6 @@ publish:
 	make clean-lib
 	make test
 	make clone-license
+
+republish:
+	./scripts/republish.sh
