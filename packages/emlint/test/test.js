@@ -3,6 +3,15 @@ import { emlint } from "../dist/emlint.esm";
 import apply from "ranges-apply";
 // import errors from "../src/errors.json";
 
+function getUniqueIssueNames(issues) {
+  return issues.reduce((accum, curr) => {
+    if (!accum.includes(curr.name)) {
+      return accum.concat([curr.name]);
+    }
+    return accum;
+  }, []);
+}
+
 // 00. Insurance
 // -----------------------------------------------------------------------------
 
@@ -46,19 +55,10 @@ test(`01.01 - ${`\u001b[${35}m${`space between the tag name and opening bracket`
   t.deepEqual(res2.issues[0].position, [[1, 5]], "01.01.06");
 
   t.is(res3.issues.length, 4, "01.01.07");
-  const uniqueIssueNames = [];
-  res3.issues.forEach(issueObj => {
-    if (!uniqueIssueNames.includes(issueObj.name)) {
-      uniqueIssueNames.push(issueObj.name);
-    }
-  });
-  t.truthy(
-    uniqueIssueNames.includes("space-after-opening-bracket"),
-    "01.01.08-1"
-  );
-  t.truthy(
-    uniqueIssueNames.includes("bad-character-character-tabulation"),
-    "01.01.08-2"
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues).sort(),
+    ["bad-character-character-tabulation", "space-after-opening-bracket"],
+    "01.01.08"
   );
   t.deepEqual(res3.fix, [[1, 11]], "01.01.09");
 
@@ -147,4 +147,47 @@ test(`02.XX - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ASCII 0-3
       );
     }
   });
+});
+
+// 03. rule "tagname-lowercase"
+// -----------------------------------------------------------------------------
+test(`03.00 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
+  t.is(emlint("<table>").issues.length, 0, "03.00.01");
+});
+
+test(`03.01 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - one tag with capital letter`, t => {
+  const bad = "<Table>";
+  const good = "<table>";
+  const res = emlint(bad);
+
+  // there's only one issue:
+  t.is(res.issues.length, 1, "03.01.01");
+  t.is(res.issues[0].name, "tagname-lowercase", "03.01.02");
+  t.deepEqual(res.issues[0].position, [[1, 2, "t"]], "03.01.03");
+
+  // fixing:
+  t.is(apply(bad, res.fix), good, "03.01.04");
+});
+
+test(`03.02 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - few tags with capital letters`, t => {
+  const bad = "<tAbLE><tR><TD>";
+  const good = "<table><tr><td>";
+  const res = emlint(bad);
+
+  // there's only one issue:
+  t.is(res.issues.length, 6, "03.02.01");
+  t.is(res.issues[0].name, "tagname-lowercase", "03.02.02");
+  t.deepEqual(
+    getUniqueIssueNames(res.issues),
+    ["tagname-lowercase"],
+    "03.02.03"
+  );
+  t.deepEqual(
+    res.fix,
+    [[2, 3, "a"], [4, 6, "le"], [9, 10, "r"], [12, 14, "td"]],
+    "03.02.04"
+  );
+
+  // fixing:
+  t.is(apply(bad, res.fix), good, "03.02.05");
 });

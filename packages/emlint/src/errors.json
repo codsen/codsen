@@ -1,157 +1,162 @@
 {
-  "space-after-opening-bracket": {
-    "excerpt": "space between opening bracket and tag name",
-    "description": "Many browsers, including Chrome will not consider this a tag",
-    "scope": "html"
-  },
-  "bad-character-null": {
-    "excerpt": "bad character - null",
-    "description": "http://www.fileformat.info/info/unicode/char/0000/index.htm",
-    "scope": "all"
-  },
-  "bad-character-start-of-heading": {
-    "excerpt": "bad character - start of heading",
-    "description": "http://www.fileformat.info/info/unicode/char/0001/index.htm",
-    "scope": "all"
-  },
-  "bad-character-start-of-text": {
-    "excerpt": "bad character - start of text",
-    "description": "http://www.fileformat.info/info/unicode/char/0002/index.htm",
-    "scope": "all"
-  },
-  "bad-character-end-of-text": {
-    "excerpt": "bad character - end of text",
-    "description": "http://www.fileformat.info/info/unicode/char/0003/index.htm",
-    "scope": "all"
-  },
-  "bad-character-end-of-transmission": {
-    "excerpt": "bad character - end of transmission",
-    "description": "http://www.fileformat.info/info/unicode/char/0004/index.htm",
-    "scope": "all"
-  },
-  "bad-character-enquiry": {
-    "excerpt": "bad character - enquiry",
-    "description": "http://www.fileformat.info/info/unicode/char/0005/index.htm",
-    "scope": "all"
-  },
   "bad-character-acknowledge": {
-    "excerpt": "bad character - acknowledge",
     "description": "http://www.fileformat.info/info/unicode/char/0006/index.htm",
-    "scope": "all"
-  },
-  "bad-character-bell": {
-    "excerpt": "bad character - bell",
-    "description": "http://www.fileformat.info/info/unicode/char/0007/index.htm",
+    "excerpt": "bad character - acknowledge",
     "scope": "all"
   },
   "bad-character-backspace": {
-    "excerpt": "bad character - backspace",
     "description": "http://www.fileformat.info/info/unicode/char/0008/index.htm",
+    "excerpt": "bad character - backspace",
     "scope": "all"
   },
-  "bad-character-character-tabulation": {
-    "excerpt": "bad character - character tabulation",
-    "description": "http://www.fileformat.info/info/unicode/char/0009/index.htm",
-    "scope": "all"
-  },
-  "bad-character-line-tabulation": {
-    "excerpt": "bad character - line tabulation",
-    "description": "http://www.fileformat.info/info/unicode/char/000b/index.htm",
-    "scope": "all"
-  },
-  "bad-character-form-feed": {
-    "excerpt": "bad character - form feed",
-    "description": "http://www.fileformat.info/info/unicode/char/000c/index.htm",
-    "scope": "all"
-  },
-  "bad-character-shift-out": {
-    "excerpt": "bad character - shift out",
-    "description": "http://www.fileformat.info/info/unicode/char/000e/index.htm",
-    "scope": "all"
-  },
-  "bad-character-shift-in": {
-    "excerpt": "bad character - shift in",
-    "description": "http://www.fileformat.info/info/unicode/char/000f/index.htm",
-    "scope": "all"
-  },
-  "bad-character-data-link-escape": {
-    "excerpt": "bad character - data link escape",
-    "description": "http://www.fileformat.info/info/unicode/char/0010/index.htm",
-    "scope": "all"
-  },
-  "bad-character-device-control-one": {
-    "excerpt": "bad character - device control one",
-    "description": "http://www.fileformat.info/info/unicode/char/0011/index.htm",
-    "scope": "all"
-  },
-  "bad-character-device-control-two": {
-    "excerpt": "bad character - device control two",
-    "description": "http://www.fileformat.info/info/unicode/char/0012/index.htm",
-    "scope": "all"
-  },
-  "bad-character-device-control-three": {
-    "excerpt": "bad character - device control three",
-    "description": "http://www.fileformat.info/info/unicode/char/0013/index.htm",
-    "scope": "all"
-  },
-  "bad-character-device-control-four": {
-    "excerpt": "bad character - device control four",
-    "description": "http://www.fileformat.info/info/unicode/char/0014/index.htm",
-    "scope": "all"
-  },
-  "bad-character-negative-acknowledge": {
-    "excerpt": "bad character - negative acknowledge",
-    "description": "http://www.fileformat.info/info/unicode/char/0015/index.htm",
-    "scope": "all"
-  },
-  "bad-character-synchronous-idle": {
-    "excerpt": "bad character - synchronous idle",
-    "description": "http://www.fileformat.info/info/unicode/char/0016/index.htm",
-    "scope": "all"
-  },
-  "bad-character-end-of-transmission-block": {
-    "excerpt": "bad character - end of transmission block",
-    "description": "http://www.fileformat.info/info/unicode/char/0017/index.htm",
+  "bad-character-bell": {
+    "description": "http://www.fileformat.info/info/unicode/char/0007/index.htm",
+    "excerpt": "bad character - bell",
     "scope": "all"
   },
   "bad-character-cancel": {
-    "excerpt": "bad character - cancel",
     "description": "http://www.fileformat.info/info/unicode/char/0018/index.htm",
+    "excerpt": "bad character - cancel",
+    "scope": "all"
+  },
+  "bad-character-character-tabulation": {
+    "description": "http://www.fileformat.info/info/unicode/char/0009/index.htm",
+    "excerpt": "bad character - character tabulation",
+    "scope": "all"
+  },
+  "bad-character-data-link-escape": {
+    "description": "http://www.fileformat.info/info/unicode/char/0010/index.htm",
+    "excerpt": "bad character - data link escape",
+    "scope": "all"
+  },
+  "bad-character-device-control-four": {
+    "description": "http://www.fileformat.info/info/unicode/char/0014/index.htm",
+    "excerpt": "bad character - device control four",
+    "scope": "all"
+  },
+  "bad-character-device-control-one": {
+    "description": "http://www.fileformat.info/info/unicode/char/0011/index.htm",
+    "excerpt": "bad character - device control one",
+    "scope": "all"
+  },
+  "bad-character-device-control-three": {
+    "description": "http://www.fileformat.info/info/unicode/char/0013/index.htm",
+    "excerpt": "bad character - device control three",
+    "scope": "all"
+  },
+  "bad-character-device-control-two": {
+    "description": "http://www.fileformat.info/info/unicode/char/0012/index.htm",
+    "excerpt": "bad character - device control two",
     "scope": "all"
   },
   "bad-character-end-of-medium": {
-    "excerpt": "bad character - end of medium",
     "description": "http://www.fileformat.info/info/unicode/char/0019/index.htm",
+    "excerpt": "bad character - end of medium",
     "scope": "all"
   },
-  "bad-character-substitute": {
-    "excerpt": "bad character - substitute",
-    "description": "http://www.fileformat.info/info/unicode/char/001a/index.htm",
+  "bad-character-end-of-text": {
+    "description": "http://www.fileformat.info/info/unicode/char/0003/index.htm",
+    "excerpt": "bad character - end of text",
+    "scope": "all"
+  },
+  "bad-character-end-of-transmission": {
+    "description": "http://www.fileformat.info/info/unicode/char/0004/index.htm",
+    "excerpt": "bad character - end of transmission",
+    "scope": "all"
+  },
+  "bad-character-end-of-transmission-block": {
+    "description": "http://www.fileformat.info/info/unicode/char/0017/index.htm",
+    "excerpt": "bad character - end of transmission block",
+    "scope": "all"
+  },
+  "bad-character-enquiry": {
+    "description": "http://www.fileformat.info/info/unicode/char/0005/index.htm",
+    "excerpt": "bad character - enquiry",
     "scope": "all"
   },
   "bad-character-escape": {
-    "excerpt": "bad character - escape",
     "description": "http://www.fileformat.info/info/unicode/char/001b/index.htm",
+    "excerpt": "bad character - escape",
+    "scope": "all"
+  },
+  "bad-character-form-feed": {
+    "description": "http://www.fileformat.info/info/unicode/char/000c/index.htm",
+    "excerpt": "bad character - form feed",
     "scope": "all"
   },
   "bad-character-information-separator-four": {
-    "excerpt": "bad character - information separator four",
     "description": "http://www.fileformat.info/info/unicode/char/001c/index.htm",
-    "scope": "all"
-  },
-  "bad-character-information-separator-three": {
-    "excerpt": "bad character - information separator three",
-    "description": "http://www.fileformat.info/info/unicode/char/001d/index.htm",
-    "scope": "all"
-  },
-  "bad-character-information-separator-two": {
-    "excerpt": "bad character - information separator two",
-    "description": "http://www.fileformat.info/info/unicode/char/001e/index.htm",
+    "excerpt": "bad character - information separator four",
     "scope": "all"
   },
   "bad-character-information-separator-one": {
-    "excerpt": "bad character - information separator one",
     "description": "http://www.fileformat.info/info/unicode/char/001f/index.htm",
+    "excerpt": "bad character - information separator one",
     "scope": "all"
+  },
+  "bad-character-information-separator-three": {
+    "description": "http://www.fileformat.info/info/unicode/char/001d/index.htm",
+    "excerpt": "bad character - information separator three",
+    "scope": "all"
+  },
+  "bad-character-information-separator-two": {
+    "description": "http://www.fileformat.info/info/unicode/char/001e/index.htm",
+    "excerpt": "bad character - information separator two",
+    "scope": "all"
+  },
+  "bad-character-line-tabulation": {
+    "description": "http://www.fileformat.info/info/unicode/char/000b/index.htm",
+    "excerpt": "bad character - line tabulation",
+    "scope": "all"
+  },
+  "bad-character-negative-acknowledge": {
+    "description": "http://www.fileformat.info/info/unicode/char/0015/index.htm",
+    "excerpt": "bad character - negative acknowledge",
+    "scope": "all"
+  },
+  "bad-character-null": {
+    "description": "http://www.fileformat.info/info/unicode/char/0000/index.htm",
+    "excerpt": "bad character - null",
+    "scope": "all"
+  },
+  "bad-character-shift-in": {
+    "description": "http://www.fileformat.info/info/unicode/char/000f/index.htm",
+    "excerpt": "bad character - shift in",
+    "scope": "all"
+  },
+  "bad-character-shift-out": {
+    "description": "http://www.fileformat.info/info/unicode/char/000e/index.htm",
+    "excerpt": "bad character - shift out",
+    "scope": "all"
+  },
+  "bad-character-start-of-heading": {
+    "description": "http://www.fileformat.info/info/unicode/char/0001/index.htm",
+    "excerpt": "bad character - start of heading",
+    "scope": "all"
+  },
+  "bad-character-start-of-text": {
+    "description": "http://www.fileformat.info/info/unicode/char/0002/index.htm",
+    "excerpt": "bad character - start of text",
+    "scope": "all"
+  },
+  "bad-character-substitute": {
+    "description": "http://www.fileformat.info/info/unicode/char/001a/index.htm",
+    "excerpt": "bad character - substitute",
+    "scope": "all"
+  },
+  "bad-character-synchronous-idle": {
+    "description": "http://www.fileformat.info/info/unicode/char/0016/index.htm",
+    "excerpt": "bad character - synchronous idle",
+    "scope": "all"
+  },
+  "space-after-opening-bracket": {
+    "description": "Many browsers, including Chrome will not consider this a tag",
+    "excerpt": "space between opening bracket and tag name",
+    "scope": "html"
+  },
+  "tagname-lowercase": {
+    "description": "Normally all tags are in lowercase",
+    "excerpt": "tag name contains uppercase characters",
+    "scope": "html"
   }
 }

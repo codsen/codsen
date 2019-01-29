@@ -37,8 +37,8 @@ Here's what you'll get:
 Type            | Key in `package.json` | Path  | Size
 ----------------|-----------------------|-------|--------
 Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/emlint.cjs.js` | 5 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/emlint.esm.js` | 4 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/emlint.umd.js` | 49 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/emlint.esm.js` | 5 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/emlint.umd.js` | 32 KB
 
 **[⬆  back to top](#markdown-header-emlint)**
 
@@ -133,7 +133,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
 [bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
 
-[cov-img]: https://img.shields.io/badge/coverage-91.67%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/emlint
 
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square

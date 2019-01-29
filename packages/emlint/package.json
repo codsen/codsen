@@ -167,6 +167,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "check-types-mini": "^5.6.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
     "ranges-merge": "^3.12.3"
@@ -186,7 +187,7 @@
     "nyc": "^13.1.0",
     "prettier": "^1.16.1",
     "ranges-apply": "^2.12.3",
-    "ranges-merge": "^3.12.2",
+    "ranges-merge": "^3.12.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

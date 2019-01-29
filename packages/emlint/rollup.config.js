@@ -45,6 +45,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge"
@@ -67,6 +68,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge"
@@ -86,12 +88,8 @@ export default commandLineArgs => {
     // util.js build:
     {
       input: "src/util.js",
-      output: [
-        { file: "dist/util.esm.js", format: "es" },
-      ],
-      external: [
-        
-      ],
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: [],
       plugins: [
         strip({
           sourceMap: false

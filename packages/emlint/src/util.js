@@ -160,12 +160,31 @@ function isLowerCaseLetter(char) {
   );
 }
 
+function isUppercaseLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    char.charCodeAt(0) > 64 &&
+    char.charCodeAt(0) < 91
+  );
+}
+
 function isStr(something) {
   return typeof something === "string";
 }
 
 function isLowercase(char) {
   return char.toLowerCase() === char && char.toUpperCase() !== char;
+}
+
+function isLatinLetter(char) {
+  // we mean Latin letters A-Z, a-z
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
 }
 
 function charSuitableForTagName(char) {
@@ -191,8 +210,10 @@ function log(...pairs) {
 export {
   knownHTMLTags,
   charSuitableForTagName,
+  isUppercaseLetter,
   isLowercase,
   isStr,
   lowAsciiCharacterNames,
-  log
+  log,
+  isLatinLetter
 };

@@ -157,11 +157,27 @@ function isLowerCaseLetter(char) {
     char.charCodeAt(0) < 123
   );
 }
+function isUppercaseLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    char.charCodeAt(0) > 64 &&
+    char.charCodeAt(0) < 91
+  );
+}
 function isStr(something) {
   return typeof something === "string";
 }
 function isLowercase(char) {
   return char.toLowerCase() === char && char.toUpperCase() !== char;
+}
+function isLatinLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
 }
 function charSuitableForTagName(char) {
   return isLowerCaseLetter(char);
@@ -179,4 +195,4 @@ function log(...pairs) {
   }, "");
 }
 
-export { knownHTMLTags, charSuitableForTagName, isLowercase, isStr, lowAsciiCharacterNames, log };
+export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter };

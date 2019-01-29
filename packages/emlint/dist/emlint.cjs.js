@@ -13,8 +13,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var clone = _interopDefault(require('lodash.clonedeep'));
+var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
+var clone = _interopDefault(require('lodash.clonedeep'));
 var merge = _interopDefault(require('ranges-merge'));
 
 function _typeof(obj) {
@@ -34,14 +35,14 @@ function _typeof(obj) {
 var version = "0.4.0";
 
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
-function isLowerCaseLetter(char) {
-  return isStr(char) && char.length === 1 && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
+function isUppercaseLetter(char) {
+  return isStr(char) && char.length === 1 && char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91;
 }
 function isStr(something) {
   return typeof something === "string";
 }
-function charSuitableForTagName(char) {
-  return isLowerCaseLetter(char);
+function isLatinLetter(char) {
+  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 
 var errors = "./errors.json";
@@ -53,6 +54,16 @@ function emlint(str, originalOpts) {
   if (originalOpts && !isObj(originalOpts)) {
     throw new Error("emlint: [THROW_ID_02] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
   }
+  var defaults = {
+    rules: "recommended"
+  };
+  var opts = Object.assign({}, defaults, originalOpts);
+  checkTypes(opts, defaults, {
+    msg: "emlint: [THROW_ID_03*]",
+    schema: {
+      rules: ["string", "object", "false", "null", "undefined"]
+    }
+  });
   var logTag;
   var defaultLogTag = {
     tagStartAt: null,
@@ -106,11 +117,11 @@ function emlint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = i;
     }
-    if (logTag.tagNameStartAt !== null && !charSuitableForTagName(str[i])) {
+    if (logTag.tagNameStartAt !== null && !isLatinLetter(str[i])) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
     }
-    if (logTag.tagStartAt !== null && logTag.tagNameStartAt === null && charSuitableForTagName(str[i]) && logTag.tagStartAt < i) {
+    if (logTag.tagStartAt !== null && logTag.tagNameStartAt === null && isLatinLetter(str[i]) && logTag.tagStartAt < i) {
       logTag.tagNameStartAt = i;
       if (logTag.tagStartAt < i - 1) {
         retObj.issues.push({
@@ -118,6 +129,12 @@ function emlint(str, originalOpts) {
           position: [[logTag.tagStartAt + 1, i]]
         });
       }
+    }
+    if (logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && isUppercaseLetter(str[i])) {
+      retObj.issues.push({
+        name: "tagname-lowercase",
+        position: [[i, i + 1, str[i].toLowerCase()]]
+      });
     }
     if (str[i] === "<" && logTag.tagStartAt === null) {
       logTag.tagStartAt = i;
