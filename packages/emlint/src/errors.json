@@ -149,6 +149,11 @@
     "excerpt": "bad character - synchronous idle",
     "scope": "all"
   },
+  "mixed-line-endings": {
+    "description": "",
+    "excerpt": "mixed line endings detected",
+    "scope": "all"
+  },
   "space-after-opening-bracket": {
     "description": "Many browsers, including Chrome will not consider this a tag",
     "excerpt": "space between opening bracket and tag name",

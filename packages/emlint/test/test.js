@@ -191,3 +191,109 @@ test(`03.02 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - few tags w
   // fixing:
   t.is(apply(bad, res.fix), good, "03.02.05");
 });
+
+// 04. rule "file-mixed-line-endings"
+// -----------------------------------------------------------------------------
+test(`04.01 - ${`\u001b[${36}m${`file-mixed-line-endings`}\u001b[${39}m`} - consistent line endings given, no desired option set`, t => {
+  // desired line endings are not defined but they are consistent
+  // 1. all CR
+  t.is(emlint("\r").issues.length, 0, "04.01.01");
+  t.is(emlint("aaaaaa\rbbbbbbbb\r\rcccccc").issues.length, 0, "04.01.02");
+  t.is(emlint("aaaaaa\rbbbbbbbb\r\rcccccc\r").issues.length, 0, "04.01.03");
+  // 2. all LF
+  t.is(emlint("\n").issues.length, 0, "04.01.04");
+  t.is(emlint("aaaaaa\nbbbbbbbb\n\ncccccc").issues.length, 0, "04.01.05");
+  t.is(emlint("aaaaaa\nbbbbbbbb\n\ncccccc\n").issues.length, 0, "04.01.06");
+  // 3. all CRLF
+  t.is(emlint("\r\n").issues.length, 0, "04.01.04");
+  t.is(emlint("aaa\r\nbbb\r\n\r\nccc").issues.length, 0, "04.01.05");
+  t.is(emlint("aaa\r\nbbb\r\n\r\nccc\r\n").issues.length, 0, "04.01.06");
+});
+
+test(`04.02 - ${`\u001b[${36}m${`file-mixed-line-endings`}\u001b[${39}m`} - consistent line endings given, matching the desired option set`, t => {
+  // desired line endings are not defined but they are consistent
+  // 1. all CR
+  t.is(
+    emlint("\r", {
+      style: {
+        line_endings_CR_LF_CRLF: "CR"
+      }
+    }).issues.length,
+    0,
+    "04.02.01"
+  );
+  t.is(
+    emlint("aaaaaa\rbbbbbbbb\r\rcccccc", {
+      style: {
+        line_endings_CR_LF_CRLF: "CR"
+      }
+    }).issues.length,
+    0,
+    "04.02.02"
+  );
+  t.is(
+    emlint("aaaaaa\rbbbbbbbb\r\rcccccc\r", {
+      style: {
+        line_endings_CR_LF_CRLF: "CR"
+      }
+    }).issues.length,
+    0,
+    "04.02.03"
+  );
+  // 2. all LF
+  t.is(
+    emlint("\n", {
+      style: {
+        line_endings_CR_LF_CRLF: "LF"
+      }
+    }).issues.length,
+    0,
+    "04.02.04"
+  );
+  t.is(
+    emlint("aaaaaa\nbbbbbbbb\n\ncccccc", {
+      style: {
+        line_endings_CR_LF_CRLF: "LF"
+      }
+    }).issues.length,
+    0,
+    "04.02.05"
+  );
+  t.is(
+    emlint("aaaaaa\nbbbbbbbb\n\ncccccc\n", {
+      style: {
+        line_endings_CR_LF_CRLF: "LF"
+      }
+    }).issues.length,
+    0,
+    "04.02.06"
+  );
+  // 3. all CRLF
+  t.is(
+    emlint("\r\n", {
+      style: {
+        line_endings_CR_LF_CRLF: "CRLF"
+      }
+    }).issues.length,
+    0,
+    "04.02.04"
+  );
+  t.is(
+    emlint("aaa\r\nbbb\r\n\r\nccc", {
+      style: {
+        line_endings_CR_LF_CRLF: "CRLF"
+      }
+    }).issues.length,
+    0,
+    "04.02.05"
+  );
+  t.is(
+    emlint("aaa\r\nbbb\r\n\r\nccc\r\n", {
+      style: {
+        line_endings_CR_LF_CRLF: "CRLF"
+      }
+    }).issues.length,
+    0,
+    "04.02.06"
+  );
+});

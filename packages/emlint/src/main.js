@@ -33,15 +33,27 @@ function emlint(str, originalOpts) {
   // ---------------------------------------------------------------------------
 
   const defaults = {
-    rules: "recommended"
+    rules: "recommended",
+    style: {
+      line_endings_CR_LF_CRLF: null
+    }
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
     msg: "emlint: [THROW_ID_03*]",
     schema: {
-      rules: ["string", "object", "false", "null", "undefined"]
+      rules: ["string", "object", "false", "null", "undefined"],
+      "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
     }
   });
+
+  console.log(
+    `051 USING ${`\u001b[${33}m${`opts`}\u001b[${39}m`} = ${JSON.stringify(
+      opts,
+      null,
+      4
+    )}`
+  );
 
   // Define variables
   // ---------------------------------------------------------------------------
@@ -53,6 +65,7 @@ function emlint(str, originalOpts) {
     tagNameStartAt: null,
     tagNameEndAt: null,
     tagName: null,
+    recognised: null,
     attributes: []
   };
   function resetLogTag() {
@@ -155,7 +168,7 @@ function emlint(str, originalOpts) {
           name,
           position: [[i, i + 1, "  "]]
         });
-        console.log(`158 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
+        console.log(`171 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
       } else if (charcode === 10 || charcode === 13) {
         // 10 - "\u000A" - line feed
         // 13 - "\u000D" - carriage return
@@ -166,21 +179,21 @@ function emlint(str, originalOpts) {
           name,
           position: [[i, i + 1]]
         });
-        console.log(`169 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+        console.log(`182 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
       }
     }
 
     // catch the ending of whitespace chunks:
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       resetLogWhitespace();
-      console.log(`176 ${log("reset", "logWhitespace")}`);
+      console.log(`189 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the start of whitespace chunks:
     if (!str[i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = i;
       console.log(
-        `183 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
+        `196 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
       );
     }
 
@@ -189,7 +202,7 @@ function emlint(str, originalOpts) {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
         console.log(
-          `192 ${log(
+          `205 ${log(
             "set",
             "logWhitespace.includesLinebreaks",
             logWhitespace.includesLinebreaks
@@ -198,7 +211,7 @@ function emlint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = i;
       console.log(
-        `201 ${log(
+        `214 ${log(
           "set",
           "logWhitespace.lastLinebreakAt",
           logWhitespace.lastLinebreakAt
@@ -210,16 +223,21 @@ function emlint(str, originalOpts) {
     // PS. we deliberately allow capital Latin letters through the net, so that
     // later we could flag them up
     if (logTag.tagNameStartAt !== null && !util.isLatinLetter(str[i])) {
-      console.log("213 not a latin letter, thus we assume tag name ends here");
+      console.log("226 not a latin letter, thus we assume tag name ends here");
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
+      logTag.recognised = util.knownHTMLTags.includes(
+        logTag.tagName.toLowerCase()
+      );
       console.log(
-        `217 ${log(
+        `233 ${log(
           "set",
           "logTag.tagNameEndAt",
           logTag.tagNameEndAt,
           "logTag.tagName",
-          logTag.tagName
+          logTag.tagName,
+          "logTag.recognised",
+          logTag.recognised
         )}`
       );
     }
@@ -233,7 +251,7 @@ function emlint(str, originalOpts) {
     ) {
       logTag.tagNameStartAt = i;
       console.log(
-        `236 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
+        `254 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
       );
 
       // rule "space-between-opening-bracket-and-tag-name":
@@ -243,7 +261,7 @@ function emlint(str, originalOpts) {
           position: [[logTag.tagStartAt + 1, i]]
         });
         console.log(
-          `246 ${log(
+          `264 ${log(
             "push",
             "space-after-opening-bracket",
             `${`[[${logTag.tagStartAt + 1}, ${i}]]`}`
@@ -263,7 +281,7 @@ function emlint(str, originalOpts) {
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
       console.log(
-        `266 ${log(
+        `284 ${log(
           "push",
           "tagname-lowercase",
           `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -278,13 +296,13 @@ function emlint(str, originalOpts) {
     // catch the beginning of a tag:
     if (str[i] === "<" && logTag.tagStartAt === null) {
       logTag.tagStartAt = i;
-      console.log(`281 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`);
+      console.log(`299 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`);
     }
 
     // catch the ending of a tag:
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
-      console.log(`287 ${log("reset", "logTag")}`);
+      console.log(`305 ${log("reset", "logTag")}`);
     }
 
     //                                S

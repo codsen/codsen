@@ -50,6 +50,121 @@ const lowAsciiCharacterNames = [
   "space",
   "exclamation-mark"
 ];
+const knownHTMLTags = [
+  "abbr",
+  "address",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "base",
+  "bdi",
+  "bdo",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "data",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "doctype",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "footer",
+  "form",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "head",
+  "header",
+  "hgroup",
+  "hr",
+  "html",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "keygen",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "math",
+  "menu",
+  "menuitem",
+  "meta",
+  "meter",
+  "nav",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "param",
+  "picture",
+  "pre",
+  "progress",
+  "rb",
+  "rp",
+  "rt",
+  "rtc",
+  "ruby",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "slot",
+  "small",
+  "source",
+  "span",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "svg",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "track",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "xml"
+];
 function isUppercaseLetter(char) {
   return (
     isStr(char) &&
@@ -92,13 +207,17 @@ function emlint(str, originalOpts) {
     );
   }
   const defaults = {
-    rules: "recommended"
+    rules: "recommended",
+    style: {
+      line_endings_CR_LF_CRLF: null
+    }
   };
   const opts = Object.assign({}, defaults, originalOpts);
   checkTypes(opts, defaults, {
     msg: "emlint: [THROW_ID_03*]",
     schema: {
-      rules: ["string", "object", "false", "null", "undefined"]
+      rules: ["string", "object", "false", "null", "undefined"],
+      "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
     }
   });
   let logTag;
@@ -107,6 +226,7 @@ function emlint(str, originalOpts) {
     tagNameStartAt: null,
     tagNameEndAt: null,
     tagName: null,
+    recognised: null,
     attributes: []
   };
   function resetLogTag() {
@@ -157,6 +277,9 @@ function emlint(str, originalOpts) {
     if (logTag.tagNameStartAt !== null && !isLatinLetter(str[i])) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
+      logTag.recognised = knownHTMLTags.includes(
+        logTag.tagName.toLowerCase()
+      );
     }
     if (
       logTag.tagStartAt !== null &&
