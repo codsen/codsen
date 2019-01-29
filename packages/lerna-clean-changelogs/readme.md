@@ -144,6 +144,10 @@ This package performs the following cleaning steps:
 
    (notice how a second hash character added, beside link being removed)
 
+4. Replaces two or more empty lines into one line. `conventional-changelog` itself leaves excessive whitespace. As a bonus, if line only contains whitespace characters (spaces, tabs etc.) those whitespace characters are removed. They're hard to spot but useless.
+
+5. If existing, pre-lerna changelog entries use dashes to note list items, those dashes are updated to match `conventional-changelog` notation using asterisks.
+
 ---
 
 We might add more cleaning features in later releases.

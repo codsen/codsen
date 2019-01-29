@@ -39,6 +39,7 @@ function c(changelogContents) {
     throw new Error("lerna-clean-changelogs: [THROW_ID_02] The first input argument must be a string! It was given as ".concat(Array.isArray(changelogContents) ? "array" : _typeof(changelogContents), ", equal to:\n").concat(JSON.stringify(changelogContents, null, 4)));
   }
   var final;
+  var lastLineWasEmpty = false;
   if (changelogContents.length && (!changelogContents.includes("\n") || !changelogContents.includes("\r"))) {
     var changelogEndedWithLinebreak = isStr(changelogContents) && changelogContents.length && (changelogContents[changelogContents.length - 1] === "\n" || changelogContents[changelogContents.length - 1] === "\r");
     changelogContents = changelogContents.trim();
@@ -63,8 +64,20 @@ function c(changelogContents) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
           i--;
         }
+      } else if (!linesArr[i].trim().length) {
+        if (!lastLineWasEmpty) {
+          newLinesArr.unshift(linesArr[i].trim());
+          lastLineWasEmpty = true;
+        }
       } else {
-        newLinesArr.unshift(linesArr[i]);
+        if (linesArr[i][0] === "-" && linesArr[i][1] === " ") {
+          newLinesArr.unshift("* ".concat(linesArr[i].slice(2)));
+        } else {
+          newLinesArr.unshift(linesArr[i]);
+        }
+      }
+      if (linesArr[i].trim().length) {
+        lastLineWasEmpty = false;
       }
     }
     final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");

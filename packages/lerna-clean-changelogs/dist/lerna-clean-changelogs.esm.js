@@ -27,6 +27,7 @@ function c(changelogContents) {
     );
   }
   let final;
+  let lastLineWasEmpty = false;
   if (
     changelogContents.length &&
     (!changelogContents.includes("\n") || !changelogContents.includes("\r"))
@@ -65,8 +66,20 @@ function c(changelogContents) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
           i--;
         }
+      } else if (!linesArr[i].trim().length) {
+        if (!lastLineWasEmpty) {
+          newLinesArr.unshift(linesArr[i].trim());
+          lastLineWasEmpty = true;
+        }
       } else {
-        newLinesArr.unshift(linesArr[i]);
+        if (linesArr[i][0] === "-" && linesArr[i][1] === " ") {
+          newLinesArr.unshift(`* ${linesArr[i].slice(2)}`);
+        } else {
+          newLinesArr.unshift(linesArr[i]);
+        }
+      }
+      if (linesArr[i].trim().length) {
+        lastLineWasEmpty = false;
       }
     }
     final = `${newLinesArr.join("\n")}${

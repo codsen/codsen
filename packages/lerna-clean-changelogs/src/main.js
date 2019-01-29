@@ -20,6 +20,7 @@ function c(changelogContents) {
   }
 
   let final;
+  let lastLineWasEmpty = false;
 
   if (
     changelogContents.length &&
@@ -58,7 +59,7 @@ function c(changelogContents) {
       }
     });
     // console.log(
-    //   `084 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `062 AFTER STEP 1, ${`\u001b[${33}m${`linesArr`}\u001b[${39}m`} = ${JSON.stringify(
     //     linesArr,
     //     null,
     //     4
@@ -97,8 +98,32 @@ function c(changelogContents) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
           i--;
         }
+      } else if (!linesArr[i].trim().length) {
+        // maybe this line is empty or contains only whitespace characters (spaces, tabs etc)?
+        if (!lastLineWasEmpty) {
+          // we push trimmed lines to prevent accidental whitespace characters
+          // sitting on an empty line:
+          newLinesArr.unshift(linesArr[i].trim());
+          lastLineWasEmpty = true;
+          console.log(
+            `109 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          );
+        }
       } else {
-        newLinesArr.unshift(linesArr[i]);
+        // fix dash list items into asterisk:
+        if (linesArr[i][0] === "-" && linesArr[i][1] === " ") {
+          newLinesArr.unshift(`* ${linesArr[i].slice(2)}`);
+        } else {
+          newLinesArr.unshift(linesArr[i]);
+        }
+      }
+
+      // reset:
+      if (linesArr[i].trim().length) {
+        lastLineWasEmpty = false;
+        console.log(
+          `125 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+        );
       }
     }
 
