@@ -3,45 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-
-
-
-
-
-
-
-
-
-
-
-
 ## 3.5.0 (2019-01-20)
 
-- ✨ Various documentation and setup tweaks after we migrated to monorepo
-- ✨ Setup refresh: updated dependencies and all config files using automated tools
+* ✨ Various documentation and setup tweaks after we migrated to monorepo
+* ✨ Setup refresh: updated dependencies and all config files using automated tools
 
 ## 3.3.0 (2018-12-26)
 
 ### Bug Fixes
 
-- 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
+* 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
 
 ### Features
 
-- ✨ Algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
-- ✨ Delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
-- ✨ Improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
-- ✨ `opts.dumpLinkHrefsNearby` and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
-- ✨ Add `opts.onlyStripTags` ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
-- ✨ Add `opts.trimOnlySpaces` ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
+* ✨ Algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
+* ✨ Delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
+* ✨ Improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
+* ✨ `opts.dumpLinkHrefsNearby` and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
+* ✨ Add `opts.onlyStripTags` ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
+* ✨ Add `opts.trimOnlySpaces` ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
 
 ## 3.2.0 (2018-07-22)
 
-- ✨ Fixed `opts.returnRangesOnly` - when there are no HTML tags in the input and the option is on, an empty array is returned (as opposed to the input string, incorrectly returned previously). Sorry about that.
+* ✨ Fixed `opts.returnRangesOnly` - when there are no HTML tags in the input and the option is on, an empty array is returned (as opposed to the input string, incorrectly returned previously). Sorry about that.
 
 ## 3.1.0 (2018-07-17)
 
-- ✨ Added `opts.onlyStripTags`
+* ✨ Added `opts.onlyStripTags`
 
 ## 3.0.0 (2018-07-03)
 
@@ -65,27 +53,27 @@ This makes it easier for us to contain all new `opts.dumpLinkHrefsNearby` settin
 }
 ```
 
-- ✨ Now, input string is returned trimmed of whitespace in the beginning and in the end.
+* ✨ Now, input string is returned trimmed of whitespace in the beginning and in the end.
 
 ## 2.4.0 (2018-06-20)
 
-- ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
+* ✨ Two `range-` dependencies have been renamed, namely [ranges-push](https://www.npmjs.com/package/ranges-push) and [ranges-apply](https://www.npmjs.com/package/ranges-apply). We tapped them.
 
 ## 2.3.0 (2018-06-08)
 
-- ✨ Improvements to dirty code recognition algorithm
+* ✨ Improvements to dirty code recognition algorithm
 
 ## 2.2.0 (2018-06-02)
 
-- ✨ `opts.dumpLinkHrefsNearby` - handy when producing Email Text versions
-- ✨ Improved algorithm to understand HTML code that has been abruptly chopped off. If you select bunch of HTML where beginning is valid, but ending is somewhere in the middle of the tags, styles or whatnot, now that tag will be removed.
-- ✨ Improved algorithm to detect and clean tags without closing bracket, if a new tag follows, with or without whitespace in between.
+* ✨ `opts.dumpLinkHrefsNearby` - handy when producing Email Text versions
+* ✨ Improved algorithm to understand HTML code that has been abruptly chopped off. If you select bunch of HTML where beginning is valid, but ending is somewhere in the middle of the tags, styles or whatnot, now that tag will be removed.
+* ✨ Improved algorithm to detect and clean tags without closing bracket, if a new tag follows, with or without whitespace in between.
 
 64 unit tests, 451 assertions, 2226 lines of unit tests at 90% line coverage.
 
 ## 2.1.0 (2018-05-31)
 
-- ✨ `opts.trimOnlySpaces` - up until now, by default, the outsides of the string was trimmed using `String.trim()` which erased:
+* ✨ `opts.trimOnlySpaces` - up until now, by default, the outsides of the string was trimmed using `String.trim()` which erased:
 
   - non-breaking spaces (in combination with recursive entity decoding this means `&nbsp;` will also be erased)
   - tabs
@@ -100,29 +88,29 @@ One day I noticed that my [Nunjucks](https://mozilla.github.io/nunjucks/) code (
 
 ### Added
 
-- ✨ An even smarter algorithm, now being able to detect missing opening bracket on a tag, for example. Even latest Chrome `v.66` can't do that.
-- ✨ Increased unit test assertion count from 148 to 370. Covering even more legit and stinky code cases.
-- ✨ `opts.returnRangesOnly`
+* ✨ An even smarter algorithm, now being able to detect missing opening bracket on a tag, for example. Even latest Chrome `v.66` can't do that.
+* ✨ Increased unit test assertion count from 148 to 370. Covering even more legit and stinky code cases.
+* ✨ `opts.returnRangesOnly`
 
 ## 1.4.0 (2018-05-11)
 
-- ✨ Set up [Prettier](https://prettier.io)
-- ✨ Removed `package.lock` and `.editorconfig`
-- ✨ Wired Rollup to remove comments from non-dev builds. It means, we can now leave the `console.log`s in the source code — Rollup will remove from production code.
-- ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
+* ✨ Set up [Prettier](https://prettier.io)
+* ✨ Removed `package.lock` and `.editorconfig`
+* ✨ Wired Rollup to remove comments from non-dev builds. It means, we can now leave the `console.log`s in the source code — Rollup will remove from production code.
+* ✨ Unit tests are pointing at ES modules build, which means that code coverage is correct now, without Babel functions being missed
 
 ## 1.3.0 (2018-02-19)
 
-- ✨ Now strips HTML comments too.
+* ✨ Now strips HTML comments too.
 
 ## 1.2.0 (2017-12-31)
 
-- ✨ Improvements to `opts.stripTogetherWithTheirContents` and done a lot of rebasing.
+* ✨ Improvements to `opts.stripTogetherWithTheirContents` and done a lot of rebasing.
 
 ## 1.1.0 (2017-12-07)
 
-- ✨ Add `opts.stripTogetherWithTheirContents`
+* ✨ Add `opts.stripTogetherWithTheirContents`
 
 ## 1.0.0 (2017-11-27)
 
-- ✨ First public release
+* ✨ First public release
