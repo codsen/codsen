@@ -71,16 +71,80 @@ test(`01.01 - ${`\u001b[${35}m${`space between the tag name and opening bracket`
 // 02. rule "bad-character-*"
 // -----------------------------------------------------------------------------
 
-test(`02.01 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - null`, t => {
-  const bad1 = "\0";
-  const res1 = emlint("\0");
-  t.is(res1.issues[0].name, "bad-character-null", "02.01.01");
-  t.deepEqual(res1.issues[0].position, [[0, 1]], "02.01.02");
-  t.is(apply(bad1, res1.fix), "", "02.01.03");
+const charactersToTest = [
+  "null",
+  "start-of-heading",
+  "start-of-text",
+  "end-of-text",
+  "end-of-transmission",
+  "enquiry",
+  "acknowledge",
+  "bell",
+  "backspace",
+  "character-tabulation",
+  "line-feed",
+  "line-tabulation",
+  "form-feed",
+  "carriage-return",
+  "shift-out",
+  "shift-in",
+  "data-link-escape",
+  "device-control-one",
+  "device-control-two",
+  "device-control-three",
+  "device-control-four",
+  "negative-acknowledge",
+  "synchronous-idle",
+  "end-of-transmission-block",
+  "cancel",
+  "end-of-medium",
+  "substitute",
+  "escape",
+  "information-separator-four",
+  "information-separator-three",
+  "information-separator-two",
+  "information-separator-one"
+];
 
-  const bad2 = "aaaaa\n\n\n\0bbb";
-  const res2 = emlint(bad2);
-  t.is(res2.issues[0].name, "bad-character-null", "02.01.04");
-  t.deepEqual(res2.issues[0].position, [[8, 9]], "02.01.05");
-  t.is(apply(bad2, res2.fix), "aaaaa\n\n\nbbb", "02.01.06");
+test(`02.XX - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ASCII 0-31`, t => {
+  charactersToTest.forEach((characterStr, idx) => {
+    if (idx !== 9 && idx !== 10 && idx !== 13) {
+      // 9 = tab, 10 = LF, 13 = CR
+      const bad1 = String.fromCharCode(idx);
+      const res1 = emlint(bad1);
+      t.is(
+        res1.issues[0].name,
+        `bad-character-${characterStr}`,
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.01`
+      );
+      t.deepEqual(
+        res1.issues[0].position,
+        [[0, 1]],
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.02`
+      );
+      t.is(
+        apply(bad1, res1.fix),
+        "",
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.03`
+      );
+
+      const bad2 = `aaaaa\n\n\n${bad1}bbb`;
+      const res2 = emlint(bad2);
+      t.is(
+        res2.issues[0].name,
+        `bad-character-${characterStr}`,
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.04`
+      );
+      t.deepEqual(
+        res2.issues[0].position,
+        [[8, 9]],
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.05`
+      );
+      t.is(
+        apply(bad2, res2.fix),
+        "aaaaa\n\n\nbbb",
+        `02.${String(idx).length === 1 ? `0${idx}` : idx}.06`
+      );
+    }
+  });
 });
