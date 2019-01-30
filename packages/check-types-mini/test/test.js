@@ -2840,3 +2840,55 @@ test(`04.11 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} type "any" applies
     );
   });
 });
+
+test(`04.12 - ${`\u001b[${35}m${`opts.schema`}\u001b[${39}m`} key's value is "undefined" literal, it's in schema`, t => {
+  const err2 = t.throws(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: undefined
+      },
+      {
+        option1: "zz",
+        option2: "yy"
+      },
+      {
+        schema: {
+          option2: ["string", "boolean"]
+        }
+      }
+    );
+  });
+  t.regex(err2.message, /opts\.option2 was customised to "undefined"/gi);
+
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: undefined
+      },
+      null, // << reference object is completely omitted!!!
+      {
+        schema: {
+          option1: "String",
+          option2: ["null", "undefined"]
+        }
+      }
+    );
+  });
+  t.notThrows(() => {
+    checkTypes(
+      {
+        option1: "setting1",
+        option2: null
+      },
+      null, // << reference object is completely omitted!!!
+      {
+        schema: {
+          option1: "String",
+          option2: ["null", "undefined"]
+        }
+      }
+    );
+  });
+});

@@ -186,8 +186,12 @@ function checkTypesMini(
   }
   const ignoredPathsArr = [];
   traverse(obj, (key, val, innerObj) => {
-    const current = val !== undefined ? val : key;
-    const objKey = val !== undefined ? key : undefined;
+    let current = val;
+    let objKey = key;
+    if (innerObj.parentType === "array") {
+      objKey = undefined;
+      current = key;
+    }
     if (
       isArr(ignoredPathsArr) &&
       ignoredPathsArr.length &&

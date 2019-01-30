@@ -133,8 +133,12 @@ function checkTypesMini(obj, ref, originalOptions) {
   }
   var ignoredPathsArr = [];
   traverse(obj, function (key, val, innerObj) {
-    var current = val !== undefined ? val : key;
-    var objKey = val !== undefined ? key : undefined;
+    var current = val;
+    var objKey = key;
+    if (innerObj.parentType === "array") {
+      objKey = undefined;
+      current = key;
+    }
     if (isArr(ignoredPathsArr) && ignoredPathsArr.length && ignoredPathsArr.some(function (path) {
       return innerObj.path.startsWith(path);
     })) {
