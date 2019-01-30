@@ -33,6 +33,7 @@ function astMonkeyTraverse(tree1, cb1) {
         const path = `${innerObj.path}.${i}`;
         if (tree[i] !== undefined) {
           innerObj.parent = clone(tree);
+          innerObj.parentType = "array";
           // innerObj.path = `${innerObj.path}[${i}]`
           res = traverseInner(
             callback(
@@ -62,6 +63,7 @@ function astMonkeyTraverse(tree1, cb1) {
           innerObj.topmostKey = key;
         }
         innerObj.parent = clone(tree);
+        innerObj.parentType = "object";
         res = traverseInner(
           callback(
             key,
