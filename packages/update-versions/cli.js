@@ -120,14 +120,43 @@ if (cli.flags) {
         }
       }
       if (isObj(contents.devDependencies)) {
-        const keys = Object.keys(contents.devDependencies);
+        let keys = Object.keys(contents.devDependencies);
+        // 1. first, remove deps which if they are in normal dependencies in
+        // package.json, that's our value contents.dependencies
+
+        if (isObj(contents.dependencies)) {
+          Object.keys(contents.dependencies).forEach(depName => {
+            if (keys.includes(depName)) {
+              delete contents.devDependencies[depName];
+              wrote = true;
+              logUpdate.done();
+              console.log(
+                `   ${`\u001b[${36}m${path.dirname(
+                  p
+                )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${depName}\u001b[${39}m`} removed because it is among normal dependencies`
+              );
+              console.log(
+                `${`\u001b[${33}m${`contents`}\u001b[${39}m`} = ${JSON.stringify(
+                  contents,
+                  null,
+                  4
+                )}`
+              );
+            }
+          });
+        }
+
+        // 2. update the deps
+
+        // recalculate keys:
+        keys = Object.keys(contents.devDependencies);
         for (let y = 0, len2 = keys.length; y < len2; y++) {
           let updatedThisDep = false;
           const singleDepName = keys[y];
           const singleDepValue = contents.devDependencies[keys[y]];
           if (db.hasOwnProperty(singleDepName)) {
             // if (path.dirname(p) === "html-crush") {
-            //   console.log(`127 ${singleDepName} db`);
+            //   console.log(`130 ${singleDepName} db`);
             // }
             if (
               contents.devDependencies[singleDepName] !==
@@ -139,7 +168,7 @@ if (cli.flags) {
             }
           } else {
             // if (path.dirname(p) === "html-crush") {
-            //   console.log(`139 ${singleDepName} ping pacote`);
+            //   console.log(`142 ${singleDepName} ping pacote`);
             // }
             const retrievedVersion = await pacote
               .manifest(singleDepName)
