@@ -197,29 +197,71 @@ function emlint(str, originalOpts) {
       )} (type ${typeof str})`
     );
   }
-  if (originalOpts && !isObj(originalOpts)) {
-    throw new Error(
-      `emlint: [THROW_ID_02] the second input argument must be a plain object. It was given as:\n${JSON.stringify(
-        originalOpts,
-        null,
-        4
-      )} (type ${typeof originalOpts})`
-    );
-  }
   const defaults = {
     rules: "recommended",
     style: {
       line_endings_CR_LF_CRLF: null
     }
   };
-  const opts = Object.assign({}, defaults, originalOpts);
-  checkTypes(opts, defaults, {
-    msg: "emlint: [THROW_ID_03*]",
-    schema: {
-      rules: ["string", "object", "false", "null", "undefined"],
-      "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
+  let opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = Object.assign({}, defaults, originalOpts);
+      checkTypes(opts, defaults, {
+        msg: "emlint: [THROW_ID_03*]",
+        schema: {
+          rules: ["string", "object", "false", "null", "undefined"],
+          style: ["object", "null", "undefined"],
+          "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
+        }
+      });
+      if (opts.style && isStr(opts.style.line_endings_CR_LF_CRLF)) {
+        if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
+          if (opts.style.line_endings_CR_LF_CRLF !== "CR") {
+            opts.style.line_endings_CR_LF_CRLF === "CR";
+          }
+        } else if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "lf") {
+          if (opts.style.line_endings_CR_LF_CRLF !== "LF") {
+            opts.style.line_endings_CR_LF_CRLF === "LF";
+          }
+        } else if (
+          opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "crlf"
+        ) {
+          if (opts.style.line_endings_CR_LF_CRLF !== "CRLF") {
+            opts.style.line_endings_CR_LF_CRLF === "CRLF";
+          }
+        } else {
+          throw new Error(
+            `emlint: [THROW_ID_04] opts.style.line_endings_CR_LF_CRLF should be either falsey or string "CR" or "LF" or "CRLF". It was given as:\n${JSON.stringify(
+              opts.style.line_endings_CR_LF_CRLF,
+              null,
+              4
+            )} (type is string)`
+          );
+        }
+      }
+    } else {
+      throw new Error(
+        `emlint: [THROW_ID_02] the second input argument must be a plain object. It was given as:\n${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )} (type ${typeof originalOpts})`
+      );
     }
-  });
+  } else {
+    opts = clone(defaults);
+  }
+  let rawEnforcedEOLChar;
+  if (opts.style && isStr(opts.style.line_endings_CR_LF_CRLF)) {
+    if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
+      rawEnforcedEOLChar = "\r";
+    } else if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "crlf") {
+      rawEnforcedEOLChar = "\r\n";
+    } else {
+      rawEnforcedEOLChar = "\n";
+    }
+  }
   let logTag;
   const defaultLogTag = {
     tagStartAt: null,
@@ -246,6 +288,11 @@ function emlint(str, originalOpts) {
   const retObj = {
     issues: []
   };
+  const logLineEndings = {
+    cr: [],
+    lf: [],
+    crlf: []
+  };
   for (let i = 0, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (charcode < 32) {
@@ -255,7 +302,50 @@ function emlint(str, originalOpts) {
           name: name$$1,
           position: [[i, i + 1, "  "]]
         });
-      } else if (charcode === 10 || charcode === 13) ; else {
+      } else if (charcode === 13) {
+        if (isStr(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
+          if (
+            opts.style &&
+            opts.style.line_endings_CR_LF_CRLF &&
+            opts.style.line_endings_CR_LF_CRLF !== "CRLF"
+          ) {
+            retObj.issues.push({
+              name: "file-wrong-type-line-ending-CRLF",
+              position: [[i, i + 2, rawEnforcedEOLChar]]
+            });
+          } else {
+            logLineEndings.crlf.push([i, i + 2]);
+          }
+        } else {
+          if (
+            opts.style &&
+            opts.style.line_endings_CR_LF_CRLF &&
+            opts.style.line_endings_CR_LF_CRLF !== "CR"
+          ) {
+            retObj.issues.push({
+              name: "file-wrong-type-line-ending-CR",
+              position: [[i, i + 1, rawEnforcedEOLChar]]
+            });
+          } else {
+            logLineEndings.cr.push([i, i + 1]);
+          }
+        }
+      } else if (charcode === 10) {
+        if (!(isStr(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
+          if (
+            opts.style &&
+            opts.style.line_endings_CR_LF_CRLF &&
+            opts.style.line_endings_CR_LF_CRLF !== "LF"
+          ) {
+            retObj.issues.push({
+              name: "file-wrong-type-line-ending-LF",
+              position: [[i, i + 1, rawEnforcedEOLChar]]
+            });
+          } else {
+            logLineEndings.lf.push([i, i + 1]);
+          }
+        }
+      } else {
         retObj.issues.push({
           name: name$$1,
           position: [[i, i + 1]]
@@ -310,6 +400,132 @@ function emlint(str, originalOpts) {
     }
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
+    }
+  }
+  if (
+    (!opts.style || !opts.style.line_endings_CR_LF_CRLF) &&
+    ((logLineEndings.cr.length && logLineEndings.lf.length) ||
+      (logLineEndings.lf.length && logLineEndings.crlf.length) ||
+      (logLineEndings.cr.length && logLineEndings.crlf.length))
+  ) {
+    if (
+      logLineEndings.cr.length > logLineEndings.crlf.length &&
+      logLineEndings.cr.length > logLineEndings.lf.length
+    ) {
+      if (logLineEndings.crlf.length) {
+        logLineEndings.crlf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CR-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r"]]
+          });
+        });
+      }
+      if (logLineEndings.lf.length) {
+        logLineEndings.lf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CR-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r"]]
+          });
+        });
+      }
+    } else if (
+      logLineEndings.lf.length > logLineEndings.crlf.length &&
+      logLineEndings.lf.length > logLineEndings.cr.length
+    ) {
+      if (logLineEndings.crlf.length) {
+        logLineEndings.crlf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-LF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+          });
+        });
+      }
+      if (logLineEndings.cr.length) {
+        logLineEndings.cr.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-LF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+          });
+        });
+      }
+    } else if (
+      logLineEndings.crlf.length > logLineEndings.lf.length &&
+      logLineEndings.crlf.length > logLineEndings.cr.length
+    ) {
+      if (logLineEndings.cr.length) {
+        logLineEndings.cr.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CRLF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
+          });
+        });
+      }
+      if (logLineEndings.lf.length) {
+        logLineEndings.lf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CRLF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
+          });
+        });
+      }
+    } else if (
+      logLineEndings.crlf.length === logLineEndings.lf.length &&
+      logLineEndings.lf.length === logLineEndings.cr.length
+    ) {
+      logLineEndings.crlf.forEach(eolEntryArr => {
+        retObj.issues.push({
+          name: "file-mixed-line-endings-file-is-LF-mainly",
+          position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+        });
+      });
+      logLineEndings.cr.forEach(eolEntryArr => {
+        retObj.issues.push({
+          name: "file-mixed-line-endings-file-is-LF-mainly",
+          position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+        });
+      });
+    } else if (
+      logLineEndings.cr.length === logLineEndings.crlf.length &&
+      logLineEndings.cr.length > logLineEndings.lf.length
+    ) {
+      if (logLineEndings.cr.length) {
+        logLineEndings.cr.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CRLF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
+          });
+        });
+      }
+      if (logLineEndings.lf.length) {
+        logLineEndings.lf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-CRLF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
+          });
+        });
+      }
+    } else if (
+      (logLineEndings.lf.length === logLineEndings.crlf.length &&
+        logLineEndings.lf.length > logLineEndings.cr.length) ||
+      (logLineEndings.cr.length === logLineEndings.lf.length &&
+        logLineEndings.cr.length > logLineEndings.crlf.length)
+    ) {
+      if (logLineEndings.cr.length) {
+        logLineEndings.cr.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-LF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+          });
+        });
+      }
+      if (logLineEndings.crlf.length) {
+        logLineEndings.crlf.forEach(eolEntryArr => {
+          retObj.issues.push({
+            name: "file-mixed-line-endings-file-is-LF-mainly",
+            position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
+          });
+        });
+      }
     }
   }
   retObj.fix =

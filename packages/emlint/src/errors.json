@@ -149,9 +149,34 @@
     "excerpt": "bad character - synchronous idle",
     "scope": "all"
   },
-  "mixed-line-endings": {
-    "description": "",
-    "excerpt": "mixed line endings detected",
+  "file-mixed-line-endings-file-is-CR-mainly": {
+    "description": "mixed line endings detected, majority EOL's are CR",
+    "excerpt": "mixed line endings detected, majority EOL's are CR",
+    "scope": "all"
+  },
+  "file-mixed-line-endings-file-is-CRLF-mainly": {
+    "description": "mixed line endings detected, majority EOL's are CRLF",
+    "excerpt": "mixed line endings detected, majority EOL's are CRLF",
+    "scope": "all"
+  },
+  "file-mixed-line-endings-file-is-LF-mainly": {
+    "description": "mixed line endings detected, majority EOL's are LF",
+    "excerpt": "mixed line endings detected, majority EOL's are LF",
+    "scope": "all"
+  },
+  "file-wrong-type-line-ending-CR": {
+    "description": "Carriage Return (ASCII #13) line ending detected",
+    "excerpt": "Carriage Return line ending",
+    "scope": "all"
+  },
+  "file-wrong-type-line-ending-CRLF": {
+    "description": "CRLF (Carriage Return + Line Feed) line ending detected",
+    "excerpt": "CRLF line ending",
+    "scope": "all"
+  },
+  "file-wrong-type-line-ending-LF": {
+    "description": "Line Feed (ASCII #10) line ending detected",
+    "excerpt": "Line Feed line ending",
     "scope": "all"
   },
   "space-after-opening-bracket": {
