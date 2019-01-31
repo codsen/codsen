@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 5.7.0 (2019-01-31)
+
+### Features
+
+* Correctly behave if object has a key which has a value equal to literal undefined ([5c28021](https://gitlab.com/codsen/codsen/commit/5c28021))
+
 ## 5.6.0 (2019-01-20)
 
 * ✨ Various documentation and setup tweaks after we migrated to monorepo
