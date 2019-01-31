@@ -52,7 +52,7 @@ function getDescr(name) {
 }
 
 function bucket(lib) {
-  return `[packages/${lib}](https://bitbucket.org/codsen/codsen/src/master/packages/${lib}/)`;
+  return `[packages/${lib}](https://gitlab.com/codsen/codsen/tree/master/packages/${lib}/)`;
 }
 
 function urlize(something) {
@@ -63,7 +63,7 @@ function urlize(something) {
 }
 
 function row(lib, webApp) {
-  return `| [\`${lib}\`](https://bitbucket.org/codsen/codsen/src/master/packages/${lib}/) | ${getDescr(
+  return `| [\`${lib}\`](https://gitlab.com/codsen/codsen/tree/master/packages/${lib}/) | ${getDescr(
     lib
   )} |${webApp ? ` ${urlize(webApps[lib])} |` : ""} ${getNpm(lib)} | ${bucket(
     lib
@@ -240,21 +240,20 @@ const template = `# 📦 Codsen 📦
 
 ## 💡 Table of Contents
 
-- [Flagship Libraries](#markdown-header-flagship-libraries)
-- [Range Libraries](#markdown-header-${
-  filteredRangeLibsList.length
-}-range-libraries)
-- [String Processing Libraries](#markdown-header-${
+- [Flagship Libraries](#-flagship-libraries)
+- [Range Libraries](#-${filteredRangeLibsList.length}-range-libraries)
+- [String Processing Libraries](#-${
   filteredStringLibsList.length
 }-string-processing-libraries)
-- [Object Processing Libraries](#markdown-header-${
+- [Object Processing Libraries](#-${
   filteredObjectLibsList.length
 }-object-processing-libraries)
-- [CLI Apps](#markdown-header-${filteredCliAppsList.length}-cli-apps)
-- [Miscellaneous Libraries](#markdown-header-${
+- [CLI Apps](#-${filteredCliAppsList.length}-cli-apps)
+- [Miscellaneous Libraries](#-${
   filteredOtherLibsList.length
 }-miscellaneous-libraries)
-- [Licence](#markdown-header-licence)
+- [Contributing](#-contributing)
+- [Licence](#-licence)
 
 ## 🚢 Flagship Libraries
 
