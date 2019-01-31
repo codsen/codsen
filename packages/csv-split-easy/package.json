@@ -1,6 +1,6 @@
 {
   "name": "csv-split-easy",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "Splits the CSV string into array of arrays, each representing a row of columns",
   "license": "MIT",
   "engines": {
@@ -171,9 +171,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.6.3",
+    "check-types-mini": "^5.7.0",
     "lodash.isplainobject": "^4.0.6",
-    "string-remove-thousand-separators": "^2.6.3"
+    "string-remove-thousand-separators": "^2.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

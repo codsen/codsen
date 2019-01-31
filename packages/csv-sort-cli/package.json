@@ -1,6 +1,6 @@
 {
   "name": "csv-sort-cli",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "csv-sort": "^2.6.3",
+    "csv-sort": "^2.6.4",
     "globby": "^9.0.0",
     "inquirer": "^6.2.1",
     "lodash.pullall": "^4.2.0",

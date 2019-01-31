@@ -1,6 +1,6 @@
 {
   "name": "chlu-cli",
-  "version": "1.16.3",
+  "version": "1.16.4",
   "description": "CH-ange-L-og U-pdate - Automatically fix errors in your changelog file",
   "license": "MIT",
   "engines": {
@@ -160,7 +160,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "chlu": "^3.7.3",
+    "chlu": "^3.7.4",
     "fs-extra": "^7.0.1",
     "meow": "^5.0.0",
     "pify": "^4.0.1",
