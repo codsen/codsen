@@ -164,7 +164,7 @@
     "chalk": "^2.4.2",
     "csv-sort": "^2.6.4",
     "globby": "^9.0.0",
-    "inquirer": "^6.2.1",
+    "inquirer": "^6.2.2",
     "lodash.pullall": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "meow": "^5.0.0",
