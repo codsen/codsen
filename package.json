@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://bitbucket.org/codsen/codsen.git"
+    "url": "git+https://gitlab.com/codsen/codsen.git"
   },
   "homepage": "https://codsen.com",
   "author": "Roy Revelt <roy@codsen.com>",
@@ -28,9 +28,9 @@
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "lect": "make run-lect",
     "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add packages/*/changelog.md && lcc \"**\" && npm run readme:generate && git add readme.md && lerna publish from-package --yes && git add . && git commit -m \"chore: Automated build tasks\" --no-verify && git push",
-    "republish": "make republish",
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
+    "republish": "make republish",
     "wipe": "rm -rf node_modules && npx lerna clean -y"
   },
   "husky": {
@@ -47,12 +47,12 @@
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^5.12.1",
     "eslint-config-prettier": "^4.0.0",
-    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     "husky": "^1.3.1",
     "lerna": "^3.10.7",
     "npm-watch": "^0.6.0",
-    "prettier": "^1.16.1"
+    "prettier": "^1.16.2"
   }
 }
