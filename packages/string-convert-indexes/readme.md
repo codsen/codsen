@@ -3,7 +3,7 @@
 > Convert string character indexes from JS native index-based to Unicode character-count-based and backwards.
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -42,7 +42,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-convert-indexes.esm.js` | 5 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-convert-indexes.umd.js` | 39 KB |
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -61,7 +61,7 @@ Highlights:
 - Untranspiled ES Modules build is wired up to `module` key in `package.json` - WebPack and Rollup will recognise and consume it.
 - The main export is transpiled to ES5 (wired up to `main` key in `package.json`). You'll have no issues with `create-react-app`.
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -120,7 +120,7 @@ const res9 = unicodeToNative("\uD834\uDF06aa", [1, 0, 2, 3]);
 // we have only three Unicode characters, so indexes go only up until 2, not reaching 3 we need
 ```
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -136,7 +136,7 @@ Converts JS native indexes to indexes (used in let's say `String.slice()`), base
 
 Converts Unicode character count-based indexes to JS native indexes.
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ### API - Input
 
@@ -148,7 +148,7 @@ API for both methods is the same:
 | `indexes`      | Whatever     | yes         | It can be anything: from numbers to nested arrays or arrays of numeric strings. Only natural numbers (incl. zero) in number or string shape will be compiled and replaced with converted value. |
 | `opts`         | Plain object | no          | Options object. See its API below in a separate table.                                                                                                                                          |
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -166,26 +166,26 @@ Here are all the defaults in one place:
 }
 ```
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## Practical use
 
 I have created quite a few string processing libraries, and some are using native JS indexes, while some are using Unicode character count-based indexing. This library will make them all more universal.
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-convert-indexes%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-string-convert-indexes)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -195,8 +195,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/string-convert-indexes.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-convert-indexes
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -208,4 +208,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

@@ -351,6 +351,13 @@
       "sourceMap": false
     }
   },
+  "package_keys": {
+    "write_hard": {
+      "repository": "https://gitlab.com/codsen/codsen/"
+    },
+    "write_soft": {},
+    "delete": ["", ""]
+  },
   "rollup": {
     "infoTable": {
       "cjsTitle": "Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`",
@@ -362,6 +369,7 @@
   "scripts": {
     "cli": {
       "coverage": "nyc report --reporter=json-summary",
+      "dev": "echo\"\"",
       "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
       "lect": "lect",
       "lint": "./node_modules/.bin/eslint **/*.js --fix",
@@ -388,7 +396,7 @@
     "back_to_top": {
       "enabled": true,
       "label": "⬆  back to top",
-      "url": "#markdown-header-%REPONAME%"
+      "url": "#"
     }
   }
 }

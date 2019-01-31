@@ -7,8 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Update unit tests to match the API ([e53dc83](https://gitlab.com/codsen/codsen/commit/e53dc83))
+- Update unit tests to match the API ([e53dc83](https://gitlab.com/codsen/codsen/commit/e53dc83))
 
 ## 1.0.0 (2019-01-20)
 
-* ✨ First public release
+- ✨ First public release

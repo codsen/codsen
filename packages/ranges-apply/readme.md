@@ -3,7 +3,7 @@
 > Take an array of string slice ranges, delete/replace the string according to them
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -42,7 +42,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-apply.esm.js` | 5 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-apply.umd.js` | 32 KB |
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -99,7 +99,7 @@ If you just want something inserted at a given index but nothing deleted, set bo
 [10, 10, "abc"];
 ```
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -107,7 +107,7 @@ If you just want something inserted at a given index but nothing deleted, set bo
 
 Function returns a string with requested slices deleted/replaced.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 #### inputString - 1st argument
 
@@ -131,13 +131,13 @@ For example,
 
 **PSST.** Check out [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 #### progressFn - 3rd argument
 
 This optional third input argument is used in worker setups where user wants to report the progress of the job. If a function is passed as third input argument, it will be called with first argument, natural number, which means percentage done so far (from `0` to `100`).
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## The algorithm
 
@@ -145,7 +145,7 @@ The plan is simple - we `array.reduce` your given ranges array, slicing the inpu
 
 The main thing is unit tests and edge case scenarios. Also, fancy optional features (upcoming) like using character enumeration counting emoji as one character.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## In my case
 
@@ -153,20 +153,20 @@ Originally this library was part of [email-comb](https://gitlab.com/codsen/codse
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-apply%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-ranges-apply)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -176,8 +176,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ranges-apply.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-apply
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -189,4 +189,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

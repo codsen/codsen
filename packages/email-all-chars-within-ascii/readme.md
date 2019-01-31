@@ -3,7 +3,7 @@
 > Scans all characters within a string and checks are they within ASCII range
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -35,11 +35,11 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------------------ | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-all-chars-within-ascii.cjs.js` | 3 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/email-all-chars-within-ascii.cjs.js` | 2 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/email-all-chars-within-ascii.esm.js` | 2 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/email-all-chars-within-ascii.umd.js` | 28 KB |
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -57,7 +57,7 @@ In that sense, [non-ascii regex](https://github.com/sindresorhus/non-ascii/) and
 
 Also, we want an error `throw`n if any lines exceed the permitted length, 1000 characters. Our algorithm will `throw` earlier, at more than `997` consecutive non-CR/non-LR characters because line lengths count `CRLR` in the end (which is two extra characters, and we don't want to reach 1000).
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## The API
 
@@ -81,18 +81,18 @@ Options object is sanitised by [check-types-mini](https://bitbucket.org/codsen/c
 }
 ```
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object's API:
 
-| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                                                                      |
-| ---------------------- | ------- | ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options` object's key | Type    | Obligatory? | Default | Description                                                                                                                                                                                                                    |
+| ---------------------- | ------- | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | {                      |         |             |         |
 | `messageOnly`          | Boolean | no          | `false` | Should we not append `email-all-chars-within-ascii:` in front of each error message? Set to `true` to turn it off, like in [CLI app](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/). |
-| `checkLineLength`      | Boolean | no          | `true`  | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters".      |
+| `checkLineLength`      | Boolean | no          | `true`  | Throws if line length between any `CR` or `LR` characters is more than `997`. It's because [spec](https://tools.ietf.org/html/rfc821) says "The maximum total length of a text line including `<CRLF>` is 1000 characters".    |
 | }                      |         |             |         |
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -105,7 +105,7 @@ let res2 = within("Ą");
 // => throws an error because "Ą" is not within allowed ASCII range.
 ```
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## Practical use
 
@@ -115,20 +115,20 @@ PS. I'm saying 126, not 127 because 127 is "invisible" DEL character which is no
 
 Check out [CLI](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/) version which you can install globally and use in your terminal.
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=email-all-chars-within-ascii%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-email-all-chars-within-ascii)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -138,8 +138,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/email-all-chars-within-ascii.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/email-all-chars-within-ascii
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -151,4 +151,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

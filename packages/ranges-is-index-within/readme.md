@@ -3,7 +3,7 @@
 > Efficiently checks if index is within any of the given ranges
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -32,7 +32,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-is-index-within.esm.js` | 7 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-is-index-within.umd.js` | 32 KB |
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ## Table of Contents
 
@@ -69,7 +69,7 @@ This library would answer the question, is your index `79` within any of the ran
 
 In the example above, yes, because `79` is within range `[75, 80]`. If you want range endings to be inclusive, set `options.inclusiveRangeEnds` to `true` because by default they are not inclusive (`75` would be not considered to be within range `[75, 80]`).
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ### API - Input
 
@@ -81,7 +81,7 @@ In the example above, yes, because `79` is within range `[75, 80]`. If you want 
 
 A wrong type will cause `throw`s.
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -109,7 +109,7 @@ Here is the options object in one place (in case you ever want to copy it):
 }
 ```
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -117,7 +117,7 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 
 ^ If `opts.returnMatchedRangeInsteadOfTrue` is set to `true`, positive result will be the range which was matched. Negative result would be still `false`.
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ### `opts.skipIncomingRangeSorting`
 
@@ -129,7 +129,7 @@ Now you can save users' resources and turn off range sorting in this library usi
 
 For example, in my library [charcode-is-valid-xml-name-character](https://bitbucket.org/codsen/charcode-is-valid-xml-name-character) I'm checking is the character a valid to be XML element's name. I know Unicode ranges upfront, so I sorted them, console-logg'ed and pasted as constant. Then, when checking user input character's index, is it among my ranges, I use this library, `ranges-is-index-within`, with sorting turned off.
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ## Example
 
@@ -218,7 +218,7 @@ console.log(res4);
 // > [25, 30]  <------ ! not Boolean, but the range itself.
 ```
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ## The algorithm
 
@@ -262,20 +262,20 @@ It took three iterations of a `while` loop to measure `13` ranges. Would could h
 
 In our example above, the `for` loop with `break` or `Array.some` would have stopped after checking 8th range. Our algorithm did it in 3 checks. That's the meaning of "efficient" I'm talking about.
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-is-index-within%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-ranges-is-index-within)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -285,8 +285,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ranges-is-index-within.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-is-index-within
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -298,4 +298,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

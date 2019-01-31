@@ -7,8 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Remove excessive blank lines and convert list item bullets to asterisks ([f53d14b](https://gitlab.com/codsen/codsen/commit/f53d14b))
+- Remove excessive blank lines and convert list item bullets to asterisks ([f53d14b](https://gitlab.com/codsen/codsen/commit/f53d14b))
 
 ## 1.0.0 (2019-01-20)
 
-* ✨ First public release
+- ✨ First public release

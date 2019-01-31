@@ -3,7 +3,7 @@
 > Command line app to deep sort JSON files, also dot-files as long as they are valid JSON
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
 [![Code style: prettier][prettier-img]][prettier-url]
@@ -41,7 +41,7 @@ $ jsonsort --help
 
 or `sortjson`, same thing. I wired up both. See the [API section](#api---flags) (of call for help via CLI, `jsonsort -h`).
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ## API - flags
 
@@ -60,7 +60,7 @@ Put either short or long version of a desired flag, before or after the path or 
 - `jsonsort templates/springsale03 --silent`
 - `jsonsort --silent templates/springsale03`
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ## What it does exactly
 
@@ -70,7 +70,7 @@ This is a parsing-type application, so written files are also **prettified** —
 
 Under the bonnet, this application uses [ast-monkey-traverse](https://www.npmjs.com/package/ast-monkey-traverse) and [sorted-object](https://www.npmjs.com/package/sorted-object).
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ### Extra features
 
@@ -80,26 +80,26 @@ If a file is a broken JSON file with errors in the markup, it won't cause an err
 
 System files like `.DS_Store` are not processed by default, don't worry about excluding them in the input path.
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ## Updating it
 
 When you install it globally, it will check occasionally, are there newer versions available, and if so, will show a message nagging you to update. It's the [same update notifier](https://www.npmjs.com/package/update-notifier) that AVA and [npm](https://www.npmjs.com/package/npm) themselves use!
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-sort-cli%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-json-sort-cli)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -109,8 +109,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/json-sort-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-sort-cli
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/json-sort-cli
 [downloads-img]: https://img.shields.io/npm/dm/json-sort-cli.svg?style=flat-square
@@ -118,4 +118,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

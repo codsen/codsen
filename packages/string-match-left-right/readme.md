@@ -3,7 +3,7 @@
 > Do substrings match what's on the left or right of a given index?
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -56,7 +56,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-match-left-right.esm.js` | 18 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-match-left-right.umd.js` | 35 KB |
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## The API
 
@@ -76,7 +76,7 @@ There are four methods; all have the same API's:
 | `whatToMatch`  | String or array of strings | yes         | What should we look for on the particular side, left or right, of the aforementioned `position`. If anything was found, it will be returned. It's especially handy when here we pass an array of string - this way you know _which_ of strings was matched. |
 | `opts`         | Plain object               | no          | The Optional Options Object. See below.                                                                                                                                                                                                                     |
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ### Output
 
@@ -85,7 +85,7 @@ Returns Boolean `false` or value of the string that was matched, that is,
 - if `whatToMatch` was a string, then returns it, OR
 - if `whatToMatch` was an array, then returns the first match from this array's elements.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object's API:
 
@@ -157,7 +157,7 @@ console.log(`res4 = ${res4}`);
 // => res4 = 'ef'
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Using a callback - `opts.cb`
 
@@ -262,7 +262,7 @@ const res = matchRightIncl("ab      cdef", 2, "cd", {
 console.log(`res = ${JSON.stringify(res, null, 4)}`);
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Matching relying only on a callback
 
@@ -325,7 +325,7 @@ console.log(res4);
 // => true
 ```
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## `opts.trimBeforeMatching`
 
@@ -333,13 +333,13 @@ For example, [string-strip-html](https://gitlab.com/codsen/codsen/tree/master/pa
 
 By the way it's not on by default because such scenarios are rare. Default comparison should be a strict-one.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## `opts.trimCharsBeforeMatching`
 
 For example, [string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Matching the beginning of ending of the string
 
@@ -363,7 +363,7 @@ console.log(res);
 
 We match, is "EOL" or "x" to the right of the character at index `0` (letter "a"). While traversing towards right, we instruct to skip any characters "z". Result is string "EOL".
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Unicode is somewhat supported
 
@@ -373,20 +373,20 @@ Algorithm covers the emoji that comprise of two characters but not longer emoji.
 
 The code in this library contains only `for` loops, iterating on the input string. There's no splitting-by-grapheme into array and later performing all the operations on that array. I think this approach is the most performant. In the end, which library would you choose: more performant-one or less performant but with with less lines of code?
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-match-left-right%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-string-match-left-right)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -396,8 +396,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/string-match-left-right.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-match-left-right
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
 [cov-img]: https://img.shields.io/badge/coverage-96.8%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -409,4 +409,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

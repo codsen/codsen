@@ -3,7 +3,7 @@
 > The inner core of json-comb
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -64,7 +64,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/json-comb-core.esm.js` | 13 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/json-comb-core.umd.js` | 74 KB |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -86,7 +86,7 @@ It's when we can't/won't normalise files, yet we need some insurance. It would b
 
 A set of JSON files might be normalised, but certain keys can have placeholder values on every single JSON. That means the particular key is [unused](#findunused) and probably can be deleted.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `getKeyset()`
 
@@ -103,7 +103,7 @@ Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -120,7 +120,7 @@ PS. The input is normal, a synchronous array full of promises. Not a promise of 
 | `placeholder`                 | Any  | `false` | All Reference Object's key values are set to be placeholders. This way we a) minimise the footprint; and b) make it easy later to fill the missing values — value from Reference can be written straight as it is because it's already equal to a placeholder. |
 | }                             |      |         |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -168,7 +168,7 @@ test1()
 // }
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `getKeysetSync()`
 
@@ -185,7 +185,7 @@ Technically speaking, a "schema keyset" is a superset of all objects. Two rules:
 
 The merging is done on a premise to retain [as much information](https://github.com/codsen/object-merge-advanced) after merging as possible.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -200,7 +200,7 @@ The merging is done on a premise to retain [as much information](https://github.
 | `placeholder`                 | Any  | `false` | All Reference Object's key values are set to be placeholders. This way we a) minimise the footprint; and b) make it easy later to fill the missing values — value from Reference can be written straight as it is because it's already equal to a placeholder. |
 | }                             |      |         |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -285,7 +285,7 @@ console.log("schema = " + JSON.stringify(schema, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `enforceKeyset()`
 
@@ -309,7 +309,7 @@ Optional Options Object's API is the same as asyc version's of this method, [`en
 | `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
 | }                                              |                               |         |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -390,7 +390,7 @@ console.log(`obj3Normalised = ${JSON.stringify(obj3Normalised, null, 4)}`);
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `enforceKeysetSync()`
 
@@ -414,7 +414,7 @@ Optional Options Object's API is the same as asyc version's of this method, [`en
 | `useNullAsExplicitFalse`                       | Boolean                       | `true`  | Sometimes you want to turn off certain areas of the template, but defaults kick in and defuse your "false". In those cases, you an ultimate "false" - `null`. When this mode is on, `null` will kill any incoming value and result will resolve to null. |
 | }                                              |                               |         |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -442,7 +442,7 @@ console.log("inputObj = " + JSON.stringify(inputObj, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `noNewKeys()`
 
@@ -450,7 +450,7 @@ Reads an array and a reference keyset object, returns an array of zero or more k
 
 Practically this is handy to tame the JSON's that we don't/can't normalise. At least we can ensure there are no new keys. For example, all data mapping files could be validated through `noNewKeys()`.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -459,7 +459,7 @@ Practically this is handy to tame the JSON's that we don't/can't normalise. At l
 | `input`        | Object | yes         | What should we check?                         |
 | `schema`       | Object | yes         | According to what schema should we normalise? |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -526,7 +526,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => ['z[0].c', 'z[1].c']
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `findUnused()`
 
@@ -534,7 +534,7 @@ Reads a set of objects (array of plain objects, probably parsed JSON files) and 
 
 Practically it is useful to identify unused keys to reduce the JSON data file size. Also, it can help to identify misspelt keys.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -550,7 +550,7 @@ Practically it is useful to identify unused keys to reduce the JSON data file si
 | `comments`             | string (to mark "turned on") or anything falsey (to mark "turned off") | no          | `__comment__` | If any key name in JSON contains this piece of string, it will not be reported as unused (even if it was unused). Set it to any falsey value to turn it off. |
 | }                      |                                                                        |             |               |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
@@ -625,7 +625,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => ['c', 'a[0].l']
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## `sortAllObjects()`
 
@@ -633,7 +633,7 @@ This method sorts objects (no matter how deeply-nested), and it will sort object
 
 This method does not mutate the input and is fine if you pass _any_ JS type (`array`, `string`, `null` etc.).
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### input
 
@@ -641,14 +641,14 @@ This method does not mutate the input and is fine if you pass _any_ JS type (`ar
 | -------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `input`        | Whatever | no          | If it's a plain object or it contains some plain objects, a copy of it will be created with all its plain objects sorted. Otherwise, the untouched input will be returned. |
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### output
 
 If the input is **a plain object or array** containing some plain objects within, an output is a copy of the input with all plain objects sorted.
 If the input is **something else**, an output is the same thing as input.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ### example
 
@@ -667,7 +667,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## Difference between Normalising JSON and real JSON Schemas
 
@@ -679,20 +679,20 @@ So, normalisation is a process of making a bunch of JSON files to have the same 
 
 When performing a normalisation, all JSON files are read, and internally a schema is created, so algorithm knows what keys are missing on a particular file of a set of JSON's. However, that schema is concerned only about keys - its values are set to a placeholder.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=json-comb-core%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-json-comb-core)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -702,8 +702,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/json-comb-core.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/json-comb-core
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -715,4 +715,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

@@ -16,6 +16,7 @@
   "main": "index.js",
   "scripts": {
     "coverage": "nyc report --reporter=json-summary",
+    "dev": "echo\"\"",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lect": "lect",
     "lint": "./node_modules/.bin/eslint **/*.js --fix",

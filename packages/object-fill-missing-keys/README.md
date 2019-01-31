@@ -3,7 +3,7 @@
 > Add missing keys into plain objects, according to a reference object
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -42,13 +42,13 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-fill-missing-keys.esm.js` | 5 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-fill-missing-keys.umd.js` | 53 KB |
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
 This library fills missing keys in a plain object according to a supplied reference object. It is driving the [json-comb-core](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core) method `enforceKeyset()`.
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## How this works
 
@@ -68,7 +68,7 @@ Alternatively, you can use this library just to add missing keys. Mind you, for 
 
 Previously I kept "insurance" function which took a schema reference object and overwrote all its values to the `opts.placeholder`, but then I understood that "normal" reference schemas will always come with right key values anyway, and such operation would waste resources.
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## Example
 
@@ -93,7 +93,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 // }
 ```
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -111,19 +111,19 @@ Input arguments are not mutated, inputs are cloned before being used. That's imp
 | `schemaObj`     | Plain object | yes         | Schema object which contains a desired set of values. Can be nested or hold arrays of things. |
 | `opts`          | Plain object | no          | Optional Options Object, see below for its API                                                |
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ### An Optional Options Object
 
-| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ---------------------------------------------- | ----------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| options object's key                           | Type of its value             | Default         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ---------------------------------------------- | ----------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | {                                              |                               |                 |
 | `placeholder`                                  | Anything                      | Boolean `false` | Used only in combination with `doNotFillThesePathsIfTheyContainPlaceholders` as a means to compare do all children keys contain placeholder values. It won't patch up your reference schema objects (for performance reasons). Always make sure your reference schema object has all values [set](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to) to be a desired `placeholder` (default placeholder is usually Boolean `false`). |
-| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                                                  |
+| `doNotFillThesePathsIfTheyContainPlaceholders` | Array of zero or more strings | `[]`            | Handy to activate this for ad-hoc keys in data structures to limit the data bloat.                                                                                                                                                                                                                                                                                                                                                                                |
 | `useNullAsExplicitFalse`                       | Boolean                       | `true`          | When filling the keys, when this setting is on if there is existing key with `null` value it won't get the value assigned to anything, even if the reference object would otherwise set it to a nested something. Under bonnet it's setting same-named options key for [object-merge-advanced](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced).                                                                                      |
 | }                                              |                               |                 |
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ### `opts.doNotFillThesePathsIfTheyContainPlaceholders`
 
@@ -272,7 +272,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 // }
 ```
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ### `opts.useNullAsExplicitFalse`
 
@@ -328,20 +328,20 @@ console.log(
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-fill-missing-keys%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-object-fill-missing-keys)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -351,8 +351,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/object-fill-missing-keys.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-fill-missing-keys
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
 [cov-img]: https://img.shields.io/badge/coverage-98.15%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -364,4 +364,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

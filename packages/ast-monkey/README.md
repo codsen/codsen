@@ -3,7 +3,7 @@
 > Utility library for ops on parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -64,7 +64,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-monkey.esm.js` | 8 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-monkey.umd.js` | 41 KB |
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -82,7 +82,7 @@ Using this library, you can delete the particular piece of AST (method [.drop()]
 
 Alternatively, you can tap into the core of the monkey, the [.traverse()](#traverse) function and save yourself the trouble writing recursive walk-through functions - the [.traverse()](#traverse) will walk through every single element of an array or key of an object, giving you the current thing via the familiar callback function interface (just like `Array.forEach` or `Array.map`).
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -172,7 +172,7 @@ Once you know that the path is `[2, 3, 4]`, you can iterate its parents, `get()`
 
 This method is the most versatile of the `ast-monkey` because you can go "up the AST tree" by querying its array elements backwards.
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .get()
 
@@ -229,7 +229,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 
 In practice, you would query a list of indexes programmatically using a `for` loop.
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .set()
 
@@ -286,7 +286,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .drop()
 
@@ -341,7 +341,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .info()
 
@@ -452,7 +452,7 @@ data.gatherPath = [
 -----------
 ```
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .del()
 
@@ -525,7 +525,7 @@ console.log("result = " + JSON.stringify(result, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .arrayFirstOnly()
 
@@ -577,7 +577,7 @@ In practice, it's handy when you want to simplify the data objects. For example,
 | ------- | --------------- | ------------------- |
 | `input` | Same as `input` | The amended `input` |
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ### .traverse()
 
@@ -630,7 +630,7 @@ It's very important to **return the value on the callback function** (point mark
 
 If you definitely want to delete, return `NaN`.
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 #### innerObj in the callback
 
@@ -660,26 +660,26 @@ If monkey is currently traversing an array, going through all elements, a `key` 
 | `parent`                | Type of the parent of current element being traversed | A whole parent (array or a plain object) which contains the current element. Its purpose is to allow you to query the **siblings** of the current element.                                                                                                                                                                                      |
 | `}`                     |                                                       |
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ## The name of this library
 
 HTML is parsed into nested objects and arrays which are called Abstract Syntax Trees. This library can go up and down the trees, so what's a better name than _monkey_? The **ast-monkey**. Anything-nested is can also be considered a tree – tree of plain objects, arrays and strings, for example. Monkey can [traverse](#traverse) anything really.
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-monkey%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-ast-monkey)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -689,8 +689,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ast-monkey.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-monkey
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -702,4 +702,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

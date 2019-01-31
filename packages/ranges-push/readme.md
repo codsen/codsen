@@ -3,7 +3,7 @@
 > Manage the array of slices referencing the index ranges within the string
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -53,7 +53,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-push.esm.js` | 7 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-push.umd.js` | 35 KB |
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ## The Idea
 
@@ -77,7 +77,7 @@ Imagine, you want to delete bunch of characters from a string. Like making a bun
 
 **PS.** Later, when you're finished with your operations, and you want your string crunched according to your newly-generated array of slices, use [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) to do the actual deletion/replacement job. It consumes your ranges array and performs all the deletion/replacement tasks on the string at once.
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -94,7 +94,7 @@ The `slices` (with lowercase) is your [class](https://github.com/getify/You-Dont
 
 You can also provide an Optional Options Object when creating the class:
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -118,16 +118,16 @@ Here is the Optional Options Object in one place (in case you ever want to copy 
 
 You then interact with your newly-created slices class by calling its _methods_:
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ### slices.add(from, to[, str])
 
 alias - **.push**
 
-| Input argument | Type                    | Obligatory? | Description                                                                                                                                           |
-| -------------- | ----------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice                                                                                                                          |
-| `deleteTo`     | Integer, natural number | yes         | Ending index of the slice                                                                                                                             |
+| Input argument | Type                    | Obligatory? | Description                                                                                                                                         |
+| -------------- | ----------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `deleteFrom`   | Integer, natural number | yes         | Beginning index of the slice                                                                                                                        |
+| `deleteTo`     | Integer, natural number | yes         | Ending index of the slice                                                                                                                           |
 | `str`          | String                  | no          | If you want not only to delete but [insert](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) something, put that new string here |
 
 If you want only to insert and you don't want to delete anything, put both `deleteFrom` and `deleteTo` **the same**.
@@ -144,7 +144,7 @@ Additionally, when `.add` merges two ranges and one completely overlaps another,
 
 You can use either `.add` or `.push`, both do the same thing.
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ### slices.current()
 
@@ -182,7 +182,7 @@ Imagine: `[ [10, 20, 'aaa'], [10, 15, bbb]]` was merged by `.current`, and becam
 
 **Conclusion**: complete all your operations, `add()`-ing ranges. Then, fetch your master ranges array _once_, using `.current` and feed it into [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply). At this point don't do any more `add()`ing, or if you really want that, process the ranges you've got using [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply), `wipe()` everything and start `add()`ing again.
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ### slices.wipe()
 
@@ -204,7 +204,7 @@ Outputs:
 
 PSST. Later, feed your ranges array into [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) to delete/replace all those ranges in your string.
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ## In my case
 
@@ -212,20 +212,20 @@ Originally this library was part of [email-comb](https://gitlab.com/codsen/codse
 
 This library is part one of two library combo, second one being [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply).
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ranges-push%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-ranges-push)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -235,8 +235,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ranges-push.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-push
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -248,4 +248,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

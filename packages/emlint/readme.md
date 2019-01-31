@@ -3,7 +3,7 @@
 > Detects errors in HTML/CSS, proposes fixes, email-template friendly
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -34,13 +34,13 @@ import { emlint, version } from "emlint";
 
 Here's what you'll get:
 
-Type            | Key in `package.json` | Path  | Size
-----------------|-----------------------|-------|--------
-Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/emlint.cjs.js` | 5 KB
-**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/emlint.esm.js` | 5 KB
-**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/emlint.umd.js` | 32 KB
+| Type                                                                                                    | Key in `package.json` | Path                 | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 14 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 14 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 36 KB |
 
-**[⬆  back to top](#markdown-header-emlint)**
+**[⬆ back to top](#)**
 
 ## Idea
 
@@ -50,7 +50,7 @@ This is a tool to detect fundamental errors in pure (X)HTML or (X)HTML-mixed-wit
 - Redundant tags
 - Detecting and checking tag patterns such as _Hybrid Email_ or _Outlook Shadow Code_
 - Some cases where chunks of code were moved
-- Micro$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) (Email Template-specific feature)
+- Micro\$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) (Email Template-specific feature)
 - Will check (X)HTML with as little or as much tags as you want: one tag is fine, whole document is fine. Validators won't work on pieces of HTML but we're fine with that (unless you explicitly instruct to treat input as a whole document).
 
 It is a stupid idea to use a _parser_ to look for errors because HTML code can be _unparseable_ because of those errors. If it's _parseable_, it's already fixed. Logical, right?
@@ -73,7 +73,7 @@ This is not a _validator_ (like [W3C Markup Validator](https://validator.w3.org)
 
 Our aim is to make the most advanced (X)HTML linting tool that humanity has ever produced.
 
-**[⬆  back to top](#markdown-header-emlint)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -87,37 +87,37 @@ import { emlint, version } from "emlint";
 
 Aboev, you see [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) in action. The object that comes in is "destructured" into constants. Here they are:
 
-| Key        | Description                                                                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `emlint`   | Main function to which you feed your string; see its API below                                                                             |
-| `version`  | Taken from `package.json`. Should match what's on npm.                                                                                     |
+| Key       | Description                                                    |
+| --------- | -------------------------------------------------------------- |
+| `emlint`  | Main function to which you feed your string; see its API below |
+| `version` | Taken from `package.json`. Should match what's on npm.         |
 
-**[⬆  back to top](#markdown-header-emlint)**
+**[⬆ back to top](#)**
 
 ## Breaking rules
 
 If you looked at this or any project code in this monorepo you probably noticed we're breaking many "best practice" rules:
 
-* We use copious amounts of `console.log` for debugging and we keep all those `console.log`s in the source of the application. Rollup will build _production_ build and strip all logging automatically. But this allows us to use command line arguments to ask Rollup for _dev_ build, where `console.log`s are intact, [with line numbers](https://www.npmjs.com/package/js-row-num-cli). This allows app to granularly report what happens where. In terminal. In color.
-* We know functional vs. imperative programming styles and actually prefer imperative.
-* We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there's two files, `util.js` but only for unit test coverage purposes.
+- We use copious amounts of `console.log` for debugging and we keep all those `console.log`s in the source of the application. Rollup will build _production_ build and strip all logging automatically. But this allows us to use command line arguments to ask Rollup for _dev_ build, where `console.log`s are intact, [with line numbers](https://www.npmjs.com/package/js-row-num-cli). This allows app to granularly report what happens where. In terminal. In color.
+- We know functional vs. imperative programming styles and actually prefer imperative.
+- We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there's two files, `util.js` but only for unit test coverage purposes.
 
 We say "we" but it's me, Roy mainly, addressing himself in 3rd person.
 
-**[⬆  back to top](#markdown-header-emlint)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-* If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here).
-* If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). Let's discuss it.
-* If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). We'll try to help.
-* If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆  back to top](#markdown-header-emlint)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -125,28 +125,19 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-
-
 [node-img]: https://img.shields.io/node/v/emlint.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/emlint
-
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint
-
 [downloads-img]: https://img.shields.io/npm/dm/emlint.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/emlint
-
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/emlint
-
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
-
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

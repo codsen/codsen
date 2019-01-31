@@ -3,7 +3,7 @@
 > Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -45,7 +45,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/object-merge-advanced.esm.js` | 14 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/object-merge-advanced.umd.js` | 40 KB |
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
@@ -100,7 +100,7 @@ In some cases, we perform a custom actions:
 
 Check `test.js` unit tests to see this library in action.
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## In practice
 
@@ -108,7 +108,7 @@ I use this library to merge humongous JSON files that house my templates' data. 
 
 Also, I use it in small cases where `Object.assign` is not suitable, for example, when filling missing keys in a plain object or doing other operations on objects coming from JSON files.
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -164,7 +164,7 @@ Here are all defaults in one place:
 }
 ```
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ### API - Output
 
@@ -235,7 +235,7 @@ mergeAdvanced(
 )
 ```
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` bigger example, number one
 
@@ -287,7 +287,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 // }
 ```
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` bigger example, number two
 
@@ -338,7 +338,7 @@ console.log(`res = ${JSON.stringify(res, null, 4)}`);
 
 Whatever you return from the _callback_ will be written as a result of a clash, so make sure you return either `resultAboutToBeReturned` (third argument in the callback), or something to substitute it. Otherwise, `undefined` will be written.
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ### `opts.cb` another example, using paths of the keys to override the merge
 
@@ -425,7 +425,7 @@ const res = mergeAdvanced(
 //     }
 ```
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ### `opts.mergeObjectsOnlyWhenKeysetMatches` use cases
 
@@ -496,7 +496,7 @@ console.log("res2 = " + JSON.stringify(res2, null, 4));
 //    }
 ```
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## Difference from Lodash `_.merge`
 
@@ -518,20 +518,20 @@ If merging were done using `object-assign`, placeholder `false` would overwrite 
 
 If merging were done using `object-merge-advanced`, all would be fine, because String trumps Boolean — placeholder `false`s would not overwrite the default SCSS string values.
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=object-merge-advanced%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-object-merge-advanced)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -541,8 +541,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/object-merge-advanced.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-merge-advanced
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -556,5 +556,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [contributors-img]: https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square
 [contributors-url]: #contributors
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
-[all-contributors-url]: https://github.com/kentcdodds/all-contributors
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

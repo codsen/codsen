@@ -44,7 +44,9 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: ["matcher"],
+      external: [
+        "matcher"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -62,7 +64,9 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: ["matcher"],
+      external: [
+        "matcher"
+      ],
       plugins: [
         strip({
           sourceMap: false
