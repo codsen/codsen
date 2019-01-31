@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Add a new key, parentType in a callback innerObj ([6e16b99](https://gitlab.com/codsen/codsen/commit/6e16b99))
+* Add a new key, `parentType` in a callback `innerObj` ([6e16b99](https://gitlab.com/codsen/codsen/commit/6e16b99))
 
 ## 1.10.0 (2019-01-20)
 
