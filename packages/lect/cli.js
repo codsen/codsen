@@ -810,7 +810,7 @@ function step11() {
 
 // second part
 async function writePackageJson(receivedPackageJsonObj) {
-  const mainRepoPath = `https://bitbucket.org/${parsedPack.user}/${
+  const mainRepoPath = `https://gitlab.com/${parsedPack.user}/${
     parsedPack.project
   }`;
 
@@ -1130,9 +1130,7 @@ async function step10() {
       }
     }
 
-    // in both CLI and non-CLI case, do the following:
-    // set Node engines to ">=8"
-    finalThing.engines = { node: ">=8" };
+    // TODO - adhoc key changes should go here
 
     // then write out whole thing:
     writePackageJson(finalThing);
