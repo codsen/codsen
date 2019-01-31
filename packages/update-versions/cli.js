@@ -135,13 +135,6 @@ if (cli.flags) {
                   p
                 )}\u001b[${39}m`} dev dep ${`\u001b[${33}m${depName}\u001b[${39}m`} removed because it is among normal dependencies`
               );
-              console.log(
-                `${`\u001b[${33}m${`contents`}\u001b[${39}m`} = ${JSON.stringify(
-                  contents,
-                  null,
-                  4
-                )}`
-              );
             }
           });
         }
