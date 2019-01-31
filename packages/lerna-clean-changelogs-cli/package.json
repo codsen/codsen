@@ -4,10 +4,10 @@
   "description": "CLI application to cleanse the lerna-generated changelogs",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -187,6 +187,6 @@
     "execa": "^1.0.0",
     "nyc": "^13.1.0",
     "p-map": "^2.0.0",
-    "prettier": "^1.16.2"
+    "prettier": "^1.16.3"
   }
 }

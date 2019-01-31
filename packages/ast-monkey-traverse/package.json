@@ -4,10 +4,10 @@
   "description": "Utility library to traverse parsed HTML (AST's) or anything nested (plain objects within arrays within plain objects)",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey-traverse",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -186,7 +186,7 @@
     "lodash.isequal": "^4.5.0",
     "nyc": "^13.1.0",
     "object-path": "^0.11.4",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

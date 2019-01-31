@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.8.0 (2018-12-26)
 
-* ✨ Improvements against input argument mutation ([924c7ae](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/924c7ae))
-* ✨ Removes ranges with no third arg with identical start and end points ([707553b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge/commits/707553b))
+* ✨ Improvements against input argument mutation ([924c7ae](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/924c7ae))
+* ✨ Removes ranges with no third arg with identical start and end points ([707553b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge/commits/707553b))
 
 ## 3.7.0 (2018-11-29)
 

@@ -272,7 +272,7 @@ There can be a **third element** in a range array, what to add instead of the ra
 
 For example, a range \`[1, 3]\` in a string "\`abcdef\`" would mean \`bc\` because "b" is at index number 1 (counting starts at zero) and 3rd is "d". The beginning of the range is inclusive, and the ending is not. Hence, the result "bc".
 
-Another example, if you want to replace "\`<placeholder>\`" with "John" in a string "\`Hi <placeholder>!\`", the range would be \`[3, 16, "John"]\`.
+Another example, if you want to replace "\`{placeholder}\`" with "John" in a string "\`Hi {placeholder}!\`"^, the range would be \`[3, 16, "John"]\`.
 
 Now, if you have **many ranges**, you put them into an array. You get _an array of ranges_. Majority of \`range-\` libraries process such arrays of ranges: sort bunch of ranges, fix overlapping ranges and so on.
 
@@ -284,11 +284,11 @@ Practically, we need ranges when we process strings and want to "keep a note" of
     "mutate the mutated string" ->
     ... and so on,
 
-We only "compile a to-do list" — [push the ranges](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/) into an array. When we finish gathering them, we **do all the actions in one go**.
+We only "compile a to-do list" — [push the ranges](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) into an array. When we finish gathering them, we **do all the actions in one go**.
 
 Performing string processing only once is better for both **performance** reasons (fewer actions = faster) and for **consistency** (in-between taking the notes, we operate on the original string instead of its previously mutated version).
 
-If you think, strings are immutable in JavaScript — each change of a string means rewriting it in a computer memory. Let's say you want to add a letter and delete the same letter in a string which consists of a thousand characters. Both actions cancel each other out. However, if you do the string edits sequentially, you write a thousand characters to memory two times, after every amend. On the other hand, if you use _ranges_ approach, you'd only [create a new record](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/) in the computer memory, housing a couple of arrays, each consisting of couple index numbers. When you [process the ranges](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply), they would cancel each other out, and we would not write anything to the memory at all. Now, if you scale this — longer strings, more amends, and done many times — you'll soon feel the difference in performance.
+If you think, strings are immutable in JavaScript — each change of a string means rewriting it in a computer memory. Let's say you want to add a letter and delete the same letter in a string which consists of a thousand characters. Both actions cancel each other out. However, if you do the string edits sequentially, you write a thousand characters to memory two times, after every amend. On the other hand, if you use _ranges_ approach, you'd only [create a new record](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/) in the computer memory, housing a couple of arrays, each consisting of couple index numbers. When you [process the ranges](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply), they would cancel each other out, and we would not write anything to the memory at all. Now, if you scale this — longer strings, more amends, and done many times — you'll soon feel the difference in performance.
 
 ${topRow()}
 ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
@@ -315,7 +315,7 @@ All the following libraries are command line applications. You install them usin
 
 You use them in the Terminal (command line), for example:
 
-![CLI app](https://bitbucket.org/codsen/codsen/raw/dcd51a7a32ee052e41cfaca3d0cbe8e606337c82/packages/email-all-chars-within-ascii-cli/media/mov2.gif)
+![CLI app](packages/email-all-chars-within-ascii-cli/media/mov2.gif)
 
 ${topRow()}
 ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
@@ -349,7 +349,7 @@ fs.writeFile(
     )
     .replace(
       /%ISSUELINK%/gm,
-      "https://bitbucket.org/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here"
+      "https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here"
     )
     .replace(/ - /gm, " — "),
   err => {

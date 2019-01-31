@@ -4,10 +4,10 @@
   "description": "Generate homepage in the Browsersync root with links/screenshots to all your email templates",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/email-homey",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/email-homey",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/email-homey",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -181,6 +181,6 @@
     "esm": "^3.2.0",
     "execa": "^1.0.0",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.2"
+    "prettier": "^1.16.3"
   }
 }

@@ -4,7 +4,7 @@
  * Version: 2.16.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push
  */
 
 import isInt from 'is-natural-number';

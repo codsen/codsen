@@ -30,7 +30,7 @@
 npm i string-unfancy
 ```
 
-> or, if you work with image `alt` attributes, check out [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt) which uses `string-unfancy`.
+> or, if you work with image `alt` attributes, check out [html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt) which uses `string-unfancy`.
 
 ```js
 // consume via a CommonJS require:
@@ -51,7 +51,7 @@ Here's what you'll get:
 
 ## Idea
 
-This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. One could say it's the opposite of [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent).
+This library converts fancy strings like curly apostrophes into not fancy ones, like a single quote. One could say it's the opposite of [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent).
 
 `string-unfancy` main purpose is to simplify the images `alt` attribute content in email templates.
 
@@ -59,7 +59,7 @@ The list of covered characters includes all kinds of single quotes, double quote
 
 Also, this library will recursively decode any HTML entities before performing the replacement.
 
-PS. If you want a higher-level tool, [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
+PS. If you want a higher-level tool, [html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt) uses `string-unfancy` and performs many more fixes (adding empty `alt` attributes if they are missing, cleaning of the whitespace between the attributes, trimming of the `alt` contents and even replacing single quotes to double quotes).
 
 **[⬆ back to top](#markdown-header-string-unfancy)**
 
@@ -150,9 +150,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-unfancy.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-unfancy
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-unfancy
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-unfancy
 [downloads-img]: https://img.shields.io/npm/dm/string-unfancy.svg?style=flat-square

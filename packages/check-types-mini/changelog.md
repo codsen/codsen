@@ -12,14 +12,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* 🐛 Pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/2948a28))
+* 🐛 Pull pullAllWithGlob inline because it was causing circular dependency clashes ([2948a28](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/2948a28))
 
 ### Features
 
-* ✨ Matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/4648ad5))
-* ✨ `opts.ignorePaths` and nested opts support ([c1128d6](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/c1128d6))
-* ✨ `opts.schema` can now be given in nested formatting too ([d102784](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/d102784))
-* ✨ schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini/commits/568eb33))
+* ✨ Matcher under opts.ignorePaths and opts.ignoreKeys ([4648ad5](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/4648ad5))
+* ✨ `opts.ignorePaths` and nested opts support ([c1128d6](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/c1128d6))
+* ✨ `opts.schema` can now be given in nested formatting too ([d102784](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/d102784))
+* ✨ schema ignores with types 'any' and 'whatever' now apply to all children nodes of that path ([568eb33](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini/commits/568eb33))
 
 ## 5.1.0 (2018-10-15)
 

@@ -40,7 +40,7 @@ Here's what you'll get:
 
 This library extracts the class and id names from the string and returns them all put into an array.
 
-I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which detects and deletes the unused CSS styles.
+I use `string-extract-class-names` to identify all the CSS class names from the parsed HTML/CSS in the library [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) which detects and deletes the unused CSS styles.
 
 Since deleting of people's code is a risky task, a huge responsibility falls onto parts which identify _what should be deleted_, and more importantly, parts which identify _class names and id's_. That's why I extracted the `string-extract-class-names` from the `email-remove-unused-css` and set up a proper test suite.
 
@@ -122,9 +122,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-extract-class-names.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-extract-class-names
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-extract-class-names
 [downloads-img]: https://img.shields.io/npm/dm/string-extract-class-names.svg?style=flat-square

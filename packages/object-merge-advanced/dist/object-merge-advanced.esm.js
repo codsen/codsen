@@ -4,7 +4,7 @@
  * Version: 10.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced
  */
 
 import isObj from 'lodash.isplainobject';

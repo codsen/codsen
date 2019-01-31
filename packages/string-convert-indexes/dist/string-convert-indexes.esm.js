@@ -4,7 +4,7 @@
  * Version: 1.9.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes
  */
 
 import { traverse, set } from 'ast-monkey';

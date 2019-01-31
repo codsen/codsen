@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.9.0 (2018-12-26)
 
-* ✨ Now we allow null as ranges array value (2nd arg.) ([4c57155](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4c57155))
-* ✨ Setup refresh and tiny rebasing ([4e5cb2c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within/commits/4e5cb2c))
+* ✨ Now we allow null as ranges array value (2nd arg.) ([4c57155](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within/commits/4c57155))
+* ✨ Setup refresh and tiny rebasing ([4e5cb2c](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within/commits/4e5cb2c))
 
 ## 1.8.0 (2018-10-25)
 

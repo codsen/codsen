@@ -12,8 +12,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* ✨ cater null values too ([38fa255](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
-* ✨ rippling sort from arbitrary axis column ([38d850f](https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
+* ✨ cater null values too ([38fa255](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col/commits/38fa255))
+* ✨ rippling sort from arbitrary axis column ([38d850f](https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col/commits/38d850f))
 
 ## 2.3.0 (2018-12-14)
 

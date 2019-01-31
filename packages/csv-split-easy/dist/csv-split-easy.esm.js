@@ -4,7 +4,7 @@
  * Version: 2.6.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
  */
 
 import remSep from 'string-remove-thousand-separators';

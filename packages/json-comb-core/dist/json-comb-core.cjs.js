@@ -4,7 +4,7 @@
  * Version: 6.5.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
  */
 
 'use strict';

@@ -4,7 +4,7 @@
  * Version: 3.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/chlu
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
  */
 
 import reverse from 'lodash.reverse';

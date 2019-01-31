@@ -10,11 +10,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 6.4.0 (2019-01-11)
 
-* ✨ Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/commits/4f00871))
+* ✨ Add one more tag before which there will be a line break ([4f00871](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core/commits/4f00871))
 
 ## 6.3.0 (2019-01-08)
 
-* ✨ Add one more tag before which there will be a line break ([4f00871](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core/commits/4f00871))
+* ✨ Add one more tag before which there will be a line break ([4f00871](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core/commits/4f00871))
 
 ## 6.2.0 (2018-06-11)
 

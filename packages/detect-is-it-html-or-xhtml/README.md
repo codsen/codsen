@@ -54,7 +54,7 @@ Here's what you'll get:
 
 As you know, XHTML is slightly different from HTML: **HTML** (4 and 5) does not close the `<img>` and other single tags, while **XHTML** does. There are more to that, but that's the major thing from developer's perspective.
 
-When I was working on the [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
+When I was working on the [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb), I was parsing the HTML and rendering it back. Upon this _rendering-back_ stage, I had to identify, is the source code of the HTML-type, or XHTML, because I had to instruct the [renderer](https://github.com/posthtml/posthtml-render) to close all the single tags (or not close them). Ignoring this setting would have nasty consequences because, roughly, in only half of the cases my library would produce the correct code.
 
 I couldn't find any library that analyses the code, telling is it HTML or XHTML. That's how `detect-is-it-html-or-xhtml` was born.
 
@@ -122,9 +122,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/detect-is-it-html-or-xhtml.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/detect-is-it-html-or-xhtml
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/detect-is-it-html-or-xhtml
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/detect-is-it-html-or-xhtml
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/detect-is-it-html-or-xhtml
 [downloads-img]: https://img.shields.io/npm/dm/detect-is-it-html-or-xhtml.svg?style=flat-square

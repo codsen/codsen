@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.6.0 (2018-12-26)
 
-* ✨ Add `opts.progressFn` ([09de99c](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort/commits/09de99c))
+* ✨ Add `opts.progressFn` ([09de99c](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort/commits/09de99c))
 
 ## 3.5.0 (2018-11-29)
 

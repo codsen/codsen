@@ -7,13 +7,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Add opts.decode ([ae22fea](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/commits/ae22fea))
+* Add opts.decode ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
 
 ## 1.5.0 (2019-01-27)
 
 ### Features
 
-* Add opts.decode ([ae22fea](https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities/commits/ae22fea))
+* Add opts.decode ([ae22fea](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/commits/ae22fea))
 
 ## 1.4.0 (2019-01-20)
 

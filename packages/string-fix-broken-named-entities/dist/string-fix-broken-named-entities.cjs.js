@@ -4,7 +4,7 @@
  * Version: 1.6.1
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-fix-broken-named-entities
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
 
 'use strict';

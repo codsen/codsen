@@ -253,7 +253,7 @@ This option can work in combination with `opts.ignoreTags`. Any tags listed in `
 
 Some HTML tag stripping libraries _assume_ that the input is always valid HTML and that intention of their libraries is sanitation of some mystical rogue visitor's input string. Hence, libraries just rip the brackets out and call it a day.
 
-But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) for example?
+But those libraries assume too much - what if neither input nor output is not an HTML? What if HTML tag stripping library is used in a universal tool which accepts all kinds of text **and strips only and strictly only recognised HTML tags**? Like [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) for example?
 
 For the record, somebody might input `a < b and c > d` (clearly, not HTML) into Detergent with intention clean invisible characters before **pasting the result into Photoshop**. A user just wants to get rid of any invisible characters. There's not even a smell of HTML here. There's no rogue XSS injection or cross-site scripting. Notice there's even spaces around brackets! Even Chrome will interpret `a < b and c > d` as text. I believe we should not delete `a < b and c > d` from a text when stripping the HTML. However, [other](https://www.npmjs.com/package/striptags) [HTML](https://www.npmjs.com/package/strip-html-tags) [stripping](https://www.npmjs.com/package/htmlstrip-native) libraries find excuses to think differently.
 
@@ -267,7 +267,7 @@ Choose your HTML stripping tool wisely.
 
 ## A bigger picture
 
-I scratched my itch, producing [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
+I scratched my itch, producing [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) — I needed a tool to clean the text before pasting into HTML because clients would supply briefing documents in all possible forms and shapes and often text would contain invisible Unicode characters. I've been given: Excel files, PSD's, Illustrator files, PDF's and of course, good old "nothing" where I had to reference existing code.
 
 Detergent would remove the excessive whitespace, invisible characters and improve the text's English style. Detergent would also take HTML as input — stripping the tags, cleaning the text and giving back ready-to-paste sentences. But most of the cases, Detergent's input is just a text. And not always it ends up in HTML.
 
@@ -301,9 +301,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-strip-html.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-strip-html
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
 [cov-img]: https://img.shields.io/badge/coverage-93.14%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-strip-html
 [downloads-img]: https://img.shields.io/npm/dm/string-strip-html.svg?style=flat-square

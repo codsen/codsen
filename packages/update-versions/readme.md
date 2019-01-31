@@ -2,6 +2,8 @@
 
 > Like npm-check-updates but supports Lerna monorepos and enforces strict semver values
 
+![Update all dependencies in on all package.json(s)](packages/update-versions/media/upd.gif)
+
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]

@@ -4,7 +4,7 @@
  * Version: 3.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
  */
 
 import isNaturalNumber from 'is-natural-number';

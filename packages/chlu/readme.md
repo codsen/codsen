@@ -69,9 +69,9 @@ Unit test #14 - uses changelog of **keystone 4.0.0-beta.5** to test automated er
 [node-img]: https://img.shields.io/node/v/chlu.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/chlu
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/chlu
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
 [cov-img]: https://img.shields.io/badge/coverage-87.57%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/chlu
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/chlu
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/chlu
 [downloads-img]: https://img.shields.io/npm/dm/chlu.svg?style=flat-square

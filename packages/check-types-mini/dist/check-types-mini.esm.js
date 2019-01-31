@@ -4,7 +4,7 @@
  * Version: 5.6.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
  */
 
 import typ from 'type-detect';

@@ -4,7 +4,7 @@
  * Version: 1.12.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace
  */
 
 function collapseLeadingWhitespace(str, originalLimitLinebreaksCount) {

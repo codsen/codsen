@@ -107,13 +107,13 @@ compare(
 // => true
 ```
 
-Main purpose of this library is to compare parsed HTML/CSS trees when deleting empty [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) branches. This library is a dependency for [ast-delete-object](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
+Main purpose of this library is to compare parsed HTML/CSS trees when deleting empty [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) branches. This library is a dependency for [ast-delete-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
 **[⬆ back to top](#markdown-header-ast-loose-compare)**
 
 ## Difference from `ast-compare`
 
-There is another similarly-named library, [ast-compare](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare). The difference between the two is the following.
+There is another similarly-named library, [ast-compare](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare). The difference between the two is the following.
 
 `ast-compare` will check: is something a _subset_ or exactly equal of something. If **subset** query item has empty array or an array with empty string with it, it will search for exactly the same on the **superset** query item. Unlike in [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch), empty array will not be reported as equal to non-empty array.
 
@@ -129,7 +129,7 @@ In Lodash [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch), an empty a
 
 [\_.isMatch](https://www.npmjs.com/package/lodash.ismatch) positively matches empty arrays to everything. This is bad when you are comparing parsed HTML/CSS trees. This library doesn't do this. In this library, empty array will not be reported as equal to non-empty array, although if both arguments contain something which is _empty space_, they will be considered equal.
 
-If you want an AST comparison library with a stricter ways towards the _empty space equation_, check [ast-compare](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare).
+If you want an AST comparison library with a stricter ways towards the _empty space equation_, check [ast-compare](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare).
 
 **[⬆ back to top](#markdown-header-ast-loose-compare)**
 
@@ -212,9 +212,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/ast-loose-compare.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-loose-compare
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-loose-compare
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-loose-compare
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-loose-compare
 [downloads-img]: https://img.shields.io/npm/dm/ast-loose-compare.svg?style=flat-square

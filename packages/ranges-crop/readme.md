@@ -66,7 +66,7 @@ That's what this library does - it takes an **array of ranges** and the **length
 
 | Input argument | Type                         | Obligatory? | Description                                                                                                                                                                                                                     |
 | -------------- | ---------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort) or [merged](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge). |
+| `arrOfRanges`  | Array of zero or more arrays | yes         | Provide an array of ranges to invert. Ranges do not have to be [sorted](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort) or [merged](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge). |
 | `strLen`       | Integer number               | yes         | Algorithm needs to know the length of the reference string to calculate the inverted last slice's ending index.                                                                                                                 |
 
 **Output**: array of zero or more arrays (so-called _ranges_) where each consists of two or more natural number (or zero) indexes.
@@ -97,9 +97,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/ranges-crop.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-crop
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-crop
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-crop
 [downloads-img]: https://img.shields.io/npm/dm/ranges-crop.svg?style=flat-square

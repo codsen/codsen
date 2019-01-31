@@ -4,7 +4,7 @@
  * Version: 3.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/easy-replace
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace
  */
 
 import toArray from 'lodash.toarray';

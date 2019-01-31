@@ -4,10 +4,10 @@
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/html-crush",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/html-crush",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -199,7 +199,7 @@
     "node-fetch": "^2.3.0",
     "nyc": "^13.1.0",
     "p-map": "^2.0.0",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

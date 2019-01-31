@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.7.0 (2018-12-26)
 
-* ✨ opts.useWildcards ([d541cab](https://bitbucket.org/codsen/codsen/src/master/packages/ast-compare/commits/d541cab))
+* ✨ opts.useWildcards ([d541cab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare/commits/d541cab))
 
 ## 1.6.0 (2018-10-12)
 

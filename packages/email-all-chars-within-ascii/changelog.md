@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.5.0 (2018-12-26)
 
-* ✨ Added `opts.messageOnly` ([d20b191](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii/commits/d20b191))
+* ✨ Added `opts.messageOnly` ([d20b191](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii/commits/d20b191))
 
 ## 2.4.0 (2018-10-17)
 

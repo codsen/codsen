@@ -104,7 +104,7 @@ In example above, `a` and `b` are "pinned" to `1`, thus reducing the amount of c
 
 ## Overriding the combinations — in practice
 
-In practice, I use this overriding to perform the specific tests on [Detergent.js](https://bitbucket.org/codsen/codsen/src/master/packages/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
+In practice, I use this overriding to perform the specific tests on [Detergent.js](https://gitlab.com/codsen/codsen/tree/master/packages/detergent). For example, let's say, I am testing: does Detergent encode entities correctly. In that case I need two arrays filled with objects:
 
 - first array — `encodeEntities = true` and all possible combinations of the other 9 settings (2^(10-1)=512 objects in array)
 - second array — `encodeEntities = false` and all possible combinations of the rest — again 512 objects in array.
@@ -149,9 +149,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/object-boolean-combinations.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-boolean-combinations
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-boolean-combinations
 [downloads-img]: https://img.shields.io/npm/dm/object-boolean-combinations.svg?style=flat-square

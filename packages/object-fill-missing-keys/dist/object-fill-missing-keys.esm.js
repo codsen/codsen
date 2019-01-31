@@ -4,7 +4,7 @@
  * Version: 7.9.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys
  */
 
 import clone from 'lodash.clonedeep';

@@ -123,7 +123,7 @@ Boolean `true`^ or `false`, answering the question, is the given `index` found w
 
 If you use this library as an internal dependency and you know the ranges upfront, it makes sense to sort them upfront, before feeding into this library and turn off the sorting here.
 
-You can wire up temporary `console.log` and use [ranges-sort](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
+You can wire up temporary `console.log` and use [ranges-sort](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort), then copy-paste the sorted result into your code, as a constant ranges.
 
 Now you can save users' resources and turn off range sorting in this library using `opts.skipIncomingRangeSorting`.
 
@@ -286,9 +286,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/ranges-is-index-within.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-is-index-within
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-is-index-within
 [downloads-img]: https://img.shields.io/npm/dm/ranges-is-index-within.svg?style=flat-square

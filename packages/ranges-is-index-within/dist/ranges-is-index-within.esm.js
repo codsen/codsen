@@ -4,7 +4,7 @@
  * Version: 1.13.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-is-index-within
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within
  */
 
 import isObj from 'lodash.isplainobject';

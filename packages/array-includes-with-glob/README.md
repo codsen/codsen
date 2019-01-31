@@ -139,7 +139,7 @@ console.log("res2 = " + res2);
 
 ### Practical usage
 
-I need this library for my other libraries when I'm working with plain objects, and I want to let users whitelist certain keys of those objects. For example, [object-merge-advanced](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
+I need this library for my other libraries when I'm working with plain objects, and I want to let users whitelist certain keys of those objects. For example, [object-merge-advanced](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced) can skip the overwrite of any keys upon request. That request technically, is an array, like `['*thing']` in the example below:
 
 ```js
 mergeAdvanced(
@@ -206,9 +206,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/array-includes-with-glob.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-includes-with-glob
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-includes-with-glob
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-includes-with-glob
 [downloads-img]: https://img.shields.io/npm/dm/array-includes-with-glob.svg?style=flat-square

@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.6.0 (2018-12-26)
 
-* ✨ Add _unit tests_, rebase some functions ([59c5f46](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli/commits/59c5f46))
+* ✨ Add _unit tests_, rebase some functions ([59c5f46](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli/commits/59c5f46))
 
 ## 1.5.0 (2018-08-17)
 

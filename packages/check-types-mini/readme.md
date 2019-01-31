@@ -233,7 +233,7 @@ If you want, you can blacklist certain keys of your objects so that `opts.accept
 
 ### `opts.enforceStrictKeyset`
 
-When I was coding a new major version of [ast-delete-object](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
+When I was coding a new major version of [ast-delete-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object) I had to update all the unit tests too. Previously, the settings were set using only one argument, Boolean-type. I had to change it to be a plain object. I noticed that when I missed updating some tests, their Booleans were `Object.assign`ed into a default settings object and no alarm was being raised! That's not good.
 
 Then I came up with the idea to **enforce the keys of the object** to match the reference and/or schema keys in `options`. It's on by default because I can't imagine how you would end up with settings object that does not match your default settings object, key-wise, but if you don't like that, feel free to turn it off. It's `opts.enforceStrictKeyset` Boolean flag.
 
@@ -330,9 +330,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/check-types-mini.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/check-types-mini
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/check-types-mini
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/check-types-mini
 [downloads-img]: https://img.shields.io/npm/dm/check-types-mini.svg?style=flat-square

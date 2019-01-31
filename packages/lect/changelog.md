@@ -7,13 +7,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Initial release ([35292b8](https://bitbucket.org/codsen/codsen/src/master/packages/lect/commits/35292b8))
+* Initial release ([35292b8](https://gitlab.com/codsen/codsen/tree/master/packages/lect/commits/35292b8))
 
 ## 0.2.0 (2019-01-27)
 
 ### Features
 
-* Initial release ([35292b8](https://bitbucket.org/codsen/codsen/src/master/packages/lect/commits/35292b8))
+* Initial release ([35292b8](https://gitlab.com/codsen/codsen/tree/master/packages/lect/commits/35292b8))
 
 ## Change Log
 

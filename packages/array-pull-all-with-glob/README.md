@@ -59,7 +59,7 @@ console.dir(pullAllWithGlob(sourceArray, removeThese));
 // => ['keep_me']
 ```
 
-Personally, I needed this library for another library, [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
+Personally, I needed this library for another library, [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb), where I had to _whitelist_ certain CSS classes (array of strings), removing them from another array.
 
 **[⬆ back to top](#markdown-header-array-pull-all-with-glob)**
 
@@ -142,9 +142,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/array-pull-all-with-glob.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/array-pull-all-with-glob
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-pull-all-with-glob
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/array-pull-all-with-glob
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/array-pull-all-with-glob
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/array-pull-all-with-glob
 [downloads-img]: https://img.shields.io/npm/dm/array-pull-all-with-glob.svg?style=flat-square

@@ -4,7 +4,7 @@
  * Version: 1.3.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-group-str-omit-num-char
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-group-str-omit-num-char
  */
 
 'use strict';

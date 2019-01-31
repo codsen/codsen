@@ -176,9 +176,9 @@ https://github.com/mathiasbynens/he
 [node-img]: https://img.shields.io/node/v/ranges-ent-decode.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-ent-decode
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-ent-decode
 [downloads-img]: https://img.shields.io/npm/dm/ranges-ent-decode.svg?style=flat-square

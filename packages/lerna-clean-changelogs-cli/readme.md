@@ -55,7 +55,7 @@ This application will performs the following cleaning steps on all encountered `
 2. It removes diff links from headings. Change the following:
 
    ```
-   ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
+   ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
    ```
 
    into:
@@ -71,7 +71,7 @@ This application will performs the following cleaning steps on all encountered `
    For exampe, change the following:
 
    ```
-   # [2.0.0](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.0.0...ranges-apply@1.9.1) (2018-12-27)
+   # [2.0.0](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.0.0...ranges-apply@1.9.1) (2018-12-27)
    ```
 
    into:
@@ -116,7 +116,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/lerna-clean-changelogs-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/lerna-clean-changelogs-cli
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/lerna-clean-changelogs-cli
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/lerna-clean-changelogs-cli
 [downloads-img]: https://img.shields.io/npm/dm/lerna-clean-changelogs-cli.svg?style=flat-square

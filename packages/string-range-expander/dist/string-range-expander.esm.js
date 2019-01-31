@@ -4,7 +4,7 @@
  * Version: 1.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
  */
 
 import checkTypes from 'check-types-mini';

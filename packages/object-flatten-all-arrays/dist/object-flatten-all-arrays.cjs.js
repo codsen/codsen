@@ -4,7 +4,7 @@
  * Version: 4.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-all-arrays
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-all-arrays
  */
 
 'use strict';

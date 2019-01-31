@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.6.0 (2018-12-26)
 
-* ✨ Add the second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-leading-whitespace/commits/74e2458))
+* ✨ Add the second argument - originalLimitLinebreaksCount - max ceiling count of consecutive line breaks ([74e2458](https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-leading-whitespace/commits/74e2458))
 
 ## 1.5.0 (2018-10-25)
 

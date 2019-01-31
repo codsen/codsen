@@ -175,7 +175,7 @@ Notice the part `< b and c >` almost matches the HTML tag description - it's wra
 
 I want a reliable string white space collapsing library which would traverse the input ONLY ONCE and gather result IN ONE GO, before returning it. This is not regex approach where we mutate the string when trimming, then mutate again when collapsing... No. It's a proper traversal within a backward FOR loop (backward instead of forwards is for better speed), where we only gather the intel while traversing.
 
-I'm going to use it first in [Detergent](https://bitbucket.org/codsen/codsen/src/master/packages/detergent), but you never know, it might prove handy in email template building in general.
+I'm going to use it first in [Detergent](https://gitlab.com/codsen/codsen/tree/master/packages/detergent), but you never know, it might prove handy in email template building in general.
 
 **[⬆ back to top](#markdown-header-string-collapse-white-space)**
 
@@ -201,9 +201,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-collapse-white-space.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-collapse-white-space
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-collapse-white-space
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-collapse-white-space
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-collapse-white-space
 [downloads-img]: https://img.shields.io/npm/dm/string-collapse-white-space.svg?style=flat-square

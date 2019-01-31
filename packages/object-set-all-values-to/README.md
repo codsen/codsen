@@ -49,7 +49,7 @@ Take any input: nested array, nested plain object or whatever really, no matter 
 
 It does not mutate the input arguments. Operations are done on a cloned input.
 
-I needed this library to [overwrite](https://bitbucket.org/codsen/codsen/src/master/packages/json-comb-core) all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
+I needed this library to [overwrite](https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core) all values to be `false` on JSON schema objects, so that later when I copy from key/value pairs from schema, values are equal to `false` and I don't need to prep them further.
 
 This library is well-tested and is being used in commercial projects.
 
@@ -113,9 +113,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/object-set-all-values-to.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-set-all-values-to
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-set-all-values-to
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-set-all-values-to
 [downloads-img]: https://img.shields.io/npm/dm/object-set-all-values-to.svg?style=flat-square

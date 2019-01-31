@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 10.6.0 (2018-12-26)
 
-* ✨ Added the fourth argument in the callback ([306e3da](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced/commits/306e3da))
+* ✨ Added the fourth argument in the callback ([306e3da](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced/commits/306e3da))
 
 ## 10.5.0 (2018-10-24)
 

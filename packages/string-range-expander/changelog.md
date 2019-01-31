@@ -12,14 +12,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* Fix for opts.wipeAllWhitespaceOnRight and left too ([72c26e6](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/72c26e6))
+* Fix for opts.wipeAllWhitespaceOnRight and left too ([72c26e6](https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander/commits/72c26e6))
 
 ### Features
 
-* improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/8bb929a))
-* opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/19b1390))
-* opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/47df5be))
-* opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([73d763b](https://bitbucket.org/codsen/codsen/src/master/packages/string-range-expander/commits/73d763b))
+* improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander/commits/8bb929a))
+* opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander/commits/19b1390))
+* opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander/commits/47df5be))
+* opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([73d763b](https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander/commits/73d763b))
 
 ## 1.5.0 (2018-10-26)
 

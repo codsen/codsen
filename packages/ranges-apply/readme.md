@@ -129,7 +129,7 @@ For example,
 ];
 ```
 
-**PSST.** Check out [ranges-push](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
+**PSST.** Check out [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push) which helps to manage the `rangesArray`. It has methods to add and retrieve the slices. Also, it helps in cases where slices overlap and helps to maintain the order of index ranges (it always goes from smallest to largest index, everywhere).
 
 **[⬆ back to top](#markdown-header-ranges-apply)**
 
@@ -149,7 +149,7 @@ The main thing is unit tests and edge case scenarios. Also, fancy optional featu
 
 ## In my case
 
-Originally this library was part of [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
+Originally this library was part of [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb), where I traversed HTML as a string and compiled an array of things to delete or replace later, in one go. The performance was important, so it was not a good idea to delete/replace things on the spot because each deletion slowed down the process. Instead, I traversed the string, compiled this _to-do_ array, then did the deletion/replacement on the whole thing, **once**. This appears to be the fastest way.
 
 I'm going to use this library in all my HTML processing libraries who work on HTML as on string, without parsing it.
 
@@ -177,9 +177,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/ranges-apply.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ranges-apply
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ranges-apply
 [downloads-img]: https://img.shields.io/npm/dm/ranges-apply.svg?style=flat-square

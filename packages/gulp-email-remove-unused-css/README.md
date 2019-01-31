@@ -12,7 +12,7 @@
 _If you have any difficulties with the output of this plugin, please use the [email-comb](https://bitbucket.org/codsen/codsen/issues/new?title=email-comb%20package%20-%20put%20title%20here) issue tracker._
 
 - Online web app: [EmailComb](https://emailcomb.com)
-- The core library: [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb).
+- The core library: [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb).
 
 ## Table of Contents
 
@@ -90,7 +90,7 @@ You can also use a _glob_, for example in order to whitelist classes `module-1`,
 
 ## Next level
 
-If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) library of it instead.
+If you start to overgrow the plugin's baby shirt and want to work with HTML directly, as string, stop using this library and use the [API](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) library of it instead.
 
 The idea is the following: in Gulp, everything flows as a vinyl Buffer streams. You [tap](https://github.com/geejs/gulp-tap) the stream, convert it to `string`, perform the operations, then convert it back to Buffer and place it back. I wanted to come up with a visual analogy example using waste pipes but thought I'd rather won't.
 
@@ -122,7 +122,7 @@ If you need more advanced CSS removal tools, check out [uncss](https://github.co
 
 There's also more direct competitor, [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) which uses [Cheerio](https://www.npmjs.com/package/cheerio), but:
 
-1. `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://bitbucket.org/codsen/codsen/src/master/packages/detergent) from its [front-end](https://detergent.io).
+1. `postcss-remove-unused` is tied with PostCSS and can't be used outside of it. Its _testing_ is also tied to PostCSS and dependent on it. On other hand, _this library_ is only a Gulp wrapper for [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) which is tool-independent (reads `string`, outputs `string`). I'm a strong believer that core functionality should be decoupled from the wrappers, PostHTML, PostCSS, Gulp, Grunt, font-end interfaces or anything else. In the past I decoupled [Detergent's core](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) from its [front-end](https://detergent.io).
 
 2. [postcss-remove-unused](https://www.npmjs.com/package/postcss-remove-unused) doesn't remove `id`'s, while this library _does_. It's important because some of _email code hacks_ are based on id's, for example, `#outlook a {padding: 0; }` which causes "View in browser" toolbar menu link to appear on Outlook 2010. Style cleaning library must recognise id's in order to white-list them.
 
@@ -150,7 +150,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/gulp-email-remove-unused-css.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/gulp-email-remove-unused-css
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/gulp-email-remove-unused-css
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/gulp-email-remove-unused-css
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/gulp-email-remove-unused-css
 [downloads-img]: https://img.shields.io/npm/dm/gulp-email-remove-unused-css.svg?style=flat-square

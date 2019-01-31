@@ -4,7 +4,7 @@
  * Version: 1.2.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/email-comb
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/email-comb
  */
 
 import { matchRightIncl, matchLeft, matchRight } from 'string-match-left-right';

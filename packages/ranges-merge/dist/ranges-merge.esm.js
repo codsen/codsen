@@ -4,7 +4,7 @@
  * Version: 3.12.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-merge
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge
  */
 
 import sortRanges from 'ranges-sort';

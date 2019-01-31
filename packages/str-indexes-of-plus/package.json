@@ -4,10 +4,10 @@
   "description": "Search for a string in another string. Get array of indexes. Full Unicode support.",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/str-indexes-of-plus",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/str-indexes-of-plus",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -177,7 +177,7 @@
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.3.0 (2018-12-26)
 
-* ✨ Implement **atomic file write** ([b9a3c2b](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/b9a3c2b))
-* ✨ Improved messages when zero files found + promisified write function ([83d2bee](https://bitbucket.org/codsen/codsen/src/master/packages/js-row-num-cli/commits/83d2bee))
+* ✨ Implement **atomic file write** ([b9a3c2b](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/commits/b9a3c2b))
+* ✨ Improved messages when zero files found + promisified write function ([83d2bee](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/commits/83d2bee))
 
 ## 1.2.0 (2018-09-20)
 

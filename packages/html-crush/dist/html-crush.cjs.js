@@ -4,7 +4,7 @@
  * Version: 0.8.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/html-crush
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
  */
 
 'use strict';

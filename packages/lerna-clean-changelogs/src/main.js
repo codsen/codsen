@@ -44,7 +44,7 @@ function c(changelogContents) {
 
     // ███
     // 1. remove links from titles, for example, turn:
-    // ## [2.9.1](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
+    // ## [2.9.1](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/compare/ranges-apply@2.9.0...ranges-apply@2.9.1) (2018-12-27)
     // into:
     // ## 2.9.1 (2018-12-27)
     linesArr.forEach((line, i) => {

@@ -4,7 +4,7 @@
  * Version: 2.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-trim-spaces-only
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only
  */
 
 import checkTypes from 'check-types-mini';

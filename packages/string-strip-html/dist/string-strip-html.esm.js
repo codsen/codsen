@@ -4,7 +4,7 @@
  * Version: 3.5.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html
  */
 
 import rangesApply from 'ranges-apply';

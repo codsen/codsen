@@ -57,7 +57,7 @@ Three modes:
 
 This library accepts anything as input, including [parsed](https://github.com/posthtml/posthtml-parser) HTML, which is _deeply_ nested arrays of plain objects, arrays and strings. You can feed anything as input into this library - if it's traversable, it will be traversed and searched for your `key` and/or `value` in any plain objects.
 
-If you want to delete any nested objects that contain certain `key`/`value` pair(s), check out [ast-delete-object](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object).
+If you want to delete any nested objects that contain certain `key`/`value` pair(s), check out [ast-delete-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object).
 
 **[⬆ back to top](#markdown-header-object-delete-key)**
 
@@ -220,7 +220,7 @@ deleteKey(
 
 ## Wildcards
 
-Wildcards can be used in keys and/or values. This library feeds inputs to [ast-monkey](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey) which is doing all the heavy lifting, which, in turn, is using [matcher](https://github.com/sindresorhus/matcher).
+Wildcards can be used in keys and/or values. This library feeds inputs to [ast-monkey](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey) which is doing all the heavy lifting, which, in turn, is using [matcher](https://github.com/sindresorhus/matcher).
 
 ```js
 const res = deleteKey(
@@ -250,7 +250,7 @@ Object-key deletion libraries like [node-dropkey](https://github.com/wankdanker/
 
 But in real life, where we deal with AST _trees_ - nested _spaghetti_ of arrays, plain objects and strings — we can't expect anything. This library accepts _anything_ as an input, and no matter how deeply-nested. Feed it some nested AST's (`input`), then optionally a `key` or optionally a `value` (or both), and you'll get a result with that key/value pair removed from every plain object within the `input`.
 
-I use this library in [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) to delete empty carcases of style tags without any selectors or empty class attributes in the inline HTML CSS.
+I use this library in [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) to delete empty carcases of style tags without any selectors or empty class attributes in the inline HTML CSS.
 
 **[⬆ back to top](#markdown-header-object-delete-key)**
 
@@ -334,9 +334,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/object-delete-key.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-delete-key
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-delete-key
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-delete-key
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-delete-key
 [downloads-img]: https://img.shields.io/npm/dm/object-delete-key.svg?style=flat-square

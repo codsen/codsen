@@ -173,7 +173,7 @@ Boolean: `true` or `false`.
 
 ## Why we need this
 
-For example, I was working on [object-fill-missing-keys](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys). The library takes an object, a reference object, and fills in missing keys according to the reference. I was implementing a feature, a options switch, which let to skip filling for chosen keys if they currently contain only placeholders.
+For example, I was working on [object-fill-missing-keys](https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys). The library takes an object, a reference object, and fills in missing keys according to the reference. I was implementing a feature, a options switch, which let to skip filling for chosen keys if they currently contain only placeholders.
 
 You'll need this library when you want to check, does the AST contain only certain value throughout the whole tree. Also, it can be a simple object, in which case, we'd be checking, are all values of all keys equal to something.
 
@@ -201,9 +201,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/object-all-values-equal-to.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-all-values-equal-to
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-all-values-equal-to
 [downloads-img]: https://img.shields.io/npm/dm/object-all-values-equal-to.svg?style=flat-square

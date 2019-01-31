@@ -69,7 +69,7 @@ There are few rules:
 
 ## Purpose
 
-It will be used in JSON [pre-processing](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables), replacing the dumb string search being used currently.
+It will be used in JSON [pre-processing](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables), replacing the dumb string search being used currently.
 
 ## Context
 
@@ -107,7 +107,7 @@ console.log('res1 = ' + JSON.stringify(res1, null, 4))
 **strFindHeadsTails(str, heads, tails, \[fromIndex])**
 
 **IMPORTANT**
-The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
+The index is based on native JavaScript string indexing where each astral character's length will be counted as two. If you wish to convert the index system to be based on _Unicode character count_, use `nativeToUnicode()` method of [string-convert-indexes](https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes). It can convert the whole nested array output of this library (not to mention number indexes).
 
 **[⬆ back to top](#markdown-header-string-find-heads-tails)**
 
@@ -168,7 +168,7 @@ Returns an array of zero or more plain objects, each having format:
 
 The whole idea is that you should be able to get the `heads` if you put `str.slice(headsStartAt, headsEndAt)`.
 
-If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://bitbucket.org/codsen/codsen/src/master/packages/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
+If you want to use Unicode-character-count-based indexing, first convert the output of this library using [string-convert-indexes](https://gitlab.com/codsen/codsen/tree/master/packages/string-convert-indexes), then use Unicode-character-count-based string slice libraries, for example: [string-slice](https://www.npmjs.com/package/string-slice).
 
 **[⬆ back to top](#markdown-header-string-find-heads-tails)**
 
@@ -194,9 +194,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-find-heads-tails.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-find-heads-tails
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-find-heads-tails
 [downloads-img]: https://img.shields.io/npm/dm/string-find-heads-tails.svg?style=flat-square

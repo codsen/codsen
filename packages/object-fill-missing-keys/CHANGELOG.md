@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 7.5.0 (2018-12-26)
 
-* ✨ Added `opts.doNotFillThesePathsIfTheyContainPlaceholders` ([8c6080e](https://bitbucket.org/codsen/codsen/src/master/packages/object-fill-missing-keys/commits/8c6080e))
+* ✨ Added `opts.doNotFillThesePathsIfTheyContainPlaceholders` ([8c6080e](https://gitlab.com/codsen/codsen/tree/master/packages/object-fill-missing-keys/commits/8c6080e))
 
 ## 7.4.0 (2018-10-24)
 

@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.5.0 (2018-12-26)
 
-* ✨ Allow any types in override object key values ([af4f99d](https://bitbucket.org/codsen/codsen/src/master/packages/object-boolean-combinations/commits/af4f99d))
+* ✨ Allow any types in override object key values ([af4f99d](https://gitlab.com/codsen/codsen/tree/master/packages/object-boolean-combinations/commits/af4f99d))
 
 ## 2.4.0 (2018-10-24)
 

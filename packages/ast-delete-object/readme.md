@@ -253,9 +253,9 @@ parsedHTMLObject = delObj(parsedHTMLObject, { 'tag': 'style', 'content': {} })
 
 ## The story
 
-I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
+I used [posthtml-parser](https://github.com/posthtml/posthtml-parser) to parse some HTML and then deleted some objects from the AST trees on [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) (deep-nested array of objects and arrays and strings). I wanted to delete empty tag objects and couldn't find a library that does this. That's how this library came to life.
 
-Later I stopped parsing the HTML [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes milliseconds.
+Later I stopped parsing the HTML [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb), treating HTML code **as string**. This increased the speed of processing by magnitudes - what previously took a minute now takes milliseconds.
 
 **[⬆ back to top](#markdown-header-ast-delete-object)**
 
@@ -281,9 +281,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/ast-delete-object.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-delete-object
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-object
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/ast-delete-object
 [downloads-img]: https://img.shields.io/npm/dm/ast-delete-object.svg?style=flat-square

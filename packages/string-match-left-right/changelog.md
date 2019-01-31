@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.6.0 (2018-12-26)
 
-* ✨ Add `EOL` matching and code refresh ([ca834a7](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/ca834a7))
-* ✨ Add `opts.relaxedApi` ([f30626c](https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right/commits/f30626c))
+* ✨ Add `EOL` matching and code refresh ([ca834a7](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/commits/ca834a7))
+* ✨ Add `opts.relaxedApi` ([f30626c](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/commits/f30626c))
 
 ## 3.5.0 (2018-12-04)
 

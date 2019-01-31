@@ -4,7 +4,7 @@
  * Version: 1.7.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/object-all-values-equal-to
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/object-all-values-equal-to
  */
 
 import isObj from 'lodash.isplainobject';

@@ -7,7 +7,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-* Add rules to identify non-printable low-range ASCII characters ([5471ccc](https://bitbucket.org/codsen/codsen/src/master/packages/emlint/commits/5471ccc))
+* Add rules to identify non-printable low-range ASCII characters ([5471ccc](https://gitlab.com/codsen/codsen/tree/master/packages/emlint/commits/5471ccc))
 
 ## 0.1.0 (2018-08-27)
 

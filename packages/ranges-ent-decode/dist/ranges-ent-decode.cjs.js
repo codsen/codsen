@@ -4,7 +4,7 @@
  * Version: 1.4.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/ranges-ent-decode
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-ent-decode
  */
 
 'use strict';

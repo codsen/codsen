@@ -113,7 +113,7 @@ Third argument - an Optional Options Object.
 | {                                        |                              |             |             |
 | `wrapHeadsWith`                          | String                       | no          | `%%_`       | Prepend this to each value, each result of flattening or simply other encountered value.                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `wrapTailsWith`                          | String                       | no          | `_%%`       | Append this to each value, each result of flattening or simply other encountered value.                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| `dontWrapKeys`                           | Array of strings or String   | no          | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables), for example. You can put wildcards (\*) to match zero or more characters.                                                                                                              |
+| `dontWrapKeys`                           | Array of strings or String   | no          | empty array | We won't append or prepend anything to the keys that match value(s) given here (applies to child nodes as well). Also, we won't flatten them (or their child nodes). This is used to prevent mangling of keys containing your [data storage](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables), for example. You can put wildcards (\*) to match zero or more characters.                                                                                                              |
 | `dontWrapPaths`                          | Array of strings or String   | no          | empty array | This is a more-precise cousin of `dontWrapKeys`. Put the exact path(s) to the key you want to ignore. Remember to append `[number]` after keys that have values as arrays. For example, here's a path to ignore: `modules[0].part2[1].ccc[0].kkk` - key `modules` in root, equal to array. Take zero'th element from that array, it's an object. Take that object's key `part2`, it's equal to an array. Take that array's second element (index `1`)... and so on. This path would be ignored, for example. |
 | `xhtml`                                  | Boolean                      | no          | `true`      | When flattening, arrays or plain objects are converted into strings. Each value is separated by a line break, and this controls which type to use: HTML (`<br>`) or XHTML (`<br />`)                                                                                                                                                                                                                                                                                                                         |
 | `preventDoubleWrapping`                  | Boolean                      | no          | `true`      | If the current value already contains a string from `wrapHeadsWith` or `wrapTailsWith`, don't wrap to prevent double wrapping.                                                                                                                                                                                                                                                                                                                                                                               |
@@ -216,7 +216,7 @@ To achieve that, you use another JSON _mapping file_,
 }
 ```
 
-It's easy to [merge](https://bitbucket.org/codsen/codsen/src/master/packages/object-merge-advanced) the _mapping file_ onto the _data file_, but you get:
+It's easy to [merge](https://gitlab.com/codsen/codsen/tree/master/packages/object-merge-advanced) the _mapping file_ onto the _data file_, but you get:
 
 ```js
 // intermediate data file after merging the mapping file over data file
@@ -278,9 +278,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/object-flatten-referencing.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/object-flatten-referencing
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-referencing
 [cov-img]: https://img.shields.io/badge/coverage-96.89%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/object-flatten-referencing
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/object-flatten-referencing
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/object-flatten-referencing
 [downloads-img]: https://img.shields.io/npm/dm/object-flatten-referencing.svg?style=flat-square

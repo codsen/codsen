@@ -4,7 +4,7 @@
  * Version: 3.14.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails
  */
 
 import isInt from 'is-natural-number';

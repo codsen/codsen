@@ -4,7 +4,7 @@
  * Version: 2.9.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/util-nonempty
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty
  */
 
 'use strict';

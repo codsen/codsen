@@ -89,7 +89,7 @@ The `opts.ignoreRanges` can be an empty array, but if it contains anything else 
 
 It works like cropping the ranges. The characters in those ranges will not be included in the result.
 
-For example, use library [string-find-heads-tails](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
+For example, use library [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) to extract the ranges of variables' _heads_ and _tails_ in a string. Then ignore all variables' _heads_ and _tails_ when splitting:
 
 ```js
 const input = "some interesting {{text}} {% and %} {{ some more }} text.";
@@ -127,7 +127,7 @@ const res2 = split(input, {
 // => ['some', 'interesting', 'text.']
 ```
 
-We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://bitbucket.org/codsen/codsen/src/master/packages/string-find-heads-tails) output, which is in format (index numbers are only examples):
+We need to perform the array.reduce to adapt to the [string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails) output, which is in format (index numbers are only examples):
 
 ```js
 [
@@ -186,9 +186,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-split-by-whitespace.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-split-by-whitespace
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-split-by-whitespace
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-split-by-whitespace
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-split-by-whitespace
 [downloads-img]: https://img.shields.io/npm/dm/string-split-by-whitespace.svg?style=flat-square

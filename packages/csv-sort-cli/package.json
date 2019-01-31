@@ -4,10 +4,10 @@
   "description": "Command line app to sort double-entry CSVs coming from internet banking statements",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli",
-  "homepage": "https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -186,7 +186,7 @@
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "tempy": "^0.2.1"
   }
 }

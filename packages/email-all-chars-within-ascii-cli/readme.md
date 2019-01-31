@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API for it: [email-all-chars-within-ascii](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii)
+- API for it: [email-all-chars-within-ascii](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii)
 
 ## TLDR; Usage
 
@@ -76,7 +76,7 @@ I'm going to prepare for the worst and deliver all my templates ready for ANY en
 
 PS. I'm saying 126, not 127 because 127 is "invisible" [DEL](http://www.fileformat.info/info/unicode/char/007f/index.htm) character which is not acceptable in templates.
 
-Check out [the API](https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii) version which works well in Gulp environment.
+Check out [the API](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii) version which works well in Gulp environment.
 
 **[⬆ back to top](#markdown-header-email-all-chars-within-ascii-cli)**
 
@@ -102,7 +102,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/email-all-chars-within-ascii-cli.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/email-all-chars-within-ascii-cli
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/email-all-chars-within-ascii-cli
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/email-all-chars-within-ascii-cli
 [downloads-img]: https://img.shields.io/npm/dm/email-all-chars-within-ascii-cli.svg?style=flat-square

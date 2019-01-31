@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.9.0 (2018-12-26)
 
-* ✨ Relax the API and switch to _Prettier_ ([8aa4018](https://bitbucket.org/codsen/codsen/src/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
+* ✨ Relax the API and switch to _Prettier_ ([8aa4018](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/commits/8aa4018))
 
 ## 2.8.0 (2018-10-26)
 

@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 5.2.0 (2018-12-26)
 
-* ✨ Complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names/commits/4d888dc))
+* ✨ Complete rewrite, now allowing to request array of ranges as well. Removed all deps. ([4d888dc](https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names/commits/4d888dc))
 
 ## 5.1.0 (2018-10-25)
 

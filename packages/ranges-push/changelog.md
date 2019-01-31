@@ -10,10 +10,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.13.0 (2018-12-26)
 
-* ✨ Harden the type checks just in case ([106ae7a](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/106ae7a))
-* ✨ Implement throw pinning in unit tests ([6b8c789](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/6b8c789))
-* ✨ Omit the 3rd argument when it's equal to an empty string ([343c153](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/343c153))
-* ✨ Add `opts.limitLinebreaksCount` ([55eedfa](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-push/commits/55eedfa))
+* ✨ Harden the type checks just in case ([106ae7a](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/commits/106ae7a))
+* ✨ Implement throw pinning in unit tests ([6b8c789](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/commits/6b8c789))
+* ✨ Omit the 3rd argument when it's equal to an empty string ([343c153](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/commits/343c153))
+* ✨ Add `opts.limitLinebreaksCount` ([55eedfa](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push/commits/55eedfa))
 
 ## 2.12.0 (2018-10-25)
 

@@ -10,12 +10,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.10.0 (2018-12-26)
 
-* ✨ Added `-s` (`--silent`) flag ([294dc8b](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/294dc8b))
-* ✨ Address single/plural cases in unsortable files ([345d3d1](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/345d3d1))
-* ✨ Exclude DS_Store and other system files by default ([02f0b31](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/02f0b31))
-* ✨ Labeling improvement ([f81653d](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f81653d))
-* ✨ Setup improvements, unit tests and deep sort ([5dff488](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/5dff488))
-* ✨ Silent mode, more unit tests and improved reporting ([f43fcca](https://bitbucket.org/codsen/codsen/src/master/packages/json-sort-cli/commits/f43fcca))
+* ✨ Added `-s` (`--silent`) flag ([294dc8b](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/294dc8b))
+* ✨ Address single/plural cases in unsortable files ([345d3d1](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/345d3d1))
+* ✨ Exclude DS_Store and other system files by default ([02f0b31](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/02f0b31))
+* ✨ Labeling improvement ([f81653d](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/f81653d))
+* ✨ Setup improvements, unit tests and deep sort ([5dff488](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/5dff488))
+* ✨ Silent mode, more unit tests and improved reporting ([f43fcca](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/commits/f43fcca))
 
 ## 1.9.0 (2018-08-19)
 

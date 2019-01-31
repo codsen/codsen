@@ -4,7 +4,7 @@
  * Version: 5.8.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/string-extract-class-names
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names
  */
 
 'use strict';

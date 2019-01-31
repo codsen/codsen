@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.3.0 (2018-12-26)
 
-* ✨ Comments skip ([4afb7c4](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/4afb7c4))
-* ✨ Improvements to tag recognition algorithm ([d265d1e](https://bitbucket.org/codsen/codsen/src/master/packages/html-table-patcher/commits/d265d1e))
+* ✨ Comments skip ([4afb7c4](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/commits/4afb7c4))
+* ✨ Improvements to tag recognition algorithm ([d265d1e](https://gitlab.com/codsen/codsen/tree/master/packages/html-table-patcher/commits/d265d1e))
 
 ## 0.2.0 (2018-10-28)
 

@@ -4,10 +4,10 @@
   "description": "Like npm-check-updates but supports Lerna monorepos and enforces strict semver values",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=8.9"
   },
-  "repository": "https://bitbucket.org/codsen/update-versions",
-  "homepage": "https://bitbucket.org/codsen/update-versions",
+  "repository": "https://gitlab.com/codsen/codsen/",
+  "homepage": "https://gitlab.com/codsen/codsen/tree/master/packages/update-versions",
   "author": {
     "email": "roy@codsen.com",
     "name": "Roy Revelt",
@@ -199,7 +199,7 @@
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^13.1.0",
     "p-map": "^2.0.0",
-    "prettier": "^1.16.2",
+    "prettier": "^1.16.3",
     "tempy": "^0.2.1"
   }
 }

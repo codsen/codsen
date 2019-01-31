@@ -10,8 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 3.3.0 (2018-12-26)
 
-* ✨ Bitbucket support ([c3ff18e](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/c3ff18e))
-* ✨ Support only changelog data, no package.json or git tags ([142b047](https://bitbucket.org/codsen/codsen/src/master/packages/chlu/commits/142b047))
+* ✨ Bitbucket support ([c3ff18e](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/commits/c3ff18e))
+* ✨ Support only changelog data, no package.json or git tags ([142b047](https://gitlab.com/codsen/codsen/tree/master/packages/chlu/commits/142b047))
 
 ## 3.2.0 (2018-10-14)
 

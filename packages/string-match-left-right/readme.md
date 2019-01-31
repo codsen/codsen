@@ -329,7 +329,7 @@ console.log(res4);
 
 ## `opts.trimBeforeMatching`
 
-For example, [string-strip-html](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html) is using this library to check, is there a known HTML tag name to the right of the opening bracket character (`<`). Like `<div` or `<img`. Now, we want to allow dirty code cases when there's whitespace after the bracket, like `< div`, just in case somebody would sneak in `< script` and some browser would "patch it up". In `string-strip-html`, we want to be able to detect and strip even `<\n\n\nscript>`. That's easy, we set `opts.trimBeforeMatching` to `true`. When matching is performed, substring on the right of `<`, the `\n\n\nscript`, is trimmed into `script`, then matched.
+For example, [string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html) is using this library to check, is there a known HTML tag name to the right of the opening bracket character (`<`). Like `<div` or `<img`. Now, we want to allow dirty code cases when there's whitespace after the bracket, like `< div`, just in case somebody would sneak in `< script` and some browser would "patch it up". In `string-strip-html`, we want to be able to detect and strip even `<\n\n\nscript>`. That's easy, we set `opts.trimBeforeMatching` to `true`. When matching is performed, substring on the right of `<`, the `\n\n\nscript`, is trimmed into `script`, then matched.
 
 By the way it's not on by default because such scenarios are rare. Default comparison should be a strict-one.
 
@@ -337,7 +337,7 @@ By the way it's not on by default because such scenarios are rare. Default compa
 
 ## `opts.trimCharsBeforeMatching`
 
-For example, [string-strip-html](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
+For example, [string-strip-html](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html) will look for opening and closing tags. First it will locate opening bracket `<`. Then it will check, is there a known tag name to the right, but trimming any `/`'s, to account for closing slashes.
 
 **[⬆ back to top](#markdown-header-string-match-left-right)**
 
@@ -397,9 +397,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/string-match-left-right.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-match-left-right
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
 [cov-img]: https://img.shields.io/badge/coverage-96.8%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/string-match-left-right
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-match-left-right
 [downloads-img]: https://img.shields.io/npm/dm/string-match-left-right.svg?style=flat-square

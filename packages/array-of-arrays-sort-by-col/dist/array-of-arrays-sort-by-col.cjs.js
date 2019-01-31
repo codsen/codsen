@@ -4,7 +4,7 @@
  * Version: 2.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/array-of-arrays-sort-by-col
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-of-arrays-sort-by-col
  */
 
 'use strict';

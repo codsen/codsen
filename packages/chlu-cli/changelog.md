@@ -10,10 +10,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.13.0 (2018-12-26)
 
-* ✨ Add unit tests ([0692e46](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/0692e46))
-* ✨ Add atomic file writing ([82f1065](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/82f1065))
-* ✨ Add Bitbucket support ([ea95929](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/ea95929))
-* ✨ Now recognises Bitbucket and more ([d541303](https://bitbucket.org/codsen/codsen/src/master/packages/chlu-cli/commits/d541303))
+* ✨ Add unit tests ([0692e46](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/commits/0692e46))
+* ✨ Add atomic file writing ([82f1065](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/commits/82f1065))
+* ✨ Add Bitbucket support ([ea95929](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/commits/ea95929))
+* ✨ Now recognises Bitbucket and more ([d541303](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli/commits/d541303))
 
 ## 1.12.0 (2018-10-14)
 

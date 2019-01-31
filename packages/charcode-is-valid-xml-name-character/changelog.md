@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.7.0 (2018-12-26)
 
-* ✨ Add function aliases with more human-friendly names ([9cb319b](https://bitbucket.org/codsen/codsen/src/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
+* ✨ Add function aliases with more human-friendly names ([9cb319b](https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character/commits/9cb319b))
 
 ## 1.6.0 (2018-10-14)
 

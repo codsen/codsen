@@ -12,16 +12,16 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/ef44f63))
+* 🐛 Throwing case when tag is the last in string and has closing bracket missing ([ef44f63](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/ef44f63))
 
 ### Features
 
-* ✨ Algorithm improvements ([8a82b8e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/8a82b8e))
-* ✨ Delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/71f720c))
-* ✨ Improvements to exclamation mark punctuation ([e31fd3b](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/e31fd3b))
-* ✨ `opts.dumpLinkHrefsNearby` and algorithm improvements ([777407e](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/777407e))
-* ✨ Add `opts.onlyStripTags` ([7bb49c8](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/7bb49c8))
-* ✨ Add `opts.trimOnlySpaces` ([b8c6f29](https://bitbucket.org/codsen/codsen/src/master/packages/string-strip-html/commits/b8c6f29))
+* ✨ Algorithm improvements ([8a82b8e](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/8a82b8e))
+* ✨ Delete trailing whitespace after dirty code chunk: tag + missing opening bracket tag ([71f720c](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/71f720c))
+* ✨ Improvements to exclamation mark punctuation ([e31fd3b](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/e31fd3b))
+* ✨ `opts.dumpLinkHrefsNearby` and algorithm improvements ([777407e](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/777407e))
+* ✨ Add `opts.onlyStripTags` ([7bb49c8](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/7bb49c8))
+* ✨ Add `opts.trimOnlySpaces` ([b8c6f29](https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html/commits/b8c6f29))
 
 ## 3.2.0 (2018-07-22)
 

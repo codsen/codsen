@@ -158,9 +158,9 @@ I think the API should accept a very wide spectrum of values, so users would not
 
 I'm going to use it in:
 
-- [ast-monkey](https://bitbucket.org/codsen/codsen/src/master/packages/ast-monkey)
-- [json-variables](https://bitbucket.org/codsen/codsen/src/master/packages/json-variables)
-- [ast-delete-key](https://bitbucket.org/codsen/codsen/src/master/packages/ast-delete-key)
+- [ast-monkey](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey)
+- [json-variables](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables)
+- [ast-delete-key](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-key)
 
 and others. So, it's not that niche as it might seem!
 
@@ -188,9 +188,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/util-array-object-or-both.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/util-array-object-or-both
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/util-array-object-or-both
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/util-array-object-or-both
 [downloads-img]: https://img.shields.io/npm/dm/util-array-object-or-both.svg?style=flat-square

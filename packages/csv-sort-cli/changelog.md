@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.7.0 (2018-12-26)
 
-* ✨ Add unit tests for CLI operations ([3676894](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort-cli/commits/3676894))
+* ✨ Add unit tests for CLI operations ([3676894](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli/commits/3676894))
 
 ## 1.6.0 (2018-06-25)
 

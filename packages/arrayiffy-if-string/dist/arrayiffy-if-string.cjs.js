@@ -4,7 +4,7 @@
  * Version: 3.10.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
- * Homepage: https://bitbucket.org/codsen/codsen/src/master/packages/arrayiffy-if-string
+ * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/arrayiffy-if-string
  */
 
 'use strict';

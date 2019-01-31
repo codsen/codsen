@@ -10,9 +10,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.9.0 (2018-12-26)
 
-* ✨ Add 3rd input arg - progressFn ([f6735e2](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/f6735e2))
-* ✨ Accept `null` as second input argument, instead of ranges ([0c59484](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/0c59484))
-* ✨ [`ranges-merge`](https://www.npmjs.com/package/ranges-merge) (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://bitbucket.org/codsen/codsen/src/master/packages/ranges-apply/commits/35e3c4b))
+* ✨ Add 3rd input arg - progressFn ([f6735e2](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/f6735e2))
+* ✨ Accept `null` as second input argument, instead of ranges ([0c59484](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/0c59484))
+* ✨ [`ranges-merge`](https://www.npmjs.com/package/ranges-merge) (sort + merge) is applied by default now to prevent errors on unsorted ranges ([35e3c4b](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply/commits/35e3c4b))
 
 ## 2.8.0 (2018-11-29)
 

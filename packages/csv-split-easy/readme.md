@@ -151,7 +151,7 @@ The third requirement is that any of the values can be wrapped with double quote
 
 The requirements mentioned above pretty much rule out the conventional regex-based split algorithms. You [can](https://github.com/sindresorhus/split-lines/blob/master/index.js) just split by `/\r?\n/` but later you'll need to clean up possible empty rows. You can't `string.split` each row by comma because that comma might be a value, you need to check for wrapping double quotes first!
 
-So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-comb](https://bitbucket.org/codsen/codsen/src/master/packages/email-comb) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://bitbucket.org/codsen/codsen/src/master/packages/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
+So, the best algorithm is a single `for`-loop traversal on the input string, detecting and `array.push`ing the values one by one. It worked very well on [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb) where I remove unused CSS from an HTML template within around 2.5 times more characters "travelled" than there are in the file. Traversing as a string also worked well on [html-img-alt](https://gitlab.com/codsen/codsen/tree/master/packages/html-img-alt) which needs only a single traversal through the string to fix all the `img` tag `alt` attributes and clean all the crap in/around them.
 
 **[⬆ back to top](#markdown-header-csv-split-easy)**
 
@@ -177,9 +177,9 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-img]: https://img.shields.io/node/v/csv-split-easy.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/csv-split-easy
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
 [cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/csv-split-easy
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-split-easy
 [downloads-img]: https://img.shields.io/npm/dm/csv-split-easy.svg?style=flat-square

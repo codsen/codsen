@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 2.4.0 (2018-12-26)
 
-* ✨ Rebase to point to es modules builds ([8d4635e](https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort/commits/8d4635e))
+* ✨ Rebase to point to es modules builds ([8d4635e](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort/commits/8d4635e))
 
 ## 2.3.0 (2018-10-17)
 

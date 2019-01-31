@@ -130,9 +130,9 @@ List of [currency signs](https://github.com/bengourley/currency-symbol-map) - Co
 [node-img]: https://img.shields.io/node/v/csv-sort.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/csv-sort
 [bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort
+[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
 [cov-img]: https://img.shields.io/badge/coverage-98.92%25-brightgreen.svg?style=flat-square
-[cov-url]: https://bitbucket.org/codsen/codsen/src/master/packages/csv-sort
+[cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/csv-sort
 [downloads-img]: https://img.shields.io/npm/dm/csv-sort.svg?style=flat-square

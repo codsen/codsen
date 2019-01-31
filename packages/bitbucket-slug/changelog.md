@@ -10,7 +10,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.3.0 (2018-12-26)
 
-* ✨ recognise consecutive dashes ([b44ff9d](https://bitbucket.org/codsen/codsen/src/master/packages/bitbucket-slug/commits/b44ff9d))
+* ✨ recognise consecutive dashes ([b44ff9d](https://gitlab.com/codsen/codsen/tree/master/packages/bitbucket-slug/commits/b44ff9d))
 
 ## 1.2.0 (2018-10-14)
 
