@@ -903,7 +903,7 @@ test(`04.17 - ${`\u001b[${33}m${`file-mixed-line-endings-file-is-*-mainly`}\u001
 // 05. rule "attribute-space-between-name-and-equals"
 // -----------------------------------------------------------------------------
 
-test(`05.01 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
+test(`05.01 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
   const input1 = `<zzz>`;
   const res1 = emlint(input1);
   t.is(res1.issues.length, 0, "05.01.01");
@@ -913,7 +913,7 @@ test(`05.01 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b
   t.is(res2.issues.length, 0, "05.01.02");
 });
 
-test(`05.02 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
+test(`05.02 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
   // 1. single space
 
   const bad1 = `<zzz yyy ="qqq">`;
@@ -939,6 +939,149 @@ test(`05.02 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b
   t.is(apply(bad2, res2.fix), good2, "05.02.04");
 });
 
+// 06. rule "tag-excessive-whitespace-inside-tag"
+// -----------------------------------------------------------------------------
+
+test(`06.01 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - control, no excessive gaps`, t => {
+  const input1 = `<aaa bbb="ccc" ddd="eee">`;
+  const res1 = emlint(input1);
+  t.is(res1.issues.length, 0, "06.01.01");
+
+  const input2 = `<aaa bbb="ccc" ddd="eee"/>`;
+  const res2 = emlint(input2);
+  t.is(res2.issues.length, 0, "06.01.02");
+});
+
+test(`06.02 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces between tag name and attr`, t => {
+  // 1. single space between tag name and attr
+
+  const bad1 = `<aaa  bbb="ccc" ddd="eee">`;
+  const good1 = `<aaa bbb="ccc" ddd="eee">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.02.02");
+
+  // 2. more substantial whitespace
+  const bad2 = `<aaa \n bbb="ccc" ddd="eee">`;
+  const good2 = `<aaa bbb="ccc" ddd="eee">`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.02.01"
+  );
+  t.is(apply(bad2, res2.fix), good2, "06.02.02");
+});
+
+test(`06.03 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces between attrs`, t => {
+  // 1. double space between attributes, once
+  const bad1 = `<aaa bbb="ccc"  ddd="eee">`;
+  const good1 = `<aaa bbb="ccc" ddd="eee">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.03.02");
+
+  // 2. multiple chunks, both larger
+  const bad2 = `<aaa bbb="ccc"  ddd="eee"       fff="ggg">`;
+  const good2 = `<aaa bbb="ccc" ddd="eee" fff="ggg">`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.03.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "06.03.04");
+
+  // 3. attribute without a value, followed by whitespace chunk:
+  // attribute with no equals and value
+  const bad3 = `<aaa bbb  ddd="eee">`;
+  const good3 = `<aaa bbb ddd="eee">`;
+  const res3 = emlint(bad3);
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.03.05"
+  );
+  t.is(apply(bad3, res3.fix), good3, "06.03.06");
+});
+
+test(`06.04 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash`, t => {
+  // 1. single space before closing slash
+
+  const bad1 = `<aaa bbb="ccc" ddd="eee" />`;
+  const good1 = `<aaa bbb="ccc" ddd="eee"/>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.04.02");
+
+  // 2. multiple spaces before the closing slash
+
+  const bad2 = `<aaa bbb="ccc" ddd="eee"    />`;
+  const good2 = `<aaa bbb="ccc" ddd="eee"/>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.04.01"
+  );
+  t.is(apply(bad2, res2.fix), good2, "06.04.02");
+});
+
+test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash`, t => {
+  // 1. single space before closing slash
+
+  const bad1 = `<aaa bbb="ccc" / ddd="eee"/>`;
+  //                          ^
+  //   this gap will be recognised as not closing slash
+  const res1 = emlint(bad1);
+  t.false(
+    getUniqueIssueNames(res1.issues).includes(
+      "tag-excessive-whitespace-inside-tag"
+    ),
+    "06.05.01"
+  );
+});
+
+// 07. rule "attribute-space-between-equals-and-opening-quotes"
+// -----------------------------------------------------------------------------
+// 1. double space between attributes, once
+
+test(`07.01 - ${`\u001b[${34}m${`attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and quote`, t => {
+  // 1. double quote:
+  const bad1 = `<aaa bbb= "ccc">`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["attribute-space-between-equals-and-opening-quotes"],
+    "07.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "07.01.02");
+
+  // 2. single quote:
+  const bad2 = `<aaa bbb= 'ccc'>`;
+  const good2 = `<aaa bbb='ccc'>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["attribute-space-between-equals-and-opening-quotes"],
+    "07.01.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "07.01.04");
+});
+
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
@@ -946,3 +1089,5 @@ test(`05.02 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b
 // test.todo("file-html-tag-ending");
 // test.todo("file-trailing-line-break-present");
 // test.todo("file-trailing-line-break-absent");
+// test.todo("tough one: <aaa bbb="  ccc="ddd">")
+// test.todo("even tougher one: <aaa bbb = "  ccc = "ddd">")

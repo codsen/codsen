@@ -285,8 +285,8 @@ function emlint(str, originalOpts) {
     attrName: null,
     attrValue: null,
     attrEqualAt: null,
-    attrOpeningQuoteAt: null,
-    attrClosingQuoteAt: null,
+    attrOpeningQuote: { pos: null, val: null },
+    attrClosingQuote: { pos: null, val: null },
     recognised: null,
     pureHTML: true
   };
@@ -329,6 +329,19 @@ function emlint(str, originalOpts) {
       else if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
         logAttr.attrStartAt = i;
         logAttr.attrNameStartAt = i;
+        if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
+          if (str[logWhitespace.startAt] === " ") {
+            retObj.issues.push({
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt + 1, i]]
+            });
+          } else {
+            retObj.issues.push({
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt, i, " "]]
+            });
+          }
+        }
       }
       if (
         logAttr.attrNameEndAt !== null &&
@@ -340,11 +353,62 @@ function emlint(str, originalOpts) {
           logAttr.attrEqualAt = i;
         }
         if (logWhitespace.startAt !== null) {
-          retObj.issues.push({
-            name: "attribute-space-between-name-and-equals",
-            position: [[logWhitespace.startAt, i]]
-          });
+          if (str[i] === "=") {
+            retObj.issues.push({
+              name: "attribute-space-between-name-and-equals",
+              position: [[logWhitespace.startAt, i]]
+            });
+          } else if (isLatinLetter(str[i])) {
+            logTag.attributes.push(clone(logAttr));
+            resetLogAttr();
+            if (logWhitespace.startAt !== null) {
+              if (str[logWhitespace.startAt] === " ") {
+                retObj.issues.push({
+                  name: "tag-excessive-whitespace-inside-tag",
+                  position: [[logWhitespace.startAt + 1, i]]
+                });
+              } else {
+                retObj.issues.push({
+                  name: "tag-excessive-whitespace-inside-tag",
+                  position: [[logWhitespace.startAt, i, " "]]
+                });
+              }
+            }
+          }
         }
+      }
+      else if (
+        logAttr.attrEqualAt !== null &&
+        logAttr.attrOpeningQuote.pos === null &&
+        str[i].trim().length
+      ) {
+        logAttr.attrOpeningQuote.pos = i;
+        logAttr.attrOpeningQuote.val = str[i];
+        if (logWhitespace.startAt !== null) {
+          if (str[i] === "'" || str[i] === '"') {
+            retObj.issues.push({
+              name: "attribute-space-between-equals-and-opening-quotes",
+              position: [[logWhitespace.startAt, i]]
+            });
+          }
+        }
+      }
+      else if (
+        logAttr.attrEqualAt !== null &&
+        logAttr.attrOpeningQuote.pos !== null &&
+        i > logAttr.attrOpeningQuote.pos &&
+        str[i] === logAttr.attrOpeningQuote.val
+      ) {
+        logAttr.attrClosingQuote.pos = i;
+        logAttr.attrClosingQuote.val = str[i];
+        if (logAttr.attrOpeningQuote.pos + 1 < i) {
+          logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
+        } else {
+          logAttr.attrValue = "";
+        }
+        logAttr.attrEndAt = i;
+        logTag.attributes.push(clone(logAttr));
+        resetLogAttr();
       }
     }
     if (charcode < 32) {
@@ -405,6 +469,22 @@ function emlint(str, originalOpts) {
       }
     }
     if (logWhitespace.startAt !== null && str[i].trim().length) {
+      if (
+        logTag.tagNameStartAt !== null &&
+        logAttr.attrStartAt === null &&
+        (str[i] === ">" ||
+          (str[i] === "/" &&
+            (str[i + 1] === ">" ||
+              str
+                .slice(i + 1)
+                .trim()
+                .startsWith(">"))))
+      ) {
+        retObj.issues.push({
+          name: "tag-excessive-whitespace-inside-tag",
+          position: [[logWhitespace.startAt, i]]
+        });
+      }
       resetLogWhitespace();
     }
     if (!str[i].trim().length && logWhitespace.startAt === null) {
