@@ -73,7 +73,7 @@ function row(lib, webApp) {
 function topRow(webapp) {
   return `| Library's name | Purpose |${
     webapp ? "Web app |" : ""
-  } ____npm_link____ | Source code in monorepo |
+  } the_link_to_npm | Source code in monorepo |
 | -------------- | ------- |${
     webapp ? " ------- |" : ""
   } ----------- | ----------------------- |`;
