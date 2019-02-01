@@ -255,7 +255,7 @@ const template = `# 📦 Codsen 📦
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 🚢 Flagship Libraries
 
@@ -295,7 +295,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 ${topRow()}
 ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 🎻 ${filteredStringLibsList.length} String Processing Libraries
 
@@ -304,7 +304,7 @@ They process string inputs, which might be text, code or something else as long 
 ${topRow()}
 ${filteredStringLibsList.map(lib => row(lib)).join("\n")}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 🔮 ${filteredObjectLibsList.length} Object Processing Libraries
 
@@ -315,7 +315,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ na
 ${topRow()}
 ${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## ✂️ ${filteredCliAppsList.length} CLI Apps
 
@@ -328,19 +328,19 @@ You use them in the Terminal (command line), for example:
 ${topRow()}
 ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 🛠️ ${filteredOtherLibsList.length} Miscellaneous Libraries
 
 ${topRow()}
 ${filteredOtherLibsList.map(lib => row(lib)).join("\n")}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 🤝 Contributing
 ${lectrc.contributing.restofit}
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 
 ## 💼 Licence
 
@@ -348,7 +348,7 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-<div style="float: right; display: inline-block;"><a href="#-codsen-">⬆ back to top</a></div>
+<span align="right"><a href="#-codsen-">⬆ back to top</a></span>
 `;
 
 fs.writeFile(
