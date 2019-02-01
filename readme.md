@@ -13,7 +13,7 @@
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-<table><tr><td align="left"><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table><tr><td><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 | Library's name | Purpose |Web app | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ------- | ----------- | ----------------------- |

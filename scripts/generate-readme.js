@@ -255,7 +255,7 @@ const template = `# 📦 Codsen 📦
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-<table><tr><td align="left"><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table><tr><td><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ${topRow(true)}
 ${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
