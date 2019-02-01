@@ -480,8 +480,12 @@ function emlint(str, originalOpts) {
                 .trim()
                 .startsWith(">"))))
       ) {
+        let name$$1 = "tag-excessive-whitespace-inside-tag";
+        if (str[logWhitespace.startAt - 1] === "/") {
+          name$$1 = "tag-whitespace-tags-closing-slash-and-bracket";
+        }
         retObj.issues.push({
-          name: "tag-excessive-whitespace-inside-tag",
+          name: name$$1,
           position: [[logWhitespace.startAt, i]]
         });
       }

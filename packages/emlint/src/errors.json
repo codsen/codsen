@@ -203,5 +203,10 @@
     "description": "There's an excessive whitespace inside the tag",
     "excerpt": "space between attribute's name and equal sign",
     "scope": "html"
+  },
+  "tag-whitespace-tags-closing-slash-and-bracket": {
+    "description": "There's a whitespace between closing slash and closing bracket",
+    "excerpt": "whitespace between slash and closing bracket",
+    "scope": "html"
   }
 }

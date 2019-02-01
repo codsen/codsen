@@ -284,8 +284,12 @@ function emlint(str, originalOpts) {
     }
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (str[i] === ">" || str[i] === "/" && (str[i + 1] === ">" || str.slice(i + 1).trim().startsWith(">")))) {
+        var _name = "tag-excessive-whitespace-inside-tag";
+        if (str[logWhitespace.startAt - 1] === "/") {
+          _name = "tag-whitespace-tags-closing-slash-and-bracket";
+        }
         retObj.issues.push({
-          name: "tag-excessive-whitespace-inside-tag",
+          name: _name,
           position: [[logWhitespace.startAt, i]]
         });
       }

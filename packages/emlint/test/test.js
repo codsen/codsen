@@ -1058,7 +1058,6 @@ test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
 
 // 07. rule "attribute-space-between-equals-and-opening-quotes"
 // -----------------------------------------------------------------------------
-// 1. double space between attributes, once
 
 test(`07.01 - ${`\u001b[${34}m${`attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and quote`, t => {
   // 1. double quote:
@@ -1082,6 +1081,71 @@ test(`07.01 - ${`\u001b[${34}m${`attribute-space-between-equals-and-opening-quot
     "07.01.03"
   );
   t.is(apply(bad2, res2.fix), good2, "07.01.04");
+});
+
+// 08. rule "tag-whitespace-tags-closing-slash-and-bracket"
+// -----------------------------------------------------------------------------
+
+test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}\u001b[${39}m`} - all OK`, t => {
+  // there is no whitespace or slash at all
+  const good1 = `<aaa>`;
+  const res1 = emlint(good1);
+  t.false(
+    getUniqueIssueNames(res1.issues).includes(
+      "attribute-space-between-equals-and-opening-quotes"
+    ),
+    "08.01.01"
+  );
+
+  // there is no whitespace at all
+  const good2 = `<aaa/>`;
+  const res2 = emlint(good2);
+  t.false(
+    getUniqueIssueNames(res2.issues).includes(
+      "attribute-space-between-equals-and-opening-quotes"
+    ),
+    "08.01.02"
+  );
+
+  // whitespace IS there but it's a different issue
+  const good3 = `<aaa />`;
+  const res3 = emlint(good3);
+  t.false(
+    getUniqueIssueNames(res3.issues).includes(
+      "attribute-space-between-equals-and-opening-quotes"
+    ),
+    "08.01.03"
+  );
+  t.true(
+    getUniqueIssueNames(res3.issues).includes(
+      "tag-excessive-whitespace-inside-tag"
+    ),
+    "08.01.04"
+  );
+});
+
+test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}\u001b[${39}m`} - spaces between equal and quote`, t => {
+  // 1. single space:
+  const bad1 = `<aaa/ >`;
+  const good1 = `<aaa/>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-whitespace-tags-closing-slash-and-bracket"],
+    "08.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "08.02.02");
+
+  // 2. more whitespace:
+  const bad2 = `<aaa/    \n >`;
+  const good2 = `<aaa/>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-whitespace-tags-closing-slash-and-bracket"],
+    "08.02.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "08.02.04");
 });
 
 // xx. TODO's
