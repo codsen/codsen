@@ -262,6 +262,8 @@ ${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🎯 ${filteredRangeLibsList.length} Range Libraries
 
 > _Range_ means an array of two text character index numbers, "from" and "to" (plus optional third element, string, which marks "what to add").
@@ -300,6 +302,8 @@ They process string inputs, which might be text, code or something else as long 
 ${topRow()}
 ${filteredStringLibsList.map(lib => row(lib)).join("\n")}
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🔮 ${filteredObjectLibsList.length} Object Processing Libraries
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ name: "Bob" }\`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
@@ -308,6 +312,8 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ na
 
 ${topRow()}
 ${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
+
+**[⬆ back to top](#-codsen-)**
 
 ## ✂️ ${filteredCliAppsList.length} CLI Apps
 
@@ -320,13 +326,19 @@ You use them in the Terminal (command line), for example:
 ${topRow()}
 ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🛠️ ${filteredOtherLibsList.length} Miscellaneous Libraries
 
 ${topRow()}
 ${filteredOtherLibsList.map(lib => row(lib)).join("\n")}
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🤝 Contributing
 ${lectrc.contributing.restofit}
+
+**[⬆ back to top](#-codsen-)**
 
 ## 💼 Licence
 
@@ -334,6 +346,7 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
+**[⬆ back to top](#-codsen-)**
 `;
 
 fs.writeFile(

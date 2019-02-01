@@ -4,8 +4,6 @@
 
 ## 💡 Table of Contents
 
-#%EF%B8%8F-17-miscellaneous-libraries
-
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-11-range-libraries)
 - [String Processing Libraries](#-25-string-processing-libraries)
@@ -23,6 +21,8 @@
 | [`html-crush`](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) | Minifies HTML/CSS: valid or broken, pure or mixed with other languages | [htmlcrush.com](https://htmlcrush.com) | [![html-crush on npm](https://img.shields.io/npm/v/html-crush.svg?style=flat-square)](https://www.npmjs.com/package/html-crush) | [packages/html-crush](https://gitlab.com/codsen/codsen/tree/master/packages/html-crush/) |
 
 There are quite a few small libraries, so let's group them by a common purpose.
+
+**[⬆ back to top](#-codsen-)**
 
 ## 🎯 11 Range Libraries
 
@@ -98,6 +98,8 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but trims only spaces | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
 | [`string-unfancy`](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) | Replace all fancy dashes, quotes etc with their simpler equivalents | [![string-unfancy on npm](https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square)](https://www.npmjs.com/package/string-unfancy) | [packages/string-unfancy](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) |
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🔮 20 Object Processing Libraries
 
 When we say "object" we mean _a plain object_ in JavaScript, for example, `{ name: "Bob" }`. Usually, plain objects come from JSON files, and often they are deeply nested. The following libraries help us to traverse them, set and delete keys and compare objects.
@@ -127,6 +129,8 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) |
 
+**[⬆ back to top](#-codsen-)**
+
 ## ✂️ 8 CLI Apps
 
 All the following libraries are command line applications. You install them using `-g` flag, for example, `npm i -g json-sort-cli`.
@@ -145,6 +149,8 @@ You use them in the Terminal (command line), for example:
 | [`js-row-num-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) | Update all row numbers in all console.logs in JS code | [![js-row-num-cli on npm](https://img.shields.io/npm/v/js-row-num-cli.svg?style=flat-square)](https://www.npmjs.com/package/js-row-num-cli) | [packages/js-row-num-cli](https://gitlab.com/codsen/codsen/tree/master/packages/js-row-num-cli/) |
 | [`json-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, also dot-files as long as they are valid JSON | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) |
 | [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
+
+**[⬆ back to top](#-codsen-)**
 
 ## 🛠️ 17 Miscellaneous Libraries
 
@@ -168,6 +174,8 @@ You use them in the Terminal (command line), for example:
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |
 | [`util-nonempty`](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) |
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🤝 Contributing
 * If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here).
 * If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here). Let's discuss it.
@@ -178,9 +186,12 @@ In monorepo, npm libraries are located in `packages/` folder. Inside, the source
 
 The npm script within each package's `package.json` "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
+**[⬆ back to top](#-codsen-)**
+
 ## 💼 Licence
 
 MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
+**[⬆ back to top](#-codsen-)**
