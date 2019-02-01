@@ -295,6 +295,8 @@ If you think, strings are immutable in JavaScript — each change of a string me
 ${topRow()}
 ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🎻 ${filteredStringLibsList.length} String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.

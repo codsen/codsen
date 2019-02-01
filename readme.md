@@ -66,6 +66,8 @@ If you think, strings are immutable in JavaScript — each change of a string me
 | [`ranges-process-outside`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) | Iterate through string and optionally a given ranges as if they were one | [![ranges-process-outside on npm](https://img.shields.io/npm/v/ranges-process-outside.svg?style=flat-square)](https://www.npmjs.com/package/ranges-process-outside) | [packages/ranges-process-outside](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) |
 | [`ranges-regex`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) | Perform a regex search on string and get a ranges array of findings (or null) | [![ranges-regex on npm](https://img.shields.io/npm/v/ranges-regex.svg?style=flat-square)](https://www.npmjs.com/package/ranges-regex) | [packages/ranges-regex](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) |
 
+**[⬆ back to top](#-codsen-)**
+
 ## 🎻 25 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
