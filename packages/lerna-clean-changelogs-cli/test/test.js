@@ -51,11 +51,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* aaa
+- aaa
 
 ### Features
 
-* bbb
+- bbb
 `;
 
 // Quick, general unit tests
