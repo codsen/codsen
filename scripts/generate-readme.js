@@ -73,7 +73,7 @@ function row(lib, webApp) {
 function topRow(webapp) {
   return `| Library's name | Purpose |${
     webapp ? "Web app |" : ""
-  } Link on npm | Source code in monorepo |
+  } ____npm_link____ | Source code in monorepo |
 | -------------- | ------- |${
     webapp ? " ------- |" : ""
   } ----------- | ----------------------- |`;
@@ -240,6 +240,8 @@ const template = `# 📦 Codsen 📦
 
 ## 💡 Table of Contents
 
+#%EF%B8%8F-17-miscellaneous-libraries
+
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-${filteredRangeLibsList.length}-range-libraries)
 - [String Processing Libraries](#-${
@@ -248,8 +250,8 @@ const template = `# 📦 Codsen 📦
 - [Object Processing Libraries](#-${
   filteredObjectLibsList.length
 }-object-processing-libraries)
-- [CLI Apps](#-${filteredCliAppsList.length}-cli-apps)
-- [Miscellaneous Libraries](#-${
+- [CLI Apps](#%EF%B8%8F-${filteredCliAppsList.length}-cli-apps)
+- [Miscellaneous Libraries](#%EF%B8%8F-${
   filteredOtherLibsList.length
 }-miscellaneous-libraries)
 - [Contributing](#-contributing)
