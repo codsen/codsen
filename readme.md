@@ -22,7 +22,7 @@
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
-**[⬆ back to top](#-codsen-)**
+<span style="float: right;">**[⬆ back to top](#-codsen-)**</span>
 
 ## 🎯 11 Range Libraries
 
