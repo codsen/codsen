@@ -15,6 +15,7 @@
 
 - [Install](#markdown-header-install)
 - [Idea](#markdown-header-idea)
+- [Description for final product](#markdown-header-description-for-final-product)
 - [API](#markdown-header-api)
 - [Breaking rules](#markdown-header-breaking-rules)
 - [Contributing](#markdown-header-contributing)
@@ -36,9 +37,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 14 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 14 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 36 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 15 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 15 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 37 KB |
 
 **[⬆ back to top](#)**
 
@@ -96,6 +97,8 @@ Above, [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 | `emlint`  | Function | Main function to which you feed your string; see its API below |
 | `version` | String   | Taken from `package.json`. Should match what's on npm.         |
 
+**[⬆ back to top](#)**
+
 ### API - emlint() - input
 
 **emlint(str, \[opts])** — in other words, function, which takes two arguments:
@@ -120,7 +123,7 @@ const input = "<    table>";
 // emlint() is a function, so feed that string with code into it:
 const res = emlint(input);
 // PS. options are omitted, so we're running on defaults
-console.log('res = ' + JSON.stringify(res, null, 4));
+console.log("res = " + JSON.stringify(res, null, 4));
 ```
 
 **[⬆ back to top](#)**

@@ -3,7 +3,7 @@
 > Compare anything: AST, objects, arrays, strings and nested thereof
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -38,7 +38,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ast-compare.esm.js` | 9 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ast-compare.umd.js` | 33 KB |
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Purpose
 
@@ -70,7 +70,7 @@ console.log(result);
 
 The main purpose is to compare two parsed HTML/CSS trees or their branches, but you can compare anything, it will recursively traverse arrays too. This lib is dependency for [ast-delete-object](https://gitlab.com/codsen/codsen/tree/master/packages/ast-delete-object) — library which can delete elements from [parsed](https://github.com/posthtml/posthtml-parser) HTML/CSS objects.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Use
 
@@ -96,7 +96,7 @@ This library will not mutate the input arguments.
 - If everything from `smallObj` matches everything within `bigObj`, this library returns `true`.
 - Otherwise, if there's a mismatch or something wrong with input args, it returns `false`.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ### Options object
 
@@ -108,7 +108,7 @@ This library will not mutate the input arguments.
 | `verboseWhenMismatches` | Boolean | no          | `false` | When set to `true`, instead of `false` the output will be a string with a message explaining what didn't match. It's for cases when it's important to report what didn't match. |
 | }                       |         |             |         |
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ### Output
 
@@ -119,7 +119,7 @@ If it's **not** a superset or equal, the value depends on `opts.verboseWhenMisma
 - Default, `opts.verboseWhenMismatches===false` will yield `false`
 - Default, `opts.verboseWhenMismatches===true` will yield `string`, explaining what didn't match.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Examples
 
@@ -163,7 +163,7 @@ compare(null);
 // => false.
 ```
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## opts.verboseWhenMismatches
 
@@ -171,13 +171,13 @@ Sometimes you just want a yes/no answer is something a subset or equal to someth
 
 If you use this setting, you have to anticipate Boolean `true` OR something else (Boolean `false` or string) coming out from this library.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Rationale
 
 I want to check, does a deeply-nested array of objects/strings/arrays (for example, [PostHTML-parsed](https://github.com/posthtml/posthtml-parser) AST output) is equal or is a subset of some other AST. Normally `_.isMatch` would do the deed but it positively matches **empty arrays against any arrays** what is terrible. Hence this library. Plus, this library will accept and adapt to any sources — combinations of arrays, objects and strings. That's necessary to support any parsed AST trees - HTML or CSS or whatever.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Differences from \_.isMatch
 
@@ -191,20 +191,20 @@ var res = compare(["a", "b", "c"], []);
 // now, res === false
 ```
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=ast-compare%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-ast-compare)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -214,8 +214,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/ast-compare.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/ast-compare
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
 [cov-img]: https://img.shields.io/badge/coverage-96.58%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -227,4 +227,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

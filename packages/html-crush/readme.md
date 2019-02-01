@@ -3,7 +3,7 @@
 > Minifies HTML/CSS: valid or broken, pure or mixed with other languages
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -50,7 +50,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/html-crush.esm.js` | 23 KB |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/html-crush.umd.js` | 56 KB |
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -82,7 +82,7 @@ console.log("res:\n" + JSON.stringify(res, null, 4));
 // "
 ```
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## TLDR;
 
@@ -90,7 +90,7 @@ Let's minify any input (preferably but not necessarily HTML) without parsing, an
 
 We built this minifier so that we were able to minify email templates containing Nunjucks template literals, for example, `{% if order.price < 50 %}` (notice the bracket). Other tools on the market will fail upon first encounter of non-HTML code.
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## Features
 
@@ -115,7 +115,7 @@ As a side priority, this application also takes into consideration **human-frien
 4. API (this library) considers giving all possible JavaScript use choices: CommonJS transpiled to ES5, modern untranspiled ES Modules code in ES6, and UMD transpiled to ES5 with all dependencies baked-in, all published to npm and accessible via [unpkg](https://unpkg.com/html-crush) CDN
 5. Developer friendliness - source is fully set up with `console.log`s which report the line numbers and all actions as they happen. Production builds (`dist/`) strip all logging, of course. This means it's easy to come back later or the first time and debug the code
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## API - Input
 
@@ -139,7 +139,7 @@ Once you get the function, `crush`, it's API is the following:
 
 If supplied input arguments are of any other types, an error will be thrown.
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## API - Output
 
@@ -151,7 +151,7 @@ The function exported under key `crush` will return **a plain object** where you
 | `ranges`   | Array of zero or more string range arrays | For example, if characters from index `0` to `5` and `30` to `35` were deleted, that would be `[[0, 5], [30, 35]]`               |
 | `result`   | String                                    | The string version where all ranges were applied to it.                                                                          |
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -195,7 +195,7 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
 }
 ```
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 # `opts.reportProgressFunc`
 
@@ -236,7 +236,7 @@ also,
 
 In general, when you want to minify **a mixed source code** like HTML template which contains ESP templating code (or other back-end code), you've pretty much got **no choice**: either this library or nothing. Web development-oriented libraries are all parsing, (like tried to use this library but it misbehaves, or you need a) and they will not tolerate the mixed sources. Or you'll jump over hoops to make them bypass your non-HTML/CSS parts until you aren't able to jump any more. For example, aforementioned `html-minifier` has escape latches for cheeky code in the _tag attributes_ but no matter how much you tweak its settings — it will fail sooner or later. For example, Nunjucks' `IF` statements are impossible to exclude in settings, an error is inevitable.
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## Non-deterministic unit tests
 
@@ -258,20 +258,20 @@ ava test_alt/nondeterministic.js -- --time=3s
 
 Call the file `nondeterministic.js` located in folder `test_alt` in `ava`, pass the duration in seconds you want to generate and run tests. More time, more random tests. Just number, for example `-- --time=3` means `3 milliseconds`. "s" appended means seconds, for example, `-- --time=3s`. Three minutes would be `-- --time=3m`.
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=html-crush%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-html-crush)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -281,8 +281,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/html-crush.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/html-crush
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
 [cov-img]: https://img.shields.io/badge/coverage-97.37%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -294,4 +294,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

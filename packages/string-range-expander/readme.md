@@ -3,7 +3,7 @@
 > Expands string index ranges within whitespace boundaries until letters are met
 
 [![Minimum Node version required][node-img]][node-url]
-[![Repository is on BitBucket][bitbucket-img]][bitbucket-url]
+[![Repository is on GitLab][gitlab-img]][gitlab-url]
 [![Coverage][cov-img]][cov-url]
 [![View dependencies as 2D chart][deps2d-img]][deps2d-url]
 [![Downloads/Month][downloads-img]][downloads-url]
@@ -40,7 +40,7 @@ Here's what you'll get:
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-range-expander.esm.js` | 9 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-range-expander.umd.js` | 32 KB |
 
-**[⬆ back to top](#markdown-header-string-range-expander)**
+**[⬆ back to top](#)**
 
 ## Usage
 
@@ -65,7 +65,7 @@ console.log("res = " + JSON.stringify(res1, null, 4));
 
 This library is used to manage the whitespace in the string index selections. The "from" and "to" indexes correspond the `String.slice()` "beginIndex" and "endIndex" API as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice).
 
-**[⬆ back to top](#markdown-header-string-range-expander)**
+**[⬆ back to top](#)**
 
 ## API
 
@@ -81,7 +81,7 @@ The function is exported as _default_, you can name it any way you like when you
 
 If input arguments are supplied have any other types, an error will be `throw`n.
 
-**[⬆ back to top](#markdown-header-string-range-expander)**
+**[⬆ back to top](#)**
 
 ### Optional Options Object
 
@@ -119,7 +119,7 @@ Here it is in one place if you want to copy-paste it somewhere:
 }
 ```
 
-**[⬆ back to top](#markdown-header-string-range-expander)**
+**[⬆ back to top](#)**
 
 ### API - Function's Output
 
@@ -127,16 +127,16 @@ The output is an array of two indexes, the new "from" and new "to". For example,
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://bitbucket.org/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://bitbucket.org/codsen/codsen/src/) via BitBucket, then write code, then file a pull request via BitBucket. We'll merge it in and release.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=string-range-expander%20package%20-%20put%20title%20here). We'll try to help.
+- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#markdown-header-string-range-expander)**
+**[⬆ back to top](#)**
 
 ## Licence
 
@@ -146,8 +146,8 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 
 [node-img]: https://img.shields.io/node/v/string-range-expander.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-range-expander
-[bitbucket-img]: https://img.shields.io/badge/repo-on%20BitBucket-brightgreen.svg?style=flat-square
-[bitbucket-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
+[gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
+[gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
 [cov-img]: https://img.shields.io/badge/coverage-81.43%25-yellow.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-range-expander
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
@@ -159,4 +159,4 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
-[license-url]: https://bitbucket.org/codsen/codsen/src/master/LICENSE
+[license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

@@ -28,6 +28,7 @@
     "require": [
       "esm"
     ],
+    "timeout": "99m",
     "verbose": true
   },
   "esm": {
