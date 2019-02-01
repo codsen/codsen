@@ -262,7 +262,7 @@ ${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
 
 There are quite a few small libraries, so let's group them by a common purpose.
 
-<span style="float: right;">**[⬆ back to top](#-codsen-)**</span>
+<div style="text-align: right">**[⬆ back to top](#-codsen-)**</div>
 
 ## 🎯 ${filteredRangeLibsList.length} Range Libraries
 
