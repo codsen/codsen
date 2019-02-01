@@ -1039,12 +1039,13 @@ test(`06.04 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
   t.is(apply(bad2, res2.fix), good2, "06.04.02");
 });
 
-test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash`, t => {
+test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash - fake case`, t => {
   // 1. single space before closing slash
 
   const bad1 = `<aaa bbb="ccc" / ddd="eee"/>`;
   //                          ^
   //   this gap will be recognised as not closing slash
+
   const res1 = emlint(bad1);
   t.false(
     getUniqueIssueNames(res1.issues).includes(
@@ -1052,6 +1053,7 @@ test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
     ),
     "06.05.01"
   );
+  // PS. in theory error should be raised but not with this rule...
 });
 
 // 07. rule "attribute-space-between-equals-and-opening-quotes"
