@@ -240,8 +240,6 @@ const template = `# 📦 Codsen 📦
 
 ## 💡 Table of Contents
 
-#%EF%B8%8F-17-miscellaneous-libraries
-
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-${filteredRangeLibsList.length}-range-libraries)
 - [String Processing Libraries](#-${
