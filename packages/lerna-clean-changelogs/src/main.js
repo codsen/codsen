@@ -110,9 +110,9 @@ function c(changelogContents) {
           );
         }
       } else {
-        // fix dash list items into asterisk:
-        if (linesArr[i][0] === "-" && linesArr[i][1] === " ") {
-          newLinesArr.unshift(`* ${linesArr[i].slice(2)}`);
+        // fix asterisk list items into dash (Prettier default):
+        if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+          newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
         } else {
           newLinesArr.unshift(linesArr[i]);
         }

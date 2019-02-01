@@ -7,28 +7,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* aaa
+- aaa
 
 ### Features
 
-* bbb
+- bbb
 
 ## 2.8.0 (2018-12-22)
 
 ### Bug Fixes
 
-* aaa
+- aaa
 
 ### Features
 
-* bbb
+- bbb
 
 ## 2.7.2 (2018-12-21)
 
 ### Bug Fixes
 
-* aaa
+- aaa
 
 ### Features
 
-* bbb
+- bbb

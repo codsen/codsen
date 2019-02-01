@@ -72,8 +72,8 @@ function c(changelogContents) {
           lastLineWasEmpty = true;
         }
       } else {
-        if (linesArr[i][0] === "-" && linesArr[i][1] === " ") {
-          newLinesArr.unshift(`* ${linesArr[i].slice(2)}`);
+        if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
+          newLinesArr.unshift(`- ${linesArr[i].slice(2)}`);
         } else {
           newLinesArr.unshift(linesArr[i]);
         }
