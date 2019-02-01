@@ -255,9 +255,7 @@ const template = `# 📦 Codsen 📦
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
-
-## 🚢 Flagship Libraries
+<table><tr><td align="left"><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ${topRow(true)}
 ${flagshipLibsList.map(lib => row(lib, true)).join("\n")}
@@ -295,7 +293,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 ${topRow()}
 ${filteredRangeLibsList.map(lib => row(lib)).join("\n")}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🎻 ${filteredStringLibsList.length} String Processing Libraries
 
@@ -304,7 +302,7 @@ They process string inputs, which might be text, code or something else as long 
 ${topRow()}
 ${filteredStringLibsList.map(lib => row(lib)).join("\n")}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🔮 ${filteredObjectLibsList.length} Object Processing Libraries
 
@@ -315,7 +313,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, \`{ na
 ${topRow()}
 ${filteredObjectLibsList.map(lib => row(lib)).join("\n")}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## ✂️ ${filteredCliAppsList.length} CLI Apps
 
@@ -328,19 +326,19 @@ You use them in the Terminal (command line), for example:
 ${topRow()}
 ${filteredCliAppsList.map(lib => row(lib)).join("\n")}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🛠️ ${filteredOtherLibsList.length} Miscellaneous Libraries
 
 ${topRow()}
 ${filteredOtherLibsList.map(lib => row(lib)).join("\n")}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🤝 Contributing
 ${lectrc.contributing.restofit}
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 💼 Licence
 
@@ -348,7 +346,7 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 `;
 
 fs.writeFile(

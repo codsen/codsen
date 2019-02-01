@@ -13,9 +13,7 @@
 - [Contributing](#-contributing)
 - [Licence](#-licence)
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
-
-## 🚢 Flagship Libraries
+<table><tr><td align="left"><h2>🚢 Flagship Libraries</h2></td><td align="right"><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 | Library's name | Purpose |Web app | the_link_to_npm | Source code in monorepo |
 | -------------- | ------- | ------- | ----------- | ----------------------- |
@@ -66,7 +64,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 | [`ranges-process-outside`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) | Iterate through string and optionally a given ranges as if they were one | [![ranges-process-outside on npm](https://img.shields.io/npm/v/ranges-process-outside.svg?style=flat-square)](https://www.npmjs.com/package/ranges-process-outside) | [packages/ranges-process-outside](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-process-outside/) |
 | [`ranges-regex`](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) | Perform a regex search on string and get a ranges array of findings (or null) | [![ranges-regex on npm](https://img.shields.io/npm/v/ranges-regex.svg?style=flat-square)](https://www.npmjs.com/package/ranges-regex) | [packages/ranges-regex](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex/) |
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🎻 25 String Processing Libraries
 
@@ -100,7 +98,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-trim-spaces-only`](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) | Like `String.trim()` but trims only spaces | [![string-trim-spaces-only on npm](https://img.shields.io/npm/v/string-trim-spaces-only.svg?style=flat-square)](https://www.npmjs.com/package/string-trim-spaces-only) | [packages/string-trim-spaces-only](https://gitlab.com/codsen/codsen/tree/master/packages/string-trim-spaces-only/) |
 | [`string-unfancy`](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) | Replace all fancy dashes, quotes etc with their simpler equivalents | [![string-unfancy on npm](https://img.shields.io/npm/v/string-unfancy.svg?style=flat-square)](https://www.npmjs.com/package/string-unfancy) | [packages/string-unfancy](https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy/) |
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🔮 20 Object Processing Libraries
 
@@ -131,7 +129,7 @@ When we say "object" we mean _a plain object_ in JavaScript, for example, `{ nam
 | [`object-no-new-keys`](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) | Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON) | [![object-no-new-keys on npm](https://img.shields.io/npm/v/object-no-new-keys.svg?style=flat-square)](https://www.npmjs.com/package/object-no-new-keys) | [packages/object-no-new-keys](https://gitlab.com/codsen/codsen/tree/master/packages/object-no-new-keys/) |
 | [`object-set-all-values-to`](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) | Recursively walk the input and set all found values in plain objects to something | [![object-set-all-values-to on npm](https://img.shields.io/npm/v/object-set-all-values-to.svg?style=flat-square)](https://www.npmjs.com/package/object-set-all-values-to) | [packages/object-set-all-values-to](https://gitlab.com/codsen/codsen/tree/master/packages/object-set-all-values-to/) |
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## ✂️ 8 CLI Apps
 
@@ -152,7 +150,7 @@ You use them in the Terminal (command line), for example:
 | [`json-sort-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) | Command line app to deep sort JSON files, also dot-files as long as they are valid JSON | [![json-sort-cli on npm](https://img.shields.io/npm/v/json-sort-cli.svg?style=flat-square)](https://www.npmjs.com/package/json-sort-cli) | [packages/json-sort-cli](https://gitlab.com/codsen/codsen/tree/master/packages/json-sort-cli/) |
 | [`lerna-clean-changelogs-cli`](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) | CLI application to cleanse the lerna-generated changelogs | [![lerna-clean-changelogs-cli on npm](https://img.shields.io/npm/v/lerna-clean-changelogs-cli.svg?style=flat-square)](https://www.npmjs.com/package/lerna-clean-changelogs-cli) | [packages/lerna-clean-changelogs-cli](https://gitlab.com/codsen/codsen/tree/master/packages/lerna-clean-changelogs-cli/) |
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🛠️ 17 Miscellaneous Libraries
 
@@ -176,7 +174,7 @@ You use them in the Terminal (command line), for example:
 | [`util-array-object-or-both`](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) | Validate and normalise user choice: array, object or both? | [![util-array-object-or-both on npm](https://img.shields.io/npm/v/util-array-object-or-both.svg?style=flat-square)](https://www.npmjs.com/package/util-array-object-or-both) | [packages/util-array-object-or-both](https://gitlab.com/codsen/codsen/tree/master/packages/util-array-object-or-both/) |
 | [`util-nonempty`](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) | Is the input (plain object, array, string or whatever) not empty? | [![util-nonempty on npm](https://img.shields.io/npm/v/util-nonempty.svg?style=flat-square)](https://www.npmjs.com/package/util-nonempty) | [packages/util-nonempty](https://gitlab.com/codsen/codsen/tree/master/packages/util-nonempty/) |
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 🤝 Contributing
 * If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?title=put%20package%20name%20here%20-%20put%20issue%20title%20here).
@@ -188,7 +186,7 @@ In monorepo, npm libraries are located in `packages/` folder. Inside, the source
 
 The npm script within each package's `package.json` "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
 
 ## 💼 Licence
 
@@ -196,4 +194,4 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
-<table align="right" style="position:relative; z-index: 99999;"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
+<table align="right"><tr><td><a href="#-codsen-">⬆ back to top</a></td></tr></table>
