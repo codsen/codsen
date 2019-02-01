@@ -44,7 +44,11 @@ Here's what you'll get:
 
 ## Idea
 
-This is a tool to detect fundamental errors in pure (X)HTML or (X)HTML-mixed-with-something:
+Let's lint our email templates. This library is still a baby but rules count is growing.
+
+## Description for final product
+
+This will be a tool to detect fundamental errors in pure (X)HTML or (X)HTML-mixed-with-something:
 
 - Missing tags
 - Redundant tags
@@ -77,7 +81,7 @@ Our aim is to make the most advanced (X)HTML linting tool that humanity has ever
 
 ## API
 
-This library exports a plain object. The main function `emlint()` and other goodies are placed under keys of that plain object:
+This library exports _a plain object_. The main function `emlint()` and other goodies are placed under keys of that plain object, which you should consume by [destructuring that object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
 ```js
 const { emlint, version } = require("emlint");
@@ -85,12 +89,39 @@ const { emlint, version } = require("emlint");
 import { emlint, version } from "emlint";
 ```
 
-Aboev, you see [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) in action. The object that comes in is "destructured" into constants. Here they are:
+Above, [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) operation grabs all the values from those keys and dumps them in variable constants. Here they are:
 
-| Key       | Description                                                    |
-| --------- | -------------------------------------------------------------- |
-| `emlint`  | Main function to which you feed your string; see its API below |
-| `version` | Taken from `package.json`. Should match what's on npm.         |
+| Key       | Type     | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| `emlint`  | Function | Main function to which you feed your string; see its API below |
+| `version` | String   | Taken from `package.json`. Should match what's on npm.         |
+
+### API - emlint() - input
+
+**emlint(str, \[opts])** — in other words, function, which takes two arguments:
+
+1. first argument — string,
+2. optional (marked with square brackets above) second argument — An Optional Options Object — a plain object
+
+| Input argument | Key value's type | Obligatory? | Description                                        |
+| -------------- | ---------------- | ----------- | -------------------------------------------------- |
+| `str`          | String           | yes         | The input string of zero or more characters        |
+| `opts`         | Plain object     | no          | An Optional Options Object. See below for its API. |
+
+If supplied input arguments are of any other types, an error will be thrown.
+
+For example:
+
+```js
+// consume as normal require():
+const { emlint, version } = require("emlint");
+// define the input piece of code as string:
+const input = "<    table>";
+// emlint() is a function, so feed that string with code into it:
+const res = emlint(input);
+// PS. options are omitted, so we're running on defaults
+console.log('res = ' + JSON.stringify(res, null, 4));
+```
 
 **[⬆ back to top](#)**
 

@@ -269,12 +269,31 @@ function emlint(str, originalOpts) {
     tagNameEndAt: null,
     tagName: null,
     recognised: null,
+    pureHTML: true,
     attributes: []
   };
   function resetLogTag() {
     logTag = clone(defaultLogTag);
   }
   resetLogTag();
+  let logAttr;
+  const defaultLogAttr = {
+    attrStartAt: null,
+    attrEndAt: null,
+    attrNameStartAt: null,
+    attrNameEndAt: null,
+    attrName: null,
+    attrValue: null,
+    attrEqualAt: null,
+    attrOpeningQuoteAt: null,
+    attrClosingQuoteAt: null,
+    recognised: null,
+    pureHTML: true
+  };
+  function resetLogAttr() {
+    logAttr = clone(defaultLogAttr);
+  }
+  resetLogAttr();
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -295,6 +314,39 @@ function emlint(str, originalOpts) {
   };
   for (let i = 0, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
+    if (logTag.tagNameEndAt !== null) {
+      if (
+        logAttr.attrNameStartAt !== null &&
+        logAttr.attrName === null &&
+        !isLatinLetter(str[i])
+      ) {
+        logAttr.attrNameEndAt = i;
+        logAttr.attrName = str.slice(
+          logAttr.attrNameStartAt,
+          logAttr.attrNameEndAt
+        );
+      }
+      else if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
+        logAttr.attrStartAt = i;
+        logAttr.attrNameStartAt = i;
+      }
+      if (
+        logAttr.attrNameEndAt !== null &&
+        logAttr.attrEqualAt === null &&
+        i >= logAttr.attrNameEndAt &&
+        str[i].trim().length
+      ) {
+        if (str[i] === "=") {
+          logAttr.attrEqualAt = i;
+        }
+        if (logWhitespace.startAt !== null) {
+          retObj.issues.push({
+            name: "attribute-space-between-name-and-equals",
+            position: [[logWhitespace.startAt, i]]
+          });
+        }
+      }
+    }
     if (charcode < 32) {
       const name$$1 = `bad-character-${lowAsciiCharacterNames[charcode]}`;
       if (charcode === 9) {
@@ -364,7 +416,11 @@ function emlint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = i;
     }
-    if (logTag.tagNameStartAt !== null && !isLatinLetter(str[i])) {
+    if (
+      logTag.tagNameStartAt !== null &&
+      logTag.tagNameEndAt === null &&
+      !isLatinLetter(str[i])
+    ) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
       logTag.recognised = knownHTMLTags.includes(

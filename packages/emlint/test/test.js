@@ -899,3 +899,50 @@ test(`04.17 - ${`\u001b[${33}m${`file-mixed-line-endings-file-is-*-mainly`}\u001
   t.deepEqual(res, res3, "04.16.03");
   t.deepEqual(res, res4, "04.16.04");
 });
+
+// 05. rule "attribute-space-between-name-and-equals"
+// -----------------------------------------------------------------------------
+
+test(`05.01 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
+  const input1 = `<zzz>`;
+  const res1 = emlint(input1);
+  t.is(res1.issues.length, 0, "05.01.01");
+
+  const input2 = `<zzz yyy="qqq">`;
+  const res2 = emlint(input2);
+  t.is(res2.issues.length, 0, "05.01.02");
+});
+
+test(`05.02 - ${`\u001b[${34}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
+  // 1. single space
+
+  const bad1 = `<zzz yyy ="qqq">`;
+  const good1 = `<zzz yyy="qqq">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["attribute-space-between-name-and-equals"],
+    "05.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "05.02.02");
+
+  // 2. multiple spaces
+
+  const bad2 = `<zzz yyy      ="qqq">`;
+  const good2 = `<zzz yyy="qqq">`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["attribute-space-between-name-and-equals"],
+    "05.02.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "05.02.04");
+});
+
+// xx. TODO's
+// -----------------------------------------------------------------------------
+
+// test.todo("file-xhtml-tag-ending");
+// test.todo("file-html-tag-ending");
+// test.todo("file-trailing-line-break-present");
+// test.todo("file-trailing-line-break-absent");

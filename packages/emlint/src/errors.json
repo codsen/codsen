@@ -188,5 +188,10 @@
     "description": "Normally all tags are in lowercase",
     "excerpt": "tag name contains uppercase characters",
     "scope": "html"
+  },
+  "attribute-space-between-name-and-equals": {
+    "description": "There's a space between attribute's name and equal sign",
+    "excerpt": "space between attribute's name and equal sign",
+    "scope": "html"
   }
 }
