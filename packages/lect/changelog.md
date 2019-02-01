@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.4.0 (2019-02-01)
+
+### Features
+
+- Adapt codebase to support GitLab + hard write package.json keys from config ([254b415](https://gitlab.com/codsen/codsen/commit/254b415))
+
 ## 0.3.0 (2019-01-27)
 
 ### Features
