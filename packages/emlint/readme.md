@@ -14,10 +14,12 @@
 ## Table of Contents
 
 - [Install](#markdown-header-install)
+- [Aim](#markdown-header-aim)
 - [Idea](#markdown-header-idea)
-- [Description for final product](#markdown-header-description-for-final-product)
+- [Description for the final product](#markdown-header-description-for-the-final-product)
 - [API](#markdown-header-api)
-- [Breaking rules](#markdown-header-breaking-rules)
+- [Example #1](#markdown-header-example-1)
+- [Breaking the JS best-practice rules](#markdown-header-breaking-the-js-best-practice-rules)
 - [Contributing](#markdown-header-contributing)
 - [Licence](#markdown-header-licence)
 
@@ -37,52 +39,60 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 15 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 15 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 37 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 18 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 18 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 39 KB |
 
 **[⬆ back to top](#)**
 
+## Aim
+
+To be the most advanced, automated and smart (X)HTML/CSS code linting tool that humanity has ever produced.
+
 ## Idea
 
-Let's lint our email templates. This library is still a baby but rules count is growing.
+#### Is it me (Roy) or current HTML/CSS linters on the market (all of them) are both _anaemic_, _aged_ and not really aimed at fixing _messy code_?
 
-## Description for final product
+- By **anaemic** I mean, for example, at the time of writing, the [HTMLHint](https://github.com/htmlhint/HTMLHint/wiki/Rules) has 23 rules. For comparison, [ESLint](https://github.com/eslint/eslint/tree/master/lib/rules) at the time of writing has 265 rules.
 
-This will be a tool to detect fundamental errors in pure (X)HTML or (X)HTML-mixed-with-something:
+- By **aged** I mean, either the codebases are convoluted, API is often tied with CLI features (even ESLint CLI coupled with its API - check its `bin/` key in `package.json`).
 
+- By **aged** I also mean, codebases are not fully harnessing the Rollup to produce 3 builds: ES Modules (with `import`/`export`), CJS (with `require`) and UMD (with `iife`s). What's more, I like to commit builds, so that I can tap the UMD build straight from various [CDNs](https://unpkg.com/emlint) such as `unpkg` and plug front-ends to always-latest, website-friendly code. Same API though.
+
+- By **not really aimed at fixing messy code** I mean that _every rule should be fixable_, and the rules should be aiming to at least compete with a human knack of creating code errors. We should try to identify all the possible cases of messed up code before we even move on to checking _code patterns_^.
+
+Another example, PostCSS. It's brilliant when your code is _valid_. But as a tool, it is not meant to patch up _errors in messed up CSS_. The first thing it will do is it will try to parse your CSS and will throw upon the first error. That's the _end of story_ if CSS has any issues. You'll be lucky if parser's error stack will report something meaningful.
+
+^ Code pattern error is a bug that comprises of valid HTML but where that HTML will still be rendered with bugs on decrepit software, for example, Windows Outlook.
+
+**[⬆ back to top](#)**
+
+## Description for the final product
+
+This is a linter API, still in _a baby state_ but eventually it will able to detect **all** of the following:
+
+- HTML/CSS code errors
 - Missing tags
 - Redundant tags
-- Detecting and checking tag patterns such as _Hybrid Email_ or _Outlook Shadow Code_
-- Some cases where chunks of code were moved
-- Micro\$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) (Email Template-specific feature)
-- Will check (X)HTML with as little or as much tags as you want: one tag is fine, whole document is fine. Validators won't work on pieces of HTML but we're fine with that (unless you explicitly instruct to treat input as a whole document).
+- Enforce tag patterns such as _Hybrid Email_ or _Outlook Shadow Code_
+- If would be nice to detect chunks of _shifted code_ (nobody has done it before)
+- Email-specific feature, detect issues with Micro\$oft VML objects (for example, the output of [backgrounds.cm](https://backgrounds.cm)) - both bugs and settings considering surrounding code
+- Check the shadow code which is commented-out
 
-It is a stupid idea to use a _parser_ to look for errors because HTML code can be _unparseable_ because of those errors. If it's _parseable_, it's already fixed. Logical, right?
+**Other features:**
 
-That's why ESLint maintainers are elbow-deep coding Espree/Acorn parsers. Still, I (Roy) believe that parsing mindset is limiting and eventually stiffles the algorithmic creativity and program feature ambitions.
+- This is an API. It is a _function_, decoupled from both: CLI operations and anything file-system-related (reading/writing files). Let other CLI's and web apps and Electron apps tap this API.
+- Work with as little or as much of HTML file as it is given. Unless you explicitly request to treat input as the final, complete HMTL document. Often linters expect only the latter case and are not suitable to lint snippets, partials and code pieces.
+- It would be nice to heuristically recognise logical blocks such as "if" and "for". After all, `%%_if_%%`, `${if(...)}` and `_if__` are just three kinds of the same, "if" statement, right?
+- Anticipate and be cool with "blind spots" — areas where algorithm just gave up.
 
-For example, can code checking tool heuristically analyse the code and tackle all (or most) templating languages **without plugins**? After all, `%%_if_%%`, `${if(...)}` and `_if__` are just three kinds of the same, "if" statement, right. We might not know for sure, but algorithm at least can take the most likely guess. Is it too hard to make smart applications?
-
-In this tool, we anticipate that there will be "black spots" in the code which parser will not recognise. That's fine. Piece of Java code, piece of Nunjucks with some "greater than" signs, _cough_ mixed in the same file — no problem (at least not for this application).
-
-We try to **analyse a string** (a text, which _might_ be (X)HTML code) and we report what we detected. Not more, not less.
-
-This library accepts **(X)HTML** in various shapes:
-
-- (X)HTML can be pure or mixed with other sources
-- (X)HTML can be incomplete — algorithm is smart and will not complain that `doctype` is missing if you don't even have `<head>` and `<body>` tags
-- (X)HTML can be email template code or not — we treat email HTML and webpage HTML as equals
-
-This is not a _validator_ (like [W3C Markup Validator](https://validator.w3.org)). It's a tool to patch up errors **BEFORE** you feed your code to a validator. It's a tool to save you time looking for that missing bracket in your email template.
-
-Our aim is to make the most advanced (X)HTML linting tool that humanity has ever produced.
+**PS.** This is not a _validator_ (like [W3C Markup Validator](https://validator.w3.org)). It's a tool to patch up errors **BEFORE** you feed your code to a validator. It's a tool to save you time looking for that missing bracket in your email template. It's a tool that will tell you upfront if your template will look messed up in Outlook.
 
 **[⬆ back to top](#)**
 
 ## API
 
-This library exports _a plain object_. The main function `emlint()` and other goodies are placed under keys of that plain object, which you should consume by [destructuring that object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
+This library exports _a plain object_. The main function `emlint()` and other goodies are placed under **keys** of that plain object, which you should consume by [destructuring what you imported/required](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment). For example:
 
 ```js
 const { emlint, version } = require("emlint");
@@ -90,7 +100,7 @@ const { emlint, version } = require("emlint");
 import { emlint, version } from "emlint";
 ```
 
-Above, [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) operation grabs all the values from those keys and dumps them in variable constants. Here they are:
+Above, the [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) operation grabs all the values from those keys and dumps them in variable constants. Here they are:
 
 | Key       | Type     | Description                                                    |
 | --------- | -------- | -------------------------------------------------------------- |
@@ -99,9 +109,9 @@ Above, [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 
 **[⬆ back to top](#)**
 
-### API - emlint() - input
+### API - `emlint()` - input
 
-**emlint(str, \[opts])** — in other words, function, which takes two arguments:
+**emlint(str, \[opts])** — in other words, it's a _function_, which takes two arguments:
 
 1. first argument — string,
 2. optional (marked with square brackets above) second argument — An Optional Options Object — a plain object
@@ -113,7 +123,11 @@ Above, [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 
 If supplied input arguments are of any other types, an error will be thrown.
 
-For example:
+**[⬆ back to top](#)**
+
+## Example #1
+
+Below, we tap this API/package/library, feed some code into it and `console.log` what it returns:
 
 ```js
 // consume as normal require():
@@ -124,17 +138,19 @@ const input = "<    table>";
 const res = emlint(input);
 // PS. options are omitted, so we're running on defaults
 console.log("res = " + JSON.stringify(res, null, 4));
+// PPS. We use JSON.stringify because output is a plain object and we want it
+// nicely printed. That "4" above means "indent by 4 spaces".
 ```
 
 **[⬆ back to top](#)**
 
-## Breaking rules
+## Breaking the JS best-practice rules
 
 If you looked at this or any project code in this monorepo you probably noticed we're breaking many "best practice" rules:
 
-- We use copious amounts of `console.log` for debugging and we keep all those `console.log`s in the source of the application. Rollup will build _production_ build and strip all logging automatically. But this allows us to use command line arguments to ask Rollup for _dev_ build, where `console.log`s are intact, [with line numbers](https://www.npmjs.com/package/js-row-num-cli). This allows app to granularly report what happens where. In terminal. In color.
-- We know functional vs. imperative programming styles and actually prefer imperative.
-- We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there's two files, `util.js` but only for unit test coverage purposes.
+- We use copious amounts of `console.log` for debugging, and we keep all those `console.log`s in the source of the application. Rollup will build _production_ build and strip all logging automatically. But this allows us to use command line arguments to ask Rollup for a _dev_ build, where `console.log`s are intact, [with line numbers](https://www.npmjs.com/package/js-row-num-cli). This allows the app to report what happens where granularly. In terminal. In colour.
+- We know functional vs imperative programming styles and actually, prefer imperative.
+- We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there are two files, `util.js` but only for unit test coverage purposes.
 
 We say "we" but it's me, Roy mainly, addressing himself in 3rd person.
 
@@ -163,7 +179,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/emlint
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-98.29%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint
