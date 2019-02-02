@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Use](#markdown-header-use)
-- [Rationale](#markdown-header-rationale)
-- [API](#markdown-header-api)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Use](#use)
+- [Rationale](#rationale)
+- [API](#api)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -13,10 +13,10 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Usage](#markdown-header-usage)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -14,15 +14,15 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [In practice](#markdown-header-in-practice)
-- [API](#markdown-header-api)
-- [`opts.cb`](#markdown-header-optscb)
-- [Difference from Lodash `_.merge`](#markdown-header-difference-from-lodash-_merge)
-- [Difference from `Object.assign()`](#markdown-header-difference-from-objectassign)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [In practice](#in-practice)
+- [API](#api)
+- [`opts.cb`](#optscb)
+- [Difference from Lodash `_.merge`](#difference-from-lodash-_merge)
+- [Difference from `Object.assign()`](#difference-from-objectassign)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

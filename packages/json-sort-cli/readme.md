@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install globally, call anywhere](#markdown-header-install-globally-call-anywhere)
-- [API - flags](#markdown-header-api-flags)
-- [What it does exactly](#markdown-header-what-it-does-exactly)
-- [Updating it](#markdown-header-updating-it)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install globally, call anywhere](#install-globally-call-anywhere)
+- [API - flags](#api---flags)
+- [What it does exactly](#what-it-does-exactly)
+- [Updating it](#updating-it)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install globally, call anywhere
 

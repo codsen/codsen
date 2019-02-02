@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [TLDR - use default opts to enforce types](#markdown-header-tldr-use-default-opts-to-enforce-types)
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [TLDR - use default opts to enforce types](#tldr---use-default-opts-to-enforce-types)
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## TLDR - use default opts to enforce types
 

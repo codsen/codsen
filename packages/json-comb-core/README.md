@@ -13,18 +13,18 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [`getKeyset()`](#markdown-header-getkeyset)
-- [`getKeysetSync()`](#markdown-header-getkeysetsync)
-- [`enforceKeyset()`](#markdown-header-enforcekeyset)
-- [`enforceKeysetSync()`](#markdown-header-enforcekeysetsync)
-- [`noNewKeys()`](#markdown-header-nonewkeys)
-- [`findUnused()`](#markdown-header-findunused)
-- [`sortAllObjects()`](#markdown-header-sortallobjects)
-- [Difference between Normalising JSON and real JSON Schemas](#markdown-header-difference-between-normalising-json-and-real-json-schemas)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [`getKeyset()`](#getkeyset)
+- [`getKeysetSync()`](#getkeysetsync)
+- [`enforceKeyset()`](#enforcekeyset)
+- [`enforceKeysetSync()`](#enforcekeysetsync)
+- [`noNewKeys()`](#nonewkeys)
+- [`findUnused()`](#findunused)
+- [`sortAllObjects()`](#sortallobjects)
+- [Difference between Normalising JSON and real JSON Schemas](#difference-between-normalising-json-and-real-json-schemas)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

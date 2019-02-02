@@ -36,12 +36,12 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Pulling](#markdown-header-pulling)
-- [API](#markdown-header-api)
-- [Test](#markdown-header-test)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Pulling](#pulling)
+- [API](#api)
+- [Test](#test)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Pulling
 

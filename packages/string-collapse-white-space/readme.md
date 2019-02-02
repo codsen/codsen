@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [TLDR;](#markdown-header-tldr)
-- [Install](#markdown-header-install)
-- [The API](#markdown-header-the-api)
-- [Algorithm](#markdown-header-algorithm)
-- [Usage](#markdown-header-usage)
-- [Smart bits](#markdown-header-smart-bits)
-- [Practical use](#markdown-header-practical-use)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [TLDR;](#tldr)
+- [Install](#install)
+- [The API](#the-api)
+- [Algorithm](#algorithm)
+- [Usage](#usage)
+- [Smart bits](#smart-bits)
+- [Practical use](#practical-use)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## TLDR;
 

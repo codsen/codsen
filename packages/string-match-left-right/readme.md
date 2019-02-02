@@ -13,17 +13,17 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [The API](#markdown-header-the-api)
-- [Using a callback - `opts.cb`](#markdown-header-using-a-callback-optscb)
-- [Matching relying only on a callback](#markdown-header-matching-relying-only-on-a-callback)
-- [`opts.trimBeforeMatching`](#markdown-header-optstrimbeforematching)
-- [`opts.trimCharsBeforeMatching`](#markdown-header-optstrimcharsbeforematching)
-- [Matching the beginning of ending of the string](#markdown-header-matching-the-beginning-of-ending-of-the-string)
-- [Unicode is somewhat supported](#markdown-header-unicode-is-somewhat-supported)
-- [Algorithm](#markdown-header-algorithm)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [The API](#the-api)
+- [Using a callback - `opts.cb`](#using-a-callback---optscb)
+- [Matching relying only on a callback](#matching-relying-only-on-a-callback)
+- [`opts.trimBeforeMatching`](#optstrimbeforematching)
+- [`opts.trimCharsBeforeMatching`](#optstrimcharsbeforematching)
+- [Matching the beginning of ending of the string](#matching-the-beginning-of-ending-of-the-string)
+- [Unicode is somewhat supported](#unicode-is-somewhat-supported)
+- [Algorithm](#algorithm)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

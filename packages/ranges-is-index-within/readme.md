@@ -36,12 +36,12 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [What it does](#markdown-header-what-it-does)
-- [Example](#markdown-header-example)
-- [The algorithm](#markdown-header-the-algorithm)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [What it does](#what-it-does)
+- [Example](#example)
+- [The algorithm](#the-algorithm)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## What it does
 

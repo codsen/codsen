@@ -38,12 +38,12 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [How it works](#markdown-header-how-it-works)
-- [API](#markdown-header-api)
-- [Conditions when this library will throw](#markdown-header-conditions-when-this-library-will-throw)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [How it works](#how-it-works)
+- [API](#api)
+- [Conditions when this library will throw](#conditions-when-this-library-will-throw)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## How it works
 

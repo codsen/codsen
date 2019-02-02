@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Deleting](#markdown-header-deleting)
-- [API](#markdown-header-api)
-- [Example](#markdown-header-example)
-- [Wildcards](#markdown-header-wildcards)
-- [Rationale](#markdown-header-rationale)
-- [This library vs. \_.omit](#markdown-header-this-library-vs-_omit)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Deleting](#deleting)
+- [API](#api)
+- [Example](#example)
+- [Wildcards](#wildcards)
+- [Rationale](#rationale)
+- [This library vs. \_.omit](#this-library-vs-_omit)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

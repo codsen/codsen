@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [What is does](#markdown-header-what-is-does)
-- [In practice](#markdown-header-in-practice)
-- [API](#markdown-header-api)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [What is does](#what-is-does)
+- [In practice](#in-practice)
+- [API](#api)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install globally](#markdown-header-install-globally)
-- [What it does](#markdown-header-what-it-does)
-- [A nifty setup idea](#markdown-header-a-nifty-setup-idea)
-- [Updating it](#markdown-header-updating-it)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install globally](#install-globally)
+- [What it does](#what-it-does)
+- [A nifty setup idea](#a-nifty-setup-idea)
+- [Updating it](#updating-it)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install globally
 

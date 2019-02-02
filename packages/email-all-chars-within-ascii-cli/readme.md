@@ -31,12 +31,12 @@ Call on multiple files all at once:
 
 ## Table of Contents
 
-- [TLDR; Usage](#markdown-header-tldr-usage)
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [Practical use](#markdown-header-practical-use)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [TLDR; Usage](#tldr-usage)
+- [Install](#install)
+- [Idea](#idea)
+- [Practical use](#practical-use)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

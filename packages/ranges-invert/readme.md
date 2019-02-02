@@ -36,11 +36,11 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [API](#markdown-header-api)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [API](#api)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Purpose
 

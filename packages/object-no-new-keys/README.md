@@ -13,14 +13,14 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
-- [Two modes](#markdown-header-two-modes)
-- [For example](#markdown-header-for-example)
-- [Competition](#markdown-header-competition)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+- [Two modes](#two-modes)
+- [For example](#for-example)
+- [Competition](#competition)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

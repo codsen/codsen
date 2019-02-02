@@ -17,14 +17,14 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API - Input](#markdown-header-api-input)
-- [API - Output](#markdown-header-api-output)
-- [Purpose](#markdown-header-purpose)
-- [Updating it](#markdown-header-updating-it)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API - Input](#api---input)
+- [API - Output](#api---output)
+- [Purpose](#purpose)
+- [Updating it](#updating-it)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

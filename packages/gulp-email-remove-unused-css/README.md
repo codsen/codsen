@@ -16,12 +16,12 @@ _If you have any difficulties with the output of this plugin, please use the [em
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Example](#markdown-header-example)
-- [Next level](#markdown-header-next-level)
-- [Regarding removing unused CSS from web pages & competition](#markdown-header-regarding-removing-unused-css-from-web-pages-competition)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Example](#example)
+- [Next level](#next-level)
+- [Regarding removing unused CSS from web pages & competition](#regarding-removing-unused-css-from-web-pages--competition)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

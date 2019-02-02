@@ -13,16 +13,16 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [Use](#markdown-header-use)
-- [API](#markdown-header-api)
-- [Examples](#markdown-header-examples)
-- [opts.verboseWhenMismatches](#markdown-header-optsverbosewhenmismatches)
-- [Rationale](#markdown-header-rationale)
-- [Differences from \_.isMatch](#markdown-header-differences-from-_ismatch)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [Use](#use)
+- [API](#api)
+- [Examples](#examples)
+- [opts.verboseWhenMismatches](#optsverbosewhenmismatches)
+- [Rationale](#rationale)
+- [Differences from \_.isMatch](#differences-from-_ismatch)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

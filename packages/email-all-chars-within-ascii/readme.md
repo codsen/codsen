@@ -17,13 +17,13 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [The API](#markdown-header-the-api)
-- [Usage](#markdown-header-usage)
-- [Practical use](#markdown-header-practical-use)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [The API](#the-api)
+- [Usage](#usage)
+- [Practical use](#practical-use)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

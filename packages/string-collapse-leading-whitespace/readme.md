@@ -13,14 +13,14 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API - Input](#markdown-header-api-input)
-- [API - Output](#markdown-header-api-output)
-- [Example](#markdown-header-example)
-- [Purpose](#markdown-header-purpose)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API - Input](#api---input)
+- [API - Output](#api---output)
+- [Example](#example)
+- [Purpose](#purpose)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

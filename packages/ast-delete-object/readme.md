@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Deleting](#markdown-header-deleting)
-- [Match Keys Strictly setting](#markdown-header-match-keys-strictly-setting)
-- [Hungry For White Space setting](#markdown-header-hungry-for-white-space-setting)
-- [API](#markdown-header-api)
-- [Example](#markdown-header-example)
-- [The story](#markdown-header-the-story)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Deleting](#deleting)
+- [Match Keys Strictly setting](#match-keys-strictly-setting)
+- [Hungry For White Space setting](#hungry-for-white-space-setting)
+- [API](#api)
+- [Example](#example)
+- [The story](#the-story)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

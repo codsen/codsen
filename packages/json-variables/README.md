@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea - updated for v.7 - full rewrite](#markdown-header-idea-updated-for-v7-full-rewrite)
-- [API](#markdown-header-api)
-- [Use examples](#markdown-header-use-examples)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea - updated for v.7 - full rewrite](#idea---updated-for-v7---full-rewrite)
+- [API](#api)
+- [Use examples](#use-examples)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

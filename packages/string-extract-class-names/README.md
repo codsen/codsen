@@ -29,12 +29,12 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [API](#markdown-header-api)
-- [More examples](#markdown-header-more-examples)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [API](#api)
+- [More examples](#more-examples)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Purpose
 

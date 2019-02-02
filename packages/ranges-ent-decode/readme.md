@@ -36,14 +36,14 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [TL;DR](#markdown-header-tldr)
-- [Purpose](#markdown-header-purpose)
-- [API](#markdown-header-api)
-- [More on the algorithm](#markdown-header-more-on-the-algorithm)
-- [Where's encode?](#markdown-header-wheres-encode)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [TL;DR](#tldr)
+- [Purpose](#purpose)
+- [API](#api)
+- [More on the algorithm](#more-on-the-algorithm)
+- [Where's encode?](#wheres-encode)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## TL;DR
 

@@ -13,13 +13,13 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [API](#markdown-header-api)
-- [For example, reading or querying parsed trees (GET)](#markdown-header-for-example-reading-or-querying-parsed-trees-get)
-- [Writing-over example (SET)](#markdown-header-writing-over-example-set)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [API](#api)
+- [For example, reading or querying parsed trees (GET)](#for-example-reading-or-querying-parsed-trees-get)
+- [Writing-over example (SET)](#writing-over-example-set)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

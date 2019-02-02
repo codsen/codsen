@@ -13,13 +13,13 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [What it does](#markdown-header-what-it-does)
-- [API](#markdown-header-api)
-- [Overriding](#markdown-header-overriding)
-- [Overriding the combinations — in practice](#markdown-header-overriding-the-combinations-in-practice)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [What it does](#what-it-does)
+- [API](#api)
+- [Overriding](#overriding)
+- [Overriding the combinations — in practice](#overriding-the-combinations--in-practice)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -13,14 +13,14 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [Examples](#markdown-header-examples)
-- [Usage in Gulp environment](#markdown-header-usage-in-gulp-environment)
-- [API](#markdown-header-api)
-- [Reliability](#markdown-header-reliability)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [Examples](#examples)
+- [Usage in Gulp environment](#usage-in-gulp-environment)
+- [API](#api)
+- [Reliability](#reliability)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

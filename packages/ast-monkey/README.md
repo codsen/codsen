@@ -15,12 +15,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
-- [The name of this library](#markdown-header-the-name-of-this-library)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+- [The name of this library](#the-name-of-this-library)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

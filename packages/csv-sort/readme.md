@@ -17,13 +17,13 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [TLDR;](#markdown-header-tldr)
-- [This library does two twings:](#markdown-header-this-library-does-two-twings)
-- [Usage](#markdown-header-usage)
-- [API](#markdown-header-api)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [TLDR;](#tldr)
+- [This library does two twings:](#this-library-does-two-twings)
+- [Usage](#usage)
+- [API](#api)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

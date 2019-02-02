@@ -43,15 +43,15 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [Features](#markdown-header-features)
-- [API](#markdown-header-api)
-- [Options](#markdown-header-options)
-- [Not assuming anything](#markdown-header-not-assuming-anything)
-- [A bigger picture](#markdown-header-a-bigger-picture)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [Features](#features)
+- [API](#api)
+- [Options](#options)
+- [Not assuming anything](#not-assuming-anything)
+- [A bigger picture](#a-bigger-picture)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Purpose
 

@@ -13,17 +13,17 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [Usage](#markdown-header-usage)
-- [API - Input](#markdown-header-api-input)
-- [API - Output](#markdown-header-api-output)
-- [`opts.decode`](#markdown-header-optsdecode)
-- [Tips](#markdown-header-tips)
-- [Why not regexes?](#markdown-header-why-not-regexes)
-- [Practical use](#markdown-header-practical-use)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [Usage](#usage)
+- [API - Input](#api---input)
+- [API - Output](#api---output)
+- [`opts.decode`](#optsdecode)
+- [Tips](#tips)
+- [Why not regexes?](#why-not-regexes)
+- [Practical use](#practical-use)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

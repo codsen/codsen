@@ -36,13 +36,13 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [What it does](#markdown-header-what-it-does)
-- [Sorting by certain column](#markdown-header-sorting-by-certain-column)
-- [API](#markdown-header-api)
-- [Purpose of this library](#markdown-header-purpose-of-this-library)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [What it does](#what-it-does)
+- [Sorting by certain column](#sorting-by-certain-column)
+- [API](#api)
+- [Purpose of this library](#purpose-of-this-library)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## What it does
 

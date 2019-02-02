@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [Difference from `ast-compare`](#markdown-header-difference-from-ast-compare)
-- [Differences from \_.isMatch](#markdown-header-differences-from-_ismatch)
-- [Competition](#markdown-header-competition)
-- [API](#markdown-header-api)
-- [More examples](#markdown-header-more-examples)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [Difference from `ast-compare`](#difference-from-ast-compare)
+- [Differences from \_.isMatch](#differences-from-_ismatch)
+- [Competition](#competition)
+- [API](#api)
+- [More examples](#more-examples)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

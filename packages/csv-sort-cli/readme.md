@@ -15,12 +15,12 @@ Other siblings of this package:
 
 ## Table of Contents
 
-- [Install globally, call `csvsort` on a file](#markdown-header-install-globally-call-csvsort-on-a-file)
-- [or, omit the file's name, it will let you pick a CSV:](#markdown-header-or-omit-the-files-name-it-will-let-you-pick-a-csv)
-- [What it does exactly](#markdown-header-what-it-does-exactly)
-- [Updating it](#markdown-header-updating-it)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install globally, call `csvsort` on a file](#install-globally-call-csvsort-on-a-file)
+- [or, omit the file's name, it will let you pick a CSV:](#or-omit-the-files-name-it-will-let-you-pick-a-csv)
+- [What it does exactly](#what-it-does-exactly)
+- [Updating it](#updating-it)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install globally, call `csvsort` on a file
 

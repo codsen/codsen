@@ -15,16 +15,16 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Usage](#markdown-header-usage)
-- [TLDR;](#markdown-header-tldr)
-- [Features](#markdown-header-features)
-- [API - Input](#markdown-header-api-input)
-- [API - Output](#markdown-header-api-output)
-- [Competition](#markdown-header-competition)
-- [Non-deterministic unit tests](#markdown-header-non-deterministic-unit-tests)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Usage](#usage)
+- [TLDR;](#tldr)
+- [Features](#features)
+- [API - Input](#api---input)
+- [API - Output](#api---output)
+- [Competition](#competition)
+- [Non-deterministic unit tests](#non-deterministic-unit-tests)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

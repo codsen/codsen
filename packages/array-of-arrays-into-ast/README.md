@@ -36,14 +36,14 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [What it does](#markdown-header-what-it-does)
-- [API](#markdown-header-api)
-- [`opts.dedupe`](#markdown-header-optsdedupe)
-- [Principles](#markdown-header-principles)
-- [Compared vs. `datastructures-js`](#markdown-header-compared-vs-datastructures-js)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [What it does](#what-it-does)
+- [API](#api)
+- [`opts.dedupe`](#optsdedupe)
+- [Principles](#principles)
+- [Compared vs. `datastructures-js`](#compared-vs-datastructures-js)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## What it does
 

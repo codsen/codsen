@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Usage](#markdown-header-usage)
-- [API](#markdown-header-api)
-- [`opts.classicTrim`](#markdown-header-optsclassictrim)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+- [`opts.classicTrim`](#optsclassictrim)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -11,13 +11,13 @@
 
 ## Table of Contents
 
-- [Install globally or npx-it](#markdown-header-install-globally-or-npx-it)
-- [TLDR](#markdown-header-tldr)
-- [What it does](#markdown-header-what-it-does)
-- [A nifty setup idea](#markdown-header-a-nifty-setup-idea)
-- [Updating it](#markdown-header-updating-it)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install globally or npx-it](#install-globally-or-npx-it)
+- [TLDR](#tldr)
+- [What it does](#what-it-does)
+- [A nifty setup idea](#a-nifty-setup-idea)
+- [Updating it](#updating-it)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install globally or npx-it
 

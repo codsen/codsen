@@ -17,17 +17,17 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
-- [Options - `opts.whitelist`](#markdown-header-options-optswhitelist)
-- [Options - `opts.backend`](#markdown-header-options-optsbackend)
-- [Tapping the stream in Gulp](#markdown-header-tapping-the-stream-in-gulp)
-- [Extreme example of unused CSS](#markdown-header-extreme-example-of-unused-css)
-- [Removing unused CSS from web pages](#markdown-header-removing-unused-css-from-web-pages)
-- [Why it's important to be able to process HTML with back-end code](#markdown-header-why-its-important-to-be-able-to-process-html-with-back-end-code)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+- [Options - `opts.whitelist`](#options---optswhitelist)
+- [Options - `opts.backend`](#options---optsbackend)
+- [Tapping the stream in Gulp](#tapping-the-stream-in-gulp)
+- [Extreme example of unused CSS](#extreme-example-of-unused-css)
+- [Removing unused CSS from web pages](#removing-unused-css-from-web-pages)
+- [Why it's important to be able to process HTML with back-end code](#why-its-important-to-be-able-to-process-html-with-back-end-code)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

@@ -39,13 +39,13 @@ Here's what you'll get:
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Purpose](#markdown-header-purpose)
-- [Examples](#markdown-header-examples)
-- [API](#markdown-header-api)
-- [Algorithm](#markdown-header-algorithm)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Purpose](#purpose)
+- [Examples](#examples)
+- [API](#api)
+- [Algorithm](#algorithm)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Purpose
 

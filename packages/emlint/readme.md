@@ -13,15 +13,15 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Aim](#markdown-header-aim)
-- [Idea](#markdown-header-idea)
-- [Description for the final product](#markdown-header-description-for-the-final-product)
-- [API](#markdown-header-api)
-- [Example #1](#markdown-header-example-1)
-- [Breaking the JS best-practice rules](#markdown-header-breaking-the-js-best-practice-rules)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Aim](#aim)
+- [Idea](#idea)
+- [Description for the final product](#description-for-the-final-product)
+- [API](#api)
+- [Example #1](#example-1)
+- [Breaking the JS best-practice rules](#breaking-the-js-best-practice-rules)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

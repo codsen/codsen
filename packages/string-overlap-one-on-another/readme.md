@@ -13,13 +13,13 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [API](#markdown-header-api)
-- [Practical use](#markdown-header-practical-use)
-- [Edge cases](#markdown-header-edge-cases)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [API](#api)
+- [Practical use](#practical-use)
+- [Edge cases](#edge-cases)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

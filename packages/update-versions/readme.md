@@ -11,13 +11,13 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [The Problem](#markdown-header-the-problem)
-- [The Solution](#markdown-header-the-solution)
-- [Extras](#markdown-header-extras)
-- [Ingredients](#markdown-header-ingredients)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
+- [Extras](#extras)
+- [Ingredients](#ingredients)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

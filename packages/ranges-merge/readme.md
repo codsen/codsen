@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [The Idea](#markdown-header-the-idea)
-- [API](#markdown-header-api)
-- [`progressFn` - the 2nd input argument](#markdown-header-progressfn-the-2nd-input-argument)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [The Idea](#the-idea)
+- [API](#api)
+- [`progressFn` - the 2nd input argument](#progressfn---the-2nd-input-argument)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 

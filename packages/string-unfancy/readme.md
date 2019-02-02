@@ -15,14 +15,14 @@
 
 ## Table of Contents
 
-- [Install](#markdown-header-install)
-- [Idea](#markdown-header-idea)
-- [Usage](#markdown-header-usage)
-- [API](#markdown-header-api)
-- [Example - treating the image alt attributes - Gulp and stream-tapping](#markdown-header-example-treating-the-image-alt-attributes-gulp-and-stream-tapping)
-- [Can we use `lodash.deburr` instead?](#markdown-header-can-we-use-lodashdeburr-instead)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [Install](#install)
+- [Idea](#idea)
+- [Usage](#usage)
+- [API](#api)
+- [Example - treating the image alt attributes - Gulp and stream-tapping](#example---treating-the-image-alt-attributes---gulp-and-stream-tapping)
+- [Can we use `lodash.deburr` instead?](#can-we-use-lodashdeburr-instead)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## Install
 
