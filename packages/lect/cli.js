@@ -29,6 +29,8 @@ const camelCase = require("lodash.camelcase");
 const semverRegex = require("semver-regex");
 const semverCompare = require("semver-compare");
 const bSlug = require("bitbucket-slug");
+const GithubSlugger = require("github-slugger");
+const slugger = new GithubSlugger();
 
 const findRecursivelyUp = require("find-file-recursively-up");
 const replace = require("replace-string");
@@ -1039,7 +1041,7 @@ async function writePackageJson(receivedPackageJsonObj) {
 	) {
 		Object.keys(adhocKeyOpsToDo.write_hard).forEach(key => {
 			if (isStr(key) && key.trim().length) {
-				// console.log(`1042 lect cli: key to write hard =${key}`);
+				// console.log(`1044 lect cli: key to write hard =${key}`);
 				objectPath.set(
 					receivedPackageJsonObj,
 					key,
@@ -1150,7 +1152,7 @@ async function step10() {
 						.manifest(dep)
 						.then(pkg => pkg.version);
 					// console.log(
-					//   `1153 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
+					//   `1155 lect/cli.js: ${`\u001b[${33}m${`retrievedVersion`}\u001b[${39}m`} = ${JSON.stringify(
 					//     retrievedVersion,
 					//     null,
 					//     4
@@ -1628,7 +1630,7 @@ function step6() {
 					.map(val => {
 						return {
 							fullTitle: val,
-							slug: bSlug(val)
+							slug: slugger.slug(val)
 						};
 					})
 					.map(({ fullTitle, slug }) => `- [${fullTitle}](#${slug})`)

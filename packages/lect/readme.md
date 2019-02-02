@@ -11,15 +11,15 @@
 
 ## Table of Contents
 
-- [TLDR;](#markdown-header-tldr)
-- [Great Wisdom or Great Foolishness](#markdown-header-great-wisdom-or-great-foolishness)
-- [The Idea](#markdown-header-the-idea)
-- [Readme automation](#markdown-header-readme-automation)
-- [Config — .lectrc.json](#markdown-header-config-lectrcjson)
-- [Install](#markdown-header-install)
-- [Readme - Badges](#markdown-header-readme-badges)
-- [Contributing](#markdown-header-contributing)
-- [Licence](#markdown-header-licence)
+- [TLDR;](#tldr)
+- [Great Wisdom or Great Foolishness](#great-wisdom-or-great-foolishness)
+- [The Idea](#the-idea)
+- [Readme automation](#readme-automation)
+- [Config — .lectrc.json](#config--lectrcjson)
+- [Install](#install)
+- [Readme - Badges](#readme---badges)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## TLDR;
 
