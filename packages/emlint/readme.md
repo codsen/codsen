@@ -1,4 +1,4 @@
-# Emlint
+# EMLint
 
 > Detects errors in HTML/CSS, proposes fixes, email-template friendly
 
