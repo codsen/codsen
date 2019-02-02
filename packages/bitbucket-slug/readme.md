@@ -11,6 +11,8 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
+**Update 2019-Feb-02**: I think **GitHub** are traitors because they sold out all open source developers and took M$ money for our open source work. **GitHub** should have became like **Mozilla** - _a non-profit_. But hey, it's Capitalism. This leaves us with two alternatives: **BitBucket** and **GitLab**. I wanted to say **BitBucket** is 💩 compared to **GitLab** and if you choose **BitBucket**, you'll suffer. For example, readme Table Of Contents's will work either on **BitBucket** or on **npm pages** but not on both. **BitBucket** support is 💩 and they are not really coping with all their issues. **GitLab** is on the opposite, has 1 day lead times. Just sayin'.
+
 ## Table of Contents
 
 - [Install](#markdown-header-install)
