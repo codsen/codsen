@@ -39,8 +39,6 @@ That's for starters.
 
 Using somebody else's config/automation files is usually a sign of _great or wisdom_ or a _great incompetence_. It is very very unlikely that a _real, serious and capable developer_ would take on _other real, serious and capable developer_'s automation script and plugged many npm libraries into it. Unrealistic. The _other real, serious and capable developer_ will either have his own tool, or will not be capable of operating one. That's the paradox and it's valid on many other areas of life.
 
-Npm packages are often cheap and often not taken seriously. But this package belongs to a company, **Codsen Ltd** _a British company_ so we take things seriously. We will do our best to document this complex CLI as best as we can.
-
 **[⬆ back to top](#)**
 
 ## The Idea
