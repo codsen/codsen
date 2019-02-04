@@ -218,7 +218,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "esm": "^3.2.0",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.3",
+    "prettier": "^1.16.4",
     "tempy": "^0.2.1"
   }
 }

@@ -181,7 +181,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^13.1.0",
-    "prettier": "^1.16.3",
+    "prettier": "^1.16.4",
     "ranges-apply": "^2.12.5",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
