@@ -211,7 +211,7 @@ function log(...pairs) {
   }, "");
 }
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)/g;
+  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   return (
     isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
   );
@@ -457,6 +457,22 @@ function emlint(str, originalOpts) {
             name: name$$1,
             position: [[i, i + 1, `"`]]
           });
+        } else if (withinTagInnerspace$1(str, i)) {
+          let start = logAttr.attrStartAt;
+          if (str[i] === "/" || str[i] === ">") {
+            for (let y = logAttr.attrStartAt; y--; ) {
+              if (str[y].trim().length) {
+                start = y + 1;
+                break;
+              }
+            }
+          }
+          retObj.issues.push({
+            name: "tag-attribute-quote-and-onwards-missing",
+            position: [[start, i]]
+          });
+          resetLogWhitespace();
+          resetLogAttr();
         }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "'" || str[i] === '"') {
@@ -464,6 +480,12 @@ function emlint(str, originalOpts) {
               name: "tag-attribute-space-between-equals-and-opening-quotes",
               position: [[logWhitespace.startAt, i]]
             });
+          } else if (withinTagInnerspace$1(str, i + 1)) {
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[logAttr.attrStartAt, i]]
+            });
+            resetLogAttr();
           }
         }
       }

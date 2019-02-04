@@ -184,6 +184,11 @@
     "excerpt": "a left double quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
+  "tag-attribute-quote-and-onwards-missing": {
+    "description": "One of the attributes ends with an equal sign, there are no quotes on it",
+    "excerpt": "attributes ends with an equal sign, there are no quotes on it",
+    "scope": "html"
+  },
   "tag-attribute-right-double-quotation-mark": {
     "description": "There's a right double quotation mark, https://www.fileformat.info/info/unicode/char/201d/index.htm",
     "excerpt": "a right double quotation mark instead of a normal quotation mark",
@@ -217,6 +222,11 @@
   "tag-whitespace-closing-slash-and-bracket": {
     "description": "There's a whitespace between closing slash and closing bracket",
     "excerpt": "whitespace between slash and closing bracket",
+    "scope": "html"
+  },
+  "tag-generic-error": {
+    "description": "Something is wrong here",
+    "excerpt": "something is wrong here",
     "scope": "html"
   }
 }

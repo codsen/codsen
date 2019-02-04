@@ -47,7 +47,7 @@ function isLatinLetter(char) {
 }
 function withinTagInnerspace(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)/g;
+  var regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   return isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
 }
 function firstOnTheRight(str) {
@@ -248,6 +248,22 @@ function emlint(str, originalOpts) {
               name: name$$1,
               position: [[i, i + 1, "\""]]
             });
+          } else if (withinTagInnerspace$1(str, i)) {
+            var start = logAttr.attrStartAt;
+            if (str[i] === "/" || str[i] === ">") {
+              for (var y = logAttr.attrStartAt; y--;) {
+                if (str[y].trim().length) {
+                  start = y + 1;
+                  break;
+                }
+              }
+            }
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[start, i]]
+            });
+            resetLogWhitespace();
+            resetLogAttr();
           }
           if (logWhitespace.startAt !== null) {
             if (str[i] === "'" || str[i] === '"') {
@@ -255,6 +271,12 @@ function emlint(str, originalOpts) {
                 name: "tag-attribute-space-between-equals-and-opening-quotes",
                 position: [[logWhitespace.startAt, i]]
               });
+            } else if (withinTagInnerspace$1(str, i + 1)) {
+              retObj.issues.push({
+                name: "tag-attribute-quote-and-onwards-missing",
+                position: [[logAttr.attrStartAt, i]]
+              });
+              resetLogAttr();
             }
           }
         }

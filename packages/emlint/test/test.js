@@ -1187,11 +1187,11 @@ test(`09.03 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
   const bad1 = `<aaa bbb="ccc\u201C>`;
   const good1 = `<aaa bbb="ccc">`;
   const res1 = emlint(bad1);
-  // t.deepEqual(
-  //   getUniqueIssueNames(res1.issues),
-  //   ["tag-attribute-left-double-quotation-mark"],
-  //   "09.03.01"
-  // );
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-double-quotation-mark"],
+    "09.03.01"
+  );
   t.is(apply(bad1, res1.fix), good1, "09.03.02");
 });
 
@@ -1239,6 +1239,79 @@ test(`10.03 - ${`\u001b[${35}m${`tag-attribute-right-double-quotation-mark`}\u00
     "10.03.01"
   );
   t.is(apply(bad1, res1.fix), good1, "10.03.02");
+});
+
+// 11. Rule tag-attribute-quote-and-onwards-missing
+// -----------------------------------------------------------------------------
+
+test(`11.01 - ${`\u001b[${35}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, normal whitespace around`, t => {
+  const bad = `<aaa bbb="ccc" ddd= eee="fff"/>`;
+  const good = `<aaa bbb="ccc" eee="fff"/>`;
+  const res = emlint(bad);
+  t.deepEqual(
+    getUniqueIssueNames(res.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.01.01"
+  );
+  t.is(apply(bad, res.fix), good, "11.01.02");
+});
+
+test(`11.02 - ${`\u001b[${35}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, extra whitespace follows`, t => {
+  const bad = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
+  const good = `<aaa bbb="ccc" eee="fff"/>`;
+  const res = emlint(bad);
+  t.deepEqual(
+    getUniqueIssueNames(res.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.02.01"
+  );
+  t.is(apply(bad, res.fix), good, "11.02.02");
+});
+
+test(`11.03 - ${`\u001b[${35}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows`, t => {
+  // XHTML - loose
+  const bad1 = `<aaa bbb="ccc" ddd=  />`;
+  const good1 = `<aaa bbb="ccc"/>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "11.03.02");
+
+  // XHTML - tight
+  const bad2 = `<aaa bbb="ccc" ddd=/>`;
+  const good2 = `<aaa bbb="ccc"/>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.03.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "11.03.04");
+
+  // HTML - loose
+  const bad3 = `<aaa bbb="ccc" ddd=  >`;
+  const good3 = `<aaa bbb="ccc">`;
+  const res3 = emlint(bad3);
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.03.05"
+  );
+  t.is(apply(bad3, res3.fix), good3, "11.03.06");
+
+  // HTML - tight
+  const bad4 = `<aaa bbb="ccc" ddd=>`;
+  const good4 = `<aaa bbb="ccc">`;
+  const res4 = emlint(bad4);
+  t.deepEqual(
+    getUniqueIssueNames(res4.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.03.07"
+  );
+  t.is(apply(bad4, res4.fix), good4, "11.03.08");
 });
 
 // 99. Util Unit tests
@@ -1303,7 +1376,7 @@ test(`99.02 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     "99.02.04"
   );
   // yet not this (nothing is after bracket so it's still a questionable case):
-  t.false(
+  t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">`,
       //                       ^
@@ -1313,7 +1386,7 @@ test(`99.02 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   );
   t.true(
     withinTagInnerspace(
-      `<img src="zzz.jpg" alt=">a`,
+      `<img src="zzz.jpg" alt=">\n`,
       //                       ^
       24
     ),
@@ -1321,11 +1394,19 @@ test(`99.02 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   );
   t.true(
     withinTagInnerspace(
-      `<img src="zzz.jpg" alt="><`,
+      `<img src="zzz.jpg" alt=">a`,
       //                       ^
       24
     ),
     "99.02.05-3"
+  );
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt="><`,
+      //                       ^
+      24
+    ),
+    "99.02.05-4"
   );
 
   // nobody puts /> at the beginning of a comment! It's a positive case.
@@ -1366,6 +1447,11 @@ test(`99.03 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
+// todo - duplicate closing bracket
+// todo - duplicate slash quotes
+// todo - duplicate closing quotes
+// todo - duplicate opening quotes
+// todo - duplicate equal
 // todo - missing equal in attribute
 // todo - missing opening quote in attribute
 // <aaa bbb="ccc' ddd="eee"/>

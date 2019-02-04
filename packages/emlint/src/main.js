@@ -421,10 +421,38 @@ function emlint(str, originalOpts) {
           console.log(
             `422 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
           );
+        } else if (withinTagInnerspace(str, i)) {
+          let start = logAttr.attrStartAt;
+          if (str[i] === "/" || str[i] === ">") {
+            // if we're removing a dud attribute at the end of the tag, let's
+            // remove also all the whitespace in front of it:
+            for (let y = logAttr.attrStartAt; y--; ) {
+              if (str[y].trim().length) {
+                start = y + 1;
+                break;
+              }
+            }
+          }
+          retObj.issues.push({
+            name: "tag-attribute-quote-and-onwards-missing",
+            position: [[start, i]]
+          });
+          console.log(
+            `441 ${log(
+              "push",
+              "tag-attribute-quote-and-onwards-missing",
+              `${`[[${start}, ${i}]]`}`
+            )}`
+          );
+          // reset logWhitespace because it might get reported as well:
+          console.log(`448 ${log("reset", "logWhitespace")}`);
+          resetLogWhitespace();
+          console.log(`449 ${log("reset", "logAttr")}`);
+          resetLogAttr();
         }
 
         console.log(
-          `427 ${log(
+          `455 ${log(
             "SET",
             "logAttr.attrOpeningQuote.pos",
             logAttr.attrOpeningQuote.pos,
@@ -442,20 +470,29 @@ function emlint(str, originalOpts) {
               position: [[logWhitespace.startAt, i]]
             });
             console.log(
-              `445 ${log(
+              `473 ${log(
                 "push",
                 "tag-attribute-space-between-equals-and-opening-quotes",
                 `${`[[${logWhitespace.startAt}, ${i}]]`}`
               )}`
             );
-          } else {
-            // TODO - cater case where attribute's quotes and content was lost
+          } else if (withinTagInnerspace(str, i + 1)) {
+            // Attribute's quotes and content was lost
             // for example, <aaa bbb="ccc" ddd= eee="fff"/>
-            //                                ^
-            // idea. maybe traverse until closing bracket, look out for red flags
-            // but count pairs of double/single quotes. If their count is zero
-            // or even, all is fine so this attribute is stray and can be removed.
-            // Raise warning, maybe peeps saved file between typing.
+            // tag-attribute-quote-and-onwards-missing
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[logAttr.attrStartAt, i]]
+            });
+            console.log(
+              `488 ${log(
+                "push",
+                "tag-attribute-quote-and-onwards-missing",
+                `${`[[${logAttr.attrStartAt}, ${i}]]`}`
+              )}`
+            );
+            console.log(`494 ${log("reset", "logAttr")}`);
+            resetLogAttr();
           }
         }
       }
@@ -476,7 +513,7 @@ function emlint(str, originalOpts) {
           // for now.
           logAttr.attrClosingQuote.val = str[i];
           console.log(
-            `479 ${log(
+            `516 ${log(
               "SET",
               "logAttr.attrClosingQuote.pos",
               logAttr.attrClosingQuote.pos,
@@ -493,17 +530,17 @@ function emlint(str, originalOpts) {
             logAttr.attrValue = "";
           }
           console.log(
-            `496 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
+            `533 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
           );
 
           logAttr.attrEndAt = i;
           console.log(
-            `501 ${log("SET", "logAttr.attrEndAt", logAttr.attrEndAt)}`
+            `538 ${log("SET", "logAttr.attrEndAt", logAttr.attrEndAt)}`
           );
 
           // finally, push the attributes object into
           logTag.attributes.push(clone(logAttr));
-          console.log(`506 ${log("PUSH, then RESET", "logAttr")}`);
+          console.log(`543 ${log("PUSH, then RESET", "logAttr")}`);
 
           // then, reset:
           resetLogAttr();
@@ -515,7 +552,6 @@ function emlint(str, originalOpts) {
               str[firstOnTheRight(str, i)] === "/")) ||
             withinTagInnerspace(str, i + 1))
         ) {
-          console.log("520");
           // if curlies were used to open this and this is curlie
           const name =
             charcode === 8220
@@ -526,7 +562,7 @@ function emlint(str, originalOpts) {
             position: [[i, i + 1, '"']]
           });
           console.log(
-            `531 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
+            `565 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
           );
         }
       }
@@ -553,7 +589,7 @@ function emlint(str, originalOpts) {
           name,
           position: [[i, i + 1, "  "]]
         });
-        console.log(`558 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
+        console.log(`592 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
       } else if (charcode === 13) {
         // Catch CR line endings (\r)
 
@@ -572,7 +608,7 @@ function emlint(str, originalOpts) {
               position: [[i, i + 2, rawEnforcedEOLChar]]
             });
             console.log(
-              `577 ${log(
+              `611 ${log(
                 "push",
                 "file-wrong-type-line-ending-CRLF",
                 `${`[[${i}, ${i + 2}, ${JSON.stringify(
@@ -586,7 +622,7 @@ function emlint(str, originalOpts) {
             // 1.2. so line endings is not enforced. Make a note of this line ending.
             logLineEndings.crlf.push([i, i + 2]);
             console.log(
-              `591 ${log("logLineEndings.crlf push", `[${i}, ${i + 2}]`)}`
+              `625 ${log("logLineEndings.crlf push", `[${i}, ${i + 2}]`)}`
             );
           }
         } else {
@@ -602,7 +638,7 @@ function emlint(str, originalOpts) {
               position: [[i, i + 1, rawEnforcedEOLChar]]
             });
             console.log(
-              `607 ${log(
+              `641 ${log(
                 "push",
                 "file-wrong-type-line-ending-CR",
                 `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -616,7 +652,7 @@ function emlint(str, originalOpts) {
             // 2.2. so line endings is not enforced. Make a note of this line ending.
             logLineEndings.cr.push([i, i + 1]);
             console.log(
-              `621 ${log("logLineEndings.cr push", `[${i}, ${i + 1}]`)}`
+              `655 ${log("logLineEndings.cr push", `[${i}, ${i + 1}]`)}`
             );
           }
         }
@@ -636,7 +672,7 @@ function emlint(str, originalOpts) {
               position: [[i, i + 1, rawEnforcedEOLChar]]
             });
             console.log(
-              `641 ${log(
+              `675 ${log(
                 "push",
                 "file-wrong-type-line-ending-LF",
                 `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -650,7 +686,7 @@ function emlint(str, originalOpts) {
             // 3.2. so line endings is not enforced. Make a note of this line ending.
             logLineEndings.lf.push([i, i + 1]);
             console.log(
-              `655 ${log("logLineEndings.lf push", `[${i}, ${i + 1}]`)}`
+              `689 ${log("logLineEndings.lf push", `[${i}, ${i + 1}]`)}`
             );
           }
         }
@@ -660,7 +696,7 @@ function emlint(str, originalOpts) {
           name,
           position: [[i, i + 1]]
         });
-        console.log(`665 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+        console.log(`699 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
       }
     }
 
@@ -690,20 +726,20 @@ function emlint(str, originalOpts) {
           position: [[logWhitespace.startAt, i]]
         });
         console.log(
-          `695 ${log("push", name, `${`[[${logWhitespace.startAt}, ${i}]]`}`)}`
+          `729 ${log("push", name, `${`[[${logWhitespace.startAt}, ${i}]]`}`)}`
         );
       }
 
       // finally, reset the whitespace tracking marker:
       resetLogWhitespace();
-      console.log(`701 ${log("reset", "logWhitespace")}`);
+      console.log(`735 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the start of whitespace chunks:
     if (!str[i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = i;
       console.log(
-        `708 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
+        `742 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
       );
     }
 
@@ -712,7 +748,7 @@ function emlint(str, originalOpts) {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
         console.log(
-          `717 ${log(
+          `751 ${log(
             "set",
             "logWhitespace.includesLinebreaks",
             logWhitespace.includesLinebreaks
@@ -721,7 +757,7 @@ function emlint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = i;
       console.log(
-        `726 ${log(
+        `760 ${log(
           "set",
           "logWhitespace.lastLinebreakAt",
           logWhitespace.lastLinebreakAt
@@ -737,14 +773,14 @@ function emlint(str, originalOpts) {
       logTag.tagNameEndAt === null &&
       !util.isLatinLetter(str[i])
     ) {
-      console.log("742 not a latin letter, thus we assume tag name ends here");
+      console.log("776 not a latin letter, thus we assume tag name ends here");
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
       logTag.recognised = util.knownHTMLTags.includes(
         logTag.tagName.toLowerCase()
       );
       console.log(
-        `749 ${log(
+        `783 ${log(
           "set",
           "logTag.tagNameEndAt",
           logTag.tagNameEndAt,
@@ -765,7 +801,7 @@ function emlint(str, originalOpts) {
     ) {
       logTag.tagNameStartAt = i;
       console.log(
-        `770 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
+        `804 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
       );
 
       // rule "space-between-opening-bracket-and-tag-name":
@@ -775,7 +811,7 @@ function emlint(str, originalOpts) {
           position: [[logTag.tagStartAt + 1, i]]
         });
         console.log(
-          `780 ${log(
+          `814 ${log(
             "push",
             "tag-space-after-opening-bracket",
             `${`[[${logTag.tagStartAt + 1}, ${i}]]`}`
@@ -795,7 +831,7 @@ function emlint(str, originalOpts) {
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
       console.log(
-        `800 ${log(
+        `834 ${log(
           "push",
           "tag-name-lowercase",
           `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -810,13 +846,13 @@ function emlint(str, originalOpts) {
     // catch the beginning of a tag:
     if (str[i] === "<" && logTag.tagStartAt === null) {
       logTag.tagStartAt = i;
-      console.log(`815 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`);
+      console.log(`849 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`);
     }
 
     // catch the ending of a tag:
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
-      console.log(`821 ${log("reset", "logTag")}`);
+      console.log(`855 ${log("reset", "logTag")}`);
     }
 
     //                                S
@@ -927,7 +963,7 @@ function emlint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("932 CR clearly prevalent");
+      console.log("966 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -949,7 +985,7 @@ function emlint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("954 LF clearly prevalent");
+      console.log("988 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -971,7 +1007,7 @@ function emlint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("976 CRLF clearly prevalent");
+      console.log("1010 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -993,7 +1029,7 @@ function emlint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("998 same amount of each type of EOL");
+      console.log("1032 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1012,7 +1048,7 @@ function emlint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("1017 CR & CRLF are prevalent over LF");
+      console.log("1051 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -1037,7 +1073,7 @@ function emlint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "1042 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "1076 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -1060,9 +1096,9 @@ function emlint(str, originalOpts) {
   }
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("1065 BEFORE FIX");
+  console.log("1099 BEFORE FIX");
   console.log(
-    `1067 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
+    `1101 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
       retObj.issues,
       null,
       4
