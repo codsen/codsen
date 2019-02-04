@@ -1158,7 +1158,7 @@ test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
   const good1 = `<aaa bbb="ccc">`;
   const res1 = emlint(bad1);
   t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
+    getUniqueIssueNames(res1.issues),
     ["tag-attribute-left-double-quotation-mark"],
     "09.01.01"
   );
@@ -1171,15 +1171,28 @@ test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
   const bad1 = `<aaa bbb=\u201Cccc\u201D>`;
   const good1 = `<aaa bbb="ccc">`;
   const res1 = emlint(bad1);
-  // t.deepEqual(
-  //   getUniqueIssueNames(res1.issues).sort(),
-  //   [
-  //     "tag-attribute-left-double-quotation-mark",
-  //     "tag-attribute-right-double-quotation-mark"
-  //   ],
-  //   "09.02.01"
-  // );
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-left-double-quotation-mark",
+      "tag-attribute-right-double-quotation-mark"
+    ],
+    "09.02.01"
+  );
   t.is(apply(bad1, res1.fix), good1, "09.02.02");
+});
+
+test(`09.03 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double closing, normal opening`, t => {
+  // const bad1 = `<aaa bbb="ccc“>`;
+  const bad1 = `<aaa bbb="ccc\u201C>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  // t.deepEqual(
+  //   getUniqueIssueNames(res1.issues),
+  //   ["tag-attribute-left-double-quotation-mark"],
+  //   "09.03.01"
+  // );
+  t.is(apply(bad1, res1.fix), good1, "09.03.02");
 });
 
 // 10. rule "tag-attribute-right-double-quotation-mark"
@@ -1213,6 +1226,19 @@ test(`10.02 - ${`\u001b[${33}m${`tag-attribute-right-double-quotation-mark`}\u00
     "10.02.01"
   );
   t.is(apply(bad1, res1.fix), good1, "10.02.02");
+});
+
+test(`10.03 - ${`\u001b[${35}m${`tag-attribute-right-double-quotation-mark`}\u001b[${39}m`} - right double closing, normal opening`, t => {
+  // const bad1 = `<aaa bbb="ccc“>`;
+  const bad1 = `<aaa bbb="ccc\u201D>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-double-quotation-mark"],
+    "10.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "10.03.02");
 });
 
 // 99. Util Unit tests

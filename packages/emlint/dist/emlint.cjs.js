@@ -270,7 +270,7 @@ function emlint(str, originalOpts) {
               logAttr.attrEndAt = i;
               logTag.attributes.push(clone(logAttr));
               resetLogAttr();
-            } else if (isStr$1(logAttr.attrOpeningQuote.val) && (logAttr.attrOpeningQuote.val.charCodeAt(0) === 8220 || logAttr.attrOpeningQuote.val.charCodeAt(0) === 8221) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
+            } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
               var _name = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
               retObj.issues.push({
                 name: _name,

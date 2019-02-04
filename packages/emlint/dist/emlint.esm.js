@@ -485,8 +485,6 @@ function emlint(str, originalOpts) {
           resetLogAttr();
         } else if (
           isStr$1(logAttr.attrOpeningQuote.val) &&
-          (logAttr.attrOpeningQuote.val.charCodeAt(0) === 8220 ||
-            logAttr.attrOpeningQuote.val.charCodeAt(0) === 8221) &&
           (charcode === 8220 || charcode === 8221) &&
           ((firstOnTheRight$1(str, i) !== null &&
             (str[firstOnTheRight$1(str, i)] === ">" ||
