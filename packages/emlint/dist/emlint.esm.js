@@ -165,6 +165,14 @@ const knownHTMLTags = [
   "wbr",
   "xml"
 ];
+function isLowerCaseLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    char.charCodeAt(0) > 96 &&
+    char.charCodeAt(0) < 123
+  );
+}
 function isUppercaseLetter(char) {
   return (
     isStr(char) &&
@@ -176,6 +184,9 @@ function isUppercaseLetter(char) {
 function isStr(something) {
   return typeof something === "string";
 }
+function isLowercase(char) {
+  return char.toLowerCase() === char && char.toUpperCase() !== char;
+}
 function isLatinLetter(char) {
   return (
     isStr(char) &&
@@ -184,11 +195,61 @@ function isLatinLetter(char) {
       (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
   );
 }
+function charSuitableForTagName(char) {
+  return isLowerCaseLetter(char);
+}
+function log(...pairs) {
+  return pairs.reduce((accum, curr, idx, arr) => {
+    if (idx === 0 && typeof curr === "string") {
+      return `\u001b[${32}m${curr.toUpperCase()}\u001b[${39}m`;
+    } else if (idx % 2 !== 0) {
+      return `${accum} \u001b[${33}m${curr}\u001b[${39}m`;
+    }
+    return `${accum} = ${JSON.stringify(curr, null, 4)}${
+      arr[idx + 1] ? ";" : ""
+    }`;
+  }, "");
+}
+function withinTagInnerspace(str, idx = 0) {
+  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)/g;
+  return (
+    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
+  );
+}
+function firstOnTheRight(str, idx = 0) {
+  if (!str[idx + 1]) {
+    return null;
+  } else if (str[idx + 1] && str[idx + 1].trim().length) {
+    return idx + 1;
+  } else if (str[idx + 2] && str[idx + 2].trim().length) {
+    return idx + 2;
+  }
+  for (let i = idx + 1, len = str.length; i < len; i++) {
+    if (str[i].trim().length) {
+      return i;
+    }
+  }
+  return null;
+}
+
+var util = /*#__PURE__*/Object.freeze({
+  knownHTMLTags: knownHTMLTags,
+  charSuitableForTagName: charSuitableForTagName,
+  isUppercaseLetter: isUppercaseLetter,
+  isLowercase: isLowercase,
+  isStr: isStr,
+  lowAsciiCharacterNames: lowAsciiCharacterNames,
+  log: log,
+  isLatinLetter: isLatinLetter,
+  withinTagInnerspace: withinTagInnerspace,
+  firstOnTheRight: firstOnTheRight
+});
 
 const errors = "./errors.json";
 const isArr = Array.isArray;
+const { isStr: isStr$1, log: log$1, withinTagInnerspace: withinTagInnerspace$1, firstOnTheRight: firstOnTheRight$1 } = util;
 function emlint(str, originalOpts) {
-  if (!isStr(str)) {
+  if (!isStr$1(str)) {
     throw new Error(
       `emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n${JSON.stringify(
         str,
@@ -215,7 +276,7 @@ function emlint(str, originalOpts) {
           "style.line_endings_CR_LF_CRLF": ["string", "null", "undefined"]
         }
       });
-      if (opts.style && isStr(opts.style.line_endings_CR_LF_CRLF)) {
+      if (opts.style && isStr$1(opts.style.line_endings_CR_LF_CRLF)) {
         if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
           if (opts.style.line_endings_CR_LF_CRLF !== "CR") {
             opts.style.line_endings_CR_LF_CRLF === "CR";
@@ -253,7 +314,7 @@ function emlint(str, originalOpts) {
     opts = clone(defaults);
   }
   let rawEnforcedEOLChar;
-  if (opts.style && isStr(opts.style.line_endings_CR_LF_CRLF)) {
+  if (opts.style && isStr$1(opts.style.line_endings_CR_LF_CRLF)) {
     if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "cr") {
       rawEnforcedEOLChar = "\r";
     } else if (opts.style.line_endings_CR_LF_CRLF.toLowerCase() === "crlf") {
@@ -355,7 +416,7 @@ function emlint(str, originalOpts) {
         if (logWhitespace.startAt !== null) {
           if (str[i] === "=") {
             retObj.issues.push({
-              name: "attribute-space-between-name-and-equals",
+              name: "tag-attribute-space-between-name-and-equals",
               position: [[logWhitespace.startAt, i]]
             });
           } else if (isLatinLetter(str[i])) {
@@ -382,12 +443,25 @@ function emlint(str, originalOpts) {
         logAttr.attrOpeningQuote.pos === null &&
         str[i].trim().length
       ) {
-        logAttr.attrOpeningQuote.pos = i;
-        logAttr.attrOpeningQuote.val = str[i];
+        if (charcode === 34 || charcode === 39) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = str[i];
+        } else if (charcode === 8220 || charcode === 8221) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = str[i];
+          const name$$1 =
+            charcode === 8220
+              ? "tag-attribute-left-double-quotation-mark"
+              : "tag-attribute-right-double-quotation-mark";
+          retObj.issues.push({
+            name: name$$1,
+            position: [[i, i + 1, `"`]]
+          });
+        }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "'" || str[i] === '"') {
             retObj.issues.push({
-              name: "attribute-space-between-equals-and-opening-quotes",
+              name: "tag-attribute-space-between-equals-and-opening-quotes",
               position: [[logWhitespace.startAt, i]]
             });
           }
@@ -396,19 +470,38 @@ function emlint(str, originalOpts) {
       else if (
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos !== null &&
-        i > logAttr.attrOpeningQuote.pos &&
-        str[i] === logAttr.attrOpeningQuote.val
+        i > logAttr.attrOpeningQuote.pos
       ) {
-        logAttr.attrClosingQuote.pos = i;
-        logAttr.attrClosingQuote.val = str[i];
-        if (logAttr.attrOpeningQuote.pos + 1 < i) {
-          logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
-        } else {
-          logAttr.attrValue = "";
+        if (str[i] === logAttr.attrOpeningQuote.val) {
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = str[i];
+          if (logAttr.attrOpeningQuote.pos + 1 < i) {
+            logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
+          } else {
+            logAttr.attrValue = "";
+          }
+          logAttr.attrEndAt = i;
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        } else if (
+          isStr$1(logAttr.attrOpeningQuote.val) &&
+          (logAttr.attrOpeningQuote.val.charCodeAt(0) === 8220 ||
+            logAttr.attrOpeningQuote.val.charCodeAt(0) === 8221) &&
+          (charcode === 8220 || charcode === 8221) &&
+          ((firstOnTheRight$1(str, i) !== null &&
+            (str[firstOnTheRight$1(str, i)] === ">" ||
+              str[firstOnTheRight$1(str, i)] === "/")) ||
+            withinTagInnerspace$1(str, i + 1))
+        ) {
+          const name$$1 =
+            charcode === 8220
+              ? "tag-attribute-left-double-quotation-mark"
+              : "tag-attribute-right-double-quotation-mark";
+          retObj.issues.push({
+            name: name$$1,
+            position: [[i, i + 1, '"']]
+          });
         }
-        logAttr.attrEndAt = i;
-        logTag.attributes.push(clone(logAttr));
-        resetLogAttr();
       }
     }
     if (charcode < 32) {
@@ -419,7 +512,7 @@ function emlint(str, originalOpts) {
           position: [[i, i + 1, "  "]]
         });
       } else if (charcode === 13) {
-        if (isStr(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
+        if (isStr$1(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
           if (
             opts.style &&
             opts.style.line_endings_CR_LF_CRLF &&
@@ -447,7 +540,7 @@ function emlint(str, originalOpts) {
           }
         }
       } else if (charcode === 10) {
-        if (!(isStr(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
+        if (!(isStr$1(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
           if (
             opts.style &&
             opts.style.line_endings_CR_LF_CRLF &&
@@ -482,7 +575,7 @@ function emlint(str, originalOpts) {
       ) {
         let name$$1 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
-          name$$1 = "tag-whitespace-tags-closing-slash-and-bracket";
+          name$$1 = "tag-whitespace-closing-slash-and-bracket";
         }
         retObj.issues.push({
           name: name$$1,
@@ -520,7 +613,7 @@ function emlint(str, originalOpts) {
       logTag.tagNameStartAt = i;
       if (logTag.tagStartAt < i - 1) {
         retObj.issues.push({
-          name: "space-after-opening-bracket",
+          name: "tag-space-after-opening-bracket",
           position: [[logTag.tagStartAt + 1, i]]
         });
       }
@@ -531,7 +624,7 @@ function emlint(str, originalOpts) {
       isUppercaseLetter(str[i])
     ) {
       retObj.issues.push({
-        name: "tagname-lowercase",
+        name: "tag-name-lowercase",
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
     }

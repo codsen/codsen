@@ -179,24 +179,24 @@
     "excerpt": "Line Feed line ending",
     "scope": "all"
   },
-  "space-after-opening-bracket": {
-    "description": "Many browsers, including Chrome will not consider this a tag",
-    "excerpt": "space between opening bracket and tag name",
+  "tag-attribute-left-double-quotation-mark": {
+    "description": "There's a left double quotation mark, http://www.fileformat.info/info/unicode/char/201C/index.htm",
+    "excerpt": "a left double quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
-  "tagname-lowercase": {
-    "description": "Normally all tags are in lowercase",
-    "excerpt": "tag name contains uppercase characters",
+  "tag-attribute-right-double-quotation-mark": {
+    "description": "There's a right double quotation mark, https://www.fileformat.info/info/unicode/char/201d/index.htm",
+    "excerpt": "a right double quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
-  "attribute-space-between-name-and-equals": {
-    "description": "There's a space between attribute's name and equal sign",
-    "excerpt": "space between attribute's name and equal sign",
-    "scope": "html"
-  },
-  "attribute-space-between-equals-and-opening-quotes": {
+  "tag-attribute-space-between-equals-and-opening-quotes": {
     "description": "There's a space between attribute's equal sign and opening quotes",
     "excerpt": "space between attribute's equal sign and opening quotes",
+    "scope": "html"
+  },
+  "tag-attribute-space-between-name-and-equals": {
+    "description": "There's a space between attribute's name and equal sign",
+    "excerpt": "space between attribute's name and equal sign",
     "scope": "html"
   },
   "tag-excessive-whitespace-inside-tag": {
@@ -204,7 +204,17 @@
     "excerpt": "space between attribute's name and equal sign",
     "scope": "html"
   },
-  "tag-whitespace-tags-closing-slash-and-bracket": {
+  "tag-name-lowercase": {
+    "description": "Normally all tags are in lowercase",
+    "excerpt": "tag name contains uppercase characters",
+    "scope": "html"
+  },
+  "tag-space-after-opening-bracket": {
+    "description": "Many browsers, including Chrome will not consider this a tag",
+    "excerpt": "space between opening bracket and tag name",
+    "scope": "html"
+  },
+  "tag-whitespace-closing-slash-and-bracket": {
     "description": "There's a whitespace between closing slash and closing bracket",
     "excerpt": "whitespace between slash and closing bracket",
     "scope": "html"

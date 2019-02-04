@@ -194,5 +194,26 @@ function log(...pairs) {
     }`;
   }, "");
 }
+function withinTagInnerspace(str, idx = 0) {
+  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)/g;
+  return (
+    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
+  );
+}
+function firstOnTheRight(str, idx = 0) {
+  if (!str[idx + 1]) {
+    return null;
+  } else if (str[idx + 1] && str[idx + 1].trim().length) {
+    return idx + 1;
+  } else if (str[idx + 2] && str[idx + 2].trim().length) {
+    return idx + 2;
+  }
+  for (let i = idx + 1, len = str.length; i < len; i++) {
+    if (str[i].trim().length) {
+      return i;
+    }
+  }
+  return null;
+}
 
-export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter };
+export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight };

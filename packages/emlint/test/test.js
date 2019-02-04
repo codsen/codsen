@@ -2,6 +2,7 @@ import test from "ava";
 import { emlint } from "../dist/emlint.esm";
 import apply from "ranges-apply";
 // import errors from "../src/errors.json";
+import { withinTagInnerspace, firstOnTheRight } from "../dist/util.esm";
 
 function getUniqueIssueNames(issues) {
   return issues.reduce((accum, curr) => {
@@ -81,7 +82,7 @@ test(`00.03 - ${`\u001b[${33}m${`arg. validation`}\u001b[${39}m`} - opts.line_en
   });
 });
 
-// 01. rule "space-after-opening-bracket"
+// 01. rule "tag-space-after-opening-bracket"
 // -----------------------------------------------------------------------------
 test(`01.00 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - all fine (control)`, t => {
   t.is(emlint("<table>").issues.length, 0, "01.00.01");
@@ -99,17 +100,17 @@ test(`01.01 - ${`\u001b[${35}m${`space between the tag name and opening bracket`
 
   // there's only one issue:
   t.is(res1.issues.length, 1, "01.01.01");
-  t.is(res1.issues[0].name, "space-after-opening-bracket", "01.01.02");
+  t.is(res1.issues[0].name, "tag-space-after-opening-bracket", "01.01.02");
   t.deepEqual(res1.issues[0].position, [[1, 2]], "01.01.03");
 
   t.is(res2.issues.length, 1, "01.01.04");
-  t.is(res2.issues[0].name, "space-after-opening-bracket", "01.01.05");
+  t.is(res2.issues[0].name, "tag-space-after-opening-bracket", "01.01.05");
   t.deepEqual(res2.issues[0].position, [[1, 5]], "01.01.06");
 
   t.is(res3.issues.length, 4, "01.01.07");
   t.deepEqual(
     getUniqueIssueNames(res3.issues).sort(),
-    ["bad-character-character-tabulation", "space-after-opening-bracket"],
+    ["bad-character-character-tabulation", "tag-space-after-opening-bracket"],
     "01.01.08"
   );
   t.deepEqual(res3.fix, [[1, 11]], "01.01.09");
@@ -201,37 +202,37 @@ test(`02.XX - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ASCII 0-3
   });
 });
 
-// 03. rule "tagname-lowercase"
+// 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
-test(`03.00 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
+test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
   t.is(emlint("<table>").issues.length, 0, "03.00.01");
 });
 
-test(`03.01 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - one tag with capital letter`, t => {
+test(`03.01 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - one tag with capital letter`, t => {
   const bad = "<Table>";
   const good = "<table>";
   const res = emlint(bad);
 
   // there's only one issue:
   t.is(res.issues.length, 1, "03.01.01");
-  t.is(res.issues[0].name, "tagname-lowercase", "03.01.02");
+  t.is(res.issues[0].name, "tag-name-lowercase", "03.01.02");
   t.deepEqual(res.issues[0].position, [[1, 2, "t"]], "03.01.03");
 
   // fixing:
   t.is(apply(bad, res.fix), good, "03.01.04");
 });
 
-test(`03.02 - ${`\u001b[${36}m${`tagname-lowercase`}\u001b[${39}m`} - few tags with capital letters`, t => {
+test(`03.02 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - few tags with capital letters`, t => {
   const bad = "<tAbLE><tR><TD>";
   const good = "<table><tr><td>";
   const res = emlint(bad);
 
   // there's only one issue:
   t.is(res.issues.length, 6, "03.02.01");
-  t.is(res.issues[0].name, "tagname-lowercase", "03.02.02");
+  t.is(res.issues[0].name, "tag-name-lowercase", "03.02.02");
   t.deepEqual(
     getUniqueIssueNames(res.issues),
-    ["tagname-lowercase"],
+    ["tag-name-lowercase"],
     "03.02.03"
   );
   t.deepEqual(
@@ -900,10 +901,10 @@ test(`04.17 - ${`\u001b[${33}m${`file-mixed-line-endings-file-is-*-mainly`}\u001
   t.deepEqual(res, res4, "04.16.04");
 });
 
-// 05. rule "attribute-space-between-name-and-equals"
+// 05. rule "tag-attribute-space-between-name-and-equals"
 // -----------------------------------------------------------------------------
 
-test(`05.01 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
+test(`05.01 - ${`\u001b[${31}m${`tag-attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
   const input1 = `<zzz>`;
   const res1 = emlint(input1);
   t.is(res1.issues.length, 0, "05.01.01");
@@ -913,7 +914,7 @@ test(`05.01 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b
   t.is(res2.issues.length, 0, "05.01.02");
 });
 
-test(`05.02 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
+test(`05.02 - ${`\u001b[${31}m${`tag-attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
   // 1. single space
 
   const bad1 = `<zzz yyy ="qqq">`;
@@ -921,7 +922,7 @@ test(`05.02 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b
   const res1 = emlint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
-    ["attribute-space-between-name-and-equals"],
+    ["tag-attribute-space-between-name-and-equals"],
     "05.02.01"
   );
   t.is(apply(bad1, res1.fix), good1, "05.02.02");
@@ -933,7 +934,7 @@ test(`05.02 - ${`\u001b[${31}m${`attribute-space-between-name-and-equals`}\u001b
   const res2 = emlint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
-    ["attribute-space-between-name-and-equals"],
+    ["tag-attribute-space-between-name-and-equals"],
     "05.02.03"
   );
   t.is(apply(bad2, res2.fix), good2, "05.02.04");
@@ -1056,17 +1057,17 @@ test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
   // PS. in theory error should be raised but not with this rule...
 });
 
-// 07. rule "attribute-space-between-equals-and-opening-quotes"
+// 07. rule "tag-attribute-space-between-equals-and-opening-quotes"
 // -----------------------------------------------------------------------------
 
-test(`07.01 - ${`\u001b[${34}m${`attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and quote`, t => {
+test(`07.01 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and quote`, t => {
   // 1. double quote:
   const bad1 = `<aaa bbb= "ccc">`;
   const good1 = `<aaa bbb="ccc">`;
   const res1 = emlint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
-    ["attribute-space-between-equals-and-opening-quotes"],
+    ["tag-attribute-space-between-equals-and-opening-quotes"],
     "07.01.01"
   );
   t.is(apply(bad1, res1.fix), good1, "07.01.02");
@@ -1077,22 +1078,22 @@ test(`07.01 - ${`\u001b[${34}m${`attribute-space-between-equals-and-opening-quot
   const res2 = emlint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
-    ["attribute-space-between-equals-and-opening-quotes"],
+    ["tag-attribute-space-between-equals-and-opening-quotes"],
     "07.01.03"
   );
   t.is(apply(bad2, res2.fix), good2, "07.01.04");
 });
 
-// 08. rule "tag-whitespace-tags-closing-slash-and-bracket"
+// 08. rule "tag-whitespace-closing-slash-and-bracket"
 // -----------------------------------------------------------------------------
 
-test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}\u001b[${39}m`} - all OK`, t => {
+test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-closing-slash-and-bracket`}\u001b[${39}m`} - all OK`, t => {
   // there is no whitespace or slash at all
   const good1 = `<aaa>`;
   const res1 = emlint(good1);
   t.false(
     getUniqueIssueNames(res1.issues).includes(
-      "attribute-space-between-equals-and-opening-quotes"
+      "tag-attribute-space-between-equals-and-opening-quotes"
     ),
     "08.01.01"
   );
@@ -1102,7 +1103,7 @@ test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}
   const res2 = emlint(good2);
   t.false(
     getUniqueIssueNames(res2.issues).includes(
-      "attribute-space-between-equals-and-opening-quotes"
+      "tag-attribute-space-between-equals-and-opening-quotes"
     ),
     "08.01.02"
   );
@@ -1112,7 +1113,7 @@ test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}
   const res3 = emlint(good3);
   t.false(
     getUniqueIssueNames(res3.issues).includes(
-      "attribute-space-between-equals-and-opening-quotes"
+      "tag-attribute-space-between-equals-and-opening-quotes"
     ),
     "08.01.03"
   );
@@ -1124,14 +1125,14 @@ test(`08.01 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}
   );
 });
 
-test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}\u001b[${39}m`} - spaces between equal and quote`, t => {
+test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-closing-slash-and-bracket`}\u001b[${39}m`} - spaces between equal and quote`, t => {
   // 1. single space:
   const bad1 = `<aaa/ >`;
   const good1 = `<aaa/>`;
   const res1 = emlint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
-    ["tag-whitespace-tags-closing-slash-and-bracket"],
+    ["tag-whitespace-closing-slash-and-bracket"],
     "08.02.01"
   );
   t.is(apply(bad1, res1.fix), good1, "08.02.02");
@@ -1142,18 +1143,216 @@ test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-tags-closing-slash-and-bracket`}
   const res2 = emlint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
-    ["tag-whitespace-tags-closing-slash-and-bracket"],
+    ["tag-whitespace-closing-slash-and-bracket"],
     "08.02.03"
   );
   t.is(apply(bad2, res2.fix), good2, "08.02.04");
 });
 
+// 09. rule "tag-attribute-left-double-quotation-mark"
+// -----------------------------------------------------------------------------
+
+test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, normal closing`, t => {
+  // const bad1 = `<aaa bbb=“ccc">`;
+  const bad1 = `<aaa bbb=\u201Cccc">`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-left-double-quotation-mark"],
+    "09.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "09.01.02");
+});
+
+test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, right double closing`, t => {
+  // 1. pair:
+  // const bad1 = `<aaa bbb=“ccc”>`;
+  const bad1 = `<aaa bbb=\u201Cccc\u201D>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  // t.deepEqual(
+  //   getUniqueIssueNames(res1.issues).sort(),
+  //   [
+  //     "tag-attribute-left-double-quotation-mark",
+  //     "tag-attribute-right-double-quotation-mark"
+  //   ],
+  //   "09.02.01"
+  // );
+  t.is(apply(bad1, res1.fix), good1, "09.02.02");
+});
+
+// 10. rule "tag-attribute-right-double-quotation-mark"
+// -----------------------------------------------------------------------------
+
+test(`10.01 - ${`\u001b[${35}m${`tag-attribute-right-double-quotation-mark`}\u001b[${39}m`} - right double opening, normal closing`, t => {
+  // const bad1 = `<aaa bbb=“ccc">`;
+  const bad1 = `<aaa bbb=\u201Dccc">`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-double-quotation-mark"],
+    "10.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "10.01.02");
+});
+
+test(`10.02 - ${`\u001b[${33}m${`tag-attribute-right-double-quotation-mark`}\u001b[${39}m`} - attribute is enclosed in curly quotation marks`, t => {
+  // 1. pair:
+  // const bad1 = `<aaa bbb=“ccc”>`;
+  const bad1 = `<aaa bbb=\u201Cccc\u201D>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-left-double-quotation-mark",
+      "tag-attribute-right-double-quotation-mark"
+    ],
+    "10.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "10.02.02");
+});
+
+// 99. Util Unit tests
+// -----------------------------------------------------------------------------
+
+test(`99.01 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
+  // true:
+  t.true(withinTagInnerspace(` ><zzz>`));
+  t.true(withinTagInnerspace(` />`), "99.01.02");
+  t.true(withinTagInnerspace(` z="">`), "99.01.03");
+  t.true(withinTagInnerspace(` z=""/>`), "99.01.04");
+  t.true(withinTagInnerspace(` alt=""/>`), "99.01.05");
+
+  t.true(withinTagInnerspace(` ><b>`), "99.01.06");
+  t.true(withinTagInnerspace(` /><b>`), "99.01.07");
+  t.true(withinTagInnerspace(` z=""><b>`), "99.01.08");
+  t.true(withinTagInnerspace(` z=""/><b>`), "99.01.09");
+  t.true(withinTagInnerspace(` alt=""/><b>`), "99.01.10");
+
+  t.true(withinTagInnerspace(` >\n   <b>`), "99.01.11");
+  t.true(withinTagInnerspace(` />\n   <b>`), "99.01.12");
+  t.true(withinTagInnerspace(` z="">\n   <b>`), "99.01.13");
+  t.true(withinTagInnerspace(` z=""/>\n   <b>`), "99.01.14");
+  t.true(withinTagInnerspace(` alt=""/>\n   <b>`), "99.01.15");
+
+  // false:
+  // t.true(withinTagInnerspace(` alt=""/>\n   <b>`), "99.01.16");
+});
+
+test(`99.02 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - with offset`, t => {
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=" height="100" border="0" style="display:block;"/>`,
+      //                       ^
+      24
+    ),
+    "99.02.01"
+  );
+  t.false(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=" zzz" border="0" style="display:block;" alt=""/>`,
+      //                       ^
+      24
+    ),
+    "99.02.02"
+  );
+  t.false(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=" <--- zzz" border="0" style="display:block;" alt=""/>`,
+      //                       ^
+      24
+    ),
+    "99.02.03"
+  );
+  // but this is within inner tag space:
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt="border="0" style="display:block;" alt=""/>`,
+      //                       ^
+      24
+    ),
+    "99.02.04"
+  );
+  // yet not this (nothing is after bracket so it's still a questionable case):
+  t.false(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=">`,
+      //                       ^
+      24
+    ),
+    "99.02.05-1"
+  );
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=">a`,
+      //                       ^
+      24
+    ),
+    "99.02.05-2"
+  );
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt="><`,
+      //                       ^
+      24
+    ),
+    "99.02.05-3"
+  );
+
+  // nobody puts /> at the beginning of a comment! It's a positive case.
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt="/>`,
+      //                       ^
+      24
+    ),
+    "99.02.06"
+  );
+  t.true(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt="><aaa`,
+      //                       ^
+      24
+    ),
+    "99.02.07"
+  );
+});
+
+test(`99.03 - ${`\u001b[${31}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
+  t.false(!!firstOnTheRight(""), "99.03.01");
+  t.false(!!firstOnTheRight("a"), "99.03.02");
+
+  // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
+  t.is(firstOnTheRight("ab"), 1, "99.03.03");
+
+  // 2nd input arg was omitted so starting index is zero, which is "a".
+  // Now, to the right of it, there's a space, index 1, next non-whitespace char
+  // is b which is index 2.
+  t.is(firstOnTheRight("a b"), 2, "99.03.04");
+
+  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.03.05");
+  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.03.06");
+});
+
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
+// todo - missing equal in attribute
+// todo - missing opening quote in attribute
+// <aaa bbb="ccc' ddd="eee"/>
+// what if un-pushed logAttr is still available when logTag is closing?
+// space missing in front of an attribute
+// test.todo("same opening/closing quotes repeated twice")
+// test.todo("stray-ones inside another outer quotes")
 // test.todo("file-xhtml-tag-ending");
 // test.todo("file-html-tag-ending");
 // test.todo("file-trailing-line-break-present");
 // test.todo("file-trailing-line-break-absent");
 // test.todo("tough one: <aaa bbb="  ccc="ddd">")
 // test.todo("even tougher one: <aaa bbb = "  ccc = "ddd">")
+
+// \u201Csomething\u201D
+// 8220 - 8221
