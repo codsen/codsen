@@ -187,7 +187,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-prettier": "^3.0.1",
-    "nyc": "^13.1.0",
+    "nyc": "^13.2.0",
     "posthtml-parser": "^0.4.1",
     "prettier": "^1.16.4",
     "rollup": "^1.1.2",
