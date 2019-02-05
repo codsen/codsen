@@ -179,6 +179,16 @@
     "excerpt": "Line Feed line ending",
     "scope": "all"
   },
+  "tag-attribute-mismatching-quotes-is-single": {
+    "description": "attribute's opening quote is double, but closing-one is single",
+    "excerpt": "there should be a double quote here instead",
+    "scope": "html"
+  },
+  "tag-attribute-mismatching-quotes-is-double": {
+    "description": "attribute's opening quote is single, but closing-one is double",
+    "excerpt": "there should be a single quote here instead",
+    "scope": "html"
+  },
   "tag-attribute-left-double-quotation-mark": {
     "description": "There's a left double quotation mark, http://www.fileformat.info/info/unicode/char/201C/index.htm",
     "excerpt": "a left double quotation mark instead of a normal quotation mark",

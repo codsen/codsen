@@ -448,7 +448,7 @@ function emlint(str, originalOpts) {
           logAttr.attrOpeningQuote.val = str[i];
         } else if (charcode === 8220 || charcode === 8221) {
           logAttr.attrOpeningQuote.pos = i;
-          logAttr.attrOpeningQuote.val = str[i];
+          logAttr.attrOpeningQuote.val = `"`;
           const name$$1 =
             charcode === 8220
               ? "tag-attribute-left-double-quotation-mark"
@@ -494,7 +494,16 @@ function emlint(str, originalOpts) {
         logAttr.attrOpeningQuote.pos !== null &&
         i > logAttr.attrOpeningQuote.pos
       ) {
-        if (str[i] === logAttr.attrOpeningQuote.val) {
+        if (charcode === 34 || charcode === 39) {
+          if (str[i] !== logAttr.attrOpeningQuote.val) {
+            const name$$1 = `tag-attribute-mismatching-quotes-is-${
+              charcode === 34 ? "double" : "single"
+            }`;
+            retObj.issues.push({
+              name: name$$1,
+              position: [[i, i + 1, `${charcode === 34 ? "'" : '"'}`]]
+            });
+          }
           logAttr.attrClosingQuote.pos = i;
           logAttr.attrClosingQuote.val = str[i];
           if (logAttr.attrOpeningQuote.pos + 1 < i) {

@@ -242,7 +242,7 @@ function emlint(str, originalOpts) {
             logAttr.attrOpeningQuote.val = str[i];
           } else if (charcode === 8220 || charcode === 8221) {
             logAttr.attrOpeningQuote.pos = i;
-            logAttr.attrOpeningQuote.val = str[i];
+            logAttr.attrOpeningQuote.val = "\"";
             var name$$1 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
             retObj.issues.push({
               name: name$$1,
@@ -281,7 +281,14 @@ function emlint(str, originalOpts) {
           }
         }
         else if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos) {
-            if (str[i] === logAttr.attrOpeningQuote.val) {
+            if (charcode === 34 || charcode === 39) {
+              if (str[i] !== logAttr.attrOpeningQuote.val) {
+                var _name = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
+                retObj.issues.push({
+                  name: _name,
+                  position: [[i, i + 1, "".concat(charcode === 34 ? "'" : '"')]]
+                });
+              }
               logAttr.attrClosingQuote.pos = i;
               logAttr.attrClosingQuote.val = str[i];
               if (logAttr.attrOpeningQuote.pos + 1 < i) {
@@ -293,19 +300,19 @@ function emlint(str, originalOpts) {
               logTag.attributes.push(clone(logAttr));
               resetLogAttr();
             } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
-              var _name = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+              var _name2 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
               retObj.issues.push({
-                name: _name,
+                name: _name2,
                 position: [[i, i + 1, '"']]
               });
             }
           }
     }
     if (charcode < 32) {
-      var _name2 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
+      var _name3 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
       if (charcode === 9) {
         retObj.issues.push({
-          name: _name2,
+          name: _name3,
           position: [[i, i + 1, "  "]]
         });
       } else if (charcode === 13) {
@@ -341,19 +348,19 @@ function emlint(str, originalOpts) {
         }
       } else {
         retObj.issues.push({
-          name: _name2,
+          name: _name3,
           position: [[i, i + 1]]
         });
       }
     }
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (str[i] === ">" || str[i] === "/" && (str[i + 1] === ">" || str.slice(i + 1).trim().startsWith(">")))) {
-        var _name3 = "tag-excessive-whitespace-inside-tag";
+        var _name4 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
-          _name3 = "tag-whitespace-closing-slash-and-bracket";
+          _name4 = "tag-whitespace-closing-slash-and-bracket";
         }
         retObj.issues.push({
-          name: _name3,
+          name: _name4,
           position: [[logWhitespace.startAt, i]]
         });
       }
