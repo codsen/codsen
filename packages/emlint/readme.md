@@ -53,17 +53,15 @@ To be the most advanced, automated and smart (X)HTML/CSS code linting tool that 
 
 #### Is it me (Roy) or current HTML/CSS linters on the market (all of them) are both _anaemic_, _aged_ and not really aimed at fixing _messy code_?
 
-- By **anaemic** I mean, for example, at the time of writing, the [HTMLHint](https://github.com/htmlhint/HTMLHint/wiki/Rules) has 23 rules. For comparison, [ESLint](https://github.com/eslint/eslint/tree/master/lib/rules) at the time of writing has 265 rules.
+- By **anaemic** I mean, for example, at the time of writing, the [HTMLHint](https://github.com/htmlhint/HTMLHint/wiki/Rules) has 23 rules. For comparison, leading JavaScript linter [ESLint](https://github.com/eslint/eslint/tree/master/lib/rules) at the time of writing has 265 rules.
 
-- By **aged** I mean, either the codebases are convoluted, API is often tied with CLI features (even ESLint CLI coupled with its API - check its `bin/` key in `package.json`).
+- By **aged** I mean, either the codebases are convoluted, API is often tied with CLI (command line application) features (even `ESLint` is coupled with its CLI - check its `bin/` key in `package.json`).
 
-- By **aged** I also mean, codebases are not fully harnessing the Rollup to produce 3 builds: ES Modules (with `import`/`export`), CJS (with `require`) and UMD (with `iife`s). What's more, I like to commit builds, so that I can tap the UMD build straight from various [CDNs](https://unpkg.com/emlint) such as `unpkg` and plug front-ends to always-latest, website-friendly code. Same API though.
+- By **aged** I also mean, codebases are not fully harnessing the Rollup to produce 3 builds: ES Modules (with `import`/`export`), CJS (with `require`) and UMD (with `iife`s). What's more, it's beneficial to commit builds, so that users can tap the _UMD build_ straight from various [CDNs](https://unpkg.com/emlint) such as `unpkg` and plug front-ends to always-latest, website-friendly code. Same API on UMD build though.
 
-- By **not really aimed at fixing messy code** I mean that _every rule should be fixable_, and the rules should be aiming to at least compete with a human knack of creating code errors. We should try to identify all the possible cases of messed up code before we even move on to checking _code patterns_^.
+- By **not really aimed at fixing messy code** I mean that _every rule should be fixable_, and the rules should be aiming to at least compete with a human knack of creating code errors. We should try to identify all the possible cases of messed up code before we even move on to checking _code patterns_.
 
-Another example, PostCSS. It's brilliant when your code is _valid_. But as a tool, it is not meant to patch up _errors in messed up CSS_. The first thing it will do is it will try to parse your CSS and will throw upon the first error. That's the _end of story_ if CSS has any issues. You'll be lucky if parser's error stack will report something meaningful.
-
-^ Code pattern error is a bug that comprises of valid HTML but where that HTML will still be rendered with bugs on decrepit software, for example, Windows Outlook.
+Another example, `PostCSS`. It's a brilliant tool when your code is _valid_. But as a tool, it is not meant to patch up _errors in messed up CSS_. The first thing it will do is it will try to **parse your CSS** and will throw upon the first error. That's the _end of story_ if CSS has any issues. You'll be lucky if parser's error stack will report something meaningful.
 
 **[⬆ back to top](#)**
 
@@ -92,7 +90,7 @@ This is a linter API, still in _a baby state_ but eventually it will able to det
 
 ## API
 
-This library exports _a plain object_. The main function `emlint()` and other goodies are placed under **keys** of that plain object, which you should consume by [destructuring what you imported/required](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment). For example:
+This library exports _a plain object_. The main function `emlint()` and other goodies are placed under **keys** of that plain object, which you should consume by [destructuring what you `import`ed/`require`d](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment). For example:
 
 ```js
 const { emlint, version } = require("emlint");
@@ -104,8 +102,8 @@ Above, the [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 
 | Key       | Type     | Description                                                    |
 | --------- | -------- | -------------------------------------------------------------- |
-| `emlint`  | Function | Main function to which you feed your string; see its API below |
-| `version` | String   | Taken from `package.json`. Should match what's on npm.         |
+| `emlint`  | Function | Main function to which you feed your code (as a string); see its API below |
+| `version` | String   | Taken straight from `package.json`. Should match what's on npm.         |
 
 **[⬆ back to top](#)**
 
@@ -113,13 +111,13 @@ Above, the [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 
 **emlint(str, \[opts])** — in other words, it's a _function_, which takes two arguments:
 
-1. first argument — string,
-2. optional (marked with square brackets above) second argument — An Optional Options Object — a plain object
+1. **first** argument — string,
+2. optional (marked with square brackets above) **second** argument — _An Optional Options Object_ — a plain object
 
-| Input argument | Key value's type | Obligatory? | Description                                        |
-| -------------- | ---------------- | ----------- | -------------------------------------------------- |
-| `str`          | String           | yes         | The input string of zero or more characters        |
-| `opts`         | Plain object     | no          | An Optional Options Object. See below for its API. |
+| `emlint()` input argument | Arbitrary name | Type | Obligatory? | Description                                        |
+| - | -------------- | ---------------- | ----------- | -------------------------------------------------- |
+| 1st | `str`          | String           | yes         | The input string of zero or more characters        |
+| 2nd | `opts`         | Plain object     | no          | An Optional Options Object. See below for its API. |
 
 If supplied input arguments are of any other types, an error will be thrown.
 
@@ -127,7 +125,7 @@ If supplied input arguments are of any other types, an error will be thrown.
 
 ## Example #1
 
-Below, we tap this API/package/library, feed some code into it and `console.log` what it returns:
+Below, we tap this API/package/library, feed some code into it and `console.log` what it returns. Optional Options Object (2nd input argument) is omitted:
 
 ```js
 // consume as normal require():
@@ -153,6 +151,8 @@ If you looked at this or any project code in this monorepo you probably noticed 
 - We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there are two files, `util.js` but only for unit test coverage purposes.
 
 We say "we" but it's me, Roy mainly, addressing himself in 3rd person.
+
+**PS.** I don't know if you noticed the paradox but it seems that JavaScript "thought leaders" make noise but don't actually produce industry-shattering, ground-breaking software pieces. They _would_ be able to re-code a library more efficiently (like this one) but somehow they can't conceive open source pieces that would match up their social status. That's a paradox.
 
 **[⬆ back to top](#)**
 
