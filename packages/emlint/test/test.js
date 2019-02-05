@@ -1153,6 +1153,7 @@ test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-closing-slash-and-bracket`}\u001
 // -----------------------------------------------------------------------------
 
 test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, normal closing`, t => {
+  // 1. single double quote on the right
   // const bad1 = `<aaa bbb=“ccc">`;
   const bad1 = `<aaa bbb=\u201Cccc">`;
   const good1 = `<aaa bbb="ccc">`;
@@ -1163,6 +1164,18 @@ test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
     "09.01.01"
   );
   t.is(apply(bad1, res1.fix), good1, "09.01.02");
+
+  // 2. single straight quote on the right
+  // const bad1 = `<aaa bbb=“ccc'>`;
+  const bad2 = `<aaa bbb=\u201Cccc">`;
+  const good2 = `<aaa bbb="ccc">`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-left-double-quotation-mark"],
+    "09.01.01"
+  );
+  t.is(apply(bad2, res2.fix), good2, "09.01.02");
 });
 
 test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, right double closing`, t => {
@@ -1193,6 +1206,19 @@ test(`09.03 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
     "09.03.01"
   );
   t.is(apply(bad1, res1.fix), good1, "09.03.02");
+});
+
+test(`09.04 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - both left doubles`, t => {
+  // const bad1 = `<aaa bbb=“ccc“>`;
+  const bad1 = `<aaa bbb=\u201Cccc\u201C>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-double-quotation-mark"],
+    "09.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "09.04.02");
 });
 
 // 10. rule "tag-attribute-right-double-quotation-mark"
@@ -1241,6 +1267,19 @@ test(`10.03 - ${`\u001b[${33}m${`tag-attribute-right-double-quotation-mark`}\u00
   t.is(apply(bad1, res1.fix), good1, "10.03.02");
 });
 
+test(`10.04 - ${`\u001b[${33}m${`tag-attribute-right-double-quotation-mark`}\u001b[${39}m`} - both right doubles`, t => {
+  // const bad1 = `<aaa bbb=“ccc“>`;
+  const bad1 = `<aaa bbb=\u201Dccc\u201D>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-double-quotation-mark"],
+    "10.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "10.04.02");
+});
+
 // 11. Rule tag-attribute-quote-and-onwards-missing
 // -----------------------------------------------------------------------------
 
@@ -1257,15 +1296,25 @@ test(`11.01 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b
 });
 
 test(`11.02 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, extra whitespace follows`, t => {
-  const bad = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
-  const good = `<aaa bbb="ccc" eee="fff"/>`;
-  const res = emlint(bad);
+  const ba1 = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
+  const good1 = `<aaa bbb="ccc" eee="fff"/>`;
+  const res1 = emlint(ba1);
   t.deepEqual(
-    getUniqueIssueNames(res.issues),
+    getUniqueIssueNames(res1.issues),
     ["tag-attribute-quote-and-onwards-missing"],
     "11.02.01"
   );
-  t.is(apply(bad, res.fix), good, "11.02.02");
+  t.is(apply(ba1, res1.fix), good1, "11.02.02");
+
+  const bad2 = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
+  const good2 = `<aaa bbb="ccc" eee="fff"/>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.02.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "11.02.04");
 });
 
 test(`11.03 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows`, t => {
@@ -1393,6 +1442,139 @@ test(`12.05 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   t.is(apply(bad2, res2.fix), good2, "12.05.02");
 });
 
+// 13. rule "tag-attribute-left-single-quotation-mark"
+// -----------------------------------------------------------------------------
+
+test(`13.01 - ${`\u001b[${35}m${`tag-attribute-left-single-quotation-mark`}\u001b[${39}m`} - left single opening, normal closing`, t => {
+  // 1. closing single straight quote
+  // const bad1 = `<aaa bbb=‘ccc'>`;
+  const bad1 = `<aaa bbb=\u2018ccc'>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-single-quotation-mark"],
+    "13.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "13.01.02");
+
+  // 2. closing double straight quote
+  // const bad1 = `<aaa bbb=‘ccc">`;
+  const bad2 = `<aaa bbb=\u2018ccc">`;
+  const good2 = `<aaa bbb='ccc'>`;
+  const res2 = emlint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    [
+      "tag-attribute-left-single-quotation-mark",
+      "tag-attribute-mismatching-quotes-is-double"
+    ],
+    "13.01.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "13.01.04");
+});
+
+test(`13.02 - ${`\u001b[${35}m${`tag-attribute-left-single-quotation-mark`}\u001b[${39}m`} - left single opening, right single closing`, t => {
+  // const bad1 = `<aaa bbb=‘ccc’>`;
+  const bad1 = `<aaa bbb=\u2018ccc\u2019>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-left-single-quotation-mark",
+      "tag-attribute-right-single-quotation-mark"
+    ],
+    "13.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "13.02.02");
+});
+
+test(`13.03 - ${`\u001b[${35}m${`tag-attribute-left-single-quotation-mark`}\u001b[${39}m`} - left single closing, normal opening`, t => {
+  // const bad1 = `<aaa bbb='ccc‘>`;
+  const bad1 = `<aaa bbb='ccc\u2018>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-single-quotation-mark"],
+    "13.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "13.03.02");
+});
+
+test(`13.04 - ${`\u001b[${35}m${`tag-attribute-left-single-quotation-mark`}\u001b[${39}m`} - both left single quotes`, t => {
+  // const bad1 = `<aaa bbb=‘ccc‘>`;
+  const bad1 = `<aaa bbb=\u2018ccc\u2018>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-single-quotation-mark"],
+    "13.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "13.04.02");
+});
+
+// 14. rule "tag-attribute-right-single-quotation-mark"
+// -----------------------------------------------------------------------------
+
+test(`14.01 - ${`\u001b[${33}m${`tag-attribute-right-single-quotation-mark`}\u001b[${39}m`} - right single opening, normal closing`, t => {
+  // const bad1 = `<aaa bbb=’ccc'>`;
+  const bad1 = `<aaa bbb=\u2019ccc'>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-single-quotation-mark"],
+    "14.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "14.01.02");
+});
+
+test(`14.02 - ${`\u001b[${33}m${`tag-attribute-right-single-quotation-mark`}\u001b[${39}m`} - attribute is enclosed in curly quotation marks`, t => {
+  // 1. pair:
+  // const bad1 = `<aaa bbb=‘ccc’>`;
+  const bad1 = `<aaa bbb=\u2018ccc\u2019>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-left-single-quotation-mark",
+      "tag-attribute-right-single-quotation-mark"
+    ],
+    "14.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "14.02.02");
+});
+
+test(`14.03 - ${`\u001b[${33}m${`tag-attribute-right-single-quotation-mark`}\u001b[${39}m`} - right single closing, normal opening`, t => {
+  // const bad1 = `<aaa bbb='ccc’>`;
+  const bad1 = `<aaa bbb='ccc\u2019>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-single-quotation-mark"],
+    "14.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "14.03.02");
+});
+
+test(`14.04 - ${`\u001b[${33}m${`tag-attribute-right-single-quotation-mark`}\u001b[${39}m`} - both right single quotes`, t => {
+  // const bad1 = `<aaa bbb=’ccc’>`;
+  const bad1 = `<aaa bbb=\u2019ccc\u2019>`;
+  const good1 = `<aaa bbb='ccc'>`;
+  const res1 = emlint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-right-single-quotation-mark"],
+    "14.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "14.04.02");
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
@@ -1417,7 +1599,7 @@ test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(withinTagInnerspace(` alt=""/>\n   <b>`), "99.01.15");
 
   // false:
-  // t.true(withinTagInnerspace(` alt=""/>\n   <b>`), "99.01.16");
+  t.false(withinTagInnerspace(`tralala"/>\n   <b>`), "99.01.16");
 });
 
 test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - with offset`, t => {
@@ -1526,6 +1708,8 @@ test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
+// todo - tag-attribute-must-use-single-quotes
+// todo - tag-attribute-must-use-double-quotes
 // todo - curly single quotes on attrs - '\u2018something\u2019'
 // todo - duplicate closing bracket
 // todo - duplicate slash quotes
@@ -1546,5 +1730,6 @@ test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 // test.todo("tough one: <aaa bbb="  ccc="ddd">")
 // test.todo("even tougher one: <aaa bbb = "  ccc = "ddd">")
 
-// \u201Csomething\u201D
-// 8220 - 8221
+// ‘something’
+// 8216 - 8217
+// '\u2018something\u2019'

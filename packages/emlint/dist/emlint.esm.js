@@ -457,6 +457,17 @@ function emlint(str, originalOpts) {
             name: name$$1,
             position: [[i, i + 1, `"`]]
           });
+        } else if (charcode === 8216 || charcode === 8217) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = `'`;
+          const name$$1 =
+            charcode === 8216
+              ? "tag-attribute-left-single-quotation-mark"
+              : "tag-attribute-right-single-quotation-mark";
+          retObj.issues.push({
+            name: name$$1,
+            position: [[i, i + 1, `'`]]
+          });
         } else if (withinTagInnerspace$1(str, i)) {
           let start = logAttr.attrStartAt;
           if (str[i] === "/" || str[i] === ">") {
@@ -529,6 +540,22 @@ function emlint(str, originalOpts) {
           retObj.issues.push({
             name: name$$1,
             position: [[i, i + 1, '"']]
+          });
+        } else if (
+          isStr$1(logAttr.attrOpeningQuote.val) &&
+          (charcode === 8216 || charcode === 8217) &&
+          ((firstOnTheRight$1(str, i) !== null &&
+            (str[firstOnTheRight$1(str, i)] === ">" ||
+              str[firstOnTheRight$1(str, i)] === "/")) ||
+            withinTagInnerspace$1(str, i + 1))
+        ) {
+          const name$$1 =
+            charcode === 8216
+              ? "tag-attribute-left-single-quotation-mark"
+              : "tag-attribute-right-single-quotation-mark";
+          retObj.issues.push({
+            name: name$$1,
+            position: [[i, i + 1, `'`]]
           });
         }
       }

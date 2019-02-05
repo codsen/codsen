@@ -39,9 +39,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                 | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 18 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 18 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 39 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 21 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 22 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 40 KB |
 
 **[⬆ back to top](#)**
 
@@ -158,9 +158,9 @@ We say "we" but it's me, Roy mainly, addressing himself in 3rd person.
 
 ## Contributing
 
-- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?title=emlint%20package%20-%20put%20title%20here). We'll try to help.
+- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
@@ -179,7 +179,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/emlint
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-[cov-img]: https://img.shields.io/badge/coverage-98.29%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-86.8%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint
