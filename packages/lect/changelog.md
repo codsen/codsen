@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.5.0 (2019-02-05)
+
+### Features
+
+- Customise the EMLint letter case ([43a4d85](https://gitlab.com/codsen/codsen/commit/43a4d85))
+- Fix TOC slugs to suit GitLab ([4264c07](https://gitlab.com/codsen/codsen/commit/4264c07))
+
 ## 0.4.0 (2019-02-01)
 
 ### Features

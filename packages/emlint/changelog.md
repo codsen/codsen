@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.6.0 (2019-02-05)
+
+### Features
+
+- Add rule attribute-space-between-name-and-equals ([11653a9](https://gitlab.com/codsen/codsen/commit/11653a9))
+- Improvements to rules *-double-quotation-mark ([d6f3307](https://gitlab.com/codsen/codsen/commit/d6f3307))
+- Rule tag-attribute-closing-quotation-mark-missing ([f3ef429](https://gitlab.com/codsen/codsen/commit/f3ef429))
+- Rule tag-whitespace-tags-closing-slash-and-bracket ([b65ee11](https://gitlab.com/codsen/codsen/commit/b65ee11))
+- Rules *-double-quotation-mark ([e744a27](https://gitlab.com/codsen/codsen/commit/e744a27))
+- Rules tag-attribute-*-single-quotation-mark ([7ec9b49](https://gitlab.com/codsen/codsen/commit/7ec9b49))
+- Rules tag-attribute-mismatching-quotes-is-* ([1f8ca9e](https://gitlab.com/codsen/codsen/commit/1f8ca9e))
+- Rules tag-attribute-quote-and-onwards-missing and tag-generic-error ([5182c0f](https://gitlab.com/codsen/codsen/commit/5182c0f))
+- Rules: attribute-space-between-equals-and-opening-quotes and tag-excessive-whitespace-inside-tag ([1da021b](https://gitlab.com/codsen/codsen/commit/1da021b))
+
 ## 0.5.0 (2019-01-31)
 
 ### Features
