@@ -24,7 +24,7 @@
     "cm": "git-cz",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "lect": "make run-lect",
-    "publish": "FORCE_COLOR=1 lerna version --conventional-commits && git add packages/*/changelog.md && lcc \"**\" && npm run readme:generate && git add readme.md && lerna publish from-package --yes && git add . && git commit -m \"chore: Automated build tasks\" --no-verify && git push",
+    "publish": "npx lerna version --conventional-commits --yes && lcc \"**\" && npm run readme:generate && git add . && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish && git push",
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
