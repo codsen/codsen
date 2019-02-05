@@ -387,23 +387,6 @@ function lint(str, originalOpts) {
           logAttr.attrNameEndAt
         );
       }
-      else if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
-        logAttr.attrStartAt = i;
-        logAttr.attrNameStartAt = i;
-        if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
-          if (str[logWhitespace.startAt] === " ") {
-            retObj.issues.push({
-              name: "tag-excessive-whitespace-inside-tag",
-              position: [[logWhitespace.startAt + 1, i]]
-            });
-          } else {
-            retObj.issues.push({
-              name: "tag-excessive-whitespace-inside-tag",
-              position: [[logWhitespace.startAt, i, " "]]
-            });
-          }
-        }
-      }
       if (
         logAttr.attrNameEndAt !== null &&
         logAttr.attrEqualAt === null &&
@@ -424,10 +407,12 @@ function lint(str, originalOpts) {
             resetLogAttr();
             if (logWhitespace.startAt !== null) {
               if (str[logWhitespace.startAt] === " ") {
-                retObj.issues.push({
-                  name: "tag-excessive-whitespace-inside-tag",
-                  position: [[logWhitespace.startAt + 1, i]]
-                });
+                if (logWhitespace.startAt + 1 < i) {
+                  retObj.issues.push({
+                    name: "tag-excessive-whitespace-inside-tag",
+                    position: [[logWhitespace.startAt + 1, i]]
+                  });
+                }
               } else {
                 retObj.issues.push({
                   name: "tag-excessive-whitespace-inside-tag",
@@ -438,7 +423,24 @@ function lint(str, originalOpts) {
           }
         }
       }
-      else if (
+      if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
+        logAttr.attrStartAt = i;
+        logAttr.attrNameStartAt = i;
+        if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
+          if (str[logWhitespace.startAt] === " ") {
+            retObj.issues.push({
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt + 1, i]]
+            });
+          } else {
+            retObj.issues.push({
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt, i, " "]]
+            });
+          }
+        }
+      }
+      if (
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos === null &&
         str[i].trim().length
@@ -500,7 +502,7 @@ function lint(str, originalOpts) {
           }
         }
       }
-      else if (
+      if (
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos !== null &&
         i > logAttr.attrOpeningQuote.pos

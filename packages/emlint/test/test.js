@@ -1363,6 +1363,30 @@ test(`11.03 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b
   t.is(apply(bad4, res4.fix), good4, "11.03.08");
 });
 
+test(`11.04 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, normal whitespace around`, t => {
+  // HTML
+  const ba1 = `<img zz yy=>`;
+  const goo1 = `<img zz>`;
+  const res1 = lint(ba1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.04.01"
+  );
+  t.is(apply(ba1, res1.fix), goo1, "11.04.02");
+
+  // XHTML
+  const bad2 = `<img zz yy=/>`;
+  const good2 = `<img zz/>`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-quote-and-onwards-missing"],
+    "11.04.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "11.04.04");
+});
+
 // 12. Rule tag-attribute-mismatching-quotes-is-single
 // -----------------------------------------------------------------------------
 
@@ -1683,6 +1707,22 @@ test(`15.03 - ${`\u001b[${35}m${`tag-attribute-closing-quotation-mark-missing`}\
     "15.03.03"
   );
   t.is(apply(bad2, res2.fix), good2, "15.03.04");
+});
+
+test(`15.04 - ${`\u001b[${35}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - sequence of two tags`, t => {
+  // HTML, spaced
+  const bad1 = `<img alt="><z >`;
+  const good1 = `<img alt=""><z>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-excessive-whitespace-inside-tag"
+    ],
+    "15.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.04.02");
 });
 
 // 99. Util Unit tests

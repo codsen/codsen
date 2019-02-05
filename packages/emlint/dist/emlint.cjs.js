@@ -190,23 +190,6 @@ function lint(str, originalOpts) {
         logAttr.attrNameEndAt = i;
         logAttr.attrName = str.slice(logAttr.attrNameStartAt, logAttr.attrNameEndAt);
       }
-      else if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
-          logAttr.attrStartAt = i;
-          logAttr.attrNameStartAt = i;
-          if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
-            if (str[logWhitespace.startAt] === " ") {
-              retObj.issues.push({
-                name: "tag-excessive-whitespace-inside-tag",
-                position: [[logWhitespace.startAt + 1, i]]
-              });
-            } else {
-              retObj.issues.push({
-                name: "tag-excessive-whitespace-inside-tag",
-                position: [[logWhitespace.startAt, i, " "]]
-              });
-            }
-          }
-        }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && i >= logAttr.attrNameEndAt && str[i].trim().length) {
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
@@ -222,10 +205,12 @@ function lint(str, originalOpts) {
             resetLogAttr();
             if (logWhitespace.startAt !== null) {
               if (str[logWhitespace.startAt] === " ") {
-                retObj.issues.push({
-                  name: "tag-excessive-whitespace-inside-tag",
-                  position: [[logWhitespace.startAt + 1, i]]
-                });
+                if (logWhitespace.startAt + 1 < i) {
+                  retObj.issues.push({
+                    name: "tag-excessive-whitespace-inside-tag",
+                    position: [[logWhitespace.startAt + 1, i]]
+                  });
+                }
               } else {
                 retObj.issues.push({
                   name: "tag-excessive-whitespace-inside-tag",
@@ -236,118 +221,135 @@ function lint(str, originalOpts) {
           }
         }
       }
-      else if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos === null && str[i].trim().length) {
-          if (charcode === 34 || charcode === 39) {
-            logAttr.attrOpeningQuote.pos = i;
-            logAttr.attrOpeningQuote.val = str[i];
-          } else if (charcode === 8220 || charcode === 8221) {
-            logAttr.attrOpeningQuote.pos = i;
-            logAttr.attrOpeningQuote.val = "\"";
-            var name$$1 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+      if (logAttr.attrStartAt === null && isLatinLetter(str[i])) {
+        logAttr.attrStartAt = i;
+        logAttr.attrNameStartAt = i;
+        if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
+          if (str[logWhitespace.startAt] === " ") {
             retObj.issues.push({
-              name: name$$1,
-              position: [[i, i + 1, "\""]]
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt + 1, i]]
             });
-          } else if (charcode === 8216 || charcode === 8217) {
-            logAttr.attrOpeningQuote.pos = i;
-            logAttr.attrOpeningQuote.val = "'";
-            var _name = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
+          } else {
             retObj.issues.push({
-              name: _name,
-              position: [[i, i + 1, "'"]]
+              name: "tag-excessive-whitespace-inside-tag",
+              position: [[logWhitespace.startAt, i, " "]]
             });
-          } else if (withinTagInnerspace$1(str, i)) {
-            var start = logAttr.attrStartAt;
-            if (str[i] === "/" || str[i] === ">") {
-              for (var y = logAttr.attrStartAt; y--;) {
-                if (str[y].trim().length) {
-                  start = y + 1;
-                  break;
-                }
-              }
-            }
-            retObj.issues.push({
-              name: "tag-attribute-quote-and-onwards-missing",
-              position: [[start, i]]
-            });
-            resetLogWhitespace();
-            resetLogAttr();
-          }
-          if (logWhitespace.startAt !== null) {
-            if (str[i] === "'" || str[i] === '"') {
-              retObj.issues.push({
-                name: "tag-attribute-space-between-equals-and-opening-quotes",
-                position: [[logWhitespace.startAt, i]]
-              });
-            } else if (withinTagInnerspace$1(str, i + 1)) {
-              retObj.issues.push({
-                name: "tag-attribute-quote-and-onwards-missing",
-                position: [[logAttr.attrStartAt, i]]
-              });
-              resetLogAttr();
-            }
           }
         }
-        else if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos) {
-            if (charcode === 34 || charcode === 39) {
-              if (str[i] !== logAttr.attrOpeningQuote.val) {
-                var _name2 = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
-                retObj.issues.push({
-                  name: _name2,
-                  position: [[i, i + 1, "".concat(charcode === 34 ? "'" : '"')]]
-                });
+      }
+      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos === null && str[i].trim().length) {
+        if (charcode === 34 || charcode === 39) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = str[i];
+        } else if (charcode === 8220 || charcode === 8221) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = "\"";
+          var name$$1 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+          retObj.issues.push({
+            name: name$$1,
+            position: [[i, i + 1, "\""]]
+          });
+        } else if (charcode === 8216 || charcode === 8217) {
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = "'";
+          var _name = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
+          retObj.issues.push({
+            name: _name,
+            position: [[i, i + 1, "'"]]
+          });
+        } else if (withinTagInnerspace$1(str, i)) {
+          var start = logAttr.attrStartAt;
+          if (str[i] === "/" || str[i] === ">") {
+            for (var y = logAttr.attrStartAt; y--;) {
+              if (str[y].trim().length) {
+                start = y + 1;
+                break;
               }
-              logAttr.attrClosingQuote.pos = i;
-              logAttr.attrClosingQuote.val = str[i];
-              if (logAttr.attrOpeningQuote.pos + 1 < i) {
-                logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
-              } else {
-                logAttr.attrValue = "";
-              }
-              logAttr.attrEndAt = i;
-              logTag.attributes.push(clone(logAttr));
-              resetLogAttr();
-            } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
-              var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
-              retObj.issues.push({
-                name: _name3,
-                position: [[i, i + 1, '"']]
-              });
-              logAttr.attrEndAt = i;
-              logAttr.attrClosingQuote.pos = i;
-              logAttr.attrClosingQuote.val = '"';
-              logTag.attributes.push(clone(logAttr));
-              resetLogAttr();
-            } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
-              var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
-              retObj.issues.push({
-                name: _name4,
-                position: [[i, i + 1, "'"]]
-              });
-              logAttr.attrEndAt = i;
-              logAttr.attrClosingQuote.pos = i;
-              logAttr.attrClosingQuote.val = "'";
-              logTag.attributes.push(clone(logAttr));
-              resetLogAttr();
-            } else if (withinTagInnerspace$1(str, i)) {
-              var compensationSpace = " ";
-              var whatsOnTheRight = str[firstOnTheRight$1(str, i - 1)];
-              if (!str[i].trim().length || !whatsOnTheRight || whatsOnTheRight === ">" || whatsOnTheRight === "/") {
-                compensationSpace = "";
-              }
-              if (logAttr.attrOpeningQuote.val) {
-                retObj.issues.push({
-                  name: "tag-attribute-closing-quotation-mark-missing",
-                  position: [[i, i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
-                });
-              }
-              logAttr.attrEndAt = i;
-              logAttr.attrClosingQuote.pos = i;
-              logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
-              logTag.attributes.push(clone(logAttr));
-              resetLogAttr();
             }
           }
+          retObj.issues.push({
+            name: "tag-attribute-quote-and-onwards-missing",
+            position: [[start, i]]
+          });
+          resetLogWhitespace();
+          resetLogAttr();
+        }
+        if (logWhitespace.startAt !== null) {
+          if (str[i] === "'" || str[i] === '"') {
+            retObj.issues.push({
+              name: "tag-attribute-space-between-equals-and-opening-quotes",
+              position: [[logWhitespace.startAt, i]]
+            });
+          } else if (withinTagInnerspace$1(str, i + 1)) {
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[logAttr.attrStartAt, i]]
+            });
+            resetLogAttr();
+          }
+        }
+      }
+      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos) {
+        if (charcode === 34 || charcode === 39) {
+          if (str[i] !== logAttr.attrOpeningQuote.val) {
+            var _name2 = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
+            retObj.issues.push({
+              name: _name2,
+              position: [[i, i + 1, "".concat(charcode === 34 ? "'" : '"')]]
+            });
+          }
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = str[i];
+          if (logAttr.attrOpeningQuote.pos + 1 < i) {
+            logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
+          } else {
+            logAttr.attrValue = "";
+          }
+          logAttr.attrEndAt = i;
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
+          var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+          retObj.issues.push({
+            name: _name3,
+            position: [[i, i + 1, '"']]
+          });
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = '"';
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
+          var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
+          retObj.issues.push({
+            name: _name4,
+            position: [[i, i + 1, "'"]]
+          });
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = "'";
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        } else if (withinTagInnerspace$1(str, i)) {
+          var compensationSpace = " ";
+          var whatsOnTheRight = str[firstOnTheRight$1(str, i - 1)];
+          if (!str[i].trim().length || !whatsOnTheRight || whatsOnTheRight === ">" || whatsOnTheRight === "/") {
+            compensationSpace = "";
+          }
+          if (logAttr.attrOpeningQuote.val) {
+            retObj.issues.push({
+              name: "tag-attribute-closing-quotation-mark-missing",
+              position: [[i, i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
+            });
+          }
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        }
+      }
     }
     if (charcode < 32) {
       var _name5 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
