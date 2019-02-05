@@ -37,13 +37,13 @@ import { emlint, version } from "emlint";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                 | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 21 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 22 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 40 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/emlint.cjs.js` | 22 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/emlint.esm.js` | 23 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/emlint.umd.js` | 41 KB
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Aim
 
@@ -63,7 +63,7 @@ To be the most advanced, automated and smart (X)HTML/CSS code linting tool that 
 
 Another example, `PostCSS`. It's a brilliant tool when your code is _valid_. But as a tool, it is not meant to patch up _errors in messed up CSS_. The first thing it will do is it will try to **parse your CSS** and will throw upon the first error. That's the _end of story_ if CSS has any issues. You'll be lucky if parser's error stack will report something meaningful.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Description for the final product
 
@@ -86,7 +86,7 @@ This is a linter API, still in _a baby state_ but eventually it will able to det
 
 **PS.** This is not a _validator_ (like [W3C Markup Validator](https://validator.w3.org)). It's a tool to patch up errors **BEFORE** you feed your code to a validator. It's a tool to save you time looking for that missing bracket in your email template. It's a tool that will tell you upfront if your template will look messed up in Outlook.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## API
 
@@ -105,7 +105,7 @@ Above, the [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 | `emlint`  | Function | Main function to which you feed your code (as a string); see its API below |
 | `version` | String   | Taken straight from `package.json`. Should match what's on npm.         |
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ### API - `emlint()` - input
 
@@ -121,7 +121,7 @@ Above, the [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 
 If supplied input arguments are of any other types, an error will be thrown.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Example #1
 
@@ -140,34 +140,32 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // nicely printed. That "4" above means "indent by 4 spaces".
 ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Breaking the JS best-practice rules
 
 If you looked at this or any project code in this monorepo you probably noticed we're breaking many "best practice" rules:
 
-- We use copious amounts of `console.log` for debugging, and we keep all those `console.log`s in the source of the application. Rollup will build _production_ build and strip all logging automatically. But this allows us to use command line arguments to ask Rollup for a _dev_ build, where `console.log`s are intact, [with line numbers](https://www.npmjs.com/package/js-row-num-cli). This allows the app to report what happens where granularly. In terminal. In colour.
-- We know functional vs imperative programming styles and actually, prefer imperative.
+- We use copious amounts of `console.log` for debugging, and we keep all those `console.log`s in the source file (`src/main.js`). Rollup will build UMD, CJS and ESM builds and strip all logs and comments. Line number on each `console.log` is maintained running [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli). As a result, anytime you come to code, that code is debug-friendly.
+- We know functional vs imperative programming styles and actually, prefer imperative. Performance matters.
 - We hate when software is split into _gajillion_ of different files. We like **"one library—one file—one package"** way. Ok, sometimes there are two files, `util.js` but only for unit test coverage purposes.
 
 We say "we" but it's me, Roy mainly, addressing himself in 3rd person.
 
-**PS.** I don't know if you noticed the paradox but it seems that JavaScript "thought leaders" make noise but don't actually produce industry-shattering, ground-breaking software pieces. They _would_ be able to re-code a library more efficiently (like this one) but somehow they can't conceive open source pieces that would match up their social status. That's a paradox.
-
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
+* If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here).
+* If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). Let's discuss it.
+* If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=emlint%20package%20-%20put%20title%20here&issue[description]=%23%23%20emlint%0A%0Aput%20description%20here). We'll try to help.
+* If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Licence
 
@@ -175,19 +173,28 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
+
+
 [node-img]: https://img.shields.io/node/v/emlint.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/emlint
+
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
-[cov-img]: https://img.shields.io/badge/coverage-86.8%25-brightgreen.svg?style=flat-square
+
+[cov-img]: https://img.shields.io/badge/coverage-87.21%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/emlint
+
 [downloads-img]: https://img.shields.io/npm/dm/emlint.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/emlint
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/emlint
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

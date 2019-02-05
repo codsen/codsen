@@ -7,9 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- New rule - tagname-lowercase ([dfead6d](https://gitlab.com/codsen/codsen/commit/dfead6d))
-- Rules file-mixed-line-endings-file-is-\*-mainly to cater mixed EOL files with no opts for EOL ([25e21ef](https://gitlab.com/codsen/codsen/commit/25e21ef))
-- Wired up basic unit test cases for rule file-mixed-line-endings ([46a549e](https://gitlab.com/codsen/codsen/commit/46a549e))
+- New rule - `tag-name-lowercase` ([dfead6d](https://gitlab.com/codsen/codsen/commit/dfead6d))
+- New rules `file-mixed-line-endings-file-is-\*-mainly` to cater mixed EOL files with no opts for EOL ([25e21ef](https://gitlab.com/codsen/codsen/commit/25e21ef))
+- Wired up basic unit test cases for rule `file-mixed-line-endings-file-is-\*-mainly` ([46a549e](https://gitlab.com/codsen/codsen/commit/46a549e))
 
 ## 0.4.0 (2019-01-27)
 

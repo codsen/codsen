@@ -72,7 +72,7 @@ var isArr = Array.isArray;
 var isStr$1 = isStr,
     withinTagInnerspace$1 = withinTagInnerspace,
     firstOnTheRight$1 = firstOnTheRight;
-function emlint(str, originalOpts) {
+function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
   }
@@ -313,12 +313,39 @@ function emlint(str, originalOpts) {
                 name: _name3,
                 position: [[i, i + 1, '"']]
               });
+              logAttr.attrEndAt = i;
+              logAttr.attrClosingQuote.pos = i;
+              logAttr.attrClosingQuote.val = '"';
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
             } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
               var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
               retObj.issues.push({
                 name: _name4,
                 position: [[i, i + 1, "'"]]
               });
+              logAttr.attrEndAt = i;
+              logAttr.attrClosingQuote.pos = i;
+              logAttr.attrClosingQuote.val = "'";
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
+            } else if (withinTagInnerspace$1(str, i)) {
+              var compensationSpace = " ";
+              var whatsOnTheRight = str[firstOnTheRight$1(str, i - 1)];
+              if (!str[i].trim().length || !whatsOnTheRight || whatsOnTheRight === ">" || whatsOnTheRight === "/") {
+                compensationSpace = "";
+              }
+              if (logAttr.attrOpeningQuote.val) {
+                retObj.issues.push({
+                  name: "tag-attribute-closing-quotation-mark-missing",
+                  position: [[i, i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
+                });
+              }
+              logAttr.attrEndAt = i;
+              logAttr.attrClosingQuote.pos = i;
+              logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
             }
           }
     }
@@ -523,6 +550,6 @@ function emlint(str, originalOpts) {
   return retObj;
 }
 
-exports.emlint = emlint;
+exports.lint = lint;
 exports.version = version;
 exports.errors = errors;

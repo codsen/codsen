@@ -248,7 +248,7 @@ var util = /*#__PURE__*/Object.freeze({
 const errors = "./errors.json";
 const isArr = Array.isArray;
 const { isStr: isStr$1, log: log$1, withinTagInnerspace: withinTagInnerspace$1, firstOnTheRight: firstOnTheRight$1 } = util;
-function emlint(str, originalOpts) {
+function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error(
       `emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n${JSON.stringify(
@@ -541,6 +541,11 @@ function emlint(str, originalOpts) {
             name: name$$1,
             position: [[i, i + 1, '"']]
           });
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = '"';
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
         } else if (
           isStr$1(logAttr.attrOpeningQuote.val) &&
           (charcode === 8216 || charcode === 8217) &&
@@ -557,6 +562,35 @@ function emlint(str, originalOpts) {
             name: name$$1,
             position: [[i, i + 1, `'`]]
           });
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = "'";
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
+        } else if (withinTagInnerspace$1(str, i)) {
+          let compensationSpace = " ";
+          const whatsOnTheRight = str[firstOnTheRight$1(str, i - 1)];
+          if (
+            !str[i].trim().length ||
+            !whatsOnTheRight ||
+            whatsOnTheRight === ">" ||
+            whatsOnTheRight === "/"
+          ) {
+            compensationSpace = "";
+          }
+          if (logAttr.attrOpeningQuote.val) {
+            retObj.issues.push({
+              name: "tag-attribute-closing-quotation-mark-missing",
+              position: [
+                [i, i, `${logAttr.attrOpeningQuote.val}${compensationSpace}`]
+              ]
+            });
+          }
+          logAttr.attrEndAt = i;
+          logAttr.attrClosingQuote.pos = i;
+          logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
         }
       }
     }
@@ -828,4 +862,4 @@ function emlint(str, originalOpts) {
   return retObj;
 }
 
-export { emlint, version, errors };
+export { lint, version, errors };

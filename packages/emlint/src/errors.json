@@ -184,6 +184,11 @@
     "excerpt": "a left double quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
+  "tag-attribute-closing-quotation-mark-missing": {
+    "description": "The closing quotation mark is missing",
+    "excerpt": "the closing quotation mark is missing",
+    "scope": "html"
+  },
   "tag-attribute-left-single-quotation-mark": {
     "description": "There's a left single quotation mark, https://www.fileformat.info/info/unicode/char/2018/index.htm",
     "excerpt": "a left single quotation mark instead of a normal quotation mark",
