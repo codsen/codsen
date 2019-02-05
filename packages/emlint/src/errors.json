@@ -209,6 +209,11 @@
     "excerpt": "space between attribute's name and equal sign",
     "scope": "html"
   },
+  "tag-generic-error": {
+    "description": "Something is wrong here",
+    "excerpt": "something is wrong here",
+    "scope": "html"
+  },
   "tag-name-lowercase": {
     "description": "Normally all tags are in lowercase",
     "excerpt": "tag name contains uppercase characters",
@@ -222,11 +227,6 @@
   "tag-whitespace-closing-slash-and-bracket": {
     "description": "There's a whitespace between closing slash and closing bracket",
     "excerpt": "whitespace between slash and closing bracket",
-    "scope": "html"
-  },
-  "tag-generic-error": {
-    "description": "Something is wrong here",
-    "excerpt": "something is wrong here",
     "scope": "html"
   }
 }
