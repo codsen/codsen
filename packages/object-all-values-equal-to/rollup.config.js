@@ -44,12 +44,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [
-        "@babel/register",
-        "check-types-mini",
-        "lodash.isequal",
-        "lodash.isplainobject"
-      ],
+      external: ["check-types-mini", "lodash.isequal", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false
@@ -67,12 +62,7 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [
-        "@babel/register",
-        "check-types-mini",
-        "lodash.isequal",
-        "lodash.isplainobject"
-      ],
+      external: ["check-types-mini", "lodash.isequal", "lodash.isplainobject"],
       plugins: [
         strip({
           sourceMap: false
