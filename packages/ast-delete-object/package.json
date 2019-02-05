@@ -1,6 +1,6 @@
 {
   "name": "ast-delete-object",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "Delete all plain objects that contain a certain key/value pair",
   "license": "MIT",
   "engines": {
@@ -163,9 +163,9 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.11.5",
-    "ast-monkey-traverse": "^1.11.1",
-    "check-types-mini": "^5.7.1",
+    "ast-compare": "^1.11.6",
+    "ast-monkey-traverse": "^1.11.2",
+    "check-types-mini": "^5.7.2",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },

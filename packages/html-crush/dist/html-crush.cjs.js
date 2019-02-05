@@ -1,7 +1,7 @@
 /**
  * html-crush
  * Minifies HTML/CSS: valid or broken, pure or mixed with other languages
- * Version: 0.8.5
+ * Version: 0.8.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/html-crush
@@ -92,7 +92,7 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
-var version = "0.8.5";
+var version = "0.8.6";
 
 var isArr = Array.isArray;
 var finalIndexesToDelete = new Slices({

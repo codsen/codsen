@@ -1,7 +1,7 @@
 /**
  * csv-split-easy
  * Splits the CSV string into array of arrays, each representing a row of columns
- * Version: 2.6.5
+ * Version: 2.6.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy

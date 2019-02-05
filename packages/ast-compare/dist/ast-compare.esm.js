@@ -1,7 +1,7 @@
 /**
  * ast-compare
  * Compare anything: AST, objects, arrays, strings and nested thereof
- * Version: 1.11.5
+ * Version: 1.11.6
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare

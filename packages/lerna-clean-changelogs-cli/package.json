@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs-cli",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "CLI application to cleanse the lerna-generated changelogs",
   "license": "MIT",
   "engines": {
@@ -165,7 +165,7 @@
     "chalk": "^2.4.2",
     "fs-extra": "^7.0.1",
     "globby": "^9.0.0",
-    "lerna-clean-changelogs": "^1.2.0",
+    "lerna-clean-changelogs": "^1.2.1",
     "meow": "^5.0.0",
     "p-filter": "^1.0.0",
     "p-reduce": "^1.0.0",
