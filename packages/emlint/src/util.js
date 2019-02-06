@@ -208,11 +208,18 @@ function log(...pairs) {
 }
 
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
+  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   // regex matches beginning of a string, two cases:
   // "/><" (closing slash optional and there can be whitespace in between either char)
   // or
   // zzz="" (attribute, followed by whitespace or tag closing)
+  console.log(
+    `217 util() ${`\u001b[${33}m${`str.slice(${idx})`}\u001b[${39}m`} = ${JSON.stringify(
+      str.slice(idx),
+      null,
+      0
+    )}`
+  );
   return (
     isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
   );

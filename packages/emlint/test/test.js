@@ -1466,6 +1466,16 @@ test(`12.05 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   t.is(apply(bad2, res2.fix), good2, "12.05.02");
 });
 
+test(`12.04 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - legit single quote within double quotes`, t => {
+  const good1 = `<img alt="someone's">`;
+  const res1 = lint(good1);
+  t.is(res1.issues.length, 0, "12.04.01");
+
+  const good2 = `<img alt='single double: "'>`;
+  const res2 = lint(good2);
+  t.is(res2.issues.length, 0, "12.04.02");
+});
+
 // 13. rule "tag-attribute-left-single-quotation-mark"
 // -----------------------------------------------------------------------------
 
@@ -1604,8 +1614,8 @@ test(`14.04 - ${`\u001b[${33}m${`tag-attribute-right-single-quotation-mark`}\u00
 
 test(`15.01 - ${`\u001b[${35}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - double quotation mark at a tag ending`, t => {
   // HTML, tight
-  const bad1 = `<zzz alt=">`;
-  const good1 = `<zzz alt="">`;
+  const bad1 = `<zzz alt="><img alt="">`;
+  const good1 = `<zzz alt=""><img alt="">`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),

@@ -211,7 +211,7 @@ function log(...pairs) {
   }, "");
 }
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
+  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   return (
     isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
   );
@@ -505,7 +505,9 @@ function lint(str, originalOpts) {
       if (
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos !== null &&
-        i > logAttr.attrOpeningQuote.pos
+        i > logAttr.attrOpeningQuote.pos &&
+        (str[i] === logAttr.attrOpeningQuote.val ||
+          withinTagInnerspace$1(str, i + 1))
       ) {
         if (charcode === 34 || charcode === 39) {
           if (str[i] !== logAttr.attrOpeningQuote.val) {
@@ -529,11 +531,7 @@ function lint(str, originalOpts) {
           resetLogAttr();
         } else if (
           isStr$1(logAttr.attrOpeningQuote.val) &&
-          (charcode === 8220 || charcode === 8221) &&
-          ((firstOnTheRight$1(str, i) !== null &&
-            (str[firstOnTheRight$1(str, i)] === ">" ||
-              str[firstOnTheRight$1(str, i)] === "/")) ||
-            withinTagInnerspace$1(str, i + 1))
+          (charcode === 8220 || charcode === 8221)
         ) {
           const name$$1 =
             charcode === 8220
@@ -594,6 +592,24 @@ function lint(str, originalOpts) {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
         }
+      }
+      if (
+        logAttr.attrOpeningQuote.val &&
+        logAttr.attrOpeningQuote.pos < i &&
+        logAttr.attrClosingQuote.pos === null &&
+        ((str[i] === "/" &&
+          firstOnTheRight$1(str, i) &&
+          str[firstOnTheRight$1(str, i)] === ">") ||
+          str[i] === ">")
+      ) {
+        retObj.issues.push({
+          name: "tag-attribute-closing-quotation-mark-missing",
+          position: [[i, i, logAttr.attrOpeningQuote.val]]
+        });
+        logAttr.attrClosingQuote.pos = i;
+        logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+        logTag.attributes.push(clone(logAttr));
+        resetLogAttr();
       }
     }
     if (charcode < 32) {
@@ -725,6 +741,7 @@ function lint(str, originalOpts) {
     }
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
+      resetLogAttr();
     }
   }
   if (

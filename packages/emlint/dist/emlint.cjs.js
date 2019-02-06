@@ -47,7 +47,7 @@ function isLatinLetter(char) {
 }
 function withinTagInnerspace(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
+  var regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   return isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
 }
 function firstOnTheRight(str) {
@@ -290,7 +290,7 @@ function lint(str, originalOpts) {
           }
         }
       }
-      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos) {
+      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos && (str[i] === logAttr.attrOpeningQuote.val || withinTagInnerspace$1(str, i + 1))) {
         if (charcode === 34 || charcode === 39) {
           if (str[i] !== logAttr.attrOpeningQuote.val) {
             var _name2 = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
@@ -309,18 +309,19 @@ function lint(str, originalOpts) {
           logAttr.attrEndAt = i;
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
-        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
-          var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
-          retObj.issues.push({
-            name: _name3,
-            position: [[i, i + 1, '"']]
-          });
-          logAttr.attrEndAt = i;
-          logAttr.attrClosingQuote.pos = i;
-          logAttr.attrClosingQuote.val = '"';
-          logTag.attributes.push(clone(logAttr));
-          resetLogAttr();
-        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
+        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221)
+        ) {
+            var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+            retObj.issues.push({
+              name: _name3,
+              position: [[i, i + 1, '"']]
+            });
+            logAttr.attrEndAt = i;
+            logAttr.attrClosingQuote.pos = i;
+            logAttr.attrClosingQuote.val = '"';
+            logTag.attributes.push(clone(logAttr));
+            resetLogAttr();
+          } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstOnTheRight$1(str, i) !== null && (str[firstOnTheRight$1(str, i)] === ">" || str[firstOnTheRight$1(str, i)] === "/") || withinTagInnerspace$1(str, i + 1))) {
           var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
           retObj.issues.push({
             name: _name4,
@@ -349,6 +350,16 @@ function lint(str, originalOpts) {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
         }
+      }
+      if (logAttr.attrOpeningQuote.val && logAttr.attrOpeningQuote.pos < i && logAttr.attrClosingQuote.pos === null && (str[i] === "/" && firstOnTheRight$1(str, i) && str[firstOnTheRight$1(str, i)] === ">" || str[i] === ">")) {
+        retObj.issues.push({
+          name: "tag-attribute-closing-quotation-mark-missing",
+          position: [[i, i, logAttr.attrOpeningQuote.val]]
+        });
+        logAttr.attrClosingQuote.pos = i;
+        logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+        logTag.attributes.push(clone(logAttr));
+        resetLogAttr();
       }
     }
     if (charcode < 32) {
@@ -443,6 +454,7 @@ function lint(str, originalOpts) {
     }
     if (str[i] === ">" && logTag.tagStartAt !== null) {
       resetLogTag();
+      resetLogAttr();
     }
   }
   if ((!opts.style || !opts.style.line_endings_CR_LF_CRLF) && (logLineEndings.cr.length && logLineEndings.lf.length || logLineEndings.lf.length && logLineEndings.crlf.length || logLineEndings.cr.length && logLineEndings.crlf.length)) {
