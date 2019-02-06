@@ -44,14 +44,11 @@ function resolveVars(str, pack, parsedPack) {
   const mappings = {
     "%REPONAME%": pack.name,
     "%USERNAME%": parsedPack.user,
-    "%ISSUELINK%": `${path.join(
-      pack.repository,
-      `issues/new?issue[title]=${`${
-        pack.name
-      }%20package%20-%20put%20title%20here`}&issue[description]=${`%23%23%20${
-        pack.name
-      }%0A%0Aput%20description%20here`}`
-    )}`,
+    "%ISSUELINK%": `${pack.repository}issues/new?issue[title]=${
+      pack.name
+    }%20package%20-%20put%20title%20here&issue[description]=%23%23%20${
+      pack.name
+    }%0A%0Aput%20description%20here`,
     "%COMMITLINK%": `https://bitbucket.org/${parsedPack.user}/${
       parsedPack.project
     }/commits`,

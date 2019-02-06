@@ -234,7 +234,7 @@ also,
 
 ---
 
-In general, when you want to minify **a mixed source code** like HTML template which contains ESP templating code (or other back-end code), you've pretty much got **no choice**: either this library or nothing. Web development-oriented libraries are all parsing, (like tried to use this library but it misbehaves, or you need a) and they will not tolerate the mixed sources. Or you'll jump over hoops to make them bypass your non-HTML/CSS parts until you aren't able to jump any more. For example, aforementioned `html-minifier` has escape latches for cheeky code in the _tag attributes_ but no matter how much you tweak its settings — it will fail sooner or later. For example, Nunjucks' `IF` statements are impossible to exclude in settings, an error is inevitable.
+In general, when you want to minify **a mixed source code** like HTML template which contains ESP templating code (or other back-end code), you've pretty much got **no choice**: either this library or nothing. Web development-oriented libraries are all _parsing_.
 
 **[⬆ back to top](#)**
 
@@ -262,9 +262,9 @@ Call the file `nondeterministic.js` located in folder `test_alt` in `ava`, pass 
 
 ## Contributing
 
-- If you see an error, [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https:/gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here). We'll try to help.
+- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here).
+- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here). Let's discuss it.
+- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=html-crush%20package%20-%20put%20title%20here&issue[description]=%23%23%20html-crush%0A%0Aput%20description%20here). We'll try to help.
 - If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
