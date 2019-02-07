@@ -219,6 +219,11 @@
     "excerpt": "a right single quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
+  "tag-attribute-missing-equal": {
+    "description": "The equal is missing between attribute's name and quotes",
+    "excerpt": "missing equal character",
+    "scope": "html"
+  },
   "tag-attribute-space-between-equals-and-opening-quotes": {
     "description": "There's a space between attribute's equal sign and opening quotes",
     "excerpt": "space between attribute's equal sign and opening quotes",

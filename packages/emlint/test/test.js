@@ -2,7 +2,11 @@ import test from "ava";
 import { lint } from "../dist/emlint.esm";
 import apply from "ranges-apply";
 // import errors from "../src/errors.json";
-import { withinTagInnerspace, firstOnTheRight } from "../dist/util.esm";
+import {
+  withinTagInnerspace,
+  firstOnTheRight,
+  attributeOnTheRight
+} from "../dist/util.esm";
 
 function getUniqueIssueNames(issues) {
   return issues.reduce((accum, curr) => {
@@ -1735,6 +1739,57 @@ test(`15.04 - ${`\u001b[${35}m${`tag-attribute-closing-quotation-mark-missing`}\
   t.is(apply(bad1, res1.fix), good1, "15.04.02");
 });
 
+// 15. Rule tag-attribute-missing-equal
+// -----------------------------------------------------------------------------
+
+test(`15.01 - ${`\u001b[${35}m${`tag-attribute-missing-equal`}\u001b[${39}m`} - one tag, double quotes`, t => {
+  // HTML, tight
+  const bad1 = `<img alt"">`;
+  const good1 = `<img alt="">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-missing-equal"],
+    "15.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.01.02");
+
+  // XHTML, tight
+  const bad2 = `<img alt""/>`;
+  const good2 = `<img alt=""/>`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-missing-equal"],
+    "15.01.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "15.01.04");
+});
+
+test(`15.02 - ${`\u001b[${35}m${`tag-attribute-missing-equal`}\u001b[${39}m`} - one tag, single quotes`, t => {
+  // HTML, tight
+  const bad1 = `<img alt''>`;
+  const good1 = `<img alt=''>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-missing-equal"],
+    "15.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.02.02");
+
+  // XHTML, tight
+  const bad2 = `<img alt''/>`;
+  const good2 = `<img alt=''/>`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-missing-equal"],
+    "15.02.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "15.02.04");
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
@@ -1863,6 +1918,47 @@ test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 
   t.is(firstOnTheRight("a \n\n\nb"), 5, "99.03.05");
   t.is(firstOnTheRight("a \n\n\n\n"), null, "99.03.06");
+});
+
+test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
+  t.true(attributeOnTheRight(`"">`), "99.04.01");
+  t.true(attributeOnTheRight(`"" >`), "99.04.02");
+  t.true(attributeOnTheRight(`""/>`), "99.04.03");
+  t.true(attributeOnTheRight(`"" />`), "99.04.04");
+  t.true(attributeOnTheRight(`"" / >`), "99.04.05");
+  t.true(attributeOnTheRight(`""/ >`), "99.04.06");
+
+  // ends with EOF
+  t.true(attributeOnTheRight(`""`), "99.04.07");
+  t.true(attributeOnTheRight(`"" `), "99.04.08");
+  t.true(attributeOnTheRight(`"" \n`), "99.04.09");
+
+  // attr without value follows
+  t.true(attributeOnTheRight(`"" nowrap>`), "99.04.10");
+  t.true(attributeOnTheRight(`"" nowrap/>`), "99.04.11");
+
+  const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
+  t.true(attributeOnTheRight(s1, 9), "99.04.12");
+});
+
+test(`99.05 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+  t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.05.01");
+});
+
+test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+  const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
+  t.true(attributeOnTheRight(s1, 9), "99.06.01");
+  t.false(attributeOnTheRight(s1, 43), "99.06.02");
+  t.true(attributeOnTheRight(s1, 56), "99.06.03");
+  t.false(attributeOnTheRight(s1, 60), "99.06.04");
+});
+
+test(`99.07 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
+  const s1 = `<a b="c' d="e"/><f g="h"/>`;
+  t.true(attributeOnTheRight(s1, 5), "99.07.01");
+
+  const s2 = `<img alt="sometext < more text = other/text' anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
+  t.true(attributeOnTheRight(s2, 9), "99.07.02");
 });
 
 // xx. TODO's

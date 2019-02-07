@@ -66,6 +66,7 @@ const knownHTMLTags = [
   "button",
   "canvas",
   "caption",
+  "center",
   "cite",
   "code",
   "col",
@@ -231,6 +232,79 @@ function firstOnTheRight(str, idx = 0) {
   }
   return null;
 }
+function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
+  const startingQuoteVal = str[idx];
+  let closingQuoteMatched = false;
+  let lastClosingBracket = null;
+  let lastOpeningBracket = null;
+  let lastSomeQuote = null;
+  let lastEqual = null;
+  for (let i = idx, len = str.length; i < len; i++) {
+    const charcode = str[i].charCodeAt(0);
+    if (
+      i === closingQuoteAt ||
+      (closingQuoteAt === null && i > idx && str[i] === startingQuoteVal)
+    ) {
+      closingQuoteAt = i;
+      if (!closingQuoteMatched) {
+        closingQuoteMatched = true;
+      }
+    }
+    if (str[i] === ">") {
+      lastClosingBracket = i;
+    }
+    if (str[i] === "<") {
+      lastOpeningBracket = i;
+    }
+    if (str[i] === "=") {
+      lastEqual = i;
+    }
+    if (str[i] === "'" || str[i] === '"') {
+      lastSomeQuote = i;
+    }
+    if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
+      if (closingQuoteMatched) {
+        if (!lastClosingBracket || lastClosingBracket < closingQuoteAt) {
+          return true;
+        }
+      } else {
+        if (closingQuoteAt) {
+          return false;
+        }
+        const correctionsRes1 = attributeOnTheRight(
+          str,
+          idx + 1,
+          lastSomeQuote
+        );
+        if (correctionsRes1) {
+          return true;
+        }
+        const correctionsRes2 = attributeOnTheRight(str, i + 1);
+        if (correctionsRes2) {
+          return false;
+        }
+      }
+    }
+    if (
+      closingQuoteMatched &&
+      lastClosingBracket &&
+      lastClosingBracket > closingQuoteMatched
+    ) {
+      return true;
+    }
+    if (
+      closingQuoteMatched &&
+      lastClosingBracket === null &&
+      lastOpeningBracket === null &&
+      (lastSomeQuote === null || closingQuoteAt >= lastSomeQuote) &&
+      lastEqual === null
+    ) {
+      return true;
+    }
+    if (!str[i + 1]) ;
+  }
+  return false;
+}
 
 var util = /*#__PURE__*/Object.freeze({
   knownHTMLTags: knownHTMLTags,
@@ -242,12 +316,19 @@ var util = /*#__PURE__*/Object.freeze({
   log: log,
   isLatinLetter: isLatinLetter,
   withinTagInnerspace: withinTagInnerspace,
-  firstOnTheRight: firstOnTheRight
+  firstOnTheRight: firstOnTheRight,
+  attributeOnTheRight: attributeOnTheRight
 });
 
 const errors = "./errors.json";
 const isArr = Array.isArray;
-const { isStr: isStr$1, log: log$1, withinTagInnerspace: withinTagInnerspace$1, firstOnTheRight: firstOnTheRight$1 } = util;
+const {
+  isStr: isStr$1,
+  log: log$1,
+  withinTagInnerspace: withinTagInnerspace$1,
+  firstOnTheRight: firstOnTheRight$1,
+  attributeOnTheRight: attributeOnTheRight$1
+} = util;
 function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error(
@@ -386,6 +467,7 @@ function lint(str, originalOpts) {
           logAttr.attrNameStartAt,
           logAttr.attrNameEndAt
         );
+        if (str[i] !== "=" && !str[firstOnTheRight$1(str, i)] === "=") ;
       }
       if (
         logAttr.attrNameEndAt !== null &&
@@ -395,6 +477,18 @@ function lint(str, originalOpts) {
       ) {
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
+        } else if (
+          (str[i] === "'" || str[i] === '"') &&
+          attributeOnTheRight$1(str, i)
+        ) {
+          retObj.issues.push({
+            name: "tag-attribute-missing-equal",
+            position: [[i, i, "="]]
+          });
+          logAttr.attrEqualAt = i;
+        } else {
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
         }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "=") {

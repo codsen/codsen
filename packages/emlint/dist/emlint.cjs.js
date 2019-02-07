@@ -35,7 +35,7 @@ function _typeof(obj) {
 var version = "0.6.0";
 
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
-var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
+var knownHTMLTags = ["abbr", "address", "area", "article", "aside", "audio", "base", "bdi", "bdo", "blockquote", "body", "br", "button", "canvas", "caption", "center", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details", "dfn", "dialog", "div", "dl", "doctype", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "iframe", "img", "input", "ins", "kbd", "keygen", "label", "legend", "li", "link", "main", "map", "mark", "math", "menu", "menuitem", "meta", "meter", "nav", "noscript", "object", "ol", "optgroup", "option", "output", "param", "picture", "pre", "progress", "rb", "rp", "rt", "rtc", "ruby", "samp", "script", "section", "select", "slot", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "svg", "table", "tbody", "td", "template", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "ul", "var", "video", "wbr", "xml"];
 function isUppercaseLetter(char) {
   return isStr(char) && char.length === 1 && char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91;
 }
@@ -66,12 +66,71 @@ function firstOnTheRight(str) {
   }
   return null;
 }
+function attributeOnTheRight(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var closingQuoteAt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  var startingQuoteVal = str[idx];
+  var closingQuoteMatched = false;
+  var lastClosingBracket = null;
+  var lastOpeningBracket = null;
+  var lastSomeQuote = null;
+  var lastEqual = null;
+  for (var i = idx, len = str.length; i < len; i++) {
+    var charcode = str[i].charCodeAt(0);
+    if (i === closingQuoteAt || closingQuoteAt === null && i > idx && str[i] === startingQuoteVal) {
+      closingQuoteAt = i;
+      if (!closingQuoteMatched) {
+        closingQuoteMatched = true;
+      }
+    }
+    if (str[i] === ">") {
+      lastClosingBracket = i;
+    }
+    if (str[i] === "<") {
+      lastOpeningBracket = i;
+    }
+    if (str[i] === "=") {
+      lastEqual = i;
+    }
+    if (str[i] === "'" || str[i] === '"') {
+      lastSomeQuote = i;
+    }
+    if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
+      if (closingQuoteMatched) {
+        if (!lastClosingBracket || lastClosingBracket < closingQuoteAt) {
+          return true;
+        }
+      } else {
+        if (closingQuoteAt) {
+          return false;
+        }
+        var correctionsRes1 = attributeOnTheRight(str, idx + 1, lastSomeQuote);
+        if (correctionsRes1) {
+          return true;
+        }
+        var correctionsRes2 = attributeOnTheRight(str, i + 1);
+        if (correctionsRes2) {
+          return false;
+        }
+      }
+    }
+    if (closingQuoteMatched && lastClosingBracket && lastClosingBracket > closingQuoteMatched) {
+      return true;
+    }
+    if (closingQuoteMatched && lastClosingBracket === null && lastOpeningBracket === null && (lastSomeQuote === null || closingQuoteAt >= lastSomeQuote) && lastEqual === null) {
+      return true;
+    }
+    if (!str[i + 1]) ;
+  }
+  return false;
+}
 
 var errors = "./errors.json";
 var isArr = Array.isArray;
 var isStr$1 = isStr,
     withinTagInnerspace$1 = withinTagInnerspace,
-    firstOnTheRight$1 = firstOnTheRight;
+    firstOnTheRight$1 = firstOnTheRight,
+    attributeOnTheRight$1 = attributeOnTheRight;
 function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
@@ -189,10 +248,20 @@ function lint(str, originalOpts) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrName === null && !isLatinLetter(str[i])) {
         logAttr.attrNameEndAt = i;
         logAttr.attrName = str.slice(logAttr.attrNameStartAt, logAttr.attrNameEndAt);
+        if (str[i] !== "=" && !str[firstOnTheRight$1(str, i)] === "=") ;
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && i >= logAttr.attrNameEndAt && str[i].trim().length) {
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
+        } else if ((str[i] === "'" || str[i] === '"') && attributeOnTheRight$1(str, i)) {
+          retObj.issues.push({
+            name: "tag-attribute-missing-equal",
+            position: [[i, i, "="]]
+          });
+          logAttr.attrEqualAt = i;
+        } else {
+          logTag.attributes.push(clone(logAttr));
+          resetLogAttr();
         }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "=") {
