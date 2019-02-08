@@ -272,7 +272,7 @@ function firstOnTheRight(str, idx = 0) {
 
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   console.log(
-    `${`\u001b[${32}m${`\n██`}\u001b[${39}m`} util/attributeOnTheRight() ${`\u001b[${32}m${`██`}\u001b[${39}m`}`
+    `${`\u001b[${32}m${`\n██`}\u001b[${39}m`} util/attributeOnTheRight() ${`\u001b[${32}m${`██\n`}\u001b[${39}m`}`
   );
   // We start iterating from single or double quote, hoping to prove it's an
   // attribute's opening quote.
@@ -423,11 +423,16 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       closingQuoteMatched &&
       lastClosingBracket === null &&
       lastOpeningBracket === null &&
-      (lastSomeQuote === null || closingQuoteAt >= lastSomeQuote) &&
+      (lastSomeQuote === null ||
+        (lastSomeQuote && closingQuoteAt >= lastSomeQuote)) &&
       lastEqual === null
     ) {
+      // closingQuoteAt >= ...
+      // PS. closingQuoteAt above is deliberate, to exclude starting quotes,
+      // which are at position zero.
+
       // yes, it's within attribute, albeit chopped off file end follows
-      console.log(`430 (util) ${log("return", "true")}`);
+      console.log(`435 (util) ${log("return", "true")}`);
       return true;
     }
 
@@ -445,12 +450,26 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     //         S
     //         S
     if (!str[i + 1]) {
-      // EOF reached
+      console.log(`453 (util) "EOL reached"`);
     }
     console.log(closingQuoteMatched ? "closingQuoteMatched" : "");
   }
 
-  console.log(`453 (util) ${log("bottom - return", "false")}`);
+  // ;
+  // by this point, we give a last chance, maybe quotes were mismatched:
+  if (lastSomeQuote) {
+    // as in lastSomeQuote !== 0
+    const correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
+    if (correctionsRes3) {
+      console.log(
+        "465 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
+      );
+      console.log(`467 (util) ${log("return", true)}`);
+      return true;
+    }
+  }
+
+  console.log(`472 (util) ${log("bottom - return", "false")}`);
   return false;
 }
 

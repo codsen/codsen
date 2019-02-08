@@ -117,10 +117,16 @@ function attributeOnTheRight(str) {
     if (closingQuoteMatched && lastClosingBracket && lastClosingBracket > closingQuoteMatched) {
       return true;
     }
-    if (closingQuoteMatched && lastClosingBracket === null && lastOpeningBracket === null && (lastSomeQuote === null || closingQuoteAt >= lastSomeQuote) && lastEqual === null) {
+    if (closingQuoteMatched && lastClosingBracket === null && lastOpeningBracket === null && (lastSomeQuote === null || lastSomeQuote && closingQuoteAt >= lastSomeQuote) && lastEqual === null) {
       return true;
     }
     if (!str[i + 1]) ;
+  }
+  if (lastSomeQuote) {
+    var correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
+    if (correctionsRes3) {
+      return true;
+    }
   }
   return false;
 }

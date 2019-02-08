@@ -1790,6 +1790,36 @@ test(`15.02 - ${`\u001b[${35}m${`tag-attribute-missing-equal`}\u001b[${39}m`} - 
   t.is(apply(bad2, res2.fix), good2, "15.02.04");
 });
 
+test(`15.03 - ${`\u001b[${35}m${`tag-attribute-missing-equal`}\u001b[${39}m`} - combo of missing equal and mismatching quotes`, t => {
+  // HTML, tight
+  const bad1 = `<img alt'">`;
+  const good1 = `<img alt=''>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-mismatching-quotes-is-double",
+      "tag-attribute-missing-equal"
+    ],
+    "15.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.03.02");
+
+  // XHTML, tight
+  const bad2 = `<img alt'"/>`;
+  const good2 = `<img alt=''/>`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    [
+      "tag-attribute-mismatching-quotes-is-double",
+      "tag-attribute-missing-equal"
+    ],
+    "15.03.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "15.03.04");
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 

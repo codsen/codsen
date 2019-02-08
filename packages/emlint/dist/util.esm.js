@@ -280,12 +280,19 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       closingQuoteMatched &&
       lastClosingBracket === null &&
       lastOpeningBracket === null &&
-      (lastSomeQuote === null || closingQuoteAt >= lastSomeQuote) &&
+      (lastSomeQuote === null ||
+        (lastSomeQuote && closingQuoteAt >= lastSomeQuote)) &&
       lastEqual === null
     ) {
       return true;
     }
     if (!str[i + 1]) ;
+  }
+  if (lastSomeQuote) {
+    const correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
+    if (correctionsRes3) {
+      return true;
+    }
   }
   return false;
 }
