@@ -274,6 +274,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   console.log(
     `${`\u001b[${32}m${`\n██`}\u001b[${39}m`} util/attributeOnTheRight() ${`\u001b[${32}m${`██\n`}\u001b[${39}m`}`
   );
+  console.log(`closingQuoteAt = ${JSON.stringify(closingQuoteAt, null, 4)}`);
   // We start iterating from single or double quote, hoping to prove it's an
   // attribute's opening quote.
   // First, we traverse to the same closing or opening quote.
@@ -283,6 +284,20 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   // 2. equals character followed by some quotes
 
   const startingQuoteVal = str[idx];
+  if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
+    throw new Error(
+      `1 emlint/util/attributeOnTheRight(): first character is not a single/double quote!\nstartingQuoteVal = ${JSON.stringify(
+        startingQuoteVal,
+        null,
+        0
+      )}\nstr = ${JSON.stringify(str, null, 4)}\nidx = ${JSON.stringify(
+        idx,
+        null,
+        0
+      )}`
+    );
+  }
+
   let closingQuoteMatched = false;
   let lastClosingBracket = null;
   let lastOpeningBracket = null;
@@ -295,26 +310,26 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
     console.log(
       `\u001b[${
-        closingQuoteAt ? 36 : 32
+        closingQuoteAt === null ? 36 : 32
       }m${`===============================`}\u001b[${39}m \u001b[${
-        closingQuoteAt ? 34 : 31
+        closingQuoteAt === null ? 34 : 31
       }m${`str[ ${i} ] = ${
         str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
       }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} \u001b[${
-        closingQuoteAt ? 36 : 32
+        closingQuoteAt === null ? 36 : 32
       }m${`===============================`}\u001b[${39}m`
     );
     // catch the closing quote
     if (
-      i === closingQuoteAt ||
+      (i === closingQuoteAt && i > idx) ||
       (closingQuoteAt === null && i > idx && str[i] === startingQuoteVal)
     ) {
       closingQuoteAt = i;
-      console.log(`313 (util) ${log("set", "closingQuoteAt", closingQuoteAt)}`);
+      console.log(`328 (util) ${log("set", "closingQuoteAt", closingQuoteAt)}`);
       if (!closingQuoteMatched) {
         closingQuoteMatched = true;
         console.log(
-          `317 (util) ${log("set", "closingQuoteMatched", closingQuoteMatched)}`
+          `332 (util) ${log("set", "closingQuoteMatched", closingQuoteMatched)}`
         );
       }
     }
@@ -322,22 +337,22 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === ">") {
       lastClosingBracket = i;
       console.log(
-        `325 (util) ${log("set", "lastClosingBracket", lastClosingBracket)}`
+        `340 (util) ${log("set", "lastClosingBracket", lastClosingBracket)}`
       );
     }
     if (str[i] === "<") {
       lastOpeningBracket = i;
       console.log(
-        `331 (util) ${log("set", "lastOpeningBracket", lastOpeningBracket)}`
+        `346 (util) ${log("set", "lastOpeningBracket", lastOpeningBracket)}`
       );
     }
     if (str[i] === "=") {
       lastEqual = i;
-      console.log(`336 (util) ${log("set", "lastEqual", lastEqual)}`);
+      console.log(`351 (util) ${log("set", "lastEqual", lastEqual)}`);
     }
     if (str[i] === "'" || str[i] === '"') {
       lastSomeQuote = i;
-      console.log(`340 (util) ${log("set", "lastSomeQuote", lastSomeQuote)}`);
+      console.log(`355 (util) ${log("set", "lastSomeQuote", lastSomeQuote)}`);
     }
 
     // mismatching attribute correction
@@ -347,13 +362,13 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
     // catch pattern =" or ='
     if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
-      console.log("350 (util) within pattern check: equal-quote");
+      console.log("365 (util) within pattern check: equal-quote");
       if (closingQuoteMatched) {
         //
         if (!lastClosingBracket || lastClosingBracket < closingQuoteAt) {
           // if this is the first such occurence after closing quotes matched,
           // this is it. We stumbled upon the new attribute
-          console.log(`356 (util) ${log("return", "true")}`);
+          console.log(`371 (util) ${log("return", "true")}`);
           return true;
         }
       } else {
@@ -363,14 +378,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         // that's it. No more recursive calls.
         if (closingQuoteAt) {
           console.log(
-            "366 (util) STOP",
+            "381 (util) STOP",
             'recursive check ends, it\'s actually messed up. We are already within a recursion. Return "false".'
           );
           return false;
         }
 
         console.log(
-          `373 (util) ${log(
+          `388 (util) ${log(
             " ███████████████████████████████████████ correction!\n",
             "true"
           )}`
@@ -380,18 +395,16 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         // see do we get a positive result if we consider that quote's index
         // as a closing.
 
-        // notice the 3rd input argument - it's suspected closing quote's position:
-        const correctionsRes1 = attributeOnTheRight(
-          str,
-          idx + 1,
-          lastSomeQuote
-        );
-        if (correctionsRes1) {
-          console.log(
-            "391 (util) CORRECTION #1 PASSED - so it was mismatching quote"
-          );
-          console.log(`393 (util) ${log("return", "true")}`);
-          return true;
+        if (lastSomeQuote !== 0 && str[i + 1] !== lastSomeQuote) {
+          // notice the 3rd input argument - it's suspected closing quote's position:
+          const correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
+          if (correctionsRes1) {
+            console.log(
+              "403 (util) CORRECTION #1 PASSED - so it was mismatching quote"
+            );
+            console.log(`405 (util) ${log("return", "true")}`);
+            return true;
+          }
         }
 
         // 2.
@@ -400,9 +413,9 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           // If there's a healthy attribute onwards, it's definitely false.
           // Otherwise, still dubious.
           console.log(
-            "403 (util) CORRECTION #2 PASSED - healthy attributes follow"
+            "416 (util) CORRECTION #2 PASSED - healthy attributes follow"
           );
-          console.log(`405 (util) ${log("return", "false")}`);
+          console.log(`418 (util) ${log("return", "false")}`);
           return false;
         }
       }
@@ -414,7 +427,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       lastClosingBracket > closingQuoteMatched
     ) {
       // if closing bracket is met, that's positive case
-      console.log(`417 (util) ${log("return", "true")}`);
+      console.log(`430 (util) ${log("return", "true")}`);
       return true;
     }
 
@@ -432,7 +445,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       // which are at position zero.
 
       // yes, it's within attribute, albeit chopped off file end follows
-      console.log(`435 (util) ${log("return", "true")}`);
+      console.log(`448 (util) ${log("return", "true")}`);
       return true;
     }
 
@@ -450,26 +463,27 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     //         S
     //         S
     if (!str[i + 1]) {
-      console.log(`453 (util) "EOL reached"`);
+      console.log(`466 (util) "EOL reached"`);
     }
     console.log(closingQuoteMatched ? "closingQuoteMatched" : "");
   }
 
   // ;
   // by this point, we give a last chance, maybe quotes were mismatched:
-  if (lastSomeQuote) {
+  if (lastSomeQuote && closingQuoteAt === null) {
     // as in lastSomeQuote !== 0
+    console.log("475 (util) last chance, run correction 3");
     const correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
     if (correctionsRes3) {
       console.log(
-        "465 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
+        "479 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
       );
-      console.log(`467 (util) ${log("return", true)}`);
+      console.log(`481 (util) ${log("return", true)}`);
       return true;
     }
   }
 
-  console.log(`472 (util) ${log("bottom - return", "false")}`);
+  console.log(`486 (util) ${log("bottom - return", "false")}`);
   return false;
 }
 

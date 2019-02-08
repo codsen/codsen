@@ -234,6 +234,19 @@ function firstOnTheRight(str, idx = 0) {
 }
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   const startingQuoteVal = str[idx];
+  if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
+    throw new Error(
+      `1 emlint/util/attributeOnTheRight(): first character is not a single/double quote!\nstartingQuoteVal = ${JSON.stringify(
+        startingQuoteVal,
+        null,
+        0
+      )}\nstr = ${JSON.stringify(str, null, 4)}\nidx = ${JSON.stringify(
+        idx,
+        null,
+        0
+      )}`
+    );
+  }
   let closingQuoteMatched = false;
   let lastClosingBracket = null;
   let lastOpeningBracket = null;
@@ -242,7 +255,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (
-      i === closingQuoteAt ||
+      (i === closingQuoteAt && i > idx) ||
       (closingQuoteAt === null && i > idx && str[i] === startingQuoteVal)
     ) {
       closingQuoteAt = i;
@@ -271,13 +284,11 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         if (closingQuoteAt) {
           return false;
         }
-        const correctionsRes1 = attributeOnTheRight(
-          str,
-          idx + 1,
-          lastSomeQuote
-        );
-        if (correctionsRes1) {
-          return true;
+        if (lastSomeQuote !== 0 && str[i + 1] !== lastSomeQuote) {
+          const correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
+          if (correctionsRes1) {
+            return true;
+          }
         }
         const correctionsRes2 = attributeOnTheRight(str, i + 1);
         if (correctionsRes2) {
@@ -304,7 +315,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     }
     if (!str[i + 1]) ;
   }
-  if (lastSomeQuote) {
+  if (lastSomeQuote && closingQuoteAt === null) {
     const correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
     if (correctionsRes3) {
       return true;

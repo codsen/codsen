@@ -70,6 +70,9 @@ function attributeOnTheRight(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var closingQuoteAt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   var startingQuoteVal = str[idx];
+  if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
+    throw new Error("1 emlint/util/attributeOnTheRight(): first character is not a single/double quote!\nstartingQuoteVal = ".concat(JSON.stringify(startingQuoteVal, null, 0), "\nstr = ").concat(JSON.stringify(str, null, 4), "\nidx = ").concat(JSON.stringify(idx, null, 0)));
+  }
   var closingQuoteMatched = false;
   var lastClosingBracket = null;
   var lastOpeningBracket = null;
@@ -77,7 +80,7 @@ function attributeOnTheRight(str) {
   var lastEqual = null;
   for (var i = idx, len = str.length; i < len; i++) {
     var charcode = str[i].charCodeAt(0);
-    if (i === closingQuoteAt || closingQuoteAt === null && i > idx && str[i] === startingQuoteVal) {
+    if (i === closingQuoteAt && i > idx || closingQuoteAt === null && i > idx && str[i] === startingQuoteVal) {
       closingQuoteAt = i;
       if (!closingQuoteMatched) {
         closingQuoteMatched = true;
@@ -104,9 +107,11 @@ function attributeOnTheRight(str) {
         if (closingQuoteAt) {
           return false;
         }
-        var correctionsRes1 = attributeOnTheRight(str, idx + 1, lastSomeQuote);
-        if (correctionsRes1) {
-          return true;
+        if (lastSomeQuote !== 0 && str[i + 1] !== lastSomeQuote) {
+          var correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
+          if (correctionsRes1) {
+            return true;
+          }
         }
         var correctionsRes2 = attributeOnTheRight(str, i + 1);
         if (correctionsRes2) {
@@ -122,7 +127,7 @@ function attributeOnTheRight(str) {
     }
     if (!str[i + 1]) ;
   }
-  if (lastSomeQuote) {
+  if (lastSomeQuote && closingQuoteAt === null) {
     var correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
     if (correctionsRes3) {
       return true;

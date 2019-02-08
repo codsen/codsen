@@ -1973,6 +1973,23 @@ test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`a
 
 test(`99.05 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
   t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.05.01");
+  t.false(attributeOnTheRight(`">`), "99.05.02");
+  t.false(attributeOnTheRight(`"/>`), "99.05.03");
+  t.false(attributeOnTheRight(`" attr=""/>`), "99.05.04");
+  t.false(attributeOnTheRight(`" attr1 attr2=""/>`), "99.05.05");
+  t.false(attributeOnTheRight(`" attr1 attr/>`), "99.05.06");
+  t.false(attributeOnTheRight(`" attr1 attr />`), "99.05.07");
+
+  // single quote
+  t.false(attributeOnTheRight(`' attr1 atr2><img>`), "99.05.08");
+  t.false(attributeOnTheRight(`'>`), "99.05.09");
+  t.false(attributeOnTheRight(`'/>`), "99.05.10");
+  t.false(attributeOnTheRight(`' attr=""/>`), "99.05.11");
+  t.false(attributeOnTheRight(`' attr=''/>`), "99.05.12");
+  t.false(attributeOnTheRight(`' attr1 attr2=""/>`), "99.05.13");
+  t.false(attributeOnTheRight(`' attr1 attr2=''/>`), "99.05.14");
+  t.false(attributeOnTheRight(`' attr1 attr/>`), "99.05.15");
+  t.false(attributeOnTheRight(`' attr1 attr />`), "99.05.16");
 });
 
 test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
@@ -1984,11 +2001,20 @@ test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`a
 });
 
 test(`99.07 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
+  // mismatching quotes, minimal example:
   const s1 = `<a b="c' d="e"/><f g="h"/>`;
   t.true(attributeOnTheRight(s1, 5), "99.07.01");
+  t.false(attributeOnTheRight(s1, 7), "99.07.02");
+  t.true(attributeOnTheRight(s1, 11), "99.07.03");
+  t.false(attributeOnTheRight(s1, 13), "99.07.04");
+  t.true(attributeOnTheRight(s1, 21), "99.07.05");
+  t.false(attributeOnTheRight(s1, 23), "99.07.06");
 
   const s2 = `<img alt="sometext < more text = other/text' anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(attributeOnTheRight(s2, 9), "99.07.02");
+  t.true(attributeOnTheRight(s2, 9), "99.07.07");
+  t.false(attributeOnTheRight(s2, 43), "99.07.08");
+  t.true(attributeOnTheRight(s2, 56), "99.07.09");
+  t.false(attributeOnTheRight(s2, 60), "99.07.10");
 });
 
 // xx. TODO's
