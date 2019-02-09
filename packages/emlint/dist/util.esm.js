@@ -197,9 +197,9 @@ function log(...pairs) {
 }
 function withinTagInnerspace(str, idx = 0) {
   const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
-  return (
-    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str)
-  );
+  const res =
+    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+  return res;
 }
 function firstOnTheRight(str, idx = 0) {
   if (!str[idx + 1]) {
@@ -307,5 +307,27 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   }
   return false;
 }
+function findClosingQuote(str, idx = 0) {
+  let lastQuoteAt = null;
+  for (let i = idx, len = str.length; i < len; i++) {
+    const charcode = str[i].charCodeAt(0);
+    if (charcode === 34 || charcode === 39) {
+      lastQuoteAt = i;
+    }
+    else if (str[i].trim().length) {
+      if (str[i] === ">" && lastQuoteAt !== null) {
+        const temp = withinTagInnerspace(str, i);
+        if (temp) {
+          return lastQuoteAt;
+        }
+      } else if (str[i] !== "/") {
+        if (lastQuoteAt !== null) {
+          lastQuoteAt = null;
+        }
+      }
+    }
+  }
+  return null;
+}
 
-export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, attributeOnTheRight };
+export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, attributeOnTheRight, findClosingQuote };

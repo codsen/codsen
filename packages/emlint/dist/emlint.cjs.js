@@ -48,7 +48,8 @@ function isLatinLetter(char) {
 function withinTagInnerspace(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
-  return isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+  var res = isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+  return res;
 }
 function firstOnTheRight(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -135,13 +136,37 @@ function attributeOnTheRight(str) {
   }
   return false;
 }
+function findClosingQuote(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var lastQuoteAt = null;
+  for (var i = idx, len = str.length; i < len; i++) {
+    var charcode = str[i].charCodeAt(0);
+    if (charcode === 34 || charcode === 39) {
+      lastQuoteAt = i;
+    }
+    else if (str[i].trim().length) {
+        if (str[i] === ">" && lastQuoteAt !== null) {
+          var temp = withinTagInnerspace(str, i);
+          if (temp) {
+            return lastQuoteAt;
+          }
+        } else if (str[i] !== "/") {
+          if (lastQuoteAt !== null) {
+            lastQuoteAt = null;
+          }
+        }
+      }
+  }
+  return null;
+}
 
 var errors = "./errors.json";
 var isArr = Array.isArray;
 var isStr$1 = isStr,
     withinTagInnerspace$1 = withinTagInnerspace,
     firstOnTheRight$1 = firstOnTheRight,
-    attributeOnTheRight$1 = attributeOnTheRight;
+    attributeOnTheRight$1 = attributeOnTheRight,
+    findClosingQuote$1 = findClosingQuote;
 function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
@@ -219,6 +244,8 @@ function lint(str, originalOpts) {
     attrNameEndAt: null,
     attrName: null,
     attrValue: null,
+    attrValueStartAt: null,
+    attrValueEndAt: null,
     attrEqualAt: null,
     attrOpeningQuote: {
       pos: null,
@@ -259,7 +286,9 @@ function lint(str, originalOpts) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrName === null && !isLatinLetter(str[i])) {
         logAttr.attrNameEndAt = i;
         logAttr.attrName = str.slice(logAttr.attrNameStartAt, logAttr.attrNameEndAt);
-        if (str[i] !== "=" && !str[firstOnTheRight$1(str, i)] === "=") ;
+        if (str[i] !== "=") {
+          if (str[firstOnTheRight$1(str, i)] === "=") ;
+        }
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && i >= logAttr.attrNameEndAt && str[i].trim().length) {
         if (str[i] === "=") {
@@ -270,6 +299,9 @@ function lint(str, originalOpts) {
             position: [[i, i, "="]]
           });
           logAttr.attrEqualAt = i;
+          logAttr.attrValueStartAt = i;
+          logAttr.attrOpeningQuote.pos = i;
+          logAttr.attrOpeningQuote.val = str[i];
         } else {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
@@ -318,10 +350,16 @@ function lint(str, originalOpts) {
           }
         }
       }
-      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos === null && str[i].trim().length) {
+      if (logAttr.attrEqualAt !== null && logAttr.attrEqualAt < i && logAttr.attrOpeningQuote.pos === null && str[i].trim().length) {
         if (charcode === 34 || charcode === 39) {
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = str[i];
+          var closingQuotePeek = findClosingQuote$1(str, i);
+          if (closingQuotePeek) {
+            logAttr.attrClosingQuote.pos = closingQuotePeek;
+            logAttr.attrClosingQuote.val = str[closingQuotePeek];
+            logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
+          }
         } else if (charcode === 8220 || charcode === 8221) {
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = "\"";
@@ -354,6 +392,20 @@ function lint(str, originalOpts) {
           });
           resetLogWhitespace();
           resetLogAttr();
+        } else {
+          var endingQuotesPos = findClosingQuote$1(str, i);
+          if (endingQuotesPos !== null) {
+            retObj.issues.push({
+              name: "tag-attribute-opening-quotation-mark-missing",
+              position: [[i, i, str[endingQuotesPos]]]
+            });
+            logAttr.attrOpeningQuote.pos = i;
+            logAttr.attrOpeningQuote.val = str[endingQuotesPos];
+            logAttr.attrValueStartAt = i;
+            logAttr.attrClosingQuote.pos = endingQuotesPos;
+            logAttr.attrClosingQuote.val = str[endingQuotesPos];
+            logAttr.attrValue = str.slice(i, endingQuotesPos);
+          }
         }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "'" || str[i] === '"') {
@@ -387,6 +439,7 @@ function lint(str, originalOpts) {
             logAttr.attrValue = "";
           }
           logAttr.attrEndAt = i;
+          logAttr.attrValueEndAt = i;
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
         } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221)
@@ -431,7 +484,8 @@ function lint(str, originalOpts) {
           resetLogAttr();
         }
       }
-      if (logAttr.attrOpeningQuote.val && logAttr.attrOpeningQuote.pos < i && logAttr.attrClosingQuote.pos === null && (str[i] === "/" && firstOnTheRight$1(str, i) && str[firstOnTheRight$1(str, i)] === ">" || str[i] === ">")) {
+      if (logAttr.attrOpeningQuote.val && logAttr.attrOpeningQuote.pos < i && logAttr.attrClosingQuote.pos === null && (
+      str[i] === "/" && firstOnTheRight$1(str, i) && str[firstOnTheRight$1(str, i)] === ">" || str[i] === ">")) {
         retObj.issues.push({
           name: "tag-attribute-closing-quotation-mark-missing",
           position: [[i, i, logAttr.attrOpeningQuote.val]]

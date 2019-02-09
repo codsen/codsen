@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>EMLint linked tap</title>
+    <style type="text/css">
+      * {
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+        color: #f9c76b; /* yellow-ish */
+        background-color: #1c2c34;
+        font-family: sans-serif;
+      }
+      textarea {
+        color: #bec5cf; /* white-ish */
+      }
+      .w50p {
+        width: 49%;
+        height: 90%;
+      }
+      .w33p {
+        width: 33%;
+        height: 20%;
+      }
+      .fl {
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      <div>
+        <textarea ref="in" class="w50p" v-model="text1" rows="10" placeholder="put dirty html here" style="font-family: monospace;"></textarea>
+        <textarea class="w50p" v-model="cleaned" rows="10" style="font-family: monospace;"></textarea>
+      </div>
+      <br>
+      <div>
+        issues:<br>
+        <textarea v-model="list" rows="5" style="width: 98%; height: 25%; font-family: monospace;"></textarea>
+      </div>
+    </div>
+
+    <script src="vue.js"></script>
+    <script src="../dist/emlint.umd.js"></script>
+    <script src="ranges-apply.umd.js"></script>
+    <!-- <script src="https://unpkg.com/emlint"></script> -->
+    <script>
+    const {lint, version} = emlint;
+    const myStorage = window.localStorage;
+    window.Event = new Vue();
+    new Vue({
+      el: '#app',
+      data: {
+        text1: "",
+        res: {}
+      },
+      mounted: function () {
+        const retrieved = myStorage.getItem("emlint")
+        if (typeof retrieved === "string" && retrieved.length) {
+          this.text1 = retrieved;
+        };
+        this.$refs.in.focus();
+      },
+      computed: {
+        list: function () {
+          if (this.res && Array.isArray(this.res.issues)) {
+            return this.res.issues
+              .map(issueObj => `${issueObj.name} ${JSON.stringify(issueObj.position, null, 0)}`)
+              .join("\n")
+          }
+          return "no issues"
+        },
+        cleaned: function () {
+          console.log(`${`\u001b[${33}m${`this.res`}\u001b[${39}m`} = ${JSON.stringify(this.res, null, 4)}`);
+          if (
+            typeof this.text1 === "string" &&
+            this.text1.length &&
+            this.res &&
+            Array.isArray(this.res.fix)
+          ) {
+            return rangesApply(this.text1, this.res.fix);
+          }
+          console.log('067 returning empty string');
+          return this.text1
+        }
+      },
+      watch: {
+        text1: function () {
+          console.log(`${`\u001b[${33}m${`this.text1`}\u001b[${39}m`} = ${JSON.stringify(this.text1, null, 4)}`);
+          const calculatedRes = lint(this.text1);
+          console.log(`${`\u001b[${33}m${`calculatedRes`}\u001b[${39}m`} = ${JSON.stringify(calculatedRes, null, 4)}`);
+          this.res = calculatedRes;
+          myStorage.setItem("emlint", this.text1)
+        }
+      }
+    });
+    </script>
+  </body>
+</html>

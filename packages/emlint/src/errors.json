@@ -179,14 +179,14 @@
     "excerpt": "Line Feed line ending",
     "scope": "all"
   },
-  "tag-attribute-left-double-quotation-mark": {
-    "description": "There's a left double quotation mark, https://www.fileformat.info/info/unicode/char/201C/index.htm",
-    "excerpt": "a left double quotation mark instead of a normal quotation mark",
-    "scope": "html"
-  },
   "tag-attribute-closing-quotation-mark-missing": {
     "description": "The closing quotation mark is missing",
     "excerpt": "the closing quotation mark is missing",
+    "scope": "html"
+  },
+  "tag-attribute-left-double-quotation-mark": {
+    "description": "There's a left double quotation mark, https://www.fileformat.info/info/unicode/char/201C/index.htm",
+    "excerpt": "a left double quotation mark instead of a normal quotation mark",
     "scope": "html"
   },
   "tag-attribute-left-single-quotation-mark": {
@@ -204,6 +204,16 @@
     "excerpt": "there should be a double quote here instead",
     "scope": "html"
   },
+  "tag-attribute-missing-equal": {
+    "description": "The equal is missing between attribute's name and quotes",
+    "excerpt": "missing equal character",
+    "scope": "html"
+  },
+  "tag-attribute-opening-quotation-mark-missing": {
+    "description": "The opening quotation mark is missing",
+    "excerpt": "the opening quotation mark is missing",
+    "scope": "html"
+  },
   "tag-attribute-quote-and-onwards-missing": {
     "description": "One of the attributes ends with an equal sign, there are no quotes on it",
     "excerpt": "attributes ends with an equal sign, there are no quotes on it",
@@ -217,11 +227,6 @@
   "tag-attribute-right-single-quotation-mark": {
     "description": "There's a right single quotation mark, https://www.fileformat.info/info/unicode/char/2019/index.htm",
     "excerpt": "a right single quotation mark instead of a normal quotation mark",
-    "scope": "html"
-  },
-  "tag-attribute-missing-equal": {
-    "description": "The equal is missing between attribute's name and quotes",
-    "excerpt": "missing equal character",
     "scope": "html"
   },
   "tag-attribute-space-between-equals-and-opening-quotes": {
