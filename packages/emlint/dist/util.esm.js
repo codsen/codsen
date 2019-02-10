@@ -262,7 +262,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
       if (closingQuoteMatched) {
         if (!lastClosingBracket || lastClosingBracket < closingQuoteAt) {
-          return true;
+          return closingQuoteAt;
         }
       } else {
         if (closingQuoteAt) {
@@ -271,7 +271,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         if (lastSomeQuote !== 0 && str[i + 1] !== lastSomeQuote) {
           const correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
           if (correctionsRes1) {
-            return true;
+            return lastSomeQuote;
           }
         }
         const correctionsRes2 = attributeOnTheRight(str, i + 1);
@@ -285,7 +285,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       lastClosingBracket &&
       lastClosingBracket > closingQuoteMatched
     ) {
-      return true;
+      return closingQuoteAt;
     }
     if (
       closingQuoteMatched &&
@@ -295,14 +295,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         (lastSomeQuote && closingQuoteAt >= lastSomeQuote)) &&
       lastEqual === null
     ) {
-      return true;
+      return closingQuoteAt;
     }
     if (!str[i + 1]) ;
   }
   if (lastSomeQuote && closingQuoteAt === null) {
     const correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
     if (correctionsRes3) {
-      return true;
+      return lastSomeQuote;
     }
   }
   return false;
@@ -313,11 +313,21 @@ function findClosingQuote(str, idx = 0) {
     const charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
       lastQuoteAt = i;
+      if (
+        i > idx &&
+        (str[i] === "'" || str[i] === '"') &&
+        withinTagInnerspace(str, i + 1)
+      ) {
+        return i;
+      }
     }
     else if (str[i].trim().length) {
       if (str[i] === ">" && lastQuoteAt !== null) {
         const temp = withinTagInnerspace(str, i);
         if (temp) {
+          if (lastQuoteAt === idx) {
+            return lastQuoteAt + 1;
+          }
           return lastQuoteAt;
         }
       } else if (str[i] !== "/") {

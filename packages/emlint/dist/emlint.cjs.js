@@ -102,7 +102,7 @@ function attributeOnTheRight(str) {
     if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
       if (closingQuoteMatched) {
         if (!lastClosingBracket || lastClosingBracket < closingQuoteAt) {
-          return true;
+          return closingQuoteAt;
         }
       } else {
         if (closingQuoteAt) {
@@ -111,7 +111,7 @@ function attributeOnTheRight(str) {
         if (lastSomeQuote !== 0 && str[i + 1] !== lastSomeQuote) {
           var correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
           if (correctionsRes1) {
-            return true;
+            return lastSomeQuote;
           }
         }
         var correctionsRes2 = attributeOnTheRight(str, i + 1);
@@ -121,17 +121,17 @@ function attributeOnTheRight(str) {
       }
     }
     if (closingQuoteMatched && lastClosingBracket && lastClosingBracket > closingQuoteMatched) {
-      return true;
+      return closingQuoteAt;
     }
     if (closingQuoteMatched && lastClosingBracket === null && lastOpeningBracket === null && (lastSomeQuote === null || lastSomeQuote && closingQuoteAt >= lastSomeQuote) && lastEqual === null) {
-      return true;
+      return closingQuoteAt;
     }
     if (!str[i + 1]) ;
   }
   if (lastSomeQuote && closingQuoteAt === null) {
     var correctionsRes3 = attributeOnTheRight(str, idx, lastSomeQuote);
     if (correctionsRes3) {
-      return true;
+      return lastSomeQuote;
     }
   }
   return false;
@@ -143,11 +143,17 @@ function findClosingQuote(str) {
     var charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
       lastQuoteAt = i;
+      if (i > idx && (str[i] === "'" || str[i] === '"') && withinTagInnerspace(str, i + 1)) {
+        return i;
+      }
     }
     else if (str[i].trim().length) {
         if (str[i] === ">" && lastQuoteAt !== null) {
           var temp = withinTagInnerspace(str, i);
           if (temp) {
+            if (lastQuoteAt === idx) {
+              return lastQuoteAt + 1;
+            }
             return lastQuoteAt;
           }
         } else if (str[i] !== "/") {
@@ -280,7 +286,7 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
-  for (var i = 0, len = str.length; i < len; i++) {
+  var _loop = function _loop(i, len) {
     var charcode = str[i].charCodeAt(0);
     if (logTag.tagNameEndAt !== null) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrName === null && !isLatinLetter(str[i])) {
@@ -291,17 +297,25 @@ function lint(str, originalOpts) {
         }
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && i >= logAttr.attrNameEndAt && str[i].trim().length) {
+        var temp;
+        if (str[i] === "'" || str[i] === '"') {
+          temp = attributeOnTheRight$1(str, i);
+        }
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
-        } else if ((str[i] === "'" || str[i] === '"') && attributeOnTheRight$1(str, i)) {
+        } else if (temp) {
           retObj.issues.push({
             name: "tag-attribute-missing-equal",
             position: [[i, i, "="]]
           });
           logAttr.attrEqualAt = i;
           logAttr.attrValueStartAt = i;
+          logAttr.attrValueEndAt = temp;
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = str[i];
+          logAttr.attrClosingQuote.pos = temp;
+          logAttr.attrClosingQuote.val = str[temp];
+          logAttr.attrValue = str.slice(i + 1, temp);
         } else {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
@@ -356,26 +370,42 @@ function lint(str, originalOpts) {
           logAttr.attrOpeningQuote.val = str[i];
           var closingQuotePeek = findClosingQuote$1(str, i);
           if (closingQuotePeek) {
+            if (str[closingQuotePeek] !== str[i]) {
+              if (str[closingQuotePeek] === "'" || str[closingQuotePeek] === '"') {
+                var isDouble = str[closingQuotePeek] === '"';
+                var name$$1 = "tag-attribute-mismatching-quotes-is-".concat(isDouble ? "double" : "single");
+                retObj.issues.push({
+                  name: name$$1,
+                  position: [[closingQuotePeek, closingQuotePeek + 1, "".concat(isDouble ? "'" : '"')]]
+                });
+              } else {
+                retObj.issues.push({
+                  name: "tag-attribute-closing-quotation-mark-missing",
+                  position: [[closingQuotePeek, closingQuotePeek, str[i]]]
+                });
+              }
+            }
             logAttr.attrClosingQuote.pos = closingQuotePeek;
-            logAttr.attrClosingQuote.val = str[closingQuotePeek];
+            logAttr.attrClosingQuote.val = str[i];
             logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
           }
         } else if (charcode === 8220 || charcode === 8221) {
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = "\"";
-          var name$$1 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+          var _name = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
           retObj.issues.push({
-            name: name$$1,
+            name: _name,
             position: [[i, i + 1, "\""]]
           });
         } else if (charcode === 8216 || charcode === 8217) {
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = "'";
-          var _name = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
+          var _name2 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
           retObj.issues.push({
-            name: _name,
+            name: _name2,
             position: [[i, i + 1, "'"]]
           });
+          logAttr.attrValueStartAt = i + 1;
         } else if (withinTagInnerspace$1(str, i)) {
           var start = logAttr.attrStartAt;
           if (str[i] === "/" || str[i] === ">") {
@@ -424,10 +454,12 @@ function lint(str, originalOpts) {
       }
       if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && i > logAttr.attrOpeningQuote.pos && (str[i] === logAttr.attrOpeningQuote.val || withinTagInnerspace$1(str, i + 1))) {
         if (charcode === 34 || charcode === 39) {
-          if (str[i] !== logAttr.attrOpeningQuote.val) {
-            var _name2 = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
+          var issueName = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
+          if (str[i] !== logAttr.attrOpeningQuote.val && !retObj.issues.some(function (issueObj) {
+            return issueObj.name === issueName && issueObj.position.length === 1 && issueObj.position[0][0] === i && issueObj.position[0][1] === i + 1;
+          })) {
             retObj.issues.push({
-              name: _name2,
+              name: issueName,
               position: [[i, i + 1, "".concat(charcode === 34 ? "'" : '"')]]
             });
           }
@@ -471,11 +503,16 @@ function lint(str, originalOpts) {
           if (!str[i].trim().length || !whatsOnTheRight || whatsOnTheRight === ">" || whatsOnTheRight === "/") {
             compensationSpace = "";
           }
+          var _issueName = "tag-attribute-closing-quotation-mark-missing";
           if (logAttr.attrOpeningQuote.val) {
-            retObj.issues.push({
-              name: "tag-attribute-closing-quotation-mark-missing",
-              position: [[i, i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
-            });
+            if (!retObj.issues.some(function (issueObj) {
+              return issueObj.name === _issueName && issueObj.position.length === 1 && issueObj.position[0][0] === i && issueObj.position[0][1] === i;
+            })) {
+              retObj.issues.push({
+                name: _issueName,
+                position: [[i, i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
+              });
+            }
           }
           logAttr.attrEndAt = i;
           logAttr.attrClosingQuote.pos = i;
@@ -590,6 +627,9 @@ function lint(str, originalOpts) {
       resetLogTag();
       resetLogAttr();
     }
+  };
+  for (var i = 0, len = str.length; i < len; i++) {
+    _loop(i, len);
   }
   if ((!opts.style || !opts.style.line_endings_CR_LF_CRLF) && (logLineEndings.cr.length && logLineEndings.lf.length || logLineEndings.lf.length && logLineEndings.crlf.length || logLineEndings.cr.length && logLineEndings.crlf.length)) {
     if (logLineEndings.cr.length > logLineEndings.crlf.length && logLineEndings.cr.length > logLineEndings.lf.length) {
