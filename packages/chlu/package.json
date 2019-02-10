@@ -21,7 +21,7 @@
     "dev": "rm -rf dist && rollup -c --dev --silent",
     "format": "prettier '*.{js,ts,css,less,scss,vue,gql,md}' --write && npm run lint",
     "lect": "lect",
-    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\"",
+    "lint": "./node_modules/.bin/eslint \"**/*.js\" --fix --ignore-pattern \"dist/*\" --ignore-pattern \"rollup.config.js\" --ignore-pattern \"tap/**\"",
     "prepare": "npm run build",
     "pretest": "npm run build",
     "test": "npm run lint && npm run unittest",
