@@ -1,6 +1,6 @@
 {
   "name": "easy-replace",
-  "version": "3.7.6",
+  "version": "3.7.7",
   "description": "Replace strings with optional lookarounds, but without regexes",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.2",
+    "check-types-mini": "^5.7.3",
     "lodash.toarray": "^4.4.0"
   },
   "devDependencies": {

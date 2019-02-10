@@ -1,7 +1,7 @@
 /**
  * ranges-crop
  * Crop array of ranges when they go beyond the reference string's length
- * Version: 1.3.6
+ * Version: 1.3.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop

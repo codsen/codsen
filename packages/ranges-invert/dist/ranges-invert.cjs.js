@@ -1,7 +1,7 @@
 /**
  * ranges-invert
  * Invert string index ranges [ [1, 3] ] => [ [0, 1], [3, ...] ]
- * Version: 1.4.6
+ * Version: 1.4.7
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/ranges-invert

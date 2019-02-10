@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.7](https://gitlab.com/codsen/codsen/compare/array-includes-with-glob@2.11.6...array-includes-with-glob@2.11.7) (2019-02-10)
+
+
+### Bug Fixes
+
+* Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
+
+
+
+
+
 ## 2.11.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

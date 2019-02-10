@@ -1,6 +1,6 @@
 {
   "name": "ranges-process-outside",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Iterate through string and optionally a given ranges as if they were one",
   "license": "MIT",
   "engines": {
@@ -156,7 +156,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-merge": "^3.12.6"
+    "ranges-merge": "^3.12.7"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
