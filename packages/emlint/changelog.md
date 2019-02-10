@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.7.0 (2019-02-10)
+
+### Bug Fixes
+
+- Add more false-outcome unit tests and tweak the algorithm edge cases to pass all tests ([3563c3e](https://gitlab.com/codsen/codsen/commit/3563c3e))
+- Algorithm tweaks to pass all unit tests ([d576d39](https://gitlab.com/codsen/codsen/commit/d576d39))
+- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
+- Treats legit quotes of the opposite kind within healthy quotes correctly ([a390e6d](https://gitlab.com/codsen/codsen/commit/a390e6d))
+- Tweak the detection algorithm of some false cases ([18c368d](https://gitlab.com/codsen/codsen/commit/18c368d))
+
+### Features
+
+- Improve recognition of attribute sequences ([998f718](https://gitlab.com/codsen/codsen/commit/998f718))
+- Rule tag-attribute-missing-equal ([06c5992](https://gitlab.com/codsen/codsen/commit/06c5992))
+- Rules tag-attribute-missing-equal and tag-attribute-opening-quotation-mark-missing ([5f2f0d4](https://gitlab.com/codsen/codsen/commit/5f2f0d4))
+
 ## 0.6.0 (2019-02-05)
 
 ### Features

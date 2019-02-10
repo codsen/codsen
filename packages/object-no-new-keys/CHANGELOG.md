@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.7](https://gitlab.com/codsen/codsen/compare/object-no-new-keys@2.7.6...object-no-new-keys@2.7.7) (2019-02-10)
-
+## 2.7.7 (2019-02-10)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
-
-
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
 
 ## 2.7.0 (2019-01-20)
 

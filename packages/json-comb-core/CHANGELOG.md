@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [6.5.7](https://gitlab.com/codsen/codsen/compare/json-comb-core@6.5.6...json-comb-core@6.5.7) (2019-02-10)
-
+## 6.5.7 (2019-02-10)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
-
-
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
 
 ## 6.5.0 (2019-01-20)
 

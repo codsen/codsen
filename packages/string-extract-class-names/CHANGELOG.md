@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [5.8.7](https://gitlab.com/codsen/codsen/compare/string-extract-class-names@5.8.6...string-extract-class-names@5.8.7) (2019-02-10)
-
+## 5.8.7 (2019-02-10)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
-
-
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
 
 ## 5.8.0 (2019-01-20)
 

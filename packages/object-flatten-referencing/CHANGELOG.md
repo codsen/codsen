@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.10.7](https://gitlab.com/codsen/codsen/compare/object-flatten-referencing@4.10.6...object-flatten-referencing@4.10.7) (2019-02-10)
-
+## 4.10.7 (2019-02-10)
 
 ### Bug Fixes
 
-* Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
-
-
-
+- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
 
 ## 4.10.0 (2019-01-20)
 
