@@ -196,7 +196,7 @@ function log(...pairs) {
   }, "");
 }
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*["'][^"']*["'](?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
+  const regex = /(?:^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
   const res =
     isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
   return res;
@@ -211,6 +211,21 @@ function firstOnTheRight(str, idx = 0) {
   }
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (str[i].trim().length) {
+      return i;
+    }
+  }
+  return null;
+}
+function firstOnTheLeft(str, idx = 0) {
+  if (idx < 1) {
+    return null;
+  } else if (str[idx - 1] && str[idx - 1].trim().length) {
+    return idx - 1;
+  } else if (str[idx - 2] && str[idx - 2].trim().length) {
+    return idx - 2;
+  }
+  for (let i = idx; i--; ) {
+    if (str[i] && str[i].trim().length) {
       return i;
     }
   }
@@ -308,10 +323,12 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   return false;
 }
 function findClosingQuote(str, idx = 0) {
+  let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
+      lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       if (
         i > idx &&
@@ -322,17 +339,27 @@ function findClosingQuote(str, idx = 0) {
       }
     }
     else if (str[i].trim().length) {
-      if (str[i] === ">" && lastQuoteAt !== null) {
+      if (str[i] === ">" && lastNonWhitespaceCharWasQuoteAt !== null) {
         const temp = withinTagInnerspace(str, i);
         if (temp) {
-          if (lastQuoteAt === idx) {
+          if (lastNonWhitespaceCharWasQuoteAt === idx) {
+            return lastNonWhitespaceCharWasQuoteAt + 1;
+          }
+          return lastNonWhitespaceCharWasQuoteAt;
+        }
+      } else if (str[i] === "=") {
+        const whatFollowsEq = firstOnTheRight(str, i);
+        if (
+          whatFollowsEq &&
+          (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
+        ) {
+          if (withinTagInnerspace(str, lastQuoteAt + 1)) {
             return lastQuoteAt + 1;
           }
-          return lastQuoteAt;
         }
       } else if (str[i] !== "/") {
-        if (lastQuoteAt !== null) {
-          lastQuoteAt = null;
+        if (lastNonWhitespaceCharWasQuoteAt !== null) {
+          lastNonWhitespaceCharWasQuoteAt = null;
         }
       }
     }
@@ -340,4 +367,4 @@ function findClosingQuote(str, idx = 0) {
   return null;
 }
 
-export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, attributeOnTheRight, findClosingQuote };
+export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, firstOnTheLeft, attributeOnTheRight, findClosingQuote };

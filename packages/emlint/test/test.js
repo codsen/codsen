@@ -5,6 +5,7 @@ import apply from "ranges-apply";
 import {
   withinTagInnerspace,
   firstOnTheRight,
+  firstOnTheLeft,
   attributeOnTheRight,
   findClosingQuote
 } from "../dist/util.esm";
@@ -958,9 +959,7 @@ test(`06.01 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
   t.is(res2.issues.length, 0, "06.01.02");
 });
 
-test(`06.02 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces between tag name and attr`, t => {
-  // 1. single space between tag name and attr
-
+test(`06.02 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - single space between tag name and attr`, t => {
   const bad1 = `<aaa  bbb="ccc" ddd="eee">`;
   const good1 = `<aaa bbb="ccc" ddd="eee">`;
   const res1 = lint(bad1);
@@ -970,60 +969,23 @@ test(`06.02 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
     "06.02.01"
   );
   t.is(apply(bad1, res1.fix), good1, "06.02.02");
+});
 
-  // 2. more substantial whitespace
+test(`06.03 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - more substantial whitespace`, t => {
   const bad2 = `<aaa \n bbb="ccc" ddd="eee">`;
   const good2 = `<aaa bbb="ccc" ddd="eee">`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-excessive-whitespace-inside-tag"],
-    "06.02.01"
-  );
-  t.is(apply(bad2, res2.fix), good2, "06.02.02");
-});
-
-test(`06.03 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces between attrs`, t => {
-  // 1. double space between attributes, once
-  const bad1 = `<aaa bbb="ccc"  ddd="eee">`;
-  const good1 = `<aaa bbb="ccc" ddd="eee">`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues),
-    ["tag-excessive-whitespace-inside-tag"],
     "06.03.01"
   );
-  t.is(apply(bad1, res1.fix), good1, "06.03.02");
-
-  // 2. multiple chunks, both larger
-  const bad2 = `<aaa bbb="ccc"  ddd="eee"       fff="ggg">`;
-  const good2 = `<aaa bbb="ccc" ddd="eee" fff="ggg">`;
-  const res2 = lint(bad2);
-  t.deepEqual(
-    getUniqueIssueNames(res2.issues),
-    ["tag-excessive-whitespace-inside-tag"],
-    "06.03.03"
-  );
-  t.is(apply(bad2, res2.fix), good2, "06.03.04");
-
-  // 3. attribute without a value, followed by whitespace chunk:
-  // attribute with no equals and value
-  const bad3 = `<aaa bbb  ddd="eee">`;
-  const good3 = `<aaa bbb ddd="eee">`;
-  const res3 = lint(bad3);
-  t.deepEqual(
-    getUniqueIssueNames(res3.issues),
-    ["tag-excessive-whitespace-inside-tag"],
-    "06.03.05"
-  );
-  t.is(apply(bad3, res3.fix), good3, "06.03.06");
+  t.is(apply(bad2, res2.fix), good2, "06.03.02");
 });
 
-test(`06.04 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash`, t => {
-  // 1. single space before closing slash
-
-  const bad1 = `<aaa bbb="ccc" ddd="eee" />`;
-  const good1 = `<aaa bbb="ccc" ddd="eee"/>`;
+test(`06.04 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - double space between attributes, once`, t => {
+  const bad1 = `<aaa bbb="ccc"  ddd="eee">`;
+  const good1 = `<aaa bbb="ccc" ddd="eee">`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
@@ -1031,23 +993,57 @@ test(`06.04 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
     "06.04.01"
   );
   t.is(apply(bad1, res1.fix), good1, "06.04.02");
+});
 
-  // 2. multiple spaces before the closing slash
+test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - multiple chunks, both larger`, t => {
+  const bad1 = `<aaa bbb="ccc"  ddd="eee"       fff="ggg">`;
+  const good1 = `<aaa bbb="ccc" ddd="eee" fff="ggg">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.05.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.05.02");
+});
 
+test(`06.06 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - attribute with no equals and value`, t => {
+  const bad3 = `<aaa bbb  ddd="eee">`;
+  const good3 = `<aaa bbb ddd="eee">`;
+  const res3 = lint(bad3);
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.06.01"
+  );
+  t.is(apply(bad3, res3.fix), good3, "06.06.02");
+});
+
+test(`06.07 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - single space before closing slash`, t => {
+  const bad1 = `<aaa bbb="ccc" ddd="eee" />`;
+  const good1 = `<aaa bbb="ccc" ddd="eee"/>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-excessive-whitespace-inside-tag"],
+    "06.07.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.07.02");
+});
+
+test(`06.08 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - multiple spaces before the closing slash`, t => {
   const bad2 = `<aaa bbb="ccc" ddd="eee"    />`;
   const good2 = `<aaa bbb="ccc" ddd="eee"/>`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-excessive-whitespace-inside-tag"],
-    "06.04.01"
+    "06.08.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "06.04.02");
+  t.is(apply(bad2, res2.fix), good2, "06.08.02");
 });
 
-test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash - fake case`, t => {
-  // 1. single space before closing slash
-
+test(`06.09 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - spaces attr and closing slash - fake case`, t => {
   const bad1 = `<aaa bbb="ccc" / ddd="eee"/>`;
   //                          ^
   //   this gap will be recognised as not closing slash
@@ -1057,7 +1053,7 @@ test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
     getUniqueIssueNames(res1.issues).includes(
       "tag-excessive-whitespace-inside-tag"
     ),
-    "06.05.01"
+    "06.09.01"
   );
   // PS. in theory error should be raised but not with this rule...
 });
@@ -1065,7 +1061,7 @@ test(`06.05 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
 // 07. rule "tag-attribute-space-between-equals-and-opening-quotes"
 // -----------------------------------------------------------------------------
 
-test(`07.01 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and quote`, t => {
+test(`07.01 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and double quote`, t => {
   // 1. double quote:
   const bad1 = `<aaa bbb= "ccc">`;
   const good1 = `<aaa bbb="ccc">`;
@@ -1076,7 +1072,9 @@ test(`07.01 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-
     "07.01.01"
   );
   t.is(apply(bad1, res1.fix), good1, "07.01.02");
+});
 
+test(`07.02 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-quotes`}\u001b[${39}m`} - spaces between equal and single quote`, t => {
   // 2. single quote:
   const bad2 = `<aaa bbb= 'ccc'>`;
   const good2 = `<aaa bbb='ccc'>`;
@@ -1084,9 +1082,9 @@ test(`07.01 - ${`\u001b[${34}m${`tag-attribute-space-between-equals-and-opening-
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-attribute-space-between-equals-and-opening-quotes"],
-    "07.01.03"
+    "07.02.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "07.01.04");
+  t.is(apply(bad2, res2.fix), good2, "07.02.02");
 });
 
 // 08. rule "tag-whitespace-closing-slash-and-bracket"
@@ -1300,9 +1298,9 @@ test(`11.01 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b
   t.is(apply(bad, res.fix), good, "11.01.02");
 });
 
-test(`11.02 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, extra whitespace follows`, t => {
-  const ba1 = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
-  const good1 = `<aaa bbb="ccc" eee="fff"/>`;
+test(`11.02 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, extra whitespace follows, HTML`, t => {
+  const ba1 = `<aaa bbb="ccc" ddd=  eee="fff">`;
+  const good1 = `<aaa bbb="ccc" eee="fff">`;
   const res1 = lint(ba1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
@@ -1310,86 +1308,90 @@ test(`11.02 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b
     "11.02.01"
   );
   t.is(apply(ba1, res1.fix), good1, "11.02.02");
+});
 
+test(`11.03 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, extra whitespace follows, XHTML`, t => {
   const bad2 = `<aaa bbb="ccc" ddd=  eee="fff"/>`;
   const good2 = `<aaa bbb="ccc" eee="fff"/>`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.02.03"
+    "11.03.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "11.02.04");
+  t.is(apply(bad2, res2.fix), good2, "11.03.02");
 });
 
-test(`11.03 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows`, t => {
-  // XHTML - loose
+test(`11.04 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows - XHTML - loose`, t => {
   const bad1 = `<aaa bbb="ccc" ddd=  />`;
   const good1 = `<aaa bbb="ccc"/>`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.03.01"
+    "11.04.01"
   );
-  t.is(apply(bad1, res1.fix), good1, "11.03.02");
+  t.is(apply(bad1, res1.fix), good1, "11.04.02");
+});
 
-  // XHTML - tight
+test(`11.05 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows - XHTML - tight`, t => {
   const bad2 = `<aaa bbb="ccc" ddd=/>`;
   const good2 = `<aaa bbb="ccc"/>`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.03.03"
+    "11.05.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "11.03.04");
+  t.is(apply(bad2, res2.fix), good2, "11.05.02");
+});
 
-  // HTML - loose
+test(`11.06 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows - HTML - loose`, t => {
   const bad3 = `<aaa bbb="ccc" ddd=  >`;
   const good3 = `<aaa bbb="ccc">`;
   const res3 = lint(bad3);
   t.deepEqual(
     getUniqueIssueNames(res3.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.03.05"
+    "11.06.01"
   );
-  t.is(apply(bad3, res3.fix), good3, "11.03.06");
+  t.is(apply(bad3, res3.fix), good3, "11.06.02");
+});
 
-  // HTML - tight
+test(`11.07 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows - HTML - tight`, t => {
   const bad4 = `<aaa bbb="ccc" ddd=>`;
   const good4 = `<aaa bbb="ccc">`;
   const res4 = lint(bad4);
   t.deepEqual(
     getUniqueIssueNames(res4.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.03.07"
+    "11.07.01"
   );
-  t.is(apply(bad4, res4.fix), good4, "11.03.08");
+  t.is(apply(bad4, res4.fix), good4, "11.07.02");
 });
 
-test(`11.04 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, normal whitespace around`, t => {
-  // HTML
+test(`11.08 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, normal whitespace around - HTML`, t => {
   const ba1 = `<img zz yy=>`;
   const goo1 = `<img zz>`;
   const res1 = lint(ba1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.04.01"
+    "11.08.01"
   );
-  t.is(apply(ba1, res1.fix), goo1, "11.04.02");
+  t.is(apply(ba1, res1.fix), goo1, "11.08.02");
+});
 
-  // XHTML
+test(`11.09 - ${`\u001b[${34}m${`tag-attribute-quote-and-onwards-missing`}\u001b[${39}m`} - value with quotes missing, end of tag follows - XHTML`, t => {
   const bad2 = `<img zz yy=/>`;
   const good2 = `<img zz/>`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
     ["tag-attribute-quote-and-onwards-missing"],
-    "11.04.03"
+    "11.09.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "11.04.04");
+  t.is(apply(bad2, res2.fix), good2, "11.09.02");
 });
 
 // 12. Rule tag-attribute-mismatching-quotes-is-single
@@ -1456,29 +1458,16 @@ test(`12.05 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     "12.05.01"
   );
   t.is(apply(bad1, res1.fix), good1, "12.05.02");
-
-  const bad2 = `<aaa bbb="ccc' ddd='eee">`;
-  const good2 = `<aaa bbb="ccc" ddd='eee'>`;
-  const res2 = lint(bad2);
-  t.deepEqual(
-    getUniqueIssueNames(res2.issues).sort(),
-    [
-      "tag-attribute-mismatching-quotes-is-double",
-      "tag-attribute-mismatching-quotes-is-single"
-    ],
-    "12.05.01"
-  );
-  t.is(apply(bad2, res2.fix), good2, "12.05.02");
 });
 
-test(`12.04 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - legit single quote within double quotes`, t => {
+test(`12.06 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - legit single quote within double quotes`, t => {
   const good1 = `<img alt="someone's">`;
   const res1 = lint(good1);
-  t.is(res1.issues.length, 0, "12.04.01");
+  t.deepEqual(res1.issues, [], "12.06.01");
 
   const good2 = `<img alt='single double: "'>`;
   const res2 = lint(good2);
-  t.is(res2.issues.length, 0, "12.04.02");
+  t.deepEqual(res2.issues, [], "12.06.02");
 });
 
 // 13. rule "tag-attribute-left-single-quotation-mark"
@@ -1757,6 +1746,18 @@ test(`15.10 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
 
   t.deepEqual(lint(`<zzz alt=" '>' ">`).issues, [], "15.10.05");
   t.deepEqual(lint(`<zzz alt=' ">" '>`).issues, [], "15.10.06");
+});
+
+test(`15.11 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - false positive cases (rule not applicable)`, t => {
+  // HTML
+  const good1 = `<img alt="a > b">`;
+  const res1 = lint(good1);
+  t.deepEqual(res1.issues, [], "15.11.01");
+
+  // XHTML
+  const good2 = `<img alt="a > b"/>`;
+  const res2 = lint(good2);
+  t.deepEqual(res2.issues, [], "15.11.02");
 });
 
 // 16. Rule tag-attribute-missing-equal
@@ -2133,121 +2134,149 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   );
 });
 
-test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(!!firstOnTheRight(""), "99.03.01");
-  t.false(!!firstOnTheRight("a"), "99.03.02");
+test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
+  t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03.01");
+});
+
+test(`99.13 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
+  t.false(!!firstOnTheRight(""), "99.13.01");
+  t.false(!!firstOnTheRight("a"), "99.13.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  t.is(firstOnTheRight("ab"), 1, "99.03.03");
+  t.is(firstOnTheRight("ab"), 1, "99.13.03");
 
   // 2nd input arg was omitted so starting index is zero, which is "a".
   // Now, to the right of it, there's a space, index 1, next non-whitespace char
   // is b which is index 2.
-  t.is(firstOnTheRight("a b"), 2, "99.03.04");
+  t.is(firstOnTheRight("a b"), 2, "99.13.04");
 
-  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.03.05");
-  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.03.06");
+  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.13.05");
+  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.13.06");
 });
 
-test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
-  t.true(!!attributeOnTheRight(`"">`), "99.04.01");
-  t.true(!!attributeOnTheRight(`"" >`), "99.04.02");
-  t.true(!!attributeOnTheRight(`""/>`), "99.04.03");
-  t.true(!!attributeOnTheRight(`"" />`), "99.04.04");
-  t.true(!!attributeOnTheRight(`"" / >`), "99.04.05");
-  t.true(!!attributeOnTheRight(`""/ >`), "99.04.06");
+test(`99.14 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
+  t.true(!!attributeOnTheRight(`"">`), "99.14.01");
+  t.true(!!attributeOnTheRight(`"" >`), "99.14.02");
+  t.true(!!attributeOnTheRight(`""/>`), "99.14.03");
+  t.true(!!attributeOnTheRight(`"" />`), "99.14.04");
+  t.true(!!attributeOnTheRight(`"" / >`), "99.14.05");
+  t.true(!!attributeOnTheRight(`""/ >`), "99.14.06");
 
   // ends with EOF
-  t.true(!!attributeOnTheRight(`""`), "99.04.07");
-  t.true(!!attributeOnTheRight(`"" `), "99.04.08");
-  t.true(!!attributeOnTheRight(`"" \n`), "99.04.09");
+  t.true(!!attributeOnTheRight(`""`), "99.14.07");
+  t.true(!!attributeOnTheRight(`"" `), "99.14.08");
+  t.true(!!attributeOnTheRight(`"" \n`), "99.14.09");
 
   // attr without value follows
-  t.true(!!attributeOnTheRight(`"" nowrap>`), "99.04.10");
-  t.true(!!attributeOnTheRight(`"" nowrap/>`), "99.04.11");
+  t.true(!!attributeOnTheRight(`"" nowrap>`), "99.14.10");
+  t.true(!!attributeOnTheRight(`"" nowrap/>`), "99.14.11");
 
   const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s1, 9), "99.04.12");
+  t.true(!!attributeOnTheRight(s1, 9), "99.14.12");
 });
 
-test(`99.05 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
-  t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.05.01");
-  t.false(attributeOnTheRight(`">`), "99.05.02");
-  t.false(attributeOnTheRight(`"/>`), "99.05.03");
-  t.false(attributeOnTheRight(`" attr=""/>`), "99.05.04");
-  t.false(attributeOnTheRight(`" attr1 attr2=""/>`), "99.05.05");
-  t.false(attributeOnTheRight(`" attr1 attr/>`), "99.05.06");
-  t.false(attributeOnTheRight(`" attr1 attr />`), "99.05.07");
+test(`99.15 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+  t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.15.01");
+  t.false(attributeOnTheRight(`">`), "99.15.02");
+  t.false(attributeOnTheRight(`"/>`), "99.15.03");
+  t.false(attributeOnTheRight(`" attr=""/>`), "99.15.04");
+  t.false(attributeOnTheRight(`" attr1 attr2=""/>`), "99.15.05");
+  t.false(attributeOnTheRight(`" attr1 attr/>`), "99.15.06");
+  t.false(attributeOnTheRight(`" attr1 attr />`), "99.15.07");
 
   // single quote
-  t.false(attributeOnTheRight(`' attr1 atr2><img>`), "99.05.08");
-  t.false(attributeOnTheRight(`'>`), "99.05.09");
-  t.false(attributeOnTheRight(`'/>`), "99.05.10");
-  t.false(attributeOnTheRight(`' attr=""/>`), "99.05.11");
-  t.false(attributeOnTheRight(`' attr=''/>`), "99.05.12");
-  t.false(attributeOnTheRight(`' attr1 attr2=""/>`), "99.05.13");
-  t.false(attributeOnTheRight(`' attr1 attr2=''/>`), "99.05.14");
-  t.false(attributeOnTheRight(`' attr1 attr/>`), "99.05.15");
-  t.false(attributeOnTheRight(`' attr1 attr />`), "99.05.16");
+  t.false(attributeOnTheRight(`' attr1 atr2><img>`), "99.15.08");
+  t.false(attributeOnTheRight(`'>`), "99.15.09");
+  t.false(attributeOnTheRight(`'/>`), "99.15.10");
+  t.false(attributeOnTheRight(`' attr=""/>`), "99.15.11");
+  t.false(attributeOnTheRight(`' attr=''/>`), "99.15.12");
+  t.false(attributeOnTheRight(`' attr1 attr2=""/>`), "99.15.13");
+  t.false(attributeOnTheRight(`' attr1 attr2=''/>`), "99.15.14");
+  t.false(attributeOnTheRight(`' attr1 attr/>`), "99.15.15");
+  t.false(attributeOnTheRight(`' attr1 attr />`), "99.15.16");
 });
 
-test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
   const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s1, 9), "99.06.01");
-  t.false(attributeOnTheRight(s1, 43), "99.06.02");
-  t.true(!!attributeOnTheRight(s1, 56), "99.06.03");
-  t.false(attributeOnTheRight(s1, 60), "99.06.04");
+  t.true(!!attributeOnTheRight(s1, 9), "99.16.01");
+  t.false(attributeOnTheRight(s1, 43), "99.16.02");
+  t.true(!!attributeOnTheRight(s1, 56), "99.16.03");
+  t.false(attributeOnTheRight(s1, 60), "99.16.04");
 });
 
-test(`99.07 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
+test(`99.17 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
   // mismatching quotes, minimal example:
   const s1 = `<a b="c' d="e"/><f g="h"/>`;
-  t.true(!!attributeOnTheRight(s1, 5), "99.07.01");
-  t.false(attributeOnTheRight(s1, 7), "99.07.02");
-  t.true(!!attributeOnTheRight(s1, 11), "99.07.03");
-  t.false(attributeOnTheRight(s1, 13), "99.07.04");
-  t.true(!!attributeOnTheRight(s1, 21), "99.07.05");
-  t.false(attributeOnTheRight(s1, 23), "99.07.06");
+  t.true(!!attributeOnTheRight(s1, 5), "99.17.01");
+  t.false(attributeOnTheRight(s1, 7), "99.17.02");
+  t.true(!!attributeOnTheRight(s1, 11), "99.17.03");
+  t.false(attributeOnTheRight(s1, 13), "99.17.04");
+  t.true(!!attributeOnTheRight(s1, 21), "99.17.05");
+  t.false(attributeOnTheRight(s1, 23), "99.17.06");
 
   const s2 = `<img alt="sometext < more text = other/text' anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s2, 9), "99.07.07");
-  t.false(attributeOnTheRight(s2, 43), "99.07.08");
-  t.true(!!attributeOnTheRight(s2, 56), "99.07.09");
-  t.false(attributeOnTheRight(s2, 60), "99.07.10");
+  t.true(!!attributeOnTheRight(s2, 9), "99.17.07");
+  t.false(attributeOnTheRight(s2, 43), "99.17.08");
+  t.true(!!attributeOnTheRight(s2, 56), "99.17.09");
+  t.false(attributeOnTheRight(s2, 60), "99.17.10");
 });
 
-test(`99.08 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
+test(`99.18 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
   const code1 = `<zzz alt=So, "a" > "b"'>\ntext <img>`;
-  t.is(findClosingQuote(code1, 9), 22, "99.08.01");
+  t.is(findClosingQuote(code1, 9), 22, "99.18.01");
 
   const code2 = `<zzz alt=">`;
-  t.is(findClosingQuote(code2, 9), 10, "99.08.02");
+  t.is(findClosingQuote(code2, 9), 10, "99.18.02");
 
   const code3 = `<zzz alt="/>`;
-  t.is(findClosingQuote(code3, 9), 10, "99.08.03");
+  t.is(findClosingQuote(code3, 9), 10, "99.18.03");
 
   const code4 = `<zzz alt=" />`;
-  t.is(findClosingQuote(code4, 9), 10, "99.08.04");
+  t.is(findClosingQuote(code4, 9), 10, "99.18.04");
 
   const code5 = `<zzz alt="><img alt="">`;
-  t.is(findClosingQuote(code5, 9), 10, "99.08.05");
+  t.is(findClosingQuote(code5, 9), 10, "99.18.05");
 
   const code6 = `<zzz alt="/><img alt="">`;
-  t.is(findClosingQuote(code6, 9), 10, "99.08.06");
+  t.is(findClosingQuote(code6, 9), 10, "99.18.06");
 
   const code7 = `<zzz alt=" /><img alt="">`;
-  t.is(findClosingQuote(code7, 9), 10, "99.08.07");
+  t.is(findClosingQuote(code7, 9), 10, "99.18.07");
 });
 
-test(`99.09 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
   const code1 = `<aaa bbb="ccc' ddd="eee"/>`;
-  t.is(findClosingQuote(code1, 9), 13, "99.09.01");
+  t.is(findClosingQuote(code1, 9), 13, "99.19.01");
 
   const code2 = `<aaa bbb='ccc" ddd="eee"/>`;
-  t.is(findClosingQuote(code2, 9), 13, "99.09.02");
+  t.is(findClosingQuote(code2, 9), 13, "99.19.02");
 
   const code3 = `<aaa bbb='ccc" ddd='eee'/>`;
-  t.is(findClosingQuote(code3, 9), 13, "99.09.03");
+  t.is(findClosingQuote(code3, 9), 13, "99.19.03");
+});
+
+test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+  const code1 = `<aaa bbb="ccc" ddd= eee="fff"/>`;
+  t.is(findClosingQuote(code1, 9), 13, "99.20.01");
+  t.is(findClosingQuote(code1, 25), 28, "99.20.02");
+});
+
+test(`99.21 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - unclosed quote`, t => {
+  const code = `<zzz alt="nnn="mmm">`;
+  t.is(findClosingQuote(code, 9), 10, "99.21.01");
+});
+
+test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheLeft()`}\u001b[${39}m`} - all cases`, t => {
+  // defaults to zero:
+  t.false(!!firstOnTheLeft(""), "99.13.01");
+  t.false(!!firstOnTheLeft("a"), "99.13.02");
+  t.is(firstOnTheLeft("ab", 1), 0, "99.13.03");
+  t.is(firstOnTheLeft("a b", 2), 0, "99.13.04");
+  t.is(firstOnTheLeft("a \n\n\nb", 5), 0, "99.13.05");
+  t.is(firstOnTheLeft("\n\n\n\n", 4), null, "99.13.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 3), null, "99.13.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 2), null, "99.13.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 1), null, "99.13.06");
 });
 
 // xx. TODO's
