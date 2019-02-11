@@ -209,22 +209,67 @@ function log(...pairs) {
 }
 
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
+  console.log(`212 withinTagInnerspace() called, idx = ${idx}`);
+
+  const r1 = /^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+)/g;
+  const r2 = /^\s*\/*\s*>\s*</g;
+  const r3 = /^\s*\/*\s*>\s*\w/g;
+  const r4 = /^\s*\w*\s*\/+\s*>/g;
+  const r5 = /^\s*\/*\s*>\s*$/g;
+  const r6 = /^\s*\w*\s*\/?\s*>(?:(\s*$)|(\s*[^=>'"]*<))/g;
   // regex matches beginning of a string, two cases:
   // "/><" (closing slash optional and there can be whitespace in between either char)
   // or
   // zzz="" (attribute, followed by whitespace or tag closing)
   // console.log(
-  //   `218 (util) util/withinTagInnerspace ${`\u001b[${33}m${`str.slice(${idx})`}\u001b[${39}m`} = ${JSON.stringify(
+  //   `226 (util) util/withinTagInnerspace ${`\u001b[${33}m${`str.slice(${idx})`}\u001b[${39}m`} = ${JSON.stringify(
   //     str.slice(idx),
   //     null,
   //     0
   //   )}`
   // );
-  const res =
-    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+
+  const whatToTest = idx ? str.slice(idx) : str;
+  let passed = false;
+  if (r1.test(whatToTest)) {
+    console.log(
+      `237 util/withinTagInnerspace(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  if (r2.test(whatToTest)) {
+    console.log(
+      `243 util/withinTagInnerspace(): ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  if (r3.test(whatToTest)) {
+    console.log(
+      `249 util/withinTagInnerspace(): ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  if (r4.test(whatToTest)) {
+    console.log(
+      `255 util/withinTagInnerspace(): ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  if (r5.test(whatToTest)) {
+    console.log(
+      `261 util/withinTagInnerspace(): ${`\u001b[${31}m${`R5`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  if (r6.test(whatToTest)) {
+    console.log(
+      `267 util/withinTagInnerspace(): ${`\u001b[${31}m${`R6`}\u001b[${39}m`} passed`
+    );
+    passed = true;
+  }
+  const res = isStr(str) && idx < str.length && passed;
   console.log(
-    `227 util/withinTagInnerspace(): return ${`\u001b[${36}m${res}\u001b[${39}m`}`
+    `273 util/withinTagInnerspace(): return ${`\u001b[${36}m${res}\u001b[${39}m`}`
   );
   return res;
 }
@@ -349,7 +394,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     ) {
       closingQuoteAt = i;
       console.log(
-        `352 (util/attributeOnTheRight) ${log(
+        `398 (util/attributeOnTheRight) ${log(
           "set",
           "closingQuoteAt",
           closingQuoteAt
@@ -358,7 +403,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       if (!closingQuoteMatched) {
         closingQuoteMatched = true;
         console.log(
-          `361 (util/attributeOnTheRight) ${log(
+          `407 (util/attributeOnTheRight) ${log(
             "set",
             "closingQuoteMatched",
             closingQuoteMatched
@@ -370,7 +415,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === ">") {
       lastClosingBracket = i;
       console.log(
-        `373 (util/attributeOnTheRight) ${log(
+        `419 (util/attributeOnTheRight) ${log(
           "set",
           "lastClosingBracket",
           lastClosingBracket
@@ -380,7 +425,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === "<") {
       lastOpeningBracket = i;
       console.log(
-        `383 (util/attributeOnTheRight) ${log(
+        `429 (util/attributeOnTheRight) ${log(
           "set",
           "lastOpeningBracket",
           lastOpeningBracket
@@ -390,13 +435,13 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === "=") {
       lastEqual = i;
       console.log(
-        `393 (util/attributeOnTheRight) ${log("set", "lastEqual", lastEqual)}`
+        `439 (util/attributeOnTheRight) ${log("set", "lastEqual", lastEqual)}`
       );
     }
     if (str[i] === "'" || str[i] === '"') {
       lastSomeQuote = i;
       console.log(
-        `399 (util/attributeOnTheRight) ${log(
+        `445 (util/attributeOnTheRight) ${log(
           "set",
           "lastSomeQuote",
           lastSomeQuote
@@ -412,7 +457,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     // catch pattern =" or ='
     if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
       console.log(
-        "415 (util/attributeOnTheRight) within pattern check: equal-quote"
+        "461 (util/attributeOnTheRight) within pattern check: equal-quote"
       );
       if (closingQuoteMatched) {
         //
@@ -420,7 +465,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           // if this is the first such occurence after closing quotes matched,
           // this is it. We stumbled upon the new attribute
           console.log(
-            `423 (util/attributeOnTheRight) ${log(
+            `469 (util/attributeOnTheRight) ${log(
               "return",
               "closingQuoteAt",
               closingQuoteAt
@@ -435,14 +480,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         // that's it. No more recursive calls.
         if (closingQuoteAt) {
           console.log(
-            "438 (util/attributeOnTheRight) STOP",
+            "484 (util/attributeOnTheRight) STOP",
             'recursive check ends, it\'s actually messed up. We are already within a recursion. Return "false".'
           );
           return false;
         }
 
         console.log(
-          `445 (util/attributeOnTheRight) ${log(
+          `491 (util/attributeOnTheRight) ${log(
             " ███████████████████████████████████████ correction!\n",
             "true"
           )}`
@@ -457,10 +502,10 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           const correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
           if (correctionsRes1) {
             console.log(
-              "460 (util/attributeOnTheRight) CORRECTION #1 PASSED - so it was mismatching quote"
+              "506 (util/attributeOnTheRight) CORRECTION #1 PASSED - so it was mismatching quote"
             );
             console.log(
-              `463 (util/attributeOnTheRight) ${log(
+              `509 (util/attributeOnTheRight) ${log(
                 "return",
                 "lastSomeQuote",
                 lastSomeQuote
@@ -476,10 +521,10 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           // If there's a healthy attribute onwards, it's definitely false.
           // Otherwise, still dubious.
           console.log(
-            "479 (util/attributeOnTheRight) CORRECTION #2 PASSED - healthy attributes follow"
+            "525 (util/attributeOnTheRight) CORRECTION #2 PASSED - healthy attributes follow"
           );
           console.log(
-            `482 (util/attributeOnTheRight) ${log("return", "false")}`
+            `528 (util/attributeOnTheRight) ${log("return", "false")}`
           );
           return false;
         }
@@ -493,7 +538,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     ) {
       // if closing bracket is met, that's positive case
       console.log(
-        `496 (util/attributeOnTheRight) ${log(
+        `542 (util/attributeOnTheRight) ${log(
           "return",
           "closingQuoteAt",
           closingQuoteAt
@@ -517,7 +562,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
       // yes, it's within attribute, albeit chopped off file end follows
       console.log(
-        `520 (util/attributeOnTheRight) ${log(
+        `566 (util/attributeOnTheRight) ${log(
           "return",
           "closingQuoteAt",
           closingQuoteAt
@@ -540,7 +585,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     //         S
     //         S
     if (!str[i + 1]) {
-      console.log(`543 (util) "EOL reached"`);
+      console.log(`589 (util) "EOL reached"`);
     }
     console.log(closingQuoteMatched ? "closingQuoteMatched" : "");
   }
@@ -549,7 +594,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   // by this point, we give a last chance, maybe quotes were mismatched:
   if (lastSomeQuote && closingQuoteAt === null) {
     // as in lastSomeQuote !== 0
-    console.log("552 (util) last chance, run correction 3");
+    console.log("598 (util) last chance, run correction 3");
     console.log(
       `${`\u001b[${33}m${`lastSomeQuote`}\u001b[${39}m`} = ${JSON.stringify(
         lastSomeQuote,
@@ -561,14 +606,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
     if (correctionsRes3) {
       console.log(
-        "564 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
+        "610 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
       );
-      console.log(`566 (util) ${log("return", true)}`);
+      console.log(`612 (util) ${log("return", true)}`);
       return lastSomeQuote;
     }
   }
 
-  console.log(`571 (util) ${log("bottom - return", "false")}`);
+  console.log(`617 (util) ${log("bottom - return", "false")}`);
   return false;
 }
 
@@ -588,7 +633,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 // If end of the loop is reached fruitless, return null.
 function findClosingQuote(str, idx = 0) {
   console.log(
-    `591 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
+    `637 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
   );
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
@@ -606,7 +651,7 @@ function findClosingQuote(str, idx = 0) {
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       console.log(
-        `609 (util/findClosingQuote) ${log(
+        `655 (util/findClosingQuote) ${log(
           "set",
           "lastNonWhitespaceCharWasQuoteAt",
           lastNonWhitespaceCharWasQuoteAt
@@ -620,23 +665,23 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
-        console.log(`623 (util/findClosingQuote) ${log("return", i)}`);
+        console.log(`669 (util/findClosingQuote) ${log("return", i)}`);
         return i;
       }
     }
 
     // catch non-whitespace characters
     else if (str[i].trim().length) {
-      console.log("630 (util/findClosingQuote)");
+      console.log("676 (util/findClosingQuote)");
       if (str[i] === ">" && lastNonWhitespaceCharWasQuoteAt !== null) {
         console.log(
-          `633 (util/findClosingQuote) ${log("!", "suitable candidate found")}`
+          `679 (util/findClosingQuote) ${log("!", "suitable candidate found")}`
         );
         // perform the check, are we outside quotes' content, within the space
         // of a tag:
         const temp = withinTagInnerspace(str, i);
         console.log(
-          `639 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
+          `685 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
         );
         if (temp) {
           // now, we have two cases.
@@ -659,7 +704,7 @@ function findClosingQuote(str, idx = 0) {
           // Detect if code is messed up - lastNonWhitespaceCharWasQuoteAt === idx
           if (lastNonWhitespaceCharWasQuoteAt === idx) {
             console.log(
-              `662 (util/findClosingQuote) ${log(
+              `708 (util/findClosingQuote) ${log(
                 "return",
                 "lastNonWhitespaceCharWasQuoteAt + 1",
                 lastNonWhitespaceCharWasQuoteAt + 1
@@ -668,7 +713,7 @@ function findClosingQuote(str, idx = 0) {
             return lastNonWhitespaceCharWasQuoteAt + 1;
           }
           console.log(
-            `671 (util/findClosingQuote) ${log(
+            `717 (util/findClosingQuote) ${log(
               "return",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -682,7 +727,7 @@ function findClosingQuote(str, idx = 0) {
         //              ^
         const whatFollowsEq = firstOnTheRight(str, i);
         console.log(
-          `685 (util/findClosingQuote) ${log(
+          `731 (util/findClosingQuote) ${log(
             "set",
             "whatFollowsEq",
             whatFollowsEq
@@ -692,7 +737,7 @@ function findClosingQuote(str, idx = 0) {
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
         ) {
-          console.log("695 (util/findClosingQuote)");
+          console.log("741 (util/findClosingQuote)");
           console.log(
             `${`\u001b[${33}m${`lastNonWhitespaceCharWasQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
               lastNonWhitespaceCharWasQuoteAt,
@@ -704,7 +749,7 @@ function findClosingQuote(str, idx = 0) {
           // last quote, check does it pass the util/withinTagInnerspace()
           if (withinTagInnerspace(str, lastQuoteAt + 1)) {
             console.log(
-              `707 (util/findClosingQuote) ${log(
+              `753 (util/findClosingQuote) ${log(
                 "return",
                 "lastQuoteAt + 1",
                 lastQuoteAt + 1
@@ -717,7 +762,7 @@ function findClosingQuote(str, idx = 0) {
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `720 (util/findClosingQuote) ${log(
+            `766 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -729,7 +774,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `732 (util/findClosingQuote) ${log(
+      `778 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt

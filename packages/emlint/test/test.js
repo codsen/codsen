@@ -1470,6 +1470,30 @@ test(`12.06 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   t.deepEqual(res2.issues, [], "12.06.02");
 });
 
+test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML`, t => {
+  const bad1 = `<td alt="a b' something>`;
+  const good1 = `<td alt="a b" something>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.07.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.07.02");
+});
+
+test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML`, t => {
+  const bad1 = `<td alt="a b' something/>`;
+  const good1 = `<td alt="a b" something/>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.08.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.08.02");
+});
+
 // 13. rule "tag-attribute-left-single-quotation-mark"
 // -----------------------------------------------------------------------------
 
@@ -2018,6 +2042,69 @@ test(`17.12 - ${`\u001b[${36}m${`tag-attribute-opening-quotation-mark-missing`}\
     "17.12.01"
   );
   t.is(apply(bad4, res4.fix), good4, "17.12.02");
+});
+
+// 18. Rule tag-attribute-mismatching-quotes-is-double
+// -----------------------------------------------------------------------------
+
+test(`18.01 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML`, t => {
+  const bad1 = `<td alt='a b" something>`;
+  const good1 = `<td alt='a b' something>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-double"],
+    "18.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.01.02");
+});
+
+test(`18.02 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML`, t => {
+  const bad1 = `<td alt='a b" something/>`;
+  const good1 = `<td alt='a b' something/>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-double"],
+    "18.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.02.02");
+});
+
+test(`18.03 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute, followed by normal attribute`, t => {
+  const bad1 = `<td alt='a b" cde="fgh">`;
+  const good1 = `<td alt='a b' cde="fgh">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-double"],
+    "18.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.03.02");
+});
+
+test(`18.04 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute, preceded by normal attribute`, t => {
+  const bad1 = `<td cde="fgh" alt='a b">`;
+  const good1 = `<td cde="fgh" alt='a b'>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-double"],
+    "18.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.04.02");
+});
+
+test(`18.05 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute, surrounded by normal attributes`, t => {
+  const bad1 = `<td cde="fgh" alt='a b" ijk="lmn">`;
+  const good1 = `<td cde="fgh" alt='a b' ijk="lmn">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-double"],
+    "18.05.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.05.02");
 });
 
 // 99. Util Unit tests

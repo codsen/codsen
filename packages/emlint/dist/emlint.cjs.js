@@ -47,8 +47,33 @@ function isLatinLetter(char) {
 }
 function withinTagInnerspace(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  var regex = /(?:^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
-  var res = isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+  var r1 = /^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+)/g;
+  var r2 = /^\s*\/*\s*>\s*</g;
+  var r3 = /^\s*\/*\s*>\s*\w/g;
+  var r4 = /^\s*\w*\s*\/+\s*>/g;
+  var r5 = /^\s*\/*\s*>\s*$/g;
+  var r6 = /^\s*\w*\s*\/?\s*>(?:(\s*$)|(\s*[^=>'"]*<))/g;
+  var whatToTest = idx ? str.slice(idx) : str;
+  var passed = false;
+  if (r1.test(whatToTest)) {
+    passed = true;
+  }
+  if (r2.test(whatToTest)) {
+    passed = true;
+  }
+  if (r3.test(whatToTest)) {
+    passed = true;
+  }
+  if (r4.test(whatToTest)) {
+    passed = true;
+  }
+  if (r5.test(whatToTest)) {
+    passed = true;
+  }
+  if (r6.test(whatToTest)) {
+    passed = true;
+  }
+  var res = isStr(str) && idx < str.length && passed;
   return res;
 }
 function firstOnTheRight(str) {

@@ -212,9 +212,33 @@ function log(...pairs) {
   }, "");
 }
 function withinTagInnerspace(str, idx = 0) {
-  const regex = /(?:^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+))|(?:^\s*\/*\s*>\s*<)|(?:^\s*\/*\s*>\s*\w)|(?:^\s*\w*\s*\/+\s*>)|(?:^\s*\/*\s*>\s*$)/g;
-  const res =
-    isStr(str) && idx < str.length && regex.test(idx ? str.slice(idx) : str);
+  const r1 = /^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+)/g;
+  const r2 = /^\s*\/*\s*>\s*</g;
+  const r3 = /^\s*\/*\s*>\s*\w/g;
+  const r4 = /^\s*\w*\s*\/+\s*>/g;
+  const r5 = /^\s*\/*\s*>\s*$/g;
+  const r6 = /^\s*\w*\s*\/?\s*>(?:(\s*$)|(\s*[^=>'"]*<))/g;
+  const whatToTest = idx ? str.slice(idx) : str;
+  let passed = false;
+  if (r1.test(whatToTest)) {
+    passed = true;
+  }
+  if (r2.test(whatToTest)) {
+    passed = true;
+  }
+  if (r3.test(whatToTest)) {
+    passed = true;
+  }
+  if (r4.test(whatToTest)) {
+    passed = true;
+  }
+  if (r5.test(whatToTest)) {
+    passed = true;
+  }
+  if (r6.test(whatToTest)) {
+    passed = true;
+  }
+  const res = isStr(str) && idx < str.length && passed;
   return res;
 }
 function firstOnTheRight(str, idx = 0) {
