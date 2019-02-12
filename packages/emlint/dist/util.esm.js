@@ -207,23 +207,36 @@ function withinTagInnerspace(str, idx = 0) {
   let passed = false;
   if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r2.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
+    passed = true;
+  } else if (r3.test(whatToTest)) {
+    passed = true;
+  } else if (r4.test(whatToTest)) {
+    passed = true;
+  } else if (r5.test(whatToTest)) {
+    passed = true;
+  } else if (r6.test(whatToTest)) {
+    passed = true;
+  } else if (r7.test(whatToTest)) {
     passed = true;
   }
-  if (r3.test(whatToTest)) {
+  const res = isStr(str) && idx < str.length && passed;
+  return res;
+}
+function tagOnTheRight(str, idx = 0) {
+  const r1 = /^<\s*\w+\s*\/?\s*>/g;
+  const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
+  const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
+  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  const whatToTest = idx ? str.slice(idx) : str;
+  let passed = false;
+  if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r4.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
     passed = true;
-  }
-  if (r5.test(whatToTest)) {
+  } else if (r3.test(whatToTest)) {
     passed = true;
-  }
-  if (r6.test(whatToTest)) {
-    passed = true;
-  }
-  if (r7.test(whatToTest)) {
+  } else if (r4.test(whatToTest)) {
     passed = true;
   }
   const res = isStr(str) && idx < str.length && passed;
@@ -353,9 +366,13 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 function findClosingQuote(str, idx = 0) {
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
+  const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
+      if (str[i] === startingQuote && i > idx) {
+        return i;
+      }
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       if (
@@ -363,6 +380,9 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
+        return i;
+      }
+      if (tagOnTheRight(str, i + 1)) {
         return i;
       }
     }
@@ -394,5 +414,35 @@ function findClosingQuote(str, idx = 0) {
   }
   return null;
 }
+function encodeChar(str, i) {
+  if (
+    str[i] === "&" &&
+    (!str[i + 1] || str[i + 1] !== "a") &&
+    (!str[i + 2] || str[i + 2] !== "m") &&
+    (!str[i + 3] || str[i + 3] !== "p") &&
+    (!str[i + 3] || str[i + 3] !== ";")
+  ) {
+    return {
+      name: "bad-character-unencoded-ampersand",
+      position: [[i, i + 1, "&amp;"]]
+    };
+  } else if (str[i] === "<") {
+    return {
+      name: "bad-character-unencoded-opening-bracket",
+      position: [[i, i + 1, "&lt;"]]
+    };
+  } else if (str[i] === ">") {
+    return {
+      name: "bad-character-unencoded-closing-bracket",
+      position: [[i, i + 1, "&gt;"]]
+    };
+  } else if (str[i] === '"') {
+    return {
+      name: "bad-character-unencoded-double-quotes",
+      position: [[i, i + 1, "&quot;"]]
+    };
+  }
+  return null;
+}
 
-export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, firstOnTheLeft, attributeOnTheRight, findClosingQuote };
+export { knownHTMLTags, charSuitableForTagName, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstOnTheRight, firstOnTheLeft, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };

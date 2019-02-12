@@ -58,23 +58,37 @@ function withinTagInnerspace(str) {
   var passed = false;
   if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r2.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
+    passed = true;
+  } else if (r3.test(whatToTest)) {
+    passed = true;
+  } else if (r4.test(whatToTest)) {
+    passed = true;
+  } else if (r5.test(whatToTest)) {
+    passed = true;
+  } else if (r6.test(whatToTest)) {
+    passed = true;
+  } else if (r7.test(whatToTest)) {
     passed = true;
   }
-  if (r3.test(whatToTest)) {
+  var res = isStr(str) && idx < str.length && passed;
+  return res;
+}
+function tagOnTheRight(str) {
+  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var r1 = /^<\s*\w+\s*\/?\s*>/g;
+  var r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
+  var r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
+  var r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  var whatToTest = idx ? str.slice(idx) : str;
+  var passed = false;
+  if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r4.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
     passed = true;
-  }
-  if (r5.test(whatToTest)) {
+  } else if (r3.test(whatToTest)) {
     passed = true;
-  }
-  if (r6.test(whatToTest)) {
-    passed = true;
-  }
-  if (r7.test(whatToTest)) {
+  } else if (r4.test(whatToTest)) {
     passed = true;
   }
   var res = isStr(str) && idx < str.length && passed;
@@ -185,12 +199,19 @@ function findClosingQuote(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var lastNonWhitespaceCharWasQuoteAt = null;
   var lastQuoteAt = null;
+  var startingQuote = "\"'".includes(str[idx]) ? str[idx] : null;
   for (var i = idx, len = str.length; i < len; i++) {
     var charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
+      if (str[i] === startingQuote && i > idx) {
+        return i;
+      }
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       if (i > idx && (str[i] === "'" || str[i] === '"') && withinTagInnerspace(str, i + 1)) {
+        return i;
+      }
+      if (tagOnTheRight(str, i + 1)) {
         return i;
       }
     }
@@ -219,6 +240,30 @@ function findClosingQuote(str) {
   }
   return null;
 }
+function encodeChar(str, i) {
+  if (str[i] === "&" && (!str[i + 1] || str[i + 1] !== "a") && (!str[i + 2] || str[i + 2] !== "m") && (!str[i + 3] || str[i + 3] !== "p") && (!str[i + 3] || str[i + 3] !== ";")) {
+    return {
+      name: "bad-character-unencoded-ampersand",
+      position: [[i, i + 1, "&amp;"]]
+    };
+  } else if (str[i] === "<") {
+    return {
+      name: "bad-character-unencoded-opening-bracket",
+      position: [[i, i + 1, "&lt;"]]
+    };
+  } else if (str[i] === ">") {
+    return {
+      name: "bad-character-unencoded-closing-bracket",
+      position: [[i, i + 1, "&gt;"]]
+    };
+  } else if (str[i] === '"') {
+    return {
+      name: "bad-character-unencoded-double-quotes",
+      position: [[i, i + 1, "&quot;"]]
+    };
+  }
+  return null;
+}
 
 var errors = "./errors.json";
 var isArr = Array.isArray;
@@ -227,7 +272,9 @@ var isStr$1 = isStr,
     firstOnTheRight$1 = firstOnTheRight,
     firstOnTheLeft$1 = firstOnTheLeft,
     attributeOnTheRight$1 = attributeOnTheRight,
-    findClosingQuote$1 = findClosingQuote;
+    findClosingQuote$1 = findClosingQuote,
+    encodeChar$1 = encodeChar,
+    tagOnTheRight$1 = tagOnTheRight;
 function lint(str, originalOpts) {
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
@@ -336,6 +383,8 @@ function lint(str, originalOpts) {
   var retObj = {
     issues: []
   };
+  var tagIssueStaging = [];
+  var rawIssueStaging = [];
   var logLineEndings = {
     cr: [],
     lf: [],
@@ -456,12 +505,27 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(_i + 1, closingQuotePeek);
             logAttr.attrValueStartAt = _i + 1;
             logAttr.attrValueEndAt = closingQuotePeek;
+            for (var y = _i + 1; y < closingQuotePeek; y++) {
+              var newIssue = encodeChar$1(str, y);
+              if (newIssue) {
+                tagIssueStaging.push(newIssue);
+              }
+            }
+            if (rawIssueStaging.length) ;
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
             if (str[closingQuotePeek].trim().length) {
               _i = closingQuotePeek;
             } else {
               _i = firstOnTheLeft$1(str, closingQuotePeek);
+            }
+            if (_i === len - 1 && logTag.tagStartAt !== null && (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null || logTag.attributes.some(function (attrObj) {
+              return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
+            }))) {
+              retObj.issues.push({
+                name: "tag-missing-closing-bracket",
+                position: [[_i + 1, _i + 1, ">"]]
+              });
             }
             i = _i;
             return "continue";
@@ -486,9 +550,9 @@ function lint(str, originalOpts) {
         } else if (withinTagInnerspace$1(str, _i)) {
           var start = logAttr.attrStartAt;
           if (str[_i] === "/" || str[_i] === ">") {
-            for (var y = logAttr.attrStartAt; y--;) {
-              if (str[y].trim().length) {
-                start = y + 1;
+            for (var _y = logAttr.attrStartAt; _y--;) {
+              if (str[_y].trim().length) {
+                start = _y + 1;
                 break;
               }
             }
@@ -532,10 +596,10 @@ function lint(str, originalOpts) {
       if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && _i > logAttr.attrOpeningQuote.pos && (str[_i] === logAttr.attrOpeningQuote.val || withinTagInnerspace$1(str, _i + 1))) {
         if (charcode === 34 || charcode === 39) {
           var issueName = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
-          if (str[_i] !== logAttr.attrOpeningQuote.val && !retObj.issues.some(function (issueObj) {
+          if (str[_i] !== logAttr.attrOpeningQuote.val && (!retObj.issues.length || !retObj.issues.some(function (issueObj) {
             i = _i;
             return issueObj.name === issueName && issueObj.position.length === 1 && issueObj.position[0][0] === _i && issueObj.position[0][1] === _i + 1;
-          })) {
+          }))) {
             retObj.issues.push({
               name: issueName,
               position: [[_i, _i + 1, "".concat(charcode === 34 ? "'" : '"')]]
@@ -658,6 +722,13 @@ function lint(str, originalOpts) {
           position: [[_i, _i + 1]]
         });
       }
+    } else if (encodeChar$1(str, _i)) {
+      var _newIssue = encodeChar$1(str, _i);
+      if (logAttr.attrStartAt !== null) {
+        tagIssueStaging.push(_newIssue);
+      } else {
+        rawIssueStaging.push(_newIssue);
+      }
     }
     if (logWhitespace.startAt !== null && str[_i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && (str[_i + 1] === ">" || str.slice(_i + 1).trim().startsWith(">")))) {
@@ -670,7 +741,6 @@ function lint(str, originalOpts) {
           position: [[logWhitespace.startAt, _i]]
         });
       }
-      resetLogWhitespace();
     }
     if (!str[_i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = _i;
@@ -681,15 +751,15 @@ function lint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = _i;
     }
-    if (logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && !isLatinLetter(str[_i])) {
+    if (logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && !isLatinLetter(str[_i]) && str[_i] !== "<" && str[_i] !== "/") {
       logTag.tagNameEndAt = _i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, _i);
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
     }
     if (logTag.tagStartAt !== null && logTag.tagNameStartAt === null && isLatinLetter(str[_i]) && logTag.tagStartAt < _i) {
       logTag.tagNameStartAt = _i;
-      if (logTag.tagStartAt < _i - 1) {
-        retObj.issues.push({
+      if (logTag.tagStartAt < _i - 1 && logWhitespace.startAt !== null) {
+        tagIssueStaging.push({
           name: "tag-space-after-opening-bracket",
           position: [[logTag.tagStartAt + 1, _i]]
         });
@@ -701,12 +771,70 @@ function lint(str, originalOpts) {
         position: [[_i, _i + 1, str[_i].toLowerCase()]]
       });
     }
-    if (str[_i] === "<" && logTag.tagStartAt === null) {
-      logTag.tagStartAt = _i;
+    if (str[_i] === "<") {
+      if (logTag.tagStartAt === null) {
+        logTag.tagStartAt = _i;
+      } else if (tagOnTheRight$1(str, _i)) {
+        if (logTag.tagStartAt !== null && logTag.attributes.length && logTag.attributes.some(function (attrObj) {
+          return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
+        })) {
+          var lastNonWhitespaceOnLeft = firstOnTheLeft$1(str, _i);
+          retObj.issues.push({
+            name: "tag-missing-closing-bracket",
+            position: [[lastNonWhitespaceOnLeft + 1, _i, ">"]]
+          });
+        } else {
+          if (rawIssueStaging.length) {
+            rawIssueStaging.forEach(function (issueObj) {
+              if (
+              issueObj.position[0][0] < _i) {
+                retObj.issues.push(issueObj);
+              }
+            });
+            rawIssueStaging = [];
+          }
+          if (tagIssueStaging.length) {
+            tagIssueStaging = [];
+          }
+        }
+      }
     }
-    if (str[_i] === ">" && logTag.tagStartAt !== null && (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < _i)) {
+    if (charcode === 62 && logTag.tagStartAt !== null && (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < _i)) {
+      if (tagIssueStaging.length) {
+        retObj.issues = retObj.issues.concat(tagIssueStaging);
+        tagIssueStaging = [];
+      }
+      if (rawIssueStaging.length) {
+        rawIssueStaging.forEach(function (issueObj) {
+          if (issueObj.position[0][0] < logTag.tagStartAt) {
+            retObj.issues.push(issueObj);
+          }
+        });
+        rawIssueStaging = [];
+      }
       resetLogTag();
       resetLogAttr();
+    }
+    if (str[_i].trim().length) {
+      resetLogWhitespace();
+    }
+    if (!str[_i + 1]) {
+      if (rawIssueStaging.length) {
+        if (logTag.tagStartAt !== null && logTag.attributes.some(function (attrObj) {
+          return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null;
+        })) {
+          rawIssueStaging.forEach(function (issueObj) {
+            if (issueObj.position[0][0] < logTag.tagStartAt) {
+              retObj.issues.push(issueObj);
+            }
+          });
+          rawIssueStaging = [];
+          retObj.issues.push({
+            name: "tag-missing-closing-bracket",
+            position: [[logWhitespace.startAt ? logWhitespace.startAt : _i + 1, _i + 1, ">"]]
+          });
+        }
+      }
     }
     i = _i;
   };

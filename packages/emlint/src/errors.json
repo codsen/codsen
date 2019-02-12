@@ -149,6 +149,26 @@
     "excerpt": "bad character - synchronous idle",
     "scope": "all"
   },
+  "bad-character-unencoded-ampersand": {
+    "description": "There is unencoded ampersand",
+    "excerpt": "unencoded ampersand",
+    "scope": "html"
+  },
+  "bad-character-unencoded-closing-bracket": {
+    "description": "There is unencoded closing bracket",
+    "excerpt": "unencoded closing bracket",
+    "scope": "html"
+  },
+  "bad-character-unencoded-double-quotes": {
+    "description": "There is unencoded double quotes",
+    "excerpt": "unencoded double quotes",
+    "scope": "html"
+  },
+  "bad-character-unencoded-opening-bracket": {
+    "description": "There is unencoded opening bracket",
+    "excerpt": "unencoded opening bracket",
+    "scope": "html"
+  },
   "file-mixed-line-endings-file-is-CR-mainly": {
     "description": "mixed line endings detected, majority EOL's are CR",
     "excerpt": "mixed line endings detected, majority EOL's are CR",
@@ -247,6 +267,11 @@
   "tag-generic-error": {
     "description": "Something is wrong here",
     "excerpt": "something is wrong here",
+    "scope": "html"
+  },
+  "tag-missing-closing-bracket": {
+    "description": "Tag's closing bracket is missing",
+    "excerpt": "missing closing bracket",
     "scope": "html"
   },
   "tag-name-lowercase": {

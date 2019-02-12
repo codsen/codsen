@@ -223,23 +223,36 @@ function withinTagInnerspace(str, idx = 0) {
   let passed = false;
   if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r2.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
+    passed = true;
+  } else if (r3.test(whatToTest)) {
+    passed = true;
+  } else if (r4.test(whatToTest)) {
+    passed = true;
+  } else if (r5.test(whatToTest)) {
+    passed = true;
+  } else if (r6.test(whatToTest)) {
+    passed = true;
+  } else if (r7.test(whatToTest)) {
     passed = true;
   }
-  if (r3.test(whatToTest)) {
+  const res = isStr(str) && idx < str.length && passed;
+  return res;
+}
+function tagOnTheRight(str, idx = 0) {
+  const r1 = /^<\s*\w+\s*\/?\s*>/g;
+  const r2 = /^<\s*\w+\s+\w+\s*=\s*['"]/g;
+  const r3 = /^<\s*\/?\s*\w+\s*\/?\s*>/g;
+  const r4 = /^<\s*\w+(?:\s*\w+)*\s*\w+=['"]/g;
+  const whatToTest = idx ? str.slice(idx) : str;
+  let passed = false;
+  if (r1.test(whatToTest)) {
     passed = true;
-  }
-  if (r4.test(whatToTest)) {
+  } else if (r2.test(whatToTest)) {
     passed = true;
-  }
-  if (r5.test(whatToTest)) {
+  } else if (r3.test(whatToTest)) {
     passed = true;
-  }
-  if (r6.test(whatToTest)) {
-    passed = true;
-  }
-  if (r7.test(whatToTest)) {
+  } else if (r4.test(whatToTest)) {
     passed = true;
   }
   const res = isStr(str) && idx < str.length && passed;
@@ -369,9 +382,13 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 function findClosingQuote(str, idx = 0) {
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
+  const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
+      if (str[i] === startingQuote && i > idx) {
+        return i;
+      }
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       if (
@@ -379,6 +396,9 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
+        return i;
+      }
+      if (tagOnTheRight(str, i + 1)) {
         return i;
       }
     }
@@ -410,6 +430,36 @@ function findClosingQuote(str, idx = 0) {
   }
   return null;
 }
+function encodeChar(str, i) {
+  if (
+    str[i] === "&" &&
+    (!str[i + 1] || str[i + 1] !== "a") &&
+    (!str[i + 2] || str[i + 2] !== "m") &&
+    (!str[i + 3] || str[i + 3] !== "p") &&
+    (!str[i + 3] || str[i + 3] !== ";")
+  ) {
+    return {
+      name: "bad-character-unencoded-ampersand",
+      position: [[i, i + 1, "&amp;"]]
+    };
+  } else if (str[i] === "<") {
+    return {
+      name: "bad-character-unencoded-opening-bracket",
+      position: [[i, i + 1, "&lt;"]]
+    };
+  } else if (str[i] === ">") {
+    return {
+      name: "bad-character-unencoded-closing-bracket",
+      position: [[i, i + 1, "&gt;"]]
+    };
+  } else if (str[i] === '"') {
+    return {
+      name: "bad-character-unencoded-double-quotes",
+      position: [[i, i + 1, "&quot;"]]
+    };
+  }
+  return null;
+}
 
 var util = /*#__PURE__*/Object.freeze({
   knownHTMLTags: knownHTMLTags,
@@ -424,7 +474,9 @@ var util = /*#__PURE__*/Object.freeze({
   firstOnTheRight: firstOnTheRight,
   firstOnTheLeft: firstOnTheLeft,
   attributeOnTheRight: attributeOnTheRight,
-  findClosingQuote: findClosingQuote
+  findClosingQuote: findClosingQuote,
+  encodeChar: encodeChar,
+  tagOnTheRight: tagOnTheRight
 });
 
 const errors = "./errors.json";
@@ -436,7 +488,9 @@ const {
   firstOnTheRight: firstOnTheRight$1,
   firstOnTheLeft: firstOnTheLeft$1,
   attributeOnTheRight: attributeOnTheRight$1,
-  findClosingQuote: findClosingQuote$1
+  findClosingQuote: findClosingQuote$1,
+  encodeChar: encodeChar$1,
+  tagOnTheRight: tagOnTheRight$1
 } = util;
 function lint(str, originalOpts) {
   if (!isStr$1(str)) {
@@ -560,6 +614,8 @@ function lint(str, originalOpts) {
   const retObj = {
     issues: []
   };
+  let tagIssueStaging = [];
+  let rawIssueStaging = [];
   const logLineEndings = {
     cr: [],
     lf: [],
@@ -722,12 +778,35 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
             logAttr.attrValueStartAt = i + 1;
             logAttr.attrValueEndAt = closingQuotePeek;
+            for (let y = i + 1; y < closingQuotePeek; y++) {
+              const newIssue = encodeChar$1(str, y);
+              if (newIssue) {
+                tagIssueStaging.push(newIssue);
+              }
+            }
+            if (rawIssueStaging.length) ;
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
             if (str[closingQuotePeek].trim().length) {
               i = closingQuotePeek;
             } else {
               i = firstOnTheLeft$1(str, closingQuotePeek);
+            }
+            if (
+              i === len - 1 &&
+              logTag.tagStartAt !== null &&
+              ((logAttr.attrEqualAt !== null &&
+                logAttr.attrOpeningQuote.pos !== null) ||
+                logTag.attributes.some(
+                  attrObj =>
+                    attrObj.attrEqualAt !== null &&
+                    attrObj.attrOpeningQuote.pos !== null
+                ))
+            ) {
+              retObj.issues.push({
+                name: "tag-missing-closing-bracket",
+                position: [[i + 1, i + 1, ">"]]
+              });
             }
             continue;
           }
@@ -813,14 +892,15 @@ function lint(str, originalOpts) {
           }`;
           if (
             str[i] !== logAttr.attrOpeningQuote.val &&
-            !retObj.issues.some(issueObj => {
-              return (
-                issueObj.name === issueName &&
-                issueObj.position.length === 1 &&
-                issueObj.position[0][0] === i &&
-                issueObj.position[0][1] === i + 1
-              );
-            })
+            (!retObj.issues.length ||
+              !retObj.issues.some(issueObj => {
+                return (
+                  issueObj.name === issueName &&
+                  issueObj.position.length === 1 &&
+                  issueObj.position[0][0] === i &&
+                  issueObj.position[0][1] === i + 1
+                );
+              }))
           ) {
             retObj.issues.push({
               name: issueName,
@@ -994,6 +1074,13 @@ function lint(str, originalOpts) {
           position: [[i, i + 1]]
         });
       }
+    } else if (encodeChar$1(str, i)) {
+      const newIssue = encodeChar$1(str, i);
+      if (logAttr.attrStartAt !== null) {
+        tagIssueStaging.push(newIssue);
+      } else {
+        rawIssueStaging.push(newIssue);
+      }
     }
     if (logWhitespace.startAt !== null && str[i].trim().length) {
       if (
@@ -1017,7 +1104,6 @@ function lint(str, originalOpts) {
           position: [[logWhitespace.startAt, i]]
         });
       }
-      resetLogWhitespace();
     }
     if (!str[i].trim().length && logWhitespace.startAt === null) {
       logWhitespace.startAt = i;
@@ -1031,7 +1117,9 @@ function lint(str, originalOpts) {
     if (
       logTag.tagNameStartAt !== null &&
       logTag.tagNameEndAt === null &&
-      !isLatinLetter(str[i])
+      !isLatinLetter(str[i]) &&
+      str[i] !== "<" &&
+      str[i] !== "/"
     ) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
@@ -1046,8 +1134,8 @@ function lint(str, originalOpts) {
       logTag.tagStartAt < i
     ) {
       logTag.tagNameStartAt = i;
-      if (logTag.tagStartAt < i - 1) {
-        retObj.issues.push({
+      if (logTag.tagStartAt < i - 1 && logWhitespace.startAt !== null) {
+        tagIssueStaging.push({
           name: "tag-space-after-opening-bracket",
           position: [[logTag.tagStartAt + 1, i]]
         });
@@ -1063,16 +1151,91 @@ function lint(str, originalOpts) {
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
     }
-    if (str[i] === "<" && logTag.tagStartAt === null) {
-      logTag.tagStartAt = i;
+    if (str[i] === "<") {
+      if (logTag.tagStartAt === null) {
+        logTag.tagStartAt = i;
+      } else if (tagOnTheRight$1(str, i)) {
+        if (
+          logTag.tagStartAt !== null &&
+          logTag.attributes.length &&
+          logTag.attributes.some(
+            attrObj =>
+              attrObj.attrEqualAt !== null &&
+              attrObj.attrOpeningQuote.pos !== null
+          )
+        ) {
+          const lastNonWhitespaceOnLeft = firstOnTheLeft$1(str, i);
+          retObj.issues.push({
+            name: "tag-missing-closing-bracket",
+            position: [[lastNonWhitespaceOnLeft + 1, i, ">"]]
+          });
+        } else {
+          if (rawIssueStaging.length) {
+            rawIssueStaging.forEach(issueObj => {
+              if (
+                issueObj.position[0][0] < i
+              ) {
+                retObj.issues.push(issueObj);
+              }
+            });
+            rawIssueStaging = [];
+          }
+          if (tagIssueStaging.length) {
+            tagIssueStaging = [];
+          }
+        }
+      }
     }
     if (
-      str[i] === ">" &&
+      charcode === 62 &&
       logTag.tagStartAt !== null &&
       (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < i)
     ) {
+      if (tagIssueStaging.length) {
+        retObj.issues = retObj.issues.concat(tagIssueStaging);
+        tagIssueStaging = [];
+      }
+      if (rawIssueStaging.length) {
+        rawIssueStaging.forEach(issueObj => {
+          if (issueObj.position[0][0] < logTag.tagStartAt) {
+            retObj.issues.push(issueObj);
+          }
+        });
+        rawIssueStaging = [];
+      }
       resetLogTag();
       resetLogAttr();
+    }
+    if (str[i].trim().length) {
+      resetLogWhitespace();
+    }
+    if (!str[i + 1]) {
+      if (rawIssueStaging.length) {
+        if (
+          logTag.tagStartAt !== null &&
+          logTag.attributes.some(
+            attrObj =>
+              attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null
+          )
+        ) {
+          rawIssueStaging.forEach(issueObj => {
+            if (issueObj.position[0][0] < logTag.tagStartAt) {
+              retObj.issues.push(issueObj);
+            }
+          });
+          rawIssueStaging = [];
+          retObj.issues.push({
+            name: "tag-missing-closing-bracket",
+            position: [
+              [
+                logWhitespace.startAt ? logWhitespace.startAt : i + 1,
+                i + 1,
+                ">"
+              ]
+            ]
+          });
+        }
+      }
     }
   }
   if (
