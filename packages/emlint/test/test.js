@@ -2413,8 +2413,6 @@ test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 // todo - duplicate closing quotes
 // todo - duplicate opening quotes
 // todo - duplicate equal
-// todo - missing equal in attribute
-// todo - missing opening quote in attribute
 // what if un-pushed logAttr is still available when logTag is closing?
 // space missing in front of an attribute
 // test.todo("same opening/closing quotes repeated twice")
