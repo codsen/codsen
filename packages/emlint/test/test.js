@@ -2107,6 +2107,21 @@ test(`18.05 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u0
   t.is(apply(bad1, res1.fix), good1, "18.05.02");
 });
 
+test(`18.06 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - mix of different type mismatches separated by value-less attribute`, t => {
+  const bad1 = `<td abc='d e" fgh ijk="klm'/>`;
+  const good1 = `<td abc='d e' fgh ijk="klm"/>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-mismatching-quotes-is-double",
+      "tag-attribute-mismatching-quotes-is-single"
+    ],
+    "18.06.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "18.06.02");
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
@@ -2222,7 +2237,12 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
 });
 
 test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
-  t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03.01");
+  t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03");
+});
+
+test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
+  const code = `<td abc='d e" fgh ijk="klm'/>`;
+  t.true(!!withinTagInnerspace(code, 13), "99.04");
 });
 
 test(`99.13 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {

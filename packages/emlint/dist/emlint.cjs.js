@@ -53,6 +53,7 @@ function withinTagInnerspace(str) {
   var r4 = /^\s*\w*\s*\/+\s*>/g;
   var r5 = /^\s*\/*\s*>\s*$/g;
   var r6 = /^\s*\w*\s*\/?\s*>(?:(\s*$)|(\s*[^=>'"]*<))/g;
+  var r7 = /^\s*\w+\s*\w+\s*=\s*(?:["'][^=>"']*["'])/g;
   var whatToTest = idx ? str.slice(idx) : str;
   var passed = false;
   if (r1.test(whatToTest)) {
@@ -71,6 +72,9 @@ function withinTagInnerspace(str) {
     passed = true;
   }
   if (r6.test(whatToTest)) {
+    passed = true;
+  }
+  if (r7.test(whatToTest)) {
     passed = true;
   }
   var res = isStr(str) && idx < str.length && passed;
