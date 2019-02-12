@@ -1058,6 +1058,23 @@ test(`06.09 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
   // PS. in theory error should be raised but not with this rule...
 });
 
+test(`06.10 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - multiple issues`, t => {
+  const bad2 = `<aaa bbb = "  ccc = "ddd">`;
+  const good2 = `<aaa bbb="" ccc="ddd">`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    [
+      "tag-attribute-space-between-name-and-equals",
+      "tag-attribute-space-between-equals-and-opening-quotes",
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-excessive-whitespace-inside-tag"
+    ],
+    "06.10.01"
+  );
+  t.is(apply(bad2, res2.fix), good2, "06.10.02");
+});
+
 // 07. rule "tag-attribute-space-between-equals-and-opening-quotes"
 // -----------------------------------------------------------------------------
 
@@ -2245,121 +2262,121 @@ test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(!!withinTagInnerspace(code, 13), "99.04");
 });
 
-test(`99.13 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(!!firstOnTheRight(""), "99.13.01");
-  t.false(!!firstOnTheRight("a"), "99.13.02");
+test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
+  t.false(!!firstOnTheRight(""), "99.10.01");
+  t.false(!!firstOnTheRight("a"), "99.10.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  t.is(firstOnTheRight("ab"), 1, "99.13.03");
+  t.is(firstOnTheRight("ab"), 1, "99.10.03");
 
   // 2nd input arg was omitted so starting index is zero, which is "a".
   // Now, to the right of it, there's a space, index 1, next non-whitespace char
   // is b which is index 2.
-  t.is(firstOnTheRight("a b"), 2, "99.13.04");
+  t.is(firstOnTheRight("a b"), 2, "99.10.04");
 
-  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.13.05");
-  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.13.06");
+  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.10.05");
+  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.10.06");
 });
 
-test(`99.14 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
-  t.true(!!attributeOnTheRight(`"">`), "99.14.01");
-  t.true(!!attributeOnTheRight(`"" >`), "99.14.02");
-  t.true(!!attributeOnTheRight(`""/>`), "99.14.03");
-  t.true(!!attributeOnTheRight(`"" />`), "99.14.04");
-  t.true(!!attributeOnTheRight(`"" / >`), "99.14.05");
-  t.true(!!attributeOnTheRight(`""/ >`), "99.14.06");
+test(`99.11 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
+  t.true(!!attributeOnTheRight(`"">`), "99.11.01");
+  t.true(!!attributeOnTheRight(`"" >`), "99.11.02");
+  t.true(!!attributeOnTheRight(`""/>`), "99.11.03");
+  t.true(!!attributeOnTheRight(`"" />`), "99.11.04");
+  t.true(!!attributeOnTheRight(`"" / >`), "99.11.05");
+  t.true(!!attributeOnTheRight(`""/ >`), "99.11.06");
 
   // ends with EOF
-  t.true(!!attributeOnTheRight(`""`), "99.14.07");
-  t.true(!!attributeOnTheRight(`"" `), "99.14.08");
-  t.true(!!attributeOnTheRight(`"" \n`), "99.14.09");
+  t.true(!!attributeOnTheRight(`""`), "99.11.07");
+  t.true(!!attributeOnTheRight(`"" `), "99.11.08");
+  t.true(!!attributeOnTheRight(`"" \n`), "99.11.09");
 
   // attr without value follows
-  t.true(!!attributeOnTheRight(`"" nowrap>`), "99.14.10");
-  t.true(!!attributeOnTheRight(`"" nowrap/>`), "99.14.11");
+  t.true(!!attributeOnTheRight(`"" nowrap>`), "99.11.10");
+  t.true(!!attributeOnTheRight(`"" nowrap/>`), "99.11.11");
 
   const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s1, 9), "99.14.12");
+  t.true(!!attributeOnTheRight(s1, 9), "99.11.12");
 });
 
-test(`99.15 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
-  t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.15.01");
-  t.false(attributeOnTheRight(`">`), "99.15.02");
-  t.false(attributeOnTheRight(`"/>`), "99.15.03");
-  t.false(attributeOnTheRight(`" attr=""/>`), "99.15.04");
-  t.false(attributeOnTheRight(`" attr1 attr2=""/>`), "99.15.05");
-  t.false(attributeOnTheRight(`" attr1 attr/>`), "99.15.06");
-  t.false(attributeOnTheRight(`" attr1 attr />`), "99.15.07");
+test(`99.12 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+  t.false(attributeOnTheRight(`" attr1 atr2><img>`), "99.12.01");
+  t.false(attributeOnTheRight(`">`), "99.12.02");
+  t.false(attributeOnTheRight(`"/>`), "99.12.03");
+  t.false(attributeOnTheRight(`" attr=""/>`), "99.12.04");
+  t.false(attributeOnTheRight(`" attr1 attr2=""/>`), "99.12.05");
+  t.false(attributeOnTheRight(`" attr1 attr/>`), "99.12.06");
+  t.false(attributeOnTheRight(`" attr1 attr />`), "99.12.07");
 
   // single quote
-  t.false(attributeOnTheRight(`' attr1 atr2><img>`), "99.15.08");
-  t.false(attributeOnTheRight(`'>`), "99.15.09");
-  t.false(attributeOnTheRight(`'/>`), "99.15.10");
-  t.false(attributeOnTheRight(`' attr=""/>`), "99.15.11");
-  t.false(attributeOnTheRight(`' attr=''/>`), "99.15.12");
-  t.false(attributeOnTheRight(`' attr1 attr2=""/>`), "99.15.13");
-  t.false(attributeOnTheRight(`' attr1 attr2=''/>`), "99.15.14");
-  t.false(attributeOnTheRight(`' attr1 attr/>`), "99.15.15");
-  t.false(attributeOnTheRight(`' attr1 attr />`), "99.15.16");
+  t.false(attributeOnTheRight(`' attr1 atr2><img>`), "99.12.08");
+  t.false(attributeOnTheRight(`'>`), "99.12.09");
+  t.false(attributeOnTheRight(`'/>`), "99.12.10");
+  t.false(attributeOnTheRight(`' attr=""/>`), "99.12.11");
+  t.false(attributeOnTheRight(`' attr=''/>`), "99.12.12");
+  t.false(attributeOnTheRight(`' attr1 attr2=""/>`), "99.12.13");
+  t.false(attributeOnTheRight(`' attr1 attr2=''/>`), "99.12.14");
+  t.false(attributeOnTheRight(`' attr1 attr/>`), "99.12.15");
+  t.false(attributeOnTheRight(`' attr1 attr />`), "99.12.16");
 });
 
-test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
+test(`99.13 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - negative cases`, t => {
   const s1 = `<img alt="sometext < more text = other/text" anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s1, 9), "99.16.01");
-  t.false(attributeOnTheRight(s1, 43), "99.16.02");
-  t.true(!!attributeOnTheRight(s1, 56), "99.16.03");
-  t.false(attributeOnTheRight(s1, 60), "99.16.04");
+  t.true(!!attributeOnTheRight(s1, 9), "99.13.01");
+  t.false(attributeOnTheRight(s1, 43), "99.13.02");
+  t.true(!!attributeOnTheRight(s1, 56), "99.13.03");
+  t.false(attributeOnTheRight(s1, 60), "99.13.04");
 });
 
-test(`99.17 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
+test(`99.14 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - mismatching quotes`, t => {
   // mismatching quotes, minimal example:
   const s1 = `<a b="c' d="e"/><f g="h"/>`;
-  t.true(!!attributeOnTheRight(s1, 5), "99.17.01");
-  t.false(attributeOnTheRight(s1, 7), "99.17.02");
-  t.true(!!attributeOnTheRight(s1, 11), "99.17.03");
-  t.false(attributeOnTheRight(s1, 13), "99.17.04");
-  t.true(!!attributeOnTheRight(s1, 21), "99.17.05");
-  t.false(attributeOnTheRight(s1, 23), "99.17.06");
+  t.true(!!attributeOnTheRight(s1, 5), "99.14.01");
+  t.false(attributeOnTheRight(s1, 7), "99.14.02");
+  t.true(!!attributeOnTheRight(s1, 11), "99.14.03");
+  t.false(attributeOnTheRight(s1, 13), "99.14.04");
+  t.true(!!attributeOnTheRight(s1, 21), "99.14.05");
+  t.false(attributeOnTheRight(s1, 23), "99.14.06");
 
   const s2 = `<img alt="sometext < more text = other/text' anotherTag="zzz"/><img alt="sometext < more text = other text"/>`;
-  t.true(!!attributeOnTheRight(s2, 9), "99.17.07");
-  t.false(attributeOnTheRight(s2, 43), "99.17.08");
-  t.true(!!attributeOnTheRight(s2, 56), "99.17.09");
-  t.false(attributeOnTheRight(s2, 60), "99.17.10");
+  t.true(!!attributeOnTheRight(s2, 9), "99.14.07");
+  t.false(attributeOnTheRight(s2, 43), "99.14.08");
+  t.true(!!attributeOnTheRight(s2, 56), "99.14.09");
+  t.false(attributeOnTheRight(s2, 60), "99.14.10");
 });
 
-test(`99.18 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
+test(`99.15 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
   const code1 = `<zzz alt=So, "a" > "b"'>\ntext <img>`;
-  t.is(findClosingQuote(code1, 9), 22, "99.18.01");
+  t.is(findClosingQuote(code1, 9), 22, "99.15.01");
 
   const code2 = `<zzz alt=">`;
-  t.is(findClosingQuote(code2, 9), 10, "99.18.02");
+  t.is(findClosingQuote(code2, 9), 10, "99.15.02");
 
   const code3 = `<zzz alt="/>`;
-  t.is(findClosingQuote(code3, 9), 10, "99.18.03");
+  t.is(findClosingQuote(code3, 9), 10, "99.15.03");
 
   const code4 = `<zzz alt=" />`;
-  t.is(findClosingQuote(code4, 9), 10, "99.18.04");
+  t.is(findClosingQuote(code4, 9), 10, "99.15.04");
 
   const code5 = `<zzz alt="><img alt="">`;
-  t.is(findClosingQuote(code5, 9), 10, "99.18.05");
+  t.is(findClosingQuote(code5, 9), 10, "99.15.05");
 
   const code6 = `<zzz alt="/><img alt="">`;
-  t.is(findClosingQuote(code6, 9), 10, "99.18.06");
+  t.is(findClosingQuote(code6, 9), 10, "99.15.06");
 
   const code7 = `<zzz alt=" /><img alt="">`;
-  t.is(findClosingQuote(code7, 9), 10, "99.18.07");
+  t.is(findClosingQuote(code7, 9), 10, "99.15.07");
 });
 
-test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
   const code1 = `<aaa bbb="ccc' ddd="eee"/>`;
-  t.is(findClosingQuote(code1, 9), 13, "99.19.01");
+  t.is(findClosingQuote(code1, 9), 13, "99.16.01");
 
   const code2 = `<aaa bbb='ccc" ddd="eee"/>`;
-  t.is(findClosingQuote(code2, 9), 13, "99.19.02");
+  t.is(findClosingQuote(code2, 9), 13, "99.16.02");
 
   const code3 = `<aaa bbb='ccc" ddd='eee'/>`;
-  t.is(findClosingQuote(code3, 9), 13, "99.19.03");
+  t.is(findClosingQuote(code3, 9), 13, "99.16.03");
 });
 
 test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
@@ -2375,15 +2392,15 @@ test(`99.21 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 
 test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheLeft()`}\u001b[${39}m`} - all cases`, t => {
   // defaults to zero:
-  t.false(!!firstOnTheLeft(""), "99.13.01");
-  t.false(!!firstOnTheLeft("a"), "99.13.02");
-  t.is(firstOnTheLeft("ab", 1), 0, "99.13.03");
-  t.is(firstOnTheLeft("a b", 2), 0, "99.13.04");
-  t.is(firstOnTheLeft("a \n\n\nb", 5), 0, "99.13.05");
-  t.is(firstOnTheLeft("\n\n\n\n", 4), null, "99.13.06");
-  t.is(firstOnTheLeft("\n\n\n\n", 3), null, "99.13.06");
-  t.is(firstOnTheLeft("\n\n\n\n", 2), null, "99.13.06");
-  t.is(firstOnTheLeft("\n\n\n\n", 1), null, "99.13.06");
+  t.false(!!firstOnTheLeft(""), "99.30.01");
+  t.false(!!firstOnTheLeft("a"), "99.30.02");
+  t.is(firstOnTheLeft("ab", 1), 0, "99.30.03");
+  t.is(firstOnTheLeft("a b", 2), 0, "99.30.04");
+  t.is(firstOnTheLeft("a \n\n\nb", 5), 0, "99.30.05");
+  t.is(firstOnTheLeft("\n\n\n\n", 4), null, "99.30.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 3), null, "99.30.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 2), null, "99.30.06");
+  t.is(firstOnTheLeft("\n\n\n\n", 1), null, "99.30.06");
 });
 
 // xx. TODO's
@@ -2407,9 +2424,4 @@ test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 // test.todo("file-trailing-line-break-present");
 // test.todo("file-trailing-line-break-absent");
 // test.todo("tough one: <aaa bbb="  ccc="ddd">")
-// test.todo("even tougher one: <aaa bbb = "  ccc = "ddd">")
 // stray letters at the end of a line, surrounded by tag one the left and EOL
-
-// ‘something’
-// 8216 - 8217
-// '\u2018something\u2019'
