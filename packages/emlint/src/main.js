@@ -1691,7 +1691,7 @@ function lint(str, originalOpts) {
       console.log(`1691 ${log("reset", "logWhitespace")}`);
     }
 
-    // catch the string's end
+    // catch the string's end, EOF EOL
     if (!str[i + 1]) {
       console.log("1696");
       // this (str[i]) is the last character
@@ -1750,6 +1750,15 @@ function lint(str, originalOpts) {
               }, ${i + 1}, ">"]]`}`
             )}`
           );
+        } else {
+          // if there's no tag registered, just dump all raw
+          // character-related issues at staging, "rawIssueStaging"
+          // into final issues:
+          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          console.log(
+            `1759 concat, then wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
+          );
+          rawIssueStaging = [];
         }
       }
     }
@@ -1860,7 +1869,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("1863 CR clearly prevalent");
+      console.log("1872 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1882,7 +1891,7 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("1885 LF clearly prevalent");
+      console.log("1894 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1904,7 +1913,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("1907 CRLF clearly prevalent");
+      console.log("1916 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -1926,7 +1935,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("1929 same amount of each type of EOL");
+      console.log("1938 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1945,7 +1954,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("1948 CR & CRLF are prevalent over LF");
+      console.log("1957 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -1970,7 +1979,7 @@ function lint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "1973 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "1982 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -1993,9 +2002,9 @@ function lint(str, originalOpts) {
   }
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("1996 BEFORE FIX");
+  console.log("2005 BEFORE FIX");
   console.log(
-    `1998 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
+    `2007 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
       retObj.issues,
       null,
       4

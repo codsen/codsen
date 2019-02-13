@@ -1238,6 +1238,9 @@ function lint(str, originalOpts) {
               ]
             ]
           });
+        } else {
+          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          rawIssueStaging = [];
         }
       }
     }

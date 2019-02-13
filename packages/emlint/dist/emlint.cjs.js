@@ -837,6 +837,9 @@ function lint(str, originalOpts) {
             name: "tag-missing-closing-bracket",
             position: [[logWhitespace.startAt ? logWhitespace.startAt : _i + 1, _i + 1, ">"]]
           });
+        } else {
+          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          rawIssueStaging = [];
         }
       }
     }

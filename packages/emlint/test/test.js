@@ -2320,7 +2320,7 @@ test(`19.04 - ${`\u001b[${33}m${`bad-character-unencoded-closing-bracket`}\u001b
 // 20. rule "bad-character-unencoded-opening-bracket"
 // -----------------------------------------------------------------------------
 
-test(`20.01 - ${`\u001b[${33}m${`bad-character-unencoded-opening-bracket`}\u001b[${39}m`} - minimal example`, t => {
+test(`20.01 - ${`\u001b[${33}m${`bad-character-unencoded-opening-bracket`}\u001b[${39}m`} - no HTML`, t => {
   const bad1 = `a < b`;
   const good1 = `a &lt; b`;
   const res1 = lint(bad1);
