@@ -688,9 +688,11 @@ function findClosingQuote(str, idx = 0) {
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
   const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
+  let lastClosingBracketAt = null;
   for (let i = idx, len = str.length; i < len; i++) {
     // logging
     const charcode = str[i].charCodeAt(0);
+
     console.log(
       `\u001b[${36}m${`===============================`}\u001b[${39}m \u001b[${34}m${`str[ ${i} ] = ${
         str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
@@ -702,7 +704,7 @@ function findClosingQuote(str, idx = 0) {
       // quick ending - if closing quote, matching the opening-one is met, that's the result
       if (str[i] === startingQuote && i > idx) {
         console.log(
-          `705 (util/findClosingQuote) quick ending, ${i} is the matching quote`
+          `707 (util/findClosingQuote) quick ending, ${i} is the matching quote`
         );
         return i;
       }
@@ -710,7 +712,7 @@ function findClosingQuote(str, idx = 0) {
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       console.log(
-        `713 (util/findClosingQuote) ${log(
+        `715 (util/findClosingQuote) ${log(
           "set",
           "lastNonWhitespaceCharWasQuoteAt",
           lastNonWhitespaceCharWasQuoteAt
@@ -724,72 +726,80 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
-        console.log(`727 (util/findClosingQuote) ${log("return", i)}`);
+        console.log(`729 (util/findClosingQuote) ${log("return", i)}`);
         return i;
       }
-      console.log("730 (util/findClosingQuote) didn't pass");
+      console.log("732 (util/findClosingQuote) didn't pass");
       // maybe this is an unclosed tag and there's a healthy tag on the right?
       if (tagOnTheRight(str, i + 1)) {
         console.log(
-          `734 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
+          `736 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
         );
         return i;
       }
       console.log(
-        `739 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
+        `741 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
       );
     }
 
     // catch non-whitespace characters
     else if (str[i].trim().length) {
-      console.log("745 (util/findClosingQuote)");
-      if (str[i] === ">" && lastNonWhitespaceCharWasQuoteAt !== null) {
-        console.log(
-          `748 (util/findClosingQuote) ${log("!", "suitable candidate found")}`
-        );
-        // perform the check, are we outside quotes' content, within the space
-        // of a tag:
-        const temp = withinTagInnerspace(str, i);
-        console.log(
-          `754 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
-        );
-        if (temp) {
-          // now, we have two cases.
-          // 1. In healthy code, where closing quote is present, this "last quote"
-          // would be the one we want to report.
-          // 2. In messed up code where there are no closing quotes, for example
-          // <zzz alt=" />
-          // the index of the opening quote, also "the last quote", would be
-          // returned.
-          // However, algorithmically, if we have to work with such code, in
-          // case of our example <zzz alt=" />, the index of opening quote
-          // means we would "insert" things in front of it. When string index is
-          // given as starting-one, it means "to the left of it". When string
-          // index is given as closing-one, it means "up to but not including it".
-          // So, in dirty code cases, we want to report index as the next character,
-          // for example <zzz alt=" /> - not 9 but 10 (to the right of double
-          // quote), because inevitably we'll want to INSERT those missing
-          // characters and index will be correct.
+      console.log("747 (util/findClosingQuote)");
 
-          // Detect if code is messed up - lastNonWhitespaceCharWasQuoteAt === idx
-          if (lastNonWhitespaceCharWasQuoteAt === idx) {
-            console.log(
-              `777 (util/findClosingQuote) ${log(
-                "return",
-                "lastNonWhitespaceCharWasQuoteAt + 1",
-                lastNonWhitespaceCharWasQuoteAt + 1
-              )}`
-            );
-            return lastNonWhitespaceCharWasQuoteAt + 1;
-          }
+      if (str[i] === ">") {
+        // catch closing brackets:
+        lastClosingBracketAt = i;
+        if (lastNonWhitespaceCharWasQuoteAt !== null) {
           console.log(
-            `786 (util/findClosingQuote) ${log(
-              "return",
-              "lastNonWhitespaceCharWasQuoteAt",
-              lastNonWhitespaceCharWasQuoteAt
+            `754 (util/findClosingQuote) ${log(
+              "!",
+              "suitable candidate found"
             )}`
           );
-          return lastNonWhitespaceCharWasQuoteAt;
+          // perform the check, are we outside quotes' content, within the space
+          // of a tag:
+          const temp = withinTagInnerspace(str, i);
+          console.log(
+            `763 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
+          );
+          if (temp) {
+            // now, we have two cases.
+            // 1. In healthy code, where closing quote is present, this "last quote"
+            // would be the one we want to report.
+            // 2. In messed up code where there are no closing quotes, for example
+            // <zzz alt=" />
+            // the index of the opening quote, also "the last quote", would be
+            // returned.
+            // However, algorithmically, if we have to work with such code, in
+            // case of our example <zzz alt=" />, the index of opening quote
+            // means we would "insert" things in front of it. When string index is
+            // given as starting-one, it means "to the left of it". When string
+            // index is given as closing-one, it means "up to but not including it".
+            // So, in dirty code cases, we want to report index as the next character,
+            // for example <zzz alt=" /> - not 9 but 10 (to the right of double
+            // quote), because inevitably we'll want to INSERT those missing
+            // characters and index will be correct.
+
+            // Detect if code is messed up - lastNonWhitespaceCharWasQuoteAt === idx
+            if (lastNonWhitespaceCharWasQuoteAt === idx) {
+              console.log(
+                `786 (util/findClosingQuote) ${log(
+                  "return",
+                  "lastNonWhitespaceCharWasQuoteAt + 1",
+                  lastNonWhitespaceCharWasQuoteAt + 1
+                )}`
+              );
+              return lastNonWhitespaceCharWasQuoteAt + 1;
+            }
+            console.log(
+              `795 (util/findClosingQuote) ${log(
+                "return",
+                "lastNonWhitespaceCharWasQuoteAt",
+                lastNonWhitespaceCharWasQuoteAt
+              )}`
+            );
+            return lastNonWhitespaceCharWasQuoteAt;
+          }
         }
       } else if (str[i] === "=") {
         // cases like:
@@ -797,7 +807,7 @@ function findClosingQuote(str, idx = 0) {
         //              ^
         const whatFollowsEq = firstOnTheRight(str, i);
         console.log(
-          `800 (util/findClosingQuote) ${log(
+          `810 (util/findClosingQuote) ${log(
             "set",
             "whatFollowsEq",
             whatFollowsEq
@@ -807,7 +817,7 @@ function findClosingQuote(str, idx = 0) {
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
         ) {
-          console.log("810 (util/findClosingQuote)");
+          console.log("820 (util/findClosingQuote)");
           console.log(
             `${`\u001b[${33}m${`lastNonWhitespaceCharWasQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
               lastNonWhitespaceCharWasQuoteAt,
@@ -819,7 +829,7 @@ function findClosingQuote(str, idx = 0) {
           // last quote, check does it pass the util/withinTagInnerspace()
           if (withinTagInnerspace(str, lastQuoteAt + 1)) {
             console.log(
-              `822 (util/findClosingQuote) ${log(
+              `832 (util/findClosingQuote) ${log(
                 "return",
                 "lastQuoteAt + 1",
                 lastQuoteAt + 1
@@ -827,13 +837,29 @@ function findClosingQuote(str, idx = 0) {
             );
             return lastQuoteAt + 1;
           }
-          console.log("830 didn't pass");
+          console.log("840 didn't pass");
         }
       } else if (str[i] !== "/") {
+        // 1. catch <
+        if (str[i] === "<" && tagOnTheRight(str, i)) {
+          console.log(`845 ██ tag on the right`);
+          if (lastClosingBracketAt !== null) {
+            console.log(
+              `848 (util/findClosingQuote) ${log(
+                "return",
+                "lastClosingBracketAt",
+                lastClosingBracketAt
+              )}`
+            );
+            return lastClosingBracketAt;
+          }
+        }
+
+        // 2. resets to catch sequences only
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `836 (util/findClosingQuote) ${log(
+            `862 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -845,7 +871,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `848 (util/findClosingQuote) ${log(
+      `874 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt

@@ -200,6 +200,7 @@ function findClosingQuote(str) {
   var lastNonWhitespaceCharWasQuoteAt = null;
   var lastQuoteAt = null;
   var startingQuote = "\"'".includes(str[idx]) ? str[idx] : null;
+  var lastClosingBracketAt = null;
   for (var i = idx, len = str.length; i < len; i++) {
     var charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
@@ -216,13 +217,16 @@ function findClosingQuote(str) {
       }
     }
     else if (str[i].trim().length) {
-        if (str[i] === ">" && lastNonWhitespaceCharWasQuoteAt !== null) {
-          var temp = withinTagInnerspace(str, i);
-          if (temp) {
-            if (lastNonWhitespaceCharWasQuoteAt === idx) {
-              return lastNonWhitespaceCharWasQuoteAt + 1;
+        if (str[i] === ">") {
+          lastClosingBracketAt = i;
+          if (lastNonWhitespaceCharWasQuoteAt !== null) {
+            var temp = withinTagInnerspace(str, i);
+            if (temp) {
+              if (lastNonWhitespaceCharWasQuoteAt === idx) {
+                return lastNonWhitespaceCharWasQuoteAt + 1;
+              }
+              return lastNonWhitespaceCharWasQuoteAt;
             }
-            return lastNonWhitespaceCharWasQuoteAt;
           }
         } else if (str[i] === "=") {
           var whatFollowsEq = firstOnTheRight(str, i);
@@ -232,6 +236,11 @@ function findClosingQuote(str) {
             }
           }
         } else if (str[i] !== "/") {
+          if (str[i] === "<" && tagOnTheRight(str, i)) {
+            if (lastClosingBracketAt !== null) {
+              return lastClosingBracketAt;
+            }
+          }
           if (lastNonWhitespaceCharWasQuoteAt !== null) {
             lastNonWhitespaceCharWasQuoteAt = null;
           }

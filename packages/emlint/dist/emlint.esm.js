@@ -383,6 +383,7 @@ function findClosingQuote(str, idx = 0) {
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
   const startingQuote = `"'`.includes(str[idx]) ? str[idx] : null;
+  let lastClosingBracketAt = null;
   for (let i = idx, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
     if (charcode === 34 || charcode === 39) {
@@ -403,13 +404,16 @@ function findClosingQuote(str, idx = 0) {
       }
     }
     else if (str[i].trim().length) {
-      if (str[i] === ">" && lastNonWhitespaceCharWasQuoteAt !== null) {
-        const temp = withinTagInnerspace(str, i);
-        if (temp) {
-          if (lastNonWhitespaceCharWasQuoteAt === idx) {
-            return lastNonWhitespaceCharWasQuoteAt + 1;
+      if (str[i] === ">") {
+        lastClosingBracketAt = i;
+        if (lastNonWhitespaceCharWasQuoteAt !== null) {
+          const temp = withinTagInnerspace(str, i);
+          if (temp) {
+            if (lastNonWhitespaceCharWasQuoteAt === idx) {
+              return lastNonWhitespaceCharWasQuoteAt + 1;
+            }
+            return lastNonWhitespaceCharWasQuoteAt;
           }
-          return lastNonWhitespaceCharWasQuoteAt;
         }
       } else if (str[i] === "=") {
         const whatFollowsEq = firstOnTheRight(str, i);
@@ -422,6 +426,11 @@ function findClosingQuote(str, idx = 0) {
           }
         }
       } else if (str[i] !== "/") {
+        if (str[i] === "<" && tagOnTheRight(str, i)) {
+          if (lastClosingBracketAt !== null) {
+            return lastClosingBracketAt;
+          }
+        }
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
         }
