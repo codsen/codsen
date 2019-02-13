@@ -276,6 +276,7 @@ var isStr$1 = isStr,
     encodeChar$1 = encodeChar,
     tagOnTheRight$1 = tagOnTheRight;
 function lint(str, originalOpts) {
+  function pingTag(logTag) {}
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
   }
@@ -333,6 +334,7 @@ function lint(str, originalOpts) {
   var logTag;
   var defaultLogTag = {
     tagStartAt: null,
+    tagEndAt: null,
     tagNameStartAt: null,
     tagNameEndAt: null,
     tagName: null,
@@ -505,6 +507,7 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(_i + 1, closingQuotePeek);
             logAttr.attrValueStartAt = _i + 1;
             logAttr.attrValueEndAt = closingQuotePeek;
+            logAttr.attrEndAt = closingQuotePeek;
             for (var y = _i + 1; y < closingQuotePeek; y++) {
               var newIssue = encodeChar$1(str, y);
               if (newIssue) {
@@ -783,10 +786,26 @@ function lint(str, originalOpts) {
           return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
         })) {
           var lastNonWhitespaceOnLeft = firstOnTheLeft$1(str, _i);
-          retObj.issues.push({
-            name: "tag-missing-closing-bracket",
-            position: [[lastNonWhitespaceOnLeft + 1, _i, ">"]]
-          });
+          if (str[lastNonWhitespaceOnLeft] === ">") {
+            logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
+          } else {
+            retObj.issues.push({
+              name: "tag-missing-closing-bracket",
+              position: [[lastNonWhitespaceOnLeft + 1, _i, ">"]]
+            });
+          }
+          if (rawIssueStaging.length) {
+            rawIssueStaging.forEach(function (issueObj) {
+              if (issueObj.position[0][0] < logTag.tagStartAt) {
+                retObj.issues.push(issueObj);
+              }
+            });
+          }
+          pingTag(clone(logTag));
+          resetLogTag();
+          resetLogAttr();
+          rawIssueStaging = [];
+          logTag.tagStartAt = _i;
         } else {
           if (rawIssueStaging.length) {
             rawIssueStaging.forEach(function (issueObj) {

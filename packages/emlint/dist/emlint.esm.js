@@ -493,6 +493,8 @@ const {
   tagOnTheRight: tagOnTheRight$1
 } = util;
 function lint(str, originalOpts) {
+  function pingTag(logTag) {
+  }
   if (!isStr$1(str)) {
     throw new Error(
       `emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n${JSON.stringify(
@@ -570,6 +572,7 @@ function lint(str, originalOpts) {
   let logTag;
   const defaultLogTag = {
     tagStartAt: null,
+    tagEndAt: null,
     tagNameStartAt: null,
     tagNameEndAt: null,
     tagName: null,
@@ -778,6 +781,7 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
             logAttr.attrValueStartAt = i + 1;
             logAttr.attrValueEndAt = closingQuotePeek;
+            logAttr.attrEndAt = closingQuotePeek;
             for (let y = i + 1; y < closingQuotePeek; y++) {
               const newIssue = encodeChar$1(str, y);
               if (newIssue) {
@@ -1176,10 +1180,26 @@ function lint(str, originalOpts) {
           )
         ) {
           const lastNonWhitespaceOnLeft = firstOnTheLeft$1(str, i);
-          retObj.issues.push({
-            name: "tag-missing-closing-bracket",
-            position: [[lastNonWhitespaceOnLeft + 1, i, ">"]]
-          });
+          if (str[lastNonWhitespaceOnLeft] === ">") {
+            logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
+          } else {
+            retObj.issues.push({
+              name: "tag-missing-closing-bracket",
+              position: [[lastNonWhitespaceOnLeft + 1, i, ">"]]
+            });
+          }
+          if (rawIssueStaging.length) {
+            rawIssueStaging.forEach(issueObj => {
+              if (issueObj.position[0][0] < logTag.tagStartAt) {
+                retObj.issues.push(issueObj);
+              }
+            });
+          }
+          pingTag(clone(logTag));
+          resetLogTag();
+          resetLogAttr();
+          rawIssueStaging = [];
+          logTag.tagStartAt = i;
         } else {
           if (rawIssueStaging.length) {
             rawIssueStaging.forEach(issueObj => {
