@@ -505,9 +505,15 @@ function lint(str, originalOpts) {
                 if (str[closingQuotePeek - 1] && str[closingQuotePeek] && str[closingQuotePeek - 1].trim().length && str[closingQuotePeek].trim().length && str[closingQuotePeek] !== "/" && str[closingQuotePeek] !== ">") {
                   compensation = " ";
                 }
+                var fromPositionToInsertAt = str[closingQuotePeek - 1].trim().length ? closingQuotePeek : firstOnTheLeft$1(str, closingQuotePeek) + 1;
+                var toPositionToInsertAt = closingQuotePeek;
+                if (str[firstOnTheLeft$1(str, closingQuotePeek)] === "/") {
+                  toPositionToInsertAt = firstOnTheLeft$1(str, closingQuotePeek);
+                  fromPositionToInsertAt = firstOnTheLeft$1(str, toPositionToInsertAt) + 1;
+                }
                 retObj.issues.push({
                   name: "tag-attribute-closing-quotation-mark-missing",
-                  position: [[str[closingQuotePeek - 1].trim().length ? closingQuotePeek : firstOnTheLeft$1(str, closingQuotePeek) + 1, closingQuotePeek, "".concat(str[_i]).concat(compensation)]]
+                  position: [[fromPositionToInsertAt, toPositionToInsertAt, "".concat(str[_i]).concat(compensation)]]
                 });
               }
             }

@@ -773,14 +773,22 @@ function lint(str, originalOpts) {
                 ) {
                   compensation = " ";
                 }
+                let fromPositionToInsertAt = str[closingQuotePeek - 1].trim()
+                  .length
+                  ? closingQuotePeek
+                  : firstOnTheLeft$1(str, closingQuotePeek) + 1;
+                let toPositionToInsertAt = closingQuotePeek;
+                if (str[firstOnTheLeft$1(str, closingQuotePeek)] === "/") {
+                  toPositionToInsertAt = firstOnTheLeft$1(str, closingQuotePeek);
+                  fromPositionToInsertAt =
+                    firstOnTheLeft$1(str, toPositionToInsertAt) + 1;
+                }
                 retObj.issues.push({
                   name: "tag-attribute-closing-quotation-mark-missing",
                   position: [
                     [
-                      str[closingQuotePeek - 1].trim().length
-                        ? closingQuotePeek
-                        : firstOnTheLeft$1(str, closingQuotePeek) + 1,
-                      closingQuotePeek,
+                      fromPositionToInsertAt,
+                      toPositionToInsertAt,
                       `${str[i]}${compensation}`
                     ]
                   ]

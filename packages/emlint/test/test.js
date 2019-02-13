@@ -1942,6 +1942,30 @@ test(`15.16 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
   t.is(apply(bad2, res2.fix), good2, "15.16.04");
 });
 
+test(`15.17 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - XHTML-style tag with slash`, t => {
+  const bad1 = `<a alt="yo/><a>`;
+  const good1 = `<a alt="yo"/><a>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.17.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.17.02");
+});
+
+test(`15.18 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - XHTML-style tag with space then slash instead of closing bracket`, t => {
+  const bad1 = `<a alt="yo   /><a>`;
+  const good1 = `<a alt="yo"/><a>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.18.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.18.02");
+});
+
 // 16. rule tag-attribute-missing-equal
 // -----------------------------------------------------------------------------
 
