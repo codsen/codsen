@@ -479,56 +479,58 @@ function lint(str, originalOpts) {
           resetLogWhitespace();
           logAttr.attrOpeningQuote.pos = _i;
           logAttr.attrOpeningQuote.val = str[_i];
-          var closingQuotePeek = findClosingQuote$1(str, _i);
-          if (closingQuotePeek) {
-            if (str[closingQuotePeek] !== str[_i]) {
-              if (str[closingQuotePeek] === "'" || str[closingQuotePeek] === '"') {
-                var isDouble = str[closingQuotePeek] === '"';
-                var name$$1 = "tag-attribute-mismatching-quotes-is-".concat(isDouble ? "double" : "single");
-                retObj.issues.push({
-                  name: name$$1,
-                  position: [[closingQuotePeek, closingQuotePeek + 1, "".concat(isDouble ? "'" : '"')]]
-                });
-              } else {
-                var compensation = "";
-                if (str[closingQuotePeek - 1] && str[closingQuotePeek] && str[closingQuotePeek - 1].trim().length && str[closingQuotePeek].trim().length && str[closingQuotePeek] !== "/" && str[closingQuotePeek] !== ">") {
-                  compensation = " ";
+          if (str[_i + 1] && "/>".includes(str[firstOnTheRight$1(str, _i)])) ; else {
+            var closingQuotePeek = findClosingQuote$1(str, _i);
+            if (closingQuotePeek) {
+              if (str[closingQuotePeek] !== str[_i]) {
+                if (str[closingQuotePeek] === "'" || str[closingQuotePeek] === '"') {
+                  var isDouble = str[closingQuotePeek] === '"';
+                  var name$$1 = "tag-attribute-mismatching-quotes-is-".concat(isDouble ? "double" : "single");
+                  retObj.issues.push({
+                    name: name$$1,
+                    position: [[closingQuotePeek, closingQuotePeek + 1, "".concat(isDouble ? "'" : '"')]]
+                  });
+                } else {
+                  var compensation = "";
+                  if (str[closingQuotePeek - 1] && str[closingQuotePeek] && str[closingQuotePeek - 1].trim().length && str[closingQuotePeek].trim().length && str[closingQuotePeek] !== "/" && str[closingQuotePeek] !== ">") {
+                    compensation = " ";
+                  }
+                  retObj.issues.push({
+                    name: "tag-attribute-closing-quotation-mark-missing",
+                    position: [[closingQuotePeek, closingQuotePeek, "".concat(str[_i]).concat(compensation)]]
+                  });
                 }
+              }
+              logAttr.attrClosingQuote.pos = closingQuotePeek;
+              logAttr.attrClosingQuote.val = str[_i];
+              logAttr.attrValue = str.slice(_i + 1, closingQuotePeek);
+              logAttr.attrValueStartAt = _i + 1;
+              logAttr.attrValueEndAt = closingQuotePeek;
+              for (var y = _i + 1; y < closingQuotePeek; y++) {
+                var newIssue = encodeChar$1(str, y);
+                if (newIssue) {
+                  tagIssueStaging.push(newIssue);
+                }
+              }
+              if (rawIssueStaging.length) ;
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
+              if (str[closingQuotePeek].trim().length) {
+                _i = closingQuotePeek;
+              } else {
+                _i = firstOnTheLeft$1(str, closingQuotePeek);
+              }
+              if (_i === len - 1 && logTag.tagStartAt !== null && (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null || logTag.attributes.some(function (attrObj) {
+                return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
+              }))) {
                 retObj.issues.push({
-                  name: "tag-attribute-closing-quotation-mark-missing",
-                  position: [[closingQuotePeek, closingQuotePeek, "".concat(str[_i]).concat(compensation)]]
+                  name: "tag-missing-closing-bracket",
+                  position: [[_i + 1, _i + 1, ">"]]
                 });
               }
+              i = _i;
+              return "continue";
             }
-            logAttr.attrClosingQuote.pos = closingQuotePeek;
-            logAttr.attrClosingQuote.val = str[_i];
-            logAttr.attrValue = str.slice(_i + 1, closingQuotePeek);
-            logAttr.attrValueStartAt = _i + 1;
-            logAttr.attrValueEndAt = closingQuotePeek;
-            for (var y = _i + 1; y < closingQuotePeek; y++) {
-              var newIssue = encodeChar$1(str, y);
-              if (newIssue) {
-                tagIssueStaging.push(newIssue);
-              }
-            }
-            if (rawIssueStaging.length) ;
-            logTag.attributes.push(clone(logAttr));
-            resetLogAttr();
-            if (str[closingQuotePeek].trim().length) {
-              _i = closingQuotePeek;
-            } else {
-              _i = firstOnTheLeft$1(str, closingQuotePeek);
-            }
-            if (_i === len - 1 && logTag.tagStartAt !== null && (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null || logTag.attributes.some(function (attrObj) {
-              return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
-            }))) {
-              retObj.issues.push({
-                name: "tag-missing-closing-bracket",
-                position: [[_i + 1, _i + 1, ">"]]
-              });
-            }
-            i = _i;
-            return "continue";
           }
         } else if (charcode === 8220 || charcode === 8221) {
           logAttr.attrOpeningQuote.pos = _i;
@@ -576,6 +578,12 @@ function lint(str, originalOpts) {
             logAttr.attrClosingQuote.pos = endingQuotesPos;
             logAttr.attrClosingQuote.val = str[endingQuotesPos];
             logAttr.attrValue = str.slice(_i, endingQuotesPos);
+            for (var _y2 = _i; _y2 < endingQuotesPos; _y2++) {
+              var _newIssue = encodeChar$1(str, _y2);
+              if (_newIssue) {
+                tagIssueStaging.push(_newIssue);
+              }
+            }
           }
         }
         if (logWhitespace.startAt !== null) {
@@ -723,12 +731,8 @@ function lint(str, originalOpts) {
         });
       }
     } else if (encodeChar$1(str, _i)) {
-      var _newIssue = encodeChar$1(str, _i);
-      if (logAttr.attrStartAt !== null) {
-        tagIssueStaging.push(_newIssue);
-      } else {
-        rawIssueStaging.push(_newIssue);
-      }
+      var _newIssue2 = encodeChar$1(str, _i);
+      rawIssueStaging.push(_newIssue2);
     }
     if (logWhitespace.startAt !== null && str[_i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && (str[_i + 1] === ">" || str.slice(_i + 1).trim().startsWith(">")))) {
