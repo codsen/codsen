@@ -657,7 +657,7 @@ function lint(str, originalOpts) {
             position: [[i, i, "="]]
           });
           logAttr.attrEqualAt = i;
-          logAttr.attrValueStartAt = i;
+          logAttr.attrValueStartAt = i + 1;
           logAttr.attrValueEndAt = temp;
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = str[i];
@@ -915,10 +915,19 @@ function lint(str, originalOpts) {
           }
           logAttr.attrClosingQuote.pos = i;
           logAttr.attrClosingQuote.val = str[i];
-          if (logAttr.attrOpeningQuote.pos + 1 < i) {
-            logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos + 1, i);
-          } else {
-            logAttr.attrValue = "";
+          if (logAttr.attrValue === null) {
+            if (
+              logAttr.attrOpeningQuote.pos &&
+              logAttr.attrClosingQuote.pos &&
+              logAttr.attrOpeningQuote.pos + 1 < logAttr.attrClosingQuote.pos
+            ) {
+              logAttr.attrValue = str.slice(
+                logAttr.attrOpeningQuote.pos,
+                logAttr.attrClosingQuote.pos
+              );
+            } else {
+              logAttr.attrValue = "";
+            }
           }
           logAttr.attrEndAt = i;
           logAttr.attrValueEndAt = i;
