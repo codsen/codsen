@@ -747,7 +747,7 @@ function lint(str, originalOpts) {
       rawIssueStaging.push(_newIssue2);
     }
     if (logWhitespace.startAt !== null && str[_i].trim().length) {
-      if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && (str[_i + 1] === ">" || str.slice(_i + 1).trim().startsWith(">")))) {
+      if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[firstOnTheRight$1(str, _i)]))) {
         var _name6 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
           _name6 = "tag-whitespace-closing-slash-and-bracket";

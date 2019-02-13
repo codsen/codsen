@@ -1078,16 +1078,28 @@ test(`06.10 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
   const good2 = `<aaa bbb="" ccc="ddd">`;
   const res2 = lint(bad2);
   t.deepEqual(
-    getUniqueIssueNames(res2.issues),
+    getUniqueIssueNames(res2.issues).sort(),
     [
-      "tag-attribute-space-between-name-and-equals",
-      "tag-attribute-space-between-equals-and-opening-quotes",
       "tag-attribute-closing-quotation-mark-missing",
+      "tag-attribute-space-between-equals-and-opening-quotes",
+      "tag-attribute-space-between-name-and-equals",
       "tag-excessive-whitespace-inside-tag"
     ],
     "06.10.01"
   );
   t.is(apply(bad2, res2.fix), good2, "06.10.02");
+});
+
+test(`06.11 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - excessive whitespace leading to a missing closing bracket`, t => {
+  const bad1 = `<a alt="yo"   /<a>`;
+  const good1 = `<a alt="yo"/><a>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-excessive-whitespace-inside-tag", "tag-missing-closing-bracket"],
+    "06.11.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "06.11.02");
 });
 
 // 07. rule "tag-attribute-space-between-equals-and-opening-quotes"

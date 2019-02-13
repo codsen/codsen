@@ -1112,12 +1112,7 @@ function lint(str, originalOpts) {
         logAttr.attrStartAt === null &&
         (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= i) &&
         (str[i] === ">" ||
-          (str[i] === "/" &&
-            (str[i + 1] === ">" ||
-              str
-                .slice(i + 1)
-                .trim()
-                .startsWith(">"))))
+          (str[i] === "/" && "<>".includes(str[firstOnTheRight$1(str, i)])))
       ) {
         let name$$1 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
