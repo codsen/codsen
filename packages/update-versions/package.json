@@ -179,7 +179,7 @@
     "pacote": "^9.4.1",
     "path": "^0.12.7",
     "update-notifier": "^2.5.0",
-    "write-json-file": "^3.0.2"
+    "write-json-file": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
