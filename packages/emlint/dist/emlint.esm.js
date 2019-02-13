@@ -777,7 +777,9 @@ function lint(str, originalOpts) {
                   name: "tag-attribute-closing-quotation-mark-missing",
                   position: [
                     [
-                      closingQuotePeek,
+                      str[closingQuotePeek - 1].trim().length
+                        ? closingQuotePeek
+                        : firstOnTheLeft$1(str, closingQuotePeek) + 1,
                       closingQuotePeek,
                       `${str[i]}${compensation}`
                     ]

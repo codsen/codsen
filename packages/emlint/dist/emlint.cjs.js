@@ -507,7 +507,7 @@ function lint(str, originalOpts) {
                 }
                 retObj.issues.push({
                   name: "tag-attribute-closing-quotation-mark-missing",
-                  position: [[closingQuotePeek, closingQuotePeek, "".concat(str[_i]).concat(compensation)]]
+                  position: [[str[closingQuotePeek - 1].trim().length ? closingQuotePeek : firstOnTheLeft$1(str, closingQuotePeek) + 1, closingQuotePeek, "".concat(str[_i]).concat(compensation)]]
                 });
               }
             }

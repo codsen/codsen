@@ -1912,12 +1912,34 @@ test(`15.15 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
   const bad1 = `<zzz alt="zzz><img alt="">`;
   const good1 = `<zzz alt="zzz"><img alt="">`;
   const res1 = lint(bad1);
-  // t.deepEqual(
-  //   getUniqueIssueNames(res1.issues),
-  //   ["tag-attribute-closing-quotation-mark-missing"],
-  //   "15.15.01"
-  // );
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.15.01"
+  );
   t.is(apply(bad1, res1.fix), good1, "15.15.02");
+});
+
+test(`15.16 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - excessive whitespace instead of closing quotes`, t => {
+  const bad1 = `<a alt="yo\n><a>`;
+  const good1 = `<a alt="yo"><a>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.16.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "15.16.02");
+
+  const bad2 = `<a alt='yo\n><a>`;
+  const good2 = `<a alt='yo'><a>`;
+  const res2 = lint(bad2);
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.16.03"
+  );
+  t.is(apply(bad2, res2.fix), good2, "15.16.04");
 });
 
 // 16. rule tag-attribute-missing-equal
