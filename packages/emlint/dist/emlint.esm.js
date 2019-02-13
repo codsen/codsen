@@ -1237,7 +1237,21 @@ function lint(str, originalOpts) {
       }
       if (rawIssueStaging.length) {
         rawIssueStaging.forEach(issueObj => {
-          if (issueObj.position[0][0] < logTag.tagStartAt) {
+          if (
+            issueObj.position[0][0] < logTag.tagStartAt ||
+            (logTag.attributes.some(attrObj => {
+              return (
+                attrObj.attrValueStartAt < issueObj.position[0][0] &&
+                attrObj.attrValueEndAt > issueObj.position[0][0]
+              );
+            }) &&
+              !retObj.issues.some(existingIssue => {
+                return (
+                  existingIssue.position[0][0] === issueObj.position[0][0] &&
+                  existingIssue.position[0][1] === issueObj.position[0][1]
+                );
+              }))
+          ) {
             retObj.issues.push(issueObj);
           }
         });

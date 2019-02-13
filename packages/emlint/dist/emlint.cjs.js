@@ -819,9 +819,10 @@ function lint(str, originalOpts) {
           if (rawIssueStaging.length) {
             rawIssueStaging.forEach(function (issueObj) {
               if (
-              issueObj.position[0][0] < _i) {
-                retObj.issues.push(issueObj);
-              }
+              issueObj.position[0][0] < _i
+              ) {
+                  retObj.issues.push(issueObj);
+                }
             });
             rawIssueStaging = [];
           }
@@ -838,7 +839,13 @@ function lint(str, originalOpts) {
       }
       if (rawIssueStaging.length) {
         rawIssueStaging.forEach(function (issueObj) {
-          if (issueObj.position[0][0] < logTag.tagStartAt) {
+          if (issueObj.position[0][0] < logTag.tagStartAt || logTag.attributes.some(function (attrObj) {
+            i = _i;
+            return attrObj.attrValueStartAt < issueObj.position[0][0] && attrObj.attrValueEndAt > issueObj.position[0][0];
+          }) && !retObj.issues.some(function (existingIssue) {
+            i = _i;
+            return existingIssue.position[0][0] === issueObj.position[0][0] && existingIssue.position[0][1] === issueObj.position[0][1];
+          })) {
             retObj.issues.push(issueObj);
           }
         });

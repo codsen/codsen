@@ -1663,16 +1663,25 @@ function lint(str, originalOpts) {
             console.log(
               `1664 ${log("log", "logTag.tagStartAt", logTag.tagStartAt)}`
             );
+            console.log(
+              `1667 ${`\u001b[${31}m${JSON.stringify(
+                logAttr,
+                null,
+                4
+              )}\u001b[${39}m`}`
+            );
             rawIssueStaging.forEach(issueObj => {
               if (
                 // issueObj.position[0][0] >= logTag.tagStartAt &&
-                issueObj.position[0][0] < i
+                issueObj.position[0][0] < i // ||
+                // (issueObj.position[0][0] > a && issueObj.position[0][0] < b)
               ) {
                 retObj.issues.push(issueObj);
-                console.log(`1672 ${log("push", "issueObj", issueObj)}`);
+                console.log(`1680 ${log("push", "issueObj", issueObj)}`);
               } else {
+                console.log("");
                 console.log(
-                  `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  `1684 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
                     issueObj,
                     null,
                     4
@@ -1684,13 +1693,13 @@ function lint(str, originalOpts) {
                 );
               }
             });
-            console.log(`1687 wipe rawIssueStaging`);
+            console.log(`1696 wipe rawIssueStaging`);
             rawIssueStaging = [];
           }
 
           // 2. wipe tag issues, this tag is dud
           if (tagIssueStaging.length) {
-            console.log(`1693 ${log("wipe", "tagIssueStaging")}`);
+            console.log(`1702 ${log("wipe", "tagIssueStaging")}`);
             tagIssueStaging = [];
           }
         }
@@ -1706,7 +1715,7 @@ function lint(str, originalOpts) {
       // 1. merge any staging:
       if (tagIssueStaging.length) {
         console.log(
-          `1709 concat ${`\u001b[${33}m${`tagIssueStaging`}\u001b[${39}m`} then wipe`
+          `1718 concat ${`\u001b[${33}m${`tagIssueStaging`}\u001b[${39}m`} then wipe`
         );
         retObj.issues = retObj.issues.concat(tagIssueStaging);
         tagIssueStaging = [];
@@ -1714,15 +1723,37 @@ function lint(str, originalOpts) {
       if (rawIssueStaging.length) {
         // merge any issues that are up to the tag's beginning character's index
         console.log(
-          `1717 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
+          `1726 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
+        );
+        console.log(
+          `${`\u001b[${33}m${`logTag`}\u001b[${39}m`} = ${JSON.stringify(
+            logTag,
+            null,
+            4
+          )}`
         );
         rawIssueStaging.forEach(issueObj => {
-          if (issueObj.position[0][0] < logTag.tagStartAt) {
+          if (
+            issueObj.position[0][0] < logTag.tagStartAt ||
+            (logTag.attributes.some(attrObj => {
+              return (
+                attrObj.attrValueStartAt < issueObj.position[0][0] &&
+                attrObj.attrValueEndAt > issueObj.position[0][0]
+              );
+            }) &&
+              !retObj.issues.some(existingIssue => {
+                return (
+                  existingIssue.position[0][0] === issueObj.position[0][0] &&
+                  existingIssue.position[0][1] === issueObj.position[0][1]
+                );
+              }))
+          ) {
             retObj.issues.push(issueObj);
-            console.log(`1722 ${log("push", "issueObj", issueObj)}`);
+            console.log(`1752 ${log("push", "issueObj", issueObj)}`);
           } else {
+            console.log("");
             console.log(
-              `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `1756 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
                 issueObj,
                 null,
                 4
@@ -1734,14 +1765,14 @@ function lint(str, originalOpts) {
             );
           }
         });
-        console.log(`1737 wipe rawIssueStaging`);
+        console.log(`1768 wipe rawIssueStaging`);
         rawIssueStaging = [];
       }
 
       // 2. reset:
       resetLogTag();
       resetLogAttr();
-      console.log(`1744 ${log("reset", "logTag & logAttr")}`);
+      console.log(`1775 ${log("reset", "logTag & logAttr")}`);
     }
 
     //                                S
@@ -1767,15 +1798,15 @@ function lint(str, originalOpts) {
     // reset whitespace
     if (str[i].trim().length) {
       resetLogWhitespace();
-      console.log(`1770 ${log("reset", "logWhitespace")}`);
+      console.log(`1801 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the string's end, EOF EOL
     if (!str[i + 1]) {
-      console.log("1775");
+      console.log("1806");
       // this (str[i]) is the last character
       if (rawIssueStaging.length) {
-        console.log("1778");
+        console.log("1809");
         // if this resembles a tag (there's at least one attribute with equal+quotes pattern),
         // wipe all raw issues since the beginning of this tag, then push the rest in.
         // then, add all tagIssueStaging
@@ -1786,12 +1817,12 @@ function lint(str, originalOpts) {
               attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null
           )
         ) {
-          console.log("1789");
+          console.log("1820");
           // 1. push all issues before index at which the tag started
           rawIssueStaging.forEach(issueObj => {
             if (issueObj.position[0][0] < logTag.tagStartAt) {
               retObj.issues.push(issueObj);
-              console.log(`1794 ${log("push", "issueObj", issueObj)}`);
+              console.log(`1825 ${log("push", "issueObj", issueObj)}`);
             } else {
               console.log(
                 `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -1806,7 +1837,7 @@ function lint(str, originalOpts) {
               );
             }
           });
-          console.log(`1809 wipe rawIssueStaging`);
+          console.log(`1840 wipe rawIssueStaging`);
           rawIssueStaging = [];
 
           // 2. add missing closing bracket
@@ -1821,7 +1852,7 @@ function lint(str, originalOpts) {
             ]
           });
           console.log(
-            `1824 ${log(
+            `1855 ${log(
               "push",
               "tag-missing-closing-bracket",
               `${`[[${
@@ -1835,7 +1866,7 @@ function lint(str, originalOpts) {
           // into final issues:
           retObj.issues = retObj.issues.concat(rawIssueStaging);
           console.log(
-            `1838 concat, then wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
+            `1869 concat, then wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
           );
           rawIssueStaging = [];
         }
@@ -1948,7 +1979,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("1951 CR clearly prevalent");
+      console.log("1982 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1970,7 +2001,7 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("1973 LF clearly prevalent");
+      console.log("2004 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -1992,7 +2023,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("1995 CRLF clearly prevalent");
+      console.log("2026 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -2014,7 +2045,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("2017 same amount of each type of EOL");
+      console.log("2048 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -2033,7 +2064,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("2036 CR & CRLF are prevalent over LF");
+      console.log("2067 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -2058,7 +2089,7 @@ function lint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "2061 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "2092 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -2081,9 +2112,9 @@ function lint(str, originalOpts) {
   }
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("2084 BEFORE FIX");
+  console.log("2115 BEFORE FIX");
   console.log(
-    `2086 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
+    `2117 ${`\u001b[${33}m${`retObj.issues`}\u001b[${39}m`} = ${JSON.stringify(
       retObj.issues,
       null,
       4
