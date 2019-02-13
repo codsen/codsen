@@ -728,89 +728,87 @@ function lint(str, originalOpts) {
           resetLogWhitespace();
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = str[i];
-          if (str[i + 1] && "/>".includes(str[firstOnTheRight$1(str, i)])) ; else {
-            const closingQuotePeek = findClosingQuote$1(str, i);
-            if (closingQuotePeek) {
-              if (str[closingQuotePeek] !== str[i]) {
-                if (
-                  str[closingQuotePeek] === "'" ||
-                  str[closingQuotePeek] === '"'
-                ) {
-                  const isDouble = str[closingQuotePeek] === '"';
-                  const name$$1 = `tag-attribute-mismatching-quotes-is-${
-                    isDouble ? "double" : "single"
-                  }`;
-                  retObj.issues.push({
-                    name: name$$1,
-                    position: [
-                      [
-                        closingQuotePeek,
-                        closingQuotePeek + 1,
-                        `${isDouble ? "'" : '"'}`
-                      ]
-                    ]
-                  });
-                } else {
-                  let compensation = "";
-                  if (
-                    str[closingQuotePeek - 1] &&
-                    str[closingQuotePeek] &&
-                    str[closingQuotePeek - 1].trim().length &&
-                    str[closingQuotePeek].trim().length &&
-                    str[closingQuotePeek] !== "/" &&
-                    str[closingQuotePeek] !== ">"
-                  ) {
-                    compensation = " ";
-                  }
-                  retObj.issues.push({
-                    name: "tag-attribute-closing-quotation-mark-missing",
-                    position: [
-                      [
-                        closingQuotePeek,
-                        closingQuotePeek,
-                        `${str[i]}${compensation}`
-                      ]
-                    ]
-                  });
-                }
-              }
-              logAttr.attrClosingQuote.pos = closingQuotePeek;
-              logAttr.attrClosingQuote.val = str[i];
-              logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
-              logAttr.attrValueStartAt = i + 1;
-              logAttr.attrValueEndAt = closingQuotePeek;
-              for (let y = i + 1; y < closingQuotePeek; y++) {
-                const newIssue = encodeChar$1(str, y);
-                if (newIssue) {
-                  tagIssueStaging.push(newIssue);
-                }
-              }
-              if (rawIssueStaging.length) ;
-              logTag.attributes.push(clone(logAttr));
-              resetLogAttr();
-              if (str[closingQuotePeek].trim().length) {
-                i = closingQuotePeek;
-              } else {
-                i = firstOnTheLeft$1(str, closingQuotePeek);
-              }
+          const closingQuotePeek = findClosingQuote$1(str, i);
+          if (closingQuotePeek) {
+            if (str[closingQuotePeek] !== str[i]) {
               if (
-                i === len - 1 &&
-                logTag.tagStartAt !== null &&
-                ((logAttr.attrEqualAt !== null &&
-                  logAttr.attrOpeningQuote.pos !== null) ||
-                  logTag.attributes.some(
-                    attrObj =>
-                      attrObj.attrEqualAt !== null &&
-                      attrObj.attrOpeningQuote.pos !== null
-                  ))
+                str[closingQuotePeek] === "'" ||
+                str[closingQuotePeek] === '"'
               ) {
+                const isDouble = str[closingQuotePeek] === '"';
+                const name$$1 = `tag-attribute-mismatching-quotes-is-${
+                  isDouble ? "double" : "single"
+                }`;
                 retObj.issues.push({
-                  name: "tag-missing-closing-bracket",
-                  position: [[i + 1, i + 1, ">"]]
+                  name: name$$1,
+                  position: [
+                    [
+                      closingQuotePeek,
+                      closingQuotePeek + 1,
+                      `${isDouble ? "'" : '"'}`
+                    ]
+                  ]
+                });
+              } else {
+                let compensation = "";
+                if (
+                  str[closingQuotePeek - 1] &&
+                  str[closingQuotePeek] &&
+                  str[closingQuotePeek - 1].trim().length &&
+                  str[closingQuotePeek].trim().length &&
+                  str[closingQuotePeek] !== "/" &&
+                  str[closingQuotePeek] !== ">"
+                ) {
+                  compensation = " ";
+                }
+                retObj.issues.push({
+                  name: "tag-attribute-closing-quotation-mark-missing",
+                  position: [
+                    [
+                      closingQuotePeek,
+                      closingQuotePeek,
+                      `${str[i]}${compensation}`
+                    ]
+                  ]
                 });
               }
-              continue;
             }
+            logAttr.attrClosingQuote.pos = closingQuotePeek;
+            logAttr.attrClosingQuote.val = str[i];
+            logAttr.attrValue = str.slice(i + 1, closingQuotePeek);
+            logAttr.attrValueStartAt = i + 1;
+            logAttr.attrValueEndAt = closingQuotePeek;
+            for (let y = i + 1; y < closingQuotePeek; y++) {
+              const newIssue = encodeChar$1(str, y);
+              if (newIssue) {
+                tagIssueStaging.push(newIssue);
+              }
+            }
+            if (rawIssueStaging.length) ;
+            logTag.attributes.push(clone(logAttr));
+            resetLogAttr();
+            if (str[closingQuotePeek].trim().length) {
+              i = closingQuotePeek;
+            } else {
+              i = firstOnTheLeft$1(str, closingQuotePeek);
+            }
+            if (
+              i === len - 1 &&
+              logTag.tagStartAt !== null &&
+              ((logAttr.attrEqualAt !== null &&
+                logAttr.attrOpeningQuote.pos !== null) ||
+                logTag.attributes.some(
+                  attrObj =>
+                    attrObj.attrEqualAt !== null &&
+                    attrObj.attrOpeningQuote.pos !== null
+                ))
+            ) {
+              retObj.issues.push({
+                name: "tag-missing-closing-bracket",
+                position: [[i + 1, i + 1, ">"]]
+              });
+            }
+            continue;
           }
         } else if (charcode === 8220 || charcode === 8221) {
           logAttr.attrOpeningQuote.pos = i;
