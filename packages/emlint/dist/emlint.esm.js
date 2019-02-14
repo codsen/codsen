@@ -780,6 +780,12 @@ function lint(str, originalOpts) {
                 let toPositionToInsertAt = closingQuotePeek;
                 if (str[firstOnTheLeft$1(str, closingQuotePeek)] === "/") {
                   toPositionToInsertAt = firstOnTheLeft$1(str, closingQuotePeek);
+                  if (toPositionToInsertAt + 1 < closingQuotePeek) {
+                    retObj.issues.push({
+                      name: "tag-whitespace-closing-slash-and-bracket",
+                      position: [[toPositionToInsertAt + 1, closingQuotePeek]]
+                    });
+                  }
                   fromPositionToInsertAt =
                     firstOnTheLeft$1(str, toPositionToInsertAt) + 1;
                 }
