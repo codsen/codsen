@@ -10,7 +10,7 @@ const {
   isStr,
   log,
   withinTagInnerspace,
-  firstOnTheRight,
+  firstIdxOnTheRight,
   firstOnTheLeft,
   attributeOnTheRight,
   findClosingQuote,
@@ -315,7 +315,7 @@ function lint(str, originalOpts) {
         // is no "equal" character to the right, terminate this attribute right
         // here. There can be attributes without values, for example, "nowrap".
         if (str[i] !== "=") {
-          if (str[firstOnTheRight(str, i)] === "=") {
+          if (str[firstIdxOnTheRight(str, i)] === "=") {
             // TODO - there's equal to the right
             console.log("320 equal to the right though");
           } else {
@@ -1105,9 +1105,9 @@ function lint(str, originalOpts) {
         } else if (
           isStr(logAttr.attrOpeningQuote.val) &&
           (charcode === 8220 || charcode === 8221) // TODO - cleanup &&
-          // ((firstOnTheRight(str, i) &&
-          //   (str[firstOnTheRight(str, i)] === ">" ||
-          //     str[firstOnTheRight(str, i)] === "/")) ||
+          // ((firstIdxOnTheRight(str, i) &&
+          //   (str[firstIdxOnTheRight(str, i)] === ">" ||
+          //     str[firstIdxOnTheRight(str, i)] === "/")) ||
           //   )
         ) {
           // 1. if curlies were used to open this and this is curlie
@@ -1146,9 +1146,9 @@ function lint(str, originalOpts) {
         } else if (
           isStr(logAttr.attrOpeningQuote.val) &&
           (charcode === 8216 || charcode === 8217) &&
-          ((firstOnTheRight(str, i) !== null &&
-            (str[firstOnTheRight(str, i)] === ">" ||
-              str[firstOnTheRight(str, i)] === "/")) ||
+          ((firstIdxOnTheRight(str, i) !== null &&
+            (str[firstIdxOnTheRight(str, i)] === ">" ||
+              str[firstIdxOnTheRight(str, i)] === "/")) ||
             withinTagInnerspace(str, i + 1))
         ) {
           // if curlies were used to open this and this is curlie
@@ -1188,7 +1188,7 @@ function lint(str, originalOpts) {
           // unclosed attribute values, for example <img alt=">
           // 1. raise the issue
           let compensationSpace = " ";
-          const whatsOnTheRight = str[firstOnTheRight(str, i - 1)];
+          const whatsOnTheRight = str[firstIdxOnTheRight(str, i - 1)];
           console.log(
             `1193 ${`\u001b[${33}m${`whatsOnTheRight`}\u001b[${39}m`} = ${JSON.stringify(
               whatsOnTheRight,
@@ -1282,8 +1282,8 @@ function lint(str, originalOpts) {
         logAttr.attrClosingQuote.pos === null &&
         // !(logAttr.attrOpeningQuote.val && !logAttr.attrClosingQuote.val) &&
         ((str[i] === "/" &&
-          firstOnTheRight(str, i) &&
-          str[firstOnTheRight(str, i)] === ">") ||
+          firstIdxOnTheRight(str, i) &&
+          str[firstIdxOnTheRight(str, i)] === ">") ||
           str[i] === ">")
       ) {
         console.log("1289 inside error catch clauses");
@@ -1472,7 +1472,7 @@ function lint(str, originalOpts) {
         logAttr.attrStartAt === null &&
         (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= i) &&
         (str[i] === ">" ||
-          (str[i] === "/" && "<>".includes(str[firstOnTheRight(str, i)])))
+          (str[i] === "/" && "<>".includes(str[firstIdxOnTheRight(str, i)])))
       ) {
         console.log("1477");
         // we're within a tag but not within an attribute and this is whitespace

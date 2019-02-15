@@ -2653,58 +2653,75 @@ test(`22.09 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - mu
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
-// All previous regexes to recreate:
-// const r1 = /^\s*\w+\s*=\s*(?:["'][^"']*["'])?(?:(?:\s*\/?>)|\s+)/g;
-// const r2 = /^\s*\/*\s*>\s*</g;
-// const r3 = /^\s*\/*\s*>\s*\w/g;
-// const r4 = /^\s*\w*\s*\/+\s*>/g;
-// const r5 = /^\s*\/*\s*>\s*$/g;
-// const r6 = /^\s*\w*\s*\/?\s*>(?:(\s*$)|(\s*[^=>'"]*<))/g;
-// const r7 = /^\s*\w+\s*\w+\s*=\s*(?:["'][^=>"']*["'])/g;
-
-test.only(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
-  // true:
+test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
+  // R1 - xhtml tag ending that follows straight away
+  t.true(withinTagInnerspace(` /  >`));
+  t.true(withinTagInnerspace(` />`));
+  t.true(withinTagInnerspace(` /> `));
+  t.true(withinTagInnerspace(` /> \t`));
   //
-  // // R1 - xhtml tag ending that follows straight away
-  // t.true(withinTagInnerspace(` /  >`));
-  // t.true(withinTagInnerspace(` />`));
-  // t.true(withinTagInnerspace(` /> `));
-  // t.true(withinTagInnerspace(` /> \t`));
-  // //
-  // // R2 - pt1. HTML ending and there's at least one atribute with equal+quotes
-  // t.true(withinTagInnerspace(` z="">`));
-  // t.true(withinTagInnerspace(` z="  ">`));
-  // t.true(withinTagInnerspace(` z=" /> ">`));
-  // t.true(withinTagInnerspace(` z=""/>`));
-  // t.true(withinTagInnerspace(` z="  "/>`));
-  // t.true(withinTagInnerspace(` z=" /> "/>`));
-  // t.true(withinTagInnerspace(` z=""/>`));
-  // t.true(withinTagInnerspace(` alt=""/>`));
-  // //
-  // // R2 - pt2. there can be value-less attributes, no worries:
-  // t.true(withinTagInnerspace(` alt="" yoyo>`));
-  // t.true(withinTagInnerspace(` alt="" yoyo/>`));
-  // t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop>`));
-  // t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/>`));
+  // R2 - pt1. HTML ending and there's at least one atribute with equal+quotes
+  t.true(withinTagInnerspace(` z="">`));
+  t.true(withinTagInnerspace(` z="  ">`));
+  t.true(withinTagInnerspace(` z=" /> ">`));
+  t.true(withinTagInnerspace(` z=""/>`));
+  t.true(withinTagInnerspace(` z="  "/>`));
+  t.true(withinTagInnerspace(` z=" /> "/>`));
+  t.true(withinTagInnerspace(` z=""/>`));
+  t.true(withinTagInnerspace(` alt=""/>`));
   //
-  // R3 - html tag ending that follows straight away, with a tag that follows
-  t.true(withinTagInnerspace(` ><b>`));
-  // t.true(withinTagInnerspace(` /><b>`));
-  // t.true(withinTagInnerspace(` z=""><b>`));
-  // t.true(withinTagInnerspace(` z=""/><b>`));
-  // t.true(withinTagInnerspace(` alt=""/><b>`));
+  // R2 - pt2. there can be value-less attributes, no worries:
+  t.true(withinTagInnerspace(` alt="" yoyo>`));
+  t.true(withinTagInnerspace(` alt="" yoyo/>`));
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/>`));
   //
-  // t.true(withinTagInnerspace(` >\n   <b>`));
-  // t.true(withinTagInnerspace(` />\n   <b>`));
-  // t.true(withinTagInnerspace(` z="">\n   <b>`));
-  // t.true(withinTagInnerspace(` z=""/>\n   <b>`));
-  // t.true(withinTagInnerspace(` alt=""/>\n   <b>`));
+  // R3 - pt.1 html tag ending that follows straight away, with a tag that follows
+  t.true(withinTagInnerspace(` ><a>`));
+  t.true(withinTagInnerspace(` ><a/>`));
+  t.true(withinTagInnerspace(` ></a>`));
+  t.true(withinTagInnerspace(` ><a bcd="ef">`));
+  t.true(withinTagInnerspace(` ><a bcd="ef"/>`));
+  t.true(withinTagInnerspace(` ><a bcd="ef" gh/>`));
+  t.true(withinTagInnerspace(` ><a bcd="ef" ghi="jkl">`));
+  t.true(withinTagInnerspace(` ><a bcd="ef" ghi="jkl"/>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef' ghi='jkl'/>`));
   //
-  // // false:
-  // t.false(withinTagInnerspace(`tralala"/>\n   <b>`));
-  // t.false(withinTagInnerspace(`=ef>`));
-  // t.false(withinTagInnerspace(`=ef>\n   <b>`));
-  // t.false(withinTagInnerspace(`=ef/>\n   <b>`));
+  // R3 - pt2. text in between
+  t.true(withinTagInnerspace(` >xyz<a>`));
+  t.false(withinTagInnerspace(` >img<alt=""`));
+  t.true(withinTagInnerspace(` >xyz<a<`)); // unclosed tag "<a"
+  t.true(withinTagInnerspace(` > xyz<a/>`));
+  t.true(withinTagInnerspace(` >\nxyz</a>`));
+  t.true(withinTagInnerspace(` >\txyz<a bcd="ef">`));
+  t.true(withinTagInnerspace(` >\n\nxyz\n<a bcd="ef"/>`));
+  t.true(withinTagInnerspace(` >\nxyz\n<a bcd="ef" gh/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi="jkl">`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi="jkl"/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef' ghi='jkl'/>`));
+  //
+  // R3 - pt3. various
+  t.true(withinTagInnerspace(` /><a>`));
+  t.true(withinTagInnerspace(` z=""><a>`));
+  t.true(withinTagInnerspace(` z=""/><a>`));
+  t.true(withinTagInnerspace(` alt=""/><a>`));
+  t.true(withinTagInnerspace(` >\n   <b>`));
+  t.true(withinTagInnerspace(` />\n   <b>`));
+  t.true(withinTagInnerspace(` z="">\n   <b>`));
+  t.true(withinTagInnerspace(` z=""/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt=""/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt="" xyz \n/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt="" xyz \n/ >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="" xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="" klm xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="" klm xyz \n >\n nop  <b>`));
+  //
+  // false:
+  t.false(withinTagInnerspace(`tralala"/>\n   <b>`));
+  t.true(withinTagInnerspace(`tralala/>\n   <b>`));
+  t.false(withinTagInnerspace(`=ef>`));
+  t.false(withinTagInnerspace(`=ef>\n   <b>`));
+  t.false(withinTagInnerspace(`=ef/>\n   <b>`));
 });
 
 test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - with offset`, t => {
@@ -2742,7 +2759,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     "99.02.04"
   );
   // yet not this (nothing is after bracket so it's still a questionable case):
-  t.true(
+  t.false(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">`,
       //                       ^
@@ -2750,7 +2767,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     ),
     "99.02.05-1"
   );
-  t.true(
+  t.false(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">\n`,
       //                       ^
@@ -2758,7 +2775,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     ),
     "99.02.05-2"
   );
-  t.true(
+  t.false(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">a`,
       //                       ^
@@ -2796,10 +2813,12 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
 
 test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
   t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03");
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= >nop<r>`), "99.03");
 });
 
-test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
+test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #2`, t => {
   const code = `<td abc='d e" fgh ijk="klm'/>`;
+  //                         ^
   t.true(!!withinTagInnerspace(code, 13), "99.04");
 });
 
