@@ -1199,7 +1199,7 @@ test(`08.02 - ${`\u001b[${36}m${`tag-whitespace-closing-slash-and-bracket`}\u001
 // 09. rule "tag-attribute-left-double-quotation-mark"
 // -----------------------------------------------------------------------------
 
-test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, normal closing`, t => {
+test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, double closing`, t => {
   // 1. single double quote on the right
   // const bad1 = `<aaa bbb=“ccc">`;
   const bad1 = `<aaa bbb=\u201Cccc">`;
@@ -1211,25 +1211,29 @@ test(`09.01 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
     "09.01.01"
   );
   t.is(apply(bad1, res1.fix), good1, "09.01.02");
+});
 
+test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, single closing`, t => {
   // 2. single straight quote on the right
   // const bad1 = `<aaa bbb=“ccc'>`;
-  const bad2 = `<aaa bbb=\u201Cccc">`;
+  const bad2 = `<aaa bbb=\u201Cccc'>`;
   const good2 = `<aaa bbb="ccc">`;
   const res2 = lint(bad2);
   t.deepEqual(
     getUniqueIssueNames(res2.issues),
-    ["tag-attribute-left-double-quotation-mark"],
-    "09.01.01"
+    [
+      "tag-attribute-left-double-quotation-mark",
+      "tag-attribute-mismatching-quotes-is-single"
+    ],
+    "09.02.01"
   );
-  t.is(apply(bad2, res2.fix), good2, "09.01.02");
+  t.is(apply(bad2, res2.fix), good2, "09.02.02");
 });
 
-test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, right double closing`, t => {
-  // 1. pair:
-  // const bad1 = `<aaa bbb=“ccc”>`;
-  const bad1 = `<aaa bbb=\u201Cccc\u201D>`;
-  const good1 = `<aaa bbb="ccc">`;
+test(`09.03 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double opening, right double closing`, t => {
+  // const bad1 = `<abc def=“ghi”>`;
+  const bad1 = `<abc def=\u201Cghi\u201D>`;
+  const good1 = `<abc def="ghi">`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),
@@ -1237,27 +1241,14 @@ test(`09.02 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
       "tag-attribute-left-double-quotation-mark",
       "tag-attribute-right-double-quotation-mark"
     ],
-    "09.02.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "09.02.02");
-});
-
-test(`09.03 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double closing, normal opening`, t => {
-  // const bad1 = `<aaa bbb="ccc“>`;
-  const bad1 = `<aaa bbb="ccc\u201C>`;
-  const good1 = `<aaa bbb="ccc">`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues),
-    ["tag-attribute-left-double-quotation-mark"],
     "09.03.01"
   );
   t.is(apply(bad1, res1.fix), good1, "09.03.02");
 });
 
-test(`09.04 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - both left doubles`, t => {
-  // const bad1 = `<aaa bbb=“ccc“>`;
-  const bad1 = `<aaa bbb=\u201Cccc\u201C>`;
+test(`09.04 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - left double closing, normal opening`, t => {
+  // const bad1 = `<aaa bbb="ccc“>`;
+  const bad1 = `<aaa bbb="ccc\u201C>`;
   const good1 = `<aaa bbb="ccc">`;
   const res1 = lint(bad1);
   t.deepEqual(
@@ -1266,6 +1257,19 @@ test(`09.04 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001
     "09.04.01"
   );
   t.is(apply(bad1, res1.fix), good1, "09.04.02");
+});
+
+test(`09.05 - ${`\u001b[${35}m${`tag-attribute-left-double-quotation-mark`}\u001b[${39}m`} - both left doubles`, t => {
+  // const bad1 = `<aaa bbb=“ccc“>`;
+  const bad1 = `<aaa bbb=\u201Cccc\u201C>`;
+  const good1 = `<aaa bbb="ccc">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues),
+    ["tag-attribute-left-double-quotation-mark"],
+    "09.05.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "09.05.02");
 });
 
 // 10. rule "tag-attribute-right-double-quotation-mark"

@@ -503,14 +503,15 @@ function encodeChar(str, i) {
 
 var errors = "./errors.json";
 var isArr = Array.isArray;
-var isStr$1 = isStr,
+var attributeOnTheRight$1 = attributeOnTheRight,
     withinTagInnerspace$1 = withinTagInnerspace,
     firstIdxOnTheRight$1 = firstIdxOnTheRight,
-    firstOnTheLeft$1 = firstOnTheLeft,
-    attributeOnTheRight$1 = attributeOnTheRight,
     findClosingQuote$1 = findClosingQuote,
+    firstOnTheLeft$1 = firstOnTheLeft,
+    tagOnTheRight$1 = tagOnTheRight,
+    charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
-    tagOnTheRight$1 = tagOnTheRight;
+    isStr$1 = isStr;
 function lint(str, originalOpts) {
   function pingTag(logTag) {}
   if (!isStr$1(str)) {
@@ -789,6 +790,7 @@ function lint(str, originalOpts) {
             name: _name,
             position: [[_i, _i + 1, "\""]]
           });
+          logAttr.attrValueStartAt = _i + 1;
         } else if (charcode === 8216 || charcode === 8217) {
           logAttr.attrOpeningQuote.pos = _i;
           logAttr.attrOpeningQuote.val = "'";
@@ -850,81 +852,57 @@ function lint(str, originalOpts) {
           }
         }
       }
-      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && _i > logAttr.attrOpeningQuote.pos && (str[_i] === logAttr.attrOpeningQuote.val || withinTagInnerspace$1(str, _i + 1))) {
-        if (charcode === 34 || charcode === 39) {
-          var issueName = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
-          if (str[_i] !== logAttr.attrOpeningQuote.val && (!retObj.issues.length || !retObj.issues.some(function (issueObj) {
-            i = _i;
-            return issueObj.name === issueName && issueObj.position.length === 1 && issueObj.position[0][0] === _i && issueObj.position[0][1] === _i + 1;
-          }))) {
-            retObj.issues.push({
-              name: issueName,
-              position: [[_i, _i + 1, "".concat(charcode === 34 ? "'" : '"')]]
-            });
-          }
-          logAttr.attrClosingQuote.pos = _i;
-          logAttr.attrClosingQuote.val = str[_i];
-          if (logAttr.attrValue === null) {
-            if (logAttr.attrOpeningQuote.pos && logAttr.attrClosingQuote.pos && logAttr.attrOpeningQuote.pos + 1 < logAttr.attrClosingQuote.pos) {
-              logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos, logAttr.attrClosingQuote.pos);
-            } else {
-              logAttr.attrValue = "";
-            }
-          }
-          logAttr.attrEndAt = _i;
-          logAttr.attrValueEndAt = _i;
-          logTag.attributes.push(clone(logAttr));
-          resetLogAttr();
-        } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221)
-        ) {
-            var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
-            retObj.issues.push({
-              name: _name3,
-              position: [[_i, _i + 1, '"']]
-            });
-            logAttr.attrEndAt = _i;
-            logAttr.attrClosingQuote.pos = _i;
-            logAttr.attrClosingQuote.val = '"';
-            logTag.attributes.push(clone(logAttr));
-            resetLogAttr();
-          } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstIdxOnTheRight$1(str, _i) !== null && (str[firstIdxOnTheRight$1(str, _i)] === ">" || str[firstIdxOnTheRight$1(str, _i)] === "/") || withinTagInnerspace$1(str, _i + 1))) {
-          var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
-          retObj.issues.push({
-            name: _name4,
-            position: [[_i, _i + 1, "'"]]
-          });
-          logAttr.attrEndAt = _i;
-          logAttr.attrClosingQuote.pos = _i;
-          logAttr.attrClosingQuote.val = "'";
-          logTag.attributes.push(clone(logAttr));
-          resetLogAttr();
-        } else if (withinTagInnerspace$1(str, _i)) {
-          var compensationSpace = " ";
-          var whatsOnTheRight = str[firstIdxOnTheRight$1(str, _i - 1)];
-          if (!str[_i].trim().length || !whatsOnTheRight || whatsOnTheRight === ">" || whatsOnTheRight === "/") {
-            compensationSpace = "";
-          }
-          var _issueName = "tag-attribute-closing-quotation-mark-missing";
-          if (logAttr.attrOpeningQuote.val && (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos === _i)) {
-            if (!retObj.issues.some(function (issueObj) {
+      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && _i > logAttr.attrOpeningQuote.pos && charIsQuote$1(str[_i])
+      ) {
+          if (charcode === 34 || charcode === 39) {
+            var issueName = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");
+            if (str[_i] !== logAttr.attrOpeningQuote.val && (!retObj.issues.length || !retObj.issues.some(function (issueObj) {
               i = _i;
-              return issueObj.name === _issueName && issueObj.position.length === 1 && issueObj.position[0][0] === _i && issueObj.position[0][1] === _i;
-            })) {
+              return issueObj.name === issueName && issueObj.position.length === 1 && issueObj.position[0][0] === _i && issueObj.position[0][1] === _i + 1;
+            }))) {
               retObj.issues.push({
-                name: _issueName,
-                position: [[_i, _i, "".concat(logAttr.attrOpeningQuote.val).concat(compensationSpace)]]
+                name: issueName,
+                position: [[_i, _i + 1, "".concat(charcode === 34 ? "'" : '"')]]
               });
             }
-          }
-          if (!logAttr.attrClosingQuote.pos) {
+            logAttr.attrClosingQuote.pos = _i;
+            logAttr.attrClosingQuote.val = str[_i];
+            if (logAttr.attrValue === null) {
+              if (logAttr.attrOpeningQuote.pos && logAttr.attrClosingQuote.pos && logAttr.attrOpeningQuote.pos + 1 < logAttr.attrClosingQuote.pos) {
+                logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos, logAttr.attrClosingQuote.pos);
+              } else {
+                logAttr.attrValue = "";
+              }
+            }
+            logAttr.attrEndAt = _i;
+            logAttr.attrValueEndAt = _i;
+            logTag.attributes.push(clone(logAttr));
+            resetLogAttr();
+          } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8220 || charcode === 8221)
+          ) {
+              var _name3 = charcode === 8220 ? "tag-attribute-left-double-quotation-mark" : "tag-attribute-right-double-quotation-mark";
+              retObj.issues.push({
+                name: _name3,
+                position: [[_i, _i + 1, '"']]
+              });
+              logAttr.attrEndAt = _i;
+              logAttr.attrClosingQuote.pos = _i;
+              logAttr.attrClosingQuote.val = '"';
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
+            } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (firstIdxOnTheRight$1(str, _i) !== null && (str[firstIdxOnTheRight$1(str, _i)] === ">" || str[firstIdxOnTheRight$1(str, _i)] === "/") || withinTagInnerspace$1(str, _i + 1))) {
+            var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
+            retObj.issues.push({
+              name: _name4,
+              position: [[_i, _i + 1, "'"]]
+            });
             logAttr.attrEndAt = _i;
             logAttr.attrClosingQuote.pos = _i;
-            logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+            logAttr.attrClosingQuote.val = "'";
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
           }
         }
-      }
       if (logAttr.attrOpeningQuote.val && logAttr.attrOpeningQuote.pos < _i && logAttr.attrClosingQuote.pos === null && (
       str[_i] === "/" && firstIdxOnTheRight$1(str, _i) && str[firstIdxOnTheRight$1(str, _i)] === ">" || str[_i] === ">")) {
         retObj.issues.push({

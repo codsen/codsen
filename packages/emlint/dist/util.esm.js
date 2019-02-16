@@ -760,4 +760,4 @@ function encodeChar(str, i) {
   return null;
 }
 
-export { knownHTMLTags, charSuitableForTagName, charSuitableForAttrName, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstIdxOnTheRight, firstOnTheLeft, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };
+export { knownHTMLTags, charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstIdxOnTheRight, firstOnTheLeft, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };

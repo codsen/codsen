@@ -780,6 +780,7 @@ var util = /*#__PURE__*/Object.freeze({
   knownHTMLTags: knownHTMLTags,
   charSuitableForTagName: charSuitableForTagName,
   charSuitableForAttrName: charSuitableForAttrName,
+  charIsQuote: charIsQuote,
   notTagChar: notTagChar,
   isUppercaseLetter: isUppercaseLetter,
   isLowercase: isLowercase,
@@ -799,15 +800,16 @@ var util = /*#__PURE__*/Object.freeze({
 const errors = "./errors.json";
 const isArr = Array.isArray;
 const {
-  isStr: isStr$1,
-  log: log$1,
+  attributeOnTheRight: attributeOnTheRight$1,
   withinTagInnerspace: withinTagInnerspace$1,
   firstIdxOnTheRight: firstIdxOnTheRight$1,
-  firstOnTheLeft: firstOnTheLeft$1,
-  attributeOnTheRight: attributeOnTheRight$1,
   findClosingQuote: findClosingQuote$1,
+  firstOnTheLeft: firstOnTheLeft$1,
+  tagOnTheRight: tagOnTheRight$1,
+  charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
-  tagOnTheRight: tagOnTheRight$1
+  isStr: isStr$1,
+  log: log$1
 } = util;
 function lint(str, originalOpts) {
   function pingTag(logTag) {
@@ -1158,6 +1160,7 @@ function lint(str, originalOpts) {
             name: name$$1,
             position: [[i, i + 1, `"`]]
           });
+          logAttr.attrValueStartAt = i + 1;
         } else if (charcode === 8216 || charcode === 8217) {
           logAttr.attrOpeningQuote.pos = i;
           logAttr.attrOpeningQuote.val = `'`;
@@ -1226,8 +1229,7 @@ function lint(str, originalOpts) {
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos !== null &&
         i > logAttr.attrOpeningQuote.pos &&
-        (str[i] === logAttr.attrOpeningQuote.val ||
-          withinTagInnerspace$1(str, i + 1))
+        charIsQuote$1(str[i])
       ) {
         if (charcode === 34 || charcode === 39) {
           const issueName = `tag-attribute-mismatching-quotes-is-${
@@ -1308,47 +1310,6 @@ function lint(str, originalOpts) {
           logAttr.attrClosingQuote.val = "'";
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
-        } else if (withinTagInnerspace$1(str, i)) {
-          let compensationSpace = " ";
-          const whatsOnTheRight = str[firstIdxOnTheRight$1(str, i - 1)];
-          if (
-            !str[i].trim().length ||
-            !whatsOnTheRight ||
-            whatsOnTheRight === ">" ||
-            whatsOnTheRight === "/"
-          ) {
-            compensationSpace = "";
-          }
-          const issueName = "tag-attribute-closing-quotation-mark-missing";
-          if (
-            logAttr.attrOpeningQuote.val &&
-            (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos === i)
-          ) {
-            if (
-              !retObj.issues.some(issueObj => {
-                return (
-                  issueObj.name === issueName &&
-                  issueObj.position.length === 1 &&
-                  issueObj.position[0][0] === i &&
-                  issueObj.position[0][1] === i
-                );
-              })
-            ) {
-              retObj.issues.push({
-                name: issueName,
-                position: [
-                  [i, i, `${logAttr.attrOpeningQuote.val}${compensationSpace}`]
-                ]
-              });
-            }
-          }
-          if (!logAttr.attrClosingQuote.pos) {
-            logAttr.attrEndAt = i;
-            logAttr.attrClosingQuote.pos = i;
-            logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
-            logTag.attributes.push(clone(logAttr));
-            resetLogAttr();
-          }
         }
       }
       if (
