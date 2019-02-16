@@ -4,7 +4,7 @@ import apply from "ranges-apply";
 // import errors from "../src/errors.json";
 import {
   withinTagInnerspace,
-  firstOnTheRight,
+  firstIdxOnTheRight,
   firstOnTheLeft,
   attributeOnTheRight,
   findClosingQuote,
@@ -1520,7 +1520,7 @@ test(`12.06 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   t.is(apply(bad2, res2.fix), good2, "12.06.03");
 });
 
-test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML`, t => {
+test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML, minimal`, t => {
   const bad1 = `<td alt="a b' something>`;
   const good1 = `<td alt="a b" something>`;
   const res1 = lint(bad1);
@@ -1532,9 +1532,9 @@ test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   t.is(apply(bad1, res1.fix), good1, "12.07.02");
 });
 
-test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML`, t => {
-  const bad1 = `<td alt="a b' something/>`;
-  const good1 = `<td alt="a b" something/>`;
+test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML, real life #1`, t => {
+  const bad1 = `<td alt="a b' something><a href="zzz">aaa</a></td>`;
+  const good1 = `<td alt="a b" something><a href="zzz">aaa</a></td>`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),
@@ -1542,6 +1542,54 @@ test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     "12.08.01"
   );
   t.is(apply(bad1, res1.fix), good1, "12.08.02");
+});
+
+test(`12.09 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - HTML, real life #2`, t => {
+  const bad1 = `<td alt="a b' something>\n    tralala\n    <a href="zzz">aaa</a></td>`;
+  const good1 = `<td alt="a b" something>\n    tralala\n    <a href="zzz">aaa</a></td>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.09.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.09.02");
+});
+
+test(`12.10 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML`, t => {
+  const bad1 = `<td alt="a b' something/>`;
+  const good1 = `<td alt="a b" something/>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.10.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.10.02");
+});
+
+test(`12.11 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML, real life #1`, t => {
+  const bad1 = `<td alt="a b' something><a href="zzz">aaa</a></td>`;
+  const good1 = `<td alt="a b" something><a href="zzz">aaa</a></td>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.11.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.11.02");
+});
+
+test(`12.12 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by value-less attribute - XHTML, real life #2`, t => {
+  const bad1 = `<td alt="a b' something>\n    tralala\n    <a href="zzz">aaa</a></td>`;
+  const good1 = `<td alt="a b" something>\n    tralala\n    <a href="zzz">aaa</a></td>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-mismatching-quotes-is-single"],
+    "12.12.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "12.12.02");
 });
 
 // 13. rule "tag-attribute-left-single-quotation-mark"
@@ -2655,82 +2703,499 @@ test(`22.09 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - mu
 
 test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
   // R1 - xhtml tag ending that follows straight away
+  t.true(withinTagInnerspace(`/  >`));
+  t.true(withinTagInnerspace(`/>`));
+  t.true(withinTagInnerspace(`/> `));
+  t.true(withinTagInnerspace(`/> \t`));
+
   t.true(withinTagInnerspace(` /  >`));
   t.true(withinTagInnerspace(` />`));
   t.true(withinTagInnerspace(` /> `));
   t.true(withinTagInnerspace(` /> \t`));
+
+  t.true(withinTagInnerspace(` \n /  >`));
+  t.true(withinTagInnerspace(` \n />`));
+  t.true(withinTagInnerspace(` \n /> `));
+  t.true(withinTagInnerspace(` \n /> \t`));
   //
   // R2 - pt1. HTML ending and there's at least one atribute with equal+quotes
   t.true(withinTagInnerspace(` z="">`));
+  t.true(withinTagInnerspace(` z="'>`));
+  t.true(withinTagInnerspace(` z='">`));
+  t.true(withinTagInnerspace(` z=''>`));
+
   t.true(withinTagInnerspace(` z="  ">`));
+  t.true(withinTagInnerspace(` z='  ">`));
+  t.true(withinTagInnerspace(` z="  '>`));
+  t.true(withinTagInnerspace(` z='  '>`));
+
   t.true(withinTagInnerspace(` z=" /> ">`));
+  t.true(withinTagInnerspace(` z=' /> ">`));
+  t.true(withinTagInnerspace(` z=" /> '>`));
+  t.true(withinTagInnerspace(` z=' /> '>`));
+
   t.true(withinTagInnerspace(` z=""/>`));
+  t.true(withinTagInnerspace(` z='"/>`));
+  t.true(withinTagInnerspace(` z="'/>`));
+  t.true(withinTagInnerspace(` z=''/>`));
+
   t.true(withinTagInnerspace(` z="  "/>`));
+  t.true(withinTagInnerspace(` z='  "/>`));
+  t.true(withinTagInnerspace(` z="  '/>`));
+  t.true(withinTagInnerspace(` z='  '/>`));
+
   t.true(withinTagInnerspace(` z=" /> "/>`));
+  t.true(withinTagInnerspace(` z=' /> "/>`));
+  t.true(withinTagInnerspace(` z=" /> '/>`));
+  t.true(withinTagInnerspace(` z=' /> '/>`));
+
   t.true(withinTagInnerspace(` z=""/>`));
+  t.true(withinTagInnerspace(` z='"/>`));
+  t.true(withinTagInnerspace(` z="'/>`));
+  t.true(withinTagInnerspace(` z=''/>`));
+
   t.true(withinTagInnerspace(` alt=""/>`));
+  t.true(withinTagInnerspace(` alt='"/>`));
+  t.true(withinTagInnerspace(` alt="'/>`));
+  t.true(withinTagInnerspace(` alt=''/>`));
   //
   // R2 - pt2. there can be value-less attributes, no worries:
   t.true(withinTagInnerspace(` alt="" yoyo>`));
+  t.true(withinTagInnerspace(` alt='" yoyo>`));
+  t.true(withinTagInnerspace(` alt="' yoyo>`));
+  t.true(withinTagInnerspace(` alt='' yoyo>`));
+
   t.true(withinTagInnerspace(` alt="" yoyo/>`));
+  t.true(withinTagInnerspace(` alt='" yoyo/>`));
+  t.true(withinTagInnerspace(` alt="' yoyo/>`));
+  t.true(withinTagInnerspace(` alt='' yoyo/>`));
+
   t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc='def" ghi="jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc='def' ghi="jkl" mnop>`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc='def" ghi='jkl" mnop>`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl' mnop>`));
+  t.true(withinTagInnerspace(` abc='def' ghi='jkl' mnop>`));
+
   t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/>`));
-  //
+  t.true(withinTagInnerspace(` abc='def" ghi="jkl" mnop/>`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl" mnop/>`));
+  t.true(withinTagInnerspace(` abc='def' ghi="jkl" mnop/>`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/>`));
+  t.true(withinTagInnerspace(` abc='def" ghi='jkl" mnop/>`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl' mnop/>`));
+  t.true(withinTagInnerspace(` abc='def' ghi='jkl' mnop/>`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop />`));
+  t.true(withinTagInnerspace(` abc='def" ghi="jkl" mnop />`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl" mnop />`));
+  t.true(withinTagInnerspace(` abc='def' ghi="jkl" mnop />`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop />`));
+  t.true(withinTagInnerspace(` abc='def" ghi='jkl" mnop />`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl' mnop />`));
+  t.true(withinTagInnerspace(` abc='def' ghi='jkl' mnop />`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop / >`));
+  t.true(withinTagInnerspace(` abc='def" ghi="jkl" mnop / >`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl" mnop / >`));
+  t.true(withinTagInnerspace(` abc='def' ghi="jkl" mnop / >`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop / >`));
+  t.true(withinTagInnerspace(` abc='def" ghi='jkl" mnop / >`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl' mnop / >`));
+  t.true(withinTagInnerspace(` abc='def' ghi='jkl' mnop / >`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/ >`));
+  t.true(withinTagInnerspace(` abc='def" ghi="jkl" mnop/ >`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl" mnop/ >`));
+  t.true(withinTagInnerspace(` abc='def' ghi="jkl" mnop/ >`));
+
+  t.true(withinTagInnerspace(` abc="def" ghi="jkl" mnop/ >`));
+  t.true(withinTagInnerspace(` abc='def" ghi='jkl" mnop/ >`));
+  t.true(withinTagInnerspace(` abc="def' ghi="jkl' mnop/ >`));
+  t.true(withinTagInnerspace(` abc='def' ghi='jkl' mnop/ >`));
+
   // R3 - pt.1 html tag ending that follows straight away, with a tag that follows
   t.true(withinTagInnerspace(` ><a>`));
   t.true(withinTagInnerspace(` ><a/>`));
   t.true(withinTagInnerspace(` ></a>`));
+
   t.true(withinTagInnerspace(` ><a bcd="ef">`));
+  t.true(withinTagInnerspace(` ><a bcd='ef">`));
+  t.true(withinTagInnerspace(` ><a bcd="ef'>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef'>`));
+
   t.true(withinTagInnerspace(` ><a bcd="ef"/>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef"/>`));
+  t.true(withinTagInnerspace(` ><a bcd="ef'/>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef'/>`));
+
   t.true(withinTagInnerspace(` ><a bcd="ef" gh/>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef" gh/>`));
+  t.true(withinTagInnerspace(` ><a bcd="ef' gh/>`));
+  t.true(withinTagInnerspace(` ><a bcd='ef' gh/>`));
+
   t.true(withinTagInnerspace(` ><a bcd="ef" ghi="jkl">`));
   t.true(withinTagInnerspace(` ><a bcd="ef" ghi="jkl"/>`));
   t.true(withinTagInnerspace(` ><a bcd='ef' ghi='jkl'/>`));
   //
   // R3 - pt2. text in between
   t.true(withinTagInnerspace(` >xyz<a>`));
-  t.false(withinTagInnerspace(` >img<alt=""`));
+
+  t.true(withinTagInnerspace(` >img<img alt=""`));
+  t.true(withinTagInnerspace(` >img<img alt='"`));
+  t.true(withinTagInnerspace(` >img<img alt="'`));
+  t.true(withinTagInnerspace(` >img<img alt=''`));
+
   t.true(withinTagInnerspace(` >xyz<a<`)); // unclosed tag "<a"
   t.true(withinTagInnerspace(` > xyz<a/>`));
   t.true(withinTagInnerspace(` >\nxyz</a>`));
+
   t.true(withinTagInnerspace(` >\txyz<a bcd="ef">`));
+  t.true(withinTagInnerspace(` >\txyz<a bcd='ef">`));
+  t.true(withinTagInnerspace(` >\txyz<a bcd="ef'>`));
+  t.true(withinTagInnerspace(` >\txyz<a bcd='ef'>`));
+
   t.true(withinTagInnerspace(` >\n\nxyz\n<a bcd="ef"/>`));
+  t.true(withinTagInnerspace(` >\n\nxyz\n<a bcd='ef"/>`));
+  t.true(withinTagInnerspace(` >\n\nxyz\n<a bcd="ef'/>`));
+  t.true(withinTagInnerspace(` >\n\nxyz\n<a bcd='ef'/>`));
+
   t.true(withinTagInnerspace(` >\nxyz\n<a bcd="ef" gh/>`));
+  t.true(withinTagInnerspace(` >\nxyz\n<a bcd='ef" gh/>`));
+  t.true(withinTagInnerspace(` >\nxyz\n<a bcd="ef' gh/>`));
+  t.true(withinTagInnerspace(` >\nxyz\n<a bcd='ef' gh/>`));
+
   t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi="jkl">`));
-  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi="jkl"/>`));
-  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef' ghi='jkl'/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef" ghi="jkl">`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef' ghi="jkl">`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef' ghi="jkl">`));
+
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi='jkl'/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef" ghi="jkl'/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef' ghi='jkl"/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef' ghi="jkl"/>`));
+
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef' ghi="jkl"/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef' ghi='jkl"/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd='ef" ghi="jkl'/>`));
+  t.true(withinTagInnerspace(` > xyz\t<a bcd="ef" ghi='jkl'/>`));
   //
   // R3 - pt3. various
   t.true(withinTagInnerspace(` /><a>`));
+
   t.true(withinTagInnerspace(` z=""><a>`));
+  t.true(withinTagInnerspace(` z='"><a>`));
+  t.true(withinTagInnerspace(` z="'><a>`));
+  t.true(withinTagInnerspace(` z=''><a>`));
   t.true(withinTagInnerspace(` z=""/><a>`));
+  t.true(withinTagInnerspace(` z='"/><a>`));
+  t.true(withinTagInnerspace(` z="'/><a>`));
+  t.true(withinTagInnerspace(` z=''/><a>`));
+
+  t.true(withinTagInnerspace(` z=""><a/>`));
+  t.true(withinTagInnerspace(` z='"><a/>`));
+  t.true(withinTagInnerspace(` z="'><a/>`));
+  t.true(withinTagInnerspace(` z=''><a/>`));
+  t.true(withinTagInnerspace(` z=""/><a/>`));
+  t.true(withinTagInnerspace(` z='"/><a/>`));
+  t.true(withinTagInnerspace(` z="'/><a/>`));
+  t.true(withinTagInnerspace(` z=''/><a/>`));
+
+  t.true(withinTagInnerspace(` z=""><a />`));
+  t.true(withinTagInnerspace(` z='"><a />`));
+  t.true(withinTagInnerspace(` z="'><a />`));
+  t.true(withinTagInnerspace(` z=''><a />`));
+  t.true(withinTagInnerspace(` z=""/><a />`));
+  t.true(withinTagInnerspace(` z='"/><a />`));
+  t.true(withinTagInnerspace(` z="'/><a />`));
+  t.true(withinTagInnerspace(` z=''/><a />`));
+
+  t.true(withinTagInnerspace(` z=""><a/ >`));
+  t.true(withinTagInnerspace(` z='"><a/ >`));
+  t.true(withinTagInnerspace(` z="'><a/ >`));
+  t.true(withinTagInnerspace(` z=''><a/ >`));
+  t.true(withinTagInnerspace(` z=""/><a/ >`));
+  t.true(withinTagInnerspace(` z='"/><a/ >`));
+  t.true(withinTagInnerspace(` z="'/><a/ >`));
+  t.true(withinTagInnerspace(` z=''/><a/ >`));
+
+  t.true(withinTagInnerspace(` z=""><a / >`));
+  t.true(withinTagInnerspace(` z='"><a / >`));
+  t.true(withinTagInnerspace(` z="'><a / >`));
+  t.true(withinTagInnerspace(` z=''><a / >`));
+  t.true(withinTagInnerspace(` z=""/><a / >`));
+  t.true(withinTagInnerspace(` z='"/><a / >`));
+  t.true(withinTagInnerspace(` z="'/><a / >`));
+  t.true(withinTagInnerspace(` z=''/><a / >`));
+
   t.true(withinTagInnerspace(` alt=""/><a>`));
+  t.true(withinTagInnerspace(` alt="'/><a>`));
+  t.true(withinTagInnerspace(` alt='"/><a>`));
+  t.true(withinTagInnerspace(` alt=''/><a>`));
+
   t.true(withinTagInnerspace(` >\n   <b>`));
   t.true(withinTagInnerspace(` />\n   <b>`));
+
   t.true(withinTagInnerspace(` z="">\n   <b>`));
+  t.true(withinTagInnerspace(` z='">\n   <b>`));
+  t.true(withinTagInnerspace(` z="'>\n   <b>`));
+  t.true(withinTagInnerspace(` z=''>\n   <b>`));
   t.true(withinTagInnerspace(` z=""/>\n   <b>`));
+  t.true(withinTagInnerspace(` z='"/>\n   <b>`));
+  t.true(withinTagInnerspace(` z="'/>\n   <b>`));
+  t.true(withinTagInnerspace(` z=''/>\n   <b>`));
+
+  t.true(withinTagInnerspace(` z="" >\n   <b>`));
+  t.true(withinTagInnerspace(` z='" >\n   <b>`));
+  t.true(withinTagInnerspace(` z="' >\n   <b>`));
+  t.true(withinTagInnerspace(` z='' >\n   <b>`));
+  t.true(withinTagInnerspace(` z="" />\n   <b>`));
+  t.true(withinTagInnerspace(` z='" />\n   <b>`));
+  t.true(withinTagInnerspace(` z="' />\n   <b>`));
+  t.true(withinTagInnerspace(` z='' />\n   <b>`));
+
+  t.true(withinTagInnerspace(` z="" / >\n   <b>`));
+  t.true(withinTagInnerspace(` z='" / >\n   <b>`));
+  t.true(withinTagInnerspace(` z="' / >\n   <b>`));
+  t.true(withinTagInnerspace(` z='' / >\n   <b>`));
+  t.true(withinTagInnerspace(` z="" /  >\n   <b>`));
+  t.true(withinTagInnerspace(` z='" /  >\n   <b>`));
+  t.true(withinTagInnerspace(` z="' /  >\n   <b>`));
+  t.true(withinTagInnerspace(` z='' /  >\n   <b>`));
+
   t.true(withinTagInnerspace(` alt=""/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt='"/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt="'/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt=''/>\n   <b>`));
+
   t.true(withinTagInnerspace(` alt="" xyz \n/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt='" xyz \n/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt="' xyz \n/>\n   <b>`));
+  t.true(withinTagInnerspace(` alt='' xyz \n/>\n   <b>`));
+
   t.true(withinTagInnerspace(` alt="" xyz \n/ >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='" xyz \n/ >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="' xyz \n/ >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='' xyz \n/ >\n   <b>`));
+
   t.true(withinTagInnerspace(` alt="" xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='" xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="' xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='' xyz \n >\n   <b>`));
+
   t.true(withinTagInnerspace(` alt="" klm xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='" klm xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt="' klm xyz \n >\n   <b>`));
+  t.true(withinTagInnerspace(` alt='' klm xyz \n >\n   <b>`));
+
   t.true(withinTagInnerspace(` alt="" klm xyz \n >\n nop  <b>`));
+  t.true(withinTagInnerspace(` alt='" klm xyz \n >\n nop  <b>`));
+  t.true(withinTagInnerspace(` alt="' klm xyz \n >\n nop  <b>`));
+  t.true(withinTagInnerspace(` alt='' klm xyz \n >\n nop  <b>`));
   //
   // R4 - value-less attribute followed by slash followed by closing bracket
   t.true(withinTagInnerspace(` abc/>`));
   // R5 - full attribute with matching quotes:
   t.true(withinTagInnerspace(` abc="" def="">`));
+  t.true(withinTagInnerspace(` abc='" def="">`));
+  t.true(withinTagInnerspace(` abc="' def="">`));
+  t.true(withinTagInnerspace(` abc='' def="">`));
+
   t.true(withinTagInnerspace(` abc="" def=""/>`));
+  t.true(withinTagInnerspace(` abc='" def=""/>`));
+  t.true(withinTagInnerspace(` abc="' def=""/>`));
+  t.true(withinTagInnerspace(` abc='' def=""/>`));
+
+  t.true(withinTagInnerspace(` abc="" def="" />`));
+  t.true(withinTagInnerspace(` abc='" def="" />`));
+  t.true(withinTagInnerspace(` abc="' def="" />`));
+  t.true(withinTagInnerspace(` abc='' def="" />`));
+
+  t.true(withinTagInnerspace(` abc="" def=""/ >`));
+  t.true(withinTagInnerspace(` abc='" def=""/ >`));
+  t.true(withinTagInnerspace(` abc="' def=""/ >`));
+  t.true(withinTagInnerspace(` abc='' def=""/ >`));
+
+  t.true(withinTagInnerspace(` abc="" def="" / >`));
+  t.true(withinTagInnerspace(` abc='" def="" / >`));
+  t.true(withinTagInnerspace(` abc="' def="" / >`));
+  t.true(withinTagInnerspace(` abc='' def="" / >`));
+
   t.true(withinTagInnerspace(` abc="de" fgh="ij">`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij">`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij">`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij">`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij">`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij'>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij">`));
+
   t.true(withinTagInnerspace(` abc="de" fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij"/>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij"/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij'/>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij"/>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" />`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' />`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" />`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' />`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" />`));
+
   t.true(withinTagInnerspace(` abc=' def='>`));
+  t.true(withinTagInnerspace(` abc=" def='>`));
+  t.true(withinTagInnerspace(` abc=' def=">`));
+  t.true(withinTagInnerspace(` abc=" def=">`));
+
   t.true(withinTagInnerspace(` abc=' def='/>`));
+  t.true(withinTagInnerspace(` abc=" def='/>`));
+  t.true(withinTagInnerspace(` abc=' def="/>`));
+  t.true(withinTagInnerspace(` abc=" def="/>`));
+
+  t.true(withinTagInnerspace(` abc=' def=' />`));
+  t.true(withinTagInnerspace(` abc=" def=' />`));
+  t.true(withinTagInnerspace(` abc=' def=" />`));
+  t.true(withinTagInnerspace(` abc=" def=" />`));
+
+  t.true(withinTagInnerspace(` abc=' def='/ >`));
+  t.true(withinTagInnerspace(` abc=" def='/ >`));
+  t.true(withinTagInnerspace(` abc=' def="/ >`));
+  t.true(withinTagInnerspace(` abc=" def="/ >`));
+
+  t.true(withinTagInnerspace(` abc=' def=' / >`));
+  t.true(withinTagInnerspace(` abc=" def=' / >`));
+  t.true(withinTagInnerspace(` abc=' def=" / >`));
+  t.true(withinTagInnerspace(` abc=" def=" / >`));
+
   t.true(withinTagInnerspace(` abc='de' fgh='ij'>`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij'>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij'>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'>`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij">`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij">`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij">`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij">`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij">`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij">`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij'>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'>`));
+
   t.true(withinTagInnerspace(` abc='de' fgh='ij'/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij'/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij'/>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'/>`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij"/>`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij"/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij'/>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'/>`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' />`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij' />`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij' />`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' />`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" />`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" />`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij" />`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij' />`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' />`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh='ij'/ >`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij'/ >`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij'/ >`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij'/ >`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij"/ >`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij"/ >`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij"/ >`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij"/ >`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" / >`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij" / >`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij' / >`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' / >`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' / >`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij' / >`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij' / >`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' / >`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" /\n>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij" /\n>`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij" /\n>`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" /\n>`));
+
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" /\n>`));
+  t.true(withinTagInnerspace(` abc="de' fgh='ij" /\n>`));
+  t.true(withinTagInnerspace(` abc='de" fgh="ij' /\n>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' /\n>`));
+
   // various
-  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= >nop<r>`), "99.03");
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" klm= >nop<r>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" klm= >nop<r>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' klm= >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" klm= >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' klm= >nop<r>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" klm= />nop<r>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= />nop<r>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" klm= />nop<r>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' klm= />nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" klm= />nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' klm= />nop<r>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" klm= / >nop<r>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= / >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" klm= / >nop<r>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' klm= / >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" klm= / >nop<r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' klm= / >nop<r>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" klm= / >nop</r>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= / >nop</r>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" klm= / >nop</r>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' klm= / >nop</r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" klm= / >nop</r>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' klm= / >nop</r>`));
+
+  t.true(withinTagInnerspace(` abc="de" fgh="ij" klm= / >nop<r/>`));
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= / >nop<r/>`));
+  t.true(withinTagInnerspace(` abc='de" fgh='ij" klm= / >nop<r/>`));
+  t.true(withinTagInnerspace(` abc="de' fgh="ij' klm= / >nop<r/>`));
+  t.true(withinTagInnerspace(` abc='de' fgh="ij" klm= / >nop<r/>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij' klm= / >nop<r/>`));
   // false:
   t.false(withinTagInnerspace(`tralala"/>\n   <b>`));
+  t.false(withinTagInnerspace(`tralala'/>\n   <b>`));
+
   t.true(withinTagInnerspace(`tralala/>\n   <b>`));
   t.false(withinTagInnerspace(`=ef>`));
   t.false(withinTagInnerspace(`=ef>\n   <b>`));
@@ -2771,8 +3236,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     ),
     "99.02.04"
   );
-  // yet not this (nothing is after bracket so it's still a questionable case):
-  t.false(
+  t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">`,
       //                       ^
@@ -2780,7 +3244,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     ),
     "99.02.05-1"
   );
-  t.false(
+  t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">\n`,
       //                       ^
@@ -2788,7 +3252,7 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
     ),
     "99.02.05-2"
   );
-  t.false(
+  t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">a`,
       //                       ^
@@ -2803,6 +3267,14 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
       24
     ),
     "99.02.05-4"
+  );
+  t.false(
+    withinTagInnerspace(
+      `<img src="zzz.jpg" alt=">a"`,
+      //                       ^
+      24
+    ),
+    "99.02.05-3"
   );
 
   // nobody puts /> at the beginning of a comment! It's a positive case.
@@ -2835,20 +3307,20 @@ test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(withinTagInnerspace(code, 13), "99.04");
 });
 
-test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(firstOnTheRight(""), "99.10.01");
-  t.false(firstOnTheRight("a"), "99.10.02");
+test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstIdxOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
+  t.false(!!firstIdxOnTheRight(""), "99.10.01");
+  t.false(!!firstIdxOnTheRight("a"), "99.10.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  t.is(firstOnTheRight("ab"), 1, "99.10.03");
+  t.is(firstIdxOnTheRight("ab"), 1, "99.10.03");
 
   // 2nd input arg was omitted so starting index is zero, which is "a".
   // Now, to the right of it, there's a space, index 1, next non-whitespace char
   // is b which is index 2.
-  t.is(firstOnTheRight("a b"), 2, "99.10.04");
+  t.is(firstIdxOnTheRight("a b"), 2, "99.10.04");
 
-  t.is(firstOnTheRight("a \n\n\nb"), 5, "99.10.05");
-  t.is(firstOnTheRight("a \n\n\n\n"), null, "99.10.06");
+  t.is(firstIdxOnTheRight("a \n\n\nb"), 5, "99.10.05");
+  t.is(firstIdxOnTheRight("a \n\n\n\n"), null, "99.10.06");
 });
 
 test(`99.11 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {

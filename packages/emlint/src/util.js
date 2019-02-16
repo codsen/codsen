@@ -154,13 +154,18 @@ const knownHTMLTags = [
 
 function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
-  console.log(`157 emlint/util/charSuitableForAttrName(): return ${res}`);
+  // console.log(`157 emlint/util/charSuitableForAttrName(): return ${res}`);
   return res;
 }
 
 function charIsQuote(char) {
-  const res = `"'\u2018\u2019\u201D\u201D`.includes(char);
-  console.log(`163 emlint/util/charIsQuote(): return ${res}`);
+  // u201C - left double
+  // u201D - right double
+  // u2018 - left single
+  // u2019 - right single
+  // also notice backtick escaped below, third character in a quotes row:
+  const res = `"'\`\u2018\u2019\u201C\u201D`.includes(char);
+  // console.log(`168 emlint/util/charIsQuote(): return ${res}`);
   return res;
 }
 
@@ -171,7 +176,7 @@ function notTagChar(char) {
     );
   }
   const res = !`><=`.includes(char);
-  console.log(`174 emlint/util/charNotTag(): return ${res}`);
+  // console.log(`179 emlint/util/charNotTag(): return ${res}`);
   return res;
 }
 
@@ -246,8 +251,17 @@ function log(...pairs) {
 // Remember, index means gap to the left of a given character at that index.
 // For example, if you have a string "ab", a is index zero, b is index 1. Something being located "at
 // index 1" would mean that exact meant location is to the left of "b", between "a" and "b".
-function withinTagInnerspace(str, idx = 0) {
-  console.log(`250 withinTagInnerspace() called, idx = ${idx}`);
+function withinTagInnerspace(str, idx, closingQuotePos) {
+  console.log(`255 withinTagInnerspace() called, idx = ${idx}`);
+  if (typeof idx !== "number") {
+    if (idx == null) {
+      idx = 0;
+    } else {
+      throw new Error(
+        `emlint/util.js/withinTagInnerspace(): second argument is of a type ${typeof idx}`
+      );
+    }
+  }
   // vars
   // ---------------------------------------------------------------------------
   let whitespaceStartAt = null;
@@ -308,15 +322,22 @@ function withinTagInnerspace(str, idx = 0) {
   for (let i = idx, len = str.length; i < len; i++) {
     // logging
     // -------------------------------------------------------------------------
+
     const charcode = str[i].charCodeAt(0);
     console.log(
-      `${`\u001b[${36}m${`=`}\u001b[${39}m\u001b[${34}m${`=`}\u001b[${39}m`.repeat(
-        15
-      )} \u001b[${31}m${`str[ ${i} ] = ${
+      `${`\u001b[${
+        closingQuotePos != null ? 35 : 36
+      }m${`=`}\u001b[${39}m\u001b[${
+        closingQuotePos != null ? 33 : 34
+      }m${`=`}\u001b[${39}m`.repeat(15)} \u001b[${31}m${`str[ ${i} ] = ${
         str[i].trim().length ? str[i] : JSON.stringify(str[i], null, 0)
-      }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} ${`\u001b[${36}m${`=`}\u001b[${39}m\u001b[${34}m${`=`}\u001b[${39}m`.repeat(
-        15
-      )}`
+      }`}\u001b[${39}m ${`\u001b[${90}m#${charcode}\u001b[${39}m`} ${`\u001b[${
+        closingQuotePos != null ? 35 : 36
+      }m${`=`}\u001b[${39}m\u001b[${
+        closingQuotePos != null ? 33 : 34
+      }m${`=`}\u001b[${39}m`.repeat(15)}${
+        closingQuotePos != null ? " RECURSION" : ""
+      }`
     );
 
     // action
@@ -399,7 +420,7 @@ function withinTagInnerspace(str, idx = 0) {
     }
 
     // catch quotes
-    if (`'"`.includes(str[i])) {
+    if (charIsQuote(str[i])) {
       // Quotes are different from other characters we catch because we keep
       // note of opening quotes and keep track of being within quotes this way.
       // Only matching quote (or really serious code pattern, if the given code
@@ -407,7 +428,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (quotes.at === null) {
         quotes.within = true;
         quotes.at = i;
-      } else if (str[i] === str[quotes.at]) {
+      } else if (str[i] === str[quotes.at] || i === closingQuotePos) {
         // quotes.at = null; // <---- don't remove the opening quotes' index marker upon stepping onto
         // the closing quotes. Wipe it afterwards, upon stepping on a next character.
         quotes.within = false;
@@ -427,13 +448,13 @@ function withinTagInnerspace(str, idx = 0) {
       str[i] !== str[quotes.at]
     ) {
       quotes.at = null;
-      console.log(
-        `431 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "quotes.at",
-          quotes.at
-        )}`
-      );
+      // console.log(
+      //   `452 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "set",
+      //     "quotes.at",
+      //     quotes.at
+      //   )}`
+      // );
     }
 
     //                                S
@@ -464,107 +485,7 @@ function withinTagInnerspace(str, idx = 0) {
       ">".includes(str[firstIdxOnTheRight(str, i)])
     ) {
       console.log(
-        `467 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "return",
-          "true"
-        )}`
-      );
-      return true;
-    }
-
-    // -----------------------------------------------------------------------------
-
-    // R2. attribute with equal, value surrounded with quotes and closing bracket. Slash optional.
-    // we'll separate all clauses into separate pieces: r2_1 means R2 clause, piece 1.
-
-    // r2_1 - chunk of characters, suitable for an attribute name
-    if (
-      !quotes.within &&
-      beginningOfAString &&
-      charSuitableForAttrName(str[i]) &&
-      !r2_1
-    ) {
-      r2_1 = true;
-      console.log(
-        `489 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "r2_1",
-          r2_1
-        )}`
-      );
-    }
-
-    // r2_2 - equal that follows the attribute's name
-    else if (
-      !r2_2 &&
-      r2_1 &&
-      str[i].trim().length &&
-      !charSuitableForAttrName(str[i])
-    ) {
-      // if it's equal, activate r2_2, otherwise, wipe all preceding clauses (r2_1)
-      if (str[i] === "=") {
-        r2_2 = true;
-        console.log(
-          `508 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r2_2",
-            r2_2
-          )}`
-        );
-      } else {
-        r2_1 = false;
-        console.log(
-          `517 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r2_1",
-            r2_1
-          )}`
-        );
-      }
-    }
-
-    // r2_3 - quote follows
-    else if (!r2_3 && r2_2 && str[i].trim().length) {
-      if (`'"`.includes(str[i])) {
-        r2_3 = true;
-        console.log(
-          `531 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "set",
-            "r2_3",
-            r2_3
-          )}`
-        );
-      } else {
-        r2_1 = false;
-        r2_2 = false;
-        console.log(
-          `541 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-            "reset",
-            "r2_1",
-            r2_1,
-            "r2_2",
-            r2_2
-          )}`
-        );
-      }
-    }
-
-    // r2_4 - closing quote of an attribute
-    else if (r2_3 && str[i] === str[quotes.at]) {
-      r2_4 = true;
-      console.log(
-        `556 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "r2_4",
-          r2_4
-        )}`
-      );
-    }
-
-    // final clause
-    else if (r2_4 && !quotes.within && str[i] === ">") {
-      console.log(
-        `567 ${`\u001b[${32}m${`██ R2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `488 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "return",
           "true"
         )}`
@@ -581,17 +502,35 @@ function withinTagInnerspace(str, idx = 0) {
     if (!quotes.within && beginningOfAString && str[i] === ">" && !r3_1) {
       r3_1 = true;
       console.log(
-        `584 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `505 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r3_1",
           r3_1
         )}`
       );
 
-      if (str[firstIdxOnTheRight(str, i)] === "<") {
+      // if there's string ending on the right or the rest of the string doesn't
+      // contain any quotes, that's a tag ending, just the attribute was missing
+      // the closing quote.
+      if (
+        !str[i + 1] ||
+        !firstIdxOnTheRight(str, i) ||
+        (!str.slice(i).includes("'") && !str.slice(i).includes('"'))
+      ) {
+        // quick ending, we have something like:
+        // <img alt=>
+        //          ^ <---- we're here, at closing bracket, further there's EOF
+        console.log(
+          `524 EOF detected ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "return",
+            "true"
+          )}`
+        );
+        return true;
+      } else if (str[firstIdxOnTheRight(str, i)] === "<") {
         // nobody puts "><" within attribute values
         console.log(
-          `594 ${`\u001b[${32}m${`██ R3.2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `533 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -605,7 +544,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (str[i] === "<") {
         r3_2 = true;
         console.log(
-          `608 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `547 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_2",
             r3_2
@@ -614,7 +553,7 @@ function withinTagInnerspace(str, idx = 0) {
       } else {
         r3_1 = false;
         console.log(
-          `617 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `556 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1
@@ -628,7 +567,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (charSuitableForTagName(str[i]) || str[i] === "/") {
         r3_3 = true;
         console.log(
-          `631 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `570 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_3",
             r3_3
@@ -638,7 +577,7 @@ function withinTagInnerspace(str, idx = 0) {
         r3_1 = false;
         r3_2 = false;
         console.log(
-          `641 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `580 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -663,7 +602,7 @@ function withinTagInnerspace(str, idx = 0) {
         (str[i] === "/" && "<>".includes(firstIdxOnTheRight(str, i)))
       ) {
         console.log(
-          `666 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `605 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -675,7 +614,7 @@ function withinTagInnerspace(str, idx = 0) {
         r3_2 = false;
         r3_3 = false;
         console.log(
-          `678 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `617 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -692,7 +631,7 @@ function withinTagInnerspace(str, idx = 0) {
     else if (r3_3 && !r3_4 && !str[i].trim().length) {
       r3_4 = true;
       console.log(
-        `695 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `634 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r3_4",
           r3_4
@@ -706,7 +645,7 @@ function withinTagInnerspace(str, idx = 0) {
         // if it seems an attribute name starts
         r3_5 = true;
         console.log(
-          `709 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `648 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_5",
             r3_5
@@ -718,7 +657,7 @@ function withinTagInnerspace(str, idx = 0) {
         r3_3 = false;
         r3_4 = false;
         console.log(
-          `721 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `660 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r3_1",
             r3_1,
@@ -738,7 +677,249 @@ function withinTagInnerspace(str, idx = 0) {
     else if (r3_5) {
       if (!str[i].trim().length || str[i] === "=" || charIsQuote(str[i])) {
         console.log(
-          `741 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `680 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "return",
+            "true"
+          )}`
+        );
+        return true;
+      }
+    }
+
+    // -----------------------------------------------------------------------------
+    // important. R2 must be under R3 because R2 sometimes jumps into R3 flow
+    // -----------------------------------------------------------------------------
+
+    // R2. attribute with equal, value surrounded with quotes and closing
+    // bracket (slash optional) (clause R2/1), OR there's a space and
+    // attribute-friendly character follows (clause R2/2).
+
+    // we'll separate all clauses into separate pieces: r2_1 means R2 clause, piece 1.
+
+    // r2_1 - chunk of characters, suitable for an attribute name
+    if (
+      !quotes.within &&
+      beginningOfAString &&
+      charSuitableForAttrName(str[i]) &&
+      !r2_1
+    ) {
+      r2_1 = true;
+      console.log(
+        `706 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          "set",
+          "r2_1",
+          r2_1
+        )}`
+      );
+    }
+
+    // r2_2 - equal that follows the attribute's name
+    else if (
+      !r2_2 &&
+      r2_1 &&
+      str[i].trim().length &&
+      !charSuitableForAttrName(str[i])
+    ) {
+      // if it's equal, activate r2_2, otherwise, wipe all preceding clauses (r2_1)
+      if (str[i] === "=") {
+        r2_2 = true;
+        console.log(
+          `725 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "set",
+            "r2_2",
+            r2_2
+          )}`
+        );
+      } else if (
+        str[i] === ">" ||
+        (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">")
+      ) {
+        let closingBracketAt = i;
+        if (str[i] === "/") {
+          closingBracketAt = str[firstIdxOnTheRight(str, i)];
+        }
+
+        // check, are there any characters after the closing bracket:
+        if (firstIdxOnTheRight(str, closingBracketAt)) {
+          // if it's a tag's closing, we've got a value-less attribute,
+          // as in: " nobr>", right side of <td nobr> for example.
+          r3_1 = true;
+          r2_1 = false;
+          console.log(
+            `747 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              "set",
+              "r2_1",
+              r2_1,
+              "r3_1",
+              r3_1
+            )}`
+          );
+        } else {
+          console.log(
+            `757 ${`\u001b[${32}m${`██ R2.1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              "return",
+              "true"
+            )}`
+          );
+          return true;
+        }
+      } else {
+        r2_1 = false;
+        console.log(
+          `767 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "reset",
+            "r2_1",
+            r2_1
+          )}`
+        );
+      }
+    }
+
+    // r2_3 - quote follows
+    else if (!r2_3 && r2_2 && str[i].trim().length) {
+      if (`'"`.includes(str[i])) {
+        r2_3 = true;
+        console.log(
+          `781 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "set",
+            "r2_3",
+            r2_3
+          )}`
+        );
+      } else {
+        r2_1 = false;
+        r2_2 = false;
+        console.log(
+          `791 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "reset",
+            "r2_1",
+            r2_1,
+            "r2_2",
+            r2_2
+          )}`
+        );
+      }
+    }
+
+    // r2_4 - closing quote of an attribute
+    else if (r2_3 && charIsQuote(str[i])) {
+      if (str[i] === str[quotes.at]) {
+        r2_4 = true;
+        console.log(
+          `807 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "set",
+            "r2_4",
+            r2_4
+          )}`
+        );
+      } else {
+        // check, is this a recursion and closing quote is given as a message
+        // from the future
+        if (closingQuotePos != null && closingQuotePos === i) {
+          console.log("817 recursion, this is the index the future indicated");
+          // it's a recursion
+
+          // - if quotes are single-opening, double-closing or double-opening,
+          // single-closing, we count this as positive case, with condition that
+          // all other patterns are met.
+          // - if quotes are out of whack, they must be the opposite-type, for
+          // example, case where normal quotes got turned into "fancy" quotes,
+          // - if it's a backtick, opening and closing must match, otherwise
+          // it's a too messed up case
+
+          if (
+            isStr(str[quotes.at]) &&
+            `"'`.includes(str[quotes.at]) &&
+            `"'`.includes(str[i])
+          ) {
+            // we have a mismatching pair of single-double straight quotes
+
+            // we'll forgive this mishap and let this recursive run continue:
+
+            r2_4 = true;
+            console.log(
+              `839 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+                "set",
+                "r2_4",
+                r2_4
+              )}`
+            );
+          } else if (
+            isStr(str[quotes.at]) &&
+            `\u2018\u2019`.includes(str[quotes.at]) &&
+            `\u2018\u2019`.includes(str[i])
+          ) {
+            // Single curly quotes. Fine.
+            r2_4 = true;
+            console.log(
+              `853 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+                "set",
+                "r2_4",
+                r2_4
+              )}`
+            );
+          } else if (
+            isStr(str[quotes.at]) &&
+            `\u201C\u201D`.includes(str[quotes.at]) &&
+            `\u201C\u201D`.includes(str[i])
+          ) {
+            // Double curly quotes. Fine too.
+            r2_4 = true;
+            console.log(
+              `867 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+                "set",
+                "r2_4",
+                r2_4
+              )}`
+            );
+          }
+        } else if (
+          closingQuotePos == null &&
+          withinTagInnerspace(str, null, i)
+        ) {
+          console.log("                        ██");
+          console.log("                        ██");
+          console.log("                        ██");
+          console.log("                        ██");
+          console.log("  OUTSIDE OF RECURSION, WITHIN MAIN LOOP AGAIN");
+          console.log("                        ██");
+          console.log("                        ██");
+          console.log("                        ██");
+          console.log("                        ██");
+
+          console.log("888 not a recursion, but result from one came positive");
+
+          // not a recursion, but it's confirmed that quotes were mismatching:
+          // 1. turn off "quotes.within", because it won't turn off by itself
+          if (quotes.within) {
+            quotes.within = false;
+          }
+          // 2. do the other deeds
+          r2_4 = true;
+          console.log(
+            `898 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+              "set",
+              "r2_4",
+              r2_4
+            )}`
+          );
+        }
+      }
+    }
+
+    // final clause
+    else if (r2_4 && !quotes.within && str[i].trim().length && str[i] !== "/") {
+      if (str[i] === ">") {
+        console.log(
+          `912 ${`\u001b[${32}m${`██ R2/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+            "return",
+            "true"
+          )}`
+        );
+        return true;
+      } else if (charSuitableForAttrName(str[i])) {
+        console.log(
+          `920 ${`\u001b[${32}m${`██ R2/2`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -759,7 +940,7 @@ function withinTagInnerspace(str, idx = 0) {
     ) {
       r4_1 = true;
       console.log(
-        `762 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `941 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r4_1",
           r4_1
@@ -776,7 +957,7 @@ function withinTagInnerspace(str, idx = 0) {
       // if it's a slash+closing bracket
       if (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">") {
         console.log(
-          `779 ${`\u001b[${32}m${`██ R4`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `958 ${`\u001b[${32}m${`██ R4`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -785,7 +966,7 @@ function withinTagInnerspace(str, idx = 0) {
       }
       r4_1 = false;
       console.log(
-        `788 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `967 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "reset",
           "r4_1",
           r4_1
@@ -807,7 +988,7 @@ function withinTagInnerspace(str, idx = 0) {
     ) {
       r5_1 = true;
       console.log(
-        `810 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `989 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r5_1",
           r5_1
@@ -825,7 +1006,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (str[i] === "=") {
         r5_2 = true;
         console.log(
-          `828 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1007 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r5_2",
             r5_2
@@ -834,7 +1015,7 @@ function withinTagInnerspace(str, idx = 0) {
       } else {
         r5_1 = false;
         console.log(
-          `837 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1016 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r5_1",
             r5_1
@@ -848,7 +1029,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (str[i] === ">") {
         r5_3 = true;
         console.log(
-          `851 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1030 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r5_3",
             r5_3
@@ -858,7 +1039,7 @@ function withinTagInnerspace(str, idx = 0) {
         r5_1 = false;
         r5_2 = false;
         console.log(
-          `861 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1040 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r5_1",
             r5_1,
@@ -875,7 +1056,7 @@ function withinTagInnerspace(str, idx = 0) {
         r3_2 = true;
         // r3_2 and onwards match tag
         console.log(
-          `878 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1057 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r3_2",
             r3_2
@@ -886,7 +1067,7 @@ function withinTagInnerspace(str, idx = 0) {
         r5_2 = false;
         r5_3 = false;
         console.log(
-          `889 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1068 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r5_1",
             r5_1,
@@ -923,7 +1104,7 @@ function withinTagInnerspace(str, idx = 0) {
       // chunk of attribute's name catched:
       r6_1 = true;
       console.log(
-        `926 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+        `1105 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
           "set",
           "r6_1",
           r6_1
@@ -942,7 +1123,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (str[i] === "=") {
         r6_2 = true;
         console.log(
-          `945 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1124 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r6_2",
             r6_2
@@ -951,7 +1132,7 @@ function withinTagInnerspace(str, idx = 0) {
       } else {
         r6_1 = false;
         console.log(
-          `954 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1133 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r6_1",
             r6_1
@@ -965,7 +1146,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (charIsQuote(str[i])) {
         r6_3 = true;
         console.log(
-          `968 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1147 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "set",
             "r6_3",
             r6_3
@@ -975,7 +1156,7 @@ function withinTagInnerspace(str, idx = 0) {
         r6_1 = false;
         r6_2 = false;
         console.log(
-          `978 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1157 ${`\u001b[${31}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "reset",
             "r6_1",
             r6_1,
@@ -991,7 +1172,7 @@ function withinTagInnerspace(str, idx = 0) {
       if (str[i] === str[quotes.at]) {
         // matching closing quotes
         console.log(
-          `994 ${`\u001b[${32}m${`██ R6/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1173 ${`\u001b[${32}m${`██ R6/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
@@ -1003,21 +1184,12 @@ function withinTagInnerspace(str, idx = 0) {
       else if (str[i + 1] && `/>`.includes(str[firstIdxOnTheRight(str, i)])) {
         // mismatching quotes, but tag ending follows
         console.log(
-          `1006 ${`\u001b[${32}m${`██ R6/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+          `1185 ${`\u001b[${32}m${`██ R6/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
             "true"
           )}`
         );
         return true;
-
-        // r6_4 = true;
-        // console.log(
-        //   `1015 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-        //     "set",
-        //     "r6_4",
-        //     r6_4
-        //   )}`
-        // );
       }
     }
 
@@ -1045,7 +1217,7 @@ function withinTagInnerspace(str, idx = 0) {
       // set whitespace marker
       whitespaceStartAt = null;
       // console.log(
-      //   `1048 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //   `1218 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
       //     "set",
       //     "whitespaceStartAt",
       //     whitespaceStartAt
@@ -1055,82 +1227,82 @@ function withinTagInnerspace(str, idx = 0) {
 
     if (beginningOfAString && str[i].trim().length) {
       beginningOfAString = false;
-      console.log(
-        `1059 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
-          "set",
-          "beginningOfAString",
-          beginningOfAString
-        )}`
-      );
+      // console.log(
+      //   `1229 ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
+      //     "set",
+      //     "beginningOfAString",
+      //     beginningOfAString
+      //   )}`
+      // );
     }
 
     // logging:
     // -------------------------------------------------------------------------
 
-    console.log(`\u001b[${36}m${`█`}\u001b[${39}m`);
-    console.log(
-      `${`\u001b[${33}m${`whitespaceStartAt`}\u001b[${39}m`} = ${JSON.stringify(
-        whitespaceStartAt,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`closingBracket`}\u001b[${39}m`} = ${JSON.stringify(
-        closingBracket,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`slash`}\u001b[${39}m`} = ${JSON.stringify(
-        slash,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`beginningOfAString`}\u001b[${39}m`} = ${JSON.stringify(
-        beginningOfAString,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
-        quotes,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`r3_1`}\u001b[${39}m`} = ${JSON.stringify(
-        r3_1,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`r3_2`}\u001b[${39}m`} = ${JSON.stringify(
-        r3_2,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`r3_3`}\u001b[${39}m`} = ${JSON.stringify(
-        r3_3,
-        null,
-        0
-      )}`
-    );
-    console.log(
-      `${`\u001b[${33}m${`r3_4`}\u001b[${39}m`} = ${JSON.stringify(
-        r3_4,
-        null,
-        0
-      )}`
-    );
+    // console.log(`\u001b[${36}m${`█`}\u001b[${39}m`);
+    // console.log(
+    //   `${`\u001b[${33}m${`whitespaceStartAt`}\u001b[${39}m`} = ${JSON.stringify(
+    //     whitespaceStartAt,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`closingBracket`}\u001b[${39}m`} = ${JSON.stringify(
+    //     closingBracket,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`slash`}\u001b[${39}m`} = ${JSON.stringify(
+    //     slash,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`beginningOfAString`}\u001b[${39}m`} = ${JSON.stringify(
+    //     beginningOfAString,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`quotes`}\u001b[${39}m`} = ${JSON.stringify(
+    //     quotes,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`r2_1`}\u001b[${39}m`} = ${JSON.stringify(
+    //     r2_1,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`r2_2`}\u001b[${39}m`} = ${JSON.stringify(
+    //     r2_2,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`r2_3`}\u001b[${39}m`} = ${JSON.stringify(
+    //     r2_3,
+    //     null,
+    //     0
+    //   )}`
+    // );
+    // console.log(
+    //   `${`\u001b[${33}m${`r2_4`}\u001b[${39}m`} = ${JSON.stringify(
+    //     r2_4,
+    //     null,
+    //     0
+    //   )}`
+    // );
   }
   //                                  ^
   //                                 /|\
@@ -1143,7 +1315,7 @@ function withinTagInnerspace(str, idx = 0) {
   //                         L O O P     E N D S
 
   console.log(`\n███████████████████████████████████████`);
-  console.log(`1146 FIN. REACHED. RETURN FALSE.`);
+  console.log(`1316 FIN. RETURN FALSE.`);
   return false;
 }
 
@@ -1158,9 +1330,9 @@ function withinTagInnerspace(str, idx = 0) {
 
 function tagOnTheRight(str, idx = 0) {
   console.log(
-    `1161 util/tagOnTheRight() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
+    `1331 util/tagOnTheRight() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
   );
-  console.log(`1163 tagOnTheRight() called, idx = ${idx}`);
+  console.log(`1333 tagOnTheRight() called, idx = ${idx}`);
 
   // r1. tag without attributes
   // for example <br>, <br/>
@@ -1179,28 +1351,28 @@ function tagOnTheRight(str, idx = 0) {
   let passed = false;
   if (r1.test(whatToTest)) {
     console.log(
-      `1182 util/tagOnTheRight(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`
+      `1352 util/tagOnTheRight(): ${`\u001b[${31}m${`R1`}\u001b[${39}m`} passed`
     );
     passed = true;
   } else if (r2.test(whatToTest)) {
     console.log(
-      `1187 util/tagOnTheRight(): ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`
+      `1357 util/tagOnTheRight(): ${`\u001b[${31}m${`R2`}\u001b[${39}m`} passed`
     );
     passed = true;
   } else if (r3.test(whatToTest)) {
     console.log(
-      `1192 util/tagOnTheRight(): ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`
+      `1362 util/tagOnTheRight(): ${`\u001b[${31}m${`R3`}\u001b[${39}m`} passed`
     );
     passed = true;
   } else if (r4.test(whatToTest)) {
     console.log(
-      `1197 util/tagOnTheRight(): ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`
+      `1367 util/tagOnTheRight(): ${`\u001b[${31}m${`R4`}\u001b[${39}m`} passed`
     );
     passed = true;
   }
   const res = isStr(str) && idx < str.length && passed;
   console.log(
-    `1203 util/tagOnTheRight(): return ${`\u001b[${36}m${res}\u001b[${39}m`}`
+    `1373 util/tagOnTheRight(): return ${`\u001b[${36}m${res}\u001b[${39}m`}`
   );
   return res;
 }
@@ -1334,7 +1506,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     ) {
       closingQuoteAt = i;
       console.log(
-        `1337 (util/attributeOnTheRight) ${log(
+        `1507 (util/attributeOnTheRight) ${log(
           "set",
           "closingQuoteAt",
           closingQuoteAt
@@ -1343,7 +1515,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
       if (!closingQuoteMatched) {
         closingQuoteMatched = true;
         console.log(
-          `1346 (util/attributeOnTheRight) ${log(
+          `1516 (util/attributeOnTheRight) ${log(
             "set",
             "closingQuoteMatched",
             closingQuoteMatched
@@ -1355,7 +1527,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === ">") {
       lastClosingBracket = i;
       console.log(
-        `1358 (util/attributeOnTheRight) ${log(
+        `1528 (util/attributeOnTheRight) ${log(
           "set",
           "lastClosingBracket",
           lastClosingBracket
@@ -1365,7 +1537,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === "<") {
       lastOpeningBracket = i;
       console.log(
-        `1368 (util/attributeOnTheRight) ${log(
+        `1538 (util/attributeOnTheRight) ${log(
           "set",
           "lastOpeningBracket",
           lastOpeningBracket
@@ -1375,13 +1547,13 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     if (str[i] === "=") {
       lastEqual = i;
       console.log(
-        `1378 (util/attributeOnTheRight) ${log("set", "lastEqual", lastEqual)}`
+        `1548 (util/attributeOnTheRight) ${log("set", "lastEqual", lastEqual)}`
       );
     }
     if (str[i] === "'" || str[i] === '"') {
       lastSomeQuote = i;
       console.log(
-        `1384 (util/attributeOnTheRight) ${log(
+        `1554 (util/attributeOnTheRight) ${log(
           "set",
           "lastSomeQuote",
           lastSomeQuote
@@ -1397,7 +1569,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     // catch pattern =" or ='
     if (str[i] === "=" && (str[i + 1] === "'" || str[i + 1] === '"')) {
       console.log(
-        "1400 (util/attributeOnTheRight) within pattern check: equal-quote"
+        "1570 (util/attributeOnTheRight) within pattern check: equal-quote"
       );
       if (closingQuoteMatched) {
         //
@@ -1405,7 +1577,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           // if this is the first such occurence after closing quotes matched,
           // this is it. We stumbled upon the new attribute
           console.log(
-            `1408 (util/attributeOnTheRight) ${log(
+            `1578 (util/attributeOnTheRight) ${log(
               "return",
               "closingQuoteAt",
               closingQuoteAt
@@ -1420,14 +1592,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
         // that's it. No more recursive calls.
         if (closingQuoteAt) {
           console.log(
-            "1423 (util/attributeOnTheRight) STOP",
+            "1593 (util/attributeOnTheRight) STOP",
             'recursive check ends, it\'s actually messed up. We are already within a recursion. Return "false".'
           );
           return false;
         }
 
         console.log(
-          `1430 (util/attributeOnTheRight) ${log(
+          `1600 (util/attributeOnTheRight) ${log(
             " ███████████████████████████████████████ correction!\n",
             "true"
           )}`
@@ -1442,10 +1614,10 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           const correctionsRes1 = attributeOnTheRight(str, idx, lastSomeQuote);
           if (correctionsRes1) {
             console.log(
-              "1445 (util/attributeOnTheRight) CORRECTION #1 PASSED - so it was mismatching quote"
+              "1615 (util/attributeOnTheRight) CORRECTION #1 PASSED - so it was mismatching quote"
             );
             console.log(
-              `1448 (util/attributeOnTheRight) ${log(
+              `1618 (util/attributeOnTheRight) ${log(
                 "return",
                 "lastSomeQuote",
                 lastSomeQuote
@@ -1461,10 +1633,10 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
           // If there's a healthy attribute onwards, it's definitely false.
           // Otherwise, still dubious.
           console.log(
-            "1464 (util/attributeOnTheRight) CORRECTION #2 PASSED - healthy attributes follow"
+            "1634 (util/attributeOnTheRight) CORRECTION #2 PASSED - healthy attributes follow"
           );
           console.log(
-            `1467 (util/attributeOnTheRight) ${log("return", "false")}`
+            `1637 (util/attributeOnTheRight) ${log("return", "false")}`
           );
           return false;
         }
@@ -1478,7 +1650,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     ) {
       // if closing bracket is met, that's positive case
       console.log(
-        `1481 (util/attributeOnTheRight) ${log(
+        `1651 (util/attributeOnTheRight) ${log(
           "return",
           "closingQuoteAt",
           closingQuoteAt
@@ -1502,7 +1674,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
       // yes, it's within attribute, albeit chopped off file end follows
       console.log(
-        `1505 (util/attributeOnTheRight) ${log(
+        `1675 (util/attributeOnTheRight) ${log(
           "return",
           "closingQuoteAt",
           closingQuoteAt
@@ -1525,7 +1697,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
     //         S
     //         S
     if (!str[i + 1]) {
-      console.log(`1528 (util) "EOL reached"`);
+      console.log(`1698 (util) "EOL reached"`);
     }
     console.log(closingQuoteMatched ? "closingQuoteMatched" : "");
   }
@@ -1543,7 +1715,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   // by this point, we give a last chance, maybe quotes were mismatched:
   if (lastSomeQuote && closingQuoteAt === null) {
     // as in lastSomeQuote !== 0
-    console.log("1546 (util) last chance, run correction 3");
+    console.log("1716 (util) last chance, run correction 3");
     console.log(
       `${`\u001b[${33}m${`lastSomeQuote`}\u001b[${39}m`} = ${JSON.stringify(
         lastSomeQuote,
@@ -1555,14 +1727,14 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 
     if (correctionsRes3) {
       console.log(
-        "1558 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
+        "1728 (util) CORRECTION #3 PASSED - mismatched quotes confirmed"
       );
-      console.log(`1560 (util) ${log("return", true)}`);
+      console.log(`1730 (util) ${log("return", true)}`);
       return lastSomeQuote;
     }
   }
 
-  console.log(`1565 (util) ${log("bottom - return", "false")}`);
+  console.log(`1735 (util) ${log("bottom - return", "false")}`);
   return false;
 }
 
@@ -1582,7 +1754,7 @@ function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
 // If end of the loop is reached fruitless, return null.
 function findClosingQuote(str, idx = 0) {
   console.log(
-    `1585 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
+    `1755 util/findClosingQuote() called, ${`\u001b[${33}m${`idx`}\u001b[${39}m`} = ${`\u001b[${31}m${idx}\u001b[${39}m`}`
   );
   let lastNonWhitespaceCharWasQuoteAt = null;
   let lastQuoteAt = null;
@@ -1613,7 +1785,7 @@ function findClosingQuote(str, idx = 0) {
       // quick ending - if closing quote, matching the opening-one is met, that's the result
       if (str[i] === startingQuote && i > idx) {
         console.log(
-          `1616 (util/findClosingQuote) quick ending, ${i} is the matching quote`
+          `1786 (util/findClosingQuote) quick ending, ${i} is the matching quote`
         );
         return i;
       }
@@ -1621,7 +1793,7 @@ function findClosingQuote(str, idx = 0) {
       lastNonWhitespaceCharWasQuoteAt = i;
       lastQuoteAt = i;
       console.log(
-        `1624 (util/findClosingQuote) ${log(
+        `1794 (util/findClosingQuote) ${log(
           "set",
           "lastNonWhitespaceCharWasQuoteAt",
           lastNonWhitespaceCharWasQuoteAt
@@ -1635,32 +1807,32 @@ function findClosingQuote(str, idx = 0) {
         (str[i] === "'" || str[i] === '"') &&
         withinTagInnerspace(str, i + 1)
       ) {
-        console.log(`1638 (util/findClosingQuote) ${log("return", i)}`);
+        console.log(`1808 (util/findClosingQuote) ${log("return", i)}`);
         return i;
       }
-      console.log("1641 (util/findClosingQuote) didn't pass");
+      console.log("1811 (util/findClosingQuote) didn't pass");
       // maybe this is an unclosed tag and there's a healthy tag on the right?
       if (tagOnTheRight(str, i + 1)) {
         console.log(
-          `1645 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
+          `1815 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) tag on the right - return i=${i}`
         );
         return i;
       }
       console.log(
-        `1650 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
+        `1820 \u001b[${35}m${`██`}\u001b[${39}m (util/findClosingQuote) NOT tag on the right`
       );
     }
 
     // catch non-whitespace characters
     else if (str[i].trim().length) {
-      console.log("1656 (util/findClosingQuote)");
+      console.log("1826 (util/findClosingQuote)");
 
       if (str[i] === ">") {
         // catch closing brackets:
         lastClosingBracketAt = i;
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           console.log(
-            `1663 (util/findClosingQuote) ${log(
+            `1833 (util/findClosingQuote) ${log(
               "!",
               "suitable candidate found"
             )}`
@@ -1669,7 +1841,7 @@ function findClosingQuote(str, idx = 0) {
           // of a tag:
           const temp = withinTagInnerspace(str, i);
           console.log(
-            `1672 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
+            `1842 (util/findClosingQuote) withinTagInnerspace() result: ${temp}`
           );
           if (temp) {
             // now, we have two cases.
@@ -1692,7 +1864,7 @@ function findClosingQuote(str, idx = 0) {
             // Detect if code is messed up - lastNonWhitespaceCharWasQuoteAt === idx
             if (lastNonWhitespaceCharWasQuoteAt === idx) {
               console.log(
-                `1695 (util/findClosingQuote) ${log(
+                `1865 (util/findClosingQuote) ${log(
                   "return",
                   "lastNonWhitespaceCharWasQuoteAt + 1",
                   lastNonWhitespaceCharWasQuoteAt + 1
@@ -1701,7 +1873,7 @@ function findClosingQuote(str, idx = 0) {
               return lastNonWhitespaceCharWasQuoteAt + 1;
             }
             console.log(
-              `1704 (util/findClosingQuote) ${log(
+              `1874 (util/findClosingQuote) ${log(
                 "return",
                 "lastNonWhitespaceCharWasQuoteAt",
                 lastNonWhitespaceCharWasQuoteAt
@@ -1716,7 +1888,7 @@ function findClosingQuote(str, idx = 0) {
         //              ^
         const whatFollowsEq = firstIdxOnTheRight(str, i);
         console.log(
-          `1719 (util/findClosingQuote) ${log(
+          `1889 (util/findClosingQuote) ${log(
             "set",
             "whatFollowsEq",
             whatFollowsEq
@@ -1726,7 +1898,7 @@ function findClosingQuote(str, idx = 0) {
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
         ) {
-          console.log("1729 (util/findClosingQuote)");
+          console.log("1899 (util/findClosingQuote)");
           console.log(
             `${`\u001b[${33}m${`lastNonWhitespaceCharWasQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
               lastNonWhitespaceCharWasQuoteAt,
@@ -1738,7 +1910,7 @@ function findClosingQuote(str, idx = 0) {
           // last quote, check does it pass the util/withinTagInnerspace()
           if (withinTagInnerspace(str, lastQuoteAt + 1)) {
             console.log(
-              `1741 (util/findClosingQuote) ${log(
+              `1911 (util/findClosingQuote) ${log(
                 "return",
                 "lastQuoteAt + 1",
                 lastQuoteAt + 1
@@ -1746,15 +1918,15 @@ function findClosingQuote(str, idx = 0) {
             );
             return lastQuoteAt + 1;
           }
-          console.log("1749 didn't pass");
+          console.log("1919 didn't pass");
         }
       } else if (str[i] !== "/") {
         // 1. catch <
         if (str[i] === "<" && tagOnTheRight(str, i)) {
-          console.log(`1754 ██ tag on the right`);
+          console.log(`1924 ██ tag on the right`);
           if (lastClosingBracketAt !== null) {
             console.log(
-              `1757 (util/findClosingQuote) ${log(
+              `1927 (util/findClosingQuote) ${log(
                 "return",
                 "lastClosingBracketAt",
                 lastClosingBracketAt
@@ -1768,7 +1940,7 @@ function findClosingQuote(str, idx = 0) {
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `1771 (util/findClosingQuote) ${log(
+            `1941 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -1780,7 +1952,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `1783 (util/findClosingQuote) ${log(
+      `1953 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt

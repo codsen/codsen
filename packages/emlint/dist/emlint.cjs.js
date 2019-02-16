@@ -41,7 +41,7 @@ function charSuitableForAttrName(char) {
   return res;
 }
 function charIsQuote(char) {
-  var res = "\"'\u2018\u2019\u201D\u201D".includes(char);
+  var res = "\"'`\u2018\u2019\u201C\u201D".includes(char);
   return res;
 }
 function notTagChar(char) {
@@ -66,8 +66,14 @@ function isLatinLetter(char) {
 function charSuitableForTagName(char) {
   return isLowerCaseLetter(char);
 }
-function withinTagInnerspace(str) {
-  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+function withinTagInnerspace(str, idx, closingQuotePos) {
+  if (typeof idx !== "number") {
+    if (idx == null) {
+      idx = 0;
+    } else {
+      throw new Error("emlint/util.js/withinTagInnerspace(): second argument is of a type ".concat(_typeof(idx)));
+    }
+  }
   var quotes = {
     at: null,
     last: false,
@@ -101,11 +107,11 @@ function withinTagInnerspace(str) {
     if (str[i] === ">") ;
     if (str[i] === "/") ;
     if (str[i] === ">") ;
-    if ("'\"".includes(str[i])) {
+    if (charIsQuote(str[i])) {
       if (quotes.at === null) {
         quotes.within = true;
         quotes.at = i;
-      } else if (str[i] === str[quotes.at]) {
+      } else if (str[i] === str[quotes.at] || i === closingQuotePos) {
         quotes.within = false;
       }
       quotes.last = true;
@@ -121,33 +127,11 @@ function withinTagInnerspace(str) {
     if (!quotes.within && beginningOfAString && str[i] === "/" && ">".includes(str[firstIdxOnTheRight(str, i)])) {
       return true;
     }
-    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1) {
-      r2_1 = true;
-    }
-    else if (!r2_2 && r2_1 && str[i].trim().length && !charSuitableForAttrName(str[i])) {
-        if (str[i] === "=") {
-          r2_2 = true;
-        } else {
-          r2_1 = false;
-        }
-      }
-      else if (!r2_3 && r2_2 && str[i].trim().length) {
-          if ("'\"".includes(str[i])) {
-            r2_3 = true;
-          } else {
-            r2_1 = false;
-            r2_2 = false;
-          }
-        }
-        else if (r2_3 && str[i] === str[quotes.at]) {
-            r2_4 = true;
-          }
-          else if (r2_4 && !quotes.within && str[i] === ">") {
-              return true;
-            }
     if (!quotes.within && beginningOfAString && str[i] === ">" && !r3_1) {
       r3_1 = true;
-      if (str[firstIdxOnTheRight(str, i)] === "<") {
+      if (!str[i + 1] || !firstIdxOnTheRight(str, i) || !str.slice(i).includes("'") && !str.slice(i).includes('"')) {
+        return true;
+      } else if (str[firstIdxOnTheRight(str, i)] === "<") {
         return true;
       }
     }
@@ -193,6 +177,62 @@ function withinTagInnerspace(str) {
                     return true;
                   }
                 }
+    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1) {
+      r2_1 = true;
+    }
+    else if (!r2_2 && r2_1 && str[i].trim().length && !charSuitableForAttrName(str[i])) {
+        if (str[i] === "=") {
+          r2_2 = true;
+        } else if (str[i] === ">" || str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">") {
+          var closingBracketAt = i;
+          if (str[i] === "/") {
+            closingBracketAt = str[firstIdxOnTheRight(str, i)];
+          }
+          if (firstIdxOnTheRight(str, closingBracketAt)) {
+            r3_1 = true;
+            r2_1 = false;
+          } else {
+            return true;
+          }
+        } else {
+          r2_1 = false;
+        }
+      }
+      else if (!r2_3 && r2_2 && str[i].trim().length) {
+          if ("'\"".includes(str[i])) {
+            r2_3 = true;
+          } else {
+            r2_1 = false;
+            r2_2 = false;
+          }
+        }
+        else if (r2_3 && charIsQuote(str[i])) {
+            if (str[i] === str[quotes.at]) {
+              r2_4 = true;
+            } else {
+              if (closingQuotePos != null && closingQuotePos === i) {
+                if (isStr(str[quotes.at]) && "\"'".includes(str[quotes.at]) && "\"'".includes(str[i])) {
+                  r2_4 = true;
+                } else if (isStr(str[quotes.at]) && "\u2018\u2019".includes(str[quotes.at]) && "\u2018\u2019".includes(str[i])) {
+                  r2_4 = true;
+                } else if (isStr(str[quotes.at]) && "\u201C\u201D".includes(str[quotes.at]) && "\u201C\u201D".includes(str[i])) {
+                  r2_4 = true;
+                }
+              } else if (closingQuotePos == null && withinTagInnerspace(str, null, i)) {
+                if (quotes.within) {
+                  quotes.within = false;
+                }
+                r2_4 = true;
+              }
+            }
+          }
+          else if (r2_4 && !quotes.within && str[i].trim().length && str[i] !== "/") {
+              if (str[i] === ">") {
+                return true;
+              } else if (charSuitableForAttrName(str[i])) {
+                return true;
+              }
+            }
     if (!quotes.within && beginningOfAString && !r4_1 && charSuitableForAttrName(str[i])) {
       r4_1 = true;
     }
