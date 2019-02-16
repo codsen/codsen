@@ -2716,6 +2716,19 @@ test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(withinTagInnerspace(` alt="" klm xyz \n >\n   <b>`));
   t.true(withinTagInnerspace(` alt="" klm xyz \n >\n nop  <b>`));
   //
+  // R4 - value-less attribute followed by slash followed by closing bracket
+  t.true(withinTagInnerspace(` abc/>`));
+  // R5 - full attribute with matching quotes:
+  t.true(withinTagInnerspace(` abc="" def="">`));
+  t.true(withinTagInnerspace(` abc="" def=""/>`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij">`));
+  t.true(withinTagInnerspace(` abc="de" fgh="ij"/>`));
+  t.true(withinTagInnerspace(` abc=' def='>`));
+  t.true(withinTagInnerspace(` abc=' def='/>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij'>`));
+  t.true(withinTagInnerspace(` abc='de' fgh='ij'/>`));
+  // various
+  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= >nop<r>`), "99.03");
   // false:
   t.false(withinTagInnerspace(`tralala"/>\n   <b>`));
   t.true(withinTagInnerspace(`tralala/>\n   <b>`));
@@ -2812,19 +2825,19 @@ test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
 });
 
 test(`99.03 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #1`, t => {
-  t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03");
-  t.true(withinTagInnerspace(` abc="de" fgh='ij' klm= >nop<r>`), "99.03");
+  t.true(withinTagInnerspace(` alt= >aaa<b>`), "99.03.01");
+  t.true(withinTagInnerspace(` alt= ><b>`), "99.03.02");
 });
 
 test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - broken code case #2`, t => {
   const code = `<td abc='d e" fgh ijk="klm'/>`;
-  //                         ^
-  t.true(!!withinTagInnerspace(code, 13), "99.04");
+  //  -->                    ^
+  t.true(withinTagInnerspace(code, 13), "99.04");
 });
 
 test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(!!firstOnTheRight(""), "99.10.01");
-  t.false(!!firstOnTheRight("a"), "99.10.02");
+  t.false(firstOnTheRight(""), "99.10.01");
+  t.false(firstOnTheRight("a"), "99.10.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
   t.is(firstOnTheRight("ab"), 1, "99.10.03");
