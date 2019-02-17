@@ -2173,8 +2173,8 @@ test(`17.02 - ${`\u001b[${36}m${`tag-attribute-opening-quotation-mark-missing`}\
 });
 
 test(`17.03 - ${`\u001b[${36}m${`tag-attribute-opening-quotation-mark-missing`}\u001b[${39}m`} - quotes within quotes are ${`\u001b[${33}m${`double`}\u001b[${39}m`} - 1 tag #1`, t => {
-  const bad1 = `<zzz alt=Them, "specialists"'>`;
-  const good1 = `<zzz alt='Them, &quot;specialists&quot;'>`;
+  const bad1 = `<ab cd=Efg, "hij"'>`;
+  const good1 = `<ab cd='Efg, &quot;hij&quot;'>`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),

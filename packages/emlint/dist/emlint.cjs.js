@@ -852,7 +852,7 @@ function lint(str, originalOpts) {
           }
         }
       }
-      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && _i > logAttr.attrOpeningQuote.pos && charIsQuote$1(str[_i])
+      if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && (logAttr.attrClosingQuote.pos === null || _i === logAttr.attrClosingQuote.pos) && _i > logAttr.attrOpeningQuote.pos && charIsQuote$1(str[_i])
       ) {
           if (charcode === 34 || charcode === 39) {
             var issueName = "tag-attribute-mismatching-quotes-is-".concat(charcode === 34 ? "double" : "single");

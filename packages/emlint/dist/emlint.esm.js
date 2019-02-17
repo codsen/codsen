@@ -1228,6 +1228,8 @@ function lint(str, originalOpts) {
       if (
         logAttr.attrEqualAt !== null &&
         logAttr.attrOpeningQuote.pos !== null &&
+        (logAttr.attrClosingQuote.pos === null ||
+          i === logAttr.attrClosingQuote.pos) &&
         i > logAttr.attrOpeningQuote.pos &&
         charIsQuote$1(str[i])
       ) {
