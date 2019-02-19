@@ -169,6 +169,16 @@
     "excerpt": "unencoded opening bracket",
     "scope": "html"
   },
+  "file-empty": {
+    "description": "the contents are empty",
+    "excerpt": "the contents are empty",
+    "scope": "all"
+  },
+  "file-missing-ending": {
+    "description": "the ending part of the contents is missing",
+    "excerpt": "ending part is missing",
+    "scope": "all"
+  },
   "file-mixed-line-endings-file-is-CR-mainly": {
     "description": "mixed line endings detected, majority EOL's are CR",
     "excerpt": "mixed line endings detected, majority EOL's are CR",
