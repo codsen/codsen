@@ -1228,6 +1228,7 @@ function lint(str, originalOpts) {
       rawEnforcedEOLChar = "\n";
     }
   }
+  let doNothingUntil = null;
   let logTag;
   const defaultLogTag = {
     tagStartAt: null,
@@ -1291,7 +1292,10 @@ function lint(str, originalOpts) {
   }
   for (let i = 0, len = str.length; i < len; i++) {
     const charcode = str[i].charCodeAt(0);
-    if (logTag.tagNameEndAt !== null) {
+    if (doNothingUntil && i >= doNothingUntil) {
+      doNothingUntil = null;
+    }
+    if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (
         logAttr.attrNameStartAt !== null &&
         logAttr.attrNameEndAt === null &&
@@ -1576,9 +1580,10 @@ function lint(str, originalOpts) {
                 }
               }
               const innerTagContents = str.slice(i, innerTagEndsAt);
+              let startingPoint = innerTagEndsAt;
+              let attributeOnTheRightBeginsAt;
               if (innerTagContents.includes("=")) {
                 const temp1 = innerTagContents.split("=")[0];
-                let attributeOnTheRightBeginsAt;
                 if (temp1.split("").some(char => !char.trim().length)) {
                   for (let z = i + temp1.length; z--; ) {
                     if (!str[z].trim().length) {
@@ -1594,67 +1599,74 @@ function lint(str, originalOpts) {
                     attributeOnTheRightBeginsAt
                   );
                   if (!charIsQuote$1(temp2)) {
-                    retObj.issues.push({
-                      name: "tag-attribute-closing-quotation-mark-missing",
-                      position: [
-                        [temp2 + 1, temp2 + 1, logAttr.attrOpeningQuote.val]
-                      ]
-                    });
-                    logAttr.attrClosingQuote.pos = temp2 + 1;
-                    logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
-                    logTag.attributes.push(clone(logAttr));
-                    resetLogAttr();
-                    i = temp2 + 1;
-                    continue;
+                    startingPoint = temp2 + 1;
                   }
-                }
-              } else {
-                let caughtAttrEnd = null;
-                let caughtAttrStart = null;
-                let finalClosingQuotesShouldBeAt = null;
-                let boolAttrFound = false;
-                for (let z = innerTagEndsAt; z--; z > i) {
-                  if (caughtAttrEnd === null && str[z].trim().length) {
-                    caughtAttrEnd = z + 1;
-                    if (boolAttrFound) {
-                      finalClosingQuotesShouldBeAt = caughtAttrEnd;
-                      boolAttrFound = false;
-                    }
-                  }
-                  if (!str[z].trim().length && caughtAttrEnd) {
-                    caughtAttrStart = z + 1;
-                    if (
-                      knownBooleanHTMLAttributes.includes(
-                        str.slice(caughtAttrStart, caughtAttrEnd)
-                      )
-                    ) {
-                      boolAttrFound = true;
-                    } else {
-                      break;
-                    }
-                    caughtAttrEnd = null;
-                    caughtAttrStart = null;
-                  }
-                }
-                if (finalClosingQuotesShouldBeAt) {
-                  retObj.issues.push({
-                    name: "tag-attribute-closing-quotation-mark-missing",
-                    position: [
-                      [
-                        finalClosingQuotesShouldBeAt,
-                        finalClosingQuotesShouldBeAt,
-                        logAttr.attrOpeningQuote.val
-                      ]
-                    ]
-                  });
-                  logAttr.attrClosingQuote.pos = finalClosingQuotesShouldBeAt;
-                  logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
-                  logTag.attributes.push(clone(logAttr));
-                  resetLogAttr();
-                  i = finalClosingQuotesShouldBeAt - 1;
-                  continue;
                 }
               }
+              let caughtAttrEnd = null;
+              let caughtAttrStart = null;
+              let finalClosingQuotesShouldBeAt = null;
+              let boolAttrFound = false;
+              for (let z = startingPoint; z--; z > i) {
+                if (str[z] === "=") {
+                  break;
+                }
+                if (caughtAttrEnd === null && str[z].trim().length) {
+                  caughtAttrEnd = z + 1;
+                  if (boolAttrFound) {
+                    finalClosingQuotesShouldBeAt = caughtAttrEnd;
+                    boolAttrFound = false;
+                  }
+                }
+                if (!str[z].trim().length && caughtAttrEnd) {
+                  caughtAttrStart = z + 1;
+                  if (
+                    knownBooleanHTMLAttributes.includes(
+                      str.slice(caughtAttrStart, caughtAttrEnd)
+                    )
+                  ) {
+                    boolAttrFound = true;
+                  } else {
+                    break;
+                  }
+                  caughtAttrEnd = null;
+                  caughtAttrStart = null;
+                }
+              }
+              if (
+                !finalClosingQuotesShouldBeAt &&
+                attributeOnTheRightBeginsAt
+              ) {
+                finalClosingQuotesShouldBeAt =
+                  firstIdxOnTheLeft$1(str, attributeOnTheRightBeginsAt) + 1;
+              }
+              if (finalClosingQuotesShouldBeAt === null) {
+                finalClosingQuotesShouldBeAt = caughtAttrEnd;
+              }
+              retObj.issues.push({
+                name: "tag-attribute-closing-quotation-mark-missing",
+                position: [
+                  [
+                    finalClosingQuotesShouldBeAt,
+                    finalClosingQuotesShouldBeAt,
+                    logAttr.attrOpeningQuote.val
+                  ]
+                ]
+              });
+              logAttr.attrClosingQuote.pos = finalClosingQuotesShouldBeAt;
+              logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
+              logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
+              logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
+              logAttr.attrValue = str.slice(
+                logAttr.attrOpeningQuote.pos,
+                logAttr.attrClosingQuote.pos
+              );
+              if (!doNothingUntil) {
+                doNothingUntil = logAttr.attrClosingQuote.pos;
+              }
+              logTag.attributes.push(clone(logAttr));
+              resetLogAttr();
+              continue;
             }
           } else {
             const endingQuotesPos = findClosingQuote$1(str, i);

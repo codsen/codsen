@@ -2610,14 +2610,15 @@ test(`22.01 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - on
 });
 
 test(`22.02 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - multiple tags`, t => {
-  const bad1 = `<a bcd=ef ghj=kl>`;
+  const bad1 = `<a bcd=ef ghj=kl  >`;
   const good1 = `<a bcd="ef" ghj="kl">`;
   const res1 = lint(bad1);
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),
     [
       "tag-attribute-closing-quotation-mark-missing",
-      "tag-attribute-opening-quotation-mark-missing"
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-excessive-whitespace-inside-tag"
     ],
     "22.02.01"
   );
@@ -2640,7 +2641,7 @@ test(`22.03 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - bo
 });
 
 test(`22.04 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - boolean attributes #2`, t => {
-  const bad4 = `<a bcd efg=hi jkl=mn>`;
+  const bad4 = `<a bcd efg=hi jkl=mn   >`;
   const good4 = `<a bcd efg="hi" jkl="mn">`;
   const res4 = lint(bad4);
   t.deepEqual(
@@ -2910,6 +2911,21 @@ test(`22.21 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - ze
     "22.21.01"
   );
   t.is(apply(bad1, res1.fix), good1, "22.21.02");
+});
+
+test(`22.22 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - sequence of tags`, t => {
+  const bad1 = `<a bcd=ef ghj=kl mnop="rst uvw = xyz" nowrap abc=def>\n<b cde="fgh" ijklm=0 abc="defgh ijkl">`;
+  const good1 = `<a bcd="ef" ghj="kl" mnop="rst uvw = xyz" nowrap abc="def">\n<b cde="fgh" ijklm="0" abc="defgh ijkl">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-attribute-opening-quotation-mark-missing"
+    ],
+    "22.22.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "22.22.02");
 });
 
 // 99. Util Unit tests
