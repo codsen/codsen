@@ -4,8 +4,8 @@ import apply from "ranges-apply";
 // import errors from "../src/errors.json";
 import {
   withinTagInnerspace,
-  firstIdxOnTheRight,
-  firstIdxOnTheLeft,
+  right,
+  left,
   attributeOnTheRight,
   findClosingQuote,
   tagOnTheRight
@@ -2648,7 +2648,8 @@ test(`22.04 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - bo
     getUniqueIssueNames(res4.issues).sort(),
     [
       "tag-attribute-closing-quotation-mark-missing",
-      "tag-attribute-opening-quotation-mark-missing"
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-excessive-whitespace-inside-tag"
     ],
     "22.04.01"
   );
@@ -2776,7 +2777,7 @@ test(`22.12 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - bo
   t.is(apply(bad1, res1.fix), good1, "22.12.02");
 });
 
-test(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - tag with no value and quotes, followed by tag with a quote-less value - HTML`, t => {
+test.only(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - HTML`, t => {
   const bad1 = `<a bcd= ef=gh>`;
   const good1 = `<a ef="gh">`;
   const res1 = lint(bad1);
@@ -2784,14 +2785,15 @@ test(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - ta
     getUniqueIssueNames(res1.issues).sort(),
     [
       "tag-attribute-closing-quotation-mark-missing",
-      "tag-attribute-opening-quotation-mark-missing"
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-quote-and-onwards-missing"
     ],
     "22.13.01"
   );
   t.is(apply(bad1, res1.fix), good1, "22.13.02");
 });
 
-test(`22.14 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - tag with no value and quotes, followed by tag with a quote-less value - messy XHTML`, t => {
+test(`22.14 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - messy XHTML`, t => {
   const bad1 = `<a bcd= ef=gh   /   >`;
   const good1 = `<a ef="gh"/>`;
   const res1 = lint(bad1);
@@ -2808,7 +2810,7 @@ test(`22.14 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - ta
   t.is(apply(bad1, res1.fix), good1, "22.14.02");
 });
 
-test(`22.15 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - tag with no value and quotes, followed by tag with a quote-less value - real XHTML`, t => {
+test(`22.15 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - real XHTML`, t => {
   const bad1 = `<img src=abc.jpg width=123 height=456 border=0 style=display:block; alt=xyz/>`;
   const good1 = `<img src="abc.jpg" width="123" height="456" border="0" style="display:block;" alt="xyz"/>`;
   const res1 = lint(bad1);
@@ -2926,6 +2928,89 @@ test(`22.22 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - se
     "22.22.01"
   );
   t.is(apply(bad1, res1.fix), good1, "22.22.02");
+});
+
+// 23. rule "tag-attribute-repeated-equal"
+// -----------------------------------------------------------------------------
+
+test(`23.01 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - one tag, one double equal`, t => {
+  const bad1 = `<a bcd=="ef">`;
+  const good1 = `<a bcd="ef">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-repeated-equal"],
+    "23.01.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.01.02");
+});
+
+test(`23.02 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - few equals in a sequence, no spaces`, t => {
+  const bad1 = `<a bcd==="ef">`;
+  const good1 = `<a bcd="ef">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-repeated-equal"],
+    "23.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.02.02");
+});
+
+test(`23.03 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - few spaced out equals`, t => {
+  const bad1 = `<a bcd = = = "ef">`;
+  const good1 = `<a bcd="ef">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-repeated-equal",
+      "tag-attribute-space-between-equals-and-opening-quotes",
+      "tag-attribute-space-between-name-and-equals"
+    ],
+    "23.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.03.02");
+});
+
+test(`23.04 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - two consecutive, one spaced after`, t => {
+  const bad1 = `<a bcd== ="ef">`;
+  const good1 = `<a bcd="ef">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-repeated-equal"],
+    "23.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.04.02");
+});
+
+test(`23.05 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - excessive example`, t => {
+  const bad1 = `<a bcd === == \t== =\n = 'ef'>`;
+  const good1 = `<a bcd='ef'>`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-repeated-equal",
+      "tag-attribute-space-between-equals-and-opening-quotes",
+      "tag-attribute-space-between-name-and-equals"
+    ],
+    "23.05.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.05.02");
+});
+
+test(`23.06 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - few equals in a sequence, EOF`, t => {
+  const bad1 = `<a bcd===\n`;
+  const good1 = `<a bcd=\n`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["file-missing-ending", "tag-attribute-repeated-equal"],
+    "23.06.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "23.06.02");
 });
 
 // 99. Util Unit tests
@@ -3537,20 +3622,20 @@ test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(withinTagInnerspace(code, 13), "99.04");
 });
 
-test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstIdxOnTheRight()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(!!firstIdxOnTheRight(""), "99.10.01");
-  t.false(!!firstIdxOnTheRight("a"), "99.10.02");
+test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`right()`}\u001b[${39}m`} - all cases`, t => {
+  t.false(!!right(""), "99.10.01");
+  t.false(!!right("a"), "99.10.02");
 
   // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  t.is(firstIdxOnTheRight("ab"), 1, "99.10.03");
+  t.is(right("ab"), 1, "99.10.03");
 
   // 2nd input arg was omitted so starting index is zero, which is "a".
   // Now, to the right of it, there's a space, index 1, next non-whitespace char
   // is b which is index 2.
-  t.is(firstIdxOnTheRight("a b"), 2, "99.10.04");
+  t.is(right("a b"), 2, "99.10.04");
 
-  t.is(firstIdxOnTheRight("a \n\n\nb"), 5, "99.10.05");
-  t.is(firstIdxOnTheRight("a \n\n\n\n"), null, "99.10.06");
+  t.is(right("a \n\n\nb"), 5, "99.10.05");
+  t.is(right("a \n\n\n\n"), null, "99.10.06");
 });
 
 test(`99.11 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
@@ -3665,17 +3750,17 @@ test(`99.21 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   t.is(findClosingQuote(code, 9), 10, "99.21.01");
 });
 
-test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`firstIdxOnTheLeft()`}\u001b[${39}m`} - all cases`, t => {
+test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`left()`}\u001b[${39}m`} - all cases`, t => {
   // defaults to zero:
-  t.false(!!firstIdxOnTheLeft(""), "99.30.01");
-  t.false(!!firstIdxOnTheLeft("a"), "99.30.02");
-  t.is(firstIdxOnTheLeft("ab", 1), 0, "99.30.03");
-  t.is(firstIdxOnTheLeft("a b", 2), 0, "99.30.04");
-  t.is(firstIdxOnTheLeft("a \n\n\nb", 5), 0, "99.30.05");
-  t.is(firstIdxOnTheLeft("\n\n\n\n", 4), null, "99.30.06");
-  t.is(firstIdxOnTheLeft("\n\n\n\n", 3), null, "99.30.06");
-  t.is(firstIdxOnTheLeft("\n\n\n\n", 2), null, "99.30.06");
-  t.is(firstIdxOnTheLeft("\n\n\n\n", 1), null, "99.30.06");
+  t.false(!!left(""), "99.30.01");
+  t.false(!!left("a"), "99.30.02");
+  t.is(left("ab", 1), 0, "99.30.03");
+  t.is(left("a b", 2), 0, "99.30.04");
+  t.is(left("a \n\n\nb", 5), 0, "99.30.05");
+  t.is(left("\n\n\n\n", 4), null, "99.30.06");
+  t.is(left("\n\n\n\n", 3), null, "99.30.06");
+  t.is(left("\n\n\n\n", 2), null, "99.30.06");
+  t.is(left("\n\n\n\n", 1), null, "99.30.06");
 });
 
 test(`99.40 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - normal tag`, t => {

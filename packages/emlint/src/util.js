@@ -366,7 +366,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       !quotes.within &&
       beginningOfAString &&
       str[i] === "/" &&
-      ">".includes(str[firstIdxOnTheRight(str, i)])
+      ">".includes(str[right(str, i)])
     ) {
       console.log(
         `372 ${`\u001b[${32}m${`██ R1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
@@ -399,7 +399,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       // the closing quote.
       if (
         !str[i + 1] ||
-        !firstIdxOnTheRight(str, i) ||
+        !right(str, i) ||
         (!str.slice(i).includes("'") && !str.slice(i).includes('"'))
       ) {
         // quick ending, we have something like:
@@ -413,7 +413,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         );
         console.log("\n\n\n\n\n\n");
         return true;
-      } else if (str[firstIdxOnTheRight(str, i)] === "<") {
+      } else if (str[right(str, i)] === "<") {
         // nobody puts "><" within attribute values
         console.log(
           `419 ${`\u001b[${32}m${`██ R3.3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
@@ -486,7 +486,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       // whitespace and then closing bracket, that is a tag there
       if (
         "<>".includes(str[i]) ||
-        (str[i] === "/" && "<>".includes(firstIdxOnTheRight(str, i)))
+        (str[i] === "/" && "<>".includes(right(str, i)))
       ) {
         console.log(
           `492 ${`\u001b[${32}m${`██ R3`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
@@ -621,15 +621,15 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         );
       } else if (
         str[i] === ">" ||
-        (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">")
+        (str[i] === "/" && str[right(str, i)] === ">")
       ) {
         let closingBracketAt = i;
         if (str[i] === "/") {
-          closingBracketAt = str[firstIdxOnTheRight(str, i)];
+          closingBracketAt = str[right(str, i)];
         }
 
         // check, are there any characters after the closing bracket:
-        if (firstIdxOnTheRight(str, closingBracketAt)) {
+        if (right(str, closingBracketAt)) {
           // if it's a tag's closing, we've got a value-less attribute,
           // as in: " nobr>", right side of <td nobr> for example.
           r3_1 = true;
@@ -847,7 +847,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       (!charSuitableForAttrName(str[i]) || str[i] === "/")
     ) {
       // if it's a slash+closing bracket
-      if (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">") {
+      if (str[i] === "/" && str[right(str, i)] === ">") {
         console.log(
           `852 ${`\u001b[${32}m${`██ R4`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
             "return",
@@ -1075,7 +1075,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       }
       // it's mismatching quotes
       // further clauses needed
-      else if (str[i + 1] && `/>`.includes(str[firstIdxOnTheRight(str, i)])) {
+      else if (str[i + 1] && `/>`.includes(str[right(str, i)])) {
         // mismatching quotes, but tag ending follows
         console.log(
           `1081 ${`\u001b[${32}m${`██ R6/1`}\u001b[${39}m`} ${`\u001b[${90}m${`withinTagInnerspace()`}\u001b[${39}m`} ${log(
@@ -1275,7 +1275,7 @@ function tagOnTheRight(str, idx = 0) {
 
 // Looks what's the first non-whitespace character to the right of index "idx"
 // on string "str". Returns index of that first non-whitespace character.
-function firstIdxOnTheRight(str, idx = 0) {
+function right(str, idx = 0) {
   if (!str[idx + 1]) {
     return null;
   } else if (str[idx + 1] && str[idx + 1].trim().length) {
@@ -1295,7 +1295,7 @@ function firstIdxOnTheRight(str, idx = 0) {
 }
 
 // finds the index of the first non-whitespace character on the left
-function firstIdxOnTheLeft(str, idx = 0) {
+function left(str, idx = 0) {
   if (idx < 1) {
     return null;
   } else if (str[idx - 1] && str[idx - 1].trim().length) {
@@ -1782,7 +1782,7 @@ function findClosingQuote(str, idx = 0) {
         // cases like:
         // <zzz alt="nnn="mmm">
         //              ^
-        const whatFollowsEq = firstIdxOnTheRight(str, i);
+        const whatFollowsEq = right(str, i);
         console.log(
           `1787 (util/findClosingQuote) ${log(
             "set",
@@ -1911,8 +1911,8 @@ export {
   log,
   isLatinLetter,
   withinTagInnerspace,
-  firstIdxOnTheRight,
-  firstIdxOnTheLeft,
+  right,
+  left,
   attributeOnTheRight,
   findClosingQuote,
   encodeChar,

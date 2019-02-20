@@ -239,6 +239,11 @@
     "excerpt": "missing equal character",
     "scope": "html"
   },
+  "tag-attribute-repeated-equal": {
+    "description": "The equal after attribute's name is repeated",
+    "excerpt": "repeated equal character",
+    "scope": "html"
+  },
   "tag-attribute-opening-quotation-mark-missing": {
     "description": "The opening quotation mark is missing",
     "excerpt": "the opening quotation mark is missing",

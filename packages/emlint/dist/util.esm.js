@@ -165,7 +165,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       !quotes.within &&
       beginningOfAString &&
       str[i] === "/" &&
-      ">".includes(str[firstIdxOnTheRight(str, i)])
+      ">".includes(str[right(str, i)])
     ) {
       return true;
     }
@@ -173,11 +173,11 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       r3_1 = true;
       if (
         !str[i + 1] ||
-        !firstIdxOnTheRight(str, i) ||
+        !right(str, i) ||
         (!str.slice(i).includes("'") && !str.slice(i).includes('"'))
       ) {
         return true;
-      } else if (str[firstIdxOnTheRight(str, i)] === "<") {
+      } else if (str[right(str, i)] === "<") {
         return true;
       }
     }
@@ -204,7 +204,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     ) {
       if (
         "<>".includes(str[i]) ||
-        (str[i] === "/" && "<>".includes(firstIdxOnTheRight(str, i)))
+        (str[i] === "/" && "<>".includes(right(str, i)))
       ) {
         return true;
       } else if (`='"`.includes(str[i])) {
@@ -249,13 +249,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r2_2 = true;
       } else if (
         str[i] === ">" ||
-        (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">")
+        (str[i] === "/" && str[right(str, i)] === ">")
       ) {
         let closingBracketAt = i;
         if (str[i] === "/") {
-          closingBracketAt = str[firstIdxOnTheRight(str, i)];
+          closingBracketAt = str[right(str, i)];
         }
-        if (firstIdxOnTheRight(str, closingBracketAt)) {
+        if (right(str, closingBracketAt)) {
           r3_1 = true;
           r2_1 = false;
         } else {
@@ -328,7 +328,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       str[i].trim().length &&
       (!charSuitableForAttrName(str[i]) || str[i] === "/")
     ) {
-      if (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">") {
+      if (str[i] === "/" && str[right(str, i)] === ">") {
         return true;
       }
       r4_1 = false;
@@ -403,7 +403,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (str[i] === str[quotes.at]) {
         return true;
       }
-      else if (str[i + 1] && `/>`.includes(str[firstIdxOnTheRight(str, i)])) {
+      else if (str[i + 1] && `/>`.includes(str[right(str, i)])) {
         return true;
       }
     }
@@ -432,7 +432,7 @@ function tagOnTheRight(str, idx = 0) {
   const res = isStr(str) && idx < str.length && passed;
   return res;
 }
-function firstIdxOnTheRight(str, idx = 0) {
+function right(str, idx = 0) {
   if (!str[idx + 1]) {
     return null;
   } else if (str[idx + 1] && str[idx + 1].trim().length) {
@@ -447,7 +447,7 @@ function firstIdxOnTheRight(str, idx = 0) {
   }
   return null;
 }
-function firstIdxOnTheLeft(str, idx = 0) {
+function left(str, idx = 0) {
   if (idx < 1) {
     return null;
   } else if (str[idx - 1] && str[idx - 1].trim().length) {
@@ -590,7 +590,7 @@ function findClosingQuote(str, idx = 0) {
           }
         }
       } else if (str[i] === "=") {
-        const whatFollowsEq = firstIdxOnTheRight(str, i);
+        const whatFollowsEq = right(str, i);
         if (
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
@@ -644,4 +644,4 @@ function encodeChar(str, i) {
   return null;
 }
 
-export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, firstIdxOnTheRight, firstIdxOnTheLeft, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };
+export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, right, left, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };

@@ -410,6 +410,11 @@ var errors = {
 	excerpt: "missing equal character",
 	scope: "html"
 },
+	"tag-attribute-repeated-equal": {
+	description: "The equal after attribute's name is repeated",
+	excerpt: "repeated equal character",
+	scope: "html"
+},
 	"tag-attribute-opening-quotation-mark-missing": {
 	description: "The opening quotation mark is missing",
 	excerpt: "the opening quotation mark is missing",
@@ -639,7 +644,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       !quotes.within &&
       beginningOfAString &&
       str[i] === "/" &&
-      ">".includes(str[firstIdxOnTheRight(str, i)])
+      ">".includes(str[right(str, i)])
     ) {
       return true;
     }
@@ -647,11 +652,11 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       r3_1 = true;
       if (
         !str[i + 1] ||
-        !firstIdxOnTheRight(str, i) ||
+        !right(str, i) ||
         (!str.slice(i).includes("'") && !str.slice(i).includes('"'))
       ) {
         return true;
-      } else if (str[firstIdxOnTheRight(str, i)] === "<") {
+      } else if (str[right(str, i)] === "<") {
         return true;
       }
     }
@@ -678,7 +683,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     ) {
       if (
         "<>".includes(str[i]) ||
-        (str[i] === "/" && "<>".includes(firstIdxOnTheRight(str, i)))
+        (str[i] === "/" && "<>".includes(right(str, i)))
       ) {
         return true;
       } else if (`='"`.includes(str[i])) {
@@ -723,13 +728,13 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
         r2_2 = true;
       } else if (
         str[i] === ">" ||
-        (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">")
+        (str[i] === "/" && str[right(str, i)] === ">")
       ) {
         let closingBracketAt = i;
         if (str[i] === "/") {
-          closingBracketAt = str[firstIdxOnTheRight(str, i)];
+          closingBracketAt = str[right(str, i)];
         }
-        if (firstIdxOnTheRight(str, closingBracketAt)) {
+        if (right(str, closingBracketAt)) {
           r3_1 = true;
           r2_1 = false;
         } else {
@@ -802,7 +807,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       str[i].trim().length &&
       (!charSuitableForAttrName(str[i]) || str[i] === "/")
     ) {
-      if (str[i] === "/" && str[firstIdxOnTheRight(str, i)] === ">") {
+      if (str[i] === "/" && str[right(str, i)] === ">") {
         return true;
       }
       r4_1 = false;
@@ -877,7 +882,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       if (str[i] === str[quotes.at]) {
         return true;
       }
-      else if (str[i + 1] && `/>`.includes(str[firstIdxOnTheRight(str, i)])) {
+      else if (str[i + 1] && `/>`.includes(str[right(str, i)])) {
         return true;
       }
     }
@@ -906,7 +911,7 @@ function tagOnTheRight(str, idx = 0) {
   const res = isStr(str) && idx < str.length && passed;
   return res;
 }
-function firstIdxOnTheRight(str, idx = 0) {
+function right(str, idx = 0) {
   if (!str[idx + 1]) {
     return null;
   } else if (str[idx + 1] && str[idx + 1].trim().length) {
@@ -921,7 +926,7 @@ function firstIdxOnTheRight(str, idx = 0) {
   }
   return null;
 }
-function firstIdxOnTheLeft(str, idx = 0) {
+function left(str, idx = 0) {
   if (idx < 1) {
     return null;
   } else if (str[idx - 1] && str[idx - 1].trim().length) {
@@ -1064,7 +1069,7 @@ function findClosingQuote(str, idx = 0) {
           }
         }
       } else if (str[i] === "=") {
-        const whatFollowsEq = firstIdxOnTheRight(str, i);
+        const whatFollowsEq = right(str, i);
         if (
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
@@ -1130,8 +1135,8 @@ var util = /*#__PURE__*/Object.freeze({
   log: log,
   isLatinLetter: isLatinLetter,
   withinTagInnerspace: withinTagInnerspace,
-  firstIdxOnTheRight: firstIdxOnTheRight,
-  firstIdxOnTheLeft: firstIdxOnTheLeft,
+  right: right,
+  left: left,
   attributeOnTheRight: attributeOnTheRight,
   findClosingQuote: findClosingQuote,
   encodeChar: encodeChar,
@@ -1142,9 +1147,9 @@ const isArr = Array.isArray;
 const {
   attributeOnTheRight: attributeOnTheRight$1,
   withinTagInnerspace: withinTagInnerspace$1,
-  firstIdxOnTheRight: firstIdxOnTheRight$1,
+  right: right$1,
   findClosingQuote: findClosingQuote$1,
-  firstIdxOnTheLeft: firstIdxOnTheLeft$1,
+  left: left$1,
   tagOnTheRight: tagOnTheRight$1,
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
@@ -1308,7 +1313,7 @@ function lint(str, originalOpts) {
           logAttr.attrNameEndAt
         );
         if (str[i] !== "=") {
-          if (str[firstIdxOnTheRight$1(str, i)] === "=") ;
+          if (str[right$1(str, i)] === "=") ;
         }
       }
       if (
@@ -1323,6 +1328,28 @@ function lint(str, originalOpts) {
         }
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
+          if (str[i + 1]) {
+            const nextCharOnTheRightAt = right$1(str, i);
+            if (str[nextCharOnTheRightAt] === "=") {
+              let nextEqualStartAt = i + 1;
+              let nextEqualEndAt = nextCharOnTheRightAt + 1;
+              doNothingUntil = nextEqualEndAt;
+              while (nextEqualStartAt && nextEqualEndAt) {
+                retObj.issues.push({
+                  name: "tag-attribute-repeated-equal",
+                  position: [[nextEqualStartAt, nextEqualEndAt]]
+                });
+                const temp = right$1(str, nextEqualEndAt - 1);
+                if (str[temp] === "=") {
+                  nextEqualStartAt = nextEqualEndAt;
+                  nextEqualEndAt = temp + 1;
+                  doNothingUntil = nextEqualEndAt;
+                } else {
+                  nextEqualStartAt = null;
+                }
+              }
+            }
+          }
         } else if (temp) {
           retObj.issues.push({
             name: "tag-attribute-missing-equal",
@@ -1346,6 +1373,7 @@ function lint(str, originalOpts) {
               name: "tag-attribute-space-between-name-and-equals",
               position: [[logWhitespace.startAt, i]]
             });
+            resetLogWhitespace();
           } else if (isLatinLetter(str[i])) {
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
@@ -1435,13 +1463,10 @@ function lint(str, originalOpts) {
                   let fromPositionToInsertAt = str[closingQuotePeek - 1].trim()
                     .length
                     ? closingQuotePeek
-                    : firstIdxOnTheLeft$1(str, closingQuotePeek) + 1;
+                    : left$1(str, closingQuotePeek) + 1;
                   let toPositionToInsertAt = closingQuotePeek;
-                  if (str[firstIdxOnTheLeft$1(str, closingQuotePeek)] === "/") {
-                    toPositionToInsertAt = firstIdxOnTheLeft$1(
-                      str,
-                      closingQuotePeek
-                    );
+                  if (str[left$1(str, closingQuotePeek)] === "/") {
+                    toPositionToInsertAt = left$1(str, closingQuotePeek);
                     if (toPositionToInsertAt + 1 < closingQuotePeek) {
                       retObj.issues.push({
                         name: "tag-whitespace-closing-slash-and-bracket",
@@ -1449,7 +1474,7 @@ function lint(str, originalOpts) {
                       });
                     }
                     fromPositionToInsertAt =
-                      firstIdxOnTheLeft$1(str, toPositionToInsertAt) + 1;
+                      left$1(str, toPositionToInsertAt) + 1;
                   }
                   retObj.issues.push({
                     name: "tag-attribute-closing-quotation-mark-missing",
@@ -1481,7 +1506,7 @@ function lint(str, originalOpts) {
               if (str[closingQuotePeek].trim().length) {
                 i = closingQuotePeek;
               } else {
-                i = firstIdxOnTheLeft$1(str, closingQuotePeek);
+                i = left$1(str, closingQuotePeek);
               }
               if (
                 i === len - 1 &&
@@ -1528,7 +1553,7 @@ function lint(str, originalOpts) {
           } else if (str[i].trim().length) {
             if (
               (str[i] === ">" ||
-                (str[i] === "/" && str[firstIdxOnTheRight$1(str, i)] === ">")) &&
+                (str[i] === "/" && str[right$1(str, i)] === ">")) &&
               withinTagInnerspace$1(str, i)
             ) {
               let start = logAttr.attrStartAt;
@@ -1558,7 +1583,7 @@ function lint(str, originalOpts) {
               logAttr.attrValueStartAt = i;
               if (logWhitespace.startAt) {
                 retObj.issues.push({
-                  name: "tag-attribute-space-between-name-and-equals",
+                  name: "tag-attribute-space-between-equals-and-opening-quotes",
                   position: [[logWhitespace.startAt, i]]
                 });
               }
@@ -1567,14 +1592,13 @@ function lint(str, originalOpts) {
                 str[y];
                 if (
                   str[y] === ">" &&
-                  ((str[firstIdxOnTheLeft$1(str, y)] !== "/" &&
-                    withinTagInnerspace$1(str, y)) ||
-                    str[firstIdxOnTheLeft$1(str, y)] === "/")
+                  ((str[left$1(str, y)] !== "/" && withinTagInnerspace$1(str, y)) ||
+                    str[left$1(str, y)] === "/")
                 ) {
-                  const firstIdxOnTheLeftAt = firstIdxOnTheLeft$1(str, y);
+                  const leftAt = left$1(str, y);
                   innerTagEndsAt = y;
-                  if (str[firstIdxOnTheLeftAt] === "/") {
-                    innerTagEndsAt = firstIdxOnTheLeftAt;
+                  if (str[leftAt] === "/") {
+                    innerTagEndsAt = leftAt;
                   }
                   break;
                 }
@@ -1594,10 +1618,7 @@ function lint(str, originalOpts) {
                       break;
                     }
                   }
-                  const temp2 = firstIdxOnTheLeft$1(
-                    str,
-                    attributeOnTheRightBeginsAt
-                  );
+                  const temp2 = left$1(str, attributeOnTheRightBeginsAt);
                   if (!charIsQuote$1(temp2)) {
                     startingPoint = temp2 + 1;
                   }
@@ -1638,7 +1659,7 @@ function lint(str, originalOpts) {
                 attributeOnTheRightBeginsAt
               ) {
                 finalClosingQuotesShouldBeAt =
-                  firstIdxOnTheLeft$1(str, attributeOnTheRightBeginsAt) + 1;
+                  left$1(str, attributeOnTheRightBeginsAt) + 1;
               }
               if (finalClosingQuotesShouldBeAt === null) {
                 finalClosingQuotesShouldBeAt = caughtAttrEnd;
@@ -1703,7 +1724,7 @@ function lint(str, originalOpts) {
               resetLogAttr();
             }
           }
-        } else if (!str[i + 1] || !firstIdxOnTheRight$1(str, i)) {
+        } else if (!str[i + 1] || !right$1(str, i)) {
           retObj.issues.push({
             name: "file-missing-ending",
             position: [[i + 1, i + 1]]
@@ -1779,9 +1800,8 @@ function lint(str, originalOpts) {
         } else if (
           isStr$1(logAttr.attrOpeningQuote.val) &&
           (charcode === 8216 || charcode === 8217) &&
-          ((firstIdxOnTheRight$1(str, i) !== null &&
-            (str[firstIdxOnTheRight$1(str, i)] === ">" ||
-              str[firstIdxOnTheRight$1(str, i)] === "/")) ||
+          ((right$1(str, i) !== null &&
+            (str[right$1(str, i)] === ">" || str[right$1(str, i)] === "/")) ||
             withinTagInnerspace$1(str, i + 1))
         ) {
           const name =
@@ -1803,9 +1823,7 @@ function lint(str, originalOpts) {
         logAttr.attrOpeningQuote.val &&
         logAttr.attrOpeningQuote.pos < i &&
         logAttr.attrClosingQuote.pos === null &&
-        ((str[i] === "/" &&
-          firstIdxOnTheRight$1(str, i) &&
-          str[firstIdxOnTheRight$1(str, i)] === ">") ||
+        ((str[i] === "/" && right$1(str, i) && str[right$1(str, i)] === ">") ||
           str[i] === ">")
       ) {
         retObj.issues.push({
@@ -1818,7 +1836,7 @@ function lint(str, originalOpts) {
         resetLogAttr();
       }
     }
-    if (charcode < 32) {
+    if (!doNothingUntil && charcode < 32) {
       const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
       if (charcode === 9) {
         retObj.issues.push({
@@ -1874,17 +1892,21 @@ function lint(str, originalOpts) {
           position: [[i, i + 1]]
         });
       }
-    } else if (encodeChar$1(str, i)) {
+    } else if (!doNothingUntil && encodeChar$1(str, i)) {
       const newIssue = encodeChar$1(str, i);
       rawIssueStaging.push(newIssue);
     }
-    if (logWhitespace.startAt !== null && str[i].trim().length) {
+    if (
+      !doNothingUntil &&
+      logWhitespace.startAt !== null &&
+      str[i].trim().length
+    ) {
       if (
         logTag.tagNameStartAt !== null &&
         logAttr.attrStartAt === null &&
         (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= i) &&
         (str[i] === ">" ||
-          (str[i] === "/" && "<>".includes(str[firstIdxOnTheRight$1(str, i)])))
+          (str[i] === "/" && "<>".includes(str[right$1(str, i)])))
       ) {
         let name = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
@@ -1896,16 +1918,21 @@ function lint(str, originalOpts) {
         });
       }
     }
-    if (!str[i].trim().length && logWhitespace.startAt === null) {
+    if (
+      !doNothingUntil &&
+      !str[i].trim().length &&
+      logWhitespace.startAt === null
+    ) {
       logWhitespace.startAt = i;
     }
-    if (str[i] === "\n" || str[i] === "\r") {
+    if ((!doNothingUntil && str[i] === "\n") || str[i] === "\r") {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
       }
       logWhitespace.lastLinebreakAt = i;
     }
     if (
+      !doNothingUntil &&
       logTag.tagNameStartAt !== null &&
       logTag.tagNameEndAt === null &&
       !isLatinLetter(str[i]) &&
@@ -1917,6 +1944,7 @@ function lint(str, originalOpts) {
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
     }
     if (
+      !doNothingUntil &&
       logTag.tagStartAt !== null &&
       logTag.tagNameStartAt === null &&
       isLatinLetter(str[i]) &&
@@ -1931,6 +1959,7 @@ function lint(str, originalOpts) {
       }
     }
     if (
+      !doNothingUntil &&
       logTag.tagNameStartAt !== null &&
       logTag.tagNameEndAt === null &&
       isUppercaseLetter(str[i])
@@ -1940,7 +1969,7 @@ function lint(str, originalOpts) {
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
     }
-    if (str[i] === "<") {
+    if (!doNothingUntil && str[i] === "<") {
       if (logTag.tagStartAt === null) {
         logTag.tagStartAt = i;
       } else if (tagOnTheRight$1(str, i)) {
@@ -1953,7 +1982,7 @@ function lint(str, originalOpts) {
               attrObj.attrOpeningQuote.pos !== null
           )
         ) {
-          const lastNonWhitespaceOnLeft = firstIdxOnTheLeft$1(str, i);
+          const lastNonWhitespaceOnLeft = left$1(str, i);
           if (str[lastNonWhitespaceOnLeft] === ">") {
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
           } else {
@@ -1992,6 +2021,7 @@ function lint(str, originalOpts) {
       }
     }
     if (
+      !doNothingUntil &&
       charcode === 62 &&
       logTag.tagStartAt !== null &&
       (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < i)
@@ -2025,10 +2055,10 @@ function lint(str, originalOpts) {
       resetLogTag();
       resetLogAttr();
     }
-    if (str[i].trim().length) {
+    if (!doNothingUntil && str[i].trim().length) {
       resetLogWhitespace();
     }
-    if (!str[i + 1]) {
+    if (!doNothingUntil && !str[i + 1]) {
       if (rawIssueStaging.length) {
         if (
           logTag.tagStartAt !== null &&
