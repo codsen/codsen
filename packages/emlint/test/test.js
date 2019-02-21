@@ -2777,7 +2777,7 @@ test(`22.12 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - bo
   t.is(apply(bad1, res1.fix), good1, "22.12.02");
 });
 
-test.only(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - HTML`, t => {
+test(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - HTML - #1`, t => {
   const bad1 = `<a bcd= ef=gh>`;
   const good1 = `<a ef="gh">`;
   const res1 = lint(bad1);
@@ -2793,6 +2793,22 @@ test.only(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`}
   t.is(apply(bad1, res1.fix), good1, "22.13.02");
 });
 
+test(`22.13 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - HTML - #2`, t => {
+  const bad1 = `<a bcd= ef=gh><i jkl= mn=op><q rst= uv=wxyz>`;
+  const good1 = `<a ef="gh"><i mn="op"><q uv="wxyz">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-quote-and-onwards-missing"
+    ],
+    "22.13.03"
+  );
+  t.is(apply(bad1, res1.fix), good1, "22.13.04");
+});
+
 test(`22.14 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no value and quotes, followed by tag with a quote-less value - messy XHTML`, t => {
   const bad1 = `<a bcd= ef=gh   /   >`;
   const good1 = `<a ef="gh"/>`;
@@ -2802,6 +2818,7 @@ test(`22.14 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - no
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-quote-and-onwards-missing",
       "tag-excessive-whitespace-inside-tag",
       "tag-whitespace-closing-slash-and-bracket"
     ],
@@ -2834,6 +2851,7 @@ test(`22.16 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - co
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-space-between-name-and-equals",
       "tag-excessive-whitespace-inside-tag",
       "tag-whitespace-closing-slash-and-bracket"
     ],
@@ -2930,6 +2948,40 @@ test(`22.22 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - se
   t.is(apply(bad1, res1.fix), good1, "22.22.02");
 });
 
+test(`22.23 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value`, t => {
+  const bad1 = `<a bcd= ef=gh > ij>`;
+  const good1 = `<a ef="gh > ij">`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-quote-and-onwards-missing"
+    ],
+    "22.23.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "22.23.02");
+});
+
+test(`22.24 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value`, t => {
+  const bad1 = `<a bcd= ef=gh > ij \n klmn`;
+  const good1 = `<a ef="gh"> ij \n klmn`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    [
+      "bad-character-unencoded-closing-bracket",
+      "tag-attribute-closing-quotation-mark-missing",
+      "tag-attribute-opening-quotation-mark-missing",
+      "tag-attribute-quote-and-onwards-missing",
+      "tag-excessive-whitespace-inside-tag"
+    ],
+    "22.24.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "22.24.02");
+});
+
 // 23. rule "tag-attribute-repeated-equal"
 // -----------------------------------------------------------------------------
 
@@ -3015,6 +3067,10 @@ test(`23.06 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - few equals in
 
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
+
+// test.only(`delete me`, t => {
+//   t.false(withinTagInnerspace(` = ef>`));
+// });
 
 test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
   // R1 - xhtml tag ending that follows straight away
@@ -3512,6 +3568,12 @@ test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.false(withinTagInnerspace(`tralala'/>\n   <b>`));
 
   t.true(withinTagInnerspace(`tralala/>\n   <b>`));
+  t.false(withinTagInnerspace(`= ef>`));
+  t.false(withinTagInnerspace(`= ef>\n   <b>`));
+  t.false(withinTagInnerspace(`= ef/>\n   <b>`));
+  t.false(withinTagInnerspace(` = ef>`));
+  t.false(withinTagInnerspace(` = ef>\n   <b>`));
+  t.false(withinTagInnerspace(` = ef/>\n   <b>`));
   t.false(withinTagInnerspace(`=ef>`));
   t.false(withinTagInnerspace(`=ef>\n   <b>`));
   t.false(withinTagInnerspace(`=ef/>\n   <b>`));
@@ -3620,6 +3682,24 @@ test(`99.04 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   const code = `<td abc='d e" fgh ijk="klm'/>`;
   //  -->                    ^
   t.true(withinTagInnerspace(code, 13), "99.04");
+});
+
+test(`99.05 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - attributes without quotes follow`, t => {
+  const code = `<a bcd= ef=gh>zyx<i jkl= mn=op>`;
+  //  -->              ^
+  t.true(withinTagInnerspace(code, 7), "99.05");
+});
+
+test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - attributes without quotes follow`, t => {
+  const code = `<a bcd = ef ghi = jk lmn / >`;
+  t.true(withinTagInnerspace(code, 2), "99.06");
+  t.false(withinTagInnerspace(code, 6), "99.06");
+  t.false(withinTagInnerspace(code, 8), "99.06");
+  t.true(withinTagInnerspace(code, 11), "99.06");
+  t.false(withinTagInnerspace(code, 15), "99.06");
+  t.false(withinTagInnerspace(code, 17), "99.06");
+  t.true(withinTagInnerspace(code, 20), "99.06");
+  t.true(withinTagInnerspace(code, 24), "99.06");
 });
 
 test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`right()`}\u001b[${39}m`} - all cases`, t => {

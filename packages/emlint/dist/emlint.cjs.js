@@ -502,6 +502,18 @@ function charSuitableForAttrName(char) {
   var res = !"\"'><=".includes(char);
   return res;
 }
+function onlyAttrFriendlyCharsLeadingToEqual(str, idx) {
+  var ok = true;
+  for (var i = idx, len = str.length; i < len; i++) {
+    if (str[i] === "=") {
+      break;
+    }
+    if (!charSuitableForAttrName(str[i])) {
+      ok = false;
+    }
+  }
+  return ok;
+}
 function charIsQuote(char) {
   var res = "\"'`\u2018\u2019\u201C\u201D".includes(char);
   return res;
@@ -559,6 +571,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
   var r6_1 = false;
   var r6_2 = false;
   var r6_3 = false;
+  var r7_1 = false;
   for (var i = idx, len = str.length; i < len; i++) {
     var charcode = str[i].charCodeAt(0);
     if (!str[i].trim().length) {
@@ -639,7 +652,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
                     return true;
                   }
                 }
-    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1) {
+    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1 && (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
       r2_1 = true;
     }
     else if (!r2_2 && r2_1 && str[i].trim().length && !charSuitableForAttrName(str[i])) {
@@ -695,7 +708,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
                 return true;
               }
             }
-    if (!quotes.within && beginningOfAString && !r4_1 && charSuitableForAttrName(str[i])) {
+    if (!quotes.within && beginningOfAString && !r4_1 && charSuitableForAttrName(str[i]) && (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
       r4_1 = true;
     }
     else if (r4_1 && str[i].trim().length && (!charSuitableForAttrName(str[i]) || str[i] === "/")) {
@@ -757,6 +770,19 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
               return true;
             }
         }
+    if (!quotes.within && beginningOfAString && str[i].trim().length && charSuitableForAttrName(str[i]) && !r7_1 && (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
+      r7_1 = true;
+    }
+    if (r7_1 && !str[i].trim().length && str[i + 1] && charSuitableForAttrName(str[i + 1])) {
+      r7_1 = false;
+    }
+    if (!quotes.within && str[i].trim().length && !charSuitableForAttrName(str[i]) && r7_1
+    ) {
+        if (str[i] === "=") {
+          return true;
+        }
+        r7_1 = false;
+      }
     if (beginningOfAString && str[i].trim().length) {
       beginningOfAString = false;
     }
@@ -1136,6 +1162,14 @@ function lint(str, originalOpts) {
                 } else {
                   nextEqualStartAt = null;
                 }
+              }
+            } else if (!str[_i + 1].trim().length) {
+              if (withinTagInnerspace$1(str, _i + 1)) {
+                retObj.issues.push({
+                  name: "tag-attribute-quote-and-onwards-missing",
+                  position: [[left$1(str, logAttr.attrNameStartAt - 1) + 1, _i + 1]]
+                });
+                resetLogAttr();
               }
             }
           }
