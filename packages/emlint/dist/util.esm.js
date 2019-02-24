@@ -38,17 +38,55 @@ function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
   return res;
 }
-function onlyAttrFriendlyCharsLeadingToEqual(str, idx) {
-  let ok = true;
-  for (let i = idx, len = str.length; i < len; i++) {
-    if (str[i] === "=") {
-      break;
+function onlyTheseLeadToThat(
+  str,
+  idx = 0,
+  charWePassValidatorFuncArr,
+  breakingCharValidatorFuncArr,
+  terminatorCharValidatorFuncArr = null
+) {
+  if (typeof idx !== "number") {
+    idx = 0;
+  }
+  if (typeof charWePassValidatorFuncArr === "function") {
+    charWePassValidatorFuncArr = [charWePassValidatorFuncArr];
+  }
+  if (typeof breakingCharValidatorFuncArr === "function") {
+    breakingCharValidatorFuncArr = [breakingCharValidatorFuncArr];
+  }
+  if (typeof terminatorCharValidatorFuncArr === "function") {
+    terminatorCharValidatorFuncArr = [terminatorCharValidatorFuncArr];
+  }
+  let lastRes = false;
+  for (let i = 0, len = str.length; i < len; i++) {
+    if (breakingCharValidatorFuncArr.some(func => func(str[i], i))) {
+      if (!terminatorCharValidatorFuncArr) {
+        return i;
+      }
+      lastRes = i;
     }
-    if (!charSuitableForAttrName(str[i])) {
-      ok = false;
+    if (
+      terminatorCharValidatorFuncArr !== null &&
+      lastRes &&
+      terminatorCharValidatorFuncArr.some(func => func(str[i], i))
+    ) {
+      return lastRes;
+    }
+    if (
+      !charWePassValidatorFuncArr.some(func => func(str[i], i)) &&
+      !breakingCharValidatorFuncArr.some(func => func(str[i], i))
+    ) {
+      return false;
     }
   }
-  return ok;
+}
+function onlyAttrFriendlyCharsLeadingToEqual(str, idx = 0) {
+  return onlyTheseLeadToThat(
+    str,
+    idx,
+    charSuitableForAttrName,
+    char => char === "="
+  );
 }
 function charIsQuote(char) {
   const res = `"'\`\u2018\u2019\u201C\u201D`.includes(char);
@@ -423,12 +461,10 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
       }
     }
     if (
-      !quotes.within &&
       beginningOfAString &&
       str[i].trim().length &&
       charSuitableForAttrName(str[i]) &&
-      !r7_1 &&
-      (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))
+      !r7_1
     ) {
       r7_1 = true;
     }
@@ -688,4 +724,4 @@ function encodeChar(str, i) {
   return null;
 }
 
-export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, right, left, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight };
+export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, right, left, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight, onlyTheseLeadToThat };
