@@ -1631,46 +1631,20 @@ function lint(str, originalOpts) {
               position: [[i, i + 1, `'`]]
             });
             logAttr.attrValueStartAt = i + 1;
-          } else if (
-            str[i - 1] &&
-            !str[i - 1].trim().length &&
-            withinTagInnerspace$1(str, i)
-          ) {
-            let start = logAttr.attrStartAt;
-            const temp = right$1(str, i);
-            if (
-              (str[i] === "/" && temp && str[temp] === ">") ||
-              str[i] === ">"
-            ) {
-              for (let y = logAttr.attrStartAt; y--; ) {
-                if (str[y].trim().length) {
-                  start = y + 1;
-                  break;
-                }
-              }
-            }
-            retObj.issues.push({
-              name: "tag-attribute-quote-and-onwards-missing",
-              position: [[start, i]]
-            });
-            resetLogWhitespace();
-            resetLogAttr();
-          } else {
+          } else if (!withinTagInnerspace$1(str, i)) {
+            const closingQuotePeek = findClosingQuote$1(str, i);
+            const quoteValToPut = charIsQuote$1(str[closingQuotePeek])
+              ? str[closingQuotePeek]
+              : `"`;
             retObj.issues.push({
               name: "tag-attribute-opening-quotation-mark-missing",
-              position: [[i, i, `"`]]
+              position: [[left$1(str, i) + 1, i, quoteValToPut]]
             });
             logAttr.attrOpeningQuote = {
               pos: i,
-              val: `"`
+              val: quoteValToPut
             };
             logAttr.attrValueStartAt = i;
-            if (logWhitespace.startAt) {
-              retObj.issues.push({
-                name: "tag-attribute-space-between-equals-and-opening-quotes",
-                position: [[logWhitespace.startAt, i]]
-              });
-            }
             let innerTagEndsAt = null;
             for (let y = i; y < len; y++) {
               if (
@@ -1783,8 +1757,8 @@ function lint(str, originalOpts) {
               logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
               logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
             } else {
-              logAttr.attrClosingQuote.pos = str[left$1(str, caughtAttrEnd)];
-              logAttr.attrValueEndAt = str[left$1(str, caughtAttrEnd)];
+              logAttr.attrClosingQuote.pos = left$1(str, caughtAttrEnd);
+              logAttr.attrValueEndAt = logAttr.attrClosingQuote.pos;
               logAttr.attrEndAt = caughtAttrEnd;
             }
             logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
@@ -1811,6 +1785,26 @@ function lint(str, originalOpts) {
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
             continue;
+          } else {
+            let start = logAttr.attrStartAt;
+            const temp = right$1(str, i);
+            if (
+              (str[i] === "/" && temp && str[temp] === ">") ||
+              str[i] === ">"
+            ) {
+              for (let y = logAttr.attrStartAt; y--; ) {
+                if (str[y].trim().length) {
+                  start = y + 1;
+                  break;
+                }
+              }
+            }
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[start, i]]
+            });
+            resetLogWhitespace();
+            resetLogAttr();
           }
           if (logWhitespace.startAt !== null) {
             if (str[i] === "'" || str[i] === '"') {

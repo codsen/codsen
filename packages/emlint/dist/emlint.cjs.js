@@ -1365,50 +1365,29 @@ function lint(str, originalOpts) {
               position: [[_i, _i + 1, "'"]]
             });
             logAttr.attrValueStartAt = _i + 1;
-          } else if (str[_i - 1] && !str[_i - 1].trim().length && withinTagInnerspace$1(str, _i)) {
-            var start = logAttr.attrStartAt;
-            var _temp2 = right$1(str, _i);
-            if (str[_i] === "/" && _temp2 && str[_temp2] === ">" || str[_i] === ">") {
-              for (var _y = logAttr.attrStartAt; _y--;) {
-                if (str[_y].trim().length) {
-                  start = _y + 1;
-                  break;
-                }
-              }
-            }
-            retObj.issues.push({
-              name: "tag-attribute-quote-and-onwards-missing",
-              position: [[start, _i]]
-            });
-            resetLogWhitespace();
-            resetLogAttr();
-          } else {
+          } else if (!withinTagInnerspace$1(str, _i)) {
+            var _closingQuotePeek = findClosingQuote$1(str, _i);
+            var quoteValToPut = charIsQuote$1(str[_closingQuotePeek]) ? str[_closingQuotePeek] : "\"";
             retObj.issues.push({
               name: "tag-attribute-opening-quotation-mark-missing",
-              position: [[_i, _i, "\""]]
+              position: [[left$1(str, _i) + 1, _i, quoteValToPut]]
             });
             logAttr.attrOpeningQuote = {
               pos: _i,
-              val: "\""
+              val: quoteValToPut
             };
             logAttr.attrValueStartAt = _i;
-            if (logWhitespace.startAt) {
-              retObj.issues.push({
-                name: "tag-attribute-space-between-equals-and-opening-quotes",
-                position: [[logWhitespace.startAt, _i]]
-              });
-            }
             var innerTagEndsAt = null;
-            for (var _y2 = _i; _y2 < len; _y2++) {
-              if (str[_y2] === ">" && (str[left$1(str, _y2)] !== "/" && withinTagInnerspace$1(str, _y2) || str[left$1(str, _y2)] === "/")) {
-                var leftAt = left$1(str, _y2);
-                innerTagEndsAt = _y2;
+            for (var _y = _i; _y < len; _y++) {
+              if (str[_y] === ">" && (str[left$1(str, _y)] !== "/" && withinTagInnerspace$1(str, _y) || str[left$1(str, _y)] === "/")) {
+                var leftAt = left$1(str, _y);
+                innerTagEndsAt = _y;
                 if (str[leftAt] === "/") {
                   innerTagEndsAt = leftAt;
                 }
               }
               var dealBrakerCharacters = "=<";
-              if (innerTagEndsAt !== null && dealBrakerCharacters.includes(str[_y2])) {
+              if (innerTagEndsAt !== null && dealBrakerCharacters.includes(str[_y])) {
                 break;
               }
             }
@@ -1458,9 +1437,9 @@ function lint(str, originalOpts) {
               if (!str[_z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = _z + 1;
                 if (str[right$1(str, caughtAttrEnd)] === "=") {
-                  var _temp3 = left$1(str, caughtAttrStart);
-                  if (!charIsQuote$1(str[_temp3])) {
-                    attributeOnTheRightBeginsAt = right$1(str, _temp3 + 1);
+                  var _temp2 = left$1(str, caughtAttrStart);
+                  if (!charIsQuote$1(str[_temp2])) {
+                    attributeOnTheRightBeginsAt = right$1(str, _temp2 + 1);
                   }
                   break;
                 } else {
@@ -1489,17 +1468,17 @@ function lint(str, originalOpts) {
               logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
               logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
             } else {
-              logAttr.attrClosingQuote.pos = str[left$1(str, caughtAttrEnd)];
-              logAttr.attrValueEndAt = str[left$1(str, caughtAttrEnd)];
+              logAttr.attrClosingQuote.pos = left$1(str, caughtAttrEnd);
+              logAttr.attrValueEndAt = logAttr.attrClosingQuote.pos;
               logAttr.attrEndAt = caughtAttrEnd;
             }
             logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
             logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos, logAttr.attrClosingQuote.pos);
             if (logAttr.attrValueStartAt < logAttr.attrValueEndAt) {
               for (var _z2 = logAttr.attrValueStartAt; _z2 < logAttr.attrValueEndAt; _z2++) {
-                var _temp4 = encodeChar$1(str, _z2);
-                if (_temp4) {
-                  retObj.issues.push(_temp4);
+                var _temp3 = encodeChar$1(str, _z2);
+                if (_temp3) {
+                  retObj.issues.push(_temp3);
                 }
               }
             }
@@ -1511,6 +1490,23 @@ function lint(str, originalOpts) {
             resetLogAttr();
             i = _i;
             return "continue";
+          } else {
+            var start = logAttr.attrStartAt;
+            var _temp4 = right$1(str, _i);
+            if (str[_i] === "/" && _temp4 && str[_temp4] === ">" || str[_i] === ">") {
+              for (var _y2 = logAttr.attrStartAt; _y2--;) {
+                if (str[_y2].trim().length) {
+                  start = _y2 + 1;
+                  break;
+                }
+              }
+            }
+            retObj.issues.push({
+              name: "tag-attribute-quote-and-onwards-missing",
+              position: [[start, _i]]
+            });
+            resetLogWhitespace();
+            resetLogAttr();
           }
           if (logWhitespace.startAt !== null) {
             if (str[_i] === "'" || str[_i] === '"') {
