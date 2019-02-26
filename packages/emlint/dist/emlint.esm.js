@@ -1631,7 +1631,11 @@ function lint(str, originalOpts) {
               position: [[i, i + 1, `'`]]
             });
             logAttr.attrValueStartAt = i + 1;
-          } else if (withinTagInnerspace$1(str, i)) {
+          } else if (
+            str[i - 1] &&
+            !str[i - 1].trim().length &&
+            withinTagInnerspace$1(str, i)
+          ) {
             let start = logAttr.attrStartAt;
             const temp = right$1(str, i);
             if (
@@ -1688,7 +1692,12 @@ function lint(str, originalOpts) {
                 break;
               }
             }
-            const innerTagContents = str.slice(i, innerTagEndsAt);
+            let innerTagContents;
+            if (i < innerTagEndsAt) {
+              innerTagContents = str.slice(i, innerTagEndsAt);
+            } else {
+              innerTagContents = "";
+            }
             let startingPoint = innerTagEndsAt;
             let attributeOnTheRightBeginsAt;
             if (innerTagContents.includes("=")) {
@@ -1751,27 +1760,50 @@ function lint(str, originalOpts) {
               finalClosingQuotesShouldBeAt =
                 left$1(str, attributeOnTheRightBeginsAt) + 1;
             }
-            if (finalClosingQuotesShouldBeAt === null) {
+            if (
+              caughtAttrEnd &&
+              logAttr.attrOpeningQuote &&
+              !finalClosingQuotesShouldBeAt &&
+              str[left$1(str, caughtAttrEnd)] !== logAttr.attrOpeningQuote.val
+            ) {
               finalClosingQuotesShouldBeAt = caughtAttrEnd;
             }
-            retObj.issues.push({
-              name: "tag-attribute-closing-quotation-mark-missing",
-              position: [
-                [
-                  finalClosingQuotesShouldBeAt,
-                  finalClosingQuotesShouldBeAt,
-                  logAttr.attrOpeningQuote.val
+            if (finalClosingQuotesShouldBeAt) {
+              retObj.issues.push({
+                name: "tag-attribute-closing-quotation-mark-missing",
+                position: [
+                  [
+                    finalClosingQuotesShouldBeAt,
+                    finalClosingQuotesShouldBeAt,
+                    logAttr.attrOpeningQuote.val
+                  ]
                 ]
-              ]
-            });
-            logAttr.attrClosingQuote.pos = finalClosingQuotesShouldBeAt;
+              });
+              logAttr.attrClosingQuote.pos = finalClosingQuotesShouldBeAt;
+              logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
+              logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
+            } else {
+              logAttr.attrClosingQuote.pos = str[left$1(str, caughtAttrEnd)];
+              logAttr.attrValueEndAt = str[left$1(str, caughtAttrEnd)];
+              logAttr.attrEndAt = caughtAttrEnd;
+            }
             logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
-            logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
-            logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
             logAttr.attrValue = str.slice(
               logAttr.attrOpeningQuote.pos,
               logAttr.attrClosingQuote.pos
             );
+            if (logAttr.attrValueStartAt < logAttr.attrValueEndAt) {
+              for (
+                let z = logAttr.attrValueStartAt;
+                z < logAttr.attrValueEndAt;
+                z++
+              ) {
+                const temp = encodeChar$1(str, z);
+                if (temp) {
+                  retObj.issues.push(temp);
+                }
+              }
+            }
             if (!doNothingUntil) {
               doNothingUntil = logAttr.attrClosingQuote.pos;
               logWhitespace.startAt = null;

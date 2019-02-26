@@ -184,13 +184,13 @@
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "ranges-apply": "^2.12.7",
-    "rollup": "^1.2.1",
+    "rollup": "^1.2.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",
-    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-commonjs": "^9.2.1",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-license": "^0.8.1",
-    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.4"
   }
