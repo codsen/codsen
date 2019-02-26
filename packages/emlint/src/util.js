@@ -2024,12 +2024,13 @@ function findClosingQuote(str, idx = 0) {
           }
         }
       } else if (str[i] === "=") {
+        // 1
         // cases like:
         // <zzz alt="nnn="mmm">
         //              ^
         const whatFollowsEq = right(str, i);
         console.log(
-          `2032 (util/findClosingQuote) ${log(
+          `2033 (util/findClosingQuote) ${log(
             "set",
             "whatFollowsEq",
             whatFollowsEq
@@ -2039,7 +2040,7 @@ function findClosingQuote(str, idx = 0) {
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
         ) {
-          console.log("2042 (util/findClosingQuote)");
+          console.log("2043 (util/findClosingQuote)");
           console.log(
             `${`\u001b[${33}m${`lastNonWhitespaceCharWasQuoteAt`}\u001b[${39}m`} = ${JSON.stringify(
               lastNonWhitespaceCharWasQuoteAt,
@@ -2049,25 +2050,68 @@ function findClosingQuote(str, idx = 0) {
           );
           // since we discovered another attribute starting, go back, to the
           // last quote, check does it pass the util/withinTagInnerspace()
-          if (withinTagInnerspace(str, lastQuoteAt + 1)) {
+          if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
             console.log(
-              `2054 (util/findClosingQuote) ${log(
+              `2055 (util/findClosingQuote) ${log(
                 "return",
                 "lastQuoteAt + 1",
                 lastQuoteAt + 1
               )}`
             );
             return lastQuoteAt + 1;
+          } else if (!lastQuoteAt) {
+            console.log(`2063 we don't have lastQuoteAt`);
+            // we have a case like:
+            // <a bcd=ef ghi='jk' lmn>
+            // if we started at index 7, at letter "e", went up to closing quote
+            // after equal of "ghi=", at 14. There are no closing quotes up to
+            // there.
+
+            // turn back and go until first whitespace character is met. This
+            // will be the starting point of the attribute (at whose closing we
+            // are at). Then use left() and that will be the suitable position
+            // for quotes suggestion (if quotes don't exist already there).
+
+            const startingPoint = str[i - 1].trim().length
+              ? i - 1
+              : left(str, i);
+            let res;
+            console.log(
+              `2080 ${`\u001b[${33}m${`startingPoint`}\u001b[${39}m`} = ${JSON.stringify(
+                startingPoint,
+                null,
+                4
+              )}`
+            );
+            for (let y = startingPoint; y--; ) {
+              console.log(
+                `2088 \u001b[${36}m${`str[${y}] = ${str[y]}`}\u001b[${39}m`
+              );
+              if (!str[y].trim().length) {
+                console.log(`2091 \u001b[${36}m${`break`}\u001b[${39}m`);
+                res = left(str, y) + 1;
+                break;
+              }
+            }
+            console.log(
+              `2097 ${`\u001b[${33}m${`RETURN`}\u001b[${39}m`}: ${JSON.stringify(
+                res,
+                null,
+                4
+              )}`
+            );
+            return res;
           }
-          console.log("2062 didn't pass");
+
+          console.log("2106 recursive cycle didn't pass");
         }
       } else if (str[i] !== "/") {
         // 1. catch <
         if (str[i] === "<" && tagOnTheRight(str, i)) {
-          console.log(`2067 ██ tag on the right`);
+          console.log(`2111 ██ tag on the right`);
           if (lastClosingBracketAt !== null) {
             console.log(
-              `2070 (util/findClosingQuote) ${log(
+              `2114 (util/findClosingQuote) ${log(
                 "return",
                 "lastClosingBracketAt",
                 lastClosingBracketAt
@@ -2081,7 +2125,7 @@ function findClosingQuote(str, idx = 0) {
         if (lastNonWhitespaceCharWasQuoteAt !== null) {
           lastNonWhitespaceCharWasQuoteAt = null;
           console.log(
-            `2084 (util/findClosingQuote) ${log(
+            `2128 (util/findClosingQuote) ${log(
               "set",
               "lastNonWhitespaceCharWasQuoteAt",
               lastNonWhitespaceCharWasQuoteAt
@@ -2093,7 +2137,7 @@ function findClosingQuote(str, idx = 0) {
 
     // ======
     console.log(
-      `2096 (util/findClosingQuote) ${log(
+      `2140 (util/findClosingQuote) ${log(
         "END",
         "lastNonWhitespaceCharWasQuoteAt",
         lastNonWhitespaceCharWasQuoteAt

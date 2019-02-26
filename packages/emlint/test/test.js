@@ -3958,15 +3958,21 @@ test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   t.is(findClosingQuote(code3, 9), 13, "99.16.03");
 });
 
-test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+test(`99.17 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
   const code1 = `<aaa bbb="ccc" ddd= eee="fff"/>`;
-  t.is(findClosingQuote(code1, 9), 13, "99.20.01");
-  t.is(findClosingQuote(code1, 25), 28, "99.20.02");
+  t.is(findClosingQuote(code1, 9), 13, "99.17.01");
+  t.is(findClosingQuote(code1, 25), 28, "99.17.02");
 });
 
-test(`99.21 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - unclosed quote`, t => {
+test(`99.18 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - unclosed quote`, t => {
   const code = `<zzz alt="nnn="mmm">`;
-  t.is(findClosingQuote(code, 9), 10, "99.21.01");
+  t.is(findClosingQuote(code, 9), 10, "99.18.01");
+});
+
+test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - quotes missing`, t => {
+  const code = `<a bcd=ef ghi='jk' lmn>`;
+  t.is(findClosingQuote(code, 7), 9, "99.19.01");
+  t.is(findClosingQuote(code, 14), 17, "99.19.02");
 });
 
 test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`left()`}\u001b[${39}m`} - all cases`, t => {

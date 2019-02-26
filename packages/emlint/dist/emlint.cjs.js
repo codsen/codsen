@@ -990,8 +990,18 @@ function findClosingQuote(str) {
         } else if (str[i] === "=") {
           var whatFollowsEq = right(str, i);
           if (whatFollowsEq && (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')) {
-            if (withinTagInnerspace(str, lastQuoteAt + 1)) {
+            if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
               return lastQuoteAt + 1;
+            } else if (!lastQuoteAt) {
+              var startingPoint = str[i - 1].trim().length ? i - 1 : left(str, i);
+              var res = void 0;
+              for (var y = startingPoint; y--;) {
+                if (!str[y].trim().length) {
+                  res = left(str, y) + 1;
+                  break;
+                }
+              }
+              return res;
             }
           }
         } else if (str[i] !== "/") {

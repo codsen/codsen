@@ -677,8 +677,20 @@ function findClosingQuote(str, idx = 0) {
           whatFollowsEq &&
           (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
         ) {
-          if (withinTagInnerspace(str, lastQuoteAt + 1)) {
+          if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
             return lastQuoteAt + 1;
+          } else if (!lastQuoteAt) {
+            const startingPoint = str[i - 1].trim().length
+              ? i - 1
+              : left(str, i);
+            let res;
+            for (let y = startingPoint; y--; ) {
+              if (!str[y].trim().length) {
+                res = left(str, y) + 1;
+                break;
+              }
+            }
+            return res;
           }
         }
       } else if (str[i] !== "/") {
