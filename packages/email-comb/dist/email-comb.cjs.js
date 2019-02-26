@@ -506,7 +506,7 @@ function comb(str, opts) {
                 var toIndex = i;
                 var tempFindingIndex = void 0;
                 if (chr === "{" && str[fromIndex - 1] !== ">" && str[fromIndex - 1] !== "}") {
-                  for (var _y2 = headSelectorChunkStartedAt - 1; _y2--;) {
+                  for (var _y2 = headSelectorChunkStartedAt; _y2--;) {
                     totalCounter++;
                     if (str[_y2].trim().length !== 0 && str[_y2] !== ",") {
                       fromIndex = _y2 + 1;
@@ -533,14 +533,15 @@ function comb(str, opts) {
                 })) {
                   fromIndex = tempFindingIndex + 2;
                 }
-                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(expander({
+                var resToPush = expander({
                   str: str,
                   from: fromIndex,
                   to: toIndex,
                   ifRightSideIncludesThisThenCropTightly: ".#",
                   ifRightSideIncludesThisCropItToo: ",",
                   extendToOneSide: "right"
-                })));
+                });
+                finalIndexesToDelete.push.apply(finalIndexesToDelete, _toConsumableArray(resToPush));
                 if (opts.uglify) {
                   currentChunksMinifiedSelectors.wipe();
                 }

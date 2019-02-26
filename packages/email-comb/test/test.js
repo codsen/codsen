@@ -3073,6 +3073,23 @@ test("01.65 - dirty code - blank class attribute name", t => {
   t.is(actual2, intended2, "01.65.02");
 });
 
+test("01.66 - dirty code - blank class attribute name", t => {
+  const actual1 = comb(`<head>
+<style>@media screen and (min-width:1px){.unused {color: red;}}</style>
+</head>
+<body>
+zzz
+</body>`).result;
+  const intended1 = `<head>
+</head>
+<body>
+zzz
+</body>
+`;
+
+  t.is(actual1, intended1, "01.66");
+});
+
 //
 //
 //                                                             222222222222222
