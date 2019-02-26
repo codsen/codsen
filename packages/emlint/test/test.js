@@ -3001,12 +3001,13 @@ test(`22.24 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - se
 
 test(`22.25 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value`, t => {
   const bad1 = `<a bcd= ef=gh > ij>`;
-  const good1 = `<a ef="gh > ij">`;
+  const good1 = `<a ef="gh &gt; ij">`;
   const res1 = lint(bad1);
   t.is(apply(bad1, res1.fix), good1, "22.25.01");
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),
     [
+      "bad-character-unencoded-closing-bracket",
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
       "tag-attribute-quote-and-onwards-missing"
@@ -3017,12 +3018,13 @@ test(`22.25 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - cl
 
 test(`22.26 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value, more tags`, t => {
   const bad1 = `<a bcd= ef=gh > ij><img src=zzz alt="">`;
-  const good1 = `<a ef="gh > ij"><img src="zzz" alt="">`;
+  const good1 = `<a ef="gh &gt; ij"><img src="zzz" alt="">`;
   const res1 = lint(bad1);
   t.is(apply(bad1, res1.fix), good1, "22.26.01");
   t.deepEqual(
     getUniqueIssueNames(res1.issues).sort(),
     [
+      "bad-character-unencoded-closing-bracket",
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
       "tag-attribute-quote-and-onwards-missing"
