@@ -10,7 +10,7 @@
 import split from 'csv-split-easy';
 import pull from 'lodash.pull';
 import ordinal from 'ordinal';
-import BigNumber from 'bignumber.js';
+import currency from 'currency.js';
 import isNumeric from 'is-numeric';
 
 const currencySigns = [
@@ -430,7 +430,7 @@ function csvSort(input) {
               potentialCreditDebitColumns[suspectedColIndex]
             ] !== ""
           ) {
-            diffVal = new BigNumber(
+            diffVal = currency(
               content[suspectedRowsIndex][
                 potentialCreditDebitColumns[suspectedColIndex]
               ]
@@ -438,15 +438,15 @@ function csvSort(input) {
           }
           let totalVal = null;
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
-            totalVal = new BigNumber(
+            totalVal = currency(
               content[suspectedRowsIndex][balanceColumnIndex]
             );
           }
           let topmostResContentBalance = null;
           if (resContent[0][balanceColumnIndex] !== "") {
-            topmostResContentBalance = new BigNumber(
+            topmostResContentBalance = currency(
               resContent[0][balanceColumnIndex]
-            );
+            ).format();
           }
           let currentRowsDiffVal = null;
           if (
@@ -454,19 +454,22 @@ function csvSort(input) {
               potentialCreditDebitColumns[suspectedColIndex]
             ] !== ""
           ) {
-            currentRowsDiffVal = new BigNumber(
+            currentRowsDiffVal = currency(
               resContent[resContent.length - 1][
                 potentialCreditDebitColumns[suspectedColIndex]
               ]
-            );
+            ).format();
           }
           let lastResContentRowsBalance = null;
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
-            lastResContentRowsBalance = new BigNumber(
+            lastResContentRowsBalance = currency(
               resContent[resContent.length - 1][balanceColumnIndex]
             );
           }
-          if (diffVal && totalVal.plus(diffVal).eq(topmostResContentBalance)) {
+          if (
+            diffVal &&
+            totalVal.add(diffVal).format() === topmostResContentBalance
+          ) {
             resContent.unshift(
               content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
             );
@@ -475,7 +478,7 @@ function csvSort(input) {
             break;
           } else if (
             diffVal &&
-            totalVal.minus(diffVal).eq(topmostResContentBalance)
+            totalVal.subtract(diffVal).format() === topmostResContentBalance
           ) {
             resContent.unshift(
               content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
@@ -485,7 +488,8 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.plus(currentRowsDiffVal).eq(totalVal)
+            lastResContentRowsBalance.add(currentRowsDiffVal).format() ===
+              totalVal.format()
           ) {
             resContent.push(
               content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)
@@ -495,7 +499,8 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.minus(currentRowsDiffVal).eq(totalVal)
+            lastResContentRowsBalance.subtract(currentRowsDiffVal).format() ===
+              totalVal.format()
           ) {
             resContent.push(
               content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart)

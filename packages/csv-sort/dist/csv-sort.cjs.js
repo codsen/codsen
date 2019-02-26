@@ -14,7 +14,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var split = _interopDefault(require('csv-split-easy'));
 var pull = _interopDefault(require('lodash.pull'));
 var ordinal = _interopDefault(require('ordinal'));
-var BigNumber = _interopDefault(require('bignumber.js'));
+var currency = _interopDefault(require('currency.js'));
 var isNumeric = _interopDefault(require('is-numeric'));
 
 function _typeof(obj) {
@@ -224,40 +224,40 @@ function csvSort(input) {
         for (var suspectedColIndex = 0, _len4 = potentialCreditDebitColumns.length; suspectedColIndex < _len4; suspectedColIndex++) {
           var diffVal = null;
           if (content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            diffVal = new BigNumber(content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
+            diffVal = currency(content[suspectedRowsIndex][potentialCreditDebitColumns[suspectedColIndex]]);
           }
           var totalVal = null;
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
-            totalVal = new BigNumber(content[suspectedRowsIndex][balanceColumnIndex]);
+            totalVal = currency(content[suspectedRowsIndex][balanceColumnIndex]);
           }
           var topmostResContentBalance = null;
           if (resContent[0][balanceColumnIndex] !== "") {
-            topmostResContentBalance = new BigNumber(resContent[0][balanceColumnIndex]);
+            topmostResContentBalance = currency(resContent[0][balanceColumnIndex]).format();
           }
           var currentRowsDiffVal = null;
           if (resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]] !== "") {
-            currentRowsDiffVal = new BigNumber(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]);
+            currentRowsDiffVal = currency(resContent[resContent.length - 1][potentialCreditDebitColumns[suspectedColIndex]]).format();
           }
           var lastResContentRowsBalance = null;
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
-            lastResContentRowsBalance = new BigNumber(resContent[resContent.length - 1][balanceColumnIndex]);
+            lastResContentRowsBalance = currency(resContent[resContent.length - 1][balanceColumnIndex]);
           }
-          if (diffVal && totalVal.plus(diffVal).eq(topmostResContentBalance)) {
+          if (diffVal && totalVal.add(diffVal).format() === topmostResContentBalance) {
             resContent.unshift(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (diffVal && totalVal.minus(diffVal).eq(topmostResContentBalance)) {
+          } else if (diffVal && totalVal.subtract(diffVal).format() === topmostResContentBalance) {
             resContent.unshift(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (currentRowsDiffVal && lastResContentRowsBalance.plus(currentRowsDiffVal).eq(totalVal)) {
+          } else if (currentRowsDiffVal && lastResContentRowsBalance.add(currentRowsDiffVal).format() === totalVal.format()) {
             resContent.push(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } else if (currentRowsDiffVal && lastResContentRowsBalance.minus(currentRowsDiffVal).eq(totalVal)) {
+          } else if (currentRowsDiffVal && lastResContentRowsBalance.subtract(currentRowsDiffVal).format() === totalVal.format()) {
             resContent.push(content[suspectedRowsIndex].slice(0, indexAtWhichEmptyCellsStart));
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;

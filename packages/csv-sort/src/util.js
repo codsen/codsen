@@ -160,4 +160,4 @@ function findtype(something) {
   return "text";
 }
 
-export { findtype as default };
+export { findtype };

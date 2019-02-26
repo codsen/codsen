@@ -1,5 +1,5 @@
 import test from "ava";
-import findtype from "../dist/util.esm";
+import { findtype } from "../dist/util.esm";
 
 // 01. findtype()
 // ==========================

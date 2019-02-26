@@ -1,8 +1,8 @@
 import split from "csv-split-easy";
 import pull from "lodash.pull";
 import ordinal from "ordinal";
-import BigNumber from "bignumber.js";
-import findtype from "./util";
+import currency from "currency.js";
+import { findtype } from "./util";
 
 const isArr = Array.isArray;
 function existy(x) {
@@ -70,6 +70,7 @@ function csvSort(input) {
   let indexAtWhichEmptyCellsStart = null;
 
   for (let i = content.length - 1; i >= 0; i--) {
+    console.log(`073 content[${i}] = ${content[i]}`);
     if (!schema) {
       // prevention against last blank row:
       if (content[i].length !== 1 || content[i][0] !== "") {
@@ -381,6 +382,14 @@ function csvSort(input) {
     content[content.length - 1].slice(0, indexAtWhichEmptyCellsStart)
   );
 
+  console.log(
+    `386 after push ${`\u001b[${33}m${`resContent`}\u001b[${39}m`} = ${JSON.stringify(
+      resContent,
+      null,
+      4
+    )}`
+  );
+
   const usedUpRows = [];
 
   const bottom = stateHeaderRowPresent ? 1 : 0;
@@ -388,11 +397,26 @@ function csvSort(input) {
     // for each row above the last-one (which is already in place), we'll traverse
     // all the rows above to find the match.
     // go through all the rows and pick the right row which matches to the above:
+    console.log(
+      `\n\u001b[${90}m${`                       S`}\u001b[${39}m`.repeat(15)
+    );
+    console.log(
+      `404 \u001b[${90}m${`████████████████ y = ${y} ████████████████`}\u001b[${39}m`
+    );
+
     for (
       let suspectedRowsIndex = content.length - 2;
       suspectedRowsIndex >= bottom;
       suspectedRowsIndex--
     ) {
+      console.log(`\n\n\n\n\n ${`\u001b[${90}m${`██`}\u001b[${39}m`}`);
+      console.log(
+        `414 \u001b[${90}m${`=============== suspected row: ${JSON.stringify(
+          content[suspectedRowsIndex],
+          null,
+          0
+        )} (idx. ${suspectedRowsIndex}) ===============`}\u001b[${39}m`
+      );
       if (!usedUpRows.includes(suspectedRowsIndex)) {
         // go through each of the suspected Credit/Debit columns:
 
@@ -403,30 +427,54 @@ function csvSort(input) {
           suspectedColIndex < len;
           suspectedColIndex++
         ) {
+          console.log(
+            `431 \u001b[${90}m${`--------------- suspectedColIndex = ${suspectedColIndex} ---------------`}\u001b[${39}m`
+          );
           let diffVal = null;
           if (
             content[suspectedRowsIndex][
               potentialCreditDebitColumns[suspectedColIndex]
             ] !== ""
           ) {
-            diffVal = new BigNumber(
+            diffVal = currency(
               content[suspectedRowsIndex][
                 potentialCreditDebitColumns[suspectedColIndex]
               ]
+            );
+            console.log(
+              `445 SET ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                diffVal,
+                null,
+                4
+              )}`
             );
           }
 
           let totalVal = null;
           if (content[suspectedRowsIndex][balanceColumnIndex] !== "") {
-            totalVal = new BigNumber(
+            totalVal = currency(
               content[suspectedRowsIndex][balanceColumnIndex]
+            );
+            console.log(
+              `459 SET ${`\u001b[${33}m${`totalVal`}\u001b[${39}m`} = ${JSON.stringify(
+                totalVal,
+                null,
+                4
+              )}`
             );
           }
 
           let topmostResContentBalance = null;
           if (resContent[0][balanceColumnIndex] !== "") {
-            topmostResContentBalance = new BigNumber(
+            topmostResContentBalance = currency(
               resContent[0][balanceColumnIndex]
+            ).format();
+            console.log(
+              `473 SET ${`\u001b[${33}m${`topmostResContentBalance`}\u001b[${39}m`} = ${JSON.stringify(
+                topmostResContentBalance,
+                null,
+                4
+              )}`
             );
           }
 
@@ -436,21 +484,54 @@ function csvSort(input) {
               potentialCreditDebitColumns[suspectedColIndex]
             ] !== ""
           ) {
-            currentRowsDiffVal = new BigNumber(
+            currentRowsDiffVal = currency(
               resContent[resContent.length - 1][
                 potentialCreditDebitColumns[suspectedColIndex]
               ]
+            ).format();
+            console.log(
+              `${`\u001b[${33}m${`currentRowsDiffVal`}\u001b[${39}m`} = ${JSON.stringify(
+                currentRowsDiffVal,
+                null,
+                4
+              )}`
             );
           }
 
           let lastResContentRowsBalance = null;
           if (resContent[resContent.length - 1][balanceColumnIndex] !== "") {
-            lastResContentRowsBalance = new BigNumber(
+            lastResContentRowsBalance = currency(
               resContent[resContent.length - 1][balanceColumnIndex]
             );
           }
 
-          if (diffVal && totalVal.plus(diffVal).eq(topmostResContentBalance)) {
+          console.log("\n\n\n\n\n");
+          console.log(
+            `510 ${`\u001b[${33}m${`diffVal`}\u001b[${39}m`} = ${JSON.stringify(
+              diffVal,
+              null,
+              4
+            )}`
+          );
+
+          console.log(
+            `case 1 totalVal=${totalVal} + diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`
+          );
+          console.log(
+            `case 2 totalVal=${totalVal} - diffVal=${diffVal} === topmostResContentBalance=${topmostResContentBalance}`
+          );
+          console.log(
+            `case 3 lastResContentRowsBalance=${lastResContentRowsBalance} + currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`
+          );
+          console.log(
+            `case 4 lastResContentRowsBalance=${lastResContentRowsBalance} - currentRowsDiffVal=${currentRowsDiffVal} === totalVal=${totalVal}`
+          );
+
+          if (
+            diffVal &&
+            totalVal.add(diffVal).format() === topmostResContentBalance
+          ) {
+            console.log(`534 ADD THIS ROW ABOVE EVERYTHING`);
             // ADD THIS ROW ABOVE EVERYTHING
             // add this row above the current HEAD in resContent lines array (index `0`)
             resContent.unshift(
@@ -461,7 +542,7 @@ function csvSort(input) {
             break;
           } else if (
             diffVal &&
-            totalVal.minus(diffVal).eq(topmostResContentBalance)
+            totalVal.subtract(diffVal).format() === topmostResContentBalance
           ) {
             // ADD THIS ROW ABOVE EVERYTHING
             resContent.unshift(
@@ -472,7 +553,8 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.plus(currentRowsDiffVal).eq(totalVal)
+            lastResContentRowsBalance.add(currentRowsDiffVal).format() ===
+              totalVal.format()
           ) {
             // ADD THIS ROW BELOW EVERYTHING
             resContent.push(
@@ -483,7 +565,8 @@ function csvSort(input) {
             break;
           } else if (
             currentRowsDiffVal &&
-            lastResContentRowsBalance.minus(currentRowsDiffVal).eq(totalVal)
+            lastResContentRowsBalance.subtract(currentRowsDiffVal).format() ===
+              totalVal.format()
           ) {
             // ADD THIS ROW BELOW EVERYTHING
             resContent.push(
@@ -492,8 +575,16 @@ function csvSort(input) {
             usedUpRows.push(suspectedRowsIndex);
             thisRowIsDone = true;
             break;
-          } // else {
-          // }
+          }
+
+          console.log("----------");
+          console.log(
+            `582 ${`\u001b[${33}m${`thisRowIsDone`}\u001b[${39}m`} = ${JSON.stringify(
+              thisRowIsDone,
+              null,
+              4
+            )}`
+          );
         }
         if (thisRowIsDone) {
           thisRowIsDone = false;
@@ -501,6 +592,14 @@ function csvSort(input) {
         }
       }
     }
+
+    console.log(
+      `597 ${`\u001b[${32}m${`██`}\u001b[${39}m`} ENDING \u001b[${33}m${`resContent`}\u001b[${39}m = ${JSON.stringify(
+        resContent,
+        null,
+        4
+      )}`
+    );
   }
 
   // restore title row if present
@@ -528,4 +627,4 @@ function csvSort(input) {
   };
 }
 
-export { csvSort as default };
+export default csvSort;

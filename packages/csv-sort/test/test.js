@@ -6,7 +6,7 @@ import csvSort from "../dist/csv-sort.esm";
 
 const fixtures = path.join(__dirname, "fixtures");
 
-// -----------------------------------------------------------------------------
+// -------------------------------------------------------------------
 
 function compare(t, name, throws) {
   if (throws) {
@@ -20,6 +20,7 @@ function compare(t, name, throws) {
 }
 
 // GROUP 01. Simple file, concentrate on row sorting, Balance, Credit & Debit col detection
+// -------------------------------------------------------------------
 
 test("01.01. sorts a basic file, empty extra column in header", t =>
   compare(t, "simples"));
@@ -31,6 +32,7 @@ test("01.03. sorts a basic file with opposite order of the CSV entries", t =>
   compare(t, "simples-backwards"));
 
 // GROUP 02. Blank row cases
+// -------------------------------------------------------------------
 
 test("02.01. blank row above header", t =>
   compare(t, "simples-blank-row-aboveheader"));
@@ -58,6 +60,7 @@ test("02.08. extra column with data there, then an extra empty column everywhere
 });
 
 // GROUP 03. Throwing
+// -------------------------------------------------------------------
 
 test("03.01. throws when it can't detect Balance column (one field is empty in this case)", t =>
   compare(t, "throws-no-balance", 1));
@@ -92,6 +95,7 @@ test("03.05. throws when input types are wrong", t => {
 });
 
 // GROUP 04. 2D Trim
+// -------------------------------------------------------------------
 
 test("04.01. trims right side cols and bottom rows", t =>
   compare(t, "simples-2d-trim"));

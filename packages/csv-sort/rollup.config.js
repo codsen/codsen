@@ -45,7 +45,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
-        "bignumber.js",
+        "currency.js",
         "csv-split-easy",
         "is-numeric",
         "lodash.pull",
@@ -69,7 +69,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
-        "bignumber.js",
+        "currency.js",
         "csv-split-easy",
         "is-numeric",
         "lodash.pull",
@@ -90,8 +90,12 @@ export default commandLineArgs => {
     // util.js build:
     {
       input: "src/util.js",
-      output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: ["is-numeric"],
+      output: [
+        { file: "dist/util.esm.js", format: "es" },
+      ],
+      external: [
+        "is-numeric"
+      ],
       plugins: [
         strip({
           sourceMap: false

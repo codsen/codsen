@@ -157,4 +157,4 @@ function findtype(something) {
   return "text";
 }
 
-export default findtype;
+export { findtype };
