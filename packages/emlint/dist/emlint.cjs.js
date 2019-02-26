@@ -787,7 +787,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
               r5_3 = false;
             }
           }
-    if (!quotes.within && !r6_1 && (charSuitableForAttrName(str[i]) || !str[i].trim().length)) {
+    if (!quotes.within && !r6_1 && (charSuitableForAttrName(str[i]) || !str[i].trim().length) && !charSuitableForAttrName(str[i - 1]) && str[i - 1] !== "=") {
       r6_1 = true;
     }
     if (!quotes.within && r6_1 && !r6_2 && str[i].trim().length && !charSuitableForAttrName(str[i])) {

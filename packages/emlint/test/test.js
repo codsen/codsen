@@ -3723,47 +3723,28 @@ test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
 });
 
 test(`99.02 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - with offset`, t => {
-  t.true(
-    withinTagInnerspace(
-      `<img src="zzz.jpg" alt=" height="100" border="0" style="display:block;"/>`,
-      //                       ^
-      24
-    ),
-    "99.02.01"
-  );
-  t.false(
-    withinTagInnerspace(
-      `<img src="zzz.jpg" alt=" zzz" border="0" style="display:block;" alt=""/>`,
-      //                       ^
-      24
-    ),
-    "99.02.02"
-  );
-  t.false(
-    withinTagInnerspace(
-      `<img src="zzz.jpg" alt=" <--- zzz" border="0" style="display:block;" alt=""/>`,
-      //                       ^
-      24
-    ),
-    "99.02.03"
-  );
+  const source1 = `<img src="zzz.jpg" alt=" height="100" border="0" style="display:block;"/>`;
+  t.true(withinTagInnerspace(source1, 24), "99.02.01");
+  t.true(withinTagInnerspace(source1, 25), "99.02.02");
+
+  const source2 = `<img src="zzz.jpg" alt=" zzz" border="0" style="display:block;" alt=""/>`;
+  t.false(withinTagInnerspace(source2, 24), "99.02.03");
+  t.false(withinTagInnerspace(source2, 25), "99.02.04");
+
+  const source3 = `<img src="zzz.jpg" alt=" <--- zzz" border="0" style="display:block;" alt=""/>`;
+  t.false(withinTagInnerspace(source3, 24), "99.02.05");
+  t.false(withinTagInnerspace(source3, 25), "99.02.06");
+
   // but this is within inner tag space:
   t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt="border="0" style="display:block;" alt=""/>`,
-      //                       ^
       24
     ),
-    "99.02.04"
+    "99.02.07 - missing space and closing quote"
   );
-  t.true(
-    withinTagInnerspace(
-      `<img src="zzz.jpg" alt=">`,
-      //                       ^
-      24
-    ),
-    "99.02.05-1"
-  );
+  t.true(withinTagInnerspace(`<img src="zzz.jpg" alt=">`, 24), "99.02.08");
+  t.true(withinTagInnerspace(`<img src="zzz.jpg" alt="/>`, 24), "99.02.09");
   t.true(
     withinTagInnerspace(
       `<img src="zzz.jpg" alt=">\n`,
@@ -3836,14 +3817,28 @@ test(`99.05 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
 
 test(`99.06 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - attributes without quotes follow`, t => {
   const code = `<a bcd = ef ghi = jk lmn / >`;
-  t.true(withinTagInnerspace(code, 2), "99.06");
-  t.false(withinTagInnerspace(code, 6), "99.06");
-  t.false(withinTagInnerspace(code, 8), "99.06");
-  t.true(withinTagInnerspace(code, 11), "99.06");
-  t.false(withinTagInnerspace(code, 15), "99.06");
-  t.false(withinTagInnerspace(code, 17), "99.06");
-  t.true(withinTagInnerspace(code, 20), "99.06");
-  t.true(withinTagInnerspace(code, 24), "99.06");
+  t.true(withinTagInnerspace(code, 2), "99.06.01");
+  t.false(withinTagInnerspace(code, 6), "99.06.02");
+  t.false(withinTagInnerspace(code, 8), "99.06.03");
+  t.true(withinTagInnerspace(code, 11), "99.06.04");
+  t.false(withinTagInnerspace(code, 15), "99.06.05");
+  t.false(withinTagInnerspace(code, 17), "99.06.06");
+  t.true(withinTagInnerspace(code, 20), "99.06.07");
+  t.true(withinTagInnerspace(code, 24), "99.06.08");
+});
+
+test(`99.07 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - attributes without quotes follow`, t => {
+  const code = `<a bcd=ef ghi='jk' lmn>`;
+  t.false(withinTagInnerspace(code, 6), "99.07.01");
+  t.false(withinTagInnerspace(code, 7), "99.07.02");
+  t.true(withinTagInnerspace(code, 9), "99.07.03");
+  t.true(withinTagInnerspace(code, 10), "99.07.04");
+  t.false(withinTagInnerspace(code, 13), "99.07.05");
+  t.false(withinTagInnerspace(code, 14), "99.07.06");
+  t.false(withinTagInnerspace(code, 15), "99.07.07");
+  t.false(withinTagInnerspace(code, 17), "99.07.09");
+  t.true(withinTagInnerspace(code, 18), "99.07.10");
+  t.true(withinTagInnerspace(code, 19), "99.07.11");
 });
 
 test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`right()`}\u001b[${39}m`} - all cases`, t => {

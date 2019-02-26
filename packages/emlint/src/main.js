@@ -1010,7 +1010,7 @@ function lint(str, originalOpts) {
             console.log(
               `1011 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`false`}\u001b[${39}m`}`
             );
-            // in all other cases, insert missing opening quote here, right
+            // insert missing opening quote here, right
             // at this index, which means, to the left of this character
 
             const closingQuotePeek = findClosingQuote(str, i);
@@ -1585,9 +1585,9 @@ function lint(str, originalOpts) {
             //
             //
 
-            console.log("1588 tag closing on the right");
             let start = logAttr.attrStartAt;
             const temp = right(str, i);
+            console.log(`1590 ${log("set", "start", start, "temp", temp)}`);
             if (
               (str[i] === "/" && temp && str[temp] === ">") ||
               str[i] === ">"

@@ -906,7 +906,9 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     if (
       !quotes.within &&
       !r6_1 &&
-      (charSuitableForAttrName(str[i]) || !str[i].trim().length)
+      (charSuitableForAttrName(str[i]) || !str[i].trim().length) &&
+      !charSuitableForAttrName(str[i - 1]) &&
+      str[i - 1] !== "="
     ) {
       r6_1 = true;
     }
