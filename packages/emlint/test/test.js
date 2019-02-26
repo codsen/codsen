@@ -2877,7 +2877,6 @@ test(`22.17 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - co
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
-      "tag-attribute-space-between-equals-and-opening-quotes",
       "tag-attribute-space-between-name-and-equals",
       "tag-excessive-whitespace-inside-tag",
       "tag-whitespace-closing-slash-and-bracket"
@@ -2899,7 +2898,6 @@ test(`22.18 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - co
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
-      "tag-attribute-space-between-equals-and-opening-quotes",
       "tag-attribute-space-between-name-and-equals",
       "tag-excessive-whitespace-inside-tag",
       "tag-whitespace-closing-slash-and-bracket"
@@ -2918,7 +2916,6 @@ test(`22.19 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - un
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
-      "tag-attribute-space-between-equals-and-opening-quotes",
       "tag-attribute-space-between-name-and-equals",
       "tag-excessive-whitespace-inside-tag",
       "tag-whitespace-closing-slash-and-bracket"
@@ -2937,7 +2934,6 @@ test(`22.20 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - un
     [
       "tag-attribute-closing-quotation-mark-missing",
       "tag-attribute-opening-quotation-mark-missing",
-      "tag-attribute-space-between-equals-and-opening-quotes",
       "tag-attribute-space-between-name-and-equals",
       "tag-whitespace-closing-slash-and-bracket"
     ],
