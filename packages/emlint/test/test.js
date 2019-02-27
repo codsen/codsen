@@ -2061,17 +2061,17 @@ test(`15.19 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
   );
 });
 
-test(`15.20 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - two consecutive attributes with closing quotes missing`, t => {
-  const bad1 = `<abc def="0 ghi="1>`;
-  const good1 = `<abc def="0" ghi="1">`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "15.20.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["tag-attribute-closing-quotation-mark-missing"],
-    "15.20.02"
-  );
-});
+// test(`15.20 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - two consecutive attributes with closing quotes missing`, t => {
+//   const bad1 = `<abc def="0 ghi="1>`;
+//   const good1 = `<abc def="0" ghi="1">`;
+//   const res1 = lint(bad1);
+//   t.is(apply(bad1, res1.fix), good1, "15.20.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res1.issues).sort(),
+//     ["tag-attribute-closing-quotation-mark-missing"],
+//     "15.20.02"
+//   );
+// });
 
 // 16. rule tag-attribute-missing-equal
 // -----------------------------------------------------------------------------
@@ -3070,38 +3070,38 @@ test(`22.27 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - an
   );
 });
 
-test(`22.28 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #1`, t => {
-  const bad1 = `<a bc= > defg>`;
-  const good1 = `<a bc="&gt; defg">`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "22.28.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    [
-      "bad-character-unencoded-closing-bracket",
-      "tag-attribute-closing-quotation-mark-missing",
-      "tag-attribute-opening-quotation-mark-missing"
-    ],
-    "22.28.02"
-  );
-});
+// test(`22.28 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #1`, t => {
+//   const bad1 = `<a bc= > defg>`;
+//   const good1 = `<a bc="&gt; defg">`;
+//   const res1 = lint(bad1);
+//   t.is(apply(bad1, res1.fix), good1, "22.28.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res1.issues).sort(),
+//     [
+//       "bad-character-unencoded-closing-bracket",
+//       "tag-attribute-closing-quotation-mark-missing",
+//       "tag-attribute-opening-quotation-mark-missing"
+//     ],
+//     "22.28.02"
+//   );
+// });
+//
+// test(`22.29 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #2`, t => {
+//   const bad1 = `<a bc= "> defg>`;
+//   const good1 = `<a bc="&gt; defg">`;
+//   const res1 = lint(bad1);
+//   t.is(apply(bad1, res1.fix), good1, "22.29.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res1.issues).sort(),
+//     [
+//       "bad-character-unencoded-closing-bracket",
+//       "tag-attribute-closing-quotation-mark-missing"
+//     ],
+//     "22.29.02"
+//   );
+// });
 
-test(`22.29 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #1`, t => {
-  const bad1 = `<a bc= "> defg>`;
-  const good1 = `<a bc="&gt; defg">`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "22.29.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    [
-      "bad-character-unencoded-closing-bracket",
-      "tag-attribute-closing-quotation-mark-missing"
-    ],
-    "22.29.02"
-  );
-});
-
-test(`22.30 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #1`, t => {
+test(`22.30 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #3`, t => {
   const bad1 = `<a bc= > defg">`;
   const good1 = `<a bc="&gt; defg">`;
   const res1 = lint(bad1);
@@ -3116,24 +3116,24 @@ test(`22.30 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - at
   );
 });
 
-test(`22.31 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #2`, t => {
-  // now repeated, to ensure consistency across many tags:
-  const bad2 = `<a bc= > defg hij><k lm= > nopr stuvwxyz>`;
-  const good2 = `<a bc="> defg hij"><k lm="> nopr stuvwxyz">`;
-  const res2 = lint(bad2);
-  t.is(apply(bad2, res2.fix), good2, "22.31.01");
-  t.deepEqual(
-    getUniqueIssueNames(res2.issues).sort(),
-    [
-      "bad-character-unencoded-closing-bracket",
-      "tag-attribute-closing-quotation-mark-missing",
-      "tag-attribute-opening-quotation-mark-missing"
-    ],
-    "22.31.02"
-  );
-});
+// test(`22.31 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - attr quotes missing, value begins with unencoded bracket #4`, t => {
+//   // now repeated, to ensure consistency across many tags:
+//   const bad2 = `<a bc= > defg hij><k lm= > nopr stuvwxyz>`;
+//   const good2 = `<a bc="> defg hij"><k lm="> nopr stuvwxyz">`;
+//   const res2 = lint(bad2);
+//   t.is(apply(bad2, res2.fix), good2, "22.31.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res2.issues).sort(),
+//     [
+//       "bad-character-unencoded-closing-bracket",
+//       "tag-attribute-closing-quotation-mark-missing",
+//       "tag-attribute-opening-quotation-mark-missing"
+//     ],
+//     "22.31.02"
+//   );
+// });
 
-test(`22.32 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value`, t => {
+test(`22.32 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquoted attr value`, t => {
   const bad1 = `<a bcd= ef=gh > ij \n klmn`;
   const good1 = `<a ef="gh"> ij \n klmn`;
   const res1 = lint(bad1);
@@ -4000,12 +4000,12 @@ test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   t.is(findClosingQuote(code, 14), 17, "99.19.02");
 });
 
-test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-less attributes`, t => {
-  const code = `<a bcd=ef ghj=kl mno=pqrs>`;
-  t.is(findClosingQuote(code, 7), 9, "99.20.01");
-  t.is(findClosingQuote(code, 14), 16, "99.20.02");
-  t.is(findClosingQuote(code, 21), 25, "99.20.03");
-});
+// test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-less attributes`, t => {
+//   const code = `<a bcd=ef ghj=kl mno=pqrs>`;
+//   t.is(findClosingQuote(code, 7), 9, "99.20.01");
+//   t.is(findClosingQuote(code, 14), 16, "99.20.02");
+//   t.is(findClosingQuote(code, 21), 25, "99.20.03");
+// });
 
 test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`left()`}\u001b[${39}m`} - all cases`, t => {
   // defaults to zero:
