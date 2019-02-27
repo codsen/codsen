@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.10.8](https://gitlab.com/codsen/codsen/compare/color-shorthand-hex-to-six-digit@2.10.7...color-shorthand-hex-to-six-digit@2.10.8) (2019-02-26)
+
+**Note:** Version bump only for package color-shorthand-hex-to-six-digit
+
+
+
+
+
 ## 2.10.7 (2019-02-10)
 
 ### Bug Fixes

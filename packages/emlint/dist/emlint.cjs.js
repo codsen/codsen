@@ -1,7 +1,7 @@
 /**
  * emlint
  * Detects errors in HTML/CSS, proposes fixes, email-template friendly
- * Version: 0.7.0
+ * Version: 0.8.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -187,7 +187,7 @@ var knownHTMLTags = [
 ]
 ;
 
-var version = "0.7.0";
+var version = "0.8.0";
 
 var errors = {
 	"bad-character-acknowledge": {

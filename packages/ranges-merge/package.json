@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "3.12.7",
+  "version": "3.12.8",
   "description": "Merge and sort arrays which mean string slice ranges",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
   },
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
-    "ranges-sort": "^3.10.7"
+    "ranges-sort": "^3.10.8"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

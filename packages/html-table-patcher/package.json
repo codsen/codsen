@@ -1,6 +1,6 @@
 {
   "name": "html-table-patcher",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "Wraps any content between TR/TD tags in additional rows/columns to appear in browser correctly",
   "license": "MIT",
   "engines": {
@@ -164,8 +164,8 @@
   },
   "dependencies": {
     "html-comment-regex": "^1.1.2",
-    "ranges-apply": "^2.12.7",
-    "ranges-push": "^2.16.7"
+    "ranges-apply": "^2.12.8",
+    "ranges-push": "^2.16.8"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
