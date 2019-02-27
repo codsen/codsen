@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.7.0 (2019-02-26)
+
+### Features
+
+- Switch to currency.js ([0c2521b](https://gitlab.com/codsen/codsen/commit/0c2521b))
+
 ## 2.6.7 (2019-02-10)
 
 ### Bug Fixes

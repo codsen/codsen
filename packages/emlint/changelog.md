@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.8.0 (2019-02-26)
+
+### Bug Fixes
+
+- Algorithm tweaks ([b5875ff](https://gitlab.com/codsen/codsen/commit/b5875ff))
+- Algorithm tweaks ([2c4e4c5](https://gitlab.com/codsen/codsen/commit/2c4e4c5))
+- All unit tests pass ([b7aee54](https://gitlab.com/codsen/codsen/commit/b7aee54))
+
+### Features
+
+- Correctly recognises brackets within attribute values ([836bfe2](https://gitlab.com/codsen/codsen/commit/836bfe2))
+- Excessive whitespace before missing closing bracket ([b7ecdc9](https://gitlab.com/codsen/codsen/commit/b7ecdc9))
+- Excessive whitespace instead of a missing closing quotes ([0bf97ed](https://gitlab.com/codsen/codsen/commit/0bf97ed))
+- Excessive whitespace then slash instead of closing quotes ([68da8b5](https://gitlab.com/codsen/codsen/commit/68da8b5))
+- Rule tag-attribute-repeated-equal ([cdcbe09](https://gitlab.com/codsen/codsen/commit/cdcbe09))
+- Rule tag-missing-closing-bracket ([6f495c5](https://gitlab.com/codsen/codsen/commit/6f495c5))
+- Rules combo: missing closing quotes and whitespace between slash and bracket ([960a0f2](https://gitlab.com/codsen/codsen/commit/960a0f2))
+- WIP - 1 failing ([14c5ab4](https://gitlab.com/codsen/codsen/commit/14c5ab4))
+- WIP - 10 failing ([d8f93f6](https://gitlab.com/codsen/codsen/commit/d8f93f6))
+- WIP - 12 failing ([0a7aae2](https://gitlab.com/codsen/codsen/commit/0a7aae2))
+- WIP - 12 failing ([58a9e16](https://gitlab.com/codsen/codsen/commit/58a9e16))
+- WIP - 14 failing ([3fc3ac9](https://gitlab.com/codsen/codsen/commit/3fc3ac9))
+- WIP - 19 failing ([3d5ba75](https://gitlab.com/codsen/codsen/commit/3d5ba75))
+- WIP - 19 failing - before rewriting missing closing attr quotes ([080b24a](https://gitlab.com/codsen/codsen/commit/080b24a))
+- WIP - 2 failing ([c29b315](https://gitlab.com/codsen/codsen/commit/c29b315))
+- WIP - 20 failing ([226aa50](https://gitlab.com/codsen/codsen/commit/226aa50))
+- WIP - 21 failing ([1657d4f](https://gitlab.com/codsen/codsen/commit/1657d4f))
+- WIP - 21 failing ([b3efd34](https://gitlab.com/codsen/codsen/commit/b3efd34))
+- WIP - 22 failing ([d7383c3](https://gitlab.com/codsen/codsen/commit/d7383c3))
+- WIP - 4 failing ([ebc1150](https://gitlab.com/codsen/codsen/commit/ebc1150))
+- WIP - 4 failing ([b33fc7c](https://gitlab.com/codsen/codsen/commit/b33fc7c))
+- WIP - 4 failing ([c0cfbfd](https://gitlab.com/codsen/codsen/commit/c0cfbfd))
+- WIP - 45 failing ([15b092e](https://gitlab.com/codsen/codsen/commit/15b092e))
+- WIP - 5 failing ([1151c5b](https://gitlab.com/codsen/codsen/commit/1151c5b))
+- WIP - 6 failing ([eb9efd4](https://gitlab.com/codsen/codsen/commit/eb9efd4))
+- WIP - 8 failing ([1b9ce78](https://gitlab.com/codsen/codsen/commit/1b9ce78))
+- WIP - 8 failing ([5237f6a](https://gitlab.com/codsen/codsen/commit/5237f6a))
+- WIP - 9 failing - only Both Quotes Missing rules failing ([c42a001](https://gitlab.com/codsen/codsen/commit/c42a001))
+- WIP - withinTagInnerspace() recoding, R1 & R2 clauses done ([91c9b6c](https://gitlab.com/codsen/codsen/commit/91c9b6c))
+- WIP - withinTagInnerspace() recoding, two tests pass ([06d9bf4](https://gitlab.com/codsen/codsen/commit/06d9bf4))
+
 ## 0.7.0 (2019-02-10)
 
 ### Bug Fixes

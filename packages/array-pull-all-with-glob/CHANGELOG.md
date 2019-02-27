@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.12.8](https://gitlab.com/codsen/codsen/compare/array-pull-all-with-glob@4.12.7...array-pull-all-with-glob@4.12.8) (2019-02-26)
-
-**Note:** Version bump only for package array-pull-all-with-glob
-
-
-
-
-
 ## 4.12.7 (2019-02-10)
 
 ### Bug Fixes
