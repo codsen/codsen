@@ -71,6 +71,8 @@ function c(changelogContents) {
     // "## 2.9.2 (2018-12-27)",
     // "",
     // "**Note:** Version bump only for package ranges-apply",
+    //
+    // and also remove anything containing "WIP" (case-insensitive)
 
     const newLinesArr = [];
     for (let i = linesArr.length; i--; ) {
@@ -81,7 +83,10 @@ function c(changelogContents) {
           4
         )}`
       );
-      if (linesArr[i].startsWith("**Note:** Version bump only")) {
+      if (
+        linesArr[i].startsWith("**Note:** Version bump only") ||
+        linesArr[i].toLowerCase().includes("wip")
+      ) {
         // delete all the blank lines above the culprit:
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
           i--;
@@ -106,7 +111,7 @@ function c(changelogContents) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
           console.log(
-            `109 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+            `114 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
           );
         }
       } else {
@@ -122,7 +127,7 @@ function c(changelogContents) {
       if (linesArr[i].trim().length) {
         lastLineWasEmpty = false;
         console.log(
-          `125 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
+          `130 SET ${`\u001b[${33}m${`lastLineWasEmpty`}\u001b[${39}m`} = ${lastLineWasEmpty}`
         );
       }
     }

@@ -54,7 +54,8 @@ function c(changelogContents) {
     });
     var newLinesArr = [];
     for (var i = linesArr.length; i--;) {
-      if (linesArr[i].startsWith("**Note:** Version bump only")) {
+      console.log("----------------".concat("\x1B[".concat(36, "m", i, "\x1B[", 39, "m"), "\n", "\x1B[".concat(33, "m", "linesArr[i]", "\x1B[", 39, "m"), " = ", JSON.stringify(linesArr[i], null, 4)));
+      if (linesArr[i].startsWith("**Note:** Version bump only") || linesArr[i].toLowerCase().includes("wip")) {
         while (isStr(linesArr[i - 1]) && !linesArr[i - 1].trim().length && i) {
           i--;
         }
@@ -68,6 +69,7 @@ function c(changelogContents) {
         if (!lastLineWasEmpty) {
           newLinesArr.unshift(linesArr[i].trim());
           lastLineWasEmpty = true;
+          console.log("114 SET ".concat("\x1B[".concat(33, "m", "lastLineWasEmpty", "\x1B[", 39, "m"), " = ", lastLineWasEmpty));
         }
       } else {
         if (linesArr[i][0] === "*" && linesArr[i][1] === " ") {
@@ -78,6 +80,7 @@ function c(changelogContents) {
       }
       if (linesArr[i].trim().length) {
         lastLineWasEmpty = false;
+        console.log("130 SET ".concat("\x1B[".concat(33, "m", "lastLineWasEmpty", "\x1B[", 39, "m"), " = ", lastLineWasEmpty));
       }
     }
     final = "".concat(newLinesArr.join("\n")).concat(changelogEndedWithLinebreak ? "\n" : "");
