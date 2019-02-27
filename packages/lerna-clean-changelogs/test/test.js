@@ -85,5 +85,5 @@ test(`01.02 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - turns h1 headings w
 test(`01.03 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - cleans whitespace and replaces bullet dashes with asterisks`, t =>
   compare(t, "03_whitespace"));
 
-test.only(`01.04 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - removes WIP entries`, t =>
+test(`01.04 - ${`\u001b[${35}m${`cleaning`}\u001b[${39}m`} - removes WIP entries`, t =>
   compare(t, "04_wip"));
