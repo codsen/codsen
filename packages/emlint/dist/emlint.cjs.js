@@ -989,7 +989,7 @@ function findClosingQuote(str) {
           }
         } else if (str[i] === "=") {
           var whatFollowsEq = right(str, i);
-          if (whatFollowsEq && (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')) {
+          if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
             if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
               return lastQuoteAt + 1;
             } else if (!lastQuoteAt) {
@@ -1003,6 +1003,18 @@ function findClosingQuote(str) {
               }
               return res;
             }
+          } else if (str[i + 1].trim().length) {
+            var _temp = void 0;
+            for (var _y = i; _y--;) {
+              if (!str[_y].trim().length) {
+                _temp = left(str, _y);
+                break;
+              }
+            }
+            if (charIsQuote(_temp)) {
+              return _temp;
+            }
+            return _temp + 1;
           }
         } else if (str[i] !== "/") {
           if (str[i] === "<" && tagOnTheRight(str, i)) {

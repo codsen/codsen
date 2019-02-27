@@ -1010,8 +1010,8 @@ function lint(str, originalOpts) {
             console.log(
               `1011 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`false`}\u001b[${39}m`}`
             );
-            // insert missing opening quote here, right
-            // at this index, which means, to the left of this character
+            // insert missing opening quote here, right at this index,
+            // which means, to the left of this character
 
             const closingQuotePeek = findClosingQuote(str, i);
             console.log(`1017 ███████████████████████████████████████`);
@@ -2553,12 +2553,12 @@ function lint(str, originalOpts) {
 
     const output = {
       logTag: false,
-      logAttr: true,
-      logWhitespace: true,
+      logAttr: false,
+      logWhitespace: false,
       logLineEndings: false,
       retObj: true,
-      tagIssueStaging: true,
-      rawIssueStaging: true
+      tagIssueStaging: false,
+      rawIssueStaging: false
     };
     console.log(
       `${

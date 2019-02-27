@@ -1152,10 +1152,7 @@ function findClosingQuote(str, idx = 0) {
         }
       } else if (str[i] === "=") {
         const whatFollowsEq = right(str, i);
-        if (
-          whatFollowsEq &&
-          (str[whatFollowsEq] === "'" || str[whatFollowsEq] === '"')
-        ) {
+        if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
           if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
             return lastQuoteAt + 1;
           } else if (!lastQuoteAt) {
@@ -1171,6 +1168,18 @@ function findClosingQuote(str, idx = 0) {
             }
             return res;
           }
+        } else if (str[i + 1].trim().length) {
+          let temp;
+          for (let y = i; y--; ) {
+            if (!str[y].trim().length) {
+              temp = left(str, y);
+              break;
+            }
+          }
+          if (charIsQuote(temp)) {
+            return temp;
+          }
+          return temp + 1;
         }
       } else if (str[i] !== "/") {
         if (str[i] === "<" && tagOnTheRight(str, i)) {

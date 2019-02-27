@@ -2061,6 +2061,18 @@ test(`15.19 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\
   );
 });
 
+test(`15.20 - ${`\u001b[${34}m${`tag-attribute-closing-quotation-mark-missing`}\u001b[${39}m`} - two consecutive attributes with closing quotes missing`, t => {
+  const bad1 = `<abc def="0 ghi="1>`;
+  const good1 = `<abc def="0" ghi="1">`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "15.20.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-attribute-closing-quotation-mark-missing"],
+    "15.20.02"
+  );
+});
+
 // 16. rule tag-attribute-missing-equal
 // -----------------------------------------------------------------------------
 
@@ -2981,8 +2993,8 @@ test(`22.23 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - ze
 });
 
 test(`22.24 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - sequence of tags`, t => {
-  const bad1 = `<a bcd=ef ghj=kl mnop="rst uvw = xyz" nowrap abc=def>\n<b cde="fgh" ijklm=0 abc="defgh ijkl">`;
-  const good1 = `<a bcd="ef" ghj="kl" mnop="rst uvw = xyz" nowrap abc="def">\n<b cde="fgh" ijklm="0" abc="defgh ijkl">`;
+  const bad1 = `<a bcd=ef ghj=kl mnop="rst uvw = xyz" nowrap abc=def>`;
+  const good1 = `<a bcd="ef" ghj="kl" mnop="rst uvw = xyz" nowrap abc="def">`;
   const res1 = lint(bad1);
   t.is(apply(bad1, res1.fix), good1, "22.24.01");
   t.deepEqual(
@@ -2993,6 +3005,19 @@ test(`22.24 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - se
     ],
     "22.24.02"
   );
+
+  // const bad2 = `<a bcd=ef ghj=kl mnop="rst uvw = xyz" nowrap abc=def>\n<b cde="fgh" ijklm=0 abc="defgh ijkl">`;
+  // const good2 = `<a bcd="ef" ghj="kl" mnop="rst uvw = xyz" nowrap abc="def">\n<b cde="fgh" ijklm="0" abc="defgh ijkl">`;
+  // const res2 = lint(bad2);
+  // t.is(apply(bad2, res2.fix), good2, "22.24.03");
+  // t.deepEqual(
+  //   getUniqueIssueNames(res2.issues).sort(),
+  //   [
+  //     "tag-attribute-closing-quotation-mark-missing",
+  //     "tag-attribute-opening-quotation-mark-missing"
+  //   ],
+  //   "22.24.04"
+  // );
 });
 
 test(`22.25 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - closing bracket as content within unquotes attr value`, t => {
@@ -3973,6 +3998,13 @@ test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   const code = `<a bcd=ef ghi='jk' lmn>`;
   t.is(findClosingQuote(code, 7), 9, "99.19.01");
   t.is(findClosingQuote(code, 14), 17, "99.19.02");
+});
+
+test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-less attributes`, t => {
+  const code = `<a bcd=ef ghj=kl mno=pqrs>`;
+  t.is(findClosingQuote(code, 7), 9, "99.20.01");
+  t.is(findClosingQuote(code, 14), 16, "99.20.02");
+  t.is(findClosingQuote(code, 21), 25, "99.20.03");
 });
 
 test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`left()`}\u001b[${39}m`} - all cases`, t => {
