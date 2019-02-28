@@ -36,11 +36,11 @@ import { emlint, version } from "emlint";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                 | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 67 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 69 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 63 KB |
+| Type                                                                                                    | Key in `package.json` | Path                 | Size   |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------- | ------ |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/emlint.cjs.js` | 115 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/emlint.esm.js` | 127 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/emlint.umd.js` | 99 KB  |
 
 **[⬆ back to top](#)**
 
