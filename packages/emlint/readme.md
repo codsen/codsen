@@ -1,6 +1,6 @@
 # EMLint
 
-> Detects errors in HTML/CSS, proposes fixes, email-template friendly
+> Non-parsing, email template-oriented linter
 
 [![Minimum Node version required][node-img]][node-url]
 [![Repository is on GitLab][gitlab-img]][gitlab-url]

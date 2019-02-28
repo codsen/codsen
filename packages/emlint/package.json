@@ -1,7 +1,7 @@
 {
   "name": "emlint",
   "version": "0.8.0",
-  "description": "Detects errors in HTML/CSS, proposes fixes, email-template friendly",
+  "description": "Non-parsing, email template-oriented linter",
   "license": "MIT",
   "engines": {
     "node": ">=8.9"
