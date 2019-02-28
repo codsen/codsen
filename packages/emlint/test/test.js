@@ -3233,6 +3233,33 @@ test(`23.06 - ${`\u001b[${36}m${`repeated equal`}\u001b[${39}m`} - few equals in
   );
 });
 
+// 24. rule "tag-generic-error"
+// -----------------------------------------------------------------------------
+
+test(`24.01 - ${`\u001b[${32}m${`tag-generic-error`}\u001b[${39}m`} - stray quote before attr. name`, t => {
+  const bad1 = `<a "bcd="ef"/>`;
+  const good1 = `<a bcd="ef"/>`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "24.01.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-generic-error"],
+    "24.01.02"
+  );
+});
+
+test(`24.02 - ${`\u001b[${32}m${`tag-generic-error`}\u001b[${39}m`} - many stray quotes before attr. name`, t => {
+  const bad1 = `<a """"bcd="ef"/>`;
+  const good1 = `<a bcd="ef"/>`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "24.02.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["tag-generic-error"],
+    "24.02.02"
+  );
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
