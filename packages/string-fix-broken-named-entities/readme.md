@@ -117,7 +117,17 @@ console.log(`resultStr = "${resultStr}"`);
 | -------------------- | --------------------- | ------- | --------------------------------------------------- |
 | {                    |                       |         |
 | `decode`             | Boolean               | `false` | Whatever is fixed, will be written in decoded form. |
+| `cb`                 | Function              | `undefined` | This callback works similar to `Array.forEach` and lets you customise the result, how ranges are formatted. Read the sepate section below for more details. |
 | }                    |                       |         |
+
+For example the Optional Options Object could be like this:
+
+```js
+{
+  decode: false,
+  cb: null
+}
+```
 
 **[⬆ back to top](#)**
 
@@ -132,6 +142,93 @@ If you set `opts.decode` and there are healthy encoded entities, those will not 
 For example, you'd first filter the string using this library, `string-fix-broken-named-entities`. Then you'd filter the same input skipping already recorded ranges, using [ranges-ent-decode](https://www.npmjs.com/package/ranges-ent-decode). Then you'd merge the ranges.
 
 **[⬆ back to top](#)**
+
+## `opts.cb` - a callback function
+
+So, normally, the output of this library is **an array** of zero or more arrays (each meaning string index _ranges_), for example:
+
+```json
+[
+  [1, 2],
+  [3, 4]
+]
+```
+
+Above means, delete string from index `1` to `2` and from `3` to `4`.
+
+However, for example, in [`emlint`](https://www.npmjs.com/package/emlint), I need slightly different format, not only ranges but also **issue titles**:
+
+```json
+[
+  {
+    name: "tag-generic-error",
+    position: [[1, 2]]
+  },
+  {
+    name: "tag-generic-error",
+    position: [[3, 4]]
+  }
+]
+```
+
+**Callback function** via `opts.cb` allows you to change the output of this library.
+
+The concept is, you pass a function in option object's key `cb`. That function will receive a plain object with all "ingredients" under various keys. Whatever you return, will be pushed into results array. For each result application is about to push, it will call your function with findings, all neatly put in the plain object.
+
+For example, to solve the example above, we would do:
+
+```js
+const fix = require("string-fix-broken-named-entities");
+const res = fix("zzznbsp;zzznbsp;", {
+  cb: oodles => {
+    // "oodles" or whatever you name it, is a plain object.
+    // Grab any content from any of its keys, for example:
+    // {
+    //   fixName: "missing semicolon on &pi; (don't confuse with &piv;)",
+    //   entityName: "pi",
+    //   rangeFrom: 3,
+    //   rangeTo: 4,
+    //   rangeValEncoded: "&pi;",
+    //   rangeValDecoded: "\u03C0"
+    // }
+    return {
+      name: oodles.fixName,
+      position:
+        oodles.rangeValEncoded != null
+          ? [oodles.rangeFrom, oodles.rangeTo, oodles.rangeValEncoded]
+          : [oodles.rangeFrom, oodles.rangeTo]
+    };
+  }
+})
+console.log(JSON.stringify(res, null, 4));
+// => [
+//      {
+//        name: "malformed &nbsp;",
+//        position: [3, 8, "&nbsp;"]
+//      },
+//      {
+//        name: "malformed &nbsp;",
+//        position: [11, 16, "&nbsp;"]
+//      }
+//    ]
+```
+
+Here's the detailed description of all the keys, values and their types:
+
+| name of the key in the object in the first argument of a callback function | example value | value's type | description |
+| ------ | --------- | --- | --- |
+| fixName | `missing semicolon on &pi; (don't confuse with &piv;)` | string | Full name of the issue, suitable for linters |
+| entityName | `pi` | string | Just the name of the entity, without ampersand or semicolon. Case sensitive |
+| rangeFrom | `3` | (natural) number (string index) | Shows from where to delete |
+| rangeTo | `8` | (natural) number (string index) | Shows up to where to delete |
+| rangeValEncoded | `&pi;` | string or `null` | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
+| rangeValDecoded | `\u03C0`| string or `null` | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
+
+**PS.** `opts.decode` does not matter if you supply `opts.cb` function. In callback, you have access to _both_ encoded and decoded values and whatever you return will be put into the result's array. You could use both, either one or neither — the output is fully under your control.
+
+## `opts.progress` - another callback function
+
+In web worker setups, a worker can return "in progress" values. When we put this package into a web worker, this callback function under `opts.progress` will be called with a string, containing a natural number, showing the percentage of the work done so far.
 
 ## Tips
 
