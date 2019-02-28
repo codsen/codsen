@@ -97,7 +97,7 @@ function readSortAndWriteOverFile(oneOfPaths) {
 let thePromise;
 
 // SYNCHRONOUS PART:
-if (isArr(cli.input)) {
+if (isArr(cli.input) && cli.input.length) {
   // expand each path under globby:
   thePromise = pReduce(
     cli.input,
