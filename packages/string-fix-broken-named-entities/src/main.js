@@ -9,7 +9,6 @@ import isObj from "lodash.isplainobject";
  * @return {array}  ranges array OR null
  */
 function stringFixBrokenNamedEntities(str, originalOpts) {
-  console.log(JSON.stringify([...arguments], null, 4));
   console.log(
     `014 ${`\u001b[${33}m${`originalOpts`}\u001b[${39}m`} = ${JSON.stringify(
       originalOpts,
@@ -38,7 +37,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   const defaults = {
     decode: false,
     cb: null,
-    progress: null
+    progressFn: null
   };
   let opts;
 
@@ -63,6 +62,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
   } else {
     opts = defaults;
+  }
+  if (opts.cb && typeof opts.cb !== "function") {
+    throw new TypeError(
+      `string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ${typeof opts.cb}, equal to: ${JSON.stringify(
+        opts.cb,
+        null,
+        4
+      )}`
+    );
+  }
+  if (opts.progressFn && typeof opts.progressFn !== "function") {
+    throw new TypeError(
+      `string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(
+        opts.progressFn,
+        null,
+        4
+      )}`
+    );
   }
 
   // state flags
@@ -100,6 +117,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   let largestCharFromTheSetAt;
   let matchedLettersCount;
   let setOfValues;
+  let percentageDone;
+  let lastPercentageDone;
+
+  // allocate all 100 of progress to the main loop below
+  const len = str.length + 1;
+  let counter = 0;
 
   //                                      |
   //                                      |
@@ -119,7 +142,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   //                                      V
 
   // differently from regex-based approach, we aim to traverse the string only once:
-  outerloop: for (let i = 0, len = str.length + 1; i < len; i++) {
+  outerloop: for (let i = 0; i < len; i++) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((counter / len) * 100);
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
     //            |
     //            |
     //            |
@@ -971,6 +1001,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           : ""
       }`
     );
+    counter++;
   }
 
   //                                      ^

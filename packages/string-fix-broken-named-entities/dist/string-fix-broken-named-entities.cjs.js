@@ -59,7 +59,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var defaults = {
     decode: false,
     cb: null,
-    progress: null
+    progressFn: null
   };
   var opts;
   if (originalOpts != null) {
@@ -70,6 +70,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
   } else {
     opts = defaults;
+  }
+  if (opts.cb && typeof opts.cb !== "function") {
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.cb), ", equal to: ").concat(JSON.stringify(opts.cb, null, 4)));
+  }
+  if (opts.progressFn && typeof opts.progressFn !== "function") {
+    throw new TypeError("string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ".concat(_typeof(opts.progressFn), ", equal to: ").concat(JSON.stringify(opts.progressFn, null, 4)));
   }
   var state_AmpersandNotNeeded = false;
   var nbspDefault = {
@@ -91,7 +97,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var largestCharFromTheSetAt;
   var matchedLettersCount;
   var setOfValues;
-  outerloop: for (var i = 0, len = str.length + 1; i < len; i++) {
+  var percentageDone;
+  var lastPercentageDone;
+  var len = str.length + 1;
+  var counter = 0;
+  outerloop: for (var i = 0; i < len; i++) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor(counter / len * 100);
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
     matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
     setOfValues = [nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP].filter(function (val) {
       return val !== null;
@@ -396,6 +413,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         continue outerloop;
       }
     }
+    counter++;
   }
   return rangesArr.length ? opts.cb ? rangesArr : rangesMerge(rangesArr) : null;
 }

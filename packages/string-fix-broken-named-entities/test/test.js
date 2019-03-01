@@ -69,6 +69,22 @@ test(`01.002 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - 2nd input arg is wro
   });
 });
 
+test(`01.003 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.cb is not function`, t => {
+  const error1 = t.throws(() => {
+    fix("aaa", { cb: "bbb" });
+  });
+  t.regex(error1.message, /THROW_ID_03/);
+  t.regex(error1.message, /string/);
+});
+
+test(`01.004 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is not function`, t => {
+  const error1 = t.throws(() => {
+    fix("aaa", { progressFn: "bbb" });
+  });
+  t.regex(error1.message, /THROW_ID_04/);
+  t.regex(error1.message, /string/);
+});
+
 // -----------------------------------------------------------------------------
 // 02. special attention to nbsp - people will type it by hand often, making mistakes
 // -----------------------------------------------------------------------------
@@ -1195,6 +1211,53 @@ test(`05.002 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${34}m${`eml
     "05.002"
   );
 });
+
+// -----------------------------------------------------------------------------
+// 06. opts.progressFn
+// -----------------------------------------------------------------------------
+
+test(`06.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress`, t => {
+  t.deepEqual(
+    fix(
+      "text &ang text&ang text text &ang text&ang text text &ang text&ang text"
+    ),
+    [
+      [5, 9, "&ang;"],
+      [14, 18, "&ang;"],
+      [29, 33, "&ang;"],
+      [38, 42, "&ang;"],
+      [53, 57, "&ang;"],
+      [62, 66, "&ang;"]
+    ],
+    "06.001.01 - baseline"
+  );
+
+  let count = 0;
+  t.deepEqual(
+    fix(
+      "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
+      {
+        progressFn: percentageDone => {
+          // console.log(`percentageDone = ${percentageDone}`);
+          t.true(typeof percentageDone === "number");
+          count++;
+        }
+      }
+    ),
+    [
+      [5, 9, "&ang;"],
+      [14, 18, "&ang;"],
+      [29, 33, "&ang;"],
+      [38, 42, "&ang;"],
+      [53, 57, "&ang;"],
+      [62, 66, "&ang;"]
+    ],
+    "06.001.02 - calls the progress function"
+  );
+  t.true(typeof count === "number" && count <= 101 && count > 0, "06.001.03");
+});
+
+// TODO
 
 // Tend the following:
 // aacute

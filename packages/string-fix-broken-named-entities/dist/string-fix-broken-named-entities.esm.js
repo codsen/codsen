@@ -31,7 +31,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   const defaults = {
     decode: false,
     cb: null,
-    progress: null
+    progressFn: null
   };
   let opts;
   if (originalOpts != null) {
@@ -48,6 +48,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
   } else {
     opts = defaults;
+  }
+  if (opts.cb && typeof opts.cb !== "function") {
+    throw new TypeError(
+      `string-fix-broken-named-entities: [THROW_ID_03] opts.cb must be a function (or falsey)! Currently it's: ${typeof opts.cb}, equal to: ${JSON.stringify(
+        opts.cb,
+        null,
+        4
+      )}`
+    );
+  }
+  if (opts.progressFn && typeof opts.progressFn !== "function") {
+    throw new TypeError(
+      `string-fix-broken-named-entities: [THROW_ID_04] opts.progressFn must be a function (or falsey)! Currently it's: ${typeof opts.progressFn}, equal to: ${JSON.stringify(
+        opts.progressFn,
+        null,
+        4
+      )}`
+    );
   }
   let state_AmpersandNotNeeded = false;
   const nbspDefault = {
@@ -69,7 +87,18 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   let largestCharFromTheSetAt;
   let matchedLettersCount;
   let setOfValues;
-  outerloop: for (let i = 0, len = str.length + 1; i < len; i++) {
+  let percentageDone;
+  let lastPercentageDone;
+  const len = str.length + 1;
+  let counter = 0;
+  outerloop: for (let i = 0; i < len; i++) {
+    if (opts.progressFn) {
+      percentageDone = Math.floor((counter / len) * 100);
+      if (percentageDone !== lastPercentageDone) {
+        lastPercentageDone = percentageDone;
+        opts.progressFn(percentageDone);
+      }
+    }
     matchedLettersCount =
       (nbsp.matchedN !== null ? 1 : 0) +
       (nbsp.matchedB !== null ? 1 : 0) +
@@ -511,6 +540,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         continue outerloop;
       }
     }
+    counter++;
   }
   return rangesArr.length
     ? opts.cb

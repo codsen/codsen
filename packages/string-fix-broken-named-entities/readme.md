@@ -19,6 +19,8 @@
 - [API - Input](#api---input)
 - [API - Output](#api---output)
 - [`opts.decode`](#optsdecode)
+- [`opts.cb` - a callback function](#optscb---a-callback-function)
+- [`opts.progressFn` - another callback function](#optsprogressfn---another-callback-function)
 - [Tips](#tips)
 - [Why not regexes?](#why-not-regexes)
 - [Practical use](#practical-use)
@@ -42,15 +44,15 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 11 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 11 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 34 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 16 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 16 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 37 KB |
 
 **[⬆ back to top](#)**
 
 ## Idea
 
-Detects and proposes fixes for a string that contains broken named HTML entities (for example, `&nnbsp;` with repeated "n"). The result is not a string but a `null` (nothing to fix) or an array of [ranges](https://bitbucket.org/account/user/codsen/projects/RNG) of index arrays with a value to replace. For example, `[[0, 6, "&nbsp;"]]` means replace from index `0` to `6` putting `&nbsp;`. Notice it's array of arrays because each range is an array and there can be few.
+Detects and proposes fixes for a string that contains broken named HTML entities (for example, `&nnbsp;` with repeated "n"). The result is not a string but a `null` (nothing to fix) or an array of [ranges](https://gitlab.com/codsen/codsen/tree/master#-11-range-libraries) of index arrays with a value to replace. For example, `[[0, 6, "&nbsp;"]]` means replace from index `0` to `6` putting `&nbsp;`. Notice it's array of arrays because each range is an array and there can be few.
 
 For example:
 
@@ -113,12 +115,12 @@ console.log(`resultStr = "${resultStr}"`);
 
 ### Optional Options Object
 
-| Options Object's key | The type of its value | Default | Description                                         |
-| -------------------- | --------------------- | ------- | --------------------------------------------------- |
-| {                    |                       |         |
-| `decode`             | Boolean               | `false` | Whatever is fixed, will be written in decoded form. |
+| Options Object's key | The type of its value | Default     | Description                                                                                                                                                 |
+| -------------------- | --------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| {                    |                       |             |
+| `decode`             | Boolean               | `false`     | Whatever is fixed, will be written in decoded form.                                                                                                         |
 | `cb`                 | Function              | `undefined` | This callback works similar to `Array.forEach` and lets you customise the result, how ranges are formatted. Read the sepate section below for more details. |
-| }                    |                       |         |
+| }                    |                       |             |
 
 For example the Optional Options Object could be like this:
 
@@ -148,10 +150,7 @@ For example, you'd first filter the string using this library, `string-fix-broke
 So, normally, the output of this library is **an array** of zero or more arrays (each meaning string index _ranges_), for example:
 
 ```json
-[
-  [1, 2],
-  [3, 4]
-]
+[[1, 2], [3, 4]]
 ```
 
 Above means, delete string from index `1` to `2` and from `3` to `4`.
@@ -161,12 +160,12 @@ However, for example, in [`emlint`](https://www.npmjs.com/package/emlint), I nee
 ```json
 [
   {
-    name: "tag-generic-error",
-    position: [[1, 2]]
+    "name": "tag-generic-error",
+    "position": [[1, 2]]
   },
   {
-    name: "tag-generic-error",
-    position: [[3, 4]]
+    "name": "tag-generic-error",
+    "position": [[3, 4]]
   }
 ]
 ```
@@ -199,7 +198,7 @@ const res = fix("zzznbsp;zzznbsp;", {
           : [oodles.rangeFrom, oodles.rangeTo]
     };
   }
-})
+});
 console.log(JSON.stringify(res, null, 4));
 // => [
 //      {
@@ -215,20 +214,47 @@ console.log(JSON.stringify(res, null, 4));
 
 Here's the detailed description of all the keys, values and their types:
 
-| name of the key in the object in the first argument of a callback function | example value | value's type | description |
-| ------ | --------- | --- | --- |
-| fixName | `missing semicolon on &pi; (don't confuse with &piv;)` | string | Full name of the issue, suitable for linters |
-| entityName | `pi` | string | Just the name of the entity, without ampersand or semicolon. Case sensitive |
-| rangeFrom | `3` | (natural) number (string index) | Shows from where to delete |
-| rangeTo | `8` | (natural) number (string index) | Shows up to where to delete |
-| rangeValEncoded | `&pi;` | string or `null` | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
-| rangeValDecoded | `\u03C0`| string or `null` | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
+| name of the key in the object in the first argument of a callback function | example value                                          | value's type                    | description                                                                                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------- |
+| fixName                                                                    | `missing semicolon on &pi; (don't confuse with &piv;)` | string                          | Full name of the issue, suitable for linters                                                      |
+| entityName                                                                 | `pi`                                                   | string                          | Just the name of the entity, without ampersand or semicolon. Case sensitive                       |
+| rangeFrom                                                                  | `3`                                                    | (natural) number (string index) | Shows from where to delete                                                                        |
+| rangeTo                                                                    | `8`                                                    | (natural) number (string index) | Shows up to where to delete                                                                       |
+| rangeValEncoded                                                            | `&pi;`                                                 | string or `null`                | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
+| rangeValDecoded                                                            | `\u03C0`                                               | string or `null`                | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 
 **PS.** `opts.decode` does not matter if you supply `opts.cb` function. In callback, you have access to _both_ encoded and decoded values and whatever you return will be put into the result's array. You could use both, either one or neither — the output is fully under your control.
 
-## `opts.progress` - another callback function
+**[⬆ back to top](#)**
+
+## `opts.progressFn` - another callback function
 
 In web worker setups, a worker can return "in progress" values. When we put this package into a web worker, this callback function under `opts.progress` will be called with a string, containing a natural number, showing the percentage of the work done so far.
+
+It's hard to show minimal worker application here but at least here's how the pinging progress works from the side of this npm package:
+
+```js
+// let's define a variable on a higher scope:
+let count = 0;
+
+// call application as normal, pass opts.progressFn:
+const result = fix(
+  "text &ang text&ang text text &ang text&ang text text &ang text&ang text",
+  {
+    progressFn: percentageDone => {
+      // console.log(`percentageDone = ${percentageDone}`);
+      t.true(typeof percentageDone === "number");
+      count++;
+    }
+  }
+);
+// each time percentage is reported, "count" is incremented
+
+// now imagine if instead of incrementing the count, we pinged the
+// value out of the worker
+```
+
+**[⬆ back to top](#)**
 
 ## Tips
 
@@ -237,7 +263,7 @@ You can save time and improve the workflow by making use of other range- class l
 - [ranges-push](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-push) manages ranges: sorts and merges them. Instead of pushing into an array, you push into a Class which performs all cleaning. You can fetch the current contents using `.current()` method.
 - [ranges-apply](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-apply) applies ranges onto a string, producing a result string: ranges without third element mean deletion, ranges with the third element mean replacement. That library does all those deletions/replacements according to a given ranges array.
 
-There are [other libraries](https://bitbucket.org/account/user/codsen/projects/RNG) for [cropping](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop), [sorting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort), [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge), performing regex-to-range [searches](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex) and others.
+There are [other libraries](https://gitlab.com/codsen/codsen/tree/master#-11-range-libraries) for [cropping](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop), [sorting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort), [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge), performing regex-to-range [searches](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex) and others.
 
 **[⬆ back to top](#)**
 
@@ -245,7 +271,7 @@ There are [other libraries](https://bitbucket.org/account/user/codsen/projects/R
 
 If you think about it, each regex will perform a search on a string. That's one full traversal of all indexes in a string. No matter how well it's optimised by the Node or browser, it is going to happen. Now, this library traverses the input string **only once** and registers all errors. You can't do that easily with regexes - the resulting regex would get unwieldy and hard to debug.
 
-Furthermore, the rules in this library's algorithm are too complex for regexes, we use an equivalent of lookarounds and heavily rely on surroundings of a particular character we're evaluating. For example, here's how we detect the ending of a confirmed broken nbsp:
+Furthermore, the rules in this library's algorithm are too complex for regexes, we use an equivalent of lookarounds and heavily rely on surroundings of a particular character we're evaluating. For example, here's how we detect the ending of a **confirmed broken nbsp**:
 
 - we have detected its beginning (with the ampersand or "n" or "b" or "s" or "p" characters in case ampersand was missing)
 - characters in the "chunk" comprise of at least three types of: `["n", "b", "s", "p"]`
@@ -287,7 +313,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
-[cov-img]: https://img.shields.io/badge/coverage-90.73%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-87.17%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities
