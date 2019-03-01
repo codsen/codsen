@@ -5,16 +5,30 @@ import clone from "lodash.clonedeep";
 // 00. throws
 // ==========================
 
-test("00.01 - does not throw when the first arg is wrong", t => {
+test("00.00 - does not throw when the first arg is wrong", t => {
   t.deepEqual(mergeRanges("z"), "z", "00.01.01");
   t.deepEqual(mergeRanges(true), true, "00.01.02");
 });
 
-test("00.02 - throws when the second arg is wrong", t => {
+test("00.01 - throws when opts.progressFn is wrong", t => {
+  const error1 = t.throws(() => {
+    mergeRanges([[1, 2], [0, 1]], { progressFn: "z" });
+  });
+  t.regex(error1.message, /THROW_ID_01/);
+});
+
+test("00.02 - throws when opts.mergeType is wrong", t => {
+  const error1 = t.throws(() => {
+    mergeRanges([[1, 2], [0, 1]], { mergeType: "z" });
+  });
+  t.regex(error1.message, /THROW_ID_02/);
+});
+
+test("00.03 - throws when the second arg is wrong", t => {
   const error1 = t.throws(() => {
     mergeRanges([[1, 2], [0, 1]], 1);
   });
-  t.regex(error1.message, /THROW_ID_01/);
+  t.regex(error1.message, /THROW_ID_03/);
 });
 
 // 01. mergeRanges()
@@ -50,15 +64,31 @@ test("01.04 - more complex case", t => {
     "01.04.01"
   );
   t.deepEqual(
-    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], perc => {
-      // console.log(`done: ${perc}`);
-      t.true(typeof perc === "number");
-      counter++;
+    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+      mergeType: 1
     }),
     [[1, 5], [6, 30]],
     "01.04.02"
   );
-  t.true(counter > 5, "01.04.03");
+  t.deepEqual(
+    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+      mergeType: "1"
+    }),
+    [[1, 5], [6, 30]],
+    "01.04.03"
+  );
+  t.deepEqual(
+    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+      progressFn: perc => {
+        // console.log(`done: ${perc}`);
+        t.true(typeof perc === "number");
+        counter++;
+      }
+    }),
+    [[1, 5], [6, 30]],
+    "01.04.04"
+  );
+  t.true(counter > 5, "01.04.05");
 });
 
 test("01.05 - even more complex case", t => {
@@ -86,11 +116,13 @@ test("01.05 - even more complex case", t => {
         [30, 37],
         [5, 7]
       ],
-      perc => {
-        // console.log(`done: ${perc}`);
-        // ensure there are no repetitions on status percentages reported
-        t.true(perc !== last);
-        last = perc;
+      {
+        progressFn: perc => {
+          // console.log(`done: ${perc}`);
+          // ensure there are no repetitions on status percentages reported
+          t.true(perc !== last);
+          last = perc;
+        }
       }
     ),
     [

@@ -9,19 +9,58 @@
 
 import sortRanges from 'ranges-sort';
 import clone from 'lodash.clonedeep';
+import isObj from 'lodash.isplainobject';
 
-function mergeRanges(arrOfRanges, progressFn) {
+function mergeRanges(arrOfRanges, originalOpts) {
+  function isStr(something) {
+    return typeof something === "string";
+  }
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  if (progressFn && typeof progressFn !== "function") {
-    throw new Error(
-      `ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: "${typeof progressFn}", equal to ${JSON.stringify(
-        progressFn,
-        null,
-        4
-      )}`
-    );
+  const defaults = {
+    mergeType: 1,
+    progressFn: null
+  };
+  let opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = Object.assign({}, defaults, originalOpts);
+      if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error(
+          `ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: "${typeof opts.progressFn}", equal to ${JSON.stringify(
+            opts.progressFn,
+            null,
+            4
+          )}`
+        );
+      }
+      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+        if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+          opts.mergeType = 1;
+        } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+          opts.mergeType = 2;
+        } else {
+          throw new Error(
+            `ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: "${typeof opts.mergeType}", equal to ${JSON.stringify(
+              opts.progressFn,
+              null,
+              4
+            )}`
+          );
+        }
+      }
+    } else {
+      throw new Error(
+        `emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n${JSON.stringify(
+          originalOpts,
+          null,
+          4
+        )} (type ${typeof originalOpts})`
+      );
+    }
+  } else {
+    opts = clone(defaults);
   }
   const filtered = clone(arrOfRanges).filter(
     rangeArr => rangeArr[2] !== undefined || rangeArr[0] !== rangeArr[1]
@@ -29,13 +68,13 @@ function mergeRanges(arrOfRanges, progressFn) {
   let sortedRanges;
   let lastPercentageDone;
   let percentageDone;
-  if (progressFn) {
+  if (opts.progressFn) {
     sortedRanges = sortRanges(filtered, {
       progressFn: percentage => {
         percentageDone = Math.floor(percentage / 5);
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
+          opts.progressFn(percentageDone);
         }
       }
     });
@@ -44,14 +83,14 @@ function mergeRanges(arrOfRanges, progressFn) {
   }
   const len = sortedRanges.length - 1;
   for (let i = len; i > 0; i--) {
-    if (progressFn) {
+    if (opts.progressFn) {
       percentageDone = Math.floor((1 - i / len) * 78) + 21;
       if (
         percentageDone !== lastPercentageDone &&
         percentageDone > lastPercentageDone
       ) {
         lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+        opts.progressFn(percentageDone);
       }
     }
     if (

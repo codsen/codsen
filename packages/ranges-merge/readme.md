@@ -17,6 +17,7 @@
 - [The Idea](#the-idea)
 - [API](#api)
 - [`progressFn` - the 2nd input argument](#progressfn---the-2nd-input-argument)
+- [Clashing content to insert](#clashing-content-to-insert)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -37,9 +38,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-merge.cjs.js` | 3 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-merge.esm.js` | 3 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-merge.umd.js` | 29 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-merge.cjs.js` | 4 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-merge.esm.js` | 4 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-merge.umd.js` | 30 KB |
 
 **[⬆ back to top](#)**
 
@@ -115,6 +116,32 @@ console.log(
 Imagine, instead of `console.log`, this function could sit in a worker and report its progress, then, finally, ping the last value - result.
 
 Whatever function you give in second argument, it will be called with percentage done so far given as the first argument. Grab that argument and do whatever you want with it in your function.
+
+**[⬆ back to top](#)**
+
+## Clashing content to insert
+
+Imagine a messed up piece of code: `<div>&nbbsp;</div>`. Let's say our imaginary cleaning program detected two issues with it:
+
+- Unencoded ampersand at position `5`
+- Malformed `&nbsp;` where `b` is duplicated
+
+Range-wise, it could look like this:
+
+```js
+[
+  {
+    name: "bad-character-unencoded-ampersand",
+    position: [[5, 6, "&amp;"]]
+  },
+  {
+    name: "malformed &nbsp;",
+    position: [[5, 12, "&nbsp;"]]
+  }
+];
+```
+
+Notice we have two ranges' "insert" values clashing, `[5, 6]` and `[5, 12]` but we want latter to discard the former.
 
 **[⬆ back to top](#)**
 

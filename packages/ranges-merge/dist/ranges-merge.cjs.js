@@ -13,6 +13,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var sortRanges = _interopDefault(require('ranges-sort'));
 var clone = _interopDefault(require('lodash.clonedeep'));
+var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -28,12 +29,38 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function mergeRanges(arrOfRanges, _progressFn) {
+function mergeRanges(arrOfRanges, originalOpts) {
+  function isStr(something) {
+    return typeof something === "string";
+  }
   if (!Array.isArray(arrOfRanges)) {
     return arrOfRanges;
   }
-  if (_progressFn && typeof _progressFn !== "function") {
-    throw new Error("ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: \"".concat(_typeof(_progressFn), "\", equal to ").concat(JSON.stringify(_progressFn, null, 4)));
+  var defaults = {
+    mergeType: 1,
+    progressFn: null
+  };
+  var opts;
+  if (originalOpts) {
+    if (isObj(originalOpts)) {
+      opts = Object.assign({}, defaults, originalOpts);
+      if (opts.progressFn && typeof opts.progressFn !== "function") {
+        throw new Error("ranges-merge: [THROW_ID_01] the second input argument must be a function! It was given of a type: \"".concat(_typeof(opts.progressFn), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
+      }
+      if (opts.mergeType && opts.mergeType !== 1 && opts.mergeType !== 2) {
+        if (isStr(opts.mergeType) && opts.mergeType.trim() === "1") {
+          opts.mergeType = 1;
+        } else if (isStr(opts.mergeType) && opts.mergeType.trim() === "2") {
+          opts.mergeType = 2;
+        } else {
+          throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
+        }
+      }
+    } else {
+      throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
+    }
+  } else {
+    opts = clone(defaults);
   }
   var filtered = clone(arrOfRanges).filter(
   function (rangeArr) {
@@ -42,13 +69,13 @@ function mergeRanges(arrOfRanges, _progressFn) {
   var sortedRanges;
   var lastPercentageDone;
   var percentageDone;
-  if (_progressFn) {
+  if (opts.progressFn) {
     sortedRanges = sortRanges(filtered, {
       progressFn: function progressFn(percentage) {
         percentageDone = Math.floor(percentage / 5);
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          _progressFn(percentageDone);
+          opts.progressFn(percentageDone);
         }
       }
     });
@@ -57,11 +84,11 @@ function mergeRanges(arrOfRanges, _progressFn) {
   }
   var len = sortedRanges.length - 1;
   for (var i = len; i > 0; i--) {
-    if (_progressFn) {
+    if (opts.progressFn) {
       percentageDone = Math.floor((1 - i / len) * 78) + 21;
       if (percentageDone !== lastPercentageDone && percentageDone > lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        _progressFn(percentageDone);
+        opts.progressFn(percentageDone);
       }
     }
     if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
