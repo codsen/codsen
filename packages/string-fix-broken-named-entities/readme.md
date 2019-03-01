@@ -183,7 +183,7 @@ const res = fix("zzznbsp;zzznbsp;", {
     // "oodles" or whatever you name it, is a plain object.
     // Grab any content from any of its keys, for example:
     // {
-    //   fixName: "missing semicolon on &pi; (don't confuse with &piv;)",
+    //   ruleName: "missing semicolon on &pi; (don't confuse with &piv;)",
     //   entityName: "pi",
     //   rangeFrom: 3,
     //   rangeTo: 4,
@@ -191,7 +191,7 @@ const res = fix("zzznbsp;zzznbsp;", {
     //   rangeValDecoded: "\u03C0"
     // }
     return {
-      name: oodles.fixName,
+      name: oodles.ruleName,
       position:
         oodles.rangeValEncoded != null
           ? [oodles.rangeFrom, oodles.rangeTo, oodles.rangeValEncoded]
@@ -216,14 +216,38 @@ Here's the detailed description of all the keys, values and their types:
 
 | name of the key in the object in the first argument of a callback function | example value                                          | value's type                    | description                                                                                       |
 | -------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------- |
-| fixName                                                                    | `missing semicolon on &pi; (don't confuse with &piv;)` | string                          | Full name of the issue, suitable for linters                                                      |
+| ruleName                                                                    | `missing semicolon on &pi; (don't confuse with &piv;)` | string                          | Full name of the issue, suitable for linters                                                      |
 | entityName                                                                 | `pi`                                                   | string                          | Just the name of the entity, without ampersand or semicolon. Case sensitive                       |
 | rangeFrom                                                                  | `3`                                                    | (natural) number (string index) | Shows from where to delete                                                                        |
 | rangeTo                                                                    | `8`                                                    | (natural) number (string index) | Shows up to where to delete                                                                       |
 | rangeValEncoded                                                            | `&pi;`                                                 | string or `null`                | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 | rangeValDecoded                                                            | `\u03C0`                                               | string or `null`                | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 
-**PS.** `opts.decode` does not matter if you supply `opts.cb` function. In callback, you have access to _both_ encoded and decoded values and whatever you return will be put into the result's array. You could use both, either one or neither — the output is fully under your control.
+### `opts.decode` in relation to `opts.cb`
+
+Even though it might seem that when callback is used, `opts.decode` does not matter (because we serve both encoded and decoded values in callback), but **it does matter**.
+
+For example, consider this case, where we have non-breaking spaces without semicolons:
+
+```
+&nbsp,&nbsp,&nbsp
+```
+
+Since we give user an option to choose between raw and encoded values, result can come in two ways:
+
+* When decoded entities are requested, we replace ranges `[0, 5]`, `[6, 11]` and `[12, 17]`:
+
+  ```js
+  // ranges:
+  [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]]
+  ```
+
+* But, when encoded entities are requested, it's just a matter of sticking in the missing semicolon, at indexes `5`, `11` and `17`:
+
+  ```js
+  // ranges:
+  [[5, 5, ";"], [11, 11, ";"], [17, 17, ";"]]
+  ```
 
 **[⬆ back to top](#)**
 

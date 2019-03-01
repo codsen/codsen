@@ -117,17 +117,32 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
     if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[i - 1] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[i + 1] !== ";")) {
       if (str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") {
-        if (opts.cb) {
-          rangesArr.push(opts.cb({
-            fixName: "malformed &nbsp;",
-            entityName: "nbsp",
-            rangeFrom: nbsp.nameStartsAt,
-            rangeTo: i,
-            rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0"
-          }));
+        if (nbsp.nameStartsAt != null && i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, i) === "&nbsp" && !opts.decode) {
+          if (opts.cb) {
+            rangesArr.push(opts.cb({
+              ruleName: "bad-named-html-entity-missing-semicolon",
+              entityName: "nbsp",
+              rangeFrom: i,
+              rangeTo: i,
+              rangeValEncoded: ";",
+              rangeValDecoded: ";"
+            }));
+          } else {
+            rangesArr.push([i, i, ";"]);
+          }
         } else {
-          rangesArr.push([nbsp.nameStartsAt, i, opts.decode ? "\xA0" : "&nbsp;"]);
+          if (opts.cb) {
+            rangesArr.push(opts.cb({
+              ruleName: "bad-named-html-entity-malformed-nbsp",
+              entityName: "nbsp",
+              rangeFrom: nbsp.nameStartsAt,
+              rangeTo: i,
+              rangeValEncoded: "&nbsp;",
+              rangeValDecoded: "\xA0"
+            }));
+          } else {
+            rangesArr.push([nbsp.nameStartsAt, i, opts.decode ? "\xA0" : "&nbsp;"]);
+          }
         }
       }
       nbspWipe();
@@ -149,7 +164,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
         if (opts.cb) {
           rangesArr.push(opts.cb({
-            fixName: '"amp;" repetitions',
+            ruleName: "bad-named-html-entity-amp-repetitions",
             entityName: "amp",
             rangeFrom: i + 1,
             rangeTo: endingOfAmpRepetition,
@@ -172,9 +187,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (str[i + 4] !== "s" && str[i + 4] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &ang; (don't confuse with &angst;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "ang",
-              rangeFrom: i,
+              rangeFrom: i + 4,
               rangeTo: i + 4,
               rangeValEncoded: "&ang;",
               rangeValDecoded: "\u2220"
@@ -187,9 +202,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[i + 4] === "s" && str[i + 5] === "t" && str[i + 6] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &angst; (don't confuse with &ang;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "angst",
-              rangeFrom: i,
+              rangeFrom: i + 6,
               rangeTo: i + 6,
               rangeValEncoded: "&angst;",
               rangeValDecoded: "\xC5"
@@ -204,9 +219,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (str[i + 3] !== "v" && str[i + 3] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &pi; (don't confuse with &piv;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "pi",
-              rangeFrom: i,
+              rangeFrom: i + 3,
               rangeTo: i + 3,
               rangeValEncoded: "&pi;",
               rangeValDecoded: "\u03C0"
@@ -219,9 +234,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[i + 3] === "v" && str[i + 4] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &piv; (don't confuse with &pi)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "piv",
-              rangeFrom: i,
+              rangeFrom: i + 4,
               rangeTo: i + 4,
               rangeValEncoded: "&piv;",
               rangeValDecoded: "\u03D6"
@@ -235,9 +250,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       } else if (str[i + 1] === "P" && str[i + 2] === "i" && str[i + 3] !== ";") {
         if (opts.cb) {
           rangesArr.push(opts.cb({
-            fixName: "missing semicolon on &Pi; (don't confuse with &pi;)",
+            ruleName: "bad-named-html-entity-missing-semicolon",
             entityName: "Pi",
-            rangeFrom: i,
+            rangeFrom: i + 3,
             rangeTo: i + 3,
             rangeValEncoded: "&Pi;",
             rangeValDecoded: "\u03A0"
@@ -251,9 +266,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (str[i + 2] === "i" && str[i + 3] === "g" && str[i + 4] === "m" && str[i + 5] === "a" && str[i + 6] !== ";" && str[i + 6] !== "f") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &sigma; (don't confuse with &sigmaf;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sigma",
-              rangeFrom: i,
+              rangeFrom: i + 6,
               rangeTo: i + 6,
               rangeValEncoded: "&sigma;",
               rangeValDecoded: "\u03C3"
@@ -266,9 +281,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[i + 2] === "u" && str[i + 3] === "b" && str[i + 4] !== ";" && str[i + 4] !== "e") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &sub; (don't confuse with &sube;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sub",
-              rangeFrom: i,
+              rangeFrom: i + 4,
               rangeTo: i + 4,
               rangeValEncoded: "&sub;",
               rangeValDecoded: "\u2282"
@@ -281,9 +296,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[i + 2] === "u" && str[i + 3] === "p" && str[i + 4] !== "f" && str[i + 4] !== "e" && str[i + 4] !== "1" && str[i + 4] !== "2" && str[i + 4] !== "3" && str[i + 4] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &sup; (don't confuse with &supf;, &supe;, &sup1;, &sup2; or &sup3;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sup",
-              rangeFrom: i,
+              rangeFrom: i + 4,
               rangeTo: i + 4,
               rangeValEncoded: "&sup;",
               rangeValDecoded: "\u2283"
@@ -298,9 +313,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (str[i + 2] === "h" && str[i + 3] === "e" && str[i + 4] === "t" && str[i + 5] === "a" && str[i + 6] !== "s" && str[i + 6] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &theta; (don't confuse with &thetasym;)",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "theta",
-              rangeFrom: i,
+              rangeFrom: i + 6,
               rangeTo: i + 6,
               rangeValEncoded: "&theta;",
               rangeValDecoded: "\u03B8"
@@ -313,9 +328,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         } else if (str[i + 2] === "h" && str[i + 3] === "i" && str[i + 4] === "n" && str[i + 5] === "s" && str[i + 6] === "p" && str[i + 7] !== ";") {
           if (opts.cb) {
             rangesArr.push(opts.cb({
-              fixName: "missing semicolon on &thinsp;",
+              ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "thinsp",
-              rangeFrom: i,
+              rangeFrom: i + 7,
               rangeTo: i + 7,
               rangeValEncoded: "&thinsp;",
               rangeValDecoded: "\u2009"
