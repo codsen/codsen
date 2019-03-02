@@ -1,6 +1,6 @@
 /**
  * string-left-right
- * Look what's to the left or to the right of a given index within a string
+ * Look what's to the left or the right of a given index within a string
  * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT

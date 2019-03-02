@@ -1,12 +1,5 @@
-/**
- * string-left-right
- * Look what's to the left or the right of a given index within a string
- * Version: 1.0.0
- * Author: Roy Revelt, Codsen Ltd
- * License: MIT
- * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
- */
-
+// Looks what's the first non-whitespace character to the right of index "idx"
+// on string "str". Returns index of that first non-whitespace character.
 function right(str, idx) {
   if (typeof str !== "string" || !str.length) {
     return null;
@@ -17,10 +10,13 @@ function right(str, idx) {
   if (!str[idx + 1]) {
     return null;
   } else if (str[idx + 1] && str[idx + 1].trim().length) {
+    // best case scenario - next character is non-whitespace:
     return idx + 1;
   } else if (str[idx + 2] && str[idx + 2].trim().length) {
+    // second best case scenario - second next character is non-whitespace:
     return idx + 2;
   }
+  // worst case scenario - traverse forwards
   for (let i = idx + 1, len = str.length; i < len; i++) {
     if (str[i].trim().length) {
       return i;
@@ -28,6 +24,8 @@ function right(str, idx) {
   }
   return null;
 }
+
+// Finds the index of the first non-whitespace character on the left
 function left(str, idx) {
   if (typeof str !== "string" || !str.length) {
     return null;
@@ -38,10 +36,13 @@ function left(str, idx) {
   if (idx < 1) {
     return null;
   } else if (str[idx - 1] && str[idx - 1].trim().length) {
+    // best case scenario - next character is non-whitespace:
     return idx - 1;
   } else if (str[idx - 2] && str[idx - 2].trim().length) {
+    // second best case scenario - second next character is non-whitespace:
     return idx - 2;
   }
+  // worst case scenario - traverse backwards
   for (let i = idx; i--; ) {
     if (str[i] && str[i].trim().length) {
       return i;
