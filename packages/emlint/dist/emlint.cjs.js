@@ -13,6 +13,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
+var stringLeftRight = require('string-left-right');
 var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
@@ -360,6 +362,21 @@ var errors = {
 	excerpt: "unencoded opening bracket",
 	scope: "html"
 },
+	"bad-named-html-entity-malformed-nbsp": {
+	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
+	excerpt: "malformed &nbsp;",
+	scope: "html"
+},
+	"bad-named-html-entity-amp-repetitions": {
+	description: "HTML named entity was encoded multiple times, causing repeated amp;",
+	excerpt: "repeated amp; because of over-encoding",
+	scope: "html"
+},
+	"bad-named-html-entity-missing-semicolon": {
+	description: "HTML named entity is missing a semicolon",
+	excerpt: "missing semicolon on a named HTML entity",
+	scope: "html"
+},
 	"file-empty": {
 	description: "the contents are empty",
 	excerpt: "the contents are empty",
@@ -430,11 +447,6 @@ var errors = {
 	excerpt: "missing equal character",
 	scope: "html"
 },
-	"tag-attribute-repeated-equal": {
-	description: "The equal after attribute's name is repeated",
-	excerpt: "repeated equal character",
-	scope: "html"
-},
 	"tag-attribute-opening-quotation-mark-missing": {
 	description: "The opening quotation mark is missing",
 	excerpt: "the opening quotation mark is missing",
@@ -443,6 +455,11 @@ var errors = {
 	"tag-attribute-quote-and-onwards-missing": {
 	description: "One of the attributes ends with an equal sign, there are no quotes on it",
 	excerpt: "attributes ends with an equal sign, there are no quotes on it",
+	scope: "html"
+},
+	"tag-attribute-repeated-equal": {
+	description: "The equal after attribute's name is repeated",
+	excerpt: "repeated equal character",
 	scope: "html"
 },
 	"tag-attribute-right-double-quotation-mark": {
@@ -642,14 +659,14 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     if (quotes.at && !quotes.within && quotes.precedes && str[i] !== str[quotes.at]) {
       quotes.at = null;
     }
-    if (!quotes.within && beginningOfAString && str[i] === "/" && ">".includes(str[right(str, i)])) {
+    if (!quotes.within && beginningOfAString && str[i] === "/" && ">".includes(str[stringLeftRight.right(str, i)])) {
       return true;
     }
     if (!quotes.within && beginningOfAString && str[i] === ">" && !r3_1) {
       r3_1 = true;
-      if (!str[i + 1] || !right(str, i) || !str.slice(i).includes("'") && !str.slice(i).includes('"')) {
+      if (!str[i + 1] || !stringLeftRight.right(str, i) || !str.slice(i).includes("'") && !str.slice(i).includes('"')) {
         return true;
-      } else if (str[right(str, i)] === "<") {
+      } else if (str[stringLeftRight.right(str, i)] === "<") {
         return true;
       }
     }
@@ -669,7 +686,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           }
         }
         else if (r3_3 && !r3_4 && str[i].trim().length && !charSuitableForTagName(str[i])) {
-            if ("<>".includes(str[i]) || str[i] === "/" && "<>".includes(right(str, i))) {
+            if ("<>".includes(str[i]) || str[i] === "/" && "<>".includes(stringLeftRight.right(str, i))) {
               return true;
             } else if ("='\"".includes(str[i])) {
               r3_1 = false;
@@ -695,18 +712,18 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
                     return true;
                   }
                 }
-    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1 && (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
+    if (!quotes.within && beginningOfAString && charSuitableForAttrName(str[i]) && !r2_1 && (str[stringLeftRight.left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
       r2_1 = true;
     }
     else if (!r2_2 && r2_1 && str[i].trim().length && !charSuitableForAttrName(str[i])) {
         if (str[i] === "=") {
           r2_2 = true;
-        } else if (str[i] === ">" || str[i] === "/" && str[right(str, i)] === ">") {
+        } else if (str[i] === ">" || str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
           var closingBracketAt = i;
           if (str[i] === "/") {
-            closingBracketAt = str[right(str, i)];
+            closingBracketAt = str[stringLeftRight.right(str, i)];
           }
-          if (right(str, closingBracketAt)) {
+          if (stringLeftRight.right(str, closingBracketAt)) {
             r3_1 = true;
             r2_1 = false;
           } else {
@@ -751,11 +768,11 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
                 return true;
               }
             }
-    if (!quotes.within && beginningOfAString && !r4_1 && charSuitableForAttrName(str[i]) && (str[left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
+    if (!quotes.within && beginningOfAString && !r4_1 && charSuitableForAttrName(str[i]) && (str[stringLeftRight.left(str, i)] !== "=" || onlyAttrFriendlyCharsLeadingToEqual(str, i))) {
       r4_1 = true;
     }
     else if (r4_1 && str[i].trim().length && (!charSuitableForAttrName(str[i]) || str[i] === "/")) {
-        if (str[i] === "/" && str[right(str, i)] === ">") {
+        if (str[i] === "/" && str[stringLeftRight.right(str, i)] === ">") {
           return true;
         }
         r4_1 = false;
@@ -809,7 +826,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
           if (str[i] === str[quotes.at]) {
             return true;
           }
-          else if (str[i + 1] && "/>".includes(str[right(str, i)])) {
+          else if (str[i + 1] && "/>".includes(str[stringLeftRight.right(str, i)])) {
               return true;
             }
         }
@@ -852,38 +869,6 @@ function tagOnTheRight(str) {
   }
   var res = isStr(str) && idx < str.length && passed;
   return res;
-}
-function right(str) {
-  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  if (!str[idx + 1]) {
-    return null;
-  } else if (str[idx + 1] && str[idx + 1].trim().length) {
-    return idx + 1;
-  } else if (str[idx + 2] && str[idx + 2].trim().length) {
-    return idx + 2;
-  }
-  for (var i = idx + 1, len = str.length; i < len; i++) {
-    if (str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
-}
-function left(str) {
-  var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  if (idx < 1) {
-    return null;
-  } else if (str[idx - 1] && str[idx - 1].trim().length) {
-    return idx - 1;
-  } else if (str[idx - 2] && str[idx - 2].trim().length) {
-    return idx - 2;
-  }
-  for (var i = idx; i--;) {
-    if (str[i] && str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
 }
 function attributeOnTheRight(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
@@ -988,16 +973,16 @@ function findClosingQuote(str) {
             }
           }
         } else if (str[i] === "=") {
-          var whatFollowsEq = right(str, i);
+          var whatFollowsEq = stringLeftRight.right(str, i);
           if (whatFollowsEq && charIsQuote(str[whatFollowsEq])) {
             if (lastQuoteAt && withinTagInnerspace(str, lastQuoteAt + 1)) {
               return lastQuoteAt + 1;
             } else if (!lastQuoteAt) {
-              var startingPoint = str[i - 1].trim().length ? i - 1 : left(str, i);
+              var startingPoint = str[i - 1].trim().length ? i - 1 : stringLeftRight.left(str, i);
               var res = void 0;
               for (var y = startingPoint; y--;) {
                 if (!str[y].trim().length) {
-                  res = left(str, y) + 1;
+                  res = stringLeftRight.left(str, y) + 1;
                   break;
                 }
               }
@@ -1007,7 +992,7 @@ function findClosingQuote(str) {
             var _temp = void 0;
             for (var _y = i; _y--;) {
               if (!str[_y].trim().length) {
-                _temp = left(str, _y);
+                _temp = stringLeftRight.left(str, _y);
                 break;
               }
             }
@@ -1062,9 +1047,7 @@ var attributeOnTheRight$1 = attributeOnTheRight,
     tagOnTheRight$1 = tagOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
-    right$1 = right,
-    isStr$1 = isStr,
-    left$1 = left;
+    isStr$1 = isStr;
 function lint(str, originalOpts) {
   function pingTag(logTag) {}
   if (!isStr$1(str)) {
@@ -1199,7 +1182,7 @@ function lint(str, originalOpts) {
         logAttr.attrNameEndAt = _i;
         logAttr.attrName = str.slice(logAttr.attrNameStartAt, logAttr.attrNameEndAt);
         if (str[_i] !== "=") {
-          if (str[right$1(str, _i)] === "=") ;
+          if (str[stringLeftRight.right(str, _i)] === "=") ;
         }
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && _i >= logAttr.attrNameEndAt && str[_i].trim().length) {
@@ -1210,7 +1193,7 @@ function lint(str, originalOpts) {
         if (str[_i] === "=") {
           logAttr.attrEqualAt = _i;
           if (str[_i + 1]) {
-            var nextCharOnTheRightAt = right$1(str, _i);
+            var nextCharOnTheRightAt = stringLeftRight.right(str, _i);
             if (str[nextCharOnTheRightAt] === "=") {
               var nextEqualStartAt = _i + 1;
               var nextEqualEndAt = nextCharOnTheRightAt + 1;
@@ -1220,7 +1203,7 @@ function lint(str, originalOpts) {
                   name: "tag-attribute-repeated-equal",
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
-                var _temp = right$1(str, nextEqualEndAt - 1);
+                var _temp = stringLeftRight.right(str, nextEqualEndAt - 1);
                 if (str[_temp] === "=") {
                   nextEqualStartAt = nextEqualEndAt;
                   nextEqualEndAt = _temp + 1;
@@ -1333,17 +1316,17 @@ function lint(str, originalOpts) {
                   if (str[closingQuotePeek - 1] && str[closingQuotePeek] && str[closingQuotePeek - 1].trim().length && str[closingQuotePeek].trim().length && str[closingQuotePeek] !== "/" && str[closingQuotePeek] !== ">") {
                     compensation = " ";
                   }
-                  var fromPositionToInsertAt = str[closingQuotePeek - 1].trim().length ? closingQuotePeek : left$1(str, closingQuotePeek) + 1;
+                  var fromPositionToInsertAt = str[closingQuotePeek - 1].trim().length ? closingQuotePeek : stringLeftRight.left(str, closingQuotePeek) + 1;
                   var toPositionToInsertAt = closingQuotePeek;
-                  if (str[left$1(str, closingQuotePeek)] === "/") {
-                    toPositionToInsertAt = left$1(str, closingQuotePeek);
+                  if (str[stringLeftRight.left(str, closingQuotePeek)] === "/") {
+                    toPositionToInsertAt = stringLeftRight.left(str, closingQuotePeek);
                     if (toPositionToInsertAt + 1 < closingQuotePeek) {
                       retObj.issues.push({
                         name: "tag-whitespace-closing-slash-and-bracket",
                         position: [[toPositionToInsertAt + 1, closingQuotePeek]]
                       });
                     }
-                    fromPositionToInsertAt = left$1(str, toPositionToInsertAt) + 1;
+                    fromPositionToInsertAt = stringLeftRight.left(str, toPositionToInsertAt) + 1;
                   }
                   retObj.issues.push({
                     name: "tag-attribute-closing-quotation-mark-missing",
@@ -1369,7 +1352,7 @@ function lint(str, originalOpts) {
               if (str[closingQuotePeek].trim().length) {
                 _i = closingQuotePeek;
               } else {
-                _i = left$1(str, closingQuotePeek);
+                _i = stringLeftRight.left(str, closingQuotePeek);
               }
               if (_i === len - 1 && logTag.tagStartAt !== null && (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null || logTag.attributes.some(function (attrObj) {
                 return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
@@ -1405,7 +1388,7 @@ function lint(str, originalOpts) {
             var quoteValToPut = charIsQuote$1(str[_closingQuotePeek]) ? str[_closingQuotePeek] : "\"";
             retObj.issues.push({
               name: "tag-attribute-opening-quotation-mark-missing",
-              position: [[left$1(str, _i) + 1, _i, quoteValToPut]]
+              position: [[stringLeftRight.left(str, _i) + 1, _i, quoteValToPut]]
             });
             logAttr.attrOpeningQuote = {
               pos: _i,
@@ -1414,8 +1397,8 @@ function lint(str, originalOpts) {
             logAttr.attrValueStartAt = _i;
             var innerTagEndsAt = null;
             for (var _y2 = _i; _y2 < len; _y2++) {
-              if (str[_y2] === ">" && (str[left$1(str, _y2)] !== "/" && withinTagInnerspace$1(str, _y2) || str[left$1(str, _y2)] === "/")) {
-                var leftAt = left$1(str, _y2);
+              if (str[_y2] === ">" && (str[stringLeftRight.left(str, _y2)] !== "/" && withinTagInnerspace$1(str, _y2) || str[stringLeftRight.left(str, _y2)] === "/")) {
+                var leftAt = stringLeftRight.left(str, _y2);
                 innerTagEndsAt = _y2;
                 if (str[leftAt] === "/") {
                   innerTagEndsAt = leftAt;
@@ -1448,7 +1431,7 @@ function lint(str, originalOpts) {
                     break;
                   }
                 }
-                var temp2 = left$1(str, attributeOnTheRightBeginsAt);
+                var temp2 = stringLeftRight.left(str, attributeOnTheRightBeginsAt);
                 if (!charIsQuote$1(temp2)) {
                   startingPoint = temp2 + 1;
                 }
@@ -1471,10 +1454,10 @@ function lint(str, originalOpts) {
               }
               if (!str[_z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = _z + 1;
-                if (str[right$1(str, caughtAttrEnd)] === "=") {
-                  var _temp2 = left$1(str, caughtAttrStart);
+                if (str[stringLeftRight.right(str, caughtAttrEnd)] === "=") {
+                  var _temp2 = stringLeftRight.left(str, caughtAttrStart);
                   if (!charIsQuote$1(str[_temp2])) {
-                    attributeOnTheRightBeginsAt = right$1(str, _temp2 + 1);
+                    attributeOnTheRightBeginsAt = stringLeftRight.right(str, _temp2 + 1);
                   }
                   break;
                 } else {
@@ -1489,9 +1472,9 @@ function lint(str, originalOpts) {
               }
             }
             if (!finalClosingQuotesShouldBeAt && attributeOnTheRightBeginsAt) {
-              finalClosingQuotesShouldBeAt = left$1(str, attributeOnTheRightBeginsAt) + 1;
+              finalClosingQuotesShouldBeAt = stringLeftRight.left(str, attributeOnTheRightBeginsAt) + 1;
             }
-            if (caughtAttrEnd && logAttr.attrOpeningQuote && !finalClosingQuotesShouldBeAt && str[left$1(str, caughtAttrEnd)] !== logAttr.attrOpeningQuote.val) {
+            if (caughtAttrEnd && logAttr.attrOpeningQuote && !finalClosingQuotesShouldBeAt && str[stringLeftRight.left(str, caughtAttrEnd)] !== logAttr.attrOpeningQuote.val) {
               finalClosingQuotesShouldBeAt = caughtAttrEnd;
             }
             if (finalClosingQuotesShouldBeAt) {
@@ -1503,7 +1486,7 @@ function lint(str, originalOpts) {
               logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
               logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
             } else {
-              logAttr.attrClosingQuote.pos = left$1(str, caughtAttrEnd);
+              logAttr.attrClosingQuote.pos = stringLeftRight.left(str, caughtAttrEnd);
               logAttr.attrValueEndAt = logAttr.attrClosingQuote.pos;
               logAttr.attrEndAt = caughtAttrEnd;
             }
@@ -1527,7 +1510,7 @@ function lint(str, originalOpts) {
             return "continue";
           } else {
             var start = logAttr.attrStartAt;
-            var _temp4 = right$1(str, _i);
+            var _temp4 = stringLeftRight.right(str, _i);
             if (str[_i] === "/" && _temp4 && str[_temp4] === ">" || str[_i] === ">") {
               for (var _y3 = logAttr.attrStartAt; _y3--;) {
                 if (str[_y3].trim().length) {
@@ -1557,7 +1540,7 @@ function lint(str, originalOpts) {
               resetLogAttr();
             }
           }
-        } else if (!str[_i + 1] || !right$1(str, _i)) {
+        } else if (!str[_i + 1] || !stringLeftRight.right(str, _i)) {
           retObj.issues.push({
             name: "file-missing-ending",
             position: [[_i + 1, _i + 1]]
@@ -1601,7 +1584,7 @@ function lint(str, originalOpts) {
             logAttr.attrClosingQuote.val = '"';
             logTag.attributes.push(clone(logAttr));
             resetLogAttr();
-          } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (right$1(str, _i) !== null && (str[right$1(str, _i)] === ">" || str[right$1(str, _i)] === "/") || withinTagInnerspace$1(str, _i + 1))) {
+          } else if (isStr$1(logAttr.attrOpeningQuote.val) && (charcode === 8216 || charcode === 8217) && (stringLeftRight.right(str, _i) !== null && (str[stringLeftRight.right(str, _i)] === ">" || str[stringLeftRight.right(str, _i)] === "/") || withinTagInnerspace$1(str, _i + 1))) {
           var _name4 = charcode === 8216 ? "tag-attribute-left-single-quotation-mark" : "tag-attribute-right-single-quotation-mark";
           retObj.issues.push({
             name: _name4,
@@ -1615,7 +1598,7 @@ function lint(str, originalOpts) {
         }
       }
       if (logAttr.attrOpeningQuote.val && logAttr.attrOpeningQuote.pos < _i && logAttr.attrClosingQuote.pos === null && (
-      str[_i] === "/" && right$1(str, _i) && str[right$1(str, _i)] === ">" || str[_i] === ">")) {
+      str[_i] === "/" && stringLeftRight.right(str, _i) && str[stringLeftRight.right(str, _i)] === ">" || str[_i] === ">")) {
         retObj.issues.push({
           name: "tag-attribute-closing-quotation-mark-missing",
           position: [[_i, _i, logAttr.attrOpeningQuote.val]]
@@ -1675,7 +1658,7 @@ function lint(str, originalOpts) {
       rawIssueStaging.push(_newIssue);
     }
     if (!doNothingUntil && logWhitespace.startAt !== null && str[_i].trim().length) {
-      if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[right$1(str, _i)]))) {
+      if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[stringLeftRight.right(str, _i)]))) {
         var _name6 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
           _name6 = "tag-whitespace-closing-slash-and-bracket";
@@ -1722,7 +1705,7 @@ function lint(str, originalOpts) {
         if (logTag.tagStartAt !== null && logTag.attributes.length && logTag.attributes.some(function (attrObj) {
           return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
         })) {
-          var lastNonWhitespaceOnLeft = left$1(str, _i);
+          var lastNonWhitespaceOnLeft = stringLeftRight.left(str, _i);
           if (str[lastNonWhitespaceOnLeft] === ">") {
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
           } else {
@@ -1914,6 +1897,17 @@ function lint(str, originalOpts) {
         });
       }
     }
+  }
+  var htmlEntityFixes = fixBrokenEntities(str, {
+    cb: function cb(oodles) {
+      return {
+        name: oodles.ruleName,
+        position: [oodles.rangeValEncoded != null ? [oodles.rangeFrom, oodles.rangeTo, oodles.rangeValEncoded] : [oodles.rangeFrom, oodles.rangeTo]]
+      };
+    }
+  });
+  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+    retObj.issues = retObj.issues.concat(htmlEntityFixes);
   }
   retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.reduce(function (acc, obj) {
     return acc.concat(obj.position);

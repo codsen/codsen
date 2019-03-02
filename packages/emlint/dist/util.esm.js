@@ -1,3 +1,5 @@
+import { right, left } from 'string-left-right';
+
 const lowAsciiCharacterNames = [
   "null",
   "start-of-heading",
@@ -514,36 +516,6 @@ function tagOnTheRight(str, idx = 0) {
   const res = isStr(str) && idx < str.length && passed;
   return res;
 }
-function right(str, idx = 0) {
-  if (!str[idx + 1]) {
-    return null;
-  } else if (str[idx + 1] && str[idx + 1].trim().length) {
-    return idx + 1;
-  } else if (str[idx + 2] && str[idx + 2].trim().length) {
-    return idx + 2;
-  }
-  for (let i = idx + 1, len = str.length; i < len; i++) {
-    if (str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
-}
-function left(str, idx = 0) {
-  if (idx < 1) {
-    return null;
-  } else if (str[idx - 1] && str[idx - 1].trim().length) {
-    return idx - 1;
-  } else if (str[idx - 2] && str[idx - 2].trim().length) {
-    return idx - 2;
-  }
-  for (let i = idx; i--; ) {
-    if (str[i] && str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
-}
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   const startingQuoteVal = str[idx];
   if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
@@ -747,4 +719,4 @@ function encodeChar(str, i) {
   return null;
 }
 
-export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, right, left, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight, onlyTheseLeadToThat };
+export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, notTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, log, isLatinLetter, withinTagInnerspace, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight, onlyTheseLeadToThat };

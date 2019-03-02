@@ -11,9 +11,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var isObj = _interopDefault(require('lodash.isplainobject'));
 var rangesMerge = _interopDefault(require('ranges-merge'));
 var clone = _interopDefault(require('lodash.clonedeep'));
-var isObj = _interopDefault(require('lodash.isplainobject'));
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {

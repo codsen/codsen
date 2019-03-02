@@ -76,26 +76,26 @@ rangesMerge([
 
 ## API
 
-**rangesMerge(arrOfRanges\[, progressFn])** — in other words, this library gives you a _function_ and you must feed _an array_ into its first argument and also if you wish, you can feed a second argument, a function (bracket in `[, progressFn]` means "optional").
+**rangesMerge(arrOfRanges\[, opts])** — in other words, this library gives you a _function_, and you must feed _an array_ into its first argument and also if you wish, you can feed a second argument, a function (bracket in `[, opts]` means "optional").
 
 It returns a new array of zero or more arrays, with ranges merged (where applicable). Original input is not mutated.
 
 | Input argument | Type     | Obligatory? | Description                                                                                                                                           |
 | -------------- | -------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `arrOfRanges`  | Array    | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each)                                                                          |
-| `progressFn`   | Function | no          | If you provide a function, it will be fed a natural number many times, for each percentage (mostly) of the work done. It's handy in worker scenarios. |
+| `opts`         | Plain object | no      | Optional Options Object. See its API below. |
 
 **[⬆ back to top](#)**
 
-## `progressFn` - the 2nd input argument
+## `opts.progressFn`
 
 Consider this example (notice an arrow function in the second input argument):
 
 ```js
 console.log(
-  mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], perc => {
+  mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {progressFn: perc => {
     console.log(`done: ${perc}`);
-  })
+  }})
 );
 //
 // done: 0
@@ -115,7 +115,31 @@ console.log(
 
 Imagine, instead of `console.log`, this function could sit in a worker and report its progress, then, finally, ping the last value - result.
 
-Whatever function you give in second argument, it will be called with percentage done so far given as the first argument. Grab that argument and do whatever you want with it in your function.
+Whatever function you give in `opts.progressFn`, it will be called with percentage done so far. Grab that argument (`perc` in the example above) and do whatever you want with it in your function.
+
+## `opts.mergeType`
+
+When merging, ranges are sorted first. Then, pairs starting from the end of the sorted array are merged. Last two becomes one, last two becomes one and so on.
+
+The challenge is, what to do with values to add, third range array's element.
+
+For example,
+
+```js
+const range1 = [1, 2, "a"]
+const range2 = [1, 2, "b"]
+```
+
+The above ranges are "saying": replace characters in a string from index `1` to `2` with `"a"`, replace characters in string from index `1` to `2` with `"b"`.
+
+Do we end up with `"ab"` or `"b"` or something else?
+
+`opts.mergeType` let's you customise this behaviour:
+
+* In default mode, opts.mergeType === `1`, clashing "to insert" values will always be concatenated (`"ab"` in example above)
+* In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** latter value overrides the former (`"b"` in example above).
+
+In all other aspects, `opts.mergeType` modes `1` and `2` are the same.
 
 **[⬆ back to top](#)**
 
@@ -141,7 +165,7 @@ Range-wise, it could look like this:
 ];
 ```
 
-Notice we have two ranges' "insert" values clashing, `[5, 6]` and `[5, 12]` but we want latter to discard the former.
+Notice we have two ranges' "insert" values clashing, `[5, 6]` and `[5, 12]`, but we want latter to discard the former.
 
 **[⬆ back to top](#)**
 

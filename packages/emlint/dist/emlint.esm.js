@@ -7,6 +7,8 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
+import fixBrokenEntities from 'string-fix-broken-named-entities';
+import { right, left } from 'string-left-right';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
@@ -340,6 +342,21 @@ var errors = {
 	excerpt: "unencoded opening bracket",
 	scope: "html"
 },
+	"bad-named-html-entity-malformed-nbsp": {
+	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
+	excerpt: "malformed &nbsp;",
+	scope: "html"
+},
+	"bad-named-html-entity-amp-repetitions": {
+	description: "HTML named entity was encoded multiple times, causing repeated amp;",
+	excerpt: "repeated amp; because of over-encoding",
+	scope: "html"
+},
+	"bad-named-html-entity-missing-semicolon": {
+	description: "HTML named entity is missing a semicolon",
+	excerpt: "missing semicolon on a named HTML entity",
+	scope: "html"
+},
 	"file-empty": {
 	description: "the contents are empty",
 	excerpt: "the contents are empty",
@@ -410,11 +427,6 @@ var errors = {
 	excerpt: "missing equal character",
 	scope: "html"
 },
-	"tag-attribute-repeated-equal": {
-	description: "The equal after attribute's name is repeated",
-	excerpt: "repeated equal character",
-	scope: "html"
-},
 	"tag-attribute-opening-quotation-mark-missing": {
 	description: "The opening quotation mark is missing",
 	excerpt: "the opening quotation mark is missing",
@@ -423,6 +435,11 @@ var errors = {
 	"tag-attribute-quote-and-onwards-missing": {
 	description: "One of the attributes ends with an equal sign, there are no quotes on it",
 	excerpt: "attributes ends with an equal sign, there are no quotes on it",
+	scope: "html"
+},
+	"tag-attribute-repeated-equal": {
+	description: "The equal after attribute's name is repeated",
+	excerpt: "repeated equal character",
 	scope: "html"
 },
 	"tag-attribute-right-double-quotation-mark": {
@@ -993,36 +1010,6 @@ function tagOnTheRight(str, idx = 0) {
   const res = isStr(str) && idx < str.length && passed;
   return res;
 }
-function right(str, idx = 0) {
-  if (!str[idx + 1]) {
-    return null;
-  } else if (str[idx + 1] && str[idx + 1].trim().length) {
-    return idx + 1;
-  } else if (str[idx + 2] && str[idx + 2].trim().length) {
-    return idx + 2;
-  }
-  for (let i = idx + 1, len = str.length; i < len; i++) {
-    if (str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
-}
-function left(str, idx = 0) {
-  if (idx < 1) {
-    return null;
-  } else if (str[idx - 1] && str[idx - 1].trim().length) {
-    return idx - 1;
-  } else if (str[idx - 2] && str[idx - 2].trim().length) {
-    return idx - 2;
-  }
-  for (let i = idx; i--; ) {
-    if (str[i] && str[i].trim().length) {
-      return i;
-    }
-  }
-  return null;
-}
 function attributeOnTheRight(str, idx = 0, closingQuoteAt = null) {
   const startingQuoteVal = str[idx];
   if (startingQuoteVal !== "'" && startingQuoteVal !== '"') {
@@ -1238,8 +1225,6 @@ var util = /*#__PURE__*/Object.freeze({
   log: log,
   isLatinLetter: isLatinLetter,
   withinTagInnerspace: withinTagInnerspace,
-  right: right,
-  left: left,
   attributeOnTheRight: attributeOnTheRight,
   findClosingQuote: findClosingQuote,
   encodeChar: encodeChar,
@@ -1255,9 +1240,7 @@ const {
   tagOnTheRight: tagOnTheRight$1,
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
-  right: right$1,
   isStr: isStr$1,
-  left: left$1,
   log: log$1
 } = util;
 function lint(str, originalOpts) {
@@ -1417,7 +1400,7 @@ function lint(str, originalOpts) {
           logAttr.attrNameEndAt
         );
         if (str[i] !== "=") {
-          if (str[right$1(str, i)] === "=") ;
+          if (str[right(str, i)] === "=") ;
         }
       }
       if (
@@ -1433,7 +1416,7 @@ function lint(str, originalOpts) {
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
           if (str[i + 1]) {
-            const nextCharOnTheRightAt = right$1(str, i);
+            const nextCharOnTheRightAt = right(str, i);
             if (str[nextCharOnTheRightAt] === "=") {
               let nextEqualStartAt = i + 1;
               let nextEqualEndAt = nextCharOnTheRightAt + 1;
@@ -1443,7 +1426,7 @@ function lint(str, originalOpts) {
                   name: "tag-attribute-repeated-equal",
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
-                const temp = right$1(str, nextEqualEndAt - 1);
+                const temp = right(str, nextEqualEndAt - 1);
                 if (str[temp] === "=") {
                   nextEqualStartAt = nextEqualEndAt;
                   nextEqualEndAt = temp + 1;
@@ -1580,10 +1563,10 @@ function lint(str, originalOpts) {
                   let fromPositionToInsertAt = str[closingQuotePeek - 1].trim()
                     .length
                     ? closingQuotePeek
-                    : left$1(str, closingQuotePeek) + 1;
+                    : left(str, closingQuotePeek) + 1;
                   let toPositionToInsertAt = closingQuotePeek;
-                  if (str[left$1(str, closingQuotePeek)] === "/") {
-                    toPositionToInsertAt = left$1(str, closingQuotePeek);
+                  if (str[left(str, closingQuotePeek)] === "/") {
+                    toPositionToInsertAt = left(str, closingQuotePeek);
                     if (toPositionToInsertAt + 1 < closingQuotePeek) {
                       retObj.issues.push({
                         name: "tag-whitespace-closing-slash-and-bracket",
@@ -1591,7 +1574,7 @@ function lint(str, originalOpts) {
                       });
                     }
                     fromPositionToInsertAt =
-                      left$1(str, toPositionToInsertAt) + 1;
+                      left(str, toPositionToInsertAt) + 1;
                   }
                   retObj.issues.push({
                     name: "tag-attribute-closing-quotation-mark-missing",
@@ -1623,7 +1606,7 @@ function lint(str, originalOpts) {
               if (str[closingQuotePeek].trim().length) {
                 i = closingQuotePeek;
               } else {
-                i = left$1(str, closingQuotePeek);
+                i = left(str, closingQuotePeek);
               }
               if (
                 i === len - 1 &&
@@ -1674,7 +1657,7 @@ function lint(str, originalOpts) {
               : `"`;
             retObj.issues.push({
               name: "tag-attribute-opening-quotation-mark-missing",
-              position: [[left$1(str, i) + 1, i, quoteValToPut]]
+              position: [[left(str, i) + 1, i, quoteValToPut]]
             });
             logAttr.attrOpeningQuote = {
               pos: i,
@@ -1685,10 +1668,10 @@ function lint(str, originalOpts) {
             for (let y = i; y < len; y++) {
               if (
                 str[y] === ">" &&
-                ((str[left$1(str, y)] !== "/" && withinTagInnerspace$1(str, y)) ||
-                  str[left$1(str, y)] === "/")
+                ((str[left(str, y)] !== "/" && withinTagInnerspace$1(str, y)) ||
+                  str[left(str, y)] === "/")
               ) {
-                const leftAt = left$1(str, y);
+                const leftAt = left(str, y);
                 innerTagEndsAt = y;
                 if (str[leftAt] === "/") {
                   innerTagEndsAt = leftAt;
@@ -1722,7 +1705,7 @@ function lint(str, originalOpts) {
                     break;
                   }
                 }
-                const temp2 = left$1(str, attributeOnTheRightBeginsAt);
+                const temp2 = left(str, attributeOnTheRightBeginsAt);
                 if (!charIsQuote$1(temp2)) {
                   startingPoint = temp2 + 1;
                 }
@@ -1745,10 +1728,10 @@ function lint(str, originalOpts) {
               }
               if (!str[z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = z + 1;
-                if (str[right$1(str, caughtAttrEnd)] === "=") {
-                  const temp1 = left$1(str, caughtAttrStart);
+                if (str[right(str, caughtAttrEnd)] === "=") {
+                  const temp1 = left(str, caughtAttrStart);
                   if (!charIsQuote$1(str[temp1])) {
-                    attributeOnTheRightBeginsAt = right$1(str, temp1 + 1);
+                    attributeOnTheRightBeginsAt = right(str, temp1 + 1);
                   }
                   break;
                 } else {
@@ -1768,13 +1751,13 @@ function lint(str, originalOpts) {
             }
             if (!finalClosingQuotesShouldBeAt && attributeOnTheRightBeginsAt) {
               finalClosingQuotesShouldBeAt =
-                left$1(str, attributeOnTheRightBeginsAt) + 1;
+                left(str, attributeOnTheRightBeginsAt) + 1;
             }
             if (
               caughtAttrEnd &&
               logAttr.attrOpeningQuote &&
               !finalClosingQuotesShouldBeAt &&
-              str[left$1(str, caughtAttrEnd)] !== logAttr.attrOpeningQuote.val
+              str[left(str, caughtAttrEnd)] !== logAttr.attrOpeningQuote.val
             ) {
               finalClosingQuotesShouldBeAt = caughtAttrEnd;
             }
@@ -1793,7 +1776,7 @@ function lint(str, originalOpts) {
               logAttr.attrValueEndAt = finalClosingQuotesShouldBeAt;
               logAttr.attrEndAt = finalClosingQuotesShouldBeAt + 1;
             } else {
-              logAttr.attrClosingQuote.pos = left$1(str, caughtAttrEnd);
+              logAttr.attrClosingQuote.pos = left(str, caughtAttrEnd);
               logAttr.attrValueEndAt = logAttr.attrClosingQuote.pos;
               logAttr.attrEndAt = caughtAttrEnd;
             }
@@ -1823,7 +1806,7 @@ function lint(str, originalOpts) {
             continue;
           } else {
             let start = logAttr.attrStartAt;
-            const temp = right$1(str, i);
+            const temp = right(str, i);
             if (
               (str[i] === "/" && temp && str[temp] === ">") ||
               str[i] === ">"
@@ -1856,7 +1839,7 @@ function lint(str, originalOpts) {
               resetLogAttr();
             }
           }
-        } else if (!str[i + 1] || !right$1(str, i)) {
+        } else if (!str[i + 1] || !right(str, i)) {
           retObj.issues.push({
             name: "file-missing-ending",
             position: [[i + 1, i + 1]]
@@ -1932,8 +1915,8 @@ function lint(str, originalOpts) {
         } else if (
           isStr$1(logAttr.attrOpeningQuote.val) &&
           (charcode === 8216 || charcode === 8217) &&
-          ((right$1(str, i) !== null &&
-            (str[right$1(str, i)] === ">" || str[right$1(str, i)] === "/")) ||
+          ((right(str, i) !== null &&
+            (str[right(str, i)] === ">" || str[right(str, i)] === "/")) ||
             withinTagInnerspace$1(str, i + 1))
         ) {
           const name =
@@ -1955,7 +1938,7 @@ function lint(str, originalOpts) {
         logAttr.attrOpeningQuote.val &&
         logAttr.attrOpeningQuote.pos < i &&
         logAttr.attrClosingQuote.pos === null &&
-        ((str[i] === "/" && right$1(str, i) && str[right$1(str, i)] === ">") ||
+        ((str[i] === "/" && right(str, i) && str[right(str, i)] === ">") ||
           str[i] === ">")
       ) {
         retObj.issues.push({
@@ -2038,7 +2021,7 @@ function lint(str, originalOpts) {
         logAttr.attrStartAt === null &&
         (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= i) &&
         (str[i] === ">" ||
-          (str[i] === "/" && "<>".includes(str[right$1(str, i)])))
+          (str[i] === "/" && "<>".includes(str[right(str, i)])))
       ) {
         let name = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
@@ -2114,7 +2097,7 @@ function lint(str, originalOpts) {
               attrObj.attrOpeningQuote.pos !== null
           )
         ) {
-          const lastNonWhitespaceOnLeft = left$1(str, i);
+          const lastNonWhitespaceOnLeft = left(str, i);
           if (str[lastNonWhitespaceOnLeft] === ">") {
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
           } else {
@@ -2351,6 +2334,21 @@ function lint(str, originalOpts) {
         });
       }
     }
+  }
+  const htmlEntityFixes = fixBrokenEntities(str, {
+    cb: oodles => {
+      return {
+        name: oodles.ruleName,
+        position: [
+          oodles.rangeValEncoded != null
+            ? [oodles.rangeFrom, oodles.rangeTo, oodles.rangeValEncoded]
+            : [oodles.rangeFrom, oodles.rangeTo]
+        ]
+      };
+    }
+  });
+  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+    retObj.issues = retObj.issues.concat(htmlEntityFixes);
   }
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length

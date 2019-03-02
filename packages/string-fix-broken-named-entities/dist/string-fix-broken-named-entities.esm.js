@@ -7,9 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
  */
 
+import isObj from 'lodash.isplainobject';
 import rangesMerge from 'ranges-merge';
 import clone from 'lodash.clonedeep';
-import isObj from 'lodash.isplainobject';
 
 function stringFixBrokenNamedEntities(str, originalOpts) {
   function isNotaLetter(str) {

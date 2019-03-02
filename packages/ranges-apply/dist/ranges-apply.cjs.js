@@ -37,7 +37,7 @@ function existy(x) {
 function isStr(something) {
   return typeof something === "string";
 }
-function replaceSlicesArr(str, rangesArr, progressFn) {
+function replaceSlicesArr(str, rangesArr, _progressFn) {
   var percentageDone = 0;
   var lastPercentageDone = 0;
   if (arguments.length === 0) {
@@ -51,8 +51,8 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
   } else if (!isArr(rangesArr)) {
     throw new TypeError("ranges-apply: [THROW_ID_03] second input argument must be an array (or null)! Currently it's: ".concat(_typeof(rangesArr), ", equal to: ").concat(JSON.stringify(rangesArr, null, 4)));
   }
-  if (progressFn && typeof progressFn !== "function") {
-    throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(progressFn), ", equal to: ").concat(JSON.stringify(progressFn, null, 4)));
+  if (_progressFn && typeof _progressFn !== "function") {
+    throw new TypeError("ranges-apply: [THROW_ID_04] the third input argument must be a function (or falsey)! Currently it's: ".concat(_typeof(_progressFn), ", equal to: ").concat(JSON.stringify(_progressFn, null, 4)));
   }
   if (isArr(rangesArr) && (isInt(rangesArr[0], {
     includeZero: true
@@ -68,11 +68,11 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
   var len = rangesArr.length;
   var counter = 0;
   rangesArr.forEach(function (el, i) {
-    if (progressFn) {
+    if (_progressFn) {
       percentageDone = Math.floor(counter / len * 10);
       if (percentageDone !== lastPercentageDone) {
         lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+        _progressFn(percentageDone);
       }
     }
     if (!isArr(el)) {
@@ -102,12 +102,14 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
     }
     counter++;
   });
-  var workingRanges = rangesMerge(rangesArr, function (perc) {
-    if (progressFn) {
-      percentageDone = 10 + Math.floor(perc / 10);
-      if (percentageDone !== lastPercentageDone) {
-        lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+  var workingRanges = rangesMerge(rangesArr, {
+    progressFn: function progressFn(perc) {
+      if (_progressFn) {
+        percentageDone = 10 + Math.floor(perc / 10);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          _progressFn(percentageDone);
+        }
       }
     }
   });
@@ -115,11 +117,11 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
   if (len2 > 0) {
     var tails = str.slice(workingRanges[len2 - 1][1]);
     str = workingRanges.reduce(function (acc, val, i, arr) {
-      if (progressFn) {
+      if (_progressFn) {
         percentageDone = 20 + Math.floor(i / len2 * 80);
         if (percentageDone !== lastPercentageDone) {
           lastPercentageDone = percentageDone;
-          progressFn(percentageDone);
+          _progressFn(percentageDone);
         }
       }
       var beginning = i === 0 ? 0 : arr[i - 1][1];

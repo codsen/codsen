@@ -99,7 +99,11 @@ function mergeRanges(arrOfRanges, originalOpts) {
           if (sortedRanges[i][2] === null && sortedRanges[i - 1][2] !== null) {
             sortedRanges[i - 1][2] = null;
           } else if (sortedRanges[i - 1][2] !== undefined) {
-            sortedRanges[i - 1][2] += sortedRanges[i][2];
+            if (opts.mergeType === 2 && sortedRanges[i - 1][0] === sortedRanges[i][0]) {
+              sortedRanges[i - 1][2] = sortedRanges[i][2];
+            } else {
+              sortedRanges[i - 1][2] += sortedRanges[i][2];
+            }
           } else {
             sortedRanges[i - 1][2] = sortedRanges[i][2];
           }

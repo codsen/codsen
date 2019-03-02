@@ -238,9 +238,18 @@ test("01.13 - only two identical args in the range", t => {
     "01.13.01"
   );
   t.deepEqual(mergeRanges([[1, 1]]), [], "01.13.02");
+
+  // opts.mergeType === 2
+  t.deepEqual(
+    mergeRanges([[1, 1], [3, 4], [2, 2, "zzz"]], { mergeType: 2 }),
+    [[2, 2, "zzz"], [3, 4]],
+    "01.13.03"
+  );
+  t.deepEqual(mergeRanges([[1, 1]], { mergeType: 2 }), [], "01.13.04");
 });
 
 test("01.14 - third arg", t => {
+  // opts.mergeType === 1
   t.deepEqual(
     mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5, "b"]]),
     [[1, 8, "abc"]],
@@ -260,5 +269,71 @@ test("01.14 - third arg", t => {
     mergeRanges([[3, 8], [1, 4, "a"], [2, 5, "b"]]),
     [[1, 8, "ab"]],
     "01.14.04"
+  );
+
+  // opts.mergeType === 2
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5, "b"]], { mergeType: 2 }),
+    [[1, 8, "abc"]],
+    "01.14.05"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4], [2, 5, "b"]], { mergeType: 2 }),
+    [[1, 8, "bc"]],
+    "01.14.06"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8, "c"], [1, 4, "a"], [2, 5]], { mergeType: 2 }),
+    [[1, 8, "ac"]],
+    "01.14.07"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 8], [1, 4, "a"], [2, 5, "b"]], { mergeType: 2 }),
+    [[1, 8, "ab"]],
+    "01.14.08"
+  );
+});
+
+// 02. opts.mergeType === 2
+// -----------------------------------------------------------------------------
+
+test("02.01 - few ranges starting at the same index", t => {
+  // hors d'oeuvres - opts.mergeType === 1
+  t.deepEqual(
+    mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]]),
+    [[3, 12, "aaazzz"]],
+    "02.01.01 - control #1"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 12, "zzz"], [3, 4, "aaa"]]), // notice order is opposite
+    [[3, 12, "aaazzz"]], // <--- order does not matter, ranges are sorted
+    "02.01.02 - control #2"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 1 }),
+    [[3, 12, "aaazzz"]],
+    "02.01.03 - hardcoded correct default value"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: "1" }),
+    [[3, 12, "aaazzz"]],
+    "02.01.04 - hardcoded incorrect type default value"
+  );
+
+  // entrée - opts.mergeType === 2
+  t.deepEqual(
+    mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 2 }),
+    [[3, 12, "zzz"]],
+    "02.01.05"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: "2" }),
+    [[3, 12, "zzz"]],
+    "02.01.06"
+  );
+  t.deepEqual(
+    mergeRanges([[3, 12, "zzz"], [3, 4, "aaa"]], { mergeType: 2 }),
+    [[3, 12, "zzz"]], // ^ order does not matter
+    "02.01.07"
   );
 });

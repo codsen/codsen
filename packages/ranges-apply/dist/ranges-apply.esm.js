@@ -120,12 +120,14 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
     }
     counter++;
   });
-  const workingRanges = rangesMerge(rangesArr, perc => {
-    if (progressFn) {
-      percentageDone = 10 + Math.floor(perc / 10);
-      if (percentageDone !== lastPercentageDone) {
-        lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+  const workingRanges = rangesMerge(rangesArr, {
+    progressFn: perc => {
+      if (progressFn) {
+        percentageDone = 10 + Math.floor(perc / 10);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
       }
     }
   });
