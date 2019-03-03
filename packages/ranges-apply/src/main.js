@@ -120,15 +120,17 @@ function replaceSlicesArr(str, rangesArr, progressFn) {
   });
 
   // allocate another 10% of the progress indicator length to the rangesMerge step:
-  const workingRanges = rangesMerge(rangesArr, perc => {
-    if (progressFn) {
-      // since "perc" is already from zero to hundred, we just divide by 10 and
-      // get the range from zero to ten:
-      percentageDone = 10 + Math.floor(perc / 10);
+  const workingRanges = rangesMerge(rangesArr, {
+    progressFn: perc => {
+      if (progressFn) {
+        // since "perc" is already from zero to hundred, we just divide by 10 and
+        // get the range from zero to ten:
+        percentageDone = 10 + Math.floor(perc / 10);
 
-      if (percentageDone !== lastPercentageDone) {
-        lastPercentageDone = percentageDone;
-        progressFn(percentageDone);
+        if (percentageDone !== lastPercentageDone) {
+          lastPercentageDone = percentageDone;
+          progressFn(percentageDone);
+        }
       }
     }
   });
