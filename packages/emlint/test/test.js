@@ -4224,7 +4224,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`
 // stray letters at the end of a line, surrounded by tag one the left and EOL
 // <>< ><gh="ij">< ><>
 
-// todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removal attribute completely.
+// todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 
 // TODO:
 // https://stackoverflow.com/a/33811648/3943954
