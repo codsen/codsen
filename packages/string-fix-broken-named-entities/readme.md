@@ -44,9 +44,9 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 16 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 16 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 37 KB |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 24 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 25 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 43 KB |
 
 **[⬆ back to top](#)**
 
@@ -216,12 +216,14 @@ Here's the detailed description of all the keys, values and their types:
 
 | name of the key in the object in the first argument of a callback function | example value                                          | value's type                    | description                                                                                       |
 | -------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------- |
-| ruleName                                                                    | `missing semicolon on &pi; (don't confuse with &piv;)` | string                          | Full name of the issue, suitable for linters                                                      |
+| ruleName                                                                   | `missing semicolon on &pi; (don't confuse with &piv;)` | string                          | Full name of the issue, suitable for linters                                                      |
 | entityName                                                                 | `pi`                                                   | string                          | Just the name of the entity, without ampersand or semicolon. Case sensitive                       |
 | rangeFrom                                                                  | `3`                                                    | (natural) number (string index) | Shows from where to delete                                                                        |
 | rangeTo                                                                    | `8`                                                    | (natural) number (string index) | Shows up to where to delete                                                                       |
 | rangeValEncoded                                                            | `&pi;`                                                 | string or `null`                | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 | rangeValDecoded                                                            | `\u03C0`                                               | string or `null`                | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
+
+**[⬆ back to top](#)**
 
 ### `opts.decode` in relation to `opts.cb`
 
@@ -235,18 +237,18 @@ For example, consider this case, where we have non-breaking spaces without semic
 
 Since we give user an option to choose between raw and encoded values, result can come in two ways:
 
-* When decoded entities are requested, we replace ranges `[0, 5]`, `[6, 11]` and `[12, 17]`:
+- When decoded entities are requested, we replace ranges `[0, 5]`, `[6, 11]` and `[12, 17]`:
 
   ```js
   // ranges:
-  [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]]
+  [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]];
   ```
 
-* But, when encoded entities are requested, it's just a matter of sticking in the missing semicolon, at indexes `5`, `11` and `17`:
+- But, when encoded entities are requested, it's just a matter of sticking in the missing semicolon, at indexes `5`, `11` and `17`:
 
   ```js
   // ranges:
-  [[5, 5, ";"], [11, 11, ";"], [17, 17, ";"]]
+  [[5, 5, ";"], [11, 11, ";"], [17, 17, ";"]];
   ```
 
 **[⬆ back to top](#)**
@@ -337,7 +339,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
-[cov-img]: https://img.shields.io/badge/coverage-87.17%25-brightgreen.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-87.43%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities

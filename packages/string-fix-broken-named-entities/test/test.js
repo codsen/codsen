@@ -1284,8 +1284,58 @@ test(`06.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports pro
   t.true(typeof count === "number" && count <= 101 && count > 0, "06.001.03");
 });
 
-// TODO
+// -----------------------------------------------------------------------------
+// 07. spaces within entities
+// -----------------------------------------------------------------------------
 
+// test(`07.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space after ampersand`, t => {
+//   const inp5 = "& nbsp;";
+//   const outp5 = [
+//     {
+//       ruleName: "bad-named-html-entity-malformed-nbsp",
+//       entityName: "nbsp",
+//       rangeFrom: 0,
+//       rangeTo: 7,
+//       rangeValEncoded: "&nbsp;",
+//       rangeValDecoded: "\xA0"
+//     }
+//   ];
+//   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "07.001.01");
+// });
+//
+// test(`07.002 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
+//   const inp5 = "&nbsp ;";
+//   const outp5 = [
+//     {
+//       ruleName: "bad-named-html-entity-malformed-nbsp",
+//       entityName: "nbsp",
+//       rangeFrom: 0,
+//       rangeTo: 7,
+//       rangeValEncoded: "&nbsp;",
+//       rangeValDecoded: "\xA0"
+//     }
+//   ];
+//   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "07.002.01");
+// });
+//
+// test(`07.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}\u001b[${39}m - space before semicolon`, t => {
+//   const inp5 = "& nbsp ;";
+//   const outp5 = [
+//     {
+//       ruleName: "bad-named-html-entity-malformed-nbsp",
+//       entityName: "nbsp",
+//       rangeFrom: 0,
+//       rangeTo: 8,
+//       rangeValEncoded: "&nbsp;",
+//       rangeValDecoded: "\xA0"
+//     }
+//   ];
+//   t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "07.003.01");
+// });
+
+// -----------------------------------------------------------------------------
+
+// TODO:
 // Tend the following:
 // aacute
 // eacute
