@@ -48,7 +48,9 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "ranges-merge"
+        "string-left-right",
+        "ranges-merge",
+        "string-fix-broken-named-entities"
       ],
       plugins: [
         strip({
@@ -71,7 +73,9 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "ranges-merge"
+        "string-left-right",
+        "ranges-merge",
+        "string-fix-broken-named-entities"
       ],
       plugins: [
         strip({
@@ -89,7 +93,7 @@ export default commandLineArgs => {
     {
       input: "src/util.js",
       output: [{ file: "dist/util.esm.js", format: "es" }],
-      external: [],
+      external: ["string-left-right"],
       plugins: [
         strip({
           sourceMap: false

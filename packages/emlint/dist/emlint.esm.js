@@ -2348,7 +2348,16 @@ function lint(str, originalOpts) {
     }
   });
   if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
-    retObj.issues = retObj.issues.concat(htmlEntityFixes);
+    retObj.issues = retObj.issues
+      .filter(issueObj => {
+        return (
+          issueObj.name !== "bad-character-unencoded-ampersand" ||
+          htmlEntityFixes.every(entityFixObj => {
+            return issueObj.position[0][0] !== entityFixObj.position[0][0];
+          })
+        );
+      })
+      .concat(htmlEntityFixes ? htmlEntityFixes : []);
   }
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length

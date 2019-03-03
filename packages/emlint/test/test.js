@@ -4,8 +4,6 @@ import apply from "ranges-apply";
 // import errors from "../src/errors.json";
 import {
   withinTagInnerspace,
-  right,
-  left,
   attributeOnTheRight,
   findClosingQuote,
   tagOnTheRight,
@@ -3260,6 +3258,21 @@ test(`24.02 - ${`\u001b[${32}m${`tag-generic-error`}\u001b[${39}m`} - many stray
   );
 });
 
+// 25. rules coming from package "string-fix-broken-named-entities"
+// -----------------------------------------------------------------------------
+
+test(`25.01 - ${`\u001b[${32}m${`tag-generic-error`}\u001b[${39}m`} - one malformed nbsp`, t => {
+  const bad1 = `<div>&nbbsp;</div><div>&nbbsp;</div>`;
+  const good1 = `<div>&nbsp;</div><div>&nbsp;</div>`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "25.01.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.01.02"
+  );
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
@@ -3893,22 +3906,6 @@ test(`99.07 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`w
   t.true(withinTagInnerspace(code, 19), "99.07.11");
 });
 
-test(`99.10 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`right()`}\u001b[${39}m`} - all cases`, t => {
-  t.false(!!right(""), "99.10.01");
-  t.false(!!right("a"), "99.10.02");
-
-  // zero was defaulted to, which is 'a', so to the right of it is 'b', index 1:
-  t.is(right("ab"), 1, "99.10.03");
-
-  // 2nd input arg was omitted so starting index is zero, which is "a".
-  // Now, to the right of it, there's a space, index 1, next non-whitespace char
-  // is b which is index 2.
-  t.is(right("a b"), 2, "99.10.04");
-
-  t.is(right("a \n\n\nb"), 5, "99.10.05");
-  t.is(right("a \n\n\n\n"), null, "99.10.06");
-});
-
 test(`99.11 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`attributeOnTheRight()`}\u001b[${39}m`} - positive cases`, t => {
   t.true(!!attributeOnTheRight(`"">`), "99.11.01");
   t.true(!!attributeOnTheRight(`"" >`), "99.11.02");
@@ -4033,19 +4030,6 @@ test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
 //   t.is(findClosingQuote(code, 14), 16, "99.20.02");
 //   t.is(findClosingQuote(code, 21), 25, "99.20.03");
 // });
-
-test(`99.30 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`left()`}\u001b[${39}m`} - all cases`, t => {
-  // defaults to zero:
-  t.false(!!left(""), "99.30.01");
-  t.false(!!left("a"), "99.30.02");
-  t.is(left("ab", 1), 0, "99.30.03");
-  t.is(left("a b", 2), 0, "99.30.04");
-  t.is(left("a \n\n\nb", 5), 0, "99.30.05");
-  t.is(left("\n\n\n\n", 4), null, "99.30.06");
-  t.is(left("\n\n\n\n", 3), null, "99.30.06");
-  t.is(left("\n\n\n\n", 2), null, "99.30.06");
-  t.is(left("\n\n\n\n", 1), null, "99.30.06");
-});
 
 test(`99.40 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - normal tag`, t => {
   const s1 = `<a>`;
@@ -4213,7 +4197,7 @@ test(`99.52 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`o
   );
 });
 
-test(`XX.XX - ${`\u001b[${33}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`, t => {
+test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`, t => {
   const good = `</a>`;
   const res = lint(good);
   t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");

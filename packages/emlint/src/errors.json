@@ -169,6 +169,21 @@
     "excerpt": "unencoded opening bracket",
     "scope": "html"
   },
+  "bad-named-html-entity-malformed-nbsp": {
+    "description": "HTML named entity &nbsp; (a non-breaking space) is malformed",
+    "excerpt": "malformed &nbsp;",
+    "scope": "html"
+  },
+  "bad-named-html-entity-amp-repetitions": {
+    "description": "HTML named entity was encoded multiple times, causing repeated amp;",
+    "excerpt": "repeated amp; because of over-encoding",
+    "scope": "html"
+  },
+  "bad-named-html-entity-missing-semicolon": {
+    "description": "HTML named entity is missing a semicolon",
+    "excerpt": "missing semicolon on a named HTML entity",
+    "scope": "html"
+  },
   "file-empty": {
     "description": "the contents are empty",
     "excerpt": "the contents are empty",
@@ -239,11 +254,6 @@
     "excerpt": "missing equal character",
     "scope": "html"
   },
-  "tag-attribute-repeated-equal": {
-    "description": "The equal after attribute's name is repeated",
-    "excerpt": "repeated equal character",
-    "scope": "html"
-  },
   "tag-attribute-opening-quotation-mark-missing": {
     "description": "The opening quotation mark is missing",
     "excerpt": "the opening quotation mark is missing",
@@ -252,6 +262,11 @@
   "tag-attribute-quote-and-onwards-missing": {
     "description": "One of the attributes ends with an equal sign, there are no quotes on it",
     "excerpt": "attributes ends with an equal sign, there are no quotes on it",
+    "scope": "html"
+  },
+  "tag-attribute-repeated-equal": {
+    "description": "The equal after attribute's name is repeated",
+    "excerpt": "repeated equal character",
     "scope": "html"
   },
   "tag-attribute-right-double-quotation-mark": {
