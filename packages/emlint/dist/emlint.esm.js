@@ -342,14 +342,14 @@ var errors = {
 	excerpt: "unencoded opening bracket",
 	scope: "html"
 },
-	"bad-named-html-entity-malformed-nbsp": {
-	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
-	excerpt: "malformed &nbsp;",
-	scope: "html"
-},
 	"bad-named-html-entity-amp-repetitions": {
 	description: "HTML named entity was encoded multiple times, causing repeated amp;",
 	excerpt: "repeated amp; because of over-encoding",
+	scope: "html"
+},
+	"bad-named-html-entity-malformed-nbsp": {
+	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
+	excerpt: "malformed &nbsp;",
 	scope: "html"
 },
 	"bad-named-html-entity-missing-semicolon": {
@@ -477,6 +477,11 @@ var errors = {
 	excerpt: "missing closing bracket",
 	scope: "html"
 },
+	"tag-missing-space-before-attribute": {
+	description: "The space before attribute's name is missing",
+	excerpt: "missing space",
+	scope: "html"
+},
 	"tag-name-lowercase": {
 	description: "Normally all tags are in lowercase",
 	excerpt: "tag name contains uppercase characters",
@@ -485,6 +490,11 @@ var errors = {
 	"tag-space-after-opening-bracket": {
 	description: "Many browsers, including Chrome will not consider this a tag",
 	excerpt: "space between opening bracket and tag name",
+	scope: "html"
+},
+	"tag-stray-quotes": {
+	description: "These quotes can be deleted",
+	excerpt: "delete these",
 	scope: "html"
 },
 	"tag-whitespace-closing-slash-and-bracket": {
@@ -1498,16 +1508,18 @@ function lint(str, originalOpts) {
             });
           }
         }
-        if (str[i - 1] && charIsQuote$1(str[i - 1])) {
-          for (let y = i - 1; y--; ) {
-            if (!charIsQuote$1(str[y])) {
-              if (!str[y].trim().length) {
-                retObj.issues.push({
-                  name: "tag-generic-error",
-                  position: [[y + 1, i]]
-                });
+        if (str[i - 1]) {
+          if (charIsQuote$1(str[i - 1])) {
+            for (let y = i - 1; y--; ) {
+              if (!charIsQuote$1(str[y])) {
+                if (!str[y].trim().length) {
+                  retObj.issues.push({
+                    name: "tag-stray-quotes",
+                    position: [[y + 1, i]]
+                  });
+                }
+                break;
               }
-              break;
             }
           }
         }
@@ -1549,17 +1561,7 @@ function lint(str, originalOpts) {
                     ]
                   });
                 } else {
-                  let compensation = "";
-                  if (
-                    str[closingQuotePeek - 1] &&
-                    str[closingQuotePeek] &&
-                    str[closingQuotePeek - 1].trim().length &&
-                    str[closingQuotePeek].trim().length &&
-                    str[closingQuotePeek] !== "/" &&
-                    str[closingQuotePeek] !== ">"
-                  ) {
-                    compensation = " ";
-                  }
+                  const compensation = "";
                   let fromPositionToInsertAt = str[closingQuotePeek - 1].trim()
                     .length
                     ? closingQuotePeek
@@ -1601,10 +1603,29 @@ function lint(str, originalOpts) {
                 }
               }
               if (rawIssueStaging.length) ;
+              if (
+                logAttr.attrNameStartAt &&
+                str[logAttr.attrNameStartAt - 1].trim().length &&
+                !retObj.issues.some(issueObj => {
+                  return (
+                    issueObj.name === "tag-stray-quotes" &&
+                    issueObj.position[0][1] === logAttr.attrNameStartAt
+                  );
+                })
+              ) {
+                retObj.issues.push({
+                  name: "tag-missing-space-before-attribute",
+                  position: [
+                    [logAttr.attrNameStartAt, logAttr.attrNameStartAt, " "]
+                  ]
+                });
+              }
               logTag.attributes.push(clone(logAttr));
               resetLogAttr();
               if (str[closingQuotePeek].trim().length) {
-                i = closingQuotePeek;
+                i =
+                  closingQuotePeek -
+                  (charIsQuote$1(str[closingQuotePeek]) ? 0 : 1);
               } else {
                 i = left(str, closingQuotePeek);
               }
@@ -1824,6 +1845,8 @@ function lint(str, originalOpts) {
             });
             resetLogWhitespace();
             resetLogAttr();
+            i--;
+            continue;
           }
           if (logWhitespace.startAt !== null) {
             if (str[i] === "'" || str[i] === '"') {
@@ -2057,6 +2080,32 @@ function lint(str, originalOpts) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
+      if (charIsQuote$1(str[i])) {
+        let addSpace;
+        let strayQuotesEndAt = null;
+        if (str[i + 1].trim().length) {
+          for (let y = i + 1; y < len; y++) {
+            if (!charIsQuote$1(str[y])) {
+              if (str[y].trim().length) {
+                addSpace = true;
+                strayQuotesEndAt = y;
+              }
+              break;
+            }
+          }
+        }
+        if (addSpace) {
+          retObj.issues.push({
+            name: "tag-stray-quotes",
+            position: [[i, strayQuotesEndAt, " "]]
+          });
+        } else {
+          retObj.issues.push({
+            name: "tag-stray-quotes",
+            position: [[i, strayQuotesEndAt]]
+          });
+        }
+      }
     }
     if (
       !doNothingUntil &&

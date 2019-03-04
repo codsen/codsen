@@ -169,14 +169,14 @@
     "excerpt": "unencoded opening bracket",
     "scope": "html"
   },
-  "bad-named-html-entity-malformed-nbsp": {
-    "description": "HTML named entity &nbsp; (a non-breaking space) is malformed",
-    "excerpt": "malformed &nbsp;",
-    "scope": "html"
-  },
   "bad-named-html-entity-amp-repetitions": {
     "description": "HTML named entity was encoded multiple times, causing repeated amp;",
     "excerpt": "repeated amp; because of over-encoding",
+    "scope": "html"
+  },
+  "bad-named-html-entity-malformed-nbsp": {
+    "description": "HTML named entity &nbsp; (a non-breaking space) is malformed",
+    "excerpt": "malformed &nbsp;",
     "scope": "html"
   },
   "bad-named-html-entity-missing-semicolon": {
@@ -304,6 +304,11 @@
     "excerpt": "missing closing bracket",
     "scope": "html"
   },
+  "tag-missing-space-before-attribute": {
+    "description": "The space before attribute's name is missing",
+    "excerpt": "missing space",
+    "scope": "html"
+  },
   "tag-name-lowercase": {
     "description": "Normally all tags are in lowercase",
     "excerpt": "tag name contains uppercase characters",
@@ -312,6 +317,11 @@
   "tag-space-after-opening-bracket": {
     "description": "Many browsers, including Chrome will not consider this a tag",
     "excerpt": "space between opening bracket and tag name",
+    "scope": "html"
+  },
+  "tag-stray-quotes": {
+    "description": "These quotes can be deleted",
+    "excerpt": "delete these",
     "scope": "html"
   },
   "tag-whitespace-closing-slash-and-bracket": {
