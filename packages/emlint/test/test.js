@@ -3285,6 +3285,33 @@ test(`24.04 - ${`\u001b[${32}m${`tag-stray-quotes`}\u001b[${39}m`} - stray quote
   );
 });
 
+// 24. rule "tag-stray-equal"
+// -----------------------------------------------------------------------------
+
+// test(`24.01 - ${`\u001b[${34}m${`tag-stray-equal`}\u001b[${39}m`} - stray equal after attr. name`, t => {
+//   const bad1 = `<a="bcd="ef"/>`;
+//   const good1 = `<a bcd="ef"/>`;
+//   const res1 = lint(bad1);
+//   t.is(apply(bad1, res1.fix), good1, "24.01.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res1.issues).sort(),
+//     ["tag-stray-equal"],
+//     "24.01.02"
+//   );
+// });
+//
+// test(`24.02 - ${`\u001b[${34}m${`tag-stray-equal`}\u001b[${39}m`} - stray equal and quotes after attr. name`, t => {
+//   const bad1 = `<a="bcd="ef"/>`;
+//   const good1 = `<a bcd="ef"/>`;
+//   const res1 = lint(bad1);
+//   t.is(apply(bad1, res1.fix), good1, "24.02.01");
+//   t.deepEqual(
+//     getUniqueIssueNames(res1.issues).sort(),
+//     ["tag-stray-equal"],
+//     "24.02.02"
+//   );
+// });
+
 // 25. rules coming from package "string-fix-broken-named-entities"
 // -----------------------------------------------------------------------------
 

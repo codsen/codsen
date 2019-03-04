@@ -321,7 +321,12 @@
   },
   "tag-stray-quotes": {
     "description": "These quotes can be deleted",
-    "excerpt": "delete these",
+    "excerpt": "delete this",
+    "scope": "html"
+  },
+  "tag-stray-character": {
+    "description": "This chunk seems to be astray and can be deleted",
+    "excerpt": "delete this",
     "scope": "html"
   },
   "tag-whitespace-closing-slash-and-bracket": {
