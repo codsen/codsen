@@ -1,12 +1,12 @@
 # 📦 Codsen 📦
 
-    A lerna monorepo for our 82 npm libraries
+    A lerna monorepo for our 83 npm libraries
 
 ## 💡 Table of Contents
 
 - [Flagship Libraries](#-flagship-libraries)
 - [Range Libraries](#-11-range-libraries)
-- [String Processing Libraries](#-25-string-processing-libraries)
+- [String Processing Libraries](#-26-string-processing-libraries)
 - [Object Processing Libraries](#-20-object-processing-libraries)
 - [CLI Apps](#%EF%B8%8F-8-cli-apps)
 - [Miscellaneous Libraries](#%EF%B8%8F-17-miscellaneous-libraries)
@@ -70,7 +70,7 @@ If you think, strings are immutable in JavaScript — each change of a string me
 
 **[⬆ back to top](#-codsen-)**
 
-## 🎻 25 String Processing Libraries
+## 🎻 26 String Processing Libraries
 
 They process string inputs, which might be text, code or something else as long as it is of a string type.
 
@@ -94,6 +94,7 @@ They process string inputs, which might be text, code or something else as long 
 | [`string-extract-class-names`](https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names/) | Extract class (or id) name from a string | [![string-extract-class-names on npm](https://img.shields.io/npm/v/string-extract-class-names.svg?style=flat-square)](https://www.npmjs.com/package/string-extract-class-names) | [packages/string-extract-class-names](https://gitlab.com/codsen/codsen/tree/master/packages/string-extract-class-names/) |
 | [`string-find-heads-tails`](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails/) | Search for string pairs. A special case of string search algorithm. | [![string-find-heads-tails on npm](https://img.shields.io/npm/v/string-find-heads-tails.svg?style=flat-square)](https://www.npmjs.com/package/string-find-heads-tails) | [packages/string-find-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-find-heads-tails/) |
 | [`string-fix-broken-named-entities`](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/) | Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes | [![string-fix-broken-named-entities on npm](https://img.shields.io/npm/v/string-fix-broken-named-entities.svg?style=flat-square)](https://www.npmjs.com/package/string-fix-broken-named-entities) | [packages/string-fix-broken-named-entities](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities/) |
+| [`string-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) | Look what's to the left or the right of a given index within a string | [![string-left-right on npm](https://img.shields.io/npm/v/string-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-left-right) | [packages/string-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/) |
 | [`string-match-left-right`](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) | Do substrings match what's on the left or right of a given index? | [![string-match-left-right on npm](https://img.shields.io/npm/v/string-match-left-right.svg?style=flat-square)](https://www.npmjs.com/package/string-match-left-right) | [packages/string-match-left-right](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/) |
 | [`string-overlap-one-on-another`](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) | Lay one string on top of another, with an optional offset | [![string-overlap-one-on-another on npm](https://img.shields.io/npm/v/string-overlap-one-on-another.svg?style=flat-square)](https://www.npmjs.com/package/string-overlap-one-on-another) | [packages/string-overlap-one-on-another](https://gitlab.com/codsen/codsen/tree/master/packages/string-overlap-one-on-another/) |
 | [`string-remove-duplicate-heads-tails`](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) | Detect and (recursively) remove head and tail wrappings around the input string | [![string-remove-duplicate-heads-tails on npm](https://img.shields.io/npm/v/string-remove-duplicate-heads-tails.svg?style=flat-square)](https://www.npmjs.com/package/string-remove-duplicate-heads-tails) | [packages/string-remove-duplicate-heads-tails](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-duplicate-heads-tails/) |
