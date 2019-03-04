@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2019-03-04)
+
+### Features
+
+- Initial release ([6a3394b](https://gitlab.com/codsen/codsen/commit/6a3394b))
+- Merge modes via opts.mergeType ([7fb1c5f](https://gitlab.com/codsen/codsen/commit/7fb1c5f))
+
+### BREAKING CHANGES
+
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
 ## 1.10.7 (2019-02-10)
 
 ### Bug Fixes
@@ -16,16 +28,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.6.0 (2018-12-26)
 
-### Bug Fixes
-
-- Fix for opts.wipeAllWhitespaceOnRight and left too ([72c26e6](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/72c26e6))
-
 ### Features
 
 - improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/8bb929a))
 - opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/19b1390))
 - opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/47df5be))
-- opts.wipeAllWhitespaceOnLeft and opts.wipeAllWhitespaceOnRight ([73d763b](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/73d763b))
 
 ## 1.5.0 (2018-10-26)
 
@@ -45,10 +52,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## 1.2.0 (2018-09-18)
 
 - ✨ New feature - `opts.addSingleSpaceToPreventAccidentalConcatenation`. It's off by default but if it's on, it can prevent accidental concatenation of string when chunk is deleted. It checks the outer edges of the string range what is about to be deleted and if non-whitespace surrounds both sides it adds a single space (as range's third argument).
-
-## 1.1.0 (2018-09-12)
-
-- ✨ New feature - `opts.wipeAllWhitespaceOnLeft`, `opts.wipeAllWhitespaceOnRight` now expands to include any whitespace on the particular side. It will be handy when deleting attributes from HTML.
 
 ## 1.0.0 (2018-09-11)
 

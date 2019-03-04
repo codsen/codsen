@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.0.0 (2019-03-04)
+
+### Features
+
+- Merge modes via opts.mergeType ([7fb1c5f](https://gitlab.com/codsen/codsen/commit/7fb1c5f))
+
+### BREAKING CHANGES
+
+- Second input argument, progressFn, was moved into opts.progressFn and opts was
+placed into second input argument instead
+
 ## 0.8.7 (2019-02-10)
 
 ### Bug Fixes
