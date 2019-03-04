@@ -1296,7 +1296,7 @@ function lint(str, originalOpts) {
               if (!charIsQuote$1(str[y])) {
                 if (!str[y].trim().length) {
                   retObj.issues.push({
-                    name: "tag-stray-quotes",
+                    name: "tag-stray-character",
                     position: [[y + 1, _i]]
                   });
                 }
@@ -1363,7 +1363,7 @@ function lint(str, originalOpts) {
               if (rawIssueStaging.length) ;
               if (logAttr.attrNameStartAt && str[logAttr.attrNameStartAt - 1].trim().length && !retObj.issues.some(function (issueObj) {
                 i = _i;
-                return issueObj.name === "tag-stray-quotes" && issueObj.position[0][1] === logAttr.attrNameStartAt;
+                return (issueObj.name === "tag-stray-quotes" || issueObj.name === "tag-stray-character") && issueObj.position[0][1] === logAttr.attrNameStartAt;
               })) {
                 retObj.issues.push({
                   name: "tag-missing-space-before-attribute",
@@ -1708,29 +1708,33 @@ function lint(str, originalOpts) {
       logTag.tagNameEndAt = _i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, _i);
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
-      if (charIsQuote$1(str[_i])) {
+      if (charIsQuote$1(str[_i]) || str[_i] === "=") {
         var addSpace;
-        var strayQuotesEndAt = null;
+        var strayCharsEndAt = _i + 1;
         if (str[_i + 1].trim().length) {
-          for (var _y4 = _i + 1; _y4 < len; _y4++) {
-            if (!charIsQuote$1(str[_y4])) {
-              if (str[_y4].trim().length) {
-                addSpace = true;
-                strayQuotesEndAt = _y4;
+          if (charIsQuote$1(str[_i + 1]) || str[_i + 1] === "=") {
+            for (var _y4 = _i + 1; _y4 < len; _y4++) {
+              if (!charIsQuote$1(str[_y4]) && str[_y4] !== "=") {
+                if (str[_y4].trim().length) {
+                  addSpace = true;
+                  strayCharsEndAt = _y4;
+                }
+                break;
               }
-              break;
             }
+          } else {
+            addSpace = true;
           }
         }
         if (addSpace) {
           retObj.issues.push({
-            name: "tag-stray-quotes",
-            position: [[_i, strayQuotesEndAt, " "]]
+            name: "tag-stray-character",
+            position: [[_i, strayCharsEndAt, " "]]
           });
         } else {
           retObj.issues.push({
-            name: "tag-stray-quotes",
-            position: [[_i, strayQuotesEndAt]]
+            name: "tag-stray-character",
+            position: [[_i, strayCharsEndAt]]
           });
         }
       }

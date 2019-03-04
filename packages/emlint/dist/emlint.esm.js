@@ -1519,7 +1519,7 @@ function lint(str, originalOpts) {
               if (!charIsQuote$1(str[y])) {
                 if (!str[y].trim().length) {
                   retObj.issues.push({
-                    name: "tag-stray-quotes",
+                    name: "tag-stray-character",
                     position: [[y + 1, i]]
                   });
                 }
@@ -1613,7 +1613,8 @@ function lint(str, originalOpts) {
                 str[logAttr.attrNameStartAt - 1].trim().length &&
                 !retObj.issues.some(issueObj => {
                   return (
-                    issueObj.name === "tag-stray-quotes" &&
+                    (issueObj.name === "tag-stray-quotes" ||
+                      issueObj.name === "tag-stray-character") &&
                     issueObj.position[0][1] === logAttr.attrNameStartAt
                   );
                 })
@@ -2085,29 +2086,33 @@ function lint(str, originalOpts) {
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
-      if (charIsQuote$1(str[i])) {
+      if (charIsQuote$1(str[i]) || str[i] === "=") {
         let addSpace;
-        let strayQuotesEndAt = null;
+        let strayCharsEndAt = i + 1;
         if (str[i + 1].trim().length) {
-          for (let y = i + 1; y < len; y++) {
-            if (!charIsQuote$1(str[y])) {
-              if (str[y].trim().length) {
-                addSpace = true;
-                strayQuotesEndAt = y;
+          if (charIsQuote$1(str[i + 1]) || str[i + 1] === "=") {
+            for (let y = i + 1; y < len; y++) {
+              if (!charIsQuote$1(str[y]) && str[y] !== "=") {
+                if (str[y].trim().length) {
+                  addSpace = true;
+                  strayCharsEndAt = y;
+                }
+                break;
               }
-              break;
             }
+          } else {
+            addSpace = true;
           }
         }
         if (addSpace) {
           retObj.issues.push({
-            name: "tag-stray-quotes",
-            position: [[i, strayQuotesEndAt, " "]]
+            name: "tag-stray-character",
+            position: [[i, strayCharsEndAt, " "]]
           });
         } else {
           retObj.issues.push({
-            name: "tag-stray-quotes",
-            position: [[i, strayQuotesEndAt]]
+            name: "tag-stray-character",
+            position: [[i, strayCharsEndAt]]
           });
         }
       }
