@@ -1,6 +1,6 @@
 {
   "name": "string-trim-spaces-only",
-  "version": "2.7.8",
+  "version": "2.7.9",
   "description": "Like String.trim() but trims only spaces",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.4"
+    "check-types-mini": "^5.7.5"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

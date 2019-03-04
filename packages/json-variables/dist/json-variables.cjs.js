@@ -1,7 +1,7 @@
 /**
  * json-variables
  * Preprocessor for JSON to allow keys referencing keys
- * Version: 7.7.8
+ * Version: 8.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-variables

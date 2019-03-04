@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Look what's to the left or the right of a given index within a string",
   "license": "MIT",
   "engines": {
@@ -164,7 +164,6 @@
     ],
     "sourceMap": false
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",

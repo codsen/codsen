@@ -1,7 +1,7 @@
 /**
  * emlint
  * Non-parsing, email template-oriented linter
- * Version: 0.8.0
+ * Version: 1.0.0
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
@@ -169,7 +169,7 @@ var knownHTMLTags = [
 ]
 ;
 
-var version = "0.8.0";
+var version = "1.0.0";
 
 var errors = {
 	"bad-character-acknowledge": {
@@ -494,7 +494,12 @@ var errors = {
 },
 	"tag-stray-quotes": {
 	description: "These quotes can be deleted",
-	excerpt: "delete these",
+	excerpt: "delete this",
+	scope: "html"
+},
+	"tag-stray-character": {
+	description: "This chunk seems to be astray and can be deleted",
+	excerpt: "delete this",
 	scope: "html"
 },
 	"tag-whitespace-closing-slash-and-bracket": {
