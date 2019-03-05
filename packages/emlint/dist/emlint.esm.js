@@ -1371,6 +1371,19 @@ function lint(str, originalOpts) {
     logAttr = clone(defaultLogAttr);
   }
   resetLogAttr();
+  let logEspTag;
+  const defaultEspTag = {
+    headStartAt: null,
+    headEndAt: null,
+    tailStartAt: null,
+    tailEndAt: null,
+    startAt: null,
+    endAt: null
+  };
+  function resetEspTag() {
+    logEspTag = clone(defaultEspTag);
+  }
+  resetEspTag();
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -1391,6 +1404,7 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
+  const espChars = `{}%-$_()`;
   if (str.length === 0) {
     retObj.issues.push({
       name: "file-empty",
@@ -1401,6 +1415,16 @@ function lint(str, originalOpts) {
     const charcode = str[i].charCodeAt(0);
     if (doNothingUntil && i >= doNothingUntil) {
       doNothingUntil = null;
+    }
+    if (
+      espChars.includes(str[i]) &&
+      str[i + 1] &&
+      espChars.includes(str[i + 1]) &&
+      logEspTag.headStartAt === null &&
+      logEspTag.startAt === null
+    ) {
+      logEspTag.headStartAt = i;
+      logEspTag.startAt = i;
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (

@@ -1161,6 +1161,19 @@ function lint(str, originalOpts) {
     logAttr = clone(defaultLogAttr);
   }
   resetLogAttr();
+  var logEspTag;
+  var defaultEspTag = {
+    headStartAt: null,
+    headEndAt: null,
+    tailStartAt: null,
+    tailEndAt: null,
+    startAt: null,
+    endAt: null
+  };
+  function resetEspTag() {
+    logEspTag = clone(defaultEspTag);
+  }
+  resetEspTag();
   var logWhitespace;
   var defaultLogWhitespace = {
     startAt: null,
@@ -1181,6 +1194,7 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
+  var espChars = "{}%-$_()";
   if (str.length === 0) {
     retObj.issues.push({
       name: "file-empty",
@@ -1191,6 +1205,10 @@ function lint(str, originalOpts) {
     var charcode = str[_i].charCodeAt(0);
     if (doNothingUntil && _i >= doNothingUntil) {
       doNothingUntil = null;
+    }
+    if (espChars.includes(str[_i]) && str[_i + 1] && espChars.includes(str[_i + 1]) && logEspTag.headStartAt === null && logEspTag.startAt === null) {
+      logEspTag.headStartAt = _i;
+      logEspTag.startAt = _i;
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrNameEndAt === null && logAttr.attrName === null && !isLatinLetter(str[_i])) {

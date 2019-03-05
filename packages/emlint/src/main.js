@@ -185,6 +185,29 @@ function lint(str, originalOpts) {
 
   // ================
 
+  // ESP marker tracking:
+  // ESP stands for Email Service Provider
+  // for example, Mailchimp, Eloqua, Bronto and Responsys are ESP's.
+  // We mark their templating language markers, such as "{{" and "}}".
+  // There many ESP's and many different template marking languages they use.
+  // The plan is to come up with a universal algorithm that can recognise them
+  // all. This is an ambitious task but wasn't flying to the ambitious too?
+  let logEspTag;
+  const defaultEspTag = {
+    headStartAt: null,
+    headEndAt: null,
+    tailStartAt: null,
+    tailEndAt: null,
+    startAt: null,
+    endAt: null
+  };
+  function resetEspTag() {
+    logEspTag = clone(defaultEspTag);
+  }
+  resetEspTag(); // initiate!
+
+  // ================
+
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -223,6 +246,13 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
+
+  // ================
+
+  // templating language recognition-related bits
+
+  // temp contains all common templating language head/tail marker characters:
+  const espChars = `{}%-$_()`;
 
   // ---------------------------------------------------------------------------
 
@@ -300,6 +330,28 @@ function lint(str, originalOpts) {
     //                                S
     //                                S
     //                                S
+
+    // catch the ESP templating language marker heads/tails
+    // for example, {{ ... }} or {%- ... -%} or %%...%% and so on.
+    if (
+      espChars.includes(str[i]) &&
+      str[i + 1] &&
+      espChars.includes(str[i + 1]) &&
+      logEspTag.headStartAt === null &&
+      logEspTag.startAt === null
+    ) {
+      logEspTag.headStartAt = i;
+      logEspTag.startAt = i;
+      console.log(
+        `331 ${log(
+          "SET",
+          "logEspTag.headStartAt",
+          logEspTag.headStartAt,
+          "logEspTag.startAt",
+          logEspTag.startAt
+        )}`
+      );
+    }
 
     // catch the tag attributes
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
@@ -2657,7 +2709,8 @@ function lint(str, originalOpts) {
 
     const output = {
       logTag: true,
-      logAttr: true,
+      logAttr: false,
+      logEspTag: true,
       logWhitespace: false,
       logLineEndings: false,
       retObj: true,
@@ -2681,6 +2734,14 @@ function lint(str, originalOpts) {
         output.logAttr && logAttr.attrStartAt !== null
           ? `${`\u001b[${33}m${`logAttr`}\u001b[${39}m`} ${JSON.stringify(
               logAttr,
+              null,
+              4
+            )}; `
+          : ""
+      }${
+        output.logEspTag && logEspTag.attrStartAt !== null
+          ? `${`\u001b[${33}m${`logEspTag`}\u001b[${39}m`} ${JSON.stringify(
+              logEspTag,
               null,
               4
             )}; `
