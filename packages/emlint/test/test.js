@@ -310,8 +310,69 @@ test(`02.YY - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - Unicode 1
   });
 });
 
-test(`02.ZZ - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - DELETE character (control)`, t => {
-  t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "02.ZZ");
+test(`02.01 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - DELETE character (control)`, t => {
+  t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "02.01");
+});
+
+test(`02.02 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - ETX character, tight`, t => {
+  const bad1 = `first\u0003second`;
+  const good1 = `firstsecond`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-end-of-text"],
+    "02.02.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.02.02");
+});
+
+test(`02.03 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t => {
+  const bad1 = `first \u0003second`;
+  const good1 = `first second`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-end-of-text"],
+    "02.03.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.03.02");
+});
+
+test(`02.04 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t => {
+  const bad1 = `first \u0003 second`;
+  const good1 = `first second`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-end-of-text"],
+    "02.04.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.04.02");
+});
+
+test(`02.05 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced with line breaks`, t => {
+  const bad1 = `first \u0003\nsecond`;
+  const good1 = `first\nsecond`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-end-of-text"],
+    "02.05.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.05.02");
+});
+
+// https://www.fileformat.info/info/unicode/char/200b/index.htm
+test(`02.06 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - zero width space`, t => {
+  const bad1 = "a\u200Bb";
+  const good1 = `ab`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-zero-width-space"],
+    "02.06.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.06.02");
 });
 
 // 03. rule "tag-name-lowercase"

@@ -106,7 +106,7 @@
   },
   "bad-character-end-of-text": {
     "description": "https://www.fileformat.info/info/unicode/char/0003/index.htm",
-    "excerpt": "bad character - end of text",
+    "excerpt": "bad character - end of text (ETX)",
     "scope": "all"
   },
   "bad-character-end-of-transmission": {
@@ -212,6 +212,11 @@
   "bad-character-partial-line-backward": {
     "description": "http://www.fileformat.info/info/unicode/char/008c/index.htm",
     "excerpt": "bad character - partial line backward",
+    "scope": "all"
+  },
+  "bad-character-zero-width-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/200b/index.htm",
+    "excerpt": "bad character - zero width space",
     "scope": "all"
   },
   "bad-character-partial-line-forward": {
