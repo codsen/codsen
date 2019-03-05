@@ -3342,10 +3342,6 @@ test(`26.01 - ${`\u001b[${33}m${`tag-missing-space-before-attribute`}\u001b[${39
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
-// test(`delete me`, t => {
-//   t.false(withinTagInnerspace(` = ef>`));
-// });
-
 test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
   // R1 - xhtml tag ending that follows straight away
   t.true(withinTagInnerspace(`/  >`));
