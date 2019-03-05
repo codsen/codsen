@@ -177,6 +177,11 @@ var errors = {
 	excerpt: "bad character - acknowledge",
 	scope: "all"
 },
+	"bad-character-application-program-command": {
+	description: "http://www.fileformat.info/info/unicode/char/009f/index.htm",
+	excerpt: "bad character - application-program-command",
+	scope: "all"
+},
 	"bad-character-backspace": {
 	description: "https://www.fileformat.info/info/unicode/char/0008/index.htm",
 	excerpt: "bad character - backspace",
@@ -187,9 +192,19 @@ var errors = {
 	excerpt: "bad character - bell",
 	scope: "all"
 },
+	"bad-character-break-permitted-here": {
+	description: "http://www.fileformat.info/info/unicode/char/0082/index.htm",
+	excerpt: "bad character - break-permitted-here",
+	scope: "all"
+},
 	"bad-character-cancel": {
 	description: "https://www.fileformat.info/info/unicode/char/0018/index.htm",
 	excerpt: "bad character - cancel",
+	scope: "all"
+},
+	"bad-character-cancel-character": {
+	description: "http://www.fileformat.info/info/unicode/char/0094/index.htm",
+	excerpt: "bad character - cancel-character",
 	scope: "all"
 },
 	"bad-character-character-tabulation": {
@@ -197,9 +212,29 @@ var errors = {
 	excerpt: "bad character - character tabulation",
 	scope: "all"
 },
+	"bad-character-character-tabulation-set": {
+	description: "http://www.fileformat.info/info/unicode/char/0088/index.htm",
+	excerpt: "bad character - character-tabulation-set",
+	scope: "all"
+},
+	"bad-character-character-tabulation-with-justification": {
+	description: "http://www.fileformat.info/info/unicode/char/0089/index.htm",
+	excerpt: "bad character - character-tabulation-with-justification",
+	scope: "all"
+},
+	"bad-character-control-sequence-introducer": {
+	description: "http://www.fileformat.info/info/unicode/char/009b/index.htm",
+	excerpt: "bad character - control-sequence-introducer",
+	scope: "all"
+},
 	"bad-character-data-link-escape": {
 	description: "https://www.fileformat.info/info/unicode/char/0010/index.htm",
 	excerpt: "bad character - data link escape",
+	scope: "all"
+},
+	"bad-character-delete": {
+	description: "http://www.fileformat.info/info/unicode/char/007f/index.htm",
+	excerpt: "bad character - delete",
 	scope: "all"
 },
 	"bad-character-device-control-four": {
@@ -210,6 +245,11 @@ var errors = {
 	"bad-character-device-control-one": {
 	description: "https://www.fileformat.info/info/unicode/char/0011/index.htm",
 	excerpt: "bad character - device control one",
+	scope: "all"
+},
+	"bad-character-device-control-string": {
+	description: "http://www.fileformat.info/info/unicode/char/0090/index.htm",
+	excerpt: "bad character - device-control-string",
 	scope: "all"
 },
 	"bad-character-device-control-three": {
@@ -225,6 +265,16 @@ var errors = {
 	"bad-character-end-of-medium": {
 	description: "https://www.fileformat.info/info/unicode/char/0019/index.htm",
 	excerpt: "bad character - end of medium",
+	scope: "all"
+},
+	"bad-character-end-of-protected-area": {
+	description: "http://www.fileformat.info/info/unicode/char/0097/index.htm",
+	excerpt: "bad character - end-of-protected-area",
+	scope: "all"
+},
+	"bad-character-end-of-selected-area": {
+	description: "http://www.fileformat.info/info/unicode/char/0087/index.htm",
+	excerpt: "bad character - end-of-selected-area",
 	scope: "all"
 },
 	"bad-character-end-of-text": {
@@ -257,6 +307,16 @@ var errors = {
 	excerpt: "bad character - form feed",
 	scope: "all"
 },
+	"bad-character-high-octet-preset": {
+	description: "http://www.fileformat.info/info/unicode/char/0081/index.htm",
+	excerpt: "bad character - high-octet-preset",
+	scope: "all"
+},
+	"bad-character-index": {
+	description: "http://www.fileformat.info/info/unicode/char/0084/index.htm",
+	excerpt: "bad character - index",
+	scope: "all"
+},
 	"bad-character-information-separator-four": {
 	description: "https://www.fileformat.info/info/unicode/char/001c/index.htm",
 	excerpt: "bad character - information separator four",
@@ -282,14 +342,79 @@ var errors = {
 	excerpt: "bad character - line tabulation",
 	scope: "all"
 },
+	"bad-character-line-tabulation-set": {
+	description: "http://www.fileformat.info/info/unicode/char/008a/index.htm",
+	excerpt: "bad character - line-tabulation-set",
+	scope: "all"
+},
+	"bad-character-message-waiting": {
+	description: "http://www.fileformat.info/info/unicode/char/0095/index.htm",
+	excerpt: "bad character - message-waiting",
+	scope: "all"
+},
 	"bad-character-negative-acknowledge": {
 	description: "https://www.fileformat.info/info/unicode/char/0015/index.htm",
 	excerpt: "bad character - negative acknowledge",
 	scope: "all"
 },
+	"bad-character-next-line": {
+	description: "http://www.fileformat.info/info/unicode/char/0085/index.htm",
+	excerpt: "bad character - next-line",
+	scope: "all"
+},
+	"bad-character-no-break-here": {
+	description: "http://www.fileformat.info/info/unicode/char/0083/index.htm",
+	excerpt: "bad character - no-break-here",
+	scope: "all"
+},
 	"bad-character-null": {
 	description: "https://www.fileformat.info/info/unicode/char/0000/index.htm",
 	excerpt: "bad character - null",
+	scope: "all"
+},
+	"bad-character-operating-system-command": {
+	description: "http://www.fileformat.info/info/unicode/char/009d/index.htm",
+	excerpt: "bad character - operating-system-command",
+	scope: "all"
+},
+	"bad-character-padding": {
+	description: "http://www.fileformat.info/info/unicode/char/0080/index.htm",
+	excerpt: "bad character - padding",
+	scope: "all"
+},
+	"bad-character-partial-line-backward": {
+	description: "http://www.fileformat.info/info/unicode/char/008c/index.htm",
+	excerpt: "bad character - partial-line-backward",
+	scope: "all"
+},
+	"bad-character-partial-line-forward": {
+	description: "http://www.fileformat.info/info/unicode/char/008b/index.htm",
+	excerpt: "bad character - partial-line-forward",
+	scope: "all"
+},
+	"bad-character-private-message": {
+	description: "http://www.fileformat.info/info/unicode/char/009e/index.htm",
+	excerpt: "bad character - private-message",
+	scope: "all"
+},
+	"bad-character-private-use-1": {
+	description: "http://www.fileformat.info/info/unicode/char/0091/index.htm",
+	excerpt: "bad character - private-use-1",
+	scope: "all"
+},
+	"bad-character-private-use-2": {
+	description: "http://www.fileformat.info/info/unicode/char/0092/index.htm",
+	excerpt: "bad character - private-use-2",
+	scope: "all"
+},
+	"bad-character-reverse-line-feed": {
+	description: "http://www.fileformat.info/info/unicode/char/008d/index.htm",
+	excerpt: "bad character - reverse-line-feed",
+	scope: "all"
+},
+	"bad-character-set-transmit-state": {
+	description: "http://www.fileformat.info/info/unicode/char/0093/index.htm",
+	excerpt: "bad character - set-transmit-state",
 	scope: "all"
 },
 	"bad-character-shift-in": {
@@ -302,14 +427,54 @@ var errors = {
 	excerpt: "bad character - shift out",
 	scope: "all"
 },
+	"bad-character-single-character-intro-introducer": {
+	description: "http://www.fileformat.info/info/unicode/char/009a/index.htm",
+	excerpt: "bad character - single-character-intro-introducer",
+	scope: "all"
+},
+	"bad-character-single-graphic-character-introducer": {
+	description: "http://www.fileformat.info/info/unicode/char/0099/index.htm",
+	excerpt: "bad character - single-graphic-character-introducer",
+	scope: "all"
+},
+	"bad-character-single-shift-three": {
+	description: "http://www.fileformat.info/info/unicode/char/008f/index.htm",
+	excerpt: "bad character - single-shift-three",
+	scope: "all"
+},
+	"bad-character-single-shift-two": {
+	description: "http://www.fileformat.info/info/unicode/char/008e/index.htm",
+	excerpt: "bad character - single-shift-two",
+	scope: "all"
+},
 	"bad-character-start-of-heading": {
 	description: "https://www.fileformat.info/info/unicode/char/0001/index.htm",
 	excerpt: "bad character - start of heading",
 	scope: "all"
 },
+	"bad-character-start-of-protected-area": {
+	description: "http://www.fileformat.info/info/unicode/char/0096/index.htm",
+	excerpt: "bad character - start-of-protected-area",
+	scope: "all"
+},
+	"bad-character-start-of-selected-area": {
+	description: "http://www.fileformat.info/info/unicode/char/0086/index.htm",
+	excerpt: "bad character - start-of-selected-area",
+	scope: "all"
+},
+	"bad-character-start-of-string": {
+	description: "http://www.fileformat.info/info/unicode/char/0098/index.htm",
+	excerpt: "bad character - start-of-string",
+	scope: "all"
+},
 	"bad-character-start-of-text": {
 	description: "https://www.fileformat.info/info/unicode/char/0002/index.htm",
 	excerpt: "bad character - start of text",
+	scope: "all"
+},
+	"bad-character-string-terminator": {
+	description: "http://www.fileformat.info/info/unicode/char/009c/index.htm",
+	excerpt: "bad character - string-terminator",
 	scope: "all"
 },
 	"bad-character-substitute": {
@@ -492,13 +657,13 @@ var errors = {
 	excerpt: "space between opening bracket and tag name",
 	scope: "html"
 },
-	"tag-stray-quotes": {
-	description: "These quotes can be deleted",
+	"tag-stray-character": {
+	description: "This chunk seems to be astray and can be deleted",
 	excerpt: "delete this",
 	scope: "html"
 },
-	"tag-stray-character": {
-	description: "This chunk seems to be astray and can be deleted",
+	"tag-stray-quotes": {
+	description: "These quotes can be deleted",
 	excerpt: "delete this",
 	scope: "html"
 },
@@ -544,6 +709,41 @@ const lowAsciiCharacterNames = [
   "information-separator-one",
   "space",
   "exclamation-mark"
+];
+const c1CharacterNames = [
+  "delete",
+  "padding",
+  "high-octet-preset",
+  "break-permitted-here",
+  "no-break-here",
+  "index",
+  "next-line",
+  "start-of-selected-area",
+  "end-of-selected-area",
+  "character-tabulation-set",
+  "character-tabulation-with-justification",
+  "line-tabulation-set",
+  "partial-line-forward",
+  "partial-line-backward",
+  "reverse-line-feed",
+  "single-shift-two",
+  "single-shift-three",
+  "device-control-string",
+  "private-use-1",
+  "private-use-2",
+  "set-transmit-state",
+  "cancel-character",
+  "message-waiting",
+  "start-of-protected-area",
+  "end-of-protected-area",
+  "start-of-string",
+  "single-graphic-character-introducer",
+  "single-character-intro-introducer",
+  "control-sequence-introducer",
+  "string-terminator",
+  "operating-system-command",
+  "private-message",
+  "application-program-command"
 ];
 function charSuitableForAttrName(char) {
   const res = !`"'><=`.includes(char);
@@ -1237,6 +1437,7 @@ var util = /*#__PURE__*/Object.freeze({
   isLowercase: isLowercase,
   isStr: isStr,
   lowAsciiCharacterNames: lowAsciiCharacterNames,
+  c1CharacterNames: c1CharacterNames,
   log: log,
   isLatinLetter: isLatinLetter,
   withinTagInnerspace: withinTagInnerspace,
@@ -2060,6 +2261,12 @@ function lint(str, originalOpts) {
           position: [[i, i + 1]]
         });
       }
+    } else if (!doNothingUntil && charcode > 126 && charcode < 160) {
+      const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
+      retObj.issues.push({
+        name,
+        position: [[i, i + 1]]
+      });
     } else if (!doNothingUntil && encodeChar$1(str, i)) {
       const newIssue = encodeChar$1(str, i);
       rawIssueStaging.push(newIssue);

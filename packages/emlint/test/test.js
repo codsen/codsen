@@ -234,6 +234,86 @@ test(`02.XX - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ASCII 0-3
   });
 });
 
+const c1CharactersToTest = [
+  "delete",
+  "padding",
+  "high-octet-preset",
+  "break-permitted-here",
+  "no-break-here",
+  "index",
+  "next-line",
+  "start-of-selected-area",
+  "end-of-selected-area",
+  "character-tabulation-set",
+  "character-tabulation-with-justification",
+  "line-tabulation-set",
+  "partial-line-forward",
+  "partial-line-backward",
+  "reverse-line-feed",
+  "single-shift-two",
+  "single-shift-three",
+  "device-control-string",
+  "private-use-1",
+  "private-use-2",
+  "set-transmit-state",
+  "cancel-character",
+  "message-waiting",
+  "start-of-protected-area",
+  "end-of-protected-area",
+  "start-of-string",
+  "single-graphic-character-introducer",
+  "single-character-intro-introducer",
+  "control-sequence-introducer",
+  "string-terminator",
+  "operating-system-command",
+  "private-message",
+  "application-program-command"
+];
+
+test(`02.YY - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - Unicode 127-159`, t => {
+  c1CharactersToTest.forEach((characterStr, idx) => {
+    const bad1 = String.fromCharCode(idx + 127);
+    const res1 = lint(bad1);
+    t.is(
+      res1.issues[0].name,
+      `bad-character-${characterStr}`,
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.01`
+    );
+    t.deepEqual(
+      res1.issues[0].position,
+      [[0, 1]],
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.02`
+    );
+    t.is(
+      apply(bad1, res1.fix),
+      "",
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.03`
+    );
+
+    const bad2 = `aaaaa\n\n\n${bad1}bbb`;
+    const res2 = lint(bad2);
+    t.is(
+      res2.issues[0].name,
+      `bad-character-${characterStr}`,
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.04`
+    );
+    t.deepEqual(
+      res2.issues[0].position,
+      [[8, 9]],
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.05`
+    );
+    t.is(
+      apply(bad2, res2.fix),
+      "aaaaa\n\n\nbbb",
+      `02.${String(idx).length === 1 ? `0${idx}` : idx}.06`
+    );
+  });
+});
+
+test(`02.ZZ - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - DELETE character (control)`, t => {
+  t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "02.ZZ");
+});
+
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
