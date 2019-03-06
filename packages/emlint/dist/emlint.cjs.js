@@ -412,6 +412,11 @@ var errors = {
 	excerpt: "bad character - zero width space",
 	scope: "all"
 },
+	"bad-character-unencoded-non-breaking-space": {
+	description: "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
+	excerpt: "bad character - unencoded non-breaking space",
+	scope: "all"
+},
 	"bad-character-partial-line-forward": {
 	description: "http://www.fileformat.info/info/unicode/char/008b/index.htm",
 	excerpt: "bad character - partial line forward",
@@ -1824,97 +1829,105 @@ function lint(str, originalOpts) {
         resetLogAttr();
       }
     }
-    if (!doNothingUntil && charcode < 32) {
-      var _name5 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
-      if (charcode === 9) {
-        retObj.issues.push({
-          name: _name5,
-          position: [[_i, _i + 1, "  "]]
-        });
-      } else if (charcode === 13) {
-        if (isStr$1(str[_i + 1]) && str[_i + 1].charCodeAt(0) === 10) {
-          if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CRLF") {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-CRLF",
-              position: [[_i, _i + 2, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.crlf.push([_i, _i + 2]);
-          }
-        } else {
-          if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CR") {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-CR",
-              position: [[_i, _i + 1, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.cr.push([_i, _i + 1]);
-          }
-        }
-      } else if (charcode === 10) {
-        if (!(isStr$1(str[_i - 1]) && str[_i - 1].charCodeAt(0) === 13)) {
-          if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "LF") {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-LF",
-              position: [[_i, _i + 1, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.lf.push([_i, _i + 1]);
-          }
-        }
-      } else {
-        var nearestNonWhitespaceCharIdxOnTheLeft = stringLeftRight.left(str, _i);
-        var nearestNonWhitespaceCharIdxOnTheRight = stringLeftRight.right(str, _i);
-        var addThis;
-        if (nearestNonWhitespaceCharIdxOnTheLeft < _i - 1 && (nearestNonWhitespaceCharIdxOnTheRight > _i + 1 || nearestNonWhitespaceCharIdxOnTheRight === null && str[_i + 1] && str[_i + 1] !== "\n" && str[_i + 1] !== "\r" && !str[_i + 1].trim().length)
-        ) {
-            var tempWhitespace = str.slice(nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight);
-            if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
-              if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
-                addThis = opts.style.line_endings_CR_LF_CRLF;
-              } else {
-                addThis = "\n";
-              }
+    if (!doNothingUntil) {
+      if (charcode < 32) {
+        var _name5 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
+        if (charcode === 9) {
+          retObj.issues.push({
+            name: _name5,
+            position: [[_i, _i + 1, "  "]]
+          });
+        } else if (charcode === 13) {
+          if (isStr$1(str[_i + 1]) && str[_i + 1].charCodeAt(0) === 10) {
+            if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CRLF") {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-CRLF",
+                position: [[_i, _i + 2, rawEnforcedEOLChar]]
+              });
             } else {
-              addThis = " ";
+              logLineEndings.crlf.push([_i, _i + 2]);
+            }
+          } else {
+            if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CR") {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-CR",
+                position: [[_i, _i + 1, rawEnforcedEOLChar]]
+              });
+            } else {
+              logLineEndings.cr.push([_i, _i + 1]);
             }
           }
-        if (addThis) {
-          retObj.issues.push({
-            name: _name5,
-            position: [[nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight, addThis]]
-          });
+        } else if (charcode === 10) {
+          if (!(isStr$1(str[_i - 1]) && str[_i - 1].charCodeAt(0) === 13)) {
+            if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "LF") {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-LF",
+                position: [[_i, _i + 1, rawEnforcedEOLChar]]
+              });
+            } else {
+              logLineEndings.lf.push([_i, _i + 1]);
+            }
+          }
         } else {
-          retObj.issues.push({
-            name: _name5,
-            position: [[_i, _i + 1]]
-          });
+          var nearestNonWhitespaceCharIdxOnTheLeft = stringLeftRight.left(str, _i);
+          var nearestNonWhitespaceCharIdxOnTheRight = stringLeftRight.right(str, _i);
+          var addThis;
+          if (nearestNonWhitespaceCharIdxOnTheLeft < _i - 1 && (nearestNonWhitespaceCharIdxOnTheRight > _i + 1 || nearestNonWhitespaceCharIdxOnTheRight === null && str[_i + 1] && str[_i + 1] !== "\n" && str[_i + 1] !== "\r" && !str[_i + 1].trim().length)
+          ) {
+              var tempWhitespace = str.slice(nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight);
+              if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
+                if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
+                  addThis = opts.style.line_endings_CR_LF_CRLF;
+                } else {
+                  addThis = "\n";
+                }
+              } else {
+                addThis = " ";
+              }
+            }
+          if (addThis) {
+            retObj.issues.push({
+              name: _name5,
+              position: [[nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight, addThis]]
+            });
+          } else {
+            retObj.issues.push({
+              name: _name5,
+              position: [[_i, _i + 1]]
+            });
+          }
         }
+      } else if (charcode > 126 && charcode < 160) {
+        var _name6 = "bad-character-".concat(c1CharacterNames[charcode - 127]);
+        retObj.issues.push({
+          name: _name6,
+          position: [[_i, _i + 1]]
+        });
+      } else if (charcode === 160) {
+        var _name7 = "bad-character-unencoded-non-breaking-space";
+        retObj.issues.push({
+          name: _name7,
+          position: [[_i, _i + 1, "&nbsp;"]]
+        });
+      } else if (charcode === 8203) {
+        var _name8 = "bad-character-zero-width-space";
+        retObj.issues.push({
+          name: _name8,
+          position: [[_i, _i + 1]]
+        });
+      } else if (encodeChar$1(str, _i)) {
+        var _newIssue = encodeChar$1(str, _i);
+        rawIssueStaging.push(_newIssue);
       }
-    } else if (!doNothingUntil && charcode > 126 && charcode < 160) {
-      var _name6 = "bad-character-".concat(c1CharacterNames[charcode - 127]);
-      retObj.issues.push({
-        name: _name6,
-        position: [[_i, _i + 1]]
-      });
-    } else if (!doNothingUntil && charcode === 8203) {
-      var _name7 = "bad-character-zero-width-space";
-      retObj.issues.push({
-        name: _name7,
-        position: [[_i, _i + 1]]
-      });
-    } else if (!doNothingUntil && encodeChar$1(str, _i)) {
-      var _newIssue = encodeChar$1(str, _i);
-      rawIssueStaging.push(_newIssue);
     }
     if (!doNothingUntil && logWhitespace.startAt !== null && str[_i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[stringLeftRight.right(str, _i)]))) {
-        var _name8 = "tag-excessive-whitespace-inside-tag";
+        var _name9 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
-          _name8 = "tag-whitespace-closing-slash-and-bracket";
+          _name9 = "tag-whitespace-closing-slash-and-bracket";
         }
         retObj.issues.push({
-          name: _name8,
+          name: _name9,
           position: [[logWhitespace.startAt, _i]]
         });
       }

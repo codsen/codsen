@@ -219,6 +219,11 @@
     "excerpt": "bad character - zero width space",
     "scope": "all"
   },
+  "bad-character-unencoded-non-breaking-space": {
+    "description": "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
+    "excerpt": "bad character - unencoded non-breaking space",
+    "scope": "all"
+  },
   "bad-character-partial-line-forward": {
     "description": "http://www.fileformat.info/info/unicode/char/008b/index.htm",
     "excerpt": "bad character - partial line forward",

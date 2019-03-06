@@ -375,6 +375,20 @@ test(`02.06 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - zero widt
   t.is(apply(bad1, res1.fix), good1, "02.06.02");
 });
 
+// https://en.wikipedia.org/wiki/Non-breaking_space
+// http://www.fileformat.info/info/unicode/char/00a0/browsertest.htm
+test(`02.06 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - between letters`, t => {
+  const bad1 = "a\xA0b";
+  const good1 = `a&nbsp;b`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-unencoded-non-breaking-space"],
+    "02.06.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.06.02");
+});
+
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {

@@ -392,6 +392,11 @@ var errors = {
 	excerpt: "bad character - zero width space",
 	scope: "all"
 },
+	"bad-character-unencoded-non-breaking-space": {
+	description: "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
+	excerpt: "bad character - unencoded non-breaking space",
+	scope: "all"
+},
 	"bad-character-partial-line-forward": {
 	description: "http://www.fileformat.info/info/unicode/char/008b/index.htm",
 	excerpt: "bad character - partial line forward",
@@ -2210,116 +2215,127 @@ function lint(str, originalOpts) {
         resetLogAttr();
       }
     }
-    if (!doNothingUntil && charcode < 32) {
-      const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
-      if (charcode === 9) {
-        retObj.issues.push({
-          name,
-          position: [[i, i + 1, "  "]]
-        });
-      } else if (charcode === 13) {
-        if (isStr$1(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
-          if (
-            opts.style &&
-            opts.style.line_endings_CR_LF_CRLF &&
-            opts.style.line_endings_CR_LF_CRLF !== "CRLF"
-          ) {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-CRLF",
-              position: [[i, i + 2, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.crlf.push([i, i + 2]);
-          }
-        } else {
-          if (
-            opts.style &&
-            opts.style.line_endings_CR_LF_CRLF &&
-            opts.style.line_endings_CR_LF_CRLF !== "CR"
-          ) {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-CR",
-              position: [[i, i + 1, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.cr.push([i, i + 1]);
-          }
-        }
-      } else if (charcode === 10) {
-        if (!(isStr$1(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
-          if (
-            opts.style &&
-            opts.style.line_endings_CR_LF_CRLF &&
-            opts.style.line_endings_CR_LF_CRLF !== "LF"
-          ) {
-            retObj.issues.push({
-              name: "file-wrong-type-line-ending-LF",
-              position: [[i, i + 1, rawEnforcedEOLChar]]
-            });
-          } else {
-            logLineEndings.lf.push([i, i + 1]);
-          }
-        }
-      } else {
-        const nearestNonWhitespaceCharIdxOnTheLeft = left(str, i);
-        const nearestNonWhitespaceCharIdxOnTheRight = right(str, i);
-        let addThis;
-        if (
-          nearestNonWhitespaceCharIdxOnTheLeft < i - 1 &&
-          (nearestNonWhitespaceCharIdxOnTheRight > i + 1 ||
-            (nearestNonWhitespaceCharIdxOnTheRight === null &&
-              str[i + 1] &&
-              str[i + 1] !== "\n" &&
-              str[i + 1] !== "\r" &&
-              !str[i + 1].trim().length))
-        ) {
-          const tempWhitespace = str.slice(
-            nearestNonWhitespaceCharIdxOnTheLeft + 1,
-            nearestNonWhitespaceCharIdxOnTheRight
-          );
-          if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
-            if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
-              addThis = opts.style.line_endings_CR_LF_CRLF;
+    if (!doNothingUntil) {
+      if (charcode < 32) {
+        const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
+        if (charcode === 9) {
+          retObj.issues.push({
+            name,
+            position: [[i, i + 1, "  "]]
+          });
+        } else if (charcode === 13) {
+          if (isStr$1(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
+            if (
+              opts.style &&
+              opts.style.line_endings_CR_LF_CRLF &&
+              opts.style.line_endings_CR_LF_CRLF !== "CRLF"
+            ) {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-CRLF",
+                position: [[i, i + 2, rawEnforcedEOLChar]]
+              });
             } else {
-              addThis = "\n";
+              logLineEndings.crlf.push([i, i + 2]);
             }
           } else {
-            addThis = " ";
+            if (
+              opts.style &&
+              opts.style.line_endings_CR_LF_CRLF &&
+              opts.style.line_endings_CR_LF_CRLF !== "CR"
+            ) {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-CR",
+                position: [[i, i + 1, rawEnforcedEOLChar]]
+              });
+            } else {
+              logLineEndings.cr.push([i, i + 1]);
+            }
+          }
+        } else if (charcode === 10) {
+          if (!(isStr$1(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
+            if (
+              opts.style &&
+              opts.style.line_endings_CR_LF_CRLF &&
+              opts.style.line_endings_CR_LF_CRLF !== "LF"
+            ) {
+              retObj.issues.push({
+                name: "file-wrong-type-line-ending-LF",
+                position: [[i, i + 1, rawEnforcedEOLChar]]
+              });
+            } else {
+              logLineEndings.lf.push([i, i + 1]);
+            }
+          }
+        } else {
+          const nearestNonWhitespaceCharIdxOnTheLeft = left(str, i);
+          const nearestNonWhitespaceCharIdxOnTheRight = right(str, i);
+          let addThis;
+          if (
+            nearestNonWhitespaceCharIdxOnTheLeft < i - 1 &&
+            (nearestNonWhitespaceCharIdxOnTheRight > i + 1 ||
+              (nearestNonWhitespaceCharIdxOnTheRight === null &&
+                str[i + 1] &&
+                str[i + 1] !== "\n" &&
+                str[i + 1] !== "\r" &&
+                !str[i + 1].trim().length))
+          ) {
+            const tempWhitespace = str.slice(
+              nearestNonWhitespaceCharIdxOnTheLeft + 1,
+              nearestNonWhitespaceCharIdxOnTheRight
+            );
+            if (
+              tempWhitespace.includes("\n") ||
+              tempWhitespace.includes("\r")
+            ) {
+              if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
+                addThis = opts.style.line_endings_CR_LF_CRLF;
+              } else {
+                addThis = "\n";
+              }
+            } else {
+              addThis = " ";
+            }
+          }
+          if (addThis) {
+            retObj.issues.push({
+              name,
+              position: [
+                [
+                  nearestNonWhitespaceCharIdxOnTheLeft + 1,
+                  nearestNonWhitespaceCharIdxOnTheRight,
+                  addThis
+                ]
+              ]
+            });
+          } else {
+            retObj.issues.push({
+              name,
+              position: [[i, i + 1]]
+            });
           }
         }
-        if (addThis) {
-          retObj.issues.push({
-            name,
-            position: [
-              [
-                nearestNonWhitespaceCharIdxOnTheLeft + 1,
-                nearestNonWhitespaceCharIdxOnTheRight,
-                addThis
-              ]
-            ]
-          });
-        } else {
-          retObj.issues.push({
-            name,
-            position: [[i, i + 1]]
-          });
-        }
+      } else if (charcode > 126 && charcode < 160) {
+        const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1]]
+        });
+      } else if (charcode === 160) {
+        const name = `bad-character-unencoded-non-breaking-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, "&nbsp;"]]
+        });
+      } else if (charcode === 8203) {
+        const name = `bad-character-zero-width-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1]]
+        });
+      } else if (encodeChar$1(str, i)) {
+        const newIssue = encodeChar$1(str, i);
+        rawIssueStaging.push(newIssue);
       }
-    } else if (!doNothingUntil && charcode > 126 && charcode < 160) {
-      const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
-      retObj.issues.push({
-        name,
-        position: [[i, i + 1]]
-      });
-    } else if (!doNothingUntil && charcode === 8203) {
-      const name = `bad-character-zero-width-space`;
-      retObj.issues.push({
-        name,
-        position: [[i, i + 1]]
-      });
-    } else if (!doNothingUntil && encodeChar$1(str, i)) {
-      const newIssue = encodeChar$1(str, i);
-      rawIssueStaging.push(newIssue);
     }
     if (
       !doNothingUntil &&
