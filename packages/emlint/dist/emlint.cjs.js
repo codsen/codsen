@@ -1416,10 +1416,12 @@ function lint(str, originalOpts) {
       doNothingUntil = null;
       doNothingUntilReason = null;
     }
-    if (withinQuotes === null && charIsQuote$1(str[_i])) {
-      withinQuotes = _i;
-    } else if (withinQuotes !== null && str[withinQuotes] === str[_i]) {
-      withinQuotes = null;
+    if (doNothingUntil === null || doNothingUntil !== null && doNothingUntilReason !== "script tag" || doNothingUntilReason === "script tag" && (str[_i - 1] !== "\\" || str[_i - 2] === "\\")) {
+      if (withinQuotes === null && charIsQuote$1(str[_i])) {
+        withinQuotes = _i;
+      } else if (withinQuotes !== null && str[withinQuotes] === str[_i]) {
+        withinQuotes = null;
+      }
     }
     if (espChars.includes(str[_i]) && str[_i + 1] && espChars.includes(str[_i + 1]) && logEspTag.headStartAt === null && logEspTag.startAt === null) {
       logEspTag.headStartAt = _i;

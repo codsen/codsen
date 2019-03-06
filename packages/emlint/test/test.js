@@ -444,6 +444,16 @@ test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   t.is(apply(bad1, res1.fix), good1, "02.09.02");
 });
 
+test.todo(
+  "02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound"
+); // bad-character-unencoded-pound
+test.todo(
+  "02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded euro"
+); // bad-character-unencoded-euro
+test.todo(
+  "02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent"
+); // bad-character-unencoded-cent
+
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
@@ -3549,6 +3559,52 @@ test(`26.01 - ${`\u001b[${33}m${`tag-missing-space-before-attribute`}\u001b[${39
   );
 });
 
+// 27. Code chunk skipping rules
+// -----------------------------------------------------------------------------
+
+test(`27.01 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags`, t => {
+  const good1 = `<script> a === b ' " \`     ;; ="" kkk="mmm" </zz>  z == x</script>`;
+  const res1 = lint(good1);
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "27.01");
+});
+
+test(`27.02 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags`, t => {
+  const bad2 = `\`<script> a === b ' " \`    z == x</script>\``;
+  const good2 = `&#x60;<script> a === b ' " \`    z == x</script>&#x60;`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.02.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-character-grave-accent"],
+    "27.02.02"
+  );
+});
+
+test(`27.03 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags, more complex`, t => {
+  const good1 = `<script a="b" c="d" e="f" ghi jkl>
+m n = "</script>";
+</script>`;
+  const res1 = lint(good1);
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "27.03");
+});
+
+test(`27.04 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - slash missing on closing <script> tag`, t => {
+  // let's place excaped backtick strategically, before the closing </script>,
+  // so that if the "within quotes" state is wrongly identified, tag closing
+  // will kick in, then all the "errors" that follow within same script tag
+  // will be flagged up.
+  const bad2 = `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&`;
+  console.log(`bad2 = ${bad2}`);
+  const good2 = `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&amp;`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.04.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-character-unencoded-ampersand"],
+    "27.04.02"
+  );
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 
@@ -4473,32 +4529,6 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`
   const good = `</a>`;
   const res = lint(good);
   t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
-});
-
-test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - <script> tags`, t => {
-  const good1 = `<script> a === b ' " \`     ;; ="" kkk="mmm" </zz>  z == x</script>`;
-  const res1 = lint(good1);
-  t.deepEqual(getUniqueIssueNames(res1.issues), [], "XX.XX");
-});
-
-test(`XX.XX - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - <script> tags`, t => {
-  const bad2 = `\`<script> a === b ' " \`    z == x</script>\``;
-  const good2 = `&#x60;<script> a === b ' " \`    z == x</script>&#x60;`;
-  const res2 = lint(bad2);
-  t.is(apply(bad2, res2.fix), good2, "24.01.01");
-  t.deepEqual(
-    getUniqueIssueNames(res2.issues).sort(),
-    ["bad-character-grave-accent"],
-    "24.01.02"
-  );
-});
-
-test(`XX.XX - ${`\u001b[${31}m${`adhoc #4`}\u001b[${39}m`} - <script> tags, more complex`, t => {
-  const good1 = `<script a="b" c="d" e="f" ghi jkl>
-m n = "</script>";
-</script>`;
-  const res1 = lint(good1);
-  t.deepEqual(getUniqueIssueNames(res1.issues), [], "XX.XX");
 });
 
 // xx. TODO's

@@ -1661,10 +1661,17 @@ function lint(str, originalOpts) {
       doNothingUntil = null;
       doNothingUntilReason = null;
     }
-    if (withinQuotes === null && charIsQuote$1(str[i])) {
-      withinQuotes = i;
-    } else if (withinQuotes !== null && str[withinQuotes] === str[i]) {
-      withinQuotes = null;
+    if (
+      doNothingUntil === null ||
+      ((doNothingUntil !== null && doNothingUntilReason !== "script tag") ||
+        (doNothingUntilReason === "script tag" &&
+          (str[i - 1] !== "\\" || str[i - 2] === "\\")))
+    ) {
+      if (withinQuotes === null && charIsQuote$1(str[i])) {
+        withinQuotes = i;
+      } else if (withinQuotes !== null && str[withinQuotes] === str[i]) {
+        withinQuotes = null;
+      }
     }
     if (
       espChars.includes(str[i]) &&
