@@ -327,6 +327,11 @@ var errors = {
 	excerpt: "bad character - form feed",
 	scope: "all"
 },
+	"bad-character-grave-accent": {
+	description: "https://www.fileformat.info/info/unicode/char/0060/index.htm",
+	excerpt: "bad character - grave accent",
+	scope: "html"
+},
 	"bad-character-high-octet-preset": {
 	description: "http://www.fileformat.info/info/unicode/char/0081/index.htm",
 	excerpt: "bad character - high octet preset",
@@ -355,6 +360,11 @@ var errors = {
 	"bad-character-information-separator-two": {
 	description: "https://www.fileformat.info/info/unicode/char/001e/index.htm",
 	excerpt: "bad character - information separator two",
+	scope: "all"
+},
+	"bad-character-line-separator": {
+	description: "https://www.fileformat.info/info/unicode/char/2028/index.htm",
+	excerpt: "bad character - line separator",
 	scope: "all"
 },
 	"bad-character-line-tabulation": {
@@ -407,16 +417,6 @@ var errors = {
 	excerpt: "bad character - partial line backward",
 	scope: "all"
 },
-	"bad-character-zero-width-space": {
-	description: "https://www.fileformat.info/info/unicode/char/200b/index.htm",
-	excerpt: "bad character - zero width space",
-	scope: "all"
-},
-	"bad-character-unencoded-non-breaking-space": {
-	description: "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
-	excerpt: "bad character - unencoded non-breaking space",
-	scope: "all"
-},
 	"bad-character-partial-line-forward": {
 	description: "http://www.fileformat.info/info/unicode/char/008b/index.htm",
 	excerpt: "bad character - partial line forward",
@@ -426,11 +426,6 @@ var errors = {
 	description: "http://www.fileformat.info/info/unicode/char/009e/index.htm",
 	excerpt: "bad character - private message",
 	scope: "all"
-},
-	"bad-character-grave-accent": {
-	description: "https://www.fileformat.info/info/unicode/char/0060/index.htm",
-	excerpt: "bad character - grave accent",
-	scope: "html"
 },
 	"bad-character-private-use-1": {
 	description: "http://www.fileformat.info/info/unicode/char/0091/index.htm",
@@ -537,10 +532,20 @@ var errors = {
 	excerpt: "unencoded double quotes",
 	scope: "html"
 },
+	"bad-character-unencoded-non-breaking-space": {
+	description: "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
+	excerpt: "bad character - unencoded non-breaking space",
+	scope: "all"
+},
 	"bad-character-unencoded-opening-bracket": {
 	description: "There is unencoded opening bracket",
 	excerpt: "unencoded opening bracket",
 	scope: "html"
+},
+	"bad-character-zero-width-space": {
+	description: "https://www.fileformat.info/info/unicode/char/200b/index.htm",
+	excerpt: "bad character - zero width space",
+	scope: "all"
 },
 	"bad-named-html-entity-amp-repetitions": {
 	description: "HTML named entity was encoded multiple times, causing repeated amp;",
@@ -1237,6 +1242,21 @@ function encodeChar(str, i) {
       name: "bad-character-grave-accent",
       position: [[i, i + 1, "&#x60;"]]
     };
+  } else if (str[i] === "\xA3") {
+    return {
+      name: "bad-character-unencoded-pound",
+      position: [[i, i + 1, "&pound;"]]
+    };
+  } else if (str[i] === "\u20AC") {
+    return {
+      name: "bad-character-unencoded-euro",
+      position: [[i, i + 1, "&euro;"]]
+    };
+  } else if (str[i] === "\xA2") {
+    return {
+      name: "bad-character-unencoded-cent",
+      position: [[i, i + 1, "&cent;"]]
+    };
   }
   return null;
 }
@@ -1383,6 +1403,7 @@ function lint(str, originalOpts) {
     crlf: []
   };
   var espChars = "{}%-$_()";
+  var withinQuotes = null;
   if (str.length === 0) {
     retObj.issues.push({
       name: "file-empty",
@@ -1394,6 +1415,11 @@ function lint(str, originalOpts) {
     if (doNothingUntil && doNothingUntil !== true && _i >= doNothingUntil) {
       doNothingUntil = null;
       doNothingUntilReason = null;
+    }
+    if (withinQuotes === null && charIsQuote$1(str[_i])) {
+      withinQuotes = _i;
+    } else if (withinQuotes !== null && str[withinQuotes] === str[_i]) {
+      withinQuotes = null;
     }
     if (espChars.includes(str[_i]) && str[_i + 1] && espChars.includes(str[_i + 1]) && logEspTag.headStartAt === null && logEspTag.startAt === null) {
       logEspTag.headStartAt = _i;
@@ -1582,10 +1608,11 @@ function lint(str, originalOpts) {
               logTag.attributes.push(clone(logAttr));
               resetLogAttr();
               if (str[closingQuotePeek].trim().length) {
-                _i = closingQuotePeek - (charIsQuote$1(str[closingQuotePeek]) ? 0 : 1);
+                doNothingUntil = closingQuotePeek - (charIsQuote$1(str[closingQuotePeek]) ? 0 : 1) + 1;
               } else {
-                _i = stringLeftRight.left(str, closingQuotePeek);
+                doNothingUntil = stringLeftRight.left(str, closingQuotePeek) + 1;
               }
+              doNothingUntilReason = "closing quote issues";
               if (_i === len - 1 && logTag.tagStartAt !== null && (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null || logTag.attributes.some(function (attrObj) {
                 return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote.pos !== null;
               }))) {
@@ -2010,7 +2037,7 @@ function lint(str, originalOpts) {
         });
       }
     }
-    if (!doNothingUntil && logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && isUppercaseLetter(str[_i])) {
+    if (!doNothingUntil && logTag.tagNameStartAt !== null && logTag.tagNameEndAt === null && isUppercaseLetter(str[_i]) && !str.slice(logTag.tagNameStartAt).toLowerCase().startsWith("doctype")) {
       retObj.issues.push({
         name: "tag-name-lowercase",
         position: [[_i, _i + 1, str[_i].toLowerCase()]]
@@ -2092,7 +2119,7 @@ function lint(str, originalOpts) {
       resetLogTag();
       resetLogAttr();
     }
-    if (doNothingUntil && doNothingUntilReason === "script tag" && str[_i] === "t" && str[_i - 1] === "p" && str[_i - 2] === "i" && str[_i - 3] === "r" && str[_i - 4] === "c" && str[_i - 5] === "s") {
+    if (doNothingUntil && doNothingUntilReason === "script tag" && str[_i] === "t" && str[_i - 1] === "p" && str[_i - 2] === "i" && str[_i - 3] === "r" && str[_i - 4] === "c" && str[_i - 5] === "s" && withinQuotes === null) {
       var charOnTheRight = stringLeftRight.right(str, _i);
       var charOnTheLeft = stringLeftRight.left(str, _i - 5);
       if (str[charOnTheLeft] === "/") {
@@ -2103,7 +2130,7 @@ function lint(str, originalOpts) {
     if (!doNothingUntil && str[_i].trim().length) {
       resetLogWhitespace();
     }
-    if (!doNothingUntil && !str[_i + 1]) {
+    if (!str[_i + 1]) {
       if (rawIssueStaging.length) {
         if (logTag.tagStartAt !== null && logTag.attributes.some(function (attrObj) {
           return attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null;

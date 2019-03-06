@@ -755,6 +755,21 @@ function encodeChar(str, i) {
       name: "bad-character-grave-accent",
       position: [[i, i + 1, "&#x60;"]]
     };
+  } else if (str[i] === "\xA3") {
+    return {
+      name: "bad-character-unencoded-pound",
+      position: [[i, i + 1, "&pound;"]]
+    };
+  } else if (str[i] === "\u20AC") {
+    return {
+      name: "bad-character-unencoded-euro",
+      position: [[i, i + 1, "&euro;"]]
+    };
+  } else if (str[i] === "\xA2") {
+    return {
+      name: "bad-character-unencoded-cent",
+      position: [[i, i + 1, "&cent;"]]
+    };
   }
   return null;
 }

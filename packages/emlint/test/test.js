@@ -4493,6 +4493,14 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - <script> tags`, t =
   );
 });
 
+test(`XX.XX - ${`\u001b[${31}m${`adhoc #4`}\u001b[${39}m`} - <script> tags, more complex`, t => {
+  const good1 = `<script a="b" c="d" e="f" ghi jkl>
+m n = "</script>";
+</script>`;
+  const res1 = lint(good1);
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "XX.XX");
+});
+
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
