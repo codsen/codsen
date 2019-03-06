@@ -4461,6 +4461,24 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`
   t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
 });
 
+test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - <script> tags`, t => {
+  const good1 = `<script> a === b ' " \`     ;; ="" kkk="mmm" </zz>  z == x</script>`;
+  const res1 = lint(good1);
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "XX.XX");
+});
+
+test(`XX.XX - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - <script> tags`, t => {
+  const bad2 = `\`<script> a === b ' " \`    z == x</script>\``;
+  const good2 = `&#x60;<script> a === b ' " \`    z == x</script>&#x60;`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "24.01.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-character-grave-accent"],
+    "24.01.02"
+  );
+});
+
 // xx. TODO's
 // -----------------------------------------------------------------------------
 
