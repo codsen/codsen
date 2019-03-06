@@ -1931,6 +1931,12 @@ function lint(str, originalOpts) {
           name: _name8,
           position: [[_i, _i + 1]]
         });
+      } else if (charcode === 8232) {
+        var _name9 = "bad-character-line-separator";
+        retObj.issues.push({
+          name: _name9,
+          position: [[_i, _i + 1]]
+        });
       } else if (encodeChar$1(str, _i)) {
         var _newIssue = encodeChar$1(str, _i);
         rawIssueStaging.push(_newIssue);
@@ -1938,12 +1944,12 @@ function lint(str, originalOpts) {
     }
     if (!doNothingUntil && logWhitespace.startAt !== null && str[_i].trim().length) {
       if (logTag.tagNameStartAt !== null && logAttr.attrStartAt === null && (!logAttr.attrClosingQuote.pos || logAttr.attrClosingQuote.pos <= _i) && (str[_i] === ">" || str[_i] === "/" && "<>".includes(str[stringLeftRight.right(str, _i)]))) {
-        var _name9 = "tag-excessive-whitespace-inside-tag";
+        var _name10 = "tag-excessive-whitespace-inside-tag";
         if (str[logWhitespace.startAt - 1] === "/") {
-          _name9 = "tag-whitespace-closing-slash-and-bracket";
+          _name10 = "tag-whitespace-closing-slash-and-bracket";
         }
         retObj.issues.push({
-          name: _name9,
+          name: _name10,
           position: [[logWhitespace.startAt, _i]]
         });
       }

@@ -134,6 +134,11 @@
     "excerpt": "bad character - form feed",
     "scope": "all"
   },
+  "bad-character-grave-accent": {
+    "description": "https://www.fileformat.info/info/unicode/char/0060/index.htm",
+    "excerpt": "bad character - grave accent",
+    "scope": "html"
+  },
   "bad-character-high-octet-preset": {
     "description": "http://www.fileformat.info/info/unicode/char/0081/index.htm",
     "excerpt": "bad character - high octet preset",
@@ -162,6 +167,11 @@
   "bad-character-information-separator-two": {
     "description": "https://www.fileformat.info/info/unicode/char/001e/index.htm",
     "excerpt": "bad character - information separator two",
+    "scope": "all"
+  },
+  "bad-character-line-separator": {
+    "description": "https://www.fileformat.info/info/unicode/char/2028/index.htm",
+    "excerpt": "bad character - line separator",
     "scope": "all"
   },
   "bad-character-line-tabulation": {
@@ -214,16 +224,6 @@
     "excerpt": "bad character - partial line backward",
     "scope": "all"
   },
-  "bad-character-zero-width-space": {
-    "description": "https://www.fileformat.info/info/unicode/char/200b/index.htm",
-    "excerpt": "bad character - zero width space",
-    "scope": "all"
-  },
-  "bad-character-unencoded-non-breaking-space": {
-    "description": "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
-    "excerpt": "bad character - unencoded non-breaking space",
-    "scope": "all"
-  },
   "bad-character-partial-line-forward": {
     "description": "http://www.fileformat.info/info/unicode/char/008b/index.htm",
     "excerpt": "bad character - partial line forward",
@@ -233,11 +233,6 @@
     "description": "http://www.fileformat.info/info/unicode/char/009e/index.htm",
     "excerpt": "bad character - private message",
     "scope": "all"
-  },
-  "bad-character-grave-accent": {
-    "description": "https://www.fileformat.info/info/unicode/char/0060/index.htm",
-    "excerpt": "bad character - grave accent",
-    "scope": "html"
   },
   "bad-character-private-use-1": {
     "description": "http://www.fileformat.info/info/unicode/char/0091/index.htm",
@@ -344,10 +339,20 @@
     "excerpt": "unencoded double quotes",
     "scope": "html"
   },
+  "bad-character-unencoded-non-breaking-space": {
+    "description": "http://www.fileformat.info/info/unicode/char/00a0/index.htm",
+    "excerpt": "bad character - unencoded non-breaking space",
+    "scope": "all"
+  },
   "bad-character-unencoded-opening-bracket": {
     "description": "There is unencoded opening bracket",
     "excerpt": "unencoded opening bracket",
     "scope": "html"
+  },
+  "bad-character-zero-width-space": {
+    "description": "https://www.fileformat.info/info/unicode/char/200b/index.htm",
+    "excerpt": "bad character - zero width space",
+    "scope": "all"
   },
   "bad-named-html-entity-amp-repetitions": {
     "description": "HTML named entity was encoded multiple times, causing repeated amp;",

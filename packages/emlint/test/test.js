@@ -430,6 +430,20 @@ test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   t.is(apply(bad1, res1.fix), good1, "02.08.02");
 });
 
+// line separator character
+// https://www.fileformat.info/info/unicode/char/2028/index.htm
+test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded line separator`, t => {
+  const bad1 = "a\u2028b";
+  const good1 = `ab`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-line-separator"],
+    "02.09.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.09.02");
+});
+
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {

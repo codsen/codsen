@@ -2348,6 +2348,12 @@ function lint(str, originalOpts) {
           name,
           position: [[i, i + 1]]
         });
+      } else if (charcode === 8232) {
+        const name = `bad-character-line-separator`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1]]
+        });
       } else if (encodeChar$1(str, i)) {
         const newIssue = encodeChar$1(str, i);
         rawIssueStaging.push(newIssue);
