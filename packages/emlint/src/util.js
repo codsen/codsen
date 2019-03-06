@@ -2231,6 +2231,11 @@ function encodeChar(str, i) {
       name: "bad-character-unencoded-double-quotes",
       position: [[i, i + 1, "&quot;"]]
     };
+  } else if (str[i] === "`") {
+    return {
+      name: "bad-character-grave-accent",
+      position: [[i, i + 1, "&#x60;"]]
+    };
   }
   return null;
 }

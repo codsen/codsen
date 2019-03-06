@@ -418,6 +418,18 @@ test(`02.07 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   t.is(apply(bad1, res1.fix), good1, "02.07.02");
 });
 
+test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded grave accent`, t => {
+  const bad1 = "a`b";
+  const good1 = `a&#x60;b`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-grave-accent"],
+    "02.08.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.08.02");
+});
+
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {

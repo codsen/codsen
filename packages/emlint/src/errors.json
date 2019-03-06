@@ -234,6 +234,11 @@
     "excerpt": "bad character - private message",
     "scope": "all"
   },
+  "bad-character-grave-accent": {
+    "description": "https://www.fileformat.info/info/unicode/char/0060/index.htm",
+    "excerpt": "bad character - grave accent",
+    "scope": "html"
+  },
   "bad-character-private-use-1": {
     "description": "http://www.fileformat.info/info/unicode/char/0091/index.htm",
     "excerpt": "bad character - private use 1",
