@@ -169,7 +169,7 @@ function isLatinLetter(char) {
   );
 }
 function charSuitableForTagName(char) {
-  return isLowerCaseLetter(char);
+  return isLowerCaseLetter(char) || char === ":";
 }
 function log(...pairs) {
   return pairs.reduce((accum, curr, idx, arr) => {

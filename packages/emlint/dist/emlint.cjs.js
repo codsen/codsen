@@ -276,7 +276,7 @@ function isLatinLetter(char) {
   return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
 }
 function charSuitableForTagName(char) {
-  return isLowerCaseLetter(char);
+  return isLowerCaseLetter(char) || char === ":";
 }
 function withinTagInnerspace(str, idx, closingQuotePos) {
   if (typeof idx !== "number") {
@@ -972,7 +972,7 @@ function lint(str, originalOpts) {
       logEspTag.startAt = _i;
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
-      if (logAttr.attrNameStartAt !== null && logAttr.attrNameEndAt === null && logAttr.attrName === null && !isLatinLetter(str[_i])) {
+      if (logAttr.attrNameStartAt !== null && logAttr.attrNameEndAt === null && logAttr.attrName === null && !isLatinLetter(str[_i]) && (str[_i] !== ":" || !isLatinLetter(str[_i + 1]))) {
         logAttr.attrNameEndAt = _i;
         logAttr.attrName = str.slice(logAttr.attrNameStartAt, logAttr.attrNameEndAt);
         if (str[_i] !== "=") {

@@ -4631,6 +4631,12 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`
   t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
 });
 
+test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templating tags`, t => {
+  const good = `<td mc:edit="cta">`;
+  const res = lint(good);
+  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
+});
+
 // xx. TODO's
 // -----------------------------------------------------------------------------
 

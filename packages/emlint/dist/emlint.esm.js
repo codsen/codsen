@@ -340,7 +340,7 @@ function isLatinLetter(char) {
   );
 }
 function charSuitableForTagName(char) {
-  return isLowerCaseLetter(char);
+  return isLowerCaseLetter(char) || char === ":";
 }
 function log(...pairs) {
   return pairs.reduce((accum, curr, idx, arr) => {
@@ -1256,7 +1256,8 @@ function lint(str, originalOpts) {
         logAttr.attrNameStartAt !== null &&
         logAttr.attrNameEndAt === null &&
         logAttr.attrName === null &&
-        !isLatinLetter(str[i])
+        !isLatinLetter(str[i]) &&
+        (str[i] !== ":" || !isLatinLetter(str[i + 1]))
       ) {
         logAttr.attrNameEndAt = i;
         logAttr.attrName = str.slice(
