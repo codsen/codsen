@@ -390,7 +390,7 @@ test(`02.06 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
 });
 
 // when raw non-breaking spaces are copy pasted into code editor:
-test(`02.07 - ${`\u001b[${36}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - among indentations`, t => {
+test(`02.07 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - among indentations`, t => {
   const bad1 = `
 \xA0  <!--[if gte mso 9]>
 \xA0  <xml>
@@ -3620,7 +3620,7 @@ test(`27.04 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - slash mi
   // will kick in, then all the "errors" that follow within same script tag
   // will be flagged up.
   const bad2 = `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&`;
-  console.log(`bad2 = ${bad2}`);
+  // console.log(`bad2 = ${bad2}`);
   const good2 = `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&amp;`;
   const res2 = lint(bad2);
   t.is(apply(bad2, res2.fix), good2, "27.04.01");
@@ -4568,9 +4568,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`
 // todo - duplicate opening quotes
 // todo - duplicate equal
 // what if un-pushed logAttr is still available when logTag is closing?
-// space missing in front of an attribute
-// test.todo("same opening/closing quotes repeated twice")
-// test.todo("stray-ones inside another outer quotes")
+// test.todo("same opening/closing quotes repeated twice") <img width=""zzz"/>
 // test.todo("file-xhtml-tag-ending");
 // test.todo("file-html-tag-ending");
 // test.todo("file-trailing-line-break-present");
