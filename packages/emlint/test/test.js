@@ -3631,6 +3631,80 @@ test(`27.04 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - slash mi
   );
 });
 
+test(`27.05 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wrong letter case`, t => {
+  const bad2 = `<![CDaTA[some stuff]]>`;
+  const good2 = `<![CDATA[some stuff]]>`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.05.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-cdata-tag-character-case"],
+    "27.05.02"
+  );
+});
+
+test(`27.06 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wrong letter case + pound`, t => {
+  // this checks, do CDATA escapes (doNothingUntil) enable and disable themselves
+  // at exactly right places.
+  const bad2 = `£<![CDATA[£]]>£`;
+  const good2 = `&pound;<![CDATA[£]]>&pound;`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.06.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-character-unencoded-pound"],
+    "27.06.02"
+  );
+});
+
+test(`27.07 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before name`, t => {
+  const bad2 = `<![ CDATA[some stuff]]>`;
+  const good2 = `<![CDATA[some stuff]]>`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.07.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-cdata-whitespace"],
+    "27.07.02"
+  );
+});
+
+test(`27.08 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t => {
+  const bad2 = `<! [CDATA[some stuff]]>`;
+  const good2 = `<![CDATA[some stuff]]>`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.08.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-cdata-whitespace"],
+    "27.08.02"
+  );
+});
+
+test(`27.09 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t => {
+  const bad2 = `< ![CDATA[some stuff]]>`;
+  const good2 = `<![CDATA[some stuff]]>`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.09.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-cdata-whitespace"],
+    "27.09.02"
+  );
+});
+
+test(`27.10 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t => {
+  const bad2 = `<![CDATA [some stuff]]>`;
+  const good2 = `<![CDATA[some stuff]]>`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "27.10.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-cdata-whitespace"],
+    "27.10.02"
+  );
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 

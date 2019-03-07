@@ -9,6 +9,11 @@
     "excerpt": "malformed &nbsp;",
     "scope": "html"
   },
+  "bad-cdata-tag-character-case": {
+    "description": "CDATA opening tag name characters are in wrong letter case",
+    "excerpt": "wrong letter case",
+    "scope": "html"
+  },
   "bad-named-html-entity-missing-semicolon": {
     "description": "HTML named entity is missing a semicolon",
     "excerpt": "missing semicolon on a named HTML entity",
