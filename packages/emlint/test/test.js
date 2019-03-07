@@ -444,15 +444,41 @@ test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   t.is(apply(bad1, res1.fix), good1, "02.09.02");
 });
 
-test.todo(
-  "02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound"
-); // bad-character-unencoded-pound
-test.todo(
-  "02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded euro"
-); // bad-character-unencoded-euro
-test.todo(
-  "02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent"
-); // bad-character-unencoded-cent
+test(`02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound`, t => {
+  const bad1 = "a\xA3b";
+  const good1 = `a&pound;b`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-unencoded-pound"],
+    "02.10.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.10.02");
+});
+
+test(`02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound`, t => {
+  const bad1 = "a\u20ACb";
+  const good1 = `a&euro;b`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-unencoded-euro"],
+    "02.11.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.11.02");
+});
+
+test(`02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent`, t => {
+  const bad1 = "a\xA2b";
+  const good1 = `a&cent;b`;
+  const res1 = lint(bad1);
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-character-unencoded-cent"],
+    "02.12.01"
+  );
+  t.is(apply(bad1, res1.fix), good1, "02.12.02");
+});
 
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
