@@ -10,8 +10,8 @@ deploy:
   stage: deploy
   script:
     - npm run bootstrap
-    - npm run build:just
-    - npm run all:test:only
+    - npm run all:test:full
+    - npm run readme:generate
     - npm run pub:vers
     - npm run readme:generate
     - git add packages
