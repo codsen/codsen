@@ -20,8 +20,7 @@ deploy:
   image: node:latest
   stage: deploy
   script:
-    - lerna version --conventional-commits --yes
-    - lernacleanchangelog "**"
+    - npm run pub:vers
     - npm run readme:generate
     - git add packages
     - "git commit -m 'chore: Automated build tasks' --no-verify"

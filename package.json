@@ -25,11 +25,12 @@
     "cm": "git-cz",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "lect": "make run-lect",
-    "publish": "npx lerna version --conventional-commits --yes && lcc \"**\" && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",
+    "publish": "npx lerna version --conventional-commits --yes && lernacleanchangelog '**' && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
-    "wipe": "rm -rf node_modules && npx lerna clean -y"
+    "wipe": "rm -rf node_modules && npx lerna clean -y",
+    "pub:vers": "lerna version --conventional-commits --yes && lernacleanchangelog '**'"
   },
   "husky": {
     "hooks": {
