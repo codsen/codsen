@@ -10,13 +10,12 @@ deploy:
   stage: deploy
   script:
     - git checkout master
+    - git config --global user.email "roy@codsen.com"
+    - git config --global user.name "Roy Revelt"
     - npm run bootstrap
     - npm run all:test:full
     - npm run readme:generate
     - npm run pub:vers
-    - npm run readme:generate
-    - git config --global user.email "roy@codsen.com"
-    - git config --global user.name "Roy Revelt"
     - git add packages
     - git status
     - "git commit -m 'chore: Automated build tasks' --no-verify"
