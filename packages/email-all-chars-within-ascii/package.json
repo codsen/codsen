@@ -1,6 +1,6 @@
 {
   "name": "email-all-chars-within-ascii",
-  "version": "2.9.9",
+  "version": "2.9.10",
   "description": "Scans all characters within a string and checks are they within ASCII range",
   "license": "MIT",
   "engines": {
@@ -160,7 +160,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.5",
+    "check-types-mini": "^5.7.6",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "string-fix-broken-named-entities",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Finds and fixes common and not so common broken named HTML entities, returns ranges array of fixes",
   "license": "MIT",
   "engines": {
@@ -168,8 +168,8 @@
   "dependencies": {
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.0.0",
-    "string-left-right": "^2.0.0"
+    "ranges-merge": "^4.0.1",
+    "string-left-right": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

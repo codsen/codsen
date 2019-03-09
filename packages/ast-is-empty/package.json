@@ -1,6 +1,6 @@
 {
   "name": "ast-is-empty",
-  "version": "1.9.9",
+  "version": "1.9.10",
   "description": "Find out, is nested array/object/string/AST tree is empty",
   "license": "MIT",
   "engines": {
