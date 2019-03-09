@@ -1954,6 +1954,78 @@ function lint(str, originalOpts) {
           name,
           position: [[i, i + 1, "&nbsp;"]]
         });
+      } else if (charcode === 5760) {
+        const name = `bad-character-ogham-space-mark`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8192) {
+        const name = `bad-character-en-quad`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8193) {
+        const name = `bad-character-em-quad`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8194) {
+        const name = `bad-character-en-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8195) {
+        const name = `bad-character-em-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8196) {
+        const name = `bad-character-three-per-em-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8197) {
+        const name = `bad-character-four-per-em-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8198) {
+        const name = `bad-character-six-per-em-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8199) {
+        const name = `bad-character-figure-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8200) {
+        const name = `bad-character-punctuation-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8201) {
+        const name = `bad-character-thin-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8202) {
+        const name = `bad-character-hair-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
       } else if (charcode === 8203) {
         const name = `bad-character-zero-width-space`;
         retObj.issues.push({
@@ -1964,11 +2036,100 @@ function lint(str, originalOpts) {
         const name = `bad-character-line-separator`;
         retObj.issues.push({
           name,
-          position: [[i, i + 1]]
+          position: [[i, i + 1, "\n"]]
+        });
+      } else if (charcode === 8233) {
+        const name = `bad-character-paragraph-separator`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, "\n"]]
+        });
+      } else if (charcode === 8239) {
+        const name = `bad-character-narrow-no-break-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 8287) {
+        const name = `bad-character-medium-mathematical-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
+        });
+      } else if (charcode === 12288) {
+        const name = `bad-character-ideographic-space`;
+        retObj.issues.push({
+          name,
+          position: [[i, i + 1, " "]]
         });
       } else if (encodeChar$1(str, i)) {
         const newIssue = encodeChar$1(str, i);
         rawIssueStaging.push(newIssue);
+      } else if (charcode >= 888 && charcode <= 8591) {
+        if (
+          charcode === 888 ||
+          charcode === 889 ||
+          (charcode >= 896 && charcode <= 899) ||
+          charcode === 907 ||
+          charcode === 909 ||
+          charcode === 930 ||
+          charcode === 1328 ||
+          charcode === 1367 ||
+          charcode === 1368 ||
+          charcode === 1419 ||
+          charcode === 1419 ||
+          charcode === 1420 ||
+          charcode === 1424 ||
+          (charcode >= 1480 && charcode <= 1487) ||
+          (charcode >= 1515 && charcode <= 1519) ||
+          (charcode >= 1525 && charcode <= 1535) ||
+          charcode === 1565 ||
+          charcode === 1806 ||
+          charcode === 1867 ||
+          charcode === 1868 ||
+          (charcode >= 1970 && charcode <= 1983) ||
+          (charcode >= 2043 && charcode <= 2047) ||
+          charcode === 2094 ||
+          charcode === 2095 ||
+          charcode === 2111 ||
+          charcode === 2140 ||
+          charcode === 2141 ||
+          charcode === 2143 ||
+          (charcode >= 2155 && charcode <= 2207) ||
+          charcode === 2229 ||
+          (charcode >= 2238 && charcode <= 2258) ||
+          charcode === 2436 ||
+          charcode === 2445 ||
+          charcode === 2446 ||
+          charcode === 2449 ||
+          charcode === 2450 ||
+          charcode === 2473 ||
+          charcode === 2481 ||
+          charcode === 2483 ||
+          charcode === 2484 ||
+          charcode === 2485 ||
+          charcode === 2490 ||
+          charcode === 2491 ||
+          charcode === 2501 ||
+          charcode === 2502 ||
+          charcode === 2505 ||
+          charcode === 2506 ||
+          (charcode >= 2511 && charcode <= 2518) ||
+          (charcode >= 2520 && charcode <= 2523) ||
+          charcode === 2526 ||
+          (charcode >= 8384 && charcode <= 8399) ||
+          (charcode >= 8433 && charcode <= 8447) ||
+          charcode === 8588 ||
+          charcode === 8589 ||
+          charcode === 8590 ||
+          charcode === 8591
+        ) {
+          const name = `bad-character-generic`;
+          retObj.issues.push({
+            name,
+            position: [[i, i + 1]]
+          });
+        }
       }
     }
     if (
