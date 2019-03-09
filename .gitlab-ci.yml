@@ -10,16 +10,4 @@ deploy:
   stage: deploy
   script:
     - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/codsen/codsen.git &> /dev/null
-    - git config --global user.email 'roy@codsen.com'
-    - git config --global user.name 'Roy Revelt'
-    - git checkout master
-    - npm run bootstrap
-    - npm run all:test:full
-    - npm run readme:generate
-    - npm run pub:vers
-    - git add packages
-    - git status
-    - "git commit -m 'chore: Automated build tasks' --no-verify"
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
-    - npm run republish
-    - git push http://${YOUR_USERNAME}:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git HEAD:master
+    
