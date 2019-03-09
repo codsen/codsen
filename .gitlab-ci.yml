@@ -12,6 +12,7 @@ deploy:
     - npm run bootstrap
     - npm run all:test:full
     - npm run readme:generate
+    - git checkout -b releasing
     - npm run pub:vers
     - npm run readme:generate
     - git add packages
