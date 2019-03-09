@@ -9,5 +9,35 @@ deploy:
   image: node:latest
   stage: deploy
   script:
+    - echo '1'
     - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/codsen/codsen.git &> /dev/null
-    
+    - echo '2'
+    - git config --global user.email ${GITLAB_USER_EMAIL}
+    - echo '3'
+    - git status
+    - git config --global user.name ${GITLAB_USER_ID}
+    - echo '4'
+    - git status
+    - git checkout master
+    - echo '5'
+    - npm run bootstrap
+    - echo '6'
+    - npm run all:test:full
+    - echo '7'
+    - npm run readme:generate
+    - echo '8'
+    - npm run pub:vers
+    - echo '9'
+    - git add packages
+    - echo '10'
+    - git status
+    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
+    - echo '11'
+    - git status
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - echo '12'
+    - git status
+    - npm run republish
+    - echo '13'
+    - git push http://${GITLAB_USER_ID}:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git HEAD:master
+    - echo '14 - done'
