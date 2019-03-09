@@ -5,21 +5,13 @@ cache:
     - node_modules/
     - packages/
 
-before_script:
-  - npm run bootstrap
-  - npm run build:just
-  - npm run readme:generate
-
-unit test:
-  image: node:latest
-  stage: test
-  script:
-    - npm run all:test:only
-
 deploy:
   image: node:latest
   stage: deploy
   script:
+    - npm run bootstrap
+    - npm run build:just
+    - npm run all:test:only
     - npm run pub:vers
     - npm run readme:generate
     - git add packages
