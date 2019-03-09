@@ -9,4 +9,5 @@ deploy:
   image: node:latest
   stage: deploy
   script:
+    - git checkout FETCH_HEAD
     - git status
