@@ -3948,6 +3948,15 @@ test(`27.10 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wh
   );
 });
 
+// 28. ESP templating language recognition
+// -----------------------------------------------------------------------------
+
+test(`28.01 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags, more complex`, t => {
+  const good1 = `<img{% if klm %} class="z"{% endif %} alt="1"/>`;
+  const res1 = lint(good1);
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "28.01");
+});
+
 // 99. Util Unit tests
 // -----------------------------------------------------------------------------
 

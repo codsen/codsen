@@ -1095,10 +1095,13 @@ function lint(str, originalOpts) {
   const defaultEspTag = {
     headStartAt: null,
     headEndAt: null,
+    headVal: null,
     tailStartAt: null,
     tailEndAt: null,
+    tailVal: null,
     startAt: null,
-    endAt: null
+    endAt: null,
+    recognised: null
   };
   function resetEspTag() {
     logEspTag = clone(defaultEspTag);
@@ -1241,12 +1244,15 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
+    if (logEspTag.headStartAt !== null && !espChars.includes(str[i])) {
+      logEspTag.headEndAt = i;
+      logEspTag.headVal = str.slice(logEspTag.headStartAt, i);
+    }
     if (
+      logEspTag.startAt === null &&
       espChars.includes(str[i]) &&
       str[i + 1] &&
-      espChars.includes(str[i + 1]) &&
-      logEspTag.headStartAt === null &&
-      logEspTag.startAt === null
+      espChars.includes(str[i + 1])
     ) {
       logEspTag.headStartAt = i;
       logEspTag.startAt = i;
