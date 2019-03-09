@@ -1,0 +1,28 @@
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+    - packages/
+
+before_script:
+  - npm run bootstrap
+  - npm run build:just
+  - npm run readme:generate
+
+test:node:8:
+  image: node:8
+  script:
+    - npm run all:test:only
+
+test:node:latest:
+  image: node:latest
+  script:
+    - npm run all:test:only
+
+deploy:
+  image: node:latest
+  stage: deploy
+  script:
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - npm run publish

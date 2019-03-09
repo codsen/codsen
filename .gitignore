@@ -16,3 +16,4 @@ coverage
 /.package.json
 yarn.lock
 lerna-debug.log
+.npmrc
