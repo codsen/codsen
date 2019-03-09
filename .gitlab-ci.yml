@@ -5,18 +5,15 @@ cache:
     - node_modules/
     - packages/
 
+before_script:
+  - git remote set-url origin https://USERNAME:${PERSONAL_ACCESS_TOKEN}@gitlab.com/your-project.git
+  - git config --global user.email 'your@email.com'
+  - git config --global user.name 'yourname'
+
 deploy:
   image: node:latest
   stage: deploy
   script:
-    - echo '1'
-    - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/codsen/codsen.git &> /dev/null
-    - echo '2'
-    - git config --global user.email ${GITLAB_USER_EMAIL}
-    - echo '3'
-    - git status
-    - git config --global user.name ${GITLAB_USER_ID}
-    - echo '4'
     - git status
     - git checkout master
     - echo '5'
@@ -39,5 +36,5 @@ deploy:
     - git status
     - npm run republish
     - echo '13'
-    - git push http://${GITLAB_USER_ID}:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git HEAD:master
+    - git push origin master
     - echo '14 - done'
