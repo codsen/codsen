@@ -9,13 +9,4 @@ deploy:
   image: node:latest
   stage: deploy
   script:
-    - npm run bootstrap
-    - npm run all:test:full
-    - npm run readme:generate
-    - git checkout -b releasing
-    - npm run pub:vers
-    - npm run readme:generate
-    - git add packages
-    - "git commit -m 'chore: Automated build tasks' --no-verify"
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
-    - npm run republish
+    - git status
