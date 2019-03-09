@@ -24,6 +24,6 @@ deploy:
     - lernacleanchangelog "**"
     - npm run readme:generate
     - git add packages
-    - git commit -m 'chore: Automated build tasks' --no-verify
+    - "git commit -m 'chore: Automated build tasks' --no-verify"
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
     - npm run republish
