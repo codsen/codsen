@@ -9,3 +9,9 @@ publish:
 
 republish:
 	./scripts/republish.sh
+
+add1:
+	./scripts/add1.sh
+
+remove1:
+	./scripts/remove1.sh
