@@ -6,7 +6,7 @@ cache:
     - packages/
 
 before_script:
-  - git remote set-url origin https://USERNAME:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git
+  - git remote set-url origin https://oauth2:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git
   - git config --global user.email ${GITLAB_USER_EMAIL}
   - git config --global user.name ${GITLAB_USER_NAME}
 
