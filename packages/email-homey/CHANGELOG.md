@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.7.11](https://gitlab.com/codsen/codsen/compare/email-homey@2.7.10...email-homey@2.7.11) (2019-03-10)
-
-**Note:** Version bump only for package email-homey
-
-
-
-
-
 ## 2.7.7 (2019-02-10)
 
 ### Bug Fixes
