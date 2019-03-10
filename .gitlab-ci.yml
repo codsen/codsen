@@ -1,9 +1,7 @@
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-    - node_modules/
-    - packages/
+
+#
+#    C O D S E N
+#
 
 before_script:
   - git remote set-url origin https://oauth2:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git
