@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [4.7.12](https://gitlab.com/codsen/codsen/compare/object-flatten-all-arrays@4.7.10...object-flatten-all-arrays@4.7.12) (2019-03-10)
-
-**Note:** Version bump only for package object-flatten-all-arrays
-
-
-
-
-
 ## 4.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

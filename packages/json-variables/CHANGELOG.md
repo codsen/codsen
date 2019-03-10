@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [8.0.3](https://gitlab.com/codsen/codsen/compare/json-variables@8.0.1...json-variables@8.0.3) (2019-03-10)
-
-**Note:** Version bump only for package json-variables
-
-
-
-
-
 ## 7.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
