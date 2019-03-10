@@ -7,8 +7,8 @@ cache:
 
 before_script:
   - git remote set-url origin https://USERNAME:${PERSONAL_ACCESS_TOKEN}@gitlab.com/codsen/codsen.git
-  - git config --global user.email '${GITLAB_USER_EMAIL}'
-  - git config --global user.name '${GITLAB_USER_ID}'
+  - git config --global user.email ${GITLAB_USER_EMAIL}
+  - git config --global user.name ${GITLAB_USER_NAME}
 
 deploy:
   image: node:latest
