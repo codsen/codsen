@@ -13,6 +13,9 @@ deploy:
   stage: deploy
   script:
     - git status
-    - echo -e 'unsafe-perm = true\n//registry.npmjs.org/:_authToken=$NPM_TOKEN\nusername=$NPM_USERNAME\nemail=$NPM_EMAIL' > ~/.npmrc
     - git config user.name
+    - npm set unsafe-perm true -g
+    - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
+    - npm set username $NPM_USERNAME -g
+    - npm set email $NPM_EMAIL -g
     - npm whoami
