@@ -72,14 +72,14 @@ STRENGTHS:
 - Optionally uglifies the class or id names
 - The algorithm will cope with style tags inside the `body` tag or multiple style tags
 - Strips CSS and HTML comments; recognises Outlook conditional comments
-- Has email-specific features like [removing](regex-empty-conditional-comments) empty Outlook conditional comments
+- Has email-specific features like [removing](https://www.npmjs.com/package/regex-empty-conditional-comments) empty Outlook conditional comments
 - Faster than parsing cleaners - algorithm completes cleaning in two input (string) traversals
 - Attempts to fix some code issues, for example, remove space in `< body` (which would otherwise break in Chrome)
 - API contains no file I/O operations or anything front-end-related — it's "string-in, string-out"
 - All dependencies are either our own or Lodash's or Mr Sindre Sorhus'
 - CommonJS, ES Modules and UMD builds available, published to npm and available to consume via CDN's like unpkg.com
 - Complete console logging set and retained in the source (which is automatically removed from builds)
-- Modern setup: ava pointing at ES Modules build, Rollup bundling the builds, coverage high and [tracked](https://coveralls.io/bitbucket/codsen/email-comb), prettier and ESLint in place
+- Modern setup: ava pointing at ES Modules build, Rollup bundling the builds, coverage high, prettier and ESLint in place
 - Lets you improve the algorithm precision by letting it know how do templating variables look
 
 WEAKNESSES:
