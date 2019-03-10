@@ -1,7 +1,7 @@
 /**
  * array-includes-with-glob
  * like _.includes but with wildcards
- * Version: 2.11.11
+ * Version: 2.11.12
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/array-includes-with-glob

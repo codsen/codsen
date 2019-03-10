@@ -1,6 +1,6 @@
 {
   "name": "charcode-is-valid-xml-name-character",
-  "version": "1.10.11",
+  "version": "1.10.12",
   "description": "Does a given character belong to XML spec's \"Production 4 OR 4a\" type (is acceptable for XML element's name)",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ranges-is-index-within": "^1.13.11"
+    "ranges-is-index-within": "^1.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

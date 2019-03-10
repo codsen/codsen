@@ -1,7 +1,7 @@
 /**
  * string-strip-html
  * Strips HTML tags from strings. Detects legit unencoded brackets.
- * Version: 4.0.2
+ * Version: 4.0.3
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-strip-html

@@ -1,6 +1,6 @@
 {
   "name": "object-all-values-equal-to",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "description": "Does the AST/nested-plain-object/array/whatever contain only one kind of value?",
   "license": "MIT",
   "engines": {
@@ -161,7 +161,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.7",
+    "check-types-mini": "^5.7.8",
     "lodash.isequal": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },

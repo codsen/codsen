@@ -1,6 +1,6 @@
 {
   "name": "string-remove-thousand-separators",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Detects and removes thousand separators (dot/comma/quote/space) from string-type digits",
   "license": "MIT",
   "engines": {
@@ -161,12 +161,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.7",
+    "check-types-mini": "^5.7.8",
     "is-numeric": "^0.0.9",
     "lodash.isplainobject": "^4.0.6",
     "lodash.trim": "^4.5.1",
-    "ranges-apply": "^3.0.2",
-    "ranges-push": "^3.0.2"
+    "ranges-apply": "^3.0.3",
+    "ranges-push": "^3.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

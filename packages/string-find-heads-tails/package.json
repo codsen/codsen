@@ -1,6 +1,6 @@
 {
   "name": "string-find-heads-tails",
-  "version": "3.14.11",
+  "version": "3.14.12",
   "description": "Search for string pairs. A special case of string search algorithm.",
   "license": "MIT",
   "engines": {
@@ -160,14 +160,14 @@
     "sourceMap": false
   },
   "dependencies": {
-    "arrayiffy-if-string": "^3.10.11",
-    "check-types-mini": "^5.7.7",
+    "arrayiffy-if-string": "^3.10.12",
+    "check-types-mini": "^5.7.8",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.2",
-    "string-match-left-right": "^3.10.11"
+    "string-match-left-right": "^3.10.12"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
