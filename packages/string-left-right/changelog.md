@@ -3,24 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.0.0 (2019-03-04)
-
-### Features
-
-- Initial release ([6a3394b](https://gitlab.com/codsen/codsen/commit/6a3394b))
-- Merge modes via opts.mergeType ([7fb1c5f](https://gitlab.com/codsen/codsen/commit/7fb1c5f))
-
-### BREAKING CHANGES
-
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
-
-## 1.10.7 (2019-02-10)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
 ## 1.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
@@ -28,11 +10,7 @@ placed into second input argument instead
 
 ## 1.6.0 (2018-12-26)
 
-### Features
-
-- improvements to opts.addSingleSpaceToPreventAccidentalConcatenation ([8bb929a](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/8bb929a))
-- opts.addSingleSpaceToPreventAccidentalConcatenation ([19b1390](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/19b1390))
-- opts.addSingleSpaceToPreventAccidentalConcatenation improvements ([47df5be](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/47df5be))
+- ✨ Added `opts.addSingleSpaceToPreventAccidentalConcatenation` ([19b1390](https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right/commits/19b1390))
 
 ## 1.5.0 (2018-10-26)
 

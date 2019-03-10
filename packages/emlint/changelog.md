@@ -7,15 +7,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
-- Integrate string-fix-broken-named-entities ([bf26962](https://gitlab.com/codsen/codsen/commit/bf26962))
-- Merge modes via opts.mergeType ([7fb1c5f](https://gitlab.com/codsen/codsen/commit/7fb1c5f))
-- Rule tag-generic-error ([70dd628](https://gitlab.com/codsen/codsen/commit/70dd628))
-- Rules tag-missing-space-before-attribute and tag-stray-quotes ([fe7c5af](https://gitlab.com/codsen/codsen/commit/fe7c5af))
-
-### BREAKING CHANGES
-
-- Second input argument, progressFn, was moved into opts.progressFn and opts was
-placed into second input argument instead
+- Integrate package `string-fix-broken-named-entities` ([bf26962](https://gitlab.com/codsen/codsen/commit/bf26962))
+- Rule `tag-generic-error` ([70dd628](https://gitlab.com/codsen/codsen/commit/70dd628))
+- Rules `tag-missing-space-before-attribute` and `tag-stray-quotes` ([fe7c5af](https://gitlab.com/codsen/codsen/commit/fe7c5af))
 
 ## 0.8.0 (2019-02-26)
 

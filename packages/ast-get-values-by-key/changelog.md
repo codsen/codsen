@@ -3,35 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## 2.6.7 (2019-02-10)
-
-### Bug Fixes
-
-- Fix the Create New Issue URLs ([c5ee4a6](https://gitlab.com/codsen/codsen/commit/c5ee4a6))
-
-## 2.5.0 (2019-01-11)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/commits/4f00871))
-
-## 2.4.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/commits/4f00871))
-
-## 2.3.0 (2019-01-08)
-
-### Features
-
-- Add one more tag before which there will be a line break ([4f00871](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/commits/4f00871))
-
 ## 2.2.0 (2018-12-26)
 
 ### Features
 
-- supplement the getter's result with path ([1594a36](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/commits/1594a36))
+- Supplement the getter's result with path ([1594a36](https://gitlab.com/codsen/codsen/tree/master/packages/ast-get-values-by-key/commits/1594a36))
 
 ## 2.1.0 (2018-10-13)
 
