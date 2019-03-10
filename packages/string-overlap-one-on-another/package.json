@@ -1,6 +1,6 @@
 {
   "name": "string-overlap-one-on-another",
-  "version": "1.5.10",
+  "version": "1.5.11",
   "description": "Lay one string on top of another, with an optional offset",
   "license": "MIT",
   "engines": {
@@ -167,7 +167,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.6",
+    "check-types-mini": "^5.7.7",
     "is-natural-number": "^4.0.1",
     "lodash.isplainobject": "^4.0.6"
   },

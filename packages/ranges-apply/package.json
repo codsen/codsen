@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "engines": {
@@ -164,7 +164,7 @@
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^4.0.1"
+    "ranges-merge": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

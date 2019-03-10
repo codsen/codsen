@@ -1,6 +1,6 @@
 {
   "name": "ranges-crop",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Crop array of ranges when they go beyond the reference string's length",
   "license": "MIT",
   "engines": {
@@ -165,7 +165,7 @@
   "dependencies": {
     "is-natural-number": "^4.0.1",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-merge": "^4.0.1"
+    "ranges-merge": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -182,7 +182,7 @@
     "lodash.clonedeep": "^4.5.0",
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
-    "ranges-apply": "^3.0.1",
+    "ranges-apply": "^3.0.2",
     "rollup": "^1.6.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",

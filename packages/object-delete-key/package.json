@@ -1,6 +1,6 @@
 {
   "name": "object-delete-key",
-  "version": "1.8.10",
+  "version": "1.8.11",
   "description": "Delete keys from all arrays or plain objects, nested within anything, by key or by value or by both, and clean up afterwards. Accepts wildcards.",
   "license": "MIT",
   "engines": {
@@ -169,11 +169,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-is-empty": "^1.9.10",
-    "ast-monkey": "^7.10.10",
-    "check-types-mini": "^5.7.6",
+    "ast-is-empty": "^1.9.11",
+    "ast-monkey": "^7.10.11",
+    "check-types-mini": "^5.7.7",
     "lodash.clonedeep": "^4.5.0",
-    "util-array-object-or-both": "^2.7.10"
+    "util-array-object-or-both": "^2.7.11"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
