@@ -13,7 +13,7 @@ deploy:
   stage: deploy
   script:
     - git status
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}\nusername=${NPM_USERNAME}\nemail=${NPM_EMAIL}' > .npmrc
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}\nusername=${NPM_USERNAME}\nemail=${NPM_EMAIL}' > ~/.npmrc
     - echo '1'
     - git status
     - git checkout master
