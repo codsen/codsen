@@ -30,7 +30,7 @@
     "readme:generate": "node ./scripts/generate-readme.js",
     "republish": "make republish",
     "wipe": "rm -rf node_modules && npx lerna clean -y",
-    "pub:vers": "lerna version --conventional-commits --yes && lernacleanchangelog '**'"
+    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --no-push --yes && lernacleanchangelog '**'"
   },
   "husky": {
     "hooks": {
