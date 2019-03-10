@@ -13,7 +13,7 @@ args=("$@")
 function dir_command {
     #This example command implements doing git status for folder
     cd $1
-    mv CHANGELOG1.md CHANGELOG.md
+    mv README1.md README.md
     cd ..
 }
 
