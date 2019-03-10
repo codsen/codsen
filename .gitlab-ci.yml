@@ -15,26 +15,32 @@ deploy:
   stage: deploy
   script:
     - git status
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}\nusername=${NPM_USERNAME}\nemail=${NPM_EMAIL}' > .npmrc
+    - echo '1'
+    - git status
     - git checkout master
-    - echo '5'
+    - echo '2'
+    - git status
     - npm run bootstrap
-    - echo '6'
+    - echo '3'
+    - git status
     - npm run all:test:full
-    - echo '7'
+    - echo '4'
+    - git status
     - npm run readme:generate
-    - echo '8'
+    - echo '5'
+    - git status
     - npm run pub:vers
-    - echo '9'
+    - echo '6'
+    - git status
     - git add packages
-    - echo '10'
+    - echo '7'
     - git status
     - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
-    - echo '11'
-    - git status
-    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
-    - echo '12'
+    - echo '8'
     - git status
     - npm run republish
-    - echo '13'
+    - echo '9'
+    - git status
     - git push origin master
-    - echo '14 - done'
+    - echo '10 - done'
