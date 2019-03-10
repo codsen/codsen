@@ -8,7 +8,7 @@ deploy:
   stage: deploy
   script:
     - git config --global credential.helper store
-    - git remote add origin https://oauth2:$PERSONAL_ACCESS_TOKEN@gitlab.com/codsen/codsen.git
+    - git remote set-url origin https://gitlab-ci-token:$PERSONAL_ACCESS_TOKEN@gitlab.com/codsen/codsen.git
     - git config --global user.email "$GITLAB_USER_EMAIL"
     - git config --global user.name "$YOUR_NAME_SURNAME"
     - npm set unsafe-perm true -g
