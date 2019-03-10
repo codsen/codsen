@@ -7,15 +7,44 @@ before_script:
   - git remote set-url origin https://oauth2:$PERSONAL_ACCESS_TOKEN@gitlab.com/codsen/codsen.git
   - git config --global user.email $GITLAB_USER_EMAIL
   - git config --global user.name $YOUR_NAME_SURNAME
+  - npm set unsafe-perm true -g
+  - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
+  - npm set username $NPM_USERNAME -g
+  - npm set email $NPM_EMAIL -g
+  - echo "git user:"
+  - git config user.name
+  - echo "npm user:"
+  - npm whoami
 
 deploy:
   image: node:latest
   stage: deploy
   script:
+    - echo '1'
     - git status
-    - git config user.name
-    - npm set unsafe-perm true -g
-    - npm set //registry.npmjs.org/:_authToken $NPM_TOKEN -g
-    - npm set username $NPM_USERNAME -g
-    - npm set email $NPM_EMAIL -g
-    - npm whoami
+    - git checkout master
+    - echo '2'
+    - git status
+    - npm run bootstrap
+    - echo '3'
+    - git status
+    - npm run all:test:only
+    - echo '4'
+    - git status
+    - npm run readme:generate
+    - echo '5'
+    - git status
+    - npm run pub:vers
+    - echo '6'
+    - git status
+    - git add packages
+    - echo '7'
+    - git status
+    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
+    - echo '8'
+    - git status
+    - npm run republish
+    - echo '9'
+    - git status
+    - git push origin master
+    - echo '10 - done'
