@@ -42,13 +42,13 @@ import fix from "string-fix-broken-named-entities";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 24 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 25 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-fix-broken-named-entities.umd.js` | 43 KB |
+Type            | Key in `package.json` | Path  | Size
+----------------|-----------------------|-------|--------
+Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports` | `main`                | `dist/string-fix-broken-named-entities.cjs.js` | 43 KB
+**ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`. | `module`              | `dist/string-fix-broken-named-entities.esm.js` | 43 KB
+**UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`            | `dist/string-fix-broken-named-entities.umd.js` | 58 KB
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Idea
 
@@ -67,7 +67,7 @@ console.log(JSON.stringify(fix("a&bnsp;b&nsbp;c&nspb;"), null, 4));
 // => [[1, 7, "&nbsp;"], [8, 14, "&nbsp;"], [15, 21, "&nbsp;"]]
 ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Usage
 
@@ -102,7 +102,7 @@ console.log(`resultStr = "${resultStr}"`);
 // => resultStr = "x &nbsp; y"
 ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## API - Input
 
@@ -111,7 +111,7 @@ console.log(`resultStr = "${resultStr}"`);
 | `str`          | String       | yes         | Input string                                              |
 | `opts`         | Plain object | no          | Pass the Optional Options Object here, as second argument |
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ### Optional Options Object
 
@@ -131,7 +131,7 @@ For example the Optional Options Object could be like this:
 }
 ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## API - Output
 
@@ -143,7 +143,7 @@ If you set `opts.decode` and there are healthy encoded entities, those will not 
 
 For example, you'd first filter the string using this library, `string-fix-broken-named-entities`. Then you'd filter the same input skipping already recorded ranges, using [ranges-ent-decode](https://www.npmjs.com/package/ranges-ent-decode). Then you'd merge the ranges.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## `opts.cb` - a callback function
 
@@ -223,7 +223,7 @@ Here's the detailed description of all the keys, values and their types:
 | rangeValEncoded                                                            | `&pi;`                                                 | string or `null`                | Encoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 | rangeValDecoded                                                            | `\u03C0`                                               | string or `null`                | Decoded entity or `null` if fix should just delete that index range and there's nothing to insert |
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ### `opts.decode` in relation to `opts.cb`
 
@@ -251,7 +251,7 @@ Since we give user an option to choose between raw and encoded values, result ca
   [[5, 5, ";"], [11, 11, ";"], [17, 17, ";"]];
   ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## `opts.progressFn` - another callback function
 
@@ -280,7 +280,7 @@ const result = fix(
 // value out of the worker
 ```
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Tips
 
@@ -291,7 +291,7 @@ You can save time and improve the workflow by making use of other range- class l
 
 There are [other libraries](https://gitlab.com/codsen/codsen/tree/master#-11-range-libraries) for [cropping](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-crop), [sorting](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-sort), [merging](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-merge), performing regex-to-range [searches](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-regex) and others.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Why not regexes?
 
@@ -308,26 +308,26 @@ Furthermore, the rules in this library's algorithm are too complex for regexes, 
 
 Good luck putting the above in a regex and later troubleshooting it, after a few months.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Practical use
 
 This library was initially part of [Detergent.js](https://gitlab.com/codsen/codsen/tree/master/packages/detergent) and was taken out, rewritten; its unit tests were beefed up and consolidated and appropriately organised. Almost any tool that deals with HTML can make use of this library, especially, since it **only reports what was done** (instead of returning a mutated string which is up to you to compare and see what was done). It's easy to catch false positives this way.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Contributing
 
-- If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here).
-- If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). Let's discuss it.
-- If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). We'll try to help.
-- If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
+* If you see an error, [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here).
+* If you want a new feature but can't code it up yourself, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). Let's discuss it.
+* If you tried to use this package, but something didn't work out, also [raise an issue](https://gitlab.com/codsen/codsen/issues/new?issue[title]=string-fix-broken-named-entities%20package%20-%20put%20title%20here&issue[description]=%23%23%20string-fix-broken-named-entities%0A%0Aput%20description%20here). We'll try to help.
+* If you want to contribute some code, fork the [monorepo](https://gitlab.com/codsen/codsen/) via GitLab, then write code, then file a pull request on GitLab. We'll merge it in and release.
 
 In monorepo, npm libraries are located in `packages/` folder. Inside, the source code is located either in `src/` folder (normal npm library) or in the root, `cli.js` (if it's a command line application).
 
 The npm script "`dev`", the `"dev": "rollup -c --dev --silent"` builds the development version retaining all `console.log`s with row numbers. It's handy to have [js-row-num-cli](https://www.npmjs.com/package/js-row-num-cli) installed globally so you can automatically update the row numbers on all `console.log`s.
 
-**[⬆ back to top](#)**
+**[⬆  back to top](#)**
 
 ## Licence
 
@@ -335,19 +335,28 @@ MIT License
 
 Copyright (c) 2015-2019 Roy Revelt and other contributors
 
+
+
 [node-img]: https://img.shields.io/node/v/string-fix-broken-named-entities.svg?style=flat-square&label=works%20on%20node
 [node-url]: https://www.npmjs.com/package/string-fix-broken-named-entities
+
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
-[cov-img]: https://img.shields.io/badge/coverage-87.43%25-brightgreen.svg?style=flat-square
+
+[cov-img]: https://img.shields.io/badge/coverage-87.56%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities
+
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-fix-broken-named-entities
+
 [downloads-img]: https://img.shields.io/npm/dm/string-fix-broken-named-entities.svg?style=flat-square
 [downloads-url]: https://npmcharts.com/compare/string-fix-broken-named-entities
+
 [runkit-img]: https://img.shields.io/badge/runkit-test_in_browser-a853ff.svg?style=flat-square
 [runkit-url]: https://npm.runkit.com/string-fix-broken-named-entities
+
 [prettier-img]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
 [prettier-url]: https://prettier.io
+
 [license-img]: https://img.shields.io/badge/licence-MIT-51c838.svg?style=flat-square
 [license-url]: https://gitlab.com/codsen/codsen/blob/master/LICENSE

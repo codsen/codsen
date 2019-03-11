@@ -1214,6 +1214,15 @@ test(`04.006 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
   t.deepEqual(fix(inp1), null, "04.006.01");
 });
 
+test(`04.007 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp`, t => {
+  // encoded
+  const inp1 = "text&amp;nbsp;text";
+  t.deepEqual(fix(inp1), [[4, 14, "&nbsp;"]], "04.006.01 - double encoded");
+
+  const inp2 = "text&amp;amp;nbsp;text";
+  t.deepEqual(fix(inp2), [[4, 18, "&nbsp;"]], "04.006.02 - triple encoded");
+});
+
 // -----------------------------------------------------------------------------
 // 05. opts.cb
 // -----------------------------------------------------------------------------

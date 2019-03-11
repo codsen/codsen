@@ -47,8 +47,8 @@ export default commandLineArgs => {
       external: [
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "string-left-right",
-        "ranges-merge"
+        "ranges-merge",
+        "string-left-right"
       ],
       plugins: [
         strip({
@@ -70,8 +70,8 @@ export default commandLineArgs => {
       external: [
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "string-left-right",
-        "ranges-merge"
+        "ranges-merge",
+        "string-left-right"
       ],
       plugins: [
         strip({
