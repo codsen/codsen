@@ -1190,6 +1190,30 @@ test(`04.002 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} -
   );
 });
 
+test(`04.003 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - consecutive &amp;`, t => {
+  // encoded
+  const inp1 = "&amp;";
+  t.deepEqual(fix(inp1), null, "04.003.01");
+});
+
+test(`04.004 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - consecutive &amp;`, t => {
+  // encoded
+  const inp1 = "&amp; &amp; &amp;";
+  t.deepEqual(fix(inp1), null, "04.004.01");
+});
+
+test(`04.005 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - B&Q #1`, t => {
+  // encoded
+  const inp1 = "B&amp;Q";
+  t.deepEqual(fix(inp1), null, "04.005.01");
+});
+
+test(`04.006 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - B&Q #2`, t => {
+  // encoded
+  const inp1 = "text B&amp;Q text";
+  t.deepEqual(fix(inp1), null, "04.006.01");
+});
+
 // -----------------------------------------------------------------------------
 // 05. opts.cb
 // -----------------------------------------------------------------------------
