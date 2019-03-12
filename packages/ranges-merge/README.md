@@ -87,6 +87,26 @@ It returns a new array of zero or more arrays, with ranges merged (where applica
 
 **[⬆ back to top](#)**
 
+### Optional Options Object
+
+| Options Object's key | The type of its value                   | Default     | Description                                                                                                                                                                                                                                                                          |
+| -------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| {                    |                                         |             |
+| `mergeType`          | number                                  | `1`         | The type of merge. See below for explanation. |
+| `progressFn`   | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
+| `joinRangesThatTouchEdges` | boolean         | `true` | By default, if two ranges "touch", `[[1, 2], [2, 3]]` they are joined. Set this option to `false` to stop that. Handy when reporting [separate issues](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities). |
+| }                    |                                         |             |
+
+Here it is, in one place, in case you want to copy-paste it somewhere:
+
+```js
+{
+  mergeType: 1,
+  progressFn: null,
+  joinRangesThatTouchEdges: true
+}
+```
+
 ## `opts.progressFn`
 
 Consider this example (notice an arrow function in the second input argument):
@@ -141,9 +161,7 @@ Do we end up with `"ab"` or `"b"` or something else?
 
 In all other aspects, `opts.mergeType` modes `1` and `2` are the same.
 
-**[⬆ back to top](#)**
-
-## Clashing content to insert
+## `opts.mergeType` example
 
 Imagine a messed up piece of code: `<div>&nbbsp;</div>`. Let's say our imaginary cleaning program detected two issues with it:
 
@@ -165,7 +183,23 @@ Range-wise, it could look like this:
 ];
 ```
 
-Notice we have two ranges' "insert" values clashing, `[5, 6]` and `[5, 12]`, but we want latter to discard the former.
+Notice we have two ranges' "insert" values clashing, `[5, 6]` and `[5, 12]`, but we want latter to discard the former. That's where `opts.mergeType` setting `2` come in.
+
+Mode `2` is the same to `1` except clashing "insert" values are resolved by deleting value on the left and keeping one on the right, in the order of sorted ranges array.
+
+For example,
+
+```js
+const res1 = mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 1 });
+console.log(res1);
+// => [[3, 12, "aaazzz"]]
+
+const res2 = mergeRanges([[3, 4, "aaa"], [3, 12, "zzz"]], { mergeType: 2 });
+console.log(res2);
+// => [[3, 12, "zzz"]]
+```
+
+In the example above, notice how ranges got sorted. The sorting algorithm first sorted by first element (`3` which was the same on both) then on a second (`4` vs `12`). The range `[3, 12, "zzz"]` came second, its third element, "what to insert", `"zzz"` clashed with first one's `"aaa"`, wiping it.
 
 **[⬆ back to top](#)**
 
