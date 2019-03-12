@@ -38,7 +38,8 @@ function mergeRanges(arrOfRanges, originalOpts) {
   }
   var defaults = {
     mergeType: 1,
-    progressFn: null
+    progressFn: null,
+    joinRangesThatTouchEdges: true
   };
   var opts;
   if (originalOpts) {
@@ -55,6 +56,9 @@ function mergeRanges(arrOfRanges, originalOpts) {
         } else {
           throw new Error("ranges-merge: [THROW_ID_02] opts.mergeType was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.mergeType), "\", equal to ").concat(JSON.stringify(opts.progressFn, null, 4)));
         }
+      }
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error("ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: \"".concat(_typeof(opts.joinRangesThatTouchEdges), "\", equal to ").concat(JSON.stringify(opts.joinRangesThatTouchEdges, null, 4)));
       }
     } else {
       throw new Error("emlint: [THROW_ID_03] the second input argument must be a plain object. It was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (type ").concat(_typeof(originalOpts), ")"));
@@ -91,7 +95,7 @@ function mergeRanges(arrOfRanges, originalOpts) {
         opts.progressFn(percentageDone);
       }
     }
-    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
+    if (sortedRanges[i][0] <= sortedRanges[i - 1][0] || !opts.joinRangesThatTouchEdges && sortedRanges[i][0] < sortedRanges[i - 1][1] || opts.joinRangesThatTouchEdges && sortedRanges[i][0] <= sortedRanges[i - 1][1]) {
       sortedRanges[i - 1][0] = Math.min(sortedRanges[i][0], sortedRanges[i - 1][0]);
       sortedRanges[i - 1][1] = Math.max(sortedRanges[i][1], sortedRanges[i - 1][1]);
       if (sortedRanges[i][2] !== undefined && (sortedRanges[i - 1][0] >= sortedRanges[i][0] || sortedRanges[i - 1][1] <= sortedRanges[i][1])) {

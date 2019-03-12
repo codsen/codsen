@@ -31,6 +31,15 @@ test("00.03 - throws when the second arg is wrong", t => {
   t.regex(error1.message, /THROW_ID_03/);
 });
 
+test("00.04 - throws when opts.joinRangesThatTouchEdges is wrong", t => {
+  const error1 = t.throws(() => {
+    mergeRanges([[1, 2], [0, 1]], {
+      joinRangesThatTouchEdges: "z"
+    });
+  });
+  t.regex(error1.message, /THROW_ID_04/);
+});
+
 // 01. mergeRanges()
 // ==========================
 
@@ -38,9 +47,16 @@ test("01.01 - simples: merges three overlapping ranges", t => {
   const input = [[3, 8], [1, 4], [2, 5]];
   const inputBackup = clone(input);
   t.deepEqual(mergeRanges(input), [[1, 8]], "01.01.01 - two args");
+  t.deepEqual(
+    mergeRanges(input, {
+      joinRangesThatTouchEdges: false
+    }),
+    [[1, 8]],
+    "01.01.02 - two args"
+  );
 
   // input argument mutation checks:
-  t.deepEqual(input, inputBackup, "01.01.02 - no mutation happened");
+  t.deepEqual(input, inputBackup, "01.01.03 - no mutation happened");
 });
 
 test("01.02 - nothing to merge", t => {
@@ -49,11 +65,33 @@ test("01.02 - nothing to merge", t => {
     [[1, 2], [3, 8]],
     "01.02.01 - just sorted"
   );
+  t.deepEqual(
+    mergeRanges([[3, 8], [1, 2]], {
+      joinRangesThatTouchEdges: false
+    }),
+    [[1, 2], [3, 8]],
+    "01.02.02"
+  );
 });
 
 test("01.03 - empty input", t => {
   t.deepEqual(mergeRanges([]), [], "01.03.01 - empty array");
   t.deepEqual(mergeRanges(null), null, "01.03.02 - null");
+  // with opts
+  t.deepEqual(
+    mergeRanges([], {
+      joinRangesThatTouchEdges: false
+    }),
+    [],
+    "01.03.03 - empty array"
+  );
+  t.deepEqual(
+    mergeRanges(null, {
+      joinRangesThatTouchEdges: false
+    }),
+    null,
+    "01.03.04 - null"
+  );
 });
 
 test("01.04 - more complex case", t => {
@@ -89,6 +127,23 @@ test("01.04 - more complex case", t => {
     "01.04.04"
   );
   t.true(counter > 5, "01.04.05");
+
+  // with opts
+  t.deepEqual(
+    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+      joinRangesThatTouchEdges: false
+    }),
+    [[1, 5], [6, 10], [10, 30]],
+    "01.04.06"
+  );
+  t.deepEqual(
+    mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+      mergeType: 1,
+      joinRangesThatTouchEdges: false
+    }),
+    [[1, 5], [6, 10], [10, 30]],
+    "01.04.07"
+  );
 });
 
 test("01.05 - even more complex case", t => {
@@ -335,5 +390,28 @@ test("02.01 - few ranges starting at the same index", t => {
     mergeRanges([[3, 12, "zzz"], [3, 4, "aaa"]], { mergeType: 2 }),
     [[3, 12, "zzz"]], // ^ order does not matter
     "02.01.07"
+  );
+});
+
+// 3. opts.joinRangesThatTouchEdges
+// -----------------------------------------------------------------------------
+
+test("03.01 - third arg", t => {
+  const inp1 = [[1, 3, "a"], [3, 6, "b"]];
+  const res1 = [[1, 6, "ab"]];
+  t.deepEqual(mergeRanges(inp1), res1, "03.01.01");
+  t.deepEqual(
+    mergeRanges(inp1, {
+      joinRangesThatTouchEdges: true
+    }),
+    res1,
+    "03.01.02"
+  );
+  t.deepEqual(
+    mergeRanges(inp1, {
+      joinRangesThatTouchEdges: false
+    }),
+    inp1,
+    "03.01.03"
   );
 });

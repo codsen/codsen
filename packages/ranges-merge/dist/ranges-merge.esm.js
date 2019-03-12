@@ -20,7 +20,8 @@ function mergeRanges(arrOfRanges, originalOpts) {
   }
   const defaults = {
     mergeType: 1,
-    progressFn: null
+    progressFn: null,
+    joinRangesThatTouchEdges: true
   };
   let opts;
   if (originalOpts) {
@@ -49,6 +50,15 @@ function mergeRanges(arrOfRanges, originalOpts) {
             )}`
           );
         }
+      }
+      if (typeof opts.joinRangesThatTouchEdges !== "boolean") {
+        throw new Error(
+          `ranges-merge: [THROW_ID_04] opts.joinRangesThatTouchEdges was customised to a wrong thing! It was given of a type: "${typeof opts.joinRangesThatTouchEdges}", equal to ${JSON.stringify(
+            opts.joinRangesThatTouchEdges,
+            null,
+            4
+          )}`
+        );
       }
     } else {
       throw new Error(
@@ -95,7 +105,10 @@ function mergeRanges(arrOfRanges, originalOpts) {
     }
     if (
       sortedRanges[i][0] <= sortedRanges[i - 1][0] ||
-      sortedRanges[i][0] <= sortedRanges[i - 1][1]
+      ((!opts.joinRangesThatTouchEdges &&
+        sortedRanges[i][0] < sortedRanges[i - 1][1]) ||
+        (opts.joinRangesThatTouchEdges &&
+          sortedRanges[i][0] <= sortedRanges[i - 1][1]))
     ) {
       sortedRanges[i - 1][0] = Math.min(
         sortedRanges[i][0],
