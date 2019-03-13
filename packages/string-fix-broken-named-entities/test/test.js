@@ -90,7 +90,6 @@ test(`01.004 - ${`\u001b[${35}m${`throws`}\u001b[${39}m`} - opts.progressFn is n
 // -----------------------------------------------------------------------------
 
 test(`02.001 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, with semicol, tight`, t => {
-  // encoded
   const inp1 = "zzznbsp;zzznbsp;";
   const outp1 = [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.001.01 - letter + nbsp");
@@ -1195,38 +1194,46 @@ test(`04.002 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} -
   );
 });
 
-test(`04.003 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - consecutive &amp;`, t => {
-  // encoded
+// -----------------------------------------------------------------------------
+// 05. multiple encoding
+// -----------------------------------------------------------------------------
+
+test(`05.001 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - no consecutive &amp;`, t => {
   const inp1 = "&amp;";
-  t.deepEqual(fix(inp1), null, "04.003.01");
+  t.deepEqual(fix(inp1), null, "05.001");
 });
 
-test(`04.004 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - consecutive &amp;`, t => {
-  // encoded
+test(`05.002 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp;`, t => {
   const inp1 = "&amp; &amp; &amp;";
-  t.deepEqual(fix(inp1), null, "04.004.01");
+  t.deepEqual(fix(inp1), null, "05.002");
 });
 
-test(`04.005 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - B&Q #1`, t => {
-  // encoded
+test(`05.003 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`, t => {
+  const inp1 = "&amp;&amp;&amp;";
+  t.deepEqual(fix(inp1), null, "05.003");
+});
+
+test(`05.004 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - consecutive &amp; tight`, t => {
+  const inp1 = "abc&amp;&amp;&amp;xyz";
+  t.deepEqual(fix(inp1), null, "05.004");
+});
+
+test(`05.005 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #1`, t => {
   const inp1 = "B&amp;Q";
-  t.deepEqual(fix(inp1), null, "04.005.01");
+  t.deepEqual(fix(inp1), null, "05.005");
 });
 
-test(`04.006 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - B&Q #2`, t => {
-  // encoded
+test(`05.006 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`&amp;`}\u001b[${39}m - B&Q #2`, t => {
   const inp1 = "text B&amp;Q text";
-  t.deepEqual(fix(inp1), null, "04.006.01");
+  t.deepEqual(fix(inp1), null, "05.006");
 });
 
-test(`04.007 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp - double encoded - no cb`, t => {
-  // encoded
+test(`05.007 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - no cb`, t => {
   const inp1 = "text&amp;nbsp;text";
-  t.deepEqual(fix(inp1), [[5, 9]], "04.007 - double encoded");
+  t.deepEqual(fix(inp1), [[5, 9]], "05.007 - double encoded");
 });
 
-test(`04.008 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp - double encoded - with cb`, t => {
-  // encoded
+test(`05.008 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - double encoded - with cb`, t => {
   const inp1 = "text&amp;nbsp;text";
   t.deepEqual(
     fix(inp1, {
@@ -1241,7 +1248,7 @@ test(`04.008 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: null,
             rangeValDecoded: null
           },
-          "04.008.01"
+          "05.008.01"
         );
 
         // same cb() callback as defined at the top of this file:
@@ -1251,54 +1258,133 @@ test(`04.008 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
       }
     }),
     [[5, 9]],
-    "04.008.02 - double encoded"
+    "05.008.02 - double encoded"
   );
 });
 
-test(`04.009 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp - triple encoded`, t => {
+test(`05.009 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - triple encoded`, t => {
   const inp1 = "text&amp;amp;nbsp;text";
-  t.deepEqual(fix(inp1), [[5, 13]], "04.009 - triple encoded");
+  t.deepEqual(fix(inp1), [[5, 13]], "05.009 - triple encoded");
 
   const inp2 = "text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text";
-  t.deepEqual(fix(inp2), [[5, 49]], "04.009 - triple encoded");
+  t.deepEqual(fix(inp2), [[5, 49]], "05.009 - triple encoded");
 });
 
-test(`04.010 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, t => {
-  // encoded
+test(`05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, t => {
   const inp1 = "textamp;nbsp;text";
-  t.deepEqual(fix(inp1), [[4, 8, "&"]], "04.010.01");
+  t.deepEqual(fix(inp1), [[4, 8, "&"]], "05.010.01");
 
   const inp2 = "text amp;nbsp;text";
-  t.deepEqual(fix(inp2), [[5, 9, "&"]], "04.010.02");
+  t.deepEqual(fix(inp2), [[5, 9, "&"]], "05.010.02");
 
   const inp3 = "text\tamp;nbsp;text";
-  t.deepEqual(fix(inp3), [[4, 9, " &"]], "04.010.03");
+  t.deepEqual(fix(inp3), [[4, 9, " &"]], "05.010.03");
 
   const inp4 = "text\namp;nbsp;text";
-  t.deepEqual(fix(inp4), [[5, 9, "&"]], "04.010.04");
+  t.deepEqual(fix(inp4), [[5, 9, "&"]], "05.010.04");
 });
 
-test(`04.011 - ${`\u001b[${36}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - cb`, t => {
-  // encoded
+test(`05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - cb`, t => {
   const inp1 = "textamp;nbsp;text";
-  t.deepEqual(fix(inp1, { cb }), [[4, 8, "&"]], "04.011");
+  t.deepEqual(
+    fix(inp1, {
+      cb: received => {
+        t.deepEqual(received, { a: "b" }, "05.011.01");
+        return cb(received);
+      }
+    }),
+    [[4, 8, "&"]],
+    "05.011.02"
+  );
+});
+
+test(`05.012 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set`, t => {
+  const inp1 = "textamp;nsp;text";
+  t.deepEqual(fix(inp1), [[4, 12, "&nbsp;"]], "05.012");
+});
+
+test(`05.013 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - cb`, t => {
+  const inp1 = "textamp;nsp;text";
+  t.deepEqual(fix(inp1, { cb }), [[4, 12, "&nbsp;"]], "05.013");
+});
+
+test(`05.014 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #1`, t => {
+  const inp1 = "text    a  m p   ; a  mp   ; a m   p   ;   n   s p    ;text";
+  t.deepEqual(fix(inp1), [[5, 55, "&nbsp;"]], "05.014");
+});
+
+test(`05.015 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #1 - cb`, t => {
+  const inp1 = "text    a  m p   ; a  mp   ; a m   p   ;   n   s p    ;text";
+  t.deepEqual(fix(inp1, { cb }), [[5, 55, "&nbsp;"]], "05.015");
+});
+
+test(`05.016 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2`, t => {
+  const inp1 =
+    "text    &  a  m p   ; a  mp   ; a m   p   ;    n   s p    ;text";
+  t.deepEqual(fix(inp1), [[5, 59, "&nbsp;"]], "05.016");
+});
+
+test(`05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb`, t => {
+  const inp1 =
+    "text    &  a  m p   ; a  mp   ; a m   p   ;    n   s p    ;text";
+  t.deepEqual(fix(inp1, { cb }), [[5, 59, "&nbsp;"]], "05.017");
+});
+
+test(`05.018 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`, t => {
+  const inp1 = "abc &nbs;";
+  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.018");
+});
+
+test(`05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`, t => {
+  const inp1 = "abc &nbs;";
+  t.deepEqual(fix(inp1, { cb }), [[4, 9, "&nbsp;"]], "05.019");
+});
+
+test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`, t => {
+  const inp1 = "abc &nbs; xyz";
+  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.020.01");
+  t.deepEqual(fix(inp1, { cb }), [[4, 9, "&nbsp;"]], "05.020.02");
+
+  const inp2 = "&nbs; xyz";
+  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.020.03");
+  t.deepEqual(fix(inp2, { cb }), [[0, 5, "&nbsp;"]], "05.020.04");
+});
+
+test(`05.021 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`, t => {
+  const inp1 = "abc&nbs;";
+  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.021");
+});
+
+test(`05.022 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`, t => {
+  const inp1 = "abc&nbs;";
+  t.deepEqual(fix(inp1, { cb }), [[3, 8, "&nbsp;"]], "05.022");
+});
+
+test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`, t => {
+  const inp1 = "abc&nbs; xyz";
+  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.023.01");
+  t.deepEqual(fix(inp1, { cb }), [[3, 8, "&nbsp;"]], "05.023.02");
+
+  const inp2 = "&nbs; xyz";
+  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.023.03");
+  t.deepEqual(fix(inp2, { cb }), [[0, 5, "&nbsp;"]], "05.023.04");
 });
 
 // -----------------------------------------------------------------------------
-// 05. opts.cb
+// 06. opts.cb
 // -----------------------------------------------------------------------------
 
-test(`05.001 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`default callback`}\u001b[${39}m mimicking non-cb result`, t => {
+test(`06.001 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`default callback`}\u001b[${39}m mimicking non-cb result`, t => {
   t.deepEqual(
     fix("zzznbsp;zzznbsp;", {
       cb
     }),
     [[3, 8, "&nbsp;"], [11, 16, "&nbsp;"]],
-    "05.001 - letter + nbsp"
+    "06.001 - letter + nbsp"
   );
 });
 
-test(`05.002 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${34}m${`emlint issue spec callback`}\u001b[${39}m `, t => {
+test(`06.002 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${33}m${`emlint issue spec`}\u001b[${39}m callback`, t => {
   t.deepEqual(
     fix("zzznbsp;zzznbsp;", {
       cb: oodles => {
@@ -1329,15 +1415,15 @@ test(`05.002 - ${`\u001b[${31}m${`opts.cb`}\u001b[${39}m`} - \u001b[${34}m${`eml
         position: [11, 16, "&nbsp;"]
       }
     ],
-    "05.002"
+    "06.002"
   );
 });
 
 // -----------------------------------------------------------------------------
-// 06. opts.progressFn
+// 07. opts.progressFn
 // -----------------------------------------------------------------------------
 
-test(`06.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress`, t => {
+test(`07.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports progress`, t => {
   t.deepEqual(
     fix(
       "text &ang text&ang text text &ang text&ang text text &ang text&ang text"
@@ -1350,7 +1436,7 @@ test(`06.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports pro
       [53, 57, "&ang;"],
       [62, 66, "&ang;"]
     ],
-    "06.001.01 - baseline"
+    "07.001.01 - baseline"
   );
 
   let count = 0;
@@ -1373,9 +1459,9 @@ test(`06.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports pro
       [53, 57, "&ang;"],
       [62, 66, "&ang;"]
     ],
-    "06.001.02 - calls the progress function"
+    "07.001.02 - calls the progress function"
   );
-  t.true(typeof count === "number" && count <= 101 && count > 0, "06.001.03");
+  t.true(typeof count === "number" && count <= 101 && count > 0, "07.001.03");
 });
 
 // -----------------------------------------------------------------------------

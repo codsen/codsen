@@ -10,7 +10,7 @@
 import isObj from 'lodash.isplainobject';
 import rangesMerge from 'ranges-merge';
 import clone from 'lodash.clonedeep';
-import { rightSeq, right, left } from 'string-left-right';
+import { left, right, leftSeq, rightSeq } from 'string-left-right';
 
 var allNamedEntities = [
   "AElig",
@@ -2276,9 +2276,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           str[i].toLowerCase() !== "b" &&
           str[i].toLowerCase() !== "s" &&
           str[i].toLowerCase() !== "p") ||
-        str[i - 1] === ";") &&
+        str[left(str, i)] === ";") &&
       str[i] !== ";" &&
-      (str[i + 1] === undefined || str[i + 1] !== ";")
+      (str[i + 1] === undefined || str[right(str, i)] !== ";")
     ) {
       if (
         (nbsp.ampersandNecessary !== false &&
@@ -2339,6 +2339,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (
       str[i] &&
       str[i - 1] === ";" &&
+      !leftSeq(str, i - 1, "a", "m", "p") &&
       str[i] !== ";" &&
       matchedLettersCount > 0
     ) {
@@ -2749,6 +2750,23 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (str[i] === ";") {
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedSemicol = i;
+        if (
+          (nbsp.matchedN &&
+            !nbsp.matchedB &&
+            !nbsp.matchedS &&
+            !nbsp.matchedP) ||
+          (!nbsp.matchedN &&
+          nbsp.matchedB &&
+            !nbsp.matchedS &&
+            !nbsp.matchedP) ||
+          (!nbsp.matchedN &&
+          !nbsp.matchedB &&
+          nbsp.matchedS &&
+            !nbsp.matchedP) ||
+          (!nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP)
+        ) {
+          nbspWipe();
+        }
       }
     }
     if (state_AmpersandNotNeeded) {
@@ -2769,7 +2787,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       str[i].toLowerCase() !== "s" &&
       str[i].toLowerCase() !== "p" &&
       str[i] !== "&" &&
-      str[i] !== ";"
+      str[i] !== ";" &&
+      str[i] !== " "
     ) {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
