@@ -240,7 +240,7 @@ In general, when you want to minify **a mixed source code** like HTML template w
 
 ## Non-deterministic unit tests
 
-This library has usual unit tests written for `ava`, with coverage tracked by `nyc` and reported onto [coveralls.io](https://coveralls.io/bitbucket/codsen/html-crush).
+This library has usual unit tests written for `ava`, with coverage tracked by `nyc`.
 
 Yawn.
 

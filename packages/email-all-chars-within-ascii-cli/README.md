@@ -17,15 +17,15 @@ Other siblings of this package:
 
 Call on one file:
 
-![ran on one file](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/email-all-chars-within-ascii-cli/media/mov1.gif)
+![ran on one file](https://glcdn.githack.com/codsen/codsen/raw/master/packages/email-all-chars-within-ascii-cli/media/mov1.gif)
 
 Call just the application and it will let you choose a file from that folder:
 
-![ran without any arguments](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/email-all-chars-within-ascii-cli/media/mov2.gif)
+![ran without any arguments](https://glcdn.githack.com/codsen/codsen/raw/master/packages/email-all-chars-within-ascii-cli/media/mov2.gif)
 
 Call on multiple files all at once:
 
-![ran on multiple files all at once](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/email-all-chars-within-ascii-cli/media/mov3.gif)
+![ran on multiple files all at once](https://glcdn.githack.com/codsen/codsen/raw/master/packages/email-all-chars-within-ascii-cli/media/mov3.gif)
 
 **[⬆ back to top](#)**
 

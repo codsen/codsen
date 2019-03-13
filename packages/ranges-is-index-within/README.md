@@ -97,7 +97,7 @@ A wrong type will cause `throw`s.
 
 <!-- prettier-ignore-end -->
 
-Options object is "patrolled" using [check-types-mini](https://bitbucket.org/codsen/check-types-mini) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
+Options object is "patrolled" using `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) so please behave: the settings' values have to match and settings object should not be customised with extra keys. Naughtiness will cause `throw`s.
 
 Here is the options object in one place (in case you ever want to copy it):
 
@@ -127,7 +127,7 @@ You can wire up temporary `console.log` and use [ranges-sort](https://gitlab.com
 
 Now you can save users' resources and turn off range sorting in this library using `opts.skipIncomingRangeSorting`.
 
-For example, in my library [charcode-is-valid-xml-name-character](https://bitbucket.org/codsen/charcode-is-valid-xml-name-character) I'm checking is the character a valid to be XML element's name. I know Unicode ranges upfront, so I sorted them, console-logg'ed and pasted as constant. Then, when checking user input character's index, is it among my ranges, I use this library, `ranges-is-index-within`, with sorting turned off.
+For example, in my library `charcode-is-valid-xml-name-character` ([npm](https://www.npmjs.com/package/charcode-is-valid-xml-name-character), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/charcode-is-valid-xml-name-character)) I'm checking is the character a valid to be XML element's name. I know Unicode ranges upfront, so I sorted them, console-logg'ed and pasted as constant. Then, when checking user input character's index, is it among my ranges, I use this library, `ranges-is-index-within`, with sorting turned off.
 
 **[⬆ back to top](#)**
 

@@ -30,19 +30,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Added
 
-- ✨ Updated to the latest release of [ast-monkey-traverse](https://bitbucket.org/codsen/ast-monkey-traverse) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
+- ✨ Updated to the latest release of `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) which gives the `innerObj.path` in the callback object. The path is exactly the same notation as per popular [object-path](https://www.npmjs.com/package/object-path) and you can feed `innerObj.path` to `object-path`, you'd get `current`. However, this enables us to traverse up the tree, following the path. That's the reason why I added this feature - to traverse the AST up to root when resolving variables in [json-variables](https://www.npmjs.com/package/json-variables).
 
 ## 7.2.0 (2017-12-23)
 
 ### Changed
 
-- ✨ Separated `traverse()` into a [standalone library](https://bitbucket.org/codsen/ast-monkey-traverse) and then tapped it
+- ✨ Separated `traverse()` into a standalone library, `ast-monkey-traverse` ([npm](https://www.npmjs.com/package/ast-monkey-traverse), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey-traverse)) and then tapped it
 
 ## 7.1.0 (2017-10-29)
 
 ### Added
 
-- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with [ast-compare](https://bitbucket.org/codsen/ast-compare) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
+- ✨ `find()` and `del()` methods previously were using string-to-string comparisons. I replaced `lodash.isequal` with `ast-compare` ([npm](https://www.npmjs.com/package/ast-compare), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-compare)) running in strict mode with wildcards enabled. Now you can use [matcher](https://github.com/sindresorhus/matcher/) API when querying the keys or values.
 - ✨ Some rebasing done to improve the algorithm's performance. For example, `find()` and `del()` previously matched the actual content first, then checked `opts.only` conditions. It was not effective because why perform a check if `opts.only` is not satisfied anyway? Now, `opts.only` checks, is it of a desired type, and if so, continues to compare the values.
 
 ## 7.0.0 (2017-10-23)
@@ -145,7 +145,7 @@ Hardened the API, namely, all added more validations to options object key value
 
 ### Added
 
-- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for [json-variables](https://bitbucket.org/codsen/json-variables) to allow variables lookup at deeper levels, not only at the root. 🦄
+- ✨ `innerObj.parent` to `traverse()`. Now you can query sibling elements. I needed this for `json-variables` ([npm](https://www.npmjs.com/package/json-variables), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables)) to allow variables lookup at deeper levels, not only at the root. 🦄
 
 ## 5.0.0 (2017-04-30)
 
@@ -182,7 +182,9 @@ The good thing about being not popular is you can make breaking changes and very
 
 ### Added
 
-- ✨ Imagine, you're using [`🐒.traverse()`](https://bitbucket.org/codsen/ast-monkey#traverse) on the following piece of AST:
+
+
+- ✨ Imagine, you're using `🐒.traverse()` ([ast-monkey on npm](https://www.npmjs.com/package/ast-monkey#traverse)/[ast-monkey on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey#traverse)) on the following piece of AST:
 
 ```js
 {
@@ -196,7 +198,7 @@ The good thing about being not popular is you can make breaking changes and very
 
 When you'll be traversing the array, `['something', 'anything']`, you'll have access to the **key name**, `title`, via `innerObj.topmostKey` on the callback. ✨
 
-I needed this feature for [json-variables](https://bitbucket.org/codsen/json-variables) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
+I needed this feature for `json-variables` ([npm](https://www.npmjs.com/package/json-variables), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/json-variables)) where I wanted to access `title_data` key, same-named key except with appended string, at the same level as parent. This does not affect any unit tests, it's a handy extra information piece which was always there, only just now tapped. 👍
 
 ## 3.1.0 (2017-04-01) International Fools day No tricks here though
 

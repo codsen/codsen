@@ -88,7 +88,7 @@ console.log(JSON.stringify(res, null, 4));
 
 Notice, you can use all the features of regexes: global, case insensitive flags and so on.
 
-PS. Be careful not to signify the intention to omit the third argument by setting it to `null`. The `null` is a valid value in _ranges_ [ecosystem](https://bitbucket.org/account/user/codsen/projects/RNG) and it is used in ranges to "kill off" any present insertion values. For example, you merge two ranges and one says "add this" (in a form of third argument) and second says, disregard all that content to add, here's `null` to defuse them for good.
+PS. Be careful not to signify the intention to omit the third argument by setting it to `null`. The `null` is a valid value in _ranges_ [ecosystem](https://gitlab.com/codsen/codsen#-11-range-libraries) and it is used in ranges to "kill off" any present insertion values. For example, you merge two ranges and one says "add this" (in a form of third argument) and second says, disregard all that content to add, here's `null` to defuse them for good.
 
 **[⬆ back to top](#)**
 

@@ -11,7 +11,7 @@
 
 Other siblings of this package:
 
-- API for it: [csv-sort](https://bitbucket.org/codsen/csv-sort)
+- API for it: [csv-sort on npm](https://www.npmjs.com/package/csv-sort), [csv-sort on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort)
 
 ## Table of Contents
 
@@ -77,7 +77,7 @@ Sometimes internet banking CSV's have rows in a wrong order, especially when ent
 
 ![2D trim of a CSV contents](https://glcdn.githack.com/codsen/codsen/raw/63d7dc7cee9c957d3dc51d14af99b557c081a250/packages/csv-sort/media/img2.png)
 
-3.  Not to mention, the [our custom CSV parse](https://bitbucket.org/codsen/csv-split-easy) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with a double quotes. Read more in [its repo's readme](https://bitbucket.org/codsen/csv-split-easy).
+3.  Not to mention, the our custom CSV parser ([npm](https://www.npmjs.com/package/csv-split-easy), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy)) used here will ensure that all CSV cell _contents_ are trimmed, and there are no empty rows between the content rows. It also accepts any commas as content if the cell is wrapped with a double quotes. Read more in its repo's readme [on npm](https://www.npmjs.com/package/csv-split-easy), or [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy)).
 
 **[⬆ back to top](#)**
 

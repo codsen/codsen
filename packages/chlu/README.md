@@ -35,12 +35,12 @@ Here's what you'll get:
 
 ## What it does
 
-`chlu` stands for CHangeLog Update. This library is the API for [`chlu-cli`](https://bitbucket.org/codsen/chlu-cli) which you should install with a `-g` flag. You probably should check it [instead](https://bitbucket.org/codsen/chlu-cli).
+`chlu` stands for CHangeLog Update. This library is the API for `chlu-cli` ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)) which you should install with a `-g` flag. You probably should check it _instead_ ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)).
 
 Diff links are useful for new starters in programming — they allow to see how the particular feature was implemented and _learn_.
 Diff links are useful for regular consumers of npm libraries — they give more reassurance that the library is really maintained and provide a glimpse about its quality.
 
-When I saw the diff links for the first time in somebody's CHANGELOG, I told myself, I must get one too. However, diff links are a pain to maintain, hence this library. Make sure you install [chlu-cli](https://bitbucket.org/codsen/chlu-cli) though. This one is just an API for it.
+When I saw the diff links for the first time in somebody's CHANGELOG, I told myself, I must get one too. However, diff links are a pain to maintain, hence this library. Make sure you install `chlu-cli` ([npm](https://www.npmjs.com/package/chlu-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/chlu-cli)) though. This one is just an API for it.
 
 **[⬆ back to top](#)**
 

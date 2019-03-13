@@ -70,7 +70,7 @@ Input:
 
 Input string will be traversed, and if/when the first unacceptable character is encountered, an error will be thrown.
 
-Options object is sanitised by [check-types-mini](https://bitbucket.org/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognised keys. You'll thank me later.
+Options object is sanitised by check-types-mini ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) which will `throw` if you set options' keys to wrong types or add unrecognised keys. You'll thank me later.
 
 **Defaults**:
 

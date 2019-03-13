@@ -26,7 +26,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 API changes - new input argument - `gitTags` comes as 2nd, and existing arguments from 2nd (inclusive) onwards shift by one place further.
 It's necessary so that we could accomodate the Git tag customisations.
 
-- ✨ Provider: GitHub or BitBucket is extracted automatically from `package.json`. You probably noticed, BitBucket's versions in diff URL are backwards (later version goes first) and separator between versions is `%0D`. Not to mention different root. For example: https://bitbucket.org/codsen/array-includes-with-glob/branches/compare/v2.3.6%0Dv2.3.5
+- ✨ Provider: GitHub or BitBucket is extracted automatically from `package.json`. You probably noticed, BitBucket's versions in diff URL are backwards (later version goes first) and separator between versions is `%0D`. Not to mention different root.
 - ✨ If the repo already has diff links in changelog but in a wrong provider's format (GitHub vs BitBucket, either way), `chlu` will reference the `package.json` and will correct the diff links automatically.
 - ✨ If second (newly added) argument is provided, diffs will be rendered more precisely — namely, diff link will be calculated not from the release, last mentioned in the CHANGELOG, but from its last patch release. This is because between feature (minor/major) releases which get mentioned in CHANGELOG I produce numerous patch maintenance releases: updates, setup tweaks and whatnot which are not mentioned in CHANGELOG. Since those are not mentioned, diff link doesn't pick them up and up until now, it didn't even know they existed because Git info was not tapped. Until now, that is. We tapped Git data and [chlu-cli](https://www.npmjs.com/package/chlu-cli) will provide it to us when it will be "driving" the action.
 
@@ -38,7 +38,7 @@ It's necessary so that we could accomodate the Git tag customisations.
 
 ## 2.9.0 (2018-03-10)
 
-- ✨ Switched from deprecated [posthtml-ast-contains-only-empty-space](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space) to fresh [ast-contains-only-empty-space](https://www.npmjs.com/package/ast-contains-only-empty-space)
+- ✨ Switched from deprecated `posthtml-ast-contains-only-empty-space` ([npm](https://www.npmjs.com/package/posthtml-ast-contains-only-empty-space), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/posthtml-ast-contains-only-empty-space)) to fresh `ast-contains-only-empty-space` ([npm](https://www.npmjs.com/package/ast-contains-only-empty-space), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-contains-only-empty-space))
 - ✨ Updated all dependencies
 - 💥 Removing UMD build - nobody's gonna use this library in a browser
 

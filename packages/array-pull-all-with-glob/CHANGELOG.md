@@ -39,7 +39,7 @@ GitHub sold us out. In the meantime, we:
 
 - ✨ `opts.caseSensitive`, directly controlling today's new released [matcher's](https://www.npmjs.com/package/matcher) same feature. Case sensitive is on by default now, but you can turn it off if you're dealing with file system stuff for example. It's best to be case-insensitive in those cases.
 
-Also, I set up [check-types-mini](https://bitbucket.org/codsen/check-types-mini) to patrol the opts' types. Just in case consumers misbehave.
+Also, I set up `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) to patrol the opts' types. Just in case consumers misbehave.
 
 ## 4.1.0 (2018-01-21)
 

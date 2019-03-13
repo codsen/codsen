@@ -1,4 +1,4 @@
-![idea](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/chlu-cli/media/0_idea.png)
+![idea](https://glcdn.githack.com/codsen/codsen/raw/master/packages/chlu-cli/media/0_idea.png)
 
 # chlu-cli
 
@@ -34,7 +34,7 @@ chlu
 
 On a default setting, `chlu` just silently does the job — checks and fixes your changelog. If you want some output, call it with `--loud` flag. It will say "OK" each time it writes successfully.
 
-Chlu works on both **Bitbucket** and **Github** (God bless M\$) repositories.
+Chlu works on both **Bitbucket** and **Github** (God bless M$) repositories.
 
 `chlu` stands for **CH**ange**L**og **U**pdate. We should note that all changelogs should follow the rules given by http://keepachangelog.com. Now, the tedious part is **diff links**. Chlu takes care of them. Also, changelog should have all dates in ISO format, should have diff links between changelog entries and use a consistent title format, for example, `## [1.11.0] - 2018-07-24`. These are main things, and `chlu-cli` automates updating all that.
 
@@ -42,7 +42,7 @@ Chlu works on both **Bitbucket** and **Github** (God bless M\$) repositories.
 
 ## What it does
 
-![features](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/chlu-cli/media/features_comp.png)
+![features](https://glcdn.githack.com/codsen/codsen/raw/master/packages/chlu-cli/media/features_comp.png)
 
 **7 main features (see above):**
 

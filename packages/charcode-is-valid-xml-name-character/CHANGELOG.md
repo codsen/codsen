@@ -42,7 +42,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.1.0 (2018-02-06)
 
-- ✨ Tapped the dependency [ranges-is-index-within](https://bitbucket.org/codsen/ranges-is-index-within) with sorting turned off to save resources. (`opts.skipIncomingRangeSorting` setting)
+- ✨ Tapped the dependency `ranges-is-index-within` ([npm](https://www.npmjs.com/package/ranges-is-index-within), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ranges-is-index-within)) with sorting turned off to save resources. (`opts.skipIncomingRangeSorting` setting)
 
 ## 1.0.0 (2018-02-05)
 

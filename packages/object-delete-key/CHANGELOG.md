@@ -31,11 +31,11 @@ GitHub sold us out. In the meantime, we:
 ## 1.2.0 (2018-03-11)
 
 - ✨ Updated all dependencies
-- ✨ Switched from deprecated [posthtml-ast-is-empty](https://bitbucket.org/codsen/posthtml-ast-is-empty) to [ast-is-empty](https://bitbucket.org/codsen/ast-is-empty)
+- ✨ Switched from deprecated `posthtml-ast-is-empty` to `ast-is-empty` ([npm](https://www.npmjs.com/package/ast-is-empty), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-is-empty))
 
 ## 1.1.0 (2017-10-30)
 
-- ✨ Now accepts globs everywhere, see [matcher](https://github.com/sindresorhus/matcher)'s API which is driving the globbing. This comes from [ast-monkey](https://bitbucket.org/codsen/ast-monkey) tapping `matcher`.
+- ✨ Now accepts globs everywhere, see [matcher](https://github.com/sindresorhus/matcher)'s API which is driving the globbing. This comes from `ast-monkey` ([npm](https://www.npmjs.com/package/ast-monkey), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey)) tapping `matcher`.
 
 ## 1.0.0 (2017-10-23)
 

@@ -13,7 +13,7 @@
 
 Other siblings of this package:
 
-- CLI (command-line app) version: [csv-sort-cli](https://bitbucket.org/codsen/csv-sort-cli)
+- CLI (command-line app) version: `csv-sort-cli` ([npm](https://www.npmjs.com/package/csv-sort-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort-cli))
 
 ## Table of Contents
 

@@ -9,10 +9,10 @@
 [![Code style: prettier][prettier-img]][prettier-url]
 [![MIT License][license-img]][license-url]
 
-_If you have any difficulties with the output of this plugin, please use the [email-comb](https://bitbucket.org/codsen/codsen/issues/new?title=email-comb%20package%20-%20put%20title%20here) issue tracker._
+_If you have any difficulties with the output of this plugin, please use the [email-comb](https://gitlab.com/codsen/codsen/issues/new?issue%5Btitle%5D=email-comb%20package%20-%20put%20title%20here&issue%5Bdescription%5D=%23%23%20email-comb%0A%0Aput%20description%20here) issue tracker._
 
 - Online web app: [EmailComb](https://emailcomb.com)
-- The core library: [email-comb](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb).
+- The core library: `email-comb` ([npm](https://www.npmjs.com/package/email-comb), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/email-comb)).
 
 ## Table of Contents
 

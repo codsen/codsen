@@ -81,7 +81,7 @@ Since it's on by default, and it behaves differently to if it were off, it's a b
 ### Added
 
 - ✨ Dropped JS Standard and moved to raw ESLint on `airbnb-base` preset with semicolons off. JS Standard does not have many important rules on, beware.
-- ✨ Options - third input argument, with all validation (driven by [check-types-mini](https://bitbucket.org/codsen/check-types-mini))
+- ✨ Options - third input argument, with all validation (driven by `check-types-mini` [on npm](https://www.npmjs.com/package/check-types-mini), [on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini))
 
 ## 2.2.0 (2017-05-20)
 

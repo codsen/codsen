@@ -30,7 +30,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 2.1.0 (2018-03-06)
 
-- ✨ PR [#3](https://bitbucket.org/codsen/csv-split-easy/pull/3) from [@mac-](https://github.com/mac-) now caters double quotes wrapping double quotes, used as a means of escaping code
+- ✨ PR \#3 from [@mac-](https://github.com/mac-) now caters double quotes wrapping double quotes, used as a means of escaping code
 - 🔧 Updated dependencies. Rollup is continuously improving and build sizes are getting smaller.
 
 ## 2.0.0 (2017-11-08)
@@ -41,7 +41,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.3.0 (2017-08-16)
 
-- ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's [string-remove-thousand-separators](https://bitbucket.org/codsen/string-remove-thousand-separators) internally doing it.
+- ✨ `opts.removeThousandSeparatorsFromNumbers`. On by default. That's `string-remove-thousand-separators` ([npm](https://www.npmjs.com/package/string-remove-thousand-separators), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/string-remove-thousand-separators)) internally doing it.
 - ✨ `opts.padSingleDecimalPlaceNumbers`. On by default. `10.2` → `10.20`.
 - ✨ `opts.forceUKStyle`. Off by default. `10,15` → `10.15`.
 

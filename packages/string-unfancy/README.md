@@ -1,4 +1,4 @@
-![](https://bitbucket.org/codsen/codsen/raw/e99ef54c0bac616e3b12cc4133aafb617f3fc053/packages/string-unfancy/media/logo.png)
+![](https://glcdn.githack.com/codsen/codsen/raw/master/packages/string-unfancy/media/logo.png)
 
 # string-unfancy
 

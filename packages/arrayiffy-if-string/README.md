@@ -68,7 +68,7 @@ console.log("res = " + JSON.stringify(res, null, 4));
 // => true
 ```
 
-It's main purpose is to prepare the input argument options' objects. Check out [check-types-mini](https://bitbucket.org/codsen/check-types-mini).
+It's main purpose is to prepare the input argument options' objects. Check out `check-types-mini` on [npm](https://www.npmjs.com/package/check-types-mini), or on [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini).
 
 **[⬆ back to top](#)**
 

@@ -85,7 +85,7 @@ Input:
 - the first argument - string only or will `throw`.
 - the second argument - optional options object. Anything else than `undefined`, `null` or a plain object will `throw`.
 
-Options object is sanitized by [check-types-mini](https://bitbucket.org/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
+Options object is sanitized by `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) which will `throw` if you set options' keys to wrong types or add unrecognized keys. You'll thank me later.
 
 **[⬆ back to top](#)**
 

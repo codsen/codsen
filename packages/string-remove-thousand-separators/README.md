@@ -51,7 +51,7 @@ Here's what you'll get:
 
 This library detects and removes a thousand separators from numeric strings.
 
-The main consumer will be [csv-split-easy](https://bitbucket.org/codsen/csv-split-easy) which deals with exported Internet Banking CSV files in a double-entry accounting format.
+The main consumer will be `csv-split-easy` ([npm](https://www.npmjs.com/package/csv-split-easy), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy)) which deals with exported Internet Banking CSV files in a double-entry accounting format.
 
 The numeric string must be NUMERIC, that is, not contain any letters or other unrelated characters. It can contain empty space though, which will be automatically trimmed.
 
@@ -134,7 +134,7 @@ Second input argument, `opts`, is optional. However, if _it is_ present and is n
 
 This library uses my new favourite, string trickle-class ("strickle-class") algorithm. The string is looped (we aim once, but it depends on the complexity of the task) and the characters trickle one-by-one through our "traps" where we flip boolean flags and count stuff accordingly to what's passing by.
 
-That's a different approach from using regexes. Regexes are an easy solution when it is possible to achieve it using them. However, most of the cases, limits of regexes dictate the limits of the algorithms, and as a result, we sometimes see crippled web apps that are not smart and not really universal. For example, when we banked with Metro Bank back in 2015, they used to export CSV's with some numbers having a thousand separators and some not having them. Also, separately from that, some numbers were wrapped with double quotes, and some were not. That drew my accounting software crazy, and we had to manually edit the CSV's each time. Funnily, a combination of this library and [csv-split-easy](https://bitbucket.org/codsen/csv-split-easy) would solve such issues. The question is, how come corporate software can't do things that open source can? Is it corporate ceilings of all kinds or is it the power of JavaScript?
+That's a different approach from using regexes. Regexes are an easy solution when it is possible to achieve it using them. However, most of the cases, limits of regexes dictate the limits of the algorithms, and as a result, we sometimes see crippled web apps that are not smart and not really universal. For example, when we banked with Metro Bank back in 2015, they used to export CSV's with some numbers having a thousand separators and some not having them. Also, separately from that, some numbers were wrapped with double quotes, and some were not. That drew my accounting software crazy, and we had to manually edit the CSV's each time. Funnily, a combination of this library and `csv-split-easy` ([npm](https://www.npmjs.com/package/csv-split-easy), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-split-easy)) would solve such issues. The question is, how come corporate software can't do things that open source can? Is it corporate ceilings of all kinds or is it the power of JavaScript?
 
 **[⬆ back to top](#)**
 

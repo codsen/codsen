@@ -103,7 +103,7 @@ test(`00.04 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - em
 // 01. rule "tag-space-after-opening-bracket"
 // -----------------------------------------------------------------------------
 test(`01.00 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - all fine (control)`, t => {
-  t.is(lint("<table>").issues.length, 0, "01.00.01");
+  t.deepEqual(lint("<table>").issues, [], "01.00.01");
 });
 
 test(`01.02 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - single space`, t => {
@@ -726,7 +726,7 @@ test(`02.31 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ogham spa
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
 test(`03.00 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - all fine (control)`, t => {
-  t.is(lint("<table>").issues.length, 0, "03.00.01");
+  t.deepEqual(lint("<table>").issues, [], "03.00.01");
 });
 
 test(`03.01 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - one tag with capital letter`, t => {
@@ -771,17 +771,17 @@ test(`03.02 - ${`\u001b[${36}m${`tag-name-lowercase`}\u001b[${39}m`} - few tags 
 test(`04.01 - ${`\u001b[${34}m${`file-wrong-type-line-ending-*`}\u001b[${39}m`} - consistent line endings given, no desired option set`, t => {
   // desired line endings are not defined but they are consistent
   // 1. all CR
-  t.is(lint("\r").issues.length, 0, "04.01.01");
-  t.is(lint("aaaaaa\rbbbbbbbb\r\rcccccc").issues.length, 0, "04.01.02");
-  t.is(lint("aaaaaa\rbbbbbbbb\r\rcccccc\r").issues.length, 0, "04.01.03");
+  t.deepEqual(lint("\r").issues, [], "04.01.01");
+  t.deepEqual(lint("aaaaaa\rbbbbbbbb\r\rcccccc").issues, [], "04.01.02");
+  t.deepEqual(lint("aaaaaa\rbbbbbbbb\r\rcccccc\r").issues, [], "04.01.03");
   // 2. all LF
-  t.is(lint("\n").issues.length, 0, "04.01.04");
-  t.is(lint("aaaaaa\nbbbbbbbb\n\ncccccc").issues.length, 0, "04.01.05");
-  t.is(lint("aaaaaa\nbbbbbbbb\n\ncccccc\n").issues.length, 0, "04.01.06");
+  t.deepEqual(lint("\n").issues, [], "04.01.04");
+  t.deepEqual(lint("aaaaaa\nbbbbbbbb\n\ncccccc").issues, [], "04.01.05");
+  t.deepEqual(lint("aaaaaa\nbbbbbbbb\n\ncccccc\n").issues, [], "04.01.06");
   // 3. all CRLF
-  t.is(lint("\r\n").issues.length, 0, "04.01.04");
-  t.is(lint("aaa\r\nbbb\r\n\r\nccc").issues.length, 0, "04.01.05");
-  t.is(lint("aaa\r\nbbb\r\n\r\nccc\r\n").issues.length, 0, "04.01.06");
+  t.deepEqual(lint("\r\n").issues, [], "04.01.04");
+  t.deepEqual(lint("aaa\r\nbbb\r\n\r\nccc").issues, [], "04.01.05");
+  t.deepEqual(lint("aaa\r\nbbb\r\n\r\nccc\r\n").issues, [], "04.01.06");
 });
 
 test(`04.02 - ${`\u001b[${34}m${`file-wrong-type-line-ending-*`}\u001b[${39}m`} - consistent line endings given, matching the desired option set`, t => {
@@ -1415,7 +1415,7 @@ test(`04.17 - ${`\u001b[${33}m${`file-mixed-line-endings-file-is-*-mainly`}\u001
   });
   const res3 = lint(input, {});
   const res4 = lint(input);
-  t.is(res.issues.length, 0, "04.17.01");
+  t.deepEqual(res.issues, [], "04.17.01");
   // different missing opts yield the same:
   t.deepEqual(res, res2, "04.16.02");
   t.deepEqual(res, res3, "04.16.03");
@@ -1428,11 +1428,11 @@ test(`04.17 - ${`\u001b[${33}m${`file-mixed-line-endings-file-is-*-mainly`}\u001
 test(`05.01 - ${`\u001b[${31}m${`tag-attribute-space-between-name-and-equals`}\u001b[${39}m`} - all OK (control)`, t => {
   const input1 = `<zzz>`;
   const res1 = lint(input1);
-  t.is(res1.issues.length, 0, "05.01.01");
+  t.deepEqual(res1.issues, [], "05.01.01");
 
   const input2 = `<zzz yyy="qqq">`;
   const res2 = lint(input2);
-  t.is(res2.issues.length, 0, "05.01.02");
+  t.deepEqual(res2.issues, [], "05.01.02");
 });
 
 test(`05.02 - ${`\u001b[${31}m${`tag-attribute-space-between-name-and-equals`}\u001b[${39}m`} - spaces`, t => {
@@ -1467,11 +1467,11 @@ test(`05.02 - ${`\u001b[${31}m${`tag-attribute-space-between-name-and-equals`}\u
 test(`06.01 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - control, no excessive gaps`, t => {
   const input1 = `<aaa bbb="ccc" ddd="eee">`;
   const res1 = lint(input1);
-  t.is(res1.issues.length, 0, "06.01.01");
+  t.deepEqual(res1.issues, [], "06.01.01");
 
   const input2 = `<aaa bbb="ccc" ddd="eee"/>`;
   const res2 = lint(input2);
-  t.is(res2.issues.length, 0, "06.01.02");
+  t.deepEqual(res2.issues, [], "06.01.02");
 });
 
 test(`06.02 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - single space between tag name and attr`, t => {
@@ -3948,13 +3948,32 @@ test(`27.10 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wh
   );
 });
 
-// 28. ESP templating language recognition
+// 28. rule "bad-named-html-entity-amp-repetitions"
 // -----------------------------------------------------------------------------
 
-test(`28.01 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags, more complex`, t => {
+test.only(`28.01 - ${`\u001b[${32}m${`bad-named-html-entity-amp-repetitions`}\u001b[${39}m`} - recognises simple double-encoded entity`, t => {
+  const bad2 = `&amp;nbsp;`;
+  const good2 = `&nbsp;`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "28.01.01");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-named-html-entity-amp-repetitions"],
+    "28.01.02"
+  );
+});
+
+test(`28.02 - ${`\u001b[${32}m${`bad-named-html-entity-amp-repetitions`}\u001b[${39}m`} - not an issue`, t => {
+  t.deepEqual(lint("&amp; &amp; &amp;").issues, [], "28.02.01");
+});
+
+// 29. ESP templating language recognition
+// -----------------------------------------------------------------------------
+
+test(`29.01 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags, more complex`, t => {
   const good1 = `<img{% if klm %} class="z"{% endif %} alt="1"/>`;
   const res1 = lint(good1);
-  t.deepEqual(getUniqueIssueNames(res1.issues), [], "28.01");
+  t.deepEqual(getUniqueIssueNames(res1.issues), [], "29.01");
 });
 
 // 99. Util Unit tests
@@ -4907,6 +4926,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templatin
 // test.todo("file-trailing-line-break-absent");
 // stray letters at the end of a line, surrounded by tag one the left and EOL
 // <>< ><gh="ij">< ><>
+// <table ab="bb cc="dd">
 
 // todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 

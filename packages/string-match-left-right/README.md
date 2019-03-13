@@ -110,7 +110,7 @@ Here it is with defaults, in one place, ready for copying:
 }
 ```
 
-The Optional Options Object is sanitized by [check-types-mini](https://bitbucket.org/codsen/check-types-mini) which will `throw` if you set options' keys to wrong types or add any unrecognized keys.
+The Optional Options Object is sanitized by ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) which will `throw` if you set options' keys to wrong types or add any unrecognized keys.
 
 ```js
 // K E Y

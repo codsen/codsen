@@ -66,7 +66,7 @@ By _smartly_ we mean:
 - Thanks to `update-notifier` CLI will pester you to update if newer version is released
 - Rumors are speading `update-versions` should work on Windows too
 
-PS. We are using `update-versions` to maintain itself — our [monorepo](https://bitbucket.org/codsen/codsen/src/master/) version updates are driven by this very CLI and it is part of the [monorepo](https://bitbucket.org/codsen/codsen/src/master/).
+PS. We are using `update-versions` to maintain itself — our [monorepo](https://gitlab.com/codsen/codsen/) version updates are driven by this very CLI and it is part of the [monorepo](https://gitlab.com/codsen/codsen/).
 
 **[⬆ back to top](#)**
 

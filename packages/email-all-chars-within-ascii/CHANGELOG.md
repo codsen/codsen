@@ -56,7 +56,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 1.1.0 (2017-08-27)
 
-- ✨ `opts.messageOnly` throws only a message. Used in [CLI](https://bitbucket.org/codsen/email-all-chars-within-ascii-cli/) version of this lib.
+- ✨ `opts.messageOnly` throws only a message. Used in CLI ([npm](https://www.npmjs.com/package/email-all-chars-within-ascii-cli), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/email-all-chars-within-ascii-cli)) version of this lib.
 
 ## 1.0.0 (2017-08-24)
 

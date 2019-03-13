@@ -34,7 +34,7 @@ GitHub sold us out. In the meantime, we:
 
 ## 4.2.0 (2017-10-05)
 
-- ✨ `opts.enforceStrictKeyset`. Default is `true`, but if it is set to `false`, you are allowed to pass in unrecognised keys within an options object. It's handy when reusing options objects across multiple libraries, where API is similar but not exactly the same. As a drawback, you won't be alerted if you guess the API wrongly, pass in an option that doesn't exist in particular library (but you think it does) and [check-types-mini](https://bitbucket.org/codsen/check-types-mini) detects it and throws an error.
+- ✨ `opts.enforceStrictKeyset`. Default is `true`, but if it is set to `false`, you are allowed to pass in unrecognised keys within an options object. It's handy when reusing options objects across multiple libraries, where API is similar but not exactly the same. As a drawback, you won't be alerted if you guess the API wrongly, pass in an option that doesn't exist in particular library (but you think it does) and `check-types-mini` ([npm](https://www.npmjs.com/package/check-types-mini), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/check-types-mini)) detects it and throws an error.
 
 ## 4.1.0 (2017-10-05)
 

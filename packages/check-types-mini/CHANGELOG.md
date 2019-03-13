@@ -183,7 +183,7 @@ checkTypes(opts, defaults <...>)
 - ✨ Now `opts.schema` understands `opts.acceptArrays` setting: if the latter is `true`, that array will be traversed and each key will be matched against the types supplied in `opts.schema`. No more errors telling that array does not match the required type when `opts.acceptArrays` is on and all types inside that array match the types required by `opts.schema`.
 - More unit tests. Coverage is still solid 100%.
 
-Funny, I discovered this issue when I tried to set up `check-types-mini` on [easy-replace](https://bitbucket.org/codsen/easy-replace). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
+Funny, I discovered this issue when I tried to set up `check-types-mini` on `easy-replace` ([npm](https://www.npmjs.com/package/easy-replace), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/easy-replace)). Like they say, eat what you cook - the easiest way to discover issues is to use your own software. Especially, in production.
 
 ## 2.1.0 (2017-06-18)
 

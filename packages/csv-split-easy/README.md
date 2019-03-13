@@ -64,8 +64,8 @@ Outside of the scope:
 
 - Trimming the values of leading and trailing empty space. Just use `String.prototype.trim()`
 - Parsing numeric values. Parse them yourself. It's outside of the scope of this lib.
-- Smart detection of the offset columns. See [csv-fix-offset](https://bitbucket.org/codsen/csv-fix-offset)
-- Sorting rows of double-entry, accounting CSV's. See [csv-sort](https://bitbucket.org/codsen/csv-sort)
+- Smart detection of the offset columns. See `csv-fix-offset` ([npm](https://www.npmjs.com/package/csv-fix-offset), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-fix-offset))
+- Sorting rows of double-entry, accounting CSV's. See `csv-sort` ([npm](https://www.npmjs.com/package/csv-sort), [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/csv-sort))
 
 **[⬆ back to top](#)**
 

@@ -109,14 +109,6 @@ Here are all the defaults in one place:
 
 **[⬆ back to top](#)**
 
-## Practical use
-
-It will be used in [ranges-recursive-resolve](https://www.npmjs.com/package/ranges-recursive-resolve) when calculating the third argument's value ("string to be added") when two or more ranges clash and all have third arguments. _Recursive resolve_ "joins" two ranges applied on the same string, performed over time. One range "changes" the string and then another range changes the previous result further. When multiple ranges insert or replace character range with some string, two such "replacements" are the same as laying one on top of another. Precisely what this library does.
-
-See other range libraries here: https://bitbucket.org/account/user/codsen/projects/RNG
-
-**[⬆ back to top](#)**
-
 ## Edge cases
 
 The algorithm is the following:
