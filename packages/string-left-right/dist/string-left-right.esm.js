@@ -56,9 +56,6 @@ function seq(direction, str, idx, args) {
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-  if (!args.length) {
-    return direction === "right" ? right(str, idx) : left(str, idx);
-  }
   if (
     (direction === "right" && !str[idx + 1]) ||
     (direction === "left" && !str[idx - 1])
@@ -66,7 +63,9 @@ function seq(direction, str, idx, args) {
     return null;
   }
   let lastFinding = idx;
-  const holes = [];
+  const gaps = [];
+  let leftmostChar;
+  let rightmostChar;
   for (let i = 0, len = args.length; i < len; i++) {
     if (!args[i].length) {
       continue;
@@ -74,22 +73,42 @@ function seq(direction, str, idx, args) {
     const whattsOnTheSide =
       direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
     if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
-      holes.push([lastFinding + 1, whattsOnTheSide]);
+      gaps.push([lastFinding + 1, whattsOnTheSide]);
     } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
-      holes.unshift([whattsOnTheSide + 1, lastFinding]);
+      gaps.unshift([whattsOnTheSide + 1, lastFinding]);
     }
     if (str[whattsOnTheSide] === args[i]) {
       lastFinding = whattsOnTheSide;
+      if (direction === "right") {
+        if (leftmostChar === undefined) {
+          leftmostChar = whattsOnTheSide;
+        }
+        rightmostChar = whattsOnTheSide;
+      } else {
+        if (rightmostChar === undefined) {
+          rightmostChar = whattsOnTheSide;
+        }
+        leftmostChar = whattsOnTheSide;
+      }
     } else {
       return null;
     }
   }
-  return holes.length ? holes : true;
+  if (leftmostChar === undefined) {
+    return null;
+  }
+  return { gaps, leftmostChar, rightmostChar };
 }
 function leftSeq(str, idx, ...args) {
+  if (!args.length) {
+    return left(str, idx);
+  }
   return seq("left", str, idx, Array.from(args).reverse());
 }
 function rightSeq(str, idx, ...args) {
+  if (!args.length) {
+    return right(str, idx);
+  }
   return seq("right", str, idx, args);
 }
 

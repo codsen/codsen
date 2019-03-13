@@ -14,8 +14,8 @@ test(`00.01 - \u001b[${33}m${`null`}\u001b[${39}m - missing input`, t => {
 test(`00.02 - \u001b[${33}m${`null`}\u001b[${39}m - non-string input`, t => {
   t.is(left(1), null, "00.02.01");
   t.is(right(1), null, "00.02.02");
-  t.is(leftSeq(1), null, "00.02.03");
-  t.is(rightSeq(1), null, "00.02.04");
+  t.is(leftSeq(1, 1, "a"), null, "00.02.03");
+  t.is(rightSeq(1, 1, "a"), null, "00.02.04");
 });
 
 test(`00.03 - \u001b[${33}m${`null`}\u001b[${39}m - non-string input`, t => {
@@ -93,28 +93,65 @@ test(`02.02 - \u001b[${34}m${`right`}\u001b[${39}m - normal use`, t => {
 
 test(`03.01 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - normal use`, t => {
   // starts at "c":
-  t.true(rightSeq("abcdefghijklmnop", 2, "d", "e", "f"), "03.01.01");
-  const res1 = rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f");
-  t.deepEqual(res1, [[7, 9], [10, 12], [13, 15]], "03.01.02");
-  // and the holes array is truthy:
-  t.true(!!res1, "03.01.03");
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 2, "d"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 3
+    },
+    "03.01.01"
+  );
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 2, "d", "e", "f"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 5
+    },
+    "03.01.02"
+  );
+  t.deepEqual(
+    rightSeq("a  b  c  d  e  f  g  h  i  j  k  l", 6, "d", "e", "f"),
+    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 9, rightmostChar: 15 },
+    "03.01.03"
+  );
 });
 
 test(`03.02 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, t => {
   t.is(rightSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "03.02.01");
-  t.is(rightSeq("abcdefghijklmnop", 0, "", ""), true, "03.02.02");
-  t.is(rightSeq("abcdefghijklmnop", 0, "b", ""), true, "03.02.03");
-  t.is(rightSeq("abcdefghijklmnop", 0, "", "b"), true, "03.02.03");
 });
 
-test(`03.03 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no sequence arguments`, t => {
-  t.is(rightSeq("abcdefghijklmnop", 0), 1, "03.03.01");
-  t.is(rightSeq("abcdefghijklmnop", 1), 2, "03.03.02");
-  t.is(rightSeq("ab  cdefghijklmnop", 1), 4, "03.03.03");
+test(`03.03 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - absent skips to right()`, t => {
+  t.is(rightSeq("abcdefghijklmnop", 0, "", ""), null, "03.03.01");
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 0, "b", ""),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 1
+    },
+    "03.03.02"
+  );
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 0, "", "b"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 1
+    },
+    "03.03.03"
+  );
 });
 
-test(`03.04 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - starting point outside of the range`, t => {
-  t.is(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.04.01");
+test(`03.04 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no sequence arguments - turns into right()`, t => {
+  t.is(rightSeq("abcdefghijklmnop", 0), 1, "03.04.01");
+  t.is(rightSeq("abcdefghijklmnop", 1), 2, "03.04.02");
+  t.is(rightSeq("ab  cdefghijklmnop", 1), 4, "03.04.03");
+});
+
+test(`03.05 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - starting point outside of the range`, t => {
+  t.is(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.05.01");
 });
 
 // 04. leftSeq()
@@ -122,19 +159,44 @@ test(`03.04 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - starting point outside o
 
 test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, t => {
   // starts at "f":
-  t.true(leftSeq("abcdefghijk", 5, "c", "d", "e"), "04.01.01");
-  const res1 = leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e");
-  t.deepEqual(res1, [[7, 9], [10, 12], [13, 15]], "04.01.02");
-  // and the holes array is truthy:
-  t.true(!!res1, "04.01.03");
+  t.deepEqual(
+    leftSeq("abcdefghijk", 5, "c", "d", "e"),
+    {
+      gaps: [],
+      leftmostChar: 2,
+      rightmostChar: 4
+    },
+    "04.01.01"
+  );
+  t.deepEqual(
+    leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
+    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    "04.01.02"
+  );
 });
 
 test(`04.02 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no findings`, t => {
   t.is(leftSeq("abcdefghijklmnop", 0, "d", "e", "f"), null, "04.02.01");
   t.is(leftSeq("abcdefghijklmnop", 2, "d", "e", "f"), null, "04.02.02");
-  t.is(leftSeq("abcdefghijklmnop", 2, "", ""), true, "04.02.03");
-  t.is(leftSeq("abcdefghijklmnop", 2, "b", ""), true, "04.02.04");
-  t.is(leftSeq("abcdefghijklmnop", 2, "", "b"), true, "04.02.05");
+  t.is(leftSeq("abcdefghijklmnop", 2, "", ""), null, "04.02.03");
+  t.deepEqual(
+    leftSeq("abcdefghijklmnop", 2, "b", ""),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 1
+    },
+    "04.02.04"
+  );
+  t.deepEqual(
+    leftSeq("abcdefghijklmnop", 2, "", "b"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 1
+    },
+    "04.02.05"
+  );
 });
 
 test(`04.03 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no sequence arguments`, t => {

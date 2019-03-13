@@ -60,41 +60,64 @@ function seq(direction, str, idx, args) {
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-  if (!args.length) {
-    return direction === "right" ? right(str, idx) : left(str, idx);
-  }
   if (direction === "right" && !str[idx + 1] || direction === "left" && !str[idx - 1]) {
     return null;
   }
   var lastFinding = idx;
-  var holes = [];
+  var gaps = [];
+  var leftmostChar;
+  var rightmostChar;
   for (var i = 0, len = args.length; i < len; i++) {
     if (!args[i].length) {
       continue;
     }
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
     if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
-      holes.push([lastFinding + 1, whattsOnTheSide]);
+      gaps.push([lastFinding + 1, whattsOnTheSide]);
     } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
-      holes.unshift([whattsOnTheSide + 1, lastFinding]);
+      gaps.unshift([whattsOnTheSide + 1, lastFinding]);
     }
     if (str[whattsOnTheSide] === args[i]) {
       lastFinding = whattsOnTheSide;
+      if (direction === "right") {
+        if (leftmostChar === undefined) {
+          leftmostChar = whattsOnTheSide;
+        }
+        rightmostChar = whattsOnTheSide;
+      } else {
+        if (rightmostChar === undefined) {
+          rightmostChar = whattsOnTheSide;
+        }
+        leftmostChar = whattsOnTheSide;
+      }
     } else {
       return null;
     }
   }
-  return holes.length ? holes : true;
+  if (leftmostChar === undefined) {
+    return null;
+  }
+  return {
+    gaps: gaps,
+    leftmostChar: leftmostChar,
+    rightmostChar: rightmostChar
+  };
 }
 function leftSeq(str, idx) {
   for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
     args[_key - 2] = arguments[_key];
+  }
+  if (!args.length) {
+    return left(str, idx);
   }
   return seq("left", str, idx, Array.from(args).reverse());
 }
 function rightSeq(str, idx) {
   for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
     args[_key2 - 2] = arguments[_key2];
+  }
+  if (!args.length) {
+    return right(str, idx);
   }
   return seq("right", str, idx, args);
 }
