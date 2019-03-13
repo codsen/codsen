@@ -3948,22 +3948,22 @@ test(`27.10 - ${`\u001b[${31}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wh
   );
 });
 
-// 28. rule "bad-named-html-entity-amp-repetitions"
+// 28. rule "bad-named-html-entity-multiple-encoding"
 // -----------------------------------------------------------------------------
 
-test.only(`28.01 - ${`\u001b[${32}m${`bad-named-html-entity-amp-repetitions`}\u001b[${39}m`} - recognises simple double-encoded entity`, t => {
+test(`28.01 - ${`\u001b[${32}m${`bad-named-html-entity-multiple-encoding`}\u001b[${39}m`} - recognises simple double-encoded entity`, t => {
   const bad2 = `&amp;nbsp;`;
   const good2 = `&nbsp;`;
   const res2 = lint(bad2);
   t.is(apply(bad2, res2.fix), good2, "28.01.01");
   t.deepEqual(
     getUniqueIssueNames(res2.issues).sort(),
-    ["bad-named-html-entity-amp-repetitions"],
+    ["bad-named-html-entity-multiple-encoding"],
     "28.01.02"
   );
 });
 
-test(`28.02 - ${`\u001b[${32}m${`bad-named-html-entity-amp-repetitions`}\u001b[${39}m`} - not an issue`, t => {
+test(`28.02 - ${`\u001b[${32}m${`bad-named-html-entity-multiple-encoding`}\u001b[${39}m`} - not an issue`, t => {
   t.deepEqual(lint("&amp; &amp; &amp;").issues, [], "28.02.01");
 });
 

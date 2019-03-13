@@ -1,5 +1,5 @@
 {
-  "bad-named-html-entity-amp-repetitions": {
+  "bad-named-html-entity-multiple-encoding": {
     "description": "HTML named entity was encoded multiple times, causing repeated amp;",
     "excerpt": "repeated amp; because of over-encoding",
     "scope": "html"
