@@ -49,5 +49,48 @@ function left(str, idx) {
   }
   return null;
 }
+function seq(direction, str, idx, args) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (!args.length) {
+    return direction === "right" ? right(str, idx) : left(str, idx);
+  }
+  if (
+    (direction === "right" && !str[idx + 1]) ||
+    (direction === "left" && !str[idx - 1])
+  ) {
+    return null;
+  }
+  let lastFinding = idx;
+  const holes = [];
+  for (let i = 0, len = args.length; i < len; i++) {
+    if (!args[i].length) {
+      continue;
+    }
+    const whattsOnTheSide =
+      direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
+    if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
+      holes.push([lastFinding + 1, whattsOnTheSide]);
+    } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
+      holes.unshift([whattsOnTheSide + 1, lastFinding]);
+    }
+    if (str[whattsOnTheSide] === args[i]) {
+      lastFinding = whattsOnTheSide;
+    } else {
+      return null;
+    }
+  }
+  return holes.length ? holes : true;
+}
+function leftSeq(str, idx, ...args) {
+  return seq("left", str, idx, Array.from(args).reverse());
+}
+function rightSeq(str, idx, ...args) {
+  return seq("right", str, idx, args);
+}
 
-export { left, right };
+export { left, right, rightSeq, leftSeq };
