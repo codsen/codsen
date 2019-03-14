@@ -3813,6 +3813,90 @@ test(`25.01 - ${`\u001b[${31}m${`string-fix-broken-named-entities`}\u001b[${39}m
   );
 });
 
+test(`25.02 - ${`\u001b[${31}m${`string-fix-broken-named-entities`}\u001b[${39}m`} - one malformed nbsp - spaced`, t => {
+  const bad1 = `abc &nbs;`;
+  const good1 = `abc &nbsp;`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "25.02.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.02.02"
+  );
+
+  const bad2 = `abc &nbs; xyz`;
+  const good2 = `abc &nbsp; xyz`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "25.02.03");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.02.04"
+  );
+
+  const bad3 = `abc &nbs; xyz`;
+  const good3 = `abc &nbsp; xyz`;
+  const res3 = lint(bad3);
+  t.is(apply(bad3, res3.fix), good3, "25.02.05");
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.02.06"
+  );
+
+  const bad4 = `&nbs; xyz`;
+  const good4 = `&nbsp; xyz`;
+  const res4 = lint(bad4);
+  t.is(apply(bad4, res4.fix), good4, "25.02.05");
+  t.deepEqual(
+    getUniqueIssueNames(res4.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.02.06"
+  );
+});
+
+test(`25.03 - ${`\u001b[${31}m${`string-fix-broken-named-entities`}\u001b[${39}m`} - one malformed nbsp - tight`, t => {
+  const bad1 = `abc&nbs;`;
+  const good1 = `abc&nbsp;`;
+  const res1 = lint(bad1);
+  t.is(apply(bad1, res1.fix), good1, "25.03.01");
+  t.deepEqual(
+    getUniqueIssueNames(res1.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.03.02"
+  );
+
+  const bad2 = `abc&nbs;xyz`;
+  const good2 = `abc&nbsp;xyz`;
+  const res2 = lint(bad2);
+  t.is(apply(bad2, res2.fix), good2, "25.03.03");
+  t.deepEqual(
+    getUniqueIssueNames(res2.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.03.04"
+  );
+
+  const bad3 = `abc&nbs;xyz`;
+  const good3 = `abc&nbsp;xyz`;
+  const res3 = lint(bad3);
+  t.is(apply(bad3, res3.fix), good3, "25.03.05");
+  t.deepEqual(
+    getUniqueIssueNames(res3.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.03.06"
+  );
+
+  const bad4 = `&nbs;xyz`;
+  const good4 = `&nbsp;xyz`;
+  const res4 = lint(bad4);
+  t.is(apply(bad4, res4.fix), good4, "25.03.05");
+  t.deepEqual(
+    getUniqueIssueNames(res4.issues).sort(),
+    ["bad-named-html-entity-malformed-nbsp"],
+    "25.03.06"
+  );
+});
+
 // 26. rule "tag-missing-space-before-attribute"
 // -----------------------------------------------------------------------------
 
