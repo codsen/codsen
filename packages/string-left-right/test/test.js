@@ -2,8 +2,9 @@ import test from "ava";
 import {
   left,
   right,
-  rightSeq,
   leftSeq,
+  rightSeq,
+  chompLeft,
   chompRight
 } from "../dist/string-left-right.esm";
 
@@ -214,7 +215,7 @@ test(`04.03 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no sequence arguments`, t
 });
 
 test(`04.04 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - starting point outside of the range`, t => {
-  t.is(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.04.01");
+  t.is(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.04");
 });
 
 // 05. chompRight()
@@ -233,6 +234,26 @@ test(`05.01 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`fou
   t.is(chompRight("a b c d  c d  x", 2, o, "c", "d"), 13, "05.01.08");
   t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 13, "05.01.09");
   t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 14, "05.01.10");
+  t.is(
+    chompRight("a b c d  c d  \nx", 2, { mode: "0" }, "c", "d"),
+    14,
+    "05.01.11"
+  );
+  t.is(
+    chompRight("a b c d  c d  \nx", 2, { mode: null }, "c", "d"),
+    14,
+    "05.01.12 - falsey values default to 0"
+  );
+  t.is(
+    chompRight("a b c d  c d  \nx", 2, { mode: "" }, "c", "d"),
+    14,
+    "05.01.13 - falsey values default to 0"
+  );
+  t.is(
+    chompRight("a b c d  c d  \nx", 2, { mode: undefined }, "c", "d"),
+    14,
+    "05.01.14 - falsey values default to 0"
+  );
 });
 
 test(`05.02 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
@@ -244,6 +265,11 @@ test(`05.02 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`fou
   t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 12, "05.02.04");
   t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 12, "05.02.05");
   t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 12, "05.02.06");
+  t.is(
+    chompRight("a b c d  c d  \t \nx", 2, { mode: "1" }, "c", "d"),
+    12,
+    "05.02.07"
+  );
 });
 
 test(`05.03 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 2`, t => {
@@ -255,6 +281,11 @@ test(`05.03 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`fou
   t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 13, "05.03.04");
   t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 14, "05.03.05");
   t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 16, "05.03.06");
+  t.is(
+    chompRight("a b c d  c d  \t \nx", 2, { mode: "2" }, "c", "d"),
+    16,
+    "05.03.07"
+  );
 });
 
 test(`05.04 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 3`, t => {
@@ -266,9 +297,15 @@ test(`05.04 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`fou
   t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 14, "05.04.04");
   t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 15, "05.04.05");
   t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 17, "05.04.06");
+  t.is(
+    chompRight("a b c d  c d  \t \nx", 2, { mode: "3" }, "c", "d"),
+    17,
+    "05.04.07"
+  );
 });
 
 test(`05.05 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`not found`}\u001b[${39}m`} - all modes`, t => {
+  t.is(chompRight("a b c d  c dx", 2), null, "05.05.00");
   t.is(chompRight("a b c d  c dx", 2, "z", "x"), null, "05.05.01");
   t.is(chompRight("a b c d  c dx", 2, { mode: 0 }, "z", "x"), null, "05.05.02");
   t.is(chompRight("a b c d  c dx", 2, { mode: 1 }, "z", "x"), null, "05.05.03");
@@ -304,6 +341,223 @@ test(`05.05 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`not
   t.is(chompRight("a b c d  c dx", 2, { mode: 1 }), null, "05.05.13");
   t.is(chompRight("a b c d  c dx", 2, { mode: 2 }), null, "05.05.14");
   t.is(chompRight("a b c d  c dx", 2, { mode: 3 }), null, "05.05.15");
+});
+
+test(`05.06 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`throws`}\u001b[${39}m`}`, t => {
+  const error2 = t.throws(() => {
+    chompRight("a b c d  c dx", 2, { mode: "z" }, "k", "l");
+  });
+  t.regex(error2.message, /THROW_ID_02/);
+});
+
+test(`05.07 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #1`, t => {
+  // stop at \n
+  t.is(chompRight("a b c d  c d    \n", 2, null, "c", "d"), 16, "05.07");
+});
+
+test(`05.08 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #2`, t => {
+  // stop at \n
+  t.is(chompRight("a", 0, null, "x"), null, "05.08");
+});
+
+test(`05.09 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #3`, t => {
+  t.is(chompRight(1, 0, null, "x"), null, "05.09");
+});
+
+test(`05.10 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #4`, t => {
+  t.is(
+    chompRight("a b c d  c d    \t", 2, { mode: 0 }, "c", "d"),
+    17,
+    "05.10.01"
+  );
+  t.is(
+    chompRight("a b c d  c d    \t", 2, { mode: 2 }, "c", "d"),
+    17,
+    "05.10.02"
+  );
+  t.is(
+    chompRight("a b c d  c d    \t", 2, { mode: 3 }, "c", "d"),
+    17,
+    "05.10.03"
+  );
+});
+
+// 06. chompLeft()
+// -----------------------------------------------------------------------------
+
+test(`06.01 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 0`, t => {
+  t.is(chompLeft("ab c b c  x y", 10, "b", "c"), 1, "06.01.01");
+  t.is(chompLeft("a b c b c  x y", 11, "b", "c"), 2, "06.01.02");
+  t.is(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "06.01.03");
+  t.is(chompLeft("a\n b c b c  x y", 12, "b", "c"), 2, "06.01.04");
+  t.is(chompLeft("a\n  b c b c  x y", 13, "b", "c"), 2, "06.01.05");
+
+  // with hardcoded default opts
+  const o = { mode: 0 };
+  t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.01.06");
+  t.is(chompLeft("a b c b c  x y", 11, o, "b", "c"), 2, "06.01.07");
+  t.is(chompLeft("a  b c b c  x y", 12, o, "b", "c"), 2, "06.01.08");
+  t.is(chompLeft("a\n b c b c  x y", 12, o, "b", "c"), 2, "06.01.09");
+  t.is(chompLeft("a\n  b c b c  x y", 13, o, "b", "c"), 2, "06.01.10");
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "0" }, "b", "c"),
+    2,
+    "06.01.11"
+  );
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: null }, "b", "c"),
+    2,
+    "06.01.12"
+  );
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "" }, "b", "c"),
+    2,
+    "06.01.13"
+  );
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: undefined }, "b", "c"),
+    2,
+    "06.01.14"
+  );
+});
+
+test(`06.02 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
+  // mode 1: stop at first space, leave whitespace alone
+  const o = { mode: 1 };
+  t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.02.06");
+  t.is(chompLeft("a b c b c  x y", 11, o, "b", "c"), 2, "06.02.07");
+  t.is(chompLeft("a  b c b c  x y", 12, o, "b", "c"), 3, "06.02.08");
+  t.is(chompLeft("a\n b c b c  x y", 12, o, "b", "c"), 3, "06.02.09");
+  t.is(chompLeft("a\n  b c b c  x y", 13, o, "b", "c"), 4, "06.02.10");
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "1" }, "b", "c"),
+    4,
+    "06.02.11"
+  );
+});
+
+test(`06.03 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 2`, t => {
+  // mode 2: hungrily chomp all whitespace except newlines
+  const o = { mode: 2 };
+  t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.03.06");
+  t.is(chompLeft("a b c b c  x y", 11, o, "b", "c"), 1, "06.03.07");
+  t.is(chompLeft("a  b c b c  x y", 12, o, "b", "c"), 1, "06.03.08");
+  t.is(chompLeft("a\n b c b c  x y", 12, o, "b", "c"), 2, "06.03.09");
+  t.is(chompLeft("a\n  b c b c  x y", 13, o, "b", "c"), 2, "06.03.10");
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "2" }, "b", "c"),
+    2,
+    "06.03.11"
+  );
+});
+
+test(`06.04 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 3`, t => {
+  // mode 3: aggressively chomp all whitespace
+  const o = { mode: 3 };
+  t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.04.06");
+  t.is(chompLeft("a b c b c  x y", 11, o, "b", "c"), 1, "06.04.07");
+  t.is(chompLeft("a  b c b c  x y", 12, o, "b", "c"), 1, "06.04.08");
+  t.is(chompLeft("a\n b c b c  x y", 12, o, "b", "c"), 1, "06.04.09");
+  t.is(chompLeft("a\n  b c b c  x y", 13, o, "b", "c"), 1, "06.04.10");
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c"),
+    1,
+    "06.04.11"
+  );
+});
+
+test(`06.05 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${31}m${`not found`}\u001b[${39}m`} - all modes`, t => {
+  t.is(chompLeft("ab c b c  x y", -1), null, "06.05.00");
+  t.is(chompLeft("ab c b c  x y", 0), null, "06.05.00");
+  t.is(chompLeft("ab c b c  x y", 10), null, "06.05.00");
+  t.is(chompLeft("ab c b c  x y", 10, "z", "x"), null, "06.05.01");
+  t.is(chompLeft("ab c b c  x y", 10, { mode: 0 }, "z", "x"), null, "06.05.02");
+  t.is(chompLeft("ab c b c  x y", 10, { mode: 1 }, "z", "x"), null, "06.05.03");
+  t.is(chompLeft("ab c b c  x y", 10, { mode: 2 }, "z", "x"), null, "06.05.04");
+  t.is(chompLeft("ab c b c  x y", 10, { mode: 3 }, "z", "x"), null, "06.05.05");
+
+  // idx is zero/negative:
+  t.is(chompLeft("a b c d  c dx", 0, "z", "x"), null, "05.05.06");
+  t.is(chompLeft("a b c d  c dx", 0, { mode: 0 }, "z", "x"), null, "05.05.07");
+  t.is(chompLeft("a b c d  c dx", 0, { mode: 1 }, "z", "x"), null, "05.05.08");
+  t.is(chompLeft("a b c d  c dx", 0, { mode: 2 }, "z", "x"), null, "05.05.09");
+  t.is(chompLeft("a b c d  c dx", 0, { mode: 3 }, "z", "x"), null, "05.05.10");
+
+  t.is(chompLeft("a b c d  c dx", 99, "z", "x"), null, "05.05.11");
+  t.is(chompLeft("a b c d  c dx", 99, { mode: 0 }, "z", "x"), null, "05.05.12");
+  t.is(chompLeft("a b c d  c dx", 99, { mode: 1 }, "z", "x"), null, "05.05.13");
+  t.is(chompLeft("a b c d  c dx", 99, { mode: 2 }, "z", "x"), null, "05.05.14");
+  t.is(chompLeft("a b c d  c dx", 99, { mode: 3 }, "z", "x"), null, "05.05.15");
+
+  // no args -> null:
+  t.is(chompLeft("a b c d  c dx", 2), null, "05.05.16");
+  t.is(chompLeft("a b c d  c dx", 2, { mode: 0 }), null, "05.05.17");
+  t.is(chompLeft("a b c d  c dx", 2, { mode: 1 }), null, "05.05.18");
+  t.is(chompLeft("a b c d  c dx", 2, { mode: 2 }), null, "05.05.19");
+  t.is(chompLeft("a b c d  c dx", 2, { mode: 3 }), null, "05.05.20");
+});
+
+test(`06.06 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`throws`}\u001b[${39}m`}`, t => {
+  const error1 = t.throws(() => {
+    chompLeft("a b c d  c dx", 2, { mode: "z" }, "k", "l");
+  });
+  t.regex(error1.message, /THROW_ID_01/);
+});
+
+test(`06.07 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #1`, t => {
+  // stop at \n
+  t.is(chompLeft(" \n  b c   b  c   x y", 17, null, "b", "c"), 2, "06.07.01");
+});
+
+test(`06.08 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #2`, t => {
+  t.is(
+    chompLeft("         b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
+    0,
+    "06.08"
+  );
+});
+
+test(`06.09 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #3`, t => {
+  t.is(
+    chompLeft("a        b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
+    1,
+    "06.09.01"
+  );
+  t.is(
+    chompLeft("a        b c   b  c   x y", 22, { mode: 3 }, "b", "c"),
+    1,
+    "06.09.02"
+  );
+});
+
+test(`06.10 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #4`, t => {
+  t.is(chompLeft(1, 22, { mode: 2 }, "b", "c"), null, "06.10");
+});
+
+test(`06.11 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #5`, t => {
+  t.is(
+    chompLeft("\t        b c   b  c   x y", 22, { mode: 0 }, "b", "c"),
+    0,
+    "06.11.01"
+  );
+  t.is(
+    chompLeft("\t        b c   b  c   x y", 22, { mode: 2 }, "b", "c"),
+    0,
+    "06.11.02"
+  );
+  t.is(
+    chompLeft("\t        b c   b  c   x y", 22, { mode: 3 }, "b", "c"),
+    0,
+    "06.11.03"
+  );
+});
+
+test(`06.12 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #5`, t => {
+  t.is(
+    chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "b", "c"),
+    2,
+    "06.12"
+  );
 });
 
 // -----------------------------------------------------------------------------

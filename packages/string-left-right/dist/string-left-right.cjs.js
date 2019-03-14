@@ -25,8 +25,31 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
 function isNum(something) {
   return typeof something === "number";
+}
+function isStr(something) {
+  return typeof something === "string";
 }
 function right(str, idx) {
   if (typeof str !== "string" || !str.length) {
@@ -138,83 +161,143 @@ function rightSeq(str, idx) {
   }
   return seq("right", str, idx, args);
 }
-function chompRight(str, idx) {
+function chomp(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
   if (!idx || typeof idx !== "number") {
     idx = 0;
   }
-  if (!str[idx + 1]) {
+  if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
+    return null;
+  }
+  var lastRes;
+  var lastIdx;
+  do {
+    lastRes = direction === "right" ? rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args))) : leftSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args)));
+    if (lastRes) {
+      lastIdx = direction === "right" ? lastRes.rightmostChar + 1 : lastRes.leftmostChar;
+    }
+  } while (lastRes);
+  if (!lastIdx) {
+    return null;
+  }
+  if (direction === "right") {
+    if (str[lastIdx] && str[lastIdx].trim().length) {
+      return lastIdx;
+    }
+    var whatsOnTheRight = right(str, lastIdx);
+    if (opts.mode === 0) {
+      if (whatsOnTheRight === lastIdx + 1) {
+        return lastIdx;
+      } else if (str.slice(lastIdx, whatsOnTheRight || str.length).trim().length || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\n") || str.slice(lastIdx, whatsOnTheRight || str.length).includes("\r")) {
+        for (var y = lastIdx, len = str.length; y < len; y++) {
+          if ("\n\r".includes(str[y])) {
+            return y;
+          }
+        }
+      } else {
+        return whatsOnTheRight ? whatsOnTheRight - 1 : str.length;
+      }
+    } else if (opts.mode === 1) {
+      return lastIdx;
+    } else if (opts.mode === 2) {
+      var remainderString = str.slice(lastIdx);
+      if (remainderString.trim().length || remainderString.includes("\n") || remainderString.includes("\r")) {
+        for (var _y = lastIdx, _len3 = str.length; _y < _len3; _y++) {
+          if (str[_y].trim().length || "\n\r".includes(str[_y])) {
+            return _y;
+          }
+        }
+      }
+      return str.length;
+    }
+    return whatsOnTheRight ? whatsOnTheRight : str.length;
+  }
+  if (str[lastIdx] && str[lastIdx - 1].trim().length) {
+    return lastIdx;
+  }
+  var whatsOnTheLeft = left(str, lastIdx);
+  if (opts.mode === 0) {
+    if (whatsOnTheLeft === lastIdx - 2) {
+      return lastIdx;
+    } else if (str.slice(0, lastIdx).trim().length || str.slice(0, lastIdx).includes("\n") || str.slice(0, lastIdx).includes("\r")) {
+      for (var _y2 = lastIdx; _y2--;) {
+        if ("\n\r".includes(str[_y2]) || str[_y2].trim().length) {
+          return _y2 + 1 + (str[_y2].trim().length ? 1 : 0);
+        }
+      }
+    }
+    return 0;
+  } else if (opts.mode === 1) {
+    return lastIdx;
+  } else if (opts.mode === 2) {
+    var _remainderString = str.slice(0, lastIdx);
+    if (_remainderString.trim().length || _remainderString.includes("\n") || _remainderString.includes("\r")) {
+      for (var _y3 = lastIdx; _y3--;) {
+        if (str[_y3].trim().length || "\n\r".includes(str[_y3])) {
+          return _y3 + 1;
+        }
+      }
+    }
+    return 0;
+  }
+  return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
+}
+function chompLeft(str, idx) {
+  for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key3 = 2; _key3 < _len4; _key3++) {
+    args[_key3 - 2] = arguments[_key3];
+  }
+  if (!args.length || args.length === 1 && _typeof(args[0]) === "object") {
     return null;
   }
   var defaults = {
     mode: 0
   };
   var opts;
-  for (var _len3 = arguments.length, args = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
-    args[_key3 - 2] = arguments[_key3];
-  }
   if (_typeof(args[0]) === "object") {
     opts = Object.assign({}, defaults, args.shift());
+    if (!opts.mode) {
+      opts.mode = 0;
+    } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
+      opts.mode = Number.parseInt(opts.mode, 10);
+    } else if (!isNum(opts.mode)) {
+      throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
+    }
   } else {
     opts = defaults;
   }
-  if (!args.length) {
+  return chomp("left", str, idx, opts, args);
+}
+function chompRight(str, idx) {
+  for (var _len5 = arguments.length, args = new Array(_len5 > 2 ? _len5 - 2 : 0), _key4 = 2; _key4 < _len5; _key4++) {
+    args[_key4 - 2] = arguments[_key4];
+  }
+  if (!args.length || args.length === 1 && _typeof(args[0]) === "object") {
     return null;
   }
-  var lastRes;
-  var lastIdx;
-  do {
-    lastRes = rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(args));
-    if (lastRes) {
-      lastIdx = lastRes.rightmostChar + 1;
+  var defaults = {
+    mode: 0
+  };
+  var opts;
+  if (_typeof(args[0]) === "object") {
+    opts = Object.assign({}, defaults, args.shift());
+    if (!opts.mode) {
+      opts.mode = 0;
+    } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
+      opts.mode = Number.parseInt(opts.mode, 10);
+    } else if (!isNum(opts.mode)) {
+      throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
-  } while (lastRes);
-  if (!lastIdx) {
-    return null;
+  } else {
+    opts = defaults;
   }
-  if (str[lastIdx] && str[lastIdx].trim().length) {
-    return lastIdx;
-  }
-  var whatsOnTheRight = right(str, lastIdx);
-  if (opts.mode === 0) {
-    if (!whatsOnTheRight) {
-      return str.length;
-    }
-    if (whatsOnTheRight === lastIdx + 1) {
-      return lastIdx;
-    } else if (str.slice(lastIdx, whatsOnTheRight).includes("\n") || str.slice(lastIdx, whatsOnTheRight).includes("\r")) {
-      for (var y = lastIdx, len = str.length; y < len; y++) {
-        if ("\n\r".includes(str[y])) {
-          return y;
-        }
-      }
-    } else {
-      return whatsOnTheRight - 1;
-    }
-  } else if (opts.mode === 1) {
-    return lastIdx;
-  } else if (opts.mode === 2) {
-    var remainderString = str.slice(lastIdx, whatsOnTheRight ? whatsOnTheRight : str.length);
-    if (remainderString.includes("\n") || remainderString.includes("\r")) {
-      for (var _y = lastIdx, _len4 = str.length; _y < _len4; _y++) {
-        if (str[_y].trim().length || "\n\r".includes(str[_y])) {
-          return _y;
-        }
-      }
-    } else if (whatsOnTheRight) {
-      return whatsOnTheRight;
-    }
-    return str.length;
-  } else if (opts.mode === 3) {
-    return whatsOnTheRight ? whatsOnTheRight : str.length;
-  }
-  return null;
+  return chomp("right", str, idx, opts, args);
 }
 
 exports.left = left;
 exports.right = right;
-exports.rightSeq = rightSeq;
 exports.leftSeq = leftSeq;
+exports.rightSeq = rightSeq;
+exports.chompLeft = chompLeft;
 exports.chompRight = chompRight;
