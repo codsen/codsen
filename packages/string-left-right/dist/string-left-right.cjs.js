@@ -11,6 +11,23 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _typeof(obj) {
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+function isNum(something) {
+  return typeof something === "number";
+}
 function right(str, idx) {
   if (typeof str !== "string" || !str.length) {
     return null;
@@ -121,8 +138,83 @@ function rightSeq(str, idx) {
   }
   return seq("right", str, idx, args);
 }
+function chompRight(str, idx) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (!str[idx + 1]) {
+    return null;
+  }
+  var defaults = {
+    mode: 0
+  };
+  var opts;
+  for (var _len3 = arguments.length, args = new Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {
+    args[_key3 - 2] = arguments[_key3];
+  }
+  if (_typeof(args[0]) === "object") {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  if (!args.length) {
+    return null;
+  }
+  var lastRes;
+  var lastIdx;
+  do {
+    lastRes = rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(args));
+    if (lastRes) {
+      lastIdx = lastRes.rightmostChar + 1;
+    }
+  } while (lastRes);
+  if (!lastIdx) {
+    return null;
+  }
+  if (str[lastIdx] && str[lastIdx].trim().length) {
+    return lastIdx;
+  }
+  var whatsOnTheRight = right(str, lastIdx);
+  if (opts.mode === 0) {
+    if (!whatsOnTheRight) {
+      return str.length;
+    }
+    if (whatsOnTheRight === lastIdx + 1) {
+      return lastIdx;
+    } else if (str.slice(lastIdx, whatsOnTheRight).includes("\n") || str.slice(lastIdx, whatsOnTheRight).includes("\r")) {
+      for (var y = lastIdx, len = str.length; y < len; y++) {
+        if ("\n\r".includes(str[y])) {
+          return y;
+        }
+      }
+    } else {
+      return whatsOnTheRight - 1;
+    }
+  } else if (opts.mode === 1) {
+    return lastIdx;
+  } else if (opts.mode === 2) {
+    var remainderString = str.slice(lastIdx, whatsOnTheRight ? whatsOnTheRight : str.length);
+    if (remainderString.includes("\n") || remainderString.includes("\r")) {
+      for (var _y = lastIdx, _len4 = str.length; _y < _len4; _y++) {
+        if (str[_y].trim().length || "\n\r".includes(str[_y])) {
+          return _y;
+        }
+      }
+    } else if (whatsOnTheRight) {
+      return whatsOnTheRight;
+    }
+    return str.length;
+  } else if (opts.mode === 3) {
+    return whatsOnTheRight ? whatsOnTheRight : str.length;
+  }
+  return null;
+}
 
 exports.left = left;
 exports.right = right;
 exports.rightSeq = rightSeq;
 exports.leftSeq = leftSeq;
+exports.chompRight = chompRight;

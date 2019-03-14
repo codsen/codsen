@@ -7,6 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
  */
 
+function isNum(something) {
+  return typeof something === "number";
+}
 function right(str, idx) {
   if (typeof str !== "string" || !str.length) {
     return null;
@@ -111,5 +114,82 @@ function rightSeq(str, idx, ...args) {
   }
   return seq("right", str, idx, args);
 }
+function chompRight(str, idx, ...args) {
+  if (typeof str !== "string" || !str.length) {
+    return null;
+  }
+  if (!idx || typeof idx !== "number") {
+    idx = 0;
+  }
+  if (!str[idx + 1]) {
+    return null;
+  }
+  const defaults = {
+    mode: 0
+  };
+  let opts;
+  if (typeof args[0] === "object") {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  if (!args.length) {
+    return null;
+  }
+  let lastRes;
+  let lastIdx;
+  do {
+    lastRes = rightSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args);
+    if (lastRes) {
+      lastIdx = lastRes.rightmostChar + 1;
+    }
+  } while (lastRes);
+  if (!lastIdx) {
+    return null;
+  }
+  if (str[lastIdx] && str[lastIdx].trim().length) {
+    return lastIdx;
+  }
+  const whatsOnTheRight = right(str, lastIdx);
+  if (opts.mode === 0) {
+    if (!whatsOnTheRight) {
+      return str.length;
+    }
+    if (whatsOnTheRight === lastIdx + 1) {
+      return lastIdx;
+    } else if (
+      str.slice(lastIdx, whatsOnTheRight).includes("\n") ||
+      str.slice(lastIdx, whatsOnTheRight).includes("\r")
+    ) {
+      for (let y = lastIdx, len = str.length; y < len; y++) {
+        if (`\n\r`.includes(str[y])) {
+          return y;
+        }
+      }
+    } else {
+      return whatsOnTheRight - 1;
+    }
+  } else if (opts.mode === 1) {
+    return lastIdx;
+  } else if (opts.mode === 2) {
+    const remainderString = str.slice(
+      lastIdx,
+      whatsOnTheRight ? whatsOnTheRight : str.length
+    );
+    if (remainderString.includes("\n") || remainderString.includes("\r")) {
+      for (let y = lastIdx, len = str.length; y < len; y++) {
+        if (str[y].trim().length || `\n\r`.includes(str[y])) {
+          return y;
+        }
+      }
+    } else if (whatsOnTheRight) {
+      return whatsOnTheRight;
+    }
+    return str.length;
+  } else if (opts.mode === 3) {
+    return whatsOnTheRight ? whatsOnTheRight : str.length;
+  }
+  return null;
+}
 
-export { left, right, rightSeq, leftSeq };
+export { left, right, rightSeq, leftSeq, chompRight };

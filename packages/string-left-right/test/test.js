@@ -1,5 +1,11 @@
 import test from "ava";
-import { left, right, rightSeq, leftSeq } from "../dist/string-left-right.esm";
+import {
+  left,
+  right,
+  rightSeq,
+  leftSeq,
+  chompRight
+} from "../dist/string-left-right.esm";
 
 // 00. EDGE CASES (there are no throws as it's an internal library)
 // -----------------------------------------------------------------------------
@@ -211,12 +217,101 @@ test(`04.04 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - starting point outside of
   t.is(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.04.01");
 });
 
+// 05. chompRight()
+// -----------------------------------------------------------------------------
+
+test(`05.01 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 0`, t => {
+  t.is(chompRight("a b c d  c dx", 2, "c", "d"), 12, "05.01.01");
+  t.is(chompRight("a b c d  c d x", 2, "c", "d"), 12, "05.01.02");
+  t.is(chompRight("a b c d  c d  x", 2, "c", "d"), 13, "05.01.03");
+  t.is(chompRight("a b c d  c d \nx", 2, "c", "d"), 13, "05.01.04");
+  t.is(chompRight("a b c d  c d  \nx", 2, "c", "d"), 14, "05.01.05");
+  // with hardcoded default opts
+  const o = { mode: 0 };
+  t.is(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "05.01.06");
+  t.is(chompRight("a b c d  c d x", 2, o, "c", "d"), 12, "05.01.07");
+  t.is(chompRight("a b c d  c d  x", 2, o, "c", "d"), 13, "05.01.08");
+  t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 13, "05.01.09");
+  t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 14, "05.01.10");
+});
+
+test(`05.02 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
+  // mode 1: stop at first space, leave whitespace alone
+  const o = { mode: 1 };
+  t.is(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "05.02.01");
+  t.is(chompRight("a b c d  c d x", 2, o, "c", "d"), 12, "05.02.02");
+  t.is(chompRight("a b c d  c d  x", 2, o, "c", "d"), 12, "05.02.03");
+  t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 12, "05.02.04");
+  t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 12, "05.02.05");
+  t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 12, "05.02.06");
+});
+
+test(`05.03 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 2`, t => {
+  // mode 2: hungrily chomp all whitespace except newlines
+  const o = { mode: 2 };
+  t.is(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "05.03.01");
+  t.is(chompRight("a b c d  c d x", 2, o, "c", "d"), 13, "05.03.02");
+  t.is(chompRight("a b c d  c d  x", 2, o, "c", "d"), 14, "05.03.03");
+  t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 13, "05.03.04");
+  t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 14, "05.03.05");
+  t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 16, "05.03.06");
+});
+
+test(`05.04 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 3`, t => {
+  // mode 3: aggressively chomp all whitespace
+  const o = { mode: 3 };
+  t.is(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "05.04.01");
+  t.is(chompRight("a b c d  c d x", 2, o, "c", "d"), 13, "05.04.02");
+  t.is(chompRight("a b c d  c d  x", 2, o, "c", "d"), 14, "05.04.03");
+  t.is(chompRight("a b c d  c d \nx", 2, o, "c", "d"), 14, "05.04.04");
+  t.is(chompRight("a b c d  c d  \nx", 2, o, "c", "d"), 15, "05.04.05");
+  t.is(chompRight("a b c d  c d  \t \nx", 2, o, "c", "d"), 17, "05.04.06");
+});
+
+test(`05.05 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`not found`}\u001b[${39}m`} - all modes`, t => {
+  t.is(chompRight("a b c d  c dx", 2, "z", "x"), null, "05.05.01");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 0 }, "z", "x"), null, "05.05.02");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 1 }, "z", "x"), null, "05.05.03");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 2 }, "z", "x"), null, "05.05.04");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 3 }, "z", "x"), null, "05.05.05");
+
+  // idx is too high:
+  t.is(chompRight("a b c d  c dx", 99, "z", "x"), null, "05.05.06");
+  t.is(
+    chompRight("a b c d  c dx", 99, { mode: 0 }, "z", "x"),
+    null,
+    "05.05.07"
+  );
+  t.is(
+    chompRight("a b c d  c dx", 99, { mode: 1 }, "z", "x"),
+    null,
+    "05.05.08"
+  );
+  t.is(
+    chompRight("a b c d  c dx", 99, { mode: 2 }, "z", "x"),
+    null,
+    "05.05.09"
+  );
+  t.is(
+    chompRight("a b c d  c dx", 99, { mode: 3 }, "z", "x"),
+    null,
+    "05.05.10"
+  );
+
+  // no args -> null:
+  t.is(chompRight("a b c d  c dx", 2), null, "05.05.11");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 0 }), null, "05.05.12");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 1 }), null, "05.05.13");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 2 }), null, "05.05.14");
+  t.is(chompRight("a b c d  c dx", 2, { mode: 3 }), null, "05.05.15");
+});
+
 // -----------------------------------------------------------------------------
 
 //
 //                                               ██\███/██
 //                                               ███\█/███
-//               ███x█x█x█x█x████████████████████████x█████
-//                            .bug hammer.       ███/█\███
-//                                               ██/███\██
+//               ███x█x█x█x█x███████████████████|████x████O
+//                       ^ bug hammer ^          ███/█\███
+//                  tears of the teared bugs     ██/███\██
 //
