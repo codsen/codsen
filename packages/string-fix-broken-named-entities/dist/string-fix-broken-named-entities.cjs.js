@@ -2180,6 +2180,7 @@ var allNamedEntities = [
 ;
 
 function stringFixBrokenNamedEntities(str, originalOpts) {
+  console.log("015 ".concat("\x1B[".concat(33, "m", "originalOpts", "\x1B[", 39, "m"), " = ", JSON.stringify(originalOpts, null, 4)));
   function isNotaLetter(str) {
     return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
   }
@@ -2197,6 +2198,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       throw new Error("string-fix-broken-named-entities: [THROW_ID_02] the second input argument must be a plain object! I was given as:\n".concat(JSON.stringify(originalOpts, null, 4), " (").concat(_typeof(originalOpts), "-type)"));
     } else {
       opts = Object.assign({}, defaults, originalOpts);
+      console.log("059 new ".concat("\x1B[".concat(33, "m", "opts", "\x1B[", 39, "m"), " = ", JSON.stringify(opts, null, 4)));
     }
   } else {
     opts = defaults;
@@ -2241,10 +2243,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         opts.progressFn(percentageDone);
       }
     }
+    console.log("\x1B[".concat(36, "m", "===============================", "\x1B[", 39, "m \x1B[", 35, "m", "str[ ".concat(i, " ] = ", "\x1B[".concat(31, "m", str[i] ? str[i].trim() === "" ? str[i] === null ? "null" : str[i] === "\n" ? "line break" : str[i] === "\t" ? "tab" : str[i] === " " ? "space" : "???" : str[i] : "undefined", "\x1B[", 39, "m")), "\x1B[", 39, "m \x1B[", 36, "m", "===============================", "\x1B[", 39, "m ", doNothingUntil && (doNothingUntil === true || doNothingUntil > i) ? "".concat("\x1B[".concat(31, "m", "\u2588\u2588 doNothingUntil until ".concat(doNothingUntil), "\x1B[", 39, "m")) : ""));
     if (doNothingUntil) {
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
+        console.log("219 RESET ".concat("\x1B[".concat(33, "m", "doNothingUntil", "\x1B[", 39, "m"), " = null"));
       } else {
+        console.log("222 continue");
         continue;
       }
     }
@@ -2254,10 +2259,23 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     });
     smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
+    console.log("246 ".concat("\x1B[".concat(33, "m", "smallestCharFromTheSetAt", "\x1B[", 39, "m"), " = ", JSON.stringify(smallestCharFromTheSetAt, null, 4)));
+    console.log("253 ".concat("\x1B[".concat(33, "m", "largestCharFromTheSetAt", "\x1B[", 39, "m"), " = ", JSON.stringify(largestCharFromTheSetAt, null, 4)));
     if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";")) {
+      console.log("296 ".concat("\x1B[".concat(90, "m", "within nbsp clauses", "\x1B[", 39, "m")));
       if (nbsp.ampersandNecessary !== false && str.slice(nbsp.nameStartsAt, i) !== "&nbsp;" || nbsp.ampersandNecessary === false && str.slice(Math.min(nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP), i) !== "nbsp;") {
+        console.log("313 ".concat("\x1B[".concat(90, "m", "catching what's missing in nbsp", "\x1B[", 39, "m")));
         if (nbsp.nameStartsAt != null && i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, i) === "&nbsp" && !opts.decode) {
+          console.log("323 ██ only semicol missing!");
           if (opts.cb) {
+            console.log("326 push ".concat(JSON.stringify(opts.cb({
+              ruleName: "bad-named-html-entity-missing-semicolon",
+              entityName: "nbsp",
+              rangeFrom: i,
+              rangeTo: i,
+              rangeValEncoded: ";",
+              rangeValDecoded: ";"
+            }), null, 4)));
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "nbsp",
@@ -2268,8 +2286,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i, ";"]);
+          console.log("352 pushed [".concat(i, ", ").concat(i, ", \";\"]"));
         } else {
+          console.log("354 it's not just semicolon missing");
+          console.log("356 ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", JSON.stringify(nbsp.nameStartsAt, null, 4)));
           if (opts.cb) {
+            console.log("367 push ".concat(JSON.stringify(opts.cb({
+              ruleName: "bad-named-html-entity-malformed-nbsp",
+              entityName: "nbsp",
+              rangeFrom: nbsp.nameStartsAt,
+              rangeTo: i,
+              rangeValEncoded: "&nbsp;",
+              rangeValDecoded: "\xA0"
+            }), null, 4)));
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-malformed-nbsp",
               entityName: "nbsp",
@@ -2280,32 +2309,54 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([nbsp.nameStartsAt, i, opts.decode ? "\xA0" : "&nbsp;"]);
+          console.log("399 pushed ".concat(JSON.stringify([nbsp.nameStartsAt, i, opts.decode ? "\xA0" : "&nbsp;"], null, 4)));
         }
       }
       nbspWipe();
+      console.log("408 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
       continue outerloop;
+    } else {
+      console.log("412 \n\x1B[".concat(32, "m", "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588", "\x1B[", 39, "m"));
+      console.log("a1. nbsp.nameStartsAt !== null: ".concat(nbsp.nameStartsAt !== null));
+      console.log("a2. matchedLettersCount > 2: ".concat(matchedLettersCount > 2));
+      console.log("a3. (nbsp.matchedSemicol !== null ||...: ".concat(nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i])));
+      console.log("a4 (!str[i] ||... :".concat(!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p"));
+      console.log("a5 str[i] !== \";\": ".concat(str[i] !== ";"));
+      console.log("a6 (str[i + 1] === undefined || str[i + 1] !== \";\"): ".concat(str[i + 1] === undefined || str[i + 1] !== ";"));
+      console.log("\x1B[".concat(32, "m", "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588", "\x1B[", 39, "m\n"));
     }
     if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
       nbspWipe();
+      console.log("455 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
       continue outerloop;
     }
     if (str[i] === "a") {
+      console.log("473 ".concat("\x1B[".concat(90, "m", "within a clauses", "\x1B[", 39, "m")));
       var singleAmpOnTheRight = stringLeftRight.rightSeq(str, i, "m", "p", ";");
       if (singleAmpOnTheRight) {
         (function () {
+          console.log("483 ".concat("\x1B[".concat(90, "m", "confirmed amp; from index ".concat(i, " onwards"), "\x1B[", 39, "m")));
           var toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1;
+          console.log("490 SET ".concat("\x1B[".concat(33, "m", "toDeleteAllAmpEndHere", "\x1B[", 39, "m"), " = ", toDeleteAllAmpEndHere));
           var nextAmpOnTheRight = stringLeftRight.rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
           if (nextAmpOnTheRight) {
+            console.log("504 ".concat("\x1B[".concat(90, "m", "confirmed another amp; on the right of index ".concat(singleAmpOnTheRight.rightmostChar), "\x1B[", 39, "m")));
             toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
+            console.log("511 SET ".concat("\x1B[".concat(33, "m", "toDeleteAllAmpEndHere", "\x1B[", 39, "m"), " = ", toDeleteAllAmpEndHere));
             var temp;
             do {
+              console.log("517 ".concat("\x1B[".concat(36, "m", "======== loop ========", "\x1B[", 39, "m")));
               temp = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
+              console.log("521 ".concat("\x1B[".concat(36, "m", "temp = ".concat(JSON.stringify(temp, null, 4)), "\x1B[", 39, "m")));
               if (temp) {
                 toDeleteAllAmpEndHere = temp.rightmostChar + 1;
+                console.log("531 ".concat("\x1B[".concat(36, "m", "another amp; confirmed! Now", "\x1B[", 39, "m"), " ", "\x1B[".concat(33, "m", "toDeleteAllAmpEndHere", "\x1B[", 39, "m"), " = ", JSON.stringify(toDeleteAllAmpEndHere, null, 4), ";"));
               }
             } while (temp);
+            console.log("541 FINAL ".concat("\x1B[".concat(32, "m", "toDeleteAllAmpEndHere", "\x1B[", 39, "m"), " = ", JSON.stringify(toDeleteAllAmpEndHere, null, 4)));
           }
           var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
+          console.log("557 SET initial ".concat("\x1B[".concat(33, "m", "firstCharThatFollows", "\x1B[", 39, "m"), " = ", firstCharThatFollows));
           var matchedTemp = void 0;
           if (str[firstCharThatFollows] && allNamedEntities.some(function (entity) {
             if (str.startsWith("".concat(entity, ";"), firstCharThatFollows)) {
@@ -2314,8 +2365,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }
           })) {
             doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
+            console.log("576 ".concat("\x1B[".concat(31, "m", "\u2588\u2588 ACTIVATE doNothingUntil = ".concat(doNothingUntil), "\x1B[", 39, "m")));
+            console.log("580 ENTITY ".concat("\x1B[".concat(32, "m", matchedTemp, "\x1B[", 39, "m"), " FOLLOWS"));
             var whatsOnTheLeft = stringLeftRight.left(str, i);
             if (str[whatsOnTheLeft] === "&") {
+              console.log("586 ampersand on the left");
               if (opts.cb) {
                 rangesArr2.push(opts.cb({
                   ruleName: "bad-named-html-entity-multiple-encoding",
@@ -2327,6 +2381,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                 }));
               }
               rangesArr.push([whatsOnTheLeft + 1, firstCharThatFollows]);
+              console.log("602 PUSH \x1B[".concat(33, "m", "[".concat(whatsOnTheLeft + 1, ", ").concat(firstCharThatFollows, "]"), "\x1B[", 39, "m"));
             } else if (whatsOnTheLeft) {
               var rangeFrom = whatsOnTheLeft + 1;
               var spaceReplacement = "";
@@ -2339,7 +2394,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
                   rangeFrom = i;
                 }
               }
+              console.log("625 rangeFrom = ".concat(rangeFrom, "; firstCharThatFollows = ").concat(firstCharThatFollows));
               if (opts.cb) {
+                console.log("629 push ".concat(JSON.stringify(opts.cb({
+                  ruleName: "bad-named-html-entity-multiple-encoding",
+                  entityName: "amp",
+                  rangeFrom: rangeFrom,
+                  rangeTo: firstCharThatFollows,
+                  rangeValEncoded: "".concat(spaceReplacement, "&"),
+                  rangeValDecoded: "".concat(spaceReplacement, "&")
+                }), null, 4)));
                 rangesArr2.push(opts.cb({
                   ruleName: "bad-named-html-entity-multiple-encoding",
                   entityName: "amp",
@@ -2356,10 +2420,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (str[i] === "&") {
+      console.log("665 ".concat("\x1B[".concat(90, "m", "& caught", "\x1B[", 39, "m")));
       if (nbsp.nameStartsAt === null) {
         if (nbsp.ampersandNecessary === null) {
           nbsp.nameStartsAt = i;
+          console.log("676 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
           nbsp.ampersandNecessary = false;
+          console.log("682 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
         }
       } else if (!nbsp.ampersandNecessary) {
         var endingIndex = i + 1;
@@ -2384,6 +2451,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }));
         }
         rangesArr.push([i, endingIndex]);
+        console.log("717 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(endingIndex, "]"), "\x1B[", 39, "m"));
       }
       if (str[i + 1] === "a" && str[i + 2] === "n" && str[i + 3] === "g") {
         if (str[i + 4] !== "s" && str[i + 4] !== ";") {
@@ -2398,6 +2466,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2220" : "&ang;"]);
+          console.log("740 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 4, ", \"&ang;\"]"), "\x1B[", 39, "m"));
           i += 3;
           continue outerloop;
         } else if (str[i + 4] === "s" && str[i + 5] === "t" && str[i + 6] !== ";") {
@@ -2412,6 +2481,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 6, opts.decode ? "\xC5" : "&angst;"]);
+          console.log("765 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 6, ", \"&angst;\"]"), "\x1B[", 39, "m"));
           i += 5;
           continue outerloop;
         }
@@ -2428,6 +2498,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 3, opts.decode ? "\u03C0" : "&pi;"]);
+          console.log("789 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 3, ", \"&pi;\"]"), "\x1B[", 39, "m"));
           i += 3;
           continue outerloop;
         } else if (str[i + 3] === "v" && str[i + 4] !== ";") {
@@ -2442,6 +2513,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u03D6" : "&piv;"]);
+          console.log("810 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 4, ", \"&piv;\"]"), "\x1B[", 39, "m"));
           i += 3;
           continue outerloop;
         }
@@ -2457,6 +2529,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }));
         }
         rangesArr.push([i, i + 3, opts.decode ? "\u03A0" : "&Pi;"]);
+        console.log("836 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 3, ", \"&Pi;\"]"), "\x1B[", 39, "m"));
         i += 2;
         continue outerloop;
       } else if (str[i + 1] === "s") {
@@ -2472,6 +2545,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 6, opts.decode ? "\u03C3" : "&sigma;"]);
+          console.log("865 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 6, ", \"&sigma;\"]"), "\x1B[", 39, "m"));
           i += 5;
           continue outerloop;
         } else if (str[i + 2] === "u" && str[i + 3] === "b" && str[i + 4] !== ";" && str[i + 4] !== "e") {
@@ -2486,6 +2560,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2282" : "&sub;"]);
+          console.log("892 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 4, ", \"&sub;\"]"), "\x1B[", 39, "m"));
           i += 3;
           continue outerloop;
         } else if (str[i + 2] === "u" && str[i + 3] === "p" && str[i + 4] !== "f" && str[i + 4] !== "e" && str[i + 4] !== "1" && str[i + 4] !== "2" && str[i + 4] !== "3" && str[i + 4] !== ";") {
@@ -2500,6 +2575,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2283" : "&sup;"]);
+          console.log("922 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 4, ", \"&sup;\"]"), "\x1B[", 39, "m"));
           i += 3;
           continue outerloop;
         }
@@ -2516,6 +2592,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 6, opts.decode ? "\u03B8" : "&theta;"]);
+          console.log("952 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 6, ", \"&theta;\"]"), "\x1B[", 39, "m"));
           i += 5;
           continue outerloop;
         } else if (str[i + 2] === "h" && str[i + 3] === "i" && str[i + 4] === "n" && str[i + 5] === "s" && str[i + 6] === "p" && str[i + 7] !== ";") {
@@ -2530,6 +2607,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             }));
           }
           rangesArr.push([i, i + 7, opts.decode ? "\u2009" : "&thinsp;"]);
+          console.log("981 PUSH \x1B[".concat(33, "m", "[".concat(i, ", ").concat(i + 7, ", \"&thinsp;\"]"), "\x1B[", 39, "m"));
           i += 6;
           continue outerloop;
         }
@@ -2537,92 +2615,124 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     }
     if (str[i] && str[i].toLowerCase() === "n") {
       if (str[i - 1] === "i" && str[i + 1] === "s") {
+        console.log("995 pattern ...ins... detected - bail");
         nbspWipe();
         continue outerloop;
       }
+      console.log("1001 n caught");
       if (nbsp.matchedN === null) {
         nbsp.matchedN = i;
+        console.log("1005 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedN", "\x1B[", 39, "m"), " = ", nbsp.matchedN));
       }
       if (nbsp.nameStartsAt === null) {
         nbsp.nameStartsAt = i;
+        console.log("1014 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
         }
+        console.log("1027 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = ", nbsp.ampersandNecessary));
       }
     }
     if (str[i] && str[i].toLowerCase() === "b") {
+      console.log("1036 b caught");
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedB === null) {
           nbsp.matchedB = i;
+          console.log("1042 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedB", "\x1B[", 39, "m"), " = ", nbsp.matchedB));
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
+        console.log("1054 MINUSMINUS ".concat("\x1B[".concat(33, "m", "nbsp.patience", "\x1B[", 39, "m"), ", then it's ", nbsp.patience));
         nbsp.nameStartsAt = i;
+        console.log("1062 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         nbsp.matchedB = i;
+        console.log("1068 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedB", "\x1B[", 39, "m"), " = true"));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
+          console.log("1076 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = true"));
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
+          console.log("1082 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = false"));
         }
       } else {
         nbspWipe();
+        console.log("1088 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
         continue outerloop;
       }
     }
     if (str[i] && str[i].toLowerCase() === "s") {
+      console.log("1095 s caught");
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedS === null) {
           nbsp.matchedS = i;
+          console.log("1101 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedS", "\x1B[", 39, "m"), " = ", nbsp.matchedS));
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
+        console.log("1113 MINUSMINUS ".concat("\x1B[".concat(33, "m", "nbsp.patience", "\x1B[", 39, "m"), ", then it's ", nbsp.patience));
         nbsp.nameStartsAt = i;
+        console.log("1121 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         nbsp.matchedS = i;
+        console.log("1127 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedS", "\x1B[", 39, "m"), " = true"));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
+          console.log("1135 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = true"));
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
+          console.log("1141 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = false"));
         }
       } else {
         nbspWipe();
+        console.log("1147 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
         continue outerloop;
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
+      console.log("1154 p caught");
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedP === null) {
           nbsp.matchedP = i;
+          console.log("1160 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedP", "\x1B[", 39, "m"), " = ", nbsp.matchedP));
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
+        console.log("1172 MINUSMINUS ".concat("\x1B[".concat(33, "m", "nbsp.patience", "\x1B[", 39, "m"), ", then it's ", nbsp.patience));
         nbsp.nameStartsAt = i;
+        console.log("1180 SET ".concat("\x1B[".concat(33, "m", "nbsp.nameStartsAt", "\x1B[", 39, "m"), " = ", nbsp.nameStartsAt));
         nbsp.matchedP = i;
+        console.log("1186 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedP", "\x1B[", 39, "m"), " = true"));
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
+          console.log("1194 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = true"));
         } else if (nbsp.ampersandNecessary !== true) {
           nbsp.ampersandNecessary = false;
+          console.log("1200 SET ".concat("\x1B[".concat(33, "m", "nbsp.ampersandNecessary", "\x1B[", 39, "m"), " = false"));
         }
       } else {
         nbspWipe();
+        console.log("1206 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
         continue outerloop;
       }
     }
     if (str[i] === ";") {
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedSemicol = i;
+        console.log("1216 SET ".concat("\x1B[".concat(33, "m", "nbsp.matchedSemicol", "\x1B[", 39, "m"), " = ", nbsp.matchedSemicol));
         if (nbsp.matchedN &&
         !nbsp.matchedB && !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && nbsp.matchedB &&
         !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && nbsp.matchedS &&
         !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP
         ) {
             nbspWipe();
+            console.log("1239 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
           }
       }
     }
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
+      console.log("1267 SET ".concat("\x1B[".concat(33, "m", "state_AmpersandNotNeeded", "\x1B[", 39, "m"), " = ", JSON.stringify(state_AmpersandNotNeeded, null, 4)));
       if (nbsp.nameStartsAt && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
         nbsp.ampersandNecessary = false;
       }
@@ -2630,14 +2740,21 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
+        console.log("1304 nbsp.patience--, now equal to: ".concat(nbsp.patience));
       } else {
         nbspWipe();
+        console.log("1307 WIPE ".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m")));
         continue outerloop;
       }
     }
+    console.log("---------------");
+    console.log("state_AmpersandNotNeeded = ".concat(state_AmpersandNotNeeded));
+    console.log("".concat("\x1B[".concat(33, "m", "nbsp", "\x1B[", 39, "m"), " = ", JSON.stringify(nbsp, null, 4)).concat(rangesArr.length ? "\n".concat("\x1B[".concat(32, "m", "rangesArr", "\x1B[", 39, "m"), " = ", JSON.stringify(rangesArr, null, 4)) : ""));
     counter++;
   }
+  console.log("1360 IN THE END, before merge rangesArr = ".concat(JSON.stringify(rangesArr, null, 4), ";\nrangesArr2 = ").concat(JSON.stringify(rangesArr2, null, 4)));
   if (!rangesArr.length) {
+    console.log("1368 ".concat("\x1B[".concat(32, "m", "RETURN", "\x1B[", 39, "m"), " null"));
     return null;
   }
   if (opts.cb) {
@@ -2647,6 +2764,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           return false;
         }
         if (rangesArr[i][0] >= range[0] && rangesArr[i][1] <= range[1]) {
+          console.log("1406 removing ".concat(JSON.stringify(range, null, 4)));
           return true;
         }
         return false;
@@ -2656,6 +2774,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       return true;
     });
   }
+  console.log("1419 return ".concat(JSON.stringify(rangesMerge(rangesArr, {
+    joinRangesThatTouchEdges: false
+  }), null, 4)));
   return rangesMerge(rangesArr, {
     joinRangesThatTouchEdges: false
   });
