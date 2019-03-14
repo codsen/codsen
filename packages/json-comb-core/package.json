@@ -172,7 +172,7 @@
     "object-set-all-values-to": "^3.9.12",
     "p-map": "^2.0.0",
     "p-one": "^1.0.0",
-    "p-reduce": "^1.0.0",
+    "p-reduce": "^2.0.0",
     "sort-keys": "^2.0.0",
     "type-detect": "^4.0.8"
   },
