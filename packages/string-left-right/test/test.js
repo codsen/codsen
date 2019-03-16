@@ -158,7 +158,73 @@ test(`03.04 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no sequence arguments - 
 });
 
 test(`03.05 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - starting point outside of the range`, t => {
-  t.is(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.05.01");
+  t.is(rightSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "03.05");
+});
+
+test(`03.06 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - optional - existing`, t => {
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 5
+    },
+    "03.06"
+  );
+});
+
+test(`03.07 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, no whitespace`, t => {
+  t.deepEqual(
+    rightSeq("abcefghijklmnop", 2, "d?", "e", "f"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 4
+    },
+    "03.07"
+  );
+});
+
+test(`03.08 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - 1 not existing, with whitespace`, t => {
+  t.deepEqual(
+    rightSeq("abc  e   f   g   hijklmnop", 2, "d?", "e", "f"),
+    {
+      gaps: [[3, 5], [6, 9]],
+      leftmostChar: 5,
+      rightmostChar: 9
+    },
+    "03.08"
+  );
+});
+
+test(`03.09 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - ${`\u001b[${31}m${`optional`}\u001b[${39}m`} - ends with non-existing optional`, t => {
+  t.deepEqual(
+    rightSeq("abc  e   f   g   hijklmnop", 2, "y?", "e", "z?"),
+    {
+      gaps: [[3, 5]],
+      leftmostChar: 5,
+      rightmostChar: 5
+    },
+    "03.09"
+  );
+});
+
+test(`03.10 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, existing`, t => {
+  t.deepEqual(
+    rightSeq("abcdefghijklmnop", 2, "d?", "e?", "f?"),
+    {
+      gaps: [],
+      leftmostChar: 3,
+      rightmostChar: 5
+    },
+    "03.10"
+  );
+});
+
+test(`03.11 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, not existing`, t => {
+  t.is(rightSeq("abcdefghijklmnop", 2, "x?"), null, "03.11.01");
+  t.is(rightSeq("abcdefghijklmnop", 2, "x?", "y?"), null, "03.11.02");
+  t.is(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "03.11.03");
 });
 
 // 04. leftSeq()
@@ -179,6 +245,16 @@ test(`04.01 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - normal use`, t => {
     leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "e"),
     { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
     "04.01.02"
+  );
+  t.deepEqual(
+    leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e"),
+    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    "04.01.03"
+  );
+  t.deepEqual(
+    leftSeq("a  b  c  d  e  f  g  h  i  j  k", 15, "c", "d", "z?", "e", "x?"),
+    { gaps: [[7, 9], [10, 12], [13, 15]], leftmostChar: 6, rightmostChar: 12 },
+    "04.01.04"
   );
 });
 
@@ -257,7 +333,7 @@ test(`05.01 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`fou
 });
 
 test(`05.02 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
-  // mode 1: stop at first space, leave whitespace alone
+  // mode 1: stop at first space, leave the whitespace alone
   const o = { mode: 1 };
   t.is(chompRight("a b c d  c dx", 2, o, "c", "d"), 12, "05.02.01");
   t.is(chompRight("a b c d  c d x", 2, o, "c", "d"), 12, "05.02.02");
@@ -341,6 +417,12 @@ test(`05.05 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`not
   t.is(chompRight("a b c d  c dx", 2, { mode: 1 }), null, "05.05.13");
   t.is(chompRight("a b c d  c dx", 2, { mode: 2 }), null, "05.05.14");
   t.is(chompRight("a b c d  c dx", 2, { mode: 3 }), null, "05.05.15");
+
+  // idx at wrong place:
+  t.is(chompRight("a b c d  c d  \nx", 0, "c", "d"), null, "05.05.16");
+
+  // both args optional and don't exist
+  t.is(chompRight("a b c d  c d  \nx", 0, "m?", "n?"), null, "05.05.17");
 });
 
 test(`05.06 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`throws`}\u001b[${39}m`}`, t => {
@@ -385,7 +467,7 @@ test(`05.10 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adh
 // 06. chompLeft()
 // -----------------------------------------------------------------------------
 
-test(`06.01 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 0`, t => {
+test(`06.01 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 0`, t => {
   t.is(chompLeft("ab c b c  x y", 10, "b", "c"), 1, "06.01.01");
   t.is(chompLeft("a b c b c  x y", 11, "b", "c"), 2, "06.01.02");
   t.is(chompLeft("a  b c b c  x y", 12, "b", "c"), 2, "06.01.03");
@@ -419,10 +501,12 @@ test(`06.01 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`foun
     2,
     "06.01.14"
   );
+  t.is(chompLeft("a\n  b c b c  x y", 13, "b", "c", "x?"), 2, "06.01.15");
+  t.is(chompLeft("a\n  b c b c  x y", 13, "y?", "b", "c", "x?"), 2, "06.01.16");
 });
 
-test(`06.02 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
-  // mode 1: stop at first space, leave whitespace alone
+test(`06.02 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 1`, t => {
+  // mode 1: stop at first space, leave the whitespace alone
   const o = { mode: 1 };
   t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.02.06");
   t.is(chompLeft("a b c b c  x y", 11, o, "b", "c"), 2, "06.02.07");
@@ -436,7 +520,7 @@ test(`06.02 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`foun
   );
 });
 
-test(`06.03 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 2`, t => {
+test(`06.03 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 2`, t => {
   // mode 2: hungrily chomp all whitespace except newlines
   const o = { mode: 2 };
   t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.03.06");
@@ -451,7 +535,7 @@ test(`06.03 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`foun
   );
 });
 
-test(`06.04 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`found`}\u001b[${39}m`} - mode: 3`, t => {
+test(`06.04 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${32}m${`found`}\u001b[${39}m`} - mode: 3`, t => {
   // mode 3: aggressively chomp all whitespace
   const o = { mode: 3 };
   t.is(chompLeft("ab c b c  x y", 10, o, "b", "c"), 1, "06.04.06");
@@ -463,6 +547,11 @@ test(`06.04 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${34}m${`foun
     chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c"),
     1,
     "06.04.11"
+  );
+  t.is(
+    chompLeft("a\n  b c b c  x y", 12, { mode: "3" }, "b", "c?"),
+    1,
+    "06.04.12"
   );
 });
 
@@ -556,7 +645,17 @@ test(`06.12 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adho
   t.is(
     chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "b", "c"),
     2,
-    "06.12"
+    "06.12.01"
+  );
+  t.is(
+    chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "b?", "c?"),
+    2,
+    "06.12.02"
+  );
+  t.is(
+    chompLeft("a        b c   b  c   x y", 22, { mode: 0 }, "x?", "b", "c"),
+    2,
+    "06.12.03"
   );
 });
 

@@ -45,6 +45,18 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+function x(something) {
+  if (something.endsWith("?")) {
+    return {
+      value: something.slice(0, something.length - 1),
+      optional: true
+    };
+  }
+  return {
+    value: something,
+    optional: false
+  };
+}
 function isNum(something) {
   return typeof something === "number";
 }
@@ -111,13 +123,16 @@ function seq(direction, str, idx, args) {
     if (!args[i].length) {
       continue;
     }
+    var _x = x(args[i]),
+        value = _x.value,
+        optional = _x.optional;
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
-    if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
-      gaps.push([lastFinding + 1, whattsOnTheSide]);
-    } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
-      gaps.unshift([whattsOnTheSide + 1, lastFinding]);
-    }
-    if (str[whattsOnTheSide] === args[i]) {
+    if (str[whattsOnTheSide] === value) {
+      if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
+        gaps.push([lastFinding + 1, whattsOnTheSide]);
+      } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
+        gaps.unshift([whattsOnTheSide + 1, lastFinding]);
+      }
       lastFinding = whattsOnTheSide;
       if (direction === "right") {
         if (leftmostChar === undefined) {
@@ -130,6 +145,8 @@ function seq(direction, str, idx, args) {
         }
         leftmostChar = whattsOnTheSide;
       }
+    } else if (optional) {
+      continue;
     } else {
       return null;
     }
