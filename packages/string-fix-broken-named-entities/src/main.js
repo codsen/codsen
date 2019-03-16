@@ -684,15 +684,14 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (str[i] === "&") {
       console.log(`685 ${`\u001b[${90}m${`& caught`}\u001b[${39}m`}`);
 
-      // 1. Tackle false positives, where ampersand if after the
-      // caught characters
+      // 1. Tackle false positives, where ampersand follows the caught characters
       if (
         nbsp.nameStartsAt &&
         nbsp.nameStartsAt < i &&
         (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)
       ) {
         console.log(
-          `691 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} nbsp markers because ampersand follows a tag beginning`
+          `694 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} nbsp markers because ampersand follows a tag beginning`
         );
         nbspWipe();
       }
@@ -707,13 +706,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // mark the beginning
           nbsp.nameStartsAt = i;
           console.log(
-            `706 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+            `709 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
               nbsp.nameStartsAt
             }`
           );
           nbsp.ampersandNecessary = false;
           console.log(
-            `712 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
+            `715 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
               nbsp.ampersandNecessary
             }`
           );
@@ -749,7 +748,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, endingIndex]);
           console.log(
-            `748 PUSH \u001b[${33}m${`[${i}, ${endingIndex}]`}\u001b[${39}m`
+            `751 PUSH \u001b[${33}m${`[${i}, ${endingIndex}]`}\u001b[${39}m`
           );
         }
       }
@@ -773,7 +772,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2220" : "&ang;"]);
           console.log(
-            `772 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&ang;"]`}\u001b[${39}m`
+            `775 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&ang;"]`}\u001b[${39}m`
           );
 
           i += 3;
@@ -798,7 +797,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 6, opts.decode ? "\xC5" : "&angst;"]);
           console.log(
-            `797 PUSH \u001b[${33}m${`[${i}, ${i +
+            `800 PUSH \u001b[${33}m${`[${i}, ${i +
               6}, "&angst;"]`}\u001b[${39}m`
           );
 
@@ -822,7 +821,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 3, opts.decode ? "\u03C0" : "&pi;"]);
           console.log(
-            `821 PUSH \u001b[${33}m${`[${i}, ${i + 3}, "&pi;"]`}\u001b[${39}m`
+            `824 PUSH \u001b[${33}m${`[${i}, ${i + 3}, "&pi;"]`}\u001b[${39}m`
           );
 
           i += 3;
@@ -843,7 +842,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u03D6" : "&piv;"]);
           console.log(
-            `842 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&piv;"]`}\u001b[${39}m`
+            `845 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&piv;"]`}\u001b[${39}m`
           );
 
           i += 3;
@@ -869,7 +868,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
         rangesArr.push([i, i + 3, opts.decode ? "\u03A0" : "&Pi;"]);
         console.log(
-          `868 PUSH \u001b[${33}m${`[${i}, ${i + 3}, "&Pi;"]`}\u001b[${39}m`
+          `871 PUSH \u001b[${33}m${`[${i}, ${i + 3}, "&Pi;"]`}\u001b[${39}m`
         );
 
         i += 2;
@@ -898,7 +897,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 6, opts.decode ? "\u03C3" : "&sigma;"]);
           console.log(
-            `897 PUSH \u001b[${33}m${`[${i}, ${i +
+            `900 PUSH \u001b[${33}m${`[${i}, ${i +
               6}, "&sigma;"]`}\u001b[${39}m`
           );
 
@@ -925,7 +924,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2282" : "&sub;"]);
           console.log(
-            `924 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&sub;"]`}\u001b[${39}m`
+            `927 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&sub;"]`}\u001b[${39}m`
           );
 
           i += 3;
@@ -955,7 +954,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 4, opts.decode ? "\u2283" : "&sup;"]);
           console.log(
-            `954 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&sup;"]`}\u001b[${39}m`
+            `957 PUSH \u001b[${33}m${`[${i}, ${i + 4}, "&sup;"]`}\u001b[${39}m`
           );
 
           i += 3;
@@ -985,7 +984,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 6, opts.decode ? "\u03B8" : "&theta;"]);
           console.log(
-            `984 PUSH \u001b[${33}m${`[${i}, ${i +
+            `987 PUSH \u001b[${33}m${`[${i}, ${i +
               6}, "&theta;"]`}\u001b[${39}m`
           );
 
@@ -1014,7 +1013,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
           rangesArr.push([i, i + 7, opts.decode ? "\u2009" : "&thinsp;"]);
           console.log(
-            `1013 PUSH \u001b[${33}m${`[${i}, ${i +
+            `1016 PUSH \u001b[${33}m${`[${i}, ${i +
               7}, "&thinsp;"]`}\u001b[${39}m`
           );
 
@@ -1028,17 +1027,17 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (str[i] && str[i].toLowerCase() === "n") {
       // failsafe
       if (str[i - 1] === "i" && str[i + 1] === "s") {
-        console.log("1027 pattern ...ins... detected - bail");
+        console.log("1030 pattern ...ins... detected - bail");
         nbspWipe();
         continue outerloop;
       }
 
       // action
-      console.log("1033 n caught");
+      console.log("1036 n caught");
       if (nbsp.matchedN === null) {
         nbsp.matchedN = i;
         console.log(
-          `1037 SET ${`\u001b[${33}m${`nbsp.matchedN`}\u001b[${39}m`} = ${
+          `1040 SET ${`\u001b[${33}m${`nbsp.matchedN`}\u001b[${39}m`} = ${
             nbsp.matchedN
           }`
         );
@@ -1047,7 +1046,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // 1. mark it
         nbsp.nameStartsAt = i;
         console.log(
-          `1046 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+          `1049 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
             nbsp.nameStartsAt
           }`
         );
@@ -1060,7 +1059,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           nbsp.ampersandNecessary = false;
         }
         console.log(
-          `1059 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
+          `1062 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = ${
             nbsp.ampersandNecessary
           }`
         );
@@ -1069,13 +1068,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
     // catch "b"
     if (str[i] && str[i].toLowerCase() === "b") {
-      console.log("1068 b caught");
+      console.log("1071 b caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code, N was already detected
         if (nbsp.matchedB === null) {
           nbsp.matchedB = i;
           console.log(
-            `1074 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = ${
+            `1077 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = ${
               nbsp.matchedB
             }`
           );
@@ -1087,7 +1086,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // be only one character missing out of n-b-s-p.
         nbsp.patience--;
         console.log(
-          `1086 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+          `1089 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
             nbsp.patience
           }`
         );
@@ -1095,13 +1094,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // 2. mark the start
         nbsp.nameStartsAt = i;
         console.log(
-          `1094 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+          `1097 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
             nbsp.nameStartsAt
           }`
         );
         nbsp.matchedB = i;
         console.log(
-          `1100 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = true`
+          `1103 SET ${`\u001b[${33}m${`nbsp.matchedB`}\u001b[${39}m`} = true`
         );
 
         // 3. tend the ampersand situation
@@ -1109,32 +1108,32 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // if by now there are signs of ampersand records, it must be added later:
           nbsp.ampersandNecessary = true;
           console.log(
-            `1108 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+            `1111 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
           );
         } else if (nbsp.ampersandNecessary !== true) {
           // in all other cases, set it as not needed
           nbsp.ampersandNecessary = false;
           console.log(
-            `1114 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+            `1117 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
           );
         }
       } else {
         // wipe
         nbspWipe();
-        console.log(`1120 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        console.log(`1123 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         continue outerloop;
       }
     }
 
     // catch "s"
     if (str[i] && str[i].toLowerCase() === "s") {
-      console.log("1127 s caught");
+      console.log("1130 s caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code
         if (nbsp.matchedS === null) {
           nbsp.matchedS = i;
           console.log(
-            `1133 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = ${
+            `1136 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = ${
               nbsp.matchedS
             }`
           );
@@ -1146,7 +1145,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // be only one character missing out of n-b-s-p.
         nbsp.patience--;
         console.log(
-          `1145 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+          `1148 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
             nbsp.patience
           }`
         );
@@ -1154,13 +1153,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // 2. mark the start
         nbsp.nameStartsAt = i;
         console.log(
-          `1153 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+          `1156 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
             nbsp.nameStartsAt
           }`
         );
         nbsp.matchedS = i;
         console.log(
-          `1159 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = true`
+          `1162 SET ${`\u001b[${33}m${`nbsp.matchedS`}\u001b[${39}m`} = true`
         );
 
         // 3. tend the ampersand situation
@@ -1168,32 +1167,32 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // if by now there are signs of ampersand records, it must be added later:
           nbsp.ampersandNecessary = true;
           console.log(
-            `1167 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+            `1170 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
           );
         } else if (nbsp.ampersandNecessary !== true) {
           // in all other cases, set it as not needed
           nbsp.ampersandNecessary = false;
           console.log(
-            `1173 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+            `1176 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
           );
         }
       } else {
         // wipe
         nbspWipe();
-        console.log(`1179 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        console.log(`1182 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         continue outerloop;
       }
     }
 
     // catch "p"
     if (str[i] && str[i].toLowerCase() === "p") {
-      console.log("1186 p caught");
+      console.log("1189 p caught");
       if (nbsp.nameStartsAt !== null) {
         // clean code
         if (nbsp.matchedP === null) {
           nbsp.matchedP = i;
           console.log(
-            `1192 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = ${
+            `1195 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = ${
               nbsp.matchedP
             }`
           );
@@ -1205,7 +1204,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // be only one character missing out of n-b-s-p.
         nbsp.patience--;
         console.log(
-          `1204 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
+          `1207 MINUSMINUS ${`\u001b[${33}m${`nbsp.patience`}\u001b[${39}m`}, then it's ${
             nbsp.patience
           }`
         );
@@ -1213,13 +1212,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         // 2. mark the start
         nbsp.nameStartsAt = i;
         console.log(
-          `1212 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
+          `1215 SET ${`\u001b[${33}m${`nbsp.nameStartsAt`}\u001b[${39}m`} = ${
             nbsp.nameStartsAt
           }`
         );
         nbsp.matchedP = i;
         console.log(
-          `1218 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = true`
+          `1221 SET ${`\u001b[${33}m${`nbsp.matchedP`}\u001b[${39}m`} = true`
         );
 
         // 3. tend the ampersand situation
@@ -1227,19 +1226,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // if by now there are signs of ampersand records, it must be added later:
           nbsp.ampersandNecessary = true;
           console.log(
-            `1226 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
+            `1229 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = true`
           );
         } else if (nbsp.ampersandNecessary !== true) {
           // in all other cases, set it as not needed
           nbsp.ampersandNecessary = false;
           console.log(
-            `1232 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
+            `1235 SET ${`\u001b[${33}m${`nbsp.ampersandNecessary`}\u001b[${39}m`} = false`
           );
         }
       } else {
         // wipe
         nbspWipe();
-        console.log(`1238 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        console.log(`1241 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         continue outerloop;
       }
     }
@@ -1249,7 +1248,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (nbsp.nameStartsAt !== null) {
         nbsp.matchedSemicol = i;
         console.log(
-          `1248 SET ${`\u001b[${33}m${`nbsp.matchedSemicol`}\u001b[${39}m`} = ${
+          `1251 SET ${`\u001b[${33}m${`nbsp.matchedSemicol`}\u001b[${39}m`} = ${
             nbsp.matchedSemicol
           }`
         );
@@ -1272,7 +1271,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           (!nbsp.matchedN && !nbsp.matchedB && !nbsp.matchedS && nbsp.matchedP) // <---- just p
         ) {
           nbspWipe();
-          console.log(`1271 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+          console.log(`1274 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         }
       }
     }
@@ -1280,7 +1279,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     // // catch whitespace
     // if (str[i] && str[i].trim().length === 0 && nbsp.nameStartsAt !== null) {
     //   nbspWipe();
-    //   console.log(`1279 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+    //   console.log(`1282 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
     // }
 
     //            |
@@ -1300,7 +1299,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (state_AmpersandNotNeeded) {
       state_AmpersandNotNeeded = false;
       console.log(
-        `1299 SET ${`\u001b[${33}m${`state_AmpersandNotNeeded`}\u001b[${39}m`} = ${JSON.stringify(
+        `1302 SET ${`\u001b[${33}m${`state_AmpersandNotNeeded`}\u001b[${39}m`} = ${JSON.stringify(
           state_AmpersandNotNeeded,
           null,
           4
@@ -1337,10 +1336,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     ) {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
-        console.log(`1336 nbsp.patience--, now equal to: ${nbsp.patience}`);
+        console.log(`1339 nbsp.patience--, now equal to: ${nbsp.patience}`);
       } else {
         nbspWipe();
-        console.log(`1339 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
+        console.log(`1342 WIPE ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`}`);
         continue outerloop;
       }
     }
@@ -1393,7 +1392,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   //                                      |
 
   console.log(
-    `1392 IN THE END, before merge rangesArr = ${JSON.stringify(
+    `1395 IN THE END, before merge rangesArr = ${JSON.stringify(
       rangesArr,
       null,
       4
@@ -1401,7 +1400,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   );
 
   if (!rangesArr.length) {
-    console.log(`1400 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} null`);
+    console.log(`1403 ${`\u001b[${32}m${`RETURN`}\u001b[${39}m`} null`);
     return null;
   }
 
@@ -1439,7 +1438,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           // will cause our Array.some to give "true" which will
           // cause this range to be removed.
           if (rangesArr[i][0] >= range[0] && rangesArr[i][1] <= range[1]) {
-            console.log(`1438 removing ${JSON.stringify(range, null, 4)}`);
+            console.log(`1441 removing ${JSON.stringify(range, null, 4)}`);
             return true;
           }
           return false;
@@ -1452,7 +1451,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     });
   }
   console.log(
-    `1451 return ${JSON.stringify(
+    `1454 return ${JSON.stringify(
       rangesMerge(rangesArr, { joinRangesThatTouchEdges: false }),
       null,
       4
