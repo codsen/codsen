@@ -1322,20 +1322,20 @@ test(`05.013 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
         t.deepEqual(
           received,
           {
-            entityName: "amp",
+            entityName: "nbsp",
             rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
-            ruleName: "bad-named-html-entity-multiple-encoding"
+            rangeTo: 12,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
+            ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.013.01"
         );
         return cb(received);
       }
     }),
     [[4, 12, "&nbsp;"]],
-    "05.013"
+    "05.013.02"
   );
 });
 
@@ -1352,20 +1352,20 @@ test(`05.015 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
         t.deepEqual(
           received,
           {
-            entityName: "amp",
-            rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
-            ruleName: "bad-named-html-entity-multiple-encoding"
+            entityName: "nbsp",
+            rangeFrom: 5,
+            rangeTo: 55,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
+            ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.015.01"
         );
         return cb(received);
       }
     }),
     [[5, 55, "&nbsp;"]],
-    "05.015"
+    "05.015.02"
   );
 });
 
@@ -1384,20 +1384,20 @@ test(`05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
         t.deepEqual(
           received,
           {
-            entityName: "amp",
-            rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
-            ruleName: "bad-named-html-entity-multiple-encoding"
+            entityName: "nbsp",
+            rangeFrom: 5,
+            rangeTo: 59,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
+            ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.017.01"
         );
         return cb(received);
       }
     }),
     [[5, 59, "&nbsp;"]],
-    "05.017"
+    "05.017.02"
   );
 });
 
@@ -1416,18 +1416,18 @@ test(`05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           {
             entityName: "nbsp",
             rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
+            rangeTo: 9,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.019.01"
         );
         return cb(received);
       }
     }),
     [[4, 9, "&nbsp;"]],
-    "05.019"
+    "05.019.02"
   );
 });
 
@@ -1442,12 +1442,12 @@ test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           {
             entityName: "nbsp",
             rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
+            rangeTo: 9,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.020.01"
         );
         return cb(received);
       }
@@ -1465,19 +1465,19 @@ test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           received,
           {
             entityName: "nbsp",
-            rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
+            rangeFrom: 0,
+            rangeTo: 5,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.020.04"
         );
         return cb(received);
       }
     }),
     [[0, 5, "&nbsp;"]],
-    "05.020.04"
+    "05.020.05"
   );
 });
 
@@ -1495,19 +1495,19 @@ test(`05.022 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           received,
           {
             entityName: "nbsp",
-            rangeFrom: 4,
+            rangeFrom: 3,
             rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.022.01"
         );
         return cb(received);
       }
     }),
     [[3, 8, "&nbsp;"]],
-    "05.022"
+    "05.022.02"
   );
 });
 
@@ -1521,23 +1521,23 @@ test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           received,
           {
             entityName: "nbsp",
-            rangeFrom: 4,
+            rangeFrom: 3,
             rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
-            ruleName: "bad-named-html-malformed-nbsp"
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
+            ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.023.02"
         );
         return cb(received);
       }
     }),
     [[3, 8, "&nbsp;"]],
-    "05.023.02"
+    "05.023.03"
   );
 
   const inp2 = "&nbs; xyz";
-  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.023.03");
+  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.023.04");
   t.deepEqual(
     fix(inp2, {
       cb: received => {
@@ -1545,19 +1545,19 @@ test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           received,
           {
             entityName: "nbsp",
-            rangeFrom: 4,
-            rangeTo: 8,
-            rangeValDecoded: "&",
-            rangeValEncoded: "&",
-            ruleName: "bad-named-html-malformed-nbsp"
+            rangeFrom: 0,
+            rangeTo: 5,
+            rangeValDecoded: "\xA0",
+            rangeValEncoded: "&nbsp;",
+            ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.011.01"
+          "05.023.05"
         );
         return cb(received);
       }
     }),
     [[0, 5, "&nbsp;"]],
-    "05.023.04"
+    "05.023.06"
   );
 });
 
