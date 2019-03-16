@@ -686,7 +686,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
 
       // 1. Tackle false positives, where ampersand if after the
       // caught characters
-      if (nbsp.nameStartsAt && nbsp.nameStartsAt < i) {
+      if (
+        nbsp.nameStartsAt &&
+        nbsp.nameStartsAt < i &&
+        (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)
+      ) {
         console.log(
           `691 ${`\u001b[${31}m${`WIPE`}\u001b[${39}m`} nbsp markers because ampersand follows a tag beginning`
         );

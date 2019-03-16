@@ -2358,7 +2358,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (str[i] === "&") {
-      if (nbsp.nameStartsAt && nbsp.nameStartsAt < i) {
+      if (nbsp.nameStartsAt && nbsp.nameStartsAt < i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
         nbspWipe();
       }
       if (nbsp.nameStartsAt === null) {
