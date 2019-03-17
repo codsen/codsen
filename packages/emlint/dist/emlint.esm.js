@@ -1592,13 +1592,6 @@ const {
   isStr: isStr$1,
   log: log$1
 } = util;
-const applicableRules = {};
-Object.keys(errorsRules)
-  .concat(Object.keys(errorsCharacters))
-  .sort()
-  .forEach(ruleName => {
-    applicableRules[ruleName] = false;
-  });
 function lint(str, originalOpts) {
   function pingTag(logTag) {
   }
@@ -1741,8 +1734,19 @@ function lint(str, originalOpts) {
   }
   resetLogWhitespace();
   const retObj = {
-    issues: []
+    issues: [],
+    applicableRules: {}
   };
+  Object.keys(errorsRules)
+    .concat(Object.keys(errorsCharacters))
+    .sort()
+    .forEach(ruleName => {
+      retObj.applicableRules[ruleName] = false;
+    });
+  function submit(issueObj) {
+    retObj.applicableRules[issueObj.name] = true;
+    retObj.issues.push(issueObj);
+  }
   let tagIssueStaging = [];
   let rawIssueStaging = [];
   const logLineEndings = {
@@ -1754,7 +1758,7 @@ function lint(str, originalOpts) {
   let withinQuotes = null;
   let withinQuotesEndAt = null;
   if (str.length === 0) {
-    retObj.issues.push({
+    submit({
       name: "file-empty",
       position: [[0, 0]]
     });
@@ -1794,31 +1798,31 @@ function lint(str, originalOpts) {
           ) {
             leftOpeningBracketAt = whatsOnTheLeftOfExclMark;
             if (str.slice(i, i + 5) !== "CDATA") {
-              retObj.issues.push({
+              submit({
                 name: "bad-cdata-tag-character-case",
                 position: [[i, i + 5, "CDATA"]]
               });
             }
             if (leftSquareBracketAt < i - 1) {
-              retObj.issues.push({
+              submit({
                 name: "bad-cdata-whitespace",
                 position: [[leftSquareBracketAt + 1, i]]
               });
             }
             if (exclMarkAt < leftSquareBracketAt - 1) {
-              retObj.issues.push({
+              submit({
                 name: "bad-cdata-whitespace",
                 position: [[exclMarkAt + 1, leftSquareBracketAt]]
               });
             }
             if (leftOpeningBracketAt < exclMarkAt - 1) {
-              retObj.issues.push({
+              submit({
                 name: "bad-cdata-whitespace",
                 position: [[leftOpeningBracketAt + 1, exclMarkAt]]
               });
             }
             if (openingBracketAt !== i + 5) {
-              retObj.issues.push({
+              submit({
                 name: "bad-cdata-whitespace",
                 position: [[i + 5, openingBracketAt]]
               });
@@ -1828,7 +1832,7 @@ function lint(str, originalOpts) {
             if (rawIssueStaging.length) {
               rawIssueStaging.forEach(issueObj => {
                 if (issueObj.position[0][0] < leftOpeningBracketAt) {
-                  retObj.issues.push(issueObj);
+                  submit(issueObj);
                 }
               });
               rawIssueStaging = [];
@@ -1917,7 +1921,7 @@ function lint(str, originalOpts) {
               doNothingUntil = nextEqualEndAt;
               doNothingUntilReason = "repeated equals";
               while (nextEqualStartAt && nextEqualEndAt) {
-                retObj.issues.push({
+                submit({
                   name: "tag-attribute-repeated-equal",
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
@@ -1934,7 +1938,7 @@ function lint(str, originalOpts) {
             }
           }
         } else if (temp) {
-          retObj.issues.push({
+          submit({
             name: "tag-attribute-missing-equal",
             position: [[i, i, "="]]
           });
@@ -1952,7 +1956,7 @@ function lint(str, originalOpts) {
         }
         if (logWhitespace.startAt !== null) {
           if (str[i] === "=") {
-            retObj.issues.push({
+            submit({
               name: "tag-attribute-space-between-name-and-equals",
               position: [[logWhitespace.startAt, i]]
             });
@@ -1963,13 +1967,13 @@ function lint(str, originalOpts) {
             if (logWhitespace.startAt !== null) {
               if (str[logWhitespace.startAt] === " ") {
                 if (logWhitespace.startAt + 1 < i) {
-                  retObj.issues.push({
+                  submit({
                     name: "tag-excessive-whitespace-inside-tag",
                     position: [[logWhitespace.startAt + 1, i]]
                   });
                 }
               } else {
-                retObj.issues.push({
+                submit({
                   name: "tag-excessive-whitespace-inside-tag",
                   position: [[logWhitespace.startAt, i, " "]]
                 });
@@ -1983,12 +1987,12 @@ function lint(str, originalOpts) {
         logAttr.attrNameStartAt = i;
         if (logWhitespace.startAt !== null && logWhitespace.startAt < i - 1) {
           if (str[logWhitespace.startAt] === " ") {
-            retObj.issues.push({
+            submit({
               name: "tag-excessive-whitespace-inside-tag",
               position: [[logWhitespace.startAt + 1, i]]
             });
           } else {
-            retObj.issues.push({
+            submit({
               name: "tag-excessive-whitespace-inside-tag",
               position: [[logWhitespace.startAt, i, " "]]
             });
@@ -1999,7 +2003,7 @@ function lint(str, originalOpts) {
             for (let y = i - 1; y--; ) {
               if (!charIsQuote$1(str[y])) {
                 if (!str[y].trim().length) {
-                  retObj.issues.push({
+                  submit({
                     name: "tag-stray-character",
                     position: [[y + 1, i]]
                   });
@@ -2017,7 +2021,7 @@ function lint(str, originalOpts) {
         if (logAttr.attrEqualAt < i && str[i].trim().length) {
           if (charcode === 34 || charcode === 39) {
             if (logWhitespace.startAt && logWhitespace.startAt < i) {
-              retObj.issues.push({
+              submit({
                 name: "tag-attribute-space-between-equals-and-opening-quotes",
                 position: [[logWhitespace.startAt, i]]
               });
@@ -2036,7 +2040,7 @@ function lint(str, originalOpts) {
                   const name = `tag-attribute-mismatching-quotes-is-${
                     isDouble ? "double" : "single"
                   }`;
-                  retObj.issues.push({
+                  submit({
                     name: name,
                     position: [
                       [
@@ -2056,7 +2060,7 @@ function lint(str, originalOpts) {
                   if (str[left(str, closingQuotePeek)] === "/") {
                     toPositionToInsertAt = left(str, closingQuotePeek);
                     if (toPositionToInsertAt + 1 < closingQuotePeek) {
-                      retObj.issues.push({
+                      submit({
                         name: "tag-whitespace-closing-slash-and-bracket",
                         position: [[toPositionToInsertAt + 1, closingQuotePeek]]
                       });
@@ -2064,7 +2068,7 @@ function lint(str, originalOpts) {
                     fromPositionToInsertAt =
                       left(str, toPositionToInsertAt) + 1;
                   }
-                  retObj.issues.push({
+                  submit({
                     name: "tag-attribute-closing-quotation-mark-missing",
                     position: [
                       [
@@ -2100,7 +2104,7 @@ function lint(str, originalOpts) {
                   );
                 })
               ) {
-                retObj.issues.push({
+                submit({
                   name: "tag-missing-space-before-attribute",
                   position: [
                     [logAttr.attrNameStartAt, logAttr.attrNameStartAt, " "]
@@ -2132,7 +2136,7 @@ function lint(str, originalOpts) {
                       attrObj.attrOpeningQuote.pos !== null
                   ))
               ) {
-                retObj.issues.push({
+                submit({
                   name: "tag-missing-closing-bracket",
                   position: [[i + 1, i + 1, ">"]]
                 });
@@ -2146,7 +2150,7 @@ function lint(str, originalOpts) {
               charcode === 8220
                 ? "tag-attribute-left-double-quotation-mark"
                 : "tag-attribute-right-double-quotation-mark";
-            retObj.issues.push({
+            submit({
               name,
               position: [[i, i + 1, `"`]]
             });
@@ -2159,7 +2163,7 @@ function lint(str, originalOpts) {
               charcode === 8216
                 ? "tag-attribute-left-single-quotation-mark"
                 : "tag-attribute-right-single-quotation-mark";
-            retObj.issues.push({
+            submit({
               name,
               position: [[i, i + 1, `'`]]
             });
@@ -2170,7 +2174,7 @@ function lint(str, originalOpts) {
             const quoteValToPut = charIsQuote$1(str[closingQuotePeek])
               ? str[closingQuotePeek]
               : `"`;
-            retObj.issues.push({
+            submit({
               name: "tag-attribute-opening-quotation-mark-missing",
               position: [[left(str, i) + 1, i, quoteValToPut]]
             });
@@ -2278,7 +2282,7 @@ function lint(str, originalOpts) {
               finalClosingQuotesShouldBeAt = caughtAttrEnd;
             }
             if (finalClosingQuotesShouldBeAt) {
-              retObj.issues.push({
+              submit({
                 name: "tag-attribute-closing-quotation-mark-missing",
                 position: [
                   [
@@ -2309,7 +2313,7 @@ function lint(str, originalOpts) {
               ) {
                 const temp = encodeChar$1(str, z);
                 if (temp) {
-                  retObj.issues.push(temp);
+                  submit(temp);
                 }
               }
             }
@@ -2335,7 +2339,7 @@ function lint(str, originalOpts) {
                 }
               }
             }
-            retObj.issues.push({
+            submit({
               name: "tag-attribute-quote-and-onwards-missing",
               position: [[start, i]]
             });
@@ -2346,12 +2350,12 @@ function lint(str, originalOpts) {
           }
           if (logWhitespace.startAt !== null) {
             if (str[i] === "'" || str[i] === '"') {
-              retObj.issues.push({
+              submit({
                 name: "tag-attribute-space-between-equals-and-opening-quotes",
                 position: [[logWhitespace.startAt, i]]
               });
             } else if (withinTagInnerspace$1(str, i + 1)) {
-              retObj.issues.push({
+              submit({
                 name: "tag-attribute-quote-and-onwards-missing",
                 position: [[logAttr.attrStartAt, i]]
               });
@@ -2359,7 +2363,7 @@ function lint(str, originalOpts) {
             }
           }
         } else if (!str[i + 1] || !right(str, i)) {
-          retObj.issues.push({
+          submit({
             name: "file-missing-ending",
             position: [[i + 1, i + 1]]
           });
@@ -2389,7 +2393,7 @@ function lint(str, originalOpts) {
                 );
               }))
           ) {
-            retObj.issues.push({
+            submit({
               name: issueName,
               position: [[i, i + 1, `${charcode === 34 ? "'" : '"'}`]]
             });
@@ -2422,7 +2426,7 @@ function lint(str, originalOpts) {
             charcode === 8220
               ? "tag-attribute-left-double-quotation-mark"
               : "tag-attribute-right-double-quotation-mark";
-          retObj.issues.push({
+          submit({
             name: name,
             position: [[i, i + 1, '"']]
           });
@@ -2442,7 +2446,7 @@ function lint(str, originalOpts) {
             charcode === 8216
               ? "tag-attribute-left-single-quotation-mark"
               : "tag-attribute-right-single-quotation-mark";
-          retObj.issues.push({
+          submit({
             name: name,
             position: [[i, i + 1, `'`]]
           });
@@ -2462,7 +2466,7 @@ function lint(str, originalOpts) {
         ((str[i] === "/" && right(str, i) && str[right(str, i)] === ">") ||
           str[i] === ">")
       ) {
-        retObj.issues.push({
+        submit({
           name: "tag-attribute-closing-quotation-mark-missing",
           position: [[i, i, logAttr.attrOpeningQuote.val]]
         });
@@ -2476,7 +2480,7 @@ function lint(str, originalOpts) {
       if (charcode < 32) {
         const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
         if (charcode === 9) {
-          retObj.issues.push({
+          submit({
             name,
             position: [[i, i + 1, "  "]]
           });
@@ -2487,7 +2491,7 @@ function lint(str, originalOpts) {
               opts.style.line_endings_CR_LF_CRLF &&
               opts.style.line_endings_CR_LF_CRLF !== "CRLF"
             ) {
-              retObj.issues.push({
+              submit({
                 name: "file-wrong-type-line-ending-CRLF",
                 position: [[i, i + 2, rawEnforcedEOLChar]]
               });
@@ -2500,7 +2504,7 @@ function lint(str, originalOpts) {
               opts.style.line_endings_CR_LF_CRLF &&
               opts.style.line_endings_CR_LF_CRLF !== "CR"
             ) {
-              retObj.issues.push({
+              submit({
                 name: "file-wrong-type-line-ending-CR",
                 position: [[i, i + 1, rawEnforcedEOLChar]]
               });
@@ -2515,7 +2519,7 @@ function lint(str, originalOpts) {
               opts.style.line_endings_CR_LF_CRLF &&
               opts.style.line_endings_CR_LF_CRLF !== "LF"
             ) {
-              retObj.issues.push({
+              submit({
                 name: "file-wrong-type-line-ending-LF",
                 position: [[i, i + 1, rawEnforcedEOLChar]]
               });
@@ -2554,7 +2558,7 @@ function lint(str, originalOpts) {
             }
           }
           if (addThis) {
-            retObj.issues.push({
+            submit({
               name,
               position: [
                 [
@@ -2565,7 +2569,7 @@ function lint(str, originalOpts) {
               ]
             });
           } else {
-            retObj.issues.push({
+            submit({
               name,
               position: [[i, i + 1]]
             });
@@ -2573,121 +2577,121 @@ function lint(str, originalOpts) {
         }
       } else if (charcode > 126 && charcode < 160) {
         const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1]]
         });
       } else if (charcode === 160) {
         const name = `bad-character-unencoded-non-breaking-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, "&nbsp;"]]
         });
       } else if (charcode === 5760) {
         const name = `bad-character-ogham-space-mark`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8192) {
         const name = `bad-character-en-quad`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8193) {
         const name = `bad-character-em-quad`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8194) {
         const name = `bad-character-en-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8195) {
         const name = `bad-character-em-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8196) {
         const name = `bad-character-three-per-em-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8197) {
         const name = `bad-character-four-per-em-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8198) {
         const name = `bad-character-six-per-em-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8199) {
         const name = `bad-character-figure-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8200) {
         const name = `bad-character-punctuation-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8201) {
         const name = `bad-character-thin-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8202) {
         const name = `bad-character-hair-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8203) {
         const name = `bad-character-zero-width-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1]]
         });
       } else if (charcode === 8232) {
         const name = `bad-character-line-separator`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, "\n"]]
         });
       } else if (charcode === 8233) {
         const name = `bad-character-paragraph-separator`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, "\n"]]
         });
       } else if (charcode === 8239) {
         const name = `bad-character-narrow-no-break-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 8287) {
         const name = `bad-character-medium-mathematical-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
       } else if (charcode === 12288) {
         const name = `bad-character-ideographic-space`;
-        retObj.issues.push({
+        submit({
           name,
           position: [[i, i + 1, " "]]
         });
@@ -2754,7 +2758,7 @@ function lint(str, originalOpts) {
           charcode === 8591
         ) {
           const name = `bad-character-generic`;
-          retObj.issues.push({
+          submit({
             name,
             position: [[i, i + 1]]
           });
@@ -2777,7 +2781,7 @@ function lint(str, originalOpts) {
         if (str[logWhitespace.startAt - 1] === "/") {
           name = "tag-whitespace-closing-slash-and-bracket";
         }
-        retObj.issues.push({
+        submit({
           name: name,
           position: [[logWhitespace.startAt, i]]
         });
@@ -2826,12 +2830,12 @@ function lint(str, originalOpts) {
           }
         }
         if (addSpace) {
-          retObj.issues.push({
+          submit({
             name: "tag-stray-character",
             position: [[i, strayCharsEndAt, " "]]
           });
         } else {
-          retObj.issues.push({
+          submit({
             name: "tag-stray-character",
             position: [[i, strayCharsEndAt]]
           });
@@ -2866,7 +2870,7 @@ function lint(str, originalOpts) {
         .toLowerCase()
         .startsWith("doctype")
     ) {
-      retObj.issues.push({
+      submit({
         name: "tag-name-lowercase",
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
@@ -2898,7 +2902,7 @@ function lint(str, originalOpts) {
           if (str[lastNonWhitespaceOnLeft] === ">") {
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
           } else {
-            retObj.issues.push({
+            submit({
               name: "tag-missing-closing-bracket",
               position: [[lastNonWhitespaceOnLeft + 1, i, ">"]]
             });
@@ -2906,7 +2910,7 @@ function lint(str, originalOpts) {
           if (rawIssueStaging.length) {
             rawIssueStaging.forEach(issueObj => {
               if (issueObj.position[0][0] < logTag.tagStartAt) {
-                retObj.issues.push(issueObj);
+                submit(issueObj);
               }
             });
           }
@@ -2921,7 +2925,7 @@ function lint(str, originalOpts) {
               if (
                 issueObj.position[0][0] < i
               ) {
-                retObj.issues.push(issueObj);
+                submit(issueObj);
               }
             });
             rawIssueStaging = [];
@@ -2939,7 +2943,9 @@ function lint(str, originalOpts) {
       (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < i)
     ) {
       if (tagIssueStaging.length) {
-        retObj.issues = retObj.issues.concat(tagIssueStaging);
+        tagIssueStaging.forEach(issue => {
+          submit(issue);
+        });
         tagIssueStaging = [];
       }
       if (rawIssueStaging.length) {
@@ -2959,7 +2965,7 @@ function lint(str, originalOpts) {
                 );
               }))
           ) {
-            retObj.issues.push(issueObj);
+            submit(issueObj);
           }
         });
         rawIssueStaging = [];
@@ -3003,11 +3009,11 @@ function lint(str, originalOpts) {
         ) {
           rawIssueStaging.forEach(issueObj => {
             if (issueObj.position[0][0] < logTag.tagStartAt) {
-              retObj.issues.push(issueObj);
+              submit(issueObj);
             }
           });
           rawIssueStaging = [];
-          retObj.issues.push({
+          submit({
             name: "tag-missing-closing-bracket",
             position: [
               [
@@ -3040,7 +3046,7 @@ function lint(str, originalOpts) {
     ) {
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CR-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r"]]
           });
@@ -3048,7 +3054,7 @@ function lint(str, originalOpts) {
       }
       if (logLineEndings.lf.length) {
         logLineEndings.lf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CR-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r"]]
           });
@@ -3060,7 +3066,7 @@ function lint(str, originalOpts) {
     ) {
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-LF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
           });
@@ -3068,7 +3074,7 @@ function lint(str, originalOpts) {
       }
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-LF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
           });
@@ -3080,7 +3086,7 @@ function lint(str, originalOpts) {
     ) {
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CRLF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
           });
@@ -3088,7 +3094,7 @@ function lint(str, originalOpts) {
       }
       if (logLineEndings.lf.length) {
         logLineEndings.lf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CRLF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
           });
@@ -3099,13 +3105,13 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
       logLineEndings.crlf.forEach(eolEntryArr => {
-        retObj.issues.push({
+        submit({
           name: "file-mixed-line-endings-file-is-LF-mainly",
           position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
         });
       });
       logLineEndings.cr.forEach(eolEntryArr => {
-        retObj.issues.push({
+        submit({
           name: "file-mixed-line-endings-file-is-LF-mainly",
           position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
         });
@@ -3116,7 +3122,7 @@ function lint(str, originalOpts) {
     ) {
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CRLF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
           });
@@ -3124,7 +3130,7 @@ function lint(str, originalOpts) {
       }
       if (logLineEndings.lf.length) {
         logLineEndings.lf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-CRLF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\r\n"]]
           });
@@ -3138,7 +3144,7 @@ function lint(str, originalOpts) {
     ) {
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-LF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
           });
@@ -3146,7 +3152,7 @@ function lint(str, originalOpts) {
       }
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
-          retObj.issues.push({
+          submit({
             name: "file-mixed-line-endings-file-is-LF-mainly",
             position: [[eolEntryArr[0], eolEntryArr[1], "\n"]]
           });
@@ -3189,4 +3195,4 @@ function lint(str, originalOpts) {
   return retObj;
 }
 
-export { lint, version, applicableRules };
+export { lint, version };

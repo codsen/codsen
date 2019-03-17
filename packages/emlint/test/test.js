@@ -122,6 +122,7 @@ test(`01.02 - ${`\u001b[${35}m${`space between the tag name and opening bracket`
     ],
     "01.02.02"
   );
+  t.true(res.applicableRules["tag-space-after-opening-bracket"], "01.02.03");
 });
 
 test(`01.03 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - multiple spaces`, t => {
