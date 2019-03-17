@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "4.12.13",
+  "version": "4.12.14",
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "license": "MIT",
   "engines": {
@@ -163,7 +163,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.9",
+    "check-types-mini": "^5.7.10",
     "lodash.isplainobject": "^4.0.6",
     "matcher": "^1.1.1"
   },

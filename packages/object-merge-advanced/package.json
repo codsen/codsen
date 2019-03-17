@@ -1,6 +1,6 @@
 {
   "name": "object-merge-advanced",
-  "version": "10.10.13",
+  "version": "10.10.14",
   "description": "Recursive, deep merge of anything (objects, arrays, strings or nested thereof), which weighs contents by type hierarchy to ensure the maximum content is retained",
   "license": "MIT",
   "engines": {
@@ -187,14 +187,14 @@
   },
   "dependencies": {
     "array-includes-all": "^2.0.0",
-    "array-includes-with-glob": "^2.11.13",
-    "arrayiffy-if-string": "^3.10.13",
-    "check-types-mini": "^5.7.9",
+    "array-includes-with-glob": "^2.11.14",
+    "arrayiffy-if-string": "^3.10.14",
+    "check-types-mini": "^5.7.10",
     "lodash.clonedeep": "^4.5.0",
     "lodash.includes": "^4.3.0",
     "lodash.isplainobject": "^4.0.6",
     "lodash.uniq": "^4.5.0",
-    "util-nonempty": "^2.9.13"
+    "util-nonempty": "^2.9.14"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
