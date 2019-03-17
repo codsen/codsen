@@ -1,6 +1,6 @@
 {
   "name": "string-extract-class-names",
-  "version": "5.8.14",
+  "version": "5.8.15",
   "description": "Extract class (or id) name from a string",
   "license": "MIT",
   "engines": {

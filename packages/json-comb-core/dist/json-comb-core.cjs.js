@@ -1,7 +1,7 @@
 /**
  * json-comb-core
  * The inner core of json-comb
- * Version: 6.5.14
+ * Version: 6.5.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/json-comb-core
