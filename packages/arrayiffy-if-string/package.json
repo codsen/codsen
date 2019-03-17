@@ -1,6 +1,6 @@
 {
   "name": "arrayiffy-if-string",
-  "version": "3.10.12",
+  "version": "3.10.13",
   "description": "Put non-empty strings into arrays, turn empty-ones into empty arrays. Bypass everything else.",
   "license": "MIT",
   "engines": {

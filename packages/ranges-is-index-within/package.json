@@ -1,6 +1,6 @@
 {
   "name": "ranges-is-index-within",
-  "version": "1.13.12",
+  "version": "1.13.13",
   "description": "Efficiently checks if index is within any of the given ranges",
   "license": "MIT",
   "engines": {
@@ -155,12 +155,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.8",
+    "check-types-mini": "^5.7.9",
     "is-natural-number": "^4.0.1",
     "is-natural-number-string": "^1.0.1",
     "lodash.isplainobject": "^4.0.6",
     "ordinal-number-suffix": "^0.1.2",
-    "ranges-sort": "^3.10.12"
+    "ranges-sort": "^3.10.13"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://gitlab.com/codsen/codsen/compare/string-fix-broken-named-entities@2.0.1...string-fix-broken-named-entities@2.1.0) (2019-03-17)
+
+
+### Bug Fixes
+
+* Properly recognise false cases for double-encoded entity scenarios ([0b3eed2](https://gitlab.com/codsen/codsen/commit/0b3eed2))
+
+
+### Features
+
+* Algorithm improvements ([daa1149](https://gitlab.com/codsen/codsen/commit/daa1149))
+* Improvements to recognise malformed entities and multiple encoding ([1ef1698](https://gitlab.com/codsen/codsen/commit/1ef1698))
+* WIP - improvements to malformed nbsp and multiple encoding recognition ([dc6c5e6](https://gitlab.com/codsen/codsen/commit/dc6c5e6))
+
+
+
+
+
 ## 2.0.0 (2019-03-04)
 
 ### Features

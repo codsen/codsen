@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/codsen/codsen/compare/emlint@1.1.0...emlint@1.2.0) (2019-03-17)
+
+
+### Features
+
+* Implement opts for each rule ([f2be977](https://gitlab.com/codsen/codsen/commit/f2be977))
+* res.applicableRules - reports what rules could be applicable for given input ([d5fb5a0](https://gitlab.com/codsen/codsen/commit/d5fb5a0))
+
+
+
+
+
 ## 1.0.0 (2019-03-04)
 
 ### Features

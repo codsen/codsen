@@ -1,6 +1,6 @@
 {
   "name": "html-crush",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Minifies HTML/CSS: valid or broken, pure or mixed with other languages",
   "license": "MIT",
   "engines": {
@@ -176,12 +176,12 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.8",
+    "check-types-mini": "^5.7.9",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.3",
-    "ranges-push": "^3.0.3",
-    "string-match-left-right": "^3.10.12",
-    "string-range-expander": "^1.10.12"
+    "ranges-apply": "^3.0.4",
+    "ranges-push": "^3.0.4",
+    "string-match-left-right": "^3.10.13",
+    "string-range-expander": "^1.10.13"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

@@ -1,6 +1,6 @@
 {
   "name": "str-indexes-of-plus",
-  "version": "2.9.12",
+  "version": "2.9.13",
   "description": "Search for a string in another string. Get array of indexes. Full Unicode support.",
   "license": "MIT",
   "engines": {
