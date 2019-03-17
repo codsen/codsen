@@ -3,20 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [2.1.0](https://gitlab.com/codsen/codsen/compare/string-left-right@2.0.1...string-left-right@2.1.0) (2019-03-17)
-
+## 2.1.0 (2019-03-17)
 
 ### Features
 
-* API tweaks ([2ce37c3](https://gitlab.com/codsen/codsen/commit/2ce37c3))
-* chompLeft() ([81e44f0](https://gitlab.com/codsen/codsen/commit/81e44f0))
-* chompRight() ([e02a16f](https://gitlab.com/codsen/codsen/commit/e02a16f))
-* leftSeq and rightSeq ([f5e075e](https://gitlab.com/codsen/codsen/commit/f5e075e))
-* Optional arguments via appended ? character ([90efa04](https://gitlab.com/codsen/codsen/commit/90efa04))
-
-
-
-
+- API tweaks ([2ce37c3](https://gitlab.com/codsen/codsen/commit/2ce37c3))
+- chompLeft() ([81e44f0](https://gitlab.com/codsen/codsen/commit/81e44f0))
+- chompRight() ([e02a16f](https://gitlab.com/codsen/codsen/commit/e02a16f))
+- leftSeq and rightSeq ([f5e075e](https://gitlab.com/codsen/codsen/commit/f5e075e))
+- Optional arguments via appended ? character ([90efa04](https://gitlab.com/codsen/codsen/commit/90efa04))
 
 ## 1.10.0 (2019-01-20)
 

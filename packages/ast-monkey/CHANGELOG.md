@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.10.13](https://gitlab.com/codsen/codsen/compare/ast-monkey@7.10.10...ast-monkey@7.10.13) (2019-03-17)
-
-**Note:** Version bump only for package ast-monkey
-
-
-
-
-
 ## 7.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
@@ -189,8 +181,6 @@ The good thing about being not popular is you can make breaking changes and very
 ## 3.2.0 (2017-04-04)
 
 ### Added
-
-
 
 - ✨ Imagine, you're using `🐒.traverse()` ([ast-monkey on npm](https://www.npmjs.com/package/ast-monkey#traverse)/[ast-monkey on GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/ast-monkey#traverse)) on the following piece of AST:
 

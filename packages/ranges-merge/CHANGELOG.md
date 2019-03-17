@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [4.1.0](https://gitlab.com/codsen/codsen/compare/ranges-merge@4.0.1...ranges-merge@4.1.0) (2019-03-17)
-
+## 4.1.0 (2019-03-17)
 
 ### Features
 
-* opts.joinRangesThatTouchEdges ([40cf7e6](https://gitlab.com/codsen/codsen/commit/40cf7e6))
-
-
-
-
+- opts.joinRangesThatTouchEdges ([40cf7e6](https://gitlab.com/codsen/codsen/commit/40cf7e6))
 
 ## 3.12.0 (2019-01-20)
 
