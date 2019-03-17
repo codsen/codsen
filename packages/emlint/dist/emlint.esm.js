@@ -1605,7 +1605,7 @@ function lint(str, originalOpts) {
     );
   }
   const defaults = {
-    rules: "recommended",
+    rules: {},
     style: {
       line_endings_CR_LF_CRLF: null
     }
@@ -1615,7 +1615,9 @@ function lint(str, originalOpts) {
     if (isObj(originalOpts)) {
       opts = Object.assign({}, defaults, originalOpts);
       checkTypes(opts, defaults, {
+        enforceStrictKeyset: true,
         msg: "emlint: [THROW_ID_03*]",
+        ignorePaths: "rules.*",
         schema: {
           rules: ["string", "object", "false", "null", "undefined"],
           style: ["object", "null", "undefined"],
@@ -1733,6 +1735,8 @@ function lint(str, originalOpts) {
     logWhitespace = clone(defaultLogWhitespace);
   }
   resetLogWhitespace();
+  let tagIssueStaging = [];
+  let rawIssueStaging = [];
   const retObj = {
     issues: [],
     applicableRules: {}
@@ -1743,12 +1747,21 @@ function lint(str, originalOpts) {
     .forEach(ruleName => {
       retObj.applicableRules[ruleName] = false;
     });
-  function submit(issueObj) {
+  function submit(issueObj, whereTo) {
     retObj.applicableRules[issueObj.name] = true;
-    retObj.issues.push(issueObj);
+    if (
+      !opts.rules.hasOwnProperty(issueObj.name) ||
+      opts.rules[issueObj.name]
+    ) {
+      if (whereTo === "raw") {
+        rawIssueStaging.push(issueObj);
+      } else if (whereTo === "tag") {
+        tagIssueStaging.push(issueObj);
+      } else {
+        retObj.issues.push(issueObj);
+      }
+    }
   }
-  let tagIssueStaging = [];
-  let rawIssueStaging = [];
   const logLineEndings = {
     cr: [],
     lf: [],
@@ -2697,7 +2710,7 @@ function lint(str, originalOpts) {
         });
       } else if (encodeChar$1(str, i)) {
         const newIssue = encodeChar$1(str, i);
-        rawIssueStaging.push(newIssue);
+        submit(newIssue, "raw");
       } else if (charcode >= 888 && charcode <= 8591) {
         if (
           charcode === 888 ||

@@ -1368,7 +1368,7 @@ function lint(str, originalOpts) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
   }
   var defaults = {
-    rules: "recommended",
+    rules: {},
     style: {
       line_endings_CR_LF_CRLF: null
     }
@@ -1378,7 +1378,9 @@ function lint(str, originalOpts) {
     if (isObj(originalOpts)) {
       opts = Object.assign({}, defaults, originalOpts);
       checkTypes(opts, defaults, {
+        enforceStrictKeyset: true,
         msg: "emlint: [THROW_ID_03*]",
+        ignorePaths: "rules.*",
         schema: {
           rules: ["string", "object", "false", "null", "undefined"],
           style: ["object", "null", "undefined"],
@@ -1488,6 +1490,8 @@ function lint(str, originalOpts) {
     logWhitespace = clone(defaultLogWhitespace);
   }
   resetLogWhitespace();
+  var tagIssueStaging = [];
+  var rawIssueStaging = [];
   var retObj = {
     issues: [],
     applicableRules: {}
@@ -1495,12 +1499,18 @@ function lint(str, originalOpts) {
   Object.keys(errorsRules).concat(Object.keys(errorsCharacters)).sort().forEach(function (ruleName) {
     retObj.applicableRules[ruleName] = false;
   });
-  function submit(issueObj) {
+  function submit(issueObj, whereTo) {
     retObj.applicableRules[issueObj.name] = true;
-    retObj.issues.push(issueObj);
+    if (!opts.rules.hasOwnProperty(issueObj.name) || opts.rules[issueObj.name]) {
+      if (whereTo === "raw") {
+        rawIssueStaging.push(issueObj);
+      } else if (whereTo === "tag") {
+        tagIssueStaging.push(issueObj);
+      } else {
+        retObj.issues.push(issueObj);
+      }
+    }
   }
-  var tagIssueStaging = [];
-  var rawIssueStaging = [];
   var logLineEndings = {
     cr: [],
     lf: [],
@@ -2249,7 +2259,7 @@ function lint(str, originalOpts) {
         });
       } else if (encodeChar$1(str, _i)) {
         var _newIssue = encodeChar$1(str, _i);
-        rawIssueStaging.push(_newIssue);
+        submit(_newIssue, "raw");
       } else if (charcode >= 888 && charcode <= 8591) {
         if (charcode === 888 || charcode === 889 || charcode >= 896 && charcode <= 899 || charcode === 907 || charcode === 909 || charcode === 930 || charcode === 1328 || charcode === 1367 || charcode === 1368 || charcode === 1419 || charcode === 1419 || charcode === 1420 || charcode === 1424 || charcode >= 1480 && charcode <= 1487 || charcode >= 1515 && charcode <= 1519 || charcode >= 1525 && charcode <= 1535 || charcode === 1565 || charcode === 1806 || charcode === 1867 || charcode === 1868 || charcode >= 1970 && charcode <= 1983 || charcode >= 2043 && charcode <= 2047 || charcode === 2094 || charcode === 2095 || charcode === 2111 || charcode === 2140 || charcode === 2141 || charcode === 2143 || charcode >= 2155 && charcode <= 2207 || charcode === 2229 || charcode >= 2238 && charcode <= 2258 || charcode === 2436 || charcode === 2445 || charcode === 2446 || charcode === 2449 || charcode === 2450 || charcode === 2473 || charcode === 2481 || charcode === 2483 || charcode === 2484 || charcode === 2485 || charcode === 2490 || charcode === 2491 || charcode === 2501 || charcode === 2502 || charcode === 2505 || charcode === 2506 || charcode >= 2511 && charcode <= 2518 || charcode >= 2520 && charcode <= 2523 || charcode === 2526 || charcode >= 8384 && charcode <= 8399 || charcode >= 8433 && charcode <= 8447 || charcode === 8588 || charcode === 8589 || charcode === 8590 || charcode === 8591) {
           var _name26 = "bad-character-generic";

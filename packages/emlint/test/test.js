@@ -19,6 +19,40 @@ function getUniqueIssueNames(issues) {
   }, []);
 }
 
+function c(bad, good, issuesArr, t, opts) {
+  // zero issue inputs:
+  if (arguments.length === 2) {
+    // t is argument "good"
+    good.deepEqual(lint(bad).issues, [], "part 1");
+  } else if (arguments.length === 5 && !good && !issuesArr) {
+    // all args are in place, but it's zero-issue checking, with opts
+    good.deepEqual(lint(bad, opts).issues, [], "part 1");
+  } else {
+    // arrayiffy the issue if one was sent
+    if (typeof issuesArr === "string") {
+      issuesArr = [issuesArr];
+    }
+    // get the linting result:
+    const res1 = lint(bad, opts);
+    // ensure fixes turn "bad" into "good":
+    t.is(apply(bad, res1.fix), good, "part 1");
+    // ensure rules list is as expected:
+    t.deepEqual(
+      getUniqueIssueNames(res1.issues).sort(),
+      issuesArr.sort(),
+      "part 2"
+    );
+    // prepare a set of exactly the same rules, but disabled:
+    const allRulesDisabled = Object.keys(res1.applicableRules)
+      .filter(rule => res1.applicableRules[rule])
+      .reduce((accum, curr) => {
+        accum[curr] = false;
+        return accum;
+      }, {});
+    t.deepEqual(lint(bad, { rules: allRulesDisabled }).issues, [], "part 3");
+  }
+}
+
 // 00. Insurance
 // -----------------------------------------------------------------------------
 
@@ -102,57 +136,22 @@ test(`00.04 - ${`\u001b[${35}m${`attr. both quotes missing`}\u001b[${39}m`} - em
 
 // 01. rule "tag-space-after-opening-bracket"
 // -----------------------------------------------------------------------------
-test(`01.00 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - all fine (control)`, t => {
-  t.deepEqual(lint("<table>").issues, [], "01.00.01");
-});
+test(`01.00 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - all fine (control)`, t =>
+  c("<table>", t));
 
-test(`01.02 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - single space`, t => {
-  const bad = "< table>";
-  const res = lint(bad);
-  const good = "<table>";
-  // there's only one issue:
-  t.is(apply(bad, res.fix), good, "01.02.01");
-  t.deepEqual(
-    res.issues,
-    [
-      {
-        name: "tag-space-after-opening-bracket",
-        position: [[1, 2]]
-      }
-    ],
-    "01.02.02"
-  );
-  t.true(res.applicableRules["tag-space-after-opening-bracket"], "01.02.03");
-});
+test(`01.02 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - single space`, t =>
+  c("< table>", "<table>", "tag-space-after-opening-bracket", t));
 
-test(`01.03 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - multiple spaces`, t => {
-  const bad = "<    table>";
-  const res = lint(bad);
-  const good = "<table>";
-  t.is(apply(bad, res.fix), good, "01.03.01");
-  t.deepEqual(
-    res.issues,
-    [
-      {
-        name: "tag-space-after-opening-bracket",
-        position: [[1, 5]]
-      }
-    ],
-    "01.03.02"
-  );
-});
+test(`01.03 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - multiple spaces`, t =>
+  c("<    table>", "<table>", "tag-space-after-opening-bracket", t));
 
-test(`01.04 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - multiple spaces with tabs`, t => {
-  const bad1 = "< \n\n\n\t\t\t   table>";
-  const good1 = `<table>`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
+test(`01.04 - ${`\u001b[${35}m${`space between the tag name and opening bracket`}\u001b[${39}m`} - multiple spaces with tabs`, t =>
+  c(
+    "< \n\n\n\t\t\t   table>",
+    `<table>`,
     ["bad-character-character-tabulation", "tag-space-after-opening-bracket"],
-    "01.04.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "01.04.02");
-});
+    t
+  ));
 
 // 02. rule "bad-character-*"
 // -----------------------------------------------------------------------------
@@ -315,84 +314,31 @@ test(`02.01 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - DELETE ch
   t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "02.01");
 });
 
-test(`02.02 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, tight`, t => {
-  const bad1 = `first\u0003second`;
-  const good1 = `firstsecond`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-end-of-text"],
-    "02.02.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.02.02");
-});
+test(`02.02 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, tight`, t =>
+  c(`first\u0003second`, `firstsecond`, "bad-character-end-of-text", t));
 
-test(`02.03 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t => {
-  const bad1 = `first \u0003second`;
-  const good1 = `first second`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-end-of-text"],
-    "02.03.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.03.02");
-});
+test(`02.03 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t =>
+  c(`first \u0003second`, `first second`, "bad-character-end-of-text", t));
 
-test(`02.04 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t => {
-  const bad1 = `first \u0003 second`;
-  const good1 = `first second`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-end-of-text"],
-    "02.04.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.04.02");
-});
+test(`02.04 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t =>
+  c(`first \u0003 second`, `first second`, "bad-character-end-of-text", t));
 
-test(`02.05 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced with line breaks`, t => {
-  const bad1 = `first \u0003\nsecond`;
-  const good1 = `first\nsecond`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-end-of-text"],
-    "02.05.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.05.02");
-});
+test(`02.05 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced with line breaks`, t =>
+  c(`first \u0003\nsecond`, `first\nsecond`, "bad-character-end-of-text", t));
 
 // https://www.fileformat.info/info/unicode/char/200b/index.htm
-test(`02.06 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - zero width space`, t => {
-  const bad1 = "a\u200Bb";
-  const good1 = `ab`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-zero-width-space"],
-    "02.06.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.06.02");
-});
+test(`02.06 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - zero width space`, t =>
+  c("a\u200Bb", `ab`, "bad-character-zero-width-space", t));
 
 // https://en.wikipedia.org/wiki/Non-breaking_space
 // http://www.fileformat.info/info/unicode/char/00a0/browsertest.htm
-test(`02.07 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - between letters`, t => {
-  const bad1 = "a\xA0b";
-  const good1 = `a&nbsp;b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-unencoded-non-breaking-space"],
-    "02.07.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.07.02");
-});
+test(`02.07 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - between letters`, t =>
+  c("a\xA0b", `a&nbsp;b`, "bad-character-unencoded-non-breaking-space", t));
 
 // when raw non-breaking spaces are copy pasted into code editor:
-test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - among indentations`, t => {
-  const bad1 = `
+test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - among indentations`, t =>
+  c(
+    `
 \xA0  <!--[if gte mso 9]>
 \xA0  <xml>
   \xA0  <o:OfficeDocumentSettings>
@@ -400,8 +346,8 @@ test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   \xA0  <o:PixelsPerInch>96</o:PixelsPerInch>
   \xA0  </o:OfficeDocumentSettings>
 \xA0  </xml>
-\xA0  <![endif]-->`;
-  const good1 = `
+\xA0  <![endif]-->`,
+    `
 &nbsp;  <!--[if gte mso 9]>
 &nbsp;  <xml>
   &nbsp;  <o:OfficeDocumentSettings>
@@ -409,320 +355,108 @@ test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
   &nbsp;  <o:PixelsPerInch>96</o:PixelsPerInch>
   &nbsp;  </o:OfficeDocumentSettings>
 &nbsp;  </xml>
-&nbsp;  <![endif]-->`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-unencoded-non-breaking-space"],
-    "02.08.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.08.02");
-});
+&nbsp;  <![endif]-->`,
+    "bad-character-unencoded-non-breaking-space",
+    t
+  ));
 
-test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded grave accent`, t => {
-  const bad1 = "a`b";
-  const good1 = `a&#x60;b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-grave-accent"],
-    "02.09.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.09.02");
-});
+test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded grave accent`, t =>
+  c("a`b", `a&#x60;b`, "bad-character-grave-accent", t));
 
 // line separator character
 // https://www.fileformat.info/info/unicode/char/2028/index.htm
-test(`02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded line separator`, t => {
-  const bad1 = "a\u2028b";
-  const good1 = `a\nb`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-line-separator"],
-    "02.10.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.10.02");
-});
+test(`02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded line separator`, t =>
+  c("a\u2028b", `a\nb`, "bad-character-line-separator", t));
 
-test(`02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound`, t => {
-  const bad1 = "a\xA3b";
-  const good1 = `a&pound;b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-unencoded-pound"],
-    "02.11.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.11.02");
-});
+test(`02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound`, t =>
+  c("a\xA3b", `a&pound;b`, "bad-character-unencoded-pound", t));
 
-test(`02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded euro`, t => {
-  const bad1 = "a\u20ACb";
-  const good1 = `a&euro;b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-unencoded-euro"],
-    "02.12.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.12.02");
-});
+test(`02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded euro`, t =>
+  c("a\u20ACb", `a&euro;b`, "bad-character-unencoded-euro", t));
 
-test(`02.13 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent`, t => {
-  const bad1 = "a\xA2b";
-  const good1 = `a&cent;b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-unencoded-cent"],
-    "02.13.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.13.02");
-});
+test(`02.13 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent`, t =>
+  c("a\xA2b", `a&cent;b`, "bad-character-unencoded-cent", t));
 
-test(`02.14 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - generic bad characters`, t => {
-  const bad1 = "a\u0378b";
-  const good1 = `ab`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-generic"],
-    "02.14.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.14.02");
-});
+test(`02.14 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - generic bad characters`, t =>
+  c("a\u0378b", `ab`, "bad-character-generic", t));
 
-test(`02.15 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en quad`, t => {
-  // https://www.fileformat.info/info/unicode/char/2000/index.htm
-  const bad1 = "a\u2000b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-en-quad"],
-    "02.15.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.15.02");
-});
+// https://www.fileformat.info/info/unicode/char/2000/index.htm
+test(`02.15 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en quad`, t =>
+  c("a\u2000b", `a b`, "bad-character-en-quad", t));
 
-test(`02.16 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em quad`, t => {
-  const bad1 = "a\u2001b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-em-quad"],
-    "02.16.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.16.02");
-});
+test(`02.16 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em quad`, t =>
+  c("a\u2001b", `a b`, "bad-character-em-quad", t));
 
-test(`02.17 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en space`, t => {
-  const bad1 = "a\u2002b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-en-space"],
-    "02.17.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.17.02");
-});
+test(`02.17 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en space`, t =>
+  c("a\u2002b", `a b`, "bad-character-en-space", t));
 
-test(`02.18 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em space`, t => {
-  const bad1 = "a\u2003b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-em-space"],
-    "02.18.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.18.02");
-});
+test(`02.18 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em space`, t =>
+  c("a\u2003b", `a b`, "bad-character-em-space", t));
 
-test(`02.19 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - three-per-em space`, t => {
-  // three-per-em space:
-  // https://www.fileformat.info/info/unicode/char/2004/index.htm
-  const bad1 = "a\u2004b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-three-per-em-space"],
-    "02.19.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.19.02");
-});
+// three-per-em space:
+// https://www.fileformat.info/info/unicode/char/2004/index.htm
+test(`02.19 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - three-per-em space`, t =>
+  c("a\u2004b", `a b`, "bad-character-three-per-em-space", t));
 
-test(`02.20 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - four-per-em space`, t => {
-  // four-per-em space:
-  // https://www.fileformat.info/info/unicode/char/2005/index.htm
-  const bad1 = "a\u2005b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-four-per-em-space"],
-    "02.20.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.20.02");
-});
+// four-per-em space:
+// https://www.fileformat.info/info/unicode/char/2005/index.htm
+test(`02.20 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - four-per-em space`, t =>
+  c("a\u2005b", `a b`, "bad-character-four-per-em-space", t));
 
-test(`02.21 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - six-per-em space`, t => {
-  // six-per-em space:
-  // https://www.fileformat.info/info/unicode/char/2006/index.htm
-  const bad1 = "a\u2006b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-six-per-em-space"],
-    "02.21.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.21.02");
-});
+// six-per-em space:
+// https://www.fileformat.info/info/unicode/char/2006/index.htm
+test(`02.21 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - six-per-em space`, t =>
+  c("a\u2006b", `a b`, "bad-character-six-per-em-space", t));
 
-test(`02.22 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - figure space`, t => {
-  // figure space:
-  // https://www.fileformat.info/info/unicode/char/2007/index.htm
-  const bad1 = "a\u2007b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-figure-space"],
-    "02.22.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.22.02");
-});
+// figure space:
+// https://www.fileformat.info/info/unicode/char/2007/index.htm
+test(`02.22 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - figure space`, t =>
+  c("a\u2007b", `a b`, "bad-character-figure-space", t));
 
-test(`02.23 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - punctuation space`, t => {
-  // punctuation space:
-  // https://www.fileformat.info/info/unicode/char/2008/index.htm
-  const bad1 = "a\u2008b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-punctuation-space"],
-    "02.23.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.23.02");
-});
+// punctuation space:
+// https://www.fileformat.info/info/unicode/char/2008/index.htm
+test(`02.23 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - punctuation space`, t =>
+  c("a\u2008b", `a b`, "bad-character-punctuation-space", t));
 
-test(`02.24 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - thin space`, t => {
-  // thin space:
-  // https://www.fileformat.info/info/unicode/char/2009/index.htm
-  const bad1 = "a\u2009b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-thin-space"],
-    "02.24.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.24.02");
-});
+// thin space:
+// https://www.fileformat.info/info/unicode/char/2009/index.htm
+test(`02.24 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - thin space`, t =>
+  c("a\u2009b", `a b`, "bad-character-thin-space", t));
 
-test(`02.25 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - hair space`, t => {
-  // hair space:
-  // https://www.fileformat.info/info/unicode/char/200a/index.htm
-  const bad1 = "a\u200ab";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-hair-space"],
-    "02.25.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.25.02");
-});
+// hair space:
+// https://www.fileformat.info/info/unicode/char/200a/index.htm
+test(`02.25 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - hair space`, t =>
+  c("a\u200ab", `a b`, "bad-character-hair-space", t));
 
-test(`02.26 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - narrow no-break space`, t => {
-  // narrow no-break space:
-  // https://www.fileformat.info/info/unicode/char/202f/index.htm
-  const bad1 = "a\u202Fb";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-narrow-no-break-space"],
-    "02.26.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.26.02");
-});
+// narrow no-break space:
+// https://www.fileformat.info/info/unicode/char/202f/index.htm
+test(`02.26 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - narrow no-break space`, t =>
+  c("a\u202Fb", `a b`, "bad-character-narrow-no-break-space", t));
 
-test(`02.27 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - line separator`, t => {
-  // line separator:
-  // https://www.fileformat.info/info/unicode/char/2028/index.htm
-  const bad1 = "a\u2028b";
-  const good1 = `a\nb`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-line-separator"],
-    "02.27.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.27.02");
-});
+// line separator:
+// https://www.fileformat.info/info/unicode/char/2028/index.htm
+test(`02.27 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - line separator`, t =>
+  c("a\u2028b", `a\nb`, "bad-character-line-separator", t));
 
-test(`02.28 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - paragraph separator`, t => {
-  // paragraph separator:
-  // https://www.fileformat.info/info/unicode/char/2029/index.htm
-  const bad1 = "a\u2029b";
-  const good1 = `a\nb`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-paragraph-separator"],
-    "02.28.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.28.02");
-});
+// paragraph separator:
+// https://www.fileformat.info/info/unicode/char/2029/index.htm
+test(`02.28 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - paragraph separator`, t =>
+  c("a\u2029b", `a\nb`, "bad-character-paragraph-separator", t));
 
-test(`02.29 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - medium mathematical space`, t => {
-  // medium mathematical space:
-  // https://www.fileformat.info/info/unicode/char/205f/index.htm
-  const bad1 = "a\u205fb";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-medium-mathematical-space"],
-    "02.29.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.29.02");
-});
+// medium mathematical space:
+// https://www.fileformat.info/info/unicode/char/205f/index.htm
+test(`02.29 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - medium mathematical space`, t =>
+  c("a\u205fb", `a b`, "bad-character-medium-mathematical-space", t));
 
-test(`02.30 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ideographic space`, t => {
-  // ideographic space:
-  // https://www.fileformat.info/info/unicode/char/3000/index.htm
-  const bad1 = "a\u3000b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-ideographic-space"],
-    "02.30.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.30.02");
-});
+// ideographic space:
+// https://www.fileformat.info/info/unicode/char/3000/index.htm
+test(`02.30 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ideographic space`, t =>
+  c("a\u3000b", `a b`, "bad-character-ideographic-space", t));
 
-test(`02.31 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ogham space mark`, t => {
-  // ogham space mark:
-  // https://www.fileformat.info/info/unicode/char/1680/index.htm
-  const bad1 = "a\u1680b";
-  const good1 = `a b`;
-  const res1 = lint(bad1);
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["bad-character-ogham-space-mark"],
-    "02.31.01"
-  );
-  t.is(apply(bad1, res1.fix), good1, "02.31.02");
-});
+// ogham space mark:
+// https://www.fileformat.info/info/unicode/char/1680/index.htm
+test(`02.31 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ogham space mark`, t =>
+  c("a\u1680b", `a b`, "bad-character-ogham-space-mark", t));
 
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
@@ -3081,43 +2815,26 @@ test(`21.03 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - 
   );
 });
 
-test(`21.04 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - unclosed tag, EOF, tight`, t => {
-  const bad1 = `<a b="ccc"`;
-  const good1 = `<a b="ccc">`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "21.04.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
-    ["tag-missing-closing-bracket"],
-    "21.04.02"
-  );
-});
+test(`21.04 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - unclosed tag, EOF, tight`, t =>
+  c(`<a b="ccc"`, `<a b="ccc">`, "tag-missing-closing-bracket", t));
 
-test(`21.05 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - unclosed tag, EOF, loose`, t => {
-  const bad1 = `<a b="ccc" \t `;
-  const good1 = `<a b="ccc">`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "21.05.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
+test(`21.05 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - unclosed tag, EOF, loose`, t =>
+  c(
+    `<a b="ccc" \t `,
+    `<a b="ccc">`,
     ["bad-character-character-tabulation", "tag-missing-closing-bracket"],
-    "21.05.02"
-  );
-});
+    t
+  ));
 
-test(`21.06 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - whitespace before added bracket`, t => {
+test(`21.06 - ${`\u001b[${34}m${`tag-missing-closing-bracket`}\u001b[${39}m`} - whitespace before added bracket`, t =>
   // There must be at least one attribute with equals-quotes pattern for it to
   // be considered a tag. After that, boolean attributes can follow.
-  const bad1 = `<a b="ccc" ddd         <e>`;
-  const good1 = `<a b="ccc" ddd><e>`;
-  const res1 = lint(bad1);
-  t.is(apply(bad1, res1.fix), good1, "21.06.01");
-  t.deepEqual(
-    getUniqueIssueNames(res1.issues).sort(),
+  c(
+    `<a b="ccc" ddd         <e>`,
+    `<a b="ccc" ddd><e>`,
     ["tag-missing-closing-bracket"],
-    "21.06.02"
-  );
-});
+    t
+  ));
 
 // 22. Both quotes missing around attributes
 // -----------------------------------------------------------------------------
