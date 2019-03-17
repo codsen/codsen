@@ -1,6 +1,6 @@
 {
   "name": "lerna-clean-changelogs",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "description": "Cleans all the crap from Lerna and Conventional Commits-generated changelogs",
   "license": "MIT",
   "engines": {

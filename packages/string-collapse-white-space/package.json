@@ -1,6 +1,6 @@
 {
   "name": "string-collapse-white-space",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Efficient collapsing of white space with optional outer- and/or line-trimming and HTML tag recognition",
   "license": "MIT",
   "engines": {
@@ -158,11 +158,11 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.12",
+    "check-types-mini": "^5.7.13",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-apply": "^3.0.7",
-    "ranges-push": "^3.0.7",
-    "string-match-left-right": "^3.10.16"
+    "ranges-apply": "^3.0.8",
+    "ranges-push": "^3.0.8",
+    "string-match-left-right": "^3.10.17"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

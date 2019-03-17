@@ -1,6 +1,6 @@
 {
   "name": "ast-get-object",
-  "version": "1.8.16",
+  "version": "1.8.17",
   "description": "Getter/setter for nested parsed HTML AST's, querying objects by key/value pairs",
   "license": "MIT",
   "engines": {
@@ -166,7 +166,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "ast-compare": "^1.11.16",
+    "ast-compare": "^1.11.17",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6"
   },
