@@ -1,7 +1,7 @@
 /**
  * string-unfancy
  * Replace all fancy dashes, quotes etc with their simpler equivalents
- * Version: 3.9.14
+ * Version: 3.9.15
  * Author: Roy Revelt, Codsen Ltd
  * License: MIT
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-unfancy

@@ -1,6 +1,6 @@
 {
   "name": "object-no-new-keys",
-  "version": "2.7.15",
+  "version": "2.7.16",
   "description": "Check, does a plain object (AST/JSON) has any unique keys, not present in a reference object (another AST/JSON)",
   "license": "MIT",
   "engines": {
@@ -162,7 +162,7 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.11",
+    "check-types-mini": "^5.7.12",
     "lodash.isplainobject": "^4.0.6"
   },
   "devDependencies": {

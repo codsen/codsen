@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "1.6.15",
+  "version": "1.6.16",
   "description": "Split string into array by chunks of whitespace",
   "license": "MIT",
   "engines": {
@@ -166,8 +166,8 @@
     "sourceMap": false
   },
   "dependencies": {
-    "check-types-mini": "^5.7.11",
-    "ranges-is-index-within": "^1.13.15"
+    "check-types-mini": "^5.7.12",
+    "ranges-is-index-within": "^1.13.16"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -192,6 +192,6 @@
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-strip": "^1.2.1",
     "rollup-plugin-terser": "^4.0.4",
-    "string-find-heads-tails": "^3.14.15"
+    "string-find-heads-tails": "^3.14.16"
   }
 }
