@@ -148,11 +148,12 @@ function chomp(direction, str, idx, opts, args) {
         : leftSeq(str, isNum(lastIdx) ? lastIdx : idx, ...args);
     if (lastRes) {
       lastIdx =
-        direction === "right"
-          ? lastRes.rightmostChar + 1
-          : lastRes.leftmostChar;
+        direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
     }
   } while (lastRes);
+  if (lastIdx != null && direction === "right") {
+    lastIdx++;
+  }
   if (!lastIdx) {
     return null;
   }

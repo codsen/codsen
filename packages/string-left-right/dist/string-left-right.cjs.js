@@ -193,9 +193,12 @@ function chomp(direction, str, idx, opts, args) {
   do {
     lastRes = direction === "right" ? rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args))) : leftSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args)));
     if (lastRes) {
-      lastIdx = direction === "right" ? lastRes.rightmostChar + 1 : lastRes.leftmostChar;
+      lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
     }
   } while (lastRes);
+  if (lastIdx != null && direction === "right") {
+    lastIdx++;
+  }
   if (!lastIdx) {
     return null;
   }

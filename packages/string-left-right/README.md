@@ -16,6 +16,7 @@
 - [Install](#install)
 - [Usage](#usage)
 - [API](#api)
+- [More complex lookups](#more-complex-lookups)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -34,11 +35,11 @@ import { left, right } from "string-left-right";
 
 Here's what you'll get:
 
-| Type                                                                                                    | Key in `package.json` | Path                            | Size |
-| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ---- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 1 KB |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 1 KB |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-left-right.umd.js` | 1 KB |
+| Type                                                                                                    | Key in `package.json` | Path                            | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-left-right.cjs.js` | 10 KB |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-left-right.esm.js` | 8 KB  |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-left-right.umd.js` | 5 KB  |
 
 **[⬆ back to top](#)**
 
@@ -62,9 +63,9 @@ The first input argument is a string, the optional second (marked by brackets ab
 
 ### API - left() or right() functions
 
-| Input argument | Key value's type | Obligatory? | Description                                                                   |
-| -------------- | ---------------- | ----------- | ----------------------------------------------------------------------------- |
-| `str`          | String           | yes         | String which we will process                                                  |
+| Input argument | Key value's type | Obligatory? | Description                                                                    |
+| -------------- | ---------------- | ----------- | ------------------------------------------------------------------------------ |
+| `str`          | String           | yes         | String which we will process                                                   |
 | `idx`          | (natural) number | no          | Default is zero (beginning of a string), but you can point to any string index |
 
 The API is deliberately very forgiving; it never throws; if the result can't be determined, it returns `null`.
@@ -75,11 +76,11 @@ The API is deliberately very forgiving; it never throws; if the result can't be 
 
 The output is either **natural number index**, pointing to the nearest non-whitespace character on either side or `null`.
 
-**[⬆ back to top](#)**
-
 ## More complex lookups
 
 If you need more complex string lookups, check out `string-match-left-right` on [GitLab](https://gitlab.com/codsen/codsen/tree/master/packages/string-match-left-right/)/[npm](https://www.npmjs.com/package/string-match-left-right). It can trim whitespace or certain characters before matching.
+
+**[⬆ back to top](#)**
 
 ## Contributing
 
@@ -104,7 +105,7 @@ Copyright (c) 2015-2019 Roy Revelt and other contributors
 [node-url]: https://www.npmjs.com/package/string-left-right
 [gitlab-img]: https://img.shields.io/badge/repo-on%20GitLab-brightgreen.svg?style=flat-square
 [gitlab-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
-[cov-img]: https://img.shields.io/badge/coverage-28.57%25-red.svg?style=flat-square
+[cov-img]: https://img.shields.io/badge/coverage-100%25-brightgreen.svg?style=flat-square
 [cov-url]: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
 [deps2d-img]: https://img.shields.io/badge/deps%20in%202D-see_here-08f0fd.svg?style=flat-square
 [deps2d-url]: http://npm.anvaka.com/#/view/2d/string-left-right
