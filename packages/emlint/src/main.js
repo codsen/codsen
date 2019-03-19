@@ -276,26 +276,36 @@ function lint(str, originalOpts) {
     });
 
   function submit(issueObj, whereTo) {
-    // 1. set particular rule as among "applicable" rules
-    retObj.applicableRules[issueObj.name] = true;
-    console.log(
-      `282 SET ${`\u001b[${33}m${`retObj.applicableRules.${
-        issueObj.name
-      }`}\u001b[${39}m`} = ${retObj.applicableRules[issueObj.name]}`
-    );
+    // 1. set particular rule as among "applicable" rules, but not for stage
+    // group of characters (they might be wiped later):
+    if (whereTo !== "raw" && whereTo !== "tag") {
+      retObj.applicableRules[issueObj.name] = true;
+      console.log(
+        `284 ${`\u001b[${32}m${`SET`}\u001b[${39}m`} ${`\u001b[${33}m${`retObj.applicableRules.${
+          issueObj.name
+        }`}\u001b[${39}m`} = ${retObj.applicableRules[issueObj.name]}`
+      );
+    } else {
+      console.log(`289 didn't put "${issueObj.name}" in applicableRules`);
+    }
     // 2. add the given issue to final issues array:
     if (
       !opts.rules.hasOwnProperty(issueObj.name) ||
       opts.rules[issueObj.name]
     ) {
-      console.log(`291 PUSH THE ISSUE`);
+      console.log(
+        `297 opts.rules[${issueObj.name}] = ${opts.rules[issueObj.name]}`
+      );
       if (whereTo === "raw") {
+        console.log(`300 PUSH to rawIssueStaging`);
         // it's an issue about raw characters, outside of tags, put into stage:
         rawIssueStaging.push(issueObj);
       } else if (whereTo === "tag") {
+        console.log(`304 PUSH to tagIssueStaging`);
         // it's an issue about raw characters within tags, put into stage:
         tagIssueStaging.push(issueObj);
       } else {
+        console.log(`308 PUSH to retObj.issues`);
         // it's definitely real issue:
         retObj.issues.push(issueObj);
       }
@@ -340,7 +350,7 @@ function lint(str, originalOpts) {
       name: "file-empty",
       position: [[0, 0]]
     });
-    console.log(`343 ${log("push", "file-empty")}`);
+    console.log(`353 ${log("push", "file-empty")}`);
   }
 
   //                         L O O P     S T A R T S
@@ -386,14 +396,14 @@ function lint(str, originalOpts) {
 
     if (doNothingUntil && doNothingUntil !== true && i >= doNothingUntil) {
       doNothingUntil = null;
-      console.log(`389 ${log("RESET", "doNothingUntil", doNothingUntil)}`);
+      console.log(`399 ${log("RESET", "doNothingUntil", doNothingUntil)}`);
       doNothingUntilReason = null;
     }
 
     // catch a state of being within CDATA
     // https://stackoverflow.com/questions/2784183/what-does-cdata-in-xml-mean
 
-    // console.log(`396 ${`\u001b[${90}m${`above CDATA clauses`}\u001b[${39}m`}`);
+    // console.log(`406 ${`\u001b[${90}m${`above CDATA clauses`}\u001b[${39}m`}`);
     if (
       str[i + 4] &&
       str[i].toLowerCase() === "c" &&
@@ -403,7 +413,7 @@ function lint(str, originalOpts) {
       str[i + 4].toLowerCase() === "a" &&
       str[right(str, i + 4)] === "["
     ) {
-      console.log(`406 \u001b[${90}m${`within CDATA clauses`}\u001b[${39}m`);
+      console.log(`416 \u001b[${90}m${`within CDATA clauses`}\u001b[${39}m`);
       let leftSquareBracketAt = null;
       let exclMarkAt = null;
       let leftOpeningBracketAt = null;
@@ -427,7 +437,7 @@ function lint(str, originalOpts) {
             whatsOnTheLeftOfExclMark !== null &&
             str[whatsOnTheLeftOfExclMark] === "<"
           ) {
-            console.log(`430`);
+            console.log(`440`);
             leftOpeningBracketAt = whatsOnTheLeftOfExclMark;
             // Good. We have CDATA head, <![CDATA[
             // Now, check or typos/whitespace.
@@ -439,7 +449,7 @@ function lint(str, originalOpts) {
                 position: [[i, i + 5, "CDATA"]]
               });
               console.log(
-                `442 ${log(
+                `452 ${log(
                   "push",
                   "bad-cdata-tag-character-case",
                   `${`[[${i}, ${i + 5}, "CDATA"]]`}`
@@ -454,7 +464,7 @@ function lint(str, originalOpts) {
                 position: [[leftSquareBracketAt + 1, i]]
               });
               console.log(
-                `457 ${log(
+                `467 ${log(
                   "push",
                   "bad-cdata-whitespace",
                   `${`[[${leftSquareBracketAt + 1}, ${i}]]`}`
@@ -469,7 +479,7 @@ function lint(str, originalOpts) {
                 position: [[exclMarkAt + 1, leftSquareBracketAt]]
               });
               console.log(
-                `472 ${log(
+                `482 ${log(
                   "push",
                   "bad-cdata-whitespace",
                   `${`[[${exclMarkAt + 1}, ${leftSquareBracketAt}]]`}`
@@ -484,7 +494,7 @@ function lint(str, originalOpts) {
                 position: [[leftOpeningBracketAt + 1, exclMarkAt]]
               });
               console.log(
-                `487 ${log(
+                `497 ${log(
                   "push",
                   "bad-cdata-whitespace",
                   `${`[[${leftOpeningBracketAt + 1}, ${exclMarkAt}]]`}`
@@ -499,7 +509,7 @@ function lint(str, originalOpts) {
                 position: [[i + 5, openingBracketAt]]
               });
               console.log(
-                `502 ${log(
+                `512 ${log(
                   "push",
                   "bad-cdata-whitespace",
                   `${`[[${i + 5}, ${openingBracketAt}]]`}`
@@ -511,7 +521,7 @@ function lint(str, originalOpts) {
             doNothingUntil = true;
             doNothingUntilReason = "cdata";
             console.log(
-              `514 ${log(
+              `524 ${log(
                 "set",
                 "doNothingUntil",
                 doNothingUntil,
@@ -523,23 +533,23 @@ function lint(str, originalOpts) {
             // 7. take care of issues at rawIssueStaging:
             if (rawIssueStaging.length) {
               console.log(
-                `526 let's process all ${
+                `536 let's process all ${
                   rawIssueStaging.length
                 } raw character issues at staging`
               );
               rawIssueStaging.forEach(issueObj => {
                 if (issueObj.position[0][0] < leftOpeningBracketAt) {
                   submit(issueObj);
-                  console.log(`533 ${log("push", "issueObj", issueObj)}`);
+                  console.log(`543 ${log("push", "issueObj", issueObj)}`);
                 } else {
                   console.log(
-                    `536 discarding ${JSON.stringify(issueObj, null, 4)}`
+                    `546 discarding ${JSON.stringify(issueObj, null, 4)}`
                   );
                 }
               });
               rawIssueStaging = [];
               console.log(
-                `542 ${log("reset", "doNothingUntil", doNothingUntil)}`
+                `552 ${log("reset", "doNothingUntil", doNothingUntil)}`
               );
             }
           } else {
@@ -562,7 +572,7 @@ function lint(str, originalOpts) {
       str[i + 2] === ">"
     ) {
       doNothingUntil = i + 3;
-      console.log(`565 ${log("set", "doNothingUntil", doNothingUntil)}`);
+      console.log(`575 ${log("set", "doNothingUntil", doNothingUntil)}`);
     }
 
     // catch a state of being within quotes
@@ -580,16 +590,16 @@ function lint(str, originalOpts) {
         // ps. we don't use charIsQuote() because it's too wide and includes too
         // much, all curlies as well.
         withinQuotes = i;
-        console.log(`583 ${log("set", "withinQuotes", withinQuotes)}`);
+        console.log(`593 ${log("set", "withinQuotes", withinQuotes)}`);
       } else if (
         withinQuotes !== null &&
         str[withinQuotes] === str[i] &&
         (!withinQuotesEndAt || withinQuotesEndAt === i)
       ) {
-        console.log(`589 withinQuotes was ${withinQuotes}, resetting to null`);
+        console.log(`599 withinQuotes was ${withinQuotes}, resetting to null`);
         withinQuotes = null;
         withinQuotesEndAt = null;
-        console.log(`592 ${log("set", "withinQuotes", withinQuotes)}`);
+        console.log(`602 ${log("set", "withinQuotes", withinQuotes)}`);
       }
     }
 
@@ -597,7 +607,7 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
       console.log(
-        `600 ${log(
+        `610 ${log(
           "reset",
           "withinQuotes",
           withinQuotes,
@@ -632,7 +642,7 @@ function lint(str, originalOpts) {
       logEspTag.headEndAt = i;
       logEspTag.headVal = str.slice(logEspTag.headStartAt, i);
       console.log(
-        `635 ${log(
+        `645 ${log(
           "SET",
           "logEspTag.headEndAt",
           logEspTag.headEndAt,
@@ -653,7 +663,7 @@ function lint(str, originalOpts) {
       logEspTag.headStartAt = i;
       logEspTag.startAt = i;
       console.log(
-        `656 ${log(
+        `666 ${log(
           "SET",
           "logEspTag.headStartAt",
           logEspTag.headStartAt,
@@ -675,7 +685,7 @@ function lint(str, originalOpts) {
       //
 
       console.log(
-        `678 ${`\u001b[${90}m${`above catching the ending of an attribute's name`}\u001b[${39}m`}`
+        `688 ${`\u001b[${90}m${`above catching the ending of an attribute's name`}\u001b[${39}m`}`
       );
       // 1. catch the ending of an attribute's name
       if (
@@ -691,7 +701,7 @@ function lint(str, originalOpts) {
           logAttr.attrNameEndAt
         );
         console.log(
-          `694 ${log(
+          `704 ${log(
             "SET",
             "logAttr.attrNameEndAt",
             logAttr.attrNameEndAt,
@@ -706,16 +716,16 @@ function lint(str, originalOpts) {
         if (str[i] !== "=") {
           if (str[right(str, i)] === "=") {
             // TODO - there's equal to the right
-            console.log("709 equal to the right though");
+            console.log("719 equal to the right though");
           } else {
             // TODO - there's not equal to the right
-            console.log("712 not equal, so terminate attr");
+            console.log("722 not equal, so terminate attr");
           }
         }
       }
 
       console.log(
-        `718 ${`\u001b[${90}m${`above catching what follows the attribute's name`}\u001b[${39}m`}`
+        `728 ${`\u001b[${90}m${`above catching what follows the attribute's name`}\u001b[${39}m`}`
       );
       // 2. catch what follows the attribute's name
       if (
@@ -729,12 +739,12 @@ function lint(str, originalOpts) {
           temp = attributeOnTheRight(str, i);
         }
         console.log(
-          `732 ${`\u001b[${90}m${`inside catch what follows the attribute's name`}\u001b[${39}m`}`
+          `742 ${`\u001b[${90}m${`inside catch what follows the attribute's name`}\u001b[${39}m`}`
         );
         if (str[i] === "=") {
           logAttr.attrEqualAt = i;
           console.log(
-            `737 ${log("SET", "logAttr.attrEqualAt", logAttr.attrEqualAt)}`
+            `747 ${log("SET", "logAttr.attrEqualAt", logAttr.attrEqualAt)}`
           );
 
           // If there's whitespace on the right, especially where the first
@@ -753,8 +763,8 @@ function lint(str, originalOpts) {
             if (str[nextCharOnTheRightAt] === "=") {
               // repeated equal character after the attribute
               // error "tag-attribute-repeated-equal"
-              console.log(`756 REPEATED EQUAL DETECTED`);
-              // console.log(`757 RESET logWhitespace`);
+              console.log(`766 REPEATED EQUAL DETECTED`);
+              // console.log(`767 RESET logWhitespace`);
               // resetLogWhitespace();
               let nextEqualStartAt = i + 1;
               let nextEqualEndAt = nextCharOnTheRightAt + 1;
@@ -764,11 +774,11 @@ function lint(str, originalOpts) {
               doNothingUntil = nextEqualEndAt;
               doNothingUntilReason = "repeated equals";
               console.log(
-                `767 ${log("set", "doNothingUntil", doNothingUntil)}`
+                `777 ${log("set", "doNothingUntil", doNothingUntil)}`
               );
 
               console.log(
-                `771 SET ${`\u001b[${36}m${`nextEqualStartAt = "${nextEqualStartAt}"; nextEqualEndAt = "${nextEqualEndAt};"`}\u001b[${39}m`}`
+                `781 SET ${`\u001b[${36}m${`nextEqualStartAt = "${nextEqualStartAt}"; nextEqualEndAt = "${nextEqualEndAt};"`}\u001b[${39}m`}`
               );
               while (nextEqualStartAt && nextEqualEndAt) {
                 console.log(`       ${`\u001b[${35}m${`*`}\u001b[${39}m`}`);
@@ -777,7 +787,7 @@ function lint(str, originalOpts) {
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
                 console.log(
-                  `780 ${log(
+                  `790 ${log(
                     "push",
                     "tag-attribute-repeated-equal",
                     `${`[[${nextEqualStartAt}, ${nextEqualEndAt}]]`}`
@@ -785,15 +795,15 @@ function lint(str, originalOpts) {
                 );
                 // look what's next
                 const temp = right(str, nextEqualEndAt - 1);
-                console.log(`788 ${log("set", "temp", temp)}`);
+                console.log(`798 ${log("set", "temp", temp)}`);
                 if (str[temp] === "=") {
                   console.log(
-                    `791 ${`\u001b[${36}m${`yes, there's "=" on the right`}\u001b[${39}m`}`
+                    `801 ${`\u001b[${36}m${`yes, there's "=" on the right`}\u001b[${39}m`}`
                   );
                   nextEqualStartAt = nextEqualEndAt;
                   nextEqualEndAt = temp + 1;
                   console.log(
-                    `796 SET ${`\u001b[${36}m${`nextEqualStartAt = "${nextEqualStartAt}"; nextEqualEndAt = "${nextEqualEndAt};"`}\u001b[${39}m`}`
+                    `806 SET ${`\u001b[${36}m${`nextEqualStartAt = "${nextEqualStartAt}"; nextEqualEndAt = "${nextEqualEndAt};"`}\u001b[${39}m`}`
                   );
 
                   // set "doNothingUntil" to skip processing of already
@@ -801,12 +811,12 @@ function lint(str, originalOpts) {
                   doNothingUntil = nextEqualEndAt;
                   doNothingUntilReason = "already processed equals";
                   console.log(
-                    `804 ${log("set", "doNothingUntil", doNothingUntil)}`
+                    `814 ${log("set", "doNothingUntil", doNothingUntil)}`
                   );
                 } else {
                   nextEqualStartAt = null;
                   console.log(
-                    `809 ${log("set", "nextEqualStartAt", nextEqualStartAt)}`
+                    `819 ${log("set", "nextEqualStartAt", nextEqualStartAt)}`
                   );
                 }
               }
@@ -818,7 +828,7 @@ function lint(str, originalOpts) {
             `${`\u001b[${32}m${`\n██`}\u001b[${39}m`} util/attributeOnTheRight() ENDED ${`\u001b[${32}m${`██\n`}\u001b[${39}m`}`
           );
           console.log(
-            "821 quoted attribute's value on the right, equal is indeed missing"
+            "831 quoted attribute's value on the right, equal is indeed missing"
           );
           // 1. push the issue:
           submit({
@@ -826,7 +836,7 @@ function lint(str, originalOpts) {
             position: [[i, i, "="]]
           });
           console.log(
-            `829 ${log(
+            `839 ${log(
               "push",
               "tag-attribute-missing-equal",
               `${`[[${i}, ${i}, "="]]`}`
@@ -835,12 +845,12 @@ function lint(str, originalOpts) {
           // 2. complete the marker records:
           logAttr.attrEqualAt = i;
           console.log(
-            `838 ${log("SET", "logAttr.attrEqualAt", logAttr.attrEqualAt)}`
+            `848 ${log("SET", "logAttr.attrEqualAt", logAttr.attrEqualAt)}`
           );
           // 3. we need to mark where value starts too:
           logAttr.attrValueStartAt = i + 1;
           console.log(
-            `843 ${log(
+            `853 ${log(
               "SET",
               "logAttr.attrValueStartAt",
               logAttr.attrValueStartAt
@@ -849,7 +859,7 @@ function lint(str, originalOpts) {
           // 4. ... and ends...
           logAttr.attrValueEndAt = temp;
           console.log(
-            `852 ${log(
+            `862 ${log(
               "SET",
               "logAttr.attrValueEndAt",
               logAttr.attrValueEndAt
@@ -861,7 +871,7 @@ function lint(str, originalOpts) {
           logAttr.attrClosingQuote.pos = temp;
           logAttr.attrClosingQuote.val = str[temp];
           console.log(
-            `864 ${log(
+            `874 ${log(
               "SET",
               "logAttr.attrOpeningQuote",
               logAttr.attrOpeningQuote,
@@ -872,7 +882,7 @@ function lint(str, originalOpts) {
           // 5. and attr value:
           logAttr.attrValue = str.slice(i + 1, temp);
           console.log(
-            `875 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
+            `885 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
           );
         } else {
           console.log(
@@ -884,7 +894,7 @@ function lint(str, originalOpts) {
 
           // 1. push
           logTag.attributes.push(clone(logAttr));
-          console.log(`887 ${log("PUSH, then RESET", "logAttr")}`);
+          console.log(`897 ${log("PUSH, then RESET", "logAttr")}`);
 
           // 2. reset:
           resetLogAttr();
@@ -899,7 +909,7 @@ function lint(str, originalOpts) {
               position: [[logWhitespace.startAt, i]]
             });
             console.log(
-              `902 ${log(
+              `912 ${log(
                 "push",
                 "tag-attribute-space-between-name-and-equals",
                 `${`[[${logWhitespace.startAt}, ${i}]]`}`
@@ -912,7 +922,7 @@ function lint(str, originalOpts) {
           } else if (util.isLatinLetter(str[i])) {
             // it seems like a start of a new attribute. Push existing and reset
             logTag.attributes.push(clone(logAttr));
-            console.log(`915 ${log("PUSH, then RESET", "logAttr")}`);
+            console.log(`925 ${log("PUSH, then RESET", "logAttr")}`);
 
             // then, reset:
             resetLogAttr();
@@ -927,14 +937,14 @@ function lint(str, originalOpts) {
                     position: [[logWhitespace.startAt + 1, i]]
                   });
                   console.log(
-                    `930 ${log(
+                    `940 ${log(
                       "push",
                       "tag-excessive-whitespace-inside-tag",
                       `${`[[${logWhitespace.startAt + 1}, ${i}]]`}`
                     )}`
                   );
                 }
-                console.log("937 dead end of excessive whitespace check");
+                console.log("947 dead end of excessive whitespace check");
               } else {
                 // replace whole chunk with a single space
                 submit({
@@ -942,7 +952,7 @@ function lint(str, originalOpts) {
                   position: [[logWhitespace.startAt, i, " "]]
                 });
                 console.log(
-                  `945 ${log(
+                  `955 ${log(
                     "push",
                     "tag-excessive-whitespace-inside-tag",
                     `${`[[${logWhitespace.startAt}, ${i}, " "]]`}`
@@ -957,17 +967,17 @@ function lint(str, originalOpts) {
       }
 
       console.log(
-        `960 ${`\u001b[${90}m${`above catching the begining of an attribute's name`}\u001b[${39}m`}`
+        `970 ${`\u001b[${90}m${`above catching the begining of an attribute's name`}\u001b[${39}m`}`
       );
       // 3. catch the begining of an attribute's name
       if (logAttr.attrStartAt === null && util.isLatinLetter(str[i])) {
         console.log(
-          `965 ${`\u001b[${90}m${`inside catching the begining of an attribute's name`}\u001b[${39}m`}`
+          `975 ${`\u001b[${90}m${`inside catching the begining of an attribute's name`}\u001b[${39}m`}`
         );
         logAttr.attrStartAt = i;
         logAttr.attrNameStartAt = i;
         console.log(
-          `970 ${log(
+          `980 ${log(
             "SET",
             "logAttr.attrStartAt",
             logAttr.attrStartAt,
@@ -989,7 +999,7 @@ function lint(str, originalOpts) {
               position: [[logWhitespace.startAt + 1, i]]
             });
             console.log(
-              `992 ${log(
+              `1002 ${log(
                 "push",
                 "tag-excessive-whitespace-inside-tag",
                 `${`[[${logWhitespace.startAt + 1}, ${i}]]`}`
@@ -1002,7 +1012,7 @@ function lint(str, originalOpts) {
               position: [[logWhitespace.startAt, i, " "]]
             });
             console.log(
-              `1005 ${log(
+              `1015 ${log(
                 "push",
                 "tag-excessive-whitespace-inside-tag",
                 `${`[[${logWhitespace.startAt}, ${i}, " "]]`}`
@@ -1023,7 +1033,7 @@ function lint(str, originalOpts) {
                     position: [[y + 1, i]]
                   });
                   console.log(
-                    `1026 ${log(
+                    `1036 ${log(
                       "push",
                       "tag-stray-character",
                       `${JSON.stringify([[y + 1, i]], null, 0)}`
@@ -1038,7 +1048,7 @@ function lint(str, originalOpts) {
       }
 
       console.log(
-        `1041 ${`\u001b[${90}m${`above catching what follows attribute's equal`}\u001b[${39}m`}`
+        `1051 ${`\u001b[${90}m${`above catching what follows attribute's equal`}\u001b[${39}m`}`
       );
       // 4. catch what follows attribute's equal
       if (
@@ -1046,10 +1056,10 @@ function lint(str, originalOpts) {
         logAttr.attrOpeningQuote.pos === null
       ) {
         console.log(
-          `1049 ${`\u001b[${90}m${`inside catching what follows attribute's equal`}\u001b[${39}m`}`
+          `1059 ${`\u001b[${90}m${`inside catching what follows attribute's equal`}\u001b[${39}m`}`
         );
         if (logAttr.attrEqualAt < i && str[i].trim().length) {
-          console.log("1052 catching what follows equal");
+          console.log("1062 catching what follows equal");
           if (charcode === 34 || charcode === 39) {
             // it's single or double quote
 
@@ -1060,7 +1070,7 @@ function lint(str, originalOpts) {
                 position: [[logWhitespace.startAt, i]]
               });
               console.log(
-                `1063 ${log(
+                `1073 ${log(
                   "push",
                   "tag-attribute-space-between-equals-and-opening-quotes",
                   `${JSON.stringify([[logWhitespace.startAt, i]], null, 0)}`
@@ -1074,7 +1084,7 @@ function lint(str, originalOpts) {
 
             const closingQuotePeek = findClosingQuote(str, i);
             console.log(
-              `1077 ${log("set", "closingQuotePeek", closingQuotePeek)}`
+              `1087 ${log("set", "closingQuotePeek", closingQuotePeek)}`
             );
             // if we found closing quote, set it right away:
             if (closingQuotePeek) {
@@ -1105,7 +1115,7 @@ function lint(str, originalOpts) {
                     ]
                   });
                   console.log(
-                    `1108 ${log(
+                    `1118 ${log(
                       "push",
                       name,
                       `${`[[${closingQuotePeek}, ${closingQuotePeek + 1}, ${
@@ -1138,7 +1148,7 @@ function lint(str, originalOpts) {
                     ? closingQuotePeek
                     : left(str, closingQuotePeek) + 1;
                   console.log(
-                    `1141 ${log(
+                    `1151 ${log(
                       "set",
                       "fromPositionToInsertAt",
                       fromPositionToInsertAt
@@ -1146,7 +1156,7 @@ function lint(str, originalOpts) {
                   );
                   let toPositionToInsertAt = closingQuotePeek;
                   console.log(
-                    `1149 ${log(
+                    `1159 ${log(
                       "set",
                       "toPositionToInsertAt",
                       toPositionToInsertAt
@@ -1154,7 +1164,7 @@ function lint(str, originalOpts) {
                   );
 
                   if (str[left(str, closingQuotePeek)] === "/") {
-                    console.log("1157 SLASH ON THE LEFT");
+                    console.log("1167 SLASH ON THE LEFT");
                     toPositionToInsertAt = left(str, closingQuotePeek);
                     // if there's a gap between slash and closing bracket, tackle it
                     if (toPositionToInsertAt + 1 < closingQuotePeek) {
@@ -1163,7 +1173,7 @@ function lint(str, originalOpts) {
                         position: [[toPositionToInsertAt + 1, closingQuotePeek]]
                       });
                       console.log(
-                        `1166 ${log(
+                        `1176 ${log(
                           "push",
                           "tag-whitespace-closing-slash-and-bracket",
                           `${`[[${toPositionToInsertAt +
@@ -1176,7 +1186,7 @@ function lint(str, originalOpts) {
                     fromPositionToInsertAt =
                       left(str, toPositionToInsertAt) + 1;
                     console.log(
-                      `1179 ${log(
+                      `1189 ${log(
                         "set",
                         "toPositionToInsertAt",
                         toPositionToInsertAt,
@@ -1197,7 +1207,7 @@ function lint(str, originalOpts) {
                     ]
                   });
                   console.log(
-                    `1200 ${log(
+                    `1210 ${log(
                       "push",
                       "tag-attribute-closing-quotation-mark-missing",
                       `${`[[${closingQuotePeek}, ${closingQuotePeek}, ${`${
@@ -1215,7 +1225,7 @@ function lint(str, originalOpts) {
               logAttr.attrValueEndAt = closingQuotePeek;
               logAttr.attrEndAt = closingQuotePeek;
               console.log(
-                `1218 ${log(
+                `1228 ${log(
                   "set",
                   "logAttr.attrClosingQuote",
                   logAttr.attrClosingQuote,
@@ -1241,7 +1251,7 @@ function lint(str, originalOpts) {
                 if (newIssue) {
                   tagIssueStaging.push(newIssue);
                   console.log(
-                    `1244 ${log("push tagIssueStaging", "newIssue", newIssue)}`
+                    `1254 ${log("push tagIssueStaging", "newIssue", newIssue)}`
                   );
                 }
               }
@@ -1250,7 +1260,7 @@ function lint(str, originalOpts) {
               // staging so far
               if (rawIssueStaging.length) {
                 console.log(
-                  `1253 ${`\u001b[${31}m${`██`}\u001b[${39}m`} raw stage present!`
+                  `1263 ${`\u001b[${31}m${`██`}\u001b[${39}m`} raw stage present!`
                 );
               }
 
@@ -1262,6 +1272,7 @@ function lint(str, originalOpts) {
               if (
                 logAttr.attrNameStartAt &&
                 str[logAttr.attrNameStartAt - 1].trim().length &&
+                (!opts.rules || opts.rules["tag-stray-character"] !== false) &&
                 !retObj.issues.some(issueObj => {
                   return (
                     (issueObj.name === "tag-stray-quotes" ||
@@ -1278,7 +1289,7 @@ function lint(str, originalOpts) {
                   ]
                 });
                 console.log(
-                  `1281 ${log(
+                  `1292 ${log(
                     "push",
                     "tag-missing-space-before-attribute",
                     `${`[[${logAttr.attrNameStartAt}, ${
@@ -1290,7 +1301,7 @@ function lint(str, originalOpts) {
 
               // then, push the attribute and wipe the markers because we're done
               logTag.attributes.push(clone(logAttr));
-              console.log(`1293 ${log("PUSH, then RESET", "logAttr")}`);
+              console.log(`1304 ${log("PUSH, then RESET", "logAttr")}`);
 
               // finally, offset the index:
               // normally, we'd "jump over" to index at "closingQuotePeek", but
@@ -1304,19 +1315,19 @@ function lint(str, originalOpts) {
                 // i =
                 //   closingQuotePeek -
                 //   (charIsQuote(str[closingQuotePeek]) ? 0 : 1);
-                // console.log(`1307 ${log("set", "i", i)}`);
+                // console.log(`1318 ${log("set", "i", i)}`);
               } else {
                 // pull back to nearest non-whitespace char
                 doNothingUntil = left(str, closingQuotePeek) + 1;
                 // i = left(str, closingQuotePeek);
-                // console.log(`1312 ${log("set", "i", i)}`);
+                // console.log(`1323 ${log("set", "i", i)}`);
               }
               doNothingUntilReason = "closing quote looked up";
               if (withinQuotes !== null) {
                 withinQuotesEndAt = logAttr.attrClosingQuote.pos;
               }
               console.log(
-                `1319 ${log(
+                `1330 ${log(
                   "set",
                   "doNothingUntil",
                   doNothingUntil,
@@ -1346,7 +1357,7 @@ function lint(str, originalOpts) {
                   position: [[i + 1, i + 1, ">"]]
                 });
                 console.log(
-                  `1349 ${log(
+                  `1360 ${log(
                     "push",
                     "tag-missing-closing-bracket",
                     `${`[[${i + 1}, ${i + 1}, ">"]]`}`
@@ -1354,7 +1365,7 @@ function lint(str, originalOpts) {
                 );
               }
 
-              console.log(`1357 ${log("continue")}`);
+              console.log(`1368 ${log("continue")}`);
               continue;
             }
           } else if (charcode === 8220 || charcode === 8221) {
@@ -1365,7 +1376,7 @@ function lint(str, originalOpts) {
             logAttr.attrOpeningQuote.pos = i;
             logAttr.attrOpeningQuote.val = `"`;
             console.log(
-              `1368 ${log(
+              `1379 ${log(
                 "set",
                 "logAttr.attrOpeningQuote",
                 logAttr.attrOpeningQuote
@@ -1382,12 +1393,12 @@ function lint(str, originalOpts) {
               position: [[i, i + 1, `"`]]
             });
             console.log(
-              `1385 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
+              `1396 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
             );
 
             logAttr.attrValueStartAt = i + 1;
             console.log(
-              `1390 ${log(
+              `1401 ${log(
                 "set",
                 "logAttr.attrValueStartAt",
                 logAttr.attrValueStartAt
@@ -1396,7 +1407,7 @@ function lint(str, originalOpts) {
 
             // don't forget the withinQuotes flag:
             withinQuotes = i;
-            console.log(`1399 ${log("set", "withinQuotes", withinQuotes)}`);
+            console.log(`1410 ${log("set", "withinQuotes", withinQuotes)}`);
           } else if (charcode === 8216 || charcode === 8217) {
             // left-single-quotation-mark
             // https://www.fileformat.info/info/unicode/char/2018/index.htm
@@ -1405,7 +1416,7 @@ function lint(str, originalOpts) {
             logAttr.attrOpeningQuote.pos = i;
             logAttr.attrOpeningQuote.val = `'`;
             console.log(
-              `1408 ${log(
+              `1419 ${log(
                 "set",
                 "logAttr.attrOpeningQuote",
                 logAttr.attrOpeningQuote
@@ -1422,12 +1433,12 @@ function lint(str, originalOpts) {
               position: [[i, i + 1, `'`]]
             });
             console.log(
-              `1425 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
+              `1436 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
             );
 
             logAttr.attrValueStartAt = i + 1;
             console.log(
-              `1430 ${log(
+              `1441 ${log(
                 "set",
                 "logAttr.attrValueStartAt",
                 logAttr.attrValueStartAt
@@ -1436,18 +1447,18 @@ function lint(str, originalOpts) {
 
             // don't forget the withinQuotes flag:
             withinQuotes = i;
-            console.log(`1439 ${log("set", "withinQuotes", withinQuotes)}`);
+            console.log(`1450 ${log("set", "withinQuotes", withinQuotes)}`);
           } else if (!withinTagInnerspace(str, i)) {
             console.log(
-              `1442 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`false`}\u001b[${39}m`}`
+              `1453 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`false`}\u001b[${39}m`}`
             );
             // insert missing opening quote here, right at this index,
             // which means, to the left of this character
 
             const closingQuotePeek = findClosingQuote(str, i);
-            console.log(`1448 ███████████████████████████████████████`);
+            console.log(`1459 ███████████████████████████████████████`);
             console.log(
-              `1450 ${log("set", "closingQuotePeek", closingQuotePeek)}`
+              `1461 ${log("set", "closingQuotePeek", closingQuotePeek)}`
             );
 
             const quoteValToPut = charIsQuote(str[closingQuotePeek])
@@ -1460,7 +1471,7 @@ function lint(str, originalOpts) {
               position: [[left(str, i) + 1, i, quoteValToPut]]
             });
             console.log(
-              `1463 ${log(
+              `1474 ${log(
                 "push",
                 "tag-attribute-opening-quotation-mark-missing",
                 `${`[[${left(str, i) + 1}, ${i}, ${quoteValToPut}]]`}`
@@ -1474,7 +1485,7 @@ function lint(str, originalOpts) {
             };
             logAttr.attrValueStartAt = i;
             console.log(
-              `1477 mark opening quote: ${log(
+              `1488 mark opening quote: ${log(
                 "set",
                 "logAttr.attrOpeningQuote",
                 logAttr.attrOpeningQuote,
@@ -1484,12 +1495,12 @@ function lint(str, originalOpts) {
             );
             // don't forget the withinQuotes flag:
             withinQuotes = i;
-            console.log(`1487 ${log("set", "withinQuotes", withinQuotes)}`);
+            console.log(`1498 ${log("set", "withinQuotes", withinQuotes)}`);
 
             // 3. check the closing quotes
             // traverse forward until the first equal or closing bracket or
             // closing quotes, whichever comes first.
-            console.log("1492 traverse forward\n\n\n");
+            console.log("1503 traverse forward\n\n\n");
             let closingBracketIsAt = null;
 
             // We'll traverse forward to find the index of the last character
@@ -1516,7 +1527,7 @@ function lint(str, originalOpts) {
 
             for (let y = i; y < len; y++) {
               console.log(
-                `1519 \u001b[${36}m${`str[${y}] = "${str[y]}"`}\u001b[${39}m`
+                `1530 \u001b[${36}m${`str[${y}] = "${str[y]}"`}\u001b[${39}m`
               );
               if (
                 str[y] === ">" &&
@@ -1526,7 +1537,7 @@ function lint(str, originalOpts) {
                 const leftAt = left(str, y);
                 closingBracketIsAt = y;
                 console.log(
-                  `1529 ${log(
+                  `1540 ${log(
                     "set",
                     "leftAt",
                     leftAt,
@@ -1538,7 +1549,7 @@ function lint(str, originalOpts) {
                 if (str[leftAt] === "/") {
                   innerTagEndsAt = leftAt;
                   console.log(
-                    `1541 ${log("set", "innerTagEndsAt", innerTagEndsAt)}`
+                    `1552 ${log("set", "innerTagEndsAt", innerTagEndsAt)}`
                   );
                 }
                 // break; - don't break, move on, to ensure "greedy" capture
@@ -1550,7 +1561,7 @@ function lint(str, originalOpts) {
                 dealBrakerCharacters.includes(str[y])
               ) {
                 console.log(
-                  `1553 \u001b[${36}m${`break ("${
+                  `1564 \u001b[${36}m${`break ("${
                     str[y]
                   }" is a bad character)`}\u001b[${39}m`
                 );
@@ -1558,7 +1569,7 @@ function lint(str, originalOpts) {
               }
             }
             console.log(
-              `1561 ${log(
+              `1572 ${log(
                 "set",
                 "closingBracketIsAt",
                 closingBracketIsAt,
@@ -1574,7 +1585,7 @@ function lint(str, originalOpts) {
               innerTagContents = "";
             }
             console.log(
-              `1577 ${log("set", "innerTagContents", innerTagContents)}`
+              `1588 ${log("set", "innerTagContents", innerTagContents)}`
             );
 
             let startingPoint = innerTagEndsAt;
@@ -1589,7 +1600,7 @@ function lint(str, originalOpts) {
             // cases where value-less attribute follows, where whole sentence
             // is unquoted and where there are multiple unquoted attributes.
             if (innerTagContents.includes("=")) {
-              console.log(`1592 inner tag contents include an equal character`);
+              console.log(`1603 inner tag contents include an equal character`);
               // for example, we have:
               //
               // <a bcd=ef ghj=kl>
@@ -1602,17 +1613,17 @@ function lint(str, originalOpts) {
 
               const temp1 = innerTagContents.split("=")[0];
 
-              console.log(`1605 ${log("set", "temp1", temp1)}`);
+              console.log(`1616 ${log("set", "temp1", temp1)}`);
               // if it has spaces, that last space is the separator boundary
               // between attributes.
               if (temp1.split("").some(char => !char.trim().length)) {
                 console.log(
-                  "1610 traverse backwards to find beginning of the attr on the right\n\n\n"
+                  "1621 traverse backwards to find beginning of the attr on the right\n\n\n"
                 );
                 // let beginningOfAString = true;
                 for (let z = i + temp1.length; z--; ) {
                   console.log(
-                    `1615 \u001b[${35}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`
+                    `1626 \u001b[${35}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`
                   );
                   if (!str[z].trim().length) {
                     // if (beginningOfAString) {
@@ -1620,7 +1631,7 @@ function lint(str, originalOpts) {
                     // } else {
                     attributeOnTheRightBeginsAt = z + 1;
                     console.log(
-                      `1623 ${log(
+                      `1634 ${log(
                         "set",
                         "attributeOnTheRightBeginsAt",
                         attributeOnTheRightBeginsAt,
@@ -1637,7 +1648,7 @@ function lint(str, originalOpts) {
                 console.log("\n\n\n");
 
                 console.log(
-                  `1640 ${log(
+                  `1651 ${log(
                     "log",
                     "attributeOnTheRightBeginsAt",
                     attributeOnTheRightBeginsAt
@@ -1653,7 +1664,7 @@ function lint(str, originalOpts) {
               }
             } else {
               console.log(
-                `1656 inner tag contents don't include an equal character`
+                `1667 inner tag contents don't include an equal character`
               );
             }
 
@@ -1669,16 +1680,16 @@ function lint(str, originalOpts) {
 
             console.log("\n\n\n\n\n\n");
             console.log(
-              `1672 ${`\u001b[${31}m${`TRAVERSE BACKWARDS`}\u001b[${39}m`}; startingPoint=${startingPoint}`
+              `1683 ${`\u001b[${31}m${`TRAVERSE BACKWARDS`}\u001b[${39}m`}; startingPoint=${startingPoint}`
             );
             for (let z = startingPoint; z--; z > i) {
               // logging:
               console.log(
-                `1677 ${`\u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`}`
+                `1688 ${`\u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`}`
               );
               // bail if equal is encountered
               if (str[z] === "=") {
-                console.log(`1681 ${log("break")}`);
+                console.log(`1692 ${log("break")}`);
                 break;
               }
 
@@ -1686,14 +1697,14 @@ function lint(str, originalOpts) {
               if (caughtAttrEnd === null && str[z].trim().length) {
                 caughtAttrEnd = z + 1;
                 console.log(
-                  `1689 ${log("set", "caughtAttrEnd", caughtAttrEnd)}`
+                  `1700 ${log("set", "caughtAttrEnd", caughtAttrEnd)}`
                 );
 
                 if (boolAttrFound) {
                   // 1. finalClosingQuotesShouldBeAt
                   finalClosingQuotesShouldBeAt = caughtAttrEnd;
                   console.log(
-                    `1696 ${log(
+                    `1707 ${log(
                       "set",
                       "finalClosingQuotesShouldBeAt",
                       finalClosingQuotesShouldBeAt
@@ -1702,7 +1713,7 @@ function lint(str, originalOpts) {
                   // 2. reset
                   boolAttrFound = false;
                   console.log(
-                    `1705 ${log("set", "boolAttrFound", boolAttrFound)}`
+                    `1716 ${log("set", "boolAttrFound", boolAttrFound)}`
                   );
                 }
               }
@@ -1710,7 +1721,7 @@ function lint(str, originalOpts) {
               if (!str[z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = z + 1;
                 console.log(
-                  `1713 ${`\u001b[${35}m${`ATTR`}\u001b[${39}m`}: ${str.slice(
+                  `1724 ${`\u001b[${35}m${`ATTR`}\u001b[${39}m`}: ${str.slice(
                     caughtAttrStart,
                     caughtAttrEnd
                   )} (${caughtAttrStart}-${caughtAttrEnd})`
@@ -1739,7 +1750,7 @@ function lint(str, originalOpts) {
                     //   ]
                     // });
                     // console.log(
-                    //   `1742 ${log(
+                    //   `1753 ${log(
                     //     "push",
                     //     "tag-attribute-closing-quotation-mark-missing",
                     //     `${`[[${temp1 + 1}, ${temp1 + 1}, ${JSON.stringify(
@@ -1756,11 +1767,11 @@ function lint(str, originalOpts) {
                     // logAttr.attrClosingQuote = { pos: temp1 + 1, val: `"` };
                     // logAttr.attrValueEndAt = temp1 + 1;
                     // logAttr.attrEndAt = temp1 + 2;
-                    // console.log(`1759 ${log("log", "logAttr", logAttr)}`);
+                    // console.log(`1770 ${log("log", "logAttr", logAttr)}`);
                     //
                     // // 3. push the attribute's object into logTag
                     // logTag.attributes.push(clone(logAttr));
-                    // console.log(`1763 ${log("PUSH, then RESET", "logAttr")}`);
+                    // console.log(`1774 ${log("PUSH, then RESET", "logAttr")}`);
                     //
                     // // 4. reset logAttr:
                     // resetLogAttr();
@@ -1770,7 +1781,7 @@ function lint(str, originalOpts) {
                     // logAttr.attrNameStartAt = right(str, temp1 + 1);
                     // logAttr.attrStartAt = logAttr.attrNameStartAt;
                     // console.log(
-                    //   `1773 ${log(
+                    //   `1784 ${log(
                     //     "set",
                     //     "logAttr.attrNameStartAt",
                     //     logAttr.attrNameStartAt,
@@ -1779,12 +1790,12 @@ function lint(str, originalOpts) {
                     //   )}`
                     // );
                     // console.log("---");
-                    // console.log(`1782 ${log("log", "logAttr", logAttr)}`);
+                    // console.log(`1793 ${log("log", "logAttr", logAttr)}`);
                     // console.log("---");
 
                     attributeOnTheRightBeginsAt = right(str, temp1 + 1);
                     console.log(
-                      `1787 ${log(
+                      `1798 ${log(
                         "set",
                         "attributeOnTheRightBeginsAt",
                         attributeOnTheRightBeginsAt
@@ -1803,11 +1814,11 @@ function lint(str, originalOpts) {
                     // yes it is known
                     boolAttrFound = true;
                     console.log(
-                      `1806 ${log("set", "boolAttrFound", boolAttrFound)}`
+                      `1817 ${log("set", "boolAttrFound", boolAttrFound)}`
                     );
                   } else {
                     // no it is not recognised
-                    console.log(`1810 ${log("break")}`);
+                    console.log(`1821 ${log("break")}`);
                     break;
                   }
                 }
@@ -1816,7 +1827,7 @@ function lint(str, originalOpts) {
                 caughtAttrEnd = null;
                 caughtAttrStart = null;
                 console.log(
-                  `1819 ${log(
+                  `1830 ${log(
                     "reset",
                     "caughtAttrEnd",
                     caughtAttrEnd,
@@ -1827,7 +1838,7 @@ function lint(str, originalOpts) {
               }
             }
             console.log(
-              `1830 ${`\u001b[${31}m${`TRAVERSE ENDED`}\u001b[${39}m`}`
+              `1841 ${`\u001b[${31}m${`TRAVERSE ENDED`}\u001b[${39}m`}`
             );
 
             // if the quote has been "pulled back", for example,
@@ -1836,7 +1847,7 @@ function lint(str, originalOpts) {
             // set it there right away
 
             console.log(
-              `1839 ${log(
+              `1850 ${log(
                 "log",
                 "finalClosingQuotesShouldBeAt",
                 finalClosingQuotesShouldBeAt,
@@ -1850,14 +1861,14 @@ function lint(str, originalOpts) {
                 left(str, attributeOnTheRightBeginsAt) + 1;
 
               console.log(
-                `1853 ${log(
+                `1864 ${log(
                   "log",
                   "attributeOnTheRightBeginsAt",
                   attributeOnTheRightBeginsAt
                 )}`
               );
               console.log(
-                `1860 ${log(
+                `1871 ${log(
                   "set",
                   "finalClosingQuotesShouldBeAt",
                   finalClosingQuotesShouldBeAt
@@ -1866,7 +1877,7 @@ function lint(str, originalOpts) {
             }
 
             console.log(
-              `1869 ██ ${log(
+              `1880 ██ ${log(
                 "log",
                 "caughtAttrEnd",
                 caughtAttrEnd,
@@ -1883,7 +1894,7 @@ function lint(str, originalOpts) {
             ) {
               finalClosingQuotesShouldBeAt = caughtAttrEnd;
               console.log(
-                `1886 ${log(
+                `1897 ${log(
                   "set",
                   "finalClosingQuotesShouldBeAt",
                   finalClosingQuotesShouldBeAt
@@ -1892,7 +1903,7 @@ function lint(str, originalOpts) {
             }
 
             console.log(
-              `1895 ${`\u001b[${32}m${`██`} \u001b[${39}m`} ${`\u001b[${33}m${`finalClosingQuotesShouldBeAt`}\u001b[${39}m`} = ${JSON.stringify(
+              `1906 ${`\u001b[${32}m${`██`} \u001b[${39}m`} ${`\u001b[${33}m${`finalClosingQuotesShouldBeAt`}\u001b[${39}m`} = ${JSON.stringify(
                 finalClosingQuotesShouldBeAt,
                 null,
                 4
@@ -1914,7 +1925,7 @@ function lint(str, originalOpts) {
                 ]
               });
               console.log(
-                `1917 ${log(
+                `1928 ${log(
                   "push",
                   "tag-attribute-closing-quotation-mark-missing",
                   `${`[[${finalClosingQuotesShouldBeAt}, ${finalClosingQuotesShouldBeAt}, ${
@@ -1942,7 +1953,7 @@ function lint(str, originalOpts) {
             );
 
             console.log(
-              `1945 ${log(
+              `1956 ${log(
                 "set",
                 "logAttr.attrClosingQuote.pos",
                 logAttr.attrClosingQuote.pos,
@@ -1965,13 +1976,13 @@ function lint(str, originalOpts) {
                 z++
               ) {
                 console.log(
-                  `1968 \u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`
+                  `1979 \u001b[${36}m${`str[${z}] = ${str[z]}`}\u001b[${39}m`
                 );
                 const temp = encodeChar(str, z);
                 if (temp) {
                   submit(temp);
                   console.log(
-                    `1974 ${log("push", "unencoded character", temp)}`
+                    `1985 ${log("push", "unencoded character", temp)}`
                   );
                 }
               }
@@ -1984,7 +1995,7 @@ function lint(str, originalOpts) {
               doNothingUntilReason = "missing opening quotes";
               logWhitespace.startAt = null;
               console.log(
-                `1987 ${log(
+                `1998 ${log(
                   "set",
                   "doNothingUntil",
                   doNothingUntil,
@@ -1995,10 +2006,10 @@ function lint(str, originalOpts) {
             }
 
             // 5. since attribute record is complete, push it to logTag
-            console.log(`1998 ${log("about to push", "logAttr", logAttr)}`);
+            console.log(`2009 ${log("about to push", "logAttr", logAttr)}`);
             logTag.attributes.push(clone(logAttr));
             console.log(
-              `2001 ${log("PUSH, then RESET", "logAttr", "then CONTINUE")}`
+              `2012 ${log("PUSH, then RESET", "logAttr", "then CONTINUE")}`
             );
 
             // 6. reset logAttr:
@@ -2008,7 +2019,7 @@ function lint(str, originalOpts) {
             continue;
           } else {
             console.log(
-              `2011 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
+              `2022 \u001b[${33}m${`██`}\u001b[${39}m - withinTagInnerspace() ${`\u001b[${32}m${`true`}\u001b[${39}m`}`
             );
 
             // the quotes and value is completely missing,
@@ -2022,7 +2033,7 @@ function lint(str, originalOpts) {
 
             let start = logAttr.attrStartAt;
             const temp = right(str, i);
-            console.log(`2025 ${log("set", "start", start, "temp", temp)}`);
+            console.log(`2036 ${log("set", "start", start, "temp", temp)}`);
             if (
               (str[i] === "/" && temp && str[temp] === ">") ||
               str[i] === ">"
@@ -2041,28 +2052,28 @@ function lint(str, originalOpts) {
               position: [[start, i]]
             });
             console.log(
-              `2044 ${log(
+              `2055 ${log(
                 "push",
                 "tag-attribute-quote-and-onwards-missing",
                 `${`[[${start}, ${i}]]`}`
               )}`
             );
             // reset logWhitespace because it might get reported as well:
-            console.log(`2051 ${log("reset", "logWhitespace")}`);
+            console.log(`2062 ${log("reset", "logWhitespace")}`);
             resetLogWhitespace();
-            console.log(`2053 ${log("reset", "logAttr")}`);
+            console.log(`2064 ${log("reset", "logAttr")}`);
             resetLogAttr();
 
             // offset the index
             console.log(
-              `2058 ${log("offset the index", "i--; then continue")}`
+              `2069 ${log("offset the index", "i--; then continue")}`
             );
             i--;
             continue;
           }
 
           console.log(
-            `2065 ${log(
+            `2076 ${log(
               "SET",
               "logAttr.attrOpeningQuote.pos",
               logAttr.attrOpeningQuote.pos,
@@ -2080,7 +2091,7 @@ function lint(str, originalOpts) {
                 position: [[logWhitespace.startAt, i]]
               });
               console.log(
-                `2083 ${log(
+                `2094 ${log(
                   "push",
                   "tag-attribute-space-between-equals-and-opening-quotes",
                   `${`[[${logWhitespace.startAt}, ${i}]]`}`
@@ -2095,34 +2106,36 @@ function lint(str, originalOpts) {
                 position: [[logAttr.attrStartAt, i]]
               });
               console.log(
-                `2098 ${log(
+                `2109 ${log(
                   "push",
                   "tag-attribute-quote-and-onwards-missing",
                   `${`[[${logAttr.attrStartAt}, ${i}]]`}`
                 )}`
               );
-              console.log(`2104 ${log("reset", "logAttr")}`);
+              console.log(`2115 ${log("reset", "logAttr")}`);
               resetLogAttr();
             }
           }
         } else if (!str[i + 1] || !right(str, i)) {
-          console.log("2109");
+          console.log("2120");
           submit({
             name: "file-missing-ending",
             position: [[i + 1, i + 1]]
           });
           console.log(
-            `2115 ${log(
+            `2126 ${log(
               "push",
-              "tag-attribute-quote-and-onwards-missing",
+              "file-missing-ending",
               `${`[[${i + 1}, ${i + 1}]]`}`
             )}`
           );
+          console.log(`2132 then CONTINUE`);
+          continue;
         }
       }
 
       console.log(
-        `2125 ${`\u001b[${90}m${`above catching closing quote (single or double)`}\u001b[${39}m`}`
+        `2138 ${`\u001b[${90}m${`above catching closing quote (single or double)`}\u001b[${39}m`}`
       );
       // 5. catch closing quote (single or double)
       if (
@@ -2134,7 +2147,7 @@ function lint(str, originalOpts) {
         charIsQuote(str[i])
       ) {
         console.log(
-          `2137 ${`\u001b[${90}m${`inside catching closing quote (single or double)`}\u001b[${39}m`}`
+          `2150 ${`\u001b[${90}m${`inside catching closing quote (single or double)`}\u001b[${39}m`}`
         );
         if (charcode === 34 || charcode === 39) {
           // if it's single or double quote
@@ -2162,7 +2175,7 @@ function lint(str, originalOpts) {
               position: [[i, i + 1, `${charcode === 34 ? "'" : '"'}`]]
             });
             console.log(
-              `2165 ${log(
+              `2178 ${log(
                 "push",
                 issueName,
                 `${`[[${i}, ${i + 1}, ${charcode === 34 ? "'" : '"'}]]`}`
@@ -2170,7 +2183,7 @@ function lint(str, originalOpts) {
             );
           } else {
             console.log(
-              `2173 ${`\u001b[${31}m${`didn't push an issue`}\u001b[${39}m`}`
+              `2186 ${`\u001b[${31}m${`didn't push an issue`}\u001b[${39}m`}`
             );
           }
 
@@ -2181,7 +2194,7 @@ function lint(str, originalOpts) {
           // for now.
           logAttr.attrClosingQuote.val = str[i];
           console.log(
-            `2184 ${log(
+            `2197 ${log(
               "SET",
               "logAttr.attrClosingQuote.pos",
               logAttr.attrClosingQuote.pos,
@@ -2206,7 +2219,7 @@ function lint(str, originalOpts) {
               logAttr.attrValue = "";
             }
             console.log(
-              `2209 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
+              `2222 ${log("SET", "logAttr.attrValue", logAttr.attrValue)}`
             );
           }
 
@@ -2214,7 +2227,7 @@ function lint(str, originalOpts) {
           logAttr.attrEndAt = i;
           logAttr.attrValueEndAt = i;
           console.log(
-            `2217 ${log(
+            `2230 ${log(
               "SET",
               "logAttr.attrEndAt",
               logAttr.attrEndAt,
@@ -2226,12 +2239,12 @@ function lint(str, originalOpts) {
           // 5. don't forget "withinQuotes" marker
           if (withinQuotes) {
             withinQuotes = null;
-            console.log(`2229 ${log("SET", "withinQuotes", withinQuotes)}`);
+            console.log(`2242 ${log("SET", "withinQuotes", withinQuotes)}`);
           }
 
           // 6. Finally, push the attributes object into
           logTag.attributes.push(clone(logAttr));
-          console.log(`2234 ${log("PUSH, then RESET", "logAttr")}`);
+          console.log(`2247 ${log("PUSH, then RESET", "logAttr")}`);
 
           // then, reset:
           resetLogAttr();
@@ -2249,7 +2262,7 @@ function lint(str, originalOpts) {
             position: [[i, i + 1, '"']]
           });
           console.log(
-            `2252 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
+            `2265 ${log("push", name, `${`[[${i}, ${i + 1}, '"']]`}`)}`
           );
 
           // 2. Set the attribute's ending index in the marker:
@@ -2257,7 +2270,7 @@ function lint(str, originalOpts) {
           logAttr.attrClosingQuote.pos = i;
           logAttr.attrClosingQuote.val = '"';
           console.log(
-            `2260 ${log(
+            `2273 ${log(
               "SET",
               "logAttr.attrEndAt",
               logAttr.attrEndAt,
@@ -2268,7 +2281,7 @@ function lint(str, originalOpts) {
 
           // 3. Finally, push the attributes object into
           logTag.attributes.push(clone(logAttr));
-          console.log(`2271 ${log("PUSH, then RESET", "logAttr")}`);
+          console.log(`2284 ${log("PUSH, then RESET", "logAttr")}`);
 
           // then, reset:
           resetLogAttr();
@@ -2289,7 +2302,7 @@ function lint(str, originalOpts) {
             position: [[i, i + 1, `'`]]
           });
           console.log(
-            `2292 ${log("push", name, `${`[[${i}, ${i + 1}, "'"]]`}`)}`
+            `2305 ${log("push", name, `${`[[${i}, ${i + 1}, "'"]]`}`)}`
           );
 
           // 2. Set the attribute's ending index in the marker:
@@ -2297,7 +2310,7 @@ function lint(str, originalOpts) {
           logAttr.attrClosingQuote.pos = i;
           logAttr.attrClosingQuote.val = "'";
           console.log(
-            `2300 ${log(
+            `2313 ${log(
               "SET",
               "logAttr.attrEndAt",
               logAttr.attrEndAt,
@@ -2310,12 +2323,12 @@ function lint(str, originalOpts) {
           withinQuotes = null;
           withinQuotesEndAt = null;
           console.log(
-            `2313 ${log("reset", "withinQuotes & withinQuotesEndAt")}`
+            `2326 ${log("reset", "withinQuotes & withinQuotesEndAt")}`
           );
 
           // 4. Finally, push the attributes object into
           logTag.attributes.push(clone(logAttr));
-          console.log(`2318 ${log("PUSH, then RESET", "logAttr")}`);
+          console.log(`2331 ${log("PUSH, then RESET", "logAttr")}`);
 
           // 5. then, reset:
           resetLogAttr();
@@ -2323,7 +2336,7 @@ function lint(str, originalOpts) {
       }
 
       // 6. if reached this far, check error clauses.
-      console.log(`2326 ${`\u001b[${90}m${`error clauses`}\u001b[${39}m`}`);
+      console.log(`2339 ${`\u001b[${90}m${`error clauses`}\u001b[${39}m`}`);
 
       // unclosed attribute, followed by slash + closing bracket OR closing bracket
       if (
@@ -2334,14 +2347,14 @@ function lint(str, originalOpts) {
         ((str[i] === "/" && right(str, i) && str[right(str, i)] === ">") ||
           str[i] === ">")
       ) {
-        console.log("2337 inside error catch clauses");
+        console.log("2350 inside error catch clauses");
         // 1. push the issue:
         submit({
           name: "tag-attribute-closing-quotation-mark-missing",
           position: [[i, i, logAttr.attrOpeningQuote.val]]
         });
         console.log(
-          `2344 ${log(
+          `2357 ${log(
             "push",
             "tag-attribute-closing-quotation-mark-missing",
             `${`[[${i}, ${i}, ${logAttr.attrOpeningQuote.val}]]`}`
@@ -2351,7 +2364,7 @@ function lint(str, originalOpts) {
         logAttr.attrClosingQuote.pos = i;
         logAttr.attrClosingQuote.val = logAttr.attrOpeningQuote.val;
         console.log(
-          `2354 ${log(
+          `2367 ${log(
             "set",
             "logAttr.attrClosingQuote",
             logAttr.attrClosingQuote
@@ -2359,7 +2372,7 @@ function lint(str, originalOpts) {
         );
         // 3. since attribute record is complete, push it to logTag
         logTag.attributes.push(clone(logAttr));
-        console.log(`2362 ${log("PUSH, then RESET", "logAttr")}`);
+        console.log(`2375 ${log("PUSH, then RESET", "logAttr")}`);
 
         // 4. reset logAttr:
         resetLogAttr();
@@ -2388,7 +2401,7 @@ function lint(str, originalOpts) {
             name,
             position: [[i, i + 1, "  "]]
           });
-          console.log(`2391 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
+          console.log(`2404 PUSH "${name}", [[${i}, ${i + 1}, "  "]]`);
         } else if (charcode === 13) {
           // Catch CR line endings (\r)
 
@@ -2407,7 +2420,7 @@ function lint(str, originalOpts) {
                 position: [[i, i + 2, rawEnforcedEOLChar]]
               });
               console.log(
-                `2410 ${log(
+                `2423 ${log(
                   "push",
                   "file-wrong-type-line-ending-CRLF",
                   `${`[[${i}, ${i + 2}, ${JSON.stringify(
@@ -2421,7 +2434,7 @@ function lint(str, originalOpts) {
               // 1.2. so line endings is not enforced. Make a note of this line ending.
               logLineEndings.crlf.push([i, i + 2]);
               console.log(
-                `2424 ${log("logLineEndings.crlf push", `[${i}, ${i + 2}]`)}`
+                `2437 ${log("logLineEndings.crlf push", `[${i}, ${i + 2}]`)}`
               );
             }
           } else {
@@ -2437,7 +2450,7 @@ function lint(str, originalOpts) {
                 position: [[i, i + 1, rawEnforcedEOLChar]]
               });
               console.log(
-                `2440 ${log(
+                `2453 ${log(
                   "push",
                   "file-wrong-type-line-ending-CR",
                   `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -2451,7 +2464,7 @@ function lint(str, originalOpts) {
               // 2.2. so line endings is not enforced. Make a note of this line ending.
               logLineEndings.cr.push([i, i + 1]);
               console.log(
-                `2454 ${log("logLineEndings.cr push", `[${i}, ${i + 1}]`)}`
+                `2467 ${log("logLineEndings.cr push", `[${i}, ${i + 1}]`)}`
               );
             }
           }
@@ -2471,7 +2484,7 @@ function lint(str, originalOpts) {
                 position: [[i, i + 1, rawEnforcedEOLChar]]
               });
               console.log(
-                `2474 ${log(
+                `2487 ${log(
                   "push",
                   "file-wrong-type-line-ending-LF",
                   `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -2485,7 +2498,7 @@ function lint(str, originalOpts) {
               // 3.2. so line endings is not enforced. Make a note of this line ending.
               logLineEndings.lf.push([i, i + 1]);
               console.log(
-                `2488 ${log("logLineEndings.lf push", `[${i}, ${i + 1}]`)}`
+                `2501 ${log("logLineEndings.lf push", `[${i}, ${i + 1}]`)}`
               );
             }
           }
@@ -2524,7 +2537,7 @@ function lint(str, originalOpts) {
               addThis = " ";
             }
           }
-          console.log(`2527 ${log("log", "addThis", addThis)}`);
+          console.log(`2540 ${log("log", "addThis", addThis)}`);
 
           if (addThis) {
             submit({
@@ -2538,7 +2551,7 @@ function lint(str, originalOpts) {
               ]
             });
             console.log(
-              `2541 ${log(
+              `2554 ${log(
                 "push",
                 name,
                 `${`[[${nearestNonWhitespaceCharIdxOnTheLeft +
@@ -2550,7 +2563,7 @@ function lint(str, originalOpts) {
               name,
               position: [[i, i + 1]]
             });
-            console.log(`2553 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+            console.log(`2566 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
           }
         }
       } else if (charcode > 126 && charcode < 160) {
@@ -2561,7 +2574,7 @@ function lint(str, originalOpts) {
           name,
           position: [[i, i + 1]]
         });
-        console.log(`2564 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+        console.log(`2577 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
       } else if (charcode === 160) {
         // unencoded non-breaking space
         // https://en.wikipedia.org/wiki/Non-breaking_space
@@ -2572,7 +2585,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, "&nbsp;"]]
         });
         console.log(
-          `2575 ${log("push", name, `${`[[${i}, ${i + 1}, "&nbsp;"]]`}`)}`
+          `2588 ${log("push", name, `${`[[${i}, ${i + 1}, "&nbsp;"]]`}`)}`
         );
       } else if (charcode === 5760) {
         // ogham space mark:
@@ -2583,7 +2596,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2586 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2599 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8192) {
         // en quad:
@@ -2594,7 +2607,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2597 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2610 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8193) {
         // em quad:
@@ -2605,7 +2618,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2608 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2621 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8194) {
         // en space:
@@ -2616,7 +2629,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2619 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2632 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8195) {
         // em space:
@@ -2627,7 +2640,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2630 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2643 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8196) {
         // three-per-em space:
@@ -2638,7 +2651,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2641 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2654 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8197) {
         // four-per-em space:
@@ -2649,7 +2662,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2652 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2665 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8198) {
         // six-per-em space:
@@ -2660,7 +2673,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2663 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2676 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8199) {
         // figure space:
@@ -2671,7 +2684,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2674 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2687 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8200) {
         // punctuation space:
@@ -2682,7 +2695,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2685 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2698 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8201) {
         // thin space:
@@ -2693,7 +2706,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2696 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2709 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8202) {
         // hair space:
@@ -2704,7 +2717,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2707 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
+          `2720 ${log("push", name, `${`[[${i}, ${i + 1}, " "]]`}`)}`
         );
       } else if (charcode === 8203) {
         // zero width space:
@@ -2715,7 +2728,7 @@ function lint(str, originalOpts) {
           name,
           position: [[i, i + 1]]
         });
-        console.log(`2718 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+        console.log(`2731 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
       } else if (charcode === 8232) {
         // line separator character:
         // https://www.fileformat.info/info/unicode/char/2028/index.htm
@@ -2725,7 +2738,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, "\n"]]
         });
         console.log(
-          `2728 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
+          `2741 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
         );
       } else if (charcode === 8233) {
         // paragraph separator character:
@@ -2736,7 +2749,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, "\n"]]
         });
         console.log(
-          `2739 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
+          `2752 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
         );
       } else if (charcode === 8239) {
         // narrow no-break space character:
@@ -2747,7 +2760,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2750 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
+          `2763 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
         );
       } else if (charcode === 8287) {
         // medium mathematical space character:
@@ -2758,7 +2771,7 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2761 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
+          `2774 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
         );
       } else if (charcode === 12288) {
         // ideographic character:
@@ -2769,14 +2782,14 @@ function lint(str, originalOpts) {
           position: [[i, i + 1, " "]]
         });
         console.log(
-          `2772 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
+          `2785 ${log("push", name, `${`[[${i}, ${i + 1}, "\\n"]]`}`)}`
         );
       } else if (encodeChar(str, i)) {
         const newIssue = encodeChar(str, i);
         submit(newIssue, "raw");
-        console.log(`2777 ${log("push to raw stage", "newIssue", newIssue)}`);
+        console.log(`2790 ${log("push to raw stage", "newIssue", newIssue)}`);
       } else if (charcode >= 888 && charcode <= 8591) {
-        console.log(`2779`);
+        console.log(`2792`);
         // !!! this clause has to be the last !!!
         // otherwise, dead spots will skip characters between 888 and 8591.
         if (
@@ -2847,7 +2860,7 @@ function lint(str, originalOpts) {
             name,
             position: [[i, i + 1]]
           });
-          console.log(`2850 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
+          console.log(`2863 ${log("push", name, `${`[[${i}, ${i + 1}]]`}`)}`);
         }
       }
     }
@@ -2860,7 +2873,7 @@ function lint(str, originalOpts) {
     ) {
       // 1. catch the whitespace before closing slash, within a tag
       console.log(
-        `2863 ${`\u001b[${90}m${`inside whitespace chunks ending clauses`}\u001b[${39}m`}`
+        `2876 ${`\u001b[${90}m${`inside whitespace chunks ending clauses`}\u001b[${39}m`}`
       );
       if (
         logTag.tagNameStartAt !== null &&
@@ -2869,7 +2882,7 @@ function lint(str, originalOpts) {
         (str[i] === ">" ||
           (str[i] === "/" && "<>".includes(str[right(str, i)])))
       ) {
-        console.log("2872");
+        console.log("2885");
         // we're within a tag but not within an attribute and this is whitespace
         // chunk before closing slash or closing bracket
         let name = "tag-excessive-whitespace-inside-tag";
@@ -2882,7 +2895,7 @@ function lint(str, originalOpts) {
           position: [[logWhitespace.startAt, i]]
         });
         console.log(
-          `2885 ${log("push", name, `${`[[${logWhitespace.startAt}, ${i}]]`}`)}`
+          `2898 ${log("push", name, `${`[[${logWhitespace.startAt}, ${i}]]`}`)}`
         );
       }
     }
@@ -2895,7 +2908,7 @@ function lint(str, originalOpts) {
     ) {
       logWhitespace.startAt = i;
       console.log(
-        `2898 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
+        `2911 ${log("set", "logWhitespace.startAt", logWhitespace.startAt)}`
       );
     }
 
@@ -2904,7 +2917,7 @@ function lint(str, originalOpts) {
       if (logWhitespace.startAt !== null && !logWhitespace.includesLinebreaks) {
         logWhitespace.includesLinebreaks = true;
         console.log(
-          `2907 ${log(
+          `2920 ${log(
             "set",
             "logWhitespace.includesLinebreaks",
             logWhitespace.includesLinebreaks
@@ -2913,7 +2926,7 @@ function lint(str, originalOpts) {
       }
       logWhitespace.lastLinebreakAt = i;
       console.log(
-        `2916 ${log(
+        `2929 ${log(
           "set",
           "logWhitespace.lastLinebreakAt",
           logWhitespace.lastLinebreakAt
@@ -2921,7 +2934,7 @@ function lint(str, originalOpts) {
       );
     }
 
-    console.log("2924");
+    console.log("2937");
     // catch the ending of the tag name:
     // PS. we deliberately allow capital Latin letters through the net, so that
     // later we could flag them up
@@ -2933,12 +2946,12 @@ function lint(str, originalOpts) {
       str[i] !== "<" &&
       str[i] !== "/"
     ) {
-      console.log("2936 not a latin letter, thus we assume tag name ends here");
+      console.log("2949 not a latin letter, thus we assume tag name ends here");
       logTag.tagNameEndAt = i;
       logTag.tagName = str.slice(logTag.tagNameStartAt, i);
       logTag.recognised = knownHTMLTags.includes(logTag.tagName.toLowerCase());
       console.log(
-        `2941 ${log(
+        `2954 ${log(
           "set",
           "logTag.tagNameEndAt",
           logTag.tagNameEndAt,
@@ -2951,7 +2964,7 @@ function lint(str, originalOpts) {
 
       // maybe there's a stray quote, for example, <a"bcd="ef"/>
       if (charIsQuote(str[i]) || str[i] === "=") {
-        console.log(`2954 stray quote clauses`);
+        console.log(`2967 stray quote clauses`);
         let addSpace; // default value - false
         let strayCharsEndAt = i + 1;
         // traverse forward and chomp all quote-like characters. When first non-
@@ -2960,10 +2973,10 @@ function lint(str, originalOpts) {
         if (str[i + 1].trim().length) {
           if (charIsQuote(str[i + 1]) || str[i + 1] === "=") {
             // traverse forward
-            console.log(`\u001b[${36}m${`2963 traverse forward`}\u001b[${39}m`);
+            console.log(`\u001b[${36}m${`2976 traverse forward`}\u001b[${39}m`);
             for (let y = i + 1; y < len; y++) {
               console.log(
-                `\u001b[${36}m${`2966 str[${y}] = str[y]`}\u001b[${39}m`
+                `\u001b[${36}m${`2979 str[${y}] = str[y]`}\u001b[${39}m`
               );
               if (!charIsQuote(str[y]) && str[y] !== "=") {
                 if (str[y].trim().length) {
@@ -2985,7 +2998,7 @@ function lint(str, originalOpts) {
             position: [[i, strayCharsEndAt, " "]]
           });
           console.log(
-            `2988 ${log(
+            `3001 ${log(
               "push",
               "tag-stray-character",
               `${`[[${i}, ${strayCharsEndAt}, " "]]`}`
@@ -2997,7 +3010,7 @@ function lint(str, originalOpts) {
             position: [[i, strayCharsEndAt]]
           });
           console.log(
-            `3000 ${log(
+            `3013 ${log(
               "push",
               "tag-stray-character",
               `${`[[${i}, ${strayCharsEndAt}]]`}`
@@ -3015,15 +3028,15 @@ function lint(str, originalOpts) {
       util.isLatinLetter(str[i]) &&
       logTag.tagStartAt < i
     ) {
-      console.log(`3018 within catching the start of the tag name clauses`);
+      console.log(`3031 within catching the start of the tag name clauses`);
       logTag.tagNameStartAt = i;
       console.log(
-        `3021 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
+        `3034 ${log("set", "logTag.tagNameStartAt", logTag.tagNameStartAt)}`
       );
       if (logTag.closing === null) {
         // set it to boolean to signify we set it
         logTag.closing = false;
-        console.log(`3026 ${log("set", "logTag.closing", logTag.closing)}`);
+        console.log(`3039 ${log("set", "logTag.closing", logTag.closing)}`);
       }
 
       // rule "space-between-opening-bracket-and-tag-name":
@@ -3033,7 +3046,7 @@ function lint(str, originalOpts) {
           position: [[logTag.tagStartAt + 1, i]]
         });
         console.log(
-          `3036 ${log(
+          `3049 ${log(
             "stage",
             "tag-space-after-opening-bracket",
             `${`[[${logTag.tagStartAt + 1}, ${i}]]`}`
@@ -3058,7 +3071,7 @@ function lint(str, originalOpts) {
         position: [[i, i + 1, str[i].toLowerCase()]]
       });
       console.log(
-        `3061 ${log(
+        `3074 ${log(
           "push",
           "tag-name-lowercase",
           `${`[[${i}, ${i + 1}, ${JSON.stringify(
@@ -3089,19 +3102,19 @@ function lint(str, originalOpts) {
     // catch the beginning of a tag:
     if (!doNothingUntil && str[i] === "<") {
       console.log(
-        `3092 ${`\u001b[${90}m${`within catching the beginning of a tag clauses`}\u001b[${39}m`}`
+        `3105 ${`\u001b[${90}m${`within catching the beginning of a tag clauses`}\u001b[${39}m`}`
       );
       if (logTag.tagStartAt === null) {
         // mark it
         logTag.tagStartAt = i;
         console.log(
-          `3098 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`
+          `3111 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`
         );
       } else if (tagOnTheRight(str, i)) {
         // maybe it's a case of unclosed tag, where a tag should be closed right before here,
         // and here a new tag starts?
         console.log(
-          `3104 ${`\u001b[${32}m${`██`}\u001b[${39}m`} new tag starts`
+          `3117 ${`\u001b[${32}m${`██`}\u001b[${39}m`} new tag starts`
         );
         // two cases:
         // 1. if there is at least one attribute with equal+quotes, it's a tag
@@ -3117,9 +3130,9 @@ function lint(str, originalOpts) {
           )
         ) {
           console.log(
-            `3120 TAG ON THE LEFT, WE CAN ADD CLOSING BRACKET (IF MISSING)`
+            `3133 TAG ON THE LEFT, WE CAN ADD CLOSING BRACKET (IF MISSING)`
           );
-          // console.log("3122 ███████████████████████████████████████v");
+          // console.log("3135 ███████████████████████████████████████v");
           // console.log(
           //   `${`\u001b[${33}m${`logTag`}\u001b[${39}m`} = ${JSON.stringify(
           //     logTag,
@@ -3127,11 +3140,11 @@ function lint(str, originalOpts) {
           //     4
           //   )}`
           // );
-          // console.log("3130 ███████████████████████████████████████^");
+          // console.log("3143 ███████████████████████████████████████^");
           // 1. find out what's the last character on the left:
           const lastNonWhitespaceOnLeft = left(str, i);
           console.log(
-            `3134 ${log(
+            `3147 ${log(
               "set",
               "lastNonWhitespaceOnLeft",
               lastNonWhitespaceOnLeft
@@ -3144,7 +3157,7 @@ function lint(str, originalOpts) {
             // 2-1-1. mark the ending of a tag:
             logTag.tagEndAt = lastNonWhitespaceOnLeft + 1;
             console.log(
-              `3147 ${log("set", "logTag.tagEndAt", logTag.tagEndAt)}`
+              `3160 ${log("set", "logTag.tagEndAt", logTag.tagEndAt)}`
             );
           } else {
             // 2-2 add a closing bracket
@@ -3154,7 +3167,7 @@ function lint(str, originalOpts) {
               position: [[lastNonWhitespaceOnLeft + 1, i, ">"]]
             });
             console.log(
-              `3157 ${log(
+              `3170 ${log(
                 "push",
                 "tag-missing-closing-bracket",
                 `${`[[${lastNonWhitespaceOnLeft + 1}, ${i}, ">"]]`}`
@@ -3164,17 +3177,17 @@ function lint(str, originalOpts) {
           // 3. take care of issues at rawIssueStaging:
           if (rawIssueStaging.length) {
             console.log(
-              `3167 let's process all ${
+              `3180 let's process all ${
                 rawIssueStaging.length
               } raw character issues at staging`
             );
             rawIssueStaging.forEach(issueObj => {
               if (issueObj.position[0][0] < logTag.tagStartAt) {
                 submit(issueObj);
-                console.log(`3174 ${log("push", "issueObj", issueObj)}`);
+                console.log(`3187 ${log("push", "issueObj", issueObj)}`);
               } else {
                 console.log(
-                  `3177 discarding ${JSON.stringify(issueObj, null, 4)}`
+                  `3190 discarding ${JSON.stringify(issueObj, null, 4)}`
                 );
               }
             });
@@ -3188,27 +3201,27 @@ function lint(str, originalOpts) {
           resetLogAttr(); // as well, just in case
           rawIssueStaging = [];
           console.log(
-            `3191 ${log("reset", "logTag & logAttr && rawIssueStaging")}`
+            `3204 ${log("reset", "logTag & logAttr && rawIssueStaging")}`
           );
 
           // 6. mark the beginning of a new tag:
           logTag.tagStartAt = i;
           console.log(
-            `3197 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`
+            `3210 ${log("set", "logTag.tagStartAt", logTag.tagStartAt)}`
           );
         } else {
-          console.log(`3200 NOT TAG ON THE LEFT, WE CAN ADD ENCODE BRACKETS`);
+          console.log(`3213 NOT TAG ON THE LEFT, WE CAN ADD ENCODE BRACKETS`);
           // 1.
           if (rawIssueStaging.length) {
             // merge any issues that are on or after dud tag
             console.log(
-              `3205 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
+              `3218 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
             );
             console.log(
-              `3208 ${log("log", "logTag.tagStartAt", logTag.tagStartAt)}`
+              `3221 ${log("log", "logTag.tagStartAt", logTag.tagStartAt)}`
             );
             console.log(
-              `3211 ${`\u001b[${31}m${JSON.stringify(
+              `3224 ${`\u001b[${31}m${JSON.stringify(
                 logAttr,
                 null,
                 4
@@ -3221,11 +3234,11 @@ function lint(str, originalOpts) {
                 // (issueObj.position[0][0] > a && issueObj.position[0][0] < b)
               ) {
                 submit(issueObj);
-                console.log(`3224 ${log("push", "issueObj", issueObj)}`);
+                console.log(`3237 ${log("push", "issueObj", issueObj)}`);
               } else {
                 console.log("");
                 console.log(
-                  `3228 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+                  `3241 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
                     issueObj,
                     null,
                     4
@@ -3237,13 +3250,13 @@ function lint(str, originalOpts) {
                 );
               }
             });
-            console.log(`3240 wipe rawIssueStaging`);
+            console.log(`3253 wipe rawIssueStaging`);
             rawIssueStaging = [];
           }
 
           // 2. wipe tag issues, this tag is dud
           if (tagIssueStaging.length) {
-            console.log(`3246 ${log("wipe", "tagIssueStaging")}`);
+            console.log(`3259 ${log("wipe", "tagIssueStaging")}`);
             tagIssueStaging = [];
           }
         }
@@ -3258,12 +3271,12 @@ function lint(str, originalOpts) {
       (!logAttr.attrClosingQuote || logAttr.attrClosingQuote.pos < i)
     ) {
       console.log(
-        `3261 within catching a closing bracket of a tag, >, clauses`
+        `3274 within catching a closing bracket of a tag, >, clauses`
       );
       // 1. merge any staging:
       if (tagIssueStaging.length) {
         tagIssueStaging.forEach(issue => {
-          console.log(`3266 submit "${issue}" from staging`);
+          console.log(`3279 submit "${issue}" from staging`);
           submit(issue);
         });
         tagIssueStaging = [];
@@ -3271,7 +3284,7 @@ function lint(str, originalOpts) {
       if (rawIssueStaging.length) {
         // merge any issues that are up to the tag's beginning character's index
         console.log(
-          `3274 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
+          `3287 ${log("processing", "rawIssueStaging", rawIssueStaging)}`
         );
         console.log(
           `${`\u001b[${33}m${`logTag`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3297,11 +3310,11 @@ function lint(str, originalOpts) {
               }))
           ) {
             submit(issueObj);
-            console.log(`3300 ${log("push", "issueObj", issueObj)}`);
+            console.log(`3313 ${log("push", "issueObj", issueObj)}`);
           } else {
             console.log("");
             console.log(
-              `3304 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+              `3317 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
                 issueObj,
                 null,
                 4
@@ -3313,7 +3326,7 @@ function lint(str, originalOpts) {
             );
           }
         });
-        console.log(`3316 wipe rawIssueStaging`);
+        console.log(`3329 wipe rawIssueStaging`);
         rawIssueStaging = [];
       }
 
@@ -3323,7 +3336,7 @@ function lint(str, originalOpts) {
         doNothingUntil = true;
         doNothingUntilReason = "script tag";
         console.log(
-          `3326 ${log(
+          `3339 ${log(
             "set",
             "doNothingUntil",
             doNothingUntil
@@ -3334,7 +3347,7 @@ function lint(str, originalOpts) {
       // 2. reset:
       resetLogTag();
       resetLogAttr();
-      console.log(`3337 ${log("reset", "logTag & logAttr")}`);
+      console.log(`3350 ${log("reset", "logTag & logAttr")}`);
     }
 
     //                                S
@@ -3377,7 +3390,7 @@ function lint(str, originalOpts) {
       const charOnTheRight = right(str, i);
       const charOnTheLeft = left(str, i - 5);
       console.log(
-        `3380 ${log(
+        `3393 ${log(
           "set",
           "charOnTheRight",
           charOnTheRight,
@@ -3394,7 +3407,7 @@ function lint(str, originalOpts) {
         // check what's on the left:
         const charFurtherOnTheLeft = left(str, charOnTheLeft);
         console.log(
-          `3397 ${log(
+          `3410 ${log(
             "set",
             "charFurtherOnTheLeft",
             charFurtherOnTheLeft,
@@ -3404,26 +3417,26 @@ function lint(str, originalOpts) {
         );
       } else if (str[charOnTheLeft] === "<") {
         // we have a new opening <script> tag!
-        console.log(`3407 opening <script> tag!`);
+        console.log(`3420 opening <script> tag!`);
       }
 
       doNothingUntil = charOnTheRight + 1;
-      console.log(`3411 ${log("set", "doNothingUntil", doNothingUntil)}`);
+      console.log(`3424 ${log("set", "doNothingUntil", doNothingUntil)}`);
     }
 
     // reset whitespace
     if (!doNothingUntil && str[i].trim().length) {
       resetLogWhitespace();
-      console.log(`3417 ${log("reset", "logWhitespace")}`);
+      console.log(`3430 ${log("reset", "logWhitespace")}`);
     }
 
     // catch the string's end, EOF EOL
     // if (!doNothingUntil && !str[i + 1]) {
     if (!str[i + 1]) {
-      console.log("3423");
+      console.log("3436");
       // this (str[i]) is the last character
       if (rawIssueStaging.length) {
-        console.log("3426");
+        console.log("3439");
         // if this resembles a tag (there's at least one attribute with equal+quotes pattern),
         // wipe all raw issues since the beginning of this tag, then push the rest in.
         // then, add all tagIssueStaging
@@ -3434,12 +3447,12 @@ function lint(str, originalOpts) {
               attrObj.attrEqualAt !== null && attrObj.attrOpeningQuote !== null
           )
         ) {
-          console.log("3437");
+          console.log("3450");
           // 1. push all issues before index at which the tag started
           rawIssueStaging.forEach(issueObj => {
             if (issueObj.position[0][0] < logTag.tagStartAt) {
               submit(issueObj);
-              console.log(`3442 ${log("push", "issueObj", issueObj)}`);
+              console.log(`3455 ${log("push", "issueObj", issueObj)}`);
             } else {
               console.log(
                 `\n1519 ${`\u001b[${31}m${`not pushed`}\u001b[${39}m`} ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
@@ -3454,7 +3467,7 @@ function lint(str, originalOpts) {
               );
             }
           });
-          console.log(`3457 wipe rawIssueStaging`);
+          console.log(`3470 wipe rawIssueStaging`);
           rawIssueStaging = [];
 
           // 2. add missing closing bracket
@@ -3469,7 +3482,7 @@ function lint(str, originalOpts) {
             ]
           });
           console.log(
-            `3472 ${log(
+            `3485 ${log(
               "push",
               "tag-missing-closing-bracket",
               `${`[[${
@@ -3485,9 +3498,18 @@ function lint(str, originalOpts) {
           // if there's no tag registered, just dump all raw
           // character-related issues at staging, "rawIssueStaging"
           // into final issues:
-          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          rawIssueStaging.forEach(issueObj => {
+            submit(issueObj);
+            console.log(
+              `3504 ${`\u001b[${32}m${`SUBMIT`}\u001b[${39}m`} ${JSON.stringify(
+                issueObj,
+                null,
+                0
+              )}`
+            );
+          });
           console.log(
-            `3490 concat, then wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
+            `3512 wipe ${`\u001b[${33}m${`rawIssueStaging`}\u001b[${39}m`}`
           );
           rawIssueStaging = [];
         }
@@ -3496,15 +3518,23 @@ function lint(str, originalOpts) {
 
     const output = {
       logTag: false,
-      logAttr: true,
+      logAttr: false,
       logEspTag: true,
       logWhitespace: false,
       logLineEndings: false,
       retObj: false,
+      retObj_mini: true,
       tagIssueStaging: false,
       rawIssueStaging: false,
       withinQuotes: true
     };
+    const retObj_mini = clone(retObj);
+    Object.keys(retObj_mini.applicableRules).forEach(rule => {
+      if (!retObj_mini.applicableRules[rule]) {
+        delete retObj_mini.applicableRules[rule];
+      }
+    });
+
     console.log(
       `${
         Object.keys(output).some(key => output[key])
@@ -3558,6 +3588,14 @@ function lint(str, originalOpts) {
         output.retObj
           ? `${`\u001b[${33}m${`retObj`}\u001b[${39}m`} ${JSON.stringify(
               retObj,
+              null,
+              4
+            )}; `
+          : ""
+      }${
+        output.retObj_mini
+          ? `${`\u001b[${33}m${`retObj_mini`}\u001b[${39}m`} ${JSON.stringify(
+              retObj_mini,
               null,
               4
             )}; `
@@ -3640,7 +3678,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length > logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("3643 CR clearly prevalent");
+      console.log("3681 CR clearly prevalent");
       // replace all LF and CRLF with CR
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -3662,7 +3700,7 @@ function lint(str, originalOpts) {
       logLineEndings.lf.length > logLineEndings.crlf.length &&
       logLineEndings.lf.length > logLineEndings.cr.length
     ) {
-      console.log("3665 LF clearly prevalent");
+      console.log("3703 LF clearly prevalent");
       // replace all CR and CRLF with LF
       if (logLineEndings.crlf.length) {
         logLineEndings.crlf.forEach(eolEntryArr => {
@@ -3684,7 +3722,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length > logLineEndings.lf.length &&
       logLineEndings.crlf.length > logLineEndings.cr.length
     ) {
-      console.log("3687 CRLF clearly prevalent");
+      console.log("3725 CRLF clearly prevalent");
       // replace all CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -3706,7 +3744,7 @@ function lint(str, originalOpts) {
       logLineEndings.crlf.length === logLineEndings.lf.length &&
       logLineEndings.lf.length === logLineEndings.cr.length
     ) {
-      console.log("3709 same amount of each type of EOL");
+      console.log("3747 same amount of each type of EOL");
       // replace CR and CRLF with LF
       // no need for checking the existance (if logLineEndings.crlf.length ...):
       logLineEndings.crlf.forEach(eolEntryArr => {
@@ -3725,7 +3763,7 @@ function lint(str, originalOpts) {
       logLineEndings.cr.length === logLineEndings.crlf.length &&
       logLineEndings.cr.length > logLineEndings.lf.length
     ) {
-      console.log("3728 CR & CRLF are prevalent over LF");
+      console.log("3766 CR & CRLF are prevalent over LF");
       // replace CR and LF with CRLF
       if (logLineEndings.cr.length) {
         logLineEndings.cr.forEach(eolEntryArr => {
@@ -3750,7 +3788,7 @@ function lint(str, originalOpts) {
         logLineEndings.cr.length > logLineEndings.crlf.length)
     ) {
       console.log(
-        "3753 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
+        "3791 LF && CRLF are prevalent over CR or CR & LF are prevalent over CRLF"
       );
       // replace CRLF and CR with LF
       if (logLineEndings.cr.length) {
@@ -3808,11 +3846,9 @@ function lint(str, originalOpts) {
       };
     }
   });
-  // console.log(`3811 ${log("log", "htmlEntityFixes", htmlEntityFixes)}`);
 
-  // push any broken issues we found:
   console.log(
-    `3815 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
+    `3851 \u001b[${33}m${`█`}\u001b[${39}m\u001b[${31}m${`█`}\u001b[${39}m\u001b[${34}m${`█`}\u001b[${39}m ${log(
       "log",
       "htmlEntityFixes",
       htmlEntityFixes
@@ -3823,6 +3859,13 @@ function lint(str, originalOpts) {
     // filter out the existing raw unencoded ampersand issues
     retObj.issues = retObj.issues
       .filter(issueObj => {
+        console.log(
+          `${`\u001b[${36}m${`3851 filtering issueObj=${JSON.stringify(
+            issueObj,
+            null,
+            4
+          )}`}\u001b[${39}m`}`
+        );
         return (
           issueObj.name !== "bad-character-unencoded-ampersand" ||
           htmlEntityFixes.every(entityFixObj => {
@@ -3830,8 +3873,52 @@ function lint(str, originalOpts) {
           })
         );
       })
-      .concat(htmlEntityFixes ? htmlEntityFixes : []);
+      .concat(htmlEntityFixes ? htmlEntityFixes : [])
+      .filter(issueObj => !opts.rules || opts.rules[issueObj.name] !== false);
   }
+  // also remove "bad-character-unencoded-ampersand" from applicable rules
+  if (
+    !retObj.issues.some(
+      issueObj => issueObj.name === "bad-character-unencoded-ampersand"
+    )
+  ) {
+    retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
+    console.log(
+      `3887 SET retObj.applicableRules["bad-character-unencoded-ampersand"] = false`
+    );
+  }
+  // also push "htmlEntityFixes" to applicable rules:
+  console.log(
+    `3892 ${`\u001b[${33}m${`htmlEntityFixes`}\u001b[${39}m`} = ${JSON.stringify(
+      htmlEntityFixes,
+      null,
+      4
+    )}`
+  );
+  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+    htmlEntityFixes.forEach(issueObj => {
+      console.log(
+        `3901 ${`\u001b[${33}m${`issueObj`}\u001b[${39}m`} = ${JSON.stringify(
+          issueObj,
+          null,
+          4
+        )}`
+      );
+      if (!retObj.applicableRules[issueObj.name]) {
+        retObj.applicableRules[issueObj.name] = true;
+        console.log(
+          `3910 retObj.applicableRules[issueObj.name] = ${
+            retObj.applicableRules[issueObj.name]
+          }`
+        );
+      }
+    });
+  }
+
+  console.log(
+    `3919 \n████\n████\n████\n retObj = ${JSON.stringify(retObj, null, 4)}`
+  );
+  console.log(`\n████\n████\n████\n`);
 
   //                          .----------------.
   //                         | .--------------. |
@@ -3846,8 +3933,8 @@ function lint(str, originalOpts) {
   //                          '----------------'
 
   // merge all fixes into ranges-apply-ready array:
-  console.log("3849 BEFORE FIX");
-  console.log(`3850 ${log("log", "retObj.issues", retObj.issues)}`);
+  console.log("3936 BEFORE FIX:");
+  console.log(`3937 ${log("log", "retObj.issues", retObj.issues)}`);
 
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length
@@ -3857,7 +3944,7 @@ function lint(str, originalOpts) {
           }, [])
         )
       : null;
-  console.log(`3860 ${log("log", "retObj.fix", retObj.fix)}`);
+  console.log(`3947 ${log("log", "retObj.fix", retObj.fix)}`);
 
   return retObj;
 }

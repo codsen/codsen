@@ -1500,7 +1500,9 @@ function lint(str, originalOpts) {
     retObj.applicableRules[ruleName] = false;
   });
   function submit(issueObj, whereTo) {
-    retObj.applicableRules[issueObj.name] = true;
+    if (whereTo !== "raw" && whereTo !== "tag") {
+      retObj.applicableRules[issueObj.name] = true;
+    }
     if (!opts.rules.hasOwnProperty(issueObj.name) || opts.rules[issueObj.name]) {
       if (whereTo === "raw") {
         rawIssueStaging.push(issueObj);
@@ -1783,7 +1785,7 @@ function lint(str, originalOpts) {
                 }
               }
               if (rawIssueStaging.length) ;
-              if (logAttr.attrNameStartAt && str[logAttr.attrNameStartAt - 1].trim().length && !retObj.issues.some(function (issueObj) {
+              if (logAttr.attrNameStartAt && str[logAttr.attrNameStartAt - 1].trim().length && (!opts.rules || opts.rules["tag-stray-character"] !== false) && !retObj.issues.some(function (issueObj) {
                 i = _i;
                 return (issueObj.name === "tag-stray-quotes" || issueObj.name === "tag-stray-character") && issueObj.position[0][1] === logAttr.attrNameStartAt;
               })) {
@@ -2001,6 +2003,8 @@ function lint(str, originalOpts) {
             name: "file-missing-ending",
             position: [[_i + 1, _i + 1]]
           });
+          i = _i;
+          return "continue";
         }
       }
       if (logAttr.attrEqualAt !== null && logAttr.attrOpeningQuote.pos !== null && (logAttr.attrClosingQuote.pos === null || _i === logAttr.attrClosingQuote.pos) && _i > logAttr.attrOpeningQuote.pos && charIsQuote$1(str[_i])) {
@@ -2451,11 +2455,19 @@ function lint(str, originalOpts) {
         } else if (!retObj.issues.some(function (issueObj) {
           return issueObj.name === "file-missing-ending";
         })) {
-          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          rawIssueStaging.forEach(function (issueObj) {
+            submit(issueObj);
+          });
           rawIssueStaging = [];
         }
       }
     }
+    var retObj_mini = clone(retObj);
+    Object.keys(retObj_mini.applicableRules).forEach(function (rule) {
+      if (!retObj_mini.applicableRules[rule]) {
+        delete retObj_mini.applicableRules[rule];
+      }
+    });
     i = _i;
   };
   for (var i = 0, len = str.length; i < len; i++) {
@@ -2576,7 +2588,21 @@ function lint(str, originalOpts) {
       return issueObj.name !== "bad-character-unencoded-ampersand" || htmlEntityFixes.every(function (entityFixObj) {
         return issueObj.position[0][0] !== entityFixObj.position[0][0];
       });
-    }).concat(htmlEntityFixes ? htmlEntityFixes : []);
+    }).concat(htmlEntityFixes ? htmlEntityFixes : []).filter(function (issueObj) {
+      return !opts.rules || opts.rules[issueObj.name] !== false;
+    });
+  }
+  if (!retObj.issues.some(function (issueObj) {
+    return issueObj.name === "bad-character-unencoded-ampersand";
+  })) {
+    retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
+  }
+  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+    htmlEntityFixes.forEach(function (issueObj) {
+      if (!retObj.applicableRules[issueObj.name]) {
+        retObj.applicableRules[issueObj.name] = true;
+      }
+    });
   }
   retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.reduce(function (acc, obj) {
     return acc.concat(obj.position);

@@ -1748,7 +1748,9 @@ function lint(str, originalOpts) {
       retObj.applicableRules[ruleName] = false;
     });
   function submit(issueObj, whereTo) {
-    retObj.applicableRules[issueObj.name] = true;
+    if (whereTo !== "raw" && whereTo !== "tag") {
+      retObj.applicableRules[issueObj.name] = true;
+    }
     if (
       !opts.rules.hasOwnProperty(issueObj.name) ||
       opts.rules[issueObj.name]
@@ -2109,6 +2111,7 @@ function lint(str, originalOpts) {
               if (
                 logAttr.attrNameStartAt &&
                 str[logAttr.attrNameStartAt - 1].trim().length &&
+                (!opts.rules || opts.rules["tag-stray-character"] !== false) &&
                 !retObj.issues.some(issueObj => {
                   return (
                     (issueObj.name === "tag-stray-quotes" ||
@@ -2380,6 +2383,7 @@ function lint(str, originalOpts) {
             name: "file-missing-ending",
             position: [[i + 1, i + 1]]
           });
+          continue;
         }
       }
       if (
@@ -3041,11 +3045,19 @@ function lint(str, originalOpts) {
             issueObj => issueObj.name === "file-missing-ending"
           )
         ) {
-          retObj.issues = retObj.issues.concat(rawIssueStaging);
+          rawIssueStaging.forEach(issueObj => {
+            submit(issueObj);
+          });
           rawIssueStaging = [];
         }
       }
     }
+    const retObj_mini = clone(retObj);
+    Object.keys(retObj_mini.applicableRules).forEach(rule => {
+      if (!retObj_mini.applicableRules[rule]) {
+        delete retObj_mini.applicableRules[rule];
+      }
+    });
   }
   if (
     (!opts.style || !opts.style.line_endings_CR_LF_CRLF) &&
@@ -3195,7 +3207,22 @@ function lint(str, originalOpts) {
           })
         );
       })
-      .concat(htmlEntityFixes ? htmlEntityFixes : []);
+      .concat(htmlEntityFixes ? htmlEntityFixes : [])
+      .filter(issueObj => !opts.rules || opts.rules[issueObj.name] !== false);
+  }
+  if (
+    !retObj.issues.some(
+      issueObj => issueObj.name === "bad-character-unencoded-ampersand"
+    )
+  ) {
+    retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
+  }
+  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+    htmlEntityFixes.forEach(issueObj => {
+      if (!retObj.applicableRules[issueObj.name]) {
+        retObj.applicableRules[issueObj.name] = true;
+      }
+    });
   }
   retObj.fix =
     isArr(retObj.issues) && retObj.issues.length
