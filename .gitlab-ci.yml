@@ -4,6 +4,8 @@
 #
 
 deploy:
+  except:
+    - tags
   image: node:latest
   stage: deploy
   script:
