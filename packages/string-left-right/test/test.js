@@ -465,40 +465,49 @@ test(`05.10 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${33}m${`adh
 });
 
 test(`05.11 - \u001b[${32}m${`chompRight`}\u001b[${39}m - ${`\u001b[${31}m${`adhoc`}\u001b[${39}m`} #5 - real life`, t => {
-  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 0 }, "="), null, "05.11.01");
-  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 0 }, "="), 8, "05.11.02");
-  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 0 }, "="), 9, "05.11.03");
-  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 0 }, "="), 9, "05.11.04");
-  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 0 }, "="), 10, "05.11.05");
-  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 0 }, "="), 9, "05.11.06");
-  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 0 }, "="), 10, "05.11.07");
+  t.is(chompRight(`<a bcd="ef">`, 6, "="), null, "05.11.01");
+  t.is(chompRight(`<a bcd=="ef">`, 6, "="), 8, "05.11.02");
+  t.is(chompRight(`<a bcd==="ef">`, 6, "="), 9, "05.11.03");
+  t.is(chompRight(`<a bcd= ="ef">`, 6, "="), 9, "05.11.04");
+  t.is(chompRight(`<a bcd= =="ef">`, 6, "="), 10, "05.11.05");
+  t.is(chompRight(`<a bcd= = "ef">`, 6, "="), 9, "05.11.06");
+  t.is(chompRight(`<a bcd= == "ef">`, 6, "="), 10, "05.11.07");
+
+  // hardcoded defaults mode === 0
+  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 0 }, "="), null, "05.11.08");
+  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 0 }, "="), 8, "05.11.09");
+  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 0 }, "="), 9, "05.11.10");
+  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 0 }, "="), 9, "05.11.11");
+  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 0 }, "="), 10, "05.11.12");
+  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 0 }, "="), 9, "05.11.13");
+  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 0 }, "="), 10, "05.11.14");
 
   // mode === 1
-  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 1 }, "="), null, "05.11.08");
-  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 1 }, "="), 8, "05.11.09");
-  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 1 }, "="), 9, "05.11.10");
-  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 1 }, "="), 9, "05.11.11");
-  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 1 }, "="), 10, "05.11.12");
-  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 1 }, "="), 9, "05.11.13");
-  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 1 }, "="), 10, "05.11.14");
+  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 1 }, "="), null, "05.11.15");
+  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 1 }, "="), 8, "05.11.16");
+  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 1 }, "="), 9, "05.11.17");
+  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 1 }, "="), 9, "05.11.18");
+  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 1 }, "="), 10, "05.11.19");
+  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 1 }, "="), 9, "05.11.20");
+  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 1 }, "="), 10, "05.11.21");
 
   // mode === 2
-  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 2 }, "="), null, "05.11.15");
-  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 2 }, "="), 8, "05.11.16");
-  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 2 }, "="), 9, "05.11.17");
-  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 2 }, "="), 9, "05.11.18");
-  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 2 }, "="), 10, "05.11.19");
-  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 2 }, "="), 10, "05.11.20");
-  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 2 }, "="), 11, "05.11.21");
+  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 2 }, "="), null, "05.11.22");
+  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 2 }, "="), 8, "05.11.23");
+  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 2 }, "="), 9, "05.11.24");
+  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 2 }, "="), 9, "05.11.25");
+  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 2 }, "="), 10, "05.11.26");
+  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 2 }, "="), 10, "05.11.27");
+  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 2 }, "="), 11, "05.11.28");
 
   // mode === 3
-  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 3 }, "="), null, "05.11.22");
-  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 3 }, "="), 8, "05.11.23");
-  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 3 }, "="), 9, "05.11.24");
-  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 3 }, "="), 9, "05.11.25");
-  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 3 }, "="), 10, "05.11.26");
-  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 3 }, "="), 10, "05.11.27");
-  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 3 }, "="), 11, "05.11.28");
+  t.is(chompRight(`<a bcd="ef">`, 6, { mode: 3 }, "="), null, "05.11.29");
+  t.is(chompRight(`<a bcd=="ef">`, 6, { mode: 3 }, "="), 8, "05.11.30");
+  t.is(chompRight(`<a bcd==="ef">`, 6, { mode: 3 }, "="), 9, "05.11.31");
+  t.is(chompRight(`<a bcd= ="ef">`, 6, { mode: 3 }, "="), 9, "05.11.32");
+  t.is(chompRight(`<a bcd= =="ef">`, 6, { mode: 3 }, "="), 10, "05.11.33");
+  t.is(chompRight(`<a bcd= = "ef">`, 6, { mode: 3 }, "="), 10, "05.11.34");
+  t.is(chompRight(`<a bcd= == "ef">`, 6, { mode: 3 }, "="), 11, "05.11.35");
 });
 
 // 06. chompLeft()
@@ -694,6 +703,42 @@ test(`06.12 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adho
     2,
     "06.12.03"
   );
+});
+
+test(`05.13 - \u001b[${34}m${`chompLeft`}\u001b[${39}m - ${`\u001b[${33}m${`adhoc`}\u001b[${39}m`} #6 - real life`, t => {
+  t.is(chompLeft(`<a bcd="ef">`, 6, "="), null, "05.13.01");
+  t.is(chompLeft(`<a bcd=="ef">`, 7, "="), 6, "05.13.02");
+  t.is(chompLeft(`<a bcd==="ef">`, 8, "="), 6, "05.13.03");
+  t.is(chompLeft(`<a bcd= ="ef">`, 8, "="), 6, "05.13.04");
+  t.is(chompLeft(`<a bcd= = ="ef">`, 8, "="), 6, "05.13.05");
+
+  // hardcoded default, mode === 0
+  t.is(chompLeft(`<a bcd="ef">`, 6, { mode: 0 }, "="), null, "05.13.06");
+  t.is(chompLeft(`<a bcd=="ef">`, 7, { mode: 0 }, "="), 6, "05.13.07");
+  t.is(chompLeft(`<a bcd==="ef">`, 8, { mode: 0 }, "="), 6, "05.13.08");
+  t.is(chompLeft(`<a bcd= ="ef">`, 8, { mode: 0 }, "="), 6, "05.13.09");
+  t.is(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 0 }, "="), 6, "05.13.10");
+
+  // mode === 1
+  t.is(chompLeft(`<a bcd="ef">`, 6, { mode: 1 }, "="), null, "05.13.11");
+  t.is(chompLeft(`<a bcd=="ef">`, 7, { mode: 1 }, "="), 6, "05.13.12");
+  t.is(chompLeft(`<a bcd==="ef">`, 8, { mode: 1 }, "="), 6, "05.13.13");
+  t.is(chompLeft(`<a bcd= ="ef">`, 8, { mode: 1 }, "="), 6, "05.13.14");
+  t.is(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 1 }, "="), 6, "05.13.15");
+
+  // mode === 2
+  t.is(chompLeft(`<a bcd="ef">`, 6, { mode: 2 }, "="), null, "05.13.16");
+  t.is(chompLeft(`<a bcd=="ef">`, 7, { mode: 2 }, "="), 6, "05.13.17");
+  t.is(chompLeft(`<a bcd==="ef">`, 8, { mode: 2 }, "="), 6, "05.13.18");
+  t.is(chompLeft(`<a bcd= ="ef">`, 8, { mode: 2 }, "="), 6, "05.13.19");
+  t.is(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 2 }, "="), 6, "05.13.20");
+
+  // mode === 3
+  t.is(chompLeft(`<a bcd="ef">`, 6, { mode: 3 }, "="), null, "05.13.21");
+  t.is(chompLeft(`<a bcd=="ef">`, 7, { mode: 3 }, "="), 6, "05.13.22");
+  t.is(chompLeft(`<a bcd==="ef">`, 8, { mode: 3 }, "="), 6, "05.13.23");
+  t.is(chompLeft(`<a bcd= ="ef">`, 8, { mode: 3 }, "="), 6, "05.13.24");
+  t.is(chompLeft(`<a bcd= = ="ef">`, 8, { mode: 3 }, "="), 6, "05.13.25");
 });
 
 // -----------------------------------------------------------------------------

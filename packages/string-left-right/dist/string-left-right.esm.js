@@ -7,6 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/string-left-right
  */
 
+import isObj from 'lodash.isplainobject';
+import clone from 'lodash.clonedeep';
+
 function x(something) {
   if (something.endsWith("?")) {
     return { value: something.slice(0, something.length - 1), optional: true };
@@ -79,7 +82,7 @@ function seq(direction, str, idx, args) {
   let leftmostChar;
   let rightmostChar;
   for (let i = 0, len = args.length; i < len; i++) {
-    if (!args[i].length) {
+    if (!isStr(args[i]) || !args[i].length) {
       continue;
     }
     const { value, optional } = x(args[i]);
@@ -132,6 +135,11 @@ function chomp(direction, str, idx, opts, args) {
   }
   if (!idx || typeof idx !== "number") {
     idx = 0;
+  }
+  if (opts && !isObj(opts)) {
+    throw new Error(
+      `string-left-right/chompLeft(): [THROW_ID_03] the opts should be a plain object! It was given as ${opts} (type ${typeof opts})`
+    );
   }
   if (
     (direction === "right" && !str[idx + 1]) ||
@@ -236,15 +244,14 @@ function chomp(direction, str, idx, opts, args) {
   return whatsOnTheLeft !== null ? whatsOnTheLeft + 1 : 0;
 }
 function chompLeft(str, idx, ...args) {
-  if (!args.length || (args.length === 1 && typeof args[0] === "object")) {
+  if (!args.length || (args.length === 1 && isObj(args[0]))) {
     return null;
   }
   const defaults = {
     mode: 0
   };
-  let opts;
-  if (typeof args[0] === "object") {
-    opts = Object.assign({}, defaults, args.shift());
+  if (isObj(args[0])) {
+    const opts = Object.assign({}, defaults, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
@@ -256,21 +263,21 @@ function chompLeft(str, idx, ...args) {
         } (type ${typeof opts.mode})`
       );
     }
-  } else {
-    opts = defaults;
+    return chomp("left", str, idx, opts, clone(args).slice(1));
+  } else if (!isStr(args[0])) {
+    return chomp("left", str, idx, defaults, clone(args).slice(1));
   }
-  return chomp("left", str, idx, opts, args);
+  return chomp("left", str, idx, defaults, clone(args));
 }
 function chompRight(str, idx, ...args) {
-  if (!args.length || (args.length === 1 && typeof args[0] === "object")) {
+  if (!args.length || (args.length === 1 && isObj(args[0]))) {
     return null;
   }
   const defaults = {
     mode: 0
   };
-  let opts;
-  if (typeof args[0] === "object") {
-    opts = Object.assign({}, defaults, args.shift());
+  if (isObj(args[0])) {
+    const opts = Object.assign({}, defaults, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && `0123`.includes(opts.mode)) {
@@ -282,10 +289,11 @@ function chompRight(str, idx, ...args) {
         } (type ${typeof opts.mode})`
       );
     }
-  } else {
-    opts = defaults;
+    return chomp("right", str, idx, opts, clone(args).slice(1));
+  } else if (!isStr(args[0])) {
+    return chomp("right", str, idx, defaults, clone(args).slice(1));
   }
-  return chomp("right", str, idx, opts, args);
+  return chomp("right", str, idx, defaults, clone(args));
 }
 
 export { left, right, leftSeq, rightSeq, chompLeft, chompRight };

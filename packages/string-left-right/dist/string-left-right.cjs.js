@@ -11,6 +11,11 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var isObj = _interopDefault(require('lodash.isplainobject'));
+var clone = _interopDefault(require('lodash.clonedeep'));
+
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
@@ -120,7 +125,7 @@ function seq(direction, str, idx, args) {
   var leftmostChar;
   var rightmostChar;
   for (var i = 0, len = args.length; i < len; i++) {
-    if (!args[i].length) {
+    if (!isStr(args[i]) || !args[i].length) {
       continue;
     }
     var _x = x(args[i]),
@@ -184,6 +189,9 @@ function chomp(direction, str, idx, opts, args) {
   }
   if (!idx || typeof idx !== "number") {
     idx = 0;
+  }
+  if (opts && !isObj(opts)) {
+    throw new Error("string-left-right/chompLeft(): [THROW_ID_03] the opts should be a plain object! It was given as ".concat(opts, " (type ").concat(_typeof(opts), ")"));
   }
   if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
     return null;
@@ -268,15 +276,14 @@ function chompLeft(str, idx) {
   for (var _len4 = arguments.length, args = new Array(_len4 > 2 ? _len4 - 2 : 0), _key3 = 2; _key3 < _len4; _key3++) {
     args[_key3 - 2] = arguments[_key3];
   }
-  if (!args.length || args.length === 1 && _typeof(args[0]) === "object") {
+  if (!args.length || args.length === 1 && isObj(args[0])) {
     return null;
   }
   var defaults = {
     mode: 0
   };
-  var opts;
-  if (_typeof(args[0]) === "object") {
-    opts = Object.assign({}, defaults, args.shift());
+  if (isObj(args[0])) {
+    var opts = Object.assign({}, defaults, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -284,24 +291,24 @@ function chompLeft(str, idx) {
     } else if (!isNum(opts.mode)) {
       throw new Error("string-left-right/chompLeft(): [THROW_ID_01] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
-  } else {
-    opts = defaults;
+    return chomp("left", str, idx, opts, clone(args).slice(1));
+  } else if (!isStr(args[0])) {
+    return chomp("left", str, idx, defaults, clone(args).slice(1));
   }
-  return chomp("left", str, idx, opts, args);
+  return chomp("left", str, idx, defaults, clone(args));
 }
 function chompRight(str, idx) {
   for (var _len5 = arguments.length, args = new Array(_len5 > 2 ? _len5 - 2 : 0), _key4 = 2; _key4 < _len5; _key4++) {
     args[_key4 - 2] = arguments[_key4];
   }
-  if (!args.length || args.length === 1 && _typeof(args[0]) === "object") {
+  if (!args.length || args.length === 1 && isObj(args[0])) {
     return null;
   }
   var defaults = {
     mode: 0
   };
-  var opts;
-  if (_typeof(args[0]) === "object") {
-    opts = Object.assign({}, defaults, args.shift());
+  if (isObj(args[0])) {
+    var opts = Object.assign({}, defaults, clone(args[0]));
     if (!opts.mode) {
       opts.mode = 0;
     } else if (isStr(opts.mode) && "0123".includes(opts.mode)) {
@@ -309,10 +316,11 @@ function chompRight(str, idx) {
     } else if (!isNum(opts.mode)) {
       throw new Error("string-left-right/chompRight(): [THROW_ID_02] the opts.mode is wrong! It should be 0, 1, 2 or 3. It was given as ".concat(opts.mode, " (type ").concat(_typeof(opts.mode), ")"));
     }
-  } else {
-    opts = defaults;
+    return chomp("right", str, idx, opts, clone(args).slice(1));
+  } else if (!isStr(args[0])) {
+    return chomp("right", str, idx, defaults, clone(args).slice(1));
   }
-  return chomp("right", str, idx, opts, args);
+  return chomp("right", str, idx, defaults, clone(args));
 }
 
 exports.left = left;

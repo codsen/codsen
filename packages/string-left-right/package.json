@@ -164,6 +164,10 @@
     ],
     "sourceMap": false
   },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.isplainobject": "^4.0.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",

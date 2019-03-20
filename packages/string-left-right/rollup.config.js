@@ -44,7 +44,10 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
-      external: [""],
+      external: [
+        "lodash.isplainobject",
+        "lodash.clonedeep"
+      ],
       plugins: [
         strip({
           sourceMap: false
@@ -62,7 +65,10 @@ export default commandLineArgs => {
     {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
-      external: [""],
+      external: [
+        "lodash.isplainobject",
+        "lodash.clonedeep"
+      ],
       plugins: [
         strip({
           sourceMap: false
