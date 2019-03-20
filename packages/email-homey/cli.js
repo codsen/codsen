@@ -206,7 +206,7 @@ if (state.toDoList.length === 0) {
   // console.log(`\n\u001b[${33}m${`workingPath: ${workingPath}`}\u001b[${39}m\n`);
   globby(workingPath, { onlyDirectories: true })
     .then(folderPaths => {
-      // console.log(`1. folderPaths = ${JSON.stringify(folderPaths, null, 4)}`);
+      // console.log(`209. folderPaths = ${JSON.stringify(folderPaths, null, 4)}`);
       return folderPaths;
     })
     .then(folderPaths =>

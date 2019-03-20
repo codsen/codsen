@@ -62,21 +62,21 @@ function processOutside(str, originalRanges, cb, skipChecks) {
   ranges.forEach(([receivedFrom, receivedTo], i, wholeArr) => {
     console.log("-------------");
     console.log(
-      `050 OLD ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
+      `065 OLD ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
         previousTo,
         null,
         4
       )}`
     );
     console.log(
-      `057 ${`\u001b[${33}m${`receivedFrom`}\u001b[${39}m`} = ${JSON.stringify(
+      `072 ${`\u001b[${33}m${`receivedFrom`}\u001b[${39}m`} = ${JSON.stringify(
         receivedFrom,
         null,
         4
       )}`
     );
     console.log(
-      `064 ${`\u001b[${33}m${`receivedTo`}\u001b[${39}m`} = ${JSON.stringify(
+      `079 ${`\u001b[${33}m${`receivedTo`}\u001b[${39}m`} = ${JSON.stringify(
         receivedTo,
         null,
         4
@@ -103,7 +103,7 @@ function processOutside(str, originalRanges, cb, skipChecks) {
 
     // receivedFrom when ranges exceed string length, we set receivedFrom to null
     if (receivedFrom !== null && receivedFrom !== 0) {
-      console.log(`091 calling with [${previousTo}, ${receivedFrom}]`);
+      console.log(`106 calling with [${previousTo}, ${receivedFrom}]`);
       cb({
         from: previousTo,
         to: receivedFrom,
@@ -113,7 +113,7 @@ function processOutside(str, originalRanges, cb, skipChecks) {
 
     previousTo = receivedTo <= str.length ? receivedTo : null;
     console.log(
-      `101 SET ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
+      `116 SET ${`\u001b[${33}m${`previousTo`}\u001b[${39}m`} = ${JSON.stringify(
         previousTo,
         null,
         4
@@ -122,8 +122,8 @@ function processOutside(str, originalRanges, cb, skipChecks) {
 
     if (previousTo !== null && i === wholeArr.length - 1) {
       console.log("-------------");
-      console.log("110 last slice");
-      console.log(`111 calling with [${previousTo}, ${str.length}]`);
+      console.log("125 last slice");
+      console.log(`126 calling with [${previousTo}, ${str.length}]`);
       cb({
         from: previousTo,
         to: str.length,

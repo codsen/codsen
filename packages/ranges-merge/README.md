@@ -16,8 +16,9 @@
 - [Install](#install)
 - [The Idea](#the-idea)
 - [API](#api)
-- [`progressFn` - the 2nd input argument](#progressfn---the-2nd-input-argument)
-- [Clashing content to insert](#clashing-content-to-insert)
+- [`opts.progressFn`](#optsprogressfn)
+- [`opts.mergeType`](#optsmergetype)
+- [`opts.mergeType` example](#optsmergetype-example)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -38,8 +39,8 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                       | Size  |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------- | ----- |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-merge.cjs.js` | 4 KB  |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-merge.esm.js` | 4 KB  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/ranges-merge.cjs.js` | 5 KB  |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/ranges-merge.esm.js` | 5 KB  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/ranges-merge.umd.js` | 30 KB |
 
 **[⬆ back to top](#)**
@@ -80,22 +81,22 @@ rangesMerge([
 
 It returns a new array of zero or more arrays, with ranges merged (where applicable). Original input is not mutated.
 
-| Input argument | Type     | Obligatory? | Description                                                                                                                                           |
-| -------------- | -------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `arrOfRanges`  | Array    | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each)                                                                          |
-| `opts`         | Plain object | no      | Optional Options Object. See its API below. |
+| Input argument | Type         | Obligatory? | Description                                                                  |
+| -------------- | ------------ | ----------- | ---------------------------------------------------------------------------- |
+| `arrOfRanges`  | Array        | yes         | Array of zero or more arrays meaning natural number ranges (2 elements each) |
+| `opts`         | Plain object | no          | Optional Options Object. See its API below.                                  |
 
 **[⬆ back to top](#)**
 
 ### Optional Options Object
 
-| Options Object's key | The type of its value                   | Default     | Description                                                                                                                                                                                                                                                                          |
-| -------------------- | --------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| {                    |                                         |             |
-| `mergeType`          | number                                  | `1`         | The type of merge. See below for explanation. |
-| `progressFn`   | `null` or Boolean `false` or `function` | `null`      | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object.                   |
-| `joinRangesThatTouchEdges` | boolean         | `true` | By default, if two ranges "touch", `[[1, 2], [2, 3]]` they are joined. Set this option to `false` to stop that. Handy when reporting [separate issues](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities). |
-| }                    |                                         |             |
+| Options Object's key       | The type of its value                   | Default | Description                                                                                                                                                                                                                                                        |
+| -------------------------- | --------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| {                          |                                         |         |
+| `mergeType`                | number                                  | `1`     | The type of merge. See below for explanation.                                                                                                                                                                                                                      |
+| `progressFn`               | `null` or Boolean `false` or `function` | `null`  | If you supply a function here, it will be called, and an argument will be given to it, a natural number, which means percentage complete at that moment. Values will range from `1` to `99`, and finally, the main function will return the result's plain object. |
+| `joinRangesThatTouchEdges` | boolean                                 | `true`  | By default, if two ranges "touch", `[[1, 2], [2, 3]]` they are joined. Set this option to `false` to stop that. Handy when reporting [separate issues](https://gitlab.com/codsen/codsen/tree/master/packages/string-fix-broken-named-entities).                    |
+| }                          |                                         |         |
 
 Here it is, in one place, in case you want to copy-paste it somewhere:
 
@@ -107,15 +108,19 @@ Here it is, in one place, in case you want to copy-paste it somewhere:
 }
 ```
 
+**[⬆ back to top](#)**
+
 ## `opts.progressFn`
 
 Consider this example (notice an arrow function in the second input argument):
 
 ```js
 console.log(
-  mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {progressFn: perc => {
-    console.log(`done: ${perc}`);
-  }})
+  mergeRanges([[1, 5], [11, 15], [6, 10], [16, 20], [10, 30]], {
+    progressFn: perc => {
+      console.log(`done: ${perc}`);
+    }
+  })
 );
 //
 // done: 0
@@ -137,6 +142,8 @@ Imagine, instead of `console.log`, this function could sit in a worker and repor
 
 Whatever function you give in `opts.progressFn`, it will be called with percentage done so far. Grab that argument (`perc` in the example above) and do whatever you want with it in your function.
 
+**[⬆ back to top](#)**
+
 ## `opts.mergeType`
 
 When merging, ranges are sorted first. Then, pairs starting from the end of the sorted array are merged. Last two becomes one, last two becomes one and so on.
@@ -146,8 +153,8 @@ The challenge is, what to do with values to add, third range array's element.
 For example,
 
 ```js
-const range1 = [1, 2, "a"]
-const range2 = [1, 2, "b"]
+const range1 = [1, 2, "a"];
+const range2 = [1, 2, "b"];
 ```
 
 The above ranges are "saying": replace characters in a string from index `1` to `2` with `"a"`, replace characters in string from index `1` to `2` with `"b"`.
@@ -156,10 +163,12 @@ Do we end up with `"ab"` or `"b"` or something else?
 
 `opts.mergeType` let's you customise this behaviour:
 
-* In default mode, opts.mergeType === `1`, clashing "to insert" values will always be concatenated (`"ab"` in example above)
-* In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** latter value overrides the former (`"b"` in example above).
+- In default mode, opts.mergeType === `1`, clashing "to insert" values will always be concatenated (`"ab"` in example above)
+- In mode opts.mergeType === `2`, if "to insert" values clash and **starting indexes are the same** latter value overrides the former (`"b"` in example above).
 
 In all other aspects, `opts.mergeType` modes `1` and `2` are the same.
+
+**[⬆ back to top](#)**
 
 ## `opts.mergeType` example
 

@@ -191,7 +191,7 @@ function chomp(direction, str, idx, opts, args) {
     idx = 0;
   }
   if (opts && !isObj(opts)) {
-    throw new Error("string-left-right/chompLeft(): [THROW_ID_03] the opts should be a plain object! It was given as ".concat(opts, " (type ").concat(_typeof(opts), ")"));
+    throw new Error("string-left-right/chomp".concat(direction, "(): [THROW_ID_03] the opts should be a plain object! It was given as ").concat(opts, " (type ").concat(_typeof(opts), ")"));
   }
   if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
     return null;

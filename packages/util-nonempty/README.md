@@ -39,8 +39,8 @@ Here's what you'll get:
 
 | Type                                                                                                    | Key in `package.json` | Path                        | Size   |
 | ------------------------------------------------------------------------------------------------------- | --------------------- | --------------------------- | ------ |
-| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-nonempty.cjs.js` | 1000 B |
-| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-nonempty.esm.js` | 847 B  |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/util-nonempty.cjs.js` | 1001 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/util-nonempty.esm.js` | 848 B  |
 | **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/util-nonempty.umd.js` | 1 KB   |
 
 **[⬆ back to top](#)**

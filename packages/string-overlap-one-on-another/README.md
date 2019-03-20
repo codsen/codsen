@@ -16,7 +16,6 @@
 - [Install](#install)
 - [Idea](#idea)
 - [API](#api)
-- [Practical use](#practical-use)
 - [Edge cases](#edge-cases)
 - [Contributing](#contributing)
 - [Licence](#licence)

@@ -52,7 +52,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
 
   console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
   console.log(
-    `054 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
+    `055 CHLU main() received ${`\u001b[${33}m${`gitTags`}\u001b[${39}m`} = ${JSON.stringify(
       gitTags,
       null,
       4
@@ -114,7 +114,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
   // package.json might come in falsey in case it's unavailable
   if (packageJsonContents) {
     console.log(
-      `116 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
+      `117 ${`\u001b[${33}m${`packageJsonContents`}\u001b[${39}m`} = ${JSON.stringify(
         packageJsonContents,
         null,
         4
@@ -154,7 +154,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       );
     }
     console.log(
-      `143 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
+      `157 ${`\u001b[${33}m${`packageJson`}\u001b[${39}m`} = ${JSON.stringify(
         packageJson,
         null,
         4
@@ -491,7 +491,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
             processedGitTags.versionsOnly.length - 1
           ];
         console.log(
-          `480 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
+          `494 CHLU/main(): finalVersBefore is taken last elem of processedGitTags.versionsOnly = ${JSON.stringify(
             processedGitTags.versionsOnly,
             null,
             4
@@ -503,12 +503,12 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
           processedGitTags.versionsOnly
         );
         console.log(
-          `492 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
+          `506 CHLU/main(): finalVersBefore is calculated from previous Git tag: ${finalVersBefore}`
         );
       }
     } else {
       console.log(
-        `497 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
+        `511 CHLU/main(): \u001b[${31}m${`GIT DATA NOT AVAILABLE`}\u001b[${39}m`
       );
       // if the Git data is not available, use existing parsed Changelog data.
 
@@ -568,7 +568,7 @@ function chlu(changelogContents, gitTags, packageJsonContents) {
       mode: "set"
     });
     console.log(
-      `557 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
+      `571 SET ${`\u001b[${33}m${`footerLinks[i].content`}\u001b[${39}m`} = ${JSON.stringify(
         footerLinks[i].content,
         null,
         4

@@ -33,7 +33,7 @@ Here's what you'll get:
 | ------------------------------------------------------------------------------------------------------- | --------------------- | ----------------------------------------------- | ----- |
 | Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/string-remove-thousand-separators.cjs.js` | 4 KB  |
 | **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/string-remove-thousand-separators.esm.js` | 4 KB  |
-| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-thousand-separators.umd.js` | 39 KB |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/string-remove-thousand-separators.umd.js` | 40 KB |
 
 **[⬆ back to top](#)**
 

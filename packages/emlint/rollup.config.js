@@ -48,9 +48,9 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "string-left-right",
         "ranges-merge",
-        "string-fix-broken-named-entities"
+        "string-fix-broken-named-entities",
+        "string-left-right"
       ],
       plugins: [
         strip({
@@ -73,9 +73,9 @@ export default commandLineArgs => {
         "check-types-mini",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "string-left-right",
         "ranges-merge",
-        "string-fix-broken-named-entities"
+        "string-fix-broken-named-entities",
+        "string-left-right"
       ],
       plugins: [
         strip({

@@ -138,7 +138,7 @@ function chomp(direction, str, idx, opts, args) {
   }
   if (opts && !isObj(opts)) {
     throw new Error(
-      `string-left-right/chompLeft(): [THROW_ID_03] the opts should be a plain object! It was given as ${opts} (type ${typeof opts})`
+      `string-left-right/chomp${direction}(): [THROW_ID_03] the opts should be a plain object! It was given as ${opts} (type ${typeof opts})`
     );
   }
   if (

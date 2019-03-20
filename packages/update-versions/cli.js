@@ -149,7 +149,7 @@ if (cli.flags) {
           const singleDepValue = contents.devDependencies[keys[y]];
           if (db.hasOwnProperty(singleDepName)) {
             // if (path.dirname(p) === "html-crush") {
-            //   console.log(`130 ${singleDepName} db`);
+            //   console.log(`152 ${singleDepName} db`);
             // }
             if (
               contents.devDependencies[singleDepName] !==
@@ -161,7 +161,7 @@ if (cli.flags) {
             }
           } else {
             // if (path.dirname(p) === "html-crush") {
-            //   console.log(`142 ${singleDepName} ping pacote`);
+            //   console.log(`164 ${singleDepName} ping pacote`);
             // }
             const retrievedVersion = await pacote
               .manifest(singleDepName)

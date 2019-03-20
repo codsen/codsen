@@ -31,6 +31,14 @@ const emptyCondCommentRegex = require("regex-empty-conditional-comments");
 import emptyCondCommentRegex from "regex-empty-conditional-comments";
 ```
 
+Here's what you'll get:
+
+| Type                                                                                                    | Key in `package.json` | Path                                           | Size  |
+| ------------------------------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------- | ----- |
+| Main export - **CommonJS version**, transpiled to ES5, contains `require` and `module.exports`          | `main`                | `dist/regex-empty-conditional-comments.cjs.js` | 407 B |
+| **ES module** build that Webpack/Rollup understands. Untranspiled ES6 code with `import`/`export`.      | `module`              | `dist/regex-empty-conditional-comments.esm.js` | 368 B |
+| **UMD build** for browsers, transpiled, minified, containing `iife`'s and has all dependencies baked-in | `browser`             | `dist/regex-empty-conditional-comments.umd.js` | 567 B |
+
 **[⬆ back to top](#)**
 
 ## Usage
