@@ -4,7 +4,8 @@ import {
   attributeOnTheRight,
   findClosingQuote,
   tagOnTheRight,
-  onlyTheseLeadToThat
+  onlyTheseLeadToThat,
+  encodeChar
 } from "../dist/util.esm";
 
 test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
@@ -922,4 +923,29 @@ test(`99.52 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`o
     14,
     "99.52.01"
   );
+});
+
+test(`99.61 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`encodeChar()`}\u001b[${39}m`} - bad-character-unencoded-ampersand`, t => {
+  const testsToRun = [
+    ["&", "&amp;", "bad-character-unencoded-ampersand"],
+    ["<", "&lt;", "bad-character-unencoded-opening-bracket"],
+    [">", "&gt;", "bad-character-unencoded-closing-bracket"],
+    [`"`, "&quot;", "bad-character-unencoded-double-quotes"],
+    ["`", "&#x60;", "bad-character-grave-accent"],
+    ["\xA3", "&pound;", "bad-character-unencoded-pound"],
+    ["\u20AC", "&euro;", "bad-character-unencoded-euro"],
+    ["\xA2", "&cent;", "bad-character-unencoded-cent"]
+  ];
+  testsToRun.forEach(test => {
+    t.deepEqual(
+      encodeChar(`a${test[0]}b`, 1),
+      {
+        name: test[2],
+        position: [[1, 2, test[1]]]
+      },
+      "99.61 - 1. character to encode"
+    );
+    t.is(encodeChar(`a&b`, 0), null, "99.61 - 2. nothing to encode");
+    t.is(encodeChar(`a&b`, 2), null, "99.61 - 3. nothing to encode");
+  });
 });
