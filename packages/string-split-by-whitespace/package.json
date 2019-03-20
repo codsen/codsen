@@ -1,6 +1,6 @@
 {
   "name": "string-split-by-whitespace",
-  "version": "1.6.13",
+  "version": "1.6.17",
   "description": "Split string into array by chunks of whitespace",
   "license": "MIT",
   "engines": {

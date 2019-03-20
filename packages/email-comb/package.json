@@ -1,6 +1,6 @@
 {
   "name": "email-comb",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "description": "Remove unused CSS from email templates",
   "license": "MIT",
   "engines": {

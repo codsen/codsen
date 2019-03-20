@@ -1,6 +1,6 @@
 {
   "name": "js-row-num",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "description": "Update all row numbers in all console.logs in JS code",
   "license": "MIT",
   "engines": {

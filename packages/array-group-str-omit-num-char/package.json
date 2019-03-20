@@ -1,6 +1,6 @@
 {
   "name": "array-group-str-omit-num-char",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "description": "Groups array of strings by omitting number characters",
   "license": "MIT",
   "engines": {

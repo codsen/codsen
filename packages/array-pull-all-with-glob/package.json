@@ -1,6 +1,6 @@
 {
   "name": "array-pull-all-with-glob",
-  "version": "4.12.13",
+  "version": "4.12.17",
   "description": "pullAllWithGlob - like _.pullAll but pulling stronger, with globs",
   "license": "MIT",
   "engines": {

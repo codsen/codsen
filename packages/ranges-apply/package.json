@@ -1,6 +1,6 @@
 {
   "name": "ranges-apply",
-  "version": "3.0.4",
+  "version": "3.0.8",
   "description": "Take an array of string slice ranges, delete/replace the string according to them",
   "license": "MIT",
   "engines": {

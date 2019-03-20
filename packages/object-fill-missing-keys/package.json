@@ -1,6 +1,6 @@
 {
   "name": "object-fill-missing-keys",
-  "version": "7.9.13",
+  "version": "7.9.17",
   "description": "Add missing keys into plain objects, according to a reference object",
   "license": "MIT",
   "engines": {

@@ -1,6 +1,6 @@
 {
   "name": "ranges-ent-decode",
-  "version": "2.0.4",
+  "version": "2.0.8",
   "description": "Decode HTML entities recursively, get string index ranges of what needs to be replaced where",
   "license": "MIT",
   "engines": {

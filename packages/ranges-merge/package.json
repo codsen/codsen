@@ -1,6 +1,6 @@
 {
   "name": "ranges-merge",
-  "version": "4.1.0",
+  "version": "4.1.4",
   "description": "Merge and sort arrays which mean string slice ranges",
   "license": "MIT",
   "engines": {
