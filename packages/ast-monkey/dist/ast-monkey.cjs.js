@@ -269,10 +269,10 @@ function arrayFirstOnly(input) {
 }
 
 exports.traverse = traverse;
+exports.arrayFirstOnly = arrayFirstOnly;
+exports.del = del;
+exports.drop = drop;
 exports.find = find;
 exports.get = get;
-exports.set = set;
-exports.drop = drop;
 exports.info = info;
-exports.del = del;
-exports.arrayFirstOnly = arrayFirstOnly;
+exports.set = set;

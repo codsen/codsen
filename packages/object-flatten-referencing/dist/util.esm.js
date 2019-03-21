@@ -122,4 +122,4 @@ function reclaimIntegerString(something) {
   return something;
 }
 
-export { flattenObject, flattenArr, arrayiffyString, reclaimIntegerString };
+export { arrayiffyString, flattenArr, flattenObject, reclaimIntegerString };

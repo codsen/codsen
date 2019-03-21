@@ -773,4 +773,4 @@ function encodeChar(str, i) {
   return null;
 }
 
-export { charSuitableForTagName, charSuitableForAttrName, charIsQuote, isTagChar, isUppercaseLetter, isLowercase, isStr, lowAsciiCharacterNames, c1CharacterNames, log, isLatinLetter, withinTagInnerspace, attributeOnTheRight, findClosingQuote, encodeChar, tagOnTheRight, onlyTheseLeadToThat };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, isLatinLetter, isLowercase, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };

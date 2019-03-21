@@ -561,4 +561,4 @@ function matchRight(str, position, whatToMatch, opts) {
   return main("matchRight", str, position, whatToMatch, opts);
 }
 
-export { matchLeftIncl, matchRightIncl, matchLeft, matchRight };
+export { matchLeft, matchLeftIncl, matchRight, matchRightIncl };

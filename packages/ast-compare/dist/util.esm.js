@@ -38,4 +38,4 @@ function isTheTypeLegit(something) {
   );
 }
 
-export { existy, isObj, isStr, isNum, isBool, isNull, isBlank, isTheTypeLegit };
+export { existy, isBlank, isBool, isNull, isNum, isObj, isStr, isTheTypeLegit };

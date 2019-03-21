@@ -273,4 +273,4 @@ function arrayFirstOnly(input) {
   return monkey(input, { mode: "arrayFirstOnly" });
 }
 
-export { find, get, set, drop, info, del, arrayFirstOnly };
+export { arrayFirstOnly, del, drop, find, get, info, set };

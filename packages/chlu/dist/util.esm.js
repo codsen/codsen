@@ -294,4 +294,4 @@ function filterDate(someString) {
   return res;
 }
 
-export { isTitle, isFooterLink, versionWithBracketsRegex, versionWithoutBracketsRegex, getPreviousVersion, getRow, setRow, getTitlesAndFooterLinks, getSetFooterLink, aContainsB, versionSort, filterDate };
+export { aContainsB, filterDate, getPreviousVersion, getRow, getSetFooterLink, getTitlesAndFooterLinks, isFooterLink, isTitle, setRow, versionSort, versionWithBracketsRegex, versionWithoutBracketsRegex };

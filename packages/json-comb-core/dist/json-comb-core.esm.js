@@ -440,4 +440,4 @@ function findUnusedSync(arrOriginal, originalOpts) {
   return findUnusedSyncInner(arr, opts);
 }
 
-export { getKeysetSync, getKeyset, enforceKeyset, enforceKeysetSync, sortAllObjectsSync, noNewKeysSync, findUnusedSync };
+export { enforceKeyset, enforceKeysetSync, findUnusedSync, getKeyset, getKeysetSync, noNewKeysSync, sortAllObjectsSync };

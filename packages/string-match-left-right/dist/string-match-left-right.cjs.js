@@ -398,7 +398,7 @@ function matchRight(str, position, whatToMatch, opts) {
   return main("matchRight", str, position, whatToMatch, opts);
 }
 
-exports.matchLeftIncl = matchLeftIncl;
-exports.matchRightIncl = matchRightIncl;
 exports.matchLeft = matchLeft;
+exports.matchLeftIncl = matchLeftIncl;
 exports.matchRight = matchRight;
+exports.matchRightIncl = matchRightIncl;

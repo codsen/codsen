@@ -402,10 +402,10 @@ function findUnusedSync(arrOriginal, originalOpts) {
   return findUnusedSyncInner(arr, opts);
 }
 
-exports.getKeysetSync = getKeysetSync;
-exports.getKeyset = getKeyset;
 exports.enforceKeyset = enforceKeyset;
 exports.enforceKeysetSync = enforceKeysetSync;
-exports.sortAllObjectsSync = sortAllObjectsSync;
-exports.noNewKeysSync = noNewKeysSync;
 exports.findUnusedSync = findUnusedSync;
+exports.getKeyset = getKeyset;
+exports.getKeysetSync = getKeysetSync;
+exports.noNewKeysSync = noNewKeysSync;
+exports.sortAllObjectsSync = sortAllObjectsSync;

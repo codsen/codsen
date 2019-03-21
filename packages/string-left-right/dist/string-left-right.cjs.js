@@ -323,9 +323,9 @@ function chompRight(str, idx) {
   return chomp("right", str, idx, defaults, clone(args));
 }
 
-exports.left = left;
-exports.right = right;
-exports.leftSeq = leftSeq;
-exports.rightSeq = rightSeq;
 exports.chompLeft = chompLeft;
 exports.chompRight = chompRight;
+exports.left = left;
+exports.leftSeq = leftSeq;
+exports.right = right;
+exports.rightSeq = rightSeq;
