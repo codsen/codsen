@@ -198,15 +198,16 @@ function charIsQuote(char) {
   return res;
 }
 
-function notTagChar(char) {
+function isTagChar(char) {
   if (typeof char !== "string" || char.length > 1) {
     throw new Error(
-      "emlint/util/charNotTag(): input is not a single string character!"
+      "emlint/util/isTagChar(): input is not a single string character!"
     );
   }
-  const res = !`><=`.includes(char);
+  // const res = !`><=`.includes(char);
   // console.log(`208 emlint/util/charNotTag(): return ${res}`);
-  return res;
+  // return res;
+  return !`><=`.includes(char);
 }
 
 function isLowerCaseLetter(char) {
@@ -218,6 +219,7 @@ function isLowerCaseLetter(char) {
   );
 }
 
+// "is an upper case LATIN letter", that is
 function isUppercaseLetter(char) {
   return (
     isStr(char) &&
@@ -623,7 +625,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     }
 
     // r3_2 - opening bracket, optionally preceded by non-tag characters
-    else if (r3_1 && !r3_2 && str[i].trim().length && !notTagChar(str[i])) {
+    else if (r3_1 && !r3_2 && str[i].trim().length && !isTagChar(str[i])) {
       if (str[i] === "<") {
         r3_2 = true;
         console.log(
@@ -1142,7 +1144,7 @@ function withinTagInnerspace(str, idx, closingQuotePos) {
     }
 
     // r5_4 - opening bracket, optionally preceded by non-tag characters
-    else if (r5_3 && str[i].trim().length && !notTagChar(str[i])) {
+    else if (r5_3 && str[i].trim().length && !isTagChar(str[i])) {
       if (str[i] === "<") {
         r3_2 = true;
         // r3_2 and onwards match tag
@@ -2259,7 +2261,7 @@ export {
   charSuitableForTagName,
   charSuitableForAttrName,
   charIsQuote,
-  notTagChar,
+  isTagChar,
   isUppercaseLetter,
   isLowercase,
   isStr,

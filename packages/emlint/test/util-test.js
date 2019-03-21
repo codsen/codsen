@@ -1,11 +1,22 @@
 import test from "ava";
 import {
+  charSuitableForTagName,
+  charSuitableForAttrName,
+  charIsQuote,
+  isTagChar,
+  isUppercaseLetter,
+  isLowercase,
+  isStr,
+  lowAsciiCharacterNames,
+  c1CharacterNames,
+  log,
+  isLatinLetter,
   withinTagInnerspace,
   attributeOnTheRight,
   findClosingQuote,
+  encodeChar,
   tagOnTheRight,
-  onlyTheseLeadToThat,
-  encodeChar
+  onlyTheseLeadToThat
 } from "../dist/util.esm";
 
 test(`99.01 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`withinTagInnerspace()`}\u001b[${39}m`} - no offset`, t => {
@@ -701,7 +712,7 @@ test(`99.14 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`a
   t.false(attributeOnTheRight(s2, 60), "99.14.10");
 });
 
-test(`99.15 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
+test(`99.15 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - finds closing quote`, t => {
   const code1 = `<zzz alt=So, "a" > "b"'>\ntext <img>`;
   t.is(findClosingQuote(code1, 9), 22, "99.15.01");
 
@@ -724,7 +735,7 @@ test(`99.15 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   t.is(findClosingQuote(code7, 9), 10, "99.15.07");
 });
 
-test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+test(`99.16 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
   const code1 = `<aaa bbb="ccc' ddd="eee"/>`;
   t.is(findClosingQuote(code1, 9), 13, "99.16.01");
 
@@ -735,29 +746,29 @@ test(`99.16 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`f
   t.is(findClosingQuote(code3, 9), 13, "99.16.03");
 });
 
-test(`99.17 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
+test(`99.17 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - mismatching quotes in attributes`, t => {
   const code1 = `<aaa bbb="ccc" ddd= eee="fff"/>`;
   t.is(findClosingQuote(code1, 9), 13, "99.17.01");
   t.is(findClosingQuote(code1, 25), 28, "99.17.02");
 });
 
-test(`99.18 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - unclosed quote`, t => {
+test(`99.18 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - unclosed quote`, t => {
   const code = `<zzz alt="nnn="mmm">`;
   t.is(findClosingQuote(code, 9), 10, "99.18.01");
 });
 
-test(`99.19 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - quotes missing`, t => {
+test(`99.19 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - quotes missing`, t => {
   const code = `<a bcd=ef ghi='jk' lmn>`;
   t.is(findClosingQuote(code, 7), 9, "99.19.01");
   t.is(findClosingQuote(code, 14), 17, "99.19.02");
 });
 
-// test(`99.20 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-less attributes`, t => {
-//   const code = `<a bcd=ef ghj=kl mno=pqrs>`;
-//   t.is(findClosingQuote(code, 7), 9, "99.20.01");
-//   t.is(findClosingQuote(code, 14), 16, "99.20.02");
-//   t.is(findClosingQuote(code, 21), 25, "99.20.03");
-// });
+test(`99.20 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`findClosingQuote()`}\u001b[${39}m`} - three quote-less attributes`, t => {
+  const code = `<a bcd=ef ghj=kl mno=pqrs><img src="z.jpg">`;
+  t.is(findClosingQuote(code, 7), 9, "99.20.01");
+  t.is(findClosingQuote(code, 14), 16, "99.20.02");
+  t.is(findClosingQuote(code, 21), 25, "99.20.03");
+});
 
 test(`99.40 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`tagOnTheRight()`}\u001b[${39}m`} - normal tag`, t => {
   const s1 = `<a>`;
@@ -880,7 +891,7 @@ test(`99.44 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`t
   t.true(tagOnTheRight(s1, 10), "99.44.02");
 });
 
-test(`99.51 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`onlyTheseLeadToThat()`}\u001b[${39}m`} - not greedy - default start idx - various validators`, t => {
+test(`99.51 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`onlyTheseLeadToThat()`}\u001b[${39}m`} - not greedy - default start idx - various validators`, t => {
   function notBracket(char) {
     return char !== ">";
   }
@@ -901,7 +912,7 @@ test(`99.51 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`o
   );
 });
 
-test(`99.52 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`onlyTheseLeadToThat()`}\u001b[${39}m`} - not greedy - default start idx - greedy selection`, t => {
+test(`99.52 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`onlyTheseLeadToThat()`}\u001b[${39}m`} - not greedy - default start idx - greedy selection`, t => {
   // we'll skip to last bracket followed by equal
   function notBracket(char) {
     return char !== ">";
@@ -925,7 +936,7 @@ test(`99.52 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`o
   );
 });
 
-test(`99.61 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`encodeChar()`}\u001b[${39}m`} - bad-character-unencoded-ampersand`, t => {
+test(`99.61 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`encodeChar()`}\u001b[${39}m`} - bad-character-unencoded-ampersand`, t => {
   const testsToRun = [
     ["&", "&amp;", "bad-character-unencoded-ampersand"],
     ["<", "&lt;", "bad-character-unencoded-opening-bracket"],
@@ -948,4 +959,100 @@ test(`99.61 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`e
     t.is(encodeChar(`a&b`, 0), null, "99.61 - 2. nothing to encode");
     t.is(encodeChar(`a&b`, 2), null, "99.61 - 3. nothing to encode");
   });
+});
+
+test(`99.62 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`charSuitableForTagName()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(charSuitableForTagName("a"));
+  t.true(charSuitableForTagName(":"));
+  t.false(charSuitableForTagName("_"));
+  t.false(charSuitableForTagName("-"));
+  t.false(charSuitableForTagName("."));
+  t.false(charSuitableForTagName("{"));
+});
+
+test(`99.63 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`charSuitableForAttrName()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(charSuitableForAttrName("a"));
+  t.true(charSuitableForAttrName("_"));
+  t.true(charSuitableForAttrName("-"));
+  t.true(charSuitableForAttrName("{"));
+  t.true(charSuitableForAttrName("/"));
+
+  t.false(charSuitableForAttrName(`"`));
+  t.false(charSuitableForAttrName(`'`));
+  t.false(charSuitableForAttrName(`>`));
+  t.false(charSuitableForAttrName(`<`));
+  t.false(charSuitableForAttrName(`=`));
+});
+
+test(`99.64 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`charIsQuote()`}\u001b[${39}m`} - all tests`, t => {
+  t.false(charIsQuote("a"));
+  t.false(charIsQuote("-"));
+  t.false(charIsQuote(" "));
+
+  t.true(charIsQuote(`"`));
+  t.true(charIsQuote(`'`));
+  t.true(charIsQuote("`"));
+  t.true(charIsQuote("\u2018"));
+  t.true(charIsQuote("\u2019"));
+  t.true(charIsQuote("\u201C"));
+  t.true(charIsQuote("\u201D"));
+});
+
+test(`99.65 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`notTagChar()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(isTagChar("a"));
+  t.false(isTagChar(">"));
+  t.false(isTagChar("<"));
+  t.false(isTagChar("="));
+  const error1 = t.throws(() => {
+    isTagChar("aa");
+  });
+  t.regex(error1.message, /input is not a single string character/);
+});
+
+test(`99.66 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`isUppercaseLetter()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(isUppercaseLetter("A"));
+  t.false(isUppercaseLetter("a"));
+  t.false(isUppercaseLetter("\u0414")); // Cyrillic uppercase "D"
+  t.false(isUppercaseLetter("\u0434")); // Cyrillic lowercase "d"
+
+  t.false(isUppercaseLetter("1"));
+  t.false(isUppercaseLetter("_"));
+  t.false(isUppercaseLetter("("));
+  t.false(isUppercaseLetter(" "));
+});
+
+test(`99.67 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`isLowercase()`}\u001b[${39}m`} - all tests`, t => {
+  t.false(isLowercase("A"));
+  t.true(isLowercase("a"));
+  t.false(isLowercase("\u0414")); // Cyrillic uppercase "D"
+  t.true(isLowercase("\u0434")); // Cyrillic lowercase "d"
+});
+
+test(`99.68 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`isStr()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(isStr("a"));
+  t.false(isStr(1));
+  t.false(isStr(true));
+  t.false(isStr(null));
+  t.false(isStr(undefined));
+  t.false(isStr({}));
+  t.false(isStr(["1"]));
+});
+
+test(`99.69 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`lowAsciiCharacterNames[]`}\u001b[${39}m`}`, t => {
+  t.true(lowAsciiCharacterNames.length > 0);
+});
+
+test(`99.70 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`c1CharacterNames[]`}\u001b[${39}m`}`, t => {
+  t.true(c1CharacterNames.length > 0);
+});
+
+test(`99.71 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`log()`}\u001b[${39}m`}`, t => {
+  t.true(typeof log === "function");
+});
+
+test(`99.72 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`isLatinLetter()`}\u001b[${39}m`} - all tests`, t => {
+  t.true(isLatinLetter("A"));
+  t.true(isLatinLetter("a"));
+  t.false(isLatinLetter("\u0414")); // Cyrillic uppercase "D"
+  t.false(isLatinLetter("\u0434")); // Cyrillic lowercase "d"
 });
