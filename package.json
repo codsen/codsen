@@ -25,7 +25,7 @@
     "cm": "git-cz",
     "fresh": "npm run wipe && npm run bootstrap && npm run build",
     "lect": "make run-lect",
-    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --no-push --yes && lernacleanchangelog '**'",
+    "pub:vers": "lerna version --conventional-commits --no-commit-hooks --yes && lernacleanchangelog '**'",
     "publish": "npx lerna version --conventional-commits --yes && lernacleanchangelog '**' && npm run readme:generate && git add packages && git commit -m \"chore: Automated build tasks\" --no-verify && npm run republish",
     "readme:edit": "npm-watch",
     "readme:generate": "node ./scripts/generate-readme.js",
