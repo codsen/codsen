@@ -1,6 +1,6 @@
 {
   "name": "string-left-right",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Look what's to the left or the right of a given index within a string",
   "license": "MIT",
   "engines": {

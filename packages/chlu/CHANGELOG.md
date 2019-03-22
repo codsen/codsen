@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.7.19](https://gitlab.com/codsen/codsen/compare/chlu@3.7.18...chlu@3.7.19) (2019-03-22)
+
+**Note:** Version bump only for package chlu
+
+
+
+
+
 ## 3.7.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.10.19](https://gitlab.com/codsen/codsen/compare/object-merge-advanced@10.10.18...object-merge-advanced@10.10.19) (2019-03-22)
+
+**Note:** Version bump only for package object-merge-advanced
+
+
+
+
+
 ## 10.10.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
