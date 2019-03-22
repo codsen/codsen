@@ -2,7 +2,7 @@
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "chore: Release"
+      "message": "[skip ci] chore: Release"
     }
   },
   "lifecycle": {
