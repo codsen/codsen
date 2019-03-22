@@ -702,6 +702,9 @@ function comb(str, opts) {
                 if (headWholeLineCanBeDeleted) {
                   headWholeLineCanBeDeleted = false;
                 }
+                if (onlyDeletedChunksFollow) {
+                  onlyDeletedChunksFollow = false;
+                }
                 if (opts.uglify) {
                   finalIndexesToDelete.push(
                     currentChunksMinifiedSelectors.current()

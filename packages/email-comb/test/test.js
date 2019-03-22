@@ -3090,6 +3090,33 @@ zzz
   t.is(actual1, intended1, "01.66");
 });
 
+test("01.67 - plus selector", t => {
+  const actual1 = comb(`<style>
+[owa] .klm,
+body[nop] .klm,
+u+.a .klm,
+u+.a .ib,
+u+.a .jb{uvw}
+</style>
+<body>
+<u><a class="a"><i class="klm">x</i></a></u>
+<u><a class="a"><i class="zb">y</i></a></u>
+<u><a class="a"><i class="jb">z</i></a></u>`).result;
+  const intended1 = `<style>
+[owa] .klm,
+body[nop] .klm,
+u+.a .klm,
+u+.a .jb{uvw}
+</style>
+<body>
+<u><a class="a"><i class="klm">x</i></a></u>
+<u><a class="a"><i>y</i></a></u>
+<u><a class="a"><i class="jb">z</i></a></u>
+`;
+
+  t.is(actual1, intended1, "01.67");
+});
+
 //
 //
 //                                                             222222222222222
