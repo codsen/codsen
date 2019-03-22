@@ -3,14 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.9](https://gitlab.com/codsen/codsen/compare/ranges-invert@2.0.4...ranges-invert@2.0.9) (2019-03-22)
-
-**Note:** Version bump only for package ranges-invert
-
-
-
-
-
 ## 1.4.0 (2019-01-20)
 
 - ✨ Various documentation and setup tweaks after we migrated to monorepo
