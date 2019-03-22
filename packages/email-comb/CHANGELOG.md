@@ -3,16 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [2.0.10](https://gitlab.com/codsen/codsen/compare/email-comb@2.0.9...email-comb@2.0.10) (2019-03-22)
-
+## 2.0.10 (2019-03-22)
 
 ### Bug Fixes
 
-* The comma bug where unused chunk was sandwiched by used chunks ([cb6fa4c](https://gitlab.com/codsen/codsen/commit/cb6fa4c))
-
-
-
-
+- The comma bug where unused chunk was sandwiched by used chunks ([cb6fa4c](https://gitlab.com/codsen/codsen/commit/cb6fa4c))
 
 ## 1.2.8 (2019-02-26)
 
