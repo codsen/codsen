@@ -365,19 +365,19 @@ test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded
     `
 \xA0  <!--[if gte mso 9]>
 \xA0  <xml>
-  \xA0  <o:OfficeDocumentSettings>
-  \xA0  <o:AllowPNG/>
-  \xA0  <o:PixelsPerInch>96</o:PixelsPerInch>
-  \xA0  </o:OfficeDocumentSettings>
+  \xA0  <o:Z>
+  \xA0  <o:AA/>
+  \xA0  <o:P>96</o:P>
+  \xA0  </o:Z>
 \xA0  </xml>
 \xA0  <![endif]-->`,
     `
 &nbsp;  <!--[if gte mso 9]>
 &nbsp;  <xml>
-  &nbsp;  <o:OfficeDocumentSettings>
-  &nbsp;  <o:AllowPNG/>
-  &nbsp;  <o:PixelsPerInch>96</o:PixelsPerInch>
-  &nbsp;  </o:OfficeDocumentSettings>
+  &nbsp;  <o:Z>
+  &nbsp;  <o:AA/>
+  &nbsp;  <o:P>96</o:P>
+  &nbsp;  </o:Z>
 &nbsp;  </xml>
 &nbsp;  <![endif]-->`,
     "bad-character-unencoded-non-breaking-space",
@@ -1487,7 +1487,7 @@ test(`12.06 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
   );
 });
 
-test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - HTML, minimal`, t =>
+test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - HTML, minimal`, t =>
   c(
     `<td alt="a b' something>`,
     `<td alt="a b" something>`,
@@ -1495,7 +1495,7 @@ test(`12.07 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     t
   ));
 
-test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - HTML, real life #1`, t =>
+test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - HTML, real life #1`, t =>
   c(
     `<td alt="a b' something><a href="zzz">aaa</a></td>`,
     `<td alt="a b" something><a href="zzz">aaa</a></td>`,
@@ -1503,7 +1503,7 @@ test(`12.08 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     t
   ));
 
-test(`12.09 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - HTML, real life #2`, t =>
+test(`12.09 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - HTML, real life #2`, t =>
   c(
     `<td alt="a b' something>\n    tralala\n    <a href="zzz">aaa</a></td>`,
     `<td alt="a b" something>\n    tralala\n    <a href="zzz">aaa</a></td>`,
@@ -1511,7 +1511,7 @@ test(`12.09 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     t
   ));
 
-test(`12.10 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - XHTML`, t =>
+test(`12.10 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - XHTML`, t =>
   c(
     `<td alt="a b' something/>`,
     `<td alt="a b" something/>`,
@@ -1519,7 +1519,7 @@ test(`12.10 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     t
   ));
 
-test(`12.11 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - XHTML, real life #1`, t =>
+test(`12.11 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - XHTML, real life #1`, t =>
   c(
     `<td alt="a b' something><a href="zzz">aaa</a></td>`,
     `<td alt="a b" something><a href="zzz">aaa</a></td>`,
@@ -1527,7 +1527,7 @@ test(`12.11 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u0
     t
   ));
 
-test(`12.12 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by boolean attribute - XHTML, real life #2`, t =>
+test(`12.12 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-single`}\u001b[${39}m`} - mismatching quotes followed by bool attr - XHTML, real life #2`, t =>
   c(
     `<td alt="a b' something>\n    tralala\n    <a href="zzz">aaa</a></td>`,
     `<td alt="a b" something>\n    tralala\n    <a href="zzz">aaa</a></td>`,
@@ -2063,7 +2063,7 @@ test(`17.14 - ${`\u001b[${36}m${`tag-attribute-opening-quotation-mark-missing`}\
 // 18. rule tag-attribute-mismatching-quotes-is-double
 // -----------------------------------------------------------------------------
 
-test(`18.01 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - followed by boolean attribute - HTML`, t =>
+test(`18.01 - ${`\u001b[${31}m${`tag-attribute-mismatching-quotes-is-double`}\u001b[${39}m`} - followed by bool attr - HTML`, t =>
   c(
     `<td alt='a b" something>`,
     `<td alt='a b' something>`,
@@ -2811,7 +2811,19 @@ test(`28.02 - ${`\u001b[${32}m${`bad-named-html-entity-multiple-encoding`}\u001b
 // 29. ESP templating language recognition
 // -----------------------------------------------------------------------------
 
-test(`29.01 - ${`\u001b[${35}m${`code chunk skipping`}\u001b[${39}m`} - <script> tags, more complex`, t =>
+test(`29.01 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - spaced`, t =>
+  c(`<tag{%- if a > 0 -%}>`, t));
+
+test(`29.02 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - tight`, t =>
+  c(`<tag{%-if a > 0-%}>`, t));
+
+test(`29.03 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - loose`, t =>
+  c(`<tag{%-  if a > 0  -%}>`, t));
+
+test(`29.04 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - loose`, t =>
+  c(`<a{% if b %}c{% endif %}/>`, t));
+
+test(`29.05 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags adding conditional attributes`, t =>
   c(`<img{% if klm %} class="z"{% endif %} alt="1"/>`, t));
 
 // XX. ad hoc
@@ -2848,6 +2860,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templatin
 // stray letters at the end of a line, surrounded by tag one the left and EOL
 // <>< ><gh="ij">< ><>
 // <table ab="bb cc="dd">
+// messed up HTML comments - excl. mark missing, dash missing etc
 
 // todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 

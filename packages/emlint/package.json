@@ -165,6 +165,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "arrayiffy-if-string": "^3.10.19",
     "check-types-mini": "^5.7.15",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",

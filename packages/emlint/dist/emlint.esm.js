@@ -7,8 +7,9 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
+import { right, left, rightSeq, leftSeq } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
-import { right, left } from 'string-left-right';
+import arrayiffy from 'arrayiffy-if-string';
 import checkTypes from 'check-types-mini';
 import isObj from 'lodash.isplainobject';
 import clone from 'lodash.clonedeep';
@@ -49,298 +50,6 @@ var knownBooleanHTMLAttributes = [
 	"selected",
 	"typemustmatch"
 ];
-
-var knownHTMLTags = [
-	"abbr",
-	"address",
-	"area",
-	"article",
-	"aside",
-	"audio",
-	"base",
-	"bdi",
-	"bdo",
-	"blockquote",
-	"body",
-	"br",
-	"button",
-	"canvas",
-	"caption",
-	"center",
-	"cite",
-	"code",
-	"col",
-	"colgroup",
-	"data",
-	"datalist",
-	"dd",
-	"del",
-	"details",
-	"dfn",
-	"dialog",
-	"div",
-	"dl",
-	"doctype",
-	"dt",
-	"em",
-	"embed",
-	"fieldset",
-	"figcaption",
-	"figure",
-	"footer",
-	"form",
-	"h1",
-	"h2",
-	"h3",
-	"h4",
-	"h5",
-	"h6",
-	"head",
-	"header",
-	"hgroup",
-	"hr",
-	"html",
-	"iframe",
-	"img",
-	"input",
-	"ins",
-	"kbd",
-	"keygen",
-	"label",
-	"legend",
-	"li",
-	"link",
-	"main",
-	"map",
-	"mark",
-	"math",
-	"menu",
-	"menuitem",
-	"meta",
-	"meter",
-	"nav",
-	"noscript",
-	"object",
-	"ol",
-	"optgroup",
-	"option",
-	"output",
-	"param",
-	"picture",
-	"pre",
-	"progress",
-	"rb",
-	"rp",
-	"rt",
-	"rtc",
-	"ruby",
-	"samp",
-	"script",
-	"section",
-	"select",
-	"slot",
-	"small",
-	"source",
-	"span",
-	"strong",
-	"style",
-	"sub",
-	"summary",
-	"sup",
-	"svg",
-	"table",
-	"tbody",
-	"td",
-	"template",
-	"textarea",
-	"tfoot",
-	"th",
-	"thead",
-	"time",
-	"title",
-	"tr",
-	"track",
-	"ul",
-	"var",
-	"video",
-	"wbr",
-	"xml"
-];
-
-var version = "1.2.7";
-
-var errorsRules = {
-	"bad-named-html-entity-multiple-encoding": {
-	description: "HTML named entity was encoded multiple times, causing repeated amp;",
-	excerpt: "repeated amp; because of over-encoding",
-	scope: "html"
-},
-	"bad-named-html-entity-malformed-nbsp": {
-	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
-	excerpt: "malformed &nbsp;",
-	scope: "html"
-},
-	"bad-cdata-tag-character-case": {
-	description: "CDATA opening tag name characters are in wrong letter case",
-	excerpt: "wrong letter case",
-	scope: "html"
-},
-	"bad-named-html-entity-missing-semicolon": {
-	description: "HTML named entity is missing a semicolon",
-	excerpt: "missing semicolon on a named HTML entity",
-	scope: "html"
-},
-	"file-empty": {
-	description: "the contents are empty",
-	excerpt: "the contents are empty",
-	scope: "all"
-},
-	"file-missing-ending": {
-	description: "the ending part of the contents is missing",
-	excerpt: "ending part is missing",
-	scope: "all"
-},
-	"file-mixed-line-endings-file-is-CR-mainly": {
-	description: "mixed line endings detected, majority EOL's are CR",
-	excerpt: "mixed line endings detected, majority EOL's are CR",
-	scope: "all"
-},
-	"file-mixed-line-endings-file-is-CRLF-mainly": {
-	description: "mixed line endings detected, majority EOL's are CRLF",
-	excerpt: "mixed line endings detected, majority EOL's are CRLF",
-	scope: "all"
-},
-	"file-mixed-line-endings-file-is-LF-mainly": {
-	description: "mixed line endings detected, majority EOL's are LF",
-	excerpt: "mixed line endings detected, majority EOL's are LF",
-	scope: "all"
-},
-	"file-wrong-type-line-ending-CR": {
-	description: "Carriage Return (ASCII #13) line ending detected",
-	excerpt: "Carriage Return line ending",
-	scope: "all"
-},
-	"file-wrong-type-line-ending-CRLF": {
-	description: "CRLF (Carriage Return + Line Feed) line ending detected",
-	excerpt: "CRLF line ending",
-	scope: "all"
-},
-	"file-wrong-type-line-ending-LF": {
-	description: "Line Feed (ASCII #10) line ending detected",
-	excerpt: "Line Feed line ending",
-	scope: "all"
-},
-	"tag-attribute-closing-quotation-mark-missing": {
-	description: "The closing quotation mark is missing",
-	excerpt: "the closing quotation mark is missing",
-	scope: "html"
-},
-	"tag-attribute-left-double-quotation-mark": {
-	description: "There's a left double quotation mark, https://www.fileformat.info/info/unicode/char/201C/index.htm",
-	excerpt: "a left double quotation mark instead of a normal quotation mark",
-	scope: "html"
-},
-	"tag-attribute-left-single-quotation-mark": {
-	description: "There's a left single quotation mark, https://www.fileformat.info/info/unicode/char/2018/index.htm",
-	excerpt: "a left single quotation mark instead of a normal quotation mark",
-	scope: "html"
-},
-	"tag-attribute-mismatching-quotes-is-double": {
-	description: "attribute's opening quote is single, but closing-one is double",
-	excerpt: "there should be a single quote here instead",
-	scope: "html"
-},
-	"tag-attribute-mismatching-quotes-is-single": {
-	description: "attribute's opening quote is double, but closing-one is single",
-	excerpt: "there should be a double quote here instead",
-	scope: "html"
-},
-	"tag-attribute-missing-equal": {
-	description: "The equal is missing between attribute's name and quotes",
-	excerpt: "missing equal character",
-	scope: "html"
-},
-	"tag-attribute-opening-quotation-mark-missing": {
-	description: "The opening quotation mark is missing",
-	excerpt: "the opening quotation mark is missing",
-	scope: "html"
-},
-	"tag-attribute-quote-and-onwards-missing": {
-	description: "One of the attributes ends with an equal sign, there are no quotes on it",
-	excerpt: "attributes ends with an equal sign, there are no quotes on it",
-	scope: "html"
-},
-	"tag-attribute-repeated-equal": {
-	description: "The equal after attribute's name is repeated",
-	excerpt: "repeated equal character",
-	scope: "html"
-},
-	"tag-attribute-right-double-quotation-mark": {
-	description: "There's a right double quotation mark, https://www.fileformat.info/info/unicode/char/201d/index.htm",
-	excerpt: "a right double quotation mark instead of a normal quotation mark",
-	scope: "html"
-},
-	"tag-attribute-right-single-quotation-mark": {
-	description: "There's a right single quotation mark, https://www.fileformat.info/info/unicode/char/2019/index.htm",
-	excerpt: "a right single quotation mark instead of a normal quotation mark",
-	scope: "html"
-},
-	"tag-attribute-space-between-equals-and-opening-quotes": {
-	description: "There's a space between attribute's equal sign and opening quotes",
-	excerpt: "space between attribute's equal sign and opening quotes",
-	scope: "html"
-},
-	"tag-attribute-space-between-name-and-equals": {
-	description: "There's a space between attribute's name and equal sign",
-	excerpt: "space between attribute's name and equal sign",
-	scope: "html"
-},
-	"tag-excessive-whitespace-inside-tag": {
-	description: "There's an excessive whitespace inside the tag",
-	excerpt: "space between attribute's name and equal sign",
-	scope: "html"
-},
-	"tag-generic-error": {
-	description: "Something is wrong here",
-	excerpt: "something is wrong here",
-	scope: "html"
-},
-	"tag-missing-closing-bracket": {
-	description: "Tag's closing bracket is missing",
-	excerpt: "missing closing bracket",
-	scope: "html"
-},
-	"tag-missing-space-before-attribute": {
-	description: "The space before attribute's name is missing",
-	excerpt: "missing space",
-	scope: "html"
-},
-	"tag-name-lowercase": {
-	description: "Normally all tags are in lowercase",
-	excerpt: "tag name contains uppercase characters",
-	scope: "html"
-},
-	"tag-space-after-opening-bracket": {
-	description: "Many browsers, including Chrome will not consider this a tag",
-	excerpt: "space between opening bracket and tag name",
-	scope: "html"
-},
-	"tag-stray-character": {
-	description: "This chunk seems to be astray and can be deleted",
-	excerpt: "delete this",
-	scope: "html"
-},
-	"tag-stray-quotes": {
-	description: "These quotes can be deleted",
-	excerpt: "delete this",
-	scope: "html"
-},
-	"tag-whitespace-closing-slash-and-bracket": {
-	description: "There's a whitespace between closing slash and closing bracket",
-	excerpt: "whitespace between slash and closing bracket",
-	scope: "html"
-}
-};
 
 var errorsCharacters = {
 	"bad-character-acknowledge": {
@@ -784,6 +493,329 @@ var errorsCharacters = {
 	scope: "all"
 }
 };
+
+var knownHTMLTags = [
+	"abbr",
+	"address",
+	"area",
+	"article",
+	"aside",
+	"audio",
+	"base",
+	"bdi",
+	"bdo",
+	"blockquote",
+	"body",
+	"br",
+	"button",
+	"canvas",
+	"caption",
+	"center",
+	"cite",
+	"code",
+	"col",
+	"colgroup",
+	"data",
+	"datalist",
+	"dd",
+	"del",
+	"details",
+	"dfn",
+	"dialog",
+	"div",
+	"dl",
+	"doctype",
+	"dt",
+	"em",
+	"embed",
+	"fieldset",
+	"figcaption",
+	"figure",
+	"footer",
+	"form",
+	"h1",
+	"h2",
+	"h3",
+	"h4",
+	"h5",
+	"h6",
+	"head",
+	"header",
+	"hgroup",
+	"hr",
+	"html",
+	"iframe",
+	"img",
+	"input",
+	"ins",
+	"kbd",
+	"keygen",
+	"label",
+	"legend",
+	"li",
+	"link",
+	"main",
+	"map",
+	"mark",
+	"math",
+	"menu",
+	"menuitem",
+	"meta",
+	"meter",
+	"nav",
+	"noscript",
+	"object",
+	"ol",
+	"optgroup",
+	"option",
+	"output",
+	"param",
+	"picture",
+	"pre",
+	"progress",
+	"rb",
+	"rp",
+	"rt",
+	"rtc",
+	"ruby",
+	"samp",
+	"script",
+	"section",
+	"select",
+	"slot",
+	"small",
+	"source",
+	"span",
+	"strong",
+	"style",
+	"sub",
+	"summary",
+	"sup",
+	"svg",
+	"table",
+	"tbody",
+	"td",
+	"template",
+	"textarea",
+	"tfoot",
+	"th",
+	"thead",
+	"time",
+	"title",
+	"tr",
+	"track",
+	"ul",
+	"var",
+	"video",
+	"wbr",
+	"xml"
+];
+
+var knownESPTags = {
+	"{%": {
+	type: "opening",
+	sibling: [
+		"%}",
+		"-%}"
+	]
+},
+	"%}": {
+	type: "closing",
+	sibling: [
+		"{%",
+		"{%-"
+	]
+},
+	"{%-": {
+	type: "opening",
+	sibling: [
+		"-%}",
+		"%}"
+	]
+},
+	"-%}": {
+	type: "closing",
+	sibling: [
+		"{%-",
+		"{%"
+	]
+}
+};
+
+var errorsRules = {
+	"bad-named-html-entity-multiple-encoding": {
+	description: "HTML named entity was encoded multiple times, causing repeated amp;",
+	excerpt: "repeated amp; because of over-encoding",
+	scope: "html"
+},
+	"bad-named-html-entity-malformed-nbsp": {
+	description: "HTML named entity &nbsp; (a non-breaking space) is malformed",
+	excerpt: "malformed &nbsp;",
+	scope: "html"
+},
+	"bad-cdata-tag-character-case": {
+	description: "CDATA opening tag name characters are in wrong letter case",
+	excerpt: "wrong letter case",
+	scope: "html"
+},
+	"bad-named-html-entity-missing-semicolon": {
+	description: "HTML named entity is missing a semicolon",
+	excerpt: "missing semicolon on a named HTML entity",
+	scope: "html"
+},
+	"file-empty": {
+	description: "the contents are empty",
+	excerpt: "the contents are empty",
+	scope: "all"
+},
+	"file-missing-ending": {
+	description: "the ending part of the contents is missing",
+	excerpt: "ending part is missing",
+	scope: "all"
+},
+	"file-mixed-line-endings-file-is-CR-mainly": {
+	description: "mixed line endings detected, majority EOL's are CR",
+	excerpt: "mixed line endings detected, majority EOL's are CR",
+	scope: "all"
+},
+	"file-mixed-line-endings-file-is-CRLF-mainly": {
+	description: "mixed line endings detected, majority EOL's are CRLF",
+	excerpt: "mixed line endings detected, majority EOL's are CRLF",
+	scope: "all"
+},
+	"file-mixed-line-endings-file-is-LF-mainly": {
+	description: "mixed line endings detected, majority EOL's are LF",
+	excerpt: "mixed line endings detected, majority EOL's are LF",
+	scope: "all"
+},
+	"file-wrong-type-line-ending-CR": {
+	description: "Carriage Return (ASCII #13) line ending detected",
+	excerpt: "Carriage Return line ending",
+	scope: "all"
+},
+	"file-wrong-type-line-ending-CRLF": {
+	description: "CRLF (Carriage Return + Line Feed) line ending detected",
+	excerpt: "CRLF line ending",
+	scope: "all"
+},
+	"file-wrong-type-line-ending-LF": {
+	description: "Line Feed (ASCII #10) line ending detected",
+	excerpt: "Line Feed line ending",
+	scope: "all"
+},
+	"tag-attribute-closing-quotation-mark-missing": {
+	description: "The closing quotation mark is missing",
+	excerpt: "the closing quotation mark is missing",
+	scope: "html"
+},
+	"tag-attribute-left-double-quotation-mark": {
+	description: "There's a left double quotation mark, https://www.fileformat.info/info/unicode/char/201C/index.htm",
+	excerpt: "a left double quotation mark instead of a normal quotation mark",
+	scope: "html"
+},
+	"tag-attribute-left-single-quotation-mark": {
+	description: "There's a left single quotation mark, https://www.fileformat.info/info/unicode/char/2018/index.htm",
+	excerpt: "a left single quotation mark instead of a normal quotation mark",
+	scope: "html"
+},
+	"tag-attribute-mismatching-quotes-is-double": {
+	description: "attribute's opening quote is single, but closing-one is double",
+	excerpt: "there should be a single quote here instead",
+	scope: "html"
+},
+	"tag-attribute-mismatching-quotes-is-single": {
+	description: "attribute's opening quote is double, but closing-one is single",
+	excerpt: "there should be a double quote here instead",
+	scope: "html"
+},
+	"tag-attribute-missing-equal": {
+	description: "The equal is missing between attribute's name and quotes",
+	excerpt: "missing equal character",
+	scope: "html"
+},
+	"tag-attribute-opening-quotation-mark-missing": {
+	description: "The opening quotation mark is missing",
+	excerpt: "the opening quotation mark is missing",
+	scope: "html"
+},
+	"tag-attribute-quote-and-onwards-missing": {
+	description: "One of the attributes ends with an equal sign, there are no quotes on it",
+	excerpt: "attributes ends with an equal sign, there are no quotes on it",
+	scope: "html"
+},
+	"tag-attribute-repeated-equal": {
+	description: "The equal after attribute's name is repeated",
+	excerpt: "repeated equal character",
+	scope: "html"
+},
+	"tag-attribute-right-double-quotation-mark": {
+	description: "There's a right double quotation mark, https://www.fileformat.info/info/unicode/char/201d/index.htm",
+	excerpt: "a right double quotation mark instead of a normal quotation mark",
+	scope: "html"
+},
+	"tag-attribute-right-single-quotation-mark": {
+	description: "There's a right single quotation mark, https://www.fileformat.info/info/unicode/char/2019/index.htm",
+	excerpt: "a right single quotation mark instead of a normal quotation mark",
+	scope: "html"
+},
+	"tag-attribute-space-between-equals-and-opening-quotes": {
+	description: "There's a space between attribute's equal sign and opening quotes",
+	excerpt: "space between attribute's equal sign and opening quotes",
+	scope: "html"
+},
+	"tag-attribute-space-between-name-and-equals": {
+	description: "There's a space between attribute's name and equal sign",
+	excerpt: "space between attribute's name and equal sign",
+	scope: "html"
+},
+	"tag-excessive-whitespace-inside-tag": {
+	description: "There's an excessive whitespace inside the tag",
+	excerpt: "space between attribute's name and equal sign",
+	scope: "html"
+},
+	"tag-generic-error": {
+	description: "Something is wrong here",
+	excerpt: "something is wrong here",
+	scope: "html"
+},
+	"tag-missing-closing-bracket": {
+	description: "Tag's closing bracket is missing",
+	excerpt: "missing closing bracket",
+	scope: "html"
+},
+	"tag-missing-space-before-attribute": {
+	description: "The space before attribute's name is missing",
+	excerpt: "missing space",
+	scope: "html"
+},
+	"tag-name-lowercase": {
+	description: "Normally all tags are in lowercase",
+	excerpt: "tag name contains uppercase characters",
+	scope: "html"
+},
+	"tag-space-after-opening-bracket": {
+	description: "Many browsers, including Chrome will not consider this a tag",
+	excerpt: "space between opening bracket and tag name",
+	scope: "html"
+},
+	"tag-stray-character": {
+	description: "This chunk seems to be astray and can be deleted",
+	excerpt: "delete this",
+	scope: "html"
+},
+	"tag-stray-quotes": {
+	description: "These quotes can be deleted",
+	excerpt: "delete this",
+	scope: "html"
+},
+	"tag-whitespace-closing-slash-and-bracket": {
+	description: "There's a whitespace between closing slash and closing bracket",
+	excerpt: "whitespace between slash and closing bracket",
+	scope: "html"
+}
+};
+
+var version = "1.2.7";
 
 const lowAsciiCharacterNames = [
   "null",
@@ -1680,7 +1712,8 @@ function lint(str, originalOpts) {
     recognised: null,
     closing: null,
     pureHTML: true,
-    attributes: []
+    attributes: [],
+    esp: []
   };
   function resetLogTag() {
     logTag = clone(defaultLogTag);
@@ -1776,6 +1809,14 @@ function lint(str, originalOpts) {
     });
   }
   for (let i = 0, len = str.length; i < len; i++) {
+    if (
+      logEspTag.headVal !== null &&
+      i === logEspTag.headEndAt &&
+      doNothingUntil === null
+    ) {
+      doNothingUntil = true;
+      doNothingUntilReason = "esp";
+    }
     const charcode = str[i].charCodeAt(0);
     if (doNothingUntil && doNothingUntil !== true && i >= doNothingUntil) {
       doNothingUntil = null;
@@ -1883,15 +1924,53 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
-    if (logEspTag.headStartAt !== null && !espChars.includes(str[i])) {
-      logEspTag.headEndAt = i;
-      logEspTag.headVal = str.slice(logEspTag.headStartAt, i);
+    let temp1;
+    if (
+      doNothingUntil &&
+      doNothingUntilReason === "esp" &&
+      logEspTag.headVal &&
+      logEspTag.recognised &&
+      logEspTag.tailStartAt === null &&
+      arrayiffy(knownESPTags[logEspTag.headVal].sibling).some(closingVal => {
+        if (rightSeq(str, i, ...closingVal.split(""))) {
+          temp1 = closingVal;
+          return true;
+        }
+      })
+    ) {
+      const tempEnd = rightSeq(str, i, ...temp1.split(""));
+      logEspTag.tailStartAt = tempEnd.leftmostChar;
+      logEspTag.tailEndAt = tempEnd.rightmostChar + 1;
+      logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
+      logEspTag.endAt = logEspTag.tailEndAt;
+      doNothingUntil = logEspTag.endAt;
+      logTag.esp.push(logEspTag);
+      resetEspTag();
+    }
+    if (
+      logEspTag.headStartAt !== null &&
+      logEspTag.headEndAt === null &&
+      i > logEspTag.headStartAt &&
+      (str[i + 1] &&
+        (!str[i + 1].trim().length || !espChars.includes(str[i + 1])))
+    ) {
+      if (
+        !logEspTag.recognised ||
+        knownESPTags[logEspTag.headVal].type === "opening"
+      ) {
+        if (str.slice(logEspTag.headStartAt, i + 1) !== "--") {
+          logEspTag.headEndAt = i + 1;
+          logEspTag.headVal = str.slice(logEspTag.headStartAt, i + 1);
+          logEspTag.recognised = knownESPTags.hasOwnProperty(logEspTag.headVal);
+        }
+      }
     }
     if (
       logEspTag.startAt === null &&
       espChars.includes(str[i]) &&
       str[i + 1] &&
-      espChars.includes(str[i + 1])
+      espChars.includes(str[i + 1]) &&
+      !leftSeq(str, i, "<", "!")
     ) {
       logEspTag.headStartAt = i;
       logEspTag.startAt = i;
@@ -3009,7 +3088,11 @@ function lint(str, originalOpts) {
       } else if (str[charOnTheLeft] === "<") ;
       doNothingUntil = charOnTheRight + 1;
     }
-    if (!doNothingUntil && str[i].trim().length) {
+    if (
+      !doNothingUntil &&
+      logWhitespace.startAt !== null &&
+      str[i].trim().length
+    ) {
       resetLogWhitespace();
     }
     if (!str[i + 1]) {
