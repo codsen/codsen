@@ -1,6 +1,6 @@
 {
   "name": "emlint",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "Non-parsing, email template-oriented linter",
   "license": "MIT",
   "engines": {
