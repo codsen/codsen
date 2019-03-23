@@ -2811,20 +2811,23 @@ test(`28.02 - ${`\u001b[${32}m${`bad-named-html-entity-multiple-encoding`}\u001b
 // 29. ESP templating language recognition
 // -----------------------------------------------------------------------------
 
-test(`29.01 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - spaced`, t =>
+test(`29.01 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag within tag inner whitespace - spaced`, t =>
   c(`<tag{%- if a > 0 -%}>`, t));
 
-test(`29.02 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - tight`, t =>
+test(`29.02 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag within tag inner whitespace - tight`, t =>
   c(`<tag{%-if a > 0-%}>`, t));
 
-test(`29.03 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - loose`, t =>
+test(`29.03 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag within tag inner whitespace - loose`, t =>
   c(`<tag{%-  if a > 0  -%}>`, t));
 
-test(`29.04 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags within tag inner whitespace - loose`, t =>
+test(`29.04 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag within tag inner whitespace - loose`, t =>
   c(`<a{% if b %}c{% endif %}/>`, t));
 
-test(`29.05 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - ESP tags adding conditional attributes`, t =>
+test(`29.05 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag adding conditional attributes`, t =>
   c(`<img{% if klm %} class="z"{% endif %} alt="1"/>`, t));
+
+test(`29.06 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag adding conditional attributes`, t =>
+  c(`<img%%a z%%/>`, t));
 
 // XX. ad hoc
 // -----------------------------------------------------------------------------

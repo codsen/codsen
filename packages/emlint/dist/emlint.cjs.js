@@ -1660,22 +1660,29 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
-    var temp1 = void 0;
-    if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.headVal && logEspTag.recognised && logEspTag.tailStartAt === null && arrayiffy(knownESPTags[logEspTag.headVal].sibling).some(function (closingVal) {
-      if (stringLeftRight.rightSeq.apply(void 0, [str, _i].concat(_toConsumableArray(closingVal.split(""))))) {
-        temp1 = closingVal;
-        i = _i;
-        return true;
+    if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars.includes(str[_i + 1])) {
+      doNothingUntil = _i + 1;
+    }
+    if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.headVal && logEspTag.tailStartAt === null) {
+      var temp1;
+      if (logEspTag.recognised && arrayiffy(knownESPTags[logEspTag.headVal].sibling).some(function (closingVal) {
+        if (stringLeftRight.rightSeq.apply(void 0, [str, _i].concat(_toConsumableArray(closingVal.split(""))))) {
+          temp1 = closingVal;
+          i = _i;
+          return true;
+        }
+      })) {
+        var tempEnd = stringLeftRight.rightSeq.apply(void 0, [str, _i].concat(_toConsumableArray(temp1.split(""))));
+        logEspTag.tailStartAt = tempEnd.leftmostChar;
+        logEspTag.tailEndAt = tempEnd.rightmostChar + 1;
+        logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
+        logEspTag.endAt = logEspTag.tailEndAt;
+        doNothingUntil = logEspTag.endAt;
+        logTag.esp.push(logEspTag);
+        resetEspTag();
+      } else if (!logEspTag.recognised && espChars.includes(str[_i]) && espChars.includes(str[stringLeftRight.right(str, _i)])) {
+        logEspTag.tailStartAt = _i;
       }
-    })) {
-      var tempEnd = stringLeftRight.rightSeq.apply(void 0, [str, _i].concat(_toConsumableArray(temp1.split(""))));
-      logEspTag.tailStartAt = tempEnd.leftmostChar;
-      logEspTag.tailEndAt = tempEnd.rightmostChar + 1;
-      logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
-      logEspTag.endAt = logEspTag.tailEndAt;
-      doNothingUntil = logEspTag.endAt;
-      logTag.esp.push(logEspTag);
-      resetEspTag();
     }
     if (logEspTag.headStartAt !== null && logEspTag.headEndAt === null && _i > logEspTag.headStartAt && str[_i + 1] && (!str[_i + 1].trim().length || !espChars.includes(str[_i + 1]))) {
       if (!logEspTag.recognised || knownESPTags[logEspTag.headVal].type === "opening") {

@@ -1924,28 +1924,49 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
-    let temp1;
+    if (
+      doNothingUntil &&
+      doNothingUntilReason === "esp" &&
+      logEspTag.tailStartAt &&
+      logEspTag.tailEndAt === null &&
+      !espChars.includes(str[i + 1])
+    ) {
+      doNothingUntil = i + 1;
+    }
     if (
       doNothingUntil &&
       doNothingUntilReason === "esp" &&
       logEspTag.headVal &&
-      logEspTag.recognised &&
-      logEspTag.tailStartAt === null &&
-      arrayiffy(knownESPTags[logEspTag.headVal].sibling).some(closingVal => {
-        if (rightSeq(str, i, ...closingVal.split(""))) {
-          temp1 = closingVal;
-          return true;
-        }
-      })
+      logEspTag.tailStartAt === null
     ) {
-      const tempEnd = rightSeq(str, i, ...temp1.split(""));
-      logEspTag.tailStartAt = tempEnd.leftmostChar;
-      logEspTag.tailEndAt = tempEnd.rightmostChar + 1;
-      logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
-      logEspTag.endAt = logEspTag.tailEndAt;
-      doNothingUntil = logEspTag.endAt;
-      logTag.esp.push(logEspTag);
-      resetEspTag();
+      let temp1;
+      if (
+        logEspTag.recognised &&
+        arrayiffy(knownESPTags[logEspTag.headVal].sibling).some(closingVal => {
+          if (rightSeq(str, i, ...closingVal.split(""))) {
+            temp1 = closingVal;
+            return true;
+          }
+        })
+      ) {
+        const tempEnd = rightSeq(str, i, ...temp1.split(""));
+        logEspTag.tailStartAt = tempEnd.leftmostChar;
+        logEspTag.tailEndAt = tempEnd.rightmostChar + 1;
+        logEspTag.tailVal = str.slice(
+          logEspTag.tailStartAt,
+          logEspTag.tailEndAt
+        );
+        logEspTag.endAt = logEspTag.tailEndAt;
+        doNothingUntil = logEspTag.endAt;
+        logTag.esp.push(logEspTag);
+        resetEspTag();
+      } else if (
+        !logEspTag.recognised &&
+        espChars.includes(str[i]) &&
+        espChars.includes(str[right(str, i)])
+      ) {
+        logEspTag.tailStartAt = i;
+      }
     }
     if (
       logEspTag.headStartAt !== null &&
