@@ -679,6 +679,14 @@ var knownESPTags = {
 		"{%-",
 		"{%"
 	]
+},
+	"*|": {
+	type: "opening",
+	sibling: "|*"
+},
+	"|*": {
+	type: "closing",
+	sibling: "*|"
 }
 };
 
@@ -1402,6 +1410,11 @@ function encodeChar(str, i) {
   }
   return null;
 }
+function flip(str) {
+  if (isStr(str) && str.length) {
+    return str.replace(/\{/g, "}").replace(/\(/g, ")");
+  }
+}
 
 var isArr = Array.isArray;
 var attributeOnTheRight$1 = attributeOnTheRight,
@@ -1410,7 +1423,8 @@ var attributeOnTheRight$1 = attributeOnTheRight,
     tagOnTheRight$1 = tagOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
-    isStr$1 = isStr;
+    isStr$1 = isStr,
+    flip$1 = flip;
 function lint(str, originalOpts) {
   function pingTag(logTag) {}
   if (!isStr$1(str)) {
@@ -1530,6 +1544,7 @@ function lint(str, originalOpts) {
     logEspTag = clone(defaultEspTag);
   }
   resetEspTag();
+  var espChars = "{}%-$_()*|";
   var logWhitespace;
   var defaultLogWhitespace = {
     startAt: null,
@@ -1568,7 +1583,6 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
-  var espChars = "{}%-$_()";
   var withinQuotes = null;
   var withinQuotesEndAt = null;
   if (str.length === 0) {
@@ -1680,8 +1694,10 @@ function lint(str, originalOpts) {
         doNothingUntil = logEspTag.endAt;
         logTag.esp.push(logEspTag);
         resetEspTag();
-      } else if (!logEspTag.recognised && espChars.includes(str[_i]) && espChars.includes(str[stringLeftRight.right(str, _i)])) {
-        logEspTag.tailStartAt = _i;
+      } else if (espChars.includes(str[_i])) {
+        if (espChars.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
+          logEspTag.tailStartAt = _i;
+        }
       }
     }
     if (logEspTag.headStartAt !== null && logEspTag.headEndAt === null && _i > logEspTag.headStartAt && str[_i + 1] && (!str[_i + 1].trim().length || !espChars.includes(str[_i + 1]))) {

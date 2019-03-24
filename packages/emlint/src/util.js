@@ -2257,22 +2257,31 @@ function encodeChar(str, i) {
   return null;
 }
 
+// flips string, preparing heuristical assumption of tails. Converts: { => },
+// ( => ), and leaves the rest alone.
+function flip(str) {
+  if (isStr(str) && str.length) {
+    return str.replace(/\{/g, "}").replace(/\(/g, ")");
+  }
+}
+
 export {
-  charSuitableForTagName,
   charSuitableForAttrName,
-  charIsQuote,
-  isTagChar,
-  isUppercaseLetter,
-  isLowercase,
-  isStr,
+  charSuitableForTagName,
   lowAsciiCharacterNames,
-  c1CharacterNames,
-  log,
-  isLatinLetter,
-  withinTagInnerspace,
   attributeOnTheRight,
+  onlyTheseLeadToThat,
+  withinTagInnerspace,
+  isUppercaseLetter,
   findClosingQuote,
-  encodeChar,
+  c1CharacterNames,
   tagOnTheRight,
-  onlyTheseLeadToThat
+  isLatinLetter,
+  isLowercase,
+  charIsQuote,
+  encodeChar,
+  isTagChar,
+  isStr,
+  flip,
+  log
 };

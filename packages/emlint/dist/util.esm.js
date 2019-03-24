@@ -772,5 +772,10 @@ function encodeChar(str, i) {
   }
   return null;
 }
+function flip(str) {
+  if (isStr(str) && str.length) {
+    return str.replace(/\{/g, "}").replace(/\(/g, ")");
+  }
+}
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, isLatinLetter, isLowercase, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, flip, isLatinLetter, isLowercase, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };

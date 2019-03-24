@@ -639,6 +639,14 @@ var knownESPTags = {
 		"{%-",
 		"{%"
 	]
+},
+	"*|": {
+	type: "opening",
+	sibling: "|*"
+},
+	"|*": {
+	type: "closing",
+	sibling: "*|"
 }
 };
 
@@ -1589,25 +1597,31 @@ function encodeChar(str, i) {
   }
   return null;
 }
+function flip(str) {
+  if (isStr(str) && str.length) {
+    return str.replace(/\{/g, "}").replace(/\(/g, ")");
+  }
+}
 
 var util = /*#__PURE__*/Object.freeze({
-  charSuitableForTagName: charSuitableForTagName,
   charSuitableForAttrName: charSuitableForAttrName,
-  charIsQuote: charIsQuote,
-  isTagChar: isTagChar,
-  isUppercaseLetter: isUppercaseLetter,
-  isLowercase: isLowercase,
-  isStr: isStr,
+  charSuitableForTagName: charSuitableForTagName,
   lowAsciiCharacterNames: lowAsciiCharacterNames,
-  c1CharacterNames: c1CharacterNames,
-  log: log,
-  isLatinLetter: isLatinLetter,
-  withinTagInnerspace: withinTagInnerspace,
   attributeOnTheRight: attributeOnTheRight,
+  onlyTheseLeadToThat: onlyTheseLeadToThat,
+  withinTagInnerspace: withinTagInnerspace,
+  isUppercaseLetter: isUppercaseLetter,
   findClosingQuote: findClosingQuote,
-  encodeChar: encodeChar,
+  c1CharacterNames: c1CharacterNames,
   tagOnTheRight: tagOnTheRight,
-  onlyTheseLeadToThat: onlyTheseLeadToThat
+  isLatinLetter: isLatinLetter,
+  isLowercase: isLowercase,
+  charIsQuote: charIsQuote,
+  encodeChar: encodeChar,
+  isTagChar: isTagChar,
+  isStr: isStr,
+  flip: flip,
+  log: log
 });
 
 const isArr = Array.isArray;
@@ -1619,6 +1633,7 @@ const {
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
   isStr: isStr$1,
+  flip: flip$1,
   log: log$1
 } = util;
 function lint(str, originalOpts) {
@@ -1755,6 +1770,7 @@ function lint(str, originalOpts) {
     logEspTag = clone(defaultEspTag);
   }
   resetEspTag();
+  const espChars = `{}%-$_()*|`;
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -1799,7 +1815,6 @@ function lint(str, originalOpts) {
     lf: [],
     crlf: []
   };
-  const espChars = `{}%-$_()`;
   let withinQuotes = null;
   let withinQuotesEndAt = null;
   if (str.length === 0) {
@@ -1960,12 +1975,14 @@ function lint(str, originalOpts) {
         doNothingUntil = logEspTag.endAt;
         logTag.esp.push(logEspTag);
         resetEspTag();
-      } else if (
-        !logEspTag.recognised &&
-        espChars.includes(str[i]) &&
-        espChars.includes(str[right(str, i)])
-      ) {
-        logEspTag.tailStartAt = i;
+      } else if (espChars.includes(str[i])) {
+        if (
+          espChars.includes(str[right(str, i)]) ||
+          logEspTag.headVal.includes(str[i]) ||
+          flip$1(logEspTag.headVal).includes(str[i])
+        ) {
+          logEspTag.tailStartAt = i;
+        }
       }
     }
     if (

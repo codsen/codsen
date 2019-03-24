@@ -2826,7 +2826,10 @@ test(`29.04 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag withi
 test(`29.05 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag adding conditional attributes`, t =>
   c(`<img{% if klm %} class="z"{% endif %} alt="1"/>`, t));
 
-test(`29.06 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag adding conditional attributes`, t =>
+test(`29.06 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag closing is single char`, t =>
+  c(`<img {% if z }/>`, t));
+
+test(`29.07 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - unknown ESP tag adding conditional attributes`, t =>
   c(`<img%%a z%%/>`, t));
 
 // XX. ad hoc

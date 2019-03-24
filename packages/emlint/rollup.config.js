@@ -94,12 +94,8 @@ export default commandLineArgs => {
     // util.js build:
     {
       input: "src/util.js",
-      output: [
-        { file: "dist/util.esm.js", format: "es" },
-      ],
-      external: [
-        "string-left-right"
-      ],
+      output: [{ file: "dist/util.esm.js", format: "es" }],
+      external: ["string-left-right"],
       plugins: [
         strip({
           sourceMap: false
