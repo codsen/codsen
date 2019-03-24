@@ -651,6 +651,10 @@ var knownHTMLTags = [
 	"xml"
 ];
 
+var $ = {
+	type: "closing",
+	sibling: "$"
+};
 var knownESPTags = {
 	"{%": {
 	type: "opening",
@@ -687,7 +691,8 @@ var knownESPTags = {
 	"|*": {
 	type: "closing",
 	sibling: "*|"
-}
+},
+	$: $
 };
 
 var errorsRules = {
@@ -1419,6 +1424,7 @@ function flip(str) {
 var isArr = Array.isArray;
 var attributeOnTheRight$1 = attributeOnTheRight,
     withinTagInnerspace$1 = withinTagInnerspace,
+    isLowerCaseLetter$1 = isLowerCaseLetter,
     findClosingQuote$1 = findClosingQuote,
     tagOnTheRight$1 = tagOnTheRight,
     charIsQuote$1 = charIsQuote,
@@ -1545,6 +1551,7 @@ function lint(str, originalOpts) {
   }
   resetEspTag();
   var espChars = "{}%-$_()*|";
+  var espCharsFunc = "$";
   var logWhitespace;
   var defaultLogWhitespace = {
     startAt: null,
@@ -1692,9 +1699,11 @@ function lint(str, originalOpts) {
         logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
         logEspTag.endAt = logEspTag.tailEndAt;
         doNothingUntil = logEspTag.endAt;
-        logTag.esp.push(logEspTag);
+        if (logTag.tagStartAt !== null) {
+          logTag.esp.push(logEspTag);
+        }
         resetEspTag();
-      } else if (espChars.includes(str[_i])) {
+      } else if (flip$1(logEspTag.headVal).includes(str[_i])) {
         if (espChars.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
           logEspTag.tailStartAt = _i;
         }
@@ -1709,9 +1718,17 @@ function lint(str, originalOpts) {
         }
       }
     }
-    if (logEspTag.startAt === null && espChars.includes(str[_i]) && str[_i + 1] && espChars.includes(str[_i + 1]) && !stringLeftRight.leftSeq(str, _i, "<", "!")) {
-      logEspTag.headStartAt = _i;
-      logEspTag.startAt = _i;
+    if (logEspTag.startAt === null && logEspTag.headStartAt === null && espChars.includes(str[_i]) && str[_i + 1] && !stringLeftRight.leftSeq(str, _i, "<", "!") && (!doNothingUntil || doNothingUntil === true)) {
+      if (espChars.includes(str[_i + 1])) {
+        logEspTag.headStartAt = _i;
+        logEspTag.startAt = _i;
+      } else if (espCharsFunc.includes(str[_i]) && isLowerCaseLetter$1(str[_i + 1])) {
+        logEspTag.headStartAt = _i;
+        logEspTag.startAt = _i;
+        logEspTag.headEndAt = _i + 1;
+        logEspTag.headVal = str[_i];
+        logEspTag.recognised = knownESPTags.hasOwnProperty(str[_i]);
+      }
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrNameEndAt === null && logAttr.attrName === null && !isLatinLetter(str[_i]) && (str[_i] !== ":" || !isLatinLetter(str[_i + 1]))) {

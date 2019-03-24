@@ -22,5 +22,13 @@
   "|*": {
     "type": "closing",
     "sibling": "*|"
+  },
+  "$": {
+    "type": "opening",
+    "sibling": "$"
+  },
+  "$": {
+    "type": "closing",
+    "sibling": "$"
   }
 }

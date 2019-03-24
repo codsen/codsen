@@ -157,7 +157,9 @@ function isStr(something) {
   return typeof something === "string";
 }
 function isLowercase(char) {
-  return char.toLowerCase() === char && char.toUpperCase() !== char;
+  return (
+    isStr(char) && char.toLowerCase() === char && char.toUpperCase() !== char
+  );
 }
 function isLatinLetter(char) {
   return (
@@ -778,4 +780,4 @@ function flip(str) {
   }
 }
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, flip, isLatinLetter, isLowercase, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };

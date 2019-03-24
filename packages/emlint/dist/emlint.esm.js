@@ -611,6 +611,10 @@ var knownHTMLTags = [
 	"xml"
 ];
 
+var $ = {
+	type: "closing",
+	sibling: "$"
+};
 var knownESPTags = {
 	"{%": {
 	type: "opening",
@@ -647,7 +651,8 @@ var knownESPTags = {
 	"|*": {
 	type: "closing",
 	sibling: "*|"
-}
+},
+	$: $
 };
 
 var errorsRules = {
@@ -982,7 +987,9 @@ function isStr(something) {
   return typeof something === "string";
 }
 function isLowercase(char) {
-  return char.toLowerCase() === char && char.toUpperCase() !== char;
+  return (
+    isStr(char) && char.toLowerCase() === char && char.toUpperCase() !== char
+  );
 }
 function isLatinLetter(char) {
   return (
@@ -1610,6 +1617,7 @@ var util = /*#__PURE__*/Object.freeze({
   attributeOnTheRight: attributeOnTheRight,
   onlyTheseLeadToThat: onlyTheseLeadToThat,
   withinTagInnerspace: withinTagInnerspace,
+  isLowerCaseLetter: isLowerCaseLetter,
   isUppercaseLetter: isUppercaseLetter,
   findClosingQuote: findClosingQuote,
   c1CharacterNames: c1CharacterNames,
@@ -1628,6 +1636,7 @@ const isArr = Array.isArray;
 const {
   attributeOnTheRight: attributeOnTheRight$1,
   withinTagInnerspace: withinTagInnerspace$1,
+  isLowerCaseLetter: isLowerCaseLetter$1,
   findClosingQuote: findClosingQuote$1,
   tagOnTheRight: tagOnTheRight$1,
   charIsQuote: charIsQuote$1,
@@ -1771,6 +1780,7 @@ function lint(str, originalOpts) {
   }
   resetEspTag();
   const espChars = `{}%-$_()*|`;
+  const espCharsFunc = `$`;
   let logWhitespace;
   const defaultLogWhitespace = {
     startAt: null,
@@ -1973,9 +1983,11 @@ function lint(str, originalOpts) {
         );
         logEspTag.endAt = logEspTag.tailEndAt;
         doNothingUntil = logEspTag.endAt;
-        logTag.esp.push(logEspTag);
+        if (logTag.tagStartAt !== null) {
+          logTag.esp.push(logEspTag);
+        }
         resetEspTag();
-      } else if (espChars.includes(str[i])) {
+      } else if (flip$1(logEspTag.headVal).includes(str[i])) {
         if (
           espChars.includes(str[right(str, i)]) ||
           logEspTag.headVal.includes(str[i]) ||
@@ -2005,13 +2017,25 @@ function lint(str, originalOpts) {
     }
     if (
       logEspTag.startAt === null &&
+      logEspTag.headStartAt === null &&
       espChars.includes(str[i]) &&
       str[i + 1] &&
-      espChars.includes(str[i + 1]) &&
-      !leftSeq(str, i, "<", "!")
+      !leftSeq(str, i, "<", "!") &&
+      (!doNothingUntil || doNothingUntil === true)
     ) {
-      logEspTag.headStartAt = i;
-      logEspTag.startAt = i;
+      if (espChars.includes(str[i + 1])) {
+        logEspTag.headStartAt = i;
+        logEspTag.startAt = i;
+      } else if (
+        espCharsFunc.includes(str[i]) &&
+        isLowerCaseLetter$1(str[i + 1])
+      ) {
+        logEspTag.headStartAt = i;
+        logEspTag.startAt = i;
+        logEspTag.headEndAt = i + 1;
+        logEspTag.headVal = str[i];
+        logEspTag.recognised = knownESPTags.hasOwnProperty(str[i]);
+      }
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (

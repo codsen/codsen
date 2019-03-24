@@ -2832,6 +2832,18 @@ test(`29.06 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag closi
 test(`29.07 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - unknown ESP tag adding conditional attributes`, t =>
   c(`<img%%a z%%/>`, t));
 
+test(`29.08 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys-style nested function`, t =>
+  c(
+    `a $cond(empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    t
+  ));
+
+test(`29.09 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys clickthrough() function`, t =>
+  c(
+    `<a href="$clickthrough(ViewOnline, CUSTOMER_ID_, FIRST_NAME, LAST_NAME, SALUTATION, LANGUAGE_ISO2)$" target="_blank">click here</a>`,
+    t
+  ));
+
 // XX. ad hoc
 // -----------------------------------------------------------------------------
 
