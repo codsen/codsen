@@ -716,6 +716,23 @@ var errorsRules = {
 	excerpt: "missing semicolon on a named HTML entity",
 	scope: "html"
 },
+	"esp-more-closing-parentheses-than-opening": {
+	description: "There are more closing parentheses than opening-ones",
+	excerpt: "too many closing parentheses",
+	scope: "all",
+	unfixable: true
+},
+	"esp-more-opening-parentheses-than-closing": {
+	description: "There are more opening parentheses than closing-ones",
+	excerpt: "too many opening parentheses",
+	scope: "all",
+	unfixable: true
+},
+	"esp-line-break-within-templating-tag": {
+	description: "There should be no line breaks within ESP template tags",
+	excerpt: "line break should be removed",
+	scope: "all"
+},
 	"file-empty": {
 	description: "the contents are empty",
 	excerpt: "the contents are empty",
@@ -949,6 +966,9 @@ function isUppercaseLetter(char) {
 }
 function isStr(something) {
   return typeof something === "string";
+}
+function isNum(something) {
+  return typeof something === "number";
 }
 function isLatinLetter(char) {
   return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
@@ -1430,9 +1450,29 @@ var attributeOnTheRight$1 = attributeOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
     isStr$1 = isStr,
+    isNum$1 = isNum,
     flip$1 = flip;
 function lint(str, originalOpts) {
   function pingTag(logTag) {}
+  function pingEspTag(espTagObj) {
+    if (isNum$1(espTagObj.startAt) && isNum$1(espTagObj.endAt)) {
+      var openingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\(/g);
+      var closingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\)/g);
+      if (isArr(openingParens) && isArr(closingParens) && openingParens.length !== closingParens.length || isArr(openingParens) && !isArr(closingParens) || !isArr(openingParens) && isArr(closingParens)) {
+        if (isArr(openingParens) && isArr(closingParens) && openingParens.length > closingParens.length || isArr(openingParens) && openingParens.length && !isArr(closingParens)) {
+          submit({
+            name: "esp-more-opening-parentheses-than-closing",
+            position: [[espTagObj.startAt, espTagObj.endAt]]
+          });
+        } else if (isArr(openingParens) && isArr(closingParens) && openingParens.length < closingParens.length || isArr(closingParens) && closingParens.length && !isArr(openingParens)) {
+          submit({
+            name: "esp-more-closing-parentheses-than-opening",
+            position: [[espTagObj.startAt, espTagObj.endAt]]
+          });
+        }
+      }
+    }
+  }
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
   }
@@ -1544,7 +1584,8 @@ function lint(str, originalOpts) {
     tailVal: null,
     startAt: null,
     endAt: null,
-    recognised: null
+    recognised: null,
+    type: null
   };
   function resetEspTag() {
     logEspTag = clone(defaultEspTag);
@@ -1699,9 +1740,7 @@ function lint(str, originalOpts) {
         logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
         logEspTag.endAt = logEspTag.tailEndAt;
         doNothingUntil = logEspTag.endAt;
-        if (logTag.tagStartAt !== null) {
-          logTag.esp.push(logEspTag);
-        }
+        pingEspTag(logEspTag);
         resetEspTag();
       } else if (flip$1(logEspTag.headVal).includes(str[_i])) {
         if (espChars.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
@@ -1722,11 +1761,13 @@ function lint(str, originalOpts) {
       if (espChars.includes(str[_i + 1])) {
         logEspTag.headStartAt = _i;
         logEspTag.startAt = _i;
+        logEspTag.type = "tag-based";
       } else if (espCharsFunc.includes(str[_i]) && isLowerCaseLetter$1(str[_i + 1])) {
         logEspTag.headStartAt = _i;
         logEspTag.startAt = _i;
         logEspTag.headEndAt = _i + 1;
         logEspTag.headVal = str[_i];
+        logEspTag.type = "function-based";
         logEspTag.recognised = knownESPTags.hasOwnProperty(str[_i]);
       }
     }
@@ -2720,7 +2761,9 @@ function lint(str, originalOpts) {
       }
     });
   }
-  retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.reduce(function (acc, obj) {
+  retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.filter(function (issueObj) {
+    return !errorsRules[issueObj.name] || !errorsRules[issueObj.name].unfixable;
+  }).reduce(function (acc, obj) {
     return acc.concat(obj.position);
   }, [])) : null;
   return retObj;

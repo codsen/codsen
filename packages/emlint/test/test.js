@@ -1,7 +1,15 @@
-import test from "ava";
+import errors from "../src/errors-rules.json";
 import { lint } from "../dist/emlint.esm";
+import clone from "lodash.clonedeep";
 import apply from "ranges-apply";
-// import errors from "../src/errors.json";
+import test from "ava";
+
+// all rules turned off:
+let allOff = clone(errors);
+Object.keys(allOff).forEach(key => {
+  allOff[key] = false;
+});
+allOff = { rules: clone(allOff) };
 
 // this is loose checker, functions would pass too, but it's fine for testing needs:
 function isObj(something) {
@@ -49,7 +57,7 @@ function c(bad, good, issuesArr, t, opts) {
       }, {});
     // console.log("\n\n\n███████████████████████████████████████\n\n\n");
     // console.log(
-    //   `52 test.js: ${`\u001b[${33}m${`allRulesDisabled`}\u001b[${39}m`} = ${JSON.stringify(
+    //   `060 test.js: ${`\u001b[${33}m${`allRulesDisabled`}\u001b[${39}m`} = ${JSON.stringify(
     //     allRulesDisabled,
     //     null,
     //     4
@@ -75,6 +83,21 @@ function c(bad, good, issuesArr, t, opts) {
       "part 3 - rules disabled"
     );
   }
+}
+
+// c2() is used for rules which are unfixable
+function c2(bad, resToCompareWith, t, opts) {
+  const linted = lint(bad, opts);
+  // console.log(
+  //   `092 test.js: ${`\u001b[${33}m${`linted`}\u001b[${39}m`} = ${JSON.stringify(
+  //     linted,
+  //     null,
+  //     4
+  //   )}`
+  // );
+  t.deepEqual(linted.issues, resToCompareWith.issues);
+  t.deepEqual(lint(bad, allOff).issues, []);
+  t.is(apply(bad, linted.fix), bad);
 }
 
 // 00. Insurance
@@ -2832,15 +2855,297 @@ test(`29.06 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - known ESP tag closi
 test(`29.07 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - unknown ESP tag adding conditional attributes`, t =>
   c(`<img%%a z%%/>`, t));
 
-test(`29.08 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys-style nested function`, t =>
+test(`29.08 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys clickthrough() function`, t =>
+  c(
+    `<a href="$clickthrough(ViewOnline, CUSTOMER_ID_, FIRST_NAME, LAST_NAME, SALUTATION, LANGUAGE_ISO2)$" target="_blank">click here</a>`,
+    t
+  ));
+
+// 30. rule: "esp-more-closing-parentheses-than-opening"
+// -----------------------------------------------------------------------------
+
+test(`30.01 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - Responsys-style nested function`, t =>
   c(
     `a $cond(empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
     t
   ));
 
-test(`29.09 - ${`\u001b[${35}m${`ESP tags`}\u001b[${39}m`} - Responsys clickthrough() function`, t =>
+test(`30.02 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag`, t =>
+  c2(
+    `a $cond())$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 11]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.03 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - 1st opening paren removed`, t =>
+  c2(
+    `a $cond empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.04 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - 2nd paren removed`, t =>
+  c2(
+    `a $cond(empty lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.05 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - 3rd paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.06 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - 4rd paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID)),nothing), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 100]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.07 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - 5th paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID)),nothing), document /contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 100]]
+        }
+      ]
+    },
+    t
+  ));
+
+// ====
+
+test(`30.08 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - #6 two removed`, t =>
+  c2(
+    `a $cond(empty(lookup ZZZUID)),nothing(), document /contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.09 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - #7 three removed`, t =>
+  c2(
+    `a $cond empty lookup(ZZZUID),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 100]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.10 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - #8 all removed, mini`, t =>
+  c2(
+    `a $cond ))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 11]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`30.11 - ${`\u001b[${31}m${`esp-more-closing-parentheses-than-opening`}\u001b[${39}m`} - single function-type ESP templating tag - #8 all removed`, t =>
+  c2(
+    `a $cond empty lookup ZZZUID)),nothing ), document /contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+// 31. rule: "esp-more-opening-parentheses-than-closing"
+// -----------------------------------------------------------------------------
+
+test(`31.01 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - Responsys-style nested function`, t =>
   c(
-    `<a href="$clickthrough(ViewOnline, CUSTOMER_ID_, FIRST_NAME, LAST_NAME, SALUTATION, LANGUAGE_ISO2)$" target="_blank">click here</a>`,
+    `a $cond(empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    t
+  ));
+
+test(`31.02 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag`, t =>
+  c2(
+    `a $cond(()$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 11]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.03 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - 1st paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID ),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.04 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - 2nd paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID) ,nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.05 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - 3rd paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID)),nothing( , document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.06 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - 4th paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm)$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 100]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.07 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - 5th paren removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID)),nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.html)$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 101]]
+        }
+      ]
+    },
+    t
+  ));
+
+// ======
+
+test(`31.08 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - two parens removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID,nothing(), document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 99]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.09 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - three parens removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID,nothing(, document(/contentlibrary/!campaign_templates,zzzpixel.htm))$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 98]]
+        }
+      ]
+    },
+    t
+  ));
+
+test(`31.10 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u001b[${39}m`} - single function-type ESP templating tag - all parens removed`, t =>
+  c2(
+    `a $cond(empty(lookup(ZZZUID,nothing(, document(/contentlibrary/!campaign_templates,zzzpixel.htm$ b`,
+    {
+      issues: [
+        {
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[2, 96]]
+        }
+      ]
+    },
     t
   ));
 
@@ -2879,6 +3184,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templatin
 // <>< ><gh="ij">< ><>
 // <table ab="bb cc="dd">
 // messed up HTML comments - excl. mark missing, dash missing etc
+// excessive space in front of esp tag within html tag's whitespace
 
 // todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 
