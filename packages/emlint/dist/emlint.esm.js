@@ -691,7 +691,8 @@ var errorsRules = {
 	"esp-line-break-within-templating-tag": {
 	description: "There should be no line breaks within ESP template tags",
 	excerpt: "line break should be removed",
-	scope: "all"
+	scope: "all",
+	unfixable: true
 },
 	"file-empty": {
 	description: "the contents are empty",
@@ -2697,16 +2698,18 @@ function lint(str, originalOpts) {
         resetLogAttr();
       }
     }
-    if (!doNothingUntil) {
-      if (charcode < 32) {
-        const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
-        if (charcode === 9) {
+    if (charcode < 32) {
+      const name = `bad-character-${lowAsciiCharacterNames[charcode]}`;
+      if (charcode === 9) {
+        if (!doNothingUntil) {
           submit({
             name,
             position: [[i, i + 1, "  "]]
           });
-        } else if (charcode === 13) {
-          if (isStr$1(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
+        }
+      } else if (charcode === 13) {
+        if (isStr$1(str[i + 1]) && str[i + 1].charCodeAt(0) === 10) {
+          if (!doNothingUntil) {
             if (
               opts.style &&
               opts.style.line_endings_CR_LF_CRLF &&
@@ -2719,7 +2722,15 @@ function lint(str, originalOpts) {
             } else {
               logLineEndings.crlf.push([i, i + 2]);
             }
-          } else {
+          }
+          if (logEspTag.headStartAt !== null) {
+            submit({
+              name: "esp-line-break-within-templating-tag",
+              position: [[i, i + 2]]
+            });
+          }
+        } else {
+          if (!doNothingUntil) {
             if (
               opts.style &&
               opts.style.line_endings_CR_LF_CRLF &&
@@ -2733,8 +2744,16 @@ function lint(str, originalOpts) {
               logLineEndings.cr.push([i, i + 1]);
             }
           }
-        } else if (charcode === 10) {
-          if (!(isStr$1(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
+          if (logEspTag.headStartAt !== null) {
+            submit({
+              name: "esp-line-break-within-templating-tag",
+              position: [[i, i + 1]]
+            });
+          }
+        }
+      } else if (charcode === 10) {
+        if (!(isStr$1(str[i - 1]) && str[i - 1].charCodeAt(0) === 13)) {
+          if (!doNothingUntil) {
             if (
               opts.style &&
               opts.style.line_endings_CR_LF_CRLF &&
@@ -2748,242 +2767,245 @@ function lint(str, originalOpts) {
               logLineEndings.lf.push([i, i + 1]);
             }
           }
-        } else {
-          const nearestNonWhitespaceCharIdxOnTheLeft = left(str, i);
-          const nearestNonWhitespaceCharIdxOnTheRight = right(str, i);
-          let addThis;
-          if (
-            nearestNonWhitespaceCharIdxOnTheLeft < i - 1 &&
-            (nearestNonWhitespaceCharIdxOnTheRight > i + 1 ||
-              (nearestNonWhitespaceCharIdxOnTheRight === null &&
-                str[i + 1] &&
-                str[i + 1] !== "\n" &&
-                str[i + 1] !== "\r" &&
-                !str[i + 1].trim().length))
-          ) {
-            const tempWhitespace = str.slice(
-              nearestNonWhitespaceCharIdxOnTheLeft + 1,
-              nearestNonWhitespaceCharIdxOnTheRight
-            );
-            if (
-              tempWhitespace.includes("\n") ||
-              tempWhitespace.includes("\r")
-            ) {
-              if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
-                addThis = opts.style.line_endings_CR_LF_CRLF;
-              } else {
-                addThis = "\n";
-              }
-            } else {
-              addThis = " ";
-            }
-          }
-          if (addThis) {
+          if (logEspTag.headStartAt !== null) {
             submit({
-              name,
-              position: [
-                [
-                  nearestNonWhitespaceCharIdxOnTheLeft + 1,
-                  nearestNonWhitespaceCharIdxOnTheRight,
-                  addThis
-                ]
-              ]
-            });
-          } else {
-            submit({
-              name,
+              name: "esp-line-break-within-templating-tag",
               position: [[i, i + 1]]
             });
           }
         }
-      } else if (charcode > 126 && charcode < 160) {
-        const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
-        submit({
-          name,
-          position: [[i, i + 1]]
-        });
-      } else if (charcode === 160) {
-        const name = `bad-character-unencoded-non-breaking-space`;
-        submit({
-          name,
-          position: [[i, i + 1, "&nbsp;"]]
-        });
-      } else if (charcode === 5760) {
-        const name = `bad-character-ogham-space-mark`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8192) {
-        const name = `bad-character-en-quad`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8193) {
-        const name = `bad-character-em-quad`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8194) {
-        const name = `bad-character-en-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8195) {
-        const name = `bad-character-em-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8196) {
-        const name = `bad-character-three-per-em-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8197) {
-        const name = `bad-character-four-per-em-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8198) {
-        const name = `bad-character-six-per-em-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8199) {
-        const name = `bad-character-figure-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8200) {
-        const name = `bad-character-punctuation-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8201) {
-        const name = `bad-character-thin-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8202) {
-        const name = `bad-character-hair-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8203) {
-        const name = `bad-character-zero-width-space`;
-        submit({
-          name,
-          position: [[i, i + 1]]
-        });
-      } else if (charcode === 8232) {
-        const name = `bad-character-line-separator`;
-        submit({
-          name,
-          position: [[i, i + 1, "\n"]]
-        });
-      } else if (charcode === 8233) {
-        const name = `bad-character-paragraph-separator`;
-        submit({
-          name,
-          position: [[i, i + 1, "\n"]]
-        });
-      } else if (charcode === 8239) {
-        const name = `bad-character-narrow-no-break-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 8287) {
-        const name = `bad-character-medium-mathematical-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (charcode === 12288) {
-        const name = `bad-character-ideographic-space`;
-        submit({
-          name,
-          position: [[i, i + 1, " "]]
-        });
-      } else if (encodeChar$1(str, i)) {
-        const newIssue = encodeChar$1(str, i);
-        submit(newIssue, "raw");
-      } else if (charcode >= 888 && charcode <= 8591) {
+      } else if (!doNothingUntil) {
+        const nearestNonWhitespaceCharIdxOnTheLeft = left(str, i);
+        const nearestNonWhitespaceCharIdxOnTheRight = right(str, i);
+        let addThis;
         if (
-          charcode === 888 ||
-          charcode === 889 ||
-          (charcode >= 896 && charcode <= 899) ||
-          charcode === 907 ||
-          charcode === 909 ||
-          charcode === 930 ||
-          charcode === 1328 ||
-          charcode === 1367 ||
-          charcode === 1368 ||
-          charcode === 1419 ||
-          charcode === 1419 ||
-          charcode === 1420 ||
-          charcode === 1424 ||
-          (charcode >= 1480 && charcode <= 1487) ||
-          (charcode >= 1515 && charcode <= 1519) ||
-          (charcode >= 1525 && charcode <= 1535) ||
-          charcode === 1565 ||
-          charcode === 1806 ||
-          charcode === 1867 ||
-          charcode === 1868 ||
-          (charcode >= 1970 && charcode <= 1983) ||
-          (charcode >= 2043 && charcode <= 2047) ||
-          charcode === 2094 ||
-          charcode === 2095 ||
-          charcode === 2111 ||
-          charcode === 2140 ||
-          charcode === 2141 ||
-          charcode === 2143 ||
-          (charcode >= 2155 && charcode <= 2207) ||
-          charcode === 2229 ||
-          (charcode >= 2238 && charcode <= 2258) ||
-          charcode === 2436 ||
-          charcode === 2445 ||
-          charcode === 2446 ||
-          charcode === 2449 ||
-          charcode === 2450 ||
-          charcode === 2473 ||
-          charcode === 2481 ||
-          charcode === 2483 ||
-          charcode === 2484 ||
-          charcode === 2485 ||
-          charcode === 2490 ||
-          charcode === 2491 ||
-          charcode === 2501 ||
-          charcode === 2502 ||
-          charcode === 2505 ||
-          charcode === 2506 ||
-          (charcode >= 2511 && charcode <= 2518) ||
-          (charcode >= 2520 && charcode <= 2523) ||
-          charcode === 2526 ||
-          (charcode >= 8384 && charcode <= 8399) ||
-          (charcode >= 8433 && charcode <= 8447) ||
-          charcode === 8588 ||
-          charcode === 8589 ||
-          charcode === 8590 ||
-          charcode === 8591
+          nearestNonWhitespaceCharIdxOnTheLeft < i - 1 &&
+          (nearestNonWhitespaceCharIdxOnTheRight > i + 1 ||
+            (nearestNonWhitespaceCharIdxOnTheRight === null &&
+              str[i + 1] &&
+              str[i + 1] !== "\n" &&
+              str[i + 1] !== "\r" &&
+              !str[i + 1].trim().length))
         ) {
-          const name = `bad-character-generic`;
+          const tempWhitespace = str.slice(
+            nearestNonWhitespaceCharIdxOnTheLeft + 1,
+            nearestNonWhitespaceCharIdxOnTheRight
+          );
+          if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
+            if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
+              addThis = opts.style.line_endings_CR_LF_CRLF;
+            } else {
+              addThis = "\n";
+            }
+          } else {
+            addThis = " ";
+          }
+        }
+        if (addThis) {
+          submit({
+            name,
+            position: [
+              [
+                nearestNonWhitespaceCharIdxOnTheLeft + 1,
+                nearestNonWhitespaceCharIdxOnTheRight,
+                addThis
+              ]
+            ]
+          });
+        } else {
           submit({
             name,
             position: [[i, i + 1]]
           });
         }
+      }
+    } else if (!doNothingUntil && charcode > 126 && charcode < 160) {
+      const name = `bad-character-${c1CharacterNames[charcode - 127]}`;
+      submit({
+        name,
+        position: [[i, i + 1]]
+      });
+    } else if (!doNothingUntil && charcode === 160) {
+      const name = `bad-character-unencoded-non-breaking-space`;
+      submit({
+        name,
+        position: [[i, i + 1, "&nbsp;"]]
+      });
+    } else if (!doNothingUntil && charcode === 5760) {
+      const name = `bad-character-ogham-space-mark`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8192) {
+      const name = `bad-character-en-quad`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8193) {
+      const name = `bad-character-em-quad`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8194) {
+      const name = `bad-character-en-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8195) {
+      const name = `bad-character-em-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8196) {
+      const name = `bad-character-three-per-em-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8197) {
+      const name = `bad-character-four-per-em-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8198) {
+      const name = `bad-character-six-per-em-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8199) {
+      const name = `bad-character-figure-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8200) {
+      const name = `bad-character-punctuation-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8201) {
+      const name = `bad-character-thin-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8202) {
+      const name = `bad-character-hair-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8203) {
+      const name = `bad-character-zero-width-space`;
+      submit({
+        name,
+        position: [[i, i + 1]]
+      });
+    } else if (!doNothingUntil && charcode === 8232) {
+      const name = `bad-character-line-separator`;
+      submit({
+        name,
+        position: [[i, i + 1, "\n"]]
+      });
+    } else if (!doNothingUntil && charcode === 8233) {
+      const name = `bad-character-paragraph-separator`;
+      submit({
+        name,
+        position: [[i, i + 1, "\n"]]
+      });
+    } else if (!doNothingUntil && charcode === 8239) {
+      const name = `bad-character-narrow-no-break-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8287) {
+      const name = `bad-character-medium-mathematical-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 12288) {
+      const name = `bad-character-ideographic-space`;
+      submit({
+        name,
+        position: [[i, i + 1, " "]]
+      });
+    } else if (!doNothingUntil && encodeChar$1(str, i)) {
+      const newIssue = encodeChar$1(str, i);
+      submit(newIssue, "raw");
+    } else if (!doNothingUntil && charcode >= 888 && charcode <= 8591) {
+      if (
+        charcode === 888 ||
+        charcode === 889 ||
+        (charcode >= 896 && charcode <= 899) ||
+        charcode === 907 ||
+        charcode === 909 ||
+        charcode === 930 ||
+        charcode === 1328 ||
+        charcode === 1367 ||
+        charcode === 1368 ||
+        charcode === 1419 ||
+        charcode === 1419 ||
+        charcode === 1420 ||
+        charcode === 1424 ||
+        (charcode >= 1480 && charcode <= 1487) ||
+        (charcode >= 1515 && charcode <= 1519) ||
+        (charcode >= 1525 && charcode <= 1535) ||
+        charcode === 1565 ||
+        charcode === 1806 ||
+        charcode === 1867 ||
+        charcode === 1868 ||
+        (charcode >= 1970 && charcode <= 1983) ||
+        (charcode >= 2043 && charcode <= 2047) ||
+        charcode === 2094 ||
+        charcode === 2095 ||
+        charcode === 2111 ||
+        charcode === 2140 ||
+        charcode === 2141 ||
+        charcode === 2143 ||
+        (charcode >= 2155 && charcode <= 2207) ||
+        charcode === 2229 ||
+        (charcode >= 2238 && charcode <= 2258) ||
+        charcode === 2436 ||
+        charcode === 2445 ||
+        charcode === 2446 ||
+        charcode === 2449 ||
+        charcode === 2450 ||
+        charcode === 2473 ||
+        charcode === 2481 ||
+        charcode === 2483 ||
+        charcode === 2484 ||
+        charcode === 2485 ||
+        charcode === 2490 ||
+        charcode === 2491 ||
+        charcode === 2501 ||
+        charcode === 2502 ||
+        charcode === 2505 ||
+        charcode === 2506 ||
+        (charcode >= 2511 && charcode <= 2518) ||
+        (charcode >= 2520 && charcode <= 2523) ||
+        charcode === 2526 ||
+        (charcode >= 8384 && charcode <= 8399) ||
+        (charcode >= 8433 && charcode <= 8447) ||
+        charcode === 8588 ||
+        charcode === 8589 ||
+        charcode === 8590 ||
+        charcode === 8591
+      ) {
+        const name = `bad-character-generic`;
+        submit({
+          name,
+          position: [[i, i + 1]]
+        });
       }
     }
     if (

@@ -34,7 +34,8 @@
   "esp-line-break-within-templating-tag": {
     "description": "There should be no line breaks within ESP template tags",
     "excerpt": "line break should be removed",
-    "scope": "all"
+    "scope": "all",
+    "unfixable": true
   },
   "file-empty": {
     "description": "the contents are empty",

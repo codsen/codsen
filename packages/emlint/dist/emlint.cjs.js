@@ -731,7 +731,8 @@ var errorsRules = {
 	"esp-line-break-within-templating-tag": {
 	description: "There should be no line breaks within ESP template tags",
 	excerpt: "line break should be removed",
-	scope: "all"
+	scope: "all",
+	unfixable: true
 },
 	"file-empty": {
 	description: "the contents are empty",
@@ -2230,16 +2231,18 @@ function lint(str, originalOpts) {
         resetLogAttr();
       }
     }
-    if (!doNothingUntil) {
-      if (charcode < 32) {
-        var _name5 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
-        if (charcode === 9) {
+    if (charcode < 32) {
+      var _name5 = "bad-character-".concat(lowAsciiCharacterNames[charcode]);
+      if (charcode === 9) {
+        if (!doNothingUntil) {
           submit({
             name: _name5,
             position: [[_i, _i + 1, "  "]]
           });
-        } else if (charcode === 13) {
-          if (isStr$1(str[_i + 1]) && str[_i + 1].charCodeAt(0) === 10) {
+        }
+      } else if (charcode === 13) {
+        if (isStr$1(str[_i + 1]) && str[_i + 1].charCodeAt(0) === 10) {
+          if (!doNothingUntil) {
             if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CRLF") {
               submit({
                 name: "file-wrong-type-line-ending-CRLF",
@@ -2248,7 +2251,15 @@ function lint(str, originalOpts) {
             } else {
               logLineEndings.crlf.push([_i, _i + 2]);
             }
-          } else {
+          }
+          if (logEspTag.headStartAt !== null) {
+            submit({
+              name: "esp-line-break-within-templating-tag",
+              position: [[_i, _i + 2]]
+            });
+          }
+        } else {
+          if (!doNothingUntil) {
             if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "CR") {
               submit({
                 name: "file-wrong-type-line-ending-CR",
@@ -2258,8 +2269,16 @@ function lint(str, originalOpts) {
               logLineEndings.cr.push([_i, _i + 1]);
             }
           }
-        } else if (charcode === 10) {
-          if (!(isStr$1(str[_i - 1]) && str[_i - 1].charCodeAt(0) === 13)) {
+          if (logEspTag.headStartAt !== null) {
+            submit({
+              name: "esp-line-break-within-templating-tag",
+              position: [[_i, _i + 1]]
+            });
+          }
+        }
+      } else if (charcode === 10) {
+        if (!(isStr$1(str[_i - 1]) && str[_i - 1].charCodeAt(0) === 13)) {
+          if (!doNothingUntil) {
             if (opts.style && opts.style.line_endings_CR_LF_CRLF && opts.style.line_endings_CR_LF_CRLF !== "LF") {
               submit({
                 name: "file-wrong-type-line-ending-LF",
@@ -2269,166 +2288,172 @@ function lint(str, originalOpts) {
               logLineEndings.lf.push([_i, _i + 1]);
             }
           }
-        } else {
-          var nearestNonWhitespaceCharIdxOnTheLeft = stringLeftRight.left(str, _i);
-          var nearestNonWhitespaceCharIdxOnTheRight = stringLeftRight.right(str, _i);
-          var addThis;
-          if (nearestNonWhitespaceCharIdxOnTheLeft < _i - 1 && (nearestNonWhitespaceCharIdxOnTheRight > _i + 1 || nearestNonWhitespaceCharIdxOnTheRight === null && str[_i + 1] && str[_i + 1] !== "\n" && str[_i + 1] !== "\r" && !str[_i + 1].trim().length)
-          ) {
-              var tempWhitespace = str.slice(nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight);
-              if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
-                if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
-                  addThis = opts.style.line_endings_CR_LF_CRLF;
-                } else {
-                  addThis = "\n";
-                }
-              } else {
-                addThis = " ";
-              }
-            }
-          if (addThis) {
+          if (logEspTag.headStartAt !== null) {
             submit({
-              name: _name5,
-              position: [[nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight, addThis]]
-            });
-          } else {
-            submit({
-              name: _name5,
+              name: "esp-line-break-within-templating-tag",
               position: [[_i, _i + 1]]
             });
           }
         }
-      } else if (charcode > 126 && charcode < 160) {
-        var _name6 = "bad-character-".concat(c1CharacterNames[charcode - 127]);
-        submit({
-          name: _name6,
-          position: [[_i, _i + 1]]
-        });
-      } else if (charcode === 160) {
-        var _name7 = "bad-character-unencoded-non-breaking-space";
-        submit({
-          name: _name7,
-          position: [[_i, _i + 1, "&nbsp;"]]
-        });
-      } else if (charcode === 5760) {
-        var _name8 = "bad-character-ogham-space-mark";
-        submit({
-          name: _name8,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8192) {
-        var _name9 = "bad-character-en-quad";
-        submit({
-          name: _name9,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8193) {
-        var _name10 = "bad-character-em-quad";
-        submit({
-          name: _name10,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8194) {
-        var _name11 = "bad-character-en-space";
-        submit({
-          name: _name11,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8195) {
-        var _name12 = "bad-character-em-space";
-        submit({
-          name: _name12,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8196) {
-        var _name13 = "bad-character-three-per-em-space";
-        submit({
-          name: _name13,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8197) {
-        var _name14 = "bad-character-four-per-em-space";
-        submit({
-          name: _name14,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8198) {
-        var _name15 = "bad-character-six-per-em-space";
-        submit({
-          name: _name15,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8199) {
-        var _name16 = "bad-character-figure-space";
-        submit({
-          name: _name16,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8200) {
-        var _name17 = "bad-character-punctuation-space";
-        submit({
-          name: _name17,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8201) {
-        var _name18 = "bad-character-thin-space";
-        submit({
-          name: _name18,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8202) {
-        var _name19 = "bad-character-hair-space";
-        submit({
-          name: _name19,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8203) {
-        var _name20 = "bad-character-zero-width-space";
-        submit({
-          name: _name20,
-          position: [[_i, _i + 1]]
-        });
-      } else if (charcode === 8232) {
-        var _name21 = "bad-character-line-separator";
-        submit({
-          name: _name21,
-          position: [[_i, _i + 1, "\n"]]
-        });
-      } else if (charcode === 8233) {
-        var _name22 = "bad-character-paragraph-separator";
-        submit({
-          name: _name22,
-          position: [[_i, _i + 1, "\n"]]
-        });
-      } else if (charcode === 8239) {
-        var _name23 = "bad-character-narrow-no-break-space";
-        submit({
-          name: _name23,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 8287) {
-        var _name24 = "bad-character-medium-mathematical-space";
-        submit({
-          name: _name24,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (charcode === 12288) {
-        var _name25 = "bad-character-ideographic-space";
-        submit({
-          name: _name25,
-          position: [[_i, _i + 1, " "]]
-        });
-      } else if (encodeChar$1(str, _i)) {
-        var _newIssue = encodeChar$1(str, _i);
-        submit(_newIssue, "raw");
-      } else if (charcode >= 888 && charcode <= 8591) {
-        if (charcode === 888 || charcode === 889 || charcode >= 896 && charcode <= 899 || charcode === 907 || charcode === 909 || charcode === 930 || charcode === 1328 || charcode === 1367 || charcode === 1368 || charcode === 1419 || charcode === 1419 || charcode === 1420 || charcode === 1424 || charcode >= 1480 && charcode <= 1487 || charcode >= 1515 && charcode <= 1519 || charcode >= 1525 && charcode <= 1535 || charcode === 1565 || charcode === 1806 || charcode === 1867 || charcode === 1868 || charcode >= 1970 && charcode <= 1983 || charcode >= 2043 && charcode <= 2047 || charcode === 2094 || charcode === 2095 || charcode === 2111 || charcode === 2140 || charcode === 2141 || charcode === 2143 || charcode >= 2155 && charcode <= 2207 || charcode === 2229 || charcode >= 2238 && charcode <= 2258 || charcode === 2436 || charcode === 2445 || charcode === 2446 || charcode === 2449 || charcode === 2450 || charcode === 2473 || charcode === 2481 || charcode === 2483 || charcode === 2484 || charcode === 2485 || charcode === 2490 || charcode === 2491 || charcode === 2501 || charcode === 2502 || charcode === 2505 || charcode === 2506 || charcode >= 2511 && charcode <= 2518 || charcode >= 2520 && charcode <= 2523 || charcode === 2526 || charcode >= 8384 && charcode <= 8399 || charcode >= 8433 && charcode <= 8447 || charcode === 8588 || charcode === 8589 || charcode === 8590 || charcode === 8591) {
-          var _name26 = "bad-character-generic";
+      } else if (!doNothingUntil) {
+        var nearestNonWhitespaceCharIdxOnTheLeft = stringLeftRight.left(str, _i);
+        var nearestNonWhitespaceCharIdxOnTheRight = stringLeftRight.right(str, _i);
+        var addThis;
+        if (nearestNonWhitespaceCharIdxOnTheLeft < _i - 1 && (nearestNonWhitespaceCharIdxOnTheRight > _i + 1 || nearestNonWhitespaceCharIdxOnTheRight === null && str[_i + 1] && str[_i + 1] !== "\n" && str[_i + 1] !== "\r" && !str[_i + 1].trim().length)
+        ) {
+            var tempWhitespace = str.slice(nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight);
+            if (tempWhitespace.includes("\n") || tempWhitespace.includes("\r")) {
+              if (opts.style && opts.style.line_endings_CR_LF_CRLF) {
+                addThis = opts.style.line_endings_CR_LF_CRLF;
+              } else {
+                addThis = "\n";
+              }
+            } else {
+              addThis = " ";
+            }
+          }
+        if (addThis) {
           submit({
-            name: _name26,
+            name: _name5,
+            position: [[nearestNonWhitespaceCharIdxOnTheLeft + 1, nearestNonWhitespaceCharIdxOnTheRight, addThis]]
+          });
+        } else {
+          submit({
+            name: _name5,
             position: [[_i, _i + 1]]
           });
         }
+      }
+    } else if (!doNothingUntil && charcode > 126 && charcode < 160) {
+      var _name6 = "bad-character-".concat(c1CharacterNames[charcode - 127]);
+      submit({
+        name: _name6,
+        position: [[_i, _i + 1]]
+      });
+    } else if (!doNothingUntil && charcode === 160) {
+      var _name7 = "bad-character-unencoded-non-breaking-space";
+      submit({
+        name: _name7,
+        position: [[_i, _i + 1, "&nbsp;"]]
+      });
+    } else if (!doNothingUntil && charcode === 5760) {
+      var _name8 = "bad-character-ogham-space-mark";
+      submit({
+        name: _name8,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8192) {
+      var _name9 = "bad-character-en-quad";
+      submit({
+        name: _name9,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8193) {
+      var _name10 = "bad-character-em-quad";
+      submit({
+        name: _name10,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8194) {
+      var _name11 = "bad-character-en-space";
+      submit({
+        name: _name11,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8195) {
+      var _name12 = "bad-character-em-space";
+      submit({
+        name: _name12,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8196) {
+      var _name13 = "bad-character-three-per-em-space";
+      submit({
+        name: _name13,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8197) {
+      var _name14 = "bad-character-four-per-em-space";
+      submit({
+        name: _name14,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8198) {
+      var _name15 = "bad-character-six-per-em-space";
+      submit({
+        name: _name15,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8199) {
+      var _name16 = "bad-character-figure-space";
+      submit({
+        name: _name16,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8200) {
+      var _name17 = "bad-character-punctuation-space";
+      submit({
+        name: _name17,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8201) {
+      var _name18 = "bad-character-thin-space";
+      submit({
+        name: _name18,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8202) {
+      var _name19 = "bad-character-hair-space";
+      submit({
+        name: _name19,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8203) {
+      var _name20 = "bad-character-zero-width-space";
+      submit({
+        name: _name20,
+        position: [[_i, _i + 1]]
+      });
+    } else if (!doNothingUntil && charcode === 8232) {
+      var _name21 = "bad-character-line-separator";
+      submit({
+        name: _name21,
+        position: [[_i, _i + 1, "\n"]]
+      });
+    } else if (!doNothingUntil && charcode === 8233) {
+      var _name22 = "bad-character-paragraph-separator";
+      submit({
+        name: _name22,
+        position: [[_i, _i + 1, "\n"]]
+      });
+    } else if (!doNothingUntil && charcode === 8239) {
+      var _name23 = "bad-character-narrow-no-break-space";
+      submit({
+        name: _name23,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 8287) {
+      var _name24 = "bad-character-medium-mathematical-space";
+      submit({
+        name: _name24,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && charcode === 12288) {
+      var _name25 = "bad-character-ideographic-space";
+      submit({
+        name: _name25,
+        position: [[_i, _i + 1, " "]]
+      });
+    } else if (!doNothingUntil && encodeChar$1(str, _i)) {
+      var _newIssue = encodeChar$1(str, _i);
+      submit(_newIssue, "raw");
+    } else if (!doNothingUntil && charcode >= 888 && charcode <= 8591) {
+      if (charcode === 888 || charcode === 889 || charcode >= 896 && charcode <= 899 || charcode === 907 || charcode === 909 || charcode === 930 || charcode === 1328 || charcode === 1367 || charcode === 1368 || charcode === 1419 || charcode === 1419 || charcode === 1420 || charcode === 1424 || charcode >= 1480 && charcode <= 1487 || charcode >= 1515 && charcode <= 1519 || charcode >= 1525 && charcode <= 1535 || charcode === 1565 || charcode === 1806 || charcode === 1867 || charcode === 1868 || charcode >= 1970 && charcode <= 1983 || charcode >= 2043 && charcode <= 2047 || charcode === 2094 || charcode === 2095 || charcode === 2111 || charcode === 2140 || charcode === 2141 || charcode === 2143 || charcode >= 2155 && charcode <= 2207 || charcode === 2229 || charcode >= 2238 && charcode <= 2258 || charcode === 2436 || charcode === 2445 || charcode === 2446 || charcode === 2449 || charcode === 2450 || charcode === 2473 || charcode === 2481 || charcode === 2483 || charcode === 2484 || charcode === 2485 || charcode === 2490 || charcode === 2491 || charcode === 2501 || charcode === 2502 || charcode === 2505 || charcode === 2506 || charcode >= 2511 && charcode <= 2518 || charcode >= 2520 && charcode <= 2523 || charcode === 2526 || charcode >= 8384 && charcode <= 8399 || charcode >= 8433 && charcode <= 8447 || charcode === 8588 || charcode === 8589 || charcode === 8590 || charcode === 8591) {
+        var _name26 = "bad-character-generic";
+        submit({
+          name: _name26,
+          position: [[_i, _i + 1]]
+        });
       }
     }
     if (!doNothingUntil && logWhitespace.startAt !== null && str[_i].trim().length) {
