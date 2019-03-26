@@ -3152,14 +3152,18 @@ test(`31.10 - ${`\u001b[${33}m${`esp-more-opening-parentheses-than-closing`}\u00
 // 32. rule "esp-line-break-within-templating-tag"
 // -----------------------------------------------------------------------------
 
-test(`32.01 - ${`\u001b[${34}m${`esp-line-break-within-templating-tag`}\u001b[${39}m`} - one line break`, t =>
+test(`32.01 - ${`\u001b[${34}m${`esp-line-break-within-templating-tag`}\u001b[${39}m`} - multiple line breaks`, t =>
   c2(
-    `a $cond(something\nhere)$ b`,
+    `a $cond(\r\nsomething\nhere)$ b`,
     {
       issues: [
         {
           name: "esp-line-break-within-templating-tag",
-          position: [[17, 18]]
+          position: [[8, 10]]
+        },
+        {
+          name: "esp-line-break-within-templating-tag",
+          position: [[19, 20]]
         }
       ]
     },
