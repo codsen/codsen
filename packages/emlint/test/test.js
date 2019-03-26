@@ -1,104 +1,6 @@
-import errors from "../src/errors-rules.json";
 import { lint } from "../dist/emlint.esm";
-import clone from "lodash.clonedeep";
-import apply from "ranges-apply";
 import test from "ava";
-
-// all rules turned off:
-let allOff = clone(errors);
-Object.keys(allOff).forEach(key => {
-  allOff[key] = false;
-});
-allOff = { rules: clone(allOff) };
-
-// this is loose checker, functions would pass too, but it's fine for testing needs:
-function isObj(something) {
-  return typeof something === "object" && something !== null;
-}
-
-function getUniqueIssueNames(issues) {
-  return issues.reduce((accum, curr) => {
-    if (!accum.includes(curr.name)) {
-      return accum.concat([curr.name]);
-    }
-    return accum;
-  }, []);
-}
-
-function c(bad, good, issuesArr, t, opts) {
-  // zero issue inputs:
-  if (arguments.length === 2) {
-    // t is argument "good"
-    good.deepEqual(lint(bad).issues, [], "part 1");
-  } else if (arguments.length === 5 && !good && !issuesArr) {
-    // all args are in place, but it's zero-issue checking, with opts
-    t.deepEqual(lint(bad, opts).issues, [], "part 1");
-  } else {
-    // arrayiffy the issue if one was sent
-    if (typeof issuesArr === "string") {
-      issuesArr = [issuesArr];
-    }
-    // get the linting result:
-    const res1 = lint(bad, opts);
-    // ensure fixes turn "bad" into "good":
-    t.is(apply(bad, res1.fix), good, "part 1 - code fixed correctly");
-    // ensure rules list is as expected:
-    t.deepEqual(
-      getUniqueIssueNames(res1.issues).sort(),
-      issuesArr.sort(),
-      "part 2 - enabled rules list"
-    );
-    // prepare a set of exactly the same rules, but disabled:
-    const allRulesDisabled = Object.keys(res1.applicableRules)
-      .filter(rule => res1.applicableRules[rule])
-      .reduce((accum, curr) => {
-        accum[curr] = false;
-        return accum;
-      }, {});
-    // console.log("\n\n\n███████████████████████████████████████\n\n\n");
-    // console.log(
-    //   `060 test.js: ${`\u001b[${33}m${`allRulesDisabled`}\u001b[${39}m`} = ${JSON.stringify(
-    //     allRulesDisabled,
-    //     null,
-    //     4
-    //   )}`
-    // );
-
-    // additionally, some rules can come from opts.style, not from opts.rules
-    // here, traverse all opts.rules (if any) and add "= false" overrides
-    // to disable each, and put them under opts.rules.
-    if (
-      isObj(opts) &&
-      isObj(opts.style) &&
-      Object.keys(opts.style).length &&
-      Object.keys(opts.style).includes("line_endings_CR_LF_CRLF")
-    ) {
-      allRulesDisabled["file-mixed-line-endings-file-is-CR-mainly"] = false;
-      allRulesDisabled["file-mixed-line-endings-file-is-CRLF-mainly"] = false;
-      allRulesDisabled["file-mixed-line-endings-file-is-LF-mainly"] = false;
-    }
-    t.deepEqual(
-      lint(bad, { rules: allRulesDisabled }).issues,
-      [],
-      "part 3 - rules disabled"
-    );
-  }
-}
-
-// c2() is used for rules which are unfixable
-function c2(bad, resToCompareWith, t, opts) {
-  const linted = lint(bad, opts);
-  // console.log(
-  //   `092 test.js: ${`\u001b[${33}m${`linted`}\u001b[${39}m`} = ${JSON.stringify(
-  //     linted,
-  //     null,
-  //     4
-  //   )}`
-  // );
-  t.deepEqual(linted.issues, resToCompareWith.issues);
-  t.deepEqual(lint(bad, allOff).issues, []);
-  t.is(apply(bad, linted.fix), bad);
-}
+import { c, c2, getUniqueIssueNames } from "../test-util/util";
 
 // 00. Insurance
 // -----------------------------------------------------------------------------
@@ -199,311 +101,6 @@ test(`01.04 - ${`\u001b[${35}m${`space between the tag name and opening bracket`
     ["bad-character-character-tabulation", "tag-space-after-opening-bracket"],
     t
   ));
-
-// 02. rule "bad-character-*"
-// -----------------------------------------------------------------------------
-
-const charactersToTest = [
-  "null",
-  "start-of-heading",
-  "start-of-text",
-  "end-of-text",
-  "end-of-transmission",
-  "enquiry",
-  "acknowledge",
-  "bell",
-  "backspace",
-  "character-tabulation",
-  "line-feed",
-  "line-tabulation",
-  "form-feed",
-  "carriage-return",
-  "shift-out",
-  "shift-in",
-  "data-link-escape",
-  "device-control-one",
-  "device-control-two",
-  "device-control-three",
-  "device-control-four",
-  "negative-acknowledge",
-  "synchronous-idle",
-  "end-of-transmission-block",
-  "cancel",
-  "end-of-medium",
-  "substitute",
-  "escape",
-  "information-separator-four",
-  "information-separator-three",
-  "information-separator-two",
-  "information-separator-one"
-];
-
-test(`02.XX - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ASCII 0-31`, t => {
-  charactersToTest.forEach((characterStr, idx) => {
-    if (idx !== 9 && idx !== 10 && idx !== 13) {
-      // 9 = tab, 10 = LF, 13 = CR
-      const bad1 = String.fromCharCode(idx);
-      const res1 = lint(bad1);
-      t.is(
-        res1.issues[0].name,
-        `bad-character-${characterStr}`,
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.01`
-      );
-      t.deepEqual(
-        res1.issues[0].position,
-        [[0, 1]],
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.02`
-      );
-      t.is(
-        apply(bad1, res1.fix),
-        "",
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.03`
-      );
-
-      const bad2 = `aaaaa\n\n\n${bad1}bbb`;
-      const res2 = lint(bad2);
-      t.is(
-        res2.issues[0].name,
-        `bad-character-${characterStr}`,
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.04`
-      );
-      t.deepEqual(
-        res2.issues[0].position,
-        [[8, 9]],
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.05`
-      );
-      t.is(
-        apply(bad2, res2.fix),
-        "aaaaa\n\n\nbbb",
-        `02.${String(idx).length === 1 ? `0${idx}` : idx}.06`
-      );
-    }
-  });
-});
-
-const c1CharactersToTest = [
-  "delete",
-  "padding",
-  "high-octet-preset",
-  "break-permitted-here",
-  "no-break-here",
-  "index",
-  "next-line",
-  "start-of-selected-area",
-  "end-of-selected-area",
-  "character-tabulation-set",
-  "character-tabulation-with-justification",
-  "line-tabulation-set",
-  "partial-line-forward",
-  "partial-line-backward",
-  "reverse-line-feed",
-  "single-shift-two",
-  "single-shift-three",
-  "device-control-string",
-  "private-use-1",
-  "private-use-2",
-  "set-transmit-state",
-  "cancel-character",
-  "message-waiting",
-  "start-of-protected-area",
-  "end-of-protected-area",
-  "start-of-string",
-  "single-graphic-character-introducer",
-  "single-character-intro-introducer",
-  "control-sequence-introducer",
-  "string-terminator",
-  "operating-system-command",
-  "private-message",
-  "application-program-command"
-];
-
-test(`02.YY - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - Unicode 127-159`, t => {
-  c1CharactersToTest.forEach((characterStr, idx) => {
-    const bad1 = String.fromCharCode(idx + 127);
-    const res1 = lint(bad1);
-    t.is(
-      res1.issues[0].name,
-      `bad-character-${characterStr}`,
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.01`
-    );
-    t.deepEqual(
-      res1.issues[0].position,
-      [[0, 1]],
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.02`
-    );
-    t.is(
-      apply(bad1, res1.fix),
-      "",
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.03`
-    );
-
-    const bad2 = `aaaaa\n\n\n${bad1}bbb`;
-    const res2 = lint(bad2);
-    t.is(
-      res2.issues[0].name,
-      `bad-character-${characterStr}`,
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.04`
-    );
-    t.deepEqual(
-      res2.issues[0].position,
-      [[8, 9]],
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.05`
-    );
-    t.is(
-      apply(bad2, res2.fix),
-      "aaaaa\n\n\nbbb",
-      `02.${String(idx).length === 1 ? `0${idx}` : idx}.06`
-    );
-  });
-});
-
-test(`02.01 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - DELETE character (control)`, t => {
-  t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "02.01");
-});
-
-test(`02.02 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, tight`, t =>
-  c(`first\u0003second`, `firstsecond`, "bad-character-end-of-text", t));
-
-test(`02.03 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t =>
-  c(`first \u0003second`, `first second`, "bad-character-end-of-text", t));
-
-test(`02.04 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced`, t =>
-  c(`first \u0003 second`, `first second`, "bad-character-end-of-text", t));
-
-test(`02.05 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ETX character, spaced with line breaks`, t =>
-  c(`first \u0003\nsecond`, `first\nsecond`, "bad-character-end-of-text", t));
-
-// https://www.fileformat.info/info/unicode/char/200b/index.htm
-test(`02.06 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - zero width space`, t =>
-  c("a\u200Bb", `ab`, "bad-character-zero-width-space", t));
-
-// https://en.wikipedia.org/wiki/Non-breaking_space
-// http://www.fileformat.info/info/unicode/char/00a0/browsertest.htm
-test(`02.07 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - between letters`, t =>
-  c("a\xA0b", `a&nbsp;b`, "bad-character-unencoded-non-breaking-space", t));
-
-// when raw non-breaking spaces are copy pasted into code editor:
-test(`02.08 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded non-breaking space - among indentations`, t =>
-  c(
-    `
-\xA0  <!--[if gte mso 9]>
-\xA0  <xml>
-  \xA0  <o:Z>
-  \xA0  <o:AA/>
-  \xA0  <o:P>96</o:P>
-  \xA0  </o:Z>
-\xA0  </xml>
-\xA0  <![endif]-->`,
-    `
-&nbsp;  <!--[if gte mso 9]>
-&nbsp;  <xml>
-  &nbsp;  <o:Z>
-  &nbsp;  <o:AA/>
-  &nbsp;  <o:P>96</o:P>
-  &nbsp;  </o:Z>
-&nbsp;  </xml>
-&nbsp;  <![endif]-->`,
-    "bad-character-unencoded-non-breaking-space",
-    t
-  ));
-
-test(`02.09 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded grave accent`, t =>
-  c("a`b", `a&#x60;b`, "bad-character-grave-accent", t));
-
-// line separator character
-// https://www.fileformat.info/info/unicode/char/2028/index.htm
-test(`02.10 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded line separator`, t =>
-  c("a\u2028b", `a\nb`, "bad-character-line-separator", t));
-
-test(`02.11 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded pound`, t =>
-  c("a\xA3b", `a&pound;b`, "bad-character-unencoded-pound", t));
-
-test(`02.12 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded euro`, t =>
-  c("a\u20ACb", `a&euro;b`, "bad-character-unencoded-euro", t));
-
-test(`02.13 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - unencoded cent`, t =>
-  c("a\xA2b", `a&cent;b`, "bad-character-unencoded-cent", t));
-
-test(`02.14 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - generic bad characters`, t =>
-  c("a\u0378b", `ab`, "bad-character-generic", t));
-
-// https://www.fileformat.info/info/unicode/char/2000/index.htm
-test(`02.15 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en quad`, t =>
-  c("a\u2000b", `a b`, "bad-character-en-quad", t));
-
-test(`02.16 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em quad`, t =>
-  c("a\u2001b", `a b`, "bad-character-em-quad", t));
-
-test(`02.17 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - en space`, t =>
-  c("a\u2002b", `a b`, "bad-character-en-space", t));
-
-test(`02.18 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - em space`, t =>
-  c("a\u2003b", `a b`, "bad-character-em-space", t));
-
-// three-per-em space:
-// https://www.fileformat.info/info/unicode/char/2004/index.htm
-test(`02.19 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - three-per-em space`, t =>
-  c("a\u2004b", `a b`, "bad-character-three-per-em-space", t));
-
-// four-per-em space:
-// https://www.fileformat.info/info/unicode/char/2005/index.htm
-test(`02.20 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - four-per-em space`, t =>
-  c("a\u2005b", `a b`, "bad-character-four-per-em-space", t));
-
-// six-per-em space:
-// https://www.fileformat.info/info/unicode/char/2006/index.htm
-test(`02.21 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - six-per-em space`, t =>
-  c("a\u2006b", `a b`, "bad-character-six-per-em-space", t));
-
-// figure space:
-// https://www.fileformat.info/info/unicode/char/2007/index.htm
-test(`02.22 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - figure space`, t =>
-  c("a\u2007b", `a b`, "bad-character-figure-space", t));
-
-// punctuation space:
-// https://www.fileformat.info/info/unicode/char/2008/index.htm
-test(`02.23 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - punctuation space`, t =>
-  c("a\u2008b", `a b`, "bad-character-punctuation-space", t));
-
-// thin space:
-// https://www.fileformat.info/info/unicode/char/2009/index.htm
-test(`02.24 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - thin space`, t =>
-  c("a\u2009b", `a b`, "bad-character-thin-space", t));
-
-// hair space:
-// https://www.fileformat.info/info/unicode/char/200a/index.htm
-test(`02.25 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - hair space`, t =>
-  c("a\u200ab", `a b`, "bad-character-hair-space", t));
-
-// narrow no-break space:
-// https://www.fileformat.info/info/unicode/char/202f/index.htm
-test(`02.26 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - narrow no-break space`, t =>
-  c("a\u202Fb", `a b`, "bad-character-narrow-no-break-space", t));
-
-// line separator:
-// https://www.fileformat.info/info/unicode/char/2028/index.htm
-test(`02.27 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - line separator`, t =>
-  c("a\u2028b", `a\nb`, "bad-character-line-separator", t));
-
-// paragraph separator:
-// https://www.fileformat.info/info/unicode/char/2029/index.htm
-test(`02.28 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - paragraph separator`, t =>
-  c("a\u2029b", `a\nb`, "bad-character-paragraph-separator", t));
-
-// medium mathematical space:
-// https://www.fileformat.info/info/unicode/char/205f/index.htm
-test(`02.29 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - medium mathematical space`, t =>
-  c("a\u205fb", `a b`, "bad-character-medium-mathematical-space", t));
-
-// ideographic space:
-// https://www.fileformat.info/info/unicode/char/3000/index.htm
-test(`02.30 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ideographic space`, t =>
-  c("a\u3000b", `a b`, "bad-character-ideographic-space", t));
-
-// ogham space mark:
-// https://www.fileformat.info/info/unicode/char/1680/index.htm
-test(`02.31 - ${`\u001b[${31}m${`raw bad characters`}\u001b[${39}m`} - ogham space mark`, t =>
-  c("a\u1680b", `a b`, "bad-character-ogham-space-mark", t));
 
 // 03. rule "tag-name-lowercase"
 // -----------------------------------------------------------------------------
@@ -2838,6 +2435,54 @@ test(`27.10 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wh
     t
   ));
 
+test(`27.11 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA first opening bracket missing`, t =>
+  c(
+    `<!CDATA[some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    "bad-cdata-tag-malformed",
+    t
+  ));
+
+test(`27.12 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, tight`, t =>
+  c(
+    `<![CDATAsome stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    "bad-cdata-tag-malformed",
+    t
+  ));
+
+test(`27.13 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, spaced`, t =>
+  c(
+    `<![CDATA some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    "bad-cdata-tag-malformed",
+    t
+  ));
+
+test(`27.14 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, loose`, t =>
+  c(
+    `<![CDATA   some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    "bad-cdata-tag-malformed",
+    t
+  ));
+
+test(`27.15 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA missing opening bracket and excl mark`, t =>
+  c(
+    `<CDATA[some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    "bad-cdata-tag-malformed",
+    t
+  ));
+
+test(`27.16 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - seriously messed up CDATA tag`, t =>
+  c(
+    `<! C D A t A some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    ["bad-cdata-tag-character-case", "bad-cdata-tag-malformed"],
+    t
+  ));
+
 // 28. rule "bad-named-html-entity-multiple-encoding"
 // -----------------------------------------------------------------------------
 
@@ -3186,6 +2831,63 @@ test(`32.01 - ${`\u001b[${34}m${`esp-line-break-within-templating-tag`}\u001b[${
     t
   ));
 
+// 33. HTML comments
+// -----------------------------------------------------------------------------
+
+test(`33.01 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - single < character`, t =>
+  c(`<`, `&lt;`, "bad-character-unencoded-opening-bracket", t));
+
+test(`33.02 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - simple commented tag`, t =>
+  c(`abc <!--<d>--> xyz`, t));
+
+test(`33.03 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - simple commented text`, t =>
+  c(`abc <!--text--> xyz`, t));
+
+test(`33.04 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - does not mangle the legit HTML comments`, t => {
+  c(`<!--<a href="xxx" target="_blank">z</a>-->`, t);
+  c(`<!-- <a href="xxx" target="_blank">z</a> -->`, t);
+  c(`<!--\n<a href="xxx" target="_blank">z</a>\n-->`, t);
+});
+
+test(`33.05 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - space after 1st`, t =>
+  c(`abc < !--<d>--> xyz`, `abc <!--<d>--> xyz`, "html-comment-spaces", t));
+
+test(`33.06 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - spaces after 1st`, t =>
+  c(
+    `abc <  \t !--<d>--> xyz`,
+    `abc <!--<d>--> xyz`,
+    ["bad-character-character-tabulation", "html-comment-spaces"],
+    t
+  ));
+
+test(`33.07 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - space after 2nd`, t =>
+  c(`abc <! --<d>--> xyz`, `abc <!--<d>--> xyz`, "html-comment-spaces", t));
+
+test(`33.08 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - spaces after 2nd`, t =>
+  c(`abc <!  \n --<d>--> xyz`, `abc <!--<d>--> xyz`, "html-comment-spaces", t));
+
+test(`33.09 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - space after 3rd`, t =>
+  c(`abc <!- -<d>--> xyz`, `abc <!--<d>--> xyz`, "html-comment-spaces", t));
+
+test(`33.10 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - spaces after 3rd`, t =>
+  c(`abc <!-  \n -<d>--> xyz`, `abc <!--<d>--> xyz`, "html-comment-spaces", t));
+
+test(`33.11 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - multiple`, t =>
+  c(
+    `abc <!-  \n --<d>--> xyz`,
+    `abc <!--<d>--> xyz`,
+    ["html-comment-redundant-dash", "html-comment-spaces"],
+    t
+  ));
+
+test(`33.12 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - repeated dashes`, t =>
+  c(
+    `abc <!- - - - - - - - - - - <d>--> xyz`,
+    `abc <!--<d>--> xyz`,
+    ["html-comment-redundant-dash", "html-comment-spaces"],
+    t
+  ));
+
 // XX. ad hoc
 // -----------------------------------------------------------------------------
 
@@ -3221,7 +2923,10 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templatin
 // <>< ><gh="ij">< ><>
 // <table ab="bb cc="dd">
 // messed up HTML comments - excl. mark missing, dash missing etc
-// excessive space in front of esp tag within html tag's whitespace
+// zzzz < !DOCTYPE html> zzzz - should mention doctype
+// zzzz < ! DOCTYPE html> zzzz - should mention doctype
+// zzzz < !   DOCTYPE html> zzzz - should mention doctype
+// zzzz <    !   DOCTYPE html> zzzz - should mention doctype
 
 // todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 

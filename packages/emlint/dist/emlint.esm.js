@@ -671,6 +671,11 @@ var errorsRules = {
 	excerpt: "wrong letter case",
 	scope: "html"
 },
+	"bad-cdata-tag-malformed": {
+	description: "CDATA opening tag is malformed",
+	excerpt: "malformed CDATA tag",
+	scope: "html"
+},
 	"bad-named-html-entity-missing-semicolon": {
 	description: "HTML named entity is missing a semicolon",
 	excerpt: "missing semicolon on a named HTML entity",
@@ -693,6 +698,26 @@ var errorsRules = {
 	excerpt: "line break should be removed",
 	scope: "all",
 	unfixable: true
+},
+	"html-comment-spaces": {
+	description: "There should be no spaces between HTML comment characters",
+	excerpt: "rogue spaces",
+	scope: "html"
+},
+	"html-comment-redundant-dash": {
+	description: "There are too many dashes in HTML comment",
+	excerpt: "redundant dash",
+	scope: "html"
+},
+	"html-comment-missing-dash": {
+	description: "The dash in the comment is missing",
+	excerpt: "missing dash",
+	scope: "html"
+},
+	"html-comment-missing-exclamation-mark": {
+	description: "The exclamation mark in the HTML comment is missing",
+	excerpt: "missing exclamation mark",
+	scope: "html"
 },
 	"file-empty": {
 	description: "the contents are empty",
@@ -1887,6 +1912,24 @@ function lint(str, originalOpts) {
       }
     }
   }
+  function submitOpeningBracket(from, to) {
+    submit(
+      {
+        name: "bad-character-unencoded-opening-bracket",
+        position: [[from, to, "&lt;"]]
+      },
+      "raw"
+    );
+  }
+  function submitClosingBracket(from, to) {
+    submit(
+      {
+        name: "bad-character-unencoded-closing-bracket",
+        position: [[from, to, "&gt;"]]
+      },
+      "raw"
+    );
+  }
   const logLineEndings = {
     cr: [],
     lf: [],
@@ -1917,37 +1960,29 @@ function lint(str, originalOpts) {
     if (
       str[i + 4] &&
       str[i].toLowerCase() === "c" &&
-      str[i + 1].toLowerCase() === "d" &&
-      str[i + 2].toLowerCase() === "a" &&
-      str[i + 3].toLowerCase() === "t" &&
-      str[i + 4].toLowerCase() === "a" &&
-      str[right(str, i + 4)] === "["
+      rightSeq(str, i, { i: true }, "d", "a", "t", "a") &&
+      "<![".includes(str[left(str, i)])
     ) {
+      const secondLetterA = rightSeq(str, i, { i: true }, "d", "a", "t", "a")
+        .rightmostChar;
+      if (str.slice(i, secondLetterA + 1) !== "CDATA") {
+        submit({
+          name: "bad-cdata-tag-character-case",
+          position: [[i, secondLetterA + 1, "CDATA"]]
+        });
+      }
       let leftSquareBracketAt = null;
       let exclMarkAt = null;
       let leftOpeningBracketAt = null;
-      const openingBracketAt = right(str, i + 4);
       const whatsOnTheLeftOfC = left(str, i);
-      if (whatsOnTheLeftOfC !== null && str[whatsOnTheLeftOfC] === "[") {
+      if (str[whatsOnTheLeftOfC] === "[") {
         leftSquareBracketAt = whatsOnTheLeftOfC;
         const whatsOnTheLeftOfBracket = left(str, whatsOnTheLeftOfC);
-        if (
-          whatsOnTheLeftOfBracket !== null &&
-          str[whatsOnTheLeftOfBracket] === "!"
-        ) {
+        if (str[whatsOnTheLeftOfBracket] === "!") {
           exclMarkAt = whatsOnTheLeftOfBracket;
           const whatsOnTheLeftOfExclMark = left(str, whatsOnTheLeftOfBracket);
-          if (
-            whatsOnTheLeftOfExclMark !== null &&
-            str[whatsOnTheLeftOfExclMark] === "<"
-          ) {
+          if (str[whatsOnTheLeftOfExclMark] === "<") {
             leftOpeningBracketAt = whatsOnTheLeftOfExclMark;
-            if (str.slice(i, i + 5) !== "CDATA") {
-              submit({
-                name: "bad-cdata-tag-character-case",
-                position: [[i, i + 5, "CDATA"]]
-              });
-            }
             if (leftSquareBracketAt < i - 1) {
               submit({
                 name: "bad-cdata-whitespace",
@@ -1960,30 +1995,50 @@ function lint(str, originalOpts) {
                 position: [[exclMarkAt + 1, leftSquareBracketAt]]
               });
             }
-            if (leftOpeningBracketAt < exclMarkAt - 1) {
+            if (
+              leftOpeningBracketAt != null &&
+              exclMarkAt != null &&
+              leftOpeningBracketAt < exclMarkAt - 1
+            ) {
               submit({
                 name: "bad-cdata-whitespace",
                 position: [[leftOpeningBracketAt + 1, exclMarkAt]]
               });
             }
-            if (openingBracketAt !== i + 5) {
-              submit({
-                name: "bad-cdata-whitespace",
-                position: [[i + 5, openingBracketAt]]
-              });
-            }
-            doNothingUntil = true;
-            doNothingUntilReason = "cdata";
-            if (rawIssueStaging.length) {
-              rawIssueStaging.forEach(issueObj => {
-                if (issueObj.position[0][0] < leftOpeningBracketAt) {
-                  submit(issueObj);
-                }
-              });
-              rawIssueStaging = [];
-            }
           }
         }
+      } else if (str[whatsOnTheLeftOfC] === "!") {
+        submit({
+          name: "bad-cdata-tag-malformed",
+          position: [[whatsOnTheLeftOfC + 1, i, "["]]
+        });
+      } else if (str[whatsOnTheLeftOfC] === "<") {
+        submit({
+          name: "bad-cdata-tag-malformed",
+          position: [[whatsOnTheLeftOfC + 1, i, "!["]]
+        });
+      }
+      const whatsOnTheRight = right(str, secondLetterA);
+      if (str[whatsOnTheRight] !== "[") {
+        submit({
+          name: "bad-cdata-tag-malformed",
+          position: [[secondLetterA + 1, whatsOnTheRight, "["]]
+        });
+      } else if (whatsOnTheRight > i + 5) {
+        submit({
+          name: "bad-cdata-whitespace",
+          position: [[i + 5, whatsOnTheRight]]
+        });
+      }
+      doNothingUntil = true;
+      doNothingUntilReason = "cdata";
+      if (rawIssueStaging.length) {
+        rawIssueStaging.forEach(issueObj => {
+          if (issueObj.position[0][0] < leftOpeningBracketAt) {
+            submit(issueObj);
+          }
+        });
+        rawIssueStaging = [];
       }
     }
     if (
@@ -2836,6 +2891,69 @@ function lint(str, originalOpts) {
         name,
         position: [[i, i + 1]]
       });
+    } else if (!doNothingUntil && charcode === 60) {
+      const whatsOnTheRight1 = right(str, i);
+      if (whatsOnTheRight1) {
+        const whatsOnTheRight2 = right(str, whatsOnTheRight1);
+        if (str[whatsOnTheRight1] === "!") {
+          if (
+            whatsOnTheRight1 > i + 1 &&
+            str[right(str, whatsOnTheRight1)] !== "["
+          ) {
+            submit({
+              name: "html-comment-spaces",
+              position: [[i + 1, whatsOnTheRight1]]
+            });
+          }
+          const whatsOnTheRight3 = right(str, whatsOnTheRight2);
+          if (str[whatsOnTheRight2] === "-") {
+            if (whatsOnTheRight2 > whatsOnTheRight1 + 1) {
+              submit({
+                name: "html-comment-spaces",
+                position: [[whatsOnTheRight1 + 1, whatsOnTheRight2]]
+              });
+            }
+            const whatsOnTheRight4 = right(str, whatsOnTheRight3);
+            if (str[whatsOnTheRight3] === "-") {
+              if (whatsOnTheRight3 > whatsOnTheRight2 + 1) {
+                submit({
+                  name: "html-comment-spaces",
+                  position: [[whatsOnTheRight2 + 1, whatsOnTheRight3]]
+                });
+              }
+            }
+            if (str[whatsOnTheRight4] === "-") {
+              let endingOfTheSequence = whatsOnTheRight4;
+              let charOnTheRightAt;
+              do {
+                charOnTheRightAt = right(str, endingOfTheSequence);
+                if (str[charOnTheRightAt] === "-") {
+                  endingOfTheSequence = charOnTheRightAt;
+                }
+              } while (str[charOnTheRightAt] === "-");
+              const charOnTheRight = right(str, endingOfTheSequence);
+              submit({
+                name: "html-comment-redundant-dash",
+                position: [[whatsOnTheRight3 + 1, charOnTheRight]]
+              });
+              doNothingUntil = charOnTheRight;
+              doNothingUntilReason = "repeated HTML comment dashes";
+            }
+          }
+        } else if (str[whatsOnTheRight1] === "-") ; else {
+          submitOpeningBracket(i, i + 1);
+        }
+      } else {
+        submitOpeningBracket(i, i + 1);
+      }
+    } else if (!doNothingUntil && charcode === 62) {
+      const whatsOnTheLeft1 = left(str, i);
+      if (str[whatsOnTheLeft1] === "-") {
+        const whatsOnTheLeft2 = left(str, whatsOnTheLeft1);
+        if (str[whatsOnTheLeft2] === "-") ;
+      } else {
+        submitClosingBracket(i, i + 1);
+      }
     } else if (!doNothingUntil && charcode === 160) {
       const name = `bad-character-unencoded-non-breaking-space`;
       submit({

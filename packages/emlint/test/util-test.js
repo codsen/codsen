@@ -939,8 +939,8 @@ test(`99.52 - ${`\u001b[${32}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${33}m${`o
 test(`99.61 - ${`\u001b[${33}m${`U T I L`}\u001b[${39}m`} - ${`\u001b[${32}m${`encodeChar()`}\u001b[${39}m`} - bad-character-unencoded-ampersand`, t => {
   const testsToRun = [
     ["&", "&amp;", "bad-character-unencoded-ampersand"],
-    ["<", "&lt;", "bad-character-unencoded-opening-bracket"],
-    [">", "&gt;", "bad-character-unencoded-closing-bracket"],
+    // ["<", "&lt;", "bad-character-unencoded-opening-bracket"],
+    // [">", "&gt;", "bad-character-unencoded-closing-bracket"],
     [`"`, "&quot;", "bad-character-unencoded-double-quotes"],
     ["`", "&#x60;", "bad-character-grave-accent"],
     ["\xA3", "&pound;", "bad-character-unencoded-pound"],

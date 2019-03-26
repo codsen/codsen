@@ -14,6 +14,11 @@
     "excerpt": "wrong letter case",
     "scope": "html"
   },
+  "bad-cdata-tag-malformed": {
+    "description": "CDATA opening tag is malformed",
+    "excerpt": "malformed CDATA tag",
+    "scope": "html"
+  },
   "bad-named-html-entity-missing-semicolon": {
     "description": "HTML named entity is missing a semicolon",
     "excerpt": "missing semicolon on a named HTML entity",
@@ -36,6 +41,26 @@
     "excerpt": "line break should be removed",
     "scope": "all",
     "unfixable": true
+  },
+  "html-comment-spaces": {
+    "description": "There should be no spaces between HTML comment characters",
+    "excerpt": "rogue spaces",
+    "scope": "html"
+  },
+  "html-comment-redundant-dash": {
+    "description": "There are too many dashes in HTML comment",
+    "excerpt": "redundant dash",
+    "scope": "html"
+  },
+  "html-comment-missing-dash": {
+    "description": "The dash in the comment is missing",
+    "excerpt": "missing dash",
+    "scope": "html"
+  },
+  "html-comment-missing-exclamation-mark": {
+    "description": "The exclamation mark in the HTML comment is missing",
+    "excerpt": "missing exclamation mark",
+    "scope": "html"
   },
   "file-empty": {
     "description": "the contents are empty",

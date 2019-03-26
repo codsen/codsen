@@ -16,6 +16,7 @@ coverage
 src
 tap
 test
+test-util
 
 # files:
 
