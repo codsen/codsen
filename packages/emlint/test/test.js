@@ -1208,6 +1208,22 @@ test(`06.11 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${3
     t
   ));
 
+test(`06.12 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - excessive whitespace before ESP tag`, t =>
+  c(
+    `<a  {% if b > 0 %}c{% else %}d{% endif %}>`,
+    `<a {% if b > 0 %}c{% else %}d{% endif %}>`,
+    "tag-excessive-whitespace-inside-tag",
+    t
+  ));
+
+test(`06.13 - ${`\u001b[${32}m${`tag-excessive-whitespace-inside-tag`}\u001b[${39}m`} - excessive whitespace after ESP tag`, t =>
+  c(
+    `<a {% if b > 0 %}c{% else %}d{% endif %}  e>`,
+    `<a {% if b > 0 %}c{% else %}d{% endif %} e>`,
+    "tag-excessive-whitespace-inside-tag",
+    t
+  ));
+
 // 07. rule "tag-attribute-space-between-equals-and-opening-quotes"
 // -----------------------------------------------------------------------------
 

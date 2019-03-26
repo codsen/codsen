@@ -1771,6 +1771,12 @@ function lint(str, originalOpts) {
         logEspTag.type = "function-based";
         logEspTag.recognised = knownESPTags.hasOwnProperty(str[_i]);
       }
+      if (logEspTag.headStartAt !== null && logWhitespace.startAt !== null && logWhitespace.startAt < _i - 1 && !logWhitespace.includesLinebreaks) {
+        submit({
+          name: "tag-excessive-whitespace-inside-tag",
+          position: [[logWhitespace.startAt + 1, _i]]
+        });
+      }
     }
     if (!doNothingUntil && logTag.tagNameEndAt !== null) {
       if (logAttr.attrNameStartAt !== null && logAttr.attrNameEndAt === null && logAttr.attrName === null && !isLatinLetter(str[_i]) && (str[_i] !== ":" || !isLatinLetter(str[_i + 1]))) {
