@@ -2005,7 +2005,17 @@ function lint(str, originalOpts) {
                 position: [[leftOpeningBracketAt + 1, exclMarkAt]]
               });
             }
+          } else if (str[whatsOnTheLeftOfExclMark] !== null) {
+            submit({
+              name: "bad-cdata-tag-malformed",
+              position: [[whatsOnTheLeftOfExclMark + 1, exclMarkAt, "<"]]
+            });
           }
+        } else if (str[whatsOnTheLeftOfBracket] === "<") {
+          submit({
+            name: "bad-cdata-tag-malformed",
+            position: [[whatsOnTheLeftOfBracket + 1, leftSquareBracketAt, "!"]]
+          });
         }
       } else if (str[whatsOnTheLeftOfC] === "!") {
         submit({

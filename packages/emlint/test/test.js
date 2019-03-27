@@ -2475,11 +2475,35 @@ test(`27.15 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA mi
     t
   ));
 
-test(`27.16 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - seriously messed up CDATA tag`, t =>
+test(`27.16 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA seriously messed up tag`, t =>
   c(
     `<! C D A t A some stuff]]>`,
     `<![CDATA[some stuff]]>`,
     ["bad-cdata-tag-character-case", "bad-cdata-tag-malformed"],
+    t
+  ));
+
+test(`27.17 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA excl mark missing`, t =>
+  c(
+    `<[CDATA[some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    ["bad-cdata-tag-malformed"],
+    t
+  ));
+
+test(`27.18 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA excl mark missing, line break instead`, t =>
+  c(
+    `<\n[CDATA[some stuff]]>`,
+    `<![CDATA[some stuff]]>`,
+    ["bad-cdata-tag-malformed"],
+    t
+  ));
+
+test(`27.19 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA missing opening bracket`, t =>
+  c(
+    `<a>![CDATA[some stuff]]>`,
+    `<a><![CDATA[some stuff]]>`,
+    ["bad-cdata-tag-malformed"],
     t
   ));
 
