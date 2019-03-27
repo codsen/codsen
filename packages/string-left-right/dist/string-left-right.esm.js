@@ -64,7 +64,7 @@ function left(str, idx) {
   }
   return null;
 }
-function seq(direction, str, idx, args) {
+function seq(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -88,7 +88,10 @@ function seq(direction, str, idx, args) {
     const { value, optional } = x(args[i]);
     const whattsOnTheSide =
       direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
-    if (str[whattsOnTheSide] === value) {
+    if (
+      (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase()) ||
+      (!opts.i && str[whattsOnTheSide] === value)
+    ) {
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
@@ -121,13 +124,31 @@ function leftSeq(str, idx, ...args) {
   if (!args.length) {
     return left(str, idx);
   }
-  return seq("left", str, idx, Array.from(args).reverse());
+  const defaults = {
+    i: false
+  };
+  let opts;
+  if (isObj(args[0])) {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  return seq("left", str, idx, opts, Array.from(args).reverse());
 }
 function rightSeq(str, idx, ...args) {
   if (!args.length) {
     return right(str, idx);
   }
-  return seq("right", str, idx, args);
+  const defaults = {
+    i: false
+  };
+  let opts;
+  if (isObj(args[0])) {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  return seq("right", str, idx, opts, args);
 }
 function chomp(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
@@ -135,11 +156,6 @@ function chomp(direction, str, idx, opts, args) {
   }
   if (!idx || typeof idx !== "number") {
     idx = 0;
-  }
-  if (opts && !isObj(opts)) {
-    throw new Error(
-      `string-left-right/chomp${direction}(): [THROW_ID_03] the opts should be a plain object! It was given as ${opts} (type ${typeof opts})`
-    );
   }
   if (
     (direction === "right" && !str[idx + 1]) ||

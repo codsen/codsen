@@ -227,6 +227,19 @@ test(`03.11 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - all optional, not existi
   t.is(rightSeq("abcdefghijklmnop", 2, "x?", "y?", "z?"), null, "03.11.03");
 });
 
+test(`03.12 - \u001b[${35}m${`rightSeq`}\u001b[${39}m - no findings`, t => {
+  t.is(rightSeq("ABCDEFGHIJKLMNOP", 0, "b", "c", "d"), null, "03.12");
+  t.deepEqual(
+    rightSeq("ABCDEFGHIJKLMNOP", 0, { i: true }, "b", "c", "d"),
+    {
+      gaps: [],
+      leftmostChar: 1,
+      rightmostChar: 3
+    },
+    "03.12"
+  );
+});
+
 // 04. leftSeq()
 // -----------------------------------------------------------------------------
 
@@ -292,6 +305,19 @@ test(`04.03 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - no sequence arguments`, t
 
 test(`04.04 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - starting point outside of the range`, t => {
   t.is(leftSeq("abcdefghijklmnop", 99, "d", "e", "f"), null, "04.04");
+});
+
+test(`04.05 - \u001b[${36}m${`leftSeq`}\u001b[${39}m - case insensitive`, t => {
+  t.is(leftSeq("abcdefghijk", 5, "C", "D", "E"), null, "04.05.01");
+  t.deepEqual(
+    leftSeq("abcdefghijk", 5, { i: true }, "C", "D", "E"),
+    {
+      gaps: [],
+      leftmostChar: 2,
+      rightmostChar: 4
+    },
+    "04.05.02"
+  );
 });
 
 // 05. chompRight()

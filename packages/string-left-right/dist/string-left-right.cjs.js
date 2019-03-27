@@ -110,7 +110,7 @@ function left(str, idx) {
   }
   return null;
 }
-function seq(direction, str, idx, args) {
+function seq(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
     return null;
   }
@@ -132,7 +132,7 @@ function seq(direction, str, idx, args) {
         value = _x.value,
         optional = _x.optional;
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
-    if (str[whattsOnTheSide] === value) {
+    if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
@@ -172,7 +172,16 @@ function leftSeq(str, idx) {
   if (!args.length) {
     return left(str, idx);
   }
-  return seq("left", str, idx, Array.from(args).reverse());
+  var defaults = {
+    i: false
+  };
+  var opts;
+  if (isObj(args[0])) {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  return seq("left", str, idx, opts, Array.from(args).reverse());
 }
 function rightSeq(str, idx) {
   for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
@@ -181,7 +190,16 @@ function rightSeq(str, idx) {
   if (!args.length) {
     return right(str, idx);
   }
-  return seq("right", str, idx, args);
+  var defaults = {
+    i: false
+  };
+  var opts;
+  if (isObj(args[0])) {
+    opts = Object.assign({}, defaults, args.shift());
+  } else {
+    opts = defaults;
+  }
+  return seq("right", str, idx, opts, args);
 }
 function chomp(direction, str, idx, opts, args) {
   if (typeof str !== "string" || !str.length) {
@@ -189,9 +207,6 @@ function chomp(direction, str, idx, opts, args) {
   }
   if (!idx || typeof idx !== "number") {
     idx = 0;
-  }
-  if (opts && !isObj(opts)) {
-    throw new Error("string-left-right/chomp".concat(direction, "(): [THROW_ID_03] the opts should be a plain object! It was given as ").concat(opts, " (type ").concat(_typeof(opts), ")"));
   }
   if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
     return null;
