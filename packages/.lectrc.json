@@ -163,6 +163,7 @@
 					"devDependencies": [
 						"**/*test.js",
 						"test/**/*.*",
+						"test-util/**/*.*",
 						"rollup.config.js"
 					]
 				}
@@ -273,15 +274,16 @@
 			".idea",
 			".nyc_output",
 			"coverage",
+			"docs",
 			"fixtures",
 			"media",
 			"reference",
-			"docs",
 			"src",
+			"tap",
 			"temp",
 			"test",
 			"test-folder",
-			"tap"
+			"test-util"
 		],
 		"goodFiles": [
 			"cli-es5.js",
