@@ -1,5 +1,5 @@
-import { lint } from "../dist/emlint.esm";
 import test from "ava";
+import { lint } from "../dist/emlint.esm";
 import { c, c2, getUniqueIssueNames } from "../test-util/util";
 
 // 00. Insurance
@@ -2385,128 +2385,6 @@ test(`27.04 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash mi
     t
   ));
 
-test(`27.05 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wrong letter case`, t =>
-  c(
-    `<![CDaTA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-character-case",
-    t
-  ));
-
-// this checks, do CDATA escapes (doNothingUntil) enable and disable themselves
-// at exactly right places.
-test(`27.06 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA wrong letter case + pound`, t =>
-  c(
-    `£<![CDATA[£]]>£`,
-    `&pound;<![CDATA[£]]>&pound;`,
-    "bad-character-unencoded-pound",
-    t
-  ));
-
-test(`27.07 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before name`, t =>
-  c(
-    `<![ CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-whitespace",
-    t
-  ));
-
-test(`27.08 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t =>
-  c(
-    `<! [CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-whitespace",
-    t
-  ));
-
-test(`27.09 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t =>
-  c(
-    `< ![CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-whitespace",
-    t
-  ));
-
-test(`27.10 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA whitespace before square bracket`, t =>
-  c(
-    `<![CDATA [some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-whitespace",
-    t
-  ));
-
-test(`27.11 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA first opening bracket missing`, t =>
-  c(
-    `<!CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-malformed",
-    t
-  ));
-
-test(`27.12 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, tight`, t =>
-  c(
-    `<![CDATAsome stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-malformed",
-    t
-  ));
-
-test(`27.13 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, spaced`, t =>
-  c(
-    `<![CDATA some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-malformed",
-    t
-  ));
-
-test(`27.14 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA second opening bracket missing, loose`, t =>
-  c(
-    `<![CDATA   some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-malformed",
-    t
-  ));
-
-test(`27.15 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA missing opening bracket and excl mark`, t =>
-  c(
-    `<CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    "bad-cdata-tag-malformed",
-    t
-  ));
-
-test(`27.16 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA seriously messed up tag`, t =>
-  c(
-    `<! C D A t A some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    ["bad-cdata-tag-character-case", "bad-cdata-tag-malformed"],
-    t
-  ));
-
-test(`27.17 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA excl mark missing`, t =>
-  c(
-    `<[CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
-
-test(`27.18 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA excl mark missing, line break instead`, t =>
-  c(
-    `<\n[CDATA[some stuff]]>`,
-    `<![CDATA[some stuff]]>`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
-
-test(`27.19 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - CDATA missing opening bracket`, t =>
-  c(
-    `<a>![CDATA[some stuff]]>`,
-    `<a><![CDATA[some stuff]]>`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
-
 // 28. rule "bad-named-html-entity-multiple-encoding"
 // -----------------------------------------------------------------------------
 
@@ -2951,6 +2829,7 @@ test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templatin
 // zzzz < ! DOCTYPE html> zzzz - should mention doctype
 // zzzz < !   DOCTYPE html> zzzz - should mention doctype
 // zzzz <    !   DOCTYPE html> zzzz - should mention doctype
+// �
 
 // todo - attr with quotes/value missing (equal dangling), ensure that when attribute enforcing is on, and that attribute is enforced, instead of removal, empty quotes are added for that attr. For example, imagine forcing all img to have alt. Source: <img src="zzz" alt=>. Result: <img src="zzz" alt="">. That's opposite of usual approach of removing the attribute completely.
 

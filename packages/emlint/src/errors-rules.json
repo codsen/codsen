@@ -9,11 +9,6 @@
     "excerpt": "malformed &nbsp;",
     "scope": "html"
   },
-  "bad-cdata-tag-character-case": {
-    "description": "CDATA opening tag name characters are in wrong letter case",
-    "excerpt": "wrong letter case",
-    "scope": "html"
-  },
   "bad-cdata-tag-malformed": {
     "description": "CDATA opening tag is malformed",
     "excerpt": "malformed CDATA tag",
