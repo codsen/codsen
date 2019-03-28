@@ -51,16 +51,23 @@ function _nonIterableSpread() {
 }
 
 function x(something) {
-  if (something.endsWith("?")) {
-    return {
-      value: something.slice(0, something.length - 1),
-      optional: true
-    };
-  }
-  return {
+  var res = {
     value: something,
+    hungry: false,
     optional: false
   };
+  if ((res.value.endsWith("?*") || res.value.endsWith("*?")) && res.value.length > 2) {
+    res.value = res.value.slice(0, res.value.length - 2);
+    res.optional = true;
+    res.hungry = true;
+  } else if (res.value.endsWith("?") && res.value.length > 1) {
+    res.value = res.value.slice(0, res.value.length - 1);
+    res.optional = true;
+  } else if (res.value.endsWith("*") && res.value.length > 1) {
+    res.value = res.value.slice(0, res.value.length - 1);
+    res.hungry = true;
+  }
+  return res;
 }
 function isNum(something) {
   return typeof something === "number";
@@ -124,15 +131,25 @@ function seq(direction, str, idx, opts, args) {
   var gaps = [];
   var leftmostChar;
   var rightmostChar;
-  for (var i = 0, len = args.length; i < len; i++) {
+  var satiated;
+  var i = 0;
+  while (i < args.length) {
     if (!isStr(args[i]) || !args[i].length) {
+      i++;
       continue;
     }
     var _x = x(args[i]),
         value = _x.value,
-        optional = _x.optional;
+        optional = _x.optional,
+        hungry = _x.hungry;
     var whattsOnTheSide = direction === "right" ? right(str, lastFinding) : left(str, lastFinding);
     if (opts.i && str[whattsOnTheSide].toLowerCase() === value.toLowerCase() || !opts.i && str[whattsOnTheSide] === value) {
+      var temp = direction === "right" ? right(str, whattsOnTheSide) : left(str, whattsOnTheSide);
+      if (hungry && (opts.i && str[temp].toLowerCase() === value.toLowerCase() || !opts.i && str[temp] === value)) {
+        satiated = true;
+      } else {
+        i++;
+      }
       if (direction === "right" && whattsOnTheSide > lastFinding + 1) {
         gaps.push([lastFinding + 1, whattsOnTheSide]);
       } else if (direction === "left" && whattsOnTheSide < lastFinding - 1) {
@@ -151,6 +168,11 @@ function seq(direction, str, idx, opts, args) {
         leftmostChar = whattsOnTheSide;
       }
     } else if (optional) {
+      i++;
+      continue;
+    } else if (satiated) {
+      i++;
+      satiated = undefined;
       continue;
     } else {
       return null;
@@ -211,18 +233,18 @@ function chomp(direction, str, idx, opts, args) {
   if (direction === "right" && !str[idx + 1] || direction === "left" && (isNum(idx) && idx < 1 || idx === "0")) {
     return null;
   }
-  var lastRes;
-  var lastIdx;
+  var lastRes = null;
+  var lastIdx = null;
   do {
     lastRes = direction === "right" ? rightSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args))) : leftSeq.apply(void 0, [str, isNum(lastIdx) ? lastIdx : idx].concat(_toConsumableArray(args)));
-    if (lastRes) {
+    if (lastRes !== null) {
       lastIdx = direction === "right" ? lastRes.rightmostChar : lastRes.leftmostChar;
     }
   } while (lastRes);
   if (lastIdx != null && direction === "right") {
     lastIdx++;
   }
-  if (!lastIdx) {
+  if (lastIdx === null) {
     return null;
   }
   if (direction === "right") {
@@ -257,7 +279,7 @@ function chomp(direction, str, idx, opts, args) {
     }
     return whatsOnTheRight ? whatsOnTheRight : str.length;
   }
-  if (str[lastIdx] && str[lastIdx - 1].trim().length) {
+  if (str[lastIdx] && str[lastIdx - 1] && str[lastIdx - 1].trim().length) {
     return lastIdx;
   }
   var whatsOnTheLeft = left(str, lastIdx);
