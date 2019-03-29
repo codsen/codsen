@@ -1684,11 +1684,21 @@ function lint(str, originalOpts) {
     }
     if (str[_i + 4] && str[_i].toLowerCase() === "c" && stringLeftRight.rightSeq(str, _i, {
       i: true
-    }, "d*", "a*", "t*", "a*", "[?*", "]?", "[?*") && "<![".includes(str[stringLeftRight.left(str, _i)])) {
+    }, "d*", "a*", "t*", "a*", "[?*", "]?", "[?*") && ("<![".includes(str[stringLeftRight.left(str, _i)]) || str[_i - 1] && !"<![".includes(str[_i - 1]) && str[_i - 2] === "[" && str[_i - 3] === "!" && str[_i - 4] === "<")) {
       var rightSideOfCdataOpening = stringLeftRight.right(str, stringLeftRight.rightSeq(str, _i, {
         i: true
       }, "d*", "a*", "t*", "a*", "[?*", "]?", "[?*").rightmostChar) - 1;
       var leftChomp = stringLeftRight.chompLeft(str, _i, "<?*", "!?*", "[?*", "]?*");
+      if (
+      !"<![".includes(str[_i - 1]) && str[_i - 2] === "[" && str[_i - 3] === "!" && str[_i - 4] === "<" && (!str[_i - 5] || !"<![".includes(str[_i - 5])) ||
+      str[_i - 1] === "[" && !"<![".includes(str[_i - 2]) && str[_i - 3] === "!" && str[_i - 4] === "<" && (!str[_i - 5] || !"<![".includes(str[_i - 5])) ||
+      str[_i - 1] === "[" && str[_i - 2] === "!" && !"<![".includes(str[_i - 3]) && str[_i - 4] === "<" && (!str[_i - 5] || !"<![".includes(str[_i - 5]))) {
+        leftChomp = Math.min(leftChomp, _i - 4);
+      } else if (
+      !"<![".includes(str[_i - 1]) && str[_i - 2] === "!" && str[_i - 3] === "<" && (!str[_i - 4] || !"<![".includes(str[_i - 4])) ||
+      str[_i - 1] === "[" && !"<![".includes(str[_i - 2]) && str[_i - 3] === "<" && (!str[_i - 4] || !"<![".includes(str[_i - 4]))) {
+        leftChomp = Math.min(leftChomp, _i - 3);
+      }
       if (str.slice(leftChomp, rightSideOfCdataOpening + 1) !== "<![CDATA[") {
         submit({
           name: "bad-cdata-tag-malformed",

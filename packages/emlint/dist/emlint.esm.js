@@ -1967,7 +1967,12 @@ function lint(str, originalOpts) {
         "]?",
         "[?*"
       ) &&
-      "<![".includes(str[left(str, i)])
+      ("<![".includes(str[left(str, i)]) ||
+        (str[i - 1] &&
+          !"<![".includes(str[i - 1]) &&
+          str[i - 2] === "[" &&
+          str[i - 3] === "!" &&
+          str[i - 4] === "<"))
     ) {
       const rightSideOfCdataOpening =
         right(
@@ -1985,7 +1990,37 @@ function lint(str, originalOpts) {
             "[?*"
           ).rightmostChar
         ) - 1;
-      const leftChomp = chompLeft(str, i, "<?*", "!?*", "[?*", "]?*");
+      let leftChomp = chompLeft(str, i, "<?*", "!?*", "[?*", "]?*");
+      if (
+        (!`<![`.includes(str[i - 1]) &&
+          str[i - 2] === "[" &&
+          str[i - 3] === "!" &&
+          str[i - 4] === "<" &&
+          (!str[i - 5] || !`<![`.includes(str[i - 5]))) ||
+        (str[i - 1] === "[" &&
+          !`<![`.includes(str[i - 2]) &&
+          str[i - 3] === "!" &&
+          str[i - 4] === "<" &&
+          (!str[i - 5] || !`<![`.includes(str[i - 5]))) ||
+        (str[i - 1] === "[" &&
+          str[i - 2] === "!" &&
+          !`<![`.includes(str[i - 3]) &&
+          str[i - 4] === "<" &&
+          (!str[i - 5] || !`<![`.includes(str[i - 5])))
+      ) {
+        leftChomp = Math.min(leftChomp, i - 4);
+      } else if (
+        (!`<![`.includes(str[i - 1]) &&
+          str[i - 2] === "!" &&
+          str[i - 3] === "<" &&
+          (!str[i - 4] || !`<![`.includes(str[i - 4]))) ||
+        (str[i - 1] === "[" &&
+          !`<![`.includes(str[i - 2]) &&
+          str[i - 3] === "<" &&
+          (!str[i - 4] || !`<![`.includes(str[i - 4])))
+      ) {
+        leftChomp = Math.min(leftChomp, i - 3);
+      }
       if (str.slice(leftChomp, rightSideOfCdataOpening + 1) !== "<![CDATA[") {
         submit({
           name: "bad-cdata-tag-malformed",
