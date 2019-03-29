@@ -306,7 +306,7 @@ test(`04.12 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - repeated - go crazy - 
     t
   ));
 
-test.only(`04.13 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - repeated - go crazy`, t =>
+test(`04.13 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - repeated - go crazy`, t =>
   c(
     `<![CDATA[some stuff]][]]]] ]  >`,
     `<![CDATA[some stuff]]>`,
