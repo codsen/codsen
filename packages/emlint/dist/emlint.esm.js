@@ -7,7 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
-import { right, left, rightSeq, chompLeft, chompRight, leftSeq } from 'string-left-right';
+import { right, left, rightSeq, leftSeq, chompLeft, chompRight } from 'string-left-right';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import arrayiffy from 'arrayiffy-if-string';
 import checkTypes from 'check-types-mini';
@@ -1980,7 +1980,8 @@ function lint(str, originalOpts) {
           str[i - 2] === "!" &&
           str[i - 3] === "<" &&
           (!str[i - 4] ||
-            (str[i - 4].trim().length && !"<![".includes(str[i - 4])))))
+            (str[i - 4].trim().length && !"<![".includes(str[i - 4]))))) &&
+      leftSeq(str, i, "&", "l", "t", ";", "!", "[") === null
     ) {
       const rightSideOfCdataOpening =
         right(

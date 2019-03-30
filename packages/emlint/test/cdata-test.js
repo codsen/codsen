@@ -1,6 +1,6 @@
 import { c } from "../test-util/util";
 import test from "ava";
-// avaonly
+// avanotonly
 
 //                                 CDATA TESTS
 
@@ -405,38 +405,19 @@ test(`07.03 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - CDATA does not affect 
   c(
     `£&lt;![CDATA[some stuff]]&gt;£`,
     `&pound;&lt;![CDATA[some stuff]]&gt;&pound;`,
-    ["bad-character-unencoded-ampersand"],
+    ["bad-character-unencoded-pound"],
     t
   ));
 
-test(`07.04 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - escaped CDATA + incomplete entity`, t =>
-  c(
-    `&pound&lt;![CDATA[some stuff]]&gt;&pound;`,
-    `&pound;&lt;![CDATA[some stuff]]&gt;&pound;`,
-    ["bad-character-unencoded-ampersand"],
-    t
-  ));
+// TODO:
 
-test(`07.05 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - fills missing within escaped, #1`, t =>
-  c(
-    `&lt;[CDATA[some stuff]]&gt;`,
-    `&lt;![CDATA[some stuff]]&gt;`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
+// test(`00.00 - adds missing semicolons on html entities`, t =>
+//   c(`&pound`, `&pound;`, ["bad-character-unencoded-ampersand"], t));
 
-test(`07.06 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - fills missing within escaped, #2`, t =>
-  c(
-    `&lt;!CDATA[some stuff]]&gt;`,
-    `&lt;![CDATA[some stuff]]&gt;`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
-
-test(`07.07 - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - fills missing within escaped, #3`, t =>
-  c(
-    `&lt;![CDATA[some stuff]&gt;`,
-    `&lt;![CDATA[some stuff]]&gt;`,
-    ["bad-cdata-tag-malformed"],
-    t
-  ));
+// test(`??.?? - ${`\u001b[${32}m${`CDATA`}\u001b[${39}m`} - escaped CDATA + incomplete entity`, t =>
+//   c(
+//     `&pound&lt;![CDATA[some stuff]]&gt;&pound;`,
+//     `&pound;&lt;![CDATA[some stuff]]&gt;&pound;`,
+//     ["bad-character-unencoded-ampersand"],
+//     t
+//   ));
