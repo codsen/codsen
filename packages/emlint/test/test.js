@@ -2373,18 +2373,6 @@ m cript>",
     t
   ));
 
-// let's place excaped backtick strategically, before the closing </script>,
-// so that if the "within quotes" state is wrongly identified, tag closing
-// will kick in, then all the "errors" that follow within same script tag
-// will be flagged up.
-test(`27.04 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash missing on closing <script> tag`, t =>
-  c(
-    `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&`,
-    `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&amp;`,
-    "bad-character-unencoded-ampersand",
-    t
-  ));
-
 // 28. rule "bad-named-html-entity-multiple-encoding"
 // -----------------------------------------------------------------------------
 
@@ -2790,19 +2778,51 @@ test(`33.12 - ${`\u001b[${35}m${`HTML comments`}\u001b[${39}m`} - repeated dashe
     t
   ));
 
+// 34. rule "bad-character-unencoded-ampersand"
+// -----------------------------------------------------------------------------
+
+test(`34.01 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash missing on closing <script> tag`, t =>
+  c(`<a></a>&`, `<a></a>&amp;`, "bad-character-unencoded-ampersand", t));
+
+// let's place excaped backtick strategically, before the closing </script>,
+// so that if the "within quotes" state is wrongly identified, tag closing
+// will kick in, then all the "errors" that follow within same script tag
+// will be flagged up.
+test(`34.02 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash missing on closing <script> tag`, t =>
+  c(
+    `<xyz><b>a</b></xyz>&`,
+    `<xyz><b>a</b></xyz>&amp;`,
+    "bad-character-unencoded-ampersand",
+    t
+  ));
+
+test(`34.03 - ${`\u001b[${36}m${`code chunk skipping`}\u001b[${39}m`} - slash missing on closing <script> tag`, t =>
+  c(
+    `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&`,
+    `<xyz><script>const klm =\\\` \`</script>'"\`</script></xyz>&amp;`,
+    "bad-character-unencoded-ampersand",
+    t
+  ));
+
 // XX. ad hoc
 // -----------------------------------------------------------------------------
 
-test(`XX.XX - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`, t => {
+test(`XX.01 - ${`\u001b[${31}m${`adhoc #1`}\u001b[${39}m`} - just a closing tag`, t => {
   const good = `</a>`;
   const res = lint(good);
-  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
+  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.01");
 });
 
-test(`XX.XX - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templating tags`, t => {
+test(`XX.02 - ${`\u001b[${31}m${`adhoc #2`}\u001b[${39}m`} - mailchimp templating tags`, t => {
   const good = `<td mc:edit="cta">`;
   const res = lint(good);
-  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.XX");
+  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.02");
+});
+
+test(`XX.03 - ${`\u001b[${31}m${`adhoc #3`}\u001b[${39}m`} - correct entities`, t => {
+  const good = `abc&nbsp;def`;
+  const res = lint(good);
+  t.deepEqual(getUniqueIssueNames(res.issues), [], "XX.03");
 });
 
 // xx. TODO's

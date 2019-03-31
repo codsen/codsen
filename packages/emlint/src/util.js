@@ -2171,18 +2171,19 @@ function findClosingQuote(str, idx = 0) {
 }
 
 function encodeChar(str, i) {
-  if (
-    str[i] === "&" &&
-    (!str[i + 1] || str[i + 1] !== "a") &&
-    (!str[i + 2] || str[i + 2] !== "m") &&
-    (!str[i + 3] || str[i + 3] !== "p") &&
-    (!str[i + 3] || str[i + 3] !== ";")
-  ) {
-    return {
-      name: "bad-character-unencoded-ampersand",
-      position: [[i, i + 1, "&amp;"]]
-    };
-  } else if (str[i] === "<") {
+  // if (
+  //   str[i] === "&" &&
+  //   (!str[i + 1] || str[i + 1] !== "a") &&
+  //   (!str[i + 2] || str[i + 2] !== "m") &&
+  //   (!str[i + 3] || str[i + 3] !== "p") &&
+  //   (!str[i + 3] || str[i + 3] !== ";")
+  // ) {
+  //   return {
+  //     name: "bad-character-unencoded-ampersand",
+  //     position: [[i, i + 1, "&amp;"]]
+  //   };
+  // } else if (str[i] === "<") {
+  if (str[i] === "<") {
     return {
       name: "bad-character-unencoded-opening-bracket",
       position: [[i, i + 1, "&lt;"]]

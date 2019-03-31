@@ -13,13 +13,13 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var stringLeftRight = require('string-left-right');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var checkTypes = _interopDefault(require('check-types-mini'));
 var isObj = _interopDefault(require('lodash.isplainobject'));
 var clone = _interopDefault(require('lodash.clonedeep'));
 var merge = _interopDefault(require('ranges-merge'));
+var stringLeftRight = require('string-left-right');
 
 function _typeof(obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -89,6 +89,240 @@ var knownBooleanHTMLAttributes = [
 	"seamless",
 	"selected",
 	"typemustmatch"
+];
+
+var knownNamedHTMLEntities = [
+	"Aacute",
+	"aacute",
+	"Acirc",
+	"acirc",
+	"acute",
+	"AElig",
+	"aelig",
+	"Agrave",
+	"agrave",
+	"alefsym",
+	"Alpha",
+	"alpha",
+	"amp",
+	"and",
+	"asymp",
+	"Atilde",
+	"atilde",
+	"Auml",
+	"auml",
+	"bdquo",
+	"Beta",
+	"beta",
+	"brvbar",
+	"bull",
+	"cap",
+	"Ccedil",
+	"ccedil",
+	"cedil",
+	"cent",
+	"Chi",
+	"chi",
+	"circ",
+	"clubs",
+	"cong",
+	"copy",
+	"crarr",
+	"cup",
+	"curren",
+	"dagger",
+	"Dagger",
+	"darr",
+	"dArr",
+	"deg",
+	"Delta",
+	"delta",
+	"diams",
+	"Eacute",
+	"eacute",
+	"Ecirc",
+	"ecirc",
+	"Egrave",
+	"egrave",
+	"empty",
+	"emsp",
+	"ensp",
+	"Epsilon",
+	"epsilon",
+	"equiv",
+	"Eta",
+	"eta",
+	"ETH",
+	"eth",
+	"Euml",
+	"euml",
+	"euro",
+	"exist",
+	"fnof",
+	"forall",
+	"frac14",
+	"frac34",
+	"frasl",
+	"Gamma",
+	"gamma",
+	"ge",
+	"gt",
+	"harr",
+	"hArr",
+	"hearts",
+	"hellip",
+	"Iacute",
+	"iacute",
+	"Icirc",
+	"icirc",
+	"iexcl",
+	"Igrave",
+	"igrave",
+	"image",
+	"infin",
+	"int",
+	"Iota",
+	"iota",
+	"iquest",
+	"isin",
+	"Iuml",
+	"iuml",
+	"Kappa",
+	"kappa",
+	"Lambda",
+	"lambda",
+	"lang",
+	"laquo",
+	"larr",
+	"lArr",
+	"lceil",
+	"le",
+	"lfloor",
+	"lowast",
+	"loz",
+	"lrm",
+	"lsaquo",
+	"lt",
+	"macr",
+	"mdash",
+	"micro",
+	"middot",
+	"minus",
+	"Mu",
+	"mu",
+	"nabla",
+	"ndash",
+	"nbsp",
+	"ne",
+	"ni",
+	"not",
+	"nsub",
+	"Ntilde",
+	"ntilde",
+	"Nu",
+	"nu",
+	"Oacute",
+	"oacute",
+	"Ocirc",
+	"ocirc",
+	"OElig",
+	"oelig",
+	"Ograve",
+	"ograve",
+	"oline",
+	"Omega",
+	"omega",
+	"Omicron",
+	"omicron",
+	"oplus",
+	"ordf",
+	"ordm",
+	"Oslash",
+	"oslash",
+	"Otilde",
+	"otilde",
+	"otimes",
+	"Ouml",
+	"ouml",
+	"para",
+	"part",
+	"permil",
+	"perp",
+	"Phi",
+	"phi",
+	"pm",
+	"pound",
+	"prime",
+	"Prime",
+	"prod",
+	"prop",
+	"Psi",
+	"psi",
+	"radic",
+	"rang",
+	"raquo",
+	"rarr",
+	"rArr",
+	"rceil",
+	"real",
+	"reg",
+	"rfloor",
+	"Rho",
+	"rho",
+	"rlm",
+	"rsaquo",
+	"sbquo",
+	"Scaron",
+	"scaron",
+	"sdot",
+	"sect",
+	"sigmaf",
+	"Sigma",
+	"sim",
+	"spades",
+	"sube",
+	"sum",
+	"supe",
+	"sup1",
+	"sup2",
+	"sup3",
+	"szlig",
+	"Tau",
+	"tau",
+	"there4",
+	"thetasym",
+	"Theta",
+	"thinsp",
+	"THORN",
+	"thorn",
+	"tilde",
+	"times",
+	"trade",
+	"Uacute",
+	"uacute",
+	"uarr",
+	"uArr",
+	"Ucirc",
+	"ucirc",
+	"Ugrave",
+	"ugrave",
+	"upsih",
+	"Upsilon",
+	"upsilon",
+	"Uuml",
+	"uuml",
+	"weierp",
+	"Xi",
+	"xi",
+	"Yacute",
+	"yacute",
+	"yen",
+	"yuml",
+	"Yuml",
+	"Zeta",
+	"zeta",
+	"zwj",
+	"zwnj"
 ];
 
 var errorsCharacters = {
@@ -1413,12 +1647,7 @@ function findClosingQuote(str) {
   return null;
 }
 function encodeChar(str, i) {
-  if (str[i] === "&" && (!str[i + 1] || str[i + 1] !== "a") && (!str[i + 2] || str[i + 2] !== "m") && (!str[i + 3] || str[i + 3] !== "p") && (!str[i + 3] || str[i + 3] !== ";")) {
-    return {
-      name: "bad-character-unencoded-ampersand",
-      position: [[i, i + 1, "&amp;"]]
-    };
-  } else if (str[i] === "<") {
+  if (str[i] === "<") {
     return {
       name: "bad-character-unencoded-opening-bracket",
       position: [[i, i + 1, "&lt;"]]
@@ -2364,6 +2593,24 @@ function lint(str, originalOpts) {
         name: _name6,
         position: [[_i, _i + 1]]
       });
+    } else if (!doNothingUntil && charcode === 38) {
+      var nextNonWhitespaceChar = stringLeftRight.right(str, _i);
+      var remainderOfAString = str.slice(nextNonWhitespaceChar);
+      var _temp7;
+      if (knownNamedHTMLEntities.some(function (ent) {
+        if (remainderOfAString.startsWith(ent)) {
+          _temp7 = ent.length;
+          i = _i;
+          return true;
+        }
+      })) {
+        if (str[stringLeftRight.right(str, _i + _temp7)] !== ";") ;
+      } else {
+        submit({
+          name: "bad-character-unencoded-ampersand",
+          position: [[_i, _i + 1, "&amp;"]]
+        });
+      }
     } else if (!doNothingUntil && charcode === 60) {
       var whatsOnTheRight1 = stringLeftRight.right(str, _i);
       if (whatsOnTheRight1) {
