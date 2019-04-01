@@ -65,6 +65,9 @@ function fixRowNums(str, originalOpts) {
   let currentRow = 1;
   let wasLetterDetected = false;
   let digitStartsAt = null;
+  if (opts.padStart && len > 50000) {
+    opts.padStart = 4;
+  }
   for (i = 0; i < len; i++) {
     if (str[i] === "\n" || (str[i] === "\r" && str[i + 1] !== "\n")) {
       currentRow++;

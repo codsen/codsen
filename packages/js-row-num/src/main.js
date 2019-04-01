@@ -38,6 +38,10 @@ function fixRowNums(str, originalOpts) {
   let wasLetterDetected = false;
   let digitStartsAt = null;
 
+  if (opts.padStart && len > 50000) {
+    opts.padStart = 4;
+  }
+
   console.log(`${`\u001b[${33}m${`str`}\u001b[${39}m`}:\n${str}`);
 
   for (i = 0; i < len; i++) {
