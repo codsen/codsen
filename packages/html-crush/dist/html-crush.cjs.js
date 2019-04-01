@@ -381,7 +381,7 @@ function crush(str, originalOpts) {
           nonWhitespaceCharMet = true;
         }
       }
-      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length)) {
+      if (!doNothing && !beginningOfAFile && _i !== 0 && opts.removeLineBreaks && (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) && !stringMatchLeftRight.matchRightIncl(str, _i, "</a")) {
         if (breakToTheLeftOfFirstLetters.length && stringMatchLeftRight.matchRightIncl(str, _i, opts.breakToTheLeftOf)) {
           finalIndexesToDelete.push(_i, _i, "\n");
           stageFrom = null;

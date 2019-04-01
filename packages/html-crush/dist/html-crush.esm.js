@@ -526,7 +526,8 @@ function crush(str, originalOpts) {
         !beginningOfAFile &&
         i !== 0 &&
         opts.removeLineBreaks &&
-        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length)
+        (opts.lineLengthLimit || breakToTheLeftOfFirstLetters.length) &&
+        !matchRightIncl(str, i, "</a")
       ) {
         if (
           breakToTheLeftOfFirstLetters.length &&
