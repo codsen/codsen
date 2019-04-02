@@ -1,7 +1,7 @@
 import isObj from "lodash.isplainobject";
 import rangesMerge from "ranges-merge";
 import clone from "lodash.clonedeep";
-import allNamedEntities from "./allNamedEntities.json";
+import { entStartsWith } from "all-named-html-entities";
 import { left, right, rightSeq, leftSeq, chompLeft } from "string-left-right";
 
 /**
@@ -576,15 +576,24 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         console.log(
           `577 SET initial ${`\u001b[${33}m${`firstCharThatFollows`}\u001b[${39}m`} = ${firstCharThatFollows}`
         );
+        const secondCharThatFollows = firstCharThatFollows
+          ? right(str, firstCharThatFollows)
+          : null;
 
         // If entity follows, for example,
         // text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text
-        // we delete from first amptersand to the beginning of that entity.
+        // we delete from the first ampersand to the beginning of that entity.
         // Otherwise, we delete only repetitions of amp; + whitespaces in between.
         let matchedTemp;
         if (
-          str[firstCharThatFollows] &&
-          allNamedEntities.some(entity => {
+          secondCharThatFollows &&
+          entStartsWith.hasOwnProperty(str[firstCharThatFollows]) &&
+          entStartsWith[str[firstCharThatFollows]].hasOwnProperty(
+            str[secondCharThatFollows]
+          ) &&
+          entStartsWith[str[firstCharThatFollows]][
+            str[secondCharThatFollows]
+          ].some(entity => {
             if (str.startsWith(`${entity};`, firstCharThatFollows)) {
               matchedTemp = entity;
               return true;

@@ -45,6 +45,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.main, format: "cjs" }],
       external: [
+        "all-named-html-entities",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
@@ -68,6 +69,7 @@ export default commandLineArgs => {
       input: "src/main.js",
       output: [{ file: pkg.module, format: "es" }],
       external: [
+        "all-named-html-entities",
         "lodash.clonedeep",
         "lodash.isplainobject",
         "ranges-merge",
