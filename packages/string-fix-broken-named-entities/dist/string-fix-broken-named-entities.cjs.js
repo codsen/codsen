@@ -51,6 +51,12 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+function isStr(something) {
+  return typeof something === "string";
+}
+function isLatinLetter(char) {
+  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+}
 function stringFixBrokenNamedEntities(str, originalOpts) {
   function isNotaLetter(str) {
     return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
@@ -105,7 +111,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   var len = str.length + 1;
   var counter = 0;
   var doNothingUntil = null;
-  outerloop: for (var i = 0; i < len; i++) {
+  var letterSeqStartAt = null;
+  var _loop = function _loop(_i) {
     if (opts.progressFn) {
       percentageDone = Math.floor(counter / len * 100);
       if (percentageDone !== lastPercentageDone) {
@@ -114,10 +121,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (doNothingUntil) {
-      if (doNothingUntil !== true && i >= doNothingUntil) {
+      if (doNothingUntil !== true && _i >= doNothingUntil) {
         doNothingUntil = null;
       } else {
-        continue;
+        i = _i;
+        return "continue";
       }
     }
     matchedLettersCount = (nbsp.matchedN !== null ? 1 : 0) + (nbsp.matchedB !== null ? 1 : 0) + (nbsp.matchedS !== null ? 1 : 0) + (nbsp.matchedP !== null ? 1 : 0);
@@ -126,20 +134,20 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     });
     smallestCharFromTheSetAt = Math.min.apply(Math, _toConsumableArray(setOfValues));
     largestCharFromTheSetAt = Math.max.apply(Math, _toConsumableArray(setOfValues));
-    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[i] !== str[i - 1] || str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" || str[stringLeftRight.left(str, i)] === ";") && str[i] !== ";" && (str[i + 1] === undefined || str[stringLeftRight.right(str, i)] !== ";")) {
-      if (nbsp.ampersandNecessary !== false && str.slice(nbsp.nameStartsAt, i) !== "&nbsp;" || nbsp.ampersandNecessary === false && str.slice(Math.min(nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP), i) !== "nbsp;") {
-        if (nbsp.nameStartsAt != null && i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, i) === "&nbsp" && !opts.decode) {
+    if (nbsp.nameStartsAt !== null && matchedLettersCount > 2 && (nbsp.matchedSemicol !== null || !nbsp.ampersandNecessary || isNotaLetter(str[nbsp.nameStartsAt - 1]) && isNotaLetter(str[_i]) || (isNotaLetter(str[nbsp.nameStartsAt - 1]) || isNotaLetter(str[_i])) && largestCharFromTheSetAt - smallestCharFromTheSetAt <= 4 || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && nbsp.matchedN + 1 === nbsp.matchedB && nbsp.matchedB + 1 === nbsp.matchedS && nbsp.matchedS + 1 === nbsp.matchedP) && (!str[_i] || nbsp.matchedN !== null && nbsp.matchedB !== null && nbsp.matchedS !== null && nbsp.matchedP !== null && str[_i] !== str[_i - 1] || str[_i].toLowerCase() !== "n" && str[_i].toLowerCase() !== "b" && str[_i].toLowerCase() !== "s" && str[_i].toLowerCase() !== "p" || str[stringLeftRight.left(str, _i)] === ";") && str[_i] !== ";" && (str[_i + 1] === undefined || str[stringLeftRight.right(str, _i)] !== ";")) {
+      if (nbsp.ampersandNecessary !== false && str.slice(nbsp.nameStartsAt, _i) !== "&nbsp;" || nbsp.ampersandNecessary === false && str.slice(Math.min(nbsp.matchedN, nbsp.matchedB, nbsp.matchedS, nbsp.matchedP), _i) !== "nbsp;") {
+        if (nbsp.nameStartsAt != null && _i - nbsp.nameStartsAt === 5 && str.slice(nbsp.nameStartsAt, _i) === "&nbsp" && !opts.decode) {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "nbsp",
-              rangeFrom: i,
-              rangeTo: i,
+              rangeFrom: _i,
+              rangeTo: _i,
               rangeValEncoded: ";",
               rangeValDecoded: ";"
             }));
           }
-          rangesArr.push([i, i, ";"]);
+          rangesArr.push([_i, _i, ";"]);
         } else {
           var chompedAmpFromLeft = stringLeftRight.chompLeft(str, nbsp.nameStartsAt, "&?", "a", "m", "p", ";?");
           var beginningOfTheRange = chompedAmpFromLeft ? chompedAmpFromLeft : nbsp.nameStartsAt;
@@ -148,101 +156,140 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               ruleName: "bad-named-html-entity-malformed-nbsp",
               entityName: "nbsp",
               rangeFrom: beginningOfTheRange,
-              rangeTo: i,
+              rangeTo: _i,
               rangeValEncoded: "&nbsp;",
               rangeValDecoded: "\xA0"
             }));
           }
-          rangesArr.push([beginningOfTheRange, i, opts.decode ? "\xA0" : "&nbsp;"]);
+          rangesArr.push([beginningOfTheRange, _i, opts.decode ? "\xA0" : "&nbsp;"]);
         }
       }
       nbspWipe();
-      continue outerloop;
+      i = _i;
+      return "continue|outerloop";
     }
-    if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
+    if (str[_i] && str[_i - 1] === ";" && !stringLeftRight.leftSeq(str, _i - 1, "a", "m", "p") && str[_i] !== ";" && matchedLettersCount > 0) {
       nbspWipe();
-      continue outerloop;
+      i = _i;
+      return "continue|outerloop";
     }
-    if (str[i] === "a") {
-      var singleAmpOnTheRight = stringLeftRight.rightSeq(str, i, "m", "p", ";");
-      if (singleAmpOnTheRight) {
-        (function () {
-          var toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1;
-          var nextAmpOnTheRight = stringLeftRight.rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
-          if (nextAmpOnTheRight) {
-            toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
-            var temp;
-            do {
-              temp = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
-              if (temp) {
-                toDeleteAllAmpEndHere = temp.rightmostChar + 1;
-              }
-            } while (temp);
-          }
-          var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
-          var secondCharThatFollows = firstCharThatFollows ? stringLeftRight.right(str, firstCharThatFollows) : null;
-          var matchedTemp = void 0;
-          if (secondCharThatFollows && allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]].hasOwnProperty(str[secondCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
-            if (str.startsWith("".concat(entity, ";"), firstCharThatFollows)) {
-              matchedTemp = entity;
+    if (letterSeqStartAt !== null && (!str[_i] || str[_i].trim().length && !isLatinLetter(str[_i]))) {
+      if (_i > letterSeqStartAt + 1 && str[_i] !== "&") {
+        var potentialEntity = str.slice(letterSeqStartAt, _i);
+        var whatsOnTheLeft = str[stringLeftRight.left(str, letterSeqStartAt)];
+        if (whatsOnTheLeft === "&" && (!str[_i] || str[_i] !== ";")) ; else if (whatsOnTheLeft !== "&" && str[_i] && str[_i] === ";") {
+          var lastChar = stringLeftRight.left(str, _i);
+          var secondToLast = lastChar ? stringLeftRight.left(str, lastChar) : null;
+          var tempEnt;
+          var tempRes;
+          if (secondToLast !== null && allNamedHtmlEntities.entEndsWith.hasOwnProperty(str[lastChar]) && allNamedHtmlEntities.entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast]) && allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].some(function (oneOfKnownEntities) {
+            var temp = stringLeftRight.leftSeq.apply(void 0, [str, _i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+            if (temp && oneOfKnownEntities !== "nbsp") {
+              tempEnt = oneOfKnownEntities;
+              tempRes = temp;
+              i = _i;
               return true;
             }
           })) {
-            doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
-            var whatsOnTheLeft = stringLeftRight.left(str, i);
-            if (str[whatsOnTheLeft] === "&") {
-              if (opts.cb) {
-                rangesArr2.push(opts.cb({
-                  ruleName: "bad-named-html-entity-multiple-encoding",
-                  entityName: "amp",
-                  rangeFrom: whatsOnTheLeft + 1,
-                  rangeTo: firstCharThatFollows,
-                  rangeValEncoded: null,
-                  rangeValDecoded: null
-                }));
-              }
-              rangesArr.push([whatsOnTheLeft + 1, firstCharThatFollows]);
-            } else if (whatsOnTheLeft) {
-              var rangeFrom = whatsOnTheLeft + 1;
-              var spaceReplacement = "";
-              if (!str[rangeFrom].trim().length) {
-                if (str[rangeFrom] === " ") {
-                  rangeFrom++;
-                } else if (!"\n\r".includes(str[rangeFrom])) {
-                  spaceReplacement = " ";
-                } else {
-                  rangeFrom = i;
-                }
-              }
-              if (opts.cb) {
-                rangesArr2.push(opts.cb({
-                  ruleName: "bad-named-html-entity-multiple-encoding",
-                  entityName: "amp",
-                  rangeFrom: rangeFrom,
-                  rangeTo: firstCharThatFollows,
-                  rangeValEncoded: "".concat(spaceReplacement, "&"),
-                  rangeValDecoded: "".concat(spaceReplacement, "&")
-                }));
-              }
-              rangesArr.push([rangeFrom, firstCharThatFollows, "".concat(spaceReplacement, "&")]);
+            var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
+            if (opts.cb) {
+              rangesArr2.push(opts.cb({
+                ruleName: "bad-named-html-entity-malformed-".concat(tempEnt),
+                entityName: tempEnt,
+                rangeFrom: tempRes.leftmostChar,
+                rangeTo: _i + 1,
+                rangeValEncoded: "&".concat(tempEnt, ";"),
+                rangeValDecoded: decodedEntity
+              }));
             }
+            rangesArr.push([tempRes.leftmostChar, _i + 1, opts.decode ? decodedEntity : "&".concat(tempEnt, ";")]);
           }
-        })();
+        }
+      }
+      letterSeqStartAt = null;
+    }
+    if (letterSeqStartAt === null && isLatinLetter(str[_i])) {
+      letterSeqStartAt = _i;
+    }
+    if (str[_i] === "a") {
+      var singleAmpOnTheRight = stringLeftRight.rightSeq(str, _i, "m", "p", ";");
+      if (singleAmpOnTheRight) {
+        var toDeleteAllAmpEndHere = singleAmpOnTheRight.rightmostChar + 1;
+        var nextAmpOnTheRight = stringLeftRight.rightSeq(str, singleAmpOnTheRight.rightmostChar, "a", "m", "p", ";");
+        if (nextAmpOnTheRight) {
+          toDeleteAllAmpEndHere = nextAmpOnTheRight.rightmostChar + 1;
+          var temp;
+          do {
+            temp = stringLeftRight.rightSeq(str, toDeleteAllAmpEndHere - 1, "a", "m", "p", ";");
+            if (temp) {
+              toDeleteAllAmpEndHere = temp.rightmostChar + 1;
+            }
+          } while (temp);
+        }
+        var firstCharThatFollows = stringLeftRight.right(str, toDeleteAllAmpEndHere - 1);
+        var secondCharThatFollows = firstCharThatFollows ? stringLeftRight.right(str, firstCharThatFollows) : null;
+        var matchedTemp;
+        if (secondCharThatFollows && allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]].hasOwnProperty(str[secondCharThatFollows]) && allNamedHtmlEntities.entStartsWith[str[firstCharThatFollows]][str[secondCharThatFollows]].some(function (entity) {
+          if (str.startsWith("".concat(entity, ";"), firstCharThatFollows)) {
+            matchedTemp = entity;
+            i = _i;
+            return true;
+          }
+        })) {
+          doNothingUntil = firstCharThatFollows + matchedTemp.length + 1;
+          var _whatsOnTheLeft = stringLeftRight.left(str, _i);
+          if (str[_whatsOnTheLeft] === "&") {
+            if (opts.cb) {
+              rangesArr2.push(opts.cb({
+                ruleName: "bad-named-html-entity-multiple-encoding",
+                entityName: "amp",
+                rangeFrom: _whatsOnTheLeft + 1,
+                rangeTo: firstCharThatFollows,
+                rangeValEncoded: null,
+                rangeValDecoded: null
+              }));
+            }
+            rangesArr.push([_whatsOnTheLeft + 1, firstCharThatFollows]);
+          } else if (_whatsOnTheLeft) {
+            var rangeFrom = _whatsOnTheLeft + 1;
+            var spaceReplacement = "";
+            if (!str[rangeFrom].trim().length) {
+              if (str[rangeFrom] === " ") {
+                rangeFrom++;
+              } else if (!"\n\r".includes(str[rangeFrom])) {
+                spaceReplacement = " ";
+              } else {
+                rangeFrom = _i;
+              }
+            }
+            if (opts.cb) {
+              rangesArr2.push(opts.cb({
+                ruleName: "bad-named-html-entity-multiple-encoding",
+                entityName: "amp",
+                rangeFrom: rangeFrom,
+                rangeTo: firstCharThatFollows,
+                rangeValEncoded: "".concat(spaceReplacement, "&"),
+                rangeValDecoded: "".concat(spaceReplacement, "&")
+              }));
+            }
+            rangesArr.push([rangeFrom, firstCharThatFollows, "".concat(spaceReplacement, "&")]);
+          }
+        }
       }
     }
-    if (str[i] === "&") {
-      if (nbsp.nameStartsAt && nbsp.nameStartsAt < i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
+    if (str[_i] === "&") {
+      if (nbsp.nameStartsAt && nbsp.nameStartsAt < _i && (nbsp.matchedN || nbsp.matchedB || nbsp.matchedS || nbsp.matchedP)) {
         nbspWipe();
       }
       if (nbsp.nameStartsAt === null) {
         if (nbsp.ampersandNecessary === null) {
-          nbsp.nameStartsAt = i;
+          nbsp.nameStartsAt = _i;
           nbsp.ampersandNecessary = false;
         }
       } else {
         if (!nbsp.ampersandNecessary) {
-          var endingIndex = i + 1;
-          var whatsOnTheRight = stringLeftRight.right(str, i);
+          var endingIndex = _i + 1;
+          var whatsOnTheRight = stringLeftRight.right(str, _i);
           if (str[whatsOnTheRight] === "&") {
             for (var y = whatsOnTheRight; y < len; y++) {
               if (str[y].trim().length && str[y] !== "&") {
@@ -256,175 +303,186 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-duplicate-ampersand",
               entityName: "nbsp",
-              rangeFrom: i,
+              rangeFrom: _i,
               rangeTo: endingIndex,
               rangeValEncoded: null,
               rangeValDecoded: null
             }));
           }
-          rangesArr.push([i, endingIndex]);
+          rangesArr.push([_i, endingIndex]);
         }
       }
-      if (str[i + 1] === "a" && str[i + 2] === "n" && str[i + 3] === "g") {
-        if (str[i + 4] !== "s" && str[i + 4] !== ";") {
+      if (str[_i + 1] === "a" && str[_i + 2] === "n" && str[_i + 3] === "g") {
+        if (str[_i + 4] !== "s" && str[_i + 4] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "ang",
-              rangeFrom: i + 4,
-              rangeTo: i + 4,
+              rangeFrom: _i + 4,
+              rangeTo: _i + 4,
               rangeValEncoded: "&ang;",
               rangeValDecoded: "\u2220"
             }));
           }
-          rangesArr.push([i, i + 4, opts.decode ? "\u2220" : "&ang;"]);
-          i += 3;
-          continue outerloop;
-        } else if (str[i + 4] === "s" && str[i + 5] === "t" && str[i + 6] !== ";") {
+          rangesArr.push([_i, _i + 4, opts.decode ? "\u2220" : "&ang;"]);
+          _i += 3;
+          i = _i;
+          return "continue|outerloop";
+        } else if (str[_i + 4] === "s" && str[_i + 5] === "t" && str[_i + 6] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "angst",
-              rangeFrom: i + 6,
-              rangeTo: i + 6,
+              rangeFrom: _i + 6,
+              rangeTo: _i + 6,
               rangeValEncoded: "&angst;",
               rangeValDecoded: "\xC5"
             }));
           }
-          rangesArr.push([i, i + 6, opts.decode ? "\xC5" : "&angst;"]);
-          i += 5;
-          continue outerloop;
+          rangesArr.push([_i, _i + 6, opts.decode ? "\xC5" : "&angst;"]);
+          _i += 5;
+          i = _i;
+          return "continue|outerloop";
         }
-      } else if (str[i + 1] === "p" && str[i + 2] === "i") {
-        if (str[i + 3] !== "v" && str[i + 3] !== ";") {
+      } else if (str[_i + 1] === "p" && str[_i + 2] === "i") {
+        if (str[_i + 3] !== "v" && str[_i + 3] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "pi",
-              rangeFrom: i + 3,
-              rangeTo: i + 3,
+              rangeFrom: _i + 3,
+              rangeTo: _i + 3,
               rangeValEncoded: "&pi;",
               rangeValDecoded: "\u03C0"
             }));
           }
-          rangesArr.push([i, i + 3, opts.decode ? "\u03C0" : "&pi;"]);
-          i += 3;
-          continue outerloop;
-        } else if (str[i + 3] === "v" && str[i + 4] !== ";") {
+          rangesArr.push([_i, _i + 3, opts.decode ? "\u03C0" : "&pi;"]);
+          _i += 3;
+          i = _i;
+          return "continue|outerloop";
+        } else if (str[_i + 3] === "v" && str[_i + 4] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "piv",
-              rangeFrom: i + 4,
-              rangeTo: i + 4,
+              rangeFrom: _i + 4,
+              rangeTo: _i + 4,
               rangeValEncoded: "&piv;",
               rangeValDecoded: "\u03D6"
             }));
           }
-          rangesArr.push([i, i + 4, opts.decode ? "\u03D6" : "&piv;"]);
-          i += 3;
-          continue outerloop;
+          rangesArr.push([_i, _i + 4, opts.decode ? "\u03D6" : "&piv;"]);
+          _i += 3;
+          i = _i;
+          return "continue|outerloop";
         }
-      } else if (str[i + 1] === "P" && str[i + 2] === "i" && str[i + 3] !== ";") {
+      } else if (str[_i + 1] === "P" && str[_i + 2] === "i" && str[_i + 3] !== ";") {
         if (opts.cb) {
           rangesArr2.push(opts.cb({
             ruleName: "bad-named-html-entity-missing-semicolon",
             entityName: "Pi",
-            rangeFrom: i + 3,
-            rangeTo: i + 3,
+            rangeFrom: _i + 3,
+            rangeTo: _i + 3,
             rangeValEncoded: "&Pi;",
             rangeValDecoded: "\u03A0"
           }));
         }
-        rangesArr.push([i, i + 3, opts.decode ? "\u03A0" : "&Pi;"]);
-        i += 2;
-        continue outerloop;
-      } else if (str[i + 1] === "s") {
-        if (str[i + 2] === "i" && str[i + 3] === "g" && str[i + 4] === "m" && str[i + 5] === "a" && str[i + 6] !== ";" && str[i + 6] !== "f") {
+        rangesArr.push([_i, _i + 3, opts.decode ? "\u03A0" : "&Pi;"]);
+        _i += 2;
+        i = _i;
+        return "continue|outerloop";
+      } else if (str[_i + 1] === "s") {
+        if (str[_i + 2] === "i" && str[_i + 3] === "g" && str[_i + 4] === "m" && str[_i + 5] === "a" && str[_i + 6] !== ";" && str[_i + 6] !== "f") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sigma",
-              rangeFrom: i + 6,
-              rangeTo: i + 6,
+              rangeFrom: _i + 6,
+              rangeTo: _i + 6,
               rangeValEncoded: "&sigma;",
               rangeValDecoded: "\u03C3"
             }));
           }
-          rangesArr.push([i, i + 6, opts.decode ? "\u03C3" : "&sigma;"]);
-          i += 5;
-          continue outerloop;
-        } else if (str[i + 2] === "u" && str[i + 3] === "b" && str[i + 4] !== ";" && str[i + 4] !== "e") {
+          rangesArr.push([_i, _i + 6, opts.decode ? "\u03C3" : "&sigma;"]);
+          _i += 5;
+          i = _i;
+          return "continue|outerloop";
+        } else if (str[_i + 2] === "u" && str[_i + 3] === "b" && str[_i + 4] !== ";" && str[_i + 4] !== "e") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sub",
-              rangeFrom: i + 4,
-              rangeTo: i + 4,
+              rangeFrom: _i + 4,
+              rangeTo: _i + 4,
               rangeValEncoded: "&sub;",
               rangeValDecoded: "\u2282"
             }));
           }
-          rangesArr.push([i, i + 4, opts.decode ? "\u2282" : "&sub;"]);
-          i += 3;
-          continue outerloop;
-        } else if (str[i + 2] === "u" && str[i + 3] === "p" && str[i + 4] !== "f" && str[i + 4] !== "e" && str[i + 4] !== "1" && str[i + 4] !== "2" && str[i + 4] !== "3" && str[i + 4] !== ";") {
+          rangesArr.push([_i, _i + 4, opts.decode ? "\u2282" : "&sub;"]);
+          _i += 3;
+          i = _i;
+          return "continue|outerloop";
+        } else if (str[_i + 2] === "u" && str[_i + 3] === "p" && str[_i + 4] !== "f" && str[_i + 4] !== "e" && str[_i + 4] !== "1" && str[_i + 4] !== "2" && str[_i + 4] !== "3" && str[_i + 4] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "sup",
-              rangeFrom: i + 4,
-              rangeTo: i + 4,
+              rangeFrom: _i + 4,
+              rangeTo: _i + 4,
               rangeValEncoded: "&sup;",
               rangeValDecoded: "\u2283"
             }));
           }
-          rangesArr.push([i, i + 4, opts.decode ? "\u2283" : "&sup;"]);
-          i += 3;
-          continue outerloop;
+          rangesArr.push([_i, _i + 4, opts.decode ? "\u2283" : "&sup;"]);
+          _i += 3;
+          i = _i;
+          return "continue|outerloop";
         }
-      } else if (str[i + 1] === "t") {
-        if (str[i + 2] === "h" && str[i + 3] === "e" && str[i + 4] === "t" && str[i + 5] === "a" && str[i + 6] !== "s" && str[i + 6] !== ";") {
+      } else if (str[_i + 1] === "t") {
+        if (str[_i + 2] === "h" && str[_i + 3] === "e" && str[_i + 4] === "t" && str[_i + 5] === "a" && str[_i + 6] !== "s" && str[_i + 6] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "theta",
-              rangeFrom: i + 6,
-              rangeTo: i + 6,
+              rangeFrom: _i + 6,
+              rangeTo: _i + 6,
               rangeValEncoded: "&theta;",
               rangeValDecoded: "\u03B8"
             }));
           }
-          rangesArr.push([i, i + 6, opts.decode ? "\u03B8" : "&theta;"]);
-          i += 5;
-          continue outerloop;
-        } else if (str[i + 2] === "h" && str[i + 3] === "i" && str[i + 4] === "n" && str[i + 5] === "s" && str[i + 6] === "p" && str[i + 7] !== ";") {
+          rangesArr.push([_i, _i + 6, opts.decode ? "\u03B8" : "&theta;"]);
+          _i += 5;
+          i = _i;
+          return "continue|outerloop";
+        } else if (str[_i + 2] === "h" && str[_i + 3] === "i" && str[_i + 4] === "n" && str[_i + 5] === "s" && str[_i + 6] === "p" && str[_i + 7] !== ";") {
           if (opts.cb) {
             rangesArr2.push(opts.cb({
               ruleName: "bad-named-html-entity-missing-semicolon",
               entityName: "thinsp",
-              rangeFrom: i + 7,
-              rangeTo: i + 7,
+              rangeFrom: _i + 7,
+              rangeTo: _i + 7,
               rangeValEncoded: "&thinsp;",
               rangeValDecoded: "\u2009"
             }));
           }
-          rangesArr.push([i, i + 7, opts.decode ? "\u2009" : "&thinsp;"]);
-          i += 6;
-          continue outerloop;
+          rangesArr.push([_i, _i + 7, opts.decode ? "\u2009" : "&thinsp;"]);
+          _i += 6;
+          i = _i;
+          return "continue|outerloop";
         }
       }
     }
-    if (str[i] && str[i].toLowerCase() === "n") {
-      if (str[i - 1] === "i" && str[i + 1] === "s") {
+    if (str[_i] && str[_i].toLowerCase() === "n") {
+      if (str[_i - 1] === "i" && str[_i + 1] === "s") {
         nbspWipe();
-        continue outerloop;
+        i = _i;
+        return "continue|outerloop";
       }
       if (nbsp.matchedN === null) {
-        nbsp.matchedN = i;
+        nbsp.matchedN = _i;
       }
       if (nbsp.nameStartsAt === null) {
-        nbsp.nameStartsAt = i;
+        nbsp.nameStartsAt = _i;
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
@@ -432,15 +490,15 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       }
     }
-    if (str[i] && str[i].toLowerCase() === "b") {
+    if (str[_i] && str[_i].toLowerCase() === "b") {
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedB === null) {
-          nbsp.matchedB = i;
+          nbsp.matchedB = _i;
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedB = i;
+        nbsp.nameStartsAt = _i;
+        nbsp.matchedB = _i;
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
@@ -448,18 +506,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
-        continue outerloop;
+        i = _i;
+        return "continue|outerloop";
       }
     }
-    if (str[i] && str[i].toLowerCase() === "s") {
+    if (str[_i] && str[_i].toLowerCase() === "s") {
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedS === null) {
-          nbsp.matchedS = i;
+          nbsp.matchedS = _i;
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedS = i;
+        nbsp.nameStartsAt = _i;
+        nbsp.matchedS = _i;
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
@@ -467,18 +526,19 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
-        continue outerloop;
+        i = _i;
+        return "continue|outerloop";
       }
     }
-    if (str[i] && str[i].toLowerCase() === "p") {
+    if (str[_i] && str[_i].toLowerCase() === "p") {
       if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedP === null) {
-          nbsp.matchedP = i;
+          nbsp.matchedP = _i;
         }
       } else if (nbsp.patience) {
         nbsp.patience--;
-        nbsp.nameStartsAt = i;
-        nbsp.matchedP = i;
+        nbsp.nameStartsAt = _i;
+        nbsp.matchedP = _i;
         if (nbsp.ampersandNecessary === null && !state_AmpersandNotNeeded) {
           nbsp.ampersandNecessary = true;
         } else if (nbsp.ampersandNecessary !== true) {
@@ -486,12 +546,13 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
-        continue outerloop;
+        i = _i;
+        return "continue|outerloop";
       }
     }
-    if (str[i] === ";") {
+    if (str[_i] === ";") {
       if (nbsp.nameStartsAt !== null) {
-        nbsp.matchedSemicol = i;
+        nbsp.matchedSemicol = _i;
         if (nbsp.matchedN &&
         !nbsp.matchedB && !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && nbsp.matchedB &&
         !nbsp.matchedS && !nbsp.matchedP || !nbsp.matchedN && !nbsp.matchedB && nbsp.matchedS &&
@@ -507,15 +568,26 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         nbsp.ampersandNecessary = false;
       }
     }
-    if (nbsp.nameStartsAt !== null && i > nbsp.nameStartsAt && str[i] && str[i].toLowerCase() !== "n" && str[i].toLowerCase() !== "b" && str[i].toLowerCase() !== "s" && str[i].toLowerCase() !== "p" && str[i] !== "&" && str[i] !== ";" && str[i] !== " ") {
+    if (nbsp.nameStartsAt !== null && _i > nbsp.nameStartsAt && str[_i] && str[_i].toLowerCase() !== "n" && str[_i].toLowerCase() !== "b" && str[_i].toLowerCase() !== "s" && str[_i].toLowerCase() !== "p" && str[_i] !== "&" && str[_i] !== ";" && str[_i] !== " ") {
       if (nbsp.patience) {
         nbsp.patience = nbsp.patience - 1;
       } else {
         nbspWipe();
-        continue outerloop;
+        i = _i;
+        return "continue|outerloop";
       }
     }
     counter++;
+    i = _i;
+  };
+  outerloop: for (var i = 0; i < len; i++) {
+    var _ret = _loop(i);
+    switch (_ret) {
+      case "continue":
+        continue;
+      case "continue|outerloop":
+        continue outerloop;
+    }
   }
   if (!rangesArr.length) {
     return null;

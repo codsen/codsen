@@ -473,7 +473,7 @@ test(`02.042 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorr
 test(`02.043 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - \u001b[${36}m${`repeated`}\u001b[${39}m ampersand + n missing`, t => {
   const inp1 = "&&bsp;x&&bsp;y&&bsp;";
   const outp1 = [[0, 6, "&nbsp;"], [7, 13, "&nbsp;"], [14, 20, "&nbsp;"]];
-  // t.deepEqual(fix(inp1), outp1, "02.043.01");
+  t.deepEqual(fix(inp1), outp1, "02.043.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.043.02");
 });
 
@@ -1264,10 +1264,10 @@ test(`05.008 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
 
 test(`05.009 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - triple encoded`, t => {
   const inp1 = "text&amp;amp;nbsp;text";
-  t.deepEqual(fix(inp1), [[5, 13]], "05.009 - triple encoded");
+  t.deepEqual(fix(inp1), [[5, 13]], "05.009.01");
 
   const inp2 = "text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text";
-  t.deepEqual(fix(inp2), [[5, 49]], "05.009 - triple encoded");
+  t.deepEqual(fix(inp2), [[5, 49]], "05.009.02");
 });
 
 test(`05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, t => {
@@ -1309,73 +1309,13 @@ test(`05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
   );
 });
 
-test(`05.012 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set`, t => {
-  const inp1 = "textamp;nsp;text";
-  t.deepEqual(fix(inp1), [[4, 12, "&nbsp;"]], "05.012");
-});
-
-test(`05.013 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - cb`, t => {
-  const inp1 = "textamp;nsp;text";
-  t.deepEqual(
-    fix(inp1, {
-      cb: received => {
-        t.deepEqual(
-          received,
-          {
-            entityName: "nbsp",
-            rangeFrom: 4,
-            rangeTo: 12,
-            rangeValDecoded: "\xA0",
-            rangeValEncoded: "&nbsp;",
-            ruleName: "bad-named-html-entity-malformed-nbsp"
-          },
-          "05.013.01"
-        );
-        return cb(received);
-      }
-    }),
-    [[4, 12, "&nbsp;"]],
-    "05.013.02"
-  );
-});
-
-test(`05.014 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #1`, t => {
-  const inp1 = "text    a  m p   ; a  mp   ; a m   p   ;   n   s p    ;text";
-  t.deepEqual(fix(inp1), [[5, 55, "&nbsp;"]], "05.014");
-});
-
-test(`05.015 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #1 - cb`, t => {
-  const inp1 = "text    a  m p   ; a  mp   ; a m   p   ;   n   s p    ;text";
-  t.deepEqual(
-    fix(inp1, {
-      cb: received => {
-        t.deepEqual(
-          received,
-          {
-            entityName: "nbsp",
-            rangeFrom: 5,
-            rangeTo: 55,
-            rangeValDecoded: "\xA0",
-            rangeValEncoded: "&nbsp;",
-            ruleName: "bad-named-html-entity-malformed-nbsp"
-          },
-          "05.015.01"
-        );
-        return cb(received);
-      }
-    }),
-    [[5, 55, "&nbsp;"]],
-    "05.015.02"
-  );
-});
-
-test(`05.016 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2`, t => {
+test(`05.012 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2`, t => {
   const inp1 =
     "text    &  a  m p   ; a  mp   ; a m   p   ;    n   s p    ;text";
-  t.deepEqual(fix(inp1), [[5, 59, "&nbsp;"]], "05.016");
+  t.deepEqual(fix(inp1), [[5, 59, "&nbsp;"]], "05.012");
 });
 
-test(`05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb`, t => {
+test(`05.013 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2 - cb`, t => {
   const inp1 =
     "text    &  a  m p   ; a  mp   ; a m   p   ;    n   s p    ;text";
   t.deepEqual(
@@ -1391,22 +1331,22 @@ test(`05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.017.01"
+          "05.013.01"
         );
         return cb(received);
       }
     }),
     [[5, 59, "&nbsp;"]],
-    "05.017.02"
+    "05.013.02"
   );
 });
 
-test(`05.018 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`, t => {
+test(`05.014 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #1`, t => {
   const inp1 = "abc &nbs;";
-  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.018");
+  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.014");
 });
 
-test(`05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`, t => {
+test(`05.015 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #2`, t => {
   const inp1 = "abc &nbs;";
   t.deepEqual(
     fix(inp1, {
@@ -1421,19 +1361,19 @@ test(`05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.019.01"
+          "05.015.01"
         );
         return cb(received);
       }
     }),
     [[4, 9, "&nbsp;"]],
-    "05.019.02"
+    "05.015.02"
   );
 });
 
-test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`, t => {
+test(`05.016 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #3`, t => {
   const inp1 = "abc &nbs; xyz";
-  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.020.01");
+  t.deepEqual(fix(inp1), [[4, 9, "&nbsp;"]], "05.016.01");
   t.deepEqual(
     fix(inp1, {
       cb: received => {
@@ -1447,17 +1387,17 @@ test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.020.01"
+          "05.016.01"
         );
         return cb(received);
       }
     }),
     [[4, 9, "&nbsp;"]],
-    "05.020.02"
+    "05.016.02"
   );
 
   const inp2 = "&nbs; xyz";
-  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.020.03");
+  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.016.03");
   t.deepEqual(
     fix(inp2, {
       cb: received => {
@@ -1471,22 +1411,22 @@ test(`05.020 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.020.04"
+          "05.016.04"
         );
         return cb(received);
       }
     }),
     [[0, 5, "&nbsp;"]],
-    "05.020.05"
+    "05.016.05"
   );
 });
 
-test(`05.021 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`, t => {
+test(`05.017 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #4`, t => {
   const inp1 = "abc&nbs;";
-  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.021");
+  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.017");
 });
 
-test(`05.022 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`, t => {
+test(`05.018 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #5`, t => {
   const inp1 = "abc&nbs;";
   t.deepEqual(
     fix(inp1, {
@@ -1501,19 +1441,19 @@ test(`05.022 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.022.01"
+          "05.018.01"
         );
         return cb(received);
       }
     }),
     [[3, 8, "&nbsp;"]],
-    "05.022.02"
+    "05.018.02"
   );
 });
 
-test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`, t => {
+test(`05.019 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`isolated nbs`}\u001b[${39}m - simple case #6`, t => {
   const inp1 = "abc&nbs; xyz";
-  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.023.01");
+  t.deepEqual(fix(inp1), [[3, 8, "&nbsp;"]], "05.019.01");
   t.deepEqual(
     fix(inp1, {
       cb: received => {
@@ -1527,17 +1467,17 @@ test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.023.02"
+          "05.019.02"
         );
         return cb(received);
       }
     }),
     [[3, 8, "&nbsp;"]],
-    "05.023.03"
+    "05.019.03"
   );
 
   const inp2 = "&nbs; xyz";
-  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.023.04");
+  t.deepEqual(fix(inp2), [[0, 5, "&nbsp;"]], "05.019.04");
   t.deepEqual(
     fix(inp2, {
       cb: received => {
@@ -1551,13 +1491,13 @@ test(`05.023 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
             rangeValEncoded: "&nbsp;",
             ruleName: "bad-named-html-entity-malformed-nbsp"
           },
-          "05.023.05"
+          "05.019.05"
         );
         return cb(received);
       }
     }),
     [[0, 5, "&nbsp;"]],
-    "05.023.06"
+    "05.019.06"
   );
 });
 
@@ -1653,6 +1593,38 @@ test(`07.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports pro
     "07.001.02 - calls the progress function"
   );
   t.true(typeof count === "number" && count <= 101 && count > 0, "07.001.03");
+});
+
+// -----------------------------------------------------------------------------
+// 08. ampersand missing
+// -----------------------------------------------------------------------------
+
+test(`08.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t => {
+  const inp1 = "amp;";
+  const outp1 = [[0, 4, "&amp;"]];
+  t.deepEqual(fix(inp1), outp1, "08.001.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "08.001.02");
+});
+
+test(`08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
+  const inp1 = "#x26;";
+  const outp1 = [[0, 5, "&#x26;"]];
+  t.deepEqual(fix(inp1), outp1, "08.002.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "08.002.02");
+});
+
+test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t => {
+  const inp1 = "amp;";
+  const outp1 = [[0, 4, "&amp;"]];
+  t.deepEqual(fix(inp1), outp1, "08.003.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "08.003.02");
+});
+
+test(`08.004 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
+  const inp1 = "#x26;";
+  const outp1 = [[0, 5, "&#x26;"]];
+  t.deepEqual(fix(inp1), outp1, "08.004.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "08.004.02");
 });
 
 // -----------------------------------------------------------------------------

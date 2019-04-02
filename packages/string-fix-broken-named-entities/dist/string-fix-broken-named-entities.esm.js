@@ -10,9 +10,20 @@
 import isObj from 'lodash.isplainobject';
 import rangesMerge from 'ranges-merge';
 import clone from 'lodash.clonedeep';
-import { entStartsWith } from 'all-named-html-entities';
+import { entEndsWith, decode, entStartsWith } from 'all-named-html-entities';
 import { left, right, chompLeft, leftSeq, rightSeq } from 'string-left-right';
 
+function isStr(something) {
+  return typeof something === "string";
+}
+function isLatinLetter(char) {
+  return (
+    isStr(char) &&
+    char.length === 1 &&
+    ((char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91) ||
+      (char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123))
+  );
+}
 function stringFixBrokenNamedEntities(str, originalOpts) {
   function isNotaLetter(str) {
     return !(
@@ -95,6 +106,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   const len = str.length + 1;
   let counter = 0;
   let doNothingUntil = null;
+  let letterSeqStartAt = null;
   outerloop: for (let i = 0; i < len; i++) {
     if (opts.progressFn) {
       percentageDone = Math.floor((counter / len) * 100);
@@ -229,6 +241,59 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     ) {
       nbspWipe();
       continue outerloop;
+    }
+    if (
+      letterSeqStartAt !== null &&
+      (!str[i] || (str[i].trim().length && !isLatinLetter(str[i])))
+    ) {
+      if (i > letterSeqStartAt + 1 && str[i] !== "&") {
+        const potentialEntity = str.slice(letterSeqStartAt, i);
+        const whatsOnTheLeft = str[left(str, letterSeqStartAt)];
+        if (whatsOnTheLeft === "&" && (!str[i] || str[i] !== ";")) ; else if (whatsOnTheLeft !== "&" && str[i] && str[i] === ";") {
+          const lastChar = left(str, i);
+          const secondToLast = lastChar ? left(str, lastChar) : null;
+          let tempEnt;
+          let tempRes;
+          if (
+            secondToLast !== null &&
+            entEndsWith.hasOwnProperty(str[lastChar]) &&
+            entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast]) &&
+            entEndsWith[str[lastChar]][str[secondToLast]].some(
+              oneOfKnownEntities => {
+                const temp = leftSeq(str, i, ...oneOfKnownEntities.split(""));
+                if (temp && oneOfKnownEntities !== "nbsp") {
+                  tempEnt = oneOfKnownEntities;
+                  tempRes = temp;
+                  return true;
+                }
+              }
+            )
+          ) {
+            const decodedEntity = decode(`&${tempEnt};`);
+            if (opts.cb) {
+              rangesArr2.push(
+                opts.cb({
+                  ruleName: `bad-named-html-entity-malformed-${tempEnt}`,
+                  entityName: tempEnt,
+                  rangeFrom: tempRes.leftmostChar,
+                  rangeTo: i + 1,
+                  rangeValEncoded: `&${tempEnt};`,
+                  rangeValDecoded: decodedEntity
+                })
+              );
+            }
+            rangesArr.push([
+              tempRes.leftmostChar,
+              i + 1,
+              opts.decode ? decodedEntity : `&${tempEnt};`
+            ]);
+          }
+        }
+      }
+      letterSeqStartAt = null;
+    }
+    if (letterSeqStartAt === null && isLatinLetter(str[i])) {
+      letterSeqStartAt = i;
     }
     if (str[i] === "a") {
       const singleAmpOnTheRight = rightSeq(str, i, "m", "p", ";");
