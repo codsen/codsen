@@ -170,7 +170,6 @@
     "all-named-html-entities": "^1.0.0",
     "lodash.clonedeep": "^4.5.0",
     "lodash.isplainobject": "^4.0.6",
-    "ranges-merge": "^4.1.6",
     "string-left-right": "^2.1.6"
   },
   "devDependencies": {
@@ -190,6 +189,7 @@
     "nyc": "^13.3.0",
     "prettier": "^1.16.4",
     "rollup": "^1.7.4",
+    "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^9.2.2",

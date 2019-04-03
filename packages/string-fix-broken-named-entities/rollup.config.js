@@ -48,7 +48,6 @@ export default commandLineArgs => {
         "all-named-html-entities",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "ranges-merge",
         "string-left-right"
       ],
       plugins: [
@@ -72,7 +71,6 @@ export default commandLineArgs => {
         "all-named-html-entities",
         "lodash.clonedeep",
         "lodash.isplainobject",
-        "ranges-merge",
         "string-left-right"
       ],
       plugins: [
