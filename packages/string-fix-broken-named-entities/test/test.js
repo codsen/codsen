@@ -254,13 +254,13 @@ test(`02.019 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correc
   t.deepEqual(fix(inp1, { cb }), outp1, "02.019.02");
 });
 
-test(`02.020 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, letter + decode`, t => {
+test(`02.020 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - opts.decode is ignored if callback serves decoded`, t => {
   const inp1 = "&nbspz &nbspz";
   const outp1 = [[0, 5, "\xA0"], [7, 12, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [7, 12, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [7, 12, "&nbsp;"]];
   t.deepEqual(fix(inp1, { decode: true }), outp1, "02.020.01 - warmup");
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.020.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.020.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.020.03");
 });
 
 test(`02.021 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, spaced + decode`, t => {
@@ -276,92 +276,92 @@ test(`02.022 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correc
   // if raw (unencoded) entity is requested (opts.decode === true), we have to
   // replace all entity characters:
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.022.01 - surrounded by letters"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.022.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.022.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.022.03");
 });
 
 test(`02.023 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, dots + decode`, t => {
   const inp1 = "&nbsp...&nbsp...&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.023.01 - surrounded by dots"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.023.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.023.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.023.03");
 });
 
 test(`02.024 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, line breaks + decode`, t => {
   const inp1 = "&nbsp\n\n\n&nbsp\n\n\n&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.024.01 - surrounded by line breaks"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.024.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.024.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.024.03");
 });
 
 test(`02.025 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, well spaced + decode`, t => {
   const inp1 = "&nbsp   &nbsp   &nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.025.01 - surrounded by spaces"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.025.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.025.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.025.03");
 });
 
 test(`02.026 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, commas + decode`, t => {
   const inp1 = "&nbsp,&nbsp,&nbsp";
   const outp1 = [[0, 5, "\xA0"], [6, 11, "\xA0"], [12, 17, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [6, 11, "&nbsp;"], [12, 17, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [6, 11, "&nbsp;"], [12, 17, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.026.01 - surrounded by colons"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.026.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.026.03");
+  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp1, "02.026.03");
 });
 
 test(`02.027 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, digits + decode`, t => {
   const inp1 = "&nbsp123&nbsp123&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.027.01 - surrounded by digits"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.027.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.027.03");
+  // t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.027.03");
 });
 
 test(`02.028 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - amp, no semicol, tabs + decode`, t => {
   const inp1 = "&nbsp\t\t\t&nbsp\t\t\t&nbsp";
   const outp1 = [[0, 5, "\xA0"], [8, 13, "\xA0"], [16, 21, "\xA0"]];
-  const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
+  // const outp2 = [[0, 5, "&nbsp;"], [8, 13, "&nbsp;"], [16, 21, "&nbsp;"]];
   t.deepEqual(
     fix(inp1, { decode: true }),
     outp1,
     "02.028.01 - surrounded by tabs"
   );
   t.deepEqual(fix(inp1, { decode: true, cb: cbDecoded }), outp1, "02.028.02");
-  t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.028.03");
+  // t.deepEqual(fix(inp1, { decode: false, cb: cbDecoded }), outp2, "02.028.03");
 });
 
 test(`02.029 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`correct spelling`}\u001b[${39}m - no amp, no semicol, trailing letter`, t => {
@@ -422,12 +422,12 @@ test(`02.036 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`no amp
 
 test(`02.037 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${34}m${`incorrect spelling`}\u001b[${39}m - repeated characters - complete set - \u001b[${36}m${`repeated`}\u001b[${39}m amp, tight, leading letters`, t => {
   const inp1 = "&&nbsp;x&&nbsp;y&&nbsp;";
-  const outp1 = [[1, 2], [9, 10], [17, 18]];
+  const outp1 = [[0, 7, "&nbsp;"], [8, 15, "&nbsp;"], [16, 23, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.037.01 - duplicate ampersand");
   t.deepEqual(fix(inp1, { cb }), outp1, "02.037.02");
 
   const inp2 = "&&&&nbsp;x&&&&nbsp;y&&&&nbsp;";
-  const outp2 = [[1, 4], [11, 14], [21, 24]];
+  const outp2 = [[0, 9, "&nbsp;"], [10, 19, "&nbsp;"], [20, 29, "&nbsp;"]];
   t.deepEqual(fix(inp2), outp2, "02.037.01 - duplicate ampersand");
   t.deepEqual(fix(inp2, { cb }), outp2, "02.037.02");
 });
@@ -800,19 +800,19 @@ test(`02.083 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${32}m${`at lea
 
 test(`02.084 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - twice`, t => {
   const inp1 = "a&amp;nbsp;b";
-  const outp1 = [[2, 6]];
-  t.deepEqual(fix(inp1), outp1, "02.084.01 - twice-encoded");
+  const outp1 = [[1, 11, "&nbsp;"]];
+  t.deepEqual(fix(inp1), outp1, "02.084");
 });
 
 test(`02.085 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - thrice`, t => {
   const inp1 = "a&amp;amp;nbsp;b";
-  const outp1 = [[2, 10]];
-  t.deepEqual(fix(inp1), outp1, "02.085.01");
+  const outp1 = [[1, 15, "&nbsp;"]];
+  t.deepEqual(fix(inp1), outp1, "02.085");
 });
 
 test(`02.086 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${31}m${`recursively encoded entities`}\u001b[${39}m - quadruple`, t => {
   const inp1 = "a&amp;amp;amp;nbsp;b";
-  const outp1 = [[2, 14]];
+  const outp1 = [[1, 19, "&nbsp;"]];
   t.deepEqual(fix(inp1), outp1, "02.086.01");
 });
 

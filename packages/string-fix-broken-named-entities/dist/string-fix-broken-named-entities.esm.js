@@ -167,24 +167,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       (str[i + 1] === undefined || str[right(str, i)] !== ";")
     ) {
       if (
-        (nbsp.ampersandNecessary !== false &&
-          str.slice(nbsp.nameStartsAt, i) !== "&nbsp;") ||
-        (nbsp.ampersandNecessary === false &&
-          str.slice(
-            Math.min(
-              nbsp.matchedN,
-              nbsp.matchedB,
-              nbsp.matchedS,
-              nbsp.matchedP
-            ),
-            i
-          ) !== "nbsp;")
+        str.slice(nbsp.nameStartsAt, i) !== "&nbsp;"
       ) {
         if (
           nbsp.nameStartsAt != null &&
           i - nbsp.nameStartsAt === 5 &&
-          str.slice(nbsp.nameStartsAt, i) === "&nbsp" &&
-          !opts.decode
+          str.slice(nbsp.nameStartsAt, i) === "&nbsp"
         ) {
           rangesArr2.push({
             ruleName: "bad-named-html-entity-missing-semicolon",
@@ -207,14 +195,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           const beginningOfTheRange = chompedAmpFromLeft
             ? chompedAmpFromLeft
             : nbsp.nameStartsAt;
-          rangesArr2.push({
-            ruleName: "bad-named-html-entity-malformed-nbsp",
-            entityName: "nbsp",
-            rangeFrom: beginningOfTheRange,
-            rangeTo: i,
-            rangeValEncoded: "&nbsp;",
-            rangeValDecoded: "\xA0"
-          });
+          if (str.slice(beginningOfTheRange, i) !== "&nbsp;") {
+            rangesArr2.push({
+              ruleName: "bad-named-html-entity-malformed-nbsp",
+              entityName: "nbsp",
+              rangeFrom: beginningOfTheRange,
+              rangeTo: i,
+              rangeValEncoded: "&nbsp;",
+              rangeValDecoded: "\xA0"
+            });
+          }
         }
       }
       nbspWipe();
@@ -310,7 +300,12 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           entStartsWith[str[firstCharThatFollows]][
             str[secondCharThatFollows]
           ].some(entity => {
-            if (str.startsWith(`${entity};`, firstCharThatFollows)) {
+            const matchEntityOnTheRight = rightSeq(
+              str,
+              toDeleteAllAmpEndHere - 1,
+              ...entity.slice("")
+            );
+            if (matchEntityOnTheRight) {
               matchedTemp = entity;
               return true;
             }
@@ -322,10 +317,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             rangesArr2.push({
               ruleName: "bad-named-html-entity-multiple-encoding",
               entityName: "amp",
-              rangeFrom: whatsOnTheLeft + 1,
-              rangeTo: firstCharThatFollows,
-              rangeValEncoded: null,
-              rangeValDecoded: null
+              rangeFrom: whatsOnTheLeft,
+              rangeTo: doNothingUntil,
+              rangeValEncoded: `&${matchedTemp};`,
+              rangeValDecoded: decode(`&${matchedTemp};`)
             });
           } else if (whatsOnTheLeft) {
             let rangeFrom = whatsOnTheLeft + 1;
@@ -365,28 +360,6 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         if (nbsp.ampersandNecessary === null) {
           nbsp.nameStartsAt = i;
           nbsp.ampersandNecessary = false;
-        }
-      } else {
-        if (!nbsp.ampersandNecessary) {
-          let endingIndex = i + 1;
-          const whatsOnTheRight = right(str, i);
-          if (str[whatsOnTheRight] === "&") {
-            for (let y = whatsOnTheRight; y < len; y++) {
-              if (str[y].trim().length && str[y] !== "&") {
-                endingIndex = y;
-                doNothingUntil = y;
-                break;
-              }
-            }
-          }
-          rangesArr2.push({
-            ruleName: "bad-named-html-entity-duplicate-ampersand",
-            entityName: "nbsp",
-            rangeFrom: i,
-            rangeTo: endingIndex,
-            rangeValEncoded: null,
-            rangeValDecoded: null
-          });
         }
       }
     }
@@ -519,7 +492,8 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   if (!rangesArr2.length) {
     return null;
   }
-  return rangesArr2.map(opts.cb);
+  const res = rangesArr2.map(opts.cb);
+  return res;
 }
 
 export default stringFixBrokenNamedEntities;
