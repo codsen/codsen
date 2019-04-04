@@ -996,13 +996,13 @@ test(`02.111 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - missing semicolon gets
     {
       ruleName: "bad-named-html-entity-missing-semicolon",
       entityName: "nbsp",
-      rangeFrom: 8,
+      rangeFrom: 3,
       rangeTo: 8,
-      rangeValEncoded: ";",
-      rangeValDecoded: ";"
+      rangeValEncoded: "&nbsp;",
+      rangeValDecoded: "\xA0"
     }
   ];
-  t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "02.111.02");
+  t.deepEqual(fix(inp5, { cb: obj => obj }), outp5, "02.111");
 });
 
 // -----------------------------------------------------------------------------
