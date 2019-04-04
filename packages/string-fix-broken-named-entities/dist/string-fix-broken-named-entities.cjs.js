@@ -50,6 +50,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
+var isArr = Array.isArray;
 function stringFixBrokenNamedEntities(str, originalOpts) {
   function isNotaLetter(str) {
     return !(typeof str === "string" && str.length === 1 && str.toUpperCase() !== str.toLowerCase());
@@ -128,6 +129,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       if (doNothingUntil !== true && i >= doNothingUntil) {
         doNothingUntil = null;
       } else {
+        counter++;
         return "continue";
       }
     }
@@ -165,37 +167,77 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           }
         }
       nbspWipe();
+      counter++;
       return "continue|outerloop";
     }
     if (str[i] && str[i - 1] === ";" && !stringLeftRight.leftSeq(str, i - 1, "a", "m", "p") && str[i] !== ";" && matchedLettersCount > 0) {
       nbspWipe();
+      counter++;
       return "continue|outerloop";
     }
     if (letterSeqStartAt !== null && (!str[i] || str[i].trim().length && !isLatinLetter(str[i]))) {
-      if (i > letterSeqStartAt + 1 && str[i] !== "&") {
+      if (i > letterSeqStartAt + 1) {
         var potentialEntity = str.slice(letterSeqStartAt, i);
-        var whatsOnTheLeft = str[stringLeftRight.left(str, letterSeqStartAt)];
-        if (whatsOnTheLeft === "&" && (!str[i] || str[i] !== ";")) ; else if (whatsOnTheLeft !== "&" && str[i] && str[i] === ";") {
+        var whatsOnTheLeft = stringLeftRight.left(str, letterSeqStartAt);
+        if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
+          var firstChar = letterSeqStartAt;
+          var secondChar = stringLeftRight.right(str, letterSeqStartAt);
+          if (allNamedHtmlEntities.entStartsWith.hasOwnProperty(str[firstChar]) && allNamedHtmlEntities.entStartsWith[str[firstChar]].hasOwnProperty(str[secondChar])) {
+            var tempEnt;
+            var tempRes;
+            var temp1 = allNamedHtmlEntities.entStartsWith[str[firstChar]][str[secondChar]].reduce(function (gatheredSoFar, oneOfKnownEntities) {
+              var tempRes = stringLeftRight.rightSeq.apply(void 0, [str, letterSeqStartAt - 1].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
+              if (tempRes && oneOfKnownEntities !== "nbsp") {
+                return gatheredSoFar.concat([{
+                  tempEnt: oneOfKnownEntities,
+                  tempRes: tempRes
+                }]);
+              }
+              return gatheredSoFar;
+            }, []);
+            if (isArr(temp1) && temp1.length) {
+              var _temp1$reduce = temp1.reduce(function (gatheredSoFar, oneOfFilteredEntitiesObj) {
+                if (oneOfFilteredEntitiesObj.tempEnt.length > gatheredSoFar.tempEnt.length) {
+                  return oneOfFilteredEntitiesObj;
+                }
+                return gatheredSoFar;
+              });
+              tempEnt = _temp1$reduce.tempEnt;
+              tempRes = _temp1$reduce.tempRes;
+            }
+            if (tempEnt) {
+              var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
+              rangesArr2.push({
+                ruleName: "bad-named-html-entity-malformed-".concat(tempEnt),
+                entityName: tempEnt,
+                rangeFrom: whatsOnTheLeft,
+                rangeTo: tempRes.rightmostChar + 1,
+                rangeValEncoded: "&".concat(tempEnt, ";"),
+                rangeValDecoded: decodedEntity
+              });
+            }
+          }
+        } else if (str[whatsOnTheLeft] !== "&" && str[i] && str[i] === ";") {
           var lastChar = stringLeftRight.left(str, i);
           var secondToLast = lastChar ? stringLeftRight.left(str, lastChar) : null;
-          var tempEnt;
-          var tempRes;
+          var _tempEnt;
+          var _tempRes;
           if (secondToLast !== null && allNamedHtmlEntities.entEndsWith.hasOwnProperty(str[lastChar]) && allNamedHtmlEntities.entEndsWith[str[lastChar]].hasOwnProperty(str[secondToLast]) && allNamedHtmlEntities.entEndsWith[str[lastChar]][str[secondToLast]].some(function (oneOfKnownEntities) {
             var temp = stringLeftRight.leftSeq.apply(void 0, [str, i].concat(_toConsumableArray(oneOfKnownEntities.split(""))));
             if (temp && oneOfKnownEntities !== "nbsp") {
-              tempEnt = oneOfKnownEntities;
-              tempRes = temp;
+              _tempEnt = oneOfKnownEntities;
+              _tempRes = temp;
               return true;
             }
           })) {
-            var decodedEntity = allNamedHtmlEntities.decode("&".concat(tempEnt, ";"));
+            var _decodedEntity = allNamedHtmlEntities.decode("&".concat(_tempEnt, ";"));
             rangesArr2.push({
-              ruleName: "bad-named-html-entity-malformed-".concat(tempEnt),
-              entityName: tempEnt,
-              rangeFrom: tempRes.leftmostChar,
+              ruleName: "bad-named-html-entity-malformed-".concat(_tempEnt),
+              entityName: _tempEnt,
+              rangeFrom: _tempRes.leftmostChar,
               rangeTo: i + 1,
-              rangeValEncoded: "&".concat(tempEnt, ";"),
-              rangeValDecoded: decodedEntity
+              rangeValEncoded: "&".concat(_tempEnt, ";"),
+              rangeValDecoded: _decodedEntity
             });
           }
         }
@@ -235,7 +277,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           if (str[_whatsOnTheLeft] === "&") {
             rangesArr2.push({
               ruleName: "bad-named-html-entity-multiple-encoding",
-              entityName: "amp",
+              entityName: matchedTemp,
               rangeFrom: _whatsOnTheLeft,
               rangeTo: doNothingUntil,
               rangeValEncoded: "&".concat(matchedTemp, ";"),
@@ -256,11 +298,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             if (opts.cb) {
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",
-                entityName: "amp",
+                entityName: matchedTemp,
                 rangeFrom: rangeFrom,
-                rangeTo: firstCharThatFollows,
-                rangeValEncoded: "".concat(spaceReplacement, "&"),
-                rangeValDecoded: "".concat(spaceReplacement, "&")
+                rangeTo: doNothingUntil,
+                rangeValEncoded: "".concat(spaceReplacement, "&").concat(matchedTemp, ";"),
+                rangeValDecoded: "".concat(spaceReplacement).concat(allNamedHtmlEntities.decode("&".concat(matchedTemp, ";")))
               });
             }
           }
@@ -281,6 +323,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
     if (str[i] && str[i].toLowerCase() === "n") {
       if (str[i - 1] === "i" && str[i + 1] === "s") {
         nbspWipe();
+        counter++;
         return "continue|outerloop";
       }
       if (nbsp.matchedN === null) {
@@ -311,6 +354,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
+        counter++;
         return "continue|outerloop";
       }
     }
@@ -330,6 +374,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
+        counter++;
         return "continue|outerloop";
       }
     }
@@ -349,6 +394,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         }
       } else {
         nbspWipe();
+        counter++;
         return "continue|outerloop";
       }
     }
@@ -375,6 +421,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
         nbsp.patience = nbsp.patience - 1;
       } else {
         nbspWipe();
+        counter++;
         return "continue|outerloop";
       }
     }
@@ -392,7 +439,11 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   if (!rangesArr2.length) {
     return null;
   }
-  var res = rangesArr2.map(opts.cb);
+  var res = rangesArr2.filter(function (filteredRangeObj, i) {
+    return rangesArr2.every(function (oneOfEveryObj, y) {
+      return i === y || filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom || filteredRangeObj.rangeTo > oneOfEveryObj.rangeTo;
+    });
+  }).map(opts.cb);
   return res;
 }
 

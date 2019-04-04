@@ -1056,135 +1056,208 @@ test(`03.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - first bug spotted - v1
 // 04. other entities
 // -----------------------------------------------------------------------------
 
-test(`04.001 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - no decode`, t => {
+test(`04.001 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, spaced`, t => {
+  t.deepEqual(fix("z &ang; y"), null, "04.001.01");
+  t.deepEqual(fix("z &angst; y"), null, "04.001.02");
+
+  t.deepEqual(fix("z &ang y"), [[2, 6, "&ang;"]], "04.001.03");
+  t.deepEqual(fix("z &angst y"), [[2, 8, "&angst;"]], "04.001.04");
+
   t.deepEqual(
-    fix("text &ang text&ang text"),
-    [[5, 9, "&ang;"], [14, 18, "&ang;"]],
-    "04.001.01"
+    fix("x &ang y&ang z"),
+    [[2, 6, "&ang;"], [8, 12, "&ang;"]],
+    "04.001.05"
   );
+});
+
+test(`04.002 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&angtext&angtext"),
     [[4, 8, "&ang;"], [12, 16, "&ang;"]],
-    "04.001.02"
+    "04.002"
   );
+});
+
+test(`04.003 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&angsttext&angsttext"),
     [[4, 10, "&angst;"], [14, 20, "&angst;"]],
-    "04.001.03"
+    "04.003"
   );
+});
+
+test(`04.004 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&pitext&pitext"),
     [[4, 7, "&pi;"], [11, 14, "&pi;"]],
-    "04.001.04"
+    "04.004"
   );
+});
+
+test(`04.005 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&pivtext&pivtext"),
     [[4, 8, "&piv;"], [12, 16, "&piv;"]],
-    "04.001.05"
+    "04.005"
   );
+});
+
+test(`04.006 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&Pitext&Pitext"),
     [[4, 7, "&Pi;"], [11, 14, "&Pi;"]],
-    "04.001.06"
+    "04.006"
   );
+});
+
+test(`04.007 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&sigmatext&sigmatext"),
     [[4, 10, "&sigma;"], [14, 20, "&sigma;"]],
-    "04.001.07"
+    "04.007"
   );
+});
+
+test(`04.008 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&subtext&subtext"),
     [[4, 8, "&sub;"], [12, 16, "&sub;"]],
-    "04.001.08"
+    "04.008"
   );
+});
+
+test(`04.009 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&suptext&suptext"),
     [[4, 8, "&sup;"], [12, 16, "&sup;"]],
-    "04.001.09"
+    "04.009"
   );
+});
+
+test(`04.010 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(
     fix("text&thetatext&thetatext"),
     [[4, 10, "&theta;"], [14, 20, "&theta;"]],
-    "04.001.10"
+    "04.010"
   );
+});
+
+test(`04.011 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, linebreaked`, t => {
   t.deepEqual(
     fix("a &thinsp b\n&thinsp\nc"),
     [[2, 9, "&thinsp;"], [12, 19, "&thinsp;"]],
-    "04.001.11"
+    "04.011"
   );
+});
+
+test(`04.012 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - no decode, tight`, t => {
   t.deepEqual(fix("&thinsp"), [[0, 7, "&thinsp;"]], "04.001.12");
   t.deepEqual(
     fix("&thinsp&thinsp"),
     [[0, 7, "&thinsp;"], [7, 14, "&thinsp;"]],
-    "04.001.13 - joins"
+    "04.012 - joins"
   );
 });
 
-test(`04.002 - ${`\u001b[${36}m${`various named HTML entities`}\u001b[${39}m`} - \u001b[${32}m${`various tests`}\u001b[${39}m - with decode`, t => {
+// with decode
+
+test(`04.013 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, spaced`, t => {
   t.deepEqual(
     fix("text &ang text&ang text", { decode: true }),
     [[5, 9, "\u2220"], [14, 18, "\u2220"]],
-    "04.002.01"
+    "04.013"
   );
+});
+
+test(`04.014 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`ang`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&angtext&angtext", { decode: true }),
     [[4, 8, "\u2220"], [12, 16, "\u2220"]],
-    "04.002.02"
+    "04.014"
   );
+});
+
+test(`04.015 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`angst`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&angsttext&angsttext", { decode: true }),
     [[4, 10, "\xC5"], [14, 20, "\xC5"]],
-    "04.002.03"
+    "04.015"
   );
+});
+
+test(`04.016 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`pi`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&pitext&pitext", { decode: true }),
     [[4, 7, "\u03C0"], [11, 14, "\u03C0"]],
-    "04.002.04"
+    "04.016"
   );
+});
+
+test(`04.017 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`piv`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&pivtext&pivtext", { decode: true }),
     [[4, 8, "\u03D6"], [12, 16, "\u03D6"]],
-    "04.002.05"
+    "04.017"
   );
+});
+
+test(`04.018 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`Pi`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&Pitext&Pitext", { decode: true }),
     [[4, 7, "\u03A0"], [11, 14, "\u03A0"]],
-    "04.002.06"
+    "04.018"
   );
+});
+
+test(`04.019 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sigma`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&sigmatext&sigmatext", { decode: true }),
     [[4, 10, "\u03C3"], [14, 20, "\u03C3"]],
-    "04.002.07"
+    "04.019"
   );
+});
+
+test(`04.020 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sub`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&subtext&subtext", { decode: true }),
     [[4, 8, "\u2282"], [12, 16, "\u2282"]],
-    "04.002.08"
+    "04.020"
   );
+});
+
+test(`04.021 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`sup`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&suptext&suptext", { decode: true }),
     [[4, 8, "\u2283"], [12, 16, "\u2283"]],
-    "04.002.09"
+    "04.021"
   );
+});
+
+test(`04.022 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`theta`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("text&thetatext&thetatext", { decode: true }),
     [[4, 10, "\u03B8"], [14, 20, "\u03B8"]],
-    "04.002.10"
+    "04.022"
   );
+});
+
+test(`04.023 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, line breaked`, t => {
   t.deepEqual(
     fix("a &thinsp b\n&thinsp\nc", { decode: true }),
     [[2, 9, "\u2009"], [12, 19, "\u2009"]],
-    "04.002.11"
+    "04.023"
   );
-  t.deepEqual(
-    fix("&thinsp", { decode: true }),
-    [[0, 7, "\u2009"]],
-    "04.002.12"
-  );
+});
+
+test(`04.024 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, isolated`, t => {
+  t.deepEqual(fix("&thinsp", { decode: true }), [[0, 7, "\u2009"]], "04.024");
+});
+
+test(`04.025 - ${`\u001b[${36}m${`semicolon missing`}\u001b[${39}m`} - \u001b[${32}m${`thinsp`}\u001b[${39}m - with decode, tight`, t => {
   t.deepEqual(
     fix("&thinsp&thinsp", { decode: true }),
     [[0, 7, "\u2009"], [7, 14, "\u2009"]],
-    "04.002.13 - joins"
+    "04.025.13 - joins"
   );
 });
 
@@ -1236,7 +1309,7 @@ test(`05.008 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
           received,
           {
             ruleName: "bad-named-html-entity-multiple-encoding",
-            entityName: "&nbsp;",
+            entityName: "nbsp",
             rangeFrom: 4,
             rangeTo: 14,
             rangeValEncoded: "&nbsp;",
@@ -1278,29 +1351,12 @@ test(`05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
   t.deepEqual(fix(inp4), [[5, 9, "&"]], "05.010.04");
 });
 
-test(`05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - cb`, t => {
+test(`05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`, t => {
   const inp1 = "textamp;nbsp;text";
-  t.deepEqual(
-    fix(inp1, {
-      cb: received => {
-        t.deepEqual(
-          received,
-          {
-            entityName: "amp",
-            rangeFrom: 4,
-            rangeTo: 13,
-            rangeValDecoded: "&nbsp;",
-            rangeValEncoded: "\xA0",
-            ruleName: "bad-named-html-entity-multiple-encoding"
-          },
-          "05.011.01"
-        );
-        return cb(received);
-      }
-    }),
-    [[4, 8, "&"]],
-    "05.011.02"
-  );
+  t.deepEqual(fix(inp1), [[4, 13, "&nbsp;"]], "05.011.01");
+
+  const inp2 = "textamp;nsp;text";
+  t.deepEqual(fix(inp2), [[4, 12, "&nbsp;"]], "05.011.02");
 });
 
 test(`05.012 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nsp`}\u001b[${39}m - missing ampersand + incomplete nbsp letter set - extreme #2`, t => {
