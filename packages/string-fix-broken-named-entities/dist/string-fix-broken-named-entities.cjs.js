@@ -414,7 +414,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       }
     }
     if (str[i] && str[i].toLowerCase() === "p") {
-      if (nbsp.nameStartsAt !== null) {
+      if (stringLeftRight.leftSeq(str, i, "t", "h", "i", "n", "s")) {
+        nbspWipe();
+      } else if (nbsp.nameStartsAt !== null) {
         if (nbsp.matchedP === null) {
           nbsp.matchedP = i;
         }
