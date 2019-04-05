@@ -470,7 +470,7 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
   }
   var res = rangesArr2.filter(function (filteredRangeObj, i) {
     return rangesArr2.every(function (oneOfEveryObj, y) {
-      return i === y || filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom || filteredRangeObj.rangeTo > oneOfEveryObj.rangeTo;
+      return i === y || !(filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom && filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo);
     });
   }).map(opts.cb);
   return res;

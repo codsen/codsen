@@ -603,8 +603,10 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
       return rangesArr2.every((oneOfEveryObj, y) => {
         return (
           i === y ||
-          filteredRangeObj.rangeFrom !== oneOfEveryObj.rangeFrom ||
-          filteredRangeObj.rangeTo > oneOfEveryObj.rangeTo
+          !(
+            filteredRangeObj.rangeFrom >= oneOfEveryObj.rangeFrom &&
+            filteredRangeObj.rangeTo < oneOfEveryObj.rangeTo
+          )
         );
       });
     })
