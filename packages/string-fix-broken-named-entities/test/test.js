@@ -1,5 +1,6 @@
 import test from "ava";
 import fix from "../dist/string-fix-broken-named-entities.esm";
+// import allEntities from "../node_modules/all-named-html-entities/src/allNamedEntities.json";
 
 // -----------------------------------------------------------------------------
 // group 01. various throws
@@ -1715,14 +1716,29 @@ test(`09.003 - ${`\u001b[${33}m${`nbsp`}\u001b[${39}m`} - \u001b[${36}m${`nbsp`}
 });
 
 // -----------------------------------------------------------------------------
-// 10. numeric entities
+// 10. programmatic tests
 // -----------------------------------------------------------------------------
 
-// test(`10.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
+// test(`10.XXX - ${`\u001b[${33}m${`programmatic tests`}\u001b[${39}m`}`, t => {
+//   Object.keys(allEntities).forEach(singleEntity => {
+//     // ampersand missing, isolated:
+//     t.deepEqual(
+//       fix(`${singleEntity};`),
+//       [[0, singleEntity.length + 1, `&${singleEntity};`]],
+//       `${singleEntity} - 01`
+//     );
+//   });
+// });
+
+// -----------------------------------------------------------------------------
+// 11. numeric entities
+// -----------------------------------------------------------------------------
+
+// test(`11.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
 //   const inp1 = "#x26;";
 //   const outp1 = [[0, 5, "&#x26;"]];
-//   t.deepEqual(fix(inp1), outp1, "10.001.01");
-//   t.deepEqual(fix(inp1, { cb }), outp1, "10.001.02");
+//   t.deepEqual(fix(inp1), outp1, "11.001.01");
+//   t.deepEqual(fix(inp1, { cb }), outp1, "11.001.02");
 // });
 
 // -----------------------------------------------------------------------------
