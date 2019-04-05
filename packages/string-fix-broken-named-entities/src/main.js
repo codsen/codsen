@@ -465,6 +465,17 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
           `465 ${`\u001b[${35}m${`██ CARVED A SEQUENCE:\n${potentialEntity}`}\u001b[${39}m`}`
         );
         const whatsOnTheLeft = left(str, letterSeqStartAt);
+
+        //
+        //
+        //
+        //
+        // CASE 1 - CHECK FOR MISSING AMPERSAND
+        //
+        //
+        //
+        //
+
         if (str[whatsOnTheLeft] === "&" && (!str[i] || str[i] !== ";")) {
           console.log(
             `470 ${`\u001b[${35}m${`semicol might be missing`}\u001b[${39}m`}`
@@ -573,6 +584,16 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
             // ELSE, it was just a legit ampersand
           }
         } else if (str[whatsOnTheLeft] !== "&" && str[i] && str[i] === ";") {
+          //
+          //
+          //
+          //
+          // CASE 2 - CHECK FOR MISSING SEMICOLON
+          //
+          //
+          //
+          //
+
           console.log(
             `577 ${`\u001b[${35}m${`ampersand might be missing`}\u001b[${39}m`}`
           );
