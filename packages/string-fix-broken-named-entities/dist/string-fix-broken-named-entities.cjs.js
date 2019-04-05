@@ -319,17 +319,9 @@ function stringFixBrokenNamedEntities(str, originalOpts) {
               rangeValDecoded: allNamedHtmlEntities.decode("&".concat(matchedTemp, ";"))
             });
           } else if (_whatsOnTheLeft) {
-            var rangeFrom = _whatsOnTheLeft + 1;
+            var rangeFrom = i;
             var spaceReplacement = "";
-            if (!str[rangeFrom].trim().length) {
-              if (str[rangeFrom] === " ") {
-                rangeFrom++;
-              } else if (!"\n\r".includes(str[rangeFrom])) {
-                spaceReplacement = " ";
-              } else {
-                rangeFrom = i;
-              }
-            }
+            if (str[i - 1] === " ") ;
             if (opts.cb) {
               rangesArr2.push({
                 ruleName: "bad-named-html-entity-multiple-encoding",

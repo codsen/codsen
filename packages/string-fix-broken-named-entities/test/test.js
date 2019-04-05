@@ -1345,7 +1345,7 @@ test(`05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
   t.deepEqual(fix(inp2), [[5, 14, "&nbsp;"]], "05.010.02");
 
   const inp3 = "text\tamp;nbsp;text";
-  t.deepEqual(fix(inp3), [[5, 14, " &nbsp;"]], "05.010.03");
+  t.deepEqual(fix(inp3), [[5, 14, "&nbsp;"]], "05.010.03");
 
   const inp4 = "text\namp;nbsp;text";
   t.deepEqual(fix(inp4), [[5, 14, "&nbsp;"]], "05.010.04");
