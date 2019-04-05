@@ -17,9 +17,9 @@
     }
   },
   "scripts": {
+    "all:lect": "make run-lect",
     "all:test:full": "lerna run test --bail --concurrency 1",
     "all:test:only": "lerna run unittest --bail --concurrency 1",
-    "all:lect": "make run-lect",
     "bootstrap": "FORCE_COLOR=1 npx lerna bootstrap --hoist",
     "build": "FORCE_COLOR=1 lerna run test --bail --concurrency 1 && npm run readme:generate",
     "build:just": "lerna run build --bail",
@@ -45,7 +45,7 @@
     "@pectin/cli": "^3.0.1",
     "commitizen": "^3.0.7",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-no-unsanitized": "^3.0.2",

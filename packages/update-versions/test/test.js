@@ -62,6 +62,7 @@ const packBefore = {
   devDependencies: {
     "@pectin/cli": "^3.0.1",
     commitizen: "^3.0.5",
+    slfjdlkjglkdflgjdlkjljf: "^1.0.0",
     "cz-conventional-changelog": "^2.1.0",
     eslint: "^5.12.1",
     "eslint-config-prettier": "^3.6.0",
@@ -180,7 +181,8 @@ test.serial("01 - monorepo", async t => {
     .catch(err => t.fail(err));
 });
 
-test("02 - normal repo", async t => {
+// test.serial("02 - normal repo", async t => {
+test.only("02 - normal repo", async t => {
   const tempFolder = "temp";
 
   // 1. create folders:

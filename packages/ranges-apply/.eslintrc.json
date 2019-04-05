@@ -54,6 +54,7 @@
         "devDependencies": [
           "**/*test.js",
           "test/**/*.*",
+          "test-util/**/*.*",
           "rollup.config.js"
         ]
       }

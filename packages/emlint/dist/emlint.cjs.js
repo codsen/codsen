@@ -13,6 +13,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var allNamedHtmlEntities = require('all-named-html-entities');
 var fixBrokenEntities = _interopDefault(require('string-fix-broken-named-entities'));
 var arrayiffy = _interopDefault(require('arrayiffy-if-string'));
 var checkTypes = _interopDefault(require('check-types-mini'));
@@ -89,240 +90,6 @@ var knownBooleanHTMLAttributes = [
 	"seamless",
 	"selected",
 	"typemustmatch"
-];
-
-var knownNamedHTMLEntities = [
-	"Aacute",
-	"aacute",
-	"Acirc",
-	"acirc",
-	"acute",
-	"AElig",
-	"aelig",
-	"Agrave",
-	"agrave",
-	"alefsym",
-	"Alpha",
-	"alpha",
-	"amp",
-	"and",
-	"asymp",
-	"Atilde",
-	"atilde",
-	"Auml",
-	"auml",
-	"bdquo",
-	"Beta",
-	"beta",
-	"brvbar",
-	"bull",
-	"cap",
-	"Ccedil",
-	"ccedil",
-	"cedil",
-	"cent",
-	"Chi",
-	"chi",
-	"circ",
-	"clubs",
-	"cong",
-	"copy",
-	"crarr",
-	"cup",
-	"curren",
-	"dagger",
-	"Dagger",
-	"darr",
-	"dArr",
-	"deg",
-	"Delta",
-	"delta",
-	"diams",
-	"Eacute",
-	"eacute",
-	"Ecirc",
-	"ecirc",
-	"Egrave",
-	"egrave",
-	"empty",
-	"emsp",
-	"ensp",
-	"Epsilon",
-	"epsilon",
-	"equiv",
-	"Eta",
-	"eta",
-	"ETH",
-	"eth",
-	"Euml",
-	"euml",
-	"euro",
-	"exist",
-	"fnof",
-	"forall",
-	"frac14",
-	"frac34",
-	"frasl",
-	"Gamma",
-	"gamma",
-	"ge",
-	"gt",
-	"harr",
-	"hArr",
-	"hearts",
-	"hellip",
-	"Iacute",
-	"iacute",
-	"Icirc",
-	"icirc",
-	"iexcl",
-	"Igrave",
-	"igrave",
-	"image",
-	"infin",
-	"int",
-	"Iota",
-	"iota",
-	"iquest",
-	"isin",
-	"Iuml",
-	"iuml",
-	"Kappa",
-	"kappa",
-	"Lambda",
-	"lambda",
-	"lang",
-	"laquo",
-	"larr",
-	"lArr",
-	"lceil",
-	"le",
-	"lfloor",
-	"lowast",
-	"loz",
-	"lrm",
-	"lsaquo",
-	"lt",
-	"macr",
-	"mdash",
-	"micro",
-	"middot",
-	"minus",
-	"Mu",
-	"mu",
-	"nabla",
-	"ndash",
-	"nbsp",
-	"ne",
-	"ni",
-	"not",
-	"nsub",
-	"Ntilde",
-	"ntilde",
-	"Nu",
-	"nu",
-	"Oacute",
-	"oacute",
-	"Ocirc",
-	"ocirc",
-	"OElig",
-	"oelig",
-	"Ograve",
-	"ograve",
-	"oline",
-	"Omega",
-	"omega",
-	"Omicron",
-	"omicron",
-	"oplus",
-	"ordf",
-	"ordm",
-	"Oslash",
-	"oslash",
-	"Otilde",
-	"otilde",
-	"otimes",
-	"Ouml",
-	"ouml",
-	"para",
-	"part",
-	"permil",
-	"perp",
-	"Phi",
-	"phi",
-	"pm",
-	"pound",
-	"prime",
-	"Prime",
-	"prod",
-	"prop",
-	"Psi",
-	"psi",
-	"radic",
-	"rang",
-	"raquo",
-	"rarr",
-	"rArr",
-	"rceil",
-	"real",
-	"reg",
-	"rfloor",
-	"Rho",
-	"rho",
-	"rlm",
-	"rsaquo",
-	"sbquo",
-	"Scaron",
-	"scaron",
-	"sdot",
-	"sect",
-	"sigmaf",
-	"Sigma",
-	"sim",
-	"spades",
-	"sube",
-	"sum",
-	"supe",
-	"sup1",
-	"sup2",
-	"sup3",
-	"szlig",
-	"Tau",
-	"tau",
-	"there4",
-	"thetasym",
-	"Theta",
-	"thinsp",
-	"THORN",
-	"thorn",
-	"tilde",
-	"times",
-	"trade",
-	"Uacute",
-	"uacute",
-	"uarr",
-	"uArr",
-	"Ucirc",
-	"ucirc",
-	"Ugrave",
-	"ugrave",
-	"upsih",
-	"Upsilon",
-	"upsilon",
-	"Uuml",
-	"uuml",
-	"weierp",
-	"Xi",
-	"xi",
-	"Yacute",
-	"yacute",
-	"yen",
-	"yuml",
-	"Yuml",
-	"Zeta",
-	"zeta",
-	"zwj",
-	"zwnj"
 ];
 
 var errorsCharacters = {
@@ -1142,6 +909,7 @@ var errorsRules = {
 
 var version = "1.2.7";
 
+var isArr = Array.isArray;
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
 var c1CharacterNames = ["delete", "padding", "high-octet-preset", "break-permitted-here", "no-break-here", "index", "next-line", "start-of-selected-area", "end-of-selected-area", "character-tabulation-set", "character-tabulation-with-justification", "line-tabulation-set", "partial-line-forward", "partial-line-backward", "reverse-line-feed", "single-shift-two", "single-shift-three", "device-control-string", "private-use-1", "private-use-2", "set-transmit-state", "cancel-character", "message-waiting", "start-of-protected-area", "end-of-protected-area", "start-of-string", "single-graphic-character-introducer", "single-character-intro-introducer", "control-sequence-introducer", "string-terminator", "operating-system-command", "private-message", "application-program-command"];
 function charSuitableForAttrName(char) {
@@ -1213,8 +981,20 @@ function isTagChar(char) {
   }
   return !"><=".includes(char);
 }
+function lastChar(str) {
+  if (typeof str !== "string" || !str.length) {
+    return "";
+  }
+  return str[str.length - 1];
+}
+function secondToLastChar(str) {
+  if (typeof str !== "string" || !str.length || str.length === 1) {
+    return "";
+  }
+  return str[str.length - 2];
+}
 function isLowerCaseLetter(char) {
-  return isStr(char) && char.length === 1 && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
+  return isStr(char) && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
 }
 function isUppercaseLetter(char) {
   return isStr(char) && char.length === 1 && char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91;
@@ -1690,39 +1470,41 @@ function flip(str) {
     return str.replace(/\{/g, "}").replace(/\(/g, ")");
   }
 }
+function pingEspTag(str, espTagObj, submit) {
+  if (isNum(espTagObj.startAt) && isNum(espTagObj.endAt)) {
+    var openingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\(/g);
+    var closingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\)/g);
+    if (isArr(openingParens) && isArr(closingParens) && openingParens.length !== closingParens.length || isArr(openingParens) && !isArr(closingParens) || !isArr(openingParens) && isArr(closingParens)) {
+      if (isArr(openingParens) && isArr(closingParens) && openingParens.length > closingParens.length || isArr(openingParens) && openingParens.length && !isArr(closingParens)) {
+        submit({
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      } else if (isArr(openingParens) && isArr(closingParens) && openingParens.length < closingParens.length || isArr(closingParens) && closingParens.length && !isArr(openingParens)) {
+        submit({
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      }
+    }
+  }
+}
 
-var isArr = Array.isArray;
+var isArr$1 = Array.isArray;
 var attributeOnTheRight$1 = attributeOnTheRight,
     withinTagInnerspace$1 = withinTagInnerspace,
     isLowerCaseLetter$1 = isLowerCaseLetter,
+    secondToLastChar$1 = secondToLastChar,
     findClosingQuote$1 = findClosingQuote,
     tagOnTheRight$1 = tagOnTheRight,
     charIsQuote$1 = charIsQuote,
     encodeChar$1 = encodeChar,
+    pingEspTag$1 = pingEspTag,
+    lastChar$1 = lastChar,
     isStr$1 = isStr,
-    isNum$1 = isNum,
     flip$1 = flip;
 function lint(str, originalOpts) {
   function pingTag(logTag) {}
-  function pingEspTag(espTagObj) {
-    if (isNum$1(espTagObj.startAt) && isNum$1(espTagObj.endAt)) {
-      var openingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\(/g);
-      var closingParens = str.slice(espTagObj.startAt, espTagObj.endAt).match(/\)/g);
-      if (isArr(openingParens) && isArr(closingParens) && openingParens.length !== closingParens.length || isArr(openingParens) && !isArr(closingParens) || !isArr(openingParens) && isArr(closingParens)) {
-        if (isArr(openingParens) && isArr(closingParens) && openingParens.length > closingParens.length || isArr(openingParens) && openingParens.length && !isArr(closingParens)) {
-          submit({
-            name: "esp-more-opening-parentheses-than-closing",
-            position: [[espTagObj.startAt, espTagObj.endAt]]
-          });
-        } else if (isArr(openingParens) && isArr(closingParens) && openingParens.length < closingParens.length || isArr(closingParens) && closingParens.length && !isArr(openingParens)) {
-          submit({
-            name: "esp-more-closing-parentheses-than-opening",
-            position: [[espTagObj.startAt, espTagObj.endAt]]
-          });
-        }
-      }
-    }
-  }
   if (!isStr$1(str)) {
     throw new Error("emlint: [THROW_ID_01] the first input argument must be a string. It was given as:\n".concat(JSON.stringify(str, null, 4), " (type ").concat(_typeof(str), ")"));
   }
@@ -1781,6 +1563,7 @@ function lint(str, originalOpts) {
   }
   var doNothingUntil = null;
   var doNothingUntilReason = null;
+  var letterSeqStartAt = null;
   var logTag;
   var defaultLogTag = {
     tagStartAt: null,
@@ -1859,6 +1642,7 @@ function lint(str, originalOpts) {
     issues: [],
     applicableRules: {}
   };
+  var entitiesTackledByFixBrokenEntities = ["nbsp"];
   Object.keys(errorsRules).concat(Object.keys(errorsCharacters)).sort().forEach(function (ruleName) {
     retObj.applicableRules[ruleName] = false;
   });
@@ -1980,6 +1764,36 @@ function lint(str, originalOpts) {
       withinQuotes = null;
       withinQuotesEndAt = null;
     }
+    if (letterSeqStartAt !== null && (str[_i].trim().length && !isLowerCaseLetter$1(str[_i]) || !str[_i + 1])) {
+      var potentialEntity = str.slice(letterSeqStartAt, str[_i + 1] ? _i : _i + 1);
+      var whatsOnTheLeft = str[stringLeftRight.left(str, letterSeqStartAt)];
+      if (whatsOnTheLeft === "&" || str[_i] === ";") {
+        var _temp;
+        if (whatsOnTheLeft !== "&" && allNamedHtmlEntities.entEndsWith.hasOwnProperty(lastChar$1(potentialEntity)) && allNamedHtmlEntities.entEndsWith[lastChar$1(potentialEntity)].hasOwnProperty(secondToLastChar$1(potentialEntity)) && allNamedHtmlEntities.entEndsWith[lastChar$1(potentialEntity)][secondToLastChar$1(potentialEntity)].some(function (val) {
+          if (potentialEntity.endsWith(val)) {
+            _temp = val;
+            i = _i;
+            return true;
+          }
+        })) {
+          if (!entitiesTackledByFixBrokenEntities.includes(_temp)) {
+            submit({
+              name: "bad-named-html-entity-malformed-".concat(potentialEntity),
+              position: [[_i - _temp.length, _i - _temp.length, "&"]]
+            });
+          }
+        } else if (str[_i] !== ";") {
+          submit({
+            name: "bad-named-html-entity-malformed-".concat(potentialEntity),
+            position: [[str[_i + 1] ? _i : _i + 1, str[_i + 1] ? _i : _i + 1, ";"]]
+          });
+        }
+      }
+      letterSeqStartAt = null;
+    }
+    if (letterSeqStartAt === null && isLowerCaseLetter$1(str[_i])) {
+      letterSeqStartAt = _i;
+    }
     if (doNothingUntil && doNothingUntilReason === "esp" && logEspTag.tailStartAt && logEspTag.tailEndAt === null && !espChars.includes(str[_i + 1])) {
       doNothingUntil = _i + 1;
     }
@@ -1998,7 +1812,7 @@ function lint(str, originalOpts) {
         logEspTag.tailVal = str.slice(logEspTag.tailStartAt, logEspTag.tailEndAt);
         logEspTag.endAt = logEspTag.tailEndAt;
         doNothingUntil = logEspTag.endAt;
-        pingEspTag(logEspTag);
+        pingEspTag$1(str, logEspTag, submit);
         resetEspTag();
       } else if (flip$1(logEspTag.headVal).includes(str[_i])) {
         if (espChars.includes(str[stringLeftRight.right(str, _i)]) || logEspTag.headVal.includes(str[_i]) || flip$1(logEspTag.headVal).includes(str[_i])) {
@@ -2044,9 +1858,9 @@ function lint(str, originalOpts) {
         }
       }
       if (logAttr.attrNameEndAt !== null && logAttr.attrEqualAt === null && _i >= logAttr.attrNameEndAt && str[_i].trim().length) {
-        var _temp;
+        var _temp2;
         if (str[_i] === "'" || str[_i] === '"') {
-          _temp = attributeOnTheRight$1(str, _i);
+          _temp2 = attributeOnTheRight$1(str, _i);
         }
         if (str[_i] === "=") {
           logAttr.attrEqualAt = _i;
@@ -2062,10 +1876,10 @@ function lint(str, originalOpts) {
                   name: "tag-attribute-repeated-equal",
                   position: [[nextEqualStartAt, nextEqualEndAt]]
                 });
-                var _temp2 = stringLeftRight.right(str, nextEqualEndAt - 1);
-                if (str[_temp2] === "=") {
+                var _temp3 = stringLeftRight.right(str, nextEqualEndAt - 1);
+                if (str[_temp3] === "=") {
                   nextEqualStartAt = nextEqualEndAt;
-                  nextEqualEndAt = _temp2 + 1;
+                  nextEqualEndAt = _temp3 + 1;
                   doNothingUntil = nextEqualEndAt;
                   doNothingUntilReason = "already processed equals";
                 } else {
@@ -2074,19 +1888,19 @@ function lint(str, originalOpts) {
               }
             }
           }
-        } else if (_temp) {
+        } else if (_temp2) {
           submit({
             name: "tag-attribute-missing-equal",
             position: [[_i, _i, "="]]
           });
           logAttr.attrEqualAt = _i;
           logAttr.attrValueStartAt = _i + 1;
-          logAttr.attrValueEndAt = _temp;
+          logAttr.attrValueEndAt = _temp2;
           logAttr.attrOpeningQuote.pos = _i;
           logAttr.attrOpeningQuote.val = str[_i];
-          logAttr.attrClosingQuote.pos = _temp;
-          logAttr.attrClosingQuote.val = str[_temp];
-          logAttr.attrValue = str.slice(_i + 1, _temp);
+          logAttr.attrClosingQuote.pos = _temp2;
+          logAttr.attrClosingQuote.val = str[_temp2];
+          logAttr.attrValue = str.slice(_i + 1, _temp2);
         } else {
           logTag.attributes.push(clone(logAttr));
           resetLogAttr();
@@ -2293,11 +2107,11 @@ function lint(str, originalOpts) {
             var startingPoint = innerTagEndsAt;
             var attributeOnTheRightBeginsAt;
             if (innerTagContents.includes("=")) {
-              var _temp3 = innerTagContents.split("=")[0];
-              if (_temp3.split("").some(function (char) {
+              var _temp4 = innerTagContents.split("=")[0];
+              if (_temp4.split("").some(function (char) {
                 return !char.trim().length;
               })) {
-                for (var z = _i + _temp3.length; z--;) {
+                for (var z = _i + _temp4.length; z--;) {
                   if (!str[z].trim().length) {
                     attributeOnTheRightBeginsAt = z + 1;
                     break;
@@ -2330,9 +2144,9 @@ function lint(str, originalOpts) {
               if (!str[_z].trim().length && caughtAttrEnd) {
                 caughtAttrStart = _z + 1;
                 if (str[stringLeftRight.right(str, caughtAttrEnd)] === "=") {
-                  var _temp4 = stringLeftRight.left(str, caughtAttrStart);
-                  if (!charIsQuote$1(str[_temp4])) {
-                    attributeOnTheRightBeginsAt = stringLeftRight.right(str, _temp4 + 1);
+                  var _temp5 = stringLeftRight.left(str, caughtAttrStart);
+                  if (!charIsQuote$1(str[_temp5])) {
+                    attributeOnTheRightBeginsAt = stringLeftRight.right(str, _temp5 + 1);
                   }
                   break;
                 } else {
@@ -2369,9 +2183,9 @@ function lint(str, originalOpts) {
             logAttr.attrValue = str.slice(logAttr.attrOpeningQuote.pos, logAttr.attrClosingQuote.pos);
             if (logAttr.attrValueStartAt < logAttr.attrValueEndAt) {
               for (var _z2 = logAttr.attrValueStartAt; _z2 < logAttr.attrValueEndAt; _z2++) {
-                var _temp5 = encodeChar$1(str, _z2);
-                if (_temp5) {
-                  submit(_temp5);
+                var _temp6 = encodeChar$1(str, _z2);
+                if (_temp6) {
+                  submit(_temp6);
                 }
               }
             }
@@ -2386,8 +2200,8 @@ function lint(str, originalOpts) {
             return "continue";
           } else {
             var start = logAttr.attrStartAt;
-            var _temp6 = stringLeftRight.right(str, _i);
-            if (str[_i] === "/" && _temp6 && str[_temp6] === ">" || str[_i] === ">") {
+            var _temp7 = stringLeftRight.right(str, _i);
+            if (str[_i] === "/" && _temp7 && str[_temp7] === ">" || str[_i] === ">") {
               for (var _y3 = logAttr.attrStartAt; _y3--;) {
                 if (str[_y3].trim().length) {
                   start = _y3 + 1;
@@ -2594,18 +2408,7 @@ function lint(str, originalOpts) {
         position: [[_i, _i + 1]]
       });
     } else if (!doNothingUntil && charcode === 38) {
-      var nextNonWhitespaceChar = stringLeftRight.right(str, _i);
-      var remainderOfAString = str.slice(nextNonWhitespaceChar);
-      var _temp7;
-      if (knownNamedHTMLEntities.some(function (ent) {
-        if (remainderOfAString.startsWith(ent)) {
-          _temp7 = ent.length;
-          i = _i;
-          return true;
-        }
-      })) {
-        if (str[stringLeftRight.right(str, _i + _temp7)] !== ";") ;
-      } else {
+      if (isLowerCaseLetter$1(str[stringLeftRight.right(str, _i)])) ; else {
         submit({
           name: "bad-character-unencoded-ampersand",
           position: [[_i, _i + 1, "&amp;"]]
@@ -3106,7 +2909,7 @@ function lint(str, originalOpts) {
       };
     }
   });
-  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+  if (isArr$1(htmlEntityFixes) && htmlEntityFixes.length) {
     retObj.issues = retObj.issues.filter(function (issueObj) {
       return issueObj.name !== "bad-character-unencoded-ampersand" || htmlEntityFixes.every(function (entityFixObj) {
         return issueObj.position[0][0] !== entityFixObj.position[0][0];
@@ -3120,14 +2923,14 @@ function lint(str, originalOpts) {
   })) {
     retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
   }
-  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+  if (isArr$1(htmlEntityFixes) && htmlEntityFixes.length) {
     htmlEntityFixes.forEach(function (issueObj) {
       if (!retObj.applicableRules[issueObj.name]) {
         retObj.applicableRules[issueObj.name] = true;
       }
     });
   }
-  retObj.fix = isArr(retObj.issues) && retObj.issues.length ? merge(retObj.issues.filter(function (issueObj) {
+  retObj.fix = isArr$1(retObj.issues) && retObj.issues.length ? merge(retObj.issues.filter(function (issueObj) {
     return !errorsRules[issueObj.name] || !errorsRules[issueObj.name].unfixable;
   }).reduce(function (acc, obj) {
     return acc.concat(obj.position);

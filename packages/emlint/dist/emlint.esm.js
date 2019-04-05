@@ -7,6 +7,7 @@
  * Homepage: https://gitlab.com/codsen/codsen/tree/master/packages/emlint
  */
 
+import { entEndsWith } from 'all-named-html-entities';
 import fixBrokenEntities from 'string-fix-broken-named-entities';
 import arrayiffy from 'arrayiffy-if-string';
 import checkTypes from 'check-types-mini';
@@ -49,240 +50,6 @@ var knownBooleanHTMLAttributes = [
 	"seamless",
 	"selected",
 	"typemustmatch"
-];
-
-var knownNamedHTMLEntities = [
-	"Aacute",
-	"aacute",
-	"Acirc",
-	"acirc",
-	"acute",
-	"AElig",
-	"aelig",
-	"Agrave",
-	"agrave",
-	"alefsym",
-	"Alpha",
-	"alpha",
-	"amp",
-	"and",
-	"asymp",
-	"Atilde",
-	"atilde",
-	"Auml",
-	"auml",
-	"bdquo",
-	"Beta",
-	"beta",
-	"brvbar",
-	"bull",
-	"cap",
-	"Ccedil",
-	"ccedil",
-	"cedil",
-	"cent",
-	"Chi",
-	"chi",
-	"circ",
-	"clubs",
-	"cong",
-	"copy",
-	"crarr",
-	"cup",
-	"curren",
-	"dagger",
-	"Dagger",
-	"darr",
-	"dArr",
-	"deg",
-	"Delta",
-	"delta",
-	"diams",
-	"Eacute",
-	"eacute",
-	"Ecirc",
-	"ecirc",
-	"Egrave",
-	"egrave",
-	"empty",
-	"emsp",
-	"ensp",
-	"Epsilon",
-	"epsilon",
-	"equiv",
-	"Eta",
-	"eta",
-	"ETH",
-	"eth",
-	"Euml",
-	"euml",
-	"euro",
-	"exist",
-	"fnof",
-	"forall",
-	"frac14",
-	"frac34",
-	"frasl",
-	"Gamma",
-	"gamma",
-	"ge",
-	"gt",
-	"harr",
-	"hArr",
-	"hearts",
-	"hellip",
-	"Iacute",
-	"iacute",
-	"Icirc",
-	"icirc",
-	"iexcl",
-	"Igrave",
-	"igrave",
-	"image",
-	"infin",
-	"int",
-	"Iota",
-	"iota",
-	"iquest",
-	"isin",
-	"Iuml",
-	"iuml",
-	"Kappa",
-	"kappa",
-	"Lambda",
-	"lambda",
-	"lang",
-	"laquo",
-	"larr",
-	"lArr",
-	"lceil",
-	"le",
-	"lfloor",
-	"lowast",
-	"loz",
-	"lrm",
-	"lsaquo",
-	"lt",
-	"macr",
-	"mdash",
-	"micro",
-	"middot",
-	"minus",
-	"Mu",
-	"mu",
-	"nabla",
-	"ndash",
-	"nbsp",
-	"ne",
-	"ni",
-	"not",
-	"nsub",
-	"Ntilde",
-	"ntilde",
-	"Nu",
-	"nu",
-	"Oacute",
-	"oacute",
-	"Ocirc",
-	"ocirc",
-	"OElig",
-	"oelig",
-	"Ograve",
-	"ograve",
-	"oline",
-	"Omega",
-	"omega",
-	"Omicron",
-	"omicron",
-	"oplus",
-	"ordf",
-	"ordm",
-	"Oslash",
-	"oslash",
-	"Otilde",
-	"otilde",
-	"otimes",
-	"Ouml",
-	"ouml",
-	"para",
-	"part",
-	"permil",
-	"perp",
-	"Phi",
-	"phi",
-	"pm",
-	"pound",
-	"prime",
-	"Prime",
-	"prod",
-	"prop",
-	"Psi",
-	"psi",
-	"radic",
-	"rang",
-	"raquo",
-	"rarr",
-	"rArr",
-	"rceil",
-	"real",
-	"reg",
-	"rfloor",
-	"Rho",
-	"rho",
-	"rlm",
-	"rsaquo",
-	"sbquo",
-	"Scaron",
-	"scaron",
-	"sdot",
-	"sect",
-	"sigmaf",
-	"Sigma",
-	"sim",
-	"spades",
-	"sube",
-	"sum",
-	"supe",
-	"sup1",
-	"sup2",
-	"sup3",
-	"szlig",
-	"Tau",
-	"tau",
-	"there4",
-	"thetasym",
-	"Theta",
-	"thinsp",
-	"THORN",
-	"thorn",
-	"tilde",
-	"times",
-	"trade",
-	"Uacute",
-	"uacute",
-	"uarr",
-	"uArr",
-	"Ucirc",
-	"ucirc",
-	"Ugrave",
-	"ugrave",
-	"upsih",
-	"Upsilon",
-	"upsilon",
-	"Uuml",
-	"uuml",
-	"weierp",
-	"Xi",
-	"xi",
-	"Yacute",
-	"yacute",
-	"yen",
-	"yuml",
-	"Yuml",
-	"Zeta",
-	"zeta",
-	"zwj",
-	"zwnj"
 ];
 
 var errorsCharacters = {
@@ -1102,6 +869,7 @@ var errorsRules = {
 
 var version = "1.2.7";
 
+const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
   "null",
   "start-of-heading",
@@ -1239,13 +1007,32 @@ function isTagChar(char) {
   }
   return !`><=`.includes(char);
 }
+function lastChar(str) {
+  if (typeof str !== "string" || !str.length) {
+    return "";
+  }
+  return str[str.length - 1];
+}
+function secondToLastChar(str) {
+  if (typeof str !== "string" || !str.length || str.length === 1) {
+    return "";
+  }
+  return str[str.length - 2];
+}
+function firstChar(str) {
+  if (typeof str !== "string" || !str.length) {
+    return "";
+  }
+  return str[0];
+}
+function secondChar(str) {
+  if (typeof str !== "string" || !str.length || str.length === 1) {
+    return "";
+  }
+  return str[1];
+}
 function isLowerCaseLetter(char) {
-  return (
-    isStr(char) &&
-    char.length === 1 &&
-    char.charCodeAt(0) > 96 &&
-    char.charCodeAt(0) < 123
-  );
+  return isStr(char) && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
 }
 function isUppercaseLetter(char) {
   return (
@@ -1873,6 +1660,45 @@ function flip(str) {
     return str.replace(/\{/g, "}").replace(/\(/g, ")");
   }
 }
+function pingEspTag(str, espTagObj, submit) {
+  if (isNum(espTagObj.startAt) && isNum(espTagObj.endAt)) {
+    const openingParens = str
+      .slice(espTagObj.startAt, espTagObj.endAt)
+      .match(/\(/g);
+    const closingParens = str
+      .slice(espTagObj.startAt, espTagObj.endAt)
+      .match(/\)/g);
+    if (
+      (isArr(openingParens) &&
+        isArr(closingParens) &&
+        openingParens.length !== closingParens.length) ||
+      (isArr(openingParens) && !isArr(closingParens)) ||
+      (!isArr(openingParens) && isArr(closingParens))
+    ) {
+      if (
+        (isArr(openingParens) &&
+          isArr(closingParens) &&
+          openingParens.length > closingParens.length) ||
+        (isArr(openingParens) && openingParens.length && !isArr(closingParens))
+      ) {
+        submit({
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      } else if (
+        (isArr(openingParens) &&
+          isArr(closingParens) &&
+          openingParens.length < closingParens.length) ||
+        (isArr(closingParens) && closingParens.length && !isArr(openingParens))
+      ) {
+        submit({
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      }
+    }
+  }
+}
 
 var util = /*#__PURE__*/Object.freeze({
   charSuitableForAttrName: charSuitableForAttrName,
@@ -1884,78 +1710,44 @@ var util = /*#__PURE__*/Object.freeze({
   isLowerCaseLetter: isLowerCaseLetter,
   isUppercaseLetter: isUppercaseLetter,
   findClosingQuote: findClosingQuote,
+  secondToLastChar: secondToLastChar,
   c1CharacterNames: c1CharacterNames,
   tagOnTheRight: tagOnTheRight,
   isLatinLetter: isLatinLetter,
   isLowercase: isLowercase,
   charIsQuote: charIsQuote,
+  pingEspTag: pingEspTag,
   encodeChar: encodeChar,
+  secondChar: secondChar,
+  firstChar: firstChar,
   isTagChar: isTagChar,
+  lastChar: lastChar,
   isStr: isStr,
   isNum: isNum,
   flip: flip,
   log: log
 });
 
-const isArr = Array.isArray;
+const isArr$1 = Array.isArray;
 const {
   attributeOnTheRight: attributeOnTheRight$1,
   withinTagInnerspace: withinTagInnerspace$1,
   isLowerCaseLetter: isLowerCaseLetter$1,
+  secondToLastChar: secondToLastChar$1,
   findClosingQuote: findClosingQuote$1,
   tagOnTheRight: tagOnTheRight$1,
   charIsQuote: charIsQuote$1,
   encodeChar: encodeChar$1,
+  pingEspTag: pingEspTag$1,
+  secondChar: secondChar$1,
+  firstChar: firstChar$1,
+  lastChar: lastChar$1,
   isStr: isStr$1,
-  isNum: isNum$1,
   flip: flip$1,
   log: log$1
 } = util;
 function lint(str, originalOpts) {
   function pingTag(logTag) {
-  }
-  function pingEspTag(espTagObj) {
-    if (isNum$1(espTagObj.startAt) && isNum$1(espTagObj.endAt)) {
-      const openingParens = str
-        .slice(espTagObj.startAt, espTagObj.endAt)
-        .match(/\(/g);
-      const closingParens = str
-        .slice(espTagObj.startAt, espTagObj.endAt)
-        .match(/\)/g);
-      if (
-        (isArr(openingParens) &&
-          isArr(closingParens) &&
-          openingParens.length !== closingParens.length) ||
-        (isArr(openingParens) && !isArr(closingParens)) ||
-        (!isArr(openingParens) && isArr(closingParens))
-      ) {
-        if (
-          (isArr(openingParens) &&
-            isArr(closingParens) &&
-            openingParens.length > closingParens.length) ||
-          (isArr(openingParens) &&
-            openingParens.length &&
-            !isArr(closingParens))
-        ) {
-          submit({
-            name: "esp-more-opening-parentheses-than-closing",
-            position: [[espTagObj.startAt, espTagObj.endAt]]
-          });
-        } else if (
-          (isArr(openingParens) &&
-            isArr(closingParens) &&
-            openingParens.length < closingParens.length) ||
-          (isArr(closingParens) &&
-            closingParens.length &&
-            !isArr(openingParens))
-        ) {
-          submit({
-            name: "esp-more-closing-parentheses-than-opening",
-            position: [[espTagObj.startAt, espTagObj.endAt]]
-          });
-        }
-      }
-    }
   }
   if (!isStr$1(str)) {
     throw new Error(
@@ -2035,6 +1827,7 @@ function lint(str, originalOpts) {
   }
   let doNothingUntil = null;
   let doNothingUntilReason = null;
+  let letterSeqStartAt = null;
   let logTag;
   const defaultLogTag = {
     tagStartAt: null,
@@ -2107,6 +1900,7 @@ function lint(str, originalOpts) {
     issues: [],
     applicableRules: {}
   };
+  const entitiesTackledByFixBrokenEntities = ["nbsp"];
   Object.keys(errorsRules)
     .concat(Object.keys(errorsCharacters))
     .sort()
@@ -2334,6 +2128,50 @@ function lint(str, originalOpts) {
       withinQuotesEndAt = null;
     }
     if (
+      letterSeqStartAt !== null &&
+      ((str[i].trim().length && !isLowerCaseLetter$1(str[i])) || !str[i + 1])
+    ) {
+      const potentialEntity = str.slice(
+        letterSeqStartAt,
+        str[i + 1] ? i : i + 1
+      );
+      const whatsOnTheLeft = str[left(str, letterSeqStartAt)];
+      if (whatsOnTheLeft === "&" || str[i] === ";") {
+        let temp;
+        if (
+          whatsOnTheLeft !== "&" &&
+          entEndsWith.hasOwnProperty(lastChar$1(potentialEntity)) &&
+          entEndsWith[lastChar$1(potentialEntity)].hasOwnProperty(
+            secondToLastChar$1(potentialEntity)
+          ) &&
+          entEndsWith[lastChar$1(potentialEntity)][
+            secondToLastChar$1(potentialEntity)
+          ].some(val => {
+            if (potentialEntity.endsWith(val)) {
+              temp = val;
+              return true;
+            }
+          })
+        ) {
+          if (!entitiesTackledByFixBrokenEntities.includes(temp)) {
+            submit({
+              name: `bad-named-html-entity-malformed-${potentialEntity}`,
+              position: [[i - temp.length, i - temp.length, "&"]]
+            });
+          }
+        } else if (str[i] !== ";") {
+          submit({
+            name: `bad-named-html-entity-malformed-${potentialEntity}`,
+            position: [[str[i + 1] ? i : i + 1, str[i + 1] ? i : i + 1, ";"]]
+          });
+        }
+      }
+      letterSeqStartAt = null;
+    }
+    if (letterSeqStartAt === null && isLowerCaseLetter$1(str[i])) {
+      letterSeqStartAt = i;
+    }
+    if (
       doNothingUntil &&
       doNothingUntilReason === "esp" &&
       logEspTag.tailStartAt &&
@@ -2367,7 +2205,7 @@ function lint(str, originalOpts) {
         );
         logEspTag.endAt = logEspTag.tailEndAt;
         doNothingUntil = logEspTag.endAt;
-        pingEspTag(logEspTag);
+        pingEspTag$1(str, logEspTag, submit);
         resetEspTag();
       } else if (flip$1(logEspTag.headVal).includes(str[i])) {
         if (
@@ -3154,19 +2992,7 @@ function lint(str, originalOpts) {
         position: [[i, i + 1]]
       });
     } else if (!doNothingUntil && charcode === 38) {
-      const nextNonWhitespaceChar = right(str, i);
-      const remainderOfAString = str.slice(nextNonWhitespaceChar);
-      let temp;
-      if (
-        knownNamedHTMLEntities.some(ent => {
-          if (remainderOfAString.startsWith(ent)) {
-            temp = ent.length;
-            return true;
-          }
-        })
-      ) {
-        if (str[right(str, i + temp)] !== ";") ;
-      } else {
+      if (isLowerCaseLetter$1(str[right(str, i)])) ; else {
         submit({
           name: "bad-character-unencoded-ampersand",
           position: [[i, i + 1, "&amp;"]]
@@ -3837,7 +3663,7 @@ function lint(str, originalOpts) {
       };
     }
   });
-  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+  if (isArr$1(htmlEntityFixes) && htmlEntityFixes.length) {
     retObj.issues = retObj.issues
       .filter(issueObj => {
         return (
@@ -3857,7 +3683,7 @@ function lint(str, originalOpts) {
   ) {
     retObj.applicableRules["bad-character-unencoded-ampersand"] = false;
   }
-  if (isArr(htmlEntityFixes) && htmlEntityFixes.length) {
+  if (isArr$1(htmlEntityFixes) && htmlEntityFixes.length) {
     htmlEntityFixes.forEach(issueObj => {
       if (!retObj.applicableRules[issueObj.name]) {
         retObj.applicableRules[issueObj.name] = true;
@@ -3865,7 +3691,7 @@ function lint(str, originalOpts) {
     });
   }
   retObj.fix =
-    isArr(retObj.issues) && retObj.issues.length
+    isArr$1(retObj.issues) && retObj.issues.length
       ? merge(
           retObj.issues
             .filter(issueObj => {

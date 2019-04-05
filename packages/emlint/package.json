@@ -167,6 +167,7 @@
     "sourceMap": false
   },
   "dependencies": {
+    "all-named-html-entities": "^1.0.0",
     "arrayiffy-if-string": "^3.10.19",
     "check-types-mini": "^5.7.15",
     "lodash.clonedeep": "^4.5.0",
@@ -182,7 +183,7 @@
     "ava": "^1.4.1",
     "babel-plugin-istanbul": "^5.1.1",
     "browser-sync": "^2.26.3",
-    "eslint": "^5.15.3",
+    "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-ava": "^6.0.0",
     "eslint-plugin-import": "^2.16.0",

@@ -1,5 +1,6 @@
 import { right, left } from 'string-left-right';
 
+const isArr = Array.isArray;
 const lowAsciiCharacterNames = [
   "null",
   "start-of-heading",
@@ -137,13 +138,32 @@ function isTagChar(char) {
   }
   return !`><=`.includes(char);
 }
+function lastChar(str) {
+  if (typeof str !== "string" || !str.length) {
+    return "";
+  }
+  return str[str.length - 1];
+}
+function secondToLastChar(str) {
+  if (typeof str !== "string" || !str.length || str.length === 1) {
+    return "";
+  }
+  return str[str.length - 2];
+}
+function firstChar(str) {
+  if (typeof str !== "string" || !str.length) {
+    return "";
+  }
+  return str[0];
+}
+function secondChar(str) {
+  if (typeof str !== "string" || !str.length || str.length === 1) {
+    return "";
+  }
+  return str[1];
+}
 function isLowerCaseLetter(char) {
-  return (
-    isStr(char) &&
-    char.length === 1 &&
-    char.charCodeAt(0) > 96 &&
-    char.charCodeAt(0) < 123
-  );
+  return isStr(char) && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
 }
 function isUppercaseLetter(char) {
   return (
@@ -771,5 +791,44 @@ function flip(str) {
     return str.replace(/\{/g, "}").replace(/\(/g, ")");
   }
 }
+function pingEspTag(str, espTagObj, submit) {
+  if (isNum(espTagObj.startAt) && isNum(espTagObj.endAt)) {
+    const openingParens = str
+      .slice(espTagObj.startAt, espTagObj.endAt)
+      .match(/\(/g);
+    const closingParens = str
+      .slice(espTagObj.startAt, espTagObj.endAt)
+      .match(/\)/g);
+    if (
+      (isArr(openingParens) &&
+        isArr(closingParens) &&
+        openingParens.length !== closingParens.length) ||
+      (isArr(openingParens) && !isArr(closingParens)) ||
+      (!isArr(openingParens) && isArr(closingParens))
+    ) {
+      if (
+        (isArr(openingParens) &&
+          isArr(closingParens) &&
+          openingParens.length > closingParens.length) ||
+        (isArr(openingParens) && openingParens.length && !isArr(closingParens))
+      ) {
+        submit({
+          name: "esp-more-opening-parentheses-than-closing",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      } else if (
+        (isArr(openingParens) &&
+          isArr(closingParens) &&
+          openingParens.length < closingParens.length) ||
+        (isArr(closingParens) && closingParens.length && !isArr(openingParens))
+      ) {
+        submit({
+          name: "esp-more-closing-parentheses-than-opening",
+          position: [[espTagObj.startAt, espTagObj.endAt]]
+        });
+      }
+    }
+  }
+}
 
-export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, log, lowAsciiCharacterNames, onlyTheseLeadToThat, tagOnTheRight, withinTagInnerspace };
+export { attributeOnTheRight, c1CharacterNames, charIsQuote, charSuitableForAttrName, charSuitableForTagName, encodeChar, findClosingQuote, firstChar, flip, isLatinLetter, isLowerCaseLetter, isLowercase, isNum, isStr, isTagChar, isUppercaseLetter, lastChar, log, lowAsciiCharacterNames, onlyTheseLeadToThat, pingEspTag, secondChar, secondToLastChar, tagOnTheRight, withinTagInnerspace };

@@ -3,9 +3,6 @@ import apply from "ranges-apply";
 import { c } from "../test-util/util";
 import test from "ava";
 
-// 02. rule "bad-character-*"
-// -----------------------------------------------------------------------------
-
 const charactersToTest = [
   "null",
   "start-of-heading",
@@ -160,9 +157,8 @@ test(`YY - Unicode 127-159`, t => {
   });
 });
 
-test(`01 - DELETE character (control)`, t => {
-  t.is(lint(`\u007F`).issues[0].name, "bad-character-delete", "01");
-});
+test(`01 - DELETE character (control)`, t =>
+  c(`first\u007Fsecond`, `firstsecond`, "bad-character-delete", t));
 
 test(`02 - ETX character, tight`, t =>
   c(`first\u0003second`, `firstsecond`, "bad-character-end-of-text", t));
