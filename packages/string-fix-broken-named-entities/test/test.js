@@ -1331,24 +1331,24 @@ test(`05.008 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32
 
 test(`05.009 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - triple encoded`, t => {
   const inp1 = "text&amp;amp;nbsp;text";
-  t.deepEqual(fix(inp1), [[5, 13]], "05.009.01");
+  t.deepEqual(fix(inp1), [[4, 18, "&nbsp;"]], "05.009.01");
 
   const inp2 = "text&   amp  ;  a  m   p   ;     a  m   p   ;    nbsp;text";
-  t.deepEqual(fix(inp2), [[5, 49]], "05.009.02");
+  t.deepEqual(fix(inp2), [[4, 54, "&nbsp;"]], "05.009.02");
 });
 
 test(`05.010 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand - no cb`, t => {
   const inp1 = "textamp;nbsp;text";
-  t.deepEqual(fix(inp1), [[4, 8, "&"]], "05.010.01");
+  t.deepEqual(fix(inp1), [[4, 13, "&nbsp;"]], "05.010.01");
 
   const inp2 = "text amp;nbsp;text";
-  t.deepEqual(fix(inp2), [[5, 9, "&"]], "05.010.02");
+  t.deepEqual(fix(inp2), [[5, 14, "&nbsp;"]], "05.010.02");
 
   const inp3 = "text\tamp;nbsp;text";
-  t.deepEqual(fix(inp3), [[4, 9, " &"]], "05.010.03");
+  t.deepEqual(fix(inp3), [[5, 14, " &nbsp;"]], "05.010.03");
 
   const inp4 = "text\namp;nbsp;text";
-  t.deepEqual(fix(inp4), [[5, 9, "&"]], "05.010.04");
+  t.deepEqual(fix(inp4), [[5, 14, "&nbsp;"]], "05.010.04");
 });
 
 test(`05.011 - ${`\u001b[${34}m${`double-encoding`}\u001b[${39}m`} - \u001b[${32}m${`nbsp`}\u001b[${39}m - combo with malformed nbsp - missing opening ampersand`, t => {
