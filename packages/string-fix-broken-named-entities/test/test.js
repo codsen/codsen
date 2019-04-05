@@ -1649,26 +1649,27 @@ test(`07.001 - ${`\u001b[${32}m${`opts.progressFn`}\u001b[${39}m`} - reports pro
 // 08. ampersand missing
 // -----------------------------------------------------------------------------
 
-test.only(`08.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - no decode, spaced`, t => {
+test(`08.001 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - no decode, spaced`, t => {
   t.deepEqual(fix("z &aacute; y"), null, "08.001.01");
-  // t.deepEqual(fix("z &acute; y"), null, "08.001.02");
-
-  // t.deepEqual(fix("z aacute; y"), [[2, 9, "&aacute;"]], "08.001.03");
-  // t.deepEqual(fix("z acute; y"), [[2, 8, "&acute;"]], "08.001.04");
+  t.deepEqual(fix("z &acute; y"), null, "08.001.02");
 });
 
-test(`08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t => {
+test(`08.002 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - \u001b[${32}m${`acute`}\u001b[${39}m vs \u001b[${32}m${`aacute`}\u001b[${39}m - legit letter in front and gap is actually legit too`, t => {
+  t.deepEqual(fix("z acute; y"), [[2, 8, "&acute;"]], "08.002");
+});
+
+test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, named, amp`, t => {
   const inp1 = "amp;";
   const outp1 = [[0, 4, "&amp;"]];
-  t.deepEqual(fix(inp1), outp1, "08.002.01");
-  t.deepEqual(fix(inp1, { cb }), outp1, "08.002.02");
-});
-
-test(`08.003 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
-  const inp1 = "#x26;";
-  const outp1 = [[0, 5, "&#x26;"]];
   t.deepEqual(fix(inp1), outp1, "08.003.01");
   t.deepEqual(fix(inp1, { cb }), outp1, "08.003.02");
+});
+
+test(`08.004 - ${`\u001b[${33}m${`missing amp`}\u001b[${39}m`} - minimal isolated, numeric, amp`, t => {
+  const inp1 = "#x26;";
+  const outp1 = [[0, 5, "&#x26;"]];
+  t.deepEqual(fix(inp1), outp1, "08.004.01");
+  t.deepEqual(fix(inp1, { cb }), outp1, "08.004.02");
 });
 
 // -----------------------------------------------------------------------------
