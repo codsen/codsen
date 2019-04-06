@@ -1,18 +1,18 @@
 import { c } from "../test-util/util";
 import test from "ava";
-// avaonly
+// avanotonly
 
 const RAWAMP = `&`;
 const RAWNBSP = `\xA0`;
-const RAWSUP = `\u2283`;
-const RAWZWNJ = `\u200C`;
+// const RAWSUP = `\u2283`;
+// const RAWZWNJ = `\u200C`;
 
 //                                 HTML ENTITY TESTS
 
 // 00. raw
 // -----------------------------------------------------------------------------
 
-// single raw
+// single raw, recognised
 
 test(`00.01 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
   c(RAWAMP, `&amp;`, ["bad-character-unencoded-ampersand"], t));
@@ -20,11 +20,15 @@ test(`00.01 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw am
 test(`00.02 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
   c(RAWNBSP, `&nbsp;`, ["bad-character-unencoded-non-breaking-space"], t));
 
-test(`00.03 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
-  c(RAWSUP, `&sup;`, ["z"], t));
+// single raw, unrecognised
 
-test(`00.04 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
-  c(RAWZWNJ, `&zwnj;`, ["z"], t));
+// TODO - implement all character encoding
+// test(`00.03 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
+//   c(RAWSUP, `&sup;`, ["z"], t));
+
+// TODO - implement all character encoding
+// test(`00.04 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
+//   c(RAWZWNJ, `&zwnj;`, ["z"], t));
 
 // three repeated raw
 
@@ -44,11 +48,13 @@ test(`00.06 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw am
     t
   ));
 
-test(`00.07 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
-  c(`${RAWSUP}${RAWSUP}${RAWSUP}`, `&sup;&sup;&sup;`, ["z"], t));
+// TODO - implement all character encoding
+// test(`00.07 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
+//   c(`${RAWSUP}${RAWSUP}${RAWSUP}`, `&sup;&sup;&sup;`, ["z"], t));
 
-test(`00.08 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
-  c(`${RAWZWNJ}${RAWZWNJ}${RAWZWNJ}`, `&zwnj;&zwnj;&zwnj;`, ["z"], t));
+// TODO - implement all character encoding
+// test(`00.08 - ${`\u001b[${33}m${`raw`}\u001b[${39}m`} - minimal isolated, raw amp`, t =>
+//   c(`${RAWZWNJ}${RAWZWNJ}${RAWZWNJ}`, `&zwnj;&zwnj;&zwnj;`, ["z"], t));
 
 // 01. ALL OK
 // -----------------------------------------------------------------------------

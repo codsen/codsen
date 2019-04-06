@@ -195,6 +195,7 @@
     "prettier": "^1.16.4",
     "ranges-apply": "^3.0.10",
     "rollup": "^1.9.0",
+    "rollup-plugin-ascii": "^0.0.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^9.3.4",

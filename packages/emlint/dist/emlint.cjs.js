@@ -911,8 +911,8 @@ var version = "1.2.7";
 var isArr = Array.isArray;
 var lowAsciiCharacterNames = ["null", "start-of-heading", "start-of-text", "end-of-text", "end-of-transmission", "enquiry", "acknowledge", "bell", "backspace", "character-tabulation", "line-feed", "line-tabulation", "form-feed", "carriage-return", "shift-out", "shift-in", "data-link-escape", "device-control-one", "device-control-two", "device-control-three", "device-control-four", "negative-acknowledge", "synchronous-idle", "end-of-transmission-block", "cancel", "end-of-medium", "substitute", "escape", "information-separator-four", "information-separator-three", "information-separator-two", "information-separator-one", "space", "exclamation-mark"];
 var c1CharacterNames = ["delete", "padding", "high-octet-preset", "break-permitted-here", "no-break-here", "index", "next-line", "start-of-selected-area", "end-of-selected-area", "character-tabulation-set", "character-tabulation-with-justification", "line-tabulation-set", "partial-line-forward", "partial-line-backward", "reverse-line-feed", "single-shift-two", "single-shift-three", "device-control-string", "private-use-1", "private-use-2", "set-transmit-state", "cancel-character", "message-waiting", "start-of-protected-area", "end-of-protected-area", "start-of-string", "single-graphic-character-introducer", "single-character-intro-introducer", "control-sequence-introducer", "string-terminator", "operating-system-command", "private-message", "application-program-command"];
-function charSuitableForAttrName(char) {
-  var res = !"\"'><=".includes(char);
+function charSuitableForAttrName(_char) {
+  var res = !"\"'><=".includes(_char);
   return res;
 }
 function onlyTheseLeadToThat(str) {
@@ -965,26 +965,26 @@ function onlyTheseLeadToThat(str) {
 function onlyAttrFriendlyCharsLeadingToEqual(str) {
   var idx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   return onlyTheseLeadToThat(str, idx, charSuitableForAttrName,
-  function (char) {
-    return char === "=";
+  function (_char2) {
+    return _char2 === "=";
   }
   );
 }
-function charIsQuote(char) {
-  var res = "\"'`\u2018\u2019\u201C\u201D".includes(char);
+function charIsQuote(_char3) {
+  var res = "\"'`\u2018\u2019\u201C\u201D".includes(_char3);
   return res;
 }
-function isTagChar(char) {
-  if (typeof char !== "string" || char.length > 1) {
+function isTagChar(_char4) {
+  if (typeof _char4 !== "string" || _char4.length > 1) {
     throw new Error("emlint/util/isTagChar(): input is not a single string character!");
   }
-  return !"><=".includes(char);
+  return !"><=".includes(_char4);
 }
-function isLowerCaseLetter(char) {
-  return isStr(char) && char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123;
+function isLowerCaseLetter(_char5) {
+  return isStr(_char5) && _char5.charCodeAt(0) > 96 && _char5.charCodeAt(0) < 123;
 }
-function isUppercaseLetter(char) {
-  return isStr(char) && char.length === 1 && char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91;
+function isUppercaseLetter(_char6) {
+  return isStr(_char6) && _char6.length === 1 && _char6.charCodeAt(0) > 64 && _char6.charCodeAt(0) < 91;
 }
 function isStr(something) {
   return typeof something === "string";
@@ -992,11 +992,11 @@ function isStr(something) {
 function isNum(something) {
   return typeof something === "number";
 }
-function isLatinLetter(char) {
-  return isStr(char) && char.length === 1 && (char.charCodeAt(0) > 64 && char.charCodeAt(0) < 91 || char.charCodeAt(0) > 96 && char.charCodeAt(0) < 123);
+function isLatinLetter(_char8) {
+  return isStr(_char8) && _char8.length === 1 && (_char8.charCodeAt(0) > 64 && _char8.charCodeAt(0) < 91 || _char8.charCodeAt(0) > 96 && _char8.charCodeAt(0) < 123);
 }
-function charSuitableForTagName(char) {
-  return isLowerCaseLetter(char) || char === ":";
+function charSuitableForTagName(_char9) {
+  return isLowerCaseLetter(_char9) || _char9 === ":";
 }
 function withinTagInnerspace(str, idx, closingQuotePos) {
   if (typeof idx !== "number") {
@@ -2061,8 +2061,8 @@ function lint(str, originalOpts) {
             var attributeOnTheRightBeginsAt;
             if (innerTagContents.includes("=")) {
               var _temp3 = innerTagContents.split("=")[0];
-              if (_temp3.split("").some(function (char) {
-                return !char.trim().length;
+              if (_temp3.split("").some(function (_char) {
+                return !_char.trim().length;
               })) {
                 for (var z = _i + _temp3.length; z--;) {
                   if (!str[z].trim().length) {
