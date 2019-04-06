@@ -35,6 +35,8 @@ deploy:
     - npm run readme:generate
     - echo '█████████████████████████████ 5 █████████████████████████████'
     - git status
+    - git add packages
+    - "git commit -m '[skip ci] chore: Automated build tasks' --no-verify"
     - npx lerna changed
     - npm run pub:vers
     - echo '█████████████████████████████ 6 █████████████████████████████'
